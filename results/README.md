@@ -25,3 +25,12 @@ python -m open_space.campaign --root runs/replicate-first-visit \
 ```
 
 Use the same command after an archive outage. Verify that `state.json` records `exhausted: true`. Compare each report's source and CSV digests with the published record before comparing the counts. The completed campaign writes the full membership of each group, including its originating observation and feature IDs, to `recurrence.json`. [Method and limitations](../docs/RECURRENCE.md)
+
+
+## Follow-up experiments
+
+- The fixed-wavelength test applies eight original predictions and a Ca II K control to three new visits. The JSON records every hit, covered miss and unavailable measurement under each mask. [Readout and reproduction](../docs/HOLDOUT_RESULTS.md) · [Per-observation evidence](holdout.json)
+- The fitted-spectrum check subtracts the SDSS model and measures which of the original detections survive at the same threshold. [Measurements](template-residuals.json)
+- The exact and randomized redshift reassignments compare the observed degree of grouping with chance alignments under specified redshift-exchange assumptions. [Analysis](../docs/NULL_EXPERIMENT.md) · [Distributions](redshift-null.json)
+- The repeat case compares independently acquired spectra of one original target with two alternative continuum and exposure-mask checks. [Analysis](../docs/REPEAT_OBSERVATION.md) · [Evidence](repeat-observation.json)
+- A fresh whole-spectrum search starts from observed flux minus the survey fit and ranks surviving groups, retaining the observer-frame and cross-visit controls. [Analysis and residual candidate register](../docs/RESIDUAL_SEARCH.md)

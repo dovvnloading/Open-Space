@@ -1,0 +1,375 @@
+{
+  "schema_version": 1,
+  "kind": "same_target_repeat",
+  "catalog_url": "https://skyserver.sdss.org/dr17/SkyServerWS/SearchTools/SqlSearch",
+  "catalog_sha256": "7dda43a170ed86b12d380b824babdbb756748a3677c194efd7cfcb6a1a42b5d3",
+  "catalog_anchors": [
+    88,
+    96,
+    100,
+    139,
+    192,
+    210,
+    406,
+    424,
+    676,
+    748,
+    858,
+    963
+  ],
+  "eligible_repeat_pairs": 1,
+  "photometric_bestobjid": "1237665180057927873",
+  "catalog_offset_arcsec": 0.0,
+  "fit_position_offset_arcsec": 0.0,
+  "days_between_coadd_mjd": 228,
+  "reference_redshift": 0.08566851168870926,
+  "shared_science_exposures": [],
+  "exposure_status": "disjoint",
+  "spectra": [
+    {
+      "observation_id": "sdss-6497-56329-0139",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6497/spec-6497-56329-0139.fits",
+      "source_sha256": "5a06bc1f02dd76b17323e5888e22149e315b10b3a2f60c5a47dbffa19d391704",
+      "csv_sha256": "7b3fe4220340df384de29c3c384fc2c3582787a24bc5167915f4a701dfeb40e5",
+      "thing_id": 364543359,
+      "plate": 6497,
+      "mjd": 56329,
+      "fiber": 139,
+      "redshift": 0.08566851168870926,
+      "redshift_error": 7.475550773961004e-06,
+      "redshift_column": "SPALL.Z_NOQSO",
+      "zwarning": 0,
+      "classification": "GALAXY",
+      "subclass": "STARBURST",
+      "ra_deg": 214.31693999999993,
+      "dec_deg": 29.275123,
+      "plate_quality": "good",
+      "program": "boss",
+      "science_primary": 1,
+      "pixels": 4624,
+      "usable_pixels": 4277,
+      "science_ids": [
+        "00155803",
+        "00155804",
+        "00155805",
+        "00155806",
+        "00155807",
+        "00155808",
+        "00155809"
+      ],
+      "camera_records": {
+        "EXPID001": "b1-00155803-00155802-00155801",
+        "EXPID002": "b1-00155804-00155802-00155801",
+        "EXPID003": "b1-00155805-00155802-00155801",
+        "EXPID004": "b1-00155806-00155802-00155801",
+        "EXPID005": "b1-00155807-00155802-00155801",
+        "EXPID006": "b1-00155808-00155802-00155801",
+        "EXPID007": "b1-00155809-00155802-00155801",
+        "EXPID008": "r1-00155803-00155802-00155801",
+        "EXPID009": "r1-00155804-00155802-00155801",
+        "EXPID010": "r1-00155805-00155802-00155801",
+        "EXPID011": "r1-00155806-00155802-00155801",
+        "EXPID012": "r1-00155807-00155802-00155801",
+        "EXPID013": "r1-00155808-00155802-00155801",
+        "EXPID014": "r1-00155809-00155802-00155801"
+      },
+      "indices": {
+        "Ca_II_K": {
+          "rest_vacuum_angstrom": 3934.775106642728,
+          "predicted_observed_angstrom": 4271.861433858593,
+          "default": {
+            "pixels_blue_core_red": [
+              8,
+              7,
+              8
+            ],
+            "status": "measured",
+            "weighted_flux": 2.6190750860889205,
+            "weighted_continuum": 3.3928761129741516,
+            "flux_contrast": -0.7738010268852311,
+            "fractional_depth": 0.22806639591886746,
+            "diagonal_noise_sensitivity": {
+              "draws": 4096,
+              "usable": 4096,
+              "seed": 17,
+              "p025": 0.12711502775525185,
+              "p975": 0.3033957772693927
+            }
+          },
+          "strict": {
+            "pixels_blue_core_red": [
+              8,
+              6,
+              8
+            ],
+            "status": "measured",
+            "weighted_flux": 2.5363139164553736,
+            "weighted_continuum": 3.3932983503223464,
+            "flux_contrast": -0.8569844338669728,
+            "fractional_depth": 0.2525520438795379,
+            "diagonal_noise_sensitivity": {
+              "draws": 4096,
+              "usable": 4096,
+              "seed": 17,
+              "p025": 0.15143122348402363,
+              "p975": 0.33414908270561106
+            }
+          }
+        },
+        "K_minus_25": {
+          "rest_vacuum_angstrom": 3909.775106642728,
+          "predicted_observed_angstrom": 4244.719721066375,
+          "default": {
+            "pixels_blue_core_red": [
+              8,
+              6,
+              8
+            ],
+            "status": "measured",
+            "weighted_flux": 3.247056583462198,
+            "weighted_continuum": 3.068190136077904,
+            "flux_contrast": 0.1788664473842938,
+            "fractional_depth": -0.05829705443644384
+          },
+          "strict": {
+            "pixels_blue_core_red": [
+              8,
+              6,
+              6
+            ],
+            "status": "measured",
+            "weighted_flux": 3.247056583462198,
+            "weighted_continuum": 3.0683745618869014,
+            "flux_contrast": 0.17868202157529645,
+            "fractional_depth": -0.058233445093292646
+          }
+        },
+        "K_plus_25": {
+          "rest_vacuum_angstrom": 3959.775106642728,
+          "predicted_observed_angstrom": 4299.003146650811,
+          "default": {
+            "pixels_blue_core_red": [
+              7,
+              6,
+              8
+            ],
+            "status": "measured",
+            "weighted_flux": 2.866539375293744,
+            "weighted_continuum": 3.1269695445474746,
+            "flux_contrast": -0.2604301692537305,
+            "fractional_depth": 0.08328516333260905
+          },
+          "strict": {
+            "pixels_blue_core_red": [
+              7,
+              4,
+              6
+            ],
+            "status": "measured",
+            "weighted_flux": 2.808680185311075,
+            "weighted_continuum": 3.055367768224344,
+            "flux_contrast": -0.24668758291326887,
+            "fractional_depth": 0.08073908008024633
+          }
+        },
+        "O_III_5008": {
+          "rest_vacuum_angstrom": 5008.239,
+          "predicted_observed_angstrom": 5437.287381311349,
+          "default": {
+            "pixels_blue_core_red": [
+              6,
+              5,
+              6
+            ],
+            "status": "measured",
+            "weighted_flux": 14.52808762836549,
+            "weighted_continuum": 2.39087960662083,
+            "flux_contrast": 12.13720802174466,
+            "fractional_depth": -5.0764613944316865,
+            "eligible_peak_pixel_angstrom": 5437.50865791
+          },
+          "strict": {
+            "pixels_blue_core_red": [
+              0,
+              0,
+              0
+            ],
+            "status": "insufficient_pixels",
+            "eligible_peak_pixel_angstrom": null
+          }
+        }
+      }
+    },
+    {
+      "observation_id": "sdss-6012-56101-0585",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6012/spec-6012-56101-0585.fits",
+      "source_sha256": "7903cca82ee86f1d17e4e2432ac27b808e5e67be0908b4c86ae60b75affae44e",
+      "csv_sha256": "1981ac129df2983f7976efa00d60d55d3084dc7eb86e0a46c95c22aebf2adffb",
+      "thing_id": 364543359,
+      "plate": 6012,
+      "mjd": 56101,
+      "fiber": 585,
+      "redshift": 0.08571331948041916,
+      "redshift_error": 7.956507033668458e-06,
+      "redshift_column": "SPALL.Z_NOQSO",
+      "zwarning": 0,
+      "classification": "GALAXY",
+      "subclass": "STARBURST",
+      "ra_deg": 214.31693999999993,
+      "dec_deg": 29.275123,
+      "plate_quality": "good",
+      "program": "boss",
+      "science_primary": 0,
+      "pixels": 4619,
+      "usable_pixels": 4294,
+      "science_ids": [
+        "00145150",
+        "00145152",
+        "00145153",
+        "00145154",
+        "00145180",
+        "00145181"
+      ],
+      "camera_records": {
+        "EXPID001": "b2-00145150-00145149-00145148",
+        "EXPID002": "b2-00145152-00145149-00145148",
+        "EXPID003": "b2-00145153-00145149-00145148",
+        "EXPID004": "b2-00145154-00145149-00145148",
+        "EXPID005": "b2-00145180-00145179-00145178",
+        "EXPID006": "b2-00145181-00145179-00145178",
+        "EXPID007": "r2-00145150-00145149-00145148",
+        "EXPID008": "r2-00145152-00145149-00145148",
+        "EXPID009": "r2-00145153-00145149-00145148",
+        "EXPID010": "r2-00145154-00145149-00145148",
+        "EXPID011": "r2-00145180-00145179-00145178",
+        "EXPID012": "r2-00145181-00145179-00145178"
+      },
+      "indices": {
+        "Ca_II_K": {
+          "rest_vacuum_angstrom": 3934.775106642728,
+          "predicted_observed_angstrom": 4271.861433858593,
+          "default": {
+            "pixels_blue_core_red": [
+              8,
+              7,
+              8
+            ],
+            "status": "measured",
+            "weighted_flux": 2.6396552418465866,
+            "weighted_continuum": 3.0146085453670186,
+            "flux_contrast": -0.374953303520432,
+            "fractional_depth": 0.12437877020440236,
+            "diagonal_noise_sensitivity": {
+              "draws": 4096,
+              "usable": 4096,
+              "seed": 17,
+              "p025": -0.1104216559909836,
+              "p975": 0.2873579133009658
+            }
+          },
+          "strict": {
+            "pixels_blue_core_red": [
+              8,
+              7,
+              8
+            ],
+            "status": "measured",
+            "weighted_flux": 2.6396552418465866,
+            "weighted_continuum": 3.0146085453670186,
+            "flux_contrast": -0.374953303520432,
+            "fractional_depth": 0.12437877020440236,
+            "diagonal_noise_sensitivity": {
+              "draws": 4096,
+              "usable": 4096,
+              "seed": 17,
+              "p025": -0.1104216559909836,
+              "p975": 0.2873579133009658
+            }
+          }
+        },
+        "K_minus_25": {
+          "rest_vacuum_angstrom": 3909.775106642728,
+          "predicted_observed_angstrom": 4244.719721066375,
+          "default": {
+            "pixels_blue_core_red": [
+              8,
+              6,
+              8
+            ],
+            "status": "measured",
+            "weighted_flux": 3.095654709145868,
+            "weighted_continuum": 2.9363275186820084,
+            "flux_contrast": 0.15932719046385957,
+            "fractional_depth": -0.05426070131828298
+          },
+          "strict": {
+            "pixels_blue_core_red": [
+              8,
+              4,
+              8
+            ],
+            "status": "measured",
+            "weighted_flux": 3.332270294128129,
+            "weighted_continuum": 2.9362232814353417,
+            "flux_contrast": 0.3960470126927871,
+            "fractional_depth": -0.13488313889370973
+          }
+        },
+        "K_plus_25": {
+          "rest_vacuum_angstrom": 3959.775106642728,
+          "predicted_observed_angstrom": 4299.003146650811,
+          "default": {
+            "pixels_blue_core_red": [
+              7,
+              6,
+              8
+            ],
+            "status": "measured",
+            "weighted_flux": 2.669463726955474,
+            "weighted_continuum": 2.6883461875550863,
+            "flux_contrast": -0.018882460599612294,
+            "fractional_depth": 0.007023820327539343
+          },
+          "strict": {
+            "pixels_blue_core_red": [
+              7,
+              6,
+              8
+            ],
+            "status": "measured",
+            "weighted_flux": 2.669463726955474,
+            "weighted_continuum": 2.6883461875550863,
+            "flux_contrast": -0.018882460599612294,
+            "fractional_depth": 0.007023820327539343
+          }
+        },
+        "O_III_5008": {
+          "rest_vacuum_angstrom": 5008.239,
+          "predicted_observed_angstrom": 5437.287381311349,
+          "default": {
+            "pixels_blue_core_red": [
+              6,
+              5,
+              6
+            ],
+            "status": "measured",
+            "weighted_flux": 16.746480338437493,
+            "weighted_continuum": 2.4357252570751773,
+            "flux_contrast": 14.310755081362316,
+            "fractional_depth": -5.875356853074099,
+            "eligible_peak_pixel_angstrom": 5437.50865791
+          },
+          "strict": {
+            "pixels_blue_core_red": [
+              0,
+              0,
+              0
+            ],
+            "status": "insufficient_pixels",
+            "eligible_peak_pixel_angstrom": null
+          }
+        }
+      }
+    }
+  ]
+}

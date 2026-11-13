@@ -32,7 +32,7 @@ def run_work(db, code, max_jobs, max_calls, role=run_role, only_job=None):
                     if stage in saved:
                         continue
                     if stage == "measurements":
-                        result = measure(saved["analyst"]["requests"], scan["features"], rows)
+                        result = measure(saved["analyst"]["requests"], scan["features"], rows, scan["redshift"])
                     else:
                         if stats["provider_calls_reserved"] >= max_calls:
                             ledger.finish(db, job, "queued")

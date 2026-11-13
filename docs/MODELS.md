@@ -28,10 +28,16 @@ The client assigns IDs in the original detector order. `F0001` is the first feat
 
 | Agent | Required output | Available decision |
 | --- | --- | --- |
-| Analyst | Summary, hypotheses with their predictions and falsifiers, requested measurements | Request `mask_neighborhood` or `continuum_sensitivity` for a supplied feature ID. An empty request list is valid. |
+| Analyst | Summary, hypotheses with their predictions and falsifiers, requested measurements | Request `mask_neighborhood`, `continuum_sensitivity` or `strict_mask_recovery` for a supplied feature ID. An empty request list is valid. |
 | Reviewer | Summary and feature-specific assessments, each with a challenge and next test | Record `explained`, `inconclusive` or `follow_up`. |
 
-Both response schemas limit each list to five entries. Validation rejects unknown IDs, duplicate measurement requests, unknown fields, unsupported checks, incomplete responses and excessive text. Model content is parsed as JSON. Only the two declared check names can select code paths in the worker. When serving a hosted model, configure its retention and data settings to suit the observations you intend to provide.
+Both response schemas limit each list to five entries. Validation rejects unknown IDs, duplicate measurement requests, unknown fields, unsupported checks, incomplete responses and excessive text. Model content is parsed as JSON. The worker restricts requests to the three declared checks. When serving a hosted model, configure its retention and data settings to suit the observations you intend to provide.
+
+## Strict-mask recovery
+
+An analyst can request `strict_mask_recovery` on any feature in its packet. The worker combines the original exclusion mask with the SDSS OR mask, keeping the original inverse variances, redshift and detection threshold. All requested features share one rerun. For each feature the worker checks whether the grid point nearest the original observed centroid has a searchable continuum window. It then searches for the same sign within a symmetric log-wavelength tolerance. Its positive half-width equals the original feature’s matching tolerance in Å, with velocity half-width `c × log(1 + tolerance / wavelength)`.
+
+The `strict_search.outcome` is `hit` for a recovered same-sign feature, `miss` for a searchable window without a match, `unsearchable` when coverage is lost, and `unavailable` when the input lacks OR flags. A recovered feature includes its strict-fit score, centroid, contrast and pixel index. Baseline feature IDs remain attached to the requested measurements. Coverage loss provides no evidence that the underlying spectral feature disappeared. Model protocol version 2 adds this check. Existing outputs retain their original role and provenance records, and jobs with a different saved protocol require the original code for resumption.
 
 ## Reproducing a run
 
