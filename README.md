@@ -2,6 +2,8 @@
 
 Open-Space is an open-source, agent-led research initiative for finding and investigating unexplained features in public astronomical observations. Its first observing program searches optical galaxy spectra from the Sloan Digital Sky Survey. Each experiment starts with archived measurements and ends with an evidence record that another researcher can reproduce, challenge or extend.
 
+**Independent-field test.** Seven of the eight best-supported discovery wavelengths reappeared in a frozen test of 24 new galaxies across three observing visits. All 65 primary detections fell below the search threshold after subtraction of SDSS's fitted galaxy spectrum. A new blind search of the residuals found a single pair confined to one plate visit. The release includes covered misses, alternative mask and continuum tests, a same-target repeat and a redshift permutation experiment. [Holdout measurements and figure](docs/HOLDOUT_RESULTS.md) · [Repeat observation](docs/REPEAT_OBSERVATION.md) · [Redshift control](docs/NULL_EXPERIMENT.md) · [Blind residual search](docs/RESIDUAL_SEARCH.md)
+
 **First investigation.** In three galaxies, the search flagged absorption near 3934–3935 Å that its bundled line table did not explain. After correcting for the galaxies' different redshifts, each feature landed within 1 Å of a known transition of singly ionized calcium. The companion region overlaps a hydrogen line. The report includes the spectra, predictions, measurements, competing explanation and independent analysis of the quality flags. [Read the investigation](docs/FIRST_INVESTIGATION.md) · [Read the skeptical review](docs/INDEPENDENT_REVIEW.md)
 
 **Completed campaign.** The first full plate visit contained 12 galaxies meeting the selection criteria. The detector measured 333 features, of which 241 fell outside its small reference table. The cross-target search found 47 recurring rest-frame groups among these features at a tolerance of 150 km/s. A separate observer-frame comparison produced 36 groups. Each count depends on coverage, detector thresholds and the references searched. The published record includes every source hash and per-spectrum count. [Campaign results and reproduction](results/README.md)
@@ -39,13 +41,13 @@ export OPEN_SPACE_MAX_TOKENS=1600
 python -m open_space.campaign --models --root runs/model-visit --limit 3 --pages 1 --max-calls 6
 ```
 
-The analyst proposes testable explanations and chooses which features need a mask inspection or an alternative continuum fit. Python executes the requested measurements against the source pixels. The reviewer receives those results, challenges the proposed interpretation and records a discriminating next test. Set `OPEN_SPACE_REVIEWER_MODEL` to use a second model. The ledger keeps the validated decisions, exact prompts, model identifiers, usage when supplied, code fingerprint and source hashes. [Campaign operation and unattended execution](docs/CAMPAIGNS.md) · [Models and budgets](docs/MODELS.md)
+The analyst proposes testable explanations and chooses which features need a mask inspection, an alternative continuum fit or a new detection pass with stricter exposure flags. Python executes the requested measurements against the source pixels. The reviewer receives those results, challenges the proposed interpretation and records a discriminating next test. Set `OPEN_SPACE_REVIEWER_MODEL` to use a second model. The ledger keeps the validated decisions, exact prompts, model identifiers, usage when supplied, code fingerprint and source hashes. [Campaign operation and unattended execution](docs/CAMPAIGNS.md) · [Models and budgets](docs/MODELS.md)
 
 | Research task | What runs today | Output |
 | --- | --- | --- |
 | Select and ingest | Bounded DR17 catalog query by plate and visit, FITS checks, quality-mask preservation | Frozen target list, source and CSV digests, observation manifests |
 | Screen | Local continuum fits, signed narrow-feature detection, rest-frame and observer-frame line checks | Pixel indices, wavelengths, scores, coverage, candidate matches |
-| Investigate | Analyst, two executable pixel checks and a skeptical reviewer | Hypotheses, measured follow-ups and proposed tests |
+| Investigate | Analyst, three executable pixel checks and a skeptical reviewer | Hypotheses, measured follow-ups and proposed tests |
 | Compare galaxies | Same-sign features at similar rest wavelengths across distinct targets | Ranked recurring features, observing visits and observer-frame spread |
 | Validate | Synthetic null and injection controls, followed by paired injections into a real coadd | Recovery by sign and amplitude, coverage and confounded-trial counts |
 

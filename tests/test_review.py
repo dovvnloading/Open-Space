@@ -6,6 +6,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from unittest.mock import patch
 
 from open_space import review
+from open_space.followup import measure
 from open_space.spectra import analyze, synthetic_rows
 
 
@@ -33,6 +34,7 @@ class ReviewTest(unittest.TestCase):
 
     def test_http_roundtrip_and_audit(self):
         calls = []
+        self.analyst["requests"].append({"feature_id": "F0002", "check": "strict_mask_recovery"})
         scripts = iter((self.analyst, self.reviewer))
 
         class Server(BaseHTTPRequestHandler):
@@ -60,7 +62,9 @@ class ReviewTest(unittest.TestCase):
                                      "no_proxy": "127.0.0.1"}):
             sample = {**self.analysis, "source_context": {"kind": "synthetic", "observation_id": "fixture-0"}}
             analyst = review.run_role("analyst", sample, None, self.config)
-            checks = [{"feature_id": "F0002", "check": "continuum_sensitivity", "contrast": -8.5}]
+            rows = [dict(row, or_mask=0) for row in synthetic_rows()]
+            checks = measure(analyst["requests"], sample["features"], rows, sample["redshift"])
+            self.assertEqual(checks[-1]["strict_search"]["outcome"], "hit")
             reviewer = review.run_role("reviewer", sample, {
                 "analyst": analyst, "followup_measurements": checks}, self.config)
         self.assertEqual(analyst["requests"], self.analyst["requests"])
@@ -79,6 +83,12 @@ class ReviewTest(unittest.TestCase):
         self.assertEqual(packet["followup_measurements"], checks)
         self.assertEqual(packet["source_context"]["kind"], "synthetic")
         self.assertNotIn("review", packet["analyst"])
+
+    def test_older_saved_protocol_is_rejected_before_a_request(self):
+        old_config = {**self.config, "protocol_version": "spectral-review-v1"}
+        with patch.object(review, "_post") as post, self.assertRaisesRegex(ValueError, "protocol"):
+            review.run_role("analyst", self.analysis, None, old_config)
+        post.assert_not_called()
 
     def test_unknown_id_and_unimplemented_check_rejected(self):
         for entry in ({"feature_id": "F9999", "check": "mask_neighborhood"},

@@ -8,3 +8,7 @@ Start from a checkout and identify the question, observing unit and falsificatio
 - Before escalating an unexplained feature, check masks, continuum dependence, the observer-frame wavelength, common source transitions, plausible blends, redshift uncertainty and the history of reports on this target. Record completed and pending checks separately. Independent models evaluating the same pixels share the same observational evidence.
 - Run calibration and synthetic tests separately from observational screening. Reproduce a measurement from its primary source or describe exactly which input bytes you used. Keep the provenance for negative and inconclusive results.
 - Return reviewable contributions through a pull request. Provide the measured result and its limits, including any failures to reproduce it. Changes to a live campaign budget or model endpoint should be explicit operator choices.
+
+## Reuse the independent-field validation
+
+Start with the published eight-prediction holdout and the separate calcium control if a question depends on the first campaign. Reproduce the entire list, including uncovered wavelengths. Preserve the discovery run when deriving residual spectra. Check whether a feature survives subtracting the survey model and whether its observed wavelength also recurs on the same plate. An in-sample fit can absorb genuine structure. Independent measurements still matter. [Holdout and fit subtraction](docs/HOLDOUT_RESULTS.md) · [Blind residual search](docs/RESIDUAL_SEARCH.md) · [Same-target repeat](docs/REPEAT_OBSERVATION.md)

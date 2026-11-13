@@ -1,0 +1,1237 @@
+{
+  "experiment": "blind_full_spectrum_sdss_model_residual_v1",
+  "claim_status": "screening_only",
+  "roster_sha256": "e36f133feb89003343093eba05a15f6f5adea9450a6e5c3c24934b36fd8e47f9",
+  "implementation_sha256": {
+    "residual_search.py": "d942ddfb5390b008ddd2fa2fd988d6be5e844a3c42176c69f4296cae2a8f468e",
+    "spectra.py": "a28492dbf8ba0039631304e947d6c8fa3a0c0e579c1bf6bd7d7de8e55852d635",
+    "recurrence.py": "d393a40f373330bcf7a83009a9f8cf2c18fcd98804209b885fe19c2ba66706ef"
+  },
+  "tolerance_kms": 150.0,
+  "catalog": "sdss-manga-dr17-table2-airglow3-v1",
+  "score_threshold": 6.0,
+  "triage_minimum": {
+    "targets": 3,
+    "plates": 2,
+    "nights": 2
+  },
+  "targets": 24,
+  "counts": {
+    "raw": {
+      "catalog_match": 68,
+      "sky_match": 0,
+      "unidentified": 170
+    },
+    "residual": {
+      "catalog_match": 17,
+      "sky_match": 0,
+      "unidentified": 11
+    }
+  },
+  "observations": [
+    {
+      "observation_id": "sdss-6498-56565-0011",
+      "source_sha256": "175d14b748d7c78028c56a33ec362279abaae9c29223f25f9912d3090bd6073f",
+      "csv_sha256": "d37a57d342fe2438d908e4eca6b58eb01c94c9cd537299ecb978dc05c5536045",
+      "redshift": 0.09812731295824051,
+      "plate": 6498,
+      "mjd": 56565,
+      "raw": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 3
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4628,
+          "usable_pixels": 4478,
+          "searched_centers": 3746
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4628,
+          "usable_pixels": 4478,
+          "searched_centers": 3746
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6498-56565-0022",
+      "source_sha256": "fcc190408d6312c27295989b790da08446a13c203bd82cd6b9b33d190e6d23ec",
+      "csv_sha256": "eb63c0101f19d5bcb5300d2bc32168d7b906297433f02804b519a62ac3794527",
+      "redshift": 0.09827001392841339,
+      "plate": 6498,
+      "mjd": 56565,
+      "raw": {
+        "counts": {
+          "catalog_match": 3,
+          "sky_match": 0,
+          "unidentified": 4
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4628,
+          "usable_pixels": 4479,
+          "searched_centers": 3685
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 1
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4628,
+          "usable_pixels": 4479,
+          "searched_centers": 3685
+        }
+      },
+      "unassigned_residuals": [
+        {
+          "feature_id": "F0001",
+          "wavelength": 8020.942500875277,
+          "rest_wavelength": 7303.251840760984,
+          "direction": "absorption",
+          "score": 8.126557031505847,
+          "center_pixel": 3522,
+          "flux_contrast": -3.052977994988364,
+          "core_or_masks": [
+            0,
+            0,
+            0
+          ],
+          "sky_at_center": 3.955876111984253,
+          "sky_sideband_median": 3.076864242553711,
+          "sky_sideband_samples": 16,
+          "strict_or_window_covered": false,
+          "strict_or_same_sign_match": false
+        }
+      ]
+    },
+    {
+      "observation_id": "sdss-6498-56565-0049",
+      "source_sha256": "6d7d6d4528987cd125dcf2cfa9e299b6296fa870c1dd7f280582e9f4a4f841de",
+      "csv_sha256": "3a7791393544b3b19bbdb41893b6db81df29b2df8aede80d9c1869b404190a8a",
+      "redshift": 0.08624690026044846,
+      "plate": 6498,
+      "mjd": 56565,
+      "raw": {
+        "counts": {
+          "catalog_match": 2,
+          "sky_match": 0,
+          "unidentified": 3
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4629,
+          "usable_pixels": 4370,
+          "searched_centers": 3429
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4629,
+          "usable_pixels": 4370,
+          "searched_centers": 3429
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6498-56565-0059",
+      "source_sha256": "0c7b16fcfdc6138aa211cc3882f858b47cceac04bb9294142f3c84cf1dfd20f5",
+      "csv_sha256": "bfa2822031b820244d1230b7e01ad7e8e144e3b3ff55d5775448c8e8f7c98a4c",
+      "redshift": 0.0745437741279602,
+      "plate": 6498,
+      "mjd": 56565,
+      "raw": {
+        "counts": {
+          "catalog_match": 2,
+          "sky_match": 0,
+          "unidentified": 2
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4629,
+          "usable_pixels": 4365,
+          "searched_centers": 3432
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4629,
+          "usable_pixels": 4365,
+          "searched_centers": 3432
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6498-56565-0084",
+      "source_sha256": "427f5cfbb45bbc346e5e2a0d3c4e35dbdd66fbd39017424a98a4f0f0b64c39e4",
+      "csv_sha256": "1938dd38b1fac738c8ff1a39b8469d4e6eadfa36506d278d6bed303ac3c316b4",
+      "redshift": 0.09222457557916641,
+      "plate": 6498,
+      "mjd": 56565,
+      "raw": {
+        "counts": {
+          "catalog_match": 1,
+          "sky_match": 0,
+          "unidentified": 7
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4629,
+          "usable_pixels": 4504,
+          "searched_centers": 3802
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4629,
+          "usable_pixels": 4504,
+          "searched_centers": 3802
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6498-56565-0130",
+      "source_sha256": "63228275a4075c0158e1a323e5568a355a13e119a4aecdaf09cda02e8007bf7d",
+      "csv_sha256": "404d063a18fb20bbd379f8e5e2ee770db8f73a9a8d840f80cbd98f23157b8932",
+      "redshift": 0.09640651941299438,
+      "plate": 6498,
+      "mjd": 56565,
+      "raw": {
+        "counts": {
+          "catalog_match": 4,
+          "sky_match": 0,
+          "unidentified": 3
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4629,
+          "usable_pixels": 4384,
+          "searched_centers": 3458
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4629,
+          "usable_pixels": 4384,
+          "searched_centers": 3458
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6498-56565-0132",
+      "source_sha256": "65d0650f094113cefe1f83e768a43cda283240f88669474edccdf2915336ae2d",
+      "csv_sha256": "1040cea00e41d5930f8c1434e93498ad90a6cdedbdbb92a54b54dc5cd63a217b",
+      "redshift": 0.0960569977760315,
+      "plate": 6498,
+      "mjd": 56565,
+      "raw": {
+        "counts": {
+          "catalog_match": 3,
+          "sky_match": 0,
+          "unidentified": 2
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4629,
+          "usable_pixels": 4491,
+          "searched_centers": 3722
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4629,
+          "usable_pixels": 4491,
+          "searched_centers": 3722
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6498-56565-0200",
+      "source_sha256": "00d2d79ec2aae367319643fe6f88640f843f35b98a29137ffa87d568814dc39c",
+      "csv_sha256": "c5347b26e197fe058a31118e517ccd90318392719ab98faed18f0f42af3a7d89",
+      "redshift": 0.09018882364034653,
+      "plate": 6498,
+      "mjd": 56565,
+      "raw": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 4
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4630,
+          "usable_pixels": 4495,
+          "searched_centers": 3733
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4630,
+          "usable_pixels": 4495,
+          "searched_centers": 3733
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6503-56564-0232",
+      "source_sha256": "f227772e5d8bda866696a6740a9b79ff98252409cf88e5b284915d94100022ec",
+      "csv_sha256": "ac6df32b467c47d9937e85732fc65afab07b396db0e85685882803ef748c79ed",
+      "redshift": 0.06373780220746994,
+      "plate": 6503,
+      "mjd": 56564,
+      "raw": {
+        "counts": {
+          "catalog_match": 3,
+          "sky_match": 0,
+          "unidentified": 15
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4626,
+          "usable_pixels": 4508,
+          "searched_centers": 3786
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4626,
+          "usable_pixels": 4508,
+          "searched_centers": 3786
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6503-56564-0268",
+      "source_sha256": "1b7a1bdec619ce35cd0c2a5f43e15b2dbd9e6b514c544304aebbafc2a7703b96",
+      "csv_sha256": "08464d5c0c374c74490a12e2c84a55c0f559f963f7455fceedd58a6d648ad67a",
+      "redshift": 0.05958692356944084,
+      "plate": 6503,
+      "mjd": 56564,
+      "raw": {
+        "counts": {
+          "catalog_match": 6,
+          "sky_match": 0,
+          "unidentified": 9
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4628,
+          "usable_pixels": 4477,
+          "searched_centers": 3594
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4628,
+          "usable_pixels": 4477,
+          "searched_centers": 3594
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6503-56564-0316",
+      "source_sha256": "8eb9e86f5415ab294f1906af0c00aeca5000da6179b1aa3f60d757b825c42eea",
+      "csv_sha256": "68aa18d9deb0ea81b422f88170ce317069cd04f3249beee8ac6de0e5b589edbe",
+      "redshift": 0.06075385957956314,
+      "plate": 6503,
+      "mjd": 56564,
+      "raw": {
+        "counts": {
+          "catalog_match": 4,
+          "sky_match": 0,
+          "unidentified": 5
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4628,
+          "usable_pixels": 4429,
+          "searched_centers": 3446
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 3,
+          "sky_match": 0,
+          "unidentified": 1
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4628,
+          "usable_pixels": 4429,
+          "searched_centers": 3446
+        }
+      },
+      "unassigned_residuals": [
+        {
+          "feature_id": "F0004",
+          "wavelength": 7164.615285525588,
+          "rest_wavelength": 6754.267468199768,
+          "direction": "emission",
+          "score": 7.810410005996395,
+          "center_pixel": 3034,
+          "flux_contrast": 2.1961587981437156,
+          "core_or_masks": [
+            83886080,
+            83886080,
+            84410368
+          ],
+          "sky_at_center": 3.105429172515869,
+          "sky_sideband_median": 3.2043195962905884,
+          "sky_sideband_samples": 16,
+          "strict_or_window_covered": false,
+          "strict_or_same_sign_match": false
+        }
+      ]
+    },
+    {
+      "observation_id": "sdss-6503-56564-0479",
+      "source_sha256": "1a9ec2d4f9cce440f8d70087bba4d1776a4ba5b9e4778e31595969b91ec304f0",
+      "csv_sha256": "f7a8c84c9d817f6df8a0623689ef1864c95ebd5d240c0a9501ba64c97b29ce02",
+      "redshift": 0.04931139945983887,
+      "plate": 6503,
+      "mjd": 56564,
+      "raw": {
+        "counts": {
+          "catalog_match": 5,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4628,
+          "usable_pixels": 4217,
+          "searched_centers": 3100
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 1,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4628,
+          "usable_pixels": 4217,
+          "searched_centers": 3100
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6503-56564-0494",
+      "source_sha256": "08c031283fd018b1d2a53f67a3ac96c478a625d6834e0d2ae9045026019d4616",
+      "csv_sha256": "6a2edde48bc6730530d62f5f152117dddb80f95c0f09d0c4da68ca2a2ec6206d",
+      "redshift": 0.06515868008136749,
+      "plate": 6503,
+      "mjd": 56564,
+      "raw": {
+        "counts": {
+          "catalog_match": 2,
+          "sky_match": 0,
+          "unidentified": 6
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4628,
+          "usable_pixels": 4447,
+          "searched_centers": 3601
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4628,
+          "usable_pixels": 4447,
+          "searched_centers": 3601
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6503-56564-0556",
+      "source_sha256": "f05784bb01b7239a7bb7573f60a01b7fd00b6a227354358a098011cdd25b2cc1",
+      "csv_sha256": "33d055bde915480f57cf192564a4d1ed7706a72b236cd7e8a7a594cb6c40d444",
+      "redshift": 0.09988260269165039,
+      "plate": 6503,
+      "mjd": 56564,
+      "raw": {
+        "counts": {
+          "catalog_match": 6,
+          "sky_match": 0,
+          "unidentified": 3
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4598,
+          "usable_pixels": 4281,
+          "searched_centers": 3354
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 4,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4598,
+          "usable_pixels": 4281,
+          "searched_centers": 3354
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6503-56564-0608",
+      "source_sha256": "b622edcc22a1f946cdd80e62379e7d01fc317dd28d6f6cff6d5b3792b86fcc82",
+      "csv_sha256": "d7dc9a235e8799f8d2a2563d303f5c05899db4fde44a8eb258486c5b7b85c9c5",
+      "redshift": 0.09990761429071426,
+      "plate": 6503,
+      "mjd": 56564,
+      "raw": {
+        "counts": {
+          "catalog_match": 1,
+          "sky_match": 0,
+          "unidentified": 5
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4597,
+          "usable_pixels": 4380,
+          "searched_centers": 3494
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4597,
+          "usable_pixels": 4380,
+          "searched_centers": 3494
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6503-56564-0783",
+      "source_sha256": "32c59ca1d67f9eeaf1f534421489c3a8c750f5c43539105ef47b44023568aed9",
+      "csv_sha256": "33c8d68feb3fa6d95ac1b0459a841f4cf42aa22c1ff35b15ca8f091d3f24b54a",
+      "redshift": 0.04173307493329048,
+      "plate": 6503,
+      "mjd": 56564,
+      "raw": {
+        "counts": {
+          "catalog_match": 6,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4598,
+          "usable_pixels": 4124,
+          "searched_centers": 2996
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 6,
+          "sky_match": 0,
+          "unidentified": 1
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4598,
+          "usable_pixels": 4124,
+          "searched_centers": 2996
+        }
+      },
+      "unassigned_residuals": [
+        {
+          "feature_id": "F0007",
+          "wavelength": 7035.931110210639,
+          "rest_wavelength": 6754.063281192449,
+          "direction": "absorption",
+          "score": 7.531465040778227,
+          "center_pixel": 2903,
+          "flux_contrast": -0.9792001458189491,
+          "core_or_masks": [
+            83886080,
+            83886080,
+            83886080
+          ],
+          "sky_at_center": 2.2005112171173096,
+          "sky_sideband_median": 3.1765549182891846,
+          "sky_sideband_samples": 16,
+          "strict_or_window_covered": false,
+          "strict_or_same_sign_match": false
+        }
+      ]
+    },
+    {
+      "observation_id": "sdss-6509-56486-0028",
+      "source_sha256": "c52cabd41551b508321c8a7378a8b41a3b5b0536571d18058707ebe9f981d012",
+      "csv_sha256": "aaa27d96824ed0c5cd7984bf3194a7ce4d20ce625da8ac00766b53fe93eea9fb",
+      "redshift": 0.07912760972976685,
+      "plate": 6509,
+      "mjd": 56486,
+      "raw": {
+        "counts": {
+          "catalog_match": 1,
+          "sky_match": 0,
+          "unidentified": 6
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4611,
+          "usable_pixels": 4417,
+          "searched_centers": 3496
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4611,
+          "usable_pixels": 4417,
+          "searched_centers": 3496
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6509-56486-0128",
+      "source_sha256": "b7e325837488e692d555566859fc38c651aff19bbb2936306cb55fa3255988a4",
+      "csv_sha256": "dddb1076d379b7758d370697dc4b845fbbd1c82e9ab76ca56db7cf51eaac4a2a",
+      "redshift": 0.07888700813055038,
+      "plate": 6509,
+      "mjd": 56486,
+      "raw": {
+        "counts": {
+          "catalog_match": 2,
+          "sky_match": 0,
+          "unidentified": 11
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4613,
+          "usable_pixels": 4511,
+          "searched_centers": 3820
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 3
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4613,
+          "usable_pixels": 4511,
+          "searched_centers": 3820
+        }
+      },
+      "unassigned_residuals": [
+        {
+          "feature_id": "F0001",
+          "wavelength": 8999.036182823962,
+          "rest_wavelength": 8341.036748989229,
+          "direction": "emission",
+          "score": 9.20739593844015,
+          "center_pixel": 4009,
+          "flux_contrast": 6.727100793078294,
+          "core_or_masks": [
+            0,
+            0,
+            8978432
+          ],
+          "sky_at_center": 3.482550859451294,
+          "sky_sideband_median": 2.8193966150283813,
+          "sky_sideband_samples": 16,
+          "strict_or_window_covered": false,
+          "strict_or_same_sign_match": false
+        },
+        {
+          "feature_id": "F0002",
+          "wavelength": 9028.033563439567,
+          "rest_wavelength": 8367.91387365296,
+          "direction": "absorption",
+          "score": 7.016056970920892,
+          "center_pixel": 4023,
+          "flux_contrast": -3.5625410477907407,
+          "core_or_masks": [
+            0,
+            524288,
+            524288
+          ],
+          "sky_at_center": 1.762180209159851,
+          "sky_sideband_median": 7.143973350524902,
+          "sky_sideband_samples": 16,
+          "strict_or_window_covered": false,
+          "strict_or_same_sign_match": false
+        },
+        {
+          "feature_id": "F0003",
+          "wavelength": 9227.5401372155,
+          "rest_wavelength": 8552.832750488476,
+          "direction": "emission",
+          "score": 6.586275167740758,
+          "center_pixel": 4118,
+          "flux_contrast": 3.456147735680627,
+          "core_or_masks": [
+            0,
+            0,
+            0
+          ],
+          "sky_at_center": 7.899631500244141,
+          "sky_sideband_median": 1.9087380170822144,
+          "sky_sideband_samples": 16,
+          "strict_or_window_covered": false,
+          "strict_or_same_sign_match": false
+        }
+      ]
+    },
+    {
+      "observation_id": "sdss-6509-56486-0311",
+      "source_sha256": "3a4ff02914e0c69807753839b743d1f2fe6871c4218b3d63c2a6bcf79706cec1",
+      "csv_sha256": "cbe32e01fcc3f215cbb245a274184c49281e53689549615e257b71d7d31b3e99",
+      "redshift": 0.034667663276195526,
+      "plate": 6509,
+      "mjd": 56486,
+      "raw": {
+        "counts": {
+          "catalog_match": 5,
+          "sky_match": 0,
+          "unidentified": 20
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4615,
+          "usable_pixels": 4563,
+          "searched_centers": 4096
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 3,
+          "sky_match": 0,
+          "unidentified": 3
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4615,
+          "usable_pixels": 4563,
+          "searched_centers": 4096
+        }
+      },
+      "unassigned_residuals": [
+        {
+          "feature_id": "F0002",
+          "wavelength": 5891.311819127016,
+          "rest_wavelength": 5693.9170211163555,
+          "direction": "absorption",
+          "score": 6.954016915665724,
+          "center_pixel": 2169,
+          "flux_contrast": -5.6185386705968945,
+          "core_or_masks": [
+            524288,
+            0,
+            0
+          ],
+          "sky_at_center": 23.290971755981445,
+          "sky_sideband_median": 4.289734125137329,
+          "sky_sideband_samples": 16,
+          "strict_or_window_covered": false,
+          "strict_or_same_sign_match": false
+        },
+        {
+          "feature_id": "F0005",
+          "wavelength": 8999.096828854557,
+          "rest_wavelength": 8697.572320332898,
+          "direction": "emission",
+          "score": 15.30578829990751,
+          "center_pixel": 4009,
+          "flux_contrast": 13.355379982020338,
+          "core_or_masks": [
+            524288,
+            524288,
+            8388608
+          ],
+          "sky_at_center": 4.403013706207275,
+          "sky_sideband_median": 2.8390854597091675,
+          "sky_sideband_samples": 16,
+          "strict_or_window_covered": false,
+          "strict_or_same_sign_match": false
+        },
+        {
+          "feature_id": "F0006",
+          "wavelength": 9028.100009785645,
+          "rest_wavelength": 8725.603718201515,
+          "direction": "absorption",
+          "score": 6.461925660833382,
+          "center_pixel": 4023,
+          "flux_contrast": -7.371751959046428,
+          "core_or_masks": [
+            524288,
+            524288,
+            0
+          ],
+          "sky_at_center": 1.7331863641738892,
+          "sky_sideband_median": 7.4615797996521,
+          "sky_sideband_samples": 16,
+          "strict_or_window_covered": false,
+          "strict_or_same_sign_match": false
+        }
+      ]
+    },
+    {
+      "observation_id": "sdss-6509-56486-0313",
+      "source_sha256": "066163cbd17523357150d26864d22312ac0e0df4212ce90de4d0480bc4f93a78",
+      "csv_sha256": "5bb803753a1a24c3e4561ea3e98bb967ffc539f0d2f903f5f78c29929965ab7e",
+      "redshift": 0.06305260956287384,
+      "plate": 6509,
+      "mjd": 56486,
+      "raw": {
+        "counts": {
+          "catalog_match": 4,
+          "sky_match": 0,
+          "unidentified": 13
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4615,
+          "usable_pixels": 4466,
+          "searched_centers": 3632
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4615,
+          "usable_pixels": 4466,
+          "searched_centers": 3632
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6509-56486-0813",
+      "source_sha256": "5d51af9b476a0a9395914c7715f789db6f58595cd58c2096183350705f7ce389",
+      "csv_sha256": "6da5c326698c508770cabd16681e3c9821e0af2e5175669a48cb8d0b38544ffe",
+      "redshift": 0.07875313609838486,
+      "plate": 6509,
+      "mjd": 56486,
+      "raw": {
+        "counts": {
+          "catalog_match": 2,
+          "sky_match": 0,
+          "unidentified": 12
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4584,
+          "usable_pixels": 4407,
+          "searched_centers": 3568
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 1
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4584,
+          "usable_pixels": 4407,
+          "searched_centers": 3568
+        }
+      },
+      "unassigned_residuals": [
+        {
+          "feature_id": "F0001",
+          "wavelength": 9229.940429063656,
+          "rest_wavelength": 8556.119208558077,
+          "direction": "emission",
+          "score": 7.5033102495912765,
+          "center_pixel": 4067,
+          "flux_contrast": 2.9027576448446815,
+          "core_or_masks": [
+            524288,
+            0,
+            0
+          ],
+          "sky_at_center": 6.099349021911621,
+          "sky_sideband_median": 1.9920114278793335,
+          "sky_sideband_samples": 16,
+          "strict_or_window_covered": false,
+          "strict_or_same_sign_match": false
+        }
+      ]
+    },
+    {
+      "observation_id": "sdss-6509-56486-0816",
+      "source_sha256": "a50594211c31cd3b0cb66416c3f098ab0e560b60ba685bade18827bf2031567a",
+      "csv_sha256": "278efb249d0579c47cddfc701ba49d4e35d4d3d735d3efc09ec6d5b94abb0e89",
+      "redshift": 0.07722540199756622,
+      "plate": 6509,
+      "mjd": 56486,
+      "raw": {
+        "counts": {
+          "catalog_match": 1,
+          "sky_match": 0,
+          "unidentified": 9
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4584,
+          "usable_pixels": 4454,
+          "searched_centers": 3683
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4584,
+          "usable_pixels": 4454,
+          "searched_centers": 3683
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6509-56486-0844",
+      "source_sha256": "8e9b8584fd8e7d63db720a52b2528a81833cb67526139cbd255fcaa3e157a35a",
+      "csv_sha256": "7d9c40aebcc038c8f48b58b306bce73de6400566b9a4d000e1a8e8521fddc1b6",
+      "redshift": 0.06324703246355057,
+      "plate": 6509,
+      "mjd": 56486,
+      "raw": {
+        "counts": {
+          "catalog_match": 3,
+          "sky_match": 0,
+          "unidentified": 17
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4584,
+          "usable_pixels": 4460,
+          "searched_centers": 3686
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 0
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4584,
+          "usable_pixels": 4460,
+          "searched_centers": 3686
+        }
+      },
+      "unassigned_residuals": []
+    },
+    {
+      "observation_id": "sdss-6509-56486-0935",
+      "source_sha256": "f45d114706e58b1b1eea640596695d03ffe894eb3a8ce763f76a200300daf0ff",
+      "csv_sha256": "6f92c89c5e1ddfa20483178e7d18b66bca7e5f7e22c2316cc4f3151066525b31",
+      "redshift": 0.08889122307300568,
+      "plate": 6509,
+      "mjd": 56486,
+      "raw": {
+        "counts": {
+          "catalog_match": 2,
+          "sky_match": 0,
+          "unidentified": 11
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4583,
+          "usable_pixels": 4406,
+          "searched_centers": 3522
+        }
+      },
+      "residual": {
+        "counts": {
+          "catalog_match": 0,
+          "sky_match": 0,
+          "unidentified": 1
+        },
+        "quality": {
+          "status": "searched",
+          "input_pixels": 4583,
+          "usable_pixels": 4406,
+          "searched_centers": 3522
+        }
+      },
+      "unassigned_residuals": [
+        {
+          "feature_id": "F0001",
+          "wavelength": 8079.926820592571,
+          "rest_wavelength": 7420.325051192781,
+          "direction": "absorption",
+          "score": 6.298889167274874,
+          "center_pixel": 3488,
+          "flux_contrast": -2.093006078341495,
+          "core_or_masks": [
+            0,
+            0,
+            0
+          ],
+          "sky_at_center": 2.537729263305664,
+          "sky_sideband_median": 3.7889031171798706,
+          "sky_sideband_samples": 16,
+          "strict_or_window_covered": false,
+          "strict_or_same_sign_match": false
+        }
+      ]
+    }
+  ],
+  "rest_frame_groups": [
+    {
+      "rank": 1,
+      "direction": "emission",
+      "targets": 2,
+      "visits": [
+        {
+          "plate": 6509,
+          "mjd": 56486
+        }
+      ],
+      "median_wavelength_angstrom": 8554.475979523277,
+      "median_score": 7.044792708666018,
+      "observed_span_angstrom": 2.4002918481564848,
+      "group_span_kms": 115.17424998045259,
+      "searchable_targets_at_median": 10,
+      "member_targets_searchable_at_median": 2,
+      "passes_triage": false,
+      "members": [
+        {
+          "observation_id": "sdss-6509-56486-0128",
+          "feature_id": "F0003",
+          "direction": "emission",
+          "score": 6.586275167740758,
+          "wavelength": 9227.5401372155,
+          "rest_wavelength": 8552.832750488476
+        },
+        {
+          "observation_id": "sdss-6509-56486-0813",
+          "feature_id": "F0001",
+          "direction": "emission",
+          "score": 7.5033102495912765,
+          "wavelength": 9229.940429063656,
+          "rest_wavelength": 8556.119208558077
+        }
+      ]
+    }
+  ],
+  "observer_frame_control_groups": [
+    {
+      "rank": 1,
+      "direction": "emission",
+      "targets": 2,
+      "visits": [
+        {
+          "plate": 6509,
+          "mjd": 56486
+        }
+      ],
+      "median_wavelength_angstrom": 8999.066505839259,
+      "median_score": 12.256592119173831,
+      "observed_span_angstrom": 0.06064603059530782,
+      "group_span_kms": 2.020345395612786,
+      "searchable_targets_at_median": 2,
+      "member_targets_searchable_at_median": 2,
+      "passes_triage": false,
+      "members": [
+        {
+          "observation_id": "sdss-6509-56486-0128",
+          "feature_id": "F0001",
+          "direction": "emission",
+          "score": 9.20739593844015,
+          "wavelength": 8999.036182823962,
+          "rest_wavelength": 8341.036748989229
+        },
+        {
+          "observation_id": "sdss-6509-56486-0311",
+          "feature_id": "F0005",
+          "direction": "emission",
+          "score": 15.30578829990751,
+          "wavelength": 8999.096828854557,
+          "rest_wavelength": 8697.572320332898
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "direction": "emission",
+      "targets": 2,
+      "visits": [
+        {
+          "plate": 6509,
+          "mjd": 56486
+        }
+      ],
+      "median_wavelength_angstrom": 9228.740283139578,
+      "median_score": 7.044792708666018,
+      "observed_span_angstrom": 2.4002918481564848,
+      "group_span_kms": 77.97265662004085,
+      "searchable_targets_at_median": 23,
+      "member_targets_searchable_at_median": 2,
+      "passes_triage": false,
+      "members": [
+        {
+          "observation_id": "sdss-6509-56486-0128",
+          "feature_id": "F0003",
+          "direction": "emission",
+          "score": 6.586275167740758,
+          "wavelength": 9227.5401372155,
+          "rest_wavelength": 8552.832750488476
+        },
+        {
+          "observation_id": "sdss-6509-56486-0813",
+          "feature_id": "F0001",
+          "direction": "emission",
+          "score": 7.5033102495912765,
+          "wavelength": 9229.940429063656,
+          "rest_wavelength": 8556.119208558077
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "direction": "absorption",
+      "targets": 2,
+      "visits": [
+        {
+          "plate": 6509,
+          "mjd": 56486
+        }
+      ],
+      "median_wavelength_angstrom": 9028.066786612606,
+      "median_score": 6.738991315877136,
+      "observed_span_angstrom": 0.06644634607800981,
+      "group_span_kms": 2.206465003722272,
+      "searchable_targets_at_median": 11,
+      "member_targets_searchable_at_median": 2,
+      "passes_triage": false,
+      "members": [
+        {
+          "observation_id": "sdss-6509-56486-0128",
+          "feature_id": "F0002",
+          "direction": "absorption",
+          "score": 7.016056970920892,
+          "wavelength": 9028.033563439567,
+          "rest_wavelength": 8367.91387365296
+        },
+        {
+          "observation_id": "sdss-6509-56486-0311",
+          "feature_id": "F0006",
+          "direction": "absorption",
+          "score": 6.461925660833382,
+          "wavelength": 9028.100009785645,
+          "rest_wavelength": 8725.603718201515
+        }
+      ]
+    }
+  ]
+}
