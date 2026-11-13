@@ -1,0 +1,1176 @@
+{
+  "ffi_result_sha256": "ffc3af76133f0be4c461d20622e70aca619f6d894dac7e972f73c46885c6c218",
+  "archive": "ESA Gaia DR3",
+  "cone_radius_arcsec": 30,
+  "gaia_period_search_days": [
+    0.15,
+    8.0
+  ],
+  "method": "Weighted floating-mean single-sinusoid, G-band epoch photometry",
+  "direct_match_thresholds": {
+    "separation_arcsec_max": 15,
+    "fraction_of_rayleigh_max_both_tess_sectors": 1,
+    "gaia_weighted_variance_fraction_min": 0.4,
+    "gaia_min_accepted_epochs": 20,
+    "gaia_min_baseline_days": 100
+  },
+  "cases": [
+    {
+      "field_id": "lmc-1",
+      "source_id": "ICRS-77.11469-69.42465",
+      "centroid_deg": [
+        77.11469124667057,
+        -69.42465073778455
+      ],
+      "tess_periods_days": [
+        1.1706744212056819,
+        1.1707067258449984
+      ],
+      "sector_baselines_days": [
+        27.83361524768543,
+        27.353862385614548
+      ],
+      "cataloged_stars_in_cone": 186,
+      "count_with_epochs": 2,
+      "count_marked_variable": 2,
+      "gaia_epoch_series": [
+        {
+          "source_id": "4655220803411925376",
+          "ra_deg": 77.11302140712837,
+          "dec_deg": -69.42487604607368,
+          "g_mag": 15.390119,
+          "separation_arcsec": 2.2629918835315608,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 36,
+            "span_days": 980.4080323640837,
+            "blind_period_days": 1.4226660597019642,
+            "weighted_variance_fraction": 0.6421591033585696,
+            "frequencies_tested": 76963,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4655220803411925376&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "e68530f5a94384e16cbfdfe91aeef6932cce787450400b919896e5386964433d"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              4.21130455378911,
+              4.138071829725994
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4655220803375427072",
+          "ra_deg": 77.13129624343733,
+          "dec_deg": -69.42417532723348,
+          "g_mag": 15.902,
+          "separation_arcsec": 21.078140113786578,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 34,
+            "span_days": 980.4080306893554,
+            "blind_period_days": 3.356975383790602,
+            "weighted_variance_fraction": 0.6520893299854443,
+            "frequencies_tested": 76963,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4655220803375427072&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "4d013063cc60e9f5f0090d71f996ac2e79b24e12f16191c42e85284c612b32ad"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              15.484432015381694,
+              15.216890534943905
+            ],
+            "meets_direct_match": false
+          }
+        }
+      ],
+      "gaia_cone_receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_variable_flag%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C77.114691247%2C-69.424650738%2C0.0083333333%29%29+ORDER+BY+source_id",
+        "sha256": "945fb568896e2bf94568b691f837dce851e3b383b7b2d1c9a29d95630e78f269"
+      }
+    },
+    {
+      "field_id": "lmc-1",
+      "source_id": "ICRS-76.99986-69.40131",
+      "centroid_deg": [
+        76.99986206528393,
+        -69.40130909299775
+      ],
+      "tess_periods_days": [
+        0.6723406988694759,
+        0.6714751958224543
+      ],
+      "sector_baselines_days": [
+        27.83361524768543,
+        27.353862385614548
+      ],
+      "cataloged_stars_in_cone": 200,
+      "count_with_epochs": 1,
+      "count_marked_variable": 1,
+      "gaia_epoch_series": [
+        {
+          "source_id": "4655221112652823936",
+          "ra_deg": 76.99972947207365,
+          "dec_deg": -69.40167183634762,
+          "g_mag": 19.061634,
+          "separation_arcsec": 1.3166299463007702,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 35,
+            "span_days": 953.1662619257704,
+            "blind_period_days": 0.6711749409882884,
+            "weighted_variance_fraction": 0.6671930421242536,
+            "frequencies_tested": 74825,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4655221112652823936&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "b84bb6dfb7662f4e66e86d7432b25e442f62df29cecb8ea085c8624ea1bf1c57"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              0.07190396597731244,
+              0.018223968591367178
+            ],
+            "meets_direct_match": true
+          }
+        }
+      ],
+      "gaia_cone_receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_variable_flag%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C76.999862065%2C-69.401309093%2C0.0083333333%29%29+ORDER+BY+source_id",
+        "sha256": "3a249900588847e523610fb79c25aa08639365007a0be4d7141794af1f8f0259"
+      }
+    },
+    {
+      "field_id": "lmc-2",
+      "source_id": "ICRS-77.41663-69.34141",
+      "centroid_deg": [
+        77.41662759056294,
+        -69.3414074269063
+      ],
+      "tess_periods_days": [
+        0.9931682322801025,
+        0.9950667440510736
+      ],
+      "sector_baselines_days": [
+        27.83361524768543,
+        27.353862385614548
+      ],
+      "cataloged_stars_in_cone": 254,
+      "count_with_epochs": 2,
+      "count_marked_variable": 2,
+      "gaia_epoch_series": [
+        {
+          "source_id": "4658224467365548800",
+          "ra_deg": 77.41714271146147,
+          "dec_deg": -69.34109934677363,
+          "g_mag": 14.162548,
+          "separation_arcsec": 1.2876786939927307,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 37,
+            "span_days": 980.4080737611262,
+            "blind_period_days": 0.9952024119064843,
+            "weighted_variance_fraction": 0.8766982425987484,
+            "frequencies_tested": 76963,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658224467365548800&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "4d9219c78a11f6186acefcd12972f7c4b4235017b3970f45c1334846a56f7afa"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              0.057282858303215375,
+              0.003747416681496518
+            ],
+            "meets_direct_match": true
+          }
+        },
+        {
+          "source_id": "4658224467365543936",
+          "ra_deg": 77.41938369879917,
+          "dec_deg": -69.33740141576368,
+          "g_mag": 16.073145,
+          "separation_arcsec": 14.840459292646289,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 37,
+            "span_days": 980.4080770327669,
+            "blind_period_days": 2.104025937649965,
+            "weighted_variance_fraction": 0.6380694297012282,
+            "frequencies_tested": 76963,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658224467365543936&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "3c1844c3f7434432cbdf8d2fcec54f9fefa1d650b262cd26a36675858ec8fd0e"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              14.796334553262145,
+              14.48875010751563
+            ],
+            "meets_direct_match": false
+          }
+        }
+      ],
+      "gaia_cone_receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_variable_flag%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C77.416627591%2C-69.341407427%2C0.0083333333%29%29+ORDER+BY+source_id",
+        "sha256": "01cbeee095dbf32640a282215cbd8874a3a25513230abd40b6daf0194149b2d3"
+      }
+    },
+    {
+      "field_id": "lmc-2",
+      "source_id": "ICRS-77.46659-69.39683",
+      "centroid_deg": [
+        77.46659143645871,
+        -69.39683206213739
+      ],
+      "tess_periods_days": [
+        1.2288095797135479,
+        1.2299139167862267
+      ],
+      "sector_baselines_days": [
+        27.83361524768543,
+        27.353862385614548
+      ],
+      "cataloged_stars_in_cone": 220,
+      "count_with_epochs": 4,
+      "count_marked_variable": 4,
+      "gaia_epoch_series": [
+        {
+          "source_id": "4658224020689153152",
+          "ra_deg": 77.46853208819844,
+          "dec_deg": -69.39591062900026,
+          "g_mag": 16.717613,
+          "separation_arcsec": 4.128895327348254,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 37,
+            "span_days": 980.4080142083551,
+            "blind_period_days": 0.27213642102219887,
+            "weighted_variance_fraction": 0.4484255000415036,
+            "frequencies_tested": 76963,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658224020689153152&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "5a6c9587f840243c1945c1a1858b0fc627e48a1c0f11df88d56a05d45826690e"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              79.6272929340321,
+              78.27478828362024
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4658224020633943296",
+          "ra_deg": 77.47065943348785,
+          "dec_deg": -69.39254902625123,
+          "g_mag": 19.19297,
+          "separation_arcsec": 16.257497921361914,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 27,
+            "span_days": 980.4080171704593,
+            "blind_period_days": 0.25851453533348717,
+            "weighted_variance_fraction": 0.84366000240674,
+            "frequencies_tested": 76963,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658224020633943296&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "9cdfc9ce93b13d0d66b1781c1209776f098af2b9d5fffe09fa8ca91933cb68da"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              85.01662836988677,
+              83.57123068071574
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4658222745194609152",
+          "ra_deg": 77.44544417482679,
+          "dec_deg": -69.39807713008526,
+          "g_mag": 19.158258,
+          "separation_arcsec": 27.161310140116125,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 33,
+            "span_days": 980.4080151363687,
+            "blind_period_days": 0.36360099052957173,
+            "weighted_variance_fraction": 0.6643996643859489,
+            "frequencies_tested": 76963,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658222745194609152&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "a43c1bb852c391e92e67fb0bfb47cdf2b746305bac508e41f6581159b5429e6b"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              53.89901091219125,
+              52.98997064203706
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4658224016516135168",
+          "ra_deg": 77.4767629248968,
+          "dec_deg": -69.40404391011471,
+          "g_mag": 18.86286,
+          "separation_arcsec": 28.983399630445444,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 37,
+            "span_days": 980.4080052935115,
+            "blind_period_days": 0.8442324640510015,
+            "weighted_variance_fraction": 0.646000072911747,
+            "frequencies_tested": 76963,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658224016516135168&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "c8d8558297be215d624439e47c54371751c2139fa4120e6673c888429b8a88f0"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              10.318258895464655,
+              10.16039630471611
+            ],
+            "meets_direct_match": false
+          }
+        }
+      ],
+      "gaia_cone_receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_variable_flag%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C77.466591436%2C-69.396832062%2C0.0083333333%29%29+ORDER+BY+source_id",
+        "sha256": "fbb648351611e9d684920982a448fa537ddca6c938e245dd82e8c2f0b3917289"
+      }
+    },
+    {
+      "field_id": "lmc-3",
+      "source_id": "ICRS-77.81863-69.36103",
+      "centroid_deg": [
+        77.81863339034346,
+        -69.36103021282321
+      ],
+      "tess_periods_days": [
+        1.1831129196337742,
+        1.1833659266076153
+      ],
+      "sector_baselines_days": [
+        27.83361524768543,
+        27.353862385614548
+      ],
+      "cataloged_stars_in_cone": 273,
+      "count_with_epochs": 3,
+      "count_marked_variable": 3,
+      "gaia_epoch_series": [
+        {
+          "source_id": "4658226627649682944",
+          "ra_deg": 77.82178246319882,
+          "dec_deg": -69.36082746044468,
+          "g_mag": 16.08805,
+          "separation_arcsec": 4.062061822369945,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 37,
+            "span_days": 938.6095655451186,
+            "blind_period_days": 1.182510873552452,
+            "weighted_variance_fraction": 0.9036502234332472,
+            "frequencies_tested": 73682,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658226627649682944&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "3dfb7fc03fb36f4ddfe77f106db8f7acf0ed88669887ba2c47e22760d352098a"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              0.011977550585388241,
+              0.016714274012625617
+            ],
+            "meets_direct_match": true
+          }
+        },
+        {
+          "source_id": "4658226632031787904",
+          "ra_deg": 77.82984091139319,
+          "dec_deg": -69.36213184262839,
+          "g_mag": 15.924579,
+          "separation_arcsec": 14.763734904883494,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 36,
+            "span_days": 938.6095638944755,
+            "blind_period_days": 0.6995884900246563,
+            "weighted_variance_fraction": 0.6467720911489878,
+            "frequencies_tested": 73682,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658226632031787904&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "93fd090bfcd147c78dc46b2f920171a1da8bf4d82044f4c2894e547e84b3f593"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              16.25994934582945,
+              15.984628631433782
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4658226563312303744",
+          "ra_deg": 77.83835379794179,
+          "dec_deg": -69.35918162204852,
+          "g_mag": 19.30155,
+          "separation_arcsec": 25.894494105637047,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 33,
+            "span_days": 938.6095674100493,
+            "blind_period_days": 0.598733047508956,
+            "weighted_variance_fraction": 0.8002449487441878,
+            "frequencies_tested": 73682,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658226563312303744&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "5f76908a91aa826437858d6ace0e45e676336eff0aa59ea81be99eed5bcc7780"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              22.961774190526214,
+              22.57093777248481
+            ],
+            "meets_direct_match": false
+          }
+        }
+      ],
+      "gaia_cone_receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_variable_flag%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C77.818633390%2C-69.361030213%2C0.0083333333%29%29+ORDER+BY+source_id",
+        "sha256": "8bcb337c4810179a43a25f73e9bc0b88c7a6206a47b8f7e7e617a7fee5a90d27"
+      }
+    },
+    {
+      "field_id": "lmc-4",
+      "source_id": "ICRS-76.90371-69.21339",
+      "centroid_deg": [
+        76.9037129130824,
+        -69.21339269090082
+      ],
+      "tess_periods_days": [
+        1.2220665499124344,
+        1.2162449751714353
+      ],
+      "sector_baselines_days": [
+        27.83361524768543,
+        27.353862385614548
+      ],
+      "cataloged_stars_in_cone": 224,
+      "count_with_epochs": 2,
+      "count_marked_variable": 2,
+      "gaia_epoch_series": [
+        {
+          "source_id": "4661229398246149120",
+          "ra_deg": 76.90311549770085,
+          "dec_deg": -69.21275018628951,
+          "g_mag": 16.738222,
+          "separation_arcsec": 2.435697875618813,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 31,
+            "span_days": 911.2938282809002,
+            "blind_period_days": 1.217908242528597,
+            "weighted_variance_fraction": 0.8631845645453192,
+            "frequencies_tested": 71538,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4661229398246149120&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "22af7985a8ea6324c7e893a68a2a644a9324c8b0f11b19c1c2f81b63f332bb78"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              0.07776367605322504,
+              0.030714616225550932
+            ],
+            "meets_direct_match": true
+          }
+        },
+        {
+          "source_id": "4661229398246154880",
+          "ra_deg": 76.9156713384754,
+          "dec_deg": -69.21288976583632,
+          "g_mag": 19.698559,
+          "separation_arcsec": 15.38514497512713,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 27,
+            "span_days": 875.6477046100156,
+            "blind_period_days": 2.8792586245562175,
+            "weighted_variance_fraction": 0.8187197561802252,
+            "frequencies_tested": 68739,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4661229398246154880&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "6260a0eb8a1fbebdc24ceab4917d8ab0eb1dcf20be22102139a80393f5be0e07"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              13.108920629655673,
+              12.990107228757253
+            ],
+            "meets_direct_match": false
+          }
+        }
+      ],
+      "gaia_cone_receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_variable_flag%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C76.903712913%2C-69.213392691%2C0.0083333333%29%29+ORDER+BY+source_id",
+        "sha256": "65bbd6df37556285ec6d6278daa47b63c0845d88319c582e99a71b38e4486fb9"
+      }
+    },
+    {
+      "field_id": "lmc-4",
+      "source_id": "ICRS-77.08309-69.17205",
+      "centroid_deg": [
+        77.0830935147629,
+        -69.17204735416452
+      ],
+      "tess_periods_days": [
+        1.8071477900552488,
+        1.8094986807387863
+      ],
+      "sector_baselines_days": [
+        27.83361524768543,
+        27.353862385614548
+      ],
+      "cataloged_stars_in_cone": 233,
+      "count_with_epochs": 1,
+      "count_marked_variable": 1,
+      "gaia_epoch_series": [
+        {
+          "source_id": "4661235548642525440",
+          "ra_deg": 77.08616027688186,
+          "dec_deg": -69.17123934987644,
+          "g_mag": 16.106533,
+          "separation_arcsec": 4.885859578983251,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 31,
+            "span_days": 911.2938995294664,
+            "blind_period_days": 1.812335763223921,
+            "weighted_variance_fraction": 0.9299091473154829,
+            "frequencies_tested": 71538,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4661235548642525440&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "6afa745282e1ba2315a87c6a5521cfb5ad805cb9077e3ba41ed87ed9a6c7fde3"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              0.044089483313436754,
+              0.023664301448009177
+            ],
+            "meets_direct_match": true
+          }
+        }
+      ],
+      "gaia_cone_receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_variable_flag%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C77.083093515%2C-69.172047354%2C0.0083333333%29%29+ORDER+BY+source_id",
+        "sha256": "c4cc4dbe0b99241bedbb1a13f17296aa09dbfb3ddf9ed7817d1c5de7eebbd752"
+      }
+    },
+    {
+      "field_id": "lmc-4",
+      "source_id": "ICRS-76.99521-69.20397",
+      "centroid_deg": [
+        76.99521114067434,
+        -69.20397086541753
+      ],
+      "tess_periods_days": [
+        1.4823679365528963,
+        1.4792924935289042
+      ],
+      "sector_baselines_days": [
+        27.83361524768543,
+        27.353862385614548
+      ],
+      "cataloged_stars_in_cone": 246,
+      "count_with_epochs": 3,
+      "count_marked_variable": 3,
+      "gaia_epoch_series": [
+        {
+          "source_id": "4661229570016097920",
+          "ra_deg": 76.99852410219721,
+          "dec_deg": -69.2033540118375,
+          "g_mag": 16.2569,
+          "separation_arcsec": 4.781486596799611,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 32,
+            "span_days": 911.2938556933639,
+            "blind_period_days": 1.2133138928740614,
+            "weighted_variance_fraction": 0.7886680948004079,
+            "frequencies_tested": 71538,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4661229570016097920&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "86a98cff4b118c07cfa4dd430b0e7bd6a66dfa05607abd1301db7ca17a60e99b"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              4.163705076489878,
+              4.053574232306834
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4661229570044846848",
+          "ra_deg": 76.99276733759869,
+          "dec_deg": -69.20237440508478,
+          "g_mag": 19.159737,
+          "separation_arcsec": 6.541273134031867,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 28,
+            "span_days": 911.2938552685291,
+            "blind_period_days": 0.729086568278721,
+            "weighted_variance_fraction": 0.6938197284408603,
+            "frequencies_tested": 71538,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4661229570044846848&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "3fa8e9d458f6494747e9dbedb3c84f4e553824d0fea69b233a761b0d26de3076"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              19.39955353603736,
+              19.02681067255675
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4661229570044857856",
+          "ra_deg": 77.00998836998552,
+          "dec_deg": -69.20402446752854,
+          "g_mag": 18.050257,
+          "separation_arcsec": 18.8885050295532,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 31,
+            "span_days": 911.2938575566643,
+            "blind_period_days": 0.748755263760584,
+            "weighted_variance_fraction": 0.7013111746390076,
+            "frequencies_tested": 71538,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4661229570044857856&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "c4ec913c5c7c5b68f0b8cc362fdf08ca63d45841bc7e6d9dc75f898bb318d718"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              18.396726139460554,
+              18.041268465467173
+            ],
+            "meets_direct_match": false
+          }
+        }
+      ],
+      "gaia_cone_receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_variable_flag%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C76.995211141%2C-69.203970865%2C0.0083333333%29%29+ORDER+BY+source_id",
+        "sha256": "036b97a98dcef592b18a166888d15de9397c8f8b38cbd980e62970fe77ae1c9f"
+      }
+    },
+    {
+      "field_id": "lmc-4",
+      "source_id": "ICRS-77.05502-69.23710",
+      "centroid_deg": [
+        77.05501659622759,
+        -69.23709819715441
+      ],
+      "tess_periods_days": [
+        1.1122091169907555,
+        1.1169381107491858
+      ],
+      "sector_baselines_days": [
+        27.83361524768543,
+        27.353862385614548
+      ],
+      "cataloged_stars_in_cone": 238,
+      "count_with_epochs": 1,
+      "count_marked_variable": 1,
+      "gaia_epoch_series": [
+        {
+          "source_id": "4661229089008619008",
+          "ra_deg": 77.05144270993297,
+          "dec_deg": -69.23610471535241,
+          "g_mag": 15.973316,
+          "separation_arcsec": 5.796154051406108,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 30,
+            "span_days": 911.2938899220505,
+            "blind_period_days": 4.355151076100058,
+            "weighted_variance_fraction": 0.6200880379688412,
+            "frequencies_tested": 71538,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4661229089008619008&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "16698c20a771f3051544b4d8fdd94f79c6e8696491f8a3024c81544dbe07c3ba"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              18.634559022552963,
+              18.2092362472479
+            ],
+            "meets_direct_match": false
+          }
+        }
+      ],
+      "gaia_cone_receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_variable_flag%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C77.055016596%2C-69.237098197%2C0.0083333333%29%29+ORDER+BY+source_id",
+        "sha256": "c37388f67335d4b2ae3ed98df1315a9faadf42d935fb940d8e92dccdedd6a24e"
+      }
+    },
+    {
+      "field_id": "lmc-5",
+      "source_id": "ICRS-77.46720-69.20884",
+      "centroid_deg": [
+        77.46719583563666,
+        -69.20884479498376
+      ],
+      "tess_periods_days": [
+        1.9495250512199664,
+        1.9376530420041438
+      ],
+      "sector_baselines_days": [
+        27.83361524768543,
+        27.353862385614548
+      ],
+      "cataloged_stars_in_cone": 209,
+      "count_with_epochs": 4,
+      "count_marked_variable": 4,
+      "gaia_epoch_series": [
+        {
+          "source_id": "4658232335749637376",
+          "ra_deg": 77.46838706594355,
+          "dec_deg": -69.20817007861436,
+          "g_mag": 16.459183,
+          "separation_arcsec": 2.8665661052024656,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 34,
+            "span_days": 938.5357671505287,
+            "blind_period_days": 1.942868843659423,
+            "weighted_variance_fraction": 0.9669486981619054,
+            "frequencies_tested": 73676,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658232335749637376&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "42906d55384212f0e3d60f66165d26ccf81c7b85ceffa1554fed5302a557029b"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              0.048912985493022774,
+              0.03789834344582742
+            ],
+            "meets_direct_match": true
+          }
+        },
+        {
+          "source_id": "4658232335749633408",
+          "ra_deg": 77.45763950937776,
+          "dec_deg": -69.20843947305016,
+          "g_mag": 16.307209,
+          "separation_arcsec": 12.298680373793404,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 36,
+            "span_days": 938.5357668861839,
+            "blind_period_days": 2.679741938872598,
+            "weighted_variance_fraction": 0.6958023939241091,
+            "frequencies_tested": 73676,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658232335749633408&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "2504b99339cf46a22ec3b5f433374ea3913d10a6f972dc47d9cb0a228392a078"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              3.8904487518509785,
+              3.909359448715795
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4658232228283128960",
+          "ra_deg": 77.45504897874288,
+          "dec_deg": -69.21244659064084,
+          "g_mag": 14.762511,
+          "separation_arcsec": 20.224325349583577,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 33,
+            "span_days": 938.535776092966,
+            "blind_period_days": 0.5525727506114267,
+            "weighted_variance_fraction": 0.6158277059275451,
+            "frequencies_tested": 73676,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658232228283128960&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "d83a911eaf12ee33463595d793f38daed90111af4fad4a035f2b7ab97a31bda3"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              36.09382531633231,
+              35.38572747107388
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4658231575638839680",
+          "ra_deg": 77.48831190450488,
+          "dec_deg": -69.2097268772637,
+          "g_mag": 19.416008,
+          "separation_arcsec": 27.16916149419287,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 37,
+            "span_days": 938.5357651388986,
+            "blind_period_days": 0.5491509585409311,
+            "weighted_variance_fraction": 0.7175067366781643,
+            "frequencies_tested": 73676,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658231575638839680&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "a9f42af38295035006912e7a74b5ae117d88c7a3df38abb381cd3ddc640980cb"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              36.40768969170834,
+              35.69418193720711
+            ],
+            "meets_direct_match": false
+          }
+        }
+      ],
+      "gaia_cone_receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_variable_flag%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C77.467195836%2C-69.208844795%2C0.0083333333%29%29+ORDER+BY+source_id",
+        "sha256": "35017b4268f05d1b1851f2f27bd34bb1f6559bc8d7839b6b7126f32a17f7fa33"
+      }
+    },
+    {
+      "field_id": "lmc-6",
+      "source_id": "ICRS-77.79707-69.20872",
+      "centroid_deg": [
+        77.7970711841401,
+        -69.2087223579938
+      ],
+      "tess_periods_days": [
+        1.554812834224599,
+        1.5638491942839767
+      ],
+      "sector_baselines_days": [
+        27.83361524768543,
+        27.353862385614548
+      ],
+      "cataloged_stars_in_cone": 263,
+      "count_with_epochs": 6,
+      "count_marked_variable": 6,
+      "gaia_epoch_series": [
+        {
+          "source_id": "4658230068006111872",
+          "ra_deg": 77.79725635675172,
+          "dec_deg": -69.20830162032185,
+          "g_mag": 15.883333,
+          "separation_arcsec": 1.533028074983065,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 35,
+            "span_days": 980.6583159375994,
+            "blind_period_days": 3.1281071170158783,
+            "weighted_variance_fraction": 0.6740166622741193,
+            "frequencies_tested": 76983,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658230068006111872&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "b2d6ec79a6ddd776424c94483a13f499d78b3d1da38b414a07685dc3c1cad37e"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              9.003675842950296,
+              8.746826941008342
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4658230063642622464",
+          "ra_deg": 77.79263293343321,
+          "dec_deg": -69.21274903772718,
+          "g_mag": 18.068195,
+          "separation_arcsec": 15.56584593620464,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 40,
+            "span_days": 980.6583122901102,
+            "blind_period_days": 0.27370399296245274,
+            "weighted_variance_fraction": 0.5928455858827031,
+            "frequencies_tested": 76983,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658230063642622464&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "eece5b4d6287b0a1d531dac96d9de9459bdc64b5982f5018ac511789b7c3e3d2"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              83.79081176163166,
+              82.44821263583667
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4658230067952140032",
+          "ra_deg": 77.79574507286658,
+          "dec_deg": -69.21317585554338,
+          "g_mag": 19.14069,
+          "separation_arcsec": 16.121881590460447,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 30,
+            "span_days": 938.609794396611,
+            "blind_period_days": 0.618492685485909,
+            "weighted_variance_fraction": 0.853056378631059,
+            "frequencies_tested": 73682,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658230067952140032&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "09327dd89a3c49ed363ad0cb2283f126084ce076d176ef95764e4e43a1e32696"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              27.100749625248977,
+              26.735286215345855
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4658230098171799680",
+          "ra_deg": 77.80802070415704,
+          "dec_deg": -69.20479776854378,
+          "g_mag": 17.421364,
+          "separation_arcsec": 19.885399642777013,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 41,
+            "span_days": 980.6583178551871,
+            "blind_period_days": 4.20734805284084,
+            "weighted_variance_fraction": 0.7303754659989705,
+            "frequencies_tested": 76983,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658230098171799680&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "04ec7810fd9afb9efc1e96057e67325392b7659b7c2dcb78d56a96d7cd90f826"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              11.286108499808405,
+              10.98991854964589
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4658230098171780736",
+          "ra_deg": 77.78519564682843,
+          "dec_deg": -69.20313567432159,
+          "g_mag": 16.110588,
+          "separation_arcsec": 25.19618377078433,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 36,
+            "span_days": 980.658336571473,
+            "blind_period_days": 0.6083177896032731,
+            "weighted_variance_fraction": 0.6821425159210813,
+            "frequencies_tested": 76983,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658230098171780736&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "11e25531ed89e9b56d65dabbdb394c9b3619e9aa2183c1d94139a7a4521f712f"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              27.853471450176922,
+              27.475033784265772
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4658230098171890816",
+          "ra_deg": 77.81561604350341,
+          "dec_deg": -69.21229157017457,
+          "g_mag": 19.053743,
+          "separation_arcsec": 26.95556806215537,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 28,
+            "span_days": 953.3425882963274,
+            "blind_period_days": 0.9608682782089195,
+            "weighted_variance_fraction": 0.6590495427693314,
+            "frequencies_tested": 74838,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658230098171890816&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "036401dc95fa725404348442046c99692099234cc671d5fcd11a514b5a834082"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              11.065563959353328,
+              10.976490308688943
+            ],
+            "meets_direct_match": false
+          }
+        }
+      ],
+      "gaia_cone_receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_variable_flag%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C77.797071184%2C-69.208722358%2C0.0083333333%29%29+ORDER+BY+source_id",
+        "sha256": "0645f44464d962c8676dd05c4502dbb552d6714c2e3312f1d30e4c730c453418"
+      }
+    },
+    {
+      "field_id": "lmc-6",
+      "source_id": "ICRS-77.85069-69.19777",
+      "centroid_deg": [
+        77.85069220982747,
+        -69.19776998631593
+      ],
+      "tess_periods_days": [
+        2.3141720097280567,
+        2.3049518261259245
+      ],
+      "sector_baselines_days": [
+        27.83361524768543,
+        27.353862385614548
+      ],
+      "cataloged_stars_in_cone": 231,
+      "count_with_epochs": 1,
+      "count_marked_variable": 1,
+      "gaia_epoch_series": [
+        {
+          "source_id": "4658230166891595648",
+          "ra_deg": 77.84915555063154,
+          "dec_deg": -69.19035801967766,
+          "g_mag": 19.592371,
+          "separation_arcsec": 26.755333879008568,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 35,
+            "span_days": 980.584318637473,
+            "blind_period_days": 0.16317943143080182,
+            "weighted_variance_fraction": 0.5101232088586665,
+            "frequencies_tested": 76977,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658230166891595648&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "f6e872fad28ab0f886871692da87037da01c6ab04046a3df0d1a1e5138424853"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              158.54314883144178,
+              155.76314441712947
+            ],
+            "meets_direct_match": false
+          }
+        }
+      ],
+      "gaia_cone_receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_variable_flag%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C77.850692210%2C-69.197769986%2C0.0083333333%29%29+ORDER+BY+source_id",
+        "sha256": "722ae402a424c6901bd798919695b58603b92e5adbe8293255001ee417da661b"
+      }
+    },
+    {
+      "field_id": "lmc-6",
+      "source_id": "ICRS-77.83273-69.15378",
+      "centroid_deg": [
+        77.83272734675283,
+        -69.15378269682911
+      ],
+      "tess_periods_days": [
+        0.6723406988694759,
+        0.6735415439010018
+      ],
+      "sector_baselines_days": [
+        27.83361524768543,
+        27.353862385614548
+      ],
+      "cataloged_stars_in_cone": 213,
+      "count_with_epochs": 2,
+      "count_marked_variable": 2,
+      "gaia_epoch_series": [
+        {
+          "source_id": "4658253737676713856",
+          "ra_deg": 77.82566740343137,
+          "dec_deg": -69.15117213020761,
+          "g_mag": 19.152924,
+          "separation_arcsec": 13.043608120159423,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 35,
+            "span_days": 980.6583880094654,
+            "blind_period_days": 0.5116703774089773,
+            "weighted_variance_fraction": 0.3854258908409034,
+            "frequencies_tested": 76983,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658253737676713856&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "4cc28e6cad396c0d55c03cdaebe1e3073c19fa536759fc169bedfcddb01bfe8e"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              12.999468806378456,
+              12.847939749339167
+            ],
+            "meets_direct_match": false
+          }
+        },
+        {
+          "source_id": "4658253741874313088",
+          "ra_deg": 77.83730163481692,
+          "dec_deg": -69.16099283602604,
+          "g_mag": 13.003923,
+          "separation_arcsec": 26.609576756670055,
+          "resolved_epoch_search": {
+            "status": "measured",
+            "usable_epochs": 36,
+            "span_days": 980.6584684254137,
+            "blind_period_days": 0.759024184410477,
+            "weighted_variance_fraction": 0.5287420481979732,
+            "frequencies_tested": 76983,
+            "receipt": {
+              "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4658253741874313088&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+              "sha256": "4dd266cfc02de3cd64527862b2506e713a9c9e4b959e3810c058aac85ef3241a"
+            }
+          },
+          "comparison": {
+            "frequency_offsets_rayleigh": [
+              4.727820402348103,
+              4.573793833251041
+            ],
+            "meets_direct_match": false
+          }
+        }
+      ],
+      "gaia_cone_receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_variable_flag%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C77.832727347%2C-69.153782697%2C0.0083333333%29%29+ORDER+BY+source_id",
+        "sha256": "4615aade5d4f78bfee4b9fbc5d38801ee3a514e7dcf7a7ecfdb366a7eb9ddf87"
+      }
+    }
+  ]
+}

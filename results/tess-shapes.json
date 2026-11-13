@@ -1,0 +1,276 @@
+{
+  "experiment": "post_screen_shape_check_v1",
+  "inputs": [
+    {
+      "plan_sha256": "3290238a301b217955c35dfa9ae0d611d904b8a48be72f4c2948291ff76f97b5",
+      "evidence_sha256": "1ce629e8216380584bfdec9819e9706f3283da795806987a6a88c0bde62574b7"
+    },
+    {
+      "plan_sha256": "b8a857728bec38e08c4f33e9f3a0411f5a786fedc8d1377474a1e5181adaf020",
+      "evidence_sha256": "68f49227d5e63a94329f7c026ad928a20f649063f976b75487a3f16001c45a08"
+    }
+  ],
+  "cases": [
+    {
+      "tic_id": 100100827,
+      "role": "known_control",
+      "disposition": "two_sector_periodic_dip",
+      "period_days": 0.9415626531297059,
+      "baseline_test_loss": 331669.74183846,
+      "test_samples": 2593,
+      "models": [
+        {
+          "shape": "box",
+          "fitted_coefficients": 2,
+          "dominant_harmonic": null,
+          "improvement_over_flat": 295270.66498943727
+        },
+        {
+          "shape": "fourier_1",
+          "fitted_coefficients": 3,
+          "dominant_harmonic": 1,
+          "improvement_over_flat": 62668.410894084955
+        },
+        {
+          "shape": "fourier_4",
+          "fitted_coefficients": 9,
+          "dominant_harmonic": 2,
+          "improvement_over_flat": 219005.17599566266
+        }
+      ],
+      "best_test_shape": "box"
+    },
+    {
+      "tic_id": 234495456,
+      "role": "exploration",
+      "disposition": "periodic_dip_with_veto",
+      "period_days": 0.7608372032849126,
+      "baseline_test_loss": 57194.77217721759,
+      "test_samples": 3718,
+      "models": [
+        {
+          "shape": "box",
+          "fitted_coefficients": 2,
+          "dominant_harmonic": null,
+          "improvement_over_flat": 11723.17107226367
+        },
+        {
+          "shape": "fourier_1",
+          "fitted_coefficients": 3,
+          "dominant_harmonic": 1,
+          "improvement_over_flat": -25.513076187766274
+        },
+        {
+          "shape": "fourier_4",
+          "fitted_coefficients": 9,
+          "dominant_harmonic": 2,
+          "improvement_over_flat": 44920.82319680199
+        }
+      ],
+      "best_test_shape": "fourier_4"
+    },
+    {
+      "tic_id": 234338669,
+      "role": "exploration",
+      "disposition": "periodic_dip_with_veto",
+      "period_days": 0.9190229479338266,
+      "baseline_test_loss": 6330.798191125601,
+      "test_samples": 3578,
+      "models": [
+        {
+          "shape": "box",
+          "fitted_coefficients": 2,
+          "dominant_harmonic": null,
+          "improvement_over_flat": 700.9515141707889
+        },
+        {
+          "shape": "fourier_1",
+          "fitted_coefficients": 3,
+          "dominant_harmonic": 1,
+          "improvement_over_flat": -18.683687974550594
+        },
+        {
+          "shape": "fourier_4",
+          "fitted_coefficients": 9,
+          "dominant_harmonic": 2,
+          "improvement_over_flat": 2679.869367766757
+        }
+      ],
+      "best_test_shape": "fourier_4"
+    },
+    {
+      "tic_id": 425975034,
+      "role": "exploration",
+      "disposition": "two_sector_periodic_dip",
+      "period_days": 1.114751829131559,
+      "baseline_test_loss": 40769.42044381694,
+      "test_samples": 3716,
+      "models": [
+        {
+          "shape": "box",
+          "fitted_coefficients": 2,
+          "dominant_harmonic": null,
+          "improvement_over_flat": 6796.40704751997
+        },
+        {
+          "shape": "fourier_1",
+          "fitted_coefficients": 3,
+          "dominant_harmonic": 1,
+          "improvement_over_flat": -5.651080939693202
+        },
+        {
+          "shape": "fourier_4",
+          "fitted_coefficients": 9,
+          "dominant_harmonic": 3,
+          "improvement_over_flat": 35727.67484936687
+        }
+      ],
+      "best_test_shape": "fourier_4"
+    },
+    {
+      "tic_id": 279511712,
+      "role": "exploration",
+      "disposition": "two_sector_periodic_dip",
+      "period_days": 1.6519507969838818,
+      "baseline_test_loss": 76710.01651311529,
+      "test_samples": 3711,
+      "models": [
+        {
+          "shape": "box",
+          "fitted_coefficients": 2,
+          "dominant_harmonic": null,
+          "improvement_over_flat": 14796.326840035748
+        },
+        {
+          "shape": "fourier_1",
+          "fitted_coefficients": 3,
+          "dominant_harmonic": 1,
+          "improvement_over_flat": 43200.91424276269
+        },
+        {
+          "shape": "fourier_4",
+          "fitted_coefficients": 9,
+          "dominant_harmonic": 1,
+          "improvement_over_flat": 46910.69353480012
+        }
+      ],
+      "best_test_shape": "fourier_4"
+    },
+    {
+      "tic_id": 31780319,
+      "role": "exploration",
+      "disposition": "two_sector_periodic_dip",
+      "period_days": 1.3194298336808628,
+      "baseline_test_loss": 35923.275095367455,
+      "test_samples": 3413,
+      "models": [
+        {
+          "shape": "box",
+          "fitted_coefficients": 2,
+          "dominant_harmonic": null,
+          "improvement_over_flat": 5821.121024432352
+        },
+        {
+          "shape": "fourier_1",
+          "fitted_coefficients": 3,
+          "dominant_harmonic": 1,
+          "improvement_over_flat": 22501.524705143907
+        },
+        {
+          "shape": "fourier_4",
+          "fitted_coefficients": 9,
+          "dominant_harmonic": 1,
+          "improvement_over_flat": 22533.38626093619
+        }
+      ],
+      "best_test_shape": "fourier_4"
+    },
+    {
+      "tic_id": 279570232,
+      "role": "exploration",
+      "disposition": "periodic_dip_with_veto",
+      "period_days": 1.1174204276884312,
+      "baseline_test_loss": 244953.89469396812,
+      "test_samples": 3717,
+      "models": [
+        {
+          "shape": "box",
+          "fitted_coefficients": 2,
+          "dominant_harmonic": null,
+          "improvement_over_flat": -144516.2363676572
+        },
+        {
+          "shape": "fourier_1",
+          "fitted_coefficients": 3,
+          "dominant_harmonic": 1,
+          "improvement_over_flat": -526729.4948767876
+        },
+        {
+          "shape": "fourier_4",
+          "fitted_coefficients": 9,
+          "dominant_harmonic": 1,
+          "improvement_over_flat": -447738.29507892963
+        }
+      ],
+      "best_test_shape": "flat"
+    },
+    {
+      "tic_id": 238194430,
+      "role": "exploration",
+      "disposition": "periodic_dip_with_veto",
+      "period_days": 1.399251583770835,
+      "baseline_test_loss": 278218.2373922222,
+      "test_samples": 3718,
+      "models": [
+        {
+          "shape": "box",
+          "fitted_coefficients": 2,
+          "dominant_harmonic": null,
+          "improvement_over_flat": 40037.3855148025
+        },
+        {
+          "shape": "fourier_1",
+          "fitted_coefficients": 3,
+          "dominant_harmonic": 1,
+          "improvement_over_flat": -692.7032028615358
+        },
+        {
+          "shape": "fourier_4",
+          "fitted_coefficients": 9,
+          "dominant_harmonic": 2,
+          "improvement_over_flat": 167309.49866371875
+        }
+      ],
+      "best_test_shape": "fourier_4"
+    },
+    {
+      "tic_id": 50380257,
+      "role": "exploration",
+      "disposition": "two_sector_periodic_dip",
+      "period_days": 1.3481307518200534,
+      "baseline_test_loss": 203462.53164382628,
+      "test_samples": 3718,
+      "models": [
+        {
+          "shape": "box",
+          "fitted_coefficients": 2,
+          "dominant_harmonic": null,
+          "improvement_over_flat": 137998.2277954718
+        },
+        {
+          "shape": "fourier_1",
+          "fitted_coefficients": 3,
+          "dominant_harmonic": 1,
+          "improvement_over_flat": 20868.064790966484
+        },
+        {
+          "shape": "fourier_4",
+          "fitted_coefficients": 9,
+          "dominant_harmonic": 2,
+          "improvement_over_flat": 151095.96379779806
+        }
+      ],
+      "best_test_shape": "fourier_4"
+    }
+  ]
+}

@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "method": "tess-ffi-periodic-image-v1",
+  "plan_sha256": "6788f7627c0b70cf5e6c0b34f69c7fe13e79c35274655d64ceaa4a681e4b4075",
+  "fields": [
+    {
+      "field_id": "bb",
+      "role": "known_variable_control_field",
+      "method": "tess-ffi-periodic-image-v1",
+      "ra_deg": 17.69,
+      "dec_deg": -60.34,
+      "size_pixels": 21,
+      "products": [
+        {
+          "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=17.69&dec=-60.34&y=21&x=21&units=px&sector=1",
+          "sector": 1,
+          "camera": 3,
+          "ccd": 1,
+          "data_release": 42,
+          "science_sha256": "dacf68475023bd388e503172645bc6678b72105e90786b0f5b72e915b9376258",
+          "retrieved_fits_sha256": "fbab1cf71eb11a8bb3cc867a144f35ddbe1d2531130051fba579a0940bda7d2b",
+          "retrieved_fits_bytes": 11433600,
+          "input_images": 1282,
+          "quality_and_finite_pass": 1267,
+          "first_parent_ffi": "tess2018206192942-s0001-3-1-0120-s_ffi",
+          "last_parent_ffi": "tess2018234152941-s0001-3-1-0120-s_ffi",
+          "parent_ffi_list_sha256": "51f522523cc44aa74ba063d86af3c3002d938f069c0e63c4812f6780ffc2ea60",
+          "start_btjd": 1325.326203035862,
+          "stop_btjd": 1353.159806054525,
+          "time_reference": "BJD_TDB - 2457000",
+          "eligible_pixels": 289,
+          "above_threshold_pixels": 10,
+          "spatial_peaks": 1,
+          "frequency_trials": 1164,
+          "valid_cadences": 1267
+        },
+        {
+          "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=17.69&dec=-60.34&y=21&x=21&units=px&sector=2",
+          "sector": 2,
+          "camera": 3,
+          "ccd": 2,
+          "data_release": 42,
+          "science_sha256": "3c30b4e37385d2a8573bef2ccfa50ee21daf2fb887c72bc86c1f6d489bbfe2c4",
+          "retrieved_fits_sha256": "6d5ecdeffc45cd72289088a23efb8dbc6975465abfb36a11ce74eac49fd983a5",
+          "retrieved_fits_bytes": 11105280,
+          "input_images": 1245,
+          "quality_and_finite_pass": 1196,
+          "first_parent_ffi": "tess2018235142941-s0002-3-2-0121-s_ffi",
+          "last_parent_ffi": "tess2018262232940-s0002-3-2-0121-s_ffi",
+          "parent_ffi_list_sha256": "3ea4d8521d69d677ea345f6794bee3f9e84d98ec167f2a11dd02f546fa380d9d",
+          "start_btjd": 1354.138969520842,
+          "stop_btjd": 1381.4928126105597,
+          "time_reference": "BJD_TDB - 2457000",
+          "eligible_pixels": 289,
+          "above_threshold_pixels": 51,
+          "spatial_peaks": 8,
+          "frequency_trials": 1144,
+          "valid_cadences": 1196
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "ICRS-17.69381-60.32449",
+          "ra_deg": 17.693810600177063,
+          "dec_deg": -60.32448567329887,
+          "discovery": {
+            "peak_x": 7,
+            "peak_y": 10,
+            "centroid_x": 7.6638243160885455,
+            "centroid_y": 10.050652073049648,
+            "ra_deg": 17.693810600177063,
+            "dec_deg": -60.32448567329887,
+            "period_days": 0.37164465274818914,
+            "variance_fraction": 0.7462394024273297,
+            "semiamplitude_e_per_s": 4.452016775823722,
+            "amplitude_snr_proxy": 94.3683460424425,
+            "negative_to_positive_flux": 0.42944222481760963,
+            "independent_nuisance_fit_variance_fraction": 0.6857585835322215,
+            "core_flux_fraction": 0.8054584710042115,
+            "max_field_regressor_correlation": 0.45906441303803425,
+            "artifact_flags": []
+          },
+          "validation": {
+            "peak_x": 9,
+            "peak_y": 8,
+            "centroid_x": 8.845080584809855,
+            "centroid_y": 8.348245417004994,
+            "ra_deg": 17.692934416121616,
+            "dec_deg": -60.32398603884499,
+            "period_days": 0.3716267475885986,
+            "variance_fraction": 0.8002762485231647,
+            "semiamplitude_e_per_s": 7.7963702689885785,
+            "amplitude_snr_proxy": 78.0125364706887,
+            "negative_to_positive_flux": 0.004691183278938992,
+            "independent_nuisance_fit_variance_fraction": 0.8380461753634905,
+            "core_flux_fraction": 0.849111507587823,
+            "max_field_regressor_correlation": 0.29093669169938896,
+            "artifact_flags": []
+          },
+          "match_separation_arcsec": 2.3820175531512677,
+          "period_fractional_difference": 4.817817089020071e-05,
+          "disposition": "recurrent_image_variable",
+          "candidate": true
+        }
+      ],
+      "unmatched_validation_peaks": [
+        {
+          "peak_x": 13,
+          "peak_y": 7,
+          "centroid_x": 12.623001169431793,
+          "centroid_y": 6.902056380003925,
+          "ra_deg": 17.649019983769456,
+          "dec_deg": -60.33221657610491,
+          "period_days": 2.3545433737697414,
+          "variance_fraction": 0.18170833212826976,
+          "semiamplitude_e_per_s": 13.78845214144632,
+          "amplitude_snr_proxy": 30.748628790823442,
+          "negative_to_positive_flux": 0.4166792716898238,
+          "independent_nuisance_fit_variance_fraction": 0.16935932146957494,
+          "core_flux_fraction": 0.8243047915310842,
+          "max_field_regressor_correlation": 0.7545236702710113,
+          "artifact_flags": [
+            "field_nuisance_correlation"
+          ]
+        },
+        {
+          "peak_x": 9,
+          "peak_y": 4,
+          "centroid_x": 9.714827887096957,
+          "centroid_y": 4.566375904697542,
+          "ra_deg": 17.656816771382317,
+          "dec_deg": -60.310917959908316,
+          "period_days": 2.380148079592781,
+          "variance_fraction": 0.11105936608679515,
+          "semiamplitude_e_per_s": 1.9452679314710093,
+          "amplitude_snr_proxy": 19.881546733692044,
+          "negative_to_positive_flux": 1.4806560529165074,
+          "independent_nuisance_fit_variance_fraction": 0.092493795403633,
+          "core_flux_fraction": 0.6991332095344143,
+          "max_field_regressor_correlation": 0.7864480558910033,
+          "artifact_flags": [
+            "bipolar_residual",
+            "field_nuisance_correlation"
+          ]
+        },
+        {
+          "peak_x": 14,
+          "peak_y": 3,
+          "centroid_x": 14.17975117055745,
+          "centroid_y": 3.1701515846367037,
+          "ra_deg": 17.607281939335923,
+          "dec_deg": -60.321988517414944,
+          "period_days": 2.380148079592781,
+          "variance_fraction": 0.1500933715505305,
+          "semiamplitude_e_per_s": 1.6031895815200274,
+          "amplitude_snr_proxy": 22.048331039774688,
+          "negative_to_positive_flux": 0.7008209809416862,
+          "independent_nuisance_fit_variance_fraction": 0.12198790338400411,
+          "core_flux_fraction": 0.961735734358906,
+          "max_field_regressor_correlation": 0.7809616011868956,
+          "artifact_flags": [
+            "bipolar_residual",
+            "field_nuisance_correlation"
+          ]
+        },
+        {
+          "peak_x": 8,
+          "peak_y": 11,
+          "centroid_x": 8.649609844632318,
+          "centroid_y": 9.330442354430108,
+          "ra_deg": 17.70205375436233,
+          "dec_deg": -60.32749520535451,
+          "period_days": 0.3716267475885986,
+          "variance_fraction": 0.38967778541501086,
+          "semiamplitude_e_per_s": 0.32492477102950357,
+          "amplitude_snr_proxy": 25.920195023773438,
+          "negative_to_positive_flux": 0.01661968829492223,
+          "independent_nuisance_fit_variance_fraction": 0.4482290026120317,
+          "core_flux_fraction": 0.2221192804508189,
+          "max_field_regressor_correlation": 0.07846263108401672,
+          "artifact_flags": [
+            "diffuse_spatial_response"
+          ]
+        },
+        {
+          "peak_x": 18,
+          "peak_y": 4,
+          "centroid_x": 19.39262982910694,
+          "centroid_y": 3.8558645752239586,
+          "ra_deg": 17.566848314911233,
+          "dec_deg": -60.34495278956471,
+          "period_days": 0.3716267475885986,
+          "variance_fraction": 0.1651712878817093,
+          "semiamplitude_e_per_s": 0.3975449842775395,
+          "amplitude_snr_proxy": 16.9049964016566,
+          "negative_to_positive_flux": 0.08583076517866345,
+          "independent_nuisance_fit_variance_fraction": 0.3262377880208374,
+          "core_flux_fraction": 0.4073787927841293,
+          "max_field_regressor_correlation": 0.6507758053793906,
+          "artifact_flags": [
+            "field_nuisance_correlation"
+          ]
+        },
+        {
+          "peak_x": 12,
+          "peak_y": 10,
+          "centroid_x": 12.069232052072161,
+          "centroid_y": 8.344485943482544,
+          "ra_deg": 17.66474038225229,
+          "dec_deg": -60.336350374018366,
+          "period_days": 0.3716267475885986,
+          "variance_fraction": 0.13846411657406643,
+          "semiamplitude_e_per_s": 0.2534320738634584,
+          "amplitude_snr_proxy": 14.323727888644235,
+          "negative_to_positive_flux": 0.0885530965768622,
+          "independent_nuisance_fit_variance_fraction": 0.1245634243417933,
+          "core_flux_fraction": 0.2501375804584991,
+          "max_field_regressor_correlation": 0.5035472829911509,
+          "artifact_flags": [
+            "diffuse_spatial_response"
+          ]
+        },
+        {
+          "peak_x": 6,
+          "peak_y": 8,
+          "centroid_x": 7.705638939085369,
+          "centroid_y": 8.420522120678072,
+          "ra_deg": 17.703428695335038,
+          "dec_deg": -60.319922649509465,
+          "period_days": 0.3716267475885986,
+          "variance_fraction": 0.11819367184369524,
+          "semiamplitude_e_per_s": 0.1522179754912588,
+          "amplitude_snr_proxy": 11.747022670352127,
+          "negative_to_positive_flux": 0.013571497622105654,
+          "independent_nuisance_fit_variance_fraction": 0.1851487678060876,
+          "core_flux_fraction": 0.17258893725101118,
+          "max_field_regressor_correlation": 0.08132212238405044,
+          "artifact_flags": [
+            "diffuse_spatial_response"
+          ]
+        }
+      ]
+    },
+    {
+      "field_id": "blind",
+      "role": "coordinate_offset_exploration",
+      "method": "tess-ffi-periodic-image-v1",
+      "ra_deg": 17.97,
+      "dec_deg": -60.28,
+      "size_pixels": 21,
+      "products": [
+        {
+          "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=17.97&dec=-60.28&y=21&x=21&units=px&sector=1",
+          "sector": 1,
+          "camera": 3,
+          "ccd": 1,
+          "data_release": 42,
+          "science_sha256": "8fbf3559f34a8c8386bd38f9df7498d53d6e716713112c24859368ce2d7419ea",
+          "retrieved_fits_sha256": "e20ac18fb3ba83297af43311705d2265bbfda9631e7206e75dd113869149177f",
+          "retrieved_fits_bytes": 11433600,
+          "input_images": 1282,
+          "quality_and_finite_pass": 1267,
+          "first_parent_ffi": "tess2018206192942-s0001-3-1-0120-s_ffi",
+          "last_parent_ffi": "tess2018234152941-s0001-3-1-0120-s_ffi",
+          "parent_ffi_list_sha256": "51f522523cc44aa74ba063d86af3c3002d938f069c0e63c4812f6780ffc2ea60",
+          "start_btjd": 1325.326203035862,
+          "stop_btjd": 1353.159806054525,
+          "time_reference": "BJD_TDB - 2457000",
+          "eligible_pixels": 289,
+          "above_threshold_pixels": 0,
+          "spatial_peaks": 0,
+          "frequency_trials": 1164,
+          "valid_cadences": 1267
+        },
+        {
+          "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=17.97&dec=-60.28&y=21&x=21&units=px&sector=2",
+          "sector": 2,
+          "camera": 3,
+          "ccd": 2,
+          "data_release": 42,
+          "science_sha256": "6bf9fb6a7f286d9d87df95340bf39008b5c9ccbc58b761d7403f3ce6134e9069",
+          "retrieved_fits_sha256": "1420b9dd78aedf3579c210da37fd90006f5997849641271c5f7613b61bf2a8ef",
+          "retrieved_fits_bytes": 11105280,
+          "input_images": 1245,
+          "quality_and_finite_pass": 1196,
+          "first_parent_ffi": "tess2018235142941-s0002-3-2-0121-s_ffi",
+          "last_parent_ffi": "tess2018262232940-s0002-3-2-0121-s_ffi",
+          "parent_ffi_list_sha256": "3ea4d8521d69d677ea345f6794bee3f9e84d98ec167f2a11dd02f546fa380d9d",
+          "start_btjd": 1354.138969520842,
+          "stop_btjd": 1381.4928126105597,
+          "time_reference": "BJD_TDB - 2457000",
+          "eligible_pixels": 289,
+          "above_threshold_pixels": 2,
+          "spatial_peaks": 2,
+          "frequency_trials": 1144,
+          "valid_cadences": 1196
+        }
+      ],
+      "sources": [],
+      "unmatched_validation_peaks": [
+        {
+          "peak_x": 8,
+          "peak_y": 4,
+          "centroid_x": 8.455779526403356,
+          "centroid_y": 3.7382537750788223,
+          "ra_deg": 17.939689195098502,
+          "dec_deg": -60.240918202448576,
+          "period_days": 2.4330652790917693,
+          "variance_fraction": 0.08767629497434676,
+          "semiamplitude_e_per_s": 0.9416925163274136,
+          "amplitude_snr_proxy": 12.743339765342029,
+          "negative_to_positive_flux": 0.27359253996407473,
+          "independent_nuisance_fit_variance_fraction": 0.08150511243890957,
+          "core_flux_fraction": 0.8939905577992726,
+          "max_field_regressor_correlation": 0.7492776380721331,
+          "artifact_flags": [
+            "field_nuisance_correlation"
+          ]
+        },
+        {
+          "peak_x": 18,
+          "peak_y": 18,
+          "centroid_x": 18.163263170740322,
+          "centroid_y": 17.950261260197014,
+          "ra_deg": 17.96296258851674,
+          "dec_deg": -60.33982925638232,
+          "period_days": 2.380148079592781,
+          "variance_fraction": 0.09905258550686512,
+          "semiamplitude_e_per_s": 0.6363106897365544,
+          "amplitude_snr_proxy": 13.59055860805856,
+          "negative_to_positive_flux": 0.5074227996651007,
+          "independent_nuisance_fit_variance_fraction": 0.08430576469210456,
+          "core_flux_fraction": 0.8964572371336272,
+          "max_field_regressor_correlation": 0.7561291467512211,
+          "artifact_flags": [
+            "field_nuisance_correlation"
+          ]
+        }
+      ]
+    }
+  ]
+}
