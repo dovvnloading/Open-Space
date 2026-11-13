@@ -1,0 +1,205 @@
+{
+  "gaia_data_release": "Gaia DR3",
+  "spatial_counterparts": [
+    {
+      "tic_id": 425975034,
+      "source_name": "BB Tuc",
+      "simbad_url": "https://simbad.cds.unistra.fr/simbad/sim-id?Ident=BB+Tuc",
+      "counterpart_deg": [
+        17.69058759242,
+        -60.32425764378
+      ],
+      "gaia_dr3_source_id": "4902935692165069056",
+      "measurements": [
+        {
+          "sector": 1,
+          "distance_pixel_centroid_to_counterpart_arcsec": 3.2361408099542324,
+          "distance_pixel_centroid_to_tic_arcsec": 38.17703112400603
+        },
+        {
+          "sector": 2,
+          "distance_pixel_centroid_to_counterpart_arcsec": 3.005792428170345,
+          "distance_pixel_centroid_to_tic_arcsec": 38.29135013194197
+        }
+      ],
+      "gaia_epoch_photometry": {
+        "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4902935692165069056&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+        "sha256": "28ece5ad38ffb58d1900457f0dd943b975f95622301d30fab59693c4b55a9829"
+      },
+      "gaia_variability_product": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiadr3.vari_short_timescale+WHERE+source_id%3D4902935692165069056",
+        "sha256": "5016fb90c4b74e50d2961505e81f66e6f467ee18183802933e4856726c7b4d10",
+        "frequency": "2.691859999690504",
+        "amplitude_estimate": "0.35103923",
+        "number_of_fov_transits": "44"
+      }
+    },
+    {
+      "tic_id": 55527074,
+      "source_name": "OGLE LMC-CEP-3421",
+      "simbad_url": "https://simbad.cds.unistra.fr/simbad/sim-id?Ident=OGLE+LMC-CEP-3421",
+      "counterpart_deg": [
+        72.63480643612,
+        -64.73566435944
+      ],
+      "gaia_dr3_source_id": "4663164538667755008",
+      "measurements": [
+        {
+          "sector": 1,
+          "distance_pixel_centroid_to_counterpart_arcsec": 3.0942273632307,
+          "distance_pixel_centroid_to_tic_arcsec": 44.04009987506884
+        },
+        {
+          "sector": 2,
+          "distance_pixel_centroid_to_counterpart_arcsec": 1.663931873906288,
+          "distance_pixel_centroid_to_tic_arcsec": 43.60875728089671
+        }
+      ],
+      "gaia_epoch_photometry": {
+        "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4663164538667755008&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+        "sha256": "1e3d71d5cd44c50ec70c4e315a3c3528dbaa5da59c8fe33f163fc4cee49baf70"
+      },
+      "gaia_variability_product": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiadr3.vari_cepheid+WHERE+source_id%3D4663164538667755008",
+        "sha256": "7724de7b008180271bc042062d51146d6a58f29bd0bf51af27e131ad11f3fdeb",
+        "p1_o": "2.2947995511980492",
+        "p1_o_error": "1.3141362E-5",
+        "type_best_classification": "DCEP",
+        "mode_best_classification": "FIRST_OVERTONE",
+        "peak_to_peak_g": "0.3511246"
+      }
+    }
+  ],
+  "field_crowding": [
+    {
+      "tic_id": 234495456,
+      "center_deg": [
+        9.91944566354615,
+        -62.403467847029
+      ],
+      "cone_arcsec": 42,
+      "receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_rp_mean_mag%2Cpmra%2Cpmdec%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C9.91944566354615%2C-62.403467847029%2C0.0116666667%29%29+ORDER+BY+phot_g_mean_mag%2Csource_id",
+        "sha256": "ab2a1af3269d949c8b8ac6aa3347e87b798c88f28fd869549dd25daeb135130c"
+      },
+      "rows": [
+        {
+          "source_id": "4902468056125369856",
+          "ra": "9.920469823738376",
+          "dec": "-62.40372745527461",
+          "phot_g_mean_mag": "14.687427",
+          "phot_rp_mean_mag": "13.339917",
+          "pmra": "106.77196700735288",
+          "pmdec": "-58.38702542307824",
+          "has_epoch_photometry": "false"
+        },
+        {
+          "source_id": "4902469464874643200",
+          "ra": "9.934851040994783",
+          "dec": "-62.4082742905414",
+          "phot_g_mean_mag": "17.225122",
+          "phot_rp_mean_mag": "16.441528",
+          "pmra": "-14.440709999664223",
+          "pmdec": "2.0633687756423287",
+          "has_epoch_photometry": "false"
+        },
+        {
+          "source_id": "4902468056125369984",
+          "ra": "9.911477258963176",
+          "dec": "-62.40319835032887",
+          "phot_g_mean_mag": "20.63101",
+          "phot_rp_mean_mag": "17.957346",
+          "pmra": "",
+          "pmdec": "",
+          "has_epoch_photometry": "false"
+        }
+      ]
+    },
+    {
+      "tic_id": 234338669,
+      "center_deg": [
+        37.4529262648608,
+        -69.1011963764574
+      ],
+      "cone_arcsec": 42,
+      "receipt": {
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cphot_rp_mean_mag%2Cpmra%2Cpmdec%2Chas_epoch_photometry+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C37.4529262648608%2C-69.1011963764574%2C0.0116666667%29%29+ORDER+BY+phot_g_mean_mag%2Csource_id",
+        "sha256": "05356c0a57c3673d3a610ca23b670c32760009bb499a5b6330d80fb8fb703d8c"
+      },
+      "rows": [
+        {
+          "source_id": "4693570811172518528",
+          "ra": "37.45400025927814",
+          "dec": "-69.10121062835479",
+          "phot_g_mean_mag": "15.302918",
+          "phot_rp_mean_mag": "13.971288",
+          "pmra": "86.35822086391701",
+          "pmdec": "-2.884481006917941",
+          "has_epoch_photometry": "false"
+        },
+        {
+          "source_id": "4693570806876842496",
+          "ra": "37.45260783221385",
+          "dec": "-69.10733085307578",
+          "phot_g_mean_mag": "18.150988",
+          "phot_rp_mean_mag": "17.3895",
+          "pmra": "16.739446964371723",
+          "pmdec": "5.124241956411998",
+          "has_epoch_photometry": "false"
+        },
+        {
+          "source_id": "4693570875596332416",
+          "ra": "37.43628963558269",
+          "dec": "-69.09160996142045",
+          "phot_g_mean_mag": "19.172543",
+          "phot_rp_mean_mag": "18.22934",
+          "pmra": "6.345935328724393",
+          "pmdec": "6.370303700466873",
+          "has_epoch_photometry": "false"
+        },
+        {
+          "source_id": "4693570879891234304",
+          "ra": "37.44040551932326",
+          "dec": "-69.09147863219991",
+          "phot_g_mean_mag": "20.749783",
+          "phot_rp_mean_mag": "19.945982",
+          "pmra": "11.948688651958053",
+          "pmdec": "-10.185138204007481",
+          "has_epoch_photometry": "false"
+        },
+        {
+          "source_id": "4693570806876851072",
+          "ra": "37.44615249000998",
+          "dec": "-69.09722067815477",
+          "phot_g_mean_mag": "20.915033",
+          "phot_rp_mean_mag": "19.985872",
+          "pmra": "",
+          "pmdec": "",
+          "has_epoch_photometry": "false"
+        }
+      ]
+    }
+  ],
+  "vsx_bbtuc": {
+    "url": "https://vsx.aavso.org/index.php?view=api.object&ident=BB%20Tuc&format=json",
+    "sha256": "b4d5e0ccca434ec0ac5159ee8190f2388c01505b5ebaccda35a476926f75adae",
+    "record": {
+      "Name": "BB Tuc",
+      "AUID": "000-BFN-925",
+      "RA2000": "17.69058",
+      "Declination2000": "-60.32425",
+      "ProperMotionRA": "5.3000",
+      "ProperMotionDec": "-1.3000",
+      "VariabilityType": "EA/SD:",
+      "MaxMag": "13.5 p",
+      "MinMag": "15.0 p",
+      "Category": "Variable",
+      "OID": "37031",
+      "Constellation": "Tuc"
+    }
+  },
+  "gcvs_bbtuc": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fgcvs%2Fgcvs_cat&-c=17.69058759242+-60.32425764378&-c.rs=10&-out.max=10",
+    "sha256": "c7e7364994321d11412afe1b9c844a5660ad6eb6dbbad9c291769f9d111e3a66"
+  }
+}

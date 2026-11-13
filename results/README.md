@@ -1,5 +1,8 @@
 # First completed observing visit
 
+The multi-mission campaign produced 482 completed tasks and 971 screening rows. Read the [research results](../docs/DISCOVERY_RESULTS.md), browse the [search register](discovery-registry.csv) or download the [full evidence archive](discovery-evidence.zip). The register contains one row per measurement or source track, including controls and rejected candidates. Evidence paths in its last column resolve inside the ZIP. The [run manifest](discovery-run.json) gives checksums, software versions, inputs, task counts and model call counts.
+
+
 The coordinator processed every primary BOSS main-program galaxy meeting the published quality and redshift cuts on SDSS plate 6497, MJD 56329. The selection returned 12 distinct sky positions across four nonempty pages, followed by an empty page. A separate query for up to 100 fibers on the visit returned the same 12 IDs. Temporary SDSS HTTP 503 errors interrupted archive access during the run. Reinvoking the coordinator resumed the saved pages and completed the visit.
 
 | Measurement | Result |

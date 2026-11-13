@@ -1,6 +1,24 @@
 # Open-Space
 
-Open-Space is an open-source, agent-led research initiative for finding and investigating unexplained features in public astronomical observations. Its first observing program searches optical galaxy spectra from the Sloan Digital Sky Survey. Each experiment starts with archived measurements and ends with an evidence record that another researcher can reproduce, challenge or extend.
+Open-Space is an open-source astronomical research initiative that searches existing public observations for overlooked planets, variable stars and moving objects. Autonomous workers download real NASA archive products, search the measurements, request follow-up images and compare results against published objects. Every run retains rejected signals, input hashes and evidence that another researcher can inspect.
+
+**Start with the measured results.** The optical survey screened 152 exploratory stars and a separate known-planet control. A coordinate-only image search also scanned fields in the Large Magellanic Cloud. The infrared survey assessed 644 well-sampled tracks in its exploration fields. The evidence includes two cases where a telescope aperture assigned a real periodic signal to the wrong star. [Investigation and results](docs/DISCOVERY_RESULTS.md) · [How the workers operate](docs/DISCOVERY.md)
+
+![Five TESS sectors showing a repeating roughly 1.11-day signal toward the Large Magellanic Cloud](docs/figures/ffi-revisit.svg)
+
+The next unexamined rank in the published TESS target sequence is **152**. Run this from a checkout. The driver advances through new archive observations and resumes from disk after interruption. Configure the optional analyst and critic to use your own inference endpoint when you want model-selected investigations.
+
+```sh
+python -m venv .venv
+. .venv/bin/activate
+python -m pip install -e '.[archive]'
+python -m open_space.survey --root runs/next-survey --sectors 1 2 \
+  --start 152 --page-size 32 --pages 1 --workers 4
+```
+
+[Attach models or distribute work across machines](docs/DISCOVERY.md) · [Transit search](docs/TESS.md) · [Pixel localization](docs/PIXELS.md) · [Blind full-frame imaging](docs/FFI.md) · [Stellar catalogs and harmonics](docs/STELLAR_CATALOGS.md) · [Infrared motion](docs/WISE.md)
+
+## Galaxy spectroscopy
 
 **Independent-field test.** Seven of the eight best-supported discovery wavelengths reappeared in a frozen test of 24 new galaxies across three observing visits. All 65 primary detections fell below the search threshold after subtraction of SDSS's fitted galaxy spectrum. A new blind search of the residuals found a single pair confined to one plate visit. The release includes covered misses, alternative mask and continuum tests, a same-target repeat and a redshift permutation experiment. [Holdout measurements and figure](docs/HOLDOUT_RESULTS.md) · [Repeat observation](docs/REPEAT_OBSERVATION.md) · [Redshift control](docs/NULL_EXPERIMENT.md) · [Blind residual search](docs/RESIDUAL_SEARCH.md)
 

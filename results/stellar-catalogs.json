@@ -1,0 +1,1289 @@
+{
+  "input_sha256": "25215ac86a8320b3864f28e0c78d8c40bc44178b9426728b86c8c5f94b73786a",
+  "targets_screened": 121,
+  "coherent_targets": 12,
+  "targets": [
+    {
+      "role": "exploration",
+      "measured_period_days": 1.3224224450562734,
+      "ra_deg": 50.266468,
+      "dec_deg": -68.279869,
+      "radius_arcsec": 42,
+      "tic_id": 31780319,
+      "vsx": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "B/vsx/vsx",
+          "description": "Variable Star indeX, Version 2026-10-18 (\\originalcolumnnames)",
+          "query_date_utc": "2026-11-13T23:23:14",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=50.26646800+-68.27986900&-c.rs=42&-out=OID%2CName%2CV%2CRAJ2000%2CDEJ2000%2CType%2Cl_Period%2CPeriod%2Cu_Period&-out.max=1000",
+          "response_sha256": "e4b18bdcd47e7765cdd17b42b58b6058dab75abc4c5414cc4b31cc9e6c2ec10d",
+          "bytes": 2471,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_summary": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/varisum",
+          "description": "Information on where a source_id can be found in the different Variability tables and statistical parameters of time series, using only transits not rejected (11754237 sources) (vari_summary)",
+          "query_date_utc": "2026-11-13T23:23:14",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvarisum&-c=50.26646800+-68.27986900&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS&-out.max=1000",
+          "response_sha256": "441dcf6a140ae5a4a79d4145165c4130865ec5a5b42087cf00ac3791baa80861",
+          "bytes": 2187,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_classification": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/vclassre",
+          "description": "Variability classification results of all classifiers (vari_classifier_result)",
+          "query_date_utc": "2026-11-13T23:23:15",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvclassre&-c=50.26646800+-68.27986900&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS%2CClass%2CClassSc&-out.max=1000",
+          "response_sha256": "f3221c6840ec28b151e929042dfbd63282c7ae710ce9f60daa7c9770ad269364",
+          "bytes": 2258,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "tess_svc": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 31780319,
+            "same_id": true,
+            "ra_deg": 50.2663184005738,
+            "dec_deg": -68.2796707563109,
+            "separation_arcsec": 0.7409847693543222,
+            "periods": [
+              {
+                "period_days": 1.32408,
+                "uncertainty_days": 0.03229,
+                "period_comparison": {
+                  "measured_over_published": 0.9987481459249241,
+                  "closest_factor": 1.0,
+                  "fractional_offset_from_factor": -0.0012518540750758866
+                }
+              }
+            ],
+            "sector": "3",
+            "solution": "1sin"
+          }
+        ],
+        "receipt": {
+          "url": "https://archive.stsci.edu/hlsps/tess-svc/hlsp_tess-svc_tess_lcf_all-s0001-s0026_tess_v1.0_cat.csv",
+          "sha256": "6c0ba9aa391b007f9c803f3d847c387adfcf7a7b65c68142fd2440ec1936d7c4",
+          "rows": 84046,
+          "selection": "exact TIC ID"
+        }
+      },
+      "tars": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 31780319,
+            "same_id": true,
+            "ra_deg": 50.267243,
+            "dec_deg": -68.2796127,
+            "separation_arcsec": 1.3847076445863002,
+            "periods": [
+              {
+                "period_days": 1.3231,
+                "uncertainty_days": 0.0029,
+                "period_comparison": {
+                  "measured_over_published": 0.999487903451193,
+                  "closest_factor": 1.0,
+                  "fractional_offset_from_factor": -0.0005120965488070173
+                }
+              }
+            ],
+            "gaia_dr3_id": "4670526284404823808",
+            "sectors": 18,
+            "possible_binary": true,
+            "multiple_periods": false,
+            "doubled_period": false,
+            "contaminants": 0.0
+          }
+        ],
+        "receipt": {
+          "url": "https://zenodo.org/records/19917941/files/tars_table_2.csv.zip?download=1",
+          "sha256": "5f774c42d440516c3a679d288fe60f4877d6cd695019e93127bbe704b38d4df6",
+          "rows": 1046317,
+          "selection": "exact TIC ID"
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "role": "exploration",
+      "measured_period_days": 4.7853551153771825,
+      "ra_deg": 66.2970664263808,
+      "dec_deg": -76.1935728694041,
+      "radius_arcsec": 42,
+      "tic_id": 33881153,
+      "vsx": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "B/vsx/vsx",
+          "description": "Variable Star indeX, Version 2026-10-18 (\\originalcolumnnames)",
+          "query_date_utc": "2026-11-13T23:23:25",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=66.29706643+-76.19357287&-c.rs=42&-out=OID%2CName%2CV%2CRAJ2000%2CDEJ2000%2CType%2Cl_Period%2CPeriod%2Cu_Period&-out.max=1000",
+          "response_sha256": "4b00e4fdb97af664f1e24ed630e611a8c695bdb2e59beb641cdcd7c4ee0ca05c",
+          "bytes": 2471,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_summary": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/varisum",
+          "description": "Information on where a source_id can be found in the different Variability tables and statistical parameters of time series, using only transits not rejected (11754237 sources) (vari_summary)",
+          "query_date_utc": "2026-11-13T23:23:25",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvarisum&-c=66.29706643+-76.19357287&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS&-out.max=1000",
+          "response_sha256": "667d882e0967d4f752aa8ec2b06ffb30fd102ad13f36812dba3461a63ca9aaa8",
+          "bytes": 2187,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_classification": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/vclassre",
+          "description": "Variability classification results of all classifiers (vari_classifier_result)",
+          "query_date_utc": "2026-11-13T23:23:24",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvclassre&-c=66.29706643+-76.19357287&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS%2CClass%2CClassSc&-out.max=1000",
+          "response_sha256": "01d10ae4aa99e9a6731685ea10795e41f07b5964ad74945084b5a7d12f779b43",
+          "bytes": 2258,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "tess_svc": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "url": "https://archive.stsci.edu/hlsps/tess-svc/hlsp_tess-svc_tess_lcf_all-s0001-s0026_tess_v1.0_cat.csv",
+          "sha256": "6c0ba9aa391b007f9c803f3d847c387adfcf7a7b65c68142fd2440ec1936d7c4",
+          "rows": 84046,
+          "selection": "exact TIC ID"
+        }
+      },
+      "tars": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 33881153,
+            "same_id": true,
+            "ra_deg": 66.2969587,
+            "dec_deg": -76.1934767,
+            "separation_arcsec": 0.35836665098601045,
+            "periods": [
+              {
+                "period_days": 9.6079,
+                "uncertainty_days": 0.1031,
+                "period_comparison": {
+                  "measured_over_published": 0.49806462550371905,
+                  "closest_factor": 0.5,
+                  "fractional_offset_from_factor": -0.003870748992561901
+                }
+              }
+            ],
+            "gaia_dr3_id": "4627729065604741248",
+            "sectors": 27,
+            "possible_binary": true,
+            "multiple_periods": true,
+            "doubled_period": true,
+            "contaminants": 0.0
+          }
+        ],
+        "receipt": {
+          "url": "https://zenodo.org/records/19917941/files/tars_table_2.csv.zip?download=1",
+          "sha256": "5f774c42d440516c3a679d288fe60f4877d6cd695019e93127bbe704b38d4df6",
+          "rows": 1046317,
+          "selection": "exact TIC ID"
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "role": "exploration",
+      "measured_period_days": 0.6743858429175312,
+      "ra_deg": 32.9801756530107,
+      "dec_deg": -72.678905690469,
+      "radius_arcsec": 42,
+      "tic_id": 50380257,
+      "vsx": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "B/vsx/vsx",
+          "description": "Variable Star indeX, Version 2026-10-18 (\\originalcolumnnames)",
+          "query_date_utc": "2026-11-13T23:23:21",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=32.98017565+-72.67890569&-c.rs=42&-out=OID%2CName%2CV%2CRAJ2000%2CDEJ2000%2CType%2Cl_Period%2CPeriod%2Cu_Period&-out.max=1000",
+          "response_sha256": "9f7fe60d7d3221152ffe53b5a0cef854c7b6de16c2078f91ce91f75f90622623",
+          "bytes": 2471,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_summary": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/varisum",
+          "description": "Information on where a source_id can be found in the different Variability tables and statistical parameters of time series, using only transits not rejected (11754237 sources) (vari_summary)",
+          "query_date_utc": "2026-11-13T23:23:24",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvarisum&-c=32.98017565+-72.67890569&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS&-out.max=1000",
+          "response_sha256": "af82b2031c4da0402f8b25c39bf57f1c6311355ab80a1d34963433b73b14f4f9",
+          "bytes": 2187,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_classification": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/vclassre",
+          "description": "Variability classification results of all classifiers (vari_classifier_result)",
+          "query_date_utc": "2026-11-13T23:23:21",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvclassre&-c=32.98017565+-72.67890569&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS%2CClass%2CClassSc&-out.max=1000",
+          "response_sha256": "7d8c24784b5a7ad19a12ee8a73eb6b3320f5d731411b136262e29c7508f5e995",
+          "bytes": 2258,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "tess_svc": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "url": "https://archive.stsci.edu/hlsps/tess-svc/hlsp_tess-svc_tess_lcf_all-s0001-s0026_tess_v1.0_cat.csv",
+          "sha256": "6c0ba9aa391b007f9c803f3d847c387adfcf7a7b65c68142fd2440ec1936d7c4",
+          "rows": 84046,
+          "selection": "exact TIC ID"
+        }
+      },
+      "tars": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 50380257,
+            "same_id": true,
+            "ra_deg": 32.9807939,
+            "dec_deg": -72.6787721,
+            "separation_arcsec": 0.8187752885189465,
+            "periods": [
+              {
+                "period_days": 1.3485,
+                "uncertainty_days": 0.0047,
+                "period_comparison": {
+                  "measured_over_published": 0.5001007363125927,
+                  "closest_factor": 0.5,
+                  "fractional_offset_from_factor": 0.00020147262518532827
+                }
+              }
+            ],
+            "gaia_dr3_id": "4644468064985025280",
+            "sectors": 7,
+            "possible_binary": false,
+            "multiple_periods": false,
+            "doubled_period": true,
+            "contaminants": 1.0
+          }
+        ],
+        "receipt": {
+          "url": "https://zenodo.org/records/19917941/files/tars_table_2.csv.zip?download=1",
+          "sha256": "5f774c42d440516c3a679d288fe60f4877d6cd695019e93127bbe704b38d4df6",
+          "rows": 1046317,
+          "selection": "exact TIC ID"
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "role": "exploration",
+      "measured_period_days": 2.2804849793582993,
+      "ra_deg": 72.62764475037,
+      "dec_deg": -64.7243175332984,
+      "radius_arcsec": 42,
+      "tic_id": 55527074,
+      "vsx": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "B/vsx/vsx",
+          "description": "Variable Star indeX, Version 2026-10-18 (\\originalcolumnnames)",
+          "query_date_utc": "2026-11-13T23:23:08",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=72.62764475+-64.72431753&-c.rs=42&-out=OID%2CName%2CV%2CRAJ2000%2CDEJ2000%2CType%2Cl_Period%2CPeriod%2Cu_Period&-out.max=1000",
+          "response_sha256": "cd60b0ec3c0aeffbc415a4b0d61fd6a34d1bfd5d347d4cf46814776dacee26b3",
+          "bytes": 2471,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_summary": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/varisum",
+          "description": "Information on where a source_id can be found in the different Variability tables and statistical parameters of time series, using only transits not rejected (11754237 sources) (vari_summary)",
+          "query_date_utc": "2026-11-13T23:23:08",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvarisum&-c=72.62764475+-64.72431753&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS&-out.max=1000",
+          "response_sha256": "185b5727889b6179727503e1adad34e861424a691c1baefdb7522feca3f24bdf",
+          "bytes": 2187,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_classification": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/vclassre",
+          "description": "Variability classification results of all classifiers (vari_classifier_result)",
+          "query_date_utc": "2026-11-13T23:23:08",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvclassre&-c=72.62764475+-64.72431753&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS%2CClass%2CClassSc&-out.max=1000",
+          "response_sha256": "bf96bf15396ba13d84db1c4a7a469755ce65428ebe74023b76f17631ac4da450",
+          "bytes": 2258,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "tess_svc": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 55527074,
+            "same_id": true,
+            "ra_deg": 72.62764475037,
+            "dec_deg": -64.7243175332984,
+            "separation_arcsec": 0.0,
+            "periods": [
+              {
+                "period_days": 2.29568,
+                "uncertainty_days": 0.07829,
+                "period_comparison": {
+                  "measured_over_published": 0.9933810371472938,
+                  "closest_factor": 1.0,
+                  "fractional_offset_from_factor": -0.006618962852706245
+                }
+              }
+            ],
+            "sector": "12",
+            "solution": "1sin"
+          }
+        ],
+        "receipt": {
+          "url": "https://archive.stsci.edu/hlsps/tess-svc/hlsp_tess-svc_tess_lcf_all-s0001-s0026_tess_v1.0_cat.csv",
+          "sha256": "6c0ba9aa391b007f9c803f3d847c387adfcf7a7b65c68142fd2440ec1936d7c4",
+          "rows": 84046,
+          "selection": "exact TIC ID"
+        }
+      },
+      "tars": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "url": "https://zenodo.org/records/19917941/files/tars_table_2.csv.zip?download=1",
+          "sha256": "5f774c42d440516c3a679d288fe60f4877d6cd695019e93127bbe704b38d4df6",
+          "rows": 1046317,
+          "selection": "exact TIC ID"
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "role": "known_control",
+      "measured_period_days": 0.47040273145258193,
+      "ra_deg": 24.3543062905944,
+      "dec_deg": -45.6778823650122,
+      "radius_arcsec": 42,
+      "tic_id": 100100827,
+      "vsx": {
+        "status": "ok",
+        "matches": [
+          {
+            "source_id": "232787",
+            "name": "WASP-18",
+            "variability_flag": "0",
+            "class": "EP",
+            "period_days": 0.94145299,
+            "period_limit_flag": null,
+            "period_uncertainty_flag": null,
+            "period_comparison": {
+              "measured_over_published": 0.4996561022686666,
+              "closest_factor": 0.5,
+              "fractional_offset_from_factor": -0.0006877954626668403
+            },
+            "ra_deg": 24.35429,
+            "dec_deg": -45.67786,
+            "separation_arcsec": 0.09034106737271116
+          }
+        ],
+        "receipt": {
+          "table": "B/vsx/vsx",
+          "description": "Variable Star indeX, Version 2026-10-18 (\\originalcolumnnames)",
+          "query_date_utc": "2026-11-13T23:22:57",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=24.35430629+-45.67788237&-c.rs=42&-out=OID%2CName%2CV%2CRAJ2000%2CDEJ2000%2CType%2Cl_Period%2CPeriod%2Cu_Period&-out.max=1000",
+          "response_sha256": "9ad8c0dd7ced1746db68aeb263ea50d3c55ec91aca4e7cfda6f17bd7b941c89d",
+          "bytes": 2783,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_summary": {
+        "status": "ok",
+        "matches": [
+          {
+            "source_id": "4955371367334610048",
+            "ra_deg": 24.35446693304,
+            "dec_deg": -45.6777908468,
+            "separation_arcsec": 0.5213579608669253
+          }
+        ],
+        "receipt": {
+          "table": "I/358/varisum",
+          "description": "Information on where a source_id can be found in the different Variability tables and statistical parameters of time series, using only transits not rejected (11754237 sources) (vari_summary)",
+          "query_date_utc": "2026-11-13T23:22:57",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvarisum&-c=24.35430629+-45.67788237&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS&-out.max=1000",
+          "response_sha256": "a79441655de04c723b2193ed23986026bca6b171f2e31a90df857b22ec17b392",
+          "bytes": 2325,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_classification": {
+        "status": "ok",
+        "matches": [
+          {
+            "source_id": "4955371367334610048",
+            "class": "EP",
+            "class_score": 1.0,
+            "ra_deg": 24.35446693304,
+            "dec_deg": -45.6777908468,
+            "separation_arcsec": 0.5213579608669253
+          }
+        ],
+        "receipt": {
+          "table": "I/358/vclassre",
+          "description": "Variability classification results of all classifiers (vari_classifier_result)",
+          "query_date_utc": "2026-11-13T23:22:57",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvclassre&-c=24.35430629+-45.67788237&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS%2CClass%2CClassSc&-out.max=1000",
+          "response_sha256": "86a9252a16748f352b0e8d30af7c6f7ec30f1c9738181bd0b6e1c11fb929304f",
+          "bytes": 2497,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "tess_svc": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 100100827,
+            "same_id": true,
+            "ra_deg": 24.3543062905944,
+            "dec_deg": -45.6778823650122,
+            "separation_arcsec": 0.0,
+            "periods": [
+              {
+                "period_days": 0.470567,
+                "uncertainty_days": 0.003665,
+                "period_comparison": {
+                  "measured_over_published": 0.9996509135842121,
+                  "closest_factor": 1.0,
+                  "fractional_offset_from_factor": -0.00034908641578790256
+                }
+              }
+            ],
+            "sector": "sp3",
+            "solution": "1sin"
+          }
+        ],
+        "receipt": {
+          "url": "https://archive.stsci.edu/hlsps/tess-svc/hlsp_tess-svc_tess_lcf_all-s0001-s0026_tess_v1.0_cat.csv",
+          "sha256": "6c0ba9aa391b007f9c803f3d847c387adfcf7a7b65c68142fd2440ec1936d7c4",
+          "rows": 84046,
+          "selection": "exact TIC ID"
+        }
+      },
+      "tars": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "url": "https://zenodo.org/records/19917941/files/tars_table_2.csv.zip?download=1",
+          "sha256": "5f774c42d440516c3a679d288fe60f4877d6cd695019e93127bbe704b38d4df6",
+          "rows": 1046317,
+          "selection": "exact TIC ID"
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "role": "exploration",
+      "measured_period_days": 0.45912448800970596,
+      "ra_deg": 37.4529262648608,
+      "dec_deg": -69.1011963764574,
+      "radius_arcsec": 42,
+      "tic_id": 234338669,
+      "vsx": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "B/vsx/vsx",
+          "description": "Variable Star indeX, Version 2026-10-18 (\\originalcolumnnames)",
+          "query_date_utc": "2026-11-13T23:23:01",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=37.45292626+-69.10119638&-c.rs=42&-out=OID%2CName%2CV%2CRAJ2000%2CDEJ2000%2CType%2Cl_Period%2CPeriod%2Cu_Period&-out.max=1000",
+          "response_sha256": "f4722343bebfe1ed1f682769b3a4acae5293a81788777b902e36533bcdc3cc13",
+          "bytes": 2471,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_summary": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/varisum",
+          "description": "Information on where a source_id can be found in the different Variability tables and statistical parameters of time series, using only transits not rejected (11754237 sources) (vari_summary)",
+          "query_date_utc": "2026-11-13T23:23:04",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvarisum&-c=37.45292626+-69.10119638&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS&-out.max=1000",
+          "response_sha256": "8cf2fa8afd9921ead6e5afbdc910fa7b61676e3a0940b2528c68249568a715b4",
+          "bytes": 2187,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_classification": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/vclassre",
+          "description": "Variability classification results of all classifiers (vari_classifier_result)",
+          "query_date_utc": "2026-11-13T23:23:01",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvclassre&-c=37.45292626+-69.10119638&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS%2CClass%2CClassSc&-out.max=1000",
+          "response_sha256": "3f208e50934326d831803bee10cca14fca160d45491fe1d30e024a0310dc6ce8",
+          "bytes": 2258,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "tess_svc": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 234338669,
+            "same_id": true,
+            "ra_deg": 37.4529262648608,
+            "dec_deg": -69.1011963764574,
+            "separation_arcsec": 0.0,
+            "periods": [
+              {
+                "period_days": 0.459153,
+                "uncertainty_days": 0.002981,
+                "period_comparison": {
+                  "measured_over_published": 0.9999379030730627,
+                  "closest_factor": 1.0,
+                  "fractional_offset_from_factor": -6.209692693726065e-05
+                }
+              }
+            ],
+            "sector": "sp1",
+            "solution": "1sin"
+          }
+        ],
+        "receipt": {
+          "url": "https://archive.stsci.edu/hlsps/tess-svc/hlsp_tess-svc_tess_lcf_all-s0001-s0026_tess_v1.0_cat.csv",
+          "sha256": "6c0ba9aa391b007f9c803f3d847c387adfcf7a7b65c68142fd2440ec1936d7c4",
+          "rows": 84046,
+          "selection": "exact TIC ID"
+        }
+      },
+      "tars": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 234338669,
+            "same_id": true,
+            "ra_deg": 37.4540003,
+            "dec_deg": -69.1012106,
+            "separation_arcsec": 1.3802112110366962,
+            "periods": [
+              {
+                "period_days": 0.4595,
+                "uncertainty_days": 0.0006,
+                "period_comparison": {
+                  "measured_over_published": 0.9991827813051272,
+                  "closest_factor": 1.0,
+                  "fractional_offset_from_factor": -0.0008172186948728344
+                }
+              }
+            ],
+            "gaia_dr3_id": "4693570811172518528",
+            "sectors": 11,
+            "possible_binary": false,
+            "multiple_periods": false,
+            "doubled_period": true,
+            "contaminants": 0.0
+          }
+        ],
+        "receipt": {
+          "url": "https://zenodo.org/records/19917941/files/tars_table_2.csv.zip?download=1",
+          "sha256": "5f774c42d440516c3a679d288fe60f4877d6cd695019e93127bbe704b38d4df6",
+          "rows": 1046317,
+          "selection": "exact TIC ID"
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "role": "exploration",
+      "measured_period_days": 0.38072205716364493,
+      "ra_deg": 9.91944566354615,
+      "dec_deg": -62.403467847029,
+      "radius_arcsec": 42,
+      "tic_id": 234495456,
+      "vsx": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "B/vsx/vsx",
+          "description": "Variable Star indeX, Version 2026-10-18 (\\originalcolumnnames)",
+          "query_date_utc": "2026-11-13T23:22:57",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=9.91944566+-62.40346785&-c.rs=42&-out=OID%2CName%2CV%2CRAJ2000%2CDEJ2000%2CType%2Cl_Period%2CPeriod%2Cu_Period&-out.max=1000",
+          "response_sha256": "b7ee0a112e79b05acbf458db8ab6441cb25e11a5cee55ac6932781af7058ec17",
+          "bytes": 2470,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_summary": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/varisum",
+          "description": "Information on where a source_id can be found in the different Variability tables and statistical parameters of time series, using only transits not rejected (11754237 sources) (vari_summary)",
+          "query_date_utc": "2026-11-13T23:23:01",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvarisum&-c=9.91944566+-62.40346785&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS&-out.max=1000",
+          "response_sha256": "218902fcdf56f6516543f5ae365093aaadf42bbb35cda03abe42b7e6dde6f956",
+          "bytes": 2186,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_classification": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/vclassre",
+          "description": "Variability classification results of all classifiers (vari_classifier_result)",
+          "query_date_utc": "2026-11-13T23:23:01",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvclassre&-c=9.91944566+-62.40346785&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS%2CClass%2CClassSc&-out.max=1000",
+          "response_sha256": "50c0a34e5678ebcb6258e37157dc4d3b826ea7efe950d23fa34bab437650ee82",
+          "bytes": 2257,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "tess_svc": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 234495456,
+            "same_id": true,
+            "ra_deg": 9.91944566354615,
+            "dec_deg": -62.403467847029,
+            "separation_arcsec": 0.0,
+            "periods": [
+              {
+                "period_days": 0.380574,
+                "uncertainty_days": 0.002035,
+                "period_comparison": {
+                  "measured_over_published": 1.0003890364650367,
+                  "closest_factor": 1.0,
+                  "fractional_offset_from_factor": 0.0003890364650367406
+                }
+              }
+            ],
+            "sector": "sp1",
+            "solution": "1sin"
+          }
+        ],
+        "receipt": {
+          "url": "https://archive.stsci.edu/hlsps/tess-svc/hlsp_tess-svc_tess_lcf_all-s0001-s0026_tess_v1.0_cat.csv",
+          "sha256": "6c0ba9aa391b007f9c803f3d847c387adfcf7a7b65c68142fd2440ec1936d7c4",
+          "rows": 84046,
+          "selection": "exact TIC ID"
+        }
+      },
+      "tars": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 234495456,
+            "same_id": true,
+            "ra_deg": 9.9204698,
+            "dec_deg": -62.4037275,
+            "separation_arcsec": 1.9469820473246984,
+            "periods": [
+              {
+                "period_days": 0.3806,
+                "uncertainty_days": 0.0006,
+                "period_comparison": {
+                  "measured_over_published": 1.0003206966990146,
+                  "closest_factor": 1.0,
+                  "fractional_offset_from_factor": 0.00032069669901457765
+                }
+              }
+            ],
+            "gaia_dr3_id": "4902468056125369856",
+            "sectors": 6,
+            "possible_binary": false,
+            "multiple_periods": false,
+            "doubled_period": false,
+            "contaminants": 0.0
+          }
+        ],
+        "receipt": {
+          "url": "https://zenodo.org/records/19917941/files/tars_table_2.csv.zip?download=1",
+          "sha256": "5f774c42d440516c3a679d288fe60f4877d6cd695019e93127bbe704b38d4df6",
+          "rows": 1046317,
+          "selection": "exact TIC ID"
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "role": "exploration",
+      "measured_period_days": 0.6997847811148717,
+      "ra_deg": 56.4191410064877,
+      "dec_deg": -75.1534152645695,
+      "radius_arcsec": 42,
+      "tic_id": 238194430,
+      "vsx": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "B/vsx/vsx",
+          "description": "Variable Star indeX, Version 2026-10-18 (\\originalcolumnnames)",
+          "query_date_utc": "2026-11-13T23:23:18",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=56.41914101+-75.15341526&-c.rs=42&-out=OID%2CName%2CV%2CRAJ2000%2CDEJ2000%2CType%2Cl_Period%2CPeriod%2Cu_Period&-out.max=1000",
+          "response_sha256": "cc4a907a983ffc94bcdf5405fd9013a6a997e56864906291e21065dbbe028530",
+          "bytes": 2471,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_summary": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/varisum",
+          "description": "Information on where a source_id can be found in the different Variability tables and statistical parameters of time series, using only transits not rejected (11754237 sources) (vari_summary)",
+          "query_date_utc": "2026-11-13T23:23:18",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvarisum&-c=56.41914101+-75.15341526&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS&-out.max=1000",
+          "response_sha256": "3712f3fbf6e5bc264ab282b67c6d73f9b4007fa100b2d9a21696ab523c11fffe",
+          "bytes": 2187,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_classification": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/vclassre",
+          "description": "Variability classification results of all classifiers (vari_classifier_result)",
+          "query_date_utc": "2026-11-13T23:23:18",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvclassre&-c=56.41914101+-75.15341526&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS%2CClass%2CClassSc&-out.max=1000",
+          "response_sha256": "a65d6bcfb7f1bb9b51171aadb52ac1d920d2dfcd0ecae5d14d034b7ad889720c",
+          "bytes": 2258,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "tess_svc": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 238194430,
+            "same_id": true,
+            "ra_deg": 56.4191410064877,
+            "dec_deg": -75.1534152645695,
+            "separation_arcsec": 0.0,
+            "periods": [
+              {
+                "period_days": 0.700267,
+                "uncertainty_days": 0.007123,
+                "period_comparison": {
+                  "measured_over_published": 0.9993113785382887,
+                  "closest_factor": 1.0,
+                  "fractional_offset_from_factor": -0.0006886214617113362
+                }
+              }
+            ],
+            "sector": "sp12",
+            "solution": "1sin"
+          }
+        ],
+        "receipt": {
+          "url": "https://archive.stsci.edu/hlsps/tess-svc/hlsp_tess-svc_tess_lcf_all-s0001-s0026_tess_v1.0_cat.csv",
+          "sha256": "6c0ba9aa391b007f9c803f3d847c387adfcf7a7b65c68142fd2440ec1936d7c4",
+          "rows": 84046,
+          "selection": "exact TIC ID"
+        }
+      },
+      "tars": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 238194430,
+            "same_id": true,
+            "ra_deg": 56.420258,
+            "dec_deg": -75.1533062,
+            "separation_arcsec": 1.102631163805706,
+            "periods": [
+              {
+                "period_days": 0.7001,
+                "uncertainty_days": 0.0008,
+                "period_comparison": {
+                  "measured_over_published": 0.9995497516281557,
+                  "closest_factor": 1.0,
+                  "fractional_offset_from_factor": -0.00045024837184426403
+                }
+              }
+            ],
+            "gaia_dr3_id": "4628964641797092352",
+            "sectors": 26,
+            "possible_binary": false,
+            "multiple_periods": false,
+            "doubled_period": false,
+            "contaminants": 0.0
+          }
+        ],
+        "receipt": {
+          "url": "https://zenodo.org/records/19917941/files/tars_table_2.csv.zip?download=1",
+          "sha256": "5f774c42d440516c3a679d288fe60f4877d6cd695019e93127bbe704b38d4df6",
+          "rows": 1046317,
+          "selection": "exact TIC ID"
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "role": "exploration",
+      "measured_period_days": 1.6564827042710584,
+      "ra_deg": 105.813097,
+      "dec_deg": -59.178104,
+      "radius_arcsec": 42,
+      "tic_id": 279511712,
+      "vsx": {
+        "status": "ok",
+        "matches": [
+          {
+            "source_id": "6203",
+            "name": "V0450 Car",
+            "variability_flag": "0",
+            "class": "SPB",
+            "period_days": 1.6518,
+            "period_limit_flag": null,
+            "period_uncertainty_flag": null,
+            "period_comparison": {
+              "measured_over_published": 1.0028349099594736,
+              "closest_factor": 1.0,
+              "fractional_offset_from_factor": 0.0028349099594735527
+            },
+            "ra_deg": 105.81292,
+            "dec_deg": -59.17811,
+            "separation_arcsec": 0.3271965712496454
+          }
+        ],
+        "receipt": {
+          "table": "B/vsx/vsx",
+          "description": "Variable Star indeX, Version 2026-10-18 (\\originalcolumnnames)",
+          "query_date_utc": "2026-11-13T23:23:08",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=105.81309700+-59.17810400&-c.rs=42&-out=OID%2CName%2CV%2CRAJ2000%2CDEJ2000%2CType%2Cl_Period%2CPeriod%2Cu_Period&-out.max=1000",
+          "response_sha256": "58381cf747cffa5598f96495f51f8e0dc3932f7d1c3cd3d1e27a3385e148e5df",
+          "bytes": 2784,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_summary": {
+        "status": "ok",
+        "matches": [
+          {
+            "source_id": "5480486644608749696",
+            "ra_deg": 105.81282539809,
+            "dec_deg": -59.17804664049,
+            "separation_arcsec": 0.5418678117294726
+          }
+        ],
+        "receipt": {
+          "table": "I/358/varisum",
+          "description": "Information on where a source_id can be found in the different Variability tables and statistical parameters of time series, using only transits not rejected (11754237 sources) (vari_summary)",
+          "query_date_utc": "2026-11-13T23:23:11",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvarisum&-c=105.81309700+-59.17810400&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS&-out.max=1000",
+          "response_sha256": "c4bec4d8acd1ad0f3abb15049db8f3f99c4cf16a6883705aabc28fea1f12471b",
+          "bytes": 2326,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_classification": {
+        "status": "ok",
+        "matches": [
+          {
+            "source_id": "5480486644608749696",
+            "class": "ACV|CP|MCP|ROAM|ROAP|SXARI",
+            "class_score": 0.5517096,
+            "ra_deg": 105.81282539809,
+            "dec_deg": -59.17804664049,
+            "separation_arcsec": 0.5418678117294726
+          }
+        ],
+        "receipt": {
+          "table": "I/358/vclassre",
+          "description": "Variability classification results of all classifiers (vari_classifier_result)",
+          "query_date_utc": "2026-11-13T23:23:11",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvclassre&-c=105.81309700+-59.17810400&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS%2CClass%2CClassSc&-out.max=1000",
+          "response_sha256": "fc08f97c6e9fcea90eb021d0b533406dfe664ae3fc81bd5e4811b148e0857e33",
+          "bytes": 2498,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "tess_svc": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 279511712,
+            "same_id": true,
+            "ra_deg": 105.812911295402,
+            "dec_deg": -59.1781019946886,
+            "separation_arcsec": 0.3426148733949549,
+            "periods": [
+              {
+                "period_days": 1.64967,
+                "uncertainty_days": 0.02665,
+                "period_comparison": {
+                  "measured_over_published": 1.0041297376269547,
+                  "closest_factor": 1.0,
+                  "fractional_offset_from_factor": 0.004129737626954677
+                }
+              }
+            ],
+            "sector": "sp6",
+            "solution": "acf"
+          }
+        ],
+        "receipt": {
+          "url": "https://archive.stsci.edu/hlsps/tess-svc/hlsp_tess-svc_tess_lcf_all-s0001-s0026_tess_v1.0_cat.csv",
+          "sha256": "6c0ba9aa391b007f9c803f3d847c387adfcf7a7b65c68142fd2440ec1936d7c4",
+          "rows": 84046,
+          "selection": "exact TIC ID"
+        }
+      },
+      "tars": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "url": "https://zenodo.org/records/19917941/files/tars_table_2.csv.zip?download=1",
+          "sha256": "5f774c42d440516c3a679d288fe60f4877d6cd695019e93127bbe704b38d4df6",
+          "rows": 1046317,
+          "selection": "exact TIC ID"
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "role": "exploration",
+      "measured_period_days": 0.14897031696700977,
+      "ra_deg": 82.3691044953088,
+      "dec_deg": -58.9128291659983,
+      "radius_arcsec": 42,
+      "tic_id": 382256692,
+      "vsx": {
+        "status": "ok",
+        "matches": [
+          {
+            "source_id": "13669",
+            "name": "BB Dor",
+            "variability_flag": "0",
+            "class": "NL/VY",
+            "period_days": 0.154095,
+            "period_limit_flag": null,
+            "period_uncertainty_flag": null,
+            "period_comparison": {
+              "measured_over_published": 0.9667433529122279,
+              "closest_factor": 1.0,
+              "fractional_offset_from_factor": -0.033256647087772095
+            },
+            "ra_deg": 82.36933,
+            "dec_deg": -58.91294,
+            "separation_arcsec": 0.5787139943265519
+          }
+        ],
+        "receipt": {
+          "table": "B/vsx/vsx",
+          "description": "Variable Star indeX, Version 2026-10-18 (\\originalcolumnnames)",
+          "query_date_utc": "2026-11-13T23:23:11",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=82.36910450+-58.91282917&-c.rs=42&-out=OID%2CName%2CV%2CRAJ2000%2CDEJ2000%2CType%2Cl_Period%2CPeriod%2Cu_Period&-out.max=1000",
+          "response_sha256": "2641a19d32218e43f297e47b0cec8170c16866ef04d3c8667c393b11f25a01eb",
+          "bytes": 2783,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_summary": {
+        "status": "ok",
+        "matches": [
+          {
+            "source_id": "4760105592664097280",
+            "ra_deg": 82.3690885645,
+            "dec_deg": -58.91278814526,
+            "separation_arcsec": 0.1506144591209495
+          }
+        ],
+        "receipt": {
+          "table": "I/358/varisum",
+          "description": "Information on where a source_id can be found in the different Variability tables and statistical parameters of time series, using only transits not rejected (11754237 sources) (vari_summary)",
+          "query_date_utc": "2026-11-13T23:23:14",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvarisum&-c=82.36910450+-58.91282917&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS&-out.max=1000",
+          "response_sha256": "06126444714074ef36ac953ac7bc498e89ab31b33ec22522bbf906594aa010bd",
+          "bytes": 2325,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_classification": {
+        "status": "ok",
+        "matches": [
+          {
+            "source_id": "4760105592664097280",
+            "class": "CV",
+            "class_score": 0.25242886,
+            "ra_deg": 82.3690885645,
+            "dec_deg": -58.91278814526,
+            "separation_arcsec": 0.1506144591209495
+          }
+        ],
+        "receipt": {
+          "table": "I/358/vclassre",
+          "description": "Variability classification results of all classifiers (vari_classifier_result)",
+          "query_date_utc": "2026-11-13T23:23:11",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvclassre&-c=82.36910450+-58.91282917&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS%2CClass%2CClassSc&-out.max=1000",
+          "response_sha256": "f64b3bc5f965c3bbff93b94cd49dce16684c7af01aa7152a1ee1c44300b6b585",
+          "bytes": 2497,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "tess_svc": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "url": "https://archive.stsci.edu/hlsps/tess-svc/hlsp_tess-svc_tess_lcf_all-s0001-s0026_tess_v1.0_cat.csv",
+          "sha256": "6c0ba9aa391b007f9c803f3d847c387adfcf7a7b65c68142fd2440ec1936d7c4",
+          "rows": 84046,
+          "selection": "exact TIC ID"
+        }
+      },
+      "tars": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "url": "https://zenodo.org/records/19917941/files/tars_table_2.csv.zip?download=1",
+          "sha256": "5f774c42d440516c3a679d288fe60f4877d6cd695019e93127bbe704b38d4df6",
+          "rows": 1046317,
+          "selection": "exact TIC ID"
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "role": "exploration",
+      "measured_period_days": 0.37121542739217217,
+      "ra_deg": 17.670865460335,
+      "dec_deg": -60.3217694071467,
+      "radius_arcsec": 42,
+      "tic_id": 425975034,
+      "vsx": {
+        "status": "ok",
+        "matches": [
+          {
+            "source_id": "37031",
+            "name": "BB Tuc",
+            "variability_flag": "0",
+            "class": "EA/SD:",
+            "period_days": null,
+            "period_limit_flag": null,
+            "period_uncertainty_flag": null,
+            "period_comparison": null,
+            "ra_deg": 17.69058,
+            "dec_deg": -60.32425,
+            "separation_arcsec": 36.256085826905746
+          }
+        ],
+        "receipt": {
+          "table": "B/vsx/vsx",
+          "description": "Variable Star indeX, Version 2026-10-18 (\\originalcolumnnames)",
+          "query_date_utc": "2026-11-13T23:23:04",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=17.67086546+-60.32176941&-c.rs=42&-out=OID%2CName%2CV%2CRAJ2000%2CDEJ2000%2CType%2Cl_Period%2CPeriod%2Cu_Period&-out.max=1000",
+          "response_sha256": "ac314b43b9fc4053167c9a314baf6a866a3d557a51257500c3e391c678ad2c40",
+          "bytes": 2783,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_summary": {
+        "status": "ok",
+        "matches": [
+          {
+            "source_id": "4902935692165069056",
+            "ra_deg": 17.69063619523,
+            "dec_deg": -60.32427095514,
+            "separation_arcsec": 36.37176447334729
+          }
+        ],
+        "receipt": {
+          "table": "I/358/varisum",
+          "description": "Information on where a source_id can be found in the different Variability tables and statistical parameters of time series, using only transits not rejected (11754237 sources) (vari_summary)",
+          "query_date_utc": "2026-11-13T23:23:04",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvarisum&-c=17.67086546+-60.32176941&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS&-out.max=1000",
+          "response_sha256": "3ed3658520a24c26c3152d63f2026b73a8d50176747c7a7b1a4925dffea7cc60",
+          "bytes": 2325,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_classification": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/vclassre",
+          "description": "Variability classification results of all classifiers (vari_classifier_result)",
+          "query_date_utc": "2026-11-13T23:23:04",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvclassre&-c=17.67086546+-60.32176941&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS%2CClass%2CClassSc&-out.max=1000",
+          "response_sha256": "da6d6d19f0172e809b257a02276fb6662d9b9abbed83acee2650f42023309138",
+          "bytes": 2258,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "tess_svc": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "url": "https://archive.stsci.edu/hlsps/tess-svc/hlsp_tess-svc_tess_lcf_all-s0001-s0026_tess_v1.0_cat.csv",
+          "sha256": "6c0ba9aa391b007f9c803f3d847c387adfcf7a7b65c68142fd2440ec1936d7c4",
+          "rows": 84046,
+          "selection": "exact TIC ID"
+        }
+      },
+      "tars": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 425975034,
+            "same_id": true,
+            "ra_deg": 17.67054,
+            "dec_deg": -60.3219768,
+            "separation_arcsec": 0.9455004474804845,
+            "periods": [
+              {
+                "period_days": 0.3719,
+                "uncertainty_days": 0.0014,
+                "period_comparison": {
+                  "measured_over_published": 0.9981592562306323,
+                  "closest_factor": 1.0,
+                  "fractional_offset_from_factor": -0.0018407437693677142
+                }
+              }
+            ],
+            "gaia_dr3_id": "4902935726524406784",
+            "sectors": 1,
+            "possible_binary": false,
+            "multiple_periods": false,
+            "doubled_period": false,
+            "contaminants": 2.0
+          }
+        ],
+        "receipt": {
+          "url": "https://zenodo.org/records/19917941/files/tars_table_2.csv.zip?download=1",
+          "sha256": "5f774c42d440516c3a679d288fe60f4877d6cd695019e93127bbe704b38d4df6",
+          "rows": 1046317,
+          "selection": "exact TIC ID"
+        }
+      },
+      "status": "ok"
+    },
+    {
+      "role": "exploration",
+      "measured_period_days": 4.684800735743462,
+      "ra_deg": 43.9445009804075,
+      "dec_deg": -72.3225503224863,
+      "radius_arcsec": 42,
+      "tic_id": 426029868,
+      "vsx": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "B/vsx/vsx",
+          "description": "Variable Star indeX, Version 2026-10-18 (\\originalcolumnnames)",
+          "query_date_utc": "2026-11-13T23:23:18",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=43.94450098+-72.32255032&-c.rs=42&-out=OID%2CName%2CV%2CRAJ2000%2CDEJ2000%2CType%2Cl_Period%2CPeriod%2Cu_Period&-out.max=1000",
+          "response_sha256": "d4f6fe8823cb12aa1fa988d1420780f73a4226481d8615c6ac1c366c8899600f",
+          "bytes": 2471,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_summary": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/varisum",
+          "description": "Information on where a source_id can be found in the different Variability tables and statistical parameters of time series, using only transits not rejected (11754237 sources) (vari_summary)",
+          "query_date_utc": "2026-11-13T23:23:21",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvarisum&-c=43.94450098+-72.32255032&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS&-out.max=1000",
+          "response_sha256": "b5ed2288b13bb4a23518b12ebfa730da36603bd8bb2596cea0a4bb59086bbe3d",
+          "bytes": 2187,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "gaia_classification": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "table": "I/358/vclassre",
+          "description": "Variability classification results of all classifiers (vari_classifier_result)",
+          "query_date_utc": "2026-11-13T23:23:21",
+          "query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fvclassre&-c=43.94450098+-72.32255032&-c.rs=42&-out=Source%2CRA_ICRS%2CDE_ICRS%2CClass%2CClassSc&-out.max=1000",
+          "response_sha256": "6ecb55cb027b781e94d727797e7b4e545f5c23279338b5e85ab1209309451ddb",
+          "bytes": 2258,
+          "cached_at_utc": "2026-11-13T23:30:46+00:00"
+        }
+      },
+      "tess_svc": {
+        "status": "ok",
+        "matches": [
+          {
+            "tic_id": 426029868,
+            "same_id": true,
+            "ra_deg": 43.9445009804075,
+            "dec_deg": -72.3225503224863,
+            "separation_arcsec": 0.0,
+            "periods": [
+              {
+                "period_days": 5.60519,
+                "uncertainty_days": 0.4681,
+                "period_comparison": {
+                  "measured_over_published": 0.8357969552759963,
+                  "closest_factor": 1.0,
+                  "fractional_offset_from_factor": -0.1642030447240037
+                }
+              }
+            ],
+            "sector": "13",
+            "solution": "1sin"
+          }
+        ],
+        "receipt": {
+          "url": "https://archive.stsci.edu/hlsps/tess-svc/hlsp_tess-svc_tess_lcf_all-s0001-s0026_tess_v1.0_cat.csv",
+          "sha256": "6c0ba9aa391b007f9c803f3d847c387adfcf7a7b65c68142fd2440ec1936d7c4",
+          "rows": 84046,
+          "selection": "exact TIC ID"
+        }
+      },
+      "tars": {
+        "status": "ok",
+        "matches": [],
+        "receipt": {
+          "url": "https://zenodo.org/records/19917941/files/tars_table_2.csv.zip?download=1",
+          "sha256": "5f774c42d440516c3a679d288fe60f4877d6cd695019e93127bbe704b38d4df6",
+          "rows": 1046317,
+          "selection": "exact TIC ID"
+        }
+      },
+      "status": "ok"
+    }
+  ]
+}

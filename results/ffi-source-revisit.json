@@ -1,0 +1,1141 @@
+{
+  "schema_version": 1,
+  "input_plan_sha256": "c79868f23ec3030b8c87060be01e99739367f26f3cbc92670b68b426b7e5545a",
+  "sectors": [
+    {
+      "product": {
+        "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=77.0&dec=-69.2&y=21&x=21&units=px&sector=1",
+        "sector": 1,
+        "camera": 4,
+        "ccd": 1,
+        "data_release": 42,
+        "science_sha256": "9deb5df89acfbe0198137740e5a4e14264a512870a4b8986711e23f42c871788",
+        "retrieved_fits_sha256": "5df12859bf74f1da5a6f03456de411f0605b7a4517dff272fe9e2496d94f5d2e",
+        "retrieved_fits_bytes": 11433600,
+        "input_images": 1282,
+        "quality_and_finite_pass": 1267,
+        "first_parent_ffi": "tess2018206192942-s0001-4-1-0120-s_ffi",
+        "last_parent_ffi": "tess2018234152941-s0001-4-1-0120-s_ffi",
+        "parent_ffi_list_sha256": "af8b7063fc8fc375ff80dc20ae862bd126e51a57d1c7ec70791cfbe1deecd08b",
+        "start_btjd": 1325.323974336618,
+        "stop_btjd": 1353.1575895843034,
+        "time_reference": "BJD_TDB - 2457000"
+      },
+      "blind_search": {
+        "eligible_pixels": 289,
+        "above_threshold_pixels": 14,
+        "spatial_peaks": 5,
+        "frequency_trials": 1164,
+        "valid_cadences": 1267
+      },
+      "cases": [
+        {
+          "source_id": "ICRS-77.05502-69.23710",
+          "ra_deg": 77.05501659622759,
+          "dec_deg": -69.23709819715441,
+          "role": "unresolved_source",
+          "fixed_period_days": 1.1122091169907555,
+          "outcome": "measured",
+          "nearest_blind_peak": {
+            "peak_x": 18,
+            "peak_y": 10,
+            "centroid_x": 17.294429566253584,
+            "centroid_y": 9.701601225943964,
+            "ra_deg": 77.05501659622759,
+            "dec_deg": -69.23709819715441,
+            "period_days": 1.1122091169907555,
+            "variance_fraction": 0.32029461641578816,
+            "semiamplitude_e_per_s": 1.1806508320727374,
+            "amplitude_snr_proxy": 43.10632665028329,
+            "negative_to_positive_flux": 0.10315081559279592,
+            "independent_nuisance_fit_variance_fraction": 0.34550983563116805,
+            "core_flux_fraction": 0.7262514068290531,
+            "max_field_regressor_correlation": 0.4292221893710168,
+            "artifact_flags": []
+          },
+          "nearest_blind_offset_arcsec": 0.0,
+          "peak_in_matching_radius": true,
+          "fixed_frequency_power": 0.013858579658365965,
+          "fixed_frequency_semiamplitude_e_per_s": 0.6106169217753067,
+          "fixed_frequency_spectral_window": 1.1050181029725044e-06,
+          "field_max_abs_nuisance_correlation": 0.7910295537346429,
+          "negative_to_positive_flux": 0.25011479788822,
+          "fixed_frequency_center_icrs_deg": [
+            77.05218240683585,
+            -69.2356275295193
+          ],
+          "fixed_frequency_center_offset_arcsec": 6.412047021194046,
+          "fixed_frequency_signal_map_e_per_s": [
+            [
+              0.32113644500629435,
+              0.2056699601120928,
+              0.1175486169065959,
+              0.12955591572795389,
+              -0.016553280139403048
+            ],
+            [
+              -1.4148388608652809,
+              0.22785200364550043,
+              0.6579714906261502,
+              0.9937554108114672,
+              0.07696671880782063
+            ],
+            [
+              0.303970941354766,
+              0.45158110262070494,
+              0.5295282174471047,
+              1.2015745910794047,
+              0.03278766026881681
+            ],
+            [
+              0.23178769150388265,
+              0.17901008046485892,
+              0.33242107064124204,
+              0.1772196287855932,
+              -0.0033966673545316184
+            ],
+            [
+              -0.041252415722972335,
+              0.16293727196361577,
+              -0.13966350992569593,
+              0.09993303243461274,
+              0.02664477606422247
+            ]
+          ],
+          "x_pixel": 17,
+          "y_pixel": 10,
+          "phase_bins_e_per_s": [
+            -0.5193168544382956,
+            -0.64348974806548,
+            -0.6108273740672566,
+            -0.5290170525458482,
+            -0.8737484986804257,
+            -0.5504326639116237,
+            -0.703454666311157,
+            0.888533475678157,
+            -0.023667740361509454,
+            -0.008909525234654396,
+            0.18753955808190448,
+            0.5088510977389133,
+            0.27490675401939507,
+            0.2735762956949326,
+            0.3619062309086718,
+            0.30306736694540887,
+            1.9332799707461987,
+            -0.24350592050607645,
+            0.09608840488472906,
+            -0.018410069639950035
+          ],
+          "phase_reference_btjd": 1325.0
+        },
+        {
+          "source_id": "ICRS-76.90371-69.21339",
+          "ra_deg": 76.9037129130824,
+          "dec_deg": -69.21339269090082,
+          "role": "known_cepheid_witness",
+          "fixed_period_days": 1.2220665499124344,
+          "outcome": "measured",
+          "nearest_blind_peak": {
+            "peak_x": 9,
+            "peak_y": 4,
+            "centroid_x": 8.96433954200538,
+            "centroid_y": 4.019142437610225,
+            "ra_deg": 76.9037129130824,
+            "dec_deg": -69.21339269090082,
+            "period_days": 1.2220665499124344,
+            "variance_fraction": 0.5333783267627961,
+            "semiamplitude_e_per_s": 1.7928654772633597,
+            "amplitude_snr_proxy": 66.94868523635067,
+            "negative_to_positive_flux": 0.019197127746572038,
+            "independent_nuisance_fit_variance_fraction": 0.5261977569738346,
+            "core_flux_fraction": 0.8769062230581024,
+            "max_field_regressor_correlation": 0.44096844566795046,
+            "artifact_flags": []
+          },
+          "nearest_blind_offset_arcsec": 0.0,
+          "peak_in_matching_radius": true,
+          "fixed_frequency_power": 0.5261977569738342,
+          "fixed_frequency_semiamplitude_e_per_s": 1.8307926041503617,
+          "fixed_frequency_spectral_window": 0.0002206084302010591,
+          "field_max_abs_nuisance_correlation": 0.44096844566795046,
+          "negative_to_positive_flux": 0.019197127746572038,
+          "fixed_frequency_center_icrs_deg": [
+            76.9037129130824,
+            -69.21339269090082
+          ],
+          "fixed_frequency_center_offset_arcsec": 0.0,
+          "fixed_frequency_signal_map_e_per_s": [
+            [
+              -0.029625977392417124,
+              0.031432016308275204,
+              0.04594694829355697,
+              0.10847776033986677,
+              -0.01096334748364439
+            ],
+            [
+              0.0015263245905402026,
+              0.15693261015976767,
+              0.44503995661815704,
+              0.18514344920515075,
+              0.018872173515419387
+            ],
+            [
+              -0.044713356114438454,
+              0.637407939390978,
+              1.7957107166937736,
+              0.27059807242374906,
+              0.13689491078561156
+            ],
+            [
+              -0.0009073760195627695,
+              0.24876532488398406,
+              0.5079771401054713,
+              0.039695676057521126,
+              0.04095325396172804
+            ],
+            [
+              0.046740564354320877,
+              0.03645674446848071,
+              0.0986898037586675,
+              0.035825694100472844,
+              -0.007646372229109542
+            ]
+          ],
+          "x_pixel": 9,
+          "y_pixel": 4,
+          "phase_bins_e_per_s": [
+            1.2230299851444413,
+            1.707951004402374,
+            2.19594436266072,
+            1.804812776060992,
+            1.632415498203686,
+            1.51097584117927,
+            1.0061537592020184,
+            0.5454324968123696,
+            0.004920450100373956,
+            -0.4442883781211387,
+            -0.7582950848313099,
+            -1.0825260109323136,
+            -1.4573989425503653,
+            -1.6596439988154799,
+            -1.6207672861712235,
+            -1.696267272825637,
+            -1.2663112652222068,
+            -1.222531018993213,
+            -0.3333369449562388,
+            0.4949247776277486
+          ],
+          "phase_reference_btjd": 1325.0
+        }
+      ]
+    },
+    {
+      "product": {
+        "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=77.0&dec=-69.2&y=21&x=21&units=px&sector=2",
+        "sector": 2,
+        "camera": 4,
+        "ccd": 2,
+        "data_release": 42,
+        "science_sha256": "48afe33a1a5305afc7aeca780a8699e0f9363d7f9b0f3ccf1b45058b06a8dd69",
+        "retrieved_fits_sha256": "642f5fef30f6bd76e849951fe5cbe4306f0ddb51bb7671e48ede1d34bc814c78",
+        "retrieved_fits_bytes": 11105280,
+        "input_images": 1245,
+        "quality_and_finite_pass": 1196,
+        "first_parent_ffi": "tess2018235142941-s0002-4-2-0121-s_ffi",
+        "last_parent_ffi": "tess2018262232940-s0002-4-2-0121-s_ffi",
+        "parent_ffi_list_sha256": "cadf96a0d0d825a0459a6054ffd7b1cd5ad1d7587ce8290db2ef9f7b98797d4e",
+        "start_btjd": 1354.136746704879,
+        "stop_btjd": 1381.4906090904935,
+        "time_reference": "BJD_TDB - 2457000"
+      },
+      "blind_search": {
+        "eligible_pixels": 289,
+        "above_threshold_pixels": 59,
+        "spatial_peaks": 14,
+        "frequency_trials": 1144,
+        "valid_cadences": 1196
+      },
+      "cases": [
+        {
+          "source_id": "ICRS-77.05502-69.23710",
+          "ra_deg": 77.05501659622759,
+          "dec_deg": -69.23709819715441,
+          "role": "unresolved_source",
+          "fixed_period_days": 1.1122091169907555,
+          "outcome": "measured",
+          "nearest_blind_peak": {
+            "peak_x": 18,
+            "peak_y": 14,
+            "centroid_x": 17.422533780680517,
+            "centroid_y": 13.721801741330193,
+            "ra_deg": 77.05503380726954,
+            "dec_deg": -69.23884718789313,
+            "period_days": 1.1169381107491858,
+            "variance_fraction": 0.6867332785641276,
+            "semiamplitude_e_per_s": 1.6311175876684763,
+            "amplitude_snr_proxy": 60.924081044729036,
+            "negative_to_positive_flux": 0.06897651584656767,
+            "independent_nuisance_fit_variance_fraction": 0.696182420586668,
+            "core_flux_fraction": 0.7793515672514341,
+            "max_field_regressor_correlation": 0.08489354363768423,
+            "artifact_flags": []
+          },
+          "nearest_blind_offset_arcsec": 6.296404968254357,
+          "peak_in_matching_radius": true,
+          "fixed_frequency_power": 0.46944392988457434,
+          "fixed_frequency_semiamplitude_e_per_s": 1.500611010960819,
+          "fixed_frequency_spectral_window": 0.0008230235349422183,
+          "field_max_abs_nuisance_correlation": 0.14610307593754515,
+          "negative_to_positive_flux": 0.08876386296198495,
+          "fixed_frequency_center_icrs_deg": [
+            77.05123853264158,
+            -69.2358800810484
+          ],
+          "fixed_frequency_center_offset_arcsec": 6.517602097716192,
+          "fixed_frequency_signal_map_e_per_s": [
+            [
+              0.6996655573268954,
+              0.5876345116683556,
+              0.1926583447633962,
+              0.08058860834105482,
+              0.03421397391855854
+            ],
+            [
+              0.8838742180276313,
+              -0.0738856429700404,
+              0.42371945518952514,
+              0.6094127647434432,
+              0.16456589913535083
+            ],
+            [
+              -0.16248112388482244,
+              0.17637399567879464,
+              1.481465515081167,
+              1.7033437468411168,
+              0.15497531305710588
+            ],
+            [
+              -0.15227926128409097,
+              -0.3419751603346239,
+              0.32264880877215224,
+              0.3189545802585002,
+              0.003551582790559671
+            ],
+            [
+              0.1314035428386369,
+              0.1376873308083052,
+              0.07965198183515655,
+              0.0256520749907285,
+              0.019023901230260796
+            ]
+          ],
+          "x_pixel": 17,
+          "y_pixel": 14,
+          "phase_bins_e_per_s": [
+            -1.331005861701756,
+            -1.3862441016249654,
+            -1.296949165772854,
+            -0.7784604366579873,
+            -0.5398742223665812,
+            0.08816270575071423,
+            0.6490231183993928,
+            1.0263199772560119,
+            1.0724540409328802,
+            1.5039906577985673,
+            1.362004751008221,
+            1.4161333251050285,
+            1.1315888154207432,
+            0.7894239941767098,
+            0.25427754094267857,
+            -0.21025453506338757,
+            -0.9497161569477272,
+            -0.9391619506247731,
+            -1.0667292274944595,
+            -1.635358121885652
+          ],
+          "phase_reference_btjd": 1325.0
+        },
+        {
+          "source_id": "ICRS-76.90371-69.21339",
+          "ra_deg": 76.9037129130824,
+          "dec_deg": -69.21339269090082,
+          "role": "known_cepheid_witness",
+          "fixed_period_days": 1.2220665499124344,
+          "outcome": "measured",
+          "nearest_blind_peak": {
+            "peak_x": 12,
+            "peak_y": 5,
+            "centroid_x": 12.251486340006911,
+            "centroid_y": 5.048978728924231,
+            "ra_deg": 76.90668415653779,
+            "dec_deg": -69.21265224696496,
+            "period_days": 1.2162449751714353,
+            "variance_fraction": 0.7066347617124138,
+            "semiamplitude_e_per_s": 1.8309768390088534,
+            "amplitude_snr_proxy": 66.14855986786253,
+            "negative_to_positive_flux": 0.05382383897984696,
+            "independent_nuisance_fit_variance_fraction": 0.7092050235204536,
+            "core_flux_fraction": 0.8209240594586473,
+            "max_field_regressor_correlation": 0.1661337439249065,
+            "artifact_flags": []
+          },
+          "nearest_blind_offset_arcsec": 4.638528228982914,
+          "peak_in_matching_radius": true,
+          "fixed_frequency_power": 0.6948274332321174,
+          "fixed_frequency_semiamplitude_e_per_s": 1.8563026266199327,
+          "fixed_frequency_spectral_window": 0.000954071806430281,
+          "field_max_abs_nuisance_correlation": 0.1661337439249065,
+          "negative_to_positive_flux": 0.03389109310691009,
+          "fixed_frequency_center_icrs_deg": [
+            76.90672378269626,
+            -69.21271037477847
+          ],
+          "fixed_frequency_center_offset_arcsec": 4.564101707521602,
+          "fixed_frequency_signal_map_e_per_s": [
+            [
+              -0.04623849669473922,
+              -0.04095500360609765,
+              -0.04835444706179532,
+              -0.019295708110571845,
+              0.11775868700357116
+            ],
+            [
+              -0.012141865951769441,
+              0.02566266623062413,
+              0.5941499664747425,
+              0.3473591468159664,
+              0.08642873439968124
+            ],
+            [
+              0.05536833955775032,
+              0.41910386024805735,
+              1.8303051438407594,
+              0.7539505183982003,
+              0.04170814423881586
+            ],
+            [
+              0.0073957409431879215,
+              0.0010793120256860494,
+              0.31408177504843543,
+              0.07035161719788692,
+              0.2440009115115236
+            ],
+            [
+              0.1115438763909025,
+              0.059869537897333486,
+              0.18269335981906776,
+              0.1078110862346535,
+              -0.015030743198252278
+            ]
+          ],
+          "x_pixel": 12,
+          "y_pixel": 5,
+          "phase_bins_e_per_s": [
+            2.092949687443445,
+            1.954345087157309,
+            1.6884665040429658,
+            1.5904055302461928,
+            0.9135023844652959,
+            0.4817956244644365,
+            0.05550498702591486,
+            -0.4301851271167763,
+            -0.8412640608677364,
+            -1.1991621917633872,
+            -1.444981977545008,
+            -1.6373817133359672,
+            -1.9063315954558633,
+            -1.6506636485063078,
+            -1.439213756350146,
+            -1.136327091223715,
+            -0.6489462241931917,
+            0.02360710718327969,
+            0.955648289876112,
+            1.4948507363677404
+          ],
+          "phase_reference_btjd": 1325.0
+        }
+      ]
+    },
+    {
+      "product": {
+        "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=77.0&dec=-69.2&y=21&x=21&units=px&sector=3",
+        "sector": 3,
+        "camera": 4,
+        "ccd": 2,
+        "data_release": 42,
+        "science_sha256": "f28b33ab8e2fe8a3e8f489ee295606ea785ec0e276ebeadefee9c037b7cb75e5",
+        "retrieved_fits_sha256": "1643768228c8f336d6451c0beade59fd42c8cb358b8e84a808edf41a1c728468",
+        "retrieved_fits_bytes": 11488320,
+        "input_images": 1288,
+        "quality_and_finite_pass": 1077,
+        "first_parent_ffi": "tess2018263125940-s0003-4-2-0123-s_ffi",
+        "last_parent_ffi": "tess2018290202939-s0003-4-2-0123-s_ffi",
+        "parent_ffi_list_sha256": "fe2919fe0d680b7ce742a395c842bcef38707b269be931811e13e45153095005",
+        "start_btjd": 1382.0534040342682,
+        "stop_btjd": 1409.3655979196965,
+        "time_reference": "BJD_TDB - 2457000"
+      },
+      "blind_search": {
+        "eligible_pixels": 289,
+        "above_threshold_pixels": 50,
+        "spatial_peaks": 13,
+        "frequency_trials": 1143,
+        "valid_cadences": 1077
+      },
+      "cases": [
+        {
+          "source_id": "ICRS-77.05502-69.23710",
+          "ra_deg": 77.05501659622759,
+          "dec_deg": -69.23709819715441,
+          "role": "unresolved_source",
+          "fixed_period_days": 1.1122091169907555,
+          "outcome": "measured",
+          "nearest_blind_peak": {
+            "peak_x": 15,
+            "peak_y": 17,
+            "centroid_x": 14.682816004137631,
+            "centroid_y": 16.487430702256816,
+            "ra_deg": 77.05806960975228,
+            "dec_deg": -69.2379570618984,
+            "period_days": 1.110654851955911,
+            "variance_fraction": 0.6316682293061074,
+            "semiamplitude_e_per_s": 1.558280720465014,
+            "amplitude_snr_proxy": 53.60501230615833,
+            "negative_to_positive_flux": 0.15703625547654268,
+            "independent_nuisance_fit_variance_fraction": 0.6452867395162207,
+            "core_flux_fraction": 0.7404262934754641,
+            "max_field_regressor_correlation": 0.18233549281964656,
+            "artifact_flags": []
+          },
+          "nearest_blind_offset_arcsec": 4.973959505311981,
+          "peak_in_matching_radius": true,
+          "fixed_frequency_power": 0.3760574266221438,
+          "fixed_frequency_semiamplitude_e_per_s": 1.0886122489117371,
+          "fixed_frequency_spectral_window": 0.00026226789397842937,
+          "field_max_abs_nuisance_correlation": 0.15042741342257857,
+          "negative_to_positive_flux": 0.5476678897064335,
+          "fixed_frequency_center_icrs_deg": [
+            77.05741665070363,
+            -69.23785205175359
+          ],
+          "fixed_frequency_center_offset_arcsec": 4.092254260682179,
+          "fixed_frequency_signal_map_e_per_s": [
+            [
+              -1.1636087278604637,
+              -0.995635195789407,
+              0.03845836282080683,
+              -0.20051883637455967,
+              0.018262077296954816
+            ],
+            [
+              -0.3426155110923737,
+              0.574557292749449,
+              0.09415131616667338,
+              0.03327567633586064,
+              -0.0050820903787043015
+            ],
+            [
+              -0.1659848871999009,
+              0.3948630846883216,
+              1.0360008138724506,
+              0.2432230739312725,
+              0.0050820903787043015
+            ],
+            [
+              0.41037268390134113,
+              0.24687056034135427,
+              1.604819807894756,
+              0.36593725091978496,
+              -0.029310050114902193
+            ],
+            [
+              0.19291346784109506,
+              0.03185366922519265,
+              -0.024899345648825073,
+              0.04508173614356461,
+              0.009952214711793951
+            ]
+          ],
+          "x_pixel": 15,
+          "y_pixel": 16,
+          "phase_bins_e_per_s": [
+            -1.114968818839692,
+            -1.1813417331433513,
+            -0.7848204146539874,
+            -0.8091286924708927,
+            -0.1644227935388203,
+            0.13561861885982027,
+            0.5526871159299445,
+            0.8560411643190386,
+            0.8915301104966032,
+            1.1037159793809717,
+            1.026003696676787,
+            0.8667569568127654,
+            0.6539889057185662,
+            0.644773382070012,
+            0.19825024701611227,
+            -0.08145893806751922,
+            -0.34266847004615036,
+            -0.6009981269768283,
+            -1.0729197955743484,
+            -0.9173835763462169
+          ],
+          "phase_reference_btjd": 1325.0
+        },
+        {
+          "source_id": "ICRS-76.90371-69.21339",
+          "ra_deg": 76.9037129130824,
+          "dec_deg": -69.21339269090082,
+          "role": "known_cepheid_witness",
+          "fixed_period_days": 1.2220665499124344,
+          "outcome": "measured",
+          "nearest_blind_peak": {
+            "peak_x": 15,
+            "peak_y": 5,
+            "centroid_x": 15.368534824501506,
+            "centroid_y": 4.9095735350867225,
+            "ra_deg": 76.87925302575422,
+            "dec_deg": -69.21505187758537,
+            "period_days": 2.0268191678169987,
+            "variance_fraction": 0.35811178225899876,
+            "semiamplitude_e_per_s": 1.4232582306954993,
+            "amplitude_snr_proxy": 50.52962820521198,
+            "negative_to_positive_flux": 0.08877355985395367,
+            "independent_nuisance_fit_variance_fraction": 0.35327264035751266,
+            "core_flux_fraction": 0.7258503200665979,
+            "max_field_regressor_correlation": 0.19623755325480285,
+            "artifact_flags": []
+          },
+          "nearest_blind_offset_arcsec": 31.814463899750482,
+          "peak_in_matching_radius": false,
+          "fixed_frequency_power": 0.43109780564973516,
+          "fixed_frequency_semiamplitude_e_per_s": 1.0464556886298935,
+          "fixed_frequency_spectral_window": 0.000662439172075383,
+          "field_max_abs_nuisance_correlation": 0.12786860361287283,
+          "negative_to_positive_flux": 0.022849864913248332,
+          "fixed_frequency_center_icrs_deg": [
+            76.90393633128673,
+            -69.21290801965397
+          ],
+          "fixed_frequency_center_offset_arcsec": 1.7680106525478532,
+          "fixed_frequency_signal_map_e_per_s": [
+            [
+              -0.036373082378743225,
+              -0.0019675264079453605,
+              0.03280294366456129,
+              -0.014354325113181816,
+              -0.00966984674774695
+            ],
+            [
+              0.21060205898365536,
+              0.37800303845360606,
+              0.07388053597559018,
+              0.04193323025872189,
+              0.06916125251555386
+            ],
+            [
+              0.026337947226004126,
+              1.201765136357669,
+              1.030546748594369,
+              0.16202468059178562,
+              0.017473624080231363
+            ],
+            [
+              0.22671710075718807,
+              0.7383843761830384,
+              0.3402257576913411,
+              0.024900462894251477,
+              0.0991508025120952
+            ],
+            [
+              -0.002169557452899453,
+              0.04244431927535241,
+              0.031023879711681947,
+              -0.005522259595691253,
+              -0.038420345913288065
+            ]
+          ],
+          "x_pixel": 15,
+          "y_pixel": 6,
+          "phase_bins_e_per_s": [
+            1.0950670372903561,
+            0.9470895599986652,
+            0.7576508925121751,
+            0.4257140685937318,
+            0.16681103204106312,
+            0.14031375039048558,
+            -0.19470117681450946,
+            -0.3804115995959881,
+            -0.7176304717546192,
+            -0.7452867018377914,
+            -0.8749404732303901,
+            -0.8400606976008712,
+            -1.1416219221612347,
+            -1.0434353519834505,
+            -0.6866019619694013,
+            -0.2728046216399796,
+            0.21406072248266955,
+            0.34049278680733025,
+            1.2037952914593508,
+            1.193237345079204
+          ],
+          "phase_reference_btjd": 1325.0
+        }
+      ]
+    },
+    {
+      "product": {
+        "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=77.0&dec=-69.2&y=21&x=21&units=px&sector=27",
+        "sector": 27,
+        "camera": 4,
+        "ccd": 1,
+        "data_release": 38,
+        "science_sha256": "ac3afb3fe21184f402b390d090265128213e53bc79c8759fb50d215de9d9073e",
+        "retrieved_fits_sha256": "7956bc12a0a595f1a59a375ca714dd61153ec3302ce305ae5d90f20f2ce03c2f",
+        "retrieved_fits_bytes": 29897280,
+        "input_images": 3360,
+        "quality_and_finite_pass": 3351,
+        "first_parent_ffi": "tess2020187183916-s0027-4-1-0189-s_ffi",
+        "last_parent_ffi": "tess2020212030915-s0027-4-1-0189-s_ffi",
+        "parent_ffi_list_sha256": "7470fc5bbd2d8cea8258e726af9b8c44c392564b72e3f2407d5e29144f73ca7c",
+        "start_btjd": 2036.2820241405761,
+        "stop_btjd": 2060.636433949965,
+        "time_reference": "BJD_TDB - 2457000"
+      },
+      "blind_search": {
+        "eligible_pixels": 289,
+        "above_threshold_pixels": 24,
+        "spatial_peaks": 6,
+        "frequency_trials": 1019,
+        "valid_cadences": 3351
+      },
+      "cases": [
+        {
+          "source_id": "ICRS-77.05502-69.23710",
+          "ra_deg": 77.05501659622759,
+          "dec_deg": -69.23709819715441,
+          "role": "unresolved_source",
+          "fixed_period_days": 1.1122091169907555,
+          "outcome": "measured",
+          "nearest_blind_peak": {
+            "peak_x": 17,
+            "peak_y": 7,
+            "centroid_x": 17.051078659174415,
+            "centroid_y": 7.0012460598770305,
+            "ra_deg": 77.05889430638568,
+            "dec_deg": -69.24025954681206,
+            "period_days": 1.0952779438135087,
+            "variance_fraction": 0.5271769178993386,
+            "semiamplitude_e_per_s": 2.088228760520784,
+            "amplitude_snr_proxy": 69.2430590110395,
+            "negative_to_positive_flux": 0.24028612906928515,
+            "independent_nuisance_fit_variance_fraction": 0.5300279872024563,
+            "core_flux_fraction": 0.9222116940872584,
+            "max_field_regressor_correlation": 0.11666205615681122,
+            "artifact_flags": []
+          },
+          "nearest_blind_offset_arcsec": 12.410099461413935,
+          "peak_in_matching_radius": true,
+          "fixed_frequency_power": 0.32502814301989436,
+          "fixed_frequency_semiamplitude_e_per_s": 1.6522948436735754,
+          "fixed_frequency_spectral_window": 3.511953780239009e-05,
+          "field_max_abs_nuisance_correlation": 0.11666205615681122,
+          "negative_to_positive_flux": 0.3509143266878384,
+          "fixed_frequency_center_icrs_deg": [
+            77.05892239167072,
+            -69.24026887346272
+          ],
+          "fixed_frequency_center_offset_arcsec": 12.455196381668104,
+          "fixed_frequency_signal_map_e_per_s": [
+            [
+              -0.008444311140838661,
+              0.04509287624457527,
+              0.07430646328114587,
+              -0.003955527097171471,
+              -0.041381538715532545
+            ],
+            [
+              -0.06915270859187722,
+              0.10396157579061217,
+              0.3355266975806863,
+              0.1403748430021306,
+              0.0003545115939971987
+            ],
+            [
+              -0.2431923375178038,
+              0.3564594181215229,
+              1.6436892799101335,
+              0.22180155398738186,
+              -0.025753684746756725
+            ],
+            [
+              -0.539120353782034,
+              -0.3010758978407899,
+              0.4052094148001274,
+              0.19065441826652355,
+              0.035246119021495846
+            ],
+            [
+              0.004981341884560075,
+              -0.025261389670974882,
+              0.047690255335719425,
+              -0.022972068232534597,
+              0.043148086297060614
+            ]
+          ],
+          "x_pixel": 17,
+          "y_pixel": 7,
+          "phase_bins_e_per_s": [
+            1.467324000130805,
+            1.5405381668194145,
+            1.592554590319552,
+            1.2468577819238014,
+            1.18940717691519,
+            1.0233361455382657,
+            0.6942425066616881,
+            0.04523732274670794,
+            -0.6590122431517432,
+            -1.1642808777715048,
+            -1.3240776859319738,
+            -1.4367860884547514,
+            -1.473364589646567,
+            -1.5779207239177886,
+            -1.4277707748661037,
+            -1.1167729024665227,
+            -0.7466531520766442,
+            0.01282135533986746,
+            0.7661241538066234,
+            1.2060458978436308
+          ],
+          "phase_reference_btjd": 1325.0
+        },
+        {
+          "source_id": "ICRS-76.90371-69.21339",
+          "ra_deg": 76.9037129130824,
+          "dec_deg": -69.21339269090082,
+          "role": "known_cepheid_witness",
+          "fixed_period_days": 1.2220665499124344,
+          "outcome": "measured",
+          "nearest_blind_peak": {
+            "peak_x": 7,
+            "peak_y": 5,
+            "centroid_x": 6.6380375049717095,
+            "centroid_y": 4.822464349097975,
+            "ra_deg": 76.9019727308326,
+            "dec_deg": -69.21313890246937,
+            "period_days": 1.2185131001462959,
+            "variance_fraction": 0.47913021824600843,
+            "semiamplitude_e_per_s": 1.6496286236071123,
+            "amplitude_snr_proxy": 57.87728085542781,
+            "negative_to_positive_flux": 0.01129209311733618,
+            "independent_nuisance_fit_variance_fraction": 0.48237468498678904,
+            "core_flux_fraction": 0.875394483995286,
+            "max_field_regressor_correlation": 0.07013904829584501,
+            "artifact_flags": []
+          },
+          "nearest_blind_offset_arcsec": 2.4036745229403294,
+          "peak_in_matching_radius": true,
+          "fixed_frequency_power": 0.48033296633410155,
+          "fixed_frequency_semiamplitude_e_per_s": 1.682562716785646,
+          "fixed_frequency_spectral_window": 0.00012793893506204745,
+          "field_max_abs_nuisance_correlation": 0.07013904829584501,
+          "negative_to_positive_flux": 0.008732384587625402,
+          "fixed_frequency_center_icrs_deg": [
+            76.9019502701014,
+            -69.21316218479097
+          ],
+          "fixed_frequency_center_offset_arcsec": 2.3999867319251003,
+          "fixed_frequency_signal_map_e_per_s": [
+            [
+              0.11337378458886098,
+              0.11473411525638587,
+              0.06504679241485709,
+              -0.0009223931364057067,
+              0.008035096353514452
+            ],
+            [
+              0.13565108457452885,
+              0.5281879867906595,
+              0.4819526057241986,
+              0.11764079450752661,
+              0.052555123548512675
+            ],
+            [
+              0.04098032061929932,
+              0.9650111130030448,
+              1.643518875589717,
+              0.1665724576972461,
+              0.038712067267851355
+            ],
+            [
+              0.01189200679948093,
+              0.22107714544832208,
+              0.37317570234291786,
+              0.10532870522943642,
+              -0.01957473546744788
+            ],
+            [
+              0.014624501192580033,
+              0.06412413476258773,
+              0.01831832439558498,
+              0.024800354143021758,
+              -0.025830905675438758
+            ]
+          ],
+          "x_pixel": 7,
+          "y_pixel": 5,
+          "phase_bins_e_per_s": [
+            -0.6329261955602167,
+            0.10305225754359565,
+            0.9264429764443809,
+            1.4628438211684192,
+            1.8152155677410895,
+            1.9862216285674636,
+            1.7256628717486735,
+            1.406070498267282,
+            0.6940204155048773,
+            0.5616633715046596,
+            0.05487801088027116,
+            -0.22215018709426088,
+            -0.6556042564955286,
+            -0.861286720235323,
+            -1.2676492030335385,
+            -1.4965711680739155,
+            -1.5220848422402335,
+            -1.494217020753373,
+            -1.4218850174133884,
+            -1.0878812081367357
+          ],
+          "phase_reference_btjd": 1325.0
+        }
+      ]
+    },
+    {
+      "product": {
+        "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=77.0&dec=-69.2&y=21&x=21&units=px&sector=28",
+        "sector": 28,
+        "camera": 4,
+        "ccd": 1,
+        "data_release": 41,
+        "science_sha256": "10a99f26f7c95b7fe61dc30281df7097bc5d97d58cdbfca8e61a10aaa4864747",
+        "retrieved_fits_sha256": "c8163e243124365c9f4bca27ea992df2fa7cb878ebccc1d022396a1246f88a59",
+        "retrieved_fits_bytes": 30821760,
+        "input_images": 3464,
+        "quality_and_finite_pass": 3449,
+        "first_parent_ffi": "tess2020213081915-s0028-4-1-0190-s_ffi",
+        "last_parent_ffi": "tess2020238140914-s0028-4-1-0190-s_ffi",
+        "parent_ffi_list_sha256": "9eb73c513c4de1f6ce90f76b382a42fcd8844254fdd73521723c3180c08431c4",
+        "start_btjd": 2061.8583940510134,
+        "stop_btjd": 2087.094757373109,
+        "time_reference": "BJD_TDB - 2457000"
+      },
+      "blind_search": {
+        "eligible_pixels": 289,
+        "above_threshold_pixels": 24,
+        "spatial_peaks": 9,
+        "frequency_trials": 1056,
+        "valid_cadences": 3449
+      },
+      "cases": [
+        {
+          "source_id": "ICRS-77.05502-69.23710",
+          "ra_deg": 77.05501659622759,
+          "dec_deg": -69.23709819715441,
+          "role": "unresolved_source",
+          "fixed_period_days": 1.1122091169907555,
+          "outcome": "measured",
+          "nearest_blind_peak": {
+            "peak_x": 18,
+            "peak_y": 11,
+            "centroid_x": 18.250004702828516,
+            "centroid_y": 10.754898326288087,
+            "ra_deg": 77.05715561832076,
+            "dec_deg": -69.2405770248874,
+            "period_days": 1.1202218027371402,
+            "variance_fraction": 0.5030360607401332,
+            "semiamplitude_e_per_s": 2.2241870760697235,
+            "amplitude_snr_proxy": 73.26833761627987,
+            "negative_to_positive_flux": 0.28084649666425665,
+            "independent_nuisance_fit_variance_fraction": 0.5167271599166114,
+            "core_flux_fraction": 0.9001233474080685,
+            "max_field_regressor_correlation": 0.15351252398541054,
+            "artifact_flags": []
+          },
+          "nearest_blind_offset_arcsec": 12.817794371355088,
+          "peak_in_matching_radius": true,
+          "fixed_frequency_power": 0.43415208819247403,
+          "fixed_frequency_semiamplitude_e_per_s": 2.1766460484150114,
+          "fixed_frequency_spectral_window": 0.00020566879453581886,
+          "field_max_abs_nuisance_correlation": 0.15351252398541054,
+          "negative_to_positive_flux": 0.2193117251373868,
+          "fixed_frequency_center_icrs_deg": [
+            77.05741937173342,
+            -69.24075915170184
+          ],
+          "fixed_frequency_center_offset_arcsec": 13.531407456924944,
+          "fixed_frequency_signal_map_e_per_s": [
+            [
+              -0.21441893096694992,
+              0.03361673646882343,
+              0.07910848096064699,
+              0.1040614819345837,
+              0.05864986742160523
+            ],
+            [
+              -0.01621564578000989,
+              0.035688787648895895,
+              0.7513362726705943,
+              0.30593694534797483,
+              0.05552925913790857
+            ],
+            [
+              -0.21061637248827814,
+              -0.1716062553590041,
+              2.1327699845776893,
+              0.5115384717480135,
+              0.026772232187398243
+            ],
+            [
+              -0.10184637406411762,
+              -0.23187185884420308,
+              0.37184519282605144,
+              0.1120348023767744,
+              0.030008074645806654
+            ],
+            [
+              -0.04271971529918843,
+              -0.026854939409495154,
+              0.00997180761923501,
+              0.014491225925938309,
+              0.0
+            ]
+          ],
+          "x_pixel": 18,
+          "y_pixel": 11,
+          "phase_bins_e_per_s": [
+            2.062973576748375,
+            1.800278457040809,
+            1.351952860583873,
+            0.8930231207314061,
+            -0.04299418453709068,
+            -0.7348619470467354,
+            -1.221902420453215,
+            -1.6157573506000777,
+            -1.5790792001677052,
+            -1.987691828439085,
+            -1.9203776426334183,
+            -2.033965219964659,
+            -1.7625137291068962,
+            -1.2052411354354866,
+            -0.18486585282032902,
+            0.541499272720162,
+            1.118038237091972,
+            1.8669721403714066,
+            2.094294782780095,
+            2.116720498674987
+          ],
+          "phase_reference_btjd": 1325.0
+        },
+        {
+          "source_id": "ICRS-76.90371-69.21339",
+          "ra_deg": 76.9037129130824,
+          "dec_deg": -69.21339269090082,
+          "role": "known_cepheid_witness",
+          "fixed_period_days": 1.2220665499124344,
+          "outcome": "measured",
+          "nearest_blind_peak": {
+            "peak_x": 10,
+            "peak_y": 5,
+            "centroid_x": 9.704404384285459,
+            "centroid_y": 4.6081372234489395,
+            "ra_deg": 76.90332487374606,
+            "dec_deg": -69.21269471625104,
+            "period_days": 1.2145049884881043,
+            "variance_fraction": 0.3942622223457973,
+            "semiamplitude_e_per_s": 1.3441922905525787,
+            "amplitude_snr_proxy": 48.9258858264335,
+            "negative_to_positive_flux": 0.023252653155863473,
+            "independent_nuisance_fit_variance_fraction": 0.39763210544171335,
+            "core_flux_fraction": 0.8031735375867501,
+            "max_field_regressor_correlation": 0.12144095914161279,
+            "artifact_flags": []
+          },
+          "nearest_blind_offset_arcsec": 2.5611500377950485,
+          "peak_in_matching_radius": true,
+          "fixed_frequency_power": 0.38210965421187637,
+          "fixed_frequency_semiamplitude_e_per_s": 1.3430969310389926,
+          "fixed_frequency_spectral_window": 0.00025010284008794857,
+          "field_max_abs_nuisance_correlation": 0.12144095914161279,
+          "negative_to_positive_flux": 0.020464188428051783,
+          "fixed_frequency_center_icrs_deg": [
+            76.90302910836186,
+            -69.21281564329604
+          ],
+          "fixed_frequency_center_offset_arcsec": 2.2536010369318586,
+          "fixed_frequency_signal_map_e_per_s": [
+            [
+              0.06268640888659269,
+              0.17721491758622127,
+              0.17847935301609183,
+              0.1439040739427957,
+              0.051658641512114925
+            ],
+            [
+              0.1455503096562046,
+              0.5263460101177792,
+              0.9593676684205136,
+              0.2024509845591893,
+              0.01598297088201962
+            ],
+            [
+              0.10949077204753353,
+              0.6301102969137866,
+              1.3452100776279403,
+              0.19692484863020088,
+              -0.0003390341009014779
+            ],
+            [
+              -0.010704590443563745,
+              0.12540002553223653,
+              0.22177728630177412,
+              0.08086483015081992,
+              0.04042655135741805
+            ],
+            [
+              0.10668223903547419,
+              0.07202614387109672,
+              -0.044049261569273336,
+              -0.050989799863710404,
+              -0.004271563578290904
+            ]
+          ],
+          "x_pixel": 10,
+          "y_pixel": 5,
+          "phase_bins_e_per_s": [
+            0.40431245510573827,
+            1.0004830525033566,
+            1.2359836618864057,
+            1.411243092049141,
+            1.5561716796283873,
+            1.033832917635084,
+            0.9936015370000295,
+            0.47031919100059216,
+            0.2569068012881009,
+            -0.1085103896451047,
+            -0.3172035877734035,
+            -0.6977825025575777,
+            -0.8561793720217544,
+            -1.0773045452603875,
+            -1.417427714213796,
+            -1.3144026319844677,
+            -1.1390958817850882,
+            -0.9885777127324676,
+            -0.6611105091401078,
+            -0.17214281430971207
+          ],
+          "phase_reference_btjd": 1325.0
+        }
+      ]
+    }
+  ]
+}

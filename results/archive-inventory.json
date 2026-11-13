@@ -1,0 +1,113 @@
+{
+  "pds": {
+    "query": "((ref_lid_target eq \"urn:nasa:pds:context:target:asteroid.101955_bennu\") and (product_class eq \"Product_Observational\"))",
+    "total_matches_reported": 2431159,
+    "observations": [
+      {
+        "archive": "PDS",
+        "id": "urn:nasa:pds:orex.astronomy:data:g_000ps_ast_dustimgpol_v001::1.0",
+        "title": "Origins, Spectral Interpretation, Resource Identification, Security, Regolith Explorer (OSIRIS-REx): Derived Data Bennu Dust Investigation PolyCam Stack Image",
+        "start": "2018-09-11T04:20:02.232Z",
+        "stop": "2018-09-11T07:59:49Z",
+        "label_url": "https://sbnarchive.psi.edu/pds4/orex/orex.astronomy_v1.0/data/G_000PS_AST_DUSTIMGPOL_v001.xml",
+        "data_urls": [
+          "https://sbnarchive.psi.edu/pds4/orex/orex.astronomy_v1.0/data/G_000PS_AST_DUSTIMGPOL_v001.fits"
+        ],
+        "instruments": [
+          "urn:nasa:pds:context:instrument_host:spacecraft.orex",
+          "urn:nasa:pds:context:instrument:ocams.orex"
+        ],
+        "targets": [
+          "urn:nasa:pds:context:target:asteroid.101955_bennu"
+        ]
+      },
+      {
+        "archive": "PDS",
+        "id": "urn:nasa:pds:orex.astronomy:data:g_000ps_ast_lcparam_v001::1.0",
+        "title": "OSIRIS-REx Bennu Light Curve Parameters",
+        "start": "2018-01-01T00:00:00Z",
+        "stop": null,
+        "label_url": "https://sbnarchive.psi.edu/pds4/orex/orex.astronomy_v1.0/data/G_000PS_AST_LCPARAM_v001.xml",
+        "data_urls": [
+          "https://sbnarchive.psi.edu/pds4/orex/orex.astronomy_v1.0/data/G_000PS_AST_LCPARAM_v001.tab"
+        ],
+        "instruments": [
+          "urn:nasa:pds:context:instrument_host:spacecraft.orex",
+          "urn:nasa:pds:context:instrument:ocams.orex"
+        ],
+        "targets": [
+          "urn:nasa:pds:context:target:asteroid.101955_bennu"
+        ]
+      },
+      {
+        "archive": "PDS",
+        "id": "urn:nasa:pds:orex.derived_gravity:data:obj::1.0",
+        "title": "OSIRIS-REx Orbital Fit Parameters for Particles Ejected from Bennu",
+        "start": "2019-01-19T02:03:37.527Z",
+        "stop": "2019-02-17T09:42:41.141Z",
+        "label_url": "https://sbnarchive.psi.edu/pds4/orex/orex.derived_gravity_v1.0/data/obj.xml",
+        "data_urls": [
+          "https://sbnarchive.psi.edu/pds4/orex/orex.derived_gravity_v1.0/data/obj.csv"
+        ],
+        "instruments": [
+          "urn:nasa:pds:context:instrument_host:spacecraft.orex",
+          "urn:nasa:pds:context:instrument:rss.orex",
+          "urn:nasa:pds:context:instrument:tagcams.orex"
+        ],
+        "targets": [
+          "urn:nasa:pds:context:target:asteroid.101955_bennu"
+        ]
+      }
+    ],
+    "source": {
+      "query_url": "https://pds.nasa.gov/api/search/1/products?q=%28%28ref_lid_target+eq+%22urn%3Anasa%3Apds%3Acontext%3Atarget%3Aasteroid.101955_bennu%22%29+and+%28product_class+eq+%22Product_Observational%22%29%29&limit=3",
+      "response_sha256": "4a0ca30fbb593f1c574d55b8a7cbbea6bf3fe92daa1ee50477e60cbb5bf748fd",
+      "bytes": 46883,
+      "cached_at_utc": "2026-11-13T23:11:05+00:00"
+    }
+  },
+  "heasarc": {
+    "query": "SELECT TOP 3 obsid,name,ra,dec,exposure_a,exposure_b,public_date FROM numaster WHERE exposure_a > 0 AND 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',83.6331,22.0145,0.25)) ORDER BY obsid",
+    "observations": [
+      {
+        "archive": "HEASARC",
+        "mission": "NuSTAR",
+        "obsid": "10002001002",
+        "pointing_name": "Crab",
+        "ra_deg": 83.6596,
+        "dec_deg": 22.0462,
+        "module_a_exposure_seconds": 2608.7183,
+        "module_b_exposure_seconds": 2668.3831,
+        "public_date_mjd": "56923"
+      },
+      {
+        "archive": "HEASARC",
+        "mission": "NuSTAR",
+        "obsid": "10002001004",
+        "pointing_name": "Crab",
+        "ra_deg": 83.6619,
+        "dec_deg": 22.0491,
+        "module_a_exposure_seconds": 2386.6137,
+        "module_b_exposure_seconds": 2477.7385,
+        "public_date_mjd": "56923"
+      },
+      {
+        "archive": "HEASARC",
+        "mission": "NuSTAR",
+        "obsid": "10002001006",
+        "pointing_name": "Crab",
+        "ra_deg": 83.6389,
+        "dec_deg": 22.0329,
+        "module_a_exposure_seconds": 14262.6525,
+        "module_b_exposure_seconds": 14864.0519,
+        "public_date_mjd": "56923"
+      }
+    ],
+    "source": {
+      "query_url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?request=doQuery&lang=ADQL&query=SELECT+TOP+3+obsid%2Cname%2Cra%2Cdec%2Cexposure_a%2Cexposure_b%2Cpublic_date+FROM+numaster+WHERE+exposure_a+%3E+0+AND+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C83.6331%2C22.0145%2C0.25%29%29+ORDER+BY+obsid",
+      "response_sha256": "2e4ce5f54ab2a6bde7872607a1c4df5f21e4645014f7a6fea8cb6514f0fa1481",
+      "bytes": 2657,
+      "cached_at_utc": "2026-11-13T23:12:14+00:00"
+    }
+  }
+}

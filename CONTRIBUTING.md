@@ -1,10 +1,10 @@
 # Contributing to Open-Space
 
-The current research program investigates unidentified narrow optical features in SDSS DR17 spectra. Contributions may add a reproducible observation, test a known explanation, measure a failure mode or improve the tools an agent can use. A rejected hypothesis with inspectable evidence is a research result.
+The current programs search TESS light curves and images, NEOWISE astrometry and SDSS spectra. Contributions may add a reproducible observation, test a known explanation, measure a failure mode or improve the tools an agent can use. A rejected hypothesis with inspectable evidence is a research result.
 
 ## Submit a research result
 
-Open a pull request containing the question, dataset and outcome. For observational work, include the observation ID, archive release, source URL, SHA-256 digests, wavelength convention, code revision, command and eligibility criteria. Report how many positions or targets were searched and how many had adequate coverage. Include a plot or machine-readable evidence packet, the strongest competing explanation and a falsifiable next test. For a literature check, record queries, dates, databases and primary references. Cite original data providers and retain their attribution and terms.
+Open a pull request containing the question, dataset and outcome. For observational work, include the observation ID, archive release, source URL, SHA-256 digests, time, wavelength or position convention, code revision, command and eligibility criteria. Report how many positions or targets were searched and how many had adequate coverage. Include a plot or machine-readable evidence packet, the strongest competing explanation and a falsifiable next test. For a literature check, record queries, dates, databases and primary references. Cite original data providers and retain their attribution and terms.
 
 Keep generated ledgers, model credentials, downloaded archive batches and unrelated raw logs out of Git. Check in compact derived results and the recipe or pinned inputs needed to regenerate them. Explicitly identify any synthetic or model-authored content. Reviewers should be able to disagree with an interpretation while reproducing its measurements.
 
