@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "claim_status": "screening_only",
+  "campaign": {
+    "schema_version": 1,
+    "plate": 6497,
+    "mjd": 56329,
+    "limit": 3,
+    "software_sha256": "1fe9dcfb2c2427eb9c47ef3382fd50c50c8794629fb4279ae5571c085146263e",
+    "model_config": null
+  },
+  "cursor": {
+    "campaign_sha256": "d83902d91781759da90e943d3ec12b20fcecd9cc946c76e8f63b19c8debf01d8",
+    "after_fiber": 963,
+    "exhausted": true
+  },
+  "selection_query": "SELECT TOP 100 s.plate, s.mjd, s.fiberID AS fiber\nFROM SpecObjAll AS s\nWHERE s.plate = 6497 AND s.mjd = 56329 AND s.fiberID > 0\n  AND s.sciencePrimary = 1 AND s.survey = 'boss' AND s.programname = 'boss'\n  AND s.class = 'GALAXY' AND s.class_noqso = 'GALAXY'\n  AND s.zWarning_noqso = 0 AND s.z_noqso BETWEEN 0.02 AND 0.10\n  AND s.run2d = 'v5_13_2'\nORDER BY s.fiberID",
+  "pages": [
+    {
+      "query": "SELECT TOP 3 s.plate, s.mjd, s.fiberID AS fiber\nFROM SpecObjAll AS s\nWHERE s.plate = 6497 AND s.mjd = 56329 AND s.fiberID > 0\n  AND s.sciencePrimary = 1 AND s.survey = 'boss' AND s.programname = 'boss'\n  AND s.class = 'GALAXY' AND s.class_noqso = 'GALAXY'\n  AND s.zWarning_noqso = 0 AND s.z_noqso BETWEEN 0.02 AND 0.10\n  AND s.run2d = 'v5_13_2'\nORDER BY s.fiberID",
+      "plan_sha256": "a4eb01aee10c30e3d92db57da380998a4bcaf8ada2c9aad0dd01079438a64eeb"
+    },
+    {
+      "query": "SELECT TOP 3 s.plate, s.mjd, s.fiberID AS fiber\nFROM SpecObjAll AS s\nWHERE s.plate = 6497 AND s.mjd = 56329 AND s.fiberID > 100\n  AND s.sciencePrimary = 1 AND s.survey = 'boss' AND s.programname = 'boss'\n  AND s.class = 'GALAXY' AND s.class_noqso = 'GALAXY'\n  AND s.zWarning_noqso = 0 AND s.z_noqso BETWEEN 0.02 AND 0.10\n  AND s.run2d = 'v5_13_2'\nORDER BY s.fiberID",
+      "plan_sha256": "4a2b045d1ce7ad772a6cb9e404671c0f43d7cecf920794d286867cc5e180b9a3"
+    },
+    {
+      "query": "SELECT TOP 3 s.plate, s.mjd, s.fiberID AS fiber\nFROM SpecObjAll AS s\nWHERE s.plate = 6497 AND s.mjd = 56329 AND s.fiberID > 210\n  AND s.sciencePrimary = 1 AND s.survey = 'boss' AND s.programname = 'boss'\n  AND s.class = 'GALAXY' AND s.class_noqso = 'GALAXY'\n  AND s.zWarning_noqso = 0 AND s.z_noqso BETWEEN 0.02 AND 0.10\n  AND s.run2d = 'v5_13_2'\nORDER BY s.fiberID",
+      "plan_sha256": "8b6710ba9db493fcf0cb97c942960e6c7ccd39d1db612ad718a7e1209df05fa4"
+    },
+    {
+      "query": "SELECT TOP 3 s.plate, s.mjd, s.fiberID AS fiber\nFROM SpecObjAll AS s\nWHERE s.plate = 6497 AND s.mjd = 56329 AND s.fiberID > 676\n  AND s.sciencePrimary = 1 AND s.survey = 'boss' AND s.programname = 'boss'\n  AND s.class = 'GALAXY' AND s.class_noqso = 'GALAXY'\n  AND s.zWarning_noqso = 0 AND s.z_noqso BETWEEN 0.02 AND 0.10\n  AND s.run2d = 'v5_13_2'\nORDER BY s.fiberID",
+      "plan_sha256": "7e9fac4ac87d7207a4683e7cf222903c4813caf37a1781b74b9ff2dee2b211ee"
+    },
+    {
+      "query": "SELECT TOP 3 s.plate, s.mjd, s.fiberID AS fiber\nFROM SpecObjAll AS s\nWHERE s.plate = 6497 AND s.mjd = 56329 AND s.fiberID > 963\n  AND s.sciencePrimary = 1 AND s.survey = 'boss' AND s.programname = 'boss'\n  AND s.class = 'GALAXY' AND s.class_noqso = 'GALAXY'\n  AND s.zWarning_noqso = 0 AND s.z_noqso BETWEEN 0.02 AND 0.10\n  AND s.run2d = 'v5_13_2'\nORDER BY s.fiberID",
+      "plan_sha256": "4ef15ba6956b50ae124d2044052b18df8a5cf8a1829b50b72abb3516c4739bc8"
+    }
+  ],
+  "completed_observations": 12,
+  "provider_calls_reserved": 0,
+  "counts": {
+    "catalog_match": 92,
+    "sky_match": 0,
+    "unidentified": 241
+  },
+  "distinct_sky_targets": 12,
+  "observations": [
+    {
+      "observation_id": "sdss-6497-56329-0088",
+      "job_id": "c42d38635fa03d7225227ed3c982fcb82ad17bbb1ab1b9066d8d7f5cf094bc78",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6497/spec-6497-56329-0088.fits",
+      "source_sha256": "a94fdcebfd3cdad800a9d5f43d8acf001c358c4408b3a36bb7bd26fff34eaf4f",
+      "csv_sha256": "979280ce8740501cf9478827b9b6d2d2d4839f6e3fff8ad56a722800c6389cc0",
+      "redshift": 0.0422869473695755,
+      "quality": {
+        "input_pixels": 4624,
+        "searched_centers": 4318,
+        "status": "searched",
+        "usable_pixels": 4605
+      },
+      "counts": {
+        "catalog_match": 8,
+        "sky_match": 0,
+        "unidentified": 64
+      }
+    },
+    {
+      "observation_id": "sdss-6497-56329-0096",
+      "job_id": "809e2312ef303931cd68b09059528884d5c327143203453f523cd4d60ded28ca",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6497/spec-6497-56329-0096.fits",
+      "source_sha256": "6341f3e190b2e3f7cd7e3c36de83e3a0e1069d86c67fc9b09d43093b8c9e0e6d",
+      "csv_sha256": "b1b7c3e6886cb0718e1c90b5c88c1159d842cdd17aa1af0cbb0b40405f188c2a",
+      "redshift": 0.03487289324402809,
+      "quality": {
+        "input_pixels": 4624,
+        "searched_centers": 4168,
+        "status": "searched",
+        "usable_pixels": 4588
+      },
+      "counts": {
+        "catalog_match": 12,
+        "sky_match": 0,
+        "unidentified": 11
+      }
+    },
+    {
+      "observation_id": "sdss-6497-56329-0100",
+      "job_id": "80cd45ce8f83d8ede57f18c8438f9167daed87dd6835e1b117dfed409c7925ab",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6497/spec-6497-56329-0100.fits",
+      "source_sha256": "1353593dadd1d3152ff73fb59e6922e4467e86dda79b8325c2b45abbbd0dc07c",
+      "csv_sha256": "4d98ff51d5310cabd0b259b11b4bdacdacade7b7a1c8a88afd2ac0300a8b96b1",
+      "redshift": 0.07697335630655289,
+      "quality": {
+        "input_pixels": 4623,
+        "searched_centers": 4091,
+        "status": "searched",
+        "usable_pixels": 4572
+      },
+      "counts": {
+        "catalog_match": 10,
+        "sky_match": 0,
+        "unidentified": 39
+      }
+    },
+    {
+      "observation_id": "sdss-6497-56329-0139",
+      "job_id": "9ab7a266aef413773a75a2320b18a3507c0ad5b173d9988d63fde9c97e2c251f",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6497/spec-6497-56329-0139.fits",
+      "source_sha256": "5a06bc1f02dd76b17323e5888e22149e315b10b3a2f60c5a47dbffa19d391704",
+      "csv_sha256": "7b3fe4220340df384de29c3c384fc2c3582787a24bc5167915f4a701dfeb40e5",
+      "redshift": 0.08566851168870926,
+      "quality": {
+        "input_pixels": 4624,
+        "searched_centers": 3289,
+        "status": "searched",
+        "usable_pixels": 4277
+      },
+      "counts": {
+        "catalog_match": 12,
+        "sky_match": 0,
+        "unidentified": 0
+      }
+    },
+    {
+      "observation_id": "sdss-6497-56329-0192",
+      "job_id": "91011c079714d6a978968c084128463b2b866d655954314b4d2cb927d7bbe707",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6497/spec-6497-56329-0192.fits",
+      "source_sha256": "b24c77131eae2821d849e844ee154b51f7ff01cc3c5ef3689e646bb2bca09ebd",
+      "csv_sha256": "7f1fd1d4bf8822ce493559e973a3b0daf1f77dd7d5037b7809bb72ff9c33277a",
+      "redshift": 0.06747246533632278,
+      "quality": {
+        "input_pixels": 4624,
+        "searched_centers": 4165,
+        "status": "searched",
+        "usable_pixels": 4586
+      },
+      "counts": {
+        "catalog_match": 1,
+        "sky_match": 0,
+        "unidentified": 33
+      }
+    },
+    {
+      "observation_id": "sdss-6497-56329-0210",
+      "job_id": "d5423bb3718e4091611ca77fa70022bc1dd406695c5b204f36ccf9ff6cd49cea",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6497/spec-6497-56329-0210.fits",
+      "source_sha256": "892b6dbc24d7d806b40689f8014e148a7e44a186527933e2ae54c067618d3883",
+      "csv_sha256": "e8d3fb55889f6226576a77c207851c4cfba451c179b82c4d469775e23d282d22",
+      "redshift": 0.05858699977397919,
+      "quality": {
+        "input_pixels": 4624,
+        "searched_centers": 3880,
+        "status": "searched",
+        "usable_pixels": 4541
+      },
+      "counts": {
+        "catalog_match": 15,
+        "sky_match": 0,
+        "unidentified": 14
+      }
+    },
+    {
+      "observation_id": "sdss-6497-56329-0406",
+      "job_id": "6bb0aed6a07006ac5e4ffa37bff55a5ba9a39dc60cbf5494c591ce231aec46ed",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6497/spec-6497-56329-0406.fits",
+      "source_sha256": "44ed6ff2ba408274e2735df4a468858b07985cc5016e55edbd099dcf38e355cc",
+      "csv_sha256": "4e180ddfb96229f1cfccf25a671663cd51b90870273a5c51ce4b6602df815d3d",
+      "redshift": 0.0726763978600502,
+      "quality": {
+        "input_pixels": 4624,
+        "searched_centers": 4146,
+        "status": "searched",
+        "usable_pixels": 4580
+      },
+      "counts": {
+        "catalog_match": 1,
+        "sky_match": 0,
+        "unidentified": 17
+      }
+    },
+    {
+      "observation_id": "sdss-6497-56329-0424",
+      "job_id": "9b2ffa79397dd684554b484eb60382884aabe3382ccc17a38d2b82081e07f192",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6497/spec-6497-56329-0424.fits",
+      "source_sha256": "7d98b4a72e665a9b751b8719fdd36145e4df29754cf5805bd618100491dc0da8",
+      "csv_sha256": "f8cb5ebe9848fd1fac37c7b6c0dc1affc9f5b5c788d88f5db8d6e89087c60d36",
+      "redshift": 0.06693913042545319,
+      "quality": {
+        "input_pixels": 4624,
+        "searched_centers": 4357,
+        "status": "searched",
+        "usable_pixels": 4610
+      },
+      "counts": {
+        "catalog_match": 6,
+        "sky_match": 0,
+        "unidentified": 39
+      }
+    },
+    {
+      "observation_id": "sdss-6497-56329-0676",
+      "job_id": "ae934bde8f638fdcbee12c00085277cee5df31e6dce3f8e241f475f5024cc6b1",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6497/spec-6497-56329-0676.fits",
+      "source_sha256": "223607072c3ab22cb3d2becd82cf630e2e2c3e1e00410ad1e47fca9331b79209",
+      "csv_sha256": "3da97856856633d215d014d78a00b3d72f55be8269c23ef5ed46f849d71a9ab8",
+      "redshift": 0.06832067668437958,
+      "quality": {
+        "input_pixels": 4595,
+        "searched_centers": 3274,
+        "status": "searched",
+        "usable_pixels": 4259
+      },
+      "counts": {
+        "catalog_match": 11,
+        "sky_match": 0,
+        "unidentified": 0
+      }
+    },
+    {
+      "observation_id": "sdss-6497-56329-0748",
+      "job_id": "51a7876d2655b9ab12e8d6a23c774db268f42810b4dc71c02c68776b58eddfe2",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6497/spec-6497-56329-0748.fits",
+      "source_sha256": "cd4cc3c3ae09cafca31893f5e23196ead88f51cefcd0624415e6121b60747009",
+      "csv_sha256": "797e6ba408086fd3e48e6aac2a91930fbd5ed8749f27dc519bd3b97254121962",
+      "redshift": 0.06711658090353012,
+      "quality": {
+        "input_pixels": 4596,
+        "searched_centers": 4071,
+        "status": "searched",
+        "usable_pixels": 4549
+      },
+      "counts": {
+        "catalog_match": 5,
+        "sky_match": 0,
+        "unidentified": 23
+      }
+    },
+    {
+      "observation_id": "sdss-6497-56329-0858",
+      "job_id": "ff43381e3a49800a5db9f2d71b3a67dc518fee88e20610b400971151c1662e44",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6497/spec-6497-56329-0858.fits",
+      "source_sha256": "b18d964f46d87970897ff4ee93943104800d62a666f75c3160016ed73ba27a89",
+      "csv_sha256": "8c9ac8c395c97709cf88dcc73815772b2f75780494a10b18361893990c7837b6",
+      "redshift": 0.06750603765249252,
+      "quality": {
+        "input_pixels": 4597,
+        "searched_centers": 3275,
+        "status": "searched",
+        "usable_pixels": 4286
+      },
+      "counts": {
+        "catalog_match": 6,
+        "sky_match": 0,
+        "unidentified": 0
+      }
+    },
+    {
+      "observation_id": "sdss-6497-56329-0963",
+      "job_id": "fda6fb5bf904a18c69a93eb82656a50f5f6b4c230d1c8bb848a8208b0f9cb32b",
+      "source_url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/6497/spec-6497-56329-0963.fits",
+      "source_sha256": "932dbe86725e31e7f32c64aea96fe0494fbbfd381815db8254c11495a3101c44",
+      "csv_sha256": "c7ddef11c27e8ea50375334221a54a5c1892739b6ec183f22d5c514ec1d69469",
+      "redshift": 0.08648568391799927,
+      "quality": {
+        "input_pixels": 4597,
+        "searched_centers": 3287,
+        "status": "searched",
+        "usable_pixels": 4283
+      },
+      "counts": {
+        "catalog_match": 5,
+        "sky_match": 0,
+        "unidentified": 1
+      }
+    }
+  ],
+  "recurrence": {
+    "tolerance_kms": 150.0,
+    "rest_frame_group_counts_by_targets": {
+      "2": 13,
+      "3": 9,
+      "4": 13,
+      "5": 4,
+      "6": 6,
+      "7": 1,
+      "8": 1
+    },
+    "observer_frame_group_counts_by_targets": {
+      "2": 30,
+      "3": 5,
+      "4": 1
+    }
+  },
+  "software_commit": "3b04f60cda92dc7add47ea2e4ba171c67a332f58"
+}

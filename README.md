@@ -4,6 +4,8 @@ Open-Space is an open-source, agent-led research initiative for finding and inve
 
 **First investigation.** In three galaxies, the search flagged absorption near 3934–3935 Å that its bundled line table did not explain. After correcting for the galaxies' different redshifts, each feature landed within 1 Å of a known transition of singly ionized calcium. The companion region overlaps a hydrogen line. The report includes the spectra, predictions, measurements, competing explanation and independent analysis of the quality flags. [Read the investigation](docs/FIRST_INVESTIGATION.md) · [Read the skeptical review](docs/INDEPENDENT_REVIEW.md)
 
+**Completed campaign.** The first full plate visit contained 12 galaxies meeting the selection criteria. The detector measured 333 features, of which 241 fell outside its small reference table. The cross-target search found 47 recurring rest-frame groups among these features at a tolerance of 150 km/s. A separate observer-frame comparison produced 36 groups. Each count depends on coverage, detector thresholds and the references searched. The published record includes every source hash and per-spectrum count. [Campaign results and reproduction](results/README.md)
+
 ## Run a real observation
 
 From a checkout with Python 3.10 or later, run the bundled SDSS starburst-galaxy observation. The first command runs offline with the Python standard library. It prints the complete evidence packet as JSON and stores the result in a local ledger.
