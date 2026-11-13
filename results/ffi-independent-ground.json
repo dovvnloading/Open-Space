@@ -1,0 +1,427 @@
+{
+  "source_id": "ICRS-77.05502-69.23710",
+  "field_input_sha256": "ffc3af76133f0be4c461d20622e70aca619f6d894dac7e972f73c46885c6c218",
+  "tess_periods_days": [
+    1.1122091169907555,
+    1.1169381107491858
+  ],
+  "simbad": {
+    "receipt": {
+      "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cotype%2Cra%2Cdec+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C77.055016596%2C-69.237098197%2C0.0083333333%29%29",
+      "sha256": "939e62266a4b196d6923638f96d318d6318234ab22c12e17cb58fcfcf19e6dc0",
+      "bytes": 380
+    },
+    "objects": [
+      {
+        "main_id": "SK -69   65",
+        "otype": "*",
+        "ra": "77.05180313643",
+        "dec": "-69.23161652685",
+        "separations_arcsec": [
+          20.155743912532394,
+          26.354937414455176
+        ]
+      },
+      {
+        "main_id": "OGLE J050812.41-691410.1",
+        "otype": "Be?",
+        "ra": "77.05142020784542",
+        "dec": "-69.23610516524833",
+        "separations_arcsec": [
+          5.817784403044618,
+          10.895375281770974
+        ]
+      },
+      {
+        "main_id": "UCAC2   1797921",
+        "otype": "Be?",
+        "ra": "77.05730725622",
+        "dec": "-69.23966634171",
+        "separations_arcsec": [
+          9.696439272385959,
+          4.136751304880253
+        ]
+      },
+      {
+        "main_id": "OGLE LMC-LPV-20399",
+        "otype": "LP*",
+        "ra": "77.05330851427",
+        "dec": "-69.23721914456",
+        "separations_arcsec": [
+          2.222917729913216,
+          6.260865617297319
+        ]
+      },
+      {
+        "main_id": "OGLE LMC-HB-0108",
+        "otype": "El*",
+        "ra": "77.06629166666667",
+        "dec": "-69.24186111111112",
+        "separations_arcsec": [
+          22.3832295934052,
+          18.0023306199849
+        ]
+      },
+      {
+        "main_id": "OGLE LMC-RRLYR-5589",
+        "otype": "RR*",
+        "ra": "77.04541666666668",
+        "dec": "-69.23861111111111",
+        "separations_arcsec": [
+          13.407188278410693,
+          12.301920662780574
+        ]
+      }
+    ]
+  },
+  "gaia_classifier_and_targeted_search": {
+    "receipt": {
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiadr3.vari_classifier_result+WHERE+source_id%3D4661229089008619008",
+      "sha256": "5e2a4b154e9199d58aabcbdac0ca1004ece7b61470ce2de1a2cef6adc208dad3",
+      "bytes": 150
+    },
+    "history": [
+      {
+        "solution_id": "375316653866487564",
+        "source_id": "4661229089008619008",
+        "classifier_name": "nTransits:5+",
+        "best_class_name": "BE|GCAS|SDOR|WR",
+        "best_class_score": "0.62285304"
+      }
+    ],
+    "epoch_receipt": {
+      "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=4661229089008619008&FORMAT=CSV&BAND=G&RELEASE=Gaia+DR3",
+      "sha256": "16698c20a771f3051544b4d8fdd94f79c6e8696491f8a3024c81544dbe07c3ba",
+      "bytes": 12018
+    },
+    "weighted_power_at_exact_tess_periods": [
+      0.09650929227366337,
+      0.12476262950006137
+    ]
+  },
+  "ground_based_sources": {
+    "OGLE050812.41-691410.1.mag": {
+      "receipt": {
+        "url": "https://ogle.astrouw.edu.pl/ogle/ogle2/dia/ac/lmc_sc11.tar.gz",
+        "sha256": "c50fb5c7b04e6e3aa3a00707046c52a08b34977b63e8073323be4e87d18a5afc",
+        "bytes": 8416984
+      },
+      "member": "OGLE050812.41-691410.1.mag",
+      "member_sha256": "8e960d7303fa5194bd7838e14cea201ea5fa30fa88f9956501d327c9d5fc2b8b",
+      "analysis": [
+        {
+          "epochs": 270,
+          "baseline_days": 968.7012800000011,
+          "detrended": false,
+          "search_days": [
+            0.15,
+            8
+          ],
+          "local_search_days": [
+            1.07,
+            1.16
+          ],
+          "global_peak_days": 1.0008923190692962,
+          "global_peak_power": 0.7531774848927525,
+          "local_peak_days": 1.1090886152198367,
+          "local_peak_power": 0.024804405349738906,
+          "power_at_sector_periods": [
+            0.006394537736674277,
+            4.479658434475644e-06
+          ]
+        },
+        {
+          "epochs": 270,
+          "baseline_days": 968.7012800000011,
+          "detrended": true,
+          "search_days": [
+            0.15,
+            8
+          ],
+          "local_search_days": [
+            1.07,
+            1.16
+          ],
+          "global_peak_days": 0.4393194463542841,
+          "global_peak_power": 0.08086663956334211,
+          "local_peak_days": 1.1073981007802818,
+          "local_peak_power": 0.032010822669058574,
+          "power_at_sector_periods": [
+            0.013097677186754742,
+            0.015701151090002155
+          ]
+        }
+      ],
+      "detrended_time_halves": [
+        {
+          "epochs": 135,
+          "baseline_days": 494.81355999999505,
+          "detrended": true,
+          "search_days": [
+            0.15,
+            8
+          ],
+          "local_search_days": [
+            1.07,
+            1.16
+          ],
+          "global_peak_days": 0.16721278164842673,
+          "global_peak_power": 0.09442710875091974,
+          "local_peak_days": 1.0826995182326953,
+          "local_peak_power": 0.04564119560209252,
+          "power_at_sector_periods": [
+            0.0007715839948542223,
+            0.016274159004109237
+          ]
+        },
+        {
+          "epochs": 135,
+          "baseline_days": 471.79758000000584,
+          "detrended": true,
+          "search_days": [
+            0.15,
+            8
+          ],
+          "local_search_days": [
+            1.07,
+            1.16
+          ],
+          "global_peak_days": 0.31923698279814794,
+          "global_peak_power": 0.14927496834025247,
+          "local_peak_days": 1.1578573661006397,
+          "local_peak_power": 0.11036716172828254,
+          "power_at_sector_periods": [
+            0.03403883675050146,
+            0.04024804149825923
+          ]
+        }
+      ]
+    },
+    "OGLE050813.83-691422.9.mag": {
+      "receipt": {
+        "url": "https://ogle.astrouw.edu.pl/ogle/ogle2/dia/ac/lmc_sc11.tar.gz",
+        "sha256": "c50fb5c7b04e6e3aa3a00707046c52a08b34977b63e8073323be4e87d18a5afc",
+        "bytes": 8416984
+      },
+      "member": "OGLE050813.83-691422.9.mag",
+      "member_sha256": "d736232085df7ac5eeb10b182b1f3b909d739577ce91689897d441b9385034c1",
+      "analysis": [
+        {
+          "epochs": 270,
+          "baseline_days": 968.7012800000011,
+          "detrended": false,
+          "search_days": [
+            0.15,
+            8
+          ],
+          "local_search_days": [
+            1.07,
+            1.16
+          ],
+          "global_peak_days": 1.0006338475588057,
+          "global_peak_power": 0.42322628637592363,
+          "local_peak_days": 1.1226923961571182,
+          "local_peak_power": 0.04857272395827332,
+          "power_at_sector_periods": [
+            0.012934244284241905,
+            0.009720304915334661
+          ]
+        },
+        {
+          "epochs": 270,
+          "baseline_days": 968.7012800000011,
+          "detrended": true,
+          "search_days": [
+            0.15,
+            8
+          ],
+          "local_search_days": [
+            1.07,
+            1.16
+          ],
+          "global_peak_days": 1.1228008368763218,
+          "global_peak_power": 0.08267792250855628,
+          "local_peak_days": 1.1228008368763218,
+          "local_peak_power": 0.08267792250855628,
+          "power_at_sector_periods": [
+            0.008020979012770001,
+            0.013889795021194107
+          ]
+        }
+      ],
+      "detrended_time_halves": [
+        {
+          "epochs": 135,
+          "baseline_days": 494.81355999999505,
+          "detrended": true,
+          "search_days": [
+            0.15,
+            8
+          ],
+          "local_search_days": [
+            1.07,
+            1.16
+          ],
+          "global_peak_days": 0.5289191321894137,
+          "global_peak_power": 0.14165907567766467,
+          "local_peak_days": 1.1228281611276334,
+          "local_peak_power": 0.12766625957785183,
+          "power_at_sector_periods": [
+            0.04827690400704172,
+            0.0285223095934976
+          ]
+        },
+        {
+          "epochs": 135,
+          "baseline_days": 471.79758000000584,
+          "detrended": true,
+          "search_days": [
+            0.15,
+            8
+          ],
+          "local_search_days": [
+            1.07,
+            1.16
+          ],
+          "global_peak_days": 0.22217315145132216,
+          "global_peak_power": 0.11310030620145829,
+          "local_peak_days": 1.118733578556909,
+          "local_peak_power": 0.09019349981030425,
+          "power_at_sector_periods": [
+            0.03449030750976666,
+            0.004906813691995388
+          ]
+        }
+      ]
+    },
+    "OGLE-LMC-LPV-20399": {
+      "receipt": {
+        "url": "https://ogle.astrouw.edu.pl/ogle/ogle3/OIII-CVS/lmc/lpv/phot/I/OGLE-LMC-LPV-20399.dat",
+        "sha256": "569dd55c83cbbe1a1e8a9a40c5fd62d48bef614e636ed5c1d22ab38b6390987d",
+        "bytes": 18144
+      },
+      "analysis": {
+        "epochs": 756,
+        "baseline_days": 4227.67598,
+        "detrended": false,
+        "search_days": [
+          0.15,
+          500
+        ],
+        "local_search_days": [
+          1.07,
+          1.16
+        ],
+        "global_peak_days": 19.96176506853777,
+        "global_peak_power": 0.059855788199912933,
+        "local_peak_days": 1.115543987031766,
+        "local_peak_power": 0.021656927760260684,
+        "power_at_sector_periods": [
+          0.004411065444435253,
+          0.0010325038027439414
+        ]
+      }
+    },
+    "MACHO 1.4532.22": {
+      "receipt": {
+        "url": "https://machotap.asvo.nci.org.au/ncitap/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+10000+dateobs%2Csideofpier%2Crmag%2Crerr%2Crcut%2Cbmag%2Cberr%2Cbcut+FROM+public.photometry_view+WHERE+fieldid%3D1+AND+tileid%3D4532+AND+seqn%3D22+ORDER+BY+dateobs",
+        "sha256": "80c3e38f16026164a6b0c0b459d069fce609332ef03ba9982fb0979cc2d19ca2",
+        "bytes": 55615
+      },
+      "input_rows": 1274,
+      "bands": {
+        "r": [
+          {
+            "epochs": 1212,
+            "baseline_days": 2722.8894,
+            "detrended": false,
+            "search_days": [
+              0.15,
+              8
+            ],
+            "local_search_days": [
+              1.07,
+              1.16
+            ],
+            "global_peak_days": 0.9977811537336715,
+            "global_peak_power": 0.41161125710656804,
+            "local_peak_days": 1.1329898494431605,
+            "local_peak_power": 0.017414848303531814,
+            "power_at_sector_periods": [
+              0.0008669165128561896,
+              0.000147810921339086
+            ]
+          },
+          {
+            "epochs": 1212,
+            "baseline_days": 2722.8894,
+            "detrended": true,
+            "search_days": [
+              0.15,
+              8
+            ],
+            "local_search_days": [
+              1.07,
+              1.16
+            ],
+            "global_peak_days": 0.38619196725169014,
+            "global_peak_power": 0.02711259109864735,
+            "local_peak_days": 1.0891073273971508,
+            "local_peak_power": 0.017694171447892582,
+            "power_at_sector_periods": [
+              0.012359468829153559,
+              0.004391043936766625
+            ]
+          }
+        ],
+        "b": [
+          {
+            "epochs": 1214,
+            "baseline_days": 2722.8894,
+            "detrended": false,
+            "search_days": [
+              0.15,
+              8
+            ],
+            "local_search_days": [
+              1.07,
+              1.16
+            ],
+            "global_peak_days": 0.9977811537336715,
+            "global_peak_power": 0.5048092826844712,
+            "local_peak_days": 1.1327541808572779,
+            "local_peak_power": 0.023663212592222423,
+            "power_at_sector_periods": [
+              0.003353864654213543,
+              0.0012819392849313337
+            ]
+          },
+          {
+            "epochs": 1214,
+            "baseline_days": 2722.8894,
+            "detrended": true,
+            "search_days": [
+              0.15,
+              8
+            ],
+            "local_search_days": [
+              1.07,
+              1.16
+            ],
+            "global_peak_days": 0.935209810132304,
+            "global_peak_power": 0.030706924175630822,
+            "local_peak_days": 1.0785381237964298,
+            "local_peak_power": 0.026381812107807764,
+            "power_at_sector_periods": [
+              0.008351481301642476,
+              0.0017177993422760908
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "macho_quality": "Per-band survey cut=1, 0<error<0.08 mag, six-MAD clipping",
+  "conditioning": "Both raw magnitudes and values minus a centered 24-day running median",
+  "local_search": "Post hoc range covering the two TESS periods and possible nearby ground-based maxima"
+}

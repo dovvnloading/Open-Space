@@ -69,6 +69,24 @@ For a compute cluster, give every array element a different root and pass the sa
 
 The output `registry.csv` is a machine screening ledger. A flag remains visible after a catalog or image explains it. To evaluate a claim, open its `evidence` member in the export, then inspect the follow-up jobs in `registry.json` via their parent IDs. A failed catalog query is different from a successful empty query. A catalog miss alone gives no evidence of a new planet or star. A strong candidate dossier needs source localization, held-out data, tests of aliases and instrumental effects, relevant catalog and literature history, and a discriminating observation still to obtain. [Public results](DISCOVERY_RESULTS.md) · [Transit selection](TESS_PROTOCOL.md) · [Imaging](PIXELS.md) · [Full-frame search](FFI.md) · [Astrometry](WISE.md)
 
+## Run a blind image survey on your compute
+
+The image survey accepts sky coordinates without a target-star list. Generate a grid, download both sector cutouts for each cell and pin the scientific arrays, then run the normal worker. This example covers six new grid centers east of the published grid. Rows advance in declination and columns in right ascension, with steps specified in degrees. Across a larger grid, use `--start` and `--limit` to partition scan pages. Overlap depends on declination, detector orientation and requested cutout size. The operator chooses fields observed in both sectors, and an unavailable cutout is recorded as an acquisition failure.
+
+```sh
+python -m examples.image_survey plan --origin 78.2 -69.4 --shape 3 2 \
+  --step 0.4 0.2 --sectors 1 2 --limit 6 --output runs/lmc-east/selection.json
+python -m examples.image_survey pin runs/lmc-east/selection.json \
+  --cache runs/lmc-east/ffi --output runs/lmc-east/pinned.json
+python -m open_space.discovery --root runs/lmc-east/queue init --ffi-plan runs/lmc-east/pinned.json
+python -m open_space.discovery --root runs/lmc-east/queue work \
+  --ffi-cache runs/lmc-east/ffi --workers 4 --max-jobs 300
+python -m open_space.discovery --root runs/lmc-east/queue export runs/lmc-east/export
+python -m examples.image_survey triage runs/lmc-east/export --output runs/lmc-east/followups.json
+```
+
+The last command produces a machine-readable list of source positions, both measured periods, matched variable stars, original task IDs and remaining follow-up needs. Its automatic rule tests the VSX position within 15 arcseconds and direct, half or double periods in both sectors. An incomplete archive lookup receives its own state. The release replay associated nine of 14 recurring locations across the development and six independent fields with VSX by this rule. Five were referred to later images and resolved photometry. The fuller OGLE and source-level analyses recovered additional associations. For a prioritized source, run the later-sector experiment with a frozen position and frequency; its example plan also includes a nearby known star as a control. [Automatic triage](../results/ffi-automatic-triage.json) · [Five-sector example plan](../data/ffi-source-revisit.json) · [Follow-up measurement script](../examples/revisit_ffi_source.py)
+
 ## Other archive entry points
 
 The older SDSS program retrieves spectra and searches recurring wavelengths. The PDS and HEASARC adapters retrieve observational inventories for future analyses, including the data-product URLs exposed by PDS. The released inventory includes three OSIRIS-REx observational products at Bennu and three NuSTAR pointings toward the Crab. Archive enumeration is the completed step for these two services. [Observation receipts](../results/archive-inventory.json) · [SDSS workflow](CAMPAIGNS.md)
