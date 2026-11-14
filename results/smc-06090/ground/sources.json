@@ -1,0 +1,58 @@
+{
+  "delve-cone.csv": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+10+%2A+FROM+delve_dr3.mc_object+WHERE+ra+BETWEEN+21.05989+AND+21.06561+AND+dec+BETWEEN+-73.32678+AND+-73.32511",
+  "delve-meas.csv": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+delve_dr3.mc_meas+WHERE+objid%3D%270210m732.7445%27",
+  "delve-neighbors.csv": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+delve_dr3.mc_meas+WHERE+objid%3D%270210m732.48525%27+OR+objid%3D%270210m732.7009%27",
+  "delve-exposures.csv": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+expnum%2Cexptime%2Cjd%2Cdateobs+FROM+delve_dr3.mc_exposure+WHERE+expnum+IN+%28%2700380334%27%2C%2700380335%27%2C%2700380336%27%2C%2700380337%27%2C%2700380339%27%2C%2700380340%27%2C%2700380341%27%2C%2700380342%27%2C%2700685122%27%2C%2700685123%27%2C%2700685125%27%2C%2700685126%27%2C%2700721719%27%2C%2700721720%27%2C%2700722142%27%2C%2700722143%27%2C%2700722144%27%2C%2700762513%27%2C%2700762514%27%2C%2700777183%27%2C%2700777184%27%2C%2700777525%27%2C%2700777526%27%2C%2700795989%27%2C%2700795990%27%2C%2700805684%27%2C%2700805685%27%2C%2700806016%27%2C%2700806017%27%2C%2700806040%27%2C%2700806041%27%2C%2700806322%27%2C%2700806323%27%2C%2700807903%27%2C%2700807904%27%2C%2700822179%27%2C%2700822180%27%2C%2700871941%27%2C%2700871942%27%2C%2700871965%27%2C%2700871966%27%2C%2700905720%27%2C%2700905721%27%2C%2700909399%27%2C%2700909400%27%2C%2700909746%27%2C%2700909747%27%2C%2700922651%27%2C%2700922652%27%2C%2700922675%27%2C%2700922676%27%2C%2700926036%27%2C%2700926037%27%2C%2700926373%27%2C%2701099753%27%29",
+  "nsc-exposures.csv": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+m.measid%2Cm.exposure%2Cm.filter%2Cm.mjd%2Cm.mag_auto%2Cm.magerr_auto%2Cm.flags%2Ce.expnum%2Ce.exptime%2Ce.instrument+FROM+nsc_dr2.meas+m+JOIN+nsc_dr2.exposure+e+ON+m.exposure%3De.exposure+WHERE+m.objectid%3D%27192478_49502%27",
+  "smash-meas.csv": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+smash_dr2.source+WHERE+id%3D%2748053.548462%27",
+  "skymapper-epochs.csv": "https://api.skymapper.nci.org.au/public/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+p.image_id%2Cp.filter%2Cp.mag_psf%2Cp.e_mag_psf%2Cp.flags%2Cp.nimaflags%2Ci.date%2Ci.exp_time%2Ci.img_qual+FROM+dr4.photometry+p+JOIN+dr4.images+i+ON+p.image_id%3Di.image_id+WHERE+p.object_id%3D498093010",
+  "vmc-cone.json": "https://archive.eso.org/tap_cat/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+IAUNAME%2CSOURCEID%2CRA2000%2CDEC2000%2CYAPERMAG3%2CJAPERMAG3%2CKSAPERMAG3+FROM+vmc_dr7_ksjy_V6+WHERE+RA2000%3E21.05989+AND+RA2000%3C21.06561+AND+DEC2000%3E%28-73.32678%29+AND+DEC2000%3C%28-73.32511%29",
+  "vmc-Y.json": "https://archive.eso.org/tap_cat/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+%2A+FROM+vmc_dr7_mPhotY_V6+WHERE+SOURCEID%3D558360887601",
+  "vmc-J.json": "https://archive.eso.org/tap_cat/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+%2A+FROM+vmc_dr7_mPhotJ_V6+WHERE+SOURCEID%3D558360887601",
+  "vmc-Ks.json": "https://archive.eso.org/tap_cat/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+%2A+FROM+vmc_dr7_mPhotKs_V6+WHERE+SOURCEID%3D558360887601",
+  "ogle3-V.dat": "https://www.astrouw.edu.pl/ogle/ogle3/OIII-CVS/smc/ecl/phot/V/OGLE-SMC-ECL-6090.dat",
+  "ogle4-V.dat": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/phot/V/OGLE-SMC-ECL-06090.dat",
+  "eros-cone.tsv": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F390%2Fxcat&-c=21.0627500+-73.3259444&-c.rs=8&-out.max=30000&-out.all=1",
+  "2mass.tsv": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F246%2Fout&-c=21.0627500+-73.3259444&-c.rs=3&-out.max=30&-out.all=1",
+  "decam-2024-25-images.json": {
+    "url": "https://astroarchive.noirlab.edu/api/adv_search/find/?rectype=file&limit=1000",
+    "method": "POST",
+    "then": "Keep rows with prod_type image and basename suffix _v1.fits.fz. Preserve archive_filename,md5sum,pointing coordinates and caldat.",
+    "json": {
+      "outfields": [
+        "md5sum",
+        "archive_filename",
+        "ra_center",
+        "dec_center",
+        "prod_type",
+        "proc_type",
+        "caldat"
+      ],
+      "search": [
+        [
+          "instrument",
+          "decam"
+        ],
+        [
+          "caldat",
+          "2023-01-01",
+          "2026-11-13"
+        ],
+        [
+          "proc_type",
+          "instcal"
+        ],
+        [
+          "ra_center",
+          18,
+          24
+        ],
+        [
+          "dec_center",
+          -74.4,
+          -72.2
+        ]
+      ]
+    }
+  }
+}

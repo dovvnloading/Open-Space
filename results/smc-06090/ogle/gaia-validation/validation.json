@@ -1,0 +1,115 @@
+{
+  "inputs": {
+    "gaia-epochs.csv": {
+      "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=Gaia+DR3+4686449235706841984&VALID_DATA=true&FORMAT=CSV",
+      "bytes": 15677,
+      "sha256": "fc268e49158aec3e70e3239efe84d0f4bc584346b679f73e34ffb14e9c932ad3"
+    },
+    "gaia-catalog-model.csv": {
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiadr3.vari_eclipsing_binary+WHERE+source_id+%3D+4686449235706841984",
+      "bytes": 1507,
+      "sha256": "86f034de9d18711f66b442d875c35f4f40afea56ededb38680d882d4939108b1"
+    },
+    "ogle4-I.dat": {
+      "url": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/phot/I/OGLE-SMC-ECL-06090.dat",
+      "bytes": 19197,
+      "sha256": "429caaf74f2086f3a8f53c71a91bfb3c07049dbc2e81122c06646387c8fa21a0"
+    }
+  },
+  "source_id": "4686449235706841984",
+  "ogle_period_days": 1.1696719,
+  "ogle_primary_epoch_hjd": 2460000.0369,
+  "clock": "Gaia times are BJD(TCB)-2455197.5. ERFA TCB to TDB, treat TDB as TT (within ~2 ms), convert TT to UTC, and subtract the projected barycentric position of the Sun. OGLE published HJD treated as UTC.",
+  "gaia_rows_total": 45,
+  "gaia_G_rejection_flag_count": 2,
+  "gaia_rows_used": 43,
+  "gaia_hjd_range": [
+    2456898.419796256,
+    2457870.8903813097
+  ],
+  "gaia_bjd_tcb_minus_hjd_utc_range_seconds": [
+    86.18098497390747,
+    88.717120885849
+  ],
+  "contemporaneous_ogle_I_n": 125,
+  "ogle_I_window_selection": "Error in (0, 0.10] mag and time between first and last usable Gaia transit. Fixed catalog ephemeris. Free constant plus two periodic Gaussians, robust soft-L1 fit with 0.012 mag noise floor and f_scale=1.8.",
+  "ogle_I_fit_baseline_d1_c1_width1_d2_c2_width2": [
+    18.22363782114845,
+    0.4229573075102877,
+    0.017549930206338805,
+    0.025558542061452166,
+    0.41369861988078144,
+    0.5063555226537175,
+    0.019484914308601
+  ],
+  "ogle_I_separation": 0.4888055924473787,
+  "gaia_G_contrasts": {
+    "response": "Within 0.035 cycle of respective OGLE-fitted center. Baseline at least 0.10 cycle from both centers. Window choice is exploratory. Gaia model uses the same Gaia photons as these counts.",
+    "baseline_n": 27,
+    "baseline_magnitude": 18.14946901324374,
+    "primary": {
+      "n": 3,
+      "median_magnitude": 18.575503437364695,
+      "median_excess_vs_baseline_mag": 0.4260344241209566,
+      "observations": [
+        {
+          "hjd_utc": 2457092.2514138245,
+          "ogle_phase": 0.01612180674010233,
+          "G": 18.582362297909658,
+          "transit_id": "27532455249105461"
+        },
+        {
+          "hjd_utc": 2457492.2909485353,
+          "ogle_phase": 0.026163007878039934,
+          "G": 18.575503437364695,
+          "transit_id": "49652982127179458"
+        },
+        {
+          "hjd_utc": 2457632.662826385,
+          "ogle_phase": 0.035780961056161686,
+          "G": 18.455989781548706,
+          "transit_id": "57414829557031021"
+        }
+      ]
+    },
+    "secondary": {
+      "n": 2,
+      "median_magnitude": 18.50068413928374,
+      "median_excess_vs_baseline_mag": 0.35121512604000316,
+      "observations": [
+        {
+          "hjd_utc": 2457150.1473647603,
+          "ogle_phase": 0.5137210358752782,
+          "G": 18.572916266781373,
+          "transit_id": "30733760464449830"
+        },
+        {
+          "hjd_utc": 2457729.1099472377,
+          "ogle_phase": 0.49234066191615966,
+          "G": 18.428452011786113,
+          "transit_id": "62748149288542519"
+        }
+      ]
+    }
+  },
+  "gaia_published_model": {
+    "model": "TWOGAUSSIANS",
+    "period_days": 1.1696848905921924,
+    "HJD_UTC_two_model_eclipse_centers_near_reference": [
+      2457412.737170005,
+      2457413.320265173
+    ],
+    "OGLE_phase_of_Gaia_centers": [
+      0.012407586295012152,
+      0.5109193208795659
+    ],
+    "separation_in_Gaia_cycles": 0.4985062,
+    "separation_error_assuming_zero_covariance": 0.006312332613654083,
+    "G_depths_mag": [
+      0.47473228,
+      0.4299122
+    ],
+    "reduced_chi_squared": 3.798169
+  },
+  "limits": "Gaia measures an intermediate epoch. Its sparse core sampling and static catalog fit do not independently trace decades of drift. The quoted spacing error combines marginal errors without a covariance term."
+}
