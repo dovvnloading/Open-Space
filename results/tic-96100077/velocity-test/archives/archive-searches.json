@@ -1,0 +1,289 @@
+{
+  "observed_utc": "2026-11-14",
+  "target": {
+    "tic": 96100077,
+    "gaia_dr3": "5946882743944130304",
+    "ra_deg": 264.526816,
+    "dec_deg": -49.349215
+  },
+  "responses": [
+    {
+      "source": "ExoFOP-TESS",
+      "method": "GET",
+      "url": "https://exofop.ipac.caltech.edu/tess/target.php?id=96100077&json",
+      "result": {
+        "tic": "96100077",
+        "spectroscopy": 0,
+        "time_series": 0,
+        "files": 0
+      },
+      "response_bytes": 7419,
+      "response_sha256": "69d7e7a5821a1d592257b66c2ce84434e1dfbd041291f7877d7e2dcd890cb34c"
+    },
+    {
+      "source": "Gemini Observatory Archive",
+      "method": "GET",
+      "url": "https://archive.gemini.edu/jsonsummary/canonical/ra=264.526816/dec=-49.349215/sr=120",
+      "result": {
+        "files": 0
+      },
+      "response_bytes": 2,
+      "response_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source": "SALT Science Database",
+      "method": "POST",
+      "url": "https://ssda.saao.ac.za/api",
+      "json_body": {
+        "query": "query DataFiles($columns:[String!]!,$where:String!,$limit:Int,$startIndex:Int){dataFiles(columns:$columns,where:$where,limit:$limit,startIndex:$startIndex){dataFiles{id metadata{name value}} pageInfo{itemsPerPage itemsTotal startIndex}}}",
+        "variables": {
+          "columns": [
+            "artifact.name",
+            "target.name",
+            "position.ra",
+            "position.dec",
+            "instrument.name"
+          ],
+          "where": "{\"WITHIN_RADIUS\": {\"declination\": -49.349215, \"declinationColumn\": \"position.dec\", \"radius\": 0.03333333333333333, \"rightAscension\": 264.526816, \"rightAscensionColumn\": \"position.ra\"}}",
+          "limit": 100,
+          "startIndex": 0
+        }
+      },
+      "result": {
+        "files": 0
+      },
+      "response_bytes": 101,
+      "response_sha256": "3fee05baf5363ef3611e75b4ccebb627ed14849de14e69ca60d7bb223405bc57"
+    },
+    {
+      "source": "NOIRLab public file centers",
+      "method": "POST",
+      "url": "https://astroarchive.noirlab.edu/api/adv_search/find/?rectype=file&limit=1000",
+      "json_body": {
+        "outfields": [
+          "md5sum",
+          "archive_filename",
+          "instrument",
+          "telescope",
+          "ra_center",
+          "dec_center",
+          "obs_type",
+          "dateobs_center"
+        ],
+        "search": [
+          [
+            "ra_center",
+            264.472,
+            264.582
+          ],
+          [
+            "dec_center",
+            -49.385,
+            -49.313
+          ]
+        ]
+      },
+      "result": {
+        "files": 0
+      },
+      "response_bytes": 830,
+      "response_sha256": "8fdc1de8d3c76f3ce331c2563b6a3b95dc85e00c29b8630d64d3ca5d88370187"
+    },
+    {
+      "source": "NOIRLab CHIRON off-target positive control (limit 5)",
+      "method": "POST",
+      "url": "https://astroarchive.noirlab.edu/api/adv_search/find/?rectype=file&limit=5",
+      "json_body": {
+        "outfields": [
+          "instrument",
+          "ra_center",
+          "dec_center",
+          "archive_filename",
+          "obs_type"
+        ],
+        "search": [
+          [
+            "instrument",
+            "chiron"
+          ],
+          [
+            "obs_type",
+            "object"
+          ]
+        ]
+      },
+      "result": {
+        "files": 5
+      },
+      "response_bytes": 2695,
+      "response_sha256": "894542693357423514e13b3147f6f8a5239899eef127fd61859c871d7795aac7"
+    },
+    {
+      "source": "Data Central SSA",
+      "method": "GET",
+      "url": "https://datacentral.org.au/vo/ssa/query?REQUEST=queryData&POS=264.526816%2C-49.349215&SIZE=0.03333333",
+      "result": {
+        "query_status": [
+          "OK"
+        ],
+        "spectra": 0
+      },
+      "response_bytes": 15679,
+      "response_sha256": "97b21a61477d0cb9d4ca402aceb3788e6e1ecd5c4916d7652444c20482e9fbeb"
+    },
+    {
+      "source": "GAVO FEROS archive",
+      "method": "GET",
+      "url": "https://dc.g-vo.org/feros/q/ssa/ssap.xml?REQUEST=queryData&POS=264.526816%2C-49.349215&SIZE=0.03333333",
+      "result": {
+        "query_status": [
+          "OK"
+        ],
+        "spectra": 0
+      },
+      "response_bytes": 18520,
+      "response_sha256": "89b8b3fcdb26aace050982ce37cadc4aadabab3700243292984007453f9dc797"
+    },
+    {
+      "source": "GAVO Flash/Heros archive",
+      "method": "GET",
+      "url": "https://dc.g-vo.org/fhssa?REQUEST=queryData&POS=264.526816%2C-49.349215&SIZE=0.03333333",
+      "result": {
+        "query_status": [
+          "OK"
+        ],
+        "spectra": 0
+      },
+      "response_bytes": 18203,
+      "response_sha256": "6403b8f9bf631cfd0b20cc5e728179aff0f7a8a97efdf4b5553afdf19c1764c6"
+    },
+    {
+      "source": "ESO raw FEROS",
+      "method": "GET",
+      "url": "https://archive.eso.org/tap_obs/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+100+dp_id%2Cinstrument%2Cobject%2Cra%2Cdec%2Cdp_type+FROM+dbo.raw+WHERE+instrument%3D%27FEROS%27+AND+ra+BETWEEN+264.473+AND+264.580+AND+dec+BETWEEN+-49.384+AND+-49.314",
+      "result": {
+        "row_count": 0
+      },
+      "response_bytes": 39,
+      "response_sha256": "5a9c09d7d9b4d8ce7c184ef4ba15aea4bcac18c64c10491e3a9688688c72aff7"
+    },
+    {
+      "source": "ESO raw GIRAFFE and UVES covering possible FLAMES pointings",
+      "method": "GET",
+      "url": "https://archive.eso.org/tap_obs/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+250+dp_id%2Cinstrument%2Cobject%2Cra%2Cdec%2Cdp_tech%2Cdp_type+FROM+dbo.raw+WHERE+instrument+IN+%28%27GIRAFFE%27%2C%27UVES%27%29+AND+dp_cat%3D%27SCIENCE%27+AND+ra+BETWEEN+264.18+AND+264.87+AND+dec+BETWEEN+-49.57+AND+-49.13",
+      "result": {
+        "row_count": 0
+      },
+      "response_bytes": 47,
+      "response_sha256": "76fc5c8cf29c2e932710e3ed018248cd9212de7e2c4dd30fa8a6b6f780e2344f"
+    },
+    {
+      "source": "ESO raw science field centers, all instruments",
+      "method": "GET",
+      "url": "https://archive.eso.org/tap_obs/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+dp_id%2Cinstrument%2Cobject%2Cra%2Cdec%2Cdp_tech%2Cdp_type+FROM+dbo.raw+WHERE+dp_cat%3D%27SCIENCE%27+AND+ra+BETWEEN+264.18+AND+264.87+AND+dec+BETWEEN+-49.57+AND+-49.13",
+      "result": {
+        "row_count": 3,
+        "rows": [
+          {
+            "dp_id": "GRIPS.2023-03-27T05:15:30.255",
+            "instrument": "GRIPS19",
+            "object": "SKY MAP",
+            "ra": "264.32229194",
+            "dec": "-49.31037888",
+            "dp_tech": "SPECTRUM",
+            "dp_type": "SKY"
+          },
+          {
+            "dp_id": "GRIPS.2023-03-27T05:16:32.655",
+            "instrument": "GRIPS19",
+            "object": "SKY MAP",
+            "ra": "264.58296305",
+            "dec": "-49.31096305",
+            "dp_tech": "SPECTRUM",
+            "dp_type": "SKY"
+          },
+          {
+            "dp_id": "GRIPS.2023-03-27T05:17:35.055",
+            "instrument": "GRIPS19",
+            "object": "SKY MAP",
+            "ra": "264.84363805",
+            "dec": "-49.31154611",
+            "dp_tech": "SPECTRUM",
+            "dp_type": "SKY"
+          }
+        ]
+      },
+      "response_bytes": 302,
+      "response_sha256": "be99b36c96ed5b8d717ebb8e1afb36d3cd316682c6730e3bf4e2c89440c2643d"
+    },
+    {
+      "source": "DESI DR1 zpix fiber positions",
+      "method": "GET",
+      "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+30+targetid%2Cmean_fiber_ra%2Cmean_fiber_dec+FROM+desi_dr1.zpix+WHERE+mean_fiber_ra+BETWEEN+264.5+AND+264.55+AND+mean_fiber_dec+BETWEEN+-49.364+AND+-49.333",
+      "result": {
+        "row_count": 0
+      },
+      "response_bytes": 38,
+      "response_sha256": "2fd4298bc02cf789c9ec5cc307bf7f8cf40bd4f456d198000ae8dfee5a5baba5"
+    },
+    {
+      "source": "6dFGS final redshift release",
+      "method": "GET",
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=VII%2F259%2F6dfgs&-c=264.526816+-49.349215&-c.rs=30&-out.max=40&-out.add=_r",
+      "result": {
+        "catalogue_rows": 0
+      },
+      "response_bytes": 3016,
+      "response_sha256": "afbf14408372a2b7e46273d28511f01e152098d5691e548942aca4d64204e534"
+    },
+    {
+      "source": "SB9 catalogue via VizieR",
+      "method": "GET",
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fsb9%2Fmain&-c=264.526816+-49.349215&-c.rs=30&-out.max=40&-out.add=_r",
+      "result": {
+        "catalogue_rows": 0
+      },
+      "response_bytes": 2614,
+      "response_sha256": "0dc49fab216effb3f277710cb8d47e0bd1a005a8ca66b870d69a06889b1380c8"
+    },
+    {
+      "source": "CRVAD-2 via VizieR",
+      "method": "GET",
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=III%2F254%2Fcrvad2&-c=264.526816+-49.349215&-c.rs=30&-out.max=40&-out.add=_r",
+      "result": {
+        "catalogue_rows": 0
+      },
+      "response_bytes": 2735,
+      "response_sha256": "a6f294e724864cd226cd4bc5400e9ddb0562983af269b6150fe565f755f71145"
+    },
+    {
+      "source": "ESA Gaia DR4 June 2026 epoch-astrometry sample",
+      "method": "GET",
+      "url": "https://anonftp.cosmos.esa.int/pub/GAIA_PUBLIC_DATA/Gaia_DR4/dr4-prerelease/gaia-dr4-prerelease-epoch-astrometry_2026-06-26.zip",
+      "result": {
+        "table": "GAIA_DR4_PRERELEASE_EPOCH_ASTROMETRY_RAW.xml",
+        "rows": 1008,
+        "unique_sources": 12,
+        "nearest_source_id": "4181040337841125632",
+        "nearest_separation_deg": 39.854,
+        "distance_method": "ICRS great-circle separation from ra0 and dec0, grouped by source_id"
+      },
+      "response_bytes": 625651,
+      "response_sha256": "07f0e8d9ac97a29ea376a0c7242de3124d2a08ad72aba0958d6575d94d35fa0b"
+    }
+  ],
+  "inconclusive": [
+    {
+      "service": "AAT raw archive",
+      "reason": "Coordinate query timed out, including a 95-second retry."
+    },
+    {
+      "service": "CADC spatial spectral-archive query",
+      "reason": "Coordinate query timed out."
+    },
+    {
+      "service": "CDS associated-spectra SSA",
+      "reason": "HTTP 503."
+    }
+  ]
+}

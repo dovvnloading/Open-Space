@@ -1,6 +1,6 @@
 # Independent timing validation of TIC 96100077
 
-Three ground surveys favor a specific prediction for TIC 96100077. Its known 7.93-hour eclipses shift in the opposite direction to the radial motion predicted for the star tracing Gaia’s 272.72-day orbit. The strongest test uses 6,028 KELT-South measurements acquired before the first TESS observations. ASAS-3 and ASAS-SN extend the timing comparison across 18 observing years. These results strengthen the proposed hierarchical triple. Component-resolved spectroscopy remains the outstanding physical test. [Original investigation](../README.md) · [Original ASAS variable catalog](https://www.astrouw.edu.pl/asas/data/Vars.E)
+Three ground surveys favor a specific prediction for TIC 96100077. Its known 7.93-hour eclipses shift in the opposite direction to the radial motion predicted for the star tracing Gaia’s 272.72-day orbit. The strongest test uses 6,028 KELT-South measurements acquired before the first TESS observations. ASAS-3 and ASAS-SN extend the timing comparison across 18 observing years. These results strengthen the proposed hierarchical triple. Component-resolved spectroscopy remains the outstanding physical test. [Component velocity test and SkyMapper localization](../velocity-test/README.md) · [Original investigation](../README.md) · [Original ASAS variable catalog](https://www.astrouw.edu.pl/asas/data/Vars.E)
 
 ![Predictions compared to 99 alternative outer phases for the three independent ground surveys](ground-phase.png)
 
