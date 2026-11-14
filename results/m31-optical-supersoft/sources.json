@@ -1,0 +1,65 @@
+[
+  {
+    "upstream": "xmmdet.csv",
+    "url": "https://nxsa.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+top+85000+observation_id%2Csrc_num%2Cra%2Cdec%2Cradec_err%2Cep_det_ml%2Cep_hr1%2Cep_hr1_err%2Cep_hr2%2Cep_hr2_err%2Cep_tot_flux%2Cep_tot_flux_err%2Cpn_cts%2Cm1_cts%2Cm2_cts%2Cep_extent%2Cep_flag+from+xsa.v_epic_source+where+ra+between+8.5+and+12.8+and+dec+between+39.6+and+43.1",
+    "bytes": 4847567,
+    "sha256": "d12f6e994b768449bcf92e4e816de35e2a9bcf0c9dbb6511d3bd58023405567e",
+    "used_for": "xmm-field.csv"
+  },
+  {
+    "upstream": "xmmobs.csv",
+    "url": "https://nxsa.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+observation_id%2Ctarget%2Cstart_utc%2Cduration%2Cra%2Cdec+from+xsa.v_public_observations+where+ra+between+8+and+13.3+and+dec+between+39.2+and+43.5",
+    "bytes": 11800,
+    "sha256": "9817d81a76cfed1bb761733f851d86c6a8291f868d04590d26e6fbc2066727af",
+    "used_for": "observations.csv"
+  },
+  {
+    "upstream": "chandra-field.xml",
+    "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&QUERY=select+name%2Cra%2Cdec+from+csc+where+1%3Dcontains%28point%28%27ICRS%27%2Cra%2Cdec%29%2Ccircle%28%27ICRS%27%2C10.94883%2C41.55367%2C0.33%29%29",
+    "bytes": 24316,
+    "sha256": "a493f4da36ed3f886c72c3a673c926d5ae9ddf7f53b8bc22aa3f69379f0ba629",
+    "used_for": "chandra-field.csv"
+  },
+  {
+    "upstream": "nova.csv",
+    "url": "https://ashafter.sdsu.edu/m31_nova_table.csv",
+    "bytes": 316613,
+    "sha256": "e154ab8e9dd72cba3556849fd1a51b263a575a2d8916a7a0ca70c1b5edb21616",
+    "used_for": "search inventory"
+  },
+  {
+    "upstream": "cbat.html",
+    "url": "http://www.cbat.eps.harvard.edu/unconf/followups/J00434777+4133129.html",
+    "bytes": 7972,
+    "sha256": "79ab7cb3aee726aa904e2b3c94fdd9ef9438177e5d28fed82d61845b2be7cd54",
+    "used_for": "optical.csv"
+  },
+  {
+    "upstream": "rector3.txt",
+    "url": "https://content.cld.iop.org/journals/0004-637X/936/2/117/revision1/apjac87adt3_mrt.txt",
+    "bytes": 14666,
+    "sha256": "c5f6137ee2dfe311e9213e149197403a59e9a5af8824297a09e53526a5f2bfae",
+    "used_for": "optical.csv"
+  },
+  {
+    "upstream": "rector4.txt",
+    "url": "https://content.cld.iop.org/journals/0004-637X/936/2/117/revision1/apjac87adt4_mrt.txt",
+    "bytes": 57431,
+    "sha256": "8a286295636c9a7abbb8ee112104621823b9192b180655352e23ba7da3b0cbfc",
+    "used_for": "optical.csv"
+  },
+  {
+    "upstream": "mast.txt",
+    "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/mean.csv?ra=10.94885&dec=41.55365&radius=0.001",
+    "bytes": 12270,
+    "sha256": "af226d4452ee7ad23bfe33231d646bfa2c6e70a0b2a2ce61543b2b9986668e14",
+    "used_for": "neighbor.csv"
+  },
+  {
+    "upstream": "sasaki.pdf",
+    "url": "https://arxiv.org/pdf/1809.08020",
+    "bytes": 9419325,
+    "sha256": "11c9a9c7b73c4b3164e70004505c935c63849f83317ba03345ce097347a9799a",
+    "used_for": "Sasaki et al. Table A.1, source 53"
+  }
+]
