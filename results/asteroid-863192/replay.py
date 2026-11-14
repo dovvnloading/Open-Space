@@ -7,8 +7,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from encounter import encounter_grid, mpc_state, uncertainty_root
-from orbits import DATA, Gravity, SkyFit
+from encounter import encounter_grid, mpc_state, solar_system, uncertainty_root
+from orbits import DATA, EPOCH, EQUATOR_TO_ECLIPTIC, Gravity, SkyFit
 
 
 def same_time_positions(rows):
@@ -67,12 +67,18 @@ def main():
             "barycentric_icrf_au_au_per_day": state.tolist(),
         }
     sub = rows[rows.target == second].reset_index(drop=True)
+    # Both holdouts retain the discovery apparition used by this JPL solution.
+    seed = json.loads((DATA / "sources.json").read_text())["withheld_fit_seed"]
+    if seed["epoch_jd_tdb"] != EPOCH:
+        raise ValueError("Holdout seed and integration epochs differ.")
+    ecliptic = np.array(seed["barycentric_j2000_ecliptic_au_au_per_day"]).reshape(2, 3)
+    holdout_start = (ecliptic @ EQUATOR_TO_ECLIPTIC).ravel()
     results["withheld"] = {}
     for year in ["2003", "2014"]:
         excluded = sub.utc.str.startswith(year)
         train = sub[~excluded].reset_index(drop=True)
         test = sub[excluded].reset_index(drop=True)
-        state, _ = SkyFit(train, gravity).fit(starts[second])
+        state, _ = SkyFit(train, gravity).fit(holdout_start)
         error, _ = SkyFit(test, gravity).prediction(state)
         results["withheld"][year] = np.linalg.norm(
             error.reshape(-1, 2), axis=1
@@ -92,9 +98,6 @@ def main():
     results["nominal_2day"] = fine[0].tolist()
     # Shift the secondary along its orbit
     # by changing its orbital phase, preserving shape/orientation. The track is a counterfactual.
-    from encounter import solar_system
-    from orbits import EQUATOR_TO_ECLIPTIC
-
     sim = solar_system(gravity)
     pos, vel = fitted[second].reshape(2, 3) @ EQUATOR_TO_ECLIPTIC.T
     sim.add(x=pos[0], y=pos[1], z=pos[2], vx=vel[0], vy=vel[1], vz=vel[2])
