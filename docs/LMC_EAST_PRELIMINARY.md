@@ -13,6 +13,8 @@ A structured transcription, including the exact limitations and filenames of the
 unavailable artifacts, is in
 [`results/ffi-lmc-east-preliminary.json`](../results/ffi-lmc-east-preliminary.json).
 
+A subsequent measurement used newly retrieved OGLE light curves and six TESS cutouts to test the specific 1.196-day lead near OGLE-LMC-CEP-1429. It independently supports the known Cepheid harmonic. The remainder of the grid retains the evidence status above. [Six-sector Cepheid test](LMC_EAST_HARMONICS.md)
+
 ## Design and reported outcomes
 
 The reported extension followed the existing [coordinate-only runbook](DISCOVERY.md#run-a-blind-image-survey-on-your-compute): a frozen 3-column by 2-row grid
