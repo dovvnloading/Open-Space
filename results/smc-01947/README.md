@@ -29,6 +29,10 @@ We retrieved every TESSCut sector returned at (12.668879641°, −73.215620831°
 
 TESS pixels subtend about 21 arcseconds. Exploratory centroid fits in individual sectors were inconsistent, spanning tens of arcseconds, so we leave the variable unlocalized within the crowded field. A short-period pulsation is possible. A different variable inside the photometric aperture also fits the evidence. Resolved high-cadence photometry can distinguish these explanations.
 
+## Do the brightness variations share the proposed third-body delay?
+
+Hong et al. fitted a 6.9-year sinusoid to eclipse arrival times after accounting for apsidal motion. If the 4.252-hour source belongs to the inner binary and remains a stable clock, light-travel time should shift its maxima by the same delay. We fixed their published central phase and angular rate, then fitted the delay amplitude of the new clock. In 1,269 out-of-eclipse OGLE-IV measurements on 516 nights, the signed delay was **−1.0 ± 2.5 minutes**, versus **+11.5 ± 7.2 minutes** from their eclipse-timing fit. Each series was free to choose its constant oscillation period and phase. Testing nine combinations of published phase and rate offsets gave amplitudes from −2.7 to +1.7 minutes in OGLE-IV. OGLE-III and EROS estimates are less precise. These data give no positive evidence that the two clocks share the central published delay. The original amplitude is uncertain, phase and period can drift, and the brightness variation could come from another star. The test leaves the proposed third body open. [Fixed-phase test and sensitivity grid](delay.json)
+
 ## Prior coverage and reproduction
 
 This binary is also SMC-SC5-185154, MACHO 212.16020.84 and Gaia DR3 4685932607040745856. Hong et al. reported apsidal motion and a possible third body with a 6.9-year modulation of its **eclipse arrival times**. The four-hour signal here is a direct modulation of **brightness**. We checked the published paper, the OGLE catalog, the VSX cone, and Zhou's catalog of pulsating eclipsing binaries. Its nearest coordinate-readable entry is 73.2 arcminutes away. We found no earlier report assigning the 4.252-hour signal to this sightline. Catalog coverage and alternate identifiers limit statements about priority. [Hong et al. 2016](https://academic.oup.com/mnras/article/460/1/650/2608975) · [Zhou catalog check](prior.json) · [OGLE release](https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/)
@@ -37,6 +41,7 @@ Run the following from this directory with Python, NumPy, SciPy and Astropy. The
 
 ```sh
 OPENBLAS_NUM_THREADS=1 python measure.py
+OPENBLAS_NUM_THREADS=1 python delay_test.py
 sha256sum -c SHA256SUMS
 python extract_tess.py refreshed
 ```

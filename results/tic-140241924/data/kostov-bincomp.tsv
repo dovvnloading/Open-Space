@@ -1,0 +1,50 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-14T21:59:59 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-14T21:59:59	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FMNRAS%2F527%2F3995%2Fbincomp&TIC=140241924&-out=%2A%2A	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	MaxTuples=50000	
+
+#RESOURCE=yCat_75273995
+#Name: J/MNRAS/527/3995
+#Title: TGV: 101 eclipsing quadruple star candidates (Kostov+, 2024)
+#INFO	ivoid=ivo://cds.vizier/j/mnras/527/3995	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/mnras/527/3995	    IVOID of underlying data collection
+#INFO	creator=Kostov V.B.	    First author or institution
+#INFO	cites=bibcode:2024MNRAS.527.3995K	    Article or Data origin sources
+#INFO	journal=MNRA	    Journal name
+#INFO	original_date=2024	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/MNRAS/527/3995	    Dataset landing page
+#INFO	publication_date=2026-10-16	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_MNRAS_527_3995_bincomp:
+#Name: J/MNRAS/527/3995/bincomp
+#Title: Parameters of the 101 quadruple candidates presented here, including additional comments (part of Table 1)
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	[TIC]	(A3)	Link to all data for this system (Tables targets.dat and bincomp.dat)	[ucd=meta.ref.url]
+#Column	TIC	(I9)	[779824/470397849] TESS Input Catalog (IV/39) identifier	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F10.6)	Right ascension (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F10.6)	Declination (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	Bin	(A1)	Binary component, A (shorter EB) or B (longer EB)	[ucd=meta.id.part;meta.main]
+#Column	Per	(F7.4)	[0.29/83.1]? Period (Period)	[ucd=time.period]
+#Column	T0	(F11.6)	[1326.12/2984.21] Eclipse time; BJD-2457000	[ucd=time.epoch]
+#Column	Phase2	(F7.4)	[0.061/0.85]? Secondary phase (Phase_s)	[ucd=time.phase]
+#Column	e_Phase2	(F8.5)	[1.3e-4/0.006]? Phase2 uncertainty	[ucd=stat.error;time.phase]
+#Column	Depth1	(F5.1)	[2/360]? Depth of primary eclipse (Dep_p)	[ucd=src.var.amplitude]
+#Column	Depth2	(F5.1)	[1/306]? Depth of secondary eclipse (Dep_s)	[ucd=src.var.amplitude]
+#Column	Dur1	(F4.1)	[1/76] Duration of primary eclipse (Dur_p)	[ucd=time.duration]
+#Column	Dur2	(F4.1)	[1.4/17.5]? Duration of secondary eclipse (Dur_s)	[ucd=time.duration]
+recno	[TIC]	TIC	RAJ2000	DEJ2000	Bin	Per	T0	Phase2	e_Phase2	Depth1	Depth2	Dur1	Dur2
+ 	 	 	deg	deg	 	d	 	 	 	10-3	10-3	h	h
+--------	---	---------	----------	----------	-	-------	-----------	-------	--------	-----	-----	----	----
+      21	TIC	140241924	126.771527	-50.765831	A	 1.8035	1544.509400	 0.5042	 0.00130	 65.0	 57.0	 2.3	 2.1
+      22	TIC	140241924	126.771527	-50.765831	B	 4.3829	1561.255700	       	        	 51.0	     	 3.1	
+

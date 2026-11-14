@@ -1,0 +1,48 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-14T21:59:52 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-14T21:59:53	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FMNRAS%2F527%2F3995%2Ftargets&TIC=140241924&-out=%2A%2A	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	MaxTuples=50000	
+
+#RESOURCE=yCat_75273995
+#Name: J/MNRAS/527/3995
+#Title: TGV: 101 eclipsing quadruple star candidates (Kostov+, 2024)
+#INFO	ivoid=ivo://cds.vizier/j/mnras/527/3995	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/mnras/527/3995	    IVOID of underlying data collection
+#INFO	creator=Kostov V.B.	    First author or institution
+#INFO	cites=bibcode:2024MNRAS.527.3995K	    Article or Data origin sources
+#INFO	journal=MNRA	    Journal name
+#INFO	original_date=2024	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/MNRAS/527/3995	    Dataset landing page
+#INFO	publication_date=2026-10-16	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_MNRAS_527_3995_targets:
+#Name: J/MNRAS/527/3995/targets
+#Title: List of targets, including additional comments (part of Table 1)
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	[TIC]	(A3)	Link to all data for this system (Tables targets.dat and bincomp.dat)	[ucd=meta.ref.url]
+#Column	TIC	(I9)	[779824/470397849] TESS Input Catalog (IV/39) identifier	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F10.6)	Right ascension (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F10.6)	Declination (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	TGV	(A7)	TESS/Goddard/VSG (TGV) identifier	[ucd=meta.id]
+#Column	GaiaDR3	(I19)	Gaia DR3 (I/355) identifier	[ucd=meta.id]
+#Column	Tmag	(F5.2)	[7.1/15.63] TESS magnitude	[ucd=phot.mag]
+#Column	Teff	(I5)	[3674/19568]? Gaia DR3 composite effective temperature	[ucd=phys.temperature.effective]
+#Column	Dist	(F8.2)	[-559.03/71279.9]? Gaia DR3 distance	[ucd=pos.distance]
+#Column	Comments	(a248)	Additional comments	[ucd=meta.note]
+#Column	Sectors	(a41)	TESS sectors observed	[ucd=obs.field]
+#Column	SimbadName	(a28)	Simbad column added by the CDS	[ucd=meta.id]
+recno	[TIC]	TIC	RAJ2000	DEJ2000	TGV	GaiaDR3	Tmag	Teff	Dist	Comments	Sectors	SimbadName
+ 	 	 	deg	deg	 	 	mag	K	pc	 	 	
+--------	---	---------	----------	----------	-------	-------------------	-----	-----	--------	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	-----------------------------------------	----------------------------
+      11	TIC	140241924	126.771527	-50.765831	TGV-108	5322590658834050176	14.55	 5746	 1153.86	heavily-blended eclipses; depth differences between sectors;                                                                                                                                                                                            	8, 9, 34, 35, 36, 61-63                  	Gaia DR3 5322590658834050176
+

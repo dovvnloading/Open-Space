@@ -1,0 +1,124 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-14T22:03:03 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-14T22:03:03	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F355%2Fepphot&Source=5322590658834050176&-out.max=1000&-out=%2A%2A	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+
+#RESOURCE=yCat_1355
+#Name: I/355
+#Title: Gaia DR3 Part 1. Main source (Gaia Collaboration, 2022)
+#INFO	ivoid=ivo://cds.vizier/i/355	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/i/355	    IVOID of underlying data collection
+#INFO	creator=Gaia collaboration	    First author or institution
+#INFO	cites=bibcode:2022yCat.1355....0G	    Bibcode of the dataset
+#INFO	journal=yCat	    Journal name
+#INFO	original_date=2022	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/I/355	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.1355	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-12-12	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	H_2016.000:	ICRS
+#Table	I_355_epphot:
+#Name: I/355/epphot
+#Title: Light curves for a given object in bands G, BP and RP (555868797 rows) (epoch_photometry)
+#Column	Source	(I19)	Unique source identifier (unique within a particular Data Release) (source_id)	[ucd=meta.id;meta.main]
+#Column	RA_ICRS	(F15.11)	Right ascension (ICRS) at Ep=2016.0 (ra)	[ucd=pos.eq.ra;meta.main]
+#Column	DE_ICRS	(F15.11)	Declination (ICRS) at Ep=2016.0 (dec)	[ucd=pos.eq.dec;meta.main]
+#Column	TransitID	(I17)	Transit unique identifier (transit_id)	[ucd=meta.id]
+#Column	TimeG	(F11.6)	? Transit averaged G band observing time JD-2455197.5 (g_transit_time)	[ucd=time.epoch;stat.mean]
+#Column	FG	(D14.7)	? Transit averaged G band flux (g_transit_flux)	[ucd=phot.flux;em.opt]
+#Column	e_FG	(D14.7)	? Transit averaged G band flux error (g_transit_flux_error)	[ucd=stat.error;phot.flux;em.opt]
+#Column	RFG	(D12.5)	? Transit averaged G band flux divided by its error (g_transit_flux_over_error)	[ucd=stat.snr;phot.flux;em.opt]
+#Column	Gmag	(F9.6)	? Transit averaged G band Vega magnitude (g_transit_mag)	[ucd=phot.mag;em.opt]
+#Column	NG	(I1)	[0-9] Number of CCD observations contributing to transit averaged G band flux (g_transit_n_obs)	[ucd=meta.number]
+#Column	TimeBP	(F9.4)	? BP CCD transit observing time JD-2455197.5 (bp_obs_time)	[ucd=time.epoch;stat.mean]
+#Column	FBP	(D14.7)	? BP band flux (bp_flux)	[ucd=phot.flux;em.opt.B]
+#Column	e_FBP	(D14.7)	? BP band flux error (bp_flux_error)	[ucd=stat.error;phot.flux;em.opt.B]
+#Column	RFBP	(D12.5)	? BP band flux divided by its error (bp_flux_over_error)	[ucd=stat.snr;phot.flux;em.opt.B]
+#Column	BPmag	(F9.6)	? BP band Vega magnitude (bp_mag)	[ucd=phot.mag;em.opt.B]
+#Column	TimeRP	(F9.4)	? RP CCD transit observing time JD-2455197.5 (rp_obs_time)	[ucd=time.epoch;stat.mean]
+#Column	FRP	(D14.7)	? RP band flux (rp_flux)	[ucd=phot.flux;em.opt.R]
+#Column	e_FRP	(D14.7)	? RP band flux error (rp_flux_error)	[ucd=stat.error;phot.flux;em.opt.R]
+#Column	RFRP	(D12.5)	? RP band flux divided by its error (rp_flux_over_error)	[ucd=stat.snr;phot.flux;em.opt.R]
+#Column	RPmag	(F9.6)	? RP band Vega magnitude (rp_mag)	[ucd=phot.mag;em.opt.R]
+#Column	noisyFlag	(I1)	[0/1] G band flux scatter larger than expected by photometry processing (all CCDs considered) (photometry_flag_noisy_data)	[ucd=meta.code.status]
+#Column	SMuFlag	(I1)	[0/1] SM transit unavailable by photometry processing (photometry_flag_sm_unavailable)	[ucd=meta.code.status]
+#Column	AF1uFlag	(I1)	[0/1] AF1 transit unavailable by photometry processing (photometry_flag_af1_unavailable)	[ucd=meta.code.status]
+#Column	AF2uFlag	(I1)	[0/1] AF2 transit unavailable by photometry processing (photometry_flag_af2_unavailable)	[ucd=meta.code.status]
+#Column	AF3uFlag	(I1)	[0/1] AF3 transit unavailable by photometry processing (photometry_flag_af3_unavailable)	[ucd=meta.code.status]
+#Column	AF4uFlag	(I1)	[0/1] AF4 transit unavailable by photometry processing (photometry_flag_af4_unavailable)	[ucd=meta.code.status]
+#Column	AF5uFlag	(I1)	[0/1] AF5 transit unavailable by photometry processing (photometry_flag_af5_unavailable)	[ucd=meta.code.status]
+#Column	AF6uFlag	(I1)	[0/1] AF6 transit unavailable by photometry processing (photometry_flag_af6_unavailable)	[ucd=meta.code.status]
+#Column	AF7uFlag	(I1)	[0/1] AF7 transit unavailable by photometry processing (photometry_flag_af7_unavailable)	[ucd=meta.code.status]
+#Column	AF8uFlag	(I1)	[0/1] AF8 transit unavailable by photometry processing (photometry_flag_af8_unavailable)	[ucd=meta.code.status]
+#Column	AF9uFlag	(I1)	[0/1] AF9 transit unavailable by photometry processing (photometry_flag_af9_unavailable)	[ucd=meta.code.status]
+#Column	BPuFlag	(I1)	[0/1] BP transit unavailable by photometry processing (photometry_flag_bp_unavailable)	[ucd=meta.code.status]
+#Column	RPuFlag	(I1)	[0/1] RP transit unavailable by photometry processing (photometry_flag_rp_unavailable)	[ucd=meta.code.status]
+#Column	SMrFlag	(I1)	[1] SM transit rejected by photometry processing (photometry_flag_sm_reject)	[ucd=meta.code.status]
+#Column	AF1rFlag	(I1)	[0/1] AF1 transit rejected by photometry processing (photometry_flag_af1_reject)	[ucd=meta.code.status]
+#Column	AF2rFlag	(I1)	[0/1] AF2 transit rejected by photometry processing (photometry_flag_af2_reject)	[ucd=meta.code.status]
+#Column	AF3rFlag	(I1)	[0/1] AF3 transit rejected by photometry processing (photometry_flag_af3_reject)	[ucd=meta.code.status]
+#Column	AF4rFlag	(I1)	[0/1] AF4 transit rejected by photometry processing (photometry_flag_af4_reject)	[ucd=meta.code.status]
+#Column	AF5rFlag	(I1)	[0/1] AF5 transit rejected by photometry processing (photometry_flag_af5_reject)	[ucd=meta.code.status]
+#Column	AF6rFlag	(I1)	[0/1] AF6 transit rejected by photometry processing (photometry_flag_af6_reject)	[ucd=meta.code.status]
+#Column	AF7rFlag	(I1)	[0/1] AF7 transit rejected by photometry processing (photometry_flag_af7_reject)	[ucd=meta.code.status]
+#Column	AF8rFlag	(I1)	[0/1] AF8 transit rejected by photometry processing (photometry_flag_af8_reject)	[ucd=meta.code.status]
+#Column	AF9rFlag	(I1)	[0/1] AF9 transit rejected by photometry processing (photometry_flag_af9_reject)	[ucd=meta.code.status]
+#Column	BPrFlag	(I1)	[0/1] BP transit rejected by photometry processing (photometry_flag_bp_reject)	[ucd=meta.code.status]
+#Column	RPrFlag	(I1)	[0/1] RP transit rejected by photometry processing (photometry_flag_rp_reject)	[ucd=meta.code.status]
+#Column	GrVFlag	(I1)	[0/1] Average G transit photometry rejected by variability processing (variability_flag_g_reject)	[ucd=meta.code.status]
+#Column	BPrVFlag	(I1)	[0/1] BP transit photometry rejected by variability processing (variability_flag_bp_reject)	[ucd=meta.code.status]
+#Column	RPrVFlag	(I1)	[0/1] RP transit photometry rejected by variability processing (variability_flag_rp_reject)	[ucd=meta.code.status]
+Source	RA_ICRS	DE_ICRS	TransitID	TimeG	FG	e_FG	RFG	Gmag	NG	TimeBP	FBP	e_FBP	RFBP	BPmag	TimeRP	FRP	e_FRP	RFRP	RPmag	noisyFlag	SMuFlag	AF1uFlag	AF2uFlag	AF3uFlag	AF4uFlag	AF5uFlag	AF6uFlag	AF7uFlag	AF8uFlag	AF9uFlag	BPuFlag	RPuFlag	SMrFlag	AF1rFlag	AF2rFlag	AF3rFlag	AF4rFlag	AF5rFlag	AF6rFlag	AF7rFlag	AF8rFlag	AF9rFlag	BPrFlag	RPrFlag	GrVFlag	BPrVFlag	RPrVFlag
+ 	deg	deg	 	d	e-/s	e-/s	 	mag	 	d	e-/s	e-/s	 	mag	d	e-/s	e-/s	 	mag	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+-------------------	---------------	---------------	-----------------	-----------	--------------	--------------	------------	---------	-	---------	--------------	--------------	------------	---------	---------	--------------	--------------	------------	---------	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-
+5322590658834050176	126.77149234135	-50.76580448187	69203648271905737	2648.358478	 1.4897079e+04	 2.8074313e+01	 5.30630e+02	15.254614	8	2648.3588	 5.9960055e+03	 4.0825377e+01	 1.46870e+02	15.893887	2648.3589	 1.2760427e+04	 5.6987308e+01	 2.23917e+02	14.483233	0	0	0	0	0	0	0	0	0	1	0	0	0	1	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	69193907422541165	2648.182344	 1.3236280e+04	 7.6208117e+01	 1.73686e+02	15.382952	9	2648.1827	 5.3616210e+03	 3.7488991e+01	 1.43019e+02	16.015302	2648.1827	 1.1169915e+04	 5.2512224e+01	 2.12711e+02	14.627771	1	0	0	0	0	0	0	0	0	0	0	0	0	1	1	1	1	1	1	1	0	1	1	0	1	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	67645734506383000	2620.184811	 1.2034926e+04	 2.3184203e+01	 5.19100e+02	15.486258	6	2620.1851	 4.8938275e+03	 3.8271321e+01	 1.27872e+02	16.114421	2620.1852	 1.0288478e+04	 5.2231880e+01	 1.96977e+02	14.717018	0	0	1	0	0	0	0	1	0	0	1	0	0	1	1	1	1	1	1	1	1	1	0	1	1	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	65486965005271881	2581.144184	 1.4807353e+04	 2.0717630e+01	 7.14722e+02	15.261173	8	2581.1445	 6.2973908e+03	 4.0648397e+01	 1.54923e+02	15.840641	2581.1446	 1.2628486e+04	 5.5510360e+01	 2.27498e+02	14.494517	0	0	0	0	0	0	0	0	0	0	1	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	63870011919099088	2551.901553	 1.4751176e+04	 2.0835065e+01	 7.07998e+02	15.265300	9	2551.9019	 6.0692627e+03	 3.9728130e+01	 1.52770e+02	15.880702	2551.9020	 1.2690691e+04	 5.5940820e+01	 2.26859e+02	14.489182	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	63865919604551885	2551.827543	 1.4744775e+04	 1.8027532e+01	 8.17903e+02	15.265772	9	2551.8279	 6.0490193e+03	 3.8826106e+01	 1.55798e+02	15.884330	2551.8279	 1.2440724e+04	 5.4674087e+01	 2.27543e+02	14.510781	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	62235405200405009	2522.339329	 1.4904380e+04	 2.9065549e+01	 5.12785e+02	15.254082	8	2522.3397	 6.0543799e+03	 4.4797224e+01	 1.35151e+02	15.883368	2522.3397	 1.2897252e+04	 6.1175876e+01	 2.10823e+02	14.471653	0	0	0	0	0	0	0	1	0	0	0	0	0	1	0	0	0	0	0	1	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	60264476287735313	2486.694711	 1.4557348e+04	 1.7802927e+01	 8.17694e+02	15.279661	9	2486.6950	 5.8885437e+03	 4.1296901e+01	 1.42590e+02	15.913522	2486.6951	 1.2504157e+04	 5.7308558e+01	 2.18190e+02	14.505259	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	59113077685502909	2465.871643	 1.4567994e+04	 4.6744419e+01	 3.11652e+02	15.278867	8	2465.8720	 5.9283097e+03	 4.1090743e+01	 1.44274e+02	15.906215	2465.8721	 1.2547980e+04	 5.6635019e+01	 2.21559e+02	14.501461	1	0	0	0	0	0	0	0	0	0	1	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	55811840637302671	2406.170358	 1.4595719e+04	 3.3805745e+01	 4.31753e+02	15.276803	9	2406.1707	 6.1462585e+03	 4.5567802e+01	 1.34882e+02	15.867015	2406.1708	 1.2467535e+04	 5.5658852e+01	 2.23999e+02	14.508444	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	55802099811128100	2405.994203	 1.4529401e+04	 1.2820727e+01	 1.13327e+03	15.281748	9	2405.9945	 5.9569561e+03	 4.2593337e+01	 1.39857e+02	15.900981	2405.9946	 1.2340769e+04	 5.7374584e+01	 2.15091e+02	14.519540	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	53606354492773007	2366.286392	 1.4553892e+04	 2.4438392e+01	 5.95534e+02	15.279919	9	2366.2867	 5.8152820e+03	 4.2154451e+01	 1.37952e+02	15.927115	2366.2868	 1.2359349e+04	 5.4964226e+01	 2.24862e+02	14.517906	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	53602262204708081	2366.212388	 1.4529749e+04	 2.2161473e+01	 6.55631e+02	15.281722	9	2366.2127	 5.8442724e+03	 3.9575643e+01	 1.47673e+02	15.921716	2366.2128	 1.2289157e+04	 5.3967715e+01	 2.27713e+02	14.524090	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	52113753464415555	2339.294494	 1.4529753e+04	 2.5851390e+01	 5.62049e+02	15.281721	8	2339.2948	 5.9132655e+03	 3.9662931e+01	 1.49088e+02	15.908974	2339.2949	 1.2554318e+04	 5.6241974e+01	 2.23220e+02	14.500913	0	0	0	0	0	0	0	0	0	1	0	0	0	1	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	50276073308590553	2306.062251	 1.4738951e+04	 2.9611161e+01	 4.97750e+02	15.266200	8	2306.0626	 6.1467731e+03	 4.2000064e+01	 1.46352e+02	15.866924	2306.0627	 1.2616899e+04	 5.7152645e+01	 2.20758e+02	14.495514	0	0	0	0	0	0	0	0	0	1	0	0	0	1	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	50271981040711396	2305.988268	 1.4742158e+04	 1.6927691e+01	 8.70890e+02	15.265964	9	2305.9886	 5.9442196e+03	 4.2203317e+01	 1.40847e+02	15.903305	2305.9887	 1.4778056e+04	 6.2567107e+01	 2.36195e+02	14.323852	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	1	0	0	1
+5322590658834050176	126.77149234135	-50.76580448187	48217180361639014	2268.829145	 1.4656527e+04	 2.6738310e+01	 5.48147e+02	15.272289	8	2268.8295	 6.0502784e+03	 4.0450791e+01	 1.49571e+02	15.884104	2268.8296	 1.2642041e+04	 5.5396324e+01	 2.28211e+02	14.493353	0	0	0	0	0	0	0	0	0	0	1	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	46706326865973945	2241.506285	 1.1443481e+04	 1.5633667e+01	 7.31977e+02	15.540971	9	2241.5066	 4.6958649e+03	 3.8809465e+01	 1.20998e+02	16.159253	2241.5067	 9.8866833e+03	 5.2649024e+01	 1.87785e+02	14.760269	0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	1	1	1	1	1	1	1	1	1	1	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	44619849668649668	2203.772736	 1.4805338e+04	 1.5118090e+02	 9.79313e+01	15.261321	9	2203.7731	 6.0192615e+03	 4.0844558e+01	 1.47370e+02	15.889684	2203.7731	 1.2590894e+04	 5.6974886e+01	 2.20990e+02	14.497754	1	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	1	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	44610108858208811	2203.596573	 1.2158245e+04	 2.8570769e+01	 4.25548e+02	15.475190	9	2203.5969	 4.8900495e+03	 3.6895522e+01	 1.32538e+02	16.115259	2203.5970	 1.0319739e+04	 5.1136844e+01	 2.01806e+02	14.713724	0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	1	1	1	1	1	1	1	1	1	1	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	42938100939399640	2173.358082	 1.4756899e+04	 2.3458120e+01	 6.29074e+02	15.264879	9	2173.3584	 5.9594462e+03	 4.1307200e+01	 1.44271e+02	15.900527	2173.3585	 1.2535822e+04	 5.7541733e+01	 2.17856e+02	14.502513	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	42934008657101916	2173.284044	 1.4604651e+04	 2.6952069e+01	 5.41875e+02	15.276139	8	2173.2844	 6.0624145e+03	 4.1426811e+01	 1.46340e+02	15.881928	2173.2845	 1.9577157e+04	 6.8640798e+01	 2.85212e+02	14.018521	0	0	0	0	0	0	0	0	0	0	1	0	0	1	0	0	0	0	0	0	0	0	0	0	1	0	0	1
+5322590658834050176	126.77149234135	-50.76580448187	41413957469360606	2145.793584	 1.4832589e+04	 1.5693098e+01	 9.45166e+02	15.259324	9	2145.7939	 6.0091260e+03	 4.0755130e+01	 1.47445e+02	15.891514	2145.7940	 1.2644290e+04	 5.7405308e+01	 2.20263e+02	14.493159	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	39360343205148294	2108.653716	 1.4881695e+04	 3.6063109e+01	 4.12657e+02	15.255736	9	2108.6540	 6.1665778e+03	 4.2084700e+01	 1.46528e+02	15.863432	2108.6541	 1.2527800e+04	 5.5683941e+01	 2.24980e+02	14.503208	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	38282080353308978	2089.153472	 1.4402946e+04	 1.3875322e+01	 1.03803e+03	15.291239	9	2089.1538	 6.0219335e+03	 3.9065939e+01	 1.54148e+02	15.889202	2089.1539	 1.2316922e+04	 5.4886160e+01	 2.24409e+02	14.521640	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	38277988062204630	           	              	              	            	         	0	2089.0798	 5.4660379e+03	 3.9708062e+01	 1.37656e+02	15.994361	2089.0799	 1.1237864e+04	 5.4648518e+01	 2.05639e+02	14.621186	0	0	1	1	1	1	1	1	1	1	1	0	0	1	1	1	1	1	1	1	1	1	1	0	1	1	1	1
+5322590658834050176	126.77149234135	-50.76580448187	34897966645430115	2027.953843	 1.4809518e+04	 2.4139728e+01	 6.13491e+02	15.261015	8	2027.9542	 6.0342189e+03	 4.4050229e+01	 1.36985e+02	15.886990	2027.9543	 1.2576394e+04	 5.6622599e+01	 2.22109e+02	14.499005	0	0	0	0	0	0	0	0	0	0	1	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	32757273435350420	1989.241817	 1.4783226e+04	 1.4453800e+01	 1.02279e+03	15.262944	9	1989.2421	 6.0389461e+03	 3.9780239e+01	 1.51808e+02	15.886139	1989.2422	 1.2508808e+04	 5.6662883e+01	 2.20758e+02	14.504856	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	31154215357313184	1960.252485	 1.4771578e+04	 1.8963142e+01	 7.78963e+02	15.263800	9	1960.2528	 5.9676744e+03	 4.4317986e+01	 1.34656e+02	15.899029	1960.2529	 1.2641394e+04	 5.6106145e+01	 2.25312e+02	14.493408	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	31150123053494757	1960.178481	 1.1849595e+04	 2.1468800e+01	 5.51945e+02	15.503108	9	1960.1788	 4.9161007e+03	 4.5853568e+01	 1.07213e+02	16.109490	1960.1789	 1.0170988e+04	 5.8633429e+01	 1.73467e+02	14.729488	0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	1	1	1	1	1	1	1	1	1	1	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	29385387545252399	1928.265248	 1.4730030e+04	 2.4210711e+01	 6.08410e+02	15.266858	9	1928.2656	 6.0944289e+03	 4.6942239e+01	 1.29828e+02	15.876210	1928.2657	 1.2513949e+04	 5.7482371e+01	 2.17701e+02	14.504410	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	29381295229526130	1928.191242	 1.4873243e+04	 3.1471461e+01	 4.72595e+02	15.256353	9	1928.1916	 6.1171996e+03	 4.3612643e+01	 1.40262e+02	15.872161	1928.1916	 1.2675323e+04	 5.7100163e+01	 2.21984e+02	14.490498	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	27257408578844494	1889.782500	 1.3749611e+04	 1.1279673e+01	 1.21897e+03	15.341641	9	1889.7828	 5.6905213e+03	 4.4293152e+01	 1.28474e+02	15.950662	1889.7829	 1.1649870e+04	 5.3986177e+01	 2.15794e+02	14.582093	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	1	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	27253316276335331	1889.708493	 1.4845412e+04	 2.7469199e+01	 5.40438e+02	15.258386	9	1889.7088	 6.1121651e+03	 4.5942766e+01	 1.33039e+02	15.873055	1889.7089	 1.2716868e+04	 6.2786146e+01	 2.02543e+02	14.486945	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	25750645641622483	1862.533321	 1.4875433e+04	 2.9913913e+01	 4.97275e+02	15.256193	9	1862.5336	 6.1583924e+03	 4.5369353e+01	 1.35739e+02	15.864874	1862.5337	 1.2631131e+04	 5.8603930e+01	 2.15534e+02	14.494290	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	25746553356043411	1862.459285	 1.4923055e+04	 2.6743626e+01	 5.58004e+02	15.252722	8	1862.4596	 6.5554576e+03	 4.3731485e+01	 1.49902e+02	15.797035	1862.4597	 1.2907821e+04	 5.6226173e+01	 2.29570e+02	14.470763	0	0	0	0	0	0	0	0	0	0	1	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	23760922113401584	1826.549264	 1.4911751e+04	 1.3877013e+01	 1.07457e+03	15.253545	9	1826.5496	 6.1054989e+03	 3.9470296e+01	 1.54686e+02	15.874239	1826.5497	 1.2755052e+04	 5.5087609e+01	 2.31541e+02	14.483690	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	23756829819675573	1826.475255	 1.4893151e+04	 2.6758605e+01	 5.56574e+02	15.254900	9	1826.4756	 6.0929236e+03	 4.5131978e+01	 1.35002e+02	15.876478	1826.4757	 1.2636849e+04	 6.0754441e+01	 2.07999e+02	14.493798	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+5322590658834050176	126.77149234135	-50.76580448187	22006227699296096	1794.815262	 1.4726555e+04	 2.3604074e+01	 6.23899e+02	15.267114	9	         	              	              	            	         	         	              	              	            	         	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	1	1	0	1	1
+5322590658834050176	126.77149234135	-50.76580448187	22002135396151542	1794.741252	 1.4783843e+04	 2.7104353e+01	 5.45442e+02	15.262899	9	1794.7416	 1.6181936e+05	 1.9112399e+02	 8.46672e+02	12.315966	1794.7417	 1.2551473e+04	 5.4642742e+01	 2.29701e+02	14.501159	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	1	0	0	1	0
+5322590658834050176	126.77149234135	-50.76580448187	20592541270430889	1769.248424	 1.4765225e+04	 3.0351027e+01	 4.86482e+02	15.264267	9	1769.2487	 6.0627600e+03	 4.3367640e+01	 1.39799e+02	15.881866	1769.2488	 1.2552708e+04	 5.6301100e+01	 2.22957e+02	14.501052	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+
