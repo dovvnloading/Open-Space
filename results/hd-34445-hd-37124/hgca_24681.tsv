@@ -1,0 +1,65 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-14T22:58:21 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-14T22:58:21	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJS%2F254%2F42%2Fcatalog&HIP=24681&-out.all=&-out.max=20	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+
+#RESOURCE=yCat_22540042
+#Name: J/ApJS/254/42
+#Title: Hipparcos-Gaia (EDR3) Catalog of Accelerations (Brandt, 2021)
+#INFO	ivoid=ivo://cds.vizier/j/apjs/254/42	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/apjs/254/42	    IVOID of underlying data collection
+#INFO	creator=Brandt T.D.	    First author or institution
+#INFO	cites=bibcode:2021ApJS..254...42B	    Article or Data origin sources
+#INFO	journal=ApJS	    Journal name
+#INFO	original_date=2021	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJS/254/42	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.22540042	    Dataset identifier that can be used for citation
+#INFO	publication_date=2022-09-21	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	H:	ICRS
+#Table	J_ApJS_254_42_catalog:
+#Name: J/ApJS/254/42/catalog
+#Title: The Hipparcos-Gaia Catalog of Accelerations (HGCA), Gaia EDR3 edition
+#Column	HIP	(I6)	[1/120404] Hipparcos number (hip_id)	[ucd=meta.id;meta.main]
+#Column	Gaia	(I19)	Gaia EDR3 identifier (gaia_source_id)	[ucd=meta.id.cross]
+#Column	RA_ICRS	(F15.11)	Gaia EDR3 Barycentric right ascension of the source (ICRS) at Ep=EpochRAgaia (gaia_ra)	[ucd=pos.eq.ra;meta.main]
+#Column	DE_ICRS	(F15.11)	Gaia EDR3 Barycentric declination of the source (ICRS) at Ep=EpochDEgaia (gaia_dec)	[ucd=pos.eq.dec;meta.main]
+#Column	RV	(F8.3)	[-589/587]? Measured radial velocity (radial_velocity)	[ucd=phys.veloc;pos.heliocentric]
+#Column	e_RV	(F7.3)	[0/999]? RV standard error (radial_velocity_error)	[ucd=stat.error]
+#Column	r_RV	(A8)	Source of RV (radial_velocity_source) (1)	[ucd=meta.ref;pos.frame]
+#Column	plx	(F8.4)	[0.1/769] Gaia EDR3 parallax (parallax_gaia)	[ucd=pos.parallax.trig]
+#Column	e_plx	(F7.4)	[0.008/1.6] plx standard error (parallax_gaia_error)	[ucd=stat.error;pos.parallax]
+#Column	pmRA	(F9.3)	[-4407/6766] Gaia EDR3 proper motion in right ascension direction (pmRA*cosDE) (pmra_gaia)	[ucd=pos.pm;pos.eq.ra]
+#Column	pmDE	(F9.3)	[-5818/10363] Gaia EDR3 proper motion in declination direction (pmdec_gaia)	[ucd=pos.pm;pos.eq.dec]
+#Column	e_pmRA	(F6.3)	[0.007/2.1] Calibrated uncertainty in pmRA (pmra_gaia_error)	[ucd=stat.error;pos.pm;pos.eq.ra]
+#Column	e_pmDE	(F6.3)	[0.009/2] Calibrated uncertainty in pmDE (pmdec_gaia_error)	[ucd=stat.error;pos.pm;pos.eq.dec]
+#Column	pmRAhg	(F9.3)	[-4407/6766] Calibrated proper motion in RA from the Hipparcos-Gaia positional difference (pmra_hg)	[ucd=pos.pm;pos.eq.ra]
+#Column	pmDEhg	(F9.3)	[-5818/10363] Calibrated proper motion in DEC from the Hipparcos-Gaia positional difference (pmdec_hg)	[ucd=pos.pm;pos.eq.dec]
+#Column	e_pmRAhg	(F7.3)	[0.008/583] Calibrated uncertainty in pmRAhg (pmra_hg_error)	[ucd=stat.error;pos.pm;pos.eq.ra]
+#Column	e_pmDEhg	(F6.3)	[0.008/57] Calibrated uncertainty in pmDEhg (pmdec_hg_error)	[ucd=stat.error;pos.pm;pos.eq.dec]
+#Column	pmRAhip	(F9.3)	[-4408/6767] Calibrated proper motion in RA from the composite Hipparcos catalog (pmra_hip)	[ucd=pos.pm;pos.eq.ra]
+#Column	pmDEhip	(F9.3)	[-5819/10360] Calibrated proper motion in DEC from the composite Hipparcos catalog (pmdec_hip)	[ucd=pos.pm;pos.eq.dec]
+#Column	e_pmRAhip	(F8.3)	[0.2/2270] Calibrated uncertainty in pmRAhip (pmra_hip_error)	[ucd=stat.error;pos.pm;pos.eq.ra]
+#Column	e_pmDEhip	(F7.3)	[0.2/114] Calibrated uncertainty in pmDEhip (pmdec_hip_error)	[ucd=stat.error;pos.pm;pos.eq.dec]
+#Column	EpochRAgaia	(F6.1)	[2015.1/2017.1] Central epoch of Gaia EDR3 RA measurement (epoch_ra_gaia)	[ucd=time.epoch;pos.eq.ra]
+#Column	EpochDEgaia	(F6.1)	[2015/2017.2] Central epoch of Gaia EDR3 DEC measurement (epoch_dec_gaia)	[ucd=time.epoch;pos.eq.dec]
+#Column	EpochRAhip	(F6.1)	[1990.4/1992.4] Central epoch of Hipparcos RA measurement (epoch_ra_hip)	[ucd=time.epoch;pos.eq.ra]
+#Column	EpochDEhip	(F6.1)	[1990.3/1992.4] Central epoch of Hipparcos DEC measurement (epoch_dec_hip)	[ucd=time.epoch;pos.eq.dec]
+#Column	dpmRA	(F7.4)	[-8/2.7] Correction to pmRAhg from projecting linear motion onto the celestial sphere: {gamma}_{alpha}_^*^ from Table 2 (nonlinear_dpmra)	[ucd=arith.factor]
+#Column	dpmDE	(F7.4)	[-4.2/16.1] Correction to pmDEhg from projecting linear motion onto the celestial sphere: {gamma}_{delta}_ from Table 2 (nonlinear_dpmdec)	[ucd=arith.factor]
+#Column	chi2	(E10.3)	[3.1e-05/367600] {chi}^2^ value for a model of constant proper motion with 2 degrees of freedom (chisq)	[ucd=stat.value]
+#Column	Simbad	(a6)	Simbad column added by the CDS	[ucd=meta.ref.url]
+HIP	Gaia	RA_ICRS	DE_ICRS	RV	e_RV	r_RV	plx	e_plx	pmRA	pmDE	e_pmRA	e_pmDE	pmRAhg	pmDEhg	e_pmRAhg	e_pmDEhg	pmRAhip	pmDEhip	e_pmRAhip	e_pmDEhip	EpochRAgaia	EpochDEgaia	EpochRAhip	EpochDEhip	dpmRA	dpmDE	chi2	Simbad
+ 	 	deg	deg	km/s	km/s	 	mas	mas	mas/yr	mas/yr	mas/yr	mas/yr	mas/yr	mas/yr	mas/yr	mas/yr	mas/yr	mas/yr	mas/yr	mas/yr	yr	yr	yr	yr	mas/yr	mas/yr	 	
+------	-------------------	---------------	---------------	--------	-------	--------	--------	-------	---------	---------	------	------	---------	---------	-------	------	---------	---------	--------	-------	------	------	------	------	-------	-------	----------	------
+ 24681	3241295308714904960	079.42074813549	+07.35266590984	 -79.041	  0.149	Gaia_DR2	 21.8367	 0.0206	   -0.725	 -146.886	 0.031	 0.020	   -0.745	 -146.893	  0.026	 0.017	   -1.623	 -147.827	   0.872	  0.559	2016.4	2016.7	1991.2	1991.0	 0.0000	-0.0067	 4.114e-01	Simbad
+
