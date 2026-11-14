@@ -95,6 +95,16 @@ def integrate(case):
     return 2000 + (fit['epoch'] - 2451545) / 365.25 + times, angles
 
 
+def trailing_samples(years, angles):
+    elapsed = np.abs(years - years[0])
+    masks = {}
+    for horizon in (1000, 2000, 4000):
+        if elapsed[-1] >= horizon:
+            block = angles[elapsed <= horizon, 1:]
+            masks[horizon] = np.all((block > -180) & (block < 0), axis=0)
+    return masks
+
+
 def summarize(case, years, angles):
     nominal = angles[:, 0]
     result = {'nominal_range_deg': np.round([nominal.min(), nominal.max()], 2).tolist()}
@@ -102,11 +112,9 @@ def summarize(case, years, angles):
         result['nominal_unwrapped_span_deg'] = round(float(np.ptp(
             np.degrees(np.unwrap(np.radians(nominal))))), 2)
     elif case.startswith('mars'):
-        for horizon in (1000, 2000, 4000):
-            if abs(years[-1] - years[0]) >= horizon:
-                block = angles[np.abs(years - years[0]) <= horizon, 1:]
-                result[f'samples_trailing_{horizon}yr'] = int(
-                    np.all((block > -180) & (block < 0), axis=0).sum())
+        if angles.shape[1] > 1:
+            for horizon, mask in trailing_samples(years, angles).items():
+                result[f'samples_trailing_{horizon}yr'] = int(mask.sum())
     else:
         for year in (2065, 2150, 2200):
             block = angles[years <= year, 1:]
@@ -123,9 +131,19 @@ if __name__ == '__main__':
     parser.add_argument('case', choices=[*CASES, 'all'])
     parser.add_argument('--save', type=Path, help='Directory for trajectory arrays')
     args = parser.parse_args()
+    jpl_mars_masks = {}
     for label in CASES if args.case == 'all' else [args.case]:
         t, phi = integrate(label)
         if args.save:
             args.save.mkdir(exist_ok=True, parents=True)
             np.savez_compressed(args.save / f'{label}.npz', time=t, angle=phi)
         print(label, json.dumps(summarize(label, t, phi)), flush=True)
+        if args.case == 'all' and label in ('mars-forward', 'mars-backward'):
+            jpl_mars_masks[label] = trailing_samples(t, phi)
+    if jpl_mars_masks:
+        # The JPL seed and covariance are identical in the two directions.
+        forward = jpl_mars_masks['mars-forward']
+        backward = jpl_mars_masks['mars-backward']
+        joint = {f'samples_trailing_plus_minus_{h}yr': int((mask & backward[h]).sum())
+                 for h, mask in forward.items()}
+        print('mars-jpl-both-directions', json.dumps(joint))
