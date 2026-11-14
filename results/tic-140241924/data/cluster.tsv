@@ -1,0 +1,49 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-14T21:50:06 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-14T21:50:06	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F686%2FA42%2Fmembers&-c=126.771527+-50.765831&-c.rs=110&-out=GaiaDR3%2CName%2CProb%2Cinrt%2CRA_ICRS%2CDE_ICRS&-out.max=300	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=126.771527-50.765831,rs=110.	
+#Constraint -out.max=300
+
+#RESOURCE=yCat_36860042
+#Name: J/A+A/686/A42
+#Title: Improving the open cluster census. III. (Hunt+, 2024)
+#INFO	ivoid=ivo://cds.vizier/j/a+a/686/a42	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/a+a/686/a42	    IVOID of underlying data collection
+#INFO	creator=Hunt E.L.	    First author or institution
+#INFO	cites=bibcode:2024A&A...686A..42H	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2024	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/686/A42	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.36860042	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-11-21	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	H_2016.000:	ICRS
+#Table	J_A_A_686_A42_members:
+#Name: J/A+A/686/A42/members
+#Title: Member stars of clusters (table 2)
+#Column	GaiaDR3	(I19)	Gaia DR3 source ID	[ucd=meta.id;meta.main]
+#Column	Name	(a20)	Main accepted cluster name	[ucd=meta.id.parent]
+#Column	Prob	(F21.18)	[0/1] Membership probability	[ucd=stat.probability]
+#Column	inrt	(I1)	[0/1] Flag indicating if cluster is within estimated King (1962AJ.....67..471K) tidal radius based on cluster profile	[ucd=meta.code]
+#Column	RA_ICRS	(F11.8)	Right ascension of star (ICRS) at Ep=2016.0	[ucd=pos.eq.ra;meta.main]
+#Column	DE_ICRS	(F11.8)	Declination of star (ICRS) at Ep=2016.0	[ucd=pos.eq.dec;meta.main]
+GaiaDR3	Name	Prob	inrt	RA_ICRS	DE_ICRS
+ 	 	 	 	deg	deg
+-------------------	--------------------	---------------------	-	-----------	-----------
+5322564236194468736	UBC_247             	 1.000000000000000000	1	126.7764578	-50.7831509
+5322567191132045184	UBC_247             	 1.000000000000000000	1	126.7653959	-50.7671465
+5322567225491692032	UBC_247             	 1.000000000000000000	1	126.7368617	-50.7656065
+5322587841332501632	UBC_247             	 0.623573502255904466	1	126.8038870	-50.7469653
+5322590658834050176	UBC_247             	 1.000000000000000000	1	126.7714923	-50.7658045
+5322590796272994688	UBC_247             	 1.000000000000000000	1	126.7996822	-50.7431320
+

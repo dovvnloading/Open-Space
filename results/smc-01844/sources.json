@@ -1,0 +1,204 @@
+{
+  "iii-I.dat": {
+    "url": "https://www.astrouw.edu.pl/ogle/ogle3/OIII-CVS/smc/ecl/phot/I/OGLE-SMC-ECL-1844.dat",
+    "upstream_sha256": "888581674c198d0ff8360de4a921493282c805e3622d4fb6b892c38f9e13aeaf",
+    "upstream_bytes": 18288
+  },
+  "iii-V.dat": {
+    "url": "https://www.astrouw.edu.pl/ogle/ogle3/OIII-CVS/smc/ecl/phot/V/OGLE-SMC-ECL-1844.dat",
+    "upstream_sha256": "2e743ff7bb51eb445906e6faf91b70d0a1f7df9c2a7ddcdc5c63df91fc03f306",
+    "upstream_bytes": 2136
+  },
+  "iv-I.dat": {
+    "url": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/phot/I/OGLE-SMC-ECL-01844.dat",
+    "upstream_sha256": "37a69c703fb10d03c00497ff9a226afbd7f8d9f96551aa2613a3c776062e3aa2",
+    "upstream_bytes": 67203
+  },
+  "iv-V.dat": {
+    "url": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/phot/V/OGLE-SMC-ECL-01844.dat",
+    "upstream_sha256": "331234dfca1ec9c372fec2c2fe36f2c42ff747182e1892eec973c9d751e6f0c9",
+    "upstream_bytes": 2511
+  },
+  "xtime.tsv": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F390%2Fxtime&-c=12.57704167+-72.64900000&-c.rs=5&-out.max=20000&-out=EROS%2CHJD%2CRmag%2Ce_Rmag%2CBmag%2Ce_Bmag",
+    "upstream_sha256": "65b5d48615dc6a91856d080aac647eab45d35e3a96c18716f8d85fec5d9694d4",
+    "upstream_bytes": 275364
+  },
+  "xcat.tsv": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F390%2Fxcat&-c=12.57704167+-72.64900000&-c.rs=5&-out.max=20000&-out=_r%2CEROS%2CRAJ2000%2CDEJ2000%2CNlc",
+    "upstream_sha256": "d5bd5c4a8e2f31c9aae9d512ba950c09fd49063fadde2d7b7f969d1d1c4e66b4",
+    "upstream_bytes": 2296
+  },
+  "refs.csv": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+r.bibcode%2Cr.title+FROM+basic+b+JOIN+has_ref+h+ON+h.oidref%3Db.oid+JOIN+ref+r+ON+r.oidbib%3Dh.oidbibref+WHERE+b.main_id%3D%272dFS+++757%27",
+    "upstream_sha256": "369999034f812a0e5343411b78614e3a38a1052867e9682b3ec9b0cb77ad0ffc",
+    "upstream_bytes": 1404
+  },
+  "ids.csv": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+i.id+FROM+basic+b+JOIN+ident+i+ON+i.oidref%3Db.oid+WHERE+b.main_id%3D%272dFS+++757%27",
+    "upstream_sha256": "426186d94ff6cb25324df003a83d804851cf1911202de3169d3c995a6bb9e9ed",
+    "upstream_bytes": 327
+  },
+  "simbad.csv": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.sp_type%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.nbref+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C12.577041666666668%2C-72.649%2C0.001%29%29",
+    "upstream_sha256": "8e0c38eac52633e86bb0febdedd127adb2efc909f916bb740f380d24736fd797",
+    "upstream_bytes": 102
+  },
+  "vsx.tsv": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=12.57704167+-72.64900000&-c.rs=6&-out.max=100&-out.all=1",
+    "upstream_sha256": "19c26cd016b8f2bfa7eb38fd5be992cd45120566f537ffd907b847f254933eeb",
+    "upstream_bytes": 4480
+  },
+  "k2014.tsv": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F562%2FA125&-c=12.57704804+-72.64897851&-c.rs=5&-out.all=1",
+    "upstream_sha256": "3e1b7625120e7e3dc43a9767baea4246e0ed3b34a6f3fac526402ca8167f25f7",
+    "upstream_bytes": 12396
+  },
+  "mj-table2.tsv": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FMNRAS%2F349%2F833&-out.all=1&-out.max=20000",
+    "upstream_sha256": "1751d0f301a64c4e1273f804e54ddac052e4c1f66d9cfab562e62f3a81f991ab",
+    "upstream_bytes": 70977
+  },
+  "TESS": {
+    "1": {
+      "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.57704804&dec=-72.64897851&x=7&y=7&units=px&sector=1",
+      "sha256": "89fa45d1c94e96cc2c5f156c5d2a65488d8381975ae17fef1a67500508091f8f",
+      "bytes": 1382400,
+      "x_y_target_zero_based": [
+        3.842323575620828,
+        3.805098627911166
+      ],
+      "pixel_scale_matrix_deg": [
+        [
+          -0.002865643806729,
+          0.0051304205967295
+        ],
+        [
+          -0.0051266886090998,
+          -0.0028746672867594
+        ]
+      ],
+      "extracted_sha256": "88e26e857a862d40a8e6213a1711ad4da745cfb9668d43ed5d5adade709d4286"
+    },
+    "27": {
+      "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.57704804&dec=-72.64897851&x=7&y=7&units=px&sector=27",
+      "sha256": "8b7b31a1d155f205543591cb2a2f1f710c35e5411ad816d99b54bc2ab069a2a8",
+      "bytes": 3556800,
+      "x_y_target_zero_based": [
+        3.505517604395199,
+        3.672425249465763
+      ],
+      "pixel_scale_matrix_deg": [
+        [
+          -0.0010772459128404,
+          0.005714617629299
+        ],
+        [
+          -0.0056232007771253,
+          -0.0010772710490772
+        ]
+      ],
+      "extracted_sha256": "121a8b5165f6a29a96002c63e772a0fa99756ef6639f28bad63c95c2c3e5c634"
+    },
+    "28": {
+      "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.57704804&dec=-72.64897851&x=7&y=7&units=px&sector=28",
+      "sha256": "11b2f590a5ddd3218f37fb05cd7a21c86638d4414fe9b62126e3c3ef6e98eda0",
+      "bytes": 3666240,
+      "x_y_target_zero_based": [
+        3.514179625768347,
+        3.357332168858968
+      ],
+      "pixel_scale_matrix_deg": [
+        [
+          -0.0032146264226407,
+          0.0048869160103947
+        ],
+        [
+          -0.0048811897692463,
+          -0.0032407692920958
+        ]
+      ],
+      "extracted_sha256": "43b4fe748b4c3cca190d8a21de5cb22a7b10173580c0102aabf1a0be7b7d322e"
+    },
+    "67": {
+      "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.57704804&dec=-72.64897851&x=7&y=7&units=px&sector=67",
+      "sha256": "fa4110ce20e794636383ed6103e6650361cd692cc72a3e2cad0cd50220538646",
+      "bytes": 12300480,
+      "x_y_target_zero_based": [
+        3.3376121775383263,
+        3.414647785050991
+      ],
+      "pixel_scale_matrix_deg": [
+        [
+          -0.00076267843789525,
+          0.0057515075591283
+        ],
+        [
+          -0.0056470609963025,
+          -0.00072940006052673
+        ]
+      ],
+      "extracted_sha256": "c5c242f4a54e315fc68356806b7439d139a9e3fa3edeb19f162412b3a58a9ec2"
+    },
+    "68": {
+      "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.57704804&dec=-72.64897851&x=7&y=7&units=px&sector=68",
+      "sha256": "c59f9edf90dbec4418d4c11196f22080f84d21502582e98afc477238754dab7e",
+      "bytes": 12216960,
+      "x_y_target_zero_based": [
+        3.641936456736099,
+        3.68932967575984
+      ],
+      "pixel_scale_matrix_deg": [
+        [
+          -0.0030487720487507,
+          0.0049578999999109
+        ],
+        [
+          -0.0049732735737911,
+          -0.0030861315673699
+        ]
+      ],
+      "extracted_sha256": "e49619cc00bd2fdf0a3cb4a31a5a1f1ca5424c29520f672dc5f1c0905d6ca47d"
+    },
+    "94": {
+      "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.57704804&dec=-72.64897851&x=7&y=7&units=px&sector=94",
+      "sha256": "46413c406e2786f4e95208828d7b04c82500903128c8c3032d0d428202b43fd9",
+      "bytes": 11445120,
+      "x_y_target_zero_based": [
+        3.6463041784993973,
+        3.4565462957910293
+      ],
+      "pixel_scale_matrix_deg": [
+        [
+          -0.00058594568712771,
+          0.0057563562898734
+        ],
+        [
+          -0.0056294166419984,
+          -0.00055563495198327
+        ]
+      ],
+      "extracted_sha256": "85dbbed9933027af88b73140e50197fcf04751e368b5ffcbd3d99599ba320aa4"
+    },
+    "95": {
+      "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.57704804&dec=-72.64897851&x=7&y=7&units=px&sector=95",
+      "sha256": "e6373882da2807541f43d2fffe445ba48f5d32498a048cbeedc41926f19d79d6",
+      "bytes": 10883520,
+      "x_y_target_zero_based": [
+        3.9173775174082346,
+        3.1795353977253287
+      ],
+      "pixel_scale_matrix_deg": [
+        [
+          -0.00276590080168,
+          0.0051467738022235
+        ],
+        [
+          -0.0051671767516784,
+          -0.0027807754533967
+        ]
+      ],
+      "extracted_sha256": "03e53d0e15d1dac40f4f406f7b28049a13d170c48b9007644c211a8fc141a7f8"
+    }
+  }
+}

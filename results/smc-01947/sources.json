@@ -1,0 +1,94 @@
+{
+  "ogle4-I.dat.gz": {
+    "url": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/phot/I/OGLE-SMC-ECL-01947.dat",
+    "upstream_sha256": "c721a0ff9b5e16809caa52bf2870a03fa6e92149ed894315c394680dd2ad3530",
+    "digest_applies_to": "upstream uncompressed photometry file"
+  },
+  "ogle4-V.dat.gz": {
+    "url": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/phot/V/OGLE-SMC-ECL-01947.dat",
+    "upstream_sha256": "7181d1b183b19b921adc3e52800148cde063fe47238b18a6c112aa52747bcf6b",
+    "digest_applies_to": "upstream uncompressed photometry file"
+  },
+  "ogle3-I.dat.gz": {
+    "url": "https://www.astrouw.edu.pl/ogle/ogle3/OIII-CVS/smc/ecl/phot/I/OGLE-SMC-ECL-1947.dat",
+    "upstream_sha256": "5e17ffa2fdb65179f1c770c33907517b845687c784331d64850409440fadf8f0",
+    "digest_applies_to": "upstream uncompressed photometry file"
+  },
+  "ogle3-V.dat.gz": {
+    "url": "https://www.astrouw.edu.pl/ogle/ogle3/OIII-CVS/smc/ecl/phot/V/OGLE-SMC-ECL-1947.dat",
+    "upstream_sha256": "c4075e93c6b3a61ce22762e080bed06fc4513be4653222ef7944948d412aea11",
+    "digest_applies_to": "upstream uncompressed photometry file"
+  },
+  "xcat.tsv.gz": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F390%2Fxcat&-c=12.66891667+-73.21561111&-c.rs=5&-out.max=20000&-out=_r%2CEROS%2CRAJ2000%2CDEJ2000%2CNlc",
+    "upstream_sha256": "8f2b551cc9d47ff61f88355f9b11c384161f2fba7844004abf739ebe5608e65a"
+  },
+  "xtime.tsv.gz": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F390%2Fxtime&-c=12.66891667+-73.21561111&-c.rs=5&-out.max=20000&-out=EROS%2CHJD%2CRmag%2Ce_Rmag%2CBmag%2Ce_Bmag",
+    "upstream_sha256": "e659b88fd27beaf7f27dae06e4c48f1f96859fe1f3654129c7b024f75488a425"
+  },
+  "vsx.tsv.gz": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=12.66891667+-73.21561111&-c.rs=6&-out.max=100&-out.all=1",
+    "upstream_sha256": "f061d4d4574ec82bc184bb63e742ac255644338be7e5a7f670c2ba1f04731d3c"
+  },
+  "simbad.csv.gz": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.sp_type%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.nbref+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C12.668916666666666%2C-73.21561111111112%2C0.001%29%29",
+    "upstream_sha256": "f5df1a85f070ea3434a7586cc1193ea4afb12a7b5a1859d346d92af834eb040d"
+  },
+  "tess-1.csv.gz": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.668879641&dec=-73.215620831&y=7&x=7&units=px&sector=1",
+    "upstream_sha256": "82ea2a8f4909142a3947dcfebe9e8c38547e4992de2ce4aae21e214ae5b86736",
+    "fits_name": "s1.fits",
+    "x": 4,
+    "y": 4,
+    "digest_applies_to": "upstream uncompressed FITS"
+  },
+  "tess-27.csv.gz": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.668879641&dec=-73.215620831&y=7&x=7&units=px&sector=27",
+    "upstream_sha256": "6e20f3e871b344d28c11c327f14642c67af4961a3198899e9f00c6edb4c69ae6",
+    "fits_name": "s27.fits",
+    "x": 4,
+    "y": 3,
+    "digest_applies_to": "upstream uncompressed FITS"
+  },
+  "tess-28.csv.gz": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.668879641&dec=-73.215620831&y=7&x=7&units=px&sector=28",
+    "upstream_sha256": "5f16bfda7e08dc1890ca2e46c36ccbdfd9188199f5be945e8c1ffca8ef9d79c4",
+    "fits_name": "s28.fits",
+    "x": 4,
+    "y": 3,
+    "digest_applies_to": "upstream uncompressed FITS"
+  },
+  "tess-67.csv.gz": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.668879641&dec=-73.215620831&y=7&x=7&units=px&sector=67",
+    "upstream_sha256": "6df414160223b70bfc2e1bae3b291bc1127150be76e9cc045ecc2e229eaccf99",
+    "fits_name": "s67.fits",
+    "x": 3,
+    "y": 4,
+    "digest_applies_to": "upstream uncompressed FITS"
+  },
+  "tess-68.csv.gz": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.668879641&dec=-73.215620831&y=7&x=7&units=px&sector=68",
+    "upstream_sha256": "3f7e13b595165dabc88529bd0c70f4bfa7f1ecb0783a4b9eb69254f92feeae0b",
+    "fits_name": "s68.fits",
+    "x": 4,
+    "y": 3,
+    "digest_applies_to": "upstream uncompressed FITS"
+  },
+  "tess-94.csv.gz": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.668879641&dec=-73.215620831&y=7&x=7&units=px&sector=94",
+    "upstream_sha256": "08ef503b16a366d59e8c07249dd25e7e1eb2a042c90de8e26d5a9e781d3e6dc0",
+    "fits_name": "s94.fits",
+    "x": 4,
+    "y": 3,
+    "digest_applies_to": "upstream uncompressed FITS"
+  },
+  "tess-95.csv.gz": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=12.668879641&dec=-73.215620831&y=7&x=7&units=px&sector=95",
+    "upstream_sha256": "a7d3c3c43736467cb1113b14e6deb313fea4b87955b766006677cdcd16812176",
+    "fits_name": "s95.fits",
+    "x": 4,
+    "y": 4,
+    "digest_applies_to": "upstream uncompressed FITS"
+  }
+}

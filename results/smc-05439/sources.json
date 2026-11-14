@@ -1,0 +1,95 @@
+{
+  "ogle3-I.dat.gz": {
+    "url": "https://www.astrouw.edu.pl/ogle/ogle3/OIII-CVS/smc/ecl/phot/I/OGLE-SMC-ECL-5439.dat",
+    "upstream_sha256": "06dfed593420ae8792afa9aee34353692e641eccf67c8824b72394f335f8dde8"
+  },
+  "ogle3-V.dat.gz": {
+    "url": "https://www.astrouw.edu.pl/ogle/ogle3/OIII-CVS/smc/ecl/phot/V/OGLE-SMC-ECL-5439.dat",
+    "upstream_sha256": "7232a210ef6f21e9cca9d17d34e1af3613b299f29541e730b40e5457c088fff8"
+  },
+  "ogle4-I.dat.gz": {
+    "url": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/phot/I/OGLE-SMC-ECL-05439.dat",
+    "upstream_sha256": "e14e3f8ef4c859bd991f7326ac979c9c11672a4e56b9a68a7596331d07cdf4f9"
+  },
+  "ogle4-V.dat.gz": {
+    "url": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/phot/V/OGLE-SMC-ECL-05439.dat",
+    "upstream_sha256": "397c91531a4c4aa1827ae871e7265f2bbc101e3ff374766aecde699826f12750"
+  },
+  "xtime.tsv.gz": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F390%2Fxtime&-c=17.21983333+-72.31038889&-c.rs=5&-out.max=20000&-out=EROS%2CHJD%2CRmag%2Ce_Rmag%2CBmag%2Ce_Bmag",
+    "bytes": 189612,
+    "sha256": "35c3829389ae861c5cbe5f9d6cb32f982ef4952ece980030c9aeb1e69c46fdfa"
+  },
+  "xcat.tsv.gz": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F390%2Fxcat&-c=17.21983333+-72.31038889&-c.rs=5&-out.max=20000&-out=_r%2CEROS%2CRAJ2000%2CDEJ2000%2CNlc",
+    "bytes": 2296,
+    "sha256": "8e4efef38ca542cb58899a353c0572068909221d8f1c19bbaf42d645c6c51014"
+  },
+  "simbad.csv.gz": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.sp_type%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.nbref+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C17.219833333333334%2C-72.31038888888888%2C0.001%29%29",
+    "bytes": 111,
+    "sha256": "b368ac1c58695aa4588a7529ed34f9a523a84f9fc14fc377bd2aefdd54c227c8"
+  },
+  "vsx.tsv.gz": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=17.21983333+-72.31038889&-c.rs=6&-out.max=100&-out.all=1",
+    "bytes": 4480,
+    "sha256": "51534f646430dbd3406329589754653984a94779d2f8100f14a73cb0b4b00e7a"
+  },
+  "refs.csv.gz": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+r.bibcode%2Cr.title+FROM+basic+b+JOIN+has_ref+h+ON+h.oidref%3Db.oid+JOIN+ref+r+ON+r.oidbib%3Dh.oidbibref+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C17.2197967%2C-72.3103774%2C0.00015%29%29",
+    "bytes": 1147,
+    "sha256": "cb9b7e0998094203d87bbaebd6266920c4c73445b43d851cf3b0c983125f7335"
+  },
+  "gaia.tsv.gz": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F355%2Fgaiadr3&-c=17.2197967+-72.3103774&-c.rs=8&-out=_r%2CSource%2CRA_ICRS%2CDE_ICRS%2CGmag&-out.max=100",
+    "bytes": 2588,
+    "sha256": "2c3076aaf4786b0a25718eadd452984647061f440e85eb5e28d66c2cd9dd94dc"
+  },
+  "dc-46872.csv.gz": {
+    "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+id%2Cobjid%2Cfilter%2Cmjd%2Cmag%2Cerr%2Cforced%2Cra%2Cdec+FROM+delve_dr3.mc_meas+WHERE+objid%3D%270175m722.46872%27",
+    "sha256": "0cff59a977e7eda76ab7173deedf9088e6263d7e4db24c27355a7e144bd81784"
+  },
+  "delve-cone.csv.gz": {
+    "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+objid%2Cra%2Cdec%2Cgmag%2Crmag%2Cimag+FROM+delve_dr3.mc_object+WHERE+ra+BETWEEN+17.2077967+AND+17.2317967+AND+dec+BETWEEN+-72.3138774+AND+-72.30687739999999",
+    "sha256": "ce8e10559b7d869676eb062c2e402737cb4967c9b86d0a8074d3efc87d9d6dde",
+    "bytes": 8836
+  },
+  "meerlicht.tsv.gz": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J/A%2BA/672/A69&-c=17.2197967%20-72.3103774&-c.rs=8&-out.all=1&-out.max=1000",
+    "sha256": "ac844dec10dad40e02ab3d48a7d24dec16970e4fbfb2750abda49998411bef08"
+  },
+  "dc-46992.csv.gz": {
+    "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+id%2Cobjid%2Cfilter%2Cmjd%2Cmag%2Cerr%2Cforced%2Cra%2Cdec+FROM+delve_dr3.mc_meas+WHERE+objid%3D%270175m722.46992%27",
+    "sha256": "a91d23277f69a7f9bfbc5068aeb4fbce3f05e112cdca269ebad7f9651f59fb48"
+  },
+  "dc-59764.csv.gz": {
+    "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+id%2Cobjid%2Cfilter%2Cmjd%2Cmag%2Cerr%2Cforced%2Cra%2Cdec+FROM+delve_dr3.mc_meas+WHERE+objid%3D%270175m722.59764%27",
+    "sha256": "ae4c30ab7b4e2d1480f68efc95c08af4cc60c86f688f3e436a58b0f4376bcbd8"
+  },
+  "dc-46551.csv.gz": {
+    "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+id%2Cobjid%2Cfilter%2Cmjd%2Cmag%2Cerr%2Cforced%2Cra%2Cdec+FROM+delve_dr3.mc_meas+WHERE+objid%3D%270175m722.46551%27",
+    "sha256": "648aab0e16a848bd85df44dbe1a00c585abc3846ef3a32aa28c56810aaa6a900"
+  },
+  "dc-49627.csv.gz": {
+    "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+id%2Cobjid%2Cfilter%2Cmjd%2Cmag%2Cerr%2Cforced%2Cra%2Cdec+FROM+delve_dr3.mc_meas+WHERE+objid%3D%270175m722.49627%27",
+    "sha256": "b66bad3aadc8d683dadb2d53bbce91d31cf3159b89dad60326b5822e1c39faac"
+  },
+  "dc-46539.csv.gz": {
+    "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+id%2Cobjid%2Cfilter%2Cmjd%2Cmag%2Cerr%2Cforced%2Cra%2Cdec+FROM+delve_dr3.mc_meas+WHERE+objid%3D%270175m722.46539%27",
+    "sha256": "1b38684d9d6d9ec73054c471a1c0a3d5ac4353593196ed22b6188384ca843e1c"
+  },
+  "dc-46749.csv.gz": {
+    "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+id%2Cobjid%2Cfilter%2Cmjd%2Cmag%2Cerr%2Cforced%2Cra%2Cdec+FROM+delve_dr3.mc_meas+WHERE+objid%3D%270175m722.46749%27",
+    "sha256": "796ab759975aa5b5f7c3a1750fb24cdaf81875d1387156a19a2d311a8052da4d"
+  },
+  "durations-shared.csv.gz": {
+    "repo": "dovvnloading/Open-Space",
+    "commit": "f10ff6d1cb45b27900387ad24cd3d013a7b19689",
+    "source_paths": [
+      "results/smc-04602/delve/data/delve-expo0.csv",
+      "results/smc-04602/delve/data/delve-expo1.csv",
+      "results/smc-04602/delve/data/delve-expo2.csv"
+    ],
+    "n": 97
+  }
+}
