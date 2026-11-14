@@ -1,0 +1,69 @@
+{
+  "2014 SD315": {
+    "url": "https://data.minorplanetcenter.net/api/get-obs",
+    "method": "GET",
+    "json_body": {
+      "desigs": [
+        "2014 SD315"
+      ],
+      "output_format": [
+        "ADES_DF",
+        "OBS80"
+      ]
+    },
+    "response_sha256": "b4cc137686c1302d8e2ba2b5cd4c42c79e0ae8de77ecde74eea7d50264a7f44c"
+  },
+  "2025 UC18": {
+    "url": "https://data.minorplanetcenter.net/api/get-obs",
+    "method": "GET",
+    "json_body": {
+      "desigs": [
+        "2025 UC18"
+      ],
+      "output_format": [
+        "ADES_DF",
+        "OBS80"
+      ]
+    },
+    "response_sha256": "4c1ab5f9078d10aad17488b99c5e9c1bca1b39c058337553a5212fbd5e15df1c"
+  },
+  "MPCORB": {
+    "url": "https://www.minorplanetcenter.net/iau/MPCORB/MPCORB.DAT.gz",
+    "snapshot_last_modified_utc": "2026-11-14T13:42:43Z",
+    "gzip_sha256": "10e29c5e55c33598e5891025d4db70bc4990fed51e90f0c70b5c0d10b69533cb",
+    "epoch_packed": "K2669",
+    "eligible": 1323625,
+    "neighbors": 687
+  },
+  "DE440s": {
+    "url": "https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de440s.bsp",
+    "sha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2"
+  },
+  "stations": {
+    "url": "https://www.minorplanetcenter.net/iau/lists/ObsCodes.html",
+    "sha256": "fc7a5c9e7259ef93a5b93eb4c69984980ba775803cfb93e6f8376fee81c0d45f"
+  },
+  "JPL_2025_UC18": {
+    "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?sstr=2025+UC18&cov=mat&full-prec=1&alt-des=1&phys-par=1",
+    "response_sha256": "db9e596486d263f151cb4681532d6885d9eab1932a0c5737ed73fb61b191aae8"
+  },
+  "withheld_fit_seed": {
+    "object": "2025 UC18",
+    "service": "NASA/JPL Horizons",
+    "solution_date": "2025-11-06T14:48:20",
+    "number_of_observations": 28,
+    "first_observation_utc": "2025-10-02",
+    "last_observation_utc": "2025-10-25",
+    "epoch_jd_tdb": 2461200.5,
+    "barycentric_j2000_ecliptic_au_au_per_day": [
+      -0.7309717467805182,
+      2.081888631803217,
+      0.04527806783900874,
+      -0.01181358991750766,
+      -0.001821957162616534,
+      0.0007410798263697633
+    ],
+    "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%272025+UC18%3B%27&CENTER=%27500%400%27&EPHEM_TYPE=%27VECTORS%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&TLIST=%272461200.5%27&CSV_FORMAT=%27YES%27",
+    "response_sha256": "c46ae44f16c4287a4b472d177f8b8f30c9b2c8c2efa95bd4837ed48ec9f58a07"
+  }
+}
