@@ -1,0 +1,97 @@
+{
+  "resolved_quadruple_catalog": {
+    "url": "https://raw.githubusercontent.com/cheyanneshariat/gaia_triples/2c26a29f9106a5072b80f65f287325c5cd7359fe/Data/resolved_quads_500pc.csv",
+    "sha256": "cfa647564fe68a782ad3360fdcbb67b11d4ab9bd164222614dc2189ce9ff1b27",
+    "rows": 3175,
+    "source_columns": [
+      "star_1_source_id",
+      "star_2_source_id",
+      "star_3_source_id",
+      "star_4_source_id"
+    ]
+  },
+  "wdms_host_catalog": {
+    "repo_path": "results/cd-27-2812/data/hosts.csv.gz",
+    "sha256": "e7a915e8a7c9f6f7e807e14c3c91848b294076cc60cb87be97defc40089a6bfe",
+    "rows": 1312
+  },
+  "matching_source_ids": [
+    "1375395351637562240"
+  ],
+  "spectroscopic_catalog_checks": [
+    {
+      "source": "DESI DR1 white dwarfs",
+      "url": "https://zenodo.org/records/23453342",
+      "sha256": "b86d315dcee214d0fd49ecf1012f46e52306144a64da8baf079390b87403eaa5",
+      "result": "63,968 rows; no exact Gaia designation."
+    },
+    {
+      "source": "Hou et al. newly identified DESI CVs",
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJS%2F282%2F26&-c=233.5648852+36.6047302&-c.rs=15&-out.all=&-out.max=20",
+      "sha256": "37ca2f6d7108bcdea4977bdf6c25759a8800cf3b2425311a3e715731aa86a4db",
+      "result": "15 arcsec, table 3 has no rows."
+    },
+    {
+      "source": "SDSS WDMS DR9-12",
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FMNRAS%2F458%2F3808&-c=233.5648852+36.6047302&-c.rs=15&-out.all=&-out.max=20",
+      "sha256": "90b1281676c7cdeef931e5fc5bd8e546945c8bfaf8343f5f96b9bb5b870424a2",
+      "result": "15 arcsec, no catalog match."
+    },
+    {
+      "source": "SDSS DR19",
+      "url": "https://api.sdss.org/valis/query/cone?ra=233.564885&dec=36.60473&radius=0.004166666666666667&units=degree&release=DR19",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "result": "15 arcsec, zero returned targets."
+    },
+    {
+      "source": "SDSS DR20",
+      "url": "https://api.sdss.org/valis/query/cone?ra=233.564885&dec=36.60473&radius=0.004166666666666667&units=degree&release=DR20",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "result": "15 arcsec, zero returned targets."
+    },
+    {
+      "source": "DESI MWS",
+      "url": "https://datalab.noirlab.edu/tap/sync",
+      "sha256": "9edc51dccc576a5b9115c129b917a8cfc258236632b6b44ba48c9d8a6796fa56",
+      "result": "SELECT TOP 5 * FROM desi_dr1.mws WHERE targetid=39633011049761464; one coadd row."
+    },
+    {
+      "source": "VSX object record",
+      "url": "https://vsx.aavso.org/index.php?view=detail.top&oid=10875716",
+      "sha256": "eaa052427b4c93305008668db4d6ab1b772a2322dfa398c425d95472726321f7",
+      "result": "Known period, CV classification and 3.2-arcsec southern visual neighbor."
+    },
+    {
+      "source": "SIMBAD",
+      "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+      "sha256": "c55db3fed23787ab027db21046beecc44e142baf8a921cd407dab739390f13d9",
+      "result": "0.03-degree cone returned 3 other objects; none at variable coordinates."
+    },
+    {
+      "source": "Inight et al. supplementary tabledata.csv",
+      "url": "https://doi.org/10.1093/mnras/stag2061",
+      "sha256": "bb605078c0e04d3877fa0e8549fac7aed6eff0cb771fde9c5a966943e4c12444",
+      "result": "1028 rows; no exact Gaia ID and nearest position 0.5798 deg."
+    }
+  ],
+  "ztf_extractions": [
+    {
+      "source_id": "1375395351637562240",
+      "url": "https://irsa.ipac.caltech.edu/cgi-bin/ZTF/nph_light_curves?POS=CIRCLE+233.56488524363965+36.6047302244906+0.0006&FORMAT=csv&BAD_CATFLAGS_MASK=0",
+      "sha256_uncompressed_response": "5e6b6b5792ebc71844b593f3358f47b7196c1900b9204d8f02c0fe04216ea26e",
+      "rows": 2269
+    },
+    {
+      "source_id": "1375395141182830080",
+      "url": "https://irsa.ipac.caltech.edu/cgi-bin/ZTF/nph_light_curves?POS=CIRCLE+233.56488797129578+36.60382820721112+0.0006&FORMAT=csv&BAD_CATFLAGS_MASK=0",
+      "sha256_uncompressed_response": "841e097507ee0b532cb656b6025c8b0b80fec8ac40ce465cc615f18b484d9e5c",
+      "rows": 3290
+    },
+    {
+      "source_id": "1375395317277825536",
+      "url": "https://irsa.ipac.caltech.edu/cgi-bin/ZTF/nph_light_curves?POS=CIRCLE+233.53959010811096+36.59600342544503+0.0006&FORMAT=csv&BAD_CATFLAGS_MASK=0",
+      "sha256_uncompressed_response": "b818a92a7ab9fa8ce73d204d3233c48bc02dbe57288f1e9e3178279041be9b67",
+      "rows": 3281
+    }
+  ]
+}
