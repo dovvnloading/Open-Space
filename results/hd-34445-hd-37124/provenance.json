@@ -1,0 +1,74 @@
+{
+  "access_utc": "2026-11-14",
+  "upstream": {
+    "hosts.csv": {
+      "url": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+distinct+hostname%2Cgaia_dr3_id%2Cra%2Cdec%2Csy_dist%2Cst_radv+from+pscomppars&format=csv",
+      "bytes": 394503,
+      "sha256": "56f886567d9fd7fbe2b8d64d5fb9fc240e9632b4c887f447bdaac1cfb5449fa9"
+    },
+    "near.csv": {
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?query=select+source_id%2Cra%2Cdec%2Cparallax%2Cpmra%2Cpmdec%2Cradial_velocity%2Cradial_velocity_error%2Cparallax_error%2Cpmra_error%2Cpmdec_error%2Cruwe+from+gaiadr3.gaia_source+where+parallax%3E%3D10+and+radial_velocity+is+not+null+and+parallax_over_error%3E20+and+ruwe%3C1.4&format=csv&LANG=ADQL&REQUEST=doQuery&MAXREC=1000000",
+      "bytes": 23952484,
+      "sha256": "103cbfe69b42c34dc5f0feb1ec49cbc62be6847a1f2c06b45608fdadef2ef662"
+    },
+    "inner.csv": {
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?query=select+source_id%2Cra%2Cdec%2Cparallax%2Cpmra%2Cpmdec%2Cradial_velocity%2Cradial_velocity_error%2Cparallax_error%2Cpmra_error%2Cpmdec_error%2Cruwe+from+gaiadr3.gaia_source+where+parallax%3E%3D20+and+radial_velocity+is+not+null+and+parallax_over_error%3E20+and+ruwe%3C1.4&format=csv&LANG=ADQL&REQUEST=doQuery&MAXREC=1000000",
+      "bytes": 3854116,
+      "sha256": "0eb9edd587fc9e7dea44e0717f0d94b546b4779a6f3d4448b6c1616e50fd7ead"
+    },
+    "gaia_pair.csv": {
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?request=doQuery&lang=ADQL&format=csv&query=select+source_id%2Cra%2Cdec%2Cparallax%2Cpmra%2Cpmdec%2Cradial_velocity%2Cradial_velocity_error%2Crv_nb_transits%2Crv_amplitude_robust%2Crv_chisq_pvalue%2Cruwe%2Castrometric_params_solved%2Cnon_single_star%2Cra_error%2Cdec_error%2Cparallax_error%2Cpmra_error%2Cpmdec_error%2Cra_dec_corr%2Cra_parallax_corr%2Cra_pmra_corr%2Cra_pmdec_corr%2Cdec_parallax_corr%2Cdec_pmra_corr%2Cdec_pmdec_corr%2Cparallax_pmra_corr%2Cparallax_pmdec_corr%2Cpmra_pmdec_corr+from+gaiadr3.gaia_source+where+source_id+in+%283241295308714904960%2C3402798414192387328%29",
+      "bytes": 1085,
+      "sha256": "19b9a7fc707002db0e2796126325dfc01c6d1c5334953938f080b90604ddc689"
+    },
+    "chubak.pdf": {
+      "url": "https://arxiv.org/pdf/1207.6212",
+      "bytes": 3598277,
+      "sha256": "bd5ae3a8a5893e663d90550cef5bef9602eccfccbb2a18f56655793ba2319425",
+      "extraction": {
+        "keck.csv": "Table 3, HD 34445 and HD 37124: radial velocity, scatter, number of spectra and span in days. Table 1, HD 37124: RVPresent = -23.032 km/s. Its RVFinal = -23.054 km/s is the mean of RVPresent and RVNidever (-23.076 km/s) and matches the value printed in Table 3. HD 34445 has no Table 1 entry."
+      }
+    },
+    "hgca24681.tsv": {
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJS%2F254%2F42%2Fcatalog&HIP=24681&-out.all=&-out.max=20",
+      "bytes": 6147,
+      "sha256": "8592512b47df46541e5ac26273df1ae45c3f7191b747e182417efec370a247f7"
+    },
+    "hgca26381.tsv": {
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJS%2F254%2F42%2Fcatalog&HIP=26381&-out.all=&-out.max=20",
+      "bytes": 6147,
+      "sha256": "4677ae390a6cd23f81f70030df20d063d282a749379481d8d40153becb169199"
+    },
+    "hip24681.tsv": {
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F311%2Fhip2&HIP=24681&-out.all=&-out.max=20",
+      "bytes": 2773,
+      "sha256": "7081ae1023580423207cc4aad7c33a7b4a64260bc1e4cb5c771bdc281d62de83"
+    },
+    "hip26381.tsv": {
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F311%2Fhip2&HIP=26381&-out.all=&-out.max=20",
+      "bytes": 2773,
+      "sha256": "4581642d0505494dd01606a83a6aa453f80ab8c097f1d4ec3918cdd0bc60239a"
+    },
+    "gaia_dr2.csv": {
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+source_id%2Cra%2Cdec%2Cparallax%2Cparallax_error%2Cpmra%2Cpmdec%2Cradial_velocity%2Cradial_velocity_error+from+gaiadr2.gaia_source+where+source_id+in+%283241295308714904960%2C3402798414192387328%29",
+      "bytes": 438,
+      "sha256": "d63dacc512f1b0f261ca4e95264962b01674f3099b3acb96647cb1882f8883fe"
+    },
+    "planets.csv": {
+      "url": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+hostname%2Cpl_name%2Cpl_orbsmax%2Cpl_orbper%2Cst_mass%2Cst_rad%2Cst_teff+from+pscomppars+where+hostname+in+%28%27HD+37124%27%2C%27HD+34445%27%29+order+by+hostname%2Cpl_orbsmax&format=csv",
+      "bytes": 774,
+      "sha256": "9b6a1432b37075a9ed48ecf8330f61c039a920936380bc34c46138d07a8a33c3"
+    }
+  },
+  "frozen_files": {
+    "gaia_pair.csv": "19b9a7fc707002db0e2796126325dfc01c6d1c5334953938f080b90604ddc689",
+    "hgca_24681.tsv": "8592512b47df46541e5ac26273df1ae45c3f7191b747e182417efec370a247f7",
+    "hgca_26381.tsv": "4677ae390a6cd23f81f70030df20d063d282a749379481d8d40153becb169199",
+    "hip_24681.tsv": "7081ae1023580423207cc4aad7c33a7b4a64260bc1e4cb5c771bdc281d62de83",
+    "hip_26381.tsv": "4581642d0505494dd01606a83a6aa453f80ab8c097f1d4ec3918cdd0bc60239a",
+    "hosts.csv": "d086a200cfcde90f0a6b5ee0e9b8ffea89b1cfd3efe6fbe98c23a247ed1c3d00",
+    "keck.csv": "a124f04732e25d887522aa2e79e937bf03de762e7d6780c013802b417f7b8137",
+    "gaia_dr2.csv": "d63dacc512f1b0f261ca4e95264962b01674f3099b3acb96647cb1882f8883fe",
+    "planets.csv": "9b6a1432b37075a9ed48ecf8330f61c039a920936380bc34c46138d07a8a33c3"
+  }
+}

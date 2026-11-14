@@ -1,0 +1,38 @@
+{
+  "mpc-observations.json": {
+    "url": "https://data.minorplanetcenter.net/api/get-obs",
+    "method": "GET",
+    "json_body": {
+      "desigs": [
+        "2025 UQ146"
+      ],
+      "output_format": [
+        "ADES_DF",
+        "OBS80"
+      ]
+    },
+    "sha256": "cf082fe67d2c4a1d7c02044b07150c882815656cca1d3e857d807896f08ebcd8"
+  },
+  "mpc-orbit.json": {
+    "url": "https://data.minorplanetcenter.net/api/get-orb",
+    "method": "GET",
+    "json_body": {
+      "desig": "2025 UQ146"
+    },
+    "sha256": "384b2cb9cbe84f08b3d68ce48b7a46e843678aa58a3a97d366bf5d87d33e12cd"
+  },
+  "stations.txt": {
+    "url": "https://www.minorplanetcenter.net/iau/lists/ObsCodes.html",
+    "selection": [
+      "F51",
+      "O18",
+      "W84"
+    ],
+    "response_sha256": "fc7a5c9e7259ef93a5b93eb4c69984980ba775803cfb93e6f8376fee81c0d45f",
+    "subset_sha256": "81dad45abd5f5bbf8aae7ffd82eeafcbbc6e7ee846589d85a914b6e573ffb389"
+  },
+  "DE440s": {
+    "url": "https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de440s.bsp",
+    "sha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2"
+  }
+}
