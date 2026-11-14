@@ -1,0 +1,80 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-14T18:07:46 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-14T18:07:46	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJS%2F279%2F50&TIC=96100077&-out.all=1	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	MaxTuples=50000	
+
+#RESOURCE=yCat_22790050
+#Name: J/ApJS/279/50
+#Title: TESS Ten Thousand Catalog: Eclipsing Binaries (Kostov+, 2025)
+#INFO	ivoid=ivo://cds.vizier/j/apjs/279/50	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/apjs/279/50	    IVOID of underlying data collection
+#INFO	creator=Kostov V.B.	    First author or institution
+#INFO	cites=bibcode:2025ApJS..279...50K	    Article or Data origin sources
+#INFO	journal=ApJS	    Journal name
+#INFO	original_date=2025	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJS/279/50	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier/bb-8q-1j	    Dataset identifier that can be used for citation
+#INFO	publication_date=2026-09-14	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_ApJS_279_50_table3:
+#Name: J/ApJS/279/50/table3
+#Title: Parameters of the 7936 new eclipsing binary stars (EBs)
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	TIC	(I10)	[8636/1976115514] TESS Input catalog	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F12.8)	Right Ascension, decimal degrees (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F12.8)	[-89/89] Declination, decimal degrees (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	Tmag	(F6.3)	[6.63/15] TESS magnitude	[ucd=phot.mag;em.opt]
+#Column	Per	(F9.6)	[0.64/39.8] Period	[ucd=time.period]
+#Column	T0-pri	(F9.4)	[1325.4/3687.9] T0, Minimum brightness, Primary, BJD-2457000	[ucd=time.epoch]
+#Column	Depth-pri	(I3)	[1/848]? Eclipse median depth, primary, parts-per-thousand	[ucd=phot.mag;stat.min]
+#Column	Dur-pri	(F4.1)	[1/15.2]? Eclipse median duration, primary	[ucd=time.duration;stat.median]
+#Column	T0-sec	(F9.4)	[1325.39/3687.9]? T0, Minimum brightness, Secondary, BJD-2457000	[ucd=time.epoch]
+#Column	Phase	(F5.2)	[0.1/0.9]? Secondary Phase	[ucd=time.phase]
+#Column	Depth-sec	(F6.2)	[0/799]? Eclipse median depth, secondary, parts-per-thousand	[ucd=phot.mag;stat.min]
+#Column	Dur-sec	(F4.1)	[1/34]? Eclipse median duration, secondary	[ucd=time.duration;stat.median]
+#Column	Sect	(I2)	[1/44] TESS Sectors available at time of writing	[ucd=meta.id;obs]
+#Column	RUWE	(F5.2)	[0.7/59.7]? Gaia DR3 renormalized unit weight error	[ucd=stat.error]
+#Column	AEN	(F8.4)	[0.0016/162.3]? Gaia DR3 astrometric excess noise	[ucd=stat.fit.param]
+#Column	AENS	(F13.4)	[0.0016/13555642]? Gaia DR3 astrometric excess noise sig	[ucd=stat.fit.param]
+#Column	Teff	(I5)	[3326/24162]? Surface effective temperature	[ucd=phys.temperature.effective]
+#Column	Comm	(a112)	Comments (1)	[ucd=meta.note]
+#Column	Simbad	(a6)	Simbad column added by the CDS	[ucd=meta.ref.url]
+#Table	J_ApJS_279_50_table4:
+#Name: J/ApJS/279/50/table4
+#Title: Comparison between the correct period measured from TESS and literature periods for 2065 known EBs
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	TIC	(I10)	[10507/1421145304] TESS Input catalog	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F12.8)	Right Ascension, decimal degrees (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F12.8)	[-89/89] Declination, decimal degrees (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	Per-TESS	(F9.6)	[0.56/19.6] TESS Period	[ucd=time.period]
+#Column	T0-TESS	(F11.6)	[1325.47/3687.22] TESS T0, BJD-2,457,000	[ucd=time.epoch]
+#Column	Per-Gaia	(F10.6)	[0.2/406.1]? Gaia DR3 period	[ucd=time.period]
+#Column	Ratio1	(F5.2)	[0/6.7]? Gaia vs TESS period ratio	[ucd=time.period;arith.ratio]
+#Column	Per-ASAS	(F9.6)	[0.23/50.61]? ASAS-SN (Rowan+ 2022, J/MNRAS/517/2190) period	[ucd=time.period]
+#Column	Ratio2	(F5.2)	[0/6]? ASAS-SN vs TESS period ratio	[ucd=time.period;arith.ratio]
+#Column	Per-ATLAS	(F10.6)	[0.42/144.81]? ATLAS (Heinze+ 2018, J/AJ/156/241) period	[ucd=time.period]
+#Column	Ratio3	(F5.2)	[0/6]? ATLAS vs TESS period ratio	[ucd=time.period;arith.ratio]
+#Column	Per-VSX	(F9.6)	[0.25/38]? VSX period	[ucd=time.period]
+#Column	Ratio4	(F5.2)	[0/6]? VSX vs TESS period ratio	[ucd=time.period;arith.ratio]
+#Column	Per-WISE	(F9.6)	[0.28/4.6]? WISE (Petrosky+ 2021, J/MNRAS/503/3975) period	[ucd=time.period]
+#Column	Ratio5	(F4.1)	[1/6]? WISE vs TESS period ratio	[ucd=time.period;arith.ratio]
+#Column	Per-ZTF	(F9.6)	[0.63/7.66]? ZTF period	[ucd=time.period]
+#Column	Ratio6	(F5.2)	[1/2.33]? ZTF vs TESS period ratio	[ucd=time.period;arith.ratio]
+#Table	J_ApJS_279_50_table2:
+#Name: J/ApJS/279/50/table2
+#Title: Identifying information for ~900,000 unvetted and unvalidated targets
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	TIC	(I10)	[1051/2056031989] TESS Input catalog	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F10.6)	Right Ascension, decimal degrees (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F10.6)	Declination, decimal degrees (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	Tmag	(F5.2)	[-1.2/20.63] TESS magnitude	[ucd=phot.mag;em.opt]

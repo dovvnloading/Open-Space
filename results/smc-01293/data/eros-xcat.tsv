@@ -1,0 +1,62 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-14T18:09:19 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-14T18:09:19	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F390%2Fxcat&-c=11.964375+-73.1199722&-c.rs=6&-out.max=30000&-out.all=1	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=011.964375-73.119972,rs=6.	
+#Constraint -out.all=1
+
+#RESOURCE=yCat_2390
+#Name: II/390
+#Title: EROS light curve data base (EROS coll., 2025)
+#INFO	ivoid=ivo://cds.vizier/ii/390	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/ii/390	    IVOID of underlying data collection
+#INFO	creator=EROS collaboration	    First author or institution
+#INFO	cites=bibcode:2026A&A...706A.189A	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2026	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/II/390	    Dataset landing page
+#INFO	publication_date=2026-09-22	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	II_390_xcat:
+#Name: II/390/xcat
+#Title: Static sky catalogue (85287091 sources)
+#Column	_r	(F5.3)	Distance from center (011.964375-73.119972)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	LC	(A2)	Light Curve	[ucd=meta.ref.url]
+#Column	EROS	(a12)	Unique Identifier	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F10.6)	Right ascension on reference image, J2000 (Ra)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F10.6)	Declination on reference image, J2000 (Dec)	[ucd=pos.eq.dec;meta.main]
+#Column	Rmag	(F6.3)	Magnitude on reference image in the EROS R band (MagR)	[ucd=phot.mag;em.opt.R]
+#Column	eRmag/Rmed	(F9.3)	rms uncertainty of magnitude in the EROS R band wrt. Rmed (sigpullr)	[ucd=stat.fit.omc]
+#Column	XR	(F7.2)	Pixel coordinate in the EROS R band along X axis	[ucd=pos.cartesian]
+#Column	YR	(F7.2)	Pixel coordinate in the EROS R band along Y axis	[ucd=pos.cartesian]
+#Column	Bmag	(F6.3)	Mean magnitude on reference image in the EROS B band (MagB)	[ucd=phot.mag;em.opt.B]
+#Column	e_Bmag	(F9.3)	Mean magnitude uncertainty on reference image in the EROS B band (ErrMB)	[ucd=stat.error;phot.mag]
+#Column	XB	(F7.2)	Pixel coordinate in the EROS B band along X axis	[ucd=pos.cartesian]
+#Column	YB	(F7.2)	Pixel coordinate in the EROS B band along Y axis	[ucd=pos.cartesian]
+#Column	FluxR	(F10.2)	Flux in the EROS R band (in adu units) (fluxr)	[ucd=phot.flux.density;em.opt.R]
+#Column	FluxB	(F16.2)	Flux in the EROS B band (in adu units) (fluxb)	[ucd=phot.flux.density;em.opt.B]
+#Column	Nlc	(I4)	Number of epochs in light curve (nlc)	[ucd=meta.number]
+#Column	RmagMed	(F6.3)	Median magnitude in the EROS R band (medianr)	[ucd=phot.mag;em.opt.R]
+#Column	e_RmagMed	(F8.3)	? rms uncertainty of magnitude in the EROS R band wrt. RmagMed (sigpullr)	[ucd=stat.error]
+#Column	BmagMed	(F6.3)	Median magnitude in the EROS B band (medianb)	[ucd=phot.mag;em.opt.B]
+#Column	e_BmagMed	(F8.3)	? rms uncertainty of magnitude in the EROS B band wrt. BmagMed (sigpullb)	[ucd=stat.error]
+#Column	RAGdeg	(F10.6)	Right ascension (ICRS)	[ucd=pos.eq.ra]
+#Column	DEGdeg	(F10.6)	Declination (ICRS)	[ucd=pos.eq.dec]
+_r	LC	EROS	RAJ2000	DEJ2000	Rmag	eRmag/Rmed	XR	YR	Bmag	e_Bmag	XB	YB	FluxR	FluxB	Nlc	RmagMed	e_RmagMed	BmagMed	e_BmagMed	RAGdeg	DEGdeg
+arcsec	 	 	deg	deg	mag	mag	pix	pix	mag	mag	pix	pix	 	 	 	mag	mag	mag	mag	deg	deg
+-----	--	------------	----------	----------	------	---------	-------	-------	------	---------	-------	-------	----------	----------------	----	------	--------	------	--------	----------	----------
+3.575	LC	sm0010l7097 	011.966010	-73.119100	19.268	    0.195	 746.80	1325.40	19.375	    0.141	 692.90	1368.78	   1849.96	         4082.09	1052	19.268	   0.691	19.375	   0.713	 11.965854	-73.119073
+0.381	LC	sm0010l7230 	011.964680	-73.120030	16.700	    0.039	 750.03	1317.47	16.810	    0.037	 696.15	1360.86	  30285.55	        54632.22	1052	16.700	   1.264	16.810	   1.244	 11.964525	-73.120002
+4.704	LC	sm0010l7270 	011.968780	-73.120240	19.711	    0.262	 739.86	1315.67	20.730	    0.412	 685.99	1359.05	   1330.10	         1671.58	1051	19.711	   0.565	20.720	   0.620	 11.968624	-73.120212
+4.950	LC	sm0010l7351 	011.960880	-73.120900	19.946	    0.392	 759.43	1309.98	20.402	    0.438	 705.56	1353.39	   1380.33	         2088.34	1052	19.942	   0.575	20.398	   0.719	 11.960727	-73.120872
+5.564	LC	sm0010l7363 	011.968580	-73.120920	19.367	    0.191	 740.31	1309.83	19.811	    0.183	 686.45	1353.21	   2122.62	         3254.48	1050	19.367	   0.562	19.811	   0.549	 11.968425	-73.120891
+
