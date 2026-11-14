@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "evidence_state": "external_unverified",
+  "reported_on": "2026-11-13",
+  "baseline_commit_sha": "ad7508c459d94ea855776903874d6a80eb3e16c3",
+  "provenance_note": "Transcribed from the prior LMC-East campaign and source-follow-up reports. The underlying science arrays, full measurements and catalog receipts were not available during this repository update; these reported values have not been independently remeasured for this commit.",
+  "field_plan": {
+    "origin_icrs_deg": [78.2, -69.4],
+    "columns": 3,
+    "rows": 2,
+    "step_ra_dec_deg": [0.4, 0.2],
+    "size_pixels": 21,
+    "sectors": [1, 2]
+  },
+  "reported_scan": {
+    "first_sector_peaks": 23,
+    "first_sector_dispositions": {
+      "recurrent": 13,
+      "image_artifact_veto": 6,
+      "single_sector": 3,
+      "frequency_inconsistent": 1
+    },
+    "two_sector_usable_area_sq_deg": 0.04991,
+    "minimum_target_offset_arcsec": 104.6,
+    "later_sector_repeat": 12,
+    "automatic_vsx_associations": 9,
+    "ogle_period_associations": 11,
+    "direct_gaia_period_matches": 8
+  },
+  "reported_controls": {
+    "injections": [
+      {"peak_semiamplitude_e_per_s": 1.0, "recovered": 13, "trials": 18},
+      {"peak_semiamplitude_e_per_s": 2.5, "recovered": 18, "trials": 18},
+      {"peak_semiamplitude_e_per_s": 5.0, "recovered": 18, "trials": 18}
+    ],
+    "nulls": [
+      {"method": "independent_frame_shuffle", "field_trials": 96, "recurrent_in_area": 0, "sq_degree_trials": 0.799},
+      {"method": "half_day_block_shuffle", "field_trials": 96, "recurrent_in_area": 13, "sq_degree_trials": 0.799}
+    ]
+  },
+  "reported_source_followup": [
+    {
+      "catalog_source": "OGLE-LMC-CEP-1429",
+      "icrs_deg": [79.02466, -69.34685],
+      "tess_period_days_approx": 1.196,
+      "catalog_period_days": 3.599551,
+      "harmonic_order": 3,
+      "blind_new_sectors": {"success": 2, "total": 38},
+      "heldout_phase": {"success": 24, "total": 26},
+      "competing_sources_note": "A nearby eclipsing binary is 11.55 arcsec away; a distinct Gaia source only 1.06 arcsec from the Cepheid was nearly as consistent with the TESS fits. Resolved photometry is still needed."
+    },
+    {
+      "catalog_source": "OGLE-LMC-ECL-11330",
+      "icrs_deg": null,
+      "tess_period_days_approx": 1.822,
+      "catalog_period_days": 7.284297,
+      "harmonic_order": 4,
+      "blind_new_sectors": {"success": 26, "total": 37},
+      "heldout_phase": {"success": 25, "total": 25},
+      "competing_sources_note": "Source assignment favored by resolved two-band photometry; retained as a comparison case, not a newly discovered binary."
+    }
+  ],
+  "reported_archive_census_entries": 87,
+  "external_artifacts": [
+    {"filename": "LMC-East-Followups.csv", "bytes": 6952},
+    {"filename": "LMC-East-Evidence.zip", "bytes": 8144731},
+    {"filename": "LMC-East-Image-Inputs.zip", "bytes": 181672605},
+    {"filename": "LMC-Source-Followup.docx", "bytes": 167064},
+    {"filename": "LMC-Updated-Followups.csv", "bytes": 9915},
+    {"filename": "LMC-Source-Sector-Register.csv", "bytes": 21847},
+    {"filename": "LMC-Source-Evidence.zip", "bytes": 200528144}
+  ],
+  "limitations": [
+    "The external archive bytes and digests are not in this repository; no independently reproducible scientific release is claimed.",
+    "Individual-frame and half-day-block shuffles preserve different temporal correlations; their counts are not an estimate of the actual false-discovery fraction.",
+    "Injection recovery conditional on these fields, amplitudes and periods does not establish wide-area completeness.",
+    "A source within 1.06 arcsec of the proposed Cepheid counterpart remains unresolved."
+  ]
+}
