@@ -1,0 +1,71 @@
+{
+  "checked_utc": "2026-11-14T19:59:32.105380+00:00",
+  "dr3_id": "5946882743944130304",
+  "requests": [
+    {
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cref_epoch%2Cra%2Cdec%2Cpmra%2Cpmdec%2Cphot_g_mean_mag%2Cgrvs_mag%2Chas_rvs%2Chas_epoch_rv+FROM+gaiadr3.gaia_source+WHERE+source_id%3D5946882743944130304",
+      "status": 200,
+      "bytes": 218,
+      "sha256": "54b40d090b8be8deba13682dc6e463cfc7f1855d319855e730f6f4c8e6aa4005"
+    },
+    {
+      "url": "https://gea.esac.esa.int/data-server/datalink/links?ID=Gaia+DR3+5946882743944130304",
+      "status": 200,
+      "bytes": 3553,
+      "sha256": "5e43475108e5b5e541950a1624b78dffe9d8b2716dab370252efbe128f599e07"
+    },
+    {
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+table_name+FROM+tap_schema.tables+WHERE+table_name%3D%27gaiadr4.dr3_neighbourhood%27",
+      "status": 200,
+      "bytes": 11,
+      "sha256": "9ee9d918dcf59f936ac26a4946b253bb509b1166ba603e0001f5e693d55ff4d4"
+    }
+  ],
+  "retrieved": {},
+  "dr3_source": {
+    "source_id": "5946882743944130304",
+    "ref_epoch": "2016.0",
+    "ra": "264.52681573695196",
+    "dec": "-49.34921491176721",
+    "pmra": "1.5242523299156772",
+    "pmdec": "-8.139559521485554",
+    "phot_g_mean_mag": "10.88471",
+    "grvs_mag": "10.199883",
+    "has_rvs": "false",
+    "has_epoch_rv": "false"
+  },
+  "dr3_links": [
+    {
+      "ID": "Gaia DR3 5946882743944130304",
+      "description": "MCMC MSC, source Gaia DR3 5946882743944130304, linking_parameter SOURCE_ID",
+      "access_url": "https://gea.esac.esa.int/data-server/data?ID=Gaia+DR3+5946882743944130304&RETRIEVAL_TYPE=MCMC_MSC&LINKING_PARAMETER=SOURCE_ID",
+      "error_message": ""
+    },
+    {
+      "ID": "Gaia DR3 5946882743944130304",
+      "description": "XP mean sampled spectra, source Gaia DR3 5946882743944130304, linking_parameter SOURCE_ID",
+      "access_url": "https://gea.esac.esa.int/data-server/data?ID=Gaia+DR3+5946882743944130304&RETRIEVAL_TYPE=XP_SAMPLED&LINKING_PARAMETER=SOURCE_ID",
+      "error_message": ""
+    },
+    {
+      "ID": "Gaia DR3 5946882743944130304",
+      "description": "XP mean continuous spectra, source Gaia DR3 5946882743944130304, linking_parameter SOURCE_ID",
+      "access_url": "https://gea.esac.esa.int/data-server/data?ID=Gaia+DR3+5946882743944130304&RETRIEVAL_TYPE=XP_CONTINUOUS&LINKING_PARAMETER=SOURCE_ID",
+      "error_message": ""
+    },
+    {
+      "ID": "Gaia DR3 5946882743944130304",
+      "description": "MCMC GSP-Phot, source Gaia DR3 5946882743944130304, linking_parameter SOURCE_ID",
+      "access_url": "https://gea.esac.esa.int/data-server/data?ID=Gaia+DR3+5946882743944130304&RETRIEVAL_TYPE=MCMC_GSPPHOT&LINKING_PARAMETER=SOURCE_ID",
+      "error_message": ""
+    },
+    {
+      "ID": "Gaia DR3 5946882743944130304",
+      "description": "Epoch photometry, source Gaia DR3 5946882743944130304, linking_parameter SOURCE_ID",
+      "access_url": "https://gea.esac.esa.int/data-server/data?ID=Gaia+DR3+5946882743944130304&RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&LINKING_PARAMETER=SOURCE_ID",
+      "error_message": ""
+    }
+  ],
+  "dr4_match_table_rows": [],
+  "status": "DR4 neighbourhood table unavailable on public TAP"
+}
