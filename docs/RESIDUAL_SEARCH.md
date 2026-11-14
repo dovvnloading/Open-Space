@@ -1,5 +1,7 @@
 # Blind search of galaxy-model residual spectra
 
+**Subsequent plate-wide test.** At the wavelength of the 9228.74 Å residual, all 82 bright comparison galaxies on the same visit showed a positive feature. The median was 10.58% of the continuum. [Independent controls and comparison plates](SDSS_SUPERPOSITION.md#a-different-result-for-the-earlier-922874-å-residual)
+
 We searched the entire usable wavelength range of 24 galaxies on three SDSS plate visits after subtracting the survey's fitted spectral model. The 11 residual detections outside the bundled line tables produced **one same-sign rest-frame pair**, found on a single visit. **Zero groups cleared the triage rule** of at least three distinct galaxies, two plates and two observing nights. The search covered 85,881 possible feature centers across the 24 spectra. [All detections outside the tables, group members, masks and controls](../results/residual-search.json) · [Pinned targets and source hashes](../data/holdout-targets.csv)
 
 | Whole-spectrum measurement | Original coadd | Coadd minus survey model |

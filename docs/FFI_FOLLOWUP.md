@@ -1,5 +1,7 @@
 # Resolved-source checks for the LMC image search
 
+**Subsequent localization.** Measurements across 12 TESS sectors placed the median flux-change position 1.06 arcseconds from the Be-star candidate UCAC2 1797921. A fainter Gaia source lies 1.31 arcseconds from the same position. [Centroids, independent time split and local astrometric control](LMC4_LOCALIZATION.md)
+
 Six of the 13 recurring TESS full-frame signals have a nearby Gaia star whose independently measured G-band period matches both TESS sectors. The published OGLE catalog comparison identifies period-compatible variables near 12 signals, allowing half- and double-period matches. **One signal in LMC field 4 remains a source-identification lead.** It recurs at roughly 1.11 days in a crowded field that contains several known variables. [TESS image measurements](../results/ffi-lmc-grid.json) · [OGLE crossmatch](../results/ffi-ogle.json) · [Gaia epoch-period measurements](../results/ffi-independent.json)
 
 ## Direct Gaia period matches
