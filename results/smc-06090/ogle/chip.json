@@ -1,0 +1,203 @@
+{
+  "conditions": "Same OGLE field and chip as target, NC classification, |delta I| <= 0.75, 0.5 <= period ratio <= 2, catalog depths >= 0.12 / 0.10 mag. Count all matches. Fits use same OGLE-IV early and late windows, loss, error cut and epoch-specific freely adjusted parameters as target.",
+  "inputs": {
+    "ident.dat": {
+      "url": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/ident.dat",
+      "sha256": "7c88ad30c9e1c5fcc757098d7e5af54464a18e33c07af806fd621fbfe4fc8c9c"
+    },
+    "phot/I/OGLE-SMC-ECL-06088.dat": {
+      "url": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/phot/I/OGLE-SMC-ECL-06088.dat",
+      "sha256": "cf3339221fc435ecf423da7bd011ce028aac8a4b1a31145dc027d9be6c559786"
+    },
+    "phot/I/OGLE-SMC-ECL-06109.dat": {
+      "url": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/phot/I/OGLE-SMC-ECL-06109.dat",
+      "sha256": "809d28ac71725b0c069955407b2ec8cf4dfcbf7f1db1b4b02ba3069434bf0aa8"
+    },
+    "phot/I/OGLE-SMC-ECL-06114.dat": {
+      "url": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/phot/I/OGLE-SMC-ECL-06114.dat",
+      "sha256": "9062bf4d2299ad9e29f099253aebaa4f3188b99e211a0bb4d6ddc5c013bccdb3"
+    },
+    "phot/I/OGLE-SMC-ECL-06117.dat": {
+      "url": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/phot/I/OGLE-SMC-ECL-06117.dat",
+      "sha256": "8055549975a8f00737ad2e81bb061f4eb754184828e4558a54fa64ea53adda7c"
+    },
+    "phot/I/OGLE-SMC-ECL-06119.dat": {
+      "url": "https://www.astrouw.edu.pl/ogle/ogle4/OCVS/smc/ecl/phot/I/OGLE-SMC-ECL-06119.dat",
+      "sha256": "a34fa8928cbbdf13ec027029153e5ba469fd63e4da20e7135a7a92d8f552d9d8"
+    }
+  },
+  "controls": [
+    {
+      "id": "OGLE-SMC-ECL-06088",
+      "comparisons": [
+        {
+          "n": 381,
+          "core_obs": [
+            36,
+            41
+          ],
+          "separation": 0.5019040884511793,
+          "center_phases": [
+            -0.004364936396966354,
+            0.49753915205421295
+          ],
+          "fitted_depths": [
+            0.2289014886392867,
+            0.14222887973516357
+          ]
+        },
+        {
+          "n": 96,
+          "core_obs": [
+            13,
+            10
+          ],
+          "separation": 0.5072639303556855,
+          "center_phases": [
+            -0.0050753740656946785,
+            0.5021885562899908
+          ],
+          "fitted_depths": [
+            0.23954963820527986,
+            0.1262716206137413
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OGLE-SMC-ECL-06109",
+      "comparisons": [
+        {
+          "n": 377,
+          "core_obs": [
+            43,
+            42
+          ],
+          "separation": 0.4999183989927424,
+          "center_phases": [
+            -0.00852923278167172,
+            0.49138916621107065
+          ],
+          "fitted_depths": [
+            0.23237825395669115,
+            0.21362524886643677
+          ]
+        },
+        {
+          "n": 90,
+          "core_obs": [
+            8,
+            8
+          ],
+          "separation": 0.49934876275580986,
+          "center_phases": [
+            -0.005188358517855733,
+            0.49416040423795415
+          ],
+          "fitted_depths": [
+            0.26236704122780125,
+            0.25953407929369215
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OGLE-SMC-ECL-06114",
+      "comparisons": [
+        {
+          "n": 378,
+          "core_obs": [
+            31,
+            36
+          ],
+          "separation": 0.5018595620706158,
+          "center_phases": [
+            -0.0016315410668502706,
+            0.5002280210037655
+          ],
+          "fitted_depths": [
+            0.3386991747109421,
+            0.32510800952968955
+          ]
+        },
+        {
+          "n": 92,
+          "core_obs": [
+            8,
+            5
+          ],
+          "separation": 0.4962166773758317,
+          "center_phases": [
+            -0.001728692906965393,
+            0.4944879844688663
+          ],
+          "fitted_depths": [
+            0.29352652674768853,
+            0.3814820151167049
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OGLE-SMC-ECL-06117",
+      "comparisons": [
+        {
+          "n": 67,
+          "core_obs": [
+            9,
+            8
+          ],
+          "separation": 0.5007848513446533,
+          "center_phases": [
+            0.007200488230482778,
+            0.5079853395751361
+          ],
+          "fitted_depths": [
+            0.6114985796487865,
+            0.15056145251419642
+          ]
+        },
+        {
+          "n": 0
+        }
+      ]
+    },
+    {
+      "id": "OGLE-SMC-ECL-06119",
+      "comparisons": [
+        {
+          "n": 378,
+          "core_obs": [
+            36,
+            38
+          ],
+          "separation": 0.5039523364275614,
+          "center_phases": [
+            0.023368044124907363,
+            0.5273203805524688
+          ],
+          "fitted_depths": [
+            0.23258928846792531,
+            0.1146817416023329
+          ]
+        },
+        {
+          "n": 95,
+          "core_obs": [
+            11,
+            8
+          ],
+          "separation": 0.5158273375942847,
+          "center_phases": [
+            0.01680437196723051,
+            0.5326317095615152
+          ],
+          "fitted_depths": [
+            0.2560541484420482,
+            0.11143786982043939
+          ]
+        }
+      ]
+    }
+  ]
+}

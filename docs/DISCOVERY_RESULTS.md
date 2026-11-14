@@ -26,6 +26,12 @@ The candidate Be star **UCAC2 1797921** lies 9.7 arcseconds from the sector 1 de
 
 A separate EROS-2 search retrieved **62,748 paired red/blue measurements for 115 neighboring catalog sources**, observed between 1996 and 2002. Seventy-six sources had adequate training and held-out coverage. None passed a two-band replication test at the training period. On those 76 real backgrounds, paired injections at 1.11457 days were recovered in 7 cases at 0.01 mag semiamplitude, 24 at 0.03 mag and 68 at 0.10 mag. These data constrain strong persistent modulation in well-measured neighbors. Weaker signals and activity confined to the later TESS epoch remain viable. The next discriminating observation is spatially resolved time-series photometry at these coordinates across several 1.11-day cycles, with a second site or suitable cadence to distinguish daily aliases. [EROS-2 methods and coverage](EROS_FOLLOWUP.md) · [Ground-survey measurements and injection trial results](../results/ffi-ground-followup.json)
 
+## The eclipse interval in OGLE-SMC-ECL-06090
+
+OGLE recorded a reversal in the relative timing of the two eclipses. Independent TESS and Swift measurements show widening, and an XMM-Newton ultraviolet exposure covers the predicted primary minimum. A retrospective test withheld all observations from 2022 onward. A precessing-orbit fit predicted the two later TESS intervals within three minutes, while an alternative that approaches a plateau remains viable. The models differ by about 28 minutes for an observable eclipse pair in October 2027. [Scientific analysis](SMC_06090_ECLIPSE_TIMING.md) · [Data, code, and observing windows](../results/smc-06090/README.md)
+
+A separate DESI check found that the line shape measured in the brighter oxygen emission line also improved the prediction for its weaker companion. An LMC eclipse-depth candidate had too little late coverage to test its forecast. [DESI line-profile result and LMC holdout](ARCHIVAL_FOLLOWUP_CONTROLS.md)
+
 ## What the other searches recovered
 
 | Search | Observations and results | Interpretation |

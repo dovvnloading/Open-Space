@@ -1,0 +1,7 @@
+{
+  "xmmomsuss.xml": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&QUERY=select+%2A+from+xmmomsuss+where+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C21.06275%2C-73.32594444%2C0.00139%29%29",
+  "swift-coverage.xml": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&QUERY=select+top+10000+%2A+from+swiftmastr+where+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C21.06275%2C-73.32594444%2C0.20%29%29",
+  "gaia-references.csv": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag+from+gaiadr3.gaia_source+where+1%3Dcontains%28point%28%27ICRS%27%2Cra%2Cdec%29%2Ccircle%28%27ICRS%27%2C21.06275%2C-73.32594444%2C0.06%29%29+and+phot_g_mean_mag+%3C+18.0",
+  "gaia-epochs.csv": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=Gaia+DR3+4686449235706841984&VALID_DATA=true&FORMAT=CSV",
+  "gaia-source.csv": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+source_id%2Cra%2Cdec%2Cparallax%2Cparallax_error%2Cpmra%2Cpmra_error%2Cpmdec%2Cpmdec_error%2Cruwe%2Cphot_g_mean_mag%2Cphot_bp_mean_mag%2Cphot_rp_mean_mag%2Chas_xp_continuous%2Chas_xp_sampled%2Chas_rvs%2Chas_epoch_rv%2Cradial_velocity%2Cteff_gspphot%2Clogg_gspphot%2Cmh_gspphot%2Cdistance_gspphot%2Cag_gspphot+from+gaiadr3.gaia_source+where+source_id%3D4686449235706841984"
+}
