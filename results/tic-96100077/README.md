@@ -2,6 +2,8 @@
 
 TIC 96100077 (TYC 8351-1727-1, Gaia DR3 5946882743944130304) is an eclipsing system at ICRS 264.526816°, −49.349215°. ASAS already cataloged the 7.93-hour binary as ASAS J173806-4920.9. Gaia published both an eclipse model and a 272.72 ± 0.76 day combined astrometric and single-lined spectroscopic orbit for the same source. We propose that these are the inner and outer orbits of a compact hierarchical triple. Five TESS visits localize the dimming and provide an independent test of whether the eclipse clock moves on Gaia's longer orbit. The data support a candidate. The physical association and publication priority remain open. [Gaia eclipsing binaries](https://doi.org/10.1051/0004-6361/202245330) · [Gaia non-single stars](https://doi.org/10.1051/0004-6361/202243782)
 
+**Archival validation, November 2026.** KELT-South, ASAS-3 and ASAS-SN favor the eclipse shifts predicted from TESS and Gaia. The Gaia flags show that the spectroscopic data alone yielded no significant outer period. The proposed physical association still requires velocities for the individual stars. [Validation analysis and data](validation/README.md)
+
 ![Two TESS eclipses and timing residuals against the Gaia orbit](timing.png)
 
 ## Selection

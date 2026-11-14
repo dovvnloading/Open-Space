@@ -1,0 +1,271 @@
+{
+  "accessed_utc": "2026-11-14",
+  "target_gaia_dr3": "5946882743944130304",
+  "coordinate_icrs_deg": [
+    264.526816,
+    -49.349215
+  ],
+  "checks": [
+    {
+      "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiadr3.nss_two_body_orbit+WHERE+source_id%3D5946882743944130304",
+      "format": "Gaia archive CSV",
+      "data_rows": 1,
+      "response_sha256": "4014657a9a4348054f5738843998de663eadabd96d3ef0b8efe29be617853394",
+      "saved_as": "data/nss-orbit.csv"
+    },
+    {
+      "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiadr3.vari_eclipsing_binary+WHERE+source_id%3D5946882743944130304",
+      "format": "Gaia archive CSV",
+      "data_rows": 1,
+      "response_sha256": "a8b4fd9a88c9b9cb5ed2e8bef1afb0ea4991895ef1d9095f9bdb757683b2d462",
+      "saved_as": "data/eclipse-model.csv"
+    },
+    {
+      "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiadr3.binary_masses+WHERE+source_id%3D5946882743944130304",
+      "format": "Gaia archive CSV",
+      "data_rows": 1,
+      "response_sha256": "c547f9adcb0558c25b55f0ca41b350be560969800a56449d030d4b7ad7addee9",
+      "saved_as": "data/binary-masses.csv"
+    },
+    {
+      "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cparallax%2Cparallax_error%2Cruwe%2Cradial_velocity%2Cradial_velocity_error%2Crv_chisq_pvalue%2Crv_renormalised_gof%2Crv_amplitude_robust%2Crv_nb_transits%2Crv_nb_deblended_transits%2Crv_time_duration%2Crv_visibility_periods_used%2Crv_template_teff%2Crv_template_logg%2Crv_method_used%2Cgrvs_mag%2Cvbroad%2Cvbroad_error%2Chas_rvs%2Chas_epoch_rv%2Chas_xp_sampled%2Chas_xp_continuous+FROM+gaiadr3.gaia_source+WHERE+source_id%3D5946882743944130304",
+      "format": "Gaia archive CSV",
+      "data_rows": 1,
+      "response_sha256": "86339d10c5a1ca858430e350a026e0fa4213cad1df37c09575198f4993a156ce",
+      "saved_as": "data/source-rv.csv"
+    },
+    {
+      "endpoint": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=XP_SAMPLED&ID=Gaia+DR3+5946882743944130304&FORMAT=CSV",
+      "format": "Gaia archive CSV",
+      "data_rows": 343,
+      "response_sha256": "cdebadd6f9c4bd619776035a983b839dd6cb2cbc1b33009432efa8a7dfbdcef0",
+      "saved_as": "data/xp-mean.csv"
+    },
+    {
+      "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cteff_gspphot%2Cteff_gspphot_lower%2Cteff_gspphot_upper%2Cteff_msc1%2Cteff_msc1_lower%2Cteff_msc1_upper%2Cteff_msc2%2Cteff_msc2_lower%2Cteff_msc2_upper%2Clogg_msc1%2Clogg_msc2%2Cflags_msc+FROM+gaiadr3.astrophysical_parameters+WHERE+source_id%3D5946882743944130304",
+      "format": "Gaia archive CSV",
+      "data_rows": 1,
+      "response_sha256": "0ac613c4b6d0aa1f6cf2d4cd031b68e35b02af3de840c51b11e07c9b19a0aa59",
+      "saved_as": "data/xp-pipeline-parameters.csv"
+    },
+    {
+      "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+20+source_id%2Crv_obs_time%2Cradial_velocity%2Cradial_velocity_error+FROM+gaiadr3.vari_epoch_radial_velocity+WHERE+source_id%3D5946882743944130304",
+      "format": "TAP CSV",
+      "data_rows": 0,
+      "response_sha256": "ebcff648d37723f38798dd68ab26c3c723a1d9a4d689a3d17afffa2ea1a99acc",
+      "selected_content": "source_id,rv_obs_time,radial_velocity,radial_velocity_error"
+    },
+    {
+      "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+20+source_id%2Crv_obs_time%2Cradial_velocity%2Cradial_velocity_error+FROM+gaiafpr.vari_epoch_radial_velocity+WHERE+source_id%3D5946882743944130304",
+      "format": "TAP CSV",
+      "data_rows": 0,
+      "response_sha256": "ebcff648d37723f38798dd68ab26c3c723a1d9a4d689a3d17afffa2ea1a99acc",
+      "selected_content": "source_id,rv_obs_time,radial_velocity,radial_velocity_error"
+    },
+    {
+      "endpoint": "https://datacentral.org.au/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+sobject_id%2Cgaiadr3_source_id%2Cra%2Cdec%2Cmjd%2Crv_comp_1+FROM+galah_dr4.mainspectable+WHERE+gaiadr3_source_id%3D5946882743944130304",
+      "format": "TAP CSV",
+      "data_rows": 0,
+      "response_sha256": "6fac47047fe42240cd55872faf41c761619413be54aafe6aed4506186ebc877f",
+      "selected_content": "sobject_id,gaiadr3_source_id,ra,dec,mjd,rv_comp_1"
+    },
+    {
+      "endpoint": "https://datacentral.org.au/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+sobject_id%2Cgaiadr3_source_id%2Cra%2Cdec+FROM+galah_dr4.mainspectable+WHERE+ra+BETWEEN+264.518816+AND+264.534816+AND+dec+BETWEEN+-49.354215+AND+-49.344215",
+      "format": "TAP CSV",
+      "data_rows": 0,
+      "response_sha256": "d2940424bc8801e47eddd7b5b6823c1ce5b68d386f6f884420d58fc7d4441850",
+      "selected_content": "sobject_id,gaiadr3_source_id,ra,dec"
+    },
+    {
+      "endpoint": "https://archive.eso.org/tap_obs/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+100+instrument_name%2Cobs_id%2Ctarget_name%2Cs_ra%2Cs_dec%2Ct_min%2Ct_max%2Cdataproduct_type+FROM+ivoa.ObsCore+WHERE+s_ra+BETWEEN+264.518816+AND+264.534816+AND+s_dec+BETWEEN+-49.354215+AND+-49.344215",
+      "format": "TAP CSV",
+      "data_rows": 0,
+      "response_sha256": "1b526367fe3febdeb2460efe45092d7ff24d2d1e481443b7c9777a77d0266875",
+      "selected_content": "instrument_name,obs_id,target_name,s_ra,s_dec,t_min,t_max,dataproduct_type"
+    },
+    {
+      "endpoint": "https://archive.eso.org/tap_obs/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+120+dp_id%2Cinstrument%2Cobject%2Cra%2Cdec%2Cdp_tech%2Cdp_cat%2Cdp_type+FROM+dbo.raw+WHERE+ra+BETWEEN+264.518816+AND+264.534816+AND+dec+BETWEEN+-49.354215+AND+-49.344215+AND+dp_cat%3D%27SCIENCE%27",
+      "format": "TAP CSV",
+      "data_rows": 0,
+      "response_sha256": "47fc3f39a39f5f0981ea893ca89f8b353bf2552f891b9613a5569e603b717bec",
+      "selected_content": "dp_id,instrument,object,ra,dec,dp_tech,dp_cat,dp_type"
+    },
+    {
+      "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cradial_velocity%2Cradial_velocity_error%2Crv_nb_transits+FROM+gaiadr2.gaia_source+WHERE+source_id%3D5946882743944130304",
+      "format": "TAP CSV",
+      "data_rows": 1,
+      "response_sha256": "bdb9299deef7531263054b88de9317d335448ac42b3dfe184d6d66098ce38de5",
+      "selected_content": "source_id,radial_velocity,radial_velocity_error,rv_nb_transits\n5946882743944130304,2.7677841241434766,1.9203107681743186,5"
+    },
+    {
+      "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+count%28%2A%29+AS+n+FROM+gaiadr3.nss_two_body_orbit+WHERE+nss_solution_type%3D%27AstroSpectroSB1%27+AND+efficiency%3D0",
+      "format": "TAP CSV",
+      "data_rows": 1,
+      "response_sha256": "07d5a1bc498143d6c6a72c8350b8bc20f4796d887b7ec741a082227cf49caa9f",
+      "selected_content": "n\n23296"
+    },
+    {
+      "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+count%28%2A%29+as+n%2C+min%28efficiency%29+as+min_eff%2C+max%28efficiency%29+as+max_eff+FROM+gaiadr3.nss_two_body_orbit+WHERE+nss_solution_type%3D%27AstroSpectroSB1%27",
+      "format": "TAP CSV",
+      "data_rows": 1,
+      "response_sha256": "a81d48e815c36c74317e90496300cad669c2471effc959bdcfcc3088e3c328a9",
+      "selected_content": "n,min_eff,max_eff\n33467,0.0,0.9383801"
+    },
+    {
+      "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+count%28%2A%29+as+n%2C+min%28efficiency%29+AS+emin%2C+max%28efficiency%29+AS+emax+FROM+gaiadr3.nss_two_body_orbit+WHERE+nss_solution_type%3D%27AstroSpectroSB1%27+AND+flags%3D72057594037936192",
+      "format": "TAP CSV",
+      "data_rows": 1,
+      "response_sha256": "99399c92541dbb20f54a3177e1065b0ac484f51510edad08fd2482392aa91ded",
+      "selected_content": "n,emin,emax\n3605,0.0,0.78125465"
+    },
+    {
+      "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+15+main_id%2Cotype%2Cra%2Cdec%2Cb.nbref+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C264.526816%2C-49.349215%2C0.004166666666666667%29%29",
+      "format": "TAP CSV",
+      "data_rows": 1,
+      "response_sha256": "433221bcae64aad7a5c82824d9e68988ba2610959daa2d66863abee2526504a2",
+      "selected_content": "main_id,otype,ra,dec,nbref\n\"TYC 8351-1727-1\",\"SB*\",264.52680533787,-49.349178735939994,3"
+    },
+    {
+      "endpoint": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=III%2F283&-c=264.526816+-49.349215&-c.rs=15&-out.max=30&-out.add=_r",
+      "format": "CDS ASU TSV",
+      "data_rows": 0,
+      "response_sha256": "f870552bc2eb1b9f09f1cfdcd4d24146bb56a7a10aa57f9f13019c514ed50413",
+      "selected_content": [
+        "#Title: RAVE 6th data release (Steinmetz+, 2020)",
+        "#Title: RAVE DR6 master file and classification and observation diagnostic data (ravedr6.dr6_sparv, ravedr6.dr6_classification and ravedr6.dr6_obsdata)",
+        "#Title: Rave DR6 cross-match with Gaia DR2 (ravedr6.dr6_x_gaiadr2)",
+        "#Title: Crossmatch RAVE DR6 to Gaia EDR3 (ravedr6.dr6_x_gaiaedr3)",
+        "#Title: RAVE observation field (ravedr6.dr6_fields)"
+      ]
+    },
+    {
+      "endpoint": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=III%2F283%2Fxgaiae3&Gaiae3=5946882743944130304&-out=Gaiae3%2CObsID&-out.max=4",
+      "format": "CDS ASU TSV",
+      "data_rows": 0,
+      "response_sha256": "ac4f50b1fda3e7aa45dd63ed96d4888f12da4582b0966c6169c15bfc0c8b8d58",
+      "selected_content": [
+        "#Title: RAVE 6th data release (Steinmetz+, 2020)",
+        "#Title: Crossmatch RAVE DR6 to Gaia EDR3 (ravedr6.dr6_x_gaiaedr3)"
+      ]
+    },
+    {
+      "endpoint": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=III%2F286%2Fcatalog&-c=264.526816+-49.349215&-c.rs=15&-out.max=30&-out.add=_r",
+      "format": "CDS ASU TSV",
+      "data_rows": 0,
+      "response_sha256": "e76d2f4eb93e7ee3dc0dd43aee5f8567e406d09529e4f01519a6e727ad2ee355",
+      "selected_content": [
+        "#Title: APOGEE-2 DR17 final allStar catalog (Abdurro'uf+, 2022)",
+        "#Title: Final APOGEE-2 DR17 allStar catalog"
+      ]
+    },
+    {
+      "endpoint": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F659%2FA95&-c=264.526816+-49.349215&-c.rs=15&-out.max=30&-out.add=_r",
+      "format": "CDS ASU TSV",
+      "data_rows": 1,
+      "response_sha256": "0583506da29f166457b3199cb2bd15576693b082480a00b1c21c3a9408b03a12",
+      "selected_content": [
+        " 0.005\t10155052\t264.52681545300\t-49.34921375770\t    2.565\t   2.828\t       \t1\t                 \t 1.5\t      \t10.8805\tGaia"
+      ]
+    },
+    {
+      "endpoint": "https://archive.eso.org/ssap?REQUEST=queryData&POS=264.526816%2C-49.349215&SIZE=0.0084",
+      "format": "Simple Spectral Access VOTable",
+      "data_rows": 0,
+      "response_sha256": "0a2d2bf9e0879915f25e1747b3dd4ac70d82cef6aacbc171be1b276de82fb615",
+      "selected_content": "QUERY_STATUS=OK"
+    },
+    {
+      "endpoint": "https://api.sdss.org/valis/query/cone?ra=264.526816&dec=-49.349215&radius=0.004166666666666667&units=degree&release=DR20",
+      "format": "API JSON",
+      "data_rows": 0,
+      "response_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "selected_content": []
+    },
+    {
+      "endpoint": "https://api.sdss.org/valis/query/cone?ra=264.526816&dec=-49.349215&radius=0.004166666666666667&units=degree&release=DR19",
+      "format": "API JSON",
+      "data_rows": 0,
+      "response_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "selected_content": []
+    },
+    {
+      "endpoint": "https://mast.stsci.edu/api/v0/invoke?request=%7B%22service%22%3A+%22Mast.Caom.Filtered.Position%22%2C+%22format%22%3A+%22json%22%2C+%22params%22%3A+%7B%22columns%22%3A+%22obsid%2Cobs_collection%2Ctarget_name%2Cdataproduct_type%2Cs_ra%2Cs_dec%22%2C+%22position%22%3A+%22264.526816%2C+-49.349215%2C+0.004166666666666667%22%2C+%22filters%22%3A+%5B%7B%22paramName%22%3A+%22dataproduct_type%22%2C+%22values%22%3A+%5B%22spectrum%22%5D%7D%5D%7D%7D",
+      "format": "API JSON",
+      "data_rows": 0,
+      "response_sha256": "ce119912f9fb777a8ad3f261b0df6345cee4900648bdb2aed4f897010b96f222",
+      "selected_content": {
+        "status": "COMPLETE",
+        "msg": "",
+        "data": [],
+        "fields": [
+          {
+            "name": "obsid",
+            "type": "string"
+          },
+          {
+            "name": "obs_collection",
+            "type": "string"
+          },
+          {
+            "name": "dataproduct_type",
+            "type": "string"
+          },
+          {
+            "name": "target_name",
+            "type": "string"
+          },
+          {
+            "name": "s_ra",
+            "type": "float"
+          },
+          {
+            "name": "s_dec",
+            "type": "float"
+          }
+        ],
+        "paging": {
+          "page": 0,
+          "pageSize": 0,
+          "pagesFiltered": 0,
+          "rows": 0,
+          "rowsFiltered": 0,
+          "rowsTotal": 0
+        }
+      }
+    },
+    {
+      "endpoint": "https://archive-api.lco.global/frames/?covers=POINT%28264.526816+-49.349215%29&OBSTYPE=SPECTRUM&limit=20",
+      "format": "API JSON",
+      "data_rows": 0,
+      "response_sha256": "1a278c6be5a24e0ce063d9f1a0d5df1fff5358fd7aaa952be85ae3ab702a1666",
+      "selected_content": {
+        "count": 1,
+        "next": null,
+        "previous": null,
+        "results": [],
+        "count_estimated": true
+      }
+    },
+    {
+      "endpoint": "https://tessebs.villanova.edu/96100077",
+      "format": "TESS EB target lookup",
+      "data_rows": null,
+      "response_sha256": "7dd3febc6880107fba69b7ad966e9e91b1a8419502d4c30102e1e9e71619979a",
+      "selected_content": "This TESS ID is not in the catalog."
+    },
+    {
+      "endpoint": "https://www.astrouw.edu.pl/asas/data/Vars.E",
+      "format": "ASAS 2006 Vars.E",
+      "data_rows": 11076,
+      "response_sha256": "68d07d00acbee249e43c41d0576d6e5adc1c29e15ba5643afee9330b1f1807ac",
+      "selected_content": "173806-4920.9  17.635000  -49.348333  0.330413  1934.15  11.01  0.13  ESD"
+    },
+    {
+      "endpoint": "https://archive.eso.org/tap_cat/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+RA%2C+DECLINATION%2C+VRAD+FROM+safcat.GES_DR5_1_V1+WHERE+RA+BETWEEN+264.518816+AND+264.534816+AND+DECLINATION+BETWEEN+-49.354215+AND+-49.344215",
+      "format": "ESO catalogue TAP JSON",
+      "data_rows": 0,
+      "selected_content": [],
+      "response_sha256": "fb8b9ef5db1e732ba86163daa2c139630c4f455a891dc9d5763d79ea857b4274"
+    }
+  ]
+}
