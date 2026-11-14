@@ -1,0 +1,58 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-14T18:12:34 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-14T18:12:34	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJS%2F235%2F6&-c=93.24858+-27.88042&-c.rs=90&-out.max=200&-out=%2A%2A	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=093.248580-27.880420,rs=90.	
+#Constraint -out=**
+
+#RESOURCE=yCat_22350006
+#Name: J/ApJS/235/6
+#Title: Updated Multiple Star Catalog (MSC): Dec 2023 (Tokovinin, 2018)
+#INFO	ivoid=ivo://cds.vizier/j/apjs/235/6	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/apjs/235/6	    IVOID of underlying data collection
+#INFO	creator=Tokovinin A.	    First author or institution
+#INFO	cites=bibcode:2018ApJS..235....6T	    Article or Data origin sources
+#INFO	journal=ApJS	    Journal name
+#INFO	original_date=2018	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJS/235/6	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.22350006	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-01-08	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_ApJS_235_6_catalog:
+#Name: J/ApJS/235/6/catalog
+#Title: Components table (table 1; comp)
+#Column	_r	(F6.3)	Distance from center (093.248580-27.880420)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	ID	(A10)	WDS code (HHMMm+DDMM; J2000) (G1)	[ucd=meta.id;meta.main]
+#Column	m_ID	(A1)	Component label	[ucd=meta.code.multip]
+#Column	RAJ2000	(F10.6)	Right Ascension in decimal degrees (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F10.6)	Declination in decimal degrees (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	plx	(F6.2)	[-1.4/742.1] Parallax	[ucd=pos.parallax.trig]
+#Column	r_plx	(A4)	Reference code for plx (1)	[ucd=meta.ref;pos.frame]
+#Column	pmRA	(F7.1)	[-3776/4165] Proper motion in RA	[ucd=pos.pm;pos.eq.ra]
+#Column	pmDE	(F7.1)	[-3422/3250] Proper motion in Dec	[ucd=pos.pm;pos.eq.dec]
+#Column	RV	(F6.1)	[-291/1129]? Radial velocity	[ucd=phys.veloc;pos.heliocentric]
+#Column	Sep	(F7.1)	[0.1/31619]? Separation from main component	[ucd=pos.angDistance]
+#Column	SpT	(a8)	MK spectral type	[ucd=src.spType]
+#Column	HIP	(I6)	[25/120005]? Hipparcos number	[ucd=meta.id]
+#Column	HD	(I6)	[9/358806]? HD number	[ucd=meta.id]
+#Column	Bmag	(F5.2)	[0.1/22]? B-band magnitude	[ucd=phot.mag;em.opt.B]
+#Column	Vmag	(F5.2)	[-0.01/25]? V-band magnitude	[ucd=phot.mag;em.opt.V]
+#Column	Imag	(F5.2)	[-1.1/19]? I_C_-band magnitude	[ucd=phot.mag;em.opt.I]
+#Column	Jmag	(F5.2)	[-2.3/18.3]? J-band magnitude	[ucd=phot.mag;em.IR.J]
+#Column	Hmag	(F5.2)	[-3.3/18.2]? H-band magnitude	[ucd=phot.mag;em.IR.H]
+#Column	Kmag	(F5.2)	[-3.6/18.8]? K-band magnitude	[ucd=phot.mag;em.IR.K]
+#Column	Nc	(I1)	[0/8] Number of components	[ucd=meta.number]
+#Column	Gr	(I1)	[0/5] Grade (2)	[ucd=meta.code]
+#Column	OID	(a50)	Other identifiers	[ucd=meta.id]
+#Column	WCat	(I3)	Display the WDS data (B/wds) for this WDS code	[ucd=meta.ref.url]
+#Column	SimbadName	(f)	Simbad column added by the CDS	[ucd=meta.id]

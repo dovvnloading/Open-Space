@@ -1,0 +1,120 @@
+{
+  "data/gaia-orbit.csv": {
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?request=doQuery&lang=ADQL&format=csv&query=SELECT+%2A+FROM+gaiadr3.nss_two_body_orbit+WHERE+source_id%3D5946882743944130304",
+    "sha256": "4014657a9a4348054f5738843998de663eadabd96d3ef0b8efe29be617853394"
+  },
+  "data/gaia-model.csv": {
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?request=doQuery&lang=ADQL&format=csv&query=SELECT+%2A+FROM+gaiadr3.vari_eclipsing_binary+WHERE+source_id%3D5946882743944130304",
+    "sha256": "a8b4fd9a88c9b9cb5ed2e8bef1afb0ea4991895ef1d9095f9bdb757683b2d462"
+  },
+  "data/gaia-epoch.csv": {
+    "url": "https://gea.esac.esa.int/data-server/data?RETRIEVAL_TYPE=EPOCH_PHOTOMETRY&ID=Gaia+DR3+5946882743944130304&VALID_DATA=true&FORMAT=CSV",
+    "sha256": "9766c12a3746524c3975c37916f69c3f23f4606480717741e49ad574dc76d803"
+  },
+  "data/ident.csv": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?request=doQuery&lang=ADQL&format=csv&query=SELECT+main_id%2Cid+FROM+basic+JOIN+ident+ON+oid%3Doidref+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C264.52681573695196%2C-49.34921491176721%2C0.00111111%29%29",
+    "sha256": "14a38362d45b28ed2cf720ac063ce4842a48b309b7f4b6f8cbc5f6396b6bb8d7"
+  },
+  "data/refs.csv": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?request=doQuery&lang=ADQL&format=csv&query=SELECT+main_id%2Cbibcode%2Ctitle+FROM+basic+JOIN+has_ref+ON+oid%3Doidref+JOIN+ref+ON+oidbibref%3Doidbib+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C264.52681573695196%2C-49.34921491176721%2C0.00111111%29%29+ORDER+BY+bibcode",
+    "sha256": "d642d1d2161fe86a4eece73ae8b6bd4dfd6f424b47f3d2e97c7d93d6e65fb9ec"
+  },
+  "data/sectors.json": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/sector?ra=264.52681573695196&dec=-49.34921491176721",
+    "sha256": "77a58e1fc9b1476b19c75744895aa321410660c215096f7dd28d8ef24c933fcd"
+  },
+  "data/neighbors.tsv": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F355%2Fgaiadr3&-c=264.52681573695196+-49.34921491176721&-c.rs=75&-out=Source%2CRA_ICRS%2CDE_ICRS%2CGmag%2CBP-RP%2CPlx%2CRUWE%2CIPDfmp%2CVarFlag&-out.max=1000",
+    "sha256": "33c1cb11cc513c522a4ced95f02cca5505d91a8b0a621bdbd43e967b5f73b618"
+  },
+  "data/gaia-ebviz.tsv": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=264.526816+-49.349215&-c.rs=30&-out=Name%2CType%2CPeriod",
+    "sha256": "9d14dc2f690067f53d7286d5c31cfaf4b1431b1fd3058d1a7cce164ab2245c73"
+  },
+  "data/kostov.tsv": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJS%2F279%2F50&TIC=96100077&-out.all=1",
+    "sha256": "36768c378e6f9517788035f3bcf54fb438eae1411d5893e09b055fbb44de6c30"
+  },
+  "data/msc26.json": {
+    "url": "https://astro.ulb.ac.be/msc/api/tap-query/",
+    "sha256": "8be759591bae204ce13dcca42ef0be9d11d4a4030066ca2e9d85c7aef3c84df8"
+  },
+  "data/tic.tsv": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=IV%2F39%2Ftic82&-c=264.52681573695196+-49.34921491176721&-c.rs=3&-out=TIC%2CRAJ2000%2CDEJ2000%2CTmag%2CGAIA&-out.max=200",
+    "sha256": "9292daed684f89950507d2d112fb2e654ef85a22546b6dfdf94569ef6645b848"
+  },
+  "raw/s012.fits": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=264.52681573695196&dec=-49.34921491176721&sector=12&x=9&y=9&units=px",
+    "sha256": "114f1588400f8f57d8ca433dce7522b739e2772769e2bd0d087e657d239d2237",
+    "analysis_sha256": "96bb9e7378cf8ccc2543322d480ae10a031c90b122cddd8c461aa4b1b5e1ad66"
+  },
+  "data/s012-vectors.csv": {
+    "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27-95%27&OBJ_DATA=NO&MAKE_EPHEM=YES&EPHEM_TYPE=VECTORS&CENTER=%27%400%27&START_TIME=%272019-05-20%27&STOP_TIME=%272019-06-19%27&STEP_SIZE=%273+h%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&REF_PLANE=%27FRAME%27&CSV_FORMAT=%27YES%27&VEC_LABELS=%27NO%27",
+    "sha256": "34181881d2bf24298483fd913019875b1b595b0fb4b6f081b6a373e3d6859ae1",
+    "raw_response_sha256": "ba10c27b74feacf03d19c9d5f0ffa56dfbda4cb825ffa1c286446529a01a6e45",
+    "transform": "Horizons CSV between SOE/EOE, fields 0,2,3,4,5,6,7"
+  },
+  "raw/s039.fits": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=264.52681573695196&dec=-49.34921491176721&sector=39&x=9&y=9&units=px",
+    "sha256": "f00ccd243893566d48643079637d2d5282a8a41d1e070a57c7785239de6948e4",
+    "analysis_sha256": "feeda80411557963892b6e1138e2d2241a76a1383d17f9d26c42a324cf865ba4"
+  },
+  "data/s039-vectors.csv": {
+    "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27-95%27&OBJ_DATA=NO&MAKE_EPHEM=YES&EPHEM_TYPE=VECTORS&CENTER=%27%400%27&START_TIME=%272021-05-26%27&STOP_TIME=%272021-06-25%27&STEP_SIZE=%273+h%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&REF_PLANE=%27FRAME%27&CSV_FORMAT=%27YES%27&VEC_LABELS=%27NO%27",
+    "sha256": "65dc2705a7bdfa8cab18ce3e0682c9f143d3196891199d9c3625d0cc277e678a",
+    "raw_response_sha256": "e90354b6e2c114993555771e030a594bb4a3562e2f761346dd004d87ec2cf7aa",
+    "transform": "Horizons CSV between SOE/EOE, fields 0,2,3,4,5,6,7"
+  },
+  "raw/s066.fits": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=264.52681573695196&dec=-49.34921491176721&sector=66&x=9&y=9&units=px",
+    "sha256": "d731ece2b57005e6786d97d9d1127d479f02719d53166442fe59e954d1deeeff",
+    "analysis_sha256": "a2cc5d437df867af3137286ef491385caccda002eaf009f462614bc07e8b87d3"
+  },
+  "data/s066-vectors.csv": {
+    "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27-95%27&OBJ_DATA=NO&MAKE_EPHEM=YES&EPHEM_TYPE=VECTORS&CENTER=%27%400%27&START_TIME=%272023-06-01%27&STOP_TIME=%272023-07-01%27&STEP_SIZE=%273+h%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&REF_PLANE=%27FRAME%27&CSV_FORMAT=%27YES%27&VEC_LABELS=%27NO%27",
+    "sha256": "d8440d5e235e8a91614668b0d0a7b40af77033f1dba6bd822267d076723d3a6d",
+    "raw_response_sha256": "ab757401594e2c8728422b172f2967203b1e2d2a3e4f745f98135a884f2e493f",
+    "transform": "Horizons CSV between SOE/EOE, fields 0,2,3,4,5,6,7"
+  },
+  "raw/s093.fits": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=264.52681573695196&dec=-49.34921491176721&sector=93&x=9&y=9&units=px",
+    "sha256": "2141fddd76e278c49791cebad1b3bb11e1e57d8aec4103225218212f5ad6aff9",
+    "analysis_sha256": "580d5f2a1b587d43eb8b4aa171eb6723ecef2673db6eed4856361491fa78faa2"
+  },
+  "data/s093-vectors.csv": {
+    "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27-95%27&OBJ_DATA=NO&MAKE_EPHEM=YES&EPHEM_TYPE=VECTORS&CENTER=%27%400%27&START_TIME=%272025-06-02%27&STOP_TIME=%272025-06-30%27&STEP_SIZE=%273+h%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&REF_PLANE=%27FRAME%27&CSV_FORMAT=%27YES%27&VEC_LABELS=%27NO%27",
+    "sha256": "edeeac8f17bfac54c3fbf07f89b49b451770110417603b11aa58f5403ce23bdc",
+    "raw_response_sha256": "d57932a674e7a70c94ce91e6c28170b085460636bd8f0e1e5ee6247492687ddd",
+    "transform": "Horizons CSV between SOE/EOE, fields 0,2,3,4,5,6,7"
+  },
+  "raw/s103.fits": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=264.52681573695196&dec=-49.34921491176721&sector=103&x=9&y=9&units=px",
+    "sha256": "a46c90ffad4b88ebefd6b19769f56f5de53d5e3cbfef3a69005ed74bb69fb244",
+    "analysis_sha256": "81710afc47175128b5c80de9d75e631c5c3430f1bab000818a768b92e8a858ef"
+  },
+  "data/s103-vectors.csv": {
+    "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27-95%27&OBJ_DATA=NO&MAKE_EPHEM=YES&EPHEM_TYPE=VECTORS&CENTER=%27%400%27&START_TIME=%272026-04-20%27&STOP_TIME=%272026-05-18%27&STEP_SIZE=%273+h%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&REF_PLANE=%27FRAME%27&CSV_FORMAT=%27YES%27&VEC_LABELS=%27NO%27",
+    "sha256": "b432474190ad146f344d9a1a631ed1ab95e36c84a690d91311dff87f72944293",
+    "raw_response_sha256": "2b6d9b2018277f21a1694638a082770da420ed6eeb49ae589d5ce8c2c41395e2",
+    "transform": "Horizons CSV between SOE/EOE, fields 0,2,3,4,5,6,7"
+  },
+  "raw/s104.fits": {
+    "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=264.52681573695196&dec=-49.34921491176721&sector=104&x=9&y=9&units=px",
+    "sha256": "f19035977906cdaf5b0f16f076ffeaf00eb76c435bc26679c785a9dd798730a1",
+    "analysis_sha256": "ceaa9d5f3aef2afd6f94e07a3e7307531bfc895cb5da03d9329311dfcdd64388"
+  },
+  "data/s104-vectors.csv": {
+    "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27-95%27&OBJ_DATA=NO&MAKE_EPHEM=YES&EPHEM_TYPE=VECTORS&CENTER=%27%400%27&START_TIME=%272026-05-17%27&STOP_TIME=%272026-06-14%27&STEP_SIZE=%273+h%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&REF_PLANE=%27FRAME%27&CSV_FORMAT=%27YES%27&VEC_LABELS=%27NO%27",
+    "sha256": "abe9077a7cee4ca7c6c7a4d13a8b0427c93b8c9f33d48c3128a1f8fb83bdfba7",
+    "raw_response_sha256": "2c48bbf0e36fce721d00b36d9482d969bd3f887168807b50af1e15230e9e1e2c",
+    "transform": "Horizons CSV between SOE/EOE, fields 0,2,3,4,5,6,7"
+  },
+  "data/gaia.csv": {
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?request=doQuery&lang=ADQL&format=csv&query=SELECT+n.source_id%2C+n.nss_solution_type%2Cn.period%2Cn.period_error%2Cn.eccentricity%2Cn.significance%2Cn.goodness_of_fit%2Ce.frequency%2Ce.global_ranking%2Cs.ra%2Cs.dec%2Cs.phot_g_mean_mag+FROM+gaiadr3.nss_two_body_orbit+AS+n+JOIN+gaiadr3.vari_eclipsing_binary+AS+e+ON+n.source_id%3De.source_id+JOIN+gaiadr3.gaia_source+AS+s+ON+n.source_id%3Ds.source_id+WHERE+n.nss_solution_type+IN+%28%27Orbital%27%2C%27AstroSpectroSB1%27%29+AND+n.period%2Ae.frequency%3E10+AND+e.global_ranking%3E0.4",
+    "sha256": "bcc82b17841149d37e620a1c4bbed68924195102c9729127af5b00e809af2e9c"
+  },
+  "data/known.tsv": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F670%2FA75&-out.all=1&-out.max=10000",
+    "sha256": "a1836c2dc15079224cafc62815213db5ecded868560df0fb01a0a6f8b251175c"
+  }
+}

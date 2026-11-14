@@ -1,0 +1,47 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-14T18:13:12 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-14T18:13:12	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F246%2Fout&-c=93.25410346+-27.89451617&-c.rs=3&-out=RAJ2000%2CDEJ2000%2C2MASS%2CJmag%2Ce_Jmag%2CHmag%2Ce_Hmag%2CKmag%2Ce_Kmag%2CQflg%2CCflg&-out.max=50	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=093.254103-27.894516,rs=3.	
+#Constraint -out.max=50
+
+#RESOURCE=yCat_2246
+#Name: II/246
+#Title: 2MASS All-Sky Catalog of Point Sources (Cutri+ 2003)
+#INFO	ivoid=ivo://cds.vizier/ii/246	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/ii/246	    IVOID of underlying data collection
+#INFO	creator=Cutri R.M.	    First author or institution
+#INFO	cites=bibcode:2003yCat.2246....0C	    Bibcode of the dataset
+#INFO	journal=yCat	    Journal name
+#INFO	original_date=2003	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/II/246	    Dataset landing page
+#INFO	publication_date=2025-03-11	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	II_246_out:
+#Name: II/246/out
+#Title: 2MASS Point Source Catalogue, output (on a total of 470,992,970 sources)
+#Column	RAJ2000	(F10.6)	(ra) Right ascension (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F10.6)	(dec) Declination (J2000) (dec)	[ucd=pos.eq.dec;meta.main]
+#Column	2MASS	(a17)	(designation) Source designation (1)	[ucd=meta.id;meta.main]
+#Column	Jmag	(F6.3)	?(j_m) J selected default magnitude (2)	[ucd=phot.mag;em.IR.J]
+#Column	e_Jmag	(F6.3)	?(j_msigcom) J total magnitude uncertainty (4)	[ucd=stat.error;phot.mag]
+#Column	Hmag	(F6.3)	?(h_m) H selected default magnitude (2)	[ucd=phot.mag;em.IR.H]
+#Column	e_Hmag	(F6.3)	?(h_msigcom) H total magnitude uncertainty (4)	[ucd=stat.error;phot.mag]
+#Column	Kmag	(F6.3)	?(k_m) K selected default magnitude (2)	[ucd=phot.mag;em.IR.K]
+#Column	e_Kmag	(F6.3)	?(k_msigcom) K total magnitude uncertainty (4)	[ucd=stat.error;phot.mag]
+#Column	Qflg	(A3)	(ph_qual) JHK Photometric quality flag (5)	[ucd=meta.code.qual;phot]
+#Column	Cflg	(A3)	(cc_flg) Artifact contamination, confusion (8)	[ucd=meta.code]
+RAJ2000	DEJ2000	2MASS	Jmag	e_Jmag	Hmag	e_Hmag	Kmag	e_Kmag	Qflg	Cflg
+deg	deg	 	mag	mag	mag	mag	mag	mag	 	
+----------	----------	-----------------	------	------	------	------	------	------	---	---
+093.254082	-27.894489	06130097-2753401 	14.903	 0.038	14.366	 0.055	14.071	 0.054	AAA	000
+

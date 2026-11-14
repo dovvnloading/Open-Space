@@ -1,0 +1,1 @@
+SELECT source_id,ra,dec,parallax,parallax_error,ruwe,phot_g_mean_mag,phot_bp_mean_mag,phot_rp_mean_mag,bp_rp FROM gaiadr3.gaia_source WHERE parallax BETWEEN 25 AND 100 AND parallax_over_error>30 AND ruwe<1.3 AND phot_bp_mean_flux_over_error>20 AND phot_rp_mean_flux_over_error>50 AND visibility_periods_used>10 AND phot_rp_mean_mag+5*LOG10(parallax) BETWEEN 19.94 AND 20.34
