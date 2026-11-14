@@ -1,0 +1,229 @@
+{
+  "title": "External timing series and comparison for J1341-6220",
+  "source": "Shang et al. (2026), Table 2",
+  "authors": [
+    "L. H. Shang",
+    "Y. L. Liang",
+    "Y. Z. Qiao",
+    "P. Liu",
+    "W. J. Xiao"
+  ],
+  "url": "https://doi.org/10.1051/0004-6361/202661329",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "primary_pdf": {
+    "description": "Authors' A&A proof dated October 10, 2026. Table 2 on page 4 was transcribed and visually checked against the rendered page. Columns retained are glitch number, epoch and fractional frequency step with their reported uncertainties.",
+    "url": "https://pdfs.semanticscholar.org/0a94/a62fa71a5679b4a0cedcdafe1e5af9d4fce4.pdf",
+    "sha256": "dad1b82c08c2179da6221fceee8a8b0c946619282c3f96ac36555ea67dcd8a36",
+    "bytes": 349535
+  },
+  "jbo_sha256": "e811419f2037080bd2c99c1db30555dd4ee6f462f36b91796908f0fe90aabeb4",
+  "jbo_training_cutoff_mjd": 58214,
+  "observing_span_mjd": [
+    58222,
+    60589
+  ],
+  "events": [
+    {
+      "row_id": "G36",
+      "ordinal": 36,
+      "mjd": 58627,
+      "mjd_err": 19,
+      "size": 136.4,
+      "size_err": 0.4
+    },
+    {
+      "row_id": "G37",
+      "ordinal": 37,
+      "mjd": 58776,
+      "mjd_err": 14,
+      "size": null,
+      "size_err": null
+    },
+    {
+      "row_id": "G38",
+      "ordinal": 38,
+      "mjd": 58990,
+      "mjd_err": 17,
+      "size": null,
+      "size_err": null
+    },
+    {
+      "row_id": "G39",
+      "ordinal": 39,
+      "mjd": 59220,
+      "mjd_err": 17,
+      "size": 705.1,
+      "size_err": 0.1
+    },
+    {
+      "row_id": "G40",
+      "ordinal": 40,
+      "mjd": 59551,
+      "mjd_err": 29,
+      "size": 385.7,
+      "size_err": 0.4
+    },
+    {
+      "row_id": "G41",
+      "ordinal": 41,
+      "mjd": 59843,
+      "mjd_err": 24,
+      "size": 953.4,
+      "size_err": 0.2
+    },
+    {
+      "row_id": "G42",
+      "ordinal": 42,
+      "mjd": 60422,
+      "mjd_err": 7,
+      "size": 329.3,
+      "size_err": 0.5
+    }
+  ],
+  "points": [
+    {
+      "mjd": 58627,
+      "next_mjd": 58776,
+      "row_id": "G36",
+      "next_row_id": "G37",
+      "size": 136.4,
+      "wait_days": 149,
+      "label": "G36 → G37",
+      "pred_days": 224.78762757104724,
+      "baseline_days": 263.0,
+      "size_err": 0.4,
+      "mjd_err": 19,
+      "next_mjd_err": 14,
+      "wait_bounds_days": [
+        116,
+        182
+      ],
+      "prediction_bounds_days": [
+        224.72075679070497,
+        224.85449835138954
+      ],
+      "gain_bounds_days": [
+        38.14550164861046,
+        38.27924320929503
+      ]
+    },
+    {
+      "mjd": 59220,
+      "next_mjd": 59551,
+      "row_id": "G39",
+      "next_row_id": "G40",
+      "size": 705.1,
+      "wait_days": 331,
+      "label": "G39 → G40",
+      "pred_days": 319.861159522688,
+      "baseline_days": 263.0,
+      "size_err": 0.1,
+      "mjd_err": 17,
+      "next_mjd_err": 29,
+      "wait_bounds_days": [
+        285,
+        377
+      ],
+      "prediction_bounds_days": [
+        319.84444182760245,
+        319.8778772177736
+      ],
+      "gain_bounds_days": [
+        -12.877877217773573,
+        56.87787721777357
+      ]
+    },
+    {
+      "mjd": 59551,
+      "next_mjd": 59843,
+      "row_id": "G40",
+      "next_row_id": "G41",
+      "size": 385.7,
+      "wait_days": 292,
+      "label": "G40 → G41",
+      "pred_days": 266.4648414193751,
+      "baseline_days": 263.0,
+      "size_err": 0.4,
+      "mjd_err": 29,
+      "next_mjd_err": 24,
+      "wait_bounds_days": [
+        239,
+        345
+      ],
+      "prediction_bounds_days": [
+        266.3979706390328,
+        266.5317121997174
+      ],
+      "gain_bounds_days": [
+        -3.53171219971739,
+        3.53171219971739
+      ]
+    },
+    {
+      "mjd": 59843,
+      "next_mjd": 60422,
+      "row_id": "G41",
+      "next_row_id": "G42",
+      "size": 953.4,
+      "wait_days": 579,
+      "label": "G41 → G42",
+      "pred_days": 361.3711964201601,
+      "baseline_days": 263.0,
+      "size_err": 0.2,
+      "mjd_err": 24,
+      "next_mjd_err": 7,
+      "wait_bounds_days": [
+        548,
+        610
+      ],
+      "prediction_bounds_days": [
+        361.337761029989,
+        361.4046318103313
+      ],
+      "gain_bounds_days": [
+        98.337761029989,
+        98.4046318103313
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "mjd": 58776,
+      "next_mjd": 58990,
+      "row_id": "G37",
+      "next_row_id": "G38",
+      "reasons": [
+        "No continuous timing solution between G37 and G38. Small intervening glitches may have been missed.",
+        "absent or nonpositive starting size"
+      ]
+    },
+    {
+      "mjd": 58990,
+      "next_mjd": 59220,
+      "row_id": "G38",
+      "next_row_id": "G39",
+      "reasons": [
+        "absent or nonpositive starting size"
+      ]
+    }
+  ],
+  "summary": {
+    "n_train": 33,
+    "n_test": 4,
+    "fit_intercept_days": 201.98469147432877,
+    "fit_slope_days": 0.16717695085570733,
+    "baseline_days": 263.0,
+    "model_mae_days": 82.52260755220601,
+    "baseline_mae_days": 131.75,
+    "skill": 0.37364244742158625,
+    "wins": 4,
+    "p_value": 0.041666666666666664,
+    "mean_gain_days": 49.22739244779399,
+    "min_loo_gain_days": 32.84612445700529,
+    "mean_gain_bounds_days": [
+      30.018418315277124,
+      49.27336610927932
+    ]
+  }
+}
