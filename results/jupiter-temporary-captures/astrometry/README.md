@@ -1,17 +1,27 @@
 # Orbit fit to the three observed apparitions of 2025 UQ146
 
-The Minor Planet Center publishes 15 optical positions on five observing nights. DECam at Cerro Tololo measured five positions in 2014, Pan-STARRS 1 measured four in 2021 and WFST at Lenghu measured six in 2025. An independent fit to these positions gives a radial RMS of 0.407 arcsec and a maximum residual of 0.828 arcsec. The resulting state gives negative Jupiter-relative two-body energy on both targeted passages. These dates are model outputs.
+The Minor Planet Center publishes 15 optical positions on five observing nights. DECam at Cerro Tololo measured five positions in 2014, Pan-STARRS 1 measured four in 2021 and WFST at Lenghu measured six in 2025. A fit initialized from the sky positions alone gives a radial RMS of 0.407 arcsec and a maximum residual of 0.828 arcsec. Propagating that state gives negative Jupiter-relative two-body energy on both targeted passages. These dates are model outputs.
 
 | Nominal solution | Closest approach in 1985 (au) | Energy there (km²/s²) | Closest approach in 2070 (au) | Energy there (km²/s²) |
 | --- | ---: | ---: | ---: | ---: |
-| Refit from positions, with DE440s | 0.237874 | −0.92259 | 0.155322 | −1.00929 |
+| Refit from positions, with DE440s | 0.237873 | −0.92259 | 0.155322 | −1.00929 |
 | Published MPC state, propagated with DE440s | 0.237873 | −0.92260 | 0.155322 | −1.00929 |
 
 Between the zero crossings in Jupiter-relative energy, the refit gives 1,156.90 days from January 1984 to March 1987 and 881.65 days from April 2069 to September 2071. These durations include times outside Jupiter’s Hill radius. The propagator uses the barycenter and total mass of the Jovian system.
 
 ## Prediction checks
 
-The three single-night exclusions in the WFST apparition give maximum absolute sky-position errors of 0.315, 0.160 and 0.417 arcsec. Whole-apparition exclusions are much less predictive. Withholding 2014 gives an RMS sky-position error of 1,051.5 arcsec. Withholding 2021 gives 547.2 arcsec. A fit to just 2014 and 2021, each a single night, reached the 400-evaluation limit. All fits start from the MPC Cartesian solution using all three apparitions. These tests measure sensitivity to the excluded observations within that solution branch. The two nominal orbits above share the same 15 observations.
+For each WFST test, two positions from one October 2025 night were withheld before orbit initialization. The fit used the other 13 sky positions across four nights. The largest error among the six withheld positions was 0.417 arcsec.
+
+| Withheld WFST night (UTC) | Radial error for first position (arcsec) | Radial error for second position (arcsec) |
+| --- | ---: | ---: |
+| 2025-10-27 | 0.292 | 0.315 |
+| 2025-10-28 | 0.123 | 0.160 |
+| 2025-10-29 | 0.277 | 0.417 |
+
+The nominal refit and single-night tests each construct their own preliminary orbit using the two latest WFST nights available to the fit. The sky positions on those nights give the direction and angular velocity. A 300 × 211 grid spans topocentric range (0.5–9 au) and range rate (−0.015 to +0.015 au/day). Bound heliocentric trial orbits propagate under solar gravity to the first retained position on each earlier night. The grid ranks the orbits by the summed squared chord distance between predicted and measured unit directions. The best trial initializes the N-body fit. DE440s supplies solar and observer positions. The 13 retained positions determine each single-night prediction.
+
+The whole-apparition checks start at the published MPC Cartesian state, which uses all three apparitions. Withholding 2014 gives an RMS sky-position error of 1,051.5 arcsec. Withholding 2021 gives 547.2 arcsec. A fit to just 2014 and 2021, each a single night, reached the 400-evaluation limit. These checks measure sensitivity within the catalog solution branch. Both nominal orbits in the table above use the same 15 observations.
 
 ## Replay
 

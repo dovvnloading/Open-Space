@@ -4,7 +4,6 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 import numpy as np
@@ -13,23 +12,6 @@ import pandas as pd
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 from skyfit import Gravity, SkyFit
-
-
-def planned_sql(rows):
-    conditions = []
-    for row in rows.itertuples():
-        base, tag = row.filename.removesuffix(".fits.fz").rsplit("_", 1)
-        names = sorted({tag, "ls9", "v1", "v2", "vx", "ls10"})
-        aliases = ", ".join(f"'{base}_{value}'" for value in names)
-        conditions.append(
-            f"(exposure IN ({aliases}) AND ra BETWEEN {row.pred_ra - 0.003} AND "
-            f"{row.pred_ra + 0.003} AND dec BETWEEN {row.pred_dec - 0.003} "
-            f"AND {row.pred_dec + 0.003})"
-        )
-    return (
-        "SELECT measid,objectid,exposure,ra,dec,mjd,mag_auto,magerr_auto,flags "
-        "FROM nsc_dr2.meas WHERE " + " OR ".join(conditions)
-    )
 
 
 def main():
@@ -63,11 +45,9 @@ def main():
         import io
 
         pieces = []
+        sources = json.loads((HERE / "sources.json").read_text())
         for i in range(0, len(rows), 3):
-            sql = planned_sql(rows.iloc[i : i + 3])
-            url = "https://datalab.noirlab.edu/query/query?" + urlencode(
-                {"sql": sql, "ofmt": "csv", "async": "False"}
-            )
+            url = sources[f"nex{i:02d}"]["url"]
             req = Request(url, headers={"X-DL-AuthToken": "anonymous.0.0.anon_access"})
             with urlopen(req, timeout=150) as response:
                 pieces.append(pd.read_csv(io.BytesIO(response.read())))

@@ -14,7 +14,8 @@ DAY = 86400
 SAMPLES = 128
 FIELDS = ("epoch_jd", "years_negative_energy", "years_bound_inside_hill",
           "closest_au", "min_energy_km2_s2", "net_turns_inertial",
-          "net_turns_rotating")
+          "net_turns_rotating", "negative_energy_episodes",
+          "max_inertial_excursion_turns_any_episode")
 # Windows deliberately extend beyond both ends of each nominal episode.
 WINDOWS = {
     "uq146": [(2444970.5, 2447527.5), (2476017.5, 2479304.5)],
@@ -65,22 +66,50 @@ def initialize(target, source, count):
     return sim, epoch, states[5, 0], states[0, 0]
 
 
+def zero_crossing(t0, t1, value0, value1):
+    """Interpolate a bracketed zero in the same time and value convention."""
+    return t0 - value0 * (t1-t0) / (value1-value0)
+
+
+def negative_time(t, values):
+    """Integrate time spent below zero on a piecewise-linear trajectory."""
+    negative = values < 0
+    crossing = negative[1:] != negative[:-1]
+    dt = np.diff(t)
+    total = dt[negative[:-1] & negative[1:]].sum()
+    starts, ends = t[:-1][crossing], t[1:][crossing]
+    roots = zero_crossing(starts, ends, values[:-1][crossing], values[1:][crossing])
+    return total + np.where(negative[:-1][crossing], roots-starts, ends-roots).sum()
+
+
 def summarize(t, radius, energy, hill, longitude, rotating):
-    """Measure the contiguous negative-energy episode containing deepest entry."""
-    minimum = int(np.argmin(energy))
-    if energy[minimum] >= 0:
-        return (np.nan, 0, 0, min(radius), min(energy), 0, 0)
-    breaks = np.flatnonzero(energy >= 0)
-    left = breaks[breaks < minimum]
-    right = breaks[breaks > minimum]
-    lo = left[-1] + 1 if left.size else 0
-    hi = right[0] - 1 if right.size else len(t) - 1
-    sl = slice(lo, hi + 1)
-    inside = np.count_nonzero(radius[sl] < hill[sl])
-    return (t[np.argmin(radius[sl]) + lo], (t[hi]-t[lo])/365.25,
-            inside*(t[1]-t[0])/365.25, min(radius[sl]), energy[minimum],
-            (longitude[hi]-longitude[lo])/(2*np.pi),
-            (rotating[hi]-rotating[lo])/(2*np.pi))
+    """Measure the deepest episode and the largest angular excursion of any episode."""
+    negative = energy < 0
+    if negative[0] or negative[-1]:
+        raise ValueError("A negative-energy episode reaches the sampling boundary; "
+                         "extend the time window to bracket entry and exit")
+    if not np.any(negative):
+        return (np.nan, 0, 0, min(radius), min(energy), 0, 0, 0, 0)
+    entries = np.flatnonzero(~negative[:-1] & negative[1:]) + 1
+    exits = np.flatnonzero(negative[:-1] & ~negative[1:])
+    deepest = int(np.argmin(energy))
+    max_excursion = 0.0
+    for lo, hi in zip(entries, exits):
+        start = zero_crossing(t[lo-1], t[lo], energy[lo-1], energy[lo])
+        stop = zero_crossing(t[hi], t[hi+1], energy[hi], energy[hi+1])
+        # Include every sampled vertex as well as the interpolated boundaries.
+        times = np.r_[start, t[lo:hi+1], stop]
+        angles = np.interp(times, t, longitude)
+        max_excursion = max(max_excursion, np.ptp(angles) / (2*np.pi))
+        if lo <= deepest <= hi:
+            gap = np.interp(times, t, radius-hill)
+            hill_days = negative_time(times, gap)
+            imin = lo + int(np.argmin(radius[lo:hi+1]))
+            lon_rot = np.interp([start, stop], t, rotating)
+            result = (t[imin], (stop-start)/365.25, hill_days/365.25,
+                      radius[imin], energy[deepest], (angles[-1]-angles[0])/(2*np.pi),
+                      (lon_rot[1]-lon_rot[0])/(2*np.pi))
+    return (*result, len(entries), max_excursion)
 
 
 def propagate(target, source, count, window):

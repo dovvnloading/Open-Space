@@ -131,8 +131,13 @@ def galactic_model(par):
 def follow_up():
     pair = sorted(load("gaia_pair.csv"), key=lambda x: x["source_id"])
     nominal = parameters(pair)
+    velocities = {row["source_id"]: row for row in load("keck.csv")}
+    table3 = nominal.copy()
     keck = nominal.copy()
-    keck[:, 5] = [float(r["mean_rv_kms"]) for r in load("keck.csv")]
+    for i, star in enumerate(pair):
+        row = velocities[star["source_id"]]
+        table3[i, 5] = float(row["table3_rv_kms"])
+        keck[i, 5] = float(row["table1_present_rv_kms"] or row["table3_rv_kms"])
     long_pm, hip = keck.copy(), keck.copy()
     hip_only_pm = keck.copy()
     for i, hip_id in enumerate([24681, 26381]):
@@ -154,6 +159,7 @@ def follow_up():
               "gaia_time_myr": np.quantile(t, q).tolist(), "gaia_speed_kms": np.quantile(v, q).tolist(),
               "gaia_fraction_inside_0p1pc": float(np.mean(d < .1)),
               "gaia_dr2_epoch2015p5": point(dr2),
+              "gaia_positions_chubak_table3_rv": point(table3),
               "gaia_positions_keck_rv": point(keck), "hg_long_pm_keck_rv": point(long_pm),
               "hip_only_pm_gaia_parallax_keck_rv": point(hip_only_pm),
               "hip_astrometry_keck_rv_epoch1991p25": point(hip),

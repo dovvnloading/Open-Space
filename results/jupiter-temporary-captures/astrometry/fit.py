@@ -9,6 +9,7 @@ import pandas as pd
 from astropy.time import Time
 from scipy.integrate import solve_ivp
 from scipy.optimize import brentq, minimize_scalar
+from initial_orbit import training_seed
 from skyfit import AU_KM, DATA, DAY, EPOCH, EQUATOR_TO_ECLIPTIC, Gravity, SkyFit
 
 
@@ -97,21 +98,27 @@ def main():
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     gravity = Gravity(args.kernel)
-    start = seed(gravity)
+    catalog_state = seed(gravity)
     rows = positions()
     fits = {}
     residuals = []
-    tests = ["2014", "2021", "2025", "2025-10-27", "2025-10-28", "2025-10-29"]
+    wfst_nights = ["2025-10-27", "2025-10-28", "2025-10-29"]
+    tests = ["2014", "2021", "2025", *wfst_nights]
     for name, mask in [
         ("all", np.ones(len(rows), bool)),
         *[(y, ~rows.utc.str.startswith(y)) for y in tests],
     ]:
         train = rows.loc[mask].reset_index(drop=True)
         model = SkyFit(train, gravity)
+        if name == "all" or name in wfst_nights:
+            start, seed_info = training_seed(model, train.utc.str[:10].to_numpy())
+        else:
+            start = catalog_state
+            seed_info = {"source": "published MPC Cartesian state fit to all 15 positions"}
         try:
             state, _ = model.fit(start)
         except RuntimeError as exc:
-            fits[name] = {"fit_failed": str(exc)}
+            fits[name] = {"seed": seed_info, "fit_failed": str(exc)}
             continue
         tested = rows if name == "all" else rows.loc[~mask].reset_index(drop=True)
         err = SkyFit(tested, gravity).prediction(state)[0].reshape(-1, 2)
@@ -120,6 +127,7 @@ def main():
             tested.assign(fit=name, east_arcsec=err[:, 0], north_arcsec=err[:, 1])
         )
         fits[name] = {
+            "seed": seed_info,
             "barycentric_state_au_day": state.tolist(),
             "test_rows": len(tested),
             "radial_rms_arcsec": rms,
@@ -135,7 +143,7 @@ def main():
         if name == "all":
             fits[name]["passes"] = propagate(gravity, state)
             print(fits[name]["passes"], flush=True)
-    fits["catalog_solution"] = propagate(gravity, start)
+    fits["catalog_solution"] = propagate(gravity, catalog_state)
     pd.concat(residuals).to_csv(
         args.output / "fit-residuals.csv", index=False, float_format="%.7f"
     )
