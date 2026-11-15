@@ -53,3 +53,16 @@ With Python 3, NumPy and SciPy installed, run `python reproduce.py` in this dire
 To refresh from the primary archives in a separate copy, run `python acquire.py`. This checks for new MPC observations and for a change of Horizons solution. Quantities computed under an updated ephemeris need a new comparison. The seven controls and all fit residuals are in the machine-readable results.
 
 The two fitted states and the five moderate-orbit night-deletion states are included in `results.json`. Each gives Cartesian (x, y, z, vx, vy, vz) in ICRF, relative to the Saturn-system barycenter, at JD 2460200.5 TDB. For other dates inside the frozen 2023–2026 integration grid, run, for example, `python predict.py 2460537.7916667`. This fetches the T14 observer vector and prints both nominal directions and the five night-deletion directions.
+
+## Independent CFHT image check
+
+A CADC search for CFHT imaging within an 8° radius of (349°, −6°) from MJD 60492 to 60672, with exposures of at least 50 s, returned 452 distinct MegaPrime or WIRCam observations after removing repeated products. Intersecting the moving orbit predictions with the reported sky polygons found two frames covering either nominal solution. A third intersects one moderate-orbit night-deletion trajectory. Examination of processed detector cutouts confirmed coverage of both nominal directions on 2024-07-31 UTC.
+
+| CADC product | Orbit and detector | Approximate exposure start (UTC) | Mid-exposure RA, Dec (degrees) | Aperture S/N | 5σ aperture depth, CaHK |
+|---|---|---|---|---:|---:|
+| 3030533p | Moderate, CCD06 | 13:53:08 | 350.68064, −6.50421 | −0.21 | 22.77 |
+| 3030535p | Extreme refit, CCD12 | 14:01:17 | 349.17024, −6.78118 | −0.02 | 22.75 |
+
+Each image is a single 200 s CaHK.MP9303 narrowband exposure. Circular apertures of radius 5 pixels (0.93″) use a local sky annulus of 10–16 pixels. A robust MAD estimator over 1,256 and 1,263 nearby apertures gives the local noise. Magnitudes use the Elixir camera-run zero point and airmass term without aperture correction. These depth estimates and the discovery w-band magnitudes use different passbands. Neither nominal position gives a significant source, and the shallow narrowband images supply no independent orbit discrimination. [3030533 product](https://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/caom2/?Observation.collection=CFHT&Observation.observationID=3030533) · [3030535 product](https://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/caom2/?Observation.collection=CFHT&Observation.observationID=3030535)
+
+Run `python check_cfht_images.py` with Astropy, NumPy and SciPy to request the original detector cutouts and repeat these measurements. The numerical results and SHA-256 digests of the fetched products are in `cfht_image_checks.json`.
