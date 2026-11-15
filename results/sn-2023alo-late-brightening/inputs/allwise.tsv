@@ -1,0 +1,48 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T03:58:41 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T03:58:41	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F328%2Fallwise&-c=215.70427+-13.27516&-c.rs=6&-out=AllWISE%2CRAJ2000%2CDEJ2000%2CW1mag%2Ce_W1mag%2CW2mag%2Ce_W2mag%2CW3mag%2Ce_W3mag%2Cccf%2Cex	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	MaxTuples=50000	
+#INFO	-c=215.704270-13.275160,rs=6.	
+#Constraint -out=AllWISE,RAJ2000,DEJ2000,W1mag,e_W1mag,W2mag,e_W2mag,W3mag,e_W3mag,ccf,ex
+
+#RESOURCE=yCat_2328
+#Name: II/328
+#Title: AllWISE Data Release (Cutri+ 2013)
+#INFO	ivoid=ivo://cds.vizier/ii/328	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/ii/328	    IVOID of underlying data collection
+#INFO	creator=Cutri R.M.	    First author or institution
+#INFO	cites=bibcode:2014yCat.2328....0C	    Bibcode of the dataset
+#INFO	journal=yCat	    Journal name
+#INFO	original_date=2014	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/II/328	    Dataset landing page
+#INFO	publication_date=2024-07-15	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	II_328_allwise:
+#Name: II/328/allwise
+#Title: *the AllWISE data release (among 747,634,026 sources) (updated version, 16-Feb-2021)
+#Column	AllWISE	(a19)	WISE All-Sky Release Catalog name, based on J2000 position, <WISEA JHHMMSS.ss+DDMMSS.s> (designation)	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F11.7)	Right ascension (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F11.7)	Declination (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	W1mag	(F6.3)	? W1 magnitude (3.35um)	[ucd=phot.mag;em.IR.3-4um]
+#Column	e_W1mag	(F6.3)	? Mean error on W1 magnitude	[ucd=stat.error;phot.mag]
+#Column	W2mag	(F6.3)	? W2 magnitude (4.6um)	[ucd=phot.mag;em.IR.4-8um]
+#Column	e_W2mag	(F6.3)	? Mean error on W2 magnitude	[ucd=stat.error;phot.mag]
+#Column	W3mag	(F6.3)	? W3 magnitude (11.6um)	[ucd=phot.flux.density;em.IR.8-15um]
+#Column	e_W3mag	(F6.3)	? Mean error on W3 magnitude	[ucd=stat.error;phot.mag]
+#Column	ccf	(A4)	[0DHOPdhop] Contamination and confusion flag, one per band (cc_flags) (2)	[ucd=meta.code]
+#Column	ex	(I1)	[0-5] Extended source flag (ext_flg) (3)	[ucd=meta.code]
+AllWISE	RAJ2000	DEJ2000	W1mag	e_W1mag	W2mag	e_W2mag	W3mag	e_W3mag	ccf	ex
+ 	deg	deg	mag	mag	mag	mag	mag	mag	 	
+-------------------	-----------	-----------	------	------	------	------	------	------	----	-
+J142249.00-131630.6	215.7042016	-13.2751681	13.969	 0.027	13.521	 0.034	11.658	 0.187	0000	0
+

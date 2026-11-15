@@ -1,0 +1,40 @@
+{
+  "ztf_field.csv.gz": {
+    "url": "https://irsa.ipac.caltech.edu/cgi-bin/ZTF/nph_light_curves?POS=CIRCLE+215.70427+-13.27516+0.015&FORMAT=csv&BAD_CATFLAGS_MASK=32768",
+    "sha256": "bebc007b60b2b6ee7a23e00129f4441431915b5d9f5e8951767b01439eb68dfd",
+    "raw_sha256": "8f7604beb57cca21e85fedf215b48e410ea7cff965f179a802121d61c63f773d"
+  },
+  "ztf_alerts.json.gz": {
+    "url": "https://api.alerce.online/ztf/v1/objects/ZTF23aaabzea/detections",
+    "sha256": "582e4691bc20d92ade238e6a4cb4eb9625e4db5177b69aa9dca0b1e5da1d127d",
+    "raw_sha256": "1761c6c25c468be0aff5fb2f5b2989a18530d5dc32b908e6d098109f05f1c1b6"
+  },
+  "panstarrs.csv": {
+    "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/mean.csv?ra=215.70427&dec=-13.27516&radius=0.0014&nDetections.gte=2&columns=%5BobjID%2CraMean%2CdecMean%2CnDetections%2CgMeanPSFMag%2CrMeanPSFMag%2CrMeanKronMag%5D",
+    "sha256": "319a757733dfa4eab9f4bfa0c47d003ee1f1196bade07b9e7d047bbf636ced9d",
+    "raw_sha256": "319a757733dfa4eab9f4bfa0c47d003ee1f1196bade07b9e7d047bbf636ced9d"
+  },
+  "allwise.tsv": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F328%2Fallwise&-c=215.70427+-13.27516&-c.rs=6&-out=AllWISE%2CRAJ2000%2CDEJ2000%2CW1mag%2Ce_W1mag%2CW2mag%2Ce_W2mag%2CW3mag%2Ce_W3mag%2Cccf%2Cex",
+    "sha256": "8c6f695ff068ff4c6ac4eb48ebe31e84a32c143eea4ac8003001f1f0c4f3fcfb",
+    "raw_sha256": "8c6f695ff068ff4c6ac4eb48ebe31e84a32c143eea4ac8003001f1f0c4f3fcfb"
+  },
+  "asassn.parquet": {
+    "url": "https://asas-sn.github.io/skypatrol/queries.html",
+    "sha256": "f1100d6a5407c79b94d9e97dc296eb6381b4b9513950bf46113e22975badcf3f",
+    "raw_sha256": "f1100d6a5407c79b94d9e97dc296eb6381b4b9513950bf46113e22975badcf3f",
+    "request": {
+      "service": "ASAS-SN Sky Patrol V2",
+      "catalog": "master_list",
+      "ra_deg": 215.70427,
+      "dec_deg": -13.27516,
+      "radius_deg": 0.002,
+      "asas_sn_id": 661431284908
+    }
+  },
+  "gaia_host.csv": {
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+s.source_id%2Cs.ra%2Cs.dec%2Cs.parallax%2Cs.parallax_error%2Cs.pmra%2Cs.pmra_error%2Cs.pmdec%2Cs.pmdec_error%2Cs.ruwe%2Cs.duplicated_source%2Cs.astrometric_params_solved%2Cs.classprob_dsc_combmod_star%2Cs.classprob_dsc_combmod_galaxy%2Cs.classprob_dsc_combmod_quasar%2Cs.phot_g_mean_mag%2Cs.bp_rp+FROM+gaiadr3.gaia_source+AS+s+WHERE+source_id%3D6300335462633830528",
+    "sha256": "be4e37ebd9def68507ba0c1f195ed36fc1aef96ff69186942c3c9a325651a42e",
+    "raw_sha256": "be4e37ebd9def68507ba0c1f195ed36fc1aef96ff69186942c3c9a325651a42e"
+  }
+}
