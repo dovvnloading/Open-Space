@@ -67,7 +67,7 @@ python check_kernels.py --cache /tmp/solo-venus-ephemerides
 
 The second command retrieves four pinned public kernels (approximately 54 MB), verifies their SHA-256 hashes and rebuilds [kernel_contacts.csv](kernel_contacts.csv) and [observer_geometry.csv](observer_geometry.csv). Blank contact times mean that the direction stayed clear in the selected interval.
 
-With cdflib installed, the radio comparisons use three SHA-256-pinned mission CDFs (about 47 MB). The following command downloads the missing inputs into the specified directory and rebuilds all three radio CSVs.
+With cdflib installed, the radio comparisons use three SHA-256-pinned mission CDFs (about 50 MB). The following command downloads the missing inputs into the specified directory and rebuilds all three radio CSVs.
 
 ```sh
 python check_radio.py --cache /tmp/venus-contact-cdf --download
