@@ -4,6 +4,7 @@ import csv
 import hashlib
 import io
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import urlopen
 
@@ -30,6 +31,7 @@ def digest(b):
 
 def extract(raw_dir, dest):
     dest.mkdir(parents=True, exist_ok=True)
+    retrieved_utc = datetime.now(timezone.utc).date().isoformat() if raw_dir is None else None
     receipts = {}
     with (dest / "measurements.csv").open("w", newline="") as stream:
         writer = csv.writer(stream, lineterminator="\n")
@@ -83,7 +85,7 @@ def extract(raw_dir, dest):
                     writer.writerow((name + "_" + label, i + .5,
                                      f"{weighted_rate[i]/total[i]:.10g}",
                                      f"{1/np.sqrt(total[i]):.10g}", counts[i]))
-    manifest = dict(retrieved_utc="2026-11-14", products=receipts,
+    manifest = dict(retrieved_utc=retrieved_utc, products=receipts,
                     measurements_sha256=digest((dest / "measurements.csv").read_bytes()))
     (dest / "sources.json").write_text(json.dumps(manifest, indent=2) + "\n")
 

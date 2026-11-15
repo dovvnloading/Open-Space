@@ -23,11 +23,18 @@ def remove(values, nuisance):
 
 
 def summaries(rows):
-    nights = np.round(rows["BJD"])
-    return {key: np.array([np.median(rows[key][nights == night])
-                            for night in np.unique(nights)])
-            for key in ("BJD", "RV_mlc_nzp", "RV_drs_nzp", "CRX", "dLW",
-                        "Halpha", "RHKp", "FWHM_DRS", "BIS", "BERV")}
+    bins = np.round(rows["BJD"])
+    groups = [bins == day for day in np.unique(bins)]
+    result = {}
+    for key, values in rows.items():
+        # RVBank uses -9999999 for missing measurements, including RHKp.
+        valid = np.isfinite(values) & (values != -9999999)
+        medians = []
+        for group in groups:
+            sample = values[group & valid]
+            medians.append(np.median(sample) if sample.size else np.nan)
+        result[key] = np.array(medians)
+    return result
 
 
 def fit_harps(t, y, seeds):
@@ -105,7 +112,7 @@ def main():
     for name, values in h.items():
         if name == "BJD":
             continue
-        valid = np.isfinite(values) & (values > -1e5)
+        valid = np.isfinite(values)
         diagnostics[name] = audit_signals(t[valid], values[valid], periods, ht[valid])
     # Independent coefficients for the four fixed-phase waves in ESPRESSO.
     unit_waves = (design(u, periods) * chosen["params"][:8]).reshape(-1, 4, 2).sum(2)
@@ -143,7 +150,7 @@ def main():
             shuffled = np.argsort(rng.random((1000, len(idx))), axis=1)
             products += (measured[idx] * projected[idx][shuffled]).sum(axis=1)
         count += int(np.sum(products >= score))
-    return {"harps_exposures":len(raw["BJD"]),"harps_nights":len(t),"espresso_exposures":len(u),
+    return {"harps_exposures":len(raw["BJD"]),"harps_rounded_bjd_bins":len(t),"espresso_exposures":len(u),
             "espresso_null_rms":round(float(np.std(observed)),5),
             "aliases":aliases,"harps_control_fits":diagnostics,
             "espresso_frozen_inner_subsets":inner_subset,
