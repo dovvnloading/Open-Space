@@ -1,0 +1,34 @@
+name: V612 Scuti extended archival validation
+on:
+  push:
+    branches: [research/v612-scuti-optical-clock]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install skypatrol pandas requests astropy scipy
+      - name: Fetch independent survey and raw pixel holdouts
+        run: python results/v612-sct-clock/followup/harvest.py
+      - name: Test raw TESS pixels with independent linear pipeline
+        run: |
+          if test -f /tmp/v612-harvest/tess80.fits && test -f /tmp/v612-harvest/tess92.fits; then
+            python results/v612-sct-clock/followup/linear_pixels.py --fits-dir /tmp/v612-harvest --check --output /tmp/v612-harvest/linear-harmonics.json
+          else
+            echo "MAST image unavailable. Check acquisition.json; do not claim raw-pixel validation."
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v612-archive-holdout
+          path: |
+            /tmp/v612-harvest
+            results/v612-sct-clock/data
+          retention-days: 30
+          if-no-files-found: error

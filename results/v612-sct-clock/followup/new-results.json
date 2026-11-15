@@ -1,0 +1,176 @@
+{
+  "source": "dovvnloading/Open-Space PR #24 additive tests",
+  "epoch": "2026-11-15 UTC",
+  "fixed_clock": {
+    "period_day": 0.15956200154633035,
+    "frequency_cycles_per_day": 6.267156279746469,
+    "brightness_max_BJD_TDB": 2459499.9473282346
+  },
+  "observation_sources": {
+    "ZTF": "data/ztf-field.csv original PR #24; paired OIDs 333114400007906 and 333114400172086",
+    "TESS": "MAST TESSCut original FFIs sector 80,92; 5x5 pixels; time BTJD",
+    "ASAS_SN": "Sky Patrol public master_list images, 3 overlapping entries"
+  },
+  "matched_ztf_g": {
+    "matched_exposures": 246,
+    "semiamplitude_mag": 0.0471547129261084,
+    "mag_phase_cycles": 0.4941484367925846,
+    "correlation": 0.4884913881915045,
+    "training_before_HJD": 2460300,
+    "training_n": 152,
+    "holdout_n": 94,
+    "training_semiamp_mag": 0.04067635107898363,
+    "holdout_pearson_r": 0.5653272276414771,
+    "holdout_month_sign_flip": {
+      "month_blocks": 14,
+      "trials": 100000,
+      "exceedances": 33,
+      "p": 0.00033999660003399966
+    },
+    "paired_centroid_firstmoment_model": {
+      "east_north_arcsec": [
+        0.01853442,
+        -0.15337533
+      ],
+      "marginal_95_lower": [
+        -0.1171,
+        -0.2836
+      ],
+      "marginal_95_upper": [
+        0.1526,
+        0.0127
+      ],
+      "note": "PSF-fit catalog centroids may violate ideal first-moment model"
+    }
+  },
+  "tess_ffis_linear": {
+    "approach": "4-pixel fixed aperture minus 4 times outer-11 mean flux at each cadence, regress separate day intercept and day linear trend and f/2,f,2f,3f; no rolling median or PCA",
+    "sector80": {
+      "n": 7563,
+      "days": 22,
+      "raw_sha256": "494f20da59073b465c3eee54a7588cee657d077c4d06b7529935131e9627334c",
+      "f_amp_e_s": 2.903125360057795,
+      "f_phase": -0.005337523256756738,
+      "harmonic_2f_amp_e_s": 0.6531606502437293,
+      "harmonic_2f_phase_cycles": -0.46453310725168734,
+      "harmonic_2f_amp_day_boot95": [
+        0.4579126396474813,
+        0.8646957808088211
+      ],
+      "day_signflip_2f": {
+        "trials": 10000,
+        "exceedances": 0,
+        "p": 0.00009999
+      },
+      "subharm_f_half_amp_e_s": 0.2187314391980816,
+      "subharm_phase_cycles": -0.38526185723000256,
+      "subharm_signflip_p": 0.44865513448655137,
+      "gaussian_approx_f_centroid_xy": [
+        2.3082140400763143,
+        2.4082299185555143
+      ],
+      "gaia_target_xy": [
+        2.282913347689579,
+        2.5260460756460015
+      ]
+    },
+    "sector92": {
+      "n": 9175,
+      "days": 25,
+      "raw_sha256": "f34c3deb59263a52e1d26a9fb11ef25b75e20ed890dfa0c64cf1c75db3124494",
+      "f_amp_e_s": 3.1922571534982427,
+      "f_phase": -0.009859265936894845,
+      "harmonic_2f_amp_e_s": 0.5275098227138066,
+      "harmonic_2f_phase_cycles": -0.47803306607044804,
+      "harmonic_2f_amp_day_boot95": [
+        0.37120798335556904,
+        0.7294548488409406
+      ],
+      "day_signflip_2f": {
+        "trials": 10000,
+        "exceedances": 3,
+        "p": 0.00039996
+      },
+      "phase_locked_to_sector80": {
+        "trials": 10000,
+        "exceedances": 0,
+        "p": 0.00009999
+      },
+      "phase_difference_cycles": -0.013499958818760704,
+      "subharm_f_half_amp_e_s": 0.8304329495593011,
+      "subharm_phase_cycles": -0.058739134352942424,
+      "subharm_signflip_p": 0.05419458054194581,
+      "gaussian_approx_f_centroid_xy": [
+        2.917783523445086,
+        2.344022291680967
+      ],
+      "gaia_target_xy": [
+        2.897894502101347,
+        2.2357621781930894
+      ]
+    },
+    "note": "Gaussian source centroid is NOT a calibrated TESS PRF, may be biased by crowded field; harmonic 2f centroid especially uncertain"
+  },
+  "asas_sn": {
+    "target_id": 661428620105,
+    "nearby_catalog_ids": [
+      661431894529,
+      661431894524
+    ],
+    "post_eruption_g_n": 711,
+    "overall_photometry_n": 1117,
+    "amplitude_mag": 0.010769750310242316,
+    "rms_mag": 0.18697473761082725,
+    "approx_phase_jd_cycles": -0.37613645981184796,
+    "amplitude_month_boot95": [
+      0.00288418,
+      0.04003656
+    ],
+    "phase_locked_signflip_p": 0.23305533889322214,
+    "other_entry_correlations": [
+      0.9978551235863642,
+      0.9954776766288344,
+      0.9953881536238421
+    ],
+    "outcome": "inconclusive blended third survey; NOT a detection",
+    "csv_sha256": [
+      "e5225df58f411179083229809d8ec2ecb7c807a81c256a1f861c251c0d93a7d0",
+      "41cd1a88c6aff681f08947e3d87e17ef26220f264bd0459ab55c2e577ac26c3c",
+      "b7db712bbcf2b467f610571a879e0cab6e3d0f845e2d73fbc0cd75fa63bb5f46"
+    ]
+  },
+  "third_survey_gaps": {
+    "gaia_dr3_epoch_available": false,
+    "panstarrs_early_filter_counts": {
+      "g": 27,
+      "r": 10,
+      "i": 13,
+      "z": 14,
+      "y": 5
+    },
+    "TESS_available_sector_numbers": [
+      80,
+      92
+    ],
+    "image_cutout_success": 8,
+    "image_cutout_503": 112
+  },
+  "spectroscopy": {
+    "Porb1_hours": 3.8294880371,
+    "Porb2_hours": 7.6589760742,
+    "paired_velocity_test": "v(t+3.829488h)=v(t) if Porb1; v(t+3.829488h)=2gamma-v(t) if Porb2",
+    "future_cycle_E": 12896,
+    "predicted_max_BJD_TDB": 2461557.658900176,
+    "future_clock_uncertainty_period_only_minutes": [
+      -29.9,
+      25.4
+    ]
+  },
+  "limitations": [
+    "Not a blind global false-alarm probability",
+    "Not a spectroscopic orbital detection",
+    "TESS cannot separate 2.7-arcsecond Gaia companion",
+    "ASAS-SN images overlap and do not independently confirm",
+    "gaussian TESS difference-image centroid systematic not calibrated"
+  ]
+}

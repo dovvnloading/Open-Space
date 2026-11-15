@@ -1,0 +1,29 @@
+name: V612 Scuti additive offline holdouts
+on:
+  push:
+    branches: [research/v612-scuti-optical-clock]
+  pull_request:
+    paths:
+      - 'results/v612-sct-clock/followup/**'
+      - '.github/workflows/v612-followup-offline.yml'
+permissions:
+  contents: read
+jobs:
+  followup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy pandas scipy astropy
+      - run: python results/v612-sct-clock/followup/reanalysis.py --check --output /tmp/v612-followup.json
+      - run: python results/v612-sct-clock/followup/band_waveform.py --check --output /tmp/v612-bands.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v612-additive-reanalysis
+          path: |
+            /tmp/v612-followup.json
+            /tmp/v612-bands.json
+          retention-days: 60
