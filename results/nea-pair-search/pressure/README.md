@@ -1,6 +1,6 @@
 # An outward-acceleration candidate in the 19-year linkage
 
-The joint arc for 2007 VE138 and 2026 VV15 favors an additional outward force varying with inverse-squared heliocentric distance. The test is conditional on the two designations belonging to the same object. This is a measurement from a sparse archive with a 19-year gap. The physical origin remains open.
+The complete, retrospectively selected 2007 VE138 / 2026 VV15 arc fits better with an added outward inverse-square acceleration, **conditional on the two designations belonging to the same object**. This is a two-apparition astrometric model comparison across a 19-year gap, not a direct physical force measurement. A chronological holdout of the later 59 positions favors gravity alone (2.506″ versus 3.103″), so the acceleration model has not passed every predictive test. Its physical cause remains open.
 
 | Six-state fit or extension | A1 in AU/day² at 1 AU | A2 in AU/day² at 1 AU | All-position radial RMS |
 |---|---:|---:|---:|
