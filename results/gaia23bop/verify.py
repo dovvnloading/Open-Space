@@ -57,6 +57,36 @@ def fixed_score(frame, period, zero):
     return float(np.corrcoef(y, predictor)[0, 1])
 
 
+def red_noise_controls(frame):
+    """Compare the Gaia peak to equal-cadence, rank-matched OU surrogates."""
+    t = frame.mjd.to_numpy()
+    y = frame.value.to_numpy()
+    # Frequency spacing samples the narrowest peaks several times across.
+    freq = np.linspace(1 / 2000, 1 / 50, 700)
+    ang = 2 * np.pi * (t - t.mean())[:, None] * freq
+    # Orthogonal bases give the same zero-centered LS power as scan().
+    shift = 0.5 * np.arctan2(np.sin(2 * ang).sum(0), np.cos(2 * ang).sum(0))
+    c, s = np.cos(ang - shift), np.sin(ang - shift)
+    c /= np.sqrt((c * c).sum(0))
+    s /= np.sqrt((s * s).sum(0))
+
+    def peak(v):
+        v = v - v.mean(axis=1, keepdims=True)
+        return (((v @ c) ** 2 + (v @ s) ** 2) / (v * v).sum(1)[:, None]).max(1)
+
+    actual = peak(y[None, :])[0]
+    rng = np.random.default_rng(60247)
+    results = {}
+    for tau in [30, 90, 180, 360, 600]:
+        trials = np.empty((2000, len(t)))
+        trials[:, 0] = rng.standard_normal(len(trials))
+        for i, rho in enumerate(np.exp(-np.diff(t) / tau), start=1):
+            trials[:, i] = rho * trials[:, i-1] + np.sqrt(1 - rho ** 2) * rng.standard_normal(len(trials))
+        trials = np.sort(y)[np.argsort(np.argsort(trials, axis=1), axis=1)]
+        results[str(tau)] = (1 + int((peak(trials) >= actual).sum())) / (len(trials) + 1)
+    return results
+
+
 def main():
     frames = load_measurements()
     grouped = {k: aggregate(v, 3 if k == 'ASAS-SN' else 1) for k, v in frames.items()}
@@ -80,6 +110,38 @@ def main():
         g = aggregate(data, 3)
         result['camera_' + cam] = {'bins': len(g), 'fixed_Gaia_correlation': fixed_score(g, period, zero),
                                   'fixed_alias_correlation': fixed_score(g, alias, alias_zero)}
+    result['Gaia_red_noise_peak_exceedance'] = red_noise_controls(grouped['Gaia G'])
+    for name in ['Gaia G', 'ZTF g', 'ZTF r', 'ASAS-SN']:
+        g = grouped[name]
+        phase = (g.mjd.to_numpy() - zero) / period
+        dist = np.abs(phase - np.rint(phase))
+        y = g.value.to_numpy()
+        result[name]['faint_minus_bright_median'] = float(np.median(y[dist < 0.17]) - np.median(y[dist > 0.33]))
+        # Leave out each full recurrence interval, retaining only cycles with ≥3 bins.
+        cycle = np.rint(phase)
+        valid = [k for k in np.unique(cycle) if (cycle == k).sum() >= 3]
+        result[name]['leave_one_cycle_fixed_correlation_range'] = [
+            float(fn([fixed_score(g[cycle != k], period, zero) for k in valid])) for fn in [min, max]]
+    # Equal survey weights keep dense blended-aperture photometry from
+    # dominating the consensus. The four band-specific estimates bracket it.
+    periods = np.arange(450, 751, 0.25)
+    names = ['Gaia G', 'ZTF g', 'ZTF r', 'ASAS-SN']
+    band_scores = []
+    for name in names:
+        g = grouped[name]
+        band_scores.append(lombscargle(g.mjd.to_numpy() - 58000, g.value.to_numpy() - g.value.mean(),
+                                       2 * np.pi / periods, normalize=True))
+    consensus = float(periods[np.argmax(np.mean(band_scores, axis=0))])
+    result['equal_weight_consensus_days'] = consensus
+    ps = grouped['PS1']
+    result['PS1']['fixed_consensus_correlation'] = fixed_score(ps, consensus, sine_phase(grouped['Gaia G'], consensus))
+    # Train on Gaia up to its first three well-sampled recurrence intervals.
+    # Score all subsequent Gaia nights at their actual times, with no refit.
+    g = grouped['Gaia G']
+    early, late = g[g.mjd < 58700], g[g.mjd >= 58700]
+    p = scan(early)[0]
+    result['chronological_Gaia_test'] = {'train_bins': len(early), 'test_bins': len(late),
+        'training_period_days': p, 'test_correlation': fixed_score(late, p, sine_phase(early, p))}
     print(json.dumps(result, indent=2))
 
 
