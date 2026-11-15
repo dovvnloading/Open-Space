@@ -1,0 +1,48 @@
+{
+  "sources": [
+    {
+      "file": "data/ptf.csv",
+      "url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=ptf_lightcurves&spatial=cone&objstr=9.06354+38.858826&radius=1.4&radunits=arcsec&outfmt=3",
+      "description": "IRSA PTF lightcurve table, single-epoch source positions (s_ra/s_dec), calibrated magnitudes, pipeline flags and exposure/source identifiers. PTF fid=1 is g, fid=2 is Mould R. The source rows have flags=131072 (image bit in the upper 16 bits, no low-order SExtractor flags), goodflag=1 and qaflags=0.",
+      "retrieved_utc": "2026-11-15",
+      "sha256": "6cae03d0ad740cb92add0240d8fce5e963a6503c7c556dd7cf9411d00d22501b"
+    },
+    {
+      "file": "data/ztf_direct.csv",
+      "url": "https://irsa.ipac.caltech.edu/cgi-bin/ZTF/nph_light_curves?POS=CIRCLE+9.06354+38.858826+0.00045&FORMAT=csv",
+      "description": "IRSA ZTF public light curves. Projected columns for all rows inside a 1.62 arcsec cone. Magnitudes are direct PSF photometry.",
+      "retrieved_utc": "2026-11-15",
+      "sha256": "e5d6e9744266d7b0e06feb4330fdd9da7819a838f145ec3ac5f54bf5217b046f"
+    },
+    {
+      "file": "data/ztf_alerts.csv",
+      "url": "https://api.alerce.online/ztf/v1/objects/ZTF18accbuhi/detections",
+      "description": "ALeRCE public ZTF alert detections. Projected real-positive and negative difference-image measurements (the returned source has only positive rows).",
+      "retrieved_utc": "2026-11-15",
+      "sha256": "de4546520e2d2ed4bf305e6298c90b48b350bd3b74abc30aaefc7a6ee0d271f7"
+    },
+    {
+      "file": "data/ztf_limits.csv",
+      "url": "https://api.alerce.online/ztf/v1/objects/ZTF18accbuhi/non_detections",
+      "description": "ALeRCE ZTF difference-image non-detection limits delivered in alert history. Coverage is incomplete.",
+      "retrieved_utc": "2026-11-15",
+      "sha256": "427d9ff896588227b0f1d1bf898d3168ae25b96957c57180d743b78106b31f29"
+    },
+    {
+      "file": "data/ps1_neighbours.csv",
+      "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/mean.csv?ra=9.06354&dec=38.858826&radius=0.033333333&columns=%5BobjID%2CraMean%2CdecMean%2CnDetections%5D&pagesize=10000",
+      "description": "STScI MAST Pan-STARRS1 DR2 mean-object query. Kept objects with at least two detections in a 120 arcsec cone. Used for a local crowding check.",
+      "retrieved_utc": "2026-11-15",
+      "sha256": "21e838d262a01738946be1cf8706c5d0f6729d0c466404c3267098a8e3601ca4"
+    }
+  ],
+  "literature": {
+    "discovery": "https://www.astronomerstelegram.org/?read=3498",
+    "ztf_first_year": "https://arxiv.org/abs/2002.08447",
+    "ztf_table": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J/AJ/159/198/table2&ZTF=18accbuhi",
+    "vsx": "https://vsx.aavso.org/index.php?view=detail.top&oid=1542889",
+    "m31_catalog": "https://ashafter.sdsu.edu/m31_nova_table.html",
+    "m31_recurrent_catalog": "https://ashafter.sdsu.edu/M31_RNe.html",
+    "tns": "https://www.wis-tns.org/object/2018hvc"
+  }
+}
