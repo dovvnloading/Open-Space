@@ -1,0 +1,3 @@
+# Recurrent dimmings in TESS asteroid photometry
+
+An exploratory pass through 9,912 released TESS asteroid light curves picked out (29489) 1997 WQ and (3177) Chillicothe. Preliminary spacings between sharp dimmings are about 12.35 and 18.55 hours, respectively, in addition to ~3-hour brightness modulations. The same screen recovered periodic dimmings in established binary asteroids including Tripaxeptalis, Pogson and Zwicky. A spacing between brightness minima can be half an orbital period if both mutual events are seen. Repeating minima alone do not establish a satellite. Follow-up tests include photometric flags, independent observations, repeated epochs, alternating depths, and prior reports.
