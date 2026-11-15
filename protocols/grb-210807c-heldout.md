@@ -1,0 +1,3 @@
+# Later-visit test of GRB 210807C
+
+The initial scan of Swift target 01064421, observation suffixes 000–005, found a narrow candidate at 1,869 pc. Before reading later visits, predict a ring centered at RA 143.533875 deg, Dec −51.401056 deg. At delay t seconds after 2021-08-07 22:57:08 UTC its radius in arcseconds is sqrt(826.6 t / 1869). Use later suffixes 006–030 within ten days of trigger, 50–550 arcsec. Count events in |ln(D/1869)| < 0.0875 with adjacent sidebands from 0.1125 to 0.3375 on either side. Report 0.7–3.0 keV and harder controls, including weak or empty coverage. Compare to each visit's background accounting for the field boundary. The archival early-visit statistic itself was selected across many bursts and distances.
