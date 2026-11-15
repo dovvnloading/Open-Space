@@ -20,5 +20,27 @@
   "ipn": {
     "url": "https://ipn3.ssl.berkeley.edu/chronological.txt",
     "sha256": "73b3ed7a5f60bb5abe9a6d5fe2a26ca4a7fc05abaa15315f843a5e069b42d5ec"
+  },
+  "ipn_master": {
+    "url": "https://ipn3.ssl.berkeley.edu/masterli.txt",
+    "sha256": "5370052277951f185ef660ff7f269926100576076c1e5b8a5e6d852c9f3c62a7"
+  },
+  "grbcat": {
+    "url": "https://heasarc.gsfc.nasa.gov/FTP/heasarc/dbase/tdat_files/heasarc_grbcat.tdat.gz",
+    "sha256": "6b61edec6993c80e81f3e2d1263f5666db6cb0229a998d9f816c58350eb337e5"
+  },
+  "gusbad": {
+    "url": "https://heasarc.gsfc.nasa.gov/FTP/heasarc/dbase/tdat_files/heasarc_gusbad.tdat.gz",
+    "sha256": "b84b52cd5ba8825cbb543a89acfc40d7df3679c6e1e7c2f43ea34046f9f2dee6"
+  },
+  "grbm_nearest_samples": {
+    "parent": "wfc_lc",
+    "member": "WFC_FXT_OnlineData/GRBM/981217.grbm",
+    "selection": "nearest two samples bracketing each side of 6908.544 s UTC"
+  },
+  "published_wfc_row": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J/A%2BA/711/A60&-out.all&-out.max=200",
+    "sha256": "227656c51bd4aa6a4080c96cf92cdf5962f2ac73b47ce56dcd0126db57a83ae2",
+    "selection": "Table A.2 record 50, stripped whitespace"
   }
 }
