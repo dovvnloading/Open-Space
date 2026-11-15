@@ -80,8 +80,8 @@ def live():
     raw = fetch(LIGHT, hashes, "gaia_photometry")
     g = [[row[0],float(row[1]),row[2]] for row in csv.reader(raw.splitlines()[2:]) if len(row) == 3]
     locs = tap("select objid,ra,dec,flux_w1,flux_w2 from ls_dr11.tractor "
-               "where brickid=102468 and ra between 167.775 and 167.814 "
-               "and dec between -43.717 and -43.690", hashes, "tractor_field")
+               "where brickid=102468 and ra between 167.770 and 167.819 "
+               "and dec between -43.722 and -43.684 order by objid", hashes, "tractor_field")
     # Fix proximity and baseline brightness before looking at light curves.
     target = next(x for x in locs if x["objid"] == "5969")
     def separation(row):
