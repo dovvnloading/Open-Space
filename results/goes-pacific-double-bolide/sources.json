@@ -1,0 +1,74 @@
+{
+  "catalog_url": "https://neo-bolide.ndc.nasa.gov/service/event/public",
+  "catalog_sha256": "7bb6bea650175da991f0e0715d20cb7beb5eef1570e5b0e8f7572637f2a7fc7c",
+  "catalog_events": 11611,
+  "first_catalog_time": 1500790356000,
+  "last_catalog_time": 1791277714570,
+  "stereo_events": 2826,
+  "events": [
+    {
+      "_id": "656ce8725c197e06984541d6",
+      "groundTrack": {
+        "GLM-18": {
+          "category": "Single-Pixel",
+          "value": 0.0037596963871107834
+        },
+        "GLM-16": {
+          "category": "Multi-Pixel",
+          "value": 18.34098920936176
+        }
+      },
+      "confidenceRating": "medium",
+      "lightcurveStructure": "very good",
+      "nearbyLightningActivity": "isolated",
+      "detectedBy": "GLM-16,GLM-18",
+      "products": {
+        "16": {
+          "url": "https://neo-bolide.ndc.nasa.gov/csv/656ce8405c197e06984538f1_OR_GLM-L2-LCFA_G16_s20233251611000_e20233251611200_c20233251611222.nc.csv",
+          "sha256": "9399c867cb4b50f358360c59f831b9b720b5886b310c7eabf48d6533faa52b40"
+        },
+        "18": {
+          "url": "https://neo-bolide.ndc.nasa.gov/csv/656ce85a5c197e06984540d8_OR_GLM-L2-LCFA_G18_s20233251611000_e20233251611200_c20233251611214.nc.csv",
+          "sha256": "73581981648c2737a7ba76ffa77192c0045fe24928bc68cd7a76863aea1be675"
+        }
+      }
+    },
+    {
+      "_id": "656ce9225c197e06984556e5",
+      "groundTrack": {
+        "GLM-18": {
+          "category": "Multi-Pixel",
+          "value": 8.613863378268595
+        },
+        "GLM-16": {
+          "category": "Multi-Pixel",
+          "value": 33.75034952775789
+        }
+      },
+      "confidenceRating": "high",
+      "lightcurveStructure": "very good",
+      "nearbyLightningActivity": "isolated",
+      "detectedBy": "GLM-16,GLM-18",
+      "products": {
+        "16": {
+          "url": "https://neo-bolide.ndc.nasa.gov/csv/656ce8f75c197e0698454e00_OR_GLM-L2-LCFA_G16_s20233251611000_e20233251611200_c20233251611222.nc.csv",
+          "sha256": "ff2a3f2043bf28f10625624499ce4d56c5f827f223b6f1ea0900cf546d3c2034"
+        },
+        "18": {
+          "url": "https://neo-bolide.ndc.nasa.gov/csv/656ce90d5c197e06984555e7_OR_GLM-L2-LCFA_G18_s20233251611000_e20233251611200_c20233251611214.nc.csv",
+          "sha256": "38599671a42419fbadc21a9e97038e9e28ca2c7c010964d38afa0db447aa82e5"
+        }
+      }
+    }
+  ],
+  "noaa_l2": {
+    "16": {
+      "url": "https://noaa-goes16.s3.amazonaws.com/GLM-L2-LCFA/2023/325/16/OR_GLM-L2-LCFA_G16_s20233251611000_e20233251611200_c20233251611222.nc",
+      "sha256": "991edf1c9b5780122ad4374e3a01c4e0a6830cef47602e824f20fc5896c786d8"
+    },
+    "18": {
+      "url": "https://noaa-goes18.s3.amazonaws.com/GLM-L2-LCFA/2023/325/16/OR_GLM-L2-LCFA_G18_s20233251611000_e20233251611200_c20233251611214.nc",
+      "sha256": "41d4581d31a3bb75f565464da106a01d103ef338a63c5b17feffdebe19575f64"
+    }
+  }
+}
