@@ -1,0 +1,25 @@
+{
+  "ztf-field.csv": {
+    "url": "https://irsa.ipac.caltech.edu/cgi-bin/ZTF/nph_light_curves?POS=CIRCLE+277.94108+-14.31542+0.0022&FORMAT=CSV&BAD_CATFLAGS_MASK=32768",
+    "description": "All IRSA optical PSF light-curve rows within 7.92 arcsec of catalog position; no program or filter cuts at retrieval."
+  },
+  "gaia-field.csv": {
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Chas_epoch_photometry%2Cparallax%2Cparallax_error%2Cruwe+from+gaiadr3.gaia_source+where+1%3Dcontains%28point%28%27ICRS%27%2Cra%2Cdec%29%2Ccircle%28%27ICRS%27%2C277.94108%2C-14.31542%2C0.003%29%29",
+    "description": "Gaia DR3 sources inside 10.8 arcsec; 2016.0 reference epoch."
+  },
+  "panstarrs.csv": {
+    "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/detection.csv?ra=277.94119&dec=-14.31554&radius=0.00055&columns=%5BobjID%2CdetectID%2CfilterID%2CobsTime%2Cra%2Cdec%2CpsfFlux%2CpsfFluxErr%2CinfoFlag%2CinfoFlag2%2CinfoFlag3%5D",
+    "description": "PS1 DR2 detections around the Gaia star."
+  },
+  "screen.csv": {
+    "sources": [
+      "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J/MNRAS/517/6150&-out.all&-out.max=1000",
+      "https://asd.gsfc.nasa.gov/Koji.Mukai/novae/novae.html"
+    ],
+    "description": "Frozen list and discovery-screen scores. See README and screen.py."
+  },
+  "tess": {
+    "source": "https://mast.stsci.edu/tesscut/",
+    "description": "Per-sector archive query, original FITS SHA256 and FFI endpoints are in data/tess-manifest.json."
+  }
+}
