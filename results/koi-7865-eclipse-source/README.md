@@ -1,0 +1,3 @@
+# Eclipse source for KOI-7865.01
+
+The Kepler target KIC 8110757 and the eclipsing binary KIC 8110754 lie 5.8 arcseconds apart. Gaia DR3 2079577157039120128 has a frequency of 1.9302825156283367 cycles per day. The Kepler candidate period is 0.518060209 days. In a first reduction of Kepler quarter 16, both primary and secondary eclipse difference maps peak on the neighboring binary. NASA's KOI table carries a stellar-eclipse flag. Lissauer et al. (2024) already rejected the candidate because of its fitted radius. This investigation addresses the location and identity of the source. Independent astrometry, prior identifications, selection counts, tests and reproduction files are in preparation.
