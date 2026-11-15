@@ -1,4 +1,4 @@
-# Two recovered near-Earth objects and two same-apparition designation matches
+# An outward acceleration in the 19-year recovery of 2007 VE138 / 2026 VV15
 
 A single gravitational orbit fits observations of **2007 VE138 and 2026 VV15 across 19.0 years**. A second connects **2017 RB15 and 2026 RG39 across 9.0 years**. The 2026 JPL snapshot gave each designation a separate orbit based on a short observing arc. In the joint solutions, the first object completes about twelve revolutions between apparitions and the second about five. At JD 2461200.5 TDB their fitted heliocentric osculating periods are 578.31 and 657.46 days.
 
@@ -10,6 +10,20 @@ A single gravitational orbit fits observations of **2007 VE138 and 2026 VV15 acr
 | 2026 VO / 2026 VR1 | November 3–7, 2026 | 40 | 7 | 0.542″ | 291 | 9 | 0.557″ |
 
 RMS is the root mean square of the two-dimensional angular residual, including cos(declination) on the right-ascension axis. Each holdout removes all measurements from the named stations before refitting the six state components. Candidate selection and starting catalog orbits used existing astrometry, so the station residuals are conditional predictive checks. The eight designations still had distinct primary identifiers when queried on 2026 November 15. Official linkage and designation decisions rest with the Minor Planet Center. Discovery credit belongs to the original observers. [Frozen identifier checks and discovery circulars](audit/ARCHIVE_AUDIT.md) · [MPC identification process](https://docs.minorplanetcenter.net/mpc-ops-docs/identifications/)
+
+## An outward acceleration in 2007 VE138 / 2026 VV15
+
+For the 19-year linkage, a fit that allows both radial and transverse acceleration gives **A₁ = (+1.424 ± 0.094) × 10⁻⁸ au/day² at 1 au**, directed away from the Sun. The uncertainty groups residuals by observatory and UTC date. The transverse component is consistent with zero in this fit. Adding both terms lowers radial RMS from 1.142″ to 0.828″ over 110 positions. On 14 positions excluded by observatory, RMS falls from 1.146″ to 0.707″. The result also survives omitting the last night of either apparition. One earlier-date test goes the other way: fitting the old apparition and the first eight later measurements predicts the remaining 59 at 3.103″ RMS with acceleration and 2.506″ with gravity. [Force model, sensitivity tests and full residuals](pressure/README.md)
+
+![Astrometric residuals under gravity and under gravity plus fitted acceleration. The acceleration solution improves four comparisons; gravity performs better on the 59-position time holdout.](residuals.svg)
+
+A separate reduction with ASSIST, REBOUND and Astropy recovers the radial-only solution to within 0.01% of Find_Orb on the same positions. Applying the Gaia-based EFCC18 corrections to the appropriate 53 measurements, including every 2007 observation, gives **A₁ = +1.442 × 10⁻⁸ au/day²** and reduces the corrected-position RMS from 1.181″ to 0.840″. These tests use the same telescope observations. A third apparition or a measured range would supply independent physical evidence. [Independent orbit solution and individual catalog corrections](independent/README.md)
+
+The acceleration corresponds to an effective radiation-pressure coefficient times area-to-mass ratio of about **0.063 m²/kg** if sunlight supplies the entire force. This is about 200 times the measured value for near-Earth asteroid 2009 BD. The fit measures an acceleration. It does not determine the object's mass, composition or propulsion mechanism. Recoil from outgassing, radiation pressure and residual astrometric bias remain alternatives. A retrospective integration across the Space Age finds a closest Earth-center passage of roughly 1.17 million km, in 2007. The four nominal fitted histories provide no direct Earth-launch encounter. A constant-force extrapolation and incomplete spacecraft records leave artificial provenance unresolved. [Physical interpretation](pressure/README.md) · [Launch and encounter checks](origin-check/README.md) · [Micheli et al. on 2009 BD](https://arxiv.org/abs/1106.0564)
+
+## A prospective optical test
+
+At La Palma (MPC 950) on **2026 November 15 at 19:30 UTC**, the radial-plus-transverse solution predicts **RA 283.16593°, Dec +42.39373°**, topocentric J2000, at approximately V = 20.8. Its center is 2.94″ from the gravity prediction. The target moves about 48″ per minute. Accurate exposure midtimes, non-sidereal tracking or trail fitting, and several independent positions would help discriminate the trajectories. This is a prediction. In April 2038 the two predictions differ by 4.57 arcminutes, so the small statistical error ellipse of either individual fit is insufficient for recovery planning. [Pointings, rates, model spreads and replay](forecasts/README.md)
 
 ## How the objects were selected
 

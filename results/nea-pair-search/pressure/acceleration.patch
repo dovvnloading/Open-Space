@@ -1,0 +1,23 @@
+--- a/elem_out.cpp
++++ b/elem_out.cpp
+@@ -3310,6 +3310,11 @@
+          {
+          if (getenv("FO_FORWARD_MODEL")) {
+             perturbers = 0x7fe;
++            if (getenv("FO_ACCEL")) {
++               n_orbit_params = 8;
++               force_model = FORCE_MODEL_SRP_TWO_PARAM;
++               orbit[6] = orbit[7] = 0.;
++            }
+             for (;;) {
+                set_locs( orbit, *orbit_epoch, obs, n_obs);
+                printf("RES");
+@@ -3320,7 +3325,7 @@
+                }
+                printf("\n");
+                fflush(stdout);
+-               for (int j = 0; j < 6; ++j)
++               for (int j = 0; j < n_orbit_params; ++j)
+                   if (scanf("%lf", orbit+j) != 1) exit(0);
+             }
+          }
