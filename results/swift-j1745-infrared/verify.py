@@ -120,7 +120,7 @@ def pixel_replay(directory):
         mag = zp - 2.5*np.log10(flux[target])
         # SODA can regenerate non-science FITS header cards on later requests.
         print(f'{path.name}: fixed-aperture Ks = {mag:.3f}, original bytes = {original}')
-        if abs(mag - float(row['aperture_ks'])) > 0.003:
+        if not math.isfinite(mag) or abs(mag - float(row['aperture_ks'])) > 0.003:
             raise ValueError(f'Photometry differs from the frozen result for {path.name}')
 
 
