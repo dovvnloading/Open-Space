@@ -1,0 +1,44 @@
+name: MeerKAT common-mode attribution replay
+on:
+  push:
+    branches:
+      - research/meerkat-faraday-common-mode-origin
+  pull_request:
+    paths:
+      - 'results/meerkat-common-mode-origin/**'
+      - 'results/meerkat-shared-faraday-rotation/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy
+      - run: python results/meerkat-common-mode-origin/diagnostics.py --write
+      - name: Test the new numerical results and split cardinalities
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r = json.loads(Path('results/meerkat-common-mode-origin/checks.json').read_text())
+          assert r['sky_sector']['matched_sources'] == 304
+          assert r['year_holdout']['n_training_days'] == 56
+          assert r['year_holdout']['n_heldout_days'] == 68
+          assert abs(r['J1057']['slopes']['post_iono_rm']['slope'] - 0.13308497) < 1e-4
+          assert abs(r['J1057']['slopes']['post_peer_rm']['slope']) < 0.001
+          assert r['year_holdout']['heldout']['unscaled_peers']['rmse'] < r['year_holdout']['heldout']['no_correction']['rmse']
+          assert r['year_holdout']['heldout']['trained_ionosphere']['rmse'] > r['year_holdout']['heldout']['no_correction']['rmse']
+          assert r['published_risk_scope']['full_series_3sigma_to_subthreshold'] == 18
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: meerkat-common-mode-origin-replay
+          path: |
+            results/meerkat-common-mode-origin/checks.json
+            results/meerkat-common-mode-origin/published_risks.csv
