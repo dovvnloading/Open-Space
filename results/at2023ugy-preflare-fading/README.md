@@ -1,6 +1,6 @@
-# Years of infrared fading at the position of AT 2023ugy before its optical outburst
+# Infrared and optical dimming at the position of AT 2023ugy before its optical outburst
 
-The host of the spectroscopically classified tidal disruption event AT 2023ugy, SDSS J214044.01+210058.4 at redshift 0.106, faded in the infrared for years before its September 2023 optical outburst. The difference between 2014–15 and 2021–22 is 0.299 mag in W1 and 0.395 mag in W2, corresponding to 24% and 30% losses of the total observed flux density. Gaia G independently faded by 0.20 mag between these windows. The earlier high state is already present in the first NEOWISE season. Its onset, peak and physical origin are unknown.
+At the position of the host of the spectroscopically classified tidal disruption event AT 2023ugy, SDSS J214044.01+210058.4 at redshift 0.106, the infrared source was fainter in 2021–22 than in 2014–15, before its September 2023 optical outburst. The difference is 0.299 mag in W1 and 0.395 mag in W2, corresponding to 24% and 30% lower total observed flux density. Gaia G also shows 0.20 mag of optical dimming between these windows. The earlier high state was already present in the first NEOWISE season. **The physical cause of the fading remains open.** The two comparison windows do not prove a continuous decline, establish when the earlier high state began, or demonstrate a preceding tidal disruption.
 
 | Archive band | 2014–15 | 2021–22 | Fading | Observing units in the two windows |
 | --- | ---: | ---: | ---: | --- |
