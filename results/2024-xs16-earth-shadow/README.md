@@ -14,7 +14,7 @@ The orbit predicts an increase in brightness of 0.076 mag between the two ingres
 
 ## A second telescope before ingress
 
-Schiaparelli Observatory (MPC 204) recorded six one-second exposures of CCGRUC2. All six ESA display images show a source at the moving position predicted from the station-specific orbit and the image astrometry. The mean signal on that track exceeded all 296 translated comparison tracks. The last shutter closed at **18:24:28.7 UTC**, 176 s before modeled first contact. These images support the pre-ingress identification and position. The public display stretch limits calibrated photometry. Only L34 supplies a measured fade during ingress. [Six-frame replay, FITS-header astrometry and control tracks](schiaparelli/README.md)
+Schiaparelli Observatory (MPC 204) recorded six one-second exposures of CCGRUC2. All six ESA display images show a source at the moving position predicted from the station-specific orbit and the image astrometry. The mean signal on that track exceeded all 296 translated comparison tracks. The last shutter closed at **18:24:28.7 UTC**, 176 s before modeled first contact. These images support the pre-ingress identification and position. The public display stretch limits calibrated photometry. During modeled totality, all 150 station-204 archive exposures covered a different target field over 39° away in declination. L34 supplies the only measured fade during ingress. [Six-frame replay, FITS-header astrometry and control tracks](schiaparelli/README.md)
 
 ## Independent orbit test
 
