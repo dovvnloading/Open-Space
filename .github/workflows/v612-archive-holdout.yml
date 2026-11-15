@@ -1,0 +1,27 @@
+name: V612 Scuti extended archival validation
+on:
+  push:
+    branches: [research/v612-scuti-optical-clock]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install skypatrol pandas requests astropy
+      - name: Fetch independent survey and raw pixel holdouts
+        run: python results/v612-sct-clock/followup/harvest.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v612-archive-holdout
+          path: |
+            /tmp/v612-harvest
+            results/v612-sct-clock/data
+          retention-days: 30
+          if-no-files-found: error
