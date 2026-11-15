@@ -15,16 +15,17 @@ from scipy.optimize import minimize_scalar
 ROOT = Path(__file__).resolve().parent
 PAGES = ["1st", "2nd", "3rd", "4th", "5th", "6th"]
 COLORS = {"blue": (0, 0, 255), "black": (0, 0, 0), "yellow": (255, 215, 0), "green": (0, 128, 0)}
+CHANNEL_RGB = {**COLORS, "red": (255, 0, 0)}
 # (flux1, row1, flux2, row2) read at labeled tick centers on 1500 × 844 reference images.
 TICKS = [(1, 689, 8, 190), (1, 695, 8, 190), (1, 687, 8, 190),
          (0, 714, 8, 186), (0, 713, 8, 184), (0, 713, 8, 184)]
 
 
-def digitize(path, panel, color):
+def digitize(path, panel, color, ticks=TICKS):
     pixels = np.asarray(Image.open(path).convert("RGB"), dtype="int16")
     height, width = pixels.shape[:2]
     left, right = 0.10 * width, 0.85 * width
-    mask = np.max(np.abs(pixels - COLORS[color]), axis=2) < 85
+    mask = np.max(np.abs(pixels - CHANNEL_RGB[color]), axis=2) < 85
     mask[:round(0.15 * height)] = False
     mask[round(0.865 * height):] = False
     mask[:, np.arange(width) < left + 3] = False
@@ -37,7 +38,7 @@ def digitize(path, panel, color):
     labels = fclusterdata(np.column_stack((col, row)), 3.8 * width / 1500, criterion="distance")
     centers = np.array([(np.median(col[labels == j]), np.median(row[labels == j]))
                         for j in np.unique(labels)])
-    flux1, row1, flux2, row2 = TICKS[panel]
+    flux1, row1, flux2, row2 = ticks[panel]
     mjd = 56000 + 1000 * panel + (centers[:, 0] - left) * 1000 / (right - left)
     flux = flux1 + (centers[:, 1] * 844 / height - row1) * (flux2 - flux1) / (row2 - row1)
     points = np.column_stack((mjd, flux))
