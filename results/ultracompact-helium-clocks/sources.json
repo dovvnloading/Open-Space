@@ -1,0 +1,19 @@
+{
+  "cutouts": [
+    {
+      "name": "sector73.fits",
+      "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=89.6895095&dec=39.2591878&x=7&y=7&units=px&sector=73",
+      "original_fits_sha256": "8cdde7b3569caf9e1deda000ecef7b061d4c51ae944fdc19096221179d06465e",
+      "time_quality_flux_sha256": "7bb4f6cdf91de65e8ad1b0153d8255cdee8bc97f1e4a3fa1921dfe23d64faabb"
+    },
+    {
+      "name": "sector73_field.fits",
+      "url": "https://mast.stsci.edu/tesscut/api/v0.1/astrocut?ra=89.6895095&dec=39.2591878&x=17&y=17&units=px&sector=73",
+      "original_fits_sha256": "fc181c51e73fdf30f1575accf2749ef74f98fdfe450c5c82cfbaab7932d52b15",
+      "time_quality_flux_sha256": "b7f849a8e0b66035498e331ac8aa94e1e6536dde3d3bb3047f769b86f96c34e8"
+    }
+  ],
+  "gaia_cone_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cpmra%2Cpmdec%2Cphot_g_mean_mag%2Cphot_bp_mean_mag%2Cphot_rp_mean_mag%2Cphot_variable_flag+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C89.6895%2C39.2592%2C0.045%29%29+AND+phot_g_mean_mag%3C21+ORDER+BY+phot_g_mean_mag",
+  "catalog_url": "https://zenodo.org/records/18842123/files/amcvn_catalogue.fits?download=1",
+  "catalog_sha256": "2b11c042119bf0ed8a0d257ee07fe35488ff5ebe96462ee4797aae30929b96e3"
+}
