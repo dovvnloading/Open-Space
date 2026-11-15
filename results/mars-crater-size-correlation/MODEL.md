@@ -7,7 +7,7 @@ The Separate Fragments Model generates local similarity between neighboring crat
 | 1 m | 259 | 1,600 | 3.00 | 1.70 | 1.29 [0.45, 2.15] |
 | 1.5 m | 164 | 859 | 2.97 | 1.52 | 1.45 [0.37, 2.51] |
 | 2 m | 99 | 478 | 2.29 | 1.06 | 1.23 [−0.11, 2.53] |
-| 3 m | 37 | 209 | 1.67 | 1.31 | 0.35 [−1.86, 2.73] |
+| 3 m | 37 | 209 | 1.67 | 1.31 | 0.36 [−1.86, 2.73] |
 
 The archive supplies 115,748 model crater centers and radii. Converting radius to diameter and applying the observational selection leaves 92,474 simulated craters in the 1,600 eligible model fields for the 1 m cut. Each observed field has equal weight. For each field we average the ten nearest simulated fields in log crater count, log effective diameter (cube root of summed cubed retained diameters), and log RMS distance from the centroid. Each covariate is scaled by its simulation interquartile range. The sample medians of these quantities agree closely (22 vs. 22 craters, 8.22 vs. 8.17 m, 62.58 vs. 60.83 m). Some outlying fields have poor matches. Restricting to the 211 fields for which all ten neighbors agree within a factor of 1.5 in every covariate gives a 1.20-point difference. Matching only on crater count gives a smaller discrepancy. The JSON also reports two-covariate and unmatched results.
 
