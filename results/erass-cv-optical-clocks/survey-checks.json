@@ -1,0 +1,61 @@
+{
+  "TESS_CCC": {
+    "source": "https://www.astro.dur.ac.uk/~simo/Dag2026_TESS_CV_CATALOGUE.fits",
+    "citation": "https://doi.org/10.1093/mnras/stag514",
+    "sha256": "3827ac43d8745f14e3f1b3d9dba3227fd2fed9354e0ecdb916c05e0ea1deeae8",
+    "rows": 910,
+    "targets": {
+      "156": {
+        "tic_match": false,
+        "nearest_deg": 6.161258316952908,
+        "nearest_tic": 393907378
+      },
+      "110": {
+        "tic_match": false,
+        "nearest_deg": 3.0798952782664846,
+        "nearest_tic": 160398351
+      }
+    }
+  },
+  "Gaia_DR3": {
+    "tap": "https://gea.esac.esa.int/tap-server/tap/sync",
+    "source_ids": [
+      "6532165251671628416",
+      "6197581939197319168"
+    ],
+    "156": {
+      "has_epoch_photometry": false,
+      "phot_variable_flag": "NOT_AVAILABLE"
+    },
+    "110": {
+      "has_epoch_photometry": true,
+      "phot_variable_flag": "VARIABLE",
+      "classification": "CV",
+      "best_class_score": 0.9011074,
+      "VizieR_epoch_catalog": "I/355/epphot",
+      "clean_G_observations": 25,
+      "quality": "finite G magnitude and time, RFG>6, GrVFlag=0",
+      "TESS_fixed_frequency_cpd": 11.323312191556006,
+      "Gaia_LombScargle_power": 0.00026161776630333373
+    },
+    "period_table_queries": {
+      "gaiadr3.vari_short_timescale": "Neither source ID returned a row",
+      "gaiadr3.vari_eclipsing_binary": "Neither source ID returned a row",
+      "gaiadr3.vari_rotation_modulation": "Neither source ID returned a row",
+      "gaiadr3.vari_ms_oscillator": "Neither source ID returned a row"
+    }
+  },
+  "ASAS_SN": {
+    "catalog": "II/366/catv2021",
+    "cone_radius_arcsec": 15,
+    "156": "No row",
+    "110": "Only ASASSN-V J150720.56-391055.5, class ROT, 24.977 days. Its Gaia ID resolves to the brighter neighbor."
+  },
+  "ATLAS": {
+    "catalog": "J/AJ/156/241",
+    "cone_radius_arcsec": 15,
+    "156": "No row",
+    "110": "No row",
+    "scope": "A nonmatch in the published northern ATLAS catalog does not measure variability at these southern coordinates."
+  }
+}
