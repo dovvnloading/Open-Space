@@ -8,7 +8,7 @@ Three ACS sources are displaced by approximately 60, 10 and 60 arcsec in Table 1
 | 32 | 12:30:46.92 +12:22:24.20 | 187.69551, +12.37617 | 10.0″ | Three early-minus-late differences recover the fading source in two bands, with ratios of 10.0–14.3. |
 | 38 | 12:30:45.47 +12:23:48.08 | 187.68943, +12.41335 | 60.0″ | A four-visit F814W stack recovers the source against both an early template and a template taken a decade later. The ratios are 6.3 and 6.9. Shara et al. classified this faint variable among the less secure nova candidates. |
 
-Rounded positions reflect the pixel measurements. Precision in absolute astrometry is limited by the HST product WCS. The comparison windows and templates overlap, so the ratios in this table are descriptive and cannot be combined as independent detection significances. Neither position hypothesis was optimized on the difference images before choosing the 0.15″ search box. The earlier position was predicted from the published 2016 position, with approximately 1″ removed in declination.
+Rounded positions reflect the pixel measurements. Precision in absolute astrometry is limited by the HST product WCS. The comparison windows and templates overlap, so the ratios in this table are descriptive and cannot be combined as independent detection significances. The earlier position was predicted from the published 2016 position, with approximately 1″ removed in declination.
 
 ![HST difference images at both positions for each source](difference_images.png)
 
@@ -27,7 +27,7 @@ Source 38 moves from 0.6° to approximately 34.3° from the centerline, outside 
 
 Using the rounded tabular coordinates and this radius gives 62 inner objects, as in the paper. Our inner jet bin contains 12, compared with the paper's 13. The exact inner histogram cannot be reproduced with this angular/radial convention. Our replacement leaves every inner-bin membership unchanged because none of the three objects is inside the radius in either coordinate set. Re-simulation of the published enhancement factors requires the original detection-efficiency model.
 
-The printed-map check is independent of the wedge-count check. We used 2017 positions to locate the 2017 cyan markers in the upper panel of Figure 1, then predicted the locations of the 2006 pink crosses. All three 2024 positions land within one embedded-image pixel of a pink marker. The earlier positions are 18.5, 17.2 and 104.6 pixels from the nearest detected pink cross, respectively. The 2016 discovery chart, Figure 1, places each in the earlier part of the field.
+Run `python check_figures.py /path/to/paper.pdf` with PyMuPDF and Pillow to reproduce the printed-map measurements. Without a path the script retrieves the SHA-256-verified PDF. The printed-map check is independent of the wedge-count check. We used 2017 positions to locate the 2017 cyan markers in the upper panel of Figure 1, then predicted the locations of the 2006 pink crosses. All three 2024 positions land within one embedded-image pixel of a pink marker. The earlier positions are 18.5, 17.2 and 104.6 pixels from the nearest detected pink cross, respectively. The 2016 discovery chart, Figure 1, places each in the earlier part of the field.
 
 ## Reproduce
 
@@ -41,5 +41,7 @@ The two dates in the source-38 baselines are the December 2005 visits of GO-1054
 - [Shara et al. 2016, original map, time series and catalog](https://doi.org/10.3847/0067-0049/227/1/1). [2016 machine-readable tables](https://vizier.cfa.harvard.edu/viz-bin/VizieR?-source=J/ApJS/227/1).
 - [Shara et al. 2023, 94-object comparison table](https://vizier.cfa.harvard.edu/viz-bin/VizieR?-source=J/ApJS/269/42/table2).
 - [MAST Hubble archive](https://mast.stsci.edu/). GO-10543 original survey. GO-13731 independent late template.
+
+A targeted literature search on 2026-11-14 for Lessing, M87, erratum, the three nova numbers, astrometry and jet returned the original paper and catalogs. We found no separate correction. This search cannot rule out an unindexed notice.
 
 The rejected initial recurrence hypothesis was a separate result of the cross-survey search. The closest of 3,854 coordinate pairs was 2006 #14 / 2017 #10, 0.224″. Registering their ACS and WFC3 images showed distinct peaks about four 0.04″ grid elements apart along both axes. This pair is excluded from the interpretation above.
