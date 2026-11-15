@@ -1,0 +1,76 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T08:06:34 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T08:06:35	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F358%2Fveb&-c=283.58793+0.87774&-c.rs=4&-out.all=1&-out.max=8	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=283.587930+00.877740,rs=4.	
+#Constraint -out.max=8
+
+#RESOURCE=yCat_1358
+#Name: I/358
+#Title: Gaia DR3 Part 4. Variability (Gaia Collaboration, 2022)
+#INFO	ivoid=ivo://cds.vizier/i/358	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/i/358	    IVOID of underlying data collection
+#INFO	creator=Gaia collaboration	    First author or institution
+#INFO	cites=bibcode:2022yCat.1358....0G	    Bibcode of the dataset
+#INFO	journal=yCat	    Journal name
+#INFO	original_date=2022	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/I/358	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.1358	    Dataset identifier that can be used for citation
+#INFO	publication_date=2023-12-19	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	H_2016.000:	ICRS
+#Table	I_358_veb:
+#Name: I/358/veb
+#Title: Properties of the eclipsing binaries resulting from the variability analysis (vari_eclipsing_binary)
+#Column	_r	(F5.3)	Distance from center (283.58793000000 +0.87774000000)[ICRS], at Epoch=J2016.0	[ucd=pos.angDistance]
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	Source	(I19)	Unique source identifier (source_id)	[ucd=meta.id;meta.main]
+#Column	SolID	(I18)	Solution Identifier (solution_id)	[ucd=stat.error]
+#Column	Rank	(F11.8)	[0/1] Number between 0 (worst) and 1 (best) (global_ranking)	[ucd=stat.error]
+#Column	TimeRef	(F18.13)	Reference time used for the geometric model fit, JD-2455197.5 (reference_time)	[ucd=stat.error]
+#Column	Freq	(F22.19)	Frequency of geometric model of the eclipsing binary light curve (frequency)	[ucd=src.orbital]
+#Column	e_Freq	(D14.7)	Uncertainty of frequency (frequency_error)	[ucd=stat.error;src.orbital]
+#Column	magModRef	(F10.7)	Magnitude reference level of geometric model (geom_model_reference_level)	[ucd=stat.error]
+#Column	e_magModRef	(D13.6)	Uncertainty of geom Model Reference Level (geom_model_reference_level_error)	[ucd=stat.error;phot.mag;em.opt]
+#Column	PhaseGauss1	(D13.6)	? Phase of the Gaussian 1 component (geom_model_gaussian1_phase)	[ucd=stat.error]
+#Column	e_PhaseGauss1	(D14.7)	? Uncertainty of geom Model Gaussian1 Phase (geom_model_gaussian1_phase_error)	[ucd=stat.error;time.phase]
+#Column	sigPhaseGauss1	(D14.7)	? Standard deviation [phase] of Gaussian 1 component (geom_model_gaussian1_sigma)	[ucd=stat.error]
+#Column	e_sigPhaseGauss1	(D14.7)	? Uncertainty of geom Model Gaussian1 Sigma (geom_model_gaussian1_sigma_error)	[ucd=stat.error]
+#Column	DepthGauss1	(D14.7)	? Magnitude depth of Gaussian 1 component (geom_model_gaussian1_depth)	[ucd=src.var.amplitude]
+#Column	e_DepthGauss1	(D14.7)	? Uncertainty of geom Model Gaussian1 Depth (geom_model_gaussian1_depth_error)	[ucd=stat.error]
+#Column	PhaseGauss2	(D13.6)	? Phase of Gaussian 2 component (geom_model_gaussian2_phase)	[ucd=stat.error]
+#Column	e_PhaseGauss2	(D14.7)	? Uncertainty of geom Model Gaussian2 Phase (geom_model_gaussian2_phase_error)	[ucd=stat.error;time.phase]
+#Column	sigPhaseGauss2	(D14.7)	? Standard deviation [phase] of Gaussian 2 component (geom_model_gaussian2_sigma)	[ucd=stat.error]
+#Column	e_sigPhaseGauss2	(D14.7)	? Uncertainty of geom Model Gaussian2 Sigma (geom_model_gaussian2_sigma_error)	[ucd=stat.error]
+#Column	DepthGauss2	(D13.6)	? Magnitude depth of Gaussian2 component (geom_model_gaussian2_depth)	[ucd=src.var.amplitude]
+#Column	e_DepthGauss2	(D14.7)	? Uncertainty of geom Model Gaussian2 Depth (geom_model_gaussian2_depth_error)	[ucd=stat.error]
+#Column	AmpCHP	(D14.7)	? Amplitude of the cosine component with half the period of the geometric model (geom_model_cosine_half_period_amplitude)	[ucd=src.var.amplitude]
+#Column	e_AmpCHP	(D14.7)	? Uncertainty of geom Model Cosine Half Period Amplitude (geom_model_cosine_half_period_amplitude_error)	[ucd=stat.error]
+#Column	PhaseCHP	(F13.10)	? Reference phase of the cosine component with half the period of the geometric model (geom_model_cosine_half_period_phase)	[ucd=stat.error]
+#Column	e_PhaseCHP	(D14.7)	? Uncertainty of geom Model Cosine Half Period Phase (geom_model_cosine_half_period_phase_error)	[ucd=stat.error;time.phase]
+#Column	ModelType	(a41)	Type of geometrical model of the light curve (model_type) (1)	[ucd=meta.code.class]
+#Column	Nparam	(I1)	[4/9] Number of free parameters of the geometric model (num_model_parameters)	[ucd=stat.fit.param]
+#Column	rchi2	(F15.9)	Reduced Chi2 of the geometrical model fit (reduced_chi2)	[ucd=stat.fit.chi2]
+#Column	PhaseE1	(D13.6)	? Primary eclipse: phase at geometrically deepest point (derived_primary_ecl_phase)	[ucd=stat.error]
+#Column	e_PhaseE1	(D14.7)	? Primary eclipse: uncertainty of derived Primary Ecl Phase (derived_primary_ecl_phase_error)	[ucd=stat.error;time.phase]
+#Column	DurE1	(D14.7)	? Primary eclipse: duration [phase fraction] (derived_primary_ecl_duration)	[ucd=stat.error]
+#Column	e_DurE1	(D14.7)	? Primary eclipse: uncertainty of derived Primary Ecl Duration (derived_primary_ecl_duration_error)	[ucd=stat.error]
+#Column	DepthE1	(F13.10)	? Primary eclipse: depth (derived_primary_ecl_depth)	[ucd=src.var.amplitude]
+#Column	e_DepthE1	(D14.7)	? Primary eclipse: uncertainty of derived Primary Ecl Depth (derived_primary_ecl_depth_error)	[ucd=stat.error]
+#Column	PhaseE2	(D13.6)	? Secondary eclipse: phase at geometrically second deepest point (derived_secondary_ecl_phase)	[ucd=stat.error]
+#Column	e_PhaseE2	(D14.7)	? Secondary eclipse: uncertainty of derived Secondary Ecl Phase (derived_secondary_ecl_phase_error)	[ucd=stat.error;time.phase]
+#Column	DurE2	(D13.6)	? Secondary eclipse: duration [phase fraction] (derived_secondary_ecl_duration)	[ucd=stat.error]
+#Column	e_DurE2	(D14.7)	? Secondary eclipse: uncertainty of derived Secondary Ecl Duration (derived_secondary_ecl_duration_error)	[ucd=stat.error]
+#Column	DepthE2	(D13.6)	? Secondary eclipse: depth (derived_secondary_ecl_depth)	[ucd=src.var.amplitude]
+#Column	e_DepthE2	(D14.7)	? Secondary eclipse: uncertainty of derived Secondary Ecl Depth (derived_secondary_ecl_depth_error)	[ucd=stat.error]
+#Column	RA_ICRS	(F15.11)	Right ascension (ICRS) at Ep=2016.0 (ra)	[ucd=pos.eq.ra;meta.main]
+#Column	DE_ICRS	(F15.11)	Declination (ICRS) at Ep=2016.0 (dec)	[ucd=pos.eq.dec;meta.main]
