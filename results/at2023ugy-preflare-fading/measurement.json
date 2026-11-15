@@ -1,0 +1,37 @@
+{
+  "position_deg": [
+    325.18341667,
+    21.01626944
+  ],
+  "allwise_sources": 43,
+  "neowise_detections": 9580,
+  "gaia_G": {
+    "early": {
+      "n_nights": 6,
+      "n_transits": 8,
+      "median_G": 18.88
+    },
+    "late": {
+      "n_nights": 11,
+      "n_transits": 18,
+      "median_G": 19.08
+    }
+  },
+  "inputs": {
+    "gaia.csv": {
+      "url": "https://gsaweb.ast.cam.ac.uk/alerts/alert/Gaia23ctp/lightcurve.csv",
+      "bytes": 5272,
+      "sha256": "57b7360ebf8ae6ecac8ad06d4bd87355603973e0942bf5f7bc90a31b5a4f3e8e"
+    },
+    "allwise.tbl": {
+      "url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=325.18341667+21.01626944&radius=96&radunits=arcsec&outfmt=1&selcols=ra%2Cdec%2Cdesignation%2Cw1mpro%2Cw2mpro",
+      "bytes": 7054,
+      "sha256": "26f3b5c51c5f7c53674bad55190c67817377c9f750a50ab7ae022ab103190a1b"
+    },
+    "neowise.tbl": {
+      "url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=neowiser_p1bs_psd&spatial=Cone&objstr=325.18341667+21.01626944&radius=96&radunits=arcsec&outfmt=1&selcols=ra%2Cdec%2Cmjd%2Cw1mpro%2Cw1sigmpro%2Cw2mpro%2Cw2sigmpro%2Ccc_flags%2Cqual_frame%2Csaa_sep%2Cmoon_masked%2Cph_qual%2Cscan_id%2Cframe_num%2Csource_id",
+      "bytes": 2244504,
+      "sha256": "44bbbe81b94e3555955397024737aaebcca11a07d2f277e5b0ea22b821236343"
+    }
+  }
+}
