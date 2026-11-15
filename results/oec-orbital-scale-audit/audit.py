@@ -62,6 +62,12 @@ def positive_float(value: str) -> float | None:
     return parsed if math.isfinite(parsed) and parsed > 0 else None
 
 
+def git_blob_sha1(payload: bytes) -> str:
+    """Git's content-addressed SHA-1 for a blob (including its type/length header)."""
+    header = b"blob " + str(len(payload)).encode("ascii") + bytes([0])
+    return hashlib.sha1(header + payload).hexdigest()
+
+
 def implied_mass_solar(period_days: float, semi_major_au: float) -> float:
     """Keplerian total dynamical mass in solar units, a^3 / P^2."""
     return semi_major_au**3 / (period_days / DAY_PER_YEAR) ** 2
@@ -253,11 +259,21 @@ def main(argv=None):
                         help="four-planet K2-285 original-paper model consistency")
     parser.add_argument("--expect-sha256", default=None,
                         help="optional fail-closed SHA-256 of original CSV bytes")
+    parser.add_argument("--allow-unpinned-input", action="store_true",
+                        help="opt in to alternate data without claiming pinned-source provenance")
     args = parser.parse_args(argv)
     blob = args.input.read_bytes()
     checksum = hashlib.sha256(blob).hexdigest()
     if args.expect_sha256 and checksum.lower() != args.expect_sha256.lower():
         parser.error(f"SHA256 mismatch for {args.input}: got {checksum}")
+    input_blob_sha1 = git_blob_sha1(blob)
+    pinned_input_verified = input_blob_sha1 == OEC_TABLE_BLOB
+    if not pinned_input_verified and not args.allow_unpinned_input:
+        parser.error(
+            "input does not match pinned OEC 2023 snapshot "
+            f"(Git blob SHA-1 {input_blob_sha1}, expected {OEC_TABLE_BLOB}); "
+            "use --allow-unpinned-input for explicitly unpinned data"
+        )
     with args.input.open(encoding="utf-8-sig", newline="") as f:
         flags, counts = audit_stream(f, args.threshold)
     args.out.mkdir(parents=True, exist_ok=True)
@@ -265,9 +281,11 @@ def main(argv=None):
     summary = {
         "description": "screening only; flagged rows are NOT confirmed catalog errors",
         "units": {"period": "day", "a": "au", "mass": "solar"},
-        "source_url": SOURCE_URL,
-        "source_github_commit": OEC_TABLE_COMMIT,
-        "source_github_blob_sha1": OEC_TABLE_BLOB,
+        "source_url": SOURCE_URL if pinned_input_verified else None,
+        "source_github_commit": OEC_TABLE_COMMIT if pinned_input_verified else None,
+        "source_github_blob_sha1": OEC_TABLE_BLOB if pinned_input_verified else None,
+        "input_git_blob_sha1": input_blob_sha1,
+        "pinned_input_verified": pinned_input_verified,
         "source_sha256": checksum,
         "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "threshold_factor_strict_gt": args.threshold,
