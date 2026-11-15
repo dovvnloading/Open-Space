@@ -1,0 +1,84 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T10:55:22 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T10:55:22	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FMNRAS%2F473%2F1059&-c=242.63+-51.36&-c.rm=3.5&-out.add=_r%2C_RAJ2000%2C_DEJ2000&-out.max=30	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=242.630000-51.360000,rm=3.5	
+#Constraint -out.max=30
+
+#RESOURCE=yCat_74731059
+#Name: J/MNRAS/473/1059
+#Title: Complete sample of Galactic clump properties (Urquhart+, 2018)
+#INFO	ivoid=ivo://cds.vizier/j/mnras/473/1059	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/mnras/473/1059	    IVOID of underlying data collection
+#INFO	creator=Urquhart J.S.	    First author or institution
+#INFO	cites=bibcode:2018MNRAS.473.1059U	    Article or Data origin sources
+#INFO	journal=MNRA	    Journal name
+#INFO	original_date=2018	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/MNRAS/473/1059	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.74731059	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-08-17	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	G:	galactic
+#Table	J_MNRAS_473_1059_table2:
+#Name: J/MNRAS/473/1059/table2
+#Title: Derived distance measurements to all ATLASGAL clumps in the study
+#Column	_r	(F6.4)	Distance from center (242.63000-51.36000)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	_RAJ2000	(F11.7)	Right ascension (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)	[ucd=pos.eq.ra]
+#Column	_DEJ2000	(F11.7)	Declination (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)	[ucd=pos.eq.dec]
+#Column	Clump	(A18)	ATLASGAL catalogue name, AGALLLL.lll+BB.bbb (Clump_name)	[ucd=meta.id;meta.main]
+#Column	VLSR	(F6.1)	? Radial Velocity (VLSR)	[ucd=spect.dopplerVeloc;pos.lsr]
+#Column	r_VLSR	(I2)	? Reference for the VLSR in refs.dat file (VLSR_ref)	[ucd=meta.ref;phys.veloc;pos.frame]
+#Column	DistReid	(F4.1)	? Distance determined from the Reid et al. (2016ApJ...823...77R) Bayesian model (Reid_dist)	[ucd=pos.distance]
+#Column	DistNear	(F4.1)	? Near distance (Near_dist)	[ucd=pos.distance]
+#Column	DistFar	(F4.1)	? Far distance (Far_dist)	[ucd=pos.distance]
+#Column	Dist	(F4.1)	? Adopted kinematic distance (Distance)	[ucd=pos.distance]
+#Column	SolFlag	(A6)	Flag indicating how the kinematic distance was assigned (Solution_flag) (1)	[ucd=meta.code.error;pos.distance]
+#Column	r_Dist	(a11)	? Reference used to determine the kinematic distance in refs.dat file (Distance_ref)	[ucd=meta.ref;pos.frame]
+#Column	Cluster	(A15)	Name of cluster source is associated with GLLL.lll+BB.bbb or Bania Clump 1 (Cluster_name)	[ucd=meta.id.parent]
+#Column	DistCl	(F4.1)	? Cluster distance this is used for the clump (Cluster_dist)	[ucd=pos.distance;src.orbital]
+#Column	SED	(A26)	Name of the image with SED in subdirectory fig6	[ucd=meta.id;meta.file]
+#Column	Simbad	(a6)	Simbad column added by the CDS	[ucd=meta.ref.url]
+#Column	_RA	(F9.5)	Positions from Simbad (right ascension part)	[ucd=pos.eq.ra;meta.main]
+#Column	_DE	(F9.5)	Positions from Simbad (declination part)	[ucd=pos.eq.dec;meta.main]
+_r	_RAJ2000	_DEJ2000	Clump	VLSR	r_VLSR	DistReid	DistNear	DistFar	Dist	SolFlag	r_Dist	Cluster	DistCl	SED	Simbad	_RA	_DE
+arcmin	deg	deg	 	km/s	 	kpc	kpc	kpc	kpc	 	 	 	kpc	 	 	deg	deg
+------	-----------	-----------	------------------	------	--	----	----	----	----	------	-----------	---------------	----	--------------------------	------	---------	---------
+2.4244	242.6208333	-51.4000000	AGAL331.372+00.132	 -76.8	10	10.1	 4.5	10.1	10.1	(vi)  	           	G331.394-00.125	 5.3	AGAL331.372+00.132_sed.png	Simbad	242.62083	-51.40000
+1.2805	242.6125000	-51.3783333	AGAL331.384+00.151	 -44.8	23	11.7	 2.8	11.8	 2.8	(vi)  	           	G331.351+00.113	 2.9	AGAL331.384+00.151_sed.png	Simbad	242.61250	-51.37833
+2.0423	242.6500000	-51.3916667	AGAL331.391+00.126	 -45.5	 3	11.7	 2.9	11.8	 2.9	(vi)  	           	G331.351+00.113	 2.9	AGAL331.391+00.126_sed.png	Simbad	242.65000	-51.39167
+1.0720	242.6083333	-51.3483333	AGAL331.402+00.176	 -45.2	 3	11.7	 2.9	11.8	 2.9	(vi)  	           	G331.351+00.113	 2.9	AGAL331.402+00.176_sed.png	Simbad	242.60833	-51.34833
+
+#Table	J_MNRAS_473_1059_table8:
+#Name: J/MNRAS/473/1059/table8
+#Title: Derive positions and properties for all clump associations (clusters)
+#Column	_r	(F4.2)	Distance from center (331.404+00.158)[Galactic]	[ucd=pos.angDistance]
+#Column	_RAJ2000	(F9.5)	Right ascension (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)	[ucd=pos.eq.ra]
+#Column	_DEJ2000	(F9.5)	Declination (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)	[ucd=pos.eq.dec]
+#Column	Cluster	(A14)	Cluster name, GLLL.lll+BB.bbb or Bania Clump 1 (Cluster_name)	[ucd=meta.id;meta.main]
+#Column	OName	(a28)	Literature name (Other_name)	[ucd=meta.id]
+#Column	Nclump	(I3)	Number of clumps associated with cluster (Number_clump)	[ucd=meta.number]
+#Column	GLON	(F7.3)	Longitude of cluster (Gal_long)	[ucd=pos.galactic.lon]
+#Column	e_GLON	(F6.3)	Longitude size of cluster (standard deviation) (Gal_long_size)	[ucd=stat.error]
+#Column	GLAT	(F7.3)	Latitude of cluster (Gal_lat)	[ucd=pos.galactic.lat]
+#Column	e_GLAT	(F6.3)	Latitude size of cluster (standard deviation) (Gal_lat_size)	[ucd=stat.error]
+#Column	<VLSR>	(F6.1)	Mean radial velocity of cluster (Mean_vlsr)	[ucd=phys.veloc;pos.lsr]
+#Column	s_<VLSR>	(F5.2)	Standard deviation of velocity components (Stdev_vlsr)	[ucd=stat.stdev;phys.veloc]
+#Column	Dist	(F4.1)	? Cluster distance (Distance)	[ucd=pos.distance]
+#Column	<Temp>	(F4.1)	? Mean clump temperature (Mean_temp)	[ucd=phys.temperature]
+#Column	s_<Temp>	(F4.1)	? Standard deviation of clump temperatures (Stdev_temp)	[ucd=stat.stdev;phys.temperature]
+#Column	logLbol	(F6.3)	? Log of the total bolomeric luminosity of all associate clumps (cluster_lum)	[ucd=phys.luminosity]
+#Column	logMclump	(F6.3)	? Log of the total clump mass (cluster_mass)	[ucd=phys.mass]
+#Column	L/M	(F5.1)	? Luminosity to mass ratio (L/M_ratio)	[ucd=phys.luminosity;em.IR.3-4um]
+#Column	img	(A3)	images	[ucd=meta.ref.url]
+#Column	FITS	(A4)	Download FITS image	[ucd=meta.ref.url]
+#Column	_RA.icrs	(F8.4)	Right ascension (ICRS) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)	[ucd=pos.eq.ra]
+#Column	_DE.icrs	(F8.4)	Declination (ICRS) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)	[ucd=pos.eq.dec]

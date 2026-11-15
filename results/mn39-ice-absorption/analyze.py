@@ -64,6 +64,22 @@ def band_measurement(wavelength, signal, band):
     return signal[idx]/continuum, continuum
 
 
+def wise_epochs(filename):
+    table=ascii.read(INPUT/filename, format='ipac', converters={'moon_masked':str,'cc_flags':str})
+    table.sort('mjd'); epochs=[]; groups=[]
+    for row in table:
+        if (row['cc_flags'][:2]!='00' or row['moon_masked']!='00' or row['dist']>=2 or row['qual_frame']<5
+            or any(np.ma.is_masked(row[k]) or row[k]>=.12 for k in ('w1sigmpro','w2sigmpro'))):
+            continue
+        if not groups or row['mjd']-groups[-1][-1]['mjd']>40:
+            groups.append([])
+        groups[-1].append(row)
+    for group in groups:
+        if len(group)>=5:
+            epochs.append(dict(n=len(group),**{k:round(float(np.median([r[k] for r in group])),4) for k in ('mjd','w1mpro','w2mpro')}))
+    return epochs
+
+
 def main():
     cube = np.load(INPUT/'spherex.npz'); wave = cube['wavelength'].astype(float)
     wcs = WCS(fits.Header.fromstring(cube['header'].item()))
@@ -123,19 +139,8 @@ def main():
     vista=[dict(source_id=sid,year=year,count=len(vals),median_ks=round(float(np.median(vals)),4))
            for (sid,year),vals in sorted(grouped.items())]
     write_table('vista-epochs.csv',vista)
-    table=ascii.read(INPUT/'neowise-target.tbl', format='ipac', converters={'moon_masked':str,'cc_flags':str})
-    table.sort('mjd'); epochs=[]; groups=[]
-    for row in table:
-        if (row['cc_flags'][:2]!='00' or row['moon_masked']!='00' or row['dist']>=2 or row['qual_frame']<5
-            or any(np.ma.is_masked(row[k]) or row[k]>=.12 for k in ('w1sigmpro','w2sigmpro'))):
-            continue
-        if not groups or row['mjd']-groups[-1][-1]['mjd']>40:
-            groups.append([])
-        groups[-1].append(row)
-    for group in groups:
-        if len(group)>=5:
-            epochs.append(dict(n=len(group),**{k:round(float(np.median([r[k] for r in group])),4) for k in ('mjd','w1mpro','w2mpro')}))
-    write_table('wise-epochs.csv',epochs)
+    write_table('wise-epochs.csv', wise_epochs('neowise-target.tbl'))
+    write_table('neighbor-wise-epochs.csv', wise_epochs('neowise-neighbor.tbl'))
     print('Aperture 1.5 px, annulus 3–5 px:',[r['transmission'] for r in ratios if r['radius_pix']==1.5 and r['background_pix']=='3-5'])
 
 if __name__=='__main__':
