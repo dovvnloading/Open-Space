@@ -2,6 +2,7 @@
 import csv
 import hashlib
 import json
+from xml.etree import ElementTree
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -158,6 +159,36 @@ def light_curve():
             "episodes":episodes}
 
 
+def gaia_light_curve():
+    table = ElementTree.parse(INPUTS / "gaia_epochs.xml")
+    columns = [field.attrib["name"] for field in table.findall(".//{*}FIELD")]
+    cells = [item.text.split() for item in table.findall(".//{*}TD")]
+    values = dict(zip(columns, cells))
+    assert values["source_id"] == [TARGET]
+    records = []
+    for i in range(int(values["n_transits"][0])):
+        if values["variability_flag_g_reject"][i].lower() == "true":
+            continue
+        time = 2455197.5 + float(values["g_transit_time"][i])
+        date = datetime(2000, 1, 1, 12) + timedelta(days=time - 2451545.)
+        entry = {"bjd_tcb":time, "date":date.date().isoformat(),
+                 "G":float(values["g_transit_mag"][i]),
+                 "error_G":float(2.5 / np.log(10) / float(values["g_transit_flux_over_error"][i]))}
+        for band in ["bp", "rp"]:
+            if values[f"variability_flag_{band}_reject"][i].lower() == "false":
+                entry[band.upper()] = float(values[f"{band}_mag"][i])
+        records.append(entry)
+    # Count distinct visits, retaining paired field-of-view transits as intranight checks.
+    groups = []
+    for row in records:
+        if not groups or row["bjd_tcb"] - groups[-1][-1]["bjd_tcb"] > 1:
+            groups.append([])
+        groups[-1].append(row)
+    visits = [{"date":g[0]["date"], "n_transits":len(g),
+               "median_G":float(np.median([r["G"] for r in g]))} for g in groups]
+    return {"transits":records, "visits":visits}
+
+
 def main():
     manifest = json.loads((ROOT / "provenance.json").read_text())
     for filename, source in manifest["inputs"].items():
@@ -170,7 +201,7 @@ def main():
     distances = np.linalg.norm(coordinates(other, target, 2016), axis=1)
     closest = other[np.argmin(distances)]
     report = {"gaia_dr3":TARGET, "gaia_ra":target["ra"], "gaia_dec":target["dec"],
-              "images":register(rows, target), "photometry":light_curve(),
+              "images":register(rows, target), "photometry":light_curve(), "gaia_photometry":gaia_light_curve(),
               "local_field":{"other_sources_within_60_arcsec":int((distances <= 60).sum()),
                              "nearest_other_source":closest["source_id"],
                              "nearest_other_arcsec":float(distances.min())}}

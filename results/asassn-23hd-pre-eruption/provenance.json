@@ -27,6 +27,10 @@
     "gaia_classifier.csv": {
       "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiadr3.vari_classifier_result+WHERE+source_id%3D4662989888116855808",
       "sha256": "b4fa84daa557296dd3cb401c7944b1c92aac8ce748183529ece330c79b0f8a7f"
+    },
+    "gaia_epochs.xml": {
+      "url": "https://gaia.aip.de/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&QUERY=SELECT+%2A+FROM+gaiadr3.epoch_photometry+WHERE+source_id%3D4662989888116855808",
+      "sha256": "476de4180cf18323e47bd76246fc042cb9da469b91050a81a349f6b8c4812ba5"
     }
   },
   "gaia_query": "SELECT source_id,ra,dec,phot_g_mean_mag,bp_rp,pmra,pmdec FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',71.718411,-65.897314,0.05))"

@@ -49,13 +49,18 @@ ax.errorbar(dates[selected], data[selected,1], yerr=data[selected,2], fmt="o",
             label="OGLE I measurement")
 ax.plot(dates[~selected], np.full((~selected).sum(), .045), "|", color="#9da4a8",
         markersize=5, transform=ax.get_xaxis_transform(), label="Visit with flagged photometry")
-ax.set_ylim(22.05,19.15)
-ax.set_ylabel("OGLE I (mag)")
+gaia = report["gaia_photometry"]["transits"]
+gaia_dates = [datetime.fromisoformat(row["date"]) for row in gaia]
+ax.errorbar(gaia_dates, [row["G"] for row in gaia], yerr=[row["error_G"] for row in gaia],
+            fmt="D", markersize=4, mfc="white", mec="#ae5e24", ecolor="#ae5e24",
+            label="Gaia G measurement", zorder=3)
+ax.set_ylim(22.05,18.6)
+ax.set_ylabel("Apparent magnitude")
 ax.xaxis.set_major_locator(mdates.MonthLocator(bymonth=[1,7]))
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
 ax.tick_params(labelsize=8.5)
 ax.grid(axis="y", alpha=.18)
-ax.legend(loc="upper right", fontsize=8, frameon=False)
-ax.set_title("Pre-eruption photometry", loc="left", fontsize=11)
+ax.legend(loc="lower left", bbox_to_anchor=(0, 1.01), ncol=3, fontsize=7, frameon=False)
+
 fig.suptitle("ASASSN-23hd progenitor field", x=.01, ha="left", fontsize=16)
 fig.savefig(ROOT / "field-and-photometry.png", dpi=170)
