@@ -15,7 +15,7 @@ In 2011 Green Bank had timed four pulsars. Three lie near the center and D lies 
 | Leave out one source at a time | East-only RMS 0.614, east + north 0.707, radius-only 1.986, constant 3.007 pc cm⁻³. The data constrain the eastward component more tightly than the northward component. |
 | Reprocess overlapping FAST observations | The independent stack-search DM estimates of Dai et al. give R² = 0.965 with the same 14 positions. |
 | Test a smooth Galactic foreground | YMW16 predicts a DM range of 0.16–0.20 pc cm⁻³ over 8.70–10.60 kpc, with increasing DM to the east between D and L. The measured range is 11.203, increasing to the west. |
-| Test a turbulent foreground | 26.24% of a million simulated isotropic Gaussian fields with a Kolmogorov structure-function exponent attain the observed R² at these positions. The fit alone leaves the distance and physical structure of the plasma open. |
+| Test a turbulent foreground | **26.2%** of a million simulated isotropic Gaussian fields with a Kolmogorov-type turbulent structure function attained R² at least as high as observed. This fit is not evidence against ordinary correlated turbulence; the plasma's distance and structure remain unknown. |
 
 ## Checks using other observables
 
