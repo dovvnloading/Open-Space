@@ -1,0 +1,5 @@
+# Recurrent brightening at OGLE-2013-BLG-0769
+
+OGLE independently alerted on two brightenings separated by 1,104.572 days at positions 0.100 arcsec apart. Both came through its difference-image channel for objects absent from the template. KMTNet independently observed the 2016 episode as KMT-2016-BLG-0228. Its alert pipeline later marked a 2023 episode at the same KMT extraction coordinates as `not-ulens` (KMT-2023-BLG-0713). An additional multiday brightening in 2024 is present in public KMTNet photometry. The record supports recurrent variability in the unresolved scene. A dwarf-nova-like source is a plausible interpretation. An assignment to a particular baseline star or a spectroscopic subtype would require additional observations.
+
+[2013 OGLE alert](https://ogle.astrouw.edu.pl/ogle4/ews/2013/blg-0769.html) · [2016 OGLE alert](https://ogle.astrouw.edu.pl/ogle4/ews/2016/blg-0935.html) · [2016 KMT alert](https://kmtnet.kasi.re.kr/ulens/event/2016/view.php?event=KMT-2016-BLG-0228) · [2023 KMT alert](https://kmtnet.kasi.re.kr/ulens/event/2023/view.php?event=KMT-2023-BLG-0713)
