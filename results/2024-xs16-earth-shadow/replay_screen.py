@@ -2,6 +2,7 @@
 import argparse
 import csv
 import hashlib
+import io
 import json
 import time
 from datetime import datetime
@@ -57,12 +58,45 @@ def vector_api(cache, key, name, start, end, step):
     return CubicHermiteSpline(t, rv[:, :3], rv[:, 3:] * DAY), digest
 
 
+def audit_target(cache, body, sun):
+    """Re-extract the compact inputs used in the offline magnitude calculation."""
+    states = np.genfromtxt(ROOT / 'vectors.csv', delimiter=',', names=True)
+    times = states['jd_tdb']
+    values = np.column_stack((body(times), body(times, 1) / DAY, sun(times), sun(times, 1) / DAY))
+    frozen = np.column_stack([states[k] for k in states.dtype.names[1:]])
+    if not np.allclose(frozen, values, rtol=1e-10, atol=.001):
+        raise ValueError('Live state differs from the frozen geometric ephemeris')
+    obj, _ = get(cache, 'mpc_2024_XS16', MPC, {'desigs':['2024 XS16'], 'output_format':['ADES_DF']})
+    with (ROOT / 'mpc.csv').open() as handle:
+        archived = list(csv.DictReader(handle))
+    fields = list(archived[0])
+    reduced = [{k: str(r[k]) if r[k] is not None else '' for k in fields} for r in obj[0]['ADES_DF']]
+    if sorted(reduced, key=lambda r:r['obsid']) != sorted(archived, key=lambda r:r['obsid']):
+        raise ValueError('MPC records differ from frozen extract')
+    url = horizons_url(dict(COMMAND='DES=2024 XS16;', CENTER='L34', EPHEM_TYPE='OBSERVER',
+                   START_TIME='2024-12-11 17:35', STOP_TIME='2024-12-11 20:45', STEP_SIZE='1 m',
+                   QUANTITIES='1,9,20,24,36', CSV_FORMAT='YES', ANG_FORMAT='DEG', EXTRA_PREC='YES', OBJ_DATA='YES'))
+    data, _ = get(cache, 'l34', url)
+    lines = data['result'].split('$$SOE')[1].split('$$EOE')[0].strip()
+    reduced = [[r[i].strip() for i in (0,5,7,9,10,11)] for r in csv.reader(io.StringIO(lines))]
+    with (ROOT / 'l34-unshadowed.csv').open() as handle:
+        archived = list(csv.reader(handle))[1:]
+    if reduced != archived:
+        raise ValueError('Unshadowed observer ephemeris differs from frozen extract')
+    print('Verified the MPC extract, L34 magnitude and range table, and both state-vector series.')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('cache', type=Path)
     parser.add_argument('--only', help='One frozen target, e.g. "2024 XS16"')
     args = parser.parse_args()
     args.cache.mkdir(parents=True, exist_ok=True)
+    if not args.only:
+        population, _ = get(args.cache, 'cad', CAD)
+        records = [dict(zip(population['fields'], r)) for r in population['data']]
+        selected = {r['des'] for r in records if float(r['dist']) < .0005}
+        print('Live CAD close approaches / selected designations:', len(records), len(selected))
     sun, _ = vector_api(args.cache, 'sun', '10', '2017-12-01', '2051-02-01', '5 d')
     with (ROOT / 'encounters.csv').open() as handle:
         cases = list(csv.DictReader(handle))
@@ -93,6 +127,8 @@ def main():
                 emit = rec - np.linalg.norm(body(rec))/C/DAY
                 hits += covered(*angles(body, sun, emit, 6371.)) > .05
         print(n, f'{frac:.6f}', hits, digest)
+        if n == '2024 XS16':
+            audit_target(args.cache, body, sun)
     # Horizons response headers include a request timestamp. Full live-response
     # hashes can differ even when every element of the returned state agrees.
 
