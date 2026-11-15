@@ -66,3 +66,26 @@ A CADC search for CFHT imaging within an 8° radius of (349°, −6°) from MJD 
 Each image is a single 200 s CaHK.MP9303 narrowband exposure. Circular apertures of radius 5 pixels (0.93″) use a local sky annulus of 10–16 pixels. A robust MAD estimator over 1,256 and 1,263 nearby apertures gives the local noise. Magnitudes use the Elixir camera-run zero point and airmass term without aperture correction. These depth estimates and the discovery w-band magnitudes use different passbands. Neither nominal position gives a significant source, and the shallow narrowband images supply no independent orbit discrimination. [3030533 product](https://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/caom2/?Observation.collection=CFHT&Observation.observationID=3030533) · [3030535 product](https://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/caom2/?Observation.collection=CFHT&Observation.observationID=3030535)
 
 Run `python check_cfht_images.py` with Astropy, NumPy and SciPy to request the original detector cutouts and repeat these measurements. The numerical results and SHA-256 digests of the fetched products are in `cfht_image_checks.json`.
+
+## Search one night before the discovery arc
+
+CFHT program 23BP34 obtained 32 broadband gri exposures of the predicted track on **2023-08-14 UTC**, one night before the first published measurements. All 32 cover the direction on CCD38, with 9,539 s of open-shutter time. We also processed the 47 available exposures on the discovery night, August 15. Forty-four cover the nominal direction on a detector and provide a positive control. The August 15 stack overlaps the published observational evidence.
+
+We resampled 141-pixel stamps to a common moving frame, normalized each by its local noise, subtracted a median of other images aligned on the stellar field, clipped pixel outliers, combined and smoothed with a two-pixel Gaussian. An off-target ring sets the local MAD noise estimate. Displacements exceed 18 pixels between each science image and the images used to estimate its stationary background. An equal-area control compares the maximum within 0.56″ of the predicted position to maxima in 78 neighboring regions of the same size. Each time half shares the full-stack background model and therefore gives a consistency check only.
+
+| CFHT epoch | Nominal-position S/N after subtraction | S/N without subtraction | S/N of the two time halves | Maximum S/N within 0.56″ | Equal-area controls as high |
+|---|---:|---:|---|---:|---:|
+| Aug 14, additional epoch | 3.09 | 1.60 | 2.31, 2.24 | 3.22 | 2 / 78 |
+| Aug 15, discovery-night control | 4.39 | 4.95 | 4.11, 2.80 | 5.76 | 0 / 78 |
+
+The pipeline recovers the discovery-night source. On August 14 the excess is weak, depends on stellar subtraction, and is exceeded in two control regions. We retain this as a **possible precovery** and exclude it from the orbit fits. Both orbit families predict almost the same direction so close to the discovery arc. The frame list identifies the additional data for independent re-reduction. [CFHT data archive](https://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/cfht/) · [CADC cutout service](https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/caom2ops/)
+
+Run `python check_precovery.py --cache /path/to/cutouts` with NumPy, SciPy and Astropy. It requests 79 cutouts (roughly 15 MB total), handles CCD gaps and reproduces `precovery_results.json`. The full list of archive product IDs, UTC exposure midpoints, model positions and query centers is in `inputs/precovery_frames.csv`.
+
+## Independent DECam images
+
+A separate Cerro Tololo search found two public, calibrated DECam images with a nominal orbit position on a detector. At 01:34 UTC on 27 August 2023, a 229 s z-band observation covers both positions on detector S4. Forced photometry gives −0.79 and −0.46 local noise units for the moderate and extreme solutions. At 08:53 UTC on 24 August 2024, a 90 s i-band image covers the nominal moderate position on S3 and gives +1.38 local noise units. The alternative position is outside that exposure. These checks measure the nominal positions only. Neither image supplies additional astrometry.
+
+Positions are astrometric ICRF angles using the same fitted states and predictor evaluated at exact mid-exposure times with the W84 topocenter. The accompanying JSON includes five alternative moderate-orbit positions obtained by omitting nights. A 3.7-pixel-radius aperture and a 7–10 pixel sky annulus are compared with 484 nearby apertures of the same size on each detector. The reported scale is 1.4826 × the median absolute deviation of their background-subtracted fluxes. The null measurements are filter- and exposure-specific.
+
+The archive URLs below return calibrated FITS products. Save them under the corresponding basenames in [decam_positions.json](decam_positions.json). Run `python check_decam.py IMAGE_DIRECTORY` with NumPy and Astropy to verify both archive checksums and reproduce the [aperture measurements](decam_photometry.json). This research uses data from the Astro Data Archive at NSF's NOIRLab. [2023 DECam exposure](https://astroarchive.noirlab.edu/api/retrieve/66a96e590388d067d96584db84dbdcde/) · [2024 DECam exposure](https://astroarchive.noirlab.edu/api/retrieve/28d9ef47625c4600ddf3fe041bfd69f6/)
