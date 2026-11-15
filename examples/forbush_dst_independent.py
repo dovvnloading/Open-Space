@@ -173,6 +173,25 @@ def analyze(feid: list[dict], omni: list[dict], draws: int = 2000, seed: int = S
                 round(hits/null["mean_hits"], 4) if null["mean_hits"] else None)
         type_counts = Counter(str(e["onset_type"]) for e in accepted)
         type_hits = Counter(str(e["onset_type"]) for e,t in zip(accepted,lags) if t is not None)
+        # Label-stratified analyses make visible that the catalog codes contain
+        # prior shock/SSC information. THESE ARE NOT REAL-TIME PREDICTORS.
+        type_controls = {}
+        for code in ("1", "9"):
+            events_of_type = [e for e in accepted if str(e["onset_type"]) == code]
+            if not events_of_type:
+                continue
+            observed = type_hits[code]
+            controls = stratified_null(events_of_type, onsets, by_month, draws,
+                                       seed + (100 if code == "1" else 900) +
+                                       (1 if start == 2001 else 0))
+            outcomes = controls.pop("draws_sorted")
+            controls["hits_48h"] = observed
+            controls["eligible_episodes"] = len(events_of_type)
+            controls["upper_tail_p"] = round((1+sum(x >= observed for x in outcomes))/(1+draws), 6)
+            controls["lower_tail_p"] = round((1+sum(x <= observed for x in outcomes))/(1+draws), 6)
+            controls["observed_to_expected_ratio"] = (
+                round(observed/controls["mean_hits"], 4) if controls["mean_hits"] else None)
+            type_controls[code] = controls
         output["cohorts"][name] = {
             "episodes_in_period": len(subset), "eligible_episodes": len(accepted),
             "excluded_prior_storm_or_missing_dst": len(subset)-len(accepted),
@@ -180,6 +199,7 @@ def analyze(feid: list[dict], omni: list[dict], draws: int = 2000, seed: int = S
             "wilson_95_rate": wilson_bounds(hits, len(accepted)),
             "lag_bins_0_6_6_12_12_24_24_48": bins,
             "types_eligible": dict(type_counts), "types_hit": dict(type_hits),
+            "type_specific_month_matched_controls": type_controls,
             "null_year_month_matched": null
         }
     return output
