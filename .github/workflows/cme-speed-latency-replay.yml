@@ -1,0 +1,36 @@
+name: Independent CME-speed vs storm-peak timing replay
+on:
+  push:
+    paths:
+      - examples/cme_speed_dst_delay.py
+      - tests/test_cme_speed_dst_delay.py
+      - .github/workflows/cme-speed-latency-replay.yml
+      - examples/verify_heliophysics_replay.py
+      - tests/test_verify_heliophysics_replay.py
+      - results/cme-speed-storm-latency/summary.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reproducible-latency:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m unittest discover -s tests -p test_cme_speed_dst_delay.py -v
+      - run: python -m unittest discover -s tests -p test_verify_heliophysics_replay.py -v
+      - name: Recompute source-pinned cross-era archive association and controls
+        run: python examples/cme_speed_dst_delay.py --fetch --output /tmp/cme-dst-latency.json --bootstrap 4000 --permutations 10000
+      - name: Enforce source digest and entire committed CME timing result
+        run: |
+          python examples/verify_heliophysics_replay.py --kind cme --reference results/cme-speed-storm-latency/summary.json --observed /tmp/cme-dst-latency.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: independent-cme-dst-latency-results
+          path: /tmp/cme-dst-latency.json
+          if-no-files-found: error
