@@ -1,0 +1,18 @@
+# PR #15 research log
+
+Times use US Eastern time. Each row points to the commit that preserves its data and replay instructions. Archived measurements can come from the same observations as an earlier result.
+
+| Checkpoint • 2026-11-14 | Measurement and verification | Evidence |
+| --- | --- | --- |
+| 7:31 pm · HD 32564 | Extracted velocities from three nonoverlapping wavelength bands in 25 public ESPRESSO spectra. All three favor the frozen four-component HARPS prediction over five aliases. Residual RMS is 2.37–2.46 m/s. | [Band velocities and spectra](https://github.com/dovvnloading/Open-Space/commit/4e08d2d5cccbbfca879dddce1a23bd2652c0a438) |
+| 7:31 pm · SMC X-1 | Released 1,509 MAXI orbit bins with subband fluxes and errors and 15 Swift/XRT photon-counting observations with their exposure maps. Six out-of-eclipse XRT visits sample the middle or outer phase intervals. Their 6–20 pixel annuli contain 349 versus 14 events over 167.35 versus 82.43 seconds. | [Fluxes, events, provenance and replay](https://github.com/dovvnloading/Open-Space/commit/82ed705085d079027661cdba3935ac7179081f61) |
+| 7:32 pm · M31 | Three Liverpool Telescope eruption spectra reproduce broad Hα in M31N 2017-06c. Two October 2021 Swift visits give upper limits near both optical positions. Four August 2024 ACIS pointings contain zero 0.3–2 keV events within each 2″ aperture over 117.803 ks. | [Line profiles and X-ray energy bands](https://github.com/dovvnloading/Open-Space/commit/a32d14cda7888487871e91a5bcf01031a9a73d5c) |
+| 7:34 pm · SMC X-1 control | Subtracting the eclipse-core flux leaves the middle brighter in all three MAXI bands. The middle-minus-outer hard-fraction difference changes from −0.144 to −0.031, with a 95% within-cycle day-bootstrap interval of −0.166 to +0.121 after subtraction. Intrinsic hardening remains unresolved. | [Eclipse control](https://github.com/dovvnloading/Open-Space/commit/88c4b0794ac3cba3fa4ee0bc7ee20568f62f986a) · [Figure](https://github.com/dovvnloading/Open-Space/commit/cdd70a05125ae5173b37fe2b5c265422fb03f5aa) |
+| 7:35 pm · HD 32564 control | Hα strength tracks the full Doppler prediction at r = 0.54. Photospheric Ca I tracks the 11.06-day component at r = 0.56. Shared activity or measurement systematics remain possible. The three later proprietary ESO spectra are still a prospective test. | [Profiles, control and figure](https://github.com/dovvnloading/Open-Space/commit/f03beae2c4b9b53972dc77a2024891a6ad96f46e) |
+
+## Open checks at 7:36 pm
+
+- **WR 117-2.** The archive query returned 382 SPHEREx images from all six detectors. The extraction reproduces the brightening and fading on detectors 5 and 6. The next checkpoint will link the measured fluxes, matched wavelengths, pixel flags, field controls and exact products.
+- **M31N 2021-06b.** The expanded sample has 58 Swift/XRT visits. The provisional fixed-aperture counts suggest a summer 0.3–1 keV excess. A cataloged Chandra source lies 10.27″ away inside the Swift aperture. The next checkpoint will record the before/after comparison, exposure-scaled backgrounds, shifted apertures and the limit on source attribution.
+
+The local repository suite ran 113 tests with the archive dependency installed. The pilot and 12-seed benchmark passed. GitHub's research checks passed for the SMC X-1 figure checkpoint. [CI run](https://github.com/dovvnloading/Open-Space/actions/runs/43658945510)
