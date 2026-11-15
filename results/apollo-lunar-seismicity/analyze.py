@@ -1,4 +1,4 @@
-"""Analyze two independent Apollo event catalogs. See screen.md for the input URLs.
+"""Analyze two independent Apollo event catalogs. See README.md for the input URLs and pinned hashes.
 
 Usage: python analyze.py path/to/GradeA_thermal_mq_catalog_final.csv path/to/levent.csv
 """
