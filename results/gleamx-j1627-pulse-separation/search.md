@@ -1,0 +1,3 @@
+# GLEAM-X J162759.5−523504.3 component separation
+
+The public Murchison Widefield Array pulse data for 2018 March 13 show two identifiable peaks. An exploratory two-component fit to eleven rotations gives mean separations of about 8.20, 7.76, 7.12, 6.86 and 6.62 seconds in the five bands near 88, 119, 155, 185 and 216 MHz. Band visits are interleaved across rotations. Comparing simultaneous frequency channels within a rotation can distinguish chromatic changes from pulse-to-pulse variability. Selection of this epoch followed inspection, and a universal frequency law or physical mechanism would require additional evidence. Fits, source records, controls, comparison dates and the prior-art assessment belong with the finished analysis.
