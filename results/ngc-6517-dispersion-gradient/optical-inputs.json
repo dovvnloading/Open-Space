@@ -1,0 +1,17 @@
+{
+  "cluster": {
+    "url": "https://catalogs.mast.stsci.edu/api/v0.1/hsc/v3/summary/magaper2.csv?ra=270.4605&dec=-8.9588&radius=0.02777778&pagesize=100000&columns=%5BMatchID%2CMatchRA%2CMatchDec%2CW3_F555W%2CW3_F814W%2CCI%2CCI_Sigma%2CDSigma%2CW3_F555W_N%2CW3_F814W_N%5D&W3_F814W.gte=16&W3_F814W.lte=23&W3_F555W.gte=16&W3_F555W.lte=28",
+    "rows": 27480,
+    "sha256": "c3867bbc326a9a759aa6728e5ce11ad32143e680efde524f3241067c6b20e538"
+  },
+  "ps1": {
+    "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/mean.csv?ra=270.4605&dec=-8.9588&radius=0.03&pagesize=100000&columns=%5BobjID%2CraMean%2CdecMean%2CnDetections%2Cnr%2Cni%2Cnz%2CrMeanPSFMag%2CiMeanPSFMag%2CzMeanPSFMag%2CrMeanPSFMagErr%2CiMeanPSFMagErr%2CzMeanPSFMagErr%5D&nDetections.gte=3",
+    "rows": 2294,
+    "sha256": "c2572fe0679685ccb65526e441a4e6693fa0a2ef4d6d0956c705687fb7c84031"
+  },
+  "gaia": {
+    "url": "https://gaia.ari.uni-heidelberg.de/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cpmra%2Cpmdec%2Cpmra_error%2Cpmdec_error%2Cparallax%2Cparallax_error%2Cphot_g_mean_mag%2Cbp_rp%2Cruwe%2Cphot_bp_rp_excess_factor+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C270.4605%2C-8.9588%2C0.03%29%29",
+    "rows": 2187,
+    "sha256": "a5373d4ffe7e768461fc71fd3131102b24b44ca913752ae5d0542307633451e5"
+  }
+}
