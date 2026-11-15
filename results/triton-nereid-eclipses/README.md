@@ -1,6 +1,6 @@
 # Two candidate eclipses of Nereid by Triton
 
-On **31 January 2026**, the Horizons reconstruction places Nereid inside Triton’s penumbra for **27 min 21 s**, with maximum eclipse reaching Earth at **00:34:52 UTC**. A uniformly lit projected disk model gives **67% light loss**, about **1.21 mag**. An archived older orbit from a different group misses Nereid entirely. The disagreement makes these timed predictions directly testable with historical imaging. No observation in this package measures an eclipse.
+For **31 January 2026**, one Horizons orbit reconstruction **predicts** that Nereid would enter Triton’s penumbra for **27 min 21 s**, with a predicted Earth-reception maximum at **00:34:52 UTC**. A uniformly lit projected disk model gives **67% light loss**, about **1.21 mag**. An archived older orbit from a different group misses Nereid entirely. The disagreement makes these timed predictions directly testable with historical imaging. **This shadow candidate remains unconfirmed: no eclipse was measured, and no exposure covering its window was found in the four public archive indices searched.** Those are bounded archive searches, not proof that no observation exists elsewhere. The alternative orbit with no eclipse prevents treating the computed light loss as an observed event.
 
 | Earth-reception date | Triton and Nereid ephemerides | Peak UTC | Shadow axis to Nereid centre | Modeled loss of disk light |
 |---|---|---|---:|---:|
