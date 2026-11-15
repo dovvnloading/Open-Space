@@ -1,6 +1,6 @@
 # A main-belt asteroid passed 106,164 km from interstellar comet 2I/Borisov
 
-On 2019 October 28, asteroid **(704021) 2007 XJ8** passed **106,164 km** from Borisov at **34.764 km/s**. A separate integration of the asteroid orbit fitted by ESA gives **106,081 km**, a difference of 82 km. Two 180-second exposures taken with the Canada–France–Hawaii Telescope roughly 11½ hours after the passage independently recover the asteroid at its predicted position and motion. The exposures targeted Borisov.
+On 2019 October 28, asteroid **(704021) 2007 XJ8** passed **106,164 km** from Borisov at **34.764 km/s**. A separate integration of the asteroid orbit fitted by ESA gives **106,081 km**, a difference of 82 km. Four 180-second exposures taken with the Canada–France–Hawaii Telescope recover the asteroid on both sides of the event, roughly 13 hours before and 11½ hours after closest approach. The exposures targeted Borisov.
 
 ## Flyby
 
@@ -15,16 +15,22 @@ The nearest hourly geocentric Horizons uncertainty record gives formal three-sig
 
 ## Recovering the asteroid in the telescope images
 
-The Canadian Astronomy Data Centre’s Solar System Object Image Search returned 88 footprint hits from Oct 27–30 UTC across five instruments. The two deep red-filter exposures below were consecutive, pointed at Borisov, and had midpoint times 222 seconds apart. We used a new Horizons observer ephemeris for the CFHT site (MPC 568) at each midpoint. The footprint search supplies approximate coordinates useful for finding the detector. The independent topocentric predictions set the photometry apertures before measuring their pixels. [Exposure list](data/archive-images.tsv) · [Measurement code](images.py)
+The Canadian Astronomy Data Centre’s Solar System Object Image Search returned 88 footprint hits from Oct 27–30 UTC across five instruments. The four deep red-filter exposures below were taken in consecutive pairs on two nights. Each pair was pointed at Borisov and had midpoint times 222 seconds apart. We used a new Horizons observer ephemeris for the CFHT site (MPC 568) at each midpoint. The footprint search supplies approximate coordinates useful for finding the detector. The independent topocentric predictions set the photometry apertures before measuring their pixels. [Exposure list](data/archive-images.tsv) · [Measurement code](images.py)
 
-| CFHT exposure | UTC midpoint on Oct 28 | Forced flux / local noise | Centroid minus prediction, east / north |
+| CFHT exposure | UTC midpoint | Forced flux / local noise | Centroid minus prediction, east / north |
 | --- | --- | ---: | --- |
-| 2453634p | 14:43:40 | 4.23 | +0.09″ / +0.14″ |
-| 2453635p | 14:47:22 | 5.58 | +0.25″ / −0.09″ |
+| 2453292p | Oct 27 14:30:09 | 2.46 | +0.17″ / +0.06″ |
+| 2453293p | Oct 27 14:33:51 | 3.49 | +0.28″ / +0.08″ |
+| 2453634p | Oct 28 14:43:40 | 4.23 | +0.09″ / +0.14″ |
+| 2453635p | Oct 28 14:47:22 | 5.58 | +0.25″ / −0.09″ |
 
-The observed source moved 3.77″ east and 1.58″ south. The orbit predicted 3.61″ east and 1.35″ south. Aperture flux was measured at the fixed predicted pixel in each image, with a six-pixel aperture and a local annulus from nine to fourteen pixels. The noise estimate is the scaled median absolute deviation of measurements at displaced apertures. None of 396 displaced tracks matched the observed mean score. These nearby control apertures overlap and do not give 396 independent trials. The residuals use the original image astrometry and an unweighted-background, flux-weighted centroid. The two stamps preserve linear detector counts and their WCS. The asteroid is about 11.5 arcminutes from the comet in these frames. [Photometry and positions](data/image-measurements.json) · [Predictions](data/imaging-ephemeris.csv)
+On October 27 the measured displacement was 3.75″ east and 1.34″ south, compared with a forecast of 3.63″ east and 1.36″ south. On October 28 the observed source moved 3.77″ east and 1.58″ south. The orbit predicted 3.61″ east and 1.35″ south. Aperture flux was measured at the fixed predicted pixel in each image, with a six-pixel aperture and a local annulus from nine to fourteen pixels. The noise estimate is the scaled median absolute deviation of measurements at displaced apertures. On each night, none of the 396 displaced tracks matched that night’s observed mean score. These nearby control apertures overlap and do not give 396 independent trials. The residuals use the original image astrometry and an unweighted-background, flux-weighted centroid. The four image stamps preserve linear detector counts and their WCS. The asteroid is about 14 arcminutes from the comet on October 27 and 11.5 arcminutes on October 28. [Photometry and positions](data/image-measurements.json) · [Predictions](data/imaging-ephemeris.csv)
 
-The retrieved MPC 141-observation file has no entry from either CFHT exposure. Its nearest listed observations are 2020 January 3 from site T09. MPC's present catalogue orbit incorporates later observations as well. The detection recovers an already numbered asteroid, and the frames measure its sky-plane position. The orbits supply the depth of the encounter. Busarev et al. independently record multiband photometry of Borisov on October 28.069 UTC, about 1.6 hours before the reconstructed passage. Their paper measures the comet. [MPC astrometry checked](data/704021.mpc) · [Busarev et al. (2021), Table 1](https://academic.oup.com/mnras/article/502/2/1882/6129807)
+![The asteroid moves between two CFHT images. The circle marks the predicted position in each exposure.](data/cfht-motion.png)
+
+Both panels use the same sky coordinates. The circles mark the asteroid predictions, and the dotted segment connects the predicted positions. The figure uses a one-pixel Gaussian smoothing for display. Photometry uses the original counts.
+
+The retrieved MPC 141-observation file has no entry from any of these four CFHT exposures. Its nearest listed observations are 2020 January 3 from site T09. MPC's present catalogue orbit incorporates later observations as well. The detection recovers an already numbered asteroid, and the frames measure its sky-plane position. The orbits supply the depth of the encounter. Busarev et al. independently record multiband photometry of Borisov on October 28.069 UTC, about 1.6 hours before the reconstructed passage. Their paper measures the comet. [MPC astrometry checked](data/704021.mpc) · [Busarev et al. (2021), Table 1](https://academic.oup.com/mnras/article/502/2/1882/6129807)
 
 ## How this pair surfaced
 

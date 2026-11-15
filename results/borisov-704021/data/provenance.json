@@ -14,7 +14,9 @@
     "archive_search": "https://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/cadcbin/ssos/ssosclf.pl?lang=en&object=704021&search=bynameHorizons&epoch1=2019-10-27&epoch2=2019-10-30&format=tsv",
     "cfht_ephemeris": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27704021%3B%27&EPHEM_TYPE=OBSERVER&CSV_FORMAT=YES&ANG_FORMAT=DEG&EXTRA_PREC=YES&OBJ_DATA=NO&CENTER=%27568%40399%27&TLIST=%272458784.104270833%0A2458784.106840278%0A2458785.113657407%0A2458785.116226852%27&QUANTITIES=%271%2C3%2C9%2C20%27",
     "2453634p": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/data/pub/CFHT/2453634p.fits.fz",
-    "2453635p": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/data/pub/CFHT/2453635p.fits.fz"
+    "2453635p": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/data/pub/CFHT/2453635p.fits.fz",
+    "2453292p": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/data/pub/CFHT/2453292p.fits.fz",
+    "2453293p": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/data/pub/CFHT/2453293p.fits.fz"
   },
   "input_sha256": {
     "num.gz": "a19a90a0f48601bf1762d7ba49d584999a45f2454417d0ba03e259dc9b63bc2b",
@@ -29,9 +31,12 @@
     "obs_2I.txt": "97805cbf37402599fd8ceead5dcfa722fbb61973896a12a2ed62e4d55a16b9eb",
     "obs_704021.txt": "d6674b9f0cc421cb2ce3eba1cc32a7b37b45c7a5ca1d2cde27e33d5344951012",
     "2453634p.fits.fz": "88a6e3e4577a688c7afd5c271a2d6ac6c4974cbd8b60217aa36cbc054b1dbb08",
-    "2453635p.fits.fz": "7994770219c80fcbfe3363da2089a6c9ec8f7e763cdd9ef861b17d2017941fe5"
+    "2453635p.fits.fz": "7994770219c80fcbfe3363da2089a6c9ec8f7e763cdd9ef861b17d2017941fe5",
+    "2453292p-primary-and-ccd31.fits": "44d3d4ad3d09f59f1af5df22882dee1d3504cd665542d1362f9abf3b888e9ec1",
+    "2453293p-primary-and-ccd31.fits": "1ca5360013366815090b166d42d620a9ae48c456ba12b02dabe51525b67cef54"
   },
   "python": "3.12.14",
   "numpy": "2.3.5",
-  "scipy": "1.17.0"
+  "scipy": "1.17.0",
+  "oct27_partial_inputs": "FITS primary HDU plus the original compressed ccd31 image extension, including FITS block padding, extracted from public full mosaics with HTTP Range. The equivalent data can be obtained with extract.py from the full mosaics."
 }
