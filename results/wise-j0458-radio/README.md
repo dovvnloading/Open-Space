@@ -2,6 +2,8 @@
 
 Three Very Large Array Sky Survey (VLASS) visits show a compact 2–4 GHz source close to the predicted position of the known T8.5 + T9.5 binary WISE J0458+6434AB. The free radio centroids in 2017, 2023 and 2025 fall **0.36″, 0.33″ and 0.36″** from the predicted infrared positions. From 2017 to 2025 the radio centroid moved **3.28″ northeast**, compared with **2.93″** expected from infrared proper motion. The 2020 image gives a nondetection. We classify the result as a **candidate radio counterpart to the binary**. The 2–3″ synthesized beam includes both components. Resolved Keck near-infrared spectra established the component classifications. [Burgasser et al. 2012](https://doi.org/10.1088/0004-637X/745/1/26)
 
+The LOFAR Two-metre Sky Survey independently catalogued ILTJ045854.31+643455.8 at 144 MHz. Its 0.903 ± 0.086 mJy/beam catalog peak lies 0.22″ from the 2023 VLASS radio centroid. The 6″ LOFAR beam and the multi-date mosaic limit its ability to separate a background contributor or either binary component. The 144 MHz source was already catalogued. The proposed association with the brown-dwarf system is the new finding. [Independent LOFAR image, catalog and checks](independent-radio/README.md)
+
 ![Four VLASS visits to WISE J0458+6434AB](four-epochs.png)
 
 The panels have the same tangent-plane coordinates and intensity scale. The white cross marks the predicted 2017 position. Cyan circles follow the infrared proper motion, and the gray ellipse in each panel shows the restoring beam.
