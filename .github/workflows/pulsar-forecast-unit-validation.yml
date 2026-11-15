@@ -1,0 +1,25 @@
+name: Pulsar forecast isolated tests
+on:
+  push:
+    paths:
+      - 'results/pulsar-glitch-forecast/**'
+      - '.github/workflows/pulsar-forecast-unit-validation.yml'
+  pull_request:
+    paths:
+      - 'results/pulsar-glitch-forecast/**'
+      - '.github/workflows/pulsar-forecast-unit-validation.yml'
+permissions:
+  contents: read
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        python: ['3.10', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m unittest discover -s results/pulsar-glitch-forecast -p 'test_*.py' -v
