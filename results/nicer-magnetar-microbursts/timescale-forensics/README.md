@@ -111,19 +111,37 @@ PR #23 predicted *local* MET to UTC with NASA's calibrated TT reference and
 the +69.184-s shift (and LEAPINIT=2). The Shao UTC times then turn out to
 be **61.228–61.495 seconds later**, with median **61.275 s**.
 
-This is a **discordant, not corroborating, held-out comparison**. It
-demonstrates why it would be wrong to assert that all earlier NICER papers
-share the 69.184-s error. The relatively constant ~61.3 s gap cannot be
-silently dismissed as a known Fermi/NICER inter-spacecraft light travel time:
-it is a comparison of *two NICER analyses of the same observation*. Different
-burst onset definitions can contribute fractions of a second but do not by
-themselves establish the origin of a minute-scale disagreement. Possible
-explanations include a different/incorrect UTC rendering in Shao et al.,
-a misconstrued FITS TIMEZERO or barycentric timestamp, or a problem in
-one of the two reduction/reconstruction procedures. **No independent third
-clock was found here for these ten particular events.** Until the original
-FITS rows are checked with a standalone time conversion, do not promote
-the ~61.3 s result to a diagnosed error in either publication.
+This is a **frame-dependent comparison, not a diagnosed second clock
+error**. Shao et al. explicitly state in their Section 2.2 that they
+barycentered the NICER data using the **DE200** ephemeris, while their Table 4
+labels its dates **UTC**; Chu et al. used DE430 and label theirs **TDB**.
+Neither table indicates unambiguously whether the final calendar string was
+generated from the spacecraft-local or solar-system-barycentric timestamp.
+Subtracting Shao's UTC-labelled time from PR #23's predicted *local UTC*
+therefore compares quantities that may not refer to the same spatial clock
+location. The >60-s difference cannot by itself establish an erroneous UTC
+conversion in Shao.
+
+We explicitly test the spatial-reference ambiguity in
+[frame_controls.py](frame_controls.py): for matched event **Chu #443**,
+the corrected Chu barycentric TDB is 17:41:46.293, whereas PR #23's
+predicted NICER-local TT is 17:40:35.043428. The implied **SSB-TDB minus
+local-TT** difference is **+71.249572 s** (approximately the Rømer delay).
+Shao's UTC-labelled 17:40:27.157 is **+61.297572 s** after the predicted
+NICER-local UTC 17:39:25.859428. These two offsets differ by **9.952 s**,
+numerically the difference between the raw published Chu and Shao calendar
+strings. This identity is algebraic: it is **not** proof that either paper
+has the correct absolute timing. The TDB–TT periodic correction, precise
+ephemerides, detector screening and photon-onset definition still require
+a same-event, same-frame reconstruction. DE200 versus DE430 should not be
+assumed to explain a 10-second residual without computing it.
+
+The ten distinct interburst spacings strongly establish matching *events*.
+They do **not** establish a second publication error. **No third independent
+clock was identified here for these ten particular events.** Until the
+original Shao barycentered event TIME/BARYTIME header, its UTC conversion
+and the original NICER FITS rows are checked, do not promote the ~61.3-s
+frame-mixed value into a correction for Shao or Chu.
 
 ## 4. Affected and unaffected claims; negative controls
 
@@ -133,7 +151,7 @@ the ~61.3 s result to a diagnosed error in either publication.
 | Its two microsecond-burst attributions | Their *absolute timestamps* shift; a global 69.184-s shift **cannot** change the microsecond duration, the fast/slow detector-chain evidence, the 2018 particle-like coincidences, or the 2022 off-axis geometry. These remain **candidate instrumental events** rather than disproven magnetar emissions. |
 | NICER/GBM coincidence searches | At least seven recovered matches from seven different visits outside the April 2020 storm appear at +69.184 s in PR #23. Not all are published missed coincidences, and the crowded storm is not diagnostic. |
 | Borghese et al. (2022) SGR 1935 burst times | Two independent same-observation TDB epochs corroborate the new clock, already measured in PR #23. No evidence that Borghese inherited this catalog's error. |
-| Shao et al. (2024) separate NICER UTC table | **New independent-paper conflict** above. **Not** established to have the same offset. |
+| Shao et al. (2024) separate NICER UTC table | **New frame-dependent cross-paper test** above. No proof of the same offset or of a new error; different barycentric versus local clock conventions must be resolved. |
 | GECAM, FRB, INTEGRAL, XMM, NuSTAR, Swift, Aql X-1 and unrelated NICER catalogs | Must be tested **individually** using matching event rows, coordinates, GTIs and the stated native clock. We have not diagnosed a shared error there. The GECAM October 2022 burst table does **not** supply a contemporaneous event for the ten Oct 12 Shao–Chu pairs. |
 | FRB 200428 (2020-04-28, around 14:34 UTC); FRB 221014 (2022-10-14, around 19:21 UTC) | No Chu `TDB Start` rows on those dates within five minutes of the stated radio UTC hour. These aren't evidence of a missed radio counterpart in this specific burst list; proper barycentric conversion and coverage checks are still required. |
 
@@ -155,6 +173,7 @@ jump, making the alternatives observationally degenerate in NICER's
 
 ```sh
 python results/nicer-magnetar-microbursts/timescale-forensics/verify.py
+python results/nicer-magnetar-microbursts/timescale-forensics/frame_controls.py
 # Additional header-level audit; needs astropy and the original archive files:
 python results/nicer-magnetar-microbursts/timescale-forensics/header_audit.py /path/to/cache
 ```
