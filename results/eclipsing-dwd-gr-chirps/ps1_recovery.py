@@ -23,6 +23,15 @@ def calculate():
     bjd = (times.tdb + times.light_travel_time(source)).jd
     period = .0314116865 * 86400
     phase_seconds = ((bjd-2458796.922867)*86400+period/2) % period - period/2
+    controls = np.genfromtxt(HERE/'ps1_comparisons.csv', delimiter=',', names=True, dtype=None, encoding='utf-8')
+    controls = controls[(controls['psfFlux']>0) & (controls['psfFluxErr']>0)]
+    control_offset = np.zeros(len(controls))
+    for oid in np.unique(controls['objID']):
+        for band_id in [1, 2]:
+            subset = (controls['objID']==oid) & (controls['filterID']==band_id)
+            if subset.any():
+                flux = controls['psfFlux'][subset]
+                control_offset[subset] = -2.5*np.log10(flux/np.median(flux))
     output = []
     for band_id, band in [(1,'g'), (2,'r')]:
         mask = rows['filterID']==band_id
@@ -32,13 +41,17 @@ def calculate():
         for i in np.flatnonzero(selected):
             r = rows[i]
             rank = 1 + np.count_nonzero(rows['psfFlux'][mask] < r['psfFlux'])
+            same_exposure = (abs(controls['obsTime']-r['obsTime'])<1e-6) & (controls['filterID']==band_id)
+            comparison = np.median(control_offset[same_exposure])
             output.append(dict(date_utc=times[i].isot, detection_id=int(r['detectID']), band=band,
                                observations_in_band=int(mask.sum()), faintness_rank=rank,
                                offset_from_linear_eclipse_s=round(phase_seconds[i],2),
                                integration_s=float(r['expTime']),
                                psf_deficit_mag=round(-2.5*math.log10(r['psfFlux']/psf_base),4),
                                formal_psf_error_mag=round(2.5*r['psfFluxErr']/(math.log(10)*r['psfFlux']),4),
-                               aperture_deficit_mag=round(-2.5*math.log10(r['apFlux']/ap_base),4)))
+                               aperture_deficit_mag=round(-2.5*math.log10(r['apFlux']/ap_base),4),
+                               simultaneous_comparisons=int(same_exposure.sum()),
+                               comparison_median_deficit_mag=round(comparison,4)))
     return render_table(sorted(output, key=lambda row: row['date_utc']))
 
 
