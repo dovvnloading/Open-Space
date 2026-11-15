@@ -406,6 +406,8 @@ If you use Open-Space results, code or data, please cite:
 }
 ```
 
+The same citation is in [CITATION.cff](CITATION.cff), which powers GitHub's **Cite this repository** button.
+
 Please also credit the observatories and surveys whose public data each result uses. Each results folder lists its sources. Cite the SDSS survey and its public data policy when using SDSS measurements.
 
 Project software is MIT licensed. [License](LICENSE) · [Data references and credit](docs/DATA.md#credit)
