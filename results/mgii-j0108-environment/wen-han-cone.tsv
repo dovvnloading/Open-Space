@@ -1,0 +1,78 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T10:18:10 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T10:18:10	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJS%2F272%2F39%2Ftable2&-c=16.999238+-1.130688&-c.rm=15&-out.max=1000&-out=%2A&-out.add=_r	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=016.999238-01.130688,rm=15.	
+#Constraint -out.add=_r
+
+#RESOURCE=yCat_22720039
+#Name: J/ApJS/272/39
+#Title: Galaxy clusters from DESI Legacy Surveys & WISE (Wen+, 2024)
+#INFO	ivoid=ivo://cds.vizier/j/apjs/272/39	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/apjs/272/39	    IVOID of underlying data collection
+#INFO	creator=Wen Z.L.	    First author or institution
+#INFO	cites=bibcode:2024ApJS..272...39W	    Article or Data origin sources
+#INFO	journal=ApJS	    Journal name
+#INFO	original_date=2024	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJS/272/39	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.22720039	    Dataset identifier that can be used for citation
+#INFO	publication_date=2025-02-13	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_ApJS_272_39_table2:
+#Name: J/ApJS/272/39/table2
+#Title: A catalog of 1.58 million clusters of galaxies identified from the DESI Legacy Surveys
+#Column	_r	(F7.4)	Distance from center (016.99924-01.13069)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	ID	(I7)	[1/1581179] Internal cluster identifier	[ucd=meta.id]
+#Column	n_Name	(A3)	[WH- ] Names with "WH-" are newly identified in this paper	[ucd=meta.note]
+#Column	Name	(A16)	Cluster identifier (JHHMMSS.s+DDMMSS)	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F9.5)	Right Ascension (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F9.5)	Declination (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	zCl	(F7.4)	[0.012/1.74] Cluster redshift	[ucd=src.redshift]
+#Column	f_zCl	(I1)	[0/1] Flag on zCl (1=spectroscopic) (1)	[ucd=meta.code]
+#Column	zmag	(F6.3)	[8.67/22.77] Brightest cluster galaxy (BCG) DESI z band AB magnitude	[ucd=phot.mag;em.opt.I]
+#Column	W1mag	(F6.3)	[10.36/19.71] BCG WISE W1 band AB magnitude	[ucd=phot.mag;em.IR.3-4um]
+#Column	logMs	(F5.2)	[10.95/12.65] Log BCG stellar mass	[ucd=phys.mass]
+#Column	r500	(F6.3)	[0.28/1.74] Cluster radius	[ucd=phys.size.radius]
+#Column	lam500	(F6.2)	[10/389] Cluster richness	[ucd=src.class.richness]
+#Column	M500	(F5.2)	[0.47/16.27] Derived cluster mass	[ucd=phys.mass]
+#Column	Ngal	(I3)	[6/246] Number of member galaxy candidates within r500	[ucd=meta.number]
+#Column	Gamma	(F5.2)	[-4.87/0.67]? Relaxation parameter; see Section 5.1 (2)	[ucd=stat.fit.param]
+#Column	e_Gamma	(F5.2)	[0.02/0.3]? Uncertainty in Gamma (2)	[ucd=stat.error]
+#Column	imag?	(I1)	[1/2] Data source for the cluster (3)	[ucd=meta.code]
+#Column	Cat	(a9)	Reference notes for previously known clusters (4)	[ucd=meta.bib]
+_r	ID	n_Name	Name	RAJ2000	DEJ2000	zCl	f_zCl	zmag	W1mag	logMs	r500	lam500	M500	Ngal	Gamma	e_Gamma	imag?	Cat
+arcmin	 	 	 	deg	deg	 	 	mag	mag	Msun	Mpc	 	10+14Msun	 	 	 	 	
+-------	-------	---	----------------	---------	---------	-------	-	------	------	-----	------	------	-----	---	-----	-----	-	---------
+13.8929	  77180	   	J010704.2-010800	016.76766	-01.13344	 1.0126	0	19.405	17.705	11.94	 0.627	 39.59	 1.78	 11	     	     	1	Y21
+ 9.6162	  77752	WH-	J010731.8-010115	016.88240	-01.02096	 0.8691	0	19.735	18.325	11.52	 0.460	 18.26	 0.84	  9	     	     	1	
+ 7.3661	  77797	   	J010734.1-011125	016.89192	-01.19035	 0.7250	1	19.564	18.650	11.18	 0.342	 10.18	 0.48	  6	     	     	1	CFSFDP
+ 3.5748	  78033	   	J010745.7-010713	016.94057	-01.12024	 0.9719	0	19.976	18.249	11.66	 0.820	 98.64	 4.31	 47	-1.74	 0.07	1	Y21
+ 2.2602	  78217	WH-	J010755.1-010555	016.97965	-01.09851	 0.9857	0	20.109	18.643	11.42	 0.407	 12.12	 0.56	  7	     	     	1	
+ 2.0401	  78258	   	J010757.3-010947	016.98859	-01.16298	 0.7592	1	18.672	17.304	11.94	 0.650	 40.27	 1.81	 16	     	     	1	Y21
+ 5.9003	  78385	WH-	J010803.3-011341	017.01375	-01.22795	 0.9455	0	19.220	17.510	11.97	 0.567	 29.83	 1.35	 10	     	     	1	
+12.6196	  78464	   	J010807.1-005521	017.02964	-00.92257	 0.6578	0	19.044	18.019	11.42	 0.598	 26.50	 1.20	 17	     	     	1	Y21
+ 8.1488	  78665	   	J010816.8-011448	017.07013	-01.24654	 0.2943	1	17.142	16.923	11.46	 0.498	 14.16	 0.66	  9	     	     	1	CFSFDP
+11.6627	  78732	   	J010819.9-011822	017.08273	-01.30623	 0.7234	1	18.410	17.101	11.98	 0.697	 45.23	 2.02	 14	     	     	1	CFSFDP
+ 6.1117	  78749	WH-	J010820.5-011106	017.08543	-01.18500	 1.0698	0	20.903	19.003	11.30	 0.522	 14.87	 0.69	  6	     	     	1	
+ 6.4076	  78803	   	J010823.0-010506	017.09573	-01.08489	 0.7500	0	19.530	18.330	11.41	 0.503	 18.79	 0.86	 13	     	     	1	WH22
+ 7.9093	  78871	WH-	J010826.5-010334	017.11025	-01.05957	 1.0315	0	20.932	19.187	11.25	 0.413	 10.17	 0.48	  6	     	     	1	
+10.5053	  79035	WH-	J010834.0-010144	017.14176	-01.02895	 0.6557	1	19.237	18.003	11.47	 0.479	 14.91	 0.69	 10	     	     	1	
+ 9.6625	  79116	WH-	J010838.1-010908	017.15885	-01.15233	 0.9803	0	20.460	18.863	11.32	 0.375	 12.29	 0.57	  6	     	     	1	
+10.6880	  79200	   	J010842.5-010821	017.17721	-01.13905	 0.6402	0	19.374	18.171	11.38	 0.587	 18.25	 0.84	 12	     	     	1	Y21
+10.8658	  79204	   	J010842.7-010607	017.17809	-01.10205	 0.6524	1	18.669	17.499	11.69	 0.613	 21.33	 0.98	 11	     	     	1	Y21
+12.4615	  79211	WH-	J010842.9-011406	017.17885	-01.23504	 1.0000	0	20.701	18.906	11.28	 0.469	 10.89	 0.51	  7	     	     	1	
+12.9841	  79314	WH-	J010847.7-011254	017.19859	-01.21498	 1.1217	0	20.888	19.030	11.47	 0.424	 15.11	 0.70	  7	     	     	1	
+13.8605	  79322	   	J010848.1-011441	017.20024	-01.24462	 0.6644	1	18.758	17.698	11.66	 0.748	 49.88	 2.22	 20	     	     	1	WHL
+14.9227	  79339	   	J010848.9-011621	017.20368	-01.27239	 0.4972	1	17.871	17.036	11.80	 0.869	 65.54	 2.90	 36	-0.19	 0.09	1	AMF
+ 9.7866	 986306	WH-	J010812.2-005833	017.05080	-00.97594	 0.4722	0	17.963	16.805	11.72	 0.526	 17.14	 0.79	  6	     	     	2	
+14.4148	 986738	WH-	J010857.3-010640	017.23872	-01.11098	 0.9678	0	20.078	18.415	11.62	 0.470	 22.70	 1.04	  8	     	     	2	
+

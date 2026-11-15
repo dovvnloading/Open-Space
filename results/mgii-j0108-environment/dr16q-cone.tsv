@@ -1,0 +1,82 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T10:19:30 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T10:19:30	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=VII%2F289&-c=16.999238+-1.130688&-c.rm=6&-out.max=100&-out=SDSS%2CJName%2CRAJ2000%2CDEJ2000%2Cz%2CPlate%2CMJD%2CFiber	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=016.999238-01.130688,rm=6.	
+#Constraint -out=SDSS,JName,RAJ2000,DEJ2000,z,Plate,MJD,Fiber
+
+#RESOURCE=yCat_7289
+#Name: VII/289
+#Title: SDSS quasar catalog, sixteenth data release (DR16Q) (Lyke+, 2020)
+#INFO	ivoid=ivo://cds.vizier/vii/289	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/vii/289	    IVOID of underlying data collection
+#INFO	creator=Lyke B.W.	    First author or institution
+#INFO	cites=bibcode:2020ApJS..250....8L	    Article or Data origin sources
+#INFO	journal=ApJS	    Journal name
+#INFO	original_date=2020	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/VII/289	    Dataset landing page
+#INFO	publication_date=2021-03-01	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	VII_289_dr16q:
+#Name: VII/289/dr16q
+#Title: The SDSS quasar-only catalog from DR16 (DR16Q)
+#Column	SDSS	(A18)	SDSS-DR16 designation (HHMMSS.ss+DDMMSS.s; J2000) (SDSS_NAME)	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F10.6)	Right Ascension (J2000) (RA)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F10.6)	[-17.53/84.44] Declination (J2000) (DEC)	[ucd=pos.eq.dec;meta.main]
+#Column	z	(F11.6)	[-0.0027/7.03]? Best available redshift	[ucd=src.redshift;pos.heliocentric]
+#Column	Plate	(I5)	Spectroscopic plate number (G1)	[ucd=obs.field]
+#Column	MJD	(I5)	[51608/58543] Spectroscopic Modified Julian Date (G1)	[ucd=time.epoch]
+#Column	Fiber	(I4)	Spectroscopic fiber number (FIBERID) (G1)	[ucd=meta.number;pos.parallax.spect]
+SDSS	RAJ2000	DEJ2000	z	Plate	MJD	Fiber
+ 	deg	deg	 	 	 	
+------------------	----------	----------	-----------	-----	-----	----
+010738.63-010811.3	016.910995	-01.136479	   0.754469	 9392	58104	 302
+010739.80-011042.5	016.915853	-01.178474	   1.601887	 9332	58072	 586
+010749.01-010722.3	016.954231	-01.122874	   0.956848	 7874	57279	 186
+010752.22-010904.9	016.967621	-01.151388	   3.261000	 4226	55475	 228
+010755.89-010234.0	016.982894	-01.042784	   1.322611	 8789	57358	 445
+010802.90-010946.0	017.012114	-01.162797	   3.350000	 4226	55475	 230
+010804.31-010440.2	017.017970	-01.077837	   1.285000	 4226	55475	 232
+
+#Table	VII_289_superset:
+#Name: VII/289/superset
+#Title: The "superset" of all SDSS-IV/eBOSS objects targeted as quasars
+#Column	SDSS	(A18)	SDSS-DR16 designation (HHMMSS.ss+DDMMSS.s; J2000) (SDSS_NAME)	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F10.6)	Right Ascension (J2000) (RA)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F10.6)	[-17.53/84.44] Declination (J2000) (DEC)	[ucd=pos.eq.dec;meta.main]
+#Column	z	(F11.6)	[-0.012/7.06]? Best available redshift	[ucd=src.redshift;pos.heliocentric]
+#Column	Plate	(I5)	Spectroscopic plate number (G1)	[ucd=obs.field]
+#Column	MJD	(I5)	[51608/58543] Spectroscopic Modified Julian Date (G1)	[ucd=time.epoch]
+#Column	Fiber	(I4)	Spectroscopic fiber number (FIBERID) (G1)	[ucd=meta.note]
+SDSS	RAJ2000	DEJ2000	z	Plate	MJD	Fiber
+ 	deg	deg	 	 	 	
+------------------	----------	----------	-----------	-----	-----	----
+010738.63-010811.3	016.910995	-01.136479	   0.754469	 9392	58104	 302
+010739.80-011042.5	016.915853	-01.178474	   1.601887	 9332	58072	 586
+010746.56-010709.9	016.944003	-01.119423	   0.953046	 8789	57358	 405
+010749.01-010722.3	016.954231	-01.122874	   0.956848	 7874	57279	 186
+010752.22-010904.9	016.967621	-01.151388	   3.261000	 4226	55475	 228
+010752.22-010904.9	016.967621	-01.151388	   3.261000	 3736	55214	 291
+010754.11-010411.4	016.975459	-01.069835	  -0.000334	 8789	57358	 452
+010755.89-010234.0	016.982894	-01.042784	   1.322611	 8789	57358	 445
+010758.73-010453.2	016.994727	-01.081455	   0.849048	 8789	57358	 410
+010759.05-010750.4	016.996050	-01.130682	   0.000045	 4226	55475	 226
+010800.87-010807.0	017.003626	-01.135287	  -0.000306	 8789	57358	 407
+010802.08-010400.0	017.008693	-01.066681	   1.679984	 8789	57358	 404
+010802.90-010946.0	017.012114	-01.162797	   3.350000	 3736	55214	 284
+010802.90-010946.0	017.012114	-01.162797	   3.350000	 4226	55475	 230
+010804.31-010440.2	017.017970	-01.077837	   1.285000	 4226	55475	 232
+010804.79-010223.9	017.019972	-01.039990	   0.711122	 8789	57358	 408
+010811.23-011224.0	017.046832	-01.206682	   0.114641	 7875	56980	 508
+010820.69-010659.7	017.086242	-01.116586	   1.506329	 8789	57358	 402
+010821.53-010951.8	017.089721	-01.164398	  -0.000459	 8789	57358	 401
+
