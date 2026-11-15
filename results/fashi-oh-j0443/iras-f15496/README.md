@@ -1,6 +1,6 @@
 # A candidate OH megamaser toward IRAS F15496+0740
 
-FASHI DR2 source **20260153867** has a 1405.0059 ± 0.0060 MHz line at S/N 21.04. Hydrogen at 21 cm would place it at z = 0.01096. Interpreting it as 1667.35903 MHz OH puts it at **z = 0.1867274**, just 43.8 km/s from the spectroscopic redshift of a dusty galaxy inside the FAST beam. This is a candidate assignment of the radio line to an infrared host. An uncataloged foreground H I emitter remains possible. [FASHI DR2](https://nadc.china-vo.org/res/r103421/?lang=en) · [DESI DR1](https://data.desi.lbl.gov/doc/releases/dr1/)
+FASHI DR2 source **20260153867** has a 1405.0059 ± 0.0060 MHz line at S/N 21.04. Hydrogen at 21 cm would place it at z = 0.01096. Interpreting it as 1667.35903 MHz OH puts it at **z = 0.1867274**, just 43.8 km/s from the spectroscopic redshift of a dusty galaxy inside the FAST beam. This is a **single-line OH megamaser candidate, not a confirmed OH detection**. The independent Parkes HIPASS spectrum shows **no significant positive detection of the predicted 1665-MHz companion** at 1403.35667 MHz (or of the FAST main line at adequate significance). A **foreground H I galaxy inside the FAST beam remains possible**, including one uncataloged by DESI or SDSS. [FASHI DR2](https://nadc.china-vo.org/res/r103421/?lang=en) · [DESI DR1](https://data.desi.lbl.gov/doc/releases/dr1/)
 
 | Evidence | Measurement |
 |---|---|
