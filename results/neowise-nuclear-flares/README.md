@@ -2,7 +2,7 @@
 
 Between August 2016 and January 2017 the centre of the galaxy CGCG 539-025, 62 Mpc away, began an infrared outburst. By January 2018 it was 7.1 times brighter at 4.6 μm than it had been in six earlier NEOWISE visits. It has faded smoothly since and was still above its old level when the survey ended in 2024. The excess emission has the colour of 1,040 K dust, peaked at 1.4 × 10⁴³ erg/s and carried 1.5 × 10⁵¹ erg over seven years. The galaxy shows no sign of an active nucleus. No transient at this position is in the Transient Name Server, the Gaia alerts or the ZTF alert stream, and the flare is absent from the three published infrared flare samples we checked.
 
-Dust that glows for years after a short flash is how tidal disruption events hidden by dust have been found. In those events a star passes too close to a galaxy's central black hole and is torn apart. This flare matches the published examples in rise time, temperature, luminosity and energy. It is the largest of seven unreported flares that pass every cut in a search of 43,916 nearby galaxies. They are candidates. Infrared photometry cannot separate a disrupted star from a dust-enshrouded supernova near the nucleus or the first outburst of a dormant active nucleus. [Flare table](data/flares.csv) · [Visit light curves](data/flare-light-curves.csv)
+Dust that glows for years after a short flash is how tidal disruption events hidden by dust have been found. In those events a star passes too close to a galaxy's central black hole and is torn apart. This flare matches the published examples in rise time, temperature, luminosity and energy. It is the largest of seven unreported flares that pass every cut in a search of 43,916 nearby galaxies. They are candidates. Infrared photometry cannot separate a disrupted star from a dust-enshrouded supernova near the nucleus or the first outburst of a dormant active nucleus. Public SPHEREx images from 2025–26 show hot dust still present in UGC 2653, and possibly in CGCG 539-025. UGC 2653's nucleus also brightened in radio after its flare began. [Flare table](data/flares.csv) · [Visit light curves](data/flare-light-curves.csv) · [SPHEREx and VLASS follow-up](#spherex-and-vlass-follow-up)
 
 ![Seven panels of nuclear flux against year. Each shows a flat baseline followed by a sudden rise in both bands and a slower decline. CGCG 539-025 rises from 5 to 36 mJy at 4.6 μm.](unreported-flares.png)
 
@@ -75,9 +75,36 @@ The seven in the table are the unreported flares with one peak, at least two vis
 - "Unreported" means absent from the catalogues and services queried on 14–15 November 2026. Unpublished candidate lists from other WISE searches may contain these sources.
 - The classes use SIMBAD types, which are incomplete. A weak active nucleus without a catalogue entry would pass as a quiet galaxy.
 
+## SPHEREx and VLASS follow-up
+
+**SPHEREx shows hot dust still in UGC 2653, and probably in CGCG 539-025.** The public SPHEREx DR1 spectral cube covers 2025–26 at 12.9 arcsec per pixel. It gives each nucleus's colour between 3.0–3.8 μm and 4.1–5.0 μm, which match the W1 and W2 bands. Sixty-five 2MRS galaxies in the same sky tiles, with AllWISE W1 − W2 below 0.5 mag, calibrate how that colour follows the pre-flare WISE colour; their scatter is 0.052 mag. A nucleus that still holds warm dust should be redder than its 2010 AllWISE colour predicts.
+
+| Galaxy | Excess left at last NEOWISE visit | SPHEREx colour excess, mag | Calibration galaxies as red |
+| --- | ---: | ---: | ---: |
+| UGC 2653 | 73% | +0.48 (9σ) | 0 of 65 |
+| CGCG 539-025 | 11% | +0.12 (2.3σ) | 3 of 65 |
+| ESO 161-23 | 22% | +0.09 | 6 of 65 |
+| LEDA 204150 | 49% | +0.07 | 8 of 65 |
+| 2MASX J01110461−4558435 | 5% | +0.04 | 14 of 65 |
+| LEDA 140951 | 18% | +0.01 | 24 of 65 |
+| LEDA 707155 | none | −0.17 | 64 of 65 |
+
+A background ring of 3–5 pixels instead of 5–8 changes every excess by 0.01 mag or less. UGC 2653, the slowest and coolest of the seven, is the clear detection; CGCG 539-025 is marginal. LEDA 707155's AllWISE colour is 0.18 mag redder than its NEOWISE baseline, so its comparison is unreliable. The test uses one colour, so it cannot separate warm dust from any other red nuclear source. The cube also does not say when within the DR1 campaign each pixel was observed. [Colours and spectra](data/spherex-colours.json) · [Smaller ring](data/spherex-colours-ring3-5.json)
+
+**VLASS catches a possible radio brightening in UGC 2653.** Four of the seven nuclei are north of −40° and inside the VLA Sky Survey. Quick-look images from three epochs give peak 3 GHz flux densities (mJy/beam, or 3σ limits):
+
+| Galaxy | 2019 | 2021–22 | 2024 | NVSS 1.4 GHz, 1993–96 |
+| --- | ---: | ---: | ---: | ---: |
+| UGC 2653 | 0.71 ± 0.12 | 0.79 ± 0.11 | 1.24 ± 0.13 | 4.8 |
+| CGCG 539-025 | 0.71 ± 0.12 | 0.98 ± 0.12 | 0.87 ± 0.12 | 4.4 |
+| LEDA 204150 | < 0.47 | < 0.47 | < 0.49 | — |
+| LEDA 707155 | < 0.43 | < 0.41 | < 0.42 | — |
+
+UGC 2653's infrared flare began in mid-2022, between the second and third epochs. By July 2024 its nucleus had brightened by about 0.5 mJy, roughly 3σ and νLν ≈ 2 × 10³⁷ erg/s at 3 GHz. That is in the range of the outflows seen after tidal disruptions. The supernova SN 2007D, 6.3 arcsec away in the same galaxy, stays undetected (S/N below 2) in all three images. CGCG 539-025's radio source is steady within the errors 2–7 years into its flare. That fits star formation in this IRAS galaxy and limits any late radio flare to about 0.5 mJy, or νLν ≈ 7 × 10³⁶ erg/s. Quick-look flux scales differ by up to about 10% between epochs. [Radio measurements](data/radio.json)
+
 ## Next tests
 
-An optical spectrum of CGCG 539-025 now would test for high-ionization coronal lines, which persist for years after dust-obscured disruption events and are not produced by supernovae. Radio surveys can test for an outflow: the VLA Sky Survey observed the field in three epochs between 2017 and 2024, all during the decline. SPHEREx has been mapping the whole sky at 0.75–5 μm since 2025, so its public spectral images give the present 3–5 μm flux of all seven nuclei and extend each light curve past the end of NEOWISE.
+An optical spectrum of UGC 2653 and CGCG 539-025 now would test for high-ionization coronal lines, which persist for years after dust-obscured disruption events and are not produced by supernovae. Radio imaging of UGC 2653 at several frequencies would test whether its 2024 brightening is a new outflow, and later SPHEREx all-sky passes will follow the hot dust as it fades.
 
 ## No vanishing supergiant
 
@@ -106,6 +133,14 @@ python vet.py detections.csv data/2mrs-positions.csv.gz catalogue-records.json
 python ztf_alerts.py flares.csv ztf-alerts.json
 ```
 
+The SPHEREx and VLASS follow-up reads only byte ranges and cutouts. `spherex.py` fetches about 90 MB from each of the seven SPHEREx tiles, and `radio.py` takes about a minute:
+
+```sh
+python spherex.py data/spherex-colours.json --cache spherex-cache
+python spherex.py data/spherex-colours-ring3-5.json --cache spherex-cache --ring 3 5
+python radio.py data/radio.json
+```
+
 The Transient Name Server allows about one cone search a minute, so `vet.py` needs two hours for 113 positions. Its answers change as new transients are registered. Fluxes are in mJy on the Vega zero points 309.54 Jy and 171.787 Jy. Dates are UTC. Retrieval dates and file hashes are in [sources.json](sources.json).
 
-This work uses data from the Wide-field Infrared Survey Explorer and NEOWISE, served by the NASA/IPAC Infrared Science Archive; the 2MASS Redshift Survey; SIMBAD and VizieR; the Transient Name Server; the Zwicky Transient Facility through IRSA and the ALeRCE broker; the eROSITA-DE first data release; and the Gaia Photometric Science Alerts. [IRSA](https://irsa.ipac.caltech.edu) · [TNS](https://www.wis-tns.org) · [ALeRCE](https://alerce.science) · [eROSITA-DE DR1](https://erosita.mpe.mpg.de/dr1/) · [Gaia alerts](http://gsaweb.ast.cam.ac.uk/alerts)
+This work uses data from the Wide-field Infrared Survey Explorer and NEOWISE, served by the NASA/IPAC Infrared Science Archive; the 2MASS Redshift Survey; SIMBAD and VizieR; the Transient Name Server; the Zwicky Transient Facility through IRSA and the ALeRCE broker; the eROSITA-DE first data release; the Gaia Photometric Science Alerts; SPHEREx, served by IRSA; and the VLA Sky Survey of the National Radio Astronomy Observatory, served by the Canadian Astronomy Data Centre, with NVSS through VizieR. [IRSA](https://irsa.ipac.caltech.edu) · [TNS](https://www.wis-tns.org) · [ALeRCE](https://alerce.science) · [eROSITA-DE DR1](https://erosita.mpe.mpg.de/dr1/) · [Gaia alerts](http://gsaweb.ast.cam.ac.uk/alerts)
