@@ -25,16 +25,30 @@ The independent extraction from NASA/IPAC uses the final NEOWISE-R single-exposu
 - Gaia's early measurement uses eight transits across six dates. Its late measurement uses 18 transits across 11 dates. The independent optical change has the same sign, with considerably smaller amplitude. The TDECat and IRSA infrared extractions use the **same** spacecraft exposures.
 - The Jan–Dec 2010 cryogenic WISE observations are excluded throughout. Survey exposure sensitivity and source blending can change catalog photometry. A fluctuating or declining pre-existing accretion flow, an old dust echo, and an unresolved variable neighbor remain viable explanations. Confirming a prior tidal disruption would require additional evidence.
 
-Forced difference photometry on unWISE coadds with simultaneous fits to the target and its nearest neighbor would localize the earlier fading component. The 2014–15 minus 2021–22 difference should be positive at the host position in each scan direction and band. If the difference centroid instead falls on a neighboring source or disappears after modeling the neighbor, the host attribution fails.
+## Localization in detector images
+
+We also checked the original NASA/IPAC single-exposure intensity images. These are a separate reduction of the same infrared observations. Within each of the eight spring/fall visits in the two windows, we selected four frames at evenly spaced indices through the time-sorted detections inside a 3-arcsec host cone with clean contamination/moon flags, frame quality 10 and SAA separation above 5 degrees. Both bands of each frame were retained. This selection is independent of measured brightness. The manifest freezes all 64 selected band-images. Five images failed the field-edge coverage cut. Every spring and fall comparison still uses both years in each window.
+
+We transformed each exposure with its FITS distortion-aware WCS, linearly resampled on 1-arcsec pixels, subtracted a local median and scaled counts to a common zero point of 20. We required at least 98% geometric coverage of the 121 × 121 pixel stamp. We took medians within each visit, averaged the two annual visit medians in each window, then subtracted late from early. In each difference we fit a circular Gaussian (fixed σ of 2.85 arcsec) plus a sloping background inside an 8-arcsec aperture. We applied the same fixed-position fit to the optical host, the nearest AllWISE neighbor, and a 12-arcsec grid of 26 blank positions at least 12 arcsec from any AllWISE source. We separately allowed the Gaussian center to move by up to 4 arcsec in each coordinate to estimate the position. The resampled pixels are correlated.
+
+| Band and season | Images used | Host peak | Largest absolute blank peak | Nearest neighbor peak | Offset of fitted peak from optical host |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| W1 spring | 15 | 5.46 | 1.79 | −0.59 | 1.34″ |
+| W1 fall | 14 | 3.65 | 1.29 | −1.13 | 0.77″ |
+| W2 spring | 15 | 8.16 | 4.61 | −0.04 | 2.02″ |
+| W2 fall | 15 | 14.73 | 5.51 | −4.38 | 1.47″ |
+
+Peak amplitudes are in rescaled detector counts per pixel and are comparable within a row. All four differences peak close to the host and show no positive residual at the neighboring catalogued source 11.86 arcsec away. The four reductions share two observing windows and the N=26 blank positions provide a descriptive background control. A free-width Gaussian in the noisier W2 fall image reaches the fit bounds, so a subarcsecond nuclear location would exceed these data. Before interpreting the fading as an earlier disruption, obtain pre-outburst spectroscopy or locate an earlier optical/X-ray high state with a measurable onset and decay. Persistent narrow-line or stochastic accretion activity would favor an active galaxy interpretation.
 
 ## Reproduction
 
-From this directory run the following commands with Python 3.10 or later. The two measurement scripts use only the standard library. Rebuild the optional figure with Matplotlib and the same output and cache directories. Input caches can live outside the repository.
+From this directory run the following commands with Python 3.10 or later. The catalog and field measurements use the standard library. The figure uses Matplotlib. The image check uses NumPy, SciPy and Astropy and downloads about 255 MiB. Its manifest pins each original FITS digest (SHA-256). Input caches can live outside the repository.
 
 ```sh
 python screen.py --cache /tmp/at2023ugy-tdecat --out /tmp/at2023ugy-results
 python measure.py --cache /tmp/at2023ugy-archives --out /tmp/at2023ugy-results
 python plot.py --cache /tmp/at2023ugy-archives --out /tmp/at2023ugy-results
+python pixels.py --cache /tmp/at2023ugy-archives --out /tmp/at2023ugy-results
 ```
 
 `screen.csv` retains every target and its eligibility. The input manifest pins the 134 Git blobs to TDECat commit `bca013a266cd5d2a120aa4c6b34a2dc54bee1e5e`. `field.csv` and `visits.csv` are the direct measurements, with magnitudes on their native Vega systems. IRSA MJD and sky coordinates use the native NEOWISE time column and J2000 equatorial position. `measurement.json` contains the Gaia values and input URLs, byte counts and SHA-256 checksums from the 2026-11-15 run. Gator writes request timestamps and temporary log paths into its headers, so subsequent file digests may differ even if the data rows agree. Data providers include NASA/JPL-Caltech/IRSA, the Gaia Science Alerts team and collaborators, and the TDECat authors.
