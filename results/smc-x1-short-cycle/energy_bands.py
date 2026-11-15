@@ -71,15 +71,18 @@ def metrics(mid, low, hardness):
     return np.concatenate([mid, low, diff, (mid_fraction - low_fraction)[..., None]], axis=-1)
 
 
-def summarize(daily, hardness, draws=10000):
+def day_resamples(daily, rng, draws=10000):
+    # Keep band covariance within each day and resample within phase and cycle.
+    samples = [[sample[rng.integers(len(sample), size=(draws, len(sample)))].mean(axis=1)
+                for sample in pair] for pair in daily]
+    return np.array(samples).mean(axis=0)
+
+
+def summarize(daily, hardness):
     means = np.array([[sample.mean(axis=0) for sample in pair] for pair in daily])
     values = metrics(*means.mean(axis=0), hardness)
-    # Resample whole days within each phase interval and cycle, preserving band covariance.
-    # The four observed cycles are fixed. Adjacent-day dependence can narrow these intervals.
-    rng = np.random.default_rng(32564)
-    samples = np.array([[sample[rng.integers(len(sample), size=(draws, len(sample)))].mean(axis=1)
-                         for sample in pair] for pair in daily])
-    bootstrap = metrics(*samples.mean(axis=0), hardness)
+    samples = day_resamples(daily, np.random.default_rng(32564))
+    bootstrap = metrics(*samples, hardness)
     lows, highs = np.quantile(bootstrap, [0.025, 0.975], axis=0)
     drop_one = np.array([metrics(*np.delete(means, i, axis=0).mean(axis=0), hardness)
                          for i in range(len(daily))])
@@ -113,13 +116,33 @@ def measure(path):
         "bands_keV": BANDS, "orbit_bins": len(rows), "eligible_orbit_bins": int(keep.sum()),
         "units": "photons cm^-2 s^-1; hard fraction is dimensionless"
     }
+    selections = {}
     for name, mask, half_width in [
         ("out_of_eclipse", orbital_phase >= .17, 1/6),
         ("out_of_eclipse_narrower_windows", orbital_phase >= .17, 1/8),
         ("eclipse_core", orbital_phase <= .055, 1/6),
     ]:
         daily, cycles = states(rows, keep & mask, half_width)
+        selections[name] = daily
         result[name] = {"half_width_cycles": half_width, "cycles": cycles, **summarize(daily, hardness=(name != "eclipse_core"))}
+    # Subtract the same-phase eclipse core; it can contain real emission from the binary.
+    outside, core = selections["out_of_eclipse"], selections["eclipse_core"]
+    def state_means(daily):
+        return np.mean([[sample.mean(0) for sample in pair] for pair in daily], axis=0)
+
+    mid, edge = state_means(outside) - state_means(core)
+    rng = np.random.default_rng(60700)
+    boot_mid, boot_edge = day_resamples(outside, rng) - day_resamples(core, rng)
+    physical = (boot_mid.sum(axis=1) > 0) & (boot_edge.sum(axis=1) > 0)
+    corrected = metrics(mid, edge, True)
+    boot = metrics(boot_mid[physical], boot_edge[physical], True)
+    result["out_of_eclipse_minus_eclipse_core"] = {
+        "middle": rounded(mid), "edge": rounded(edge), "middle_minus_edge": rounded(corrected[6:9]),
+        "middle_minus_edge_hard_fraction": round(float(corrected[-1]), 6),
+        "day_bootstrap_95_hard_fraction_difference": rounded(np.quantile(boot[:, -1], [0.025, 0.975])),
+        "bootstrap_draws_with_positive_summed_flux_in_both_states": int(physical.sum()),
+        "bootstrap_draws_total": len(physical)
+    }
     return result
 
 
