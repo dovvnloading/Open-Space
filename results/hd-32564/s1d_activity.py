@@ -41,7 +41,7 @@ def indices(row, cache):
     ca_reference = band(3901.07, 20) + band(4001.07, 20)
     ca_cores = band(3933.664, 1.09, True) + band(3968.47, 1.09, True)
     values = (band(6562.808, 1.6) / ha_reference, band(6562.808, 0.6) / ha_reference,
-              ca_cores / ca_reference)
+              ca_cores / ca_reference, band(6572.795, 0.8) / ha_reference)
     profiles = []
     for name, center, reference in [("CaII_K", 3933.664, ca_reference),
                                     ("CaII_H", 3968.47, ca_reference),
@@ -55,7 +55,7 @@ def indices(row, cache):
 def extract(rows, cache):
     buffer = io.StringIO()
     out = csv.writer(buffer, lineterminator="\n")
-    out.writerow(["product", "bjd", "prefix_sha256", "halpha16", "halpha06", "cahk"])
+    out.writerow(["product", "bjd", "prefix_sha256", "halpha16", "halpha06", "cahk", "cai_control"])
     profiles = []
     for row in rows:
         digest, measurements, profile = indices(row, cache)
@@ -80,7 +80,7 @@ def correlations(rows):
     best = min(models, key=lambda row: row["rms"])
     terms = (design(t, best["P"]) * best["params"][:8]).reshape(-1, 4, 2).sum(axis=2)
     signals = {"short": terms[:, 0], "second": terms[:, 1], "full": terms.sum(axis=1)}
-    for key in ("halpha16", "halpha06", "cahk"):
+    for key in ("halpha16", "halpha06", "cahk", "cai_control"):
         values = np.array([float(r[key]) for r in rows])
         print(key, "median", round(float(np.median(values)), 6), "r",
               {name: round(float(np.corrcoef(remove(values, base), remove(wave, base))[0, 1]), 4)
@@ -91,6 +91,11 @@ def correlations(rows):
     season_base = np.column_stack([season == value for value in np.unique(season)])
     seasonal_r = np.corrcoef(remove(activity, season_base), remove(signals["full"], season_base))[0, 1]
     print("H-alpha versus full waveform after season offsets, r", round(float(seasonal_r), 4))
+    cai = np.array([float(r["cai_control"]) for r in rows])
+    print("H-alpha versus Ca I, r", round(float(np.corrcoef(remove(activity, base), remove(cai, base))[0, 1]), 4))
+    control = np.column_stack([base, cai])
+    r_partial = np.corrcoef(remove(activity, control), remove(signals["full"], control))[0, 1]
+    print("H-alpha versus full waveform after Ca I correction, r", round(float(r_partial), 4))
     base = np.column_stack([base, activity])
     for key, wave in [("null", 0), ("short", signals["short"]), ("full", signals["full"])]:
         print(key, "CCF RMS with H-alpha, m/s", round(float(np.std(remove(measured_rv - wave, base))), 4))
