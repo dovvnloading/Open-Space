@@ -3,7 +3,6 @@ from pathlib import Path
 import argparse
 import csv
 import gzip
-import warnings
 
 import numpy as np
 from astropy.coordinates import get_body_barycentric
