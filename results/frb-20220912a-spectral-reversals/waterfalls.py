@@ -62,9 +62,7 @@ def measure(path, peaks, split):
         fractions = draws[:, 1] / draws.sum(axis=1)
         envelopes.append([len(blank), *np.round(np.quantile(fractions, [.025, .975]), 5)])
     rows = []
-    for trial in (dm, 219.46, 220.5, 221.5, 222.938288):
-        if trial == 222.938288 and abs(trial-dm) < 1e-5:
-            continue
+    for trial in dict.fromkeys((round(dm, 6), 219.46, 219.893117, 220.5, 221.5, 222.938288)):
         for number, (peak, (start, end)) in enumerate(zip(peaks, gates), 1):
             # Retain the measured arrival time at the fitted peak as DM varies.
             # Changes in predicted arrival times elsewhere follow cold-plasma dispersion.
@@ -80,7 +78,7 @@ def measure(path, peaks, split):
             centroid = (f * energy).sum() / energy.sum()
             rows.append([beam, len(f), round(trial, 6), number, start, end, split,
                          round(frac, 5), round(centroid, 3),
-                         *(envelopes[number-1] if trial == dm else ['', '', ''])])
+                         *(envelopes[number-1] if abs(trial-dm) < 1e-5 else ['', '', ''])])
     return rows
 
 
