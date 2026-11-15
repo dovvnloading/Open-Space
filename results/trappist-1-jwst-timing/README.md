@@ -29,6 +29,12 @@ The depth filter fits a trapezoid and the baseline simultaneously. Each local sl
 
 The detection threshold is the larger of 500 ppm and the deepest inverted-flux event: 572 ppm with the linear model and 500 ppm with the quadratic model. This single-visit noise control does not provide a survey-wide false-alarm probability or a formal shape-independent upper bound. The quadratic scan's largest dimming measures 311 ppm. Full grid recovery includes local structure, transit blending, data gaps, edge effects and the brightening because injections are multiplied into the measured binned photometry before all fitted baselines. The search and injection templates are symmetric and do not span every grazing geometry or wavelength-dependent signal.
 
+### Physical transit shapes and original-cadence recovery
+
+A separate injection set uses occultations of a quadratic limb-darkened stellar disk, integrated over 512 annuli. For first-to-last contact lasting 81 minutes, limb coefficients 0.25 and 0.18, and peak depth 1,000 ppm, the linear search recovers **371/393 supported centers at impact parameter 0**, **368/393 at 0.7**, and **322/393 at 0.95**. The corresponding full-visit counts are 428, 425 and 375 of 559. At 1,500 ppm all three geometries reach 393/393 supported centers. Each shape is scaled to the stated peak depth. These tests quantify the cost of a less box-like chord and do not assign a probability to its geometry. [Shape sensitivity](shape_checks.csv)
+
+We also injected 1,000 ppm trapezoids into the original 1.38-second integrations at every thirteenth trial location (43 centers), then independently recomputed the median bins and all fits. All 43 detection classifications agreed with the binned-injection analysis. The largest change in fitted peak depth was 2.21 ppm. [Original-cadence checks](full_cadence_checks.csv)
+
 ## Prior observations and attribution
 
 Gillon et al. already reported a roughly two-hour, 200 ppm dip near JD 2460272.26 in **a different MIRI observation**, with an ambiguous origin. Our analysis recovers none of the 200 ppm injections with the primary model. This NIRSpec visit leaves a signal of that size unresolved. The earlier event and the 28.7-day timing solution do not establish a single ephemeris. [Gillon et al., methods and Extended Data](https://arxiv.org/html/2509.02128v1)
@@ -42,6 +48,9 @@ From this directory, run the following commands with Python and NumPy. The commi
 ```sh
 python prepare.py
 OPENBLAS_NUM_THREADS=1 python analyze.py
+OPENBLAS_NUM_THREADS=1 python shape_checks.py
 ```
 
 [One-minute flux and timestamps](one_minute.csv) · [Scan and injection summary](summary.json) · [Independent known-planet timing checks](timing/README.md)
+
+For the original-cadence check supply the source ECSV as the sole argument to `shape_checks.py`.
