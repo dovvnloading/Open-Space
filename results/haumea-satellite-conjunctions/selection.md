@@ -1,0 +1,7 @@
+# Haumea satellite–satellite conjunction search
+
+Frozen question, 2026-11-15. Do Namaka and Hiʻiaka ever overlap each other in the observer's sky plane during the published 2005–2035 satellite ephemeris, and is there archival coverage or an observable future event? The observing unit is a local minimum in the relative sky-plane separation. Screen all epochs in the published ephemeris. Preserve close misses, ephemeris uncertainty, and the angular-size assumptions that determine contact. A small nominal separation alone cannot establish an observed eclipse.
+
+The March 2026 survey by Proudfoot, Grundy and Ragozzine already predicts primary–secondary mutual events of five other trans-Neptunian systems. The 2016 Hiʻiaka rotation paper already discussed the possibility of moon–moon mutual events. Check dated predictions and actual measurements before claiming an event is new. Distinguish foreground/background ordering, sky-plane crossings, solar shadows, and independently observed flux changes.
+
+Starting data: Proudfoot et al. (2024), Table 3, https://doi.org/10.3847/PSJ/ad26e9. Compare predictions with the independently measured satellite positions where available and inspect archive exposure times for surviving past encounters.
