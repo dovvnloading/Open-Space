@@ -9,7 +9,7 @@ We extracted 13 × 13 moving-target pixel stamps from 3,412 calibrated TESS full
 | (29489) | 73 | 114 | 3/5 | +0.0632 | -0.4199 to +0.2243 |
 | (3177) | 22 | 290 | 4/8 | +0.0014 | -0.0071 to +0.0177 |
 
-The two most precise later visits give median depths near zero in the fixed-phase tests. In sector 20 the upper end of the interval is below WQ’s 2018 depth of 0.128 mag. In sector 39 the upper end is below Chillicothe’s 2018 depth of 0.0477 mag. Injections into the **extracted photometry** verify that the scoring and detrending can recover fixed-phase dips at the original scale. These bootstrap intervals describe the sampled cycles and are particularly imprecise in the small sector 73 sample. [Individual cycles, frozen phases, artificial dips and comparison aperture](FIRST_TWO_VISITS.md) · [Two additional visits](other_visits.csv)
+**The later-sector tests did not securely reproduce a persistent dimming clock, and neither asteroid has a confirmed moon.** The two most precise later visits give median depths near zero in the fixed-phase tests. In sector 20 the upper end of the interval is below WQ’s 2018 depth of 0.128 mag. In sector 39 the upper end is below Chillicothe’s 2018 depth of 0.0477 mag. Injections into the **extracted photometry** verify that the scoring and detrending can recover fixed-phase dips at the original scale. These bootstrap intervals describe the sampled cycles and are particularly imprecise in the small sector 73 sample. [Individual cycles, frozen phases, artificial dips and comparison aperture](FIRST_TWO_VISITS.md) · [Two additional visits](other_visits.csv)
 
 ## Independence and observing geometry
 
