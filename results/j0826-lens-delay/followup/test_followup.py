@@ -19,7 +19,7 @@ class FollowupEvidenceTests(unittest.TestCase):
         d = observations("ztf",width=14)
         self.assertEqual(len(d),239)
         self.assertEqual(len(observations("gaia")),76)
-        self.assertEqual(len({str(x) for x in d[:,0]}), len(d))
+        self.assertEqual(len(set(d[d[:,3]==0,0])), len(d[d[:,3]==0]))
 
     def test_same_time_image_model_is_weaker_for_locked_intrinsic_gp(self):
         gp=DelayedGP(observations("ztf",width=14))

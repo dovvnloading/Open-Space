@@ -23,6 +23,8 @@ jobs:
           python results/j0826-lens-delay/followup/free_knots.py --quick
           python results/j0826-lens-delay/followup/seasonal_template.py --quick
           python results/j0826-lens-delay/followup/sis_sanity.py
+          python results/j0826-lens-delay/followup/robustness.py --quick
+          python -m unittest discover -s results/j0826-lens-delay/followup -p 'test_followup.py' -v
       - name: Archive and independent PTF cone query
         run: |
           python results/j0826-lens-delay/followup/ptf_probe.py
