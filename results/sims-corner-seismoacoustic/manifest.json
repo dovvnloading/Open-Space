@@ -1,0 +1,685 @@
+{
+  "sources": {
+    "wa": {
+      "cneos": {
+        "date": "2026-08-14 07:48:36",
+        "energy": "3.8",
+        "impact-e": "0.13",
+        "lat": "47.7",
+        "lat-dir": "N",
+        "lon": "119.4",
+        "lon-dir": "W",
+        "alt": "30.0",
+        "vel": "12.2"
+      },
+      "cneos_query": "https://ssd-api.jpl.nasa.gov/fireball.api",
+      "cneos_snapshot_sha256": "abb39c09cbd6814fd7df3bfc1a519d8a5372b620ff91a947473e6c63d66c047e",
+      "inventory_query": "https://service.earthscope.org/fdsnws/station/1/query?latitude=47.7&longitude=-119.4&maxradius=3&starttime=2026-08-14T07%3A48%3A36&endtime=2026-08-14T07%3A48%3A36&level=channel&format=text&channel=HHZ%2CBHZ%2CEHZ%2CHNZ%2CHDF%2CBDF%2CEDF",
+      "inventory_sha256": "528ea033e1daf614d36a0205143b5450e60e53ac0151d6a323fcb81623211b74",
+      "earthquake_query": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-08-14T07:45:00&endtime=2026-08-14T08:05:00&latitude=47.7&longitude=-119.4&maxradius=5",
+      "returned_earthquakes": [
+        {
+          "id": "uw714078991",
+          "time": 1786694647990,
+          "coordinates": [
+            -122.052833333333,
+            48.5521666666667,
+            4.76
+          ],
+          "magnitude": 1.87
+        },
+        {
+          "id": "uw714078981",
+          "time": 1786694513700,
+          "coordinates": [
+            -122.3385,
+            46.3611666666667,
+            14.27
+          ],
+          "magnitude": 0.29
+        },
+        {
+          "id": "uw714078971",
+          "time": 1786694390010,
+          "coordinates": [
+            -122.332,
+            46.3486666666667,
+            15.24
+          ],
+          "magnitude": 0.66
+        }
+      ]
+    },
+    "ak": {
+      "cneos": {
+        "date": "2022-01-01 20:23:03",
+        "energy": "14.3",
+        "impact-e": "0.42",
+        "lat": "66.1",
+        "lat-dir": "N",
+        "lon": "152.6",
+        "lon-dir": "W",
+        "alt": "35.5",
+        "vel": null
+      },
+      "cneos_query": "https://ssd-api.jpl.nasa.gov/fireball.api",
+      "cneos_snapshot_sha256": "abb39c09cbd6814fd7df3bfc1a519d8a5372b620ff91a947473e6c63d66c047e",
+      "inventory_query": "https://service.earthscope.org/fdsnws/station/1/query?latitude=66.1&longitude=-152.6&maxradius=3&starttime=2022-01-01T20%3A23%3A03&endtime=2022-01-01T20%3A23%3A03&level=channel&format=text&channel=HHZ%2CBHZ%2CEHZ%2CHNZ%2CHDF%2CBDF%2CEDF",
+      "inventory_sha256": "839a3871977ea55b102cc6eb127c794436fd0debddcf69de0e82a95bd568ecb3",
+      "earthquake_query": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-01-01T20:19:00&endtime=2022-01-01T20:40:00&latitude=66.1&longitude=-152.6&maxradius=6",
+      "returned_earthquakes": []
+    }
+  },
+  "waveforms": [
+    {
+      "event": "wa",
+      "nslc": "UW.SAW..HHZ",
+      "lat": 47.70193,
+      "lon": -119.40162,
+      "elev_km": 0.7,
+      "range_km": 0.24648,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=SAW&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "491b87e6ec028314be2e853bde80731b751b9029d7a0945286efd8ea533c8153"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.EPH2..HHZ",
+      "lat": 47.37066,
+      "lon": -119.61169,
+      "elev_km": 0.689,
+      "range_km": 39.92045,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=EPH2&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "40bea13b07837a20b3ea04ecc35ed76a889d27b5558c131bc552568b988f2a49"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.DY2..HHZ",
+      "lat": 47.98523,
+      "lon": -119.77201,
+      "elev_km": 0.894,
+      "range_km": 42.151,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=DY2&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "69f0d3fbd968be90ccee24cd2059d20341f658238cb02600a891d8bbf90dea36"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.WEL2..HNZ",
+      "lat": 47.9481,
+      "lon": -119.85902,
+      "elev_km": 0.254,
+      "range_km": 43.99358,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=WEL2&loc=--&cha=HNZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "981ab59ac92032e1ede7ed4e2ac9e18f623e42257a21626297cadee4b0b90108"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.WEL1..HNZ",
+      "lat": 47.94767,
+      "lon": -119.86202,
+      "elev_km": 0.241,
+      "range_km": 44.13853,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=WEL1&loc=--&cha=HNZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "609d92d429dc1b5c78302b84f5b5402378076cbde9443995b2ab315c48bf5558"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.CHELN..HNZ",
+      "lat": 47.83453,
+      "lon": -120.00951,
+      "elev_km": 0.33039999999999997,
+      "range_km": 47.94725,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=CHELN&loc=--&cha=HNZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "0b14f50c18b306c2b104960e5880af65913e27f72f06e98a39ec016fedc1b113"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.CBS..HHZ",
+      "lat": 47.80469,
+      "lon": -120.04285,
+      "elev_km": 1.066,
+      "range_km": 49.44931,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=CBS&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "ce0c9397af14e9c9887dc36c8834f6a6be27bca082f99cb2311b13a045782d66"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.WTRV..HNZ",
+      "lat": 47.64479,
+      "lon": -120.07006,
+      "elev_km": 0.798,
+      "range_km": 50.54491,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=WTRV&loc=--&cha=HNZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "7735e348f39555baac9ba117db217c1354cfd51b632477aa59748a6a802327a6"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.WAT2..HHZ",
+      "lat": 47.620238,
+      "lon": -120.114436,
+      "elev_km": 0.8731,
+      "range_km": 54.236,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=WAT2&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "aa5316948e04bc0dbaa7b9c4527ab1bda8856af04fc84352ffacc0c116f29c18"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.MNSN..HNZ",
+      "lat": 47.89997,
+      "lon": -120.14142,
+      "elev_km": 0.377,
+      "range_km": 59.67512,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=MNSN&loc=--&cha=HNZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "4db2be7f9aa0ff205f22017a0e748fa48f7c77d5226847f568939584e88339ec"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.NTAT..HNZ",
+      "lat": 47.6642,
+      "lon": -120.22672,
+      "elev_km": 0.2373,
+      "range_km": 62.0169,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=NTAT&loc=--&cha=HNZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "215d8f772761524782b302da7d3a0897e19f9ace867a304047ff999c4f321185"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.OD2..EHZ",
+      "lat": 47.38754,
+      "lon": -118.71077,
+      "elev_km": 0.553,
+      "range_km": 62.31717,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=OD2&loc=--&cha=EHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "d591ce8454222c794706f086e335e1ab92a448f93ed8d2f3782fc1ea76196352"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.ROCKI..HNZ",
+      "lat": 47.3532,
+      "lon": -120.09818,
+      "elev_km": 0.2297,
+      "range_km": 65.07759,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=ROCKI&loc=--&cha=HNZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "39b28d7989b6a4c4d2da1c3a6f5b98bea3602695357fbd27d50e60e7f2bed8f1"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.ROCKR..HNZ",
+      "lat": 47.535318,
+      "lon": -120.29992,
+      "elev_km": 0.2657,
+      "range_km": 69.8933,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=ROCKR&loc=--&cha=HNZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "1a14bcf4a61130049d94070bed5bff540c405b0e2b8e2876315a3cbe93f1d5d2"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.ETW..HHZ",
+      "lat": 47.60451,
+      "lon": -120.33265,
+      "elev_km": 1.4747000000000001,
+      "range_km": 70.66116,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=ETW&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "b510bcb3cfec8f7fa99f9dcf0d4c25e919660d3d13eef95bd97750e2133729a5"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.OMAK..HHZ",
+      "lat": 48.3584,
+      "lon": -119.3332,
+      "elev_km": 0.6871,
+      "range_km": 73.37906,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=OMAK&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "de204443078e75c20b2731a0b61146f4c6f03af9bcc2cbe5104de779ae7ee8e0"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.WOLL..HHZ",
+      "lat": 47.057301,
+      "lon": -118.920998,
+      "elev_km": 0.3951,
+      "range_km": 80.04982,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=WOLL&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "9f397618f04326f6b996439e1ea31d35dc9e6061662e0ac85876c08b99fb64d8"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.NEL..HHZ",
+      "lat": 48.07802,
+      "lon": -120.33951,
+      "elev_km": 1.4999,
+      "range_km": 81.69576,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=NEL&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "e26c59adef94b197a492d9fbd0afcb99fc44824270ad759e0768fa26b92d6333"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.WRD..EHZ",
+      "lat": 46.96986,
+      "lon": -119.145958,
+      "elev_km": 0.375,
+      "range_km": 83.41429,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=WRD&loc=--&cha=EHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "f518159e136025a8d67ea8dfea99f69fbf5609fd9df59690c17d56f86d48aaf2"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.FHE..EHZ",
+      "lat": 46.951778,
+      "lon": -119.498093,
+      "elev_km": 0.455,
+      "range_km": 83.52633,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=FHE&loc=--&cha=EHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "76b0bdab6cdd01523acfa549af8275798ce72006f98f98e73acf24f9ef615bda"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.SLF..HHZ",
+      "lat": 47.76058,
+      "lon": -120.52946,
+      "elev_km": 1.7387000000000001,
+      "range_km": 84.74206,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=SLF&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "aef3a586e6d8d2a27ef9d7a3e325c70a4bb204263f29df145cc2768d993993b0"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.DAVN..HHZ",
+      "lat": 47.8006,
+      "lon": -118.2741,
+      "elev_km": 0.48260000000000003,
+      "range_km": 84.91529,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=DAVN&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "0bca52846ccedd74911b4d9e53036d5339e0f22a7f312f6f98555f0ff30482fc"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.CRF..EHZ",
+      "lat": 46.82486,
+      "lon": -119.38813,
+      "elev_km": 0.189,
+      "range_km": 97.31525,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=CRF&loc=--&cha=EHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "d66d2fd70e970d5bc4cf59908c1d145c8026267efc3a2ef241ec0bedaa32257b"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.TWISP..HHZ",
+      "lat": 48.46107,
+      "lon": -120.11976,
+      "elev_km": 0.7562000000000001,
+      "range_km": 100.10244,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=TWISP&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "984137c1245c41214de1d66e10f885b88515f3fb9d4966b576b1af9a738c1f35"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.BVW..EHZ",
+      "lat": 46.81083,
+      "lon": -119.88349,
+      "elev_km": 0.67,
+      "range_km": 105.38922,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=BVW&loc=--&cha=EHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "d8bb0d7665323e1a8ebdee8f4653debcf662de62a2b574477d83a836b0b90764"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.WA2..HHZ",
+      "lat": 46.755085,
+      "lon": -119.566804,
+      "elev_km": 0.2447,
+      "range_km": 105.82195,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=WA2&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "fb911930a2738bd4168da6ea625e7cdbf46c1f29358c14c741d7caad9553fc04"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.LTY..HHZ",
+      "lat": 47.25451,
+      "lon": -120.66636,
+      "elev_km": 0.807,
+      "range_km": 107.29083,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=LTY&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "4f0c5decf84df9d1041e88366eca3dacc86668616c5ebbd2a49824fedecf5967"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.TBLMT..HHZ",
+      "lat": 47.1731,
+      "lon": -120.59827,
+      "elev_km": 1.0883,
+      "range_km": 107.49323,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=TBLMT&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "f52b0593d51d8c9e3d6e5ebd43083efb80200a5edbd75f5c354284121415eeb7"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.BHCR..HHZ",
+      "lat": 48.12877,
+      "lon": -118.04087,
+      "elev_km": 1.0757999999999999,
+      "range_km": 111.94975,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=BHCR&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "9c64881eed7c9847d1cc7a6b2a84db070d24fa01f51a5ab55f3db1e45e577824"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.WRW..HHZ",
+      "lat": 47.85665,
+      "lon": -120.883,
+      "elev_km": 1.167,
+      "range_km": 112.17314,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=WRW&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "8e8a6b5c6a3fcd6906b50a35f303ff0aa410025cbd25a2b8dba3d8435f5f62fe"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.TNSKT..HHZ",
+      "lat": 48.7223,
+      "lon": -119.44221,
+      "elev_km": 0.3949,
+      "range_km": 113.71759,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=TNSKT&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "174a63b1900c3b96f3a15e108df90df0510b98f8d5d20fe891dc4833a34b3240"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.HOPR..HHZ",
+      "lat": 47.9229,
+      "lon": -120.8943,
+      "elev_km": 0.5968,
+      "range_km": 114.30499,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=HOPR&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "b8e96cb474b19803848fdc8bbc44c2b72f2942c3c45bcf419e4eb7b53adbbce7"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.DREAM..HHZ",
+      "lat": 48.30904,
+      "lon": -120.65495,
+      "elev_km": 0.371,
+      "range_km": 115.33751,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=DREAM&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "8a31c662dca9a31257744ff522a7908f1f163060c02bb61e5a5404ec3c140e1c"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.OT3..HHZ",
+      "lat": 46.668816,
+      "lon": -119.233966,
+      "elev_km": 0.32039999999999996,
+      "range_km": 115.34685,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=OT3&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "16e4af6650ad1e99697a625f9200ef83c126826b8c8343f8ca160a862869e612"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.BDGR..HHZ",
+      "lat": 46.85763,
+      "lon": -120.29764,
+      "elev_km": 0.6424,
+      "range_km": 115.57953,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=BDGR&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "14699c10afff74df9c3f641b43087d2458245782a7e15a01b2cc0b5b24115553"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.H1K..EHZ",
+      "lat": 46.64468,
+      "lon": -119.59287,
+      "elev_km": 0.152,
+      "range_km": 118.24829,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=H1K&loc=--&cha=EHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "063d9bcc1395f8a6d72ac5e03a52fbed33561a8b8780f808bdccff4268feac08"
+    },
+    {
+      "event": "wa",
+      "nslc": "UW.GOBBL..HHZ",
+      "lat": 48.674659,
+      "lon": -118.730196,
+      "elev_km": 1.1822000000000001,
+      "range_km": 119.20951,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=UW&sta=GOBBL&loc=--&cha=HHZ&start=2026-08-14T07%3A23%3A36&end=2026-08-14T08%3A33%3A36",
+      "sha256": "70730cde347cda86adfad80883854f1d84f43683e3f54699385617182efa7069"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.H21K..BHZ",
+      "lat": 65.6571,
+      "lon": -152.805,
+      "elev_km": 0.52,
+      "range_km": 50.12148,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=H21K&loc=--&cha=BHZ&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "fe788e2e162e1d0af4edb737d3ab8a429b05243891ddc3b9a2176e0bcf91a111"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.H21K.EP.BDF",
+      "lat": 65.6571,
+      "lon": -152.805,
+      "elev_km": 0.52,
+      "range_km": 50.12148,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=H21K&loc=EP&cha=BDF&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "015849b84df7e065d7b1350fca5cdaa036b504e87a5b0c8153a1134d7e991e49"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.H22K..BHZ",
+      "lat": 65.8937,
+      "lon": -151.3773,
+      "elev_km": 0.561,
+      "range_km": 59.87335,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=H22K&loc=--&cha=BHZ&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "b4dcc78075729f1bbcc2208d9a44477b90dad894fdea9c4103fa61bb439883af"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.H22K.EP.BDF",
+      "lat": 65.8937,
+      "lon": -151.3773,
+      "elev_km": 0.561,
+      "range_km": 59.87335,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=H22K&loc=EP&cha=BDF&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "ffe6d2230dfc93eb0fa4ffaef55f42380addba76aef6e21ad838809a6443cea0"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.I21K..BHZ",
+      "lat": 65.18,
+      "lon": -151.9822,
+      "elev_km": 0.248,
+      "range_km": 106.14966,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=I21K&loc=--&cha=BHZ&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "0ca65aaa8fb452e6301baa3431219551207250a8a381350875a63774bb092537"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.I21K.EP.BDF",
+      "lat": 65.18,
+      "lon": -151.9822,
+      "elev_km": 0.248,
+      "range_km": 106.14966,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=I21K&loc=EP&cha=BDF&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "86dcb4689abae626bdf383a2c1f21af320ae5c4b4afdf03c5bdc554902eae8e7"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.PS05..BHZ",
+      "lat": 66.8133,
+      "lon": -150.6646,
+      "elev_km": 0.327,
+      "range_km": 116.95437,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=PS05&loc=--&cha=BHZ&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "87e35a9b41484d1d141a77d5999ffeee81520fa83de41da544ba9559fa0805aa"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.H20K..BHZ",
+      "lat": 65.4924,
+      "lon": -154.8808,
+      "elev_km": 0.514,
+      "range_km": 123.98837,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=H20K&loc=--&cha=BHZ&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "7ca7891944fb0bea888453d8c6e9cd4e35c234fffadc6dbc0fa3ad327d1ab550"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.H20K.EP.BDF",
+      "lat": 65.4924,
+      "lon": -154.8808,
+      "elev_km": 0.514,
+      "range_km": 123.98837,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=H20K&loc=EP&cha=BDF&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "4e9f62de5c7cb0eb88081771164d8f4481526c9086903720cbdc3fa12fa1e9a6"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.F21K..BHZ",
+      "lat": 67.2221,
+      "lon": -153.483,
+      "elev_km": 0.597,
+      "range_km": 130.69127,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=F21K&loc=--&cha=BHZ&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "df51cabde5cc542cf5fddbf887090574b1c0e5fcf553280dce5f9ae43886d826"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.F21K.EP.BDF",
+      "lat": 67.2221,
+      "lon": -153.483,
+      "elev_km": 0.597,
+      "range_km": 130.69127,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=F21K&loc=EP&cha=BDF&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "fdfa7b2abf10b1d7766ea1426fd3d81c42d9283d86a863250e940979dd586d4e"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.PS06..BHZ",
+      "lat": 65.8545,
+      "lon": -149.7369,
+      "elev_km": 0.28,
+      "range_km": 132.43616,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=PS06&loc=--&cha=BHZ&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "c19874b96e21b4e1a3f1f7d791308b91c1f35889a6c0c8d1b9ed072cda884454"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.G23K..BHZ",
+      "lat": 66.7108,
+      "lon": -150.0239,
+      "elev_km": 0.746,
+      "range_km": 133.24657,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=G23K&loc=--&cha=BHZ&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": null
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.G23K.EP.BDF",
+      "lat": 66.7108,
+      "lon": -150.0239,
+      "elev_km": 0.746,
+      "range_km": 133.24657,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=G23K&loc=EP&cha=BDF&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": null
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.H23K..BHZ",
+      "lat": 65.8251,
+      "lon": -149.5432,
+      "elev_km": 0.617,
+      "range_km": 141.7717,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=H23K&loc=--&cha=BHZ&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": null
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.H23K.EP.BDF",
+      "lat": 65.8251,
+      "lon": -149.5432,
+      "elev_km": 0.617,
+      "range_km": 141.7717,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=H23K&loc=EP&cha=BDF&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": null
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.MLY..BHZ",
+      "lat": 65.0304,
+      "lon": -150.7442,
+      "elev_km": 0.812,
+      "range_km": 146.38279,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=MLY&loc=--&cha=BHZ&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "eeeb9b676b8daeb27779792231a98c1d09e73d1f851fce1dbe5d8f4995964d84"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.MLY.EP.BDF",
+      "lat": 65.0304,
+      "lon": -150.7442,
+      "elev_km": 0.812,
+      "range_km": 146.38279,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=MLY&loc=EP&cha=BDF&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "d17b1b77cba6fd4683a7bbb044fb3bab45094cfcb5e181c044a3e7b5f649e341"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.COLD..BHZ",
+      "lat": 67.2278,
+      "lon": -150.207,
+      "elev_km": 0.374,
+      "range_km": 163.79612,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=COLD&loc=--&cha=BHZ&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "681e6cb6d0fe02c0de4127a8d7a84e24f7116b64c38c978323f2090445f63c57"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.COLD.EP.BDF",
+      "lat": 67.2278,
+      "lon": -150.207,
+      "elev_km": 0.374,
+      "range_km": 163.79612,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=COLD&loc=EP&cha=BDF&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "a9d2d0650b66af015fa76c38c2f01c94aff5bab7878f5668e1d6f5c176292fdb"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.F20K..BHZ",
+      "lat": 67.0486,
+      "lon": -155.7251,
+      "elev_km": 0.136,
+      "range_km": 173.7814,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=F20K&loc=--&cha=BHZ&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "85344ffa4ff2d5591cd816a3c030258b3484ae7cfc7f783f78dc305978630abc"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.F20K.EP.BDF",
+      "lat": 67.0486,
+      "lon": -155.7251,
+      "elev_km": 0.136,
+      "range_km": 173.7814,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=F20K&loc=EP&cha=BDF&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "aef9678929eca63ba9621c311179f947c15198437d30c7b07ff844378c2145d3"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.I23K..BHZ",
+      "lat": 65.1479,
+      "lon": -149.3603,
+      "elev_km": 0.149,
+      "range_km": 182.48494,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=I23K&loc=--&cha=BHZ&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "de14429e6ff9656dfc988df48a2f773544d83132af375fe6eb0c8baa4e7a25c3"
+    },
+    {
+      "event": "ak",
+      "nslc": "AK.I23K.EP.BDF",
+      "lat": 65.1479,
+      "lon": -149.3603,
+      "elev_km": 0.149,
+      "range_km": 182.48494,
+      "url": "https://service.earthscope.org/fdsnws/dataselect/1/query?net=AK&sta=I23K&loc=EP&cha=BDF&start=2022-01-01T19%3A58%3A03&end=2022-01-01T21%3A08%3A03",
+      "sha256": "33e406898122e9becdbc489a3d10cbd90cc4e7fc27bbe44d0abc584e082ec0cd"
+    }
+  ]
+}
