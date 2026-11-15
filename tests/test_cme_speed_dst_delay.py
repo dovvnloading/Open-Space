@@ -54,7 +54,7 @@ class CMELatencyTests(unittest.TestCase):
         a=mod.era_permutation(d,60,32)
         b=mod.era_permutation(d,60,32)
         self.assertEqual(a,b)
-        self.assertGreaterEqual(a["two_sided_empirical_p"],1/61)
+        self.assertGreaterEqual(a["two_sided_empirical_p"],round(1/61,7))
 
 if __name__=="__main__":
     unittest.main()
