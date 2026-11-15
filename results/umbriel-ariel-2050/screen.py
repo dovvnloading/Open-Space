@@ -3,6 +3,7 @@
 Writes the cached four-year selection in .uranian-cache and a table with provisional
 candidates on stdout. Use replay.py for the physical event circumstances.
 """
+import argparse
 import csv
 import io
 import json
@@ -94,14 +95,26 @@ def screen_pair(states, grid, front, back, source):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--minutes", type=int, choices=(2, 5, 10), default=10)
+    args = parser.parse_args()
     d = interpolants()
     # Last 3 hours are omitted because year-seam duplicates were dropped.
-    grid = np.arange(0, 1461*86400 - 10800, 600.)
-    events = [event for source in (10, 399) for front, back in permutations(RADII, 2)
-              for event in screen_pair(d, grid, front, back, source)]
+    stop = 1461*86400 - 10800
+    step = args.minutes * 60.0
+    events = []
+    for start in range(0, stop, 32*86400):
+        end = min(start+32*86400, stop)
+        grid = np.arange(max(0, start-1200), min(stop, end+1200), step)
+        for source in (10, 399):
+            for front, back in permutations(RADII, 2):
+                candidates = screen_pair(d, grid, front, back, source)
+                events.extend(row for row in candidates if start <= (row[3]+row[4])/2 < end)
     pairs = [(a, b) for a, b in combinations(events, 2)
              if a[:2] == b[:2] and a[2] != b[2] and max(a[3], b[3]) < min(a[4], b[4])]
-    print(f"{len(events)} intervals. {len(pairs)} simultaneous same-pair candidates.", file=sys.stderr)
+    eclipses = sum(row[2] == 10 for row in events)
+    print(f"{eclipses} eclipses, {len(events)-eclipses} occultations, "
+          f"{len(pairs)} simultaneous same-pair candidates.", file=sys.stderr)
     writer = csv.writer(sys.stdout)
     writer.writerow(["foreground", "background", "overlap_start_jd_tdb", "overlap_end_jd_tdb"])
     for a, b in pairs:
