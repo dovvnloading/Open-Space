@@ -1,0 +1,58 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T11:06:53 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T11:06:53	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJS%2F272%2F39%2Ftable2&-c=153.41510+-1.80675&-c.rs=600&-out.max=300&-out.all=	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=153.415100-01.806750,rs=600.	
+#Constraint -out.all=
+
+#RESOURCE=yCat_22720039
+#Name: J/ApJS/272/39
+#Title: Galaxy clusters from DESI Legacy Surveys & WISE (Wen+, 2024)
+#INFO	ivoid=ivo://cds.vizier/j/apjs/272/39	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/apjs/272/39	    IVOID of underlying data collection
+#INFO	creator=Wen Z.L.	    First author or institution
+#INFO	cites=bibcode:2024ApJS..272...39W	    Article or Data origin sources
+#INFO	journal=ApJS	    Journal name
+#INFO	original_date=2024	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJS/272/39	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.22720039	    Dataset identifier that can be used for citation
+#INFO	publication_date=2025-02-13	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_ApJS_272_39_table2:
+#Name: J/ApJS/272/39/table2
+#Title: A catalog of 1.58 million clusters of galaxies identified from the DESI Legacy Surveys
+#Column	ID	(I7)	[1/1581179] Internal cluster identifier	[ucd=meta.id]
+#Column	n_Name	(A3)	[WH- ] Names with "WH-" are newly identified in this paper	[ucd=meta.note]
+#Column	Name	(A16)	Cluster identifier (JHHMMSS.s+DDMMSS)	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F9.5)	Right Ascension (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F9.5)	Declination (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	zCl	(F7.4)	[0.012/1.74] Cluster redshift	[ucd=src.redshift]
+#Column	f_zCl	(I1)	[0/1] Flag on zCl (1=spectroscopic) (1)	[ucd=meta.code]
+#Column	zmag	(F6.3)	[8.67/22.77] Brightest cluster galaxy (BCG) DESI z band AB magnitude	[ucd=phot.mag;em.opt.I]
+#Column	W1mag	(F6.3)	[10.36/19.71] BCG WISE W1 band AB magnitude	[ucd=phot.mag;em.IR.3-4um]
+#Column	logMs	(F5.2)	[10.95/12.65] Log BCG stellar mass	[ucd=phys.mass]
+#Column	r500	(F6.3)	[0.28/1.74] Cluster radius	[ucd=phys.size.radius]
+#Column	lam500	(F6.2)	[10/389] Cluster richness	[ucd=src.class.richness]
+#Column	M500	(F5.2)	[0.47/16.27] Derived cluster mass	[ucd=phys.mass]
+#Column	Ngal	(I3)	[6/246] Number of member galaxy candidates within r500	[ucd=meta.number]
+#Column	Gamma	(F5.2)	[-4.87/0.67]? Relaxation parameter; see Section 5.1 (2)	[ucd=stat.fit.param]
+#Column	e_Gamma	(F5.2)	[0.02/0.3]? Uncertainty in Gamma (2)	[ucd=stat.error]
+#Column	imag?	(I1)	[1/2] Data source for the cluster (3)	[ucd=meta.code]
+#Column	Cat	(a9)	Reference notes for previously known clusters (4)	[ucd=meta.bib]
+ID	n_Name	Name	RAJ2000	DEJ2000	zCl	f_zCl	zmag	W1mag	logMs	r500	lam500	M500	Ngal	Gamma	e_Gamma	imag?	Cat
+ 	 	 	deg	deg	 	 	mag	mag	Msun	Mpc	 	10+14Msun	 	 	 	 	
+-------	---	----------------	---------	---------	-------	-	------	------	-----	------	------	-----	---	-----	-----	-	---------
+1201950	   	J101307.4-015057	153.28088	-01.84903	 0.8676	0	20.355	18.446	11.29	 0.527	 26.75	 1.21	 10	     	     	2	Y21
+1202046	WH-	J101316.5-014717	153.31860	-01.78816	 0.9031	0	20.522	18.830	11.29	 0.478	 14.56	 0.67	  6	     	     	2	
+1202290	   	J101345.1-014727	153.43784	-01.79095	 0.5698	1	19.250	18.220	11.15	 0.544	 12.84	 0.60	  9	     	     	2	Y21
+1202432	   	J101359.5-015245	153.49799	-01.87918	 0.8124	0	19.942	18.478	11.42	 0.450	 14.15	 0.66	  6	     	     	2	CFSFDP
+

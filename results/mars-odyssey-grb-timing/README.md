@@ -11,6 +11,8 @@ The HEND outer scintillator on Mars Odyssey recorded a pulse matching the Fermi 
 
 These areas intersect equal-area pixels in the public GBM 90% footprint with a specified timing interval. The intersection has no calibrated joint 90% coverage. A model-dependent ±2 s slice shows the geometric precision available when the same pulse dominates both instruments. The ±24 s slice accommodates the largest measured precision-control mismatch. Neither width sets a bound on future timing errors. The GECAM-B centroid still lies outside the ±24 s slice. A full GECAM systematics model or a new independent localization could change the interpretation. Table values use the unrounded measurements in the accompanying CSVs.
 
+![GRB 250902A. The Mars timing band crosses the Fermi footprint and misses the GECAM-B centroid. The second panel compares the measured Mars pulse with the Fermi template.](GRB250902A.png)
+
 ## Selection and prior art
 
 An exploratory search of 4,420 GBM burst rows for repeat episodes was inconclusive. The December 2015 Mars signal turned out to be listed by the Interplanetary Network. That work prompted a separate retrospective search for timing localizations in more recent bursts. The screen ranks catalog fluence among bursts dated 2024-10-01 through 2026-03-31, excluding the first and last 3.5% of each UTC day, requiring a catalog statistical position error ≥0.5° and 0.2 < T90 < 15 s. It takes the 12 brightest. The calibration takes the 16 brightest from 2023-01-01 through 2026-03-31 with the same time-of-day margins, error <0.01° and 0.1 < T90 < 100 s. The ranking requires a finite fluence. [HEASARC GBM catalog](https://heasarc.gsfc.nasa.gov/W3Browse/all/fermigbrst.html) · [IPN master list](https://ipn3.ssl.berkeley.edu/masterli.txt)
