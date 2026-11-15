@@ -21,7 +21,7 @@ def raw_strip(spec):
         data = response.read(last-first+1)
     if hashlib.sha256(data).hexdigest() != spec["sha256"]:
         raise ValueError("Raw strip does not match input hash")
-    return np.frombuffer(data, dtype=np.uint8).reshape(-1, 5056)
+    return np.frombuffer(data, dtype=np.uint8).reshape(-1, int(spec["row_bytes"]))
 
 
 def estimate_registration(before, after):

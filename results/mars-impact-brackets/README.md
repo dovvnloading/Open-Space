@@ -1,8 +1,8 @@
-# A duplicated Martian crater cluster and misplaced impact dates
+# Two apparent Martian impact pairs resolved in spacecraft images
 
 Two catalog entries 82 m apart at 15.572° N, 234.090° E appear to record impacts in disjoint intervals. Raw Mars Reconnaissance Orbiter Context Camera (CTX) images show a single new dark impact scar between **14 February 2015 and 19 February 2016**. Two August 2016 HiRISE observations show the same cluster of dark features. The before and after images cited for the purported earlier event missed the site by over 8,100 km. The evidence supports treating these entries as a duplicate site for analyses of dated impacts. The two records alone cannot establish a second event.
 
-The observing units were the before and after photographs cited by the Daubar et al. catalog. We tested whether their actual mapped footprints contained the catalog coordinates and whether successive observations revealed a distinct scar. This audit started with a search for temporally distinct, unusually close impact pairs. The two sub-kilometer candidates with non-overlapping catalog intervals were 82 m and 381 m apart. We report the test of the 82 m pair here. [Catalog paper](https://doi.org/10.1029/2021JE007145) · [Original 1,203-site table](https://doi.org/10.5281/zenodo.6604912)
+The observing units were the before and after photographs cited by the Daubar et al. catalog. We tested whether their actual mapped footprints contained the catalog coordinates and whether successive observations revealed a distinct scar. This audit started with a search for temporally distinct, unusually close impact pairs. The two sub-kilometer candidates with non-overlapping catalog intervals were 82 m and 381 m apart. The latter represents two real, sequential disturbances separated by about 2.26 km. [Catalog paper](https://doi.org/10.1029/2021JE007145) · [Original 1,203-site table](https://doi.org/10.5281/zenodo.6604912)
 
 ## The apparent repeat impact
 
@@ -17,7 +17,22 @@ The panels show the same terrain, matched on four pre-existing landmarks outside
 
 ![Registered images of the same crater cluster acquired by HiRISE 11 days apart.](cluster.png)
 
-The common field spans 333 m. The unfiltered pixel correlation is 0.9771 over 111 × 111 samples on a 3 m grid after translating the second map by −36 m east and +51 m south in the sampling coordinates. The offset is a registration measurement. Both maps share the same cluster, neighboring crater rims and terrain. Local topography, small unresolved craters and the limited pixel size preclude an exact impact time or proof that no unrelated microscopic impact occurred. Image credit NASA/JPL-Caltech/UArizona. [8 August observation](https://www.uahirise.org/ESP_047030_1955) · [19 August observation](https://www.uahirise.org/ESP_047175_1955)
+The common field spans 333 m. The unfiltered pixel correlation is 0.9771 over 111 × 111 samples on a 3 m grid after translating the second map by −36 m east and +51 m south in the sampling coordinates. The offset is a registration measurement. Both maps share the same cluster, neighboring crater rims and terrain. The CTX and HiRISE images bound the impact date and resolve the cluster. They provide no exact time for the impact. Image credit NASA/JPL-Caltech/UArizona. [8 August observation](https://www.uahirise.org/ESP_047030_1955) · [19 August observation](https://www.uahirise.org/ESP_047175_1955)
+
+## Two real disturbances formed 2.26 km apart
+
+A second pair at about 1.75° S, 221.29° E has valid observing footprints. Its two catalog coordinates imply a separation of 381 m. We located the eastern and western impact scars in separate map-projected HiRISE observations and measured their separation as **2.258 km**. Both appear in the same December 2013 CTX image, providing an independent plate-scale check of **2.262 km**. The interval between the February and June observations establishes that the two disturbances formed **at least 115 Earth days apart**. This excludes a common instantaneous fragmentation event for these scars.
+
+| Scar | HiRISE map used for position | Catalog position (° N, ° E) | Measured blast-zone center (° N, ° E) | Catalog-to-center offset |
+|---|---|---|---|---:|
+| Eastern | ESP_034503_1780, 6 Dec 2013 | −1.7507, 221.2941 | −1.7459, 221.3013 | 0.51 km |
+| Western | ESP_034859_1780, 2 Jan 2014 | −1.7500, 221.2877 | −1.7616, 221.2665 | 1.43 km |
+
+![Three CTX epochs show the eastern scar throughout the sequence and the later appearance of the western scar.](adjacent.png)
+
+The eastern disturbance is already present on 18 February 2012; the western site still lacks a dark scar on 12 June 2012. On 6 December 2013 both are visible. Each panel is a 200 × 170 native-sample cutout centered by surrounding terrain and displayed with its own percentile stretch. The observations establish a sequence without requiring an impact flash or inferred impact time. Image credit NASA/JPL-Caltech/MSSS. [Eastern HiRISE observation](https://www.uahirise.org/ESP_034503_1780) · [Western HiRISE observation](https://www.uahirise.org/ESP_034859_1780)
+
+We located each diffuse blast-zone center as a local minimum in a 12-pixel Gaussian-smoothed HiRISE browse image and converted the image coordinates with the PDS map label. Repeating with widths of 8, 16 and 20 pixels gave separations from 2.257 to 2.274 km. The center measurement is sensitive to the shape of the dark ejecta and uses meter-scale browse imagery. The quoted coordinates locate the blast zones and have no absolute geodetic error calibration. In the independent CTX after frame the centers differ by 405 samples and 104 lines. Multiplying the 418.1-pixel separation by the archived 5.41 m/pixel image scale gives 2.262 km, before a geometric-distortion correction. Both impact sites were published. The contribution here is the two-instrument separation measurement, the correction to the apparent 381 m pairing, and the visible three-epoch sequence.
 
 ## Five sites with geographically incompatible image assignments
 
@@ -53,6 +68,7 @@ python extract.py /path/to/data/mars.xlsx /path/to/data/allctx.zip > extracted.c
 diff endpoints.csv extracted.csv
 python compare_images.py /path/to/data rebuilt-cluster.png
 python compare_ctx.py rebuilt-change.png
+python adjacent_sites.py /path/to/data rebuilt-adjacent.png
 ```
 
-The last command downloads only the two 901-line PDS strips listed in [ctx-strips.csv](ctx-strips.csv), verifying the byte ranges against their hashes. The fixed landmark coordinates and crop center are in the script. Independent reruns can compare alternate registration methods or retrieve the entire original EDRs. [All endpoints](endpoints.csv) · [All off-footprint endpoints](outside.csv)
+The two CTX comparisons download only the 901-line PDS strips listed in [ctx-strips.csv](ctx-strips.csv) and [adjacent-strips.csv](adjacent-strips.csv), verifying each byte range against its hash. The fixed landmark coordinates and crop center are in the script. Independent reruns can compare alternate registration methods or retrieve the entire original EDRs. [All endpoints](endpoints.csv) · [All off-footprint endpoints](outside.csv)
