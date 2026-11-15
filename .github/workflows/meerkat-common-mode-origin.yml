@@ -42,3 +42,26 @@ jobs:
           path: |
             results/meerkat-common-mode-origin/checks.json
             results/meerkat-common-mode-origin/published_risks.csv
+
+  space_weather:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy
+      - id: indices
+        name: Fetch independent NASA OMNI F10.7, Kp and Dst and test held-out days
+        run: python results/meerkat-common-mode-origin/space_weather.py --fetch --write
+        continue-on-error: true
+      - if: steps.indices.outcome == 'failure'
+        run: echo 'External OMNI retrieval unavailable; no index result should be claimed'
+      - if: steps.indices.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: meerkat-space-weather-index-holdout
+          path: |
+            results/meerkat-common-mode-origin/space_weather_checks.json
+            results/meerkat-common-mode-origin/space_weather_days.csv
