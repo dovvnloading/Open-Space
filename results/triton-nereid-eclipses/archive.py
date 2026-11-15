@@ -27,6 +27,15 @@ def search(task):
         query=(f"SELECT TOP 200 obs_collection,obs_id,t_min,t_max FROM ivoa.ObsCore "
                f"WHERE 1=INTERSECTS(s_region,CIRCLE('ICRS',{ra},{dec},0.003)) "
                f"AND t_min<{mjd+1/24:.8f} AND t_max>{mjd-1/24:.8f}")
+        if archive=='MAST':
+            # MAST has no polygon intersection in its ADQL translator. Use a
+            # four-degree pointing box, handling the 0/360 RA boundary.
+            lower,upper=(ra-4)%360,(ra+4)%360
+            test=(f"s_ra BETWEEN {lower} AND {upper}" if lower<upper
+                  else f"(s_ra>{lower} OR s_ra<{upper})")
+            query=query.replace(f"1=INTERSECTS(s_region,CIRCLE('ICRS',{ra},{dec},0.003))",
+                                f"({test}) AND s_dec BETWEEN {dec-4} AND {dec+4}")
+            query=query.replace('obs_id,t_min,t_max','obs_id,t_min,t_max,s_ra,s_dec,s_region,s_fov')
         args=dict(REQUEST='doQuery',LANG='ADQL',FORMAT='csv',QUERY=query)
         url=TAP[archive]+'?'+urlencode(args)
         req=url
@@ -44,7 +53,14 @@ def search(task):
             header=next(csv.reader(io.StringIO(raw)))
             if 'obs_id' not in header:raise ValueError(raw[:250])
             rows=list(csv.DictReader(io.StringIO(raw)))
-            result['matches']=rows
+            if archive=='MAST':
+                # Several HST positions are catalog placeholders at (0,0).
+                # Retain distinct footprints for explicit review in the result.
+                unique={(r['obs_id'],r['s_region']):r for r in rows}
+                result['boresight_query_rows']=len(rows)
+                result['distinct_footprints']=list(unique.values())
+            else:
+                result['matches']=rows
         else:
             rows=json.loads(raw)[1:]
             result['declination_band_rows']=len(rows)
