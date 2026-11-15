@@ -192,7 +192,13 @@ def fraction(states, moon, planet, t):
         return 0.0
     # Break into strips so adaptive quadrature cannot miss a narrow overlap.
     return quad(
-        overlap, lo, hi, points=np.linspace(lo, hi, 33)[1:-1], limit=200, epsabs=1e-3
+        overlap,
+        lo,
+        hi,
+        points=np.linspace(lo, hi, 33)[1:-1],
+        limit=250,
+        epsabs=0.02,
+        epsrel=2e-7,
     )[0] / (np.pi * r)
 
 
