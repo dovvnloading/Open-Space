@@ -20,6 +20,7 @@ Zieba et al. reported a developing 47.3 cycles/day feature in 2018–21 and tabu
 
 - Each sector is fit at the native two-minute cadences with quality zero, after subtracting a linear baseline in each half-day interval and fitting neighboring pulsations jointly. Fits with each frequency free within ±0.025 cycles/day agree. The 47.28 and 47.44 peaks are separated by about 0.155 cycles/day.
 - Both halves of sector 87 have ratios below one (0.79, 0.88). Both halves of sectors 95 (1.13, 1.46) and 98 (2.40, 2.26) have ratios above one. Raw-aperture SAP and corrected PDCSAP give the same ordering. These reductions share flux measurements. The separated sectors are the temporal replication.
+- The three separately delivered 20-second SPOC light curves yield PDCSAP ratios of 0.831, 1.270 and 2.360 after aggregation to two minutes. They reproduce the reversal under a different onboard cadence and pipeline product at the same epochs. [Fast-cadence measurements](fast_check.csv)
 - In two target-pixel stamps the two bands agree in their signed flux-weighted detector-column centroid to 0.022 pixel (sector 87) and 0.002 pixel (sector 95). Their profiles follow the separately known 50.49 cycles/day pulsation. This test sums the charge bleed along detector columns on this saturated star.
 - The MAST target inventory and the TESScut footprint query are recorded in [coverage.json](coverage.json). The ten analyzed sectors exhaust the archived two-minute target light curves returned by the inventory. TESScut also returns a sector 68 full-frame footprint, but the 13 × 49 pixel cutout is in trailing collateral columns, outside the active science pixels (detector columns 2115–2127 in the cutout). It has no visible stellar image. We exclude it. The original exocomet screen recovered the previously published sector 6 dip at BTJD 1486.4; the result reported here concerns stellar variability.
 
@@ -41,6 +42,7 @@ Run from this directory with Python 3, NumPy, SciPy and Astropy. The figure also
 OPENBLAS_NUM_THREADS=1 python measure.py --cache /tmp/beta-pic-tess
 OPENBLAS_NUM_THREADS=1 python slow_signal.py --cache /tmp/beta-pic-tess
 OPENBLAS_NUM_THREADS=1 python pixel_check.py --cache /tmp/beta-pic-tess
+OPENBLAS_NUM_THREADS=1 python fast_check.py --cache /tmp/beta-pic-tess
 python plot.py
 ```
 
