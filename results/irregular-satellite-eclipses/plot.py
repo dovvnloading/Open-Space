@@ -23,7 +23,7 @@ def column(name):
 plt.rcParams.update(
     {"font.size": 10, "axes.spines.top": False, "axes.spines.right": False}
 )
-fig, ax = plt.subplots(figsize=(10, 4.4), layout="constrained")
+fig, ax = plt.subplots(figsize=(10, 4.8))
 a, b = column("cassini_aldebaran"), column("cassini_gacrux")
 ax.fill_between(
     times,
@@ -50,7 +50,7 @@ ax.plot(
 )
 ax.set(
     title="Saturn’s rings dim Phoebe on both sides of totality",
-    ylabel="Fraction of direct sunlight reaching Phoebe",
+    ylabel="Direct sunlight fraction",
     xlabel="Earth reception time (UTC), March 2032",
     ylim=(-0.04, 1.08),
 )
@@ -58,5 +58,12 @@ ax.set_xlim(times[0], times[-1])
 ax.xaxis.set_major_locator(mdates.HourLocator(byhour=[0, 12]))
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %d\n%H:%M", tz=timezone.utc))
 ax.grid(axis="y", alpha=0.16)
-ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.48), ncol=3, frameon=False)
+fig.subplots_adjust(left=0.085, right=0.985, top=0.9, bottom=0.3)
+fig.legend(
+    *ax.get_legend_handles_labels(),
+    loc="lower center",
+    bbox_to_anchor=(0.5, 0.02),
+    ncol=3,
+    frameon=False
+)
 fig.savefig(DIRECTORY / "phoebe.png", dpi=160)
