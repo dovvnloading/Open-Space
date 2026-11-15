@@ -1,0 +1,775 @@
+{
+  "receipts": {
+    "ps1field.csv": {
+      "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/detection.csv?ra=140.96433333333331&dec=73.43991111111112&radius=0.04&pagesize=25000&columns=%5BobjID%2CdetectID%2CimageID%2Cra%2Cdec%2CobsTime%2CfilterID%2CpsfFlux%2CpsfFluxErr%2CapFlux%2CapFluxErr%2CpsfQfPerfect%2CpsfMajorFWHM%2CpsfChiSq%2CinfoFlag%2CinfoFlag2%2CinfoFlag3%5D",
+      "sha256": "2c55789e4e0459eec2b83a06deedb9a947f7116c5041657a49be57fd6fb3a5c7",
+      "bytes": 1258287
+    },
+    "irsa_nei.csv": {
+      "url": "https://irsa.ipac.caltech.edu/cgi-bin/ZTF/nph_light_curves?POS=CIRCLE+140.96433333333331+73.43991111111112+0.008333&FORMAT=CSV",
+      "sha256": "712533e973179611d2415913201065d63213e810662d4e96e226f1ca1253abf3",
+      "bytes": 1222799
+    },
+    "forced.json": {
+      "url": "https://raw.githubusercontent.com/janvanroestel/WD-transitingdebris-alerts/83ecde5b286d824f644cea04f18c5015663d483c/data/forcedphot/WDJ0923%2B7326.json",
+      "sha256": "c4b62e61c097dbfebfbe48700d53670c29f3558d0465c8945b7a36549b6cf6ae",
+      "bytes": 84948
+    }
+  },
+  "ps1_rows": 4952,
+  "ps1_measurements": 63,
+  "ps1_contrasts": [
+    {
+      "band": "g",
+      "estimator": "psf",
+      "bright_mjd": [
+        55260,
+        55280
+      ],
+      "faint_mjd": [
+        56640,
+        56745
+      ],
+      "bright_mag": 17.846898825322718,
+      "faint_mag": 18.265956064064596,
+      "delta_mag": 0.4190572387418783,
+      "bright_nights": 1,
+      "faint_nights": 3,
+      "bright_to_faint_flux_ratio": 1.4710346259764677,
+      "peer_sources": 9,
+      "peers_as_large": 0,
+      "neighbors": {
+        "196131409579720621": -0.013731020885444423,
+        "196121409582756231": 9.136962495404077e-05
+      }
+    },
+    {
+      "band": "g",
+      "estimator": "aperture",
+      "bright_mjd": [
+        55260,
+        55280
+      ],
+      "faint_mjd": [
+        56640,
+        56745
+      ],
+      "bright_mag": 17.841674665594432,
+      "faint_mag": 18.263330602659664,
+      "delta_mag": 0.42165593706523197,
+      "bright_nights": 1,
+      "faint_nights": 3,
+      "bright_to_faint_flux_ratio": 1.474559749056909,
+      "peer_sources": 9,
+      "peers_as_large": 0,
+      "neighbors": {
+        "196131409579720621": -0.0682243665339044,
+        "196121409582756231": -0.010136366400359975
+      }
+    },
+    {
+      "band": "r",
+      "estimator": "psf",
+      "bright_mjd": [
+        55260,
+        55280
+      ],
+      "faint_mjd": [
+        56640,
+        56745
+      ],
+      "bright_mag": 17.99613098682386,
+      "faint_mag": 18.70754169952609,
+      "delta_mag": 0.7114107127022287,
+      "bright_nights": 1,
+      "faint_nights": 3,
+      "bright_to_faint_flux_ratio": 1.925592053718058,
+      "peer_sources": 6,
+      "peers_as_large": 0,
+      "neighbors": {
+        "196131409579720621": -0.03554739569145582,
+        "196121409582756231": 0.004674995226750411
+      }
+    },
+    {
+      "band": "r",
+      "estimator": "aperture",
+      "bright_mjd": [
+        55260,
+        55280
+      ],
+      "faint_mjd": [
+        56640,
+        56745
+      ],
+      "bright_mag": 18.020811605098874,
+      "faint_mag": 18.730195493190436,
+      "delta_mag": 0.7093838880915619,
+      "bright_nights": 1,
+      "faint_nights": 3,
+      "bright_to_faint_flux_ratio": 1.922000760773521,
+      "peer_sources": 7,
+      "peers_as_large": 0,
+      "neighbors": {
+        "196131409579720621": -0.07823571262633422,
+        "196121409582756231": -0.026099457692218664
+      }
+    },
+    {
+      "band": "i",
+      "estimator": "psf",
+      "bright_mjd": [
+        56280,
+        56380
+      ],
+      "faint_mjd": [
+        56640,
+        56745
+      ],
+      "bright_mag": 18.158677688607934,
+      "faint_mag": 18.947303569529982,
+      "delta_mag": 0.7886258809220479,
+      "bright_nights": 2,
+      "faint_nights": 2,
+      "bright_to_faint_flux_ratio": 2.067523013529408,
+      "peer_sources": 13,
+      "peers_as_large": 0,
+      "neighbors": {
+        "196131409579720621": -0.007564802260809245,
+        "196121409582756231": 0.013115037363160553
+      }
+    },
+    {
+      "band": "i",
+      "estimator": "aperture",
+      "bright_mjd": [
+        56280,
+        56380
+      ],
+      "faint_mjd": [
+        56640,
+        56745
+      ],
+      "bright_mag": 18.126640612077864,
+      "faint_mag": 18.967761528250392,
+      "delta_mag": 0.8411209161725282,
+      "bright_nights": 2,
+      "faint_nights": 2,
+      "bright_to_faint_flux_ratio": 2.1699432023851073,
+      "peer_sources": 13,
+      "peers_as_large": 0,
+      "neighbors": {
+        "196131409579720621": -0.04267272071101047,
+        "196121409582756231": -0.002528216158957264
+      }
+    },
+    {
+      "band": "z",
+      "estimator": "psf",
+      "bright_mjd": [
+        56280,
+        56380
+      ],
+      "faint_mjd": [
+        56640,
+        56745
+      ],
+      "bright_mag": 18.492116846624157,
+      "faint_mag": 19.026532986406128,
+      "delta_mag": 0.5344161397819711,
+      "bright_nights": 2,
+      "faint_nights": 1,
+      "bright_to_faint_flux_ratio": 1.6359365515657323,
+      "peer_sources": 10,
+      "peers_as_large": 0,
+      "neighbors": {
+        "196131409579720621": -0.020076867343409077,
+        "196121409582756231": 0.007865434411641559
+      }
+    },
+    {
+      "band": "z",
+      "estimator": "aperture",
+      "bright_mjd": [
+        56280,
+        56380
+      ],
+      "faint_mjd": [
+        56640,
+        56745
+      ],
+      "bright_mag": 18.52530760984601,
+      "faint_mag": 19.0009636996151,
+      "delta_mag": 0.4756560897690889,
+      "bright_nights": 2,
+      "faint_nights": 1,
+      "bright_to_faint_flux_ratio": 1.549752822217836,
+      "peer_sources": 10,
+      "peers_as_large": 0,
+      "neighbors": {
+        "196131409579720621": -0.04087125682083936,
+        "196121409582756231": 0.024602268885001166
+      }
+    }
+  ],
+  "anchor_mjd": [
+    58245.691730299965,
+    58804.0217708
+  ],
+  "period_days": 558.3300405000336,
+  "anchor_sensitivity": [
+    {
+      "bin_width": 7,
+      "origins_tested": 7,
+      "period_range_days": [
+        545.8507638999727,
+        558.3300405000336
+      ],
+      "2010_offset_range_days": [
+        185.7415277997934,
+        251.13573490017734
+      ],
+      "2012_offset_range_days": [
+        224.31350119984563,
+        277.2284317001686
+      ]
+    },
+    {
+      "bin_width": 10,
+      "origins_tested": 10,
+      "period_range_days": [
+        550.8569618000183,
+        561.3596990499645
+      ],
+      "2010_offset_range_days": [
+        166.08273160019598,
+        226.10474539994902
+      ],
+      "2012_offset_range_days": [
+        244.33829280002828,
+        277.2284317001686
+      ]
+    },
+    {
+      "bin_width": 14,
+      "origins_tested": 14,
+      "period_range_days": [
+        546.3537846999243,
+        561.3596990499645
+      ],
+      "2010_offset_range_days": [
+        166.08273160019598,
+        250.12939830058895
+      ],
+      "2012_offset_range_days": [
+        224.8168169994824,
+        278.75033559966687
+      ]
+    },
+    {
+      "bin_width": 21,
+      "origins_tested": 21,
+      "period_range_days": [
+        543.8389756998513,
+        561.3596990499645
+      ],
+      "2010_offset_range_days": [
+        166.08273160019598,
+        261.1946759007842
+      ],
+      "2012_offset_range_days": [
+        216.26634839936014,
+        278.75033559966687
+      ]
+    },
+    {
+      "bin_width": 28,
+      "origins_tested": 28,
+      "period_range_days": [
+        537.3462732001208,
+        556.8491956000216
+      ],
+      "2010_offset_range_days": [
+        193.14575229985348,
+        262.8236571976013
+      ],
+      "2012_offset_range_days": [
+        183.80283590070758,
+        271.3050521001205
+      ]
+    }
+  ],
+  "direct_crosscheck": [
+    {
+      "source": "neighbor_8.6arcsec",
+      "band": "zg",
+      "cycle": 2,
+      "inside_bins": 0,
+      "outside_bins": 4,
+      "brightening_mag": null
+    },
+    {
+      "source": "neighbor_8.6arcsec",
+      "band": "zg",
+      "cycle": 3,
+      "inside_bins": 0,
+      "outside_bins": 0,
+      "brightening_mag": null
+    },
+    {
+      "source": "neighbor_8.6arcsec",
+      "band": "zg",
+      "cycle": 4,
+      "inside_bins": 0,
+      "outside_bins": 1,
+      "brightening_mag": null
+    },
+    {
+      "source": "neighbor_8.6arcsec",
+      "band": "zg",
+      "cycle": 5,
+      "inside_bins": 0,
+      "outside_bins": 1,
+      "brightening_mag": null
+    },
+    {
+      "source": "neighbor_8.6arcsec",
+      "band": "zr",
+      "cycle": 2,
+      "inside_bins": 4,
+      "outside_bins": 20,
+      "brightening_mag": -0.0038285499999979322
+    },
+    {
+      "source": "neighbor_8.6arcsec",
+      "band": "zr",
+      "cycle": 3,
+      "inside_bins": 7,
+      "outside_bins": 10,
+      "brightening_mag": -0.010294899999998108
+    },
+    {
+      "source": "neighbor_8.6arcsec",
+      "band": "zr",
+      "cycle": 4,
+      "inside_bins": 2,
+      "outside_bins": 24,
+      "brightening_mag": 0.009496250000001538
+    },
+    {
+      "source": "neighbor_8.6arcsec",
+      "band": "zr",
+      "cycle": 5,
+      "inside_bins": 0,
+      "outside_bins": 6,
+      "brightening_mag": null
+    },
+    {
+      "source": "neighbor_9.6arcsec",
+      "band": "zg",
+      "cycle": 2,
+      "inside_bins": 4,
+      "outside_bins": 19,
+      "brightening_mag": 0.004514700000001426
+    },
+    {
+      "source": "neighbor_9.6arcsec",
+      "band": "zg",
+      "cycle": 3,
+      "inside_bins": 5,
+      "outside_bins": 10,
+      "brightening_mag": -0.0003762499999950819
+    },
+    {
+      "source": "neighbor_9.6arcsec",
+      "band": "zg",
+      "cycle": 4,
+      "inside_bins": 2,
+      "outside_bins": 20,
+      "brightening_mag": 0.00439927499999726
+    },
+    {
+      "source": "neighbor_9.6arcsec",
+      "band": "zg",
+      "cycle": 5,
+      "inside_bins": 0,
+      "outside_bins": 7,
+      "brightening_mag": null
+    },
+    {
+      "source": "neighbor_9.6arcsec",
+      "band": "zr",
+      "cycle": 2,
+      "inside_bins": 4,
+      "outside_bins": 20,
+      "brightening_mag": 0.0027742500000016435
+    },
+    {
+      "source": "neighbor_9.6arcsec",
+      "band": "zr",
+      "cycle": 3,
+      "inside_bins": 7,
+      "outside_bins": 10,
+      "brightening_mag": -0.01248455000000348
+    },
+    {
+      "source": "neighbor_9.6arcsec",
+      "band": "zr",
+      "cycle": 4,
+      "inside_bins": 2,
+      "outside_bins": 24,
+      "brightening_mag": -0.016382725000003262
+    },
+    {
+      "source": "neighbor_9.6arcsec",
+      "band": "zr",
+      "cycle": 5,
+      "inside_bins": 0,
+      "outside_bins": 6,
+      "brightening_mag": null
+    },
+    {
+      "source": "target",
+      "band": "zg",
+      "cycle": 2,
+      "inside_bins": 4,
+      "outside_bins": 19,
+      "brightening_mag": 0.09883119999999934
+    },
+    {
+      "source": "target",
+      "band": "zg",
+      "cycle": 3,
+      "inside_bins": 5,
+      "outside_bins": 10,
+      "brightening_mag": 0.019601325000000003
+    },
+    {
+      "source": "target",
+      "band": "zg",
+      "cycle": 4,
+      "inside_bins": 2,
+      "outside_bins": 20,
+      "brightening_mag": 0.23837562499999976
+    },
+    {
+      "source": "target",
+      "band": "zg",
+      "cycle": 5,
+      "inside_bins": 0,
+      "outside_bins": 7,
+      "brightening_mag": null
+    },
+    {
+      "source": "target",
+      "band": "zr",
+      "cycle": 2,
+      "inside_bins": 4,
+      "outside_bins": 20,
+      "brightening_mag": 0.132779124999999
+    },
+    {
+      "source": "target",
+      "band": "zr",
+      "cycle": 3,
+      "inside_bins": 7,
+      "outside_bins": 10,
+      "brightening_mag": -0.018433600000001604
+    },
+    {
+      "source": "target",
+      "band": "zr",
+      "cycle": 4,
+      "inside_bins": 2,
+      "outside_bins": 24,
+      "brightening_mag": 0.2370901000000032
+    },
+    {
+      "source": "target",
+      "band": "zr",
+      "cycle": 5,
+      "inside_bins": 0,
+      "outside_bins": 6,
+      "brightening_mag": null
+    }
+  ],
+  "next_window_center_mjd": 61595.67197330017,
+  "phase_checks": {
+    "ZTF_g": [
+      {
+        "half_width_days": 45,
+        "cycles": [
+          {
+            "cycle": 2,
+            "forecast_mjd": 59362.35181130003,
+            "inside_bins": 3,
+            "available_bins": 24,
+            "brightening_mag": 0.13940000000000197
+          },
+          {
+            "cycle": 3,
+            "forecast_mjd": 59920.681851800065,
+            "inside_bins": 5,
+            "available_bins": 17,
+            "brightening_mag": -0.08071250000000063
+          },
+          {
+            "cycle": 4,
+            "forecast_mjd": 60479.0118923001,
+            "inside_bins": 2,
+            "available_bins": 27,
+            "brightening_mag": 0.4138750000000009
+          },
+          {
+            "cycle": 5,
+            "forecast_mjd": 61037.34193280013,
+            "inside_bins": 6,
+            "available_bins": 20,
+            "brightening_mag": 0.4499999999999993
+          }
+        ],
+        "conditional_phase_tail": 0.007839921600783992
+      },
+      {
+        "half_width_days": 56,
+        "cycles": [
+          {
+            "cycle": 2,
+            "forecast_mjd": 59362.35181130003,
+            "inside_bins": 4,
+            "available_bins": 24,
+            "brightening_mag": 0.12180000000000035
+          },
+          {
+            "cycle": 3,
+            "forecast_mjd": 59920.681851800065,
+            "inside_bins": 6,
+            "available_bins": 17,
+            "brightening_mag": -0.005924999999997738
+          },
+          {
+            "cycle": 4,
+            "forecast_mjd": 60479.0118923001,
+            "inside_bins": 3,
+            "available_bins": 27,
+            "brightening_mag": 0.3858750000000022
+          },
+          {
+            "cycle": 5,
+            "forecast_mjd": 61037.34193280013,
+            "inside_bins": 8,
+            "available_bins": 20,
+            "brightening_mag": 0.40363749999999854
+          }
+        ],
+        "conditional_phase_tail": 0.008079919200807991
+      },
+      {
+        "half_width_days": 70,
+        "cycles": [
+          {
+            "cycle": 2,
+            "forecast_mjd": 59362.35181130003,
+            "inside_bins": 5,
+            "available_bins": 24,
+            "brightening_mag": 0.10419999999999874
+          },
+          {
+            "cycle": 3,
+            "forecast_mjd": 59920.681851800065,
+            "inside_bins": 8,
+            "available_bins": 17,
+            "brightening_mag": -0.04442500000000038
+          },
+          {
+            "cycle": 4,
+            "forecast_mjd": 60479.0118923001,
+            "inside_bins": 4,
+            "available_bins": 27,
+            "brightening_mag": 0.3527249999999995
+          },
+          {
+            "cycle": 5,
+            "forecast_mjd": 61037.34193280013,
+            "inside_bins": 10,
+            "available_bins": 20,
+            "brightening_mag": 0.37296249999999986
+          }
+        ],
+        "conditional_phase_tail": 0.03481965180348197
+      },
+      {
+        "half_width_days": 84,
+        "cycles": [
+          {
+            "cycle": 2,
+            "forecast_mjd": 59362.35181130003,
+            "inside_bins": 5,
+            "available_bins": 24,
+            "brightening_mag": 0.10419999999999874
+          },
+          {
+            "cycle": 3,
+            "forecast_mjd": 59920.681851800065,
+            "inside_bins": 9,
+            "available_bins": 17,
+            "brightening_mag": -0.04218749999999716
+          },
+          {
+            "cycle": 4,
+            "forecast_mjd": 60479.0118923001,
+            "inside_bins": 5,
+            "available_bins": 27,
+            "brightening_mag": 0.3168249999999979
+          },
+          {
+            "cycle": 5,
+            "forecast_mjd": 61037.34193280013,
+            "inside_bins": 12,
+            "available_bins": 20,
+            "brightening_mag": 0.3637750000000004
+          }
+        ],
+        "conditional_phase_tail": 0.05035949640503595
+      }
+    ],
+    "ZTF_r": [
+      {
+        "half_width_days": 45,
+        "cycles": [
+          {
+            "cycle": 2,
+            "forecast_mjd": 59362.35181130003,
+            "inside_bins": 3,
+            "available_bins": 24,
+            "brightening_mag": 0.16189999999999927
+          },
+          {
+            "cycle": 3,
+            "forecast_mjd": 59920.681851800065,
+            "inside_bins": 5,
+            "available_bins": 18,
+            "brightening_mag": -0.17989999999999995
+          },
+          {
+            "cycle": 4,
+            "forecast_mjd": 60479.0118923001,
+            "inside_bins": 1,
+            "available_bins": 28,
+            "brightening_mag": null
+          },
+          {
+            "cycle": 5,
+            "forecast_mjd": 61037.34193280013,
+            "inside_bins": 6,
+            "available_bins": 18,
+            "brightening_mag": 0.3822749999999999
+          }
+        ],
+        "conditional_phase_tail": null
+      },
+      {
+        "half_width_days": 56,
+        "cycles": [
+          {
+            "cycle": 2,
+            "forecast_mjd": 59362.35181130003,
+            "inside_bins": 4,
+            "available_bins": 24,
+            "brightening_mag": 0.13729999999999976
+          },
+          {
+            "cycle": 3,
+            "forecast_mjd": 59920.681851800065,
+            "inside_bins": 7,
+            "available_bins": 18,
+            "brightening_mag": -0.00560000000000116
+          },
+          {
+            "cycle": 4,
+            "forecast_mjd": 60479.0118923001,
+            "inside_bins": 2,
+            "available_bins": 28,
+            "brightening_mag": 0.27882499999999766
+          },
+          {
+            "cycle": 5,
+            "forecast_mjd": 61037.34193280013,
+            "inside_bins": 8,
+            "available_bins": 18,
+            "brightening_mag": 0.3561499999999995
+          }
+        ],
+        "conditional_phase_tail": 0.02057979420205798
+      },
+      {
+        "half_width_days": 70,
+        "cycles": [
+          {
+            "cycle": 2,
+            "forecast_mjd": 59362.35181130003,
+            "inside_bins": 5,
+            "available_bins": 24,
+            "brightening_mag": 0.11339999999999861
+          },
+          {
+            "cycle": 3,
+            "forecast_mjd": 59920.681851800065,
+            "inside_bins": 9,
+            "available_bins": 18,
+            "brightening_mag": -0.00560000000000116
+          },
+          {
+            "cycle": 4,
+            "forecast_mjd": 60479.0118923001,
+            "inside_bins": 3,
+            "available_bins": 28,
+            "brightening_mag": 0.2717500000000008
+          },
+          {
+            "cycle": 5,
+            "forecast_mjd": 61037.34193280013,
+            "inside_bins": 10,
+            "available_bins": 18,
+            "brightening_mag": 0.3357250000000036
+          }
+        ],
+        "conditional_phase_tail": 0.03049969500304997
+      },
+      {
+        "half_width_days": 84,
+        "cycles": [
+          {
+            "cycle": 2,
+            "forecast_mjd": 59362.35181130003,
+            "inside_bins": 5,
+            "available_bins": 24,
+            "brightening_mag": 0.11339999999999861
+          },
+          {
+            "cycle": 3,
+            "forecast_mjd": 59920.681851800065,
+            "inside_bins": 9,
+            "available_bins": 18,
+            "brightening_mag": -0.00560000000000116
+          },
+          {
+            "cycle": 4,
+            "forecast_mjd": 60479.0118923001,
+            "inside_bins": 4,
+            "available_bins": 28,
+            "brightening_mag": 0.2650624999999991
+          },
+          {
+            "cycle": 5,
+            "forecast_mjd": 61037.34193280013,
+            "inside_bins": 12,
+            "available_bins": 18,
+            "brightening_mag": 0.3247250000000008
+          }
+        ],
+        "conditional_phase_tail": 0.03849961500384996
+      }
+    ]
+  }
+}
