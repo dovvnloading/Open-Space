@@ -24,7 +24,7 @@ VST independently observed the third episode on 11 November 2015, measuring appr
 
 ## Gaia coverage beyond the three reported episodes
 
-Gaia supplied 16 transits on 12 distinct dates. All 16 G observations pass its variability rejection flag. The October 2014 doublet (G = 18.901 and 18.949) occurred the day before the OGLE peak, and the November 2015 transit (G = 19.418) coincided with the third OGLE episode. In the two subsequent observing years, Gaia exceeded G = 19.1 on two dates. This threshold selects the June 2016 and April 2017 visits as well as the October 2014 control. It is descriptive, selected after inspection. [Data model and time convention](https://gea.esac.esa.int/archive/documentation/GDR3/Gaia_archive/chap_datamodel/sec_dm_photometry/ssec_dm_epoch_photometry.html) · [Frozen Gaia measurements](inputs/gaia_epochs.xml)
+Gaia supplied 16 G transits on 13 distinct dates. The 2015-05-11 G transit fails Gaia's variability rejection flag and is excluded by the analysis, leaving 15 accepted G measurements on 12 distinct dates. The October 2014 doublet (G = 18.901 and 18.949) occurred the day before the OGLE peak, and the November 2015 transit (G = 19.418) coincided with the third OGLE episode. In the two subsequent observing years, Gaia exceeded G = 19.1 on two dates. This threshold selects the June 2016 and April 2017 visits as well as the October 2014 control. It is descriptive, selected after inspection. [Data model and time convention](https://gea.esac.esa.int/archive/documentation/GDR3/Gaia_archive/chap_datamodel/sec_dm_photometry/ssec_dm_epoch_photometry.html) · [Frozen Gaia measurements](inputs/gaia_epochs.xml)
 
 | Gaia visit | G (mag) | Evidence |
 | --- | ---: | --- |
