@@ -1,0 +1,3 @@
+# Independent eclipse-timing audit
+
+Target the seven eclipsing double white dwarfs in van Roestel et al. (2025). An initial independent application of the circular quadrupole formula to the tabulated masses and period flags J0720+6439 as discrepant with the quoted decade-scale timing advance. Check the typeset paper, units, timing convention, full sample, uncertainties, and the literature for corrections. Use a previously measured compact binary as a control. Any orbit-decay values derived from masses and periods are predictions. Direct detection requires independent eclipse times and removal or bounding of apparent acceleration.
