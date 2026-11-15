@@ -4,7 +4,7 @@ On **28 November 2030**, Saturn’s A ring is predicted to pass in front of the 
 
 ## What an observer could test
 
-Ingress should occur first at Effelsberg, then at Badary, then at Urumqi. The broad ring should attenuate the compact background source and the Encke gap should interrupt the attenuation. Simultaneous calibrated measurements spanning the event and adjacent unocculted baselines could test the station dependence. A VLBI baseline measures correlated flux formed from the signals at **both** antennas. A station-specific chord would need a clear reference antenna or a jointly modeled set of baselines. Effective sensitivity against Saturn, flux variability and telescope availability remain unmeasured.
+Ingress should occur first at Effelsberg, then at Badary, then at Urumqi. If the background source remains detectable and the A ring is sufficiently opaque at the observing frequency, the ring could attenuate its correlated signal and the Encke gap could produce a relative recovery. Neither radio signature has yet been observed for this event. Simultaneous calibrated measurements spanning the event and adjacent unocculted baselines could test the station dependence. A VLBI baseline measures correlated flux formed from the signals at **both** antennas. A station-specific chord would need a clear reference antenna or a jointly modeled set of baselines. Effective sensitivity against Saturn, flux variability and telescope availability remain unmeasured.
 
 | Location | Nominal A-ring span, UTC | Closest ring-plane radius | Elevation at contacts | Encke gap or limb |
 |---|---|---:|---:|---|
