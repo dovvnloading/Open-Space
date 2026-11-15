@@ -1,0 +1,38 @@
+{
+  "accessed_utc": "2026-11-15",
+  "mpc_get_json_body": {
+    "desigs": [
+      "2024 XS16"
+    ],
+    "output_format": [
+      "ADES_DF"
+    ]
+  },
+  "sources": [
+    {
+      "name": "cad.json",
+      "url": "https://ssd-api.jpl.nasa.gov/cad.api?date-min=2018-01-01&date-max=2050-12-31&dist-max=0.002&fullname=true&sort=dist",
+      "sha256": "5f607cc9fa2385935e88ed22979f762fa86ebf4a25e0e61c1f3f3d2e2514bfbc"
+    },
+    {
+      "name": "sun.json",
+      "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&CENTER=%27500%40399%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%272017-12-01%27&STOP_TIME=%272051-02-01%27&STEP_SIZE=%275+d%27&REF_PLANE=%27FRAME%27&VEC_TABLE=%272%27&VEC_CORR=%27NONE%27&OUT_UNITS=%27KM-S%27&CSV_FORMAT=%27YES%27&OBJ_DATA=%27NO%27",
+      "sha256": "d400abcd866b16519955c97fa7b00da535e2aa7029d8a6da6d23bb8dff8e2690"
+    },
+    {
+      "name": "2024_XS16_2460656.json",
+      "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27DES%3D2024+XS16%3B%27&CENTER=%27500%40399%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%27JD2460655.42772979%27&STOP_TIME=%27JD2460657.42772979%27&STEP_SIZE=%275+m%27&REF_PLANE=%27FRAME%27&VEC_TABLE=%272%27&VEC_CORR=%27NONE%27&OUT_UNITS=%27KM-S%27&CSV_FORMAT=%27YES%27&OBJ_DATA=%27NO%27",
+      "sha256": "7c76d1f7489e6d50d701760768f8eed57052ea043fe2d37bebc481ffdbff0073"
+    },
+    {
+      "name": "mpc_2024_XS16.json",
+      "url": "https://data.minorplanetcenter.net/api/get-obs",
+      "sha256": "aca9953df61a3678224dc77cb06692154cf5abeaad368c779d6a3343532b2bf5"
+    },
+    {
+      "name": "l34.json",
+      "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27DES%3D2024+XS16%3B%27&CENTER=%27L34%27&EPHEM_TYPE=%27OBSERVER%27&START_TIME=%272024-12-11+17%3A35%27&STOP_TIME=%272024-12-11+20%3A45%27&STEP_SIZE=%271+m%27&QUANTITIES=%271%2C9%2C20%2C24%2C36%27&CSV_FORMAT=%27YES%27&ANG_FORMAT=%27DEG%27&EXTRA_PREC=%27YES%27&OBJ_DATA=%27YES%27",
+      "sha256": "9e3e6017bbbea341d55c8c5500c7e3445c0652978e4e9140dfc40d9f65f2e92b"
+    }
+  ]
+}
