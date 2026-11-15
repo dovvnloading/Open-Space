@@ -1,0 +1,80 @@
+{
+  "caveat": "Global indices are proxies, not local slant TEC or RM; observing schedule and solar-cycle trend are confounded.",
+  "correlations": {
+    "dst_min": {
+      "absolute_r": -0.08561413523204604,
+      "signed_r": 0.11729118204386813
+    },
+    "f107_med": {
+      "absolute_r": 0.07694813110489004,
+      "signed_r": 0.007157458557212024
+    },
+    "kp_max": {
+      "absolute_r": 0.04088495413718154,
+      "signed_r": -0.024728186619951378
+    }
+  },
+  "daily_reducer": {
+    "Dst": "UTC-day minimum",
+    "F10.7": "median of valid UTC-day hourly entries",
+    "Kp": "UTC-day maximum"
+  },
+  "heldout_rmse": {
+    "indices_only": 0.7478702884279179,
+    "no_correction": 0.33155563036904045,
+    "peers_only": 0.22209171304770403,
+    "peers_plus_indices": 0.3904587045065628,
+    "unscaled_peers": 0.23060721476137744
+  },
+  "indices": [
+    "Kp three-hourly (GFZ via OMNI)",
+    "Dst hourly (Kyoto via OMNI)",
+    "F10.7 daily (NRC via OMNI)"
+  ],
+  "median_absolute_common_quiet": 0.145625,
+  "median_absolute_common_storm": 0.21437499999999998,
+  "n_index_days": 124,
+  "n_test": 68,
+  "n_train": 56,
+  "quiet_days": 60,
+  "sha256_omni2_year_files": {
+    "2020": "11c2de98f1fd1ebe0156ca36c439fd4063d28c95e3706ec8752e7f59eea41700",
+    "2021": "c7a68a97abddd6842f26225b6ac5761cdb2f375aca2b5f53b752f7158ed2f211",
+    "2022": "413ac4895d24cab0af4861710c437f12efab44f3cd6c814a614815fa0f2c8d88",
+    "2023": "df74e09c22b126841835c0add8c46933b93118c33a1978f7e977f9488cf7d743"
+  },
+  "source": "https://cdaweb.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_YEAR.dat",
+  "storm_days": 12,
+  "train_coefficients": {
+    "indices_only": {
+      "betas_z": {
+        "dst_min": 0.0002428911541739881,
+        "f107_med": 0.07683416294725698,
+        "kp_max": 0.012463661093357184
+      },
+      "intercept": -0.006294642857142855
+    },
+    "peers_only": {
+      "betas_z": {
+        "A": 0.16769473003102758
+      },
+      "intercept": -0.006294642857142859
+    },
+    "peers_plus_indices": {
+      "betas_z": {
+        "A": 0.14722683133673858,
+        "dst_min": -0.024681538732820304,
+        "f107_med": 0.03832614586033363,
+        "kp_max": -0.027047586542122585
+      },
+      "intercept": -0.0062946428571428546
+    }
+  },
+  "train_rmse": {
+    "indices_only": 0.21948544921506477,
+    "no_correction": 0.23599830697031948,
+    "peers_only": 0.16593389010078358,
+    "peers_plus_indices": 0.1609911148654663,
+    "unscaled_peers": 0.1689103074542395
+  }
+}

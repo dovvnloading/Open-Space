@@ -1,0 +1,147 @@
+name: MeerKAT common-mode attribution replay
+on:
+  push:
+    branches:
+      - research/meerkat-faraday-common-mode-origin
+  pull_request:
+    paths:
+      - 'results/meerkat-common-mode-origin/**'
+      - 'results/meerkat-shared-faraday-rotation/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy
+      - run: python results/meerkat-common-mode-origin/diagnostics.py --write
+      - name: Test the new numerical results and split cardinalities
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r = json.loads(Path('results/meerkat-common-mode-origin/checks.json').read_text())
+          assert r['sky_sector']['matched_sources'] == 304
+          assert r['year_holdout']['n_training_days'] == 56
+          assert r['year_holdout']['n_heldout_days'] == 68
+          assert abs(r['J1057']['slopes']['post_iono_rm']['slope'] - 0.13308497) < 1e-4
+          assert abs(r['J1057']['slopes']['post_peer_rm']['slope']) < 0.001
+          assert r['year_holdout']['heldout']['unscaled_peers']['rmse'] < r['year_holdout']['heldout']['no_correction']['rmse']
+          assert r['year_holdout']['heldout']['trained_ionosphere']['rmse'] > r['year_holdout']['heldout']['no_correction']['rmse']
+          assert r['published_risk_scope']['full_series_3sigma_to_subthreshold'] == 18
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: meerkat-common-mode-origin-replay
+          path: |
+            results/meerkat-common-mode-origin/checks.json
+            results/meerkat-common-mode-origin/published_risks.csv
+
+  space_weather:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy
+      - id: indices
+        name: Fetch independent NASA OMNI F10.7, Kp and Dst and test held-out days
+        run: python results/meerkat-common-mode-origin/space_weather.py --fetch --write
+        continue-on-error: true
+      - if: steps.indices.outcome == 'failure'
+        run: echo 'External OMNI retrieval unavailable; no index result should be claimed'
+      - if: steps.indices.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: meerkat-space-weather-index-holdout
+          path: |
+            results/meerkat-common-mode-origin/space_weather_checks.json
+            results/meerkat-common-mode-origin/space_weather_days.csv
+
+  publish_evidence:
+    # Only a trusted push to the investigation branch can publish fresh derived files.
+    # This does not run on external PRs.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/research/meerkat-faraday-common-mode-origin'
+    needs: [replay, space_weather, ionex, ionex_all]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/meerkat-faraday-common-mode-origin
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: meerkat-*
+          path: results/meerkat-common-mode-origin
+          merge-multiple: true
+      - name: Commit deterministic, checked derived evidence (new files only)
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/meerkat-common-mode-origin/checks.json results/meerkat-common-mode-origin/published_risks.csv results/meerkat-common-mode-origin/space_weather_checks.json results/meerkat-common-mode-origin/space_weather_days.csv
+          for file in results/meerkat-common-mode-origin/code_ionex_probe_checks.json results/meerkat-common-mode-origin/code_ionex_probe_rows.csv; do
+            if [ -f "$file" ]; then git add "$file"; fi
+          done
+          for file in results/meerkat-common-mode-origin/code_ionex_full_checks.json results/meerkat-common-mode-origin/code_ionex_full_dates.csv results/meerkat-common-mode-origin/code_ionex_full_sources.csv; do
+            if [ -f "$file" ]; then git add "$file"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m 'Add validated per-pulsar RM risk audit and independent index receipts'
+            git push origin HEAD:research/meerkat-faraday-common-mode-origin
+          fi
+
+  ionex:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy pandas ppigrf unlzw3
+      - id: code
+        name: Fetch CODE independent TEC IONEX + compute IGRF-14 RM on four UTC dates
+        run: python results/meerkat-common-mode-origin/code_ionex_probe.py --fetch --write
+        continue-on-error: true
+      - if: steps.code.outcome == 'failure'
+        run: echo 'CODE map comparison did not complete; do not report a causal attribution'
+      - if: steps.code.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: meerkat-code-ionex-independent-pilot
+          path: |
+            results/meerkat-common-mode-origin/code_ionex_probe_checks.json
+            results/meerkat-common-mode-origin/code_ionex_probe_rows.csv
+
+  ionex_all:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy pandas ppigrf unlzw3
+      - id: code_all
+        name: Independent CODE IONEX/IGRF correction on all 124 predeclared UTC dates
+        run: python results/meerkat-common-mode-origin/code_ionex_all_dates.py --fetch --write
+        continue-on-error: true
+      - if: steps.code_all.outcome == 'failure'
+        run: echo 'Full CODE ionosphere test incomplete; no full-sample claim'
+      - if: steps.code_all.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: meerkat-code-ionex-124-date-audit
+          path: |
+            results/meerkat-common-mode-origin/code_ionex_full_checks.json
+            results/meerkat-common-mode-origin/code_ionex_full_dates.csv
+            results/meerkat-common-mode-origin/code_ionex_full_sources.csv
