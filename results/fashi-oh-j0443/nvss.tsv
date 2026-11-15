@@ -1,0 +1,48 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T09:11:46 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T09:11:46	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=VIII%2F65%2Fnvss&-c=70.79013+-6.82007&-c.rm=0.25&-out.max=7&-out.all=	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=070.790130-06.820070,rm=0.25	
+#Constraint -out.all=
+
+#RESOURCE=yCat_8065
+#Name: VIII/65
+#Title: 1.4GHz NRAO VLA Sky Survey (NVSS) (Condon+ 1998)
+#INFO	ivoid=ivo://cds.vizier/viii/65	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/viii/65	    IVOID of underlying data collection
+#INFO	creator=Condon J.J.	    First author or institution
+#INFO	cites=bibcode:1998AJ....115.1693C	    Article or Data origin sources
+#INFO	journal=AJ	    Journal name
+#INFO	original_date=1998	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/VIII/65	    Dataset landing page
+#INFO	publication_date=2007-12-13	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	VIII_65_nvss:
+#Name: VIII/65/nvss
+#Title: The NVSS Catalog
+#Column	NVSS	(a14)	Source name (1)	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(A11)	Right Ascension J2000 (2)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(A11)	Declination J2000 (2)	[ucd=pos.eq.dec;meta.main]
+#Column	e_RAJ2000	(F5.2)	Mean error on RA	[ucd=stat.error;pos.eq.ra]
+#Column	e_DEJ2000	(F4.1)	Mean error on Dec	[ucd=stat.error;pos.eq.dec]
+#Column	S1.4	(F8.1)	Integrated 1.4GHz flux density of radio source	[ucd=phot.flux.density;em.radio.750-1500MHz]
+#Column	e_S1.4	(F7.1)	Mean error on S1.4	[ucd=stat.error]
+#Column	l_MajAxis	(A1)	Limit flag on MajAxis	[ucd=meta.code.error;phys.angSize]
+#Column	MajAxis	(F5.1)	Fitted (deconvolved) major axis of radio source	[ucd=phys.angSize;em.radio;meta.modelled]
+#Column	l_MinAxis	(A1)	Limit flag on MinAxis	[ucd=meta.code.error;phys.angSize]
+#Column	MinAxis	(F5.1)	Fitted (deconvolved) minor axis of radio source	[ucd=phys.angSize;em.radio;meta.modelled]
+#Column	f_resFlux	(A2)	[PS* ] Residual Code (3)	[ucd=meta.code]
+NVSS	RAJ2000	DEJ2000	e_RAJ2000	e_DEJ2000	S1.4	e_S1.4	l_MajAxis	MajAxis	l_MinAxis	MinAxis	f_resFlux
+ 	"h:m:s"	"d:m:s"	s	arcsec	mJy	mJy	 	arcsec	 	arcsec	
+--------------	-----------	-----------	-----	----	--------	-------	-	-----	-	-----	--
+044309-064915 	04 43 09.33	-06 49 15.6	 0.21	 3.5	     5.1	    0.5	<	 43.4	<	 35.6	
+
