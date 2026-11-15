@@ -1,0 +1,48 @@
+{
+  "checked_utc": "2026-11-15",
+  "position_note": "Field center near both source positions, degrees ICRS. Event searches use 120 arcsec radius. The Gaia lens cross-check uses 1.5 arcsec at the expected 2016 position of the foreground dwarf.",
+  "checks": [
+    {
+      "catalog": "plc",
+      "endpoint": "https://dc.g-vo.org/tap/sync",
+      "adql": "SELECT count(*) AS n FROM plc.data WHERE 1=CONTAINS(POINT('ICRS',lensalpha,lensdelta),CIRCLE('ICRS',300.20910,36.49980,0.03333333)) OR 1=CONTAINS(POINT('ICRS',obalpha,obdelta),CIRCLE('ICRS',300.20910,36.49980,0.03333333))",
+      "response_csv": "n\r\n0"
+    },
+    {
+      "catalog": "plc2",
+      "endpoint": "https://dc.g-vo.org/tap/sync",
+      "adql": "SELECT count(*) AS n FROM plc2.data WHERE 1=CONTAINS(POINT('ICRS',lens_ra,lens_dec),CIRCLE('ICRS',300.20910,36.49980,0.03333333)) OR 1=CONTAINS(POINT('ICRS',ob_ra,ob_dec),CIRCLE('ICRS',300.20910,36.49980,0.03333333))",
+      "response_csv": "n\r\n0"
+    },
+    {
+      "catalog": "plc3",
+      "endpoint": "https://dc.g-vo.org/tap/sync",
+      "adql": "SELECT count(*) AS n FROM plc3.data WHERE 1=CONTAINS(POINT('ICRS',lens_ra,lens_dec),CIRCLE('ICRS',300.20910,36.49980,0.03333333)) OR 1=CONTAINS(POINT('ICRS',ob_ra,ob_dec),CIRCLE('ICRS',300.20910,36.49980,0.03333333))",
+      "response_csv": "n\r\n0"
+    },
+    {
+      "catalog": "Gaia DR3 lens cross-check",
+      "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+      "adql": "SELECT source_id,ra,dec,phot_g_mean_mag FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',300.209095,36.497834,0.000416667))",
+      "response_csv": "source_id,ra,dec,phot_g_mean_mag"
+    },
+    {
+      "catalog": "J/AcA/68/183/table2",
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FAcA%2F68%2F183&-c=300.20910+%2B36.4998&-c.rs=120&-out.max=20&-out.all=",
+      "data_rows": 0,
+      "response_sha256": "714caa16b57a9132450ac6638217662ca3826bb43b0c98d41905f96f530ee33c"
+    },
+    {
+      "catalog": "J/A+A/618/A44/tablea7",
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F618%2FA44&-c=300.20910+%2B36.4998&-c.rs=120&-out.max=20&-out.all=",
+      "data_rows": 0,
+      "response_sha256": "909564809688d33d2810c2069dad3bc5fbba46bdf86622b5eea501548219db31"
+    },
+    {
+      "catalog": "J/A+A/617/A135/mlens",
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F617%2FA135&-c=300.20910+%2B36.4998&-c.rs=120&-out.max=20&-out.all=",
+      "data_rows": 0,
+      "response_sha256": "c53efbb23ef4fc46040ed1729601bd90fbc180c8e24a2502caba08ce90ddb05d"
+    }
+  ]
+}
