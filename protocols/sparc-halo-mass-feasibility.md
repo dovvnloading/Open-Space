@@ -1,0 +1,7 @@
+# SPARC shell-mass feasibility search
+
+Search the public SPARC mass models for galaxies where two or more measured radii require a decrease in the enclosed spherical halo mass. The physical question is whether the published gas and stellar contributions leave room for a nonnegative spherical halo density. Also check whether gas alone exceeds the measured total acceleration locally. The observing unit is a galaxy, with nested radial pairs as correlated measurements.
+
+For each galaxy, use the tabulated circular speed and errors and signed squares of the gas, disk and bulge contributions. Compute the difference in inferred halo mass between measured radii and its propagated measurement uncertainty. Keep all eligible galaxies and pair counts. Test how much the inferred sign changes with the stellar mass-to-light ratios, distance and inclination. Favor coherent declines over multiple independent resolution elements and galaxies with higher-quality kinematics. A negative shell on a published curve may reflect a warp, noncircular motions, correlated errors, gas modeling or beam smearing. Verify leading cases against their original kinematic data and prior publications. Treat the largest pair in a scanned sample as exploratory until selection and independent checks have been addressed.
+
+Other independent archive leads under evaluation concern alternation in Mira maxima, white-dwarf pollutant chemistry and independently timed terrestrial fireballs. Only reproducible results enter the contribution.
