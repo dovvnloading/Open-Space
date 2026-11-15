@@ -11,6 +11,7 @@ from urllib.request import urlopen
 import numpy as np
 
 PHASE = {3: "ogle3/OIII-CVS", 4: "ogle4/OCVS"}
+RECEIPTS = {}
 URL = "https://www.astrouw.edu.pl/ogle/{}/{}/rrlyr/{}"
 
 
@@ -27,7 +28,9 @@ def fetch(url, cache):
             except OSError:
                 if attempt == 2:
                     raise
-    return path.read_bytes()
+    data = path.read_bytes()
+    RECEIPTS[url] = hashlib.sha256(data).hexdigest()
+    return data
 
 
 def get(phase, cloud, filename, cache):
@@ -148,4 +151,9 @@ if __name__ == "__main__":
         writer = csv.DictWriter(dest, fieldnames=fields)
         writer.writeheader()
         writer.writerows(rows)
+    manifest = args.out.with_name("screen-inputs.csv")
+    with manifest.open("w", newline="") as dest:
+        writer = csv.writer(dest)
+        writer.writerow(["url", "sha256"])
+        writer.writerows(sorted(RECEIPTS.items()))
     print(counts, "classification changes", len(rows), "measured", sum(r["status"] == "measured" for r in rows))
