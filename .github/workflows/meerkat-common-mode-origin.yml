@@ -70,7 +70,7 @@ jobs:
     # Only a trusted push to the investigation branch can publish fresh derived files.
     # This does not run on external PRs.
     if: github.event_name == 'push' && github.ref == 'refs/heads/research/meerkat-faraday-common-mode-origin'
-    needs: [replay, space_weather]
+    needs: [replay, space_weather, ionex]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -88,7 +88,30 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add results/meerkat-common-mode-origin/checks.json results/meerkat-common-mode-origin/published_risks.csv results/meerkat-common-mode-origin/space_weather_checks.json results/meerkat-common-mode-origin/space_weather_days.csv
-          if ! git diff --cached --quiet; then
+          for file in results/meerkat-common-mode-origin/code_ionex_probe_checks.json results/meerkat-common-mode-origin/code_ionex_probe_rows.csv; do\n            if [ -f "$file" ]; then git add "$file"; fi\n          done\n          if ! git diff --cached --quiet; then
             git commit -m 'Add validated per-pulsar RM risk audit and independent index receipts'
             git push origin HEAD:research/meerkat-faraday-common-mode-origin
           fi
+
+  ionex:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy pandas ppigrf unlzw3
+      - id: code
+        name: Fetch CODE independent TEC IONEX + compute IGRF-14 RM on four UTC dates
+        run: python results/meerkat-common-mode-origin/code_ionex_probe.py --fetch --write
+        continue-on-error: true
+      - if: steps.code.outcome == 'failure'
+        run: echo 'CODE map comparison did not complete; do not report a causal attribution'
+      - if: steps.code.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: meerkat-code-ionex-independent-pilot
+          path: |
+            results/meerkat-common-mode-origin/code_ionex_probe_checks.json
+            results/meerkat-common-mode-origin/code_ionex_probe_rows.csv
