@@ -28,7 +28,13 @@ def mismatches(expected: Any, actual: Any, path: str = "$", max_items: int = 12)
     def walk(e: Any, a: Any, p: str) -> None:
         if len(found) >= max_items:
             return
-        if type(e) is not type(a):
+        if (isinstance(e, (int, float)) and not isinstance(e, bool)
+                and isinstance(a, (int, float)) and not isinstance(a, bool)):
+            # JSON numbers 1 and 1.0 are semantically equivalent; the GitHub
+            # connector normalizes integral floats to integers in commits.
+            if e != a:
+                found.append(f"{p}: {e!r} -> {a!r}")
+        elif type(e) is not type(a):
             found.append(f"{p}: type changed {type(e).__name__} -> {type(a).__name__}")
         elif isinstance(e, dict):
             for key in sorted(e.keys() | a.keys()):
