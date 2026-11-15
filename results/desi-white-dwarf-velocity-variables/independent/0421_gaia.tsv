@@ -1,0 +1,52 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T11:21:58 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T11:21:58	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-c=65.480247+-13.425375&-c.rs=10&-out.max=8&-source=I%2F355%2Fgaiadr3&-out=Source%2CRA_ICRS%2CDE_ICRS%2CpmRA%2CpmDE%2CPlx%2CRUWE%2CGmag%2CNSS%2CVarFlag%2CRV%2CEpochPh%2CIPDfmp	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=065.480247-13.425375,rs=10.	
+#Constraint -out=Source,RA_ICRS,DE_ICRS,pmRA,pmDE,Plx,RUWE,Gmag,NSS,VarFlag,RV,EpochPh,IPDfmp
+
+#RESOURCE=yCat_1355
+#Name: I/355
+#Title: Gaia DR3 Part 1. Main source (Gaia Collaboration, 2022)
+#INFO	ivoid=ivo://cds.vizier/i/355	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/i/355	    IVOID of underlying data collection
+#INFO	creator=Gaia collaboration	    First author or institution
+#INFO	cites=bibcode:2022yCat.1355....0G	    Bibcode of the dataset
+#INFO	journal=yCat	    Journal name
+#INFO	original_date=2022	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/I/355	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.1355	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-12-12	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	H_2016.000:	ICRS
+#Table	I_355_gaiadr3:
+#Name: I/355/gaiadr3
+#Title: Gaia DR3 source catalog (1811709771 sources)
+#Column	Source	(I19)	Unique source identifier (unique within a particular Data Release) (source_id)	[ucd=meta.id;meta.main]
+#Column	RA_ICRS	(F15.11)	Right ascension (ICRS) at Ep=2016.0 (ra)	[ucd=pos.eq.ra;meta.main]
+#Column	DE_ICRS	(F15.11)	Declination (ICRS) at Ep=2016.0 (dec)	[ucd=pos.eq.dec;meta.main]
+#Column	pmRA	(F9.3)	? Proper motion in right ascension direction, pmRA*cosDE (pmra)	[ucd=pos.pm;pos.eq.ra]
+#Column	pmDE	(F9.3)	? Proper motion in declination direction (pmdec)	[ucd=pos.pm;pos.eq.dec]
+#Column	Plx	(F9.4)	? Parallax (parallax)	[ucd=pos.parallax.trig]
+#Column	RUWE	(F7.3)	? Renormalised unit weight error (ruwe)	[ucd=stat.error]
+#Column	Gmag	(F9.6)	? G-band mean magnitude (phot_g_mean_mag)	[ucd=phot.mag;em.opt]
+#Column	NSS	(I1)	[0/7] Flag indicating the availability of additional information in the various Non-Single Star tables (non_single_star)	[ucd=meta.code.status]
+#Column	VarFlag	(a13)	Photometric variability flag (phot_variable_flag)	[ucd=meta.code;src.var]
+#Column	RV	(F7.2)	? Radial velocity (radial_velocity)	[ucd=spect.dopplerVeloc.opt;em.opt.I]
+#Column	EpochPh	(I1)	[0/1] Flag indicating the availability of epoch photometry for this source (has_epoch_photometry)	[ucd=meta.code.status]
+#Column	IPDfmp	(I3)	[0/100] Percent of successful-IPD windows with more than one peak (ipd_frac_multi_peak)	[ucd=stat.value]
+Source	RA_ICRS	DE_ICRS	pmRA	pmDE	Plx	RUWE	Gmag	NSS	VarFlag	RV	EpochPh	IPDfmp
+ 	deg	deg	mas/yr	mas/yr	mas	 	mag	 	 	km/s	 	
+-------------------	---------------	---------------	---------	---------	---------	-------	---------	-	-------------	-------	-	---
+3176896324264567552	065.48040660076	-13.42532402194	   34.897	   11.456	   4.7320	  1.049	17.675085	0	NOT_AVAILABLE	       	0	  0
+3176896328559619968	065.48265428424	-13.42479626458	    2.008	    3.502	   0.2034	  1.001	20.508530	0	NOT_AVAILABLE	       	0	  0
+

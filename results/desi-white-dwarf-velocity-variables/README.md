@@ -13,6 +13,14 @@ The entries below are **later minus earlier** in km/s. Errors in the DESI column
 
 J0238+2733 also accelerates within one night. Its two barycentric exposure midpoints on 2021 November 13 are 24.9 minutes apart. DESI finds blue/red changes of −95/−68 km/s. Individual Hα, Hβ, Hγ and Hδ fits change by −55, −96, −66 and −86 km/s. Integration times are 1,267 and 1,580 seconds, respectively. These are exposure averages. A third DESI exposure recovers a much less negative velocity. In J0421−1325 three exposures on two nights cluster in the lower-velocity state and the fourth reaches the higher state.
 
+## A second telescope and a test for an orbital period
+
+LAMOST observed J0238+2733 on 2014 November 2, seven years before DESI. Its DR12 spectrum (ObsID 257903093) yields −119 ± 47 km/s from the heliocentric redshift. That agrees within one formal standard error with the less-negative DESI state and differs by more than four from the most-negative state. LAMOST coadded three integrations, and its absolute estimate depends on the pipeline release. This is independent support for the higher-velocity state. LAMOST did not sample a full orbit.
+
+The Gaia/ZTF checks yield no secure orbital period for either star. An apparent 0.94-mag i-band brightening of J0238+2733 coincides with an image trail that passes 0.22 pixel from the source centroid. The figure is derived directly from DESI measurements. Input checksums, the LAMOST FITS product, ZTF cutout and light-curve checks are in the [independent-survey evidence](independent/README.md).
+
+![DESI velocity measurements in the blue and red cameras on each exposure, with the earlier LAMOST measurement for J0238+2733](velocity-states.png)
+
 ## Selection and falsification
 
 Swan et al. provide the public DA classifications and individual-exposure velocities. We used the hydrogen-model joint-fit velocities for a uniform template across the DA sample. The selection was exploratory. Of 63,968 catalogue entries, 11,285 have type DA, at least two nominal exposures and estimated DESI flux contamination below 5%. We excluded ambiguous exposure keys, then required both camera errors to fall between 0.5 and 70 km/s, |RV| below 1,500 km/s, masked fractions below 0.05 and continuum S/N above 6 (blue) and 4 (red). This leaves 15,152 exposures and 3,630 objects with at least two eligible exposures. We examined 36,761 within-star exposure pairs.
