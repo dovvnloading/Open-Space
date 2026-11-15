@@ -1,7 +1,8 @@
 {
   "wfc_catalog": {
-    "url": "https://arxiv.org/html/2512.16845v2",
-    "sha256": "c7b142be5da5be978e354ca2e4633bb2ac015599596cc9615b0ea83ece307f4f"
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J/A%2BA/711/A60&-out.all&-out.max=200",
+    "sha256": "227656c51bd4aa6a4080c96cf92cdf5962f2ac73b47ce56dcd0126db57a83ae2",
+    "selection": "Table A.2, all 149 rows; ID, MJDstart, T90, RAJ2000, DEJ2000, ePos, BATSE, Type. Numerically checked all fields. Final published T90 for post-CGRO 000901 is 95.0 s; preprint had 520.3 s."
   },
   "stern_catalog": {
     "url": "https://heasarc.gsfc.nasa.gov/FTP/heasarc/dbase/tdat_files/heasarc_sterngrb.tdat.gz",
@@ -42,5 +43,20 @@
     "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J/A%2BA/711/A60&-out.all&-out.max=200",
     "sha256": "227656c51bd4aa6a4080c96cf92cdf5962f2ac73b47ce56dcd0126db57a83ae2",
     "selection": "Table A.2 record 50, stripped whitespace"
+  },
+  "wfc_preprint": {
+    "url": "https://arxiv.org/html/2512.16845v2",
+    "sha256": "c7b142be5da5be978e354ca2e4633bb2ac015599596cc9615b0ea83ece307f4f"
+  },
+  "vetere_2007_row": {
+    "url": "https://www.ssdc.asi.it/grb_wfc/wfc_cat2.js",
+    "sha256": "dcd6564199121503371b72eabeed584127f6f28676978cfea5c9a74624f0e530",
+    "selection": "GRB981217 entry in Vetere et al. Table 2. RS05 is Rossi et al. 2005 (DOI 10.1393/ncc/i2005-10053-1)."
+  },
+  "rossi_2005": {
+    "url": "http://eprints.bice.rm.cnr.it/15626/1/ncc8996.pdf",
+    "doi": "10.1393/ncc/i2005-10053-1",
+    "sha256": "39175e9306965d93a8f6421a7681812c7a82e5222cd6bd38cef857eb2eef807a",
+    "locator": "Figure 2 and immediately following text on page 333 of the original four-page publication explicitly identify GRB981217."
   }
 }

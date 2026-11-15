@@ -301,5 +301,49 @@
   "exposure_ephemeris_queries": {
     "407P": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27DES%3D407P%3BNOFRAG%3BCAP%27&CENTER=%27I41%27&EPHEM_TYPE=%27OBSERVER%27&TLIST=%272461093.642627311+2461093.670891211+2461093.767928211+2461094.642233811+2461094.677037011+2461094.691458311+2461095.692048611+2461095.715405111+2461095.755219911+2461096.659432911+2461096.687905111+2461096.716516211%27&QUANTITIES=%271%2C9%2C36%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27&ANG_FORMAT=%27DEG%27&OBJ_DATA=%27NO%27",
     "75547": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2775547%3B%27&CENTER=%27I41%27&EPHEM_TYPE=%27OBSERVER%27&TLIST=%272461093.642627311+2461093.670891211+2461093.767928211+2461094.642233811+2461094.677037011+2461094.691458311+2461095.692048611+2461095.715405111+2461095.755219911+2461096.659432911+2461096.687905111+2461096.716516211%27&QUANTITIES=%271%2C9%2C36%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27&ANG_FORMAT=%27DEG%27&OBJ_DATA=%27NO%27"
-  }
+  },
+  "candidate_audit": [
+    {
+      "comet": "428P",
+      "asteroid": "32305",
+      "screen_km": 25383.960206620977,
+      "screen_jd_tdb": 2461410.025700036,
+      "queries": {
+        "jpl_428P": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27DES%3D428P%3BNOFRAG%3BCAP%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&TLIST=%272461410.047628335%27&CSV_FORMAT=%27YES%27&OBJ_DATA=%27YES%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27",
+        "jpl_32305": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2732305%3B%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&TLIST=%272461410.047628335%27&CSV_FORMAT=%27YES%27&OBJ_DATA=%27YES%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27",
+        "miriade_428P": "https://ssp.imcce.fr/webservices/miriade/api/ephemcc.php?-name=c%3A428P&-ep=2461410.0476283357&-tscale=TT&-tcoor=2&-rplane=2&-observer=%40sun&-teph=4&-mime=json",
+        "miriade_32305": "https://ssp.imcce.fr/webservices/miriade/api/ephemcc.php?-name=a%3A32305&-ep=2461410.0476283357&-tscale=TT&-tcoor=2&-rplane=2&-observer=%40sun&-teph=4&-mime=json"
+      },
+      "jpl_sample_epoch_tdb": 2461410.047628335,
+      "jpl_separation_at_sample_km": 20925.14377872611,
+      "miriade_linearized_minimum_km": 70266.39711116593
+    },
+    {
+      "comet": "304P",
+      "asteroid": "342140",
+      "screen_km": 30706.97047154695,
+      "screen_jd_tdb": 2461302.928285697,
+      "queries": {
+        "jpl_304P": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27DES%3D304P%3BNOFRAG%3BCAP%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&TLIST=%272461302.944935346%27&CSV_FORMAT=%27YES%27&OBJ_DATA=%27YES%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27",
+        "jpl_342140": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27342140%3B%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&TLIST=%272461302.944935346%27&CSV_FORMAT=%27YES%27&OBJ_DATA=%27YES%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27",
+        "miriade_304P": "https://ssp.imcce.fr/webservices/miriade/api/ephemcc.php?-name=c%3A304P&-ep=2461302.944935348&-tscale=TT&-tcoor=2&-rplane=2&-observer=%40sun&-teph=4&-mime=json",
+        "miriade_342140": "https://ssp.imcce.fr/webservices/miriade/api/ephemcc.php?-name=a%3A342140&-ep=2461302.944935348&-tscale=TT&-tcoor=2&-rplane=2&-observer=%40sun&-teph=4&-mime=json"
+      },
+      "jpl_sample_epoch_tdb": 2461302.944935346,
+      "jpl_separation_at_sample_km": 51742.8743752272,
+      "miriade_linearized_minimum_km": 27638.627165309317
+    },
+    {
+      "comet": "P/2014 V1",
+      "asteroid": "504201",
+      "screen_km": 19476.330768869397,
+      "screen_jd_tdb": 2461307.4886228577,
+      "queries": {
+        "jpl_P/2014 V1": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27DES%3D2014+V1%3BCAP%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&TLIST=%272461307.488622858%27&CSV_FORMAT=%27YES%27&OBJ_DATA=%27YES%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27",
+        "jpl_504201": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27504201%3B%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&TLIST=%272461307.488622858%27&CSV_FORMAT=%27YES%27&OBJ_DATA=%27YES%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27"
+      },
+      "jpl_sample_epoch_tdb": 2461307.488622858,
+      "jpl_separation_at_sample_km": 70094699.13119887
+    }
+  ]
 }

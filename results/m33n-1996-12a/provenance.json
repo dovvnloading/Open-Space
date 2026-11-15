@@ -1,0 +1,59 @@
+{
+  "retrieval_utc": "2026-11-15",
+  "source_products": {
+    "positions": {
+      "url": "https://doi.org/10.1086/422833",
+      "selection": "Table 3, all six J2000 coordinates transcribed. Table 4 has one H\u03b1 detection each at JD 2450426.5 and 2450692.5."
+    },
+    "mira_fields": {
+      "url": "https://raw.githubusercontent.com/lmacri/m33sss_miras/c2de193480384f9ec54c6f8052685bdff934fa16/taba07_mrt.txt",
+      "sha256": "90eaffe761c557f5df3f50467bf4ccc882c6e638d9004cd2c4be5bf39c9c3748"
+    },
+    "ps1_detection": {
+      "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/detection.csv?objID=144690235861403627&columns=[detectID,obsTime,filterID,psfFlux,psfFluxErr,infoFlag,infoFlag2,infoFlag3,ra,dec]",
+      "sha256": "8aec6acbec34f38a47031078b4c006dedc2559dc1989e5ecef5724a88f1f1910"
+    },
+    "sim96": {
+      "url": "https://simbad.cfa.harvard.edu/simbad/sim-coo?Coord=23.58613+30.577536&Radius=5&Radius.unit=arcsec&output.format=ASCII",
+      "sha256": "65ac78b82e06cb2fb7254da31012ef0170065d9a38eb2ef9ba02c26be4c2912d"
+    },
+    "sim97": {
+      "url": "https://simbad.cfa.harvard.edu/simbad/sim-coo?Coord=23.601175+30.712017&Radius=5&Radius.unit=arcsec&output.format=ASCII",
+      "sha256": "cc4fb3f9615f1b6fe2ab9696182a9e3dc21ac70771152a83b37727c11bb297cd"
+    },
+    "dr24_96": {
+      "url": "https://irsa.ipac.caltech.edu/cgi-bin/ZTF/nph_light_curves?POS=CIRCLE%2023.58612%2030.5775%200.0013&COLLECTION=ztf_dr24&FORMAT=csv",
+      "sha256": "b98dcb5d3602ae4cf664c8bc3c86a3d3e2a2dfe468f6ab332083fac53a994511"
+    },
+    "alerts_96": {
+      "url": "https://api.alerce.online/ztf/v1/objects/ZTF19aawtdor/detections",
+      "sha256": "69e0b28904ff980f0549b80440d2027af703dfc3acd5ced38bc10cd8eb456c44"
+    },
+    "dr24_97": {
+      "url": "https://irsa.ipac.caltech.edu/cgi-bin/ZTF/nph_light_curves?POS=CIRCLE%2023.601175%2030.712017%200.0013&COLLECTION=ztf_dr24&FORMAT=csv",
+      "sha256": "dc6d1a299d62b5238562e1919c4fc29bedd88c92df3bdc615ed944f6146211c8"
+    },
+    "alerts_97": {
+      "url": "https://api.alerce.online/ztf/v1/objects/ZTF21accpgvo/detections",
+      "sha256": "4ab76251a933379a1e8da71663a49f706881b02334eaceb16761886c3b094751"
+    }
+  },
+  "columns_and_selection": {
+    "mira_fields.csv": "All table A7 records inside a 75 arcsec tangent-plane radius of any of the six original positions. Extracted whitespace fields (0-based): 0,1,2,3,4,8,10,12,29,30,47,48. Full input has 14,312 rows; 3,088 have six classifier votes (gold). Visual codes are independent of gold membership. 9.99/9.999 are catalog null codes.",
+    "ztf_dr24.csv": "In each published cone above, select every row from each light-curve object whose median epoch coordinate lies <1 arcsec from the CFHT Mira. Keep flags in the extract. Summaries use catflags == 0. The PTF/ZTF surveys are independent of Pan-STARRS; ZTF direct photometry and its alert measurements can share exposures.",
+    "ztf_alerts.csv": "All returned detections at both broker IDs; fid 1/2/3 are g/r/i. Candids are preserved as integer strings. Magnitudes describe difference flux.",
+    "ps1_detections.csv": "Exact MAST detection CSV. The headline i-band bright state has four exposures with flux/error ratios of 49\u201352. The four bright exposures have infoFlag2=128; the faintest exposure has infoFlag2=0. These measurements are illustrative across independent instruments; PS1 processing flags and flux uncertainties remain in the extract.",
+    "original_positions.csv": "Original RA hours converted to degrees, Dec arcminutes and arcseconds converted to degrees. Positions are rounded in the source.",
+    "position_controls": "The 100000 shared offsets use area-uniform radii of 12\u201360 arcsec, random position angles, and generator seed 87544. Counts are distributions of ranked separations, including both known and candidate associations in observed neighborhoods. The broad search was exploratory.",
+    "phase_sensitivity": "Single sinusoid at each trial period with independent survey intercepts, pooled i measurements grouped by integer MJD and median-aggregated. Quoted phase is (date minus fitted maximum)/period in [-0.5,0.5). Adopted model floor 0.12 mag. A sinusoid is a sensitivity test; no period uncertainty or discovery-epoch attribution is inferred."
+  },
+  "input_file_sha256": {
+    "ps1_detections.csv": "8aec6acbec34f38a47031078b4c006dedc2559dc1989e5ecef5724a88f1f1910",
+    "mira_fields.csv": "3ea95698540ab42fba53dea8d39fec55d9949ac703c2c725b43b2c46560effc5",
+    "ztf_alerts.csv": "b546225dbd0570c30189993b140503149ffb9110633039d621e90622433f2fbc",
+    "ztf_dr24.csv": "3debc4c8c676ecea02b67835b93bcf9113eea48cb8f9b20ce126bb688419bf90",
+    "simbad-97.txt": "cc4fb3f9615f1b6fe2ab9696182a9e3dc21ac70771152a83b37727c11bb297cd",
+    "original_positions.csv": "2ba207a5445e1086bff3945ca60dd9cd7c477d792d27870b5ab1115d0e4f9f58",
+    "simbad-96.txt": "65ac78b82e06cb2fb7254da31012ef0170065d9a38eb2ef9ba02c26be4c2912d"
+  }
+}

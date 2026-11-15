@@ -11,7 +11,18 @@ JPL's minimum corresponds to **19:54 UTC**, to the nearest minute. Independent s
 
 ## How the pair was found
 
-The exploratory screen included 894,699 numbered JPL asteroids (element epoch MJD >59000, semimajor axis <10 au, eccentricity <0.98) and 758 comet entries in the final search. We propagated osculating elements across an eight-day grid from 2025 through 2028, using heliocentric Horizons samples for a subset of comets. For each grid point we searched a spatial tree within 0.19 au and estimated closest approach within ±4.05 days using the relative velocity. The MPC osculating solution for 407P and the numbered asteroid elements yielded **30,675 km** before refinement. This approximate search can both miss encounters and generate false positives, especially far from an elements epoch. These counts describe the search undertaken and do not establish completeness or an encounter ranking.
+The JPL file contained 895,910 numbered asteroid records. We retained 894,699 with element epoch MJD >59000, semimajor axis <10 au, eccentricity <0.98 and inclination <180°. The retained records all have epoch MJD 61200 (9 June 2026). The MPC file contained 973 comet records. We selected nonparabolic entries with an element epoch of at least MJD 58800, perihelion distance ≤4.5 au and a parseable designation, excluding numbered fragments with a hyphen in the number field. We keyed records by designation, retaining 753 comet tracks. The 407P element epoch was MJD 61358 (14 November 2026). For 62 comet designations we used eight-day JPL Horizons vectors where available, producing 758 distinct track labels after combination. Some labels can refer to different designations of the same body.
+
+We propagated these elements on 183 grid dates, from 1 January 2025 through 27 December 2028, spaced eight days apart. At each epoch we queried a spatial tree for asteroids within 0.19 au of each comet. For each neighbour we estimated the closest relative position on a straight-line trajectory. We saved the smallest encounter per designation pair with a minimum within ±4.05 days of the grid point and separation below 0.006 au. This yielded 2,623 coarse nominations. Of these, 49 had a predicted separation <110,000 km, relative speed >0.4 km/s and heliocentric comet distance <3.8 au at the grid point. The speed cut suppresses self-matches between numbered active asteroids and their comet designations. We checked a subset with independent calculations and archived imagery as described below. The result is not a complete ranking. Two-body propagation, finite grid spacing, linear encounter interpolation, evolving solutions and aliases can yield missed, duplicated or spurious nominations.
+
+| Selected audit cases | Coarse miss distance (km) | JPL refinement (km) | Miriade cross-check (km) | Outcome |
+| --- | ---: | ---: | ---: | --- |
+| 407P and (75547) | 30,675 | 31,373 | 31,688 | Two close solutions and ZTF asteroid track |
+| 428P and (32305) | 25,384 | 20,925 | 70,266 | Large service discrepancy excludes a precise closer-passage claim |
+| 304P and (342140) | 30,707 | 51,743 | 27,639 | Large service discrepancy |
+| P/2014 V1 and (504201) | 19,476 | — | — | Horizons puts the bodies 70.1 million km apart at the nominated epoch |
+
+The default `screen.py` run uses the two unmodified fixed-width catalogue records in `ephemerides.json`. It recovers JD 2461094.30537030, 30,675.1 km and 8.0591 km/s without network access. For the complete screening procedure, `screen.py --population CACHE --output candidates.csv` reads the two named catalogue snapshots from CACHE (or downloads the current files), verifies their SHA-256 hashes and overlays the 62 saved Horizons query specifications. Use Python 3.11+, NumPy and SciPy. The full catalogue snapshots and bulk comet vectors are not bundled. Updated public catalogue files require the original snapshots for an exact historical full-population replay, and live Horizons queries can reflect new orbit solutions. These limitations do not apply to the bundled pair-specific numerical inputs.
 
 For refinement we used each body's heliocentric position and velocity to solve for the zero of relative position dotted with relative velocity, then requested new Horizons states at the refined epoch. We independently repeated the local minimization with Miriade mean J2000 heliocentric rectangular states at the JPL minimum. The bundled evidence includes both sets of state vectors, the JPL time brackets, the exact service URLs and checksums of the screening catalogues. [JPL numbered-body elements](https://ssd.jpl.nasa.gov/dat/ELEMENTS.NUMBR.gz) · [MPC comet elements](https://minorplanetcenter.net/iau/Ephemerides/Comets/Soft00Cmt.txt) · [Horizons documentation](https://ssd.jpl.nasa.gov/horizons/manual.html) · [Miriade documentation](https://ssp.imcce.fr/webservices/miriade/api/ephemcc/)
 
@@ -28,6 +39,7 @@ Paired catalogue-number, provisional-designation and comet-name searches found n
 Run from this directory. The geometry calculation uses the Python standard library and recorded inputs. The optional image calculation needs NumPy, SciPy and Astropy, and downloads the cutouts listed in the manifest.
 
 ```sh
+python screen.py
 python verify.py
 python verify.py --frames /path/to/cutout-cache
 ```
