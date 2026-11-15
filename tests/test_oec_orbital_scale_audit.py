@@ -1,4 +1,5 @@
 """Offline frozen-table audit and independent-paper diagnostic regression tests."""
+import contextlib
 import csv
 import importlib.util
 import io
@@ -35,6 +36,21 @@ class OrbitAuditTests(unittest.TestCase):
         self.assertAlmostEqual(audit.SOLAR_RADIUS_IN_AU, 0.004650467, places=7)
         self.assertAlmostEqual(audit.implied_mass_solar(365.25, 2), 8)
         self.assertAlmostEqual(audit.predicted_axis_au(365.25, 8), 2)
+
+    def test_git_blob_hash_matches_known_empty_object(self):
+        self.assertEqual(audit.git_blob_sha1(b""),
+                         "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391")
+
+    def test_default_cli_rejects_unpinned_source(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            work = Path(tmp)
+            data = work / "not-pinned.csv"
+            data.write_text(example_table().getvalue(), encoding="utf-8")
+            with contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as raised:
+                    audit.main(["--input", str(data), "--out", str(work / "out")])
+            self.assertEqual(raised.exception.code, 2)
+            self.assertFalse((work / "out").exists())
 
     def test_audit_and_exclusions(self):
         flags, counts = audit.audit_stream(example_table())
@@ -91,9 +107,15 @@ class OrbitAuditTests(unittest.TestCase):
             out = work / 'report'
             self.assertEqual(audit.main(['--input', str(source), '--out', str(out),
                                          '--primary-checks', str(HERE / 'primary_checks.csv'),
-                                         '--source-model-checks', str(HERE / 'k2_285_primary_checks.csv')]), 0)
+                                         '--source-model-checks', str(HERE / 'k2_285_primary_checks.csv'),
+                                         '--allow-unpinned-input']), 0)
             summary = json.loads((out / 'summary.json').read_text())
             self.assertEqual(summary['counts']['source_rows'], 8)
+            self.assertFalse(summary['pinned_input_verified'])
+            self.assertIsNone(summary['source_github_commit'])
+            self.assertIsNone(summary['source_url'])
+            self.assertEqual(summary['input_git_blob_sha1'],
+                             audit.git_blob_sha1(source.read_bytes()))
             self.assertEqual(summary['independently_checked_primary_paper_rows'], 6)
             self.assertEqual(summary['source_paper_model_rows_checked'], 4)
             with (out / 'flags.csv').open(newline='', encoding='utf-8') as f:
@@ -102,7 +124,7 @@ class OrbitAuditTests(unittest.TestCase):
                 self.assertEqual(len(list(csv.DictReader(f))), 6)
             # Reprocessing identical inputs yields identical CSV bytes.
             previous = (out / 'flags.csv').read_bytes()
-            audit.main(['--input', str(source), '--out', str(out)])
+            audit.main(['--input', str(source), '--out', str(out), '--allow-unpinned-input'])
             self.assertEqual((out / 'flags.csv').read_bytes(), previous)
 
 if __name__ == '__main__':
