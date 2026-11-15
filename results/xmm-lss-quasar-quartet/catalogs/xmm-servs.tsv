@@ -1,0 +1,58 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T10:54:43 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T10:54:43	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FMNRAS%2F478%2F2132%2Ftablea&-c=36.31513+-4.78245&-c.rs=130&-out.max=300&-out.all=	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=036.315130-04.782450,rs=130.	
+#Constraint -out.all=
+
+#RESOURCE=yCat_74782132
+#Name: J/MNRAS/478/2132
+#Title: XMM-LSS field. New XMM-Newton point-source cat. (Cheng+, 2018)
+#INFO	ivoid=ivo://cds.vizier/j/mnras/478/2132	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/mnras/478/2132	    IVOID of underlying data collection
+#INFO	creator=Chen C.-T.J.	    First author or institution
+#INFO	cites=bibcode:2018MNRAS.478.2132C	    Article or Data origin sources
+#INFO	journal=MNRA	    Journal name
+#INFO	original_date=2018	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/MNRAS/478/2132	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.74782132	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-08-18	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_MNRAS_478_2132_tablea:
+#Name: J/MNRAS/478/2132/tablea
+#Title: Main X-ray source catalogue
+#Column	XID	(A8)	XID, XMMNNNNN (XID)	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F10.6)	Mean source right ascension (J2000) (RA)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F10.6)	Mean source declination (J2000) (DEC)	[ucd=pos.eq.dec;meta.main]
+#Column	eXpos	(F5.2)	X-ray positional uncertainty (XPOSERR)	[ucd=stat.error;pos]
+#Column	Sct	(F8.2)	Soft band total net counts (SB_SCTS)	[ucd=phot.count;em.X-ray]
+#Column	Hct	(F8.2)	Hard band total net counts (HB_SCTS)	[ucd=phot.count;em.X-ray]
+#Column	Fct	(F8.2)	Full band total net counts (FB_SCTS)	[ucd=phot.count;em.X-ray]
+#Column	Srate	(F9.6)	Soft band total net count rate (SB_RATE)	[ucd=phot.count;em.X-ray]
+#Column	Hrate	(F9.6)	Hard band total net count rate (HB_RATE)	[ucd=phot.count;em.X-ray]
+#Column	Frate	(F9.6)	Full band total net count rate (FB_RATE)	[ucd=phot.count;em.X-ray]
+#Column	SFlux	(D12.5)	Soft band flux (SB_FLUX)	[ucd=phot.flux;em.X-ray]
+#Column	HFlux	(D12.5)	Hard band flux (HB_FLUX)	[ucd=phot.flux;em.X-ray]
+#Column	FFlux	(D12.5)	Full band flux (FB_FLUX)	[ucd=phot.flux;em.X-ray]
+#Column	HR	(F10.6)	? Total hardness ratio (HR)	[ucd=phot.flux;arith.ratio]
+#Column	LX	(D12.5)	? Rest-frame apparent 2-10keV luminosity (LX)	[ucd=phys.luminosity;em.X-ray]
+#Column	XXLID	(a8)	? XXM-XXL-North source name (XXLID)	[ucd=meta.id]
+XID	RAJ2000	DEJ2000	eXpos	Sct	Hct	Fct	Srate	Hrate	Frate	SFlux	HFlux	FFlux	HR	LX	XXLID
+ 	deg	deg	arcsec	ct	ct	ct	ct/s	ct/s	ct/s	mW/m2	mW/m2	mW/m2	 	10-7W	
+--------	----------	----------	-----	--------	--------	--------	---------	---------	---------	------------	------------	------------	----------	------------	--------
+XMM03905	036.301677	-04.754593	 0.98	  212.20	   85.86	  303.52	 0.006451	 0.002944	 0.010546	 6.65626e-15	 1.36319e-14	 2.31820e-14	 -0.373187	            	N_31_37
+XMM03908	036.302600	-04.776429	 1.05	   30.87	  208.49	  235.65	 0.000942	 0.008028	 0.009112	 1.28166e-15	 4.45490e-14	 2.27762e-14	  0.789886	 3.05912e+42	N_31_34
+XMM03921	036.309766	-04.783260	 0.70	  630.08	  248.69	  901.71	 0.020581	 0.009256	 0.033403	 2.23245e-14	 5.00865e-14	 7.79694e-14	 -0.379573	            	N_31_32
+XMM03924	036.312219	-04.794669	 0.91	  260.06	  104.83	  379.76	 0.009826	 0.004401	 0.016111	 7.41898e-15	 2.13685e-14	 2.93574e-14	 -0.381337	 3.80122e+44	N_31_28
+XMM03942	036.323510	-04.767657	 1.33	   29.12	   94.65	  107.48	 0.000978	 0.003596	 0.004088	 1.25754e-15	 1.83526e-14	 9.20010e-15	  0.572405	            	-99
+XMM03949	036.330228	-04.787000	 0.87	  271.33	  153.88	  441.94	 0.009629	 0.006297	 0.017718	 8.81677e-15	 3.06027e-14	 3.58594e-14	 -0.209254	 4.62621e+44	N_31_31
+

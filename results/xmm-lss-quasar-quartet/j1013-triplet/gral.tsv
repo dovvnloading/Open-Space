@@ -1,0 +1,68 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T11:03:49 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T11:03:49	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F707%2FA345&-c=153.41510+-1.80675&-c.rs=600&-out.max=300&-out.all=	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=153.415100-01.806750,rs=600.	
+#Constraint -out.all=
+
+#RESOURCE=yCat_37070345
+#Name: J/A+A/707/A345
+#Title: Gaia GraL. X. (Ducourant+, 2026)
+#INFO	ivoid=ivo://cds.vizier/j/a+a/707/a345	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/a+a/707/a345	    IVOID of underlying data collection
+#INFO	creator=Ducourant C.	    First author or institution
+#INFO	cites=bibcode:2026A&A...707A.345D	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2026	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/707/A345	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier/bc-p3/ldef	    Dataset identifier that can be used for citation
+#INFO	publication_date=2026-09-29	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_A_A_707_A345_tablea1:
+#Name: J/A+A/707/A345/tablea1
+#Title: Compiled list of 364 known gravitationally lensed systems
+#Column	TimeDelay	(A1)	indicates time delays in table B1	[ucd=meta.ref.url]
+#Column	Name	(a24)	Name (Name)	[ucd=meta.id;meta.main]
+#Column	Comp	(A2)	Component (Component)	[ucd=meta.code.multip]
+#Column	RAJ2000	(A13)	Right ascension (J2000) from ra_best (ra_sexa)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(A13)	Declination (J2000) from dec_best (dec_sexa)	[ucd=pos.eq.dec;meta.main]
+#Column	Type	(A6)	Type (Type)	[ucd=src.class]
+#Column	MaxSep	(F9.6)	Maximum separation (Max_separation)	[ucd=pos.angDistance]
+#Column	rpos	(a11)	Origin of best astrometry, can be Gaia_DR3, Gaia_FPR, HST, Publication (astrometry_best)	[ucd=meta.bib]
+#Column	zsource	(F7.4)	? Redshift (z_source)	[ucd=src.redshift;pos.heliocentric]
+#Column	zmilli	(F6.3)	? Redshift from Milliquas (z_milli)	[ucd=src.redshift;pos.heliocentric]
+#Column	zqsocdr3	(F9.6)	? Redshift from Gaia DR3 QSOC (z_qsoc_dr3)	[ucd=src.redshift;pos.heliocentric]
+#Column	zSHSRC	(F11.8)	? Redshift from SHSRC (z_SHSRC)	[ucd=src.redshift;pos.heliocentric]
+#Column	GLens	(A27)	Gravitatioanl lens name from Gaia FPR (gravLensName)	[ucd=meta.id]
+#Column	CompId	(I1)	? Index of the component for this sourceId from Gaia FPR (compId)	[ucd=meta.code.multip]
+#Column	GaiaDR3	(I19)	? Gaia DR3 source ID (source_id_DR3)	[ucd=meta.id]
+#Column	AllWISE	(A19)	AllWISE name (AllWISE)	[ucd=meta.id]
+#Table	J_A_A_707_A345_tableb1:
+#Name: J/A+A/707/A345/tableb1
+#Title: Compiled list of known gravitationally lensed systems with their time delays in days
+#Column	Name	(a24)	Name	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(A13)	Right ascension (J2000) of center of the lens system according to table A1	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(A13)	Declination (J2000) of center of the lens system according to table A1	[ucd=pos.eq.dec;meta.main]
+#Column	tAB	(D12.5)	? Time delay between A and B images	[ucd=time;arith.diff]
+#Column	e_tAB	(F6.3)	? Time delay between A and B images error	[ucd=stat.error]
+#Column	tAC	(D12.5)	? Time delay between A and C images	[ucd=time;arith.diff]
+#Column	e_tAC	(F5.2)	? Time delay between A and C images error	[ucd=stat.error]
+#Column	tAD	(D12.5)	? Time delay between A and D images	[ucd=time;arith.diff]
+#Column	e_tAD	(F5.2)	? Time delay between A and D images error	[ucd=stat.error]
+#Column	tBC	(F5.1)	? Time delay between B and C images	[ucd=time;arith.diff]
+#Column	e_tBC	(F5.2)	? Time delay between B and C images error	[ucd=stat.error]
+#Column	tBD	(D12.5)	? Time delay between B and D images	[ucd=time;arith.diff]
+#Column	e_tBD	(F5.2)	? Time delay between B and D images error	[ucd=stat.error]
+#Column	tCD	(D12.5)	? Time delay between C and D images	[ucd=time;arith.diff]
+#Column	e_tCD	(F5.2)	? Time delay between C and D images error	[ucd=stat.error]
+#Column	Ref	(a17)	Reference code	[ucd=meta.note]
+#Column	BibCode	(A19)	BibCode	[ucd=meta.bib.bibcode]

@@ -1,0 +1,69 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T10:54:43 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T10:54:43	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=IX%2F69&-c=36.31513+-4.78245&-c.rs=130&-out.max=300&-out.all=	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=036.315130-04.782450,rs=130.	
+#Constraint -out.all=
+
+#RESOURCE=yCat_9069
+#Name: IX/69
+#Title: XMM-Newton Serendipitous Source Catalogue 4XMM-DR13 (Webb+, 2023)
+#INFO	ivoid=ivo://cds.vizier/ix/69	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/ix/69	    IVOID of underlying data collection
+#INFO	creator=Webb N.A.	    First author or institution
+#INFO	cites=bibcode:2020A&A...641A.136W	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2020	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/IX/69	    Dataset landing page
+#INFO	publication_date=2024-06-20	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	H:	ICRS
+#Table	IX_69_xmm4d13s:
+#Name: IX/69/xmm4d13s
+#Title: The 4XMM-DR13 Catalog, "slim" version
+#Column	4XMM	(A16)	Unique source name (JHHMMSS.s+DDMMSS) (IAUNAME)	[ucd=meta.id;meta.main]
+#Column	RA_ICRS	(F10.6)	Mean source right ascension (ICRS) (SC_RA)	[ucd=pos.eq.ra;meta.main]
+#Column	DE_ICRS	(F10.6)	Mean source declination (ICRS) (SC_DEC)	[ucd=pos.eq.dec;meta.main]
+#Column	srcML	(D12.5)	Source detection likelihood (SC_DET_ML) (2)	[ucd=stat.likelihood;instr.saturation]
+#Column	Flux8	(D12.5)	Mean flux in 0.2-12keV band (SC_EP_8_FLUX)	[ucd=phot.flux;em.X-ray]
+#Column	e_Flux8	(D12.5)	Mean error on Flux8 (SC_EP_8_FLUX_ERR)	[ucd=stat.error]
+#Column	HR1	(F9.6)	[-1/1]? Hardness ratio, bands 1,2 (SC_HR1) (1)	[ucd=phot.flux;arith.ratio]
+#Column	HR2	(F9.6)	[-1/1]? Hardness ratio, bands 2,3 (SC_HR2) (1)	[ucd=phot.flux;arith.ratio]
+#Column	HR3	(F9.6)	[-1/1]? Hardness ratio, bands 3,4 (SC_HR3) (1)	[ucd=phot.flux;arith.ratio]
+#Column	HR4	(F9.6)	[-1/1]? Hardness ratio, bands 4,5 (SC_HR4) (1)	[ucd=phot.flux;arith.ratio]
+#Column	ext	(F9.6)	Total band extent (SC_EXTENT)	[ucd=phys.angSize]
+#Column	V	(I1)	[0/1] Variability flag (V=1) (SC_VAR_FLAG)	[ucd=meta.code;src.var]
+#Column	S	(I1)	[0/4] summary flag, 0=best (SC_SUM_FLAG) (5)	[ucd=meta.code.qual]
+#Column	Nd	(I2)	[1/90]? Number of detections (N_DETECTIONS)	[ucd=meta.number]
+#Column	uIRAP	(A54)	URL for details at IRAP (WEBPAGE_URL)	[ucd=meta.ref.url]
+#Column	xcatDB	(a6)	Show details from the Xcat-DB about that source	[ucd=meta.ref.url]
+4XMM	RA_ICRS	DE_ICRS	srcML	Flux8	e_Flux8	HR1	HR2	HR3	HR4	ext	V	S	Nd	uIRAP	xcatDB
+ 	deg	deg	 	mW/m2	mW/m2	 	 	 	 	arcsec	 	 	 	 	
+----------------	----------	----------	------------	------------	------------	---------	---------	---------	---------	---------	-	-	--	------------------------------------------------------	------
+J022512.4-044517	036.301686	-04.754872	 1.24669e+02	 2.53284e-14	 5.44329e-15	 0.206420	-0.096917	-0.697785	 0.604843	 0.000000	0	0	 6	http://xmm-catalog.irap.omp.eu/source/201095203010046/	xcatDB
+J022512.7-044633	036.303164	-04.776056	 1.99416e+02	 1.39260e-13	 2.14344e-14	         	 1.000000	 0.338495	-0.092179	 0.000000	0	0	 1	http://xmm-catalog.irap.omp.eu/source/201095203010014/	xcatDB
+J022513.7-044552	036.307432	-04.764471	 8.02327e+00	 7.73810e-15	 5.74214e-15	-0.723396	 0.788123	-0.830156	 0.922502	 0.000000	0	0	 1	http://xmm-catalog.irap.omp.eu/source/207804510010065/	xcatDB
+J022514.3-044700	036.309913	-04.783468	 7.89644e+02	 7.74779e-14	 6.75128e-15	 0.034490	 0.002222	-0.324649	-0.604597	 0.000000	0	2	 7	http://xmm-catalog.irap.omp.eu/source/201095204010006/	xcatDB
+J022514.8-044804	036.312017	-04.801196	 3.56600e+01	 6.62150e-15	 7.51999e-15	-1.000000	         	         	 1.000000	 0.000000	0	0	 1	http://xmm-catalog.irap.omp.eu/source/204049605010012/	xcatDB
+J022515.0-044742	036.312510	-04.795223	 1.74234e+02	 2.65326e-14	 5.02426e-15	-0.103247	 0.168752	-0.603502	 0.175392	 0.000000	0	1	 6	http://xmm-catalog.irap.omp.eu/source/201095203010016/	xcatDB
+J022519.2-044713	036.330338	-04.786993	 1.73774e+02	 3.46413e-14	 5.95177e-15	 0.538591	 0.134634	-0.333280	-0.184094	 0.000000	0	0	 7	http://xmm-catalog.irap.omp.eu/source/201095204015016/	xcatDB
+
+#Table	IX_69_summary:
+#Name: IX/69/summary
+#Title: List of observations
+#Column	Rev	(A4)	[27/4207] Satellite revolution number (REVOLUT)	[ucd=meta.id]
+#Column	ObsID	(A10)	XMM Observation number (Cat. B/xmm) (OBS_ID)	[ucd=meta.id;meta.main]
+#Column	iODF	(A3)	[1/10] Data File (ODF) number (ODF_VERS)	[ucd=meta.software]
+#Column	RAJ2000	(F10.6)	field Right Ascension (J2000) (RA)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F10.6)	field Declination (J2000) (DEC)	[ucd=pos.eq.dec;meta.main]
+#Column	PApnt	(F10.6)	Actual pointed position of the optical axis (PA_PNT)	[ucd=instr.offset]
+#Column	Target	(a19)	Target name (TARGET)	[ucd=meta.id]
