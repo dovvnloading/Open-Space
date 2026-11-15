@@ -1,5 +1,7 @@
 # Apollo eclipse and deep-moonquake screens
 
+**Negative result:** Neither the two Apollo 17 lunar-eclipse windows nor the deep-moonquake nest-pair search shows a compelling seismic excess relative to the specified controls. This is a catalog-based null finding, **not proof that eclipses have no physical effect or that nests never interact**; recording coverage, detection efficiency and statistical power limit the conclusions.
+
 The final Apollo 17 Grade-A file contains 13,000 arrivals for 3,250 events. We use the first arrival on any geophone. The six uneclipsed full Moons in the archive provide control windows with the same length and offset from the tabulated full Moon. Four adjacent windows have the same length as each eclipse window.
 
 | Global penumbral contacts in UT | Events | Six phase controls | Four adjacent controls |
@@ -24,7 +26,7 @@ A1/A14 and A8/A18 tie at eight one-hour pairings. A8/A10 lead at six hours. The 
 
 ## Reproduction
 
-The script uses NumPy and pandas, and verifies each input file by SHA-256.
+The script uses NumPy and pandas 2.0 or later (for mixed-format timestamps), and verifies each input file by SHA-256.
 
 ```sh
 curl -fLsS 'https://data.caltech.edu/records/d7mk4-f8t44/files/GradeA_thermal_mq_catalog_final.csv?download=1' -o grade.csv
