@@ -1,0 +1,16 @@
+# New Rubin astrometry and an independent test of the older orbits
+
+The October 2026 MPC orbit fits include **16 new observations of 2017 DO171 on four nights** and **26 of 2022 GV6 on eight nights**. The old JPL fits used 14 and 18 optical positions, respectively. All new rows come from the Simonyi Survey Telescope at Rubin Observatory (X05), use a Gaia DR3 reference catalog, and postdate the old fits' observing arcs. The MPC accepted all 30 and 44 positions in its new fits.
+
+| Target | Old JPL fit | New Rubin arc (UTC) | Median east, north O−C | Median radial O−C | Radial range |
+|---|---:|---|---:|---:|---:|
+| 2017 DO171 | 1 | March 13–May 13, 2026 | +1.114″, −0.170″ | 1.116″ | 0.884″–1.413″ |
+| 2022 GV6 | 2 | March 12–April 19, 2026 | +0.083″, −0.103″ | 0.161″ | 0.061″–0.349″ |
+
+For each ADES exposure time in UTC we retrieved topocentric, down-leg light-time-corrected, astrometric ICRF coordinates (Horizons observer quantity 1) at station X05 from the identified older JPL solution. East is (observed RA minus computed RA) × cos(computed Dec), and north is the declination difference. The larger DO171 offsets have a coherent direction across nights. They still lie within the older solution's formal sky-coordinate uncertainties. These residuals test a prior orbit against later measurements. Because the current MPC fit includes all these measurements, they cannot validate an extrapolation from that newer fit.
+
+The MPC exports its current Cartesian heliocentric state in ICRF-aligned J2000 ecliptic coordinates, AU and AU/day, at MJD(TT) 61200.0. Its force model is AST17 with DE431 and obliquity 84381.448″. The upper triangle of the first six rows/columns in the CAR covariance corresponds to x, y, z, vx, vy, vz. The old and new catalog solutions use different epochs. Compare dynamics from states advanced to a common epoch, or initialize the planets at each target-state epoch. [MPC convention and integration guide](https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_orbit_to_assist/)
+
+The 2022 KMTNet discovery-team abstract describes GV6 as a detached object, with its then-estimated semimajor axis near 110 AU. The 2024 DO171 MPEC reports its discovery astrometry. Neither source makes the resonance identifications considered here. Johnston's January 2026 classification table lists both objects as SDO. These checks place bounds on any priority claim. [KMTNet discovery abstract](https://doi.org/10.5194/epsc2022-338) · [MPEC 2024-O26](https://minorplanetcenter.net/mpec/K24/K24O26.html) · [Johnston's catalog](https://www.johnstonsarchive.net/astro/tnoslist.html)
+
+Run `python check_astrometry.py` for an offline recalculation from the 42 frozen exposure/ephemeris pairs. Run `python check_astrometry.py --fetch /tmp/astrometry-recheck` to request the raw observations, orbit fits and Horizons tables again. A changed JPL solution or MPC arc will cause that command to report a mismatch. The receipts contain SHA-256 digests of all original responses. [MPC observations API](https://docs.minorplanetcenter.net/mpc-ops-docs/apis/get-obs/) · [MPC orbit API](https://docs.minorplanetcenter.net/mpc-ops-docs/apis/get-orb/) · [JPL Horizons API](https://ssd-api.jpl.nasa.gov/doc/horizons.html)
