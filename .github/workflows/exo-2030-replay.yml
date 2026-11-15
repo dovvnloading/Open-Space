@@ -26,6 +26,11 @@ jobs:
           import csv, math, pathlib, sys
           results = pathlib.Path("results/be-pulsar-orbital-outbursts")
           cache = pathlib.Path(sys.argv[1])
+          for name in ("photon-replay.csv", "monitor-replay.csv"):
+              with (cache / name).open() as stream:
+                  for row in csv.DictReader(stream):
+                      if name == "photon-replay.csv" or row["series"] in ("BAT", "EXO 2-20"):
+                          print("Replayed", row, flush=True)
           def tables(file):
               with file.open() as f:
                   return list(csv.DictReader(f))

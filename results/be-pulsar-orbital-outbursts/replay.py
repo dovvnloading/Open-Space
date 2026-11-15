@@ -177,8 +177,10 @@ def main():
             excess, error, counts = contrast(x, center)
             monitor_rows.append([n, center, 1/frequency, name, *counts, excess, error, excess/error])
         if not args.monitors_only:
-            for region, times in zip(("EXO", "Cyg X-3"), photons(cache, manifest, center)):
-                pulse_rows.append([n, region, *fold(times,center,frequency)])
+            # The initial photon extraction froze window centers to the nearest half MJD.
+            timing_center = round(2*center)/2
+            for region, times in zip(("EXO", "Cyg X-3"), photons(cache, manifest, timing_center)):
+                pulse_rows.append([n, region, *fold(times,timing_center,frequency)])
     write(cache/"monitor-replay.csv", ["orbit","center_mjd","period_s","series","left_n","center_n",
           "right_n","excess","formal_error","ratio"], monitor_rows)
     if pulse_rows:
