@@ -1,0 +1,436 @@
+{
+  "aeb_url": "https://research.ssl.berkeley.edu/data/psp/data/sci/fields/l2/aeb/2024/11/psp_fld_l2_aeb_20241106_v01.cdf",
+  "aeb_sha256": "60ad4d18afc61471b6585ea8400f817bbb8d515b770ca2fa5cdbd40ace1f741e",
+  "hfr_sha256": "f0509d0adaa1882e2b30c6b89283e7822f5c7bcba6d705ed87eff0ff79b81f72",
+  "bands_MHz": [
+    [
+      1.3,
+      2
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      4,
+      8
+    ],
+    [
+      8,
+      16
+    ]
+  ],
+  "nominal_packet_offset_s": 0,
+  "antennas": {
+    "ch0_V1V2": {
+      "records_within_10_min": 70,
+      "telemetry_flags": [
+        1
+      ],
+      "distinct_command_settings": 48,
+      "command_range_uA": [
+        -0.5251,
+        6.0207
+      ],
+      "median_abs_command_minus_measured_uA": 0.0019,
+      "exact_command_overlap": {
+        "core_3min_packets": 52,
+        "left_and_right_4_to_10min_packets": [
+          0,
+          8
+        ],
+        "same_command_in_core_and_both_flanks": 0,
+        "inner_1min_positive_plateaus": 17,
+        "outer_2_to_4min_positive_plateaus": 27,
+        "shared_DAC_values_inner1_outer2to4": 0
+      },
+      "packet_offset_sensitivity_s": {
+        "-7": {
+          "adjacent_pairs": 58,
+          "spearman_rho": [
+            0.6761,
+            0.3766,
+            0.0389,
+            0.0409
+          ],
+          "db_per_uA_OLS": [
+            0.3606,
+            0.112,
+            0.0138,
+            0.002
+          ],
+          "phase_shift_ranks_abs_ge": [
+            1,
+            1,
+            46,
+            38
+          ],
+          "phase_shifts_total": 58,
+          "halves_spearman_rho": [
+            [
+              0.7657,
+              0.6699,
+              0.2791,
+              0.05
+            ],
+            [
+              0.4157,
+              0.0113,
+              -0.1092,
+              -0.1239
+            ]
+          ]
+        },
+        "-3.5": {
+          "adjacent_pairs": 59,
+          "spearman_rho": [
+            0.4861,
+            0.2771,
+            0.1861,
+            0.1429
+          ],
+          "db_per_uA_OLS": [
+            0.2209,
+            0.0776,
+            0.0381,
+            0.0152
+          ],
+          "phase_shift_ranks_abs_ge": [
+            1,
+            1,
+            9,
+            18
+          ],
+          "phase_shifts_total": 59,
+          "halves_spearman_rho": [
+            [
+              0.4984,
+              0.3438,
+              0.1571,
+              0.1397
+            ],
+            [
+              0.3065,
+              0.1165,
+              0.3528,
+              0.1163
+            ]
+          ]
+        },
+        "0": {
+          "adjacent_pairs": 59,
+          "spearman_rho": [
+            0.1181,
+            0.1141,
+            0.0988,
+            -0.0647
+          ],
+          "db_per_uA_OLS": [
+            -0.0047,
+            0.0067,
+            0.008,
+            -0.0001
+          ],
+          "phase_shift_ranks_abs_ge": [
+            28,
+            24,
+            29,
+            27
+          ],
+          "phase_shifts_total": 59,
+          "halves_spearman_rho": [
+            [
+              0.0636,
+              0.0923,
+              0.069,
+              -0.0376
+            ],
+            [
+              0.1759,
+              0.0451,
+              0.2351,
+              -0.1464
+            ]
+          ]
+        },
+        "3.5": {
+          "adjacent_pairs": 60,
+          "spearman_rho": [
+            -0.0921,
+            -0.1452,
+            -0.0826,
+            -0.0503
+          ],
+          "db_per_uA_OLS": [
+            -0.0637,
+            -0.0452,
+            -0.0117,
+            -0.0081
+          ],
+          "phase_shift_ranks_abs_ge": [
+            41,
+            14,
+            37,
+            39
+          ],
+          "phase_shifts_total": 60,
+          "halves_spearman_rho": [
+            [
+              -0.1615,
+              -0.1762,
+              -0.0134,
+              0.012
+            ],
+            [
+              -0.146,
+              -0.136,
+              -0.1213,
+              -0.1558
+            ]
+          ]
+        },
+        "7": {
+          "adjacent_pairs": 61,
+          "spearman_rho": [
+            -0.0139,
+            -0.1256,
+            -0.0282,
+            0.0746
+          ],
+          "db_per_uA_OLS": [
+            -0.0815,
+            -0.0505,
+            0.0041,
+            0.0154
+          ],
+          "phase_shift_ranks_abs_ge": [
+            56,
+            24,
+            53,
+            23
+          ],
+          "phase_shifts_total": 61,
+          "halves_spearman_rho": [
+            [
+              -0.0728,
+              -0.1472,
+              0.1988,
+              0.147
+            ],
+            [
+              0.0171,
+              -0.1609,
+              -0.2183,
+              -0.0964
+            ]
+          ]
+        }
+      }
+    },
+    "ch1_V3V4": {
+      "records_within_10_min": 70,
+      "telemetry_flags": [
+        1
+      ],
+      "distinct_command_settings": 48,
+      "command_range_uA": [
+        -0.5251,
+        6.0207
+      ],
+      "median_abs_command_minus_measured_uA": 0.0021,
+      "exact_command_overlap": {
+        "core_3min_packets": 51,
+        "left_and_right_4_to_10min_packets": [
+          0,
+          7
+        ],
+        "same_command_in_core_and_both_flanks": 0,
+        "inner_1min_positive_plateaus": 15,
+        "outer_2_to_4min_positive_plateaus": 28,
+        "shared_DAC_values_inner1_outer2to4": 0
+      },
+      "packet_offset_sensitivity_s": {
+        "-7": {
+          "adjacent_pairs": 55,
+          "spearman_rho": [
+            0.1803,
+            -0.0198,
+            -0.0791,
+            -0.0953
+          ],
+          "db_per_uA_OLS": [
+            -0.0317,
+            -0.0436,
+            -0.0096,
+            -0.0162
+          ],
+          "phase_shift_ranks_abs_ge": [
+            19,
+            54,
+            38,
+            22
+          ],
+          "phase_shifts_total": 55,
+          "halves_spearman_rho": [
+            [
+              0.216,
+              0.0438,
+              -0.187,
+              -0.0594
+            ],
+            [
+              0.146,
+              -0.1805,
+              0.2068,
+              -0.0443
+            ]
+          ]
+        },
+        "-3.5": {
+          "adjacent_pairs": 56,
+          "spearman_rho": [
+            0.5867,
+            0.3028,
+            0.0729,
+            0.0506
+          ],
+          "db_per_uA_OLS": [
+            0.1941,
+            0.061,
+            0.0183,
+            0.0018
+          ],
+          "phase_shift_ranks_abs_ge": [
+            1,
+            1,
+            32,
+            36
+          ],
+          "phase_shifts_total": 56,
+          "halves_spearman_rho": [
+            [
+              0.6781,
+              0.5122,
+              0.161,
+              0.1402
+            ],
+            [
+              0.5148,
+              0.0285,
+              -0.0099,
+              -0.0068
+            ]
+          ]
+        },
+        "0": {
+          "adjacent_pairs": 55,
+          "spearman_rho": [
+            0.8247,
+            0.5329,
+            0.2056,
+            0.1184
+          ],
+          "db_per_uA_OLS": [
+            0.4003,
+            0.1801,
+            0.04,
+            0.0221
+          ],
+          "phase_shift_ranks_abs_ge": [
+            1,
+            1,
+            10,
+            17
+          ],
+          "phase_shifts_total": 55,
+          "halves_spearman_rho": [
+            [
+              0.9187,
+              0.7632,
+              0.3028,
+              0.3405
+            ],
+            [
+              0.6609,
+              0.0724,
+              0.0864,
+              -0.0418
+            ]
+          ]
+        },
+        "3.5": {
+          "adjacent_pairs": 56,
+          "spearman_rho": [
+            0.3786,
+            0.2957,
+            0.0465,
+            0.0834
+          ],
+          "db_per_uA_OLS": [
+            0.1659,
+            0.0837,
+            0.0034,
+            0.0362
+          ],
+          "phase_shift_ranks_abs_ge": [
+            4,
+            2,
+            39,
+            26
+          ],
+          "phase_shifts_total": 56,
+          "halves_spearman_rho": [
+            [
+              0.4251,
+              0.5412,
+              -0.0608,
+              0.3512
+            ],
+            [
+              0.3485,
+              -0.0772,
+              0.1632,
+              -0.2574
+            ]
+          ]
+        },
+        "7": {
+          "adjacent_pairs": 55,
+          "spearman_rho": [
+            0.0514,
+            -0.0866,
+            -0.0037,
+            0.0116
+          ],
+          "db_per_uA_OLS": [
+            -0.0253,
+            -0.0145,
+            -0.0067,
+            0.011
+          ],
+          "phase_shift_ranks_abs_ge": [
+            42,
+            40,
+            54,
+            50
+          ],
+          "phase_shifts_total": 55,
+          "halves_spearman_rho": [
+            [
+              0.063,
+              -0.0723,
+              -0.0635,
+              0.1317
+            ],
+            [
+              0.0192,
+              -0.2024,
+              0.0928,
+              -0.0376
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

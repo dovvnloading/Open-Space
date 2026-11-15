@@ -1,0 +1,83 @@
+name: Verify Parker, Venus occultation and Gaia triple results
+on:
+  pull_request:
+    paths:
+      - "results/parker-venus-radio-power/**"
+      - "results/solar-orbiter-venus-jovian-occultations/**"
+      - "results/wide-white-dwarf-triples/**"
+      - ".github/workflows/pr51-replays.yml"
+  push:
+    branches:
+      - research/independent-compact-systems-20261115
+permissions:
+  contents: read
+jobs:
+  frozen-replays:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install numpy scipy
+      - name: Verify saved spectra, geometry, and Gaia projection
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m compileall -q results/parker-venus-radio-power results/solar-orbiter-venus-jovian-occultations results/wide-white-dwarf-triples
+          python results/parker-venus-radio-power/analyze.py > /tmp/parker-replay.json
+          cmp /tmp/parker-replay.json results/parker-venus-radio-power/results.json
+          python results/solar-orbiter-venus-jovian-occultations/reproduce.py
+          git diff --exit-code -- results/solar-orbiter-venus-jovian-occultations/contacts.csv results/solar-orbiter-venus-jovian-occultations/inputs.csv
+          python results/wide-white-dwarf-triples/audit.py > /tmp/gaia-audit.json
+          python -c 'import json; d=json.load(open("/tmp/gaia-audit.json")); assert (d["pair_rows"], d["component_records"], d["unique_stars"], d["mismatched_fields"], d["affected_systems"]) == (26, 52, 49, 11, 10), d'
+  native-bias-telemetry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy scipy cdflib
+      - name: Recompute 2024 frequency response from checksum-pinned native files
+        shell: bash
+        run: |
+          set -euo pipefail
+          python results/parker-venus-radio-power/bias_check.py --aeb /tmp/psp_aeb.cdf --hfr /tmp/psp_hfr.cdf > /tmp/bias-replay.json
+          cmp /tmp/bias-replay.json results/parker-venus-radio-power/bias_check.json
+  orbit-kernel-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy scipy spiceypy
+      - name: Reproduce contacts from pinned ESA orbit products
+        shell: bash
+        run: |
+          set -euo pipefail
+          python results/solar-orbiter-venus-jovian-occultations/check_kernels.py --cache /tmp/solo-kernels
+          git diff --exit-code -- results/solar-orbiter-venus-jovian-occultations/kernel_contacts.csv results/solar-orbiter-venus-jovian-occultations/observer_geometry.csv
+  archival-radio-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy scipy cdflib
+      - name: Reproduce archived radio contact tests from pinned CDFs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python results/solar-orbiter-venus-jovian-occultations/check_radio.py --cache /tmp/venus-radio --download
+          git diff --exit-code -- results/solar-orbiter-venus-jovian-occultations/radio_contacts.csv results/solar-orbiter-venus-jovian-occultations/radio_controls.csv results/solar-orbiter-venus-jovian-occultations/radio_sensitivity.csv
