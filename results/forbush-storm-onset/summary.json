@@ -1,0 +1,153 @@
+{
+  "cohorts": {
+    "all_1963_2016": {
+      "eligible_episodes": 2676,
+      "episodes_in_period": 2743,
+      "excluded_prior_storm_or_missing_dst": 67,
+      "hits_48h": 102,
+      "lag_bins_0_6_6_12_12_24_24_48": [
+        21,
+        24,
+        27,
+        30
+      ],
+      "null_year_month_matched": {
+        "draws": 3000,
+        "empirical_upper_tail_p": 0.012662,
+        "greater_equal": 37,
+        "mean_hits": 82.27633,
+        "observed_to_null_mean_ratio": 1.2397,
+        "p025_hits": 66,
+        "p975_hits": 99,
+        "seed": 20261115
+      },
+      "rate": 0.038117,
+      "types_eligible": {
+        "1": 442,
+        "2": 6,
+        "3": 75,
+        "5": 2,
+        "8": 1,
+        "9": 2150
+      },
+      "types_hit": {
+        "1": 68,
+        "3": 4,
+        "9": 30
+      },
+      "wilson_95_rate": [
+        0.031499,
+        0.046059
+      ]
+    },
+    "development_1963_2000": {
+      "eligible_episodes": 1908,
+      "episodes_in_period": 1966,
+      "excluded_prior_storm_or_missing_dst": 58,
+      "hits_48h": 78,
+      "lag_bins_0_6_6_12_12_24_24_48": [
+        15,
+        21,
+        20,
+        22
+      ],
+      "null_year_month_matched": {
+        "draws": 3000,
+        "empirical_upper_tail_p": 0.033655,
+        "greater_equal": 100,
+        "mean_hits": 63.41567,
+        "observed_to_null_mean_ratio": 1.23,
+        "p025_hits": 49,
+        "p975_hits": 79,
+        "seed": 20261115
+      },
+      "rate": 0.040881,
+      "types_eligible": {
+        "1": 355,
+        "2": 4,
+        "3": 41,
+        "8": 1,
+        "9": 1507
+      },
+      "types_hit": {
+        "1": 50,
+        "3": 1,
+        "9": 27
+      },
+      "wilson_95_rate": [
+        0.032879,
+        0.050727
+      ]
+    },
+    "holdout_2001_2016": {
+      "eligible_episodes": 768,
+      "episodes_in_period": 777,
+      "excluded_prior_storm_or_missing_dst": 9,
+      "hits_48h": 24,
+      "lag_bins_0_6_6_12_12_24_24_48": [
+        6,
+        3,
+        7,
+        8
+      ],
+      "null_year_month_matched": {
+        "draws": 3000,
+        "empirical_upper_tail_p": 0.120293,
+        "greater_equal": 360,
+        "mean_hits": 18.55967,
+        "observed_to_null_mean_ratio": 1.2931,
+        "p025_hits": 11,
+        "p975_hits": 27,
+        "seed": 20261116
+      },
+      "rate": 0.03125,
+      "types_eligible": {
+        "1": 87,
+        "2": 2,
+        "3": 34,
+        "5": 2,
+        "9": 643
+      },
+      "types_hit": {
+        "1": 18,
+        "3": 3,
+        "9": 3
+      },
+      "wilson_95_rate": [
+        0.021088,
+        0.046078
+      ]
+    }
+  },
+  "dst_hours": 561024,
+  "dst_period": {
+    "end": "2026-12-31T23:00:00+00:00",
+    "start": "1963-01-01T00:00:00+00:00"
+  },
+  "dst_valid_hours": 559527,
+  "eligible_utc_hours": 529969,
+  "feid_72h_episodes": 2989,
+  "filters": {
+    "dst_threshold_nt_strict": -100,
+    "first_event_per_72h_episode": true,
+    "outcome_hours": 48,
+    "prior_quiet_hours": 72
+  },
+  "method": "examples/forbush_dst_independent.py; pyarrow for input only",
+  "question": "FEID event epoch before independent OMNI Dst below -100 nT",
+  "raw_feid_rows": 7097,
+  "severe_storm_onsets": 322,
+  "source_files": {
+    "feid": {
+      "bytes": 173563,
+      "sha256": "6d88f455a97c5e2baf9a2d6e63f0f6b549865907fe8a2a0a0eff24e3a5a4914f",
+      "source": "https://huggingface.co/datasets/juliensimon/forbush-decreases/resolve/refs%2Fconvert%2Fparquet/default/train/0000.parquet"
+    },
+    "omni": {
+      "bytes": 23940824,
+      "sha256": "e97d99bd5ea47786d2ab39dd3f65b3f2db193c48ef4c8ba992a6c5862e13662a",
+      "source": "https://huggingface.co/datasets/juliensimon/omni-solar-wind-parameters/resolve/refs%2Fconvert%2Fparquet/default/train/0000.parquet"
+    }
+  },
+  "time_convention": "UTC; FEID exact minute; OMNI hourly timestamp"
+}
