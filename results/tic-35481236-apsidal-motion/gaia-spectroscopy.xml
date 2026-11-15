@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<VOTABLE version="1.3"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.ivoa.net/xml/VOTable/v1.3"
+    xmlns:stc="http://www.ivoa.net/xml/STC/v1.30">
+    <RESOURCE type="results">
+        <LINK title="gaiadr3.nss_two_body_orbit" content-role="doc" href="https://doi.org/10.17876/gaia/dr.3/74"/>
+        <INFO name="QUERY_STATUS" value="OK" />
+        <INFO name="QUERY" value="SELECT source_id,nss_solution_type,period,period_error,eccentricity,eccentricity_error,arg_periastron,arg_periastron_error,t_periastron,t_periastron_error FROM gaiadr3.nss_two_body_orbit WHERE source_id=2946311659129414144" />
+        <INFO name="QUERY_LANGUAGE" value="adql-2.1" />
+        <INFO name="SOURCE" value="gaiadr3.nss_two_body_orbit" />
+        <TABLE name="gaia_user_anonymous.2026-11-15-05-37-04-827879">
+                <FIELD name="source_id" ucd="meta.id;meta.main;meta.ref" ID="datalinkID" datatype="long"> <DESCRIPTION>Source Identifier</DESCRIPTION> </FIELD>
+                <FIELD name="nss_solution_type" ucd="meta.record" arraysize="256" datatype="char"> <DESCRIPTION>NSS model adopted</DESCRIPTION> </FIELD>
+                <FIELD name="period" unit="d" ucd="time.period" datatype="double"> <DESCRIPTION>Orbital Period</DESCRIPTION> </FIELD>
+                <FIELD name="period_error" unit="d" ucd="stat.error;time.period" datatype="float"> <DESCRIPTION>Standard error of Orbital Period</DESCRIPTION> </FIELD>
+                <FIELD name="eccentricity" ucd="src.orbital.eccentricity" datatype="double"> <DESCRIPTION>eccentricity</DESCRIPTION> </FIELD>
+                <FIELD name="eccentricity_error" ucd="stat.error;src.orbital.eccentricity" datatype="float"> <DESCRIPTION>Standard error of eccentricity</DESCRIPTION> </FIELD>
+                <FIELD name="arg_periastron" unit="deg" ucd="src.orbital.periastron" datatype="double"> <DESCRIPTION>Argument of periastron</DESCRIPTION> </FIELD>
+                <FIELD name="arg_periastron_error" unit="deg" ucd="stat.error;src.orbital.periastron" datatype="float"> <DESCRIPTION>Standard error of Argument of periastron</DESCRIPTION> </FIELD>
+                <FIELD name="t_periastron" unit="d" ucd="time.epoch" datatype="double"> <DESCRIPTION>Periastron epoch</DESCRIPTION> </FIELD>
+                <FIELD name="t_periastron_error" unit="d" ucd="stat.error;time.epoch" datatype="float"> <DESCRIPTION>Standard error of Periastron epoch</DESCRIPTION> </FIELD>
+            <DATA>
+                <TABLEDATA><TR><TD>2946311659129414144</TD><TD>SB2</TD><TD>1.843476220834883</TD><TD>2.9975667e-05</TD><TD>0.12531980040997</TD><TD>0.007243123</TD><TD>40.63314392589289</TD><TD>3.4869459</TD><TD>-0.22472132046874604</TD><TD>0.016324628</TD></TR>
+                </TABLEDATA>
+            </DATA>
+        </TABLE>
+    </RESOURCE>
+    <RESOURCE type="meta" utype="adhoc:service">
+        <PARAM name="standardID" datatype="char" arraysize="*" value="ivo://ivoa.net/std/DataLink#links-1.0" />
+        <PARAM name="accessURL" datatype="char" arraysize="*" value="https://gaia.aip.de/datalink/links" />
+        <GROUP name="inputParams">
+            <PARAM name="ID" datatype="char" arraysize="*" value="" ref="datalinkID"/>
+        </GROUP>
+    </RESOURCE>
+</VOTABLE>

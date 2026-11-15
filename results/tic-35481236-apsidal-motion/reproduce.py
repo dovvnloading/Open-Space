@@ -8,6 +8,7 @@ from pathlib import Path
 
 import numpy as np
 from astropy.io import fits
+from astropy.table import Table
 from astropy.wcs import WCS
 from scipy.optimize import brentq, least_squares, minimize_scalar
 
@@ -202,6 +203,25 @@ def historical_check(path):
     return out
 
 
+
+def endpoint_repeatability(pairs):
+    """Retain alternating cycles so no two triplets share a primary eclipse."""
+    product = "SPOC PDCSAP_FLUX"
+    def sample(sector, parity, key):
+        return [row[key] for row in pairs if row["product"]==product and
+                row["sector"]==sector and row["cycle"]%2==parity]
+    out = []
+    for early in (6,7):
+        for method in ("phase","bisector_phase"):
+            for p1 in (0,1):
+                for p2 in (0,1):
+                    a,b = sample(early,p1,method),sample(108,p2,method)
+                    out.append(dict(early_sector=early, method=method,
+                                    early_parity=p1,late_parity=p2,early_count=len(a),late_count=len(b),
+                                    contraction_minutes=(np.median(a)-np.median(b))*PERIOD*1440))
+    return out
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cache", type=Path, default=Path("archive-cache"))
@@ -243,6 +263,7 @@ def main():
     for fname, rows in (("eclipses.csv",events),("triplets.csv",pairs),
                         ("sectors.csv",sector_rows),("localization.csv",pixels)):
         write_csv(args.output/fname,rows)
+    write_csv(args.output/"endpoint-checks.csv",endpoint_repeatability(pairs))
     pdcsap = {r["sector"]:r for r in sector_rows if r["product"]=="SPOC PDCSAP_FLUX"}
     a,b = pdcsap[6],pdcsap[108]
     dt = b["median_btjd"]-a["median_btjd"]
@@ -251,6 +272,17 @@ def main():
         angles = [brentq(lambda w: observed_phase(e,w)-f,0,90) for f in (a["phase"],b["phase"])]
         result[str(e)] = dict(omega_early_deg=angles[0],omega_late_deg=angles[1],
                               rate_deg_per_year=(angles[1]-angles[0])*365.25/dt)
+    gaia = Table.read(ROOT/"gaia-spectroscopy.xml",format="votable",use_names_over_ids=True)[0]
+    if int(gaia["source_id"])!=2946311659129414144 or gaia["nss_solution_type"]!="SB2":
+        raise ValueError("Unexpected Gaia spectroscopic source or solution")
+    ge = float(gaia["eccentricity"])
+    angles = [brentq(lambda w: observed_phase(ge,w)-f,0,90) for f in (a["phase"],b["phase"])]
+    result["gaia_spectroscopic_geometry"] = dict(
+        eccentricity=ge, eccentricity_error=float(gaia["eccentricity_error"]),
+        spectroscopic_omega_deg=float(gaia["arg_periastron"]),
+        spectroscopic_omega_error_deg=float(gaia["arg_periastron_error"]),
+        tess_omega_early_deg=angles[0], tess_omega_late_deg=angles[1],
+        rate_deg_per_year=(angles[1]-angles[0])*365.25/dt)
     mass = 3.10*1.98847e30
     sma = (6.67430e-11*mass*(PERIOD*86400/(2*np.pi))**2)**(1/3)
     result["gr_deg_per_year"] = np.rad2deg(6*np.pi*6.67430e-11*mass/(sma*(1-.13**2)*299792458**2))*365.25/PERIOD
