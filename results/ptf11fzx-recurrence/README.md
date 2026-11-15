@@ -1,0 +1,3 @@
+# PTF11fzx shows repeated optical outbursts
+
+The original Palomar Transient Factory measurements recover PTF11fzx during its June 2011 discovery and show a second brightening in October 2014 at the same position. The later event has 14 good PTF g-band measurements on seven nights. ZTF subsequently detected repeated bright episodes at this position under the names ZTF18accbuhi and AT 2018hvc. The observations connect a source reported as a spectroscopically classified nova on the outskirts of M31 to an independently catalogued cataclysmic variable. Further analysis and provenance accompany the epoch data in this directory.
