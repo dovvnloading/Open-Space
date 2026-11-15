@@ -1,0 +1,85 @@
+{
+  "cdf_url": "https://spdf.gsfc.nasa.gov/pub/data/psp/sweap/spi/l3/spi_sf00_l3_mom/2024/psp_swp_spi_sf00_l3_mom_20241106_v04.cdf",
+  "cdf_sha256": "9b435d624e0f5cc84af997e966bbd6090aef7e8f7cd5b1ba7fd933b21926fc8e",
+  "frame": "spacecraft to RTN",
+  "half_window_minutes": {
+    "3": {
+      "records": 51,
+      "max_pairwise_angle_deg": 0.011005,
+      "max_sampling_gap_s": 6.991
+    },
+    "10": {
+      "records": 171,
+      "max_pairwise_angle_deg": 0.01724,
+      "max_sampling_gap_s": 6.991
+    },
+    "50": {
+      "records": 1177,
+      "max_pairwise_angle_deg": 5.000421,
+      "max_sampling_gap_s": 64.662
+    }
+  },
+  "central_attitude_threshold_deg": 0.03,
+  "first_and_last_central_attitude_within_half_hour_utc": [
+    "2024-11-06T18:21:36.828183936",
+    "2024-11-06T18:54:35.146648192"
+  ],
+  "max_departure_across_this_entire_interval_deg": 0.02416,
+  "median_attitude_difference_from_center_in_20_to_50_min_flanks_deg": 4.999695,
+  "date": "2024-11-06",
+  "center_utc_minute": 1124,
+  "bands": [
+    "db_1.3_2",
+    "db_2_4",
+    "db_4_8",
+    "db_8_16"
+  ],
+  "receiver_nsum": 40,
+  "core_half_width_min": 3,
+  "two_flanks_abs_offset_min": [
+    4,
+    10
+  ],
+  "radio": {
+    "ch0_V1V2": {
+      "vs_average_flanks_db": [
+        -1.9281,
+        -1.5462,
+        -1.1398,
+        -0.5433
+      ],
+      "vs_before_db": [
+        -2.3447,
+        -1.9419,
+        -1.3222,
+        -0.5346
+      ],
+      "vs_after_db": [
+        -1.5114,
+        -1.1504,
+        -0.9574,
+        -0.5519
+      ]
+    },
+    "ch1_V3V4": {
+      "vs_average_flanks_db": [
+        -1.8598,
+        -1.5157,
+        -1.1042,
+        -0.5529
+      ],
+      "vs_before_db": [
+        -2.3399,
+        -1.9264,
+        -1.3371,
+        -0.5631
+      ],
+      "vs_after_db": [
+        -1.3797,
+        -1.105,
+        -0.8713,
+        -0.5426
+      ]
+    }
+  }
+}
