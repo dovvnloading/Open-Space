@@ -1,0 +1,321 @@
+{
+  "crossings": {
+    "wind_mag": {
+      "start_utc": "2023-10-06 21:16:00+00:00",
+      "last_minute_utc": "2023-10-06 21:51:00+00:00",
+      "min_utc": "2023-10-06 21:25:00+00:00",
+      "min_nT": 0.9428481,
+      "ambient_nT": 6.883558,
+      "half_field_duration_min": 36,
+      "depth_fraction": 0.8630289597327429,
+      "plasma": {
+        "Np": {
+          "core": 8.45,
+          "core_n": 28,
+          "ambient": 2.99,
+          "ambient_n": 101
+        },
+        "Vp": {
+          "core": 395.07816694853403,
+          "core_n": 28,
+          "ambient": 404.64743864257935,
+          "ambient_n": 101
+        },
+        "Pdyn": {
+          "core": 2.2095814702397334,
+          "core_n": 28,
+          "ambient": 0.8123504567568514,
+          "ambient_n": 101
+        }
+      },
+      "radial_convection_scale_km": 853368.8406088335,
+      "ballistic_arrival_at_15Re_utc": "2023-10-06 22:05:07.137148562+00:00"
+    },
+    "ace_mag": {
+      "start_utc": "2023-10-06 21:08:00+00:00",
+      "last_minute_utc": "2023-10-06 21:38:00+00:00",
+      "min_utc": "2023-10-06 21:16:00+00:00",
+      "min_nT": 0.733,
+      "ambient_nT": 6.945,
+      "half_field_duration_min": 31,
+      "depth_fraction": 0.8944564434845212,
+      "plasma": {
+        "Np": {
+          "core": 13.05095,
+          "core_n": 28,
+          "ambient": 3.5709,
+          "ambient_n": 59
+        },
+        "Vp": {
+          "core": 382.37,
+          "core_n": 28,
+          "ambient": 390.165,
+          "ambient_n": 92
+        },
+        "Pdyn": {
+          "core": 3.1928021749321824,
+          "core_n": 28,
+          "ambient": 0.92011888033574,
+          "ambient_n": 59
+        }
+      },
+      "radial_convection_scale_km": 711208.2,
+      "ballistic_arrival_at_15Re_utc": "2023-10-06 22:08:19.653738525+00:00"
+    },
+    "dscovr": {
+      "start_utc": "2023-10-06 21:06:00+00:00",
+      "last_minute_utc": "2023-10-06 21:36:00+00:00",
+      "min_utc": "2023-10-06 21:08:00+00:00",
+      "min_nT": 1.649741,
+      "ambient_nT": 6.8504795,
+      "half_field_duration_min": 31,
+      "depth_fraction": 0.7591787552973481
+    }
+  },
+  "pair_baselines_km": {
+    "wind_mag_ace_mag": {
+      "total": 250430.32725327834,
+      "transverse_to_gse_x": 120201.39738073033
+    },
+    "wind_mag_dscovr": {
+      "total": 488770.4484240721,
+      "transverse_to_gse_x": 401556.5109312779
+    },
+    "ace_mag_dscovr": {
+      "total": 487637.20021962817,
+      "transverse_to_gse_x": 484059.8945197048
+    }
+  },
+  "sensitivity": {
+    "wind_mag": [
+      {
+        "threshold": 0.4,
+        "window": 3,
+        "duration_min": 31,
+        "depth_fraction": 0.8842661168618121
+      },
+      {
+        "threshold": 0.4,
+        "window": 5,
+        "duration_min": 31,
+        "depth_fraction": 0.8630289597327429
+      },
+      {
+        "threshold": 0.4,
+        "window": 7,
+        "duration_min": 31,
+        "depth_fraction": 0.8554309329952259
+      },
+      {
+        "threshold": 0.5,
+        "window": 3,
+        "duration_min": 36,
+        "depth_fraction": 0.8842661168618121
+      },
+      {
+        "threshold": 0.5,
+        "window": 5,
+        "duration_min": 36,
+        "depth_fraction": 0.8630289597327429
+      },
+      {
+        "threshold": 0.5,
+        "window": 7,
+        "duration_min": 36,
+        "depth_fraction": 0.8554309329952259
+      },
+      {
+        "threshold": 0.6,
+        "window": 3,
+        "duration_min": 42,
+        "depth_fraction": 0.8842661168618121
+      },
+      {
+        "threshold": 0.6,
+        "window": 5,
+        "duration_min": 42,
+        "depth_fraction": 0.8630289597327429
+      },
+      {
+        "threshold": 0.6,
+        "window": 7,
+        "duration_min": 42,
+        "depth_fraction": 0.8554309329952259
+      }
+    ],
+    "ace_mag": [
+      {
+        "threshold": 0.4,
+        "window": 3,
+        "duration_min": 29,
+        "depth_fraction": 0.9027867790019443
+      },
+      {
+        "threshold": 0.4,
+        "window": 5,
+        "duration_min": 29,
+        "depth_fraction": 0.8944564434845212
+      },
+      {
+        "threshold": 0.4,
+        "window": 7,
+        "duration_min": 29,
+        "depth_fraction": 0.8916876574307305
+      },
+      {
+        "threshold": 0.5,
+        "window": 3,
+        "duration_min": 31,
+        "depth_fraction": 0.9027867790019443
+      },
+      {
+        "threshold": 0.5,
+        "window": 5,
+        "duration_min": 31,
+        "depth_fraction": 0.8944564434845212
+      },
+      {
+        "threshold": 0.5,
+        "window": 7,
+        "duration_min": 32,
+        "depth_fraction": 0.8916876574307305
+      },
+      {
+        "threshold": 0.6,
+        "window": 3,
+        "duration_min": 40,
+        "depth_fraction": 0.9027867790019443
+      },
+      {
+        "threshold": 0.6,
+        "window": 5,
+        "duration_min": 39,
+        "depth_fraction": 0.8944564434845212
+      },
+      {
+        "threshold": 0.6,
+        "window": 7,
+        "duration_min": 39,
+        "depth_fraction": 0.8916876574307305
+      }
+    ],
+    "dscovr": [
+      {
+        "threshold": 0.4,
+        "window": 3,
+        "duration_min": 26,
+        "depth_fraction": 0.7590282728312919
+      },
+      {
+        "threshold": 0.4,
+        "window": 5,
+        "duration_min": 26,
+        "depth_fraction": 0.7591787552973481
+      },
+      {
+        "threshold": 0.4,
+        "window": 7,
+        "duration_min": 26,
+        "depth_fraction": 0.7482343860861627
+      },
+      {
+        "threshold": 0.5,
+        "window": 3,
+        "duration_min": 31,
+        "depth_fraction": 0.7590282728312919
+      },
+      {
+        "threshold": 0.5,
+        "window": 5,
+        "duration_min": 31,
+        "depth_fraction": 0.7591787552973481
+      },
+      {
+        "threshold": 0.5,
+        "window": 7,
+        "duration_min": 32,
+        "depth_fraction": 0.7482343860861627
+      },
+      {
+        "threshold": 0.6,
+        "window": 3,
+        "duration_min": 36,
+        "depth_fraction": 0.7590282728312919
+      },
+      {
+        "threshold": 0.6,
+        "window": 5,
+        "duration_min": 36,
+        "depth_fraction": 0.7591787552973481
+      },
+      {
+        "threshold": 0.6,
+        "window": 7,
+        "duration_min": 36,
+        "depth_fraction": 0.7482343860861627
+      }
+    ]
+  },
+  "ground": {
+    "ambient_median_nT": -15.0,
+    "peak_nT": 5.0,
+    "first_peak_utc": "2023-10-06 22:14:00+00:00",
+    "rise_nT": 20.0,
+    "first_omni_field_below_3_5_nT_utc": "2023-10-06 22:06:00+00:00"
+  },
+  "geostationary": {
+    "g16": {
+      "ambient_nT": 98.2959,
+      "peak_nT": 109.864,
+      "peak_utc": "2023-10-06 22:29:00+00:00",
+      "rise_nT": 11.568100000000001,
+      "good_minutes_in_window": 30,
+      "longitude_deg": -75.206
+    },
+    "g18": {
+      "ambient_nT": 108.2027,
+      "peak_nT": 131.5338,
+      "peak_utc": "2023-10-06 22:12:00+00:00",
+      "rise_nT": 23.33110000000002,
+      "good_minutes_in_window": 30,
+      "longitude_deg": -137.004
+    }
+  },
+  "precursor": {
+    "upstream": {
+      "wind_mag": {
+        "field_min_utc": "2023-10-06 20:58:00+00:00",
+        "field_min_nT": 3.650235,
+        "nearby_density_peak_cm3": 6.74,
+        "ballistic_minimum_arrival_utc": "2023-10-06 21:47:07.137148562+00:00"
+      },
+      "ace_mag": {
+        "field_min_utc": "2023-10-06 20:48:00+00:00",
+        "field_min_nT": 4.5515,
+        "nearby_density_peak_cm3": 9.4139,
+        "ballistic_minimum_arrival_utc": "2023-10-06 21:48:19.653738525+00:00"
+      },
+      "dscovr": {
+        "field_min_utc": "2023-10-06 20:40:00+00:00",
+        "field_min_nT": 3.616554
+      }
+    },
+    "at_earth": {
+      "SYM-H": {
+        "peak_utc": "2023-10-06 21:54:00+00:00",
+        "peak_nT": -3.0,
+        "rise_nT": 14.0
+      },
+      "g16": {
+        "peak_utc": "2023-10-06 21:53:00+00:00",
+        "peak_nT": 103.1528,
+        "rise_nT": 4.872749999999996
+      },
+      "g18": {
+        "peak_utc": "2023-10-06 21:52:00+00:00",
+        "peak_nT": 122.0674,
+        "rise_nT": 14.25375000000001
+      }
+    }
+  }
+}
