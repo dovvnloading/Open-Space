@@ -1,0 +1,10 @@
+# Independent archival investigations, 15 November 2026
+
+| Investigation | Result | Evidence |
+|---|---|---|
+| Giant radio galaxies | The proposed host of RGZ J000314.9+111544 has a DESI spectroscopic redshift of 0.763424. FIRST and VLASS independently place its two outer radio hotspots 1.13–1.14 Mpc apart. A second source, RGZ J085850.1+262321, confirms a megaparsec estimate posted in 2014. | [Radio fields, spectra, catalog comparisons and object histories](../rgz-desi-giant-radio-galaxies/README.md) |
+| Recent Martian impacts | Across 259 impact fields, the average diameter-rank difference between nearest craters is 8.4% smaller than expected after allowing for broad sorting along each field. A published fragmentation simulation reproduces part of the effect. | [Catalog measurement](../mars-crater-size-correlation/README.md) · [Physical model comparison](../mars-crater-size-correlation/MODEL.md) · [HiRISE image check](../mars-crater-size-correlation/pixel-check/README.md) |
+| Fornax3D repeat observations | In four galaxies, 36 published links between detections lead to another location, while an alternative counterpart matches position, brightness and velocity. Median separation changes from 15.39″ to 0.154″. | [Full row-by-row audit and conservative association tests](../fornax3d-nebula-identifications/README.md) |
+| Nearby galaxy cluster membership | The excess of bright planetary nebulae near compact clusters fails to repeat in a second selection. Among 544 additional nebulae the search found one pair against 5.53 expected. The M31 cluster-pair screen also yields no nominally bound pair with complete measurements. | [PHANGS and M31 controls, images and selection limits](../phangs-planetary-nebula-cluster-tests/README.md) |
+
+The [initial search questions](search-plan.md) were committed before the scientific results. The Mars analysis moved from separate impact-site chronology to within-field diameters after shared source images made close catalog pairs ambiguous. The observation and model data in the linked reports are archival. None of these measurements alone establishes first-publication priority.

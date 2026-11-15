@@ -19,10 +19,10 @@ The primary comparison permutes diameters within up to four equal-count position
 | Along-axis and cross-axis bands | 259 | 32.57 | 35.01 | 2.44 [1.85, 3.02] |
 | Along-axis and local-density bands | 259 | 32.57 | 34.71 | 2.13 [1.51, 2.76] |
 | Isolated endpoints and isolated exchange pool | 214 | 33.24 | 34.89 | 1.65 [0.73, 2.55] |
-| ≥2 m, along-axis comparison | 99 | 33.79 | 36.08 | 2.29 [1.18, 3.42] |
-| ≥3 m, along-axis comparison | 37 | 34.01 | 35.68 | 1.67 [−0.28, 3.61] |
-| Second-nearest neighbor, ≥1 m | 259 | 34.64 | 35.71 | 1.08 [0.42, 1.71] |
-| Fourth-nearest neighbor, ≥1 m | 259 | 36.43 | 36.13 | −0.30 [−0.92, 0.30] |
+| ≥2 m, along-axis comparison | 99 | 33.79 | 36.08 | 2.29 [1.20, 3.40] |
+| ≥3 m, along-axis comparison | 37 | 34.01 | 35.68 | 1.67 [−0.21, 3.62] |
+| Second-nearest neighbor, ≥1 m | 259 | 34.64 | 35.71 | 1.08 [0.43, 1.71] |
+| Fourth-nearest neighbor, ≥1 m | 259 | 36.43 | 36.13 | −0.30 [−0.90, 0.30] |
 
 The isolated subset uses 4,280 directed edges for which **both endpoints** are farther than the field's largest retained diameter from every other retained center. Diameters are exchanged only among equally isolated positions in their own along-axis band. No reassigned retained rim can overlap another retained rim at an isolated position. We require six usable edges per field in the restricted tests. This weakens the signal, and spatial variations in terrain and image contrast remain possible.
 
@@ -33,6 +33,8 @@ The two-dimensional control bisects each along-track band by cross-track positio
 Daubar and colleagues explicitly used the placement of the largest craters to infer entry direction in 77 fresh impact fields. Neidhart and colleagues mapped 557 additional fields and analyzed dispersion, diameter distributions, breakup and elevation. Grant and colleagues measured a diameter gradient in the older Jau cluster. A 2026 study compared 89 Martian two-crater fields with lateral fragment-spreading models. These motivate conditioning on the broad size gradient. In a focused literature search on 2026-11-15, we found no prior report quantifying the within-field nearest-neighbor diameter difference across these multi-crater fields under this conditional comparison. Exhaustive priority and an independent repeat mapping of crater diameters remain open. [Daubar et al. 2019](https://doi.org/10.1029/2018JE005857) · [Neidhart et al. 2023](https://doi.org/10.1029/2022JE007611) · [Grant et al. 2025](https://doi.org/10.1029/2024JE008763) · [Lateral spreading of meteoroids fragments, 2026](https://doi.org/10.1016/j.icarus.2026.117288)
 
 The input is Neidhart, Sansom, Miljković, Daubar, Eschenfelder & Collins, *New crater clusters on Mars* (2021, CC BY 4.0), including the earlier measurements cited there. The published ZIP contains 634 per-field Excel workbooks and a field summary. We reproduced the published counts in all 634 and read 15,091 mapped diameters. Thirteen were below 1 m. Geometry was checked independently by computing each field's median all-pairs separation from its member positions on a spherical Mars with radius 3,389.5 km. All but one agreed within 0.001%. In ESP_012047_1755 we recovered 39.58 m against the tabulated 45.77 m. Omitting this field increases the primary difference from 3.00 to 3.02 points. Fields and radii here come from the published mapping, without independent image remeasurement. [Source archive](https://doi.org/10.5281/zenodo.5760176) · [Source license](https://creativecommons.org/licenses/by/4.0/)
+
+A [direct HiRISE image check](pixel-check/README.md) in field ESP_066902_1830 locates 71 of 76 dark centers. A diameter-blind pixel-width estimate correlates with catalogued size (Spearman ρ = 0.563), above all 144 translated controls. This checks one field on the original exposure.
 
 ## Reproduce
 

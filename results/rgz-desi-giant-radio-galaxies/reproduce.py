@@ -114,7 +114,8 @@ def main():
     matches.to_csv(HERE/"screen.csv",index=False)
     giants = matches.query("size_mpc > 0.7")
     print(f"{len(hosts)} hosts, {len(matches)} matches, {len(shifted)} shifted matches, "
-          f"{len(giants)} over 0.7 Mpc, {sum(giants.nearest_giant_arcsec<=180)} with catalog hits")
+          f"{giants.CatID.nunique()} distinct hosts over 0.7 Mpc, "
+          f"{giants.loc[giants.nearest_giant_arcsec<=180,'CatID'].nunique()} with catalog hits")
     results=[]
     for cat_id in (8724,142770):
         row = hosts[hosts.CatID==cat_id].iloc[0]
