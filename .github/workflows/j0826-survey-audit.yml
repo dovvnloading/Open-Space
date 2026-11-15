@@ -16,7 +16,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Archive and independent PTF cone query
-        run: python results/j0826-lens-delay/followup/ptf_probe.py
+        run: |
+          python results/j0826-lens-delay/followup/ptf_probe.py
+          python results/j0826-lens-delay/followup/ptf_direct.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
