@@ -79,7 +79,9 @@ def moa_results(cache, out):
         peak = group[np.argmax(group[:, 1])]
         details.append([float(peak[0]), int(len(group))])
     results = []
-    controls = {p.name: moa_nights(p)[0] for p in sorted(cache.glob("control_*"))}
+    with (HERE / "inputs.csv").open() as manifest:
+        names = [r["file"] for r in csv.DictReader(manifest) if r["file"].startswith("control_")]
+    controls = {name: moa_nights(cache / name)[0] for name in names}
     for lo, hi in OBS_WINDOWS:
         interval = rows[(rows[:, 0] >= lo) & (rows[:, 0] <= hi)]
         peak = interval[np.argmax(interval[:, 1])]

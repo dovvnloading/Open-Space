@@ -7,6 +7,7 @@ import urllib.parse
 import urllib.request
 
 import numpy as np
+from scipy.optimize import least_squares
 
 HERE = Path(__file__).resolve().parent
 TAP = 'https://archive.eso.org/tap_cat/sync'
@@ -81,6 +82,25 @@ def fit(suffix,ra,dec,t0,te,u):
         controls.append(score if amp>0 else -score)
     result.update(brightest_sample_ks=float(min(m[in_peak])),relative_source_flux=b,formal_fit_error=uncertainty,delta_chi2=delta,
                   eligible_time_shifts=len(controls),stronger_time_shifts=sum(v>=delta for v in controls))
+    # A flexible single intrinsic outburst also brightens in both bands. Test a
+    # two-sided exponential as a competing description of the infrared time series.
+    def flare_residual(par):
+        center,rise,fall,constant,amplitude=par
+        dt=t-t0-center
+        profile=np.exp(-abs(dt)/np.where(dt<0,rise,fall))
+        return (flux-constant-amplitude*profile)/err
+    fits=[]
+    for shift in (-10,0,10):
+        for scale in (2,20,80):
+            initial=[shift,scale,scale,1.,.8]
+            bounds=([-te,.1,.005,.05,.0001],[te,2000,2000,5.,15.])
+            fits.append(least_squares(flare_residual,initial,bounds=bounds,max_nfev=3000))
+    alternate=min(fits,key=lambda v:v.cost)
+    flat=np.average(flux,weights=err**-2)
+    fixed_chi2=float(np.sum(((flux-flat)/err)**2)-delta)
+    result.update(fixed_shape_chi2=fixed_chi2,free_flare_chi2=float(2*alternate.cost),
+                  free_flare_peak_relative_days=float(alternate.x[0]),
+                  free_flare_rise_days=float(alternate.x[1]),free_flare_decay_days=float(alternate.x[2]))
     return result
 
 if __name__=='__main__':
