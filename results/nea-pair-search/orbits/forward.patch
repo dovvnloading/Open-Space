@@ -1,0 +1,39 @@
+--- a/elem_out.cpp
++++ b/elem_out.cpp
+@@ -3307,7 +3307,25 @@
+                   state_vect_text, orbit, &abs_mag);
+       got_vectors = (*orbit_epoch != 0.);
+       if( got_vectors)
++         {
++         if (getenv("FO_FORWARD_MODEL")) {
++            perturbers = 0x7fe;
++            for (;;) {
++               set_locs( orbit, *orbit_epoch, obs, n_obs);
++               printf("RES");
++               for (int j = 0; j < n_obs; ++j) {
++                  const double dx = remainder(obs[j].computed_ra - obs[j].ra, 2. * PI) * cos(obs[j].dec);
++                  printf(" %.12g %.12g", dx * 180. * 3600. / PI,
++                     (obs[j].computed_dec - obs[j].dec) * 180. * 3600. / PI);
++               }
++               printf("\n");
++               fflush(stdout);
++               for (int j = 0; j < 6; ++j)
++                  if (scanf("%lf", orbit+j) != 1) exit(0);
++            }
++         }
+          push_orbit( *orbit_epoch, orbit);
++         }
+       }
+    if( !got_vectors && !ignore_prev_solns)
+       {
+--- a/fo.cpp
++++ b/fo.cpp
+@@ -560,7 +560,7 @@
+ 
+          alt_config_directory = get_arg( argc, argv, i);
+          }
+-   ensure_config_directory_exists();
++   if (!getenv("FO_FORWARD_MODEL")) ensure_config_directory_exists();
+    *mpc_codes = '\0';
+    if( reset_astrometry_filename( &argc, argv))
+       drop_single_obs = false;

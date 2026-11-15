@@ -1,0 +1,116 @@
+{
+  "DSS": {
+    "source": "https://outerspace.stsci.edu/download/attachments/176435492/SurveyPlateListLatest.csv?version=1&modificationDate=1718908770237&api=v2",
+    "snapshot_sha256": "62947dc69bf2de3903ff6c7c038e5db49d36ae21bb121c2c7c9960aded706834",
+    "rows_in_time_window": 6,
+    "rows_with_centers": 6,
+    "nearest_centers": [
+      {
+        "plate": "OR12837",
+        "coordinate_evaluation_utc": "1988-11-03T12:25:00",
+        "exposure_seconds": null,
+        "field_center_deg": [
+          10.62343,
+          0.27343464
+        ],
+        "asteroid_ra_dec_deg": [
+          46.2614,
+          -23.9622
+        ],
+        "center_distance_deg": 42.207,
+        "illustrative_V": 22.58
+      },
+      {
+        "plate": "OR12829",
+        "coordinate_evaluation_utc": "1988-11-02T10:34:00",
+        "exposure_seconds": null,
+        "field_center_deg": [
+          350.61357,
+          -4.720952
+        ],
+        "asteroid_ra_dec_deg": [
+          47.5606,
+          -24.0441
+        ],
+        "center_distance_deg": 57.9991,
+        "illustrative_V": 22.78
+      },
+      {
+        "plate": "SF02221",
+        "coordinate_evaluation_utc": "1988-11-04T08:49:48",
+        "exposure_seconds": null,
+        "field_center_deg": [
+          78.875128,
+          40.118458
+        ],
+        "asteroid_ra_dec_deg": [
+          45.0505,
+          -23.8564
+        ],
+        "center_distance_deg": 71.3134,
+        "illustrative_V": 22.4
+      }
+    ]
+  },
+  "WFPDB": {
+    "source": "https://dc.g-vo.org/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+wfpdb.main+WHERE+epoch+BETWEEN+1988.845+AND+1988.884",
+    "snapshot_sha256": "fa7cd47671f24821cb77d0e89626803e2a89aa32173c2ca073a0efc7745c5581",
+    "rows_in_time_window": 696,
+    "rows_with_centers": 689,
+    "nearest_centers": [
+      {
+        "plate": "ASI040 017772",
+        "coordinate_evaluation_utc": "1988-11-12T00:17:29",
+        "exposure_seconds": 600.0,
+        "field_center_deg": [
+          11.379167,
+          -10.393333
+        ],
+        "asteroid_ra_dec_deg": [
+          12.4948,
+          -15.6734
+        ],
+        "center_distance_deg": 5.3907,
+        "illustrative_V": 20.37
+      },
+      {
+        "plate": "ROZ050 004744",
+        "coordinate_evaluation_utc": "1988-11-13T22:05:09",
+        "exposure_seconds": 1200.0,
+        "field_center_deg": [
+          349.39166,
+          3.2275
+        ],
+        "asteroid_ra_dec_deg": [
+          346.1014,
+          -4.1921
+        ],
+        "center_distance_deg": 8.1154,
+        "illustrative_V": 20.28
+      },
+      {
+        "plate": "ROZ050 004742",
+        "coordinate_evaluation_utc": "1988-11-13T21:03:32",
+        "exposure_seconds": 1200.0,
+        "field_center_deg": [
+          349.39166,
+          3.2275
+        ],
+        "asteroid_ra_dec_deg": [
+          346.8269,
+          -4.5414
+        ],
+        "center_distance_deg": 8.1807,
+        "illustrative_V": 20.27
+      }
+    ]
+  },
+  "nearest_plate_geometry": {
+    "id": "ASI040 017772",
+    "side_cm": 12,
+    "focal_length_cm": 100,
+    "half_diagonal_deg": 4.8501,
+    "source": "https://openaccess.inaf.it/bitstream/20.500.12386/27630/1/aa32131-17.pdf",
+    "scope": "No verified third-apparition observation. Catalog centers alone cannot establish a detection. Unknown centers, plate depths and unindexed archives remain untested."
+  }
+}
