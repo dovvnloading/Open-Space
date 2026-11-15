@@ -55,7 +55,7 @@ def render_table(rows):
 
 
 def calculate():
-    rows, apsides, velocities = [], [], []
+    rows, apsides, velocities, lifetimes = [], [], [], []
     with (HERE / 'parameters.csv').open() as source:
         for raw in csv.DictReader(source):
             name = raw['target']
@@ -73,6 +73,12 @@ def calculate():
                              mass_corner_min_s=advance(p, chirp_rate(p, *pair_low)),
                              mass_corner_max_s=advance(p, chirp_rate(p, *pair_high)),
                              midpoint_residual_in_10yr_chord_s=forecast/4))
+            printed_rate = x['printed_abs_pdot_e15'] * 1e-15
+            lifetimes.append(dict(target=name, printed_merge_myr=x['printed_merge_myr'],
+                                  printed_merge_minus_myr=x['printed_merge_minus'],
+                                  printed_merge_plus_myr=x['printed_merge_plus'],
+                                  from_printed_pdot_myr=3*p/(8*printed_rate*YEAR*1e6),
+                                  from_mass_period_pdot_myr=3*p/(8*abs(rate)*YEAR*1e6)))
             if 'k2_kms' in x:
                 def rv_advance(offset):
                     rv = semi_amplitude_rate(x['k1_kms'] + offset*x['k1_err'],
@@ -112,7 +118,7 @@ def calculate():
                   j0221_prior_advance_10yr_s=3.6, j0221_prior_1sigma_s=.1,
                   j0221_recalculated_advance_10yr_s=j0221)
     return {'chirps.csv':render_table(rows), 'precession.csv':render_table(apsides),
-            'velocity_check.csv':render_table(velocities), 'controls.json':json.dumps(checks, indent=2)+'\n'}
+            'merger_check.csv':render_table(lifetimes), 'velocity_check.csv':render_table(velocities), 'controls.json':json.dumps(checks, indent=2)+'\n'}
 
 
 if __name__ == '__main__':
