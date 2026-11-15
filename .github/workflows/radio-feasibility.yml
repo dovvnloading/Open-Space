@@ -1,0 +1,20 @@
+name: Venus radio detectability stress
+on:
+  pull_request:
+  push:
+    branches:
+      - research/independent-archive-findings
+jobs:
+  radiometer:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Freeze-test radio S-band feasibility bound
+        run: python results/venus-psr-j1813-2113/radiometer_feasibility.py > /tmp/radio-forecast.json
