@@ -31,6 +31,47 @@ We inspected monitoring products for SMC X-1, Her X-1, LMC X-4, EXO 2030+375 and
 
 The two missions measure the duration of the apparent brightness cycle. A changing disk shape can move the trough, even if the underlying precession rate changes less. A direct measurement of disk orientation or phase-resolved polarimetry could distinguish these explanations. We assign no population false-alarm probability or exact physical precession period.
 
+## Energy dependence during the four short cycles
+
+MAXI's Gas Slit Camera measured a brighter middle third than the two outer sixths combined in each of the four Swift-defined cycles, in all three energy bands. The difference is smallest at 10–20 keV. All 1,509 MAXI orbit bins between the five Swift minima (MJD 60700.5 to 60851.5, upper bound exclusive) are released with their original subband fluxes and errors. One bin had a zero subband error. The other 1,508 pass the existing broad-band quality cut and have positive errors in every band. [Orbit-bin subset](data/maxi-orbit-bands.csv.gz) · [Numerical results by cycle](energy-bands.json) · [MAXI column definitions and units](https://maxi.riken.jp/top/lc_readme.txt)
+
+| MAXI band | Middle third | Outer sixths combined | Middle minus outer | 95% within-cycle day bootstrap |
+| --- | ---: | ---: | ---: | ---: |
+| 2–4 keV | 0.04638 | 0.01729 | +0.02909 | +0.02192 to +0.03602 |
+| 4–10 keV | 0.05707 | 0.01825 | +0.03883 | +0.03289 to +0.04486 |
+| 10–20 keV | 0.02625 | 0.01880 | +0.00745 | +0.00052 to +0.01419 |
+
+Values are band-integrated photon fluxes in photons cm⁻² s⁻¹. We interpolated phase separately between consecutive *Swift* troughs, removed MAXI pointings within 0.17 orbital cycles of binary mid-eclipse, and included negative fluxes. We averaged orbit bins within each sampled integer MJD day, days within each phase region, and then the four cycles with equal weights. The middle and outer intervals contribute 434 and 247 orbit bins, respectively, across 44 and 27 day-by-cycle cells. Flux cuts could favor positive noise in the faint sample. We applied quality cuts only to flux uncertainties and finite values.
+
+The 10–20 keV fraction of the summed three-band flux rose from 0.202 in the middle to 0.346 near the troughs. The middle-minus-outer difference is −0.144, with a stratified day-bootstrap interval of −0.204 to −0.085. Using windows a quarter-cycle wide gives −0.135. Omitting each cycle in turn gives −0.178 to −0.125 with the original windows. The bootstrap resamples days within the eight cycle and phase cells and preserves all three bands together. It conditions on these four cycles and the Swift trough times. Serial dependence, diffuse background, the instrument response and missing days can affect the estimate. In particular, the eclipse-core control also has a positive middle-minus-outer contrast of 0.0109 and 0.0104 in the two softer bands. Its 10–20 keV contrast is −0.0039. The core has only 13 middle and 10 outer day-by-cycle cells. Its near-zero outer summed flux makes a hardness ratio unstable.
+
+Hu et al. found stable hardness in an earlier NinjaSat cycle using different bands and phase selection. Here the measured change concerns the relative band fluxes in the MAXI aperture during the four short cycles. Source hardening, a hard persistent contribution at low flux and energy-dependent obscuration remain possible. An absorption column or emission-line strength would require a response-folded spectrum. [NinjaSat timing and spectroscopy](https://arxiv.org/abs/2511.05016)
+
+### Pointed Swift/XRT photon energies
+
+We retrieved the cleaned photon-counting event file and exposure map for each of 15 Swift survey pointings in the original short-cycle window. They provide 666.9 s of XRT exposure near the optical position. Four exposures fall in the middle third outside binary eclipse. Two fall in the outer sixths outside eclipse. In the 6–20-pixel annulus around SMC X-1, the middle observations give 349 events in 167.35 s of live time and the outer observations give 14 in 82.43 s. A 30–60-pixel local annulus contains 115 and 3 events, respectively. The numbers below use exposure-map area for background subtraction and mean annular exposure for the rates. [Observation IDs, event files, exposure maps and SHA-256 digests](data/xrt-pointings.csv) · [Compact photon list](data/xrt-events.csv) · [Counts for all 15 visits and both annuli](xrt-counts.json)
+
+| XRT pulse-invariant energy | Middle events | Outer events | Middle net rate (counts/s) | Outer net rate (counts/s) |
+| --- | ---: | ---: | ---: | ---: |
+| 0.3–1 keV | 47 | 1 | 0.286 | 0.010 |
+| 1–2 keV | 98 | 4 | 0.601 | 0.053 |
+| 2–10 keV | 204 | 9 | 1.242 | 0.117 |
+
+The observations sample a small subset of each phase interval. XRT independently localizes the bright signal and shows a larger rate in all three bands during the sampled middle visits. Its faint-state counts are too few to establish a hardness change. Several full-aperture rates cross the photon-counting pile-up threshold. We discard the central 6 pixels and repeat at 10 pixels, which still gives a larger middle rate in every band. The annular rates omit the PSF-core and wing corrections, and the local annulus can include source wings. Exposure-area weighting allows for bad pixels and unequal background coverage under a uniform-surface-brightness approximation. These measurements describe detected counts. Physical continuum or line fits would require per-visit response files, an encircled-energy correction, stronger pile-up checks and more exposure. [UK Swift pile-up guidance](https://www.swift.ac.uk/analysis/xrt/pileup.php) · [UK Swift spectral analysis](https://www.swift.ac.uk/analysis/xrt/spectra.php)
+
+We selected Swift pointings with start MJD in [60695, 60860] within 0.25° of (19.2714°, −73.4433°) in the HEASARC swiftmastr table. All 15 are centered on the survey tile SMCJ0117.2−7326. For extraction we projected the SMC X-1 optical coordinate (19.27144054°, −73.44333744°) through each EVENTS sky WCS. The compact event table contains every cleaned event within 60 sky pixels, before grade and energy cuts. We require photon-counting grades 0–12 and PI channels 30–1000 inclusive. A channel width is 0.01 keV. Times are exposure-weighted GTI midpoints in the mission MJD system. The core excision, wings, background and image aperture use sky-pixel radii with an outer-exclusive boundary. The XRT pointings and MAXI bins are separate observations. Swift/BAT supplies only the superorbital phase boundaries for these comparisons. [HEASARC Swift master catalog](https://heasarc.gsfc.nasa.gov/W3Browse/swift/swiftmastr.html) · [SMC X-1 optical coordinates](https://simbad.harvard.edu/simbad/sim-id?Ident=X+SMC+X-1) · [Swift Small Magellanic Cloud Survey](https://www.swift.psu.edu/S-CUBED/)
+
+Offline replay requires NumPy and SciPy. The XRT script also uses Astropy. Both JSON files can be regenerated from the pinned tables. To independently extract from the mission products, supply the original MAXI orbit file from the source manifest, or use XRT's extraction option with the linked files online or in a local directory.
+
+```sh
+python energy_bands.py --output /tmp/energy-bands.json
+diff energy-bands.json /tmp/energy-bands.json
+python xrt_pointings.py --output /tmp/xrt-counts.json
+diff xrt-counts.json /tmp/xrt-counts.json
+python energy_bands.py --raw-orbit /path/to/J0117-734_g_lc_1orb_all.dat --data /tmp/maxi-orbit-bands.csv.gz --output /tmp/maxi-rebuilt.json
+python xrt_pointings.py --extract --events /tmp/xrt-events.csv --output /tmp/xrt-rebuilt.json
+```
+
 ## A dated test
 
 Using MAXI data ending November 3, 2026 (last retained sample MJD 61347.5), the full late window predicts the next broad flux minimum at MJD 61363.95, approximately November 20. Starting the fit later and allowing a second harmonic moves the forecast as late as November 23. These are model predictions with the same data cutoff. A new well-covered trough outside November 16–29 would miss our deliberately wider observing window for a continuing 58–60-day rhythm. SMC X-1 has already demonstrated that it can change that rhythm.
