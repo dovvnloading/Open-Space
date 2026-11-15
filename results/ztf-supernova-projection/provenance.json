@@ -1,0 +1,110 @@
+{
+  "bts.csv": {
+    "source": "https://sites.astro.caltech.edu/ztf/bts/explorer.php?f=s&format=csv",
+    "processing": "original bytes",
+    "source_sha256": "51d85f50772fd1412fcc2646f48b4d331b2e07f7023454f89cddd7a8e7e283ed",
+    "file_sha256": "51d85f50772fd1412fcc2646f48b4d331b2e07f7023454f89cddd7a8e7e283ed"
+  },
+  "ZTF19aakrnqh.json": {
+    "source": "https://api.alerce.online/ztf/v1/objects/ZTF19aakrnqh/lightcurve",
+    "processing": "original bytes",
+    "source_sha256": "70c31508233974e7e790655c7ea24e49a979e56ce36ea19d774b123bd924df5b",
+    "file_sha256": "70c31508233974e7e790655c7ea24e49a979e56ce36ea19d774b123bd924df5b"
+  },
+  "ZTF22aamtomc.json": {
+    "source": "https://api.alerce.online/ztf/v1/objects/ZTF22aamtomc/lightcurve",
+    "processing": "original bytes",
+    "source_sha256": "52435da38e4c5ff3ea87cc5e0395ab98a27a9b7223822d689189f2b704cf8a54",
+    "file_sha256": "52435da38e4c5ff3ea87cc5e0395ab98a27a9b7223822d689189f2b704cf8a54"
+  },
+  "dr2-lightcurve.txt": {
+    "source": "https://ztfcosmo.in2p3.fr/download/lightcurves__ZTF19aakrnqh_lc.csv",
+    "processing": "original bytes",
+    "source_sha256": "45637240594e1277e696f6570bb85f5972485205c4ba47165e3f61c8a0a9d0fe",
+    "file_sha256": "45637240594e1277e696f6570bb85f5972485205c4ba47165e3f61c8a0a9d0fe"
+  },
+  "ZTF19aakrnqh_20190314_SEDm_0.ascii": {
+    "source": "https://ztfcosmo.in2p3.fr/download/spectra__ZTF19aakrnqh_20190314_SEDm_0.ascii",
+    "processing": "original bytes",
+    "source_sha256": "0aaeebf6c750e302d69687b2674518177570e777fc76b643e896c587739863c3",
+    "file_sha256": "0aaeebf6c750e302d69687b2674518177570e777fc76b643e896c587739863c3"
+  },
+  "Gaia22cvp.csv": {
+    "source": "https://gsaweb.ast.cam.ac.uk/alerts/alert/Gaia22cvp/lightcurve.csv",
+    "processing": "original bytes",
+    "source_sha256": "e31dd95e09c7e94b0164279246ecb329399e50a12472b9c9b55be05cb4d1696b",
+    "file_sha256": "e31dd95e09c7e94b0164279246ecb329399e50a12472b9c9b55be05cb4d1696b"
+  },
+  "snia_data.csv": {
+    "source": "https://ztfcosmo.in2p3.fr/download/tables__snia_data.csv",
+    "processing": "header and row containing ZTF19aakrnqh",
+    "source_sha256": "00235b02cea086603fe3e6c7436ae2605e33500fc9c7b661373ac7dcd175fa9e",
+    "file_sha256": "bfac53528dc22bf0d6d31456cfd4b2cdcfcd94fdc837f94c1b7bb7b9bc6cfc18"
+  },
+  "globalhost_data.csv": {
+    "source": "https://ztfcosmo.in2p3.fr/download/tables__globalhost_data.csv",
+    "processing": "header and row containing ZTF19aakrnqh",
+    "source_sha256": "d042e87d34b54daf62413ee089149c9e929b8ad2ceed1942af94a21730e03a4a",
+    "file_sha256": "8139e43ccbaf2b6233bd70cf819a59e70d95c57eba0ee7122185f2a8bfab3259"
+  },
+  "legacy-photoz.csv": {
+    "source": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+o.ls_id%2Co.ra%2Co.dec%2Co.type%2Cp.z_phot_median%2Cp.z_phot_l68%2Cp.z_phot_u68%2Cp.z_spec%2Cp.survey+from+ls_dr9.tractor+o+join+ls_dr9.photo_z+p+on+o.ls_id%3Dp.ls_id+where+o.brickid%3D610033+and+o.objid+in+%283467%2C3475%2C3476%2C3482%29",
+    "processing": "original bytes",
+    "source_sha256": "5397ea4ea8b1aa62f340d7620db5a0d055a77409d001b1cfe13bf71a954c06c8",
+    "file_sha256": "5397ea4ea8b1aa62f340d7620db5a0d055a77409d001b1cfe13bf71a954c06c8"
+  },
+  "desi-field.csv": {
+    "source": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+targetid%2Cmean_fiber_ra%2Cmean_fiber_dec%2Cz%2Czerr%2Czwarn%2Cdeltachi2%2Cspectype%2Cprogram+from+desi_dr1.zpix+where+mean_fiber_ra+between+201.662+and+201.782+and+mean_fiber_dec+between+57.429770000000005+and+57.49977",
+    "processing": "original bytes",
+    "source_sha256": "dc3632681480b7c28ab2e176b91c2bdfeb8618766e61bb34532805e60afb6f69",
+    "file_sha256": "dc3632681480b7c28ab2e176b91c2bdfeb8618766e61bb34532805e60afb6f69"
+  },
+  "sdss-field.csv": {
+    "source": "https://skyserver.sdss.org/dr17/SkyServerWS/SearchTools/SqlSearch?cmd=SELECT+p.objid%2Cp.ra%2Cp.dec%2Cp.type%2Cp.petroMag_r%2Cs.specobjid%2Cs.z%2Cs.zErr%2Cs.class+FROM+dbo.fGetNearbyObjEq%28201.722%2C57.46477%2C10%29+n+join+PhotoObj+p+on+p.objid%3Dn.objid+left+join+SpecObj+s+on+s.bestobjid%3Dp.objid+WHERE+p.type%3D3+AND+%28p.petroMag_r%3C17.5+or+s.z%3E0%29&format=csv",
+    "processing": "original bytes",
+    "source_sha256": "3093cdec9280f19a84855083deae29dd48f2503d93d785e649f94aed64e9ae13",
+    "file_sha256": "3093cdec9280f19a84855083deae29dd48f2503d93d785e649f94aed64e9ae13"
+  },
+  "blast-2019bns.json": {
+    "source": "https://blast.scimma.org/transients/2019bns/",
+    "processing": "Extract Host heading adjacent HTML table key/value code spans to JSON",
+    "source_sha256": "f79808705927952870d6784adaa4e5075a47deab9c25134c16d8be806794808c",
+    "file_sha256": "3e38e7ee46d1f8a61e5dda1e720f0273d5f0b3ddf2eb9c9c68c973a960620446"
+  },
+  "blast-2022lxq.json": {
+    "source": "https://blast.scimma.org/transients/2022lxq/",
+    "processing": "Extract Host heading adjacent HTML table key/value code spans to JSON",
+    "source_sha256": "3ad6ee088dcb1b606273c460504bebb3300625bb8313beedcc287c0dcaf861c0",
+    "file_sha256": "c970d8b807ad1f7a31eb89d38317ab4534c6b7a244f3b065570f45cbcbfbab91"
+  },
+  "hsiao-window.csv": {
+    "source": "https://sncosmo.github.io/data/models/hsiao/Hsiao_SED_V3.fits",
+    "processing": "Hsiao V3 primary FITS image: rest wavelength 3400-8300 Angstrom, 10 Angstrom step, phases +3 to +14 days; 9 significant digits preserve float32",
+    "source_sha256": "92e351b8570272125be2fdbd8640b93ae1208bbbb769076f33f64246f72d43c4",
+    "file_sha256": "9edd9ca769fba841a74af5f68cf65ce3f45180c0c54a3cca96eb4976cd4521c3"
+  },
+  "2019-difference.fits.gz": {
+    "source": "https://avro.alerce.online/get_stamp?oid=ZTF19aakrnqh&candid=793469955915015006&type=difference&format=fits",
+    "processing": "original bytes",
+    "source_sha256": "d3fd0a561397043267be32bed06c50d752c0639719a772980f98f78b01ebf55e",
+    "file_sha256": "d3fd0a561397043267be32bed06c50d752c0639719a772980f98f78b01ebf55e"
+  },
+  "2019-template.fits.gz": {
+    "source": "https://avro.alerce.online/get_stamp?oid=ZTF19aakrnqh&candid=793469955915015006&type=template&format=fits",
+    "processing": "original bytes",
+    "source_sha256": "290d44240015c228a64811ca77ff05b96625690c2cc7ece5a729781f670580b9",
+    "file_sha256": "290d44240015c228a64811ca77ff05b96625690c2cc7ece5a729781f670580b9"
+  },
+  "2022-difference.fits.gz": {
+    "source": "https://avro.alerce.online/get_stamp?oid=ZTF22aamtomc&candid=1997265705915015004&type=difference&format=fits",
+    "processing": "original bytes",
+    "source_sha256": "83e9b655d63515059791ff189b1b261882acc502d2b0e2d706c25f2ccfb2124d",
+    "file_sha256": "83e9b655d63515059791ff189b1b261882acc502d2b0e2d706c25f2ccfb2124d"
+  },
+  "2022-template.fits.gz": {
+    "source": "https://avro.alerce.online/get_stamp?oid=ZTF22aamtomc&candid=1997265705915015004&type=template&format=fits",
+    "processing": "original bytes",
+    "source_sha256": "692d124560da67aaf5a660ef2b9aa552dcce64210dc001407d691c3df1f15982",
+    "file_sha256": "692d124560da67aaf5a660ef2b9aa552dcce64210dc001407d691c3df1f15982"
+  }
+}

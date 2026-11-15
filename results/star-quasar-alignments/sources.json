@@ -1,0 +1,157 @@
+[
+  {
+    "file": "gaia.csv",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=5000000&QUERY=SELECT+source_id%2Cra%2Cdec%2Cpmra%2Cpmdec%2Cparallax%2Cphot_g_mean_mag%2Cruwe+FROM+gaiadr3.gaia_source+WHERE+pm+%3E+100+AND+parallax_over_error+%3E+5+AND+ruwe+%3C+1.4",
+    "bytes": 53558888,
+    "sha256": "4125b94d81e7902aa75ca94dfe44aa6f956cc13bc57fa7c8e65969ac2a1e4f98"
+  },
+  {
+    "file": "gcsext.csv",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=5000000&QUERY=SELECT+source_id%2Cra%2Cdec%2Cpmra%2Cpmdec%2Cparallax%2Cphot_g_mean_mag%2Cruwe+FROM+gaiadr3.gaia_source+WHERE+parallax+%3E+4+AND+parallax_over_error+%3E+10+AND+pm+%3E+25+AND+pm+%3C%3D+100+AND+ruwe+%3C+1.4",
+    "bytes": 93454459,
+    "sha256": "c6f383b5a430040a54bf003d616ceff39a8a62b348ee08bfe82814bd4eab7eca"
+  },
+  {
+    "file": "gcns.csv",
+    "url": "https://dc.g-vo.org/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=5000000&QUERY=SELECT+source_id%2Cra%2Cdec%2Cpmra%2Cpmdec%2Cparallax+FROM+gcns.main",
+    "bytes": 29303148,
+    "sha256": "cf1e40dec36c6af777dd81f701d5695209ad903810102aaa451ca84fa2708454"
+  },
+  {
+    "file": "milliquas.zip",
+    "url": "https://quasars.org/milliquas.zip",
+    "bytes": 32701849,
+    "sha256": "9128d6aa91354d0ee1c83dde3ab8764a20d542aa82327e4a969a4357ba9ac984"
+  },
+  {
+    "file": "qso.fits",
+    "url": "https://data.desi.lbl.gov/public/dr1/survey/catalogs/dr1/QSO/iron/QSO_cat_iron_cumulative_v0.fits",
+    "bytes": 816203520,
+    "sha256": "a65604303cc29af8865db9193a23934b2540591b16c5afd2a4bea2d61464aef4"
+  },
+  {
+    "file": "gaia0930.csv",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=5000000&QUERY=SELECT+%2A+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C142.608279%2C50.559914%2C0.004%29%29",
+    "bytes": 4575,
+    "sha256": "df1bf0fc696a34d57843b07cc6fb08fdd335da8b23ae94976e37605d5d91dd5e"
+  },
+  {
+    "file": "0930detection.csv",
+    "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/detection.csv?ra=142.608278&dec=50.559911&radius=0.003&pagesize=10000",
+    "bytes": 108501,
+    "sha256": "ef4cbb92945d3c7720b98b403760fc9662e720fb3652f1d7bc59410fd5811d4b"
+  },
+  {
+    "file": "spec0930.fits",
+    "url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/7448/spec-7448-56739-0398.fits",
+    "bytes": 218880,
+    "sha256": "f0360a823952949b9f4987e96771733cd91d100644c8485a087c914c1478c097"
+  },
+  {
+    "file": "kluter.csv",
+    "url": "https://dc.g-vo.org/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=5000000&QUERY=SELECT+%2A+FROM+plc3.data+WHERE+lens_id+IN+%281018659143306715392%2C4011877549025109632%2C4418285771392400896%29",
+    "bytes": 1958,
+    "sha256": "be4fc7d25ffe801a63cd91ed4a17d9aa7c9bffa6670a1c0d9d9bebebb3293241"
+  },
+  {
+    "file": "prior2.csv",
+    "url": "https://dc.g-vo.org/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=5000000&QUERY=SELECT+%2A+FROM+plc2.data+WHERE+lens_id%3D1018659143306715392",
+    "bytes": 1511,
+    "sha256": "f5566f0469549696d73cc953943c1d78d5a61183ae6a135f743f5796e370a71b"
+  },
+  {
+    "file": "wd0930.tsv",
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FMNRAS%2F508%2F3877%2Fmaincat&GaiaEDR3=1018659143306715392&-out.all=1",
+    "bytes": 24095,
+    "sha256": "d6008896c9f5969acfe22fff6ba8ef3f14d47a0220dfc2a93762e0f4a6bd7020"
+  },
+  {
+    "file": "desi0949.fits",
+    "url": "https://data.desi.lbl.gov/public/dr1/spectro/redux/iron/healpix/sv1/dark/75/7565/coadd-sv1-dark-7565.fits",
+    "bytes": 448346880,
+    "sha256": "8e9b7c4442b14ee43f1439cff4d1a622d9244563b28b69c18daebe7e39074086"
+  },
+  {
+    "file": "spec2224.fits",
+    "url": "https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/lite/9148/spec-9148-58039-0322.fits",
+    "bytes": 216000,
+    "sha256": "f9743f0133612392d0ee13bcc953951e3e044a6d032d882a93f803e93dfdd52b"
+  },
+  {
+    "file": "field2109.csv",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=5000000&QUERY=SELECT+%2A+FROM+gaiadr3.gaia_source+WHERE+source_id+IN+%282124576942440058752%2C2124576942438079872%29",
+    "bytes": 5079,
+    "sha256": "477fff91032a74852dbad5021e1057760975be958acc4aac003cf3a2e0c53ae3"
+  },
+  {
+    "file": "21092mass.tsv",
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F246%2Fout&-c=273.1554+%2B49.93468&-c.rs=15&-out.all=1",
+    "bytes": 8527,
+    "sha256": "1ef01cb558320f2a0a8c2238659bc701944668e011afe11c0ce2731be663541c"
+  },
+  {
+    "file": "desi2109.csv",
+    "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=5000000&QUERY=select+%2A+from+desi_dr1.zpix+where+targetid%3D39633249072319863",
+    "bytes": 2125,
+    "sha256": "a634119ba69d5c3b5fc714c83cb0ef868ba96b60b4b02c57e191dfe57f307616"
+  },
+  {
+    "file": "2109mean.csv",
+    "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/mean.csv?ra=273.156167&dec=49.93468&radius=0.003&pagesize=10000",
+    "bytes": 28327,
+    "sha256": "19f980b8773b5ab39d9e375181ec8b40d95ba86dd8295a1d1e9b0b817818d45b"
+  },
+  {
+    "file": "desi2109.fits",
+    "url": "https://data.desi.lbl.gov/public/dr1/spectro/redux/iron/healpix/main/dark/150/15096/coadd-main-dark-15096.fits",
+    "bytes": 152804160,
+    "sha256": "4536fb93b8615ae64bcd01c3c2e78269bbd2ffc3be6e85511a33a761c7024e38"
+  },
+  {
+    "file": "ps2109det.csv",
+    "bytes": 69848,
+    "sha256": "abd77387c2cbc616feaae036909534bfa0bea6ffe5aa907e47e3e2dbee60982b",
+    "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/detection.csv?ra=273.1554&dec=49.934686&radius=0.007&pagesize=10000&columns=%5BobjID%2CdetectID%2CimageID%2CfilterID%2CobsTime%2Cra%2Cdec%2CraErr%2CdecErr%2CpsfQfPerfect%2CpsfFlux%2CpsfFluxErr%2CinfoFlag2%5D"
+  },
+  {
+    "file": "platestars.csv",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=5000000&QUERY=SELECT+source_id%2C+ra%2Cdec%2Cpmra%2Cpmdec%2Cparallax%2Cphot_g_mean_mag%2Cbp_rp+FROM+gaiadr3.gaia_source+WHERE+1%3Dcontains%28point%28%27ICRS%27%2Cra%2Cdec%29%2Ccircle%28%27ICRS%27%2C273.1545%2C49.93468%2C0.1%29%29+AND+ruwe+%3C+1.4+AND+phot_g_mean_mag+%3C+19",
+    "bytes": 26434,
+    "sha256": "203cabed5cb30fd74291a63862b192d6cc8afa1e8aee71d587289e7329bfbefb"
+  },
+  {
+    "file": "poss1_blue.fits",
+    "url": "https://archive.stsci.edu/cgi-bin/dss_search?v=poss1_blue&r=273.1545&d=%2B49.93468&e=J2000&h=8&w=8&f=fits&c=none",
+    "bytes": 512640,
+    "sha256": "079dfb4e006fa76a7f85c8bd76d230e7814c78f50f71322f876ed051e17d7f38",
+    "pixels_sha256": "a0d5ded4d2092115445ea2a75ddd2fd02add81706c3dc7c9e844a7bbe485ca02"
+  },
+  {
+    "file": "poss1_red.fits",
+    "url": "https://archive.stsci.edu/cgi-bin/dss_search?v=poss1_red&r=273.1545&d=%2B49.93468&e=J2000&h=8&w=8&f=fits&c=none",
+    "bytes": 218880,
+    "sha256": "b6e7ca92beab18159a72f28187b185ce560d4e27192e62855583172c017dc17d",
+    "pixels_sha256": "569138f16650eac0f628f4f7cab1e67c2e87832af99ab8d00185080319aabec8"
+  },
+  {
+    "file": "poss2ukstu_blue.fits",
+    "url": "https://archive.stsci.edu/cgi-bin/dss_search?v=poss2ukstu_blue&r=273.1545&d=%2B49.93468&e=J2000&h=8&w=8&f=fits&c=none",
+    "bytes": 512640,
+    "sha256": "5d744eb69e65799b45700ef8a5e3dfc66937b2c792be35545e6e912e47ccebd8",
+    "pixels_sha256": "31d713e840afeaaf2336a7e47f0468dafc95399d8454b9f5f4e515aecdcf2be8"
+  },
+  {
+    "file": "poss2ukstu_ir.fits",
+    "url": "https://archive.stsci.edu/cgi-bin/dss_search?v=poss2ukstu_ir&r=273.1545&d=%2B49.93468&e=J2000&h=8&w=8&f=fits&c=none",
+    "bytes": 512640,
+    "sha256": "6fa2f848a1aa2ce4f2710904f892206290093b6f62f708c0b99b998eddaa2565",
+    "pixels_sha256": "b52312821cd559bc6f6519d2b1ee4a810b7eccd3b3474223e4d7fb530b1dd8c9"
+  },
+  {
+    "file": "poss2ukstu_red.fits",
+    "url": "https://archive.stsci.edu/cgi-bin/dss_search?v=poss2ukstu_red&r=273.1545&d=%2B49.93468&e=J2000&h=8&w=8&f=fits&c=none",
+    "bytes": 512640,
+    "sha256": "5110df18aff801d6323dec9ca6908be404ae1f73285827c3a7fb6ee0578e145f",
+    "pixels_sha256": "f985e0ef2beeae982e9617a68feeb8dd228cdb4d3fb71d156b18ae66a9f082c0"
+  }
+]
