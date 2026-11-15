@@ -51,6 +51,23 @@ The nominal 2.5-pixel target aperture and the 4–7-pixel sky annulus use the or
 
 Within each detector the algorithm maximizes the number of ordered three-visit matches with no exposure reuse. All three pairwise center separations must fall within half the narrower measured bandwidth. Equal-count solutions minimize the sum of the triplets' maximum normalized separations. Ratios are medians of per-triplet flux ratios. Tightening the separation to a quarter-bandwidth leaves seven detector-5 triplets, all of which rise and fade, with a median middle/first ratio of 1.827. Detector 6 has zero triplets at that tolerance. With the smaller 1.5-pixel core, all 11 detector-5 and 12 detector-6 triplets rise and fade. Consecutive spectral samples can overlap in wavelength and systematic errors. Observations within each visit span days or weeks. The match counts do not give a false-alarm probability or a simultaneous color spectrum. [Matched measurements](six-detector-matches.csv) · [Coverage and sensitivity to aperture and matching tolerance](six-detector-summary.csv)
 
+### Testing the NEOWISE periods at the SPHEREx dates
+
+We evaluated all five period solutions already released from the 21 earlier NEOWISE visits at the exact times of the 18 matched detector-5 and detector-6 triplets. Each model uses its W2 sinusoid to predict the two flux ratios within each triplet. The table gives medians over the nine detector-6 triplets. SPHEREx contributed no data to the NEOWISE fits. This retrospective external comparison uses the actual dates of the good exposures in each band.
+
+| NEOWISE period | Predicted D6 middle / first | Predicted D6 late / first |
+| --- | ---: | ---: |
+| **SPHEREx measured** | **1.878** | **1.158** |
+| 472.36 d | 2.355 | 1.348 |
+| 296.88 d | 1.902 | 0.975 |
+| 131.46 d | 2.065 | 1.642 |
+| 112.97 d | 1.203 | 0.708 |
+| 76.34 d | 1.404 | 1.586 |
+
+The 296.88-day model comes closest to the measured detector-6 spring brightening. By the late visit it predicts a return to the first level, while the observed median remains 15.8% above it. The 472.36-day model predicts too much brightening on both visits. The shortest alias predicts a brighter late than middle visit on detector 6, opposite to all nine matched triplets. Detector 5 was sampled on different dates. For example the 76.34-day model nearly reproduces its middle ratio (1.852 predicted, 1.827 observed) but misses its late ratio (1.694 predicted, 1.137 observed). The data constrain extrapolations of the W2 sinusoids while leaving the physical recurrence period unresolved.
+
+As a sensitivity check we omitted one NEOWISE visit at a time, reselected the period within half an inverse time-baseline in frequency of each original peak on the original frequency grid, and refit both bands. The 21 resulting 296.88-day-family predictions at the detector-6 dates span 1.868–1.957 for the middle comparison and 0.909–1.038 for the late comparison. These deletion ranges measure sensitivity to individual training visits. Cross-instrument color response, correlated errors, non-sinusoidal cycles and long-term phase or amplitude changes remain outside that calculation. In particular, the broad W2 passband and individual SPHEREx channels weight the source spectrum differently. Run `python alias_extrapolation.py` for all five models, both detectors and both visits. [Predictions and leave-one-visit-out ranges](alias-extrapolation.csv)
+
 ### Published spectroscopy of the same sightline
 
 Kanarek et al. recorded a K-band spectrum of 1457−673 at the MDM 2.4 m with TIFKAM (their MDM12 campaign). Their Gaussian fits provide three historical line measurements. The C III entry appears in the table footnote. [Observing identification](https://academic.oup.com/view-large/78666305) · [Table 10](https://academic.oup.com/view-large/78666313) · [Table 11 and footnote](https://academic.oup.com/view-large/78666314) · [Catalog units](https://cdsarc.cds.unistra.fr/viz-bin/ReadMe/J/MNRAS/452/2858?format=html)
