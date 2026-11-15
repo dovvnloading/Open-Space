@@ -1,0 +1,27 @@
+name: J0826 follow-up numerical tests
+on:
+  push:
+    paths:
+      - 'results/j0826-lens-delay/followup/**'
+      - '.github/workflows/j0826-model-validation.yml'
+  pull_request:
+    paths:
+      - 'results/j0826-lens-delay/followup/**'
+      - '.github/workflows/j0826-model-validation.yml'
+permissions:
+  contents: read
+jobs:
+  models:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        python: ['3.10', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install 'numpy>=1.24' 'scipy>=1.11'
+      - run: python -m unittest discover -s results/j0826-lens-delay/followup -p 'test_followup.py' -v
+      - run: python results/j0826-lens-delay/followup/sis_sanity.py
