@@ -336,7 +336,7 @@ def main():
                   "new_matched_3sigma": sum(
                       not z["matched_3sigma"] and z["differential_3sigma"] for z in risks)}}
     if args.write:
-        (HERE / "checks.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+        (HERE / "checks.json").write_text(json.dumps(report, indent=2, sort_keys=True, default=lambda z: z.item() if isinstance(z, np.generic) else str(z)) + "\n")
         with (HERE / "published_risks.csv").open("w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=list(risks[0]))
             writer.writeheader()
@@ -351,7 +351,7 @@ def main():
         "heldout_dates": holdout["n_heldout_days"],
         "heldout_rmse": {k: round(v["rmse"], 5)
                          for k,v in holdout["heldout"].items()},
-        "published_risk_scope": report["published_risk_scope"]}))
+        "published_risk_scope": report["published_risk_scope"]}, default=lambda z: z.item() if isinstance(z, np.generic) else str(z)))
 
 
 if __name__ == "__main__":
