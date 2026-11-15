@@ -1,6 +1,6 @@
-# Two phase predictions fail in newly reduced later TESS images
+# Two later-sector phase predictions are not recovered in held-out TESS images
 
-The phases chosen from the start of the later visits did not predict dimming in the remaining images of either asteroid. For (29489), 9 of 19 test cycles were fainter in the predicted window. For (3177), 7 of 17 were fainter. Their median depths were −0.0054 and −0.0030 mag, respectively. These measurements constrain a persistent signal at the tested later-season phases and amplitudes. Viewing geometry, intrinsically evolving events, and the (3177) spin/cadence alias remain possible explanations of the 2018 measurements.
+The phases chosen from the start of the later visits did not yield a secure recurrence of the 2018 dimmings in the held-out images of either asteroid. For (29489), 9 of 19 test cycles were fainter in the predicted window. For (3177), 7 of 17 were fainter. Their median depths were −0.0054 and −0.0030 mag, respectively. These measurements constrain a persistent signal at the tested later-season phases and amplitudes. Viewing geometry, intrinsically evolving events, and the (3177) spin/cadence alias remain possible explanations of the 2018 measurements.
 
 | Asteroid / sector | Retrieved FFIs | Usable difference fluxes, entire visit | Held-out flux points | Qualifying cycles | Fainter in window | Median depth (mag) | Cycle-bootstrap 95% interval (mag) |
 |---|---:|---:|---:|---:|---:|---:|---:|
