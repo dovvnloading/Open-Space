@@ -1,6 +1,6 @@
 # Five spacecraft resolve opposite solar-wind magnetic polarities on 31 January 2019
 
-Wind measured southward magnetic field for every minute of a full hour at Sun–Earth L1 while ACE and DSCOVR simultaneously measured northward field. Two ARTEMIS magnetometers near the Moon independently detected the northward state on the dawn side after the nominal solar-wind transit time. During the downstream hour the Wind-derived OMNI reconstruction at Earth's bow-shock nose stayed southward in all 56 available minutes. Southward and northward interplanetary fields imply different magnetic coupling with Earth. This case measures how large the discrepancy can be between sampled locations.
+Wind measured southward magnetic field for every minute of a full hour at Sun–Earth L1 while ACE and DSCOVR simultaneously measured northward field. Two ARTEMIS magnetometers near the Moon detected the northward state after the nominal solar-wind transit time. **Both lunar probes were on the dawn side, not at Earth's bow-shock nose.** During the downstream hour the **Wind-derived OMNI propagated reconstruction** for the bow-shock nose stayed southward in all 56 available minutes, but **the actual magnetic field at the nose is undetermined**. Southward and northward interplanetary fields imply different magnetic coupling with Earth. This case measures how large the discrepancy can be between sampled locations.
 
 ![Minute-scale GSM magnetic fields at L1 and the lunar probes. Shading marks the reported hours.](polarities.png)
 
