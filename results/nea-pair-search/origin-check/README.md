@@ -42,3 +42,14 @@ curl -fsSLO https://planet4589.org/space/deepcat/tab2.tsv
 curl -fsSLO https://projectpluto.com/sat_id2.htm
 python catalog_check.py .
 ```
+
+## 1988 photographic-plate search
+
+
+At the 1988 encounter the nominal H–G light curve (H = 26, G = 0.15) reaches approximately V = 20.2. We checked all six November 1988 plates in STScI’s DSS master list against the predicted track at their recorded epochs. The closest plate center was **42.21°** away. The Wide-Field Plate Database returned 696 records in the interval 1988.845–1988.884. Of the 689 records with coordinates, the nearest was **Asiago ASI040 017772** on November 12 with a 600-second exposure. The nominal track at exposure midpoint was **5.39°** from its center, outside the 4.85° half-diagonal implied by its 12 cm square plate and 100 cm focal length. The next closest records are more than 8° away. These catalog checks yielded no third-apparition observation. Seven WFPDB records lack positions and the catalogs are incomplete. The predicted magnitude assumes a standard asteroid phase law; the search does not establish an image-based upper limit. [DSS master-list documentation](https://outerspace.stsci.edu/pages/viewpage.action?pageId=261164277) · [WFPDB record definitions](https://dc.g-vo.org/tableinfo/wfpdb.main) · [Asiago telescope and plates](https://openaccess.inaf.it/bitstream/20.500.12386/27630/1/aa32131-17.pdf)
+
+```sh
+python plate_search.py de440s.bsp /path/to/VE138.json ../pressure/fits/VE138.json
+```
+
+The script retrieves both catalogs, propagates the A1-only orbit at the individual exposure times, and prints `plate-receipt.json` to standard output. The receipt includes time-filter counts, checksums, the nearest three exposures per catalog, center and target coordinates, and the assumed magnitude. Predictions are geocentric and include first-order light time. Potential topocentric offsets are of order 0.1° at closest approach. Thus even the maximum solar-system parallax and the motion during the nearest exposure do not bridge its center-to-corner shortfall.
