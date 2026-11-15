@@ -34,6 +34,33 @@ Three ESPRESSO products in programme 116.293R returned HTTP 401. Their velocitie
 Each point is one public ESPRESSO observation. The left panel removes only the fitted ESPRESSO offset and slope from the measured velocities. The right panel uses the same fit and shows measured minus predicted velocity. Colors and symbols identify the three annual groups used in the shuffle.
 
 
+### Velocities measured directly from ESPRESSO spectral pixels
+
+We remeasured a differential velocity from each of three disjoint wavelength intervals in the 25 public ESPRESSO spectra. Each interval recovers the 2.56-day wave with its HARPS phase and amplitude fixed. In all three, the full HARPS prediction beats the other five frozen alias models. These are three measurements of the same visits, sharing a telescope, reduction and wavelength calibration. [Exposure-by-exposure velocities and FITS prefix digests](s1d-velocities.csv)
+
+| Vacuum wavelength (Å) | Eligible wavelength bins per spectrum | Offset and trend RMS (m/s) | 2.56 d alone | Four waves | Four with 11.06 d omitted | Best of five other aliases | Correlation with pipeline RV |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 4200–4600 | 54,547 | 4.32 | 2.85 | 2.40 | 3.41 | 3.32 | 0.992 |
+| 4600–5000 | 49,484 | 4.30 | 2.87 | 2.37 | 3.46 | 3.29 | 0.991 |
+| 5000–5500 | 57,149 | 4.28 | 2.90 | 2.46 | 3.62 | 3.32 | 0.989 |
+
+ESO's S1D_FINAL_A spectra supply barycentric wavelengths, calibrated flux densities, errors and quality flags. The extraction works directly on their common logarithmic grid (499.98 m/s per pixel). Each 512-pixel chunk, including a final partial chunk of at least 128 pixels, must have finite positive flux and errors and zero quality flags in every exposure. A median flux template across visits supplies a local wavelength derivative. We fit each observed chunk with a scale, a linear color term and a first-order velocity shift, refitting once after removing residuals above six quoted flux errors. We omit a chunk for every visit if any fit retains under 80% of its bins. The three intervals retained 107, 97 and 112 chunks. We center each chunk's velocities across visits and use one set of weights for all visits in an interval. The extraction uses neither the HARPS waveform nor the pipeline's scalar RV. The RMS comparisons fit only the offset and trend used in the original validation. Injecting alternating ±5 m/s shifts into the measured flux chunks before template fitting recovered 99.7%, 99.7% and 99.8% of the injected displacement. This checks the estimator's response to an imposed translation. [Extraction and injection replay](s1d_velocities.py)
+
+### A hydrogen line varies with the predicted waveform
+
+The Hα core raises a specific stellar-activity question. Its 1.6 Å flux index correlates with the full frozen waveform at **r = 0.538** after removing a common offset and linear trend from each series. With separate seasonal means the correlation is 0.520. A narrower 0.6 Å core gives 0.546 after detrending. The two Hα passbands overlap and share their continua. The Ca II H+K index gives 0.249. These are descriptive correlations from an exploratory comparison over 25 visits. Atmospheric absorption, throughput changes and stellar variability can all affect line indices. We have not modeled telluric absorption in each exposure. [Per-exposure activity measurements](s1d-activity.csv) · [Line-strength extraction](s1d_activity.py)
+
+Allowing a linear dependence of the pipeline RV on the 1.6 Å Hα index, alongside an offset and trend, gives 4.05 m/s RMS. Including the fixed 2.56-day signal gives 2.92 m/s, and including all four gives 2.38 m/s. The signal persists under this simple correction. The Hα correlation and the common spectral calibration limit what the band agreement can establish about its physical origin.
+
+We transform the vacuum wavelengths into stellar-rest air wavelengths with a fixed −40.695 km/s system velocity and the Morton conversion. Hα uses rectangular core windows and local continuum bands at 6550.87 and 6580.31 Å. The H and K indices use 1.09 Å FWHM triangular cores and two 20 Å continuum bands. Ratios use the mean flux density in each window, with flagged bins removed and at least 95% coverage required. The calcium ratio is instrumental and has no Mount Wilson calibration. The profile release gives normalized flux in 81 bins of width 0.05 Å around each line, for each exposure, and the 16th, 50th and 84th percentiles across visits. The percentile range describes the observed visit-to-visit spread. [243 spectral bins across 25 visits](s1d-profiles.csv) · [Published passbands](https://doi.org/10.1093/mnras/stv1441) · [Wavelength conversion](https://www.sdss4.org/dr12/spectro/spectro_basics/)
+
+Replay requires Python, NumPy, SciPy and Astropy. With no options each script reads the released tables. To extract the pixels again, run the commands below. The two commands share a cache of roughly 325 MB. Each download reads bytes 0–13,000,000 inclusive from the named ESO FITS product, covering both headers and the four complete columns used here. The replays check the original primary-header digests, the prefix digests and the released CSV values. The three later proprietary product IDs were rechecked on 2026-11-14 and still returned HTTP 401.
+
+```sh
+python s1d_velocities.py --extract --inject --cache /tmp/hd32564-s1d
+python s1d_activity.py --extract --cache /tmp/hd32564-s1d
+```
+
 ### Correlated stellar noise
 
 We repeated the ESPRESSO comparison with the HARPS waveforms fixed and fitted the noise independently under every hypothesis. The table gives the improvement in maximized log likelihood over a no-waveform model using the same noise family, instrumental offset and linear drift. Only the ESPRESSO covariance and drift are re-estimated. The respective velocity time series contain the same 25 exposures.
