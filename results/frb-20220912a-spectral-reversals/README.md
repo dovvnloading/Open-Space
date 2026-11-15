@@ -28,15 +28,22 @@ To gauge noise sensitivity we subtracted each available equal-duration blank gat
 
 The fitted dispersion measures differ by 3.05 pc cm⁻³ (219.893 and 222.938). We shifted each channel's integration window according to trial dispersion, retaining the pulse arrival time at its catalog peak. Both events retain a greater middle high-band fraction at common trial measures of 219.46, 219.893, and 220.5. At 221.5 the second and third fractions in A nearly meet (0.381 and 0.356). At B's fitted 222.938 the middle of A falls below its last pulse (0.393 versus 0.491). A's frequency centroid also loses its ordering in some trials. Thus the clean recurrence is a measurement at each event's fitted dispersion, with a real sensitivity to adopting the highest common value. The events share a telescope and transit, and a chromatic response can weight their spectra, although the formed beams differ. Frequency ordering refers to three component peaks. Its physical origin and any preferred repetition interval remain unresolved.
 
+## An independent example at the Allen Telescope Array
+
+We tested all 101 component center frequencies published for this source in Sheikh et al. Table 2, preserving their listed time order. Exactly one of 37 consecutive triples in 17 multicomponent events has the middle frequency above both neighbors. In ATA burst 25, MJD 59903.2531478009, the first three of six components have centers of **1240.18, 1274.37, and 1211.68 MHz**, each with a reported uncertainty of 4.62 MHz. The next three lie at 1187.19, 1116.64, and 1080.22 MHz. The local rise of 34.19 MHz is embedded in an overall downward sequence. The paper's whole-burst downward drift and this local reversal can coexist. The ATA recorded this burst 8.85 days before the CHIME pair, at roughly twice the observing frequency. It independently reproduces the three-component ordering. The raw ATA filterbank is available from the authors on request. This comparison uses their published component fits. [Published table and figure](https://arxiv.org/html/2312.07756v1) · [Burst 25 dynamic spectrum](https://arxiv.org/html/2312.07756v1/plots/dynamic_spectra_no_sp/fil_59903_20417_349189941_FRB20220912a_0001_lob_10sec_crop_no_sp.png) · [All 37 ATA triplets](ata-triplets.csv)
+
+The ATA sample's selection differs from CHIME's. The authors' correction reports that a wider search boxcar and a new candidate classifier increased the count from 35 to 102. The fraction above applies only to the 35 original published events with component measurements. The ATA integrations subdivide broad, sometimes contiguous emission, while the CHIME screen requires separated components. This comparison cannot determine how the incidence changes with observing frequency. [ATA correction](https://academic.oup.com/mnras/article/534/3/1949/7814982)
+
 ## Prior work and replay
 
 Sheikh et al. observed downward-drifting sub-bursts from this source with the Allen Telescope Array. FAST measured complex polarization structure, and Abbott et al. traced this source's activity, dispersion and waiting times with CHIME/Pulsar. Upward and mixed drifting morphologies exist in other sources. The event pages and catalog publish the individual November 29 measurements. Searches by both event names, source name and morphology, and the source-specific papers reviewed here yielded no earlier discussion of these two consecutive triplets together. [ATA study](https://doi.org/10.1093/mnras/stad3630) · [FAST study](https://doi.org/10.3847/1538-4357/aced0b) · [CHIME/Pulsar monitoring](https://arxiv.org/abs/2604.09098) · [Earlier drift measurements](https://academic.oup.com/mnras/article/507/1/246/6324574)
 
-From this directory run the following commands using Python with NumPy, h5py and Matplotlib installed. Only the last two scripts need scientific packages. The scripts verify SHA-256 hashes of the original catalog CSV and the two HDF5 files. The CSV tables and image in this directory are the replay outputs.
+From this directory run the following commands using Python with NumPy, h5py and Matplotlib installed. The catalog and ATA table replays use the Python standard library. The scripts verify SHA-256 hashes of the original catalog CSV, two HDF5 files, and the ATA table source. The CSV tables and image in this directory are the replay outputs.
 
 ```sh
 mkdir -p /tmp/chime-triplets
 python screen.py --catalog /tmp/chime-triplets/catalog.csv
+python ata.py --paper /tmp/chime-triplets/ata-paper.html
 python waterfalls.py --cache /tmp/chime-triplets
 python figure.py --cache /tmp/chime-triplets
 ```
