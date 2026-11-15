@@ -1,0 +1,71 @@
+\                                                                               
+\fixlen = T
+\RowsRetrieved =                 1
+\ORIGIN  = 'IPAC Infrared Science Archive (IRSA), Caltech/JPL'
+\SIMULATED_TABLE  = 'n'
+\DATETIME= '2026-11-15 01:22:03'
+\DATABASE= 'IRAS Faint Source Catalog v2.0 (FSC) (irasfsc)'
+\EQUINOX = 'J2000'
+\SKYAREA = 'within 60 arcsec of  ra=238.01452 dec=+7.52835 Eq J2000 '
+\StatusFile = '/workspace/TMP_DMkx5U_119800/Gator/irsa/119800/log.119800.html'
+\SQL     = 'WHERE (no constraints) 
+\SQL     = 'SELECT (24 column names follow in next row.)'
+\ 
+\ fscname 
+\ ___ Source name
+\ semimajor (arcsec) 
+\ ___ 95% confidence error ellipse semimajor axis
+\ semiminor (arcsec) 
+\ ___ 95% confidence error ellipse semiminor axis
+\ posang (deg) 
+\ ___ Uncertainty ellipse position angle
+\ fnu_12 (Jy) 
+\ ___ Non-color corrected flux density at 12um
+\ fnu_25 (Jy) 
+\ ___ Non-color corrected flux density at 25um
+\ fnu_60 (Jy) 
+\ ___ Non-color corrected flux density at 60um
+\ fnu_100 (Jy) 
+\ ___ Non-color corrected flux density at 100um
+\ fqual_12 
+\ ___ Flux density quality at 12um
+\ fqual_25 
+\ ___ Flux density quality at 25um
+\ fqual_60 
+\ ___ Flux density quality at 60um
+\ fqual_100 
+\ ___ Flux density quality at 100um
+\ cirrus 
+\ ___ Number of nearby 100 um-only extractions
+\ confuse 
+\ ___ Confusion flag, 1 per band, hex-encoded
+\ nid 
+\ ___ Number of positional associations
+\ idtype 
+\ ___ Type of object
+\ glon (deg) 
+\ ___ =Galactic Longitude, epoch B1983.5
+\ glat (deg) 
+\ ___ =Galactic Latitude, epoch B1983.5
+\ ra (deg) 
+\ ___ =RA equinox J2000.0, epoch B1983.5
+\ dec (deg) 
+\ ___ =Dec equinox J2000.0, epoch B1983.5
+\ clon 
+\ ___ Right ascention in Sexagesimal format.
+\ clat 
+\ ___ Declination in Sexagesimal format.
+\ cra 
+\ ___ =RA equinox J2000.0, epoch B1983.5
+\ cdec 
+\ ___ =Dec equinox J2000.0, epoch B1983.5
+\ dist (arcsec) 
+\ ___ Distance between the target position and each source in arcsec.
+\ angle (deg) 
+\ ___ Position Angle in degree.
+\ 
+|      fscname| semimajor| semiminor| posang|    fnu_12|    fnu_25|    fnu_60|   fnu_100| fqual_12| fqual_25| fqual_60| fqual_100| cirrus| confuse|  nid| idtype|     glon|     glat|          ra|         dec|          clon|          clat|      cra|    cdec|           dist|       angle|
+|         char|       int|       int|    int|    double|    double|    double|    double|      int|      int|      int|       int|    int|     int|  int|    int|   double|   double|      double|      double|          char|          char|     char|    char|         double|      double|
+|             |    arcsec|    arcsec|    deg|        Jy|        Jy|        Jy|        Jy|         |         |         |          |       |        |     |       |      deg|      deg|         deg|         deg|              |              |         |        |         arcsec|         deg|
+|         null|      null|      null|   null|      null|      null|      null|      null|     null|     null|     null|      null|   null|    null| null|   null|     null|     null|        null|        null|          null|          null|     null|    null|           null|        null|
+   F15496+0740         19          6      98  4.791e-02  1.298e-01  3.763e-01  6.960e-01         1         1         3          2       1        0     0    null   16.8837   42.9984   238.011826     7.529049   15h52m02.84s   07d31m44.58s  155202.8  +073145        9.924737   284.665146 

@@ -15,6 +15,8 @@ FASHI DR2 source **20260037137** has a 1407.2941 ± 0.0162 MHz emission line at 
 
 The DESI targets are only 1.18 arcsec apart and their redshifts differ by about 84 km/s. The spectra may sample overlapping light, gas motions, or distinct components. They do not independently demonstrate a merger. The mid-infrared colors and nearby continuum emission strengthen the case for a dusty radio host. Neither measurement identifies the line species. The 174-arcsec FAST beam leaves room for a faint superposed foreground H I galaxy. [DESI spectra and identifiers](https://data.desi.lbl.gov/doc/access/) · [AllWISE](https://irsa.ipac.caltech.edu/Missions/wise.html) · [NVSS](https://www.cv.nrao.edu/nvss/)
 
+A separate search using IRAS infrared sources identified FASHI 20260153867 toward IRAS F15496+0740. Its 1405.0059 MHz line would place it just 44 km/s from its optical host under the OH interpretation. [Second candidate, evidence and controls](iras-f15496/README.md)
+
 ## Search, foreground checks, and controls
 
 The discovery screen compared all 156,411 DR2 radio positions with 2,454,349 DESI DR1 primary galaxy redshifts from 0.17 through less than 0.28, requiring ZWARN = 0 and DELTACHI2 > 40. An initial 90-arcsec, ±350 km/s crossmatch returned 851 optical associations involving 780 radio rows. Ranking by positional residual exposed the two DESI targets here. Within 3 arcsec and ±150 km/s they are the only two optical entries passing in the whole sample and both correspond to this radio source. Velocity offsets use c ln[(1+z_opt)/(1+z_OH)].
