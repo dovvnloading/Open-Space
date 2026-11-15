@@ -1,0 +1,65 @@
+{
+  "retrieval_date": "2026-11-15 UTC",
+  "inputs": [
+    {
+      "file": "inputs/jpl_3I.csv",
+      "sha256": "4cc02b961e5a5f300d51d901fdff9d50caa2c87da0c68689fe621a082011f795",
+      "raw_sha256": "9e0282c6944c58cb1995b12ed04859ff20f9d4e3e035c7f58d550ca5f0ad2f7c",
+      "role": "Selected geometric ecliptic J2000 Sun-centered vector rows from raw response; positions au and velocities au/day.",
+      "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%27DES%3D3I%3BCAP%3B%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%272025-09-06%27&STOP_TIME=%272025-11-15%27&STEP_SIZE=%276+h%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&CSV_FORMAT=%27YES%27&REF_PLANE=%27ECLIPTIC%27&OBJ_DATA=%27YES%27"
+    },
+    {
+      "file": "inputs/jpl_383P.csv",
+      "sha256": "abea707ee542e5adbdb85a4a31cf36bbb149b8fe62fcf01390fd91141014e2a4",
+      "raw_sha256": "ec3e8892dac175f75bf68763acbe2e3771436cc90e61161f5cc516f81c26eec8",
+      "role": "Selected geometric ecliptic J2000 Sun-centered vector rows from raw response; positions au and velocities au/day.",
+      "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%27DES%3D383P%3BCAP%3B%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%272025-09-06%27&STOP_TIME=%272025-11-15%27&STEP_SIZE=%276+h%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&CSV_FORMAT=%27YES%27&REF_PLANE=%27ECLIPTIC%27&OBJ_DATA=%27YES%27"
+    },
+    {
+      "file": "inputs/jpl_499.csv",
+      "sha256": "87c2bf15e9f1a1c27002005c6149905f1afefe98154376ec1b360167f7458e0e",
+      "raw_sha256": "7f51046094a62c87a6ea3be856b5f890a9c35c9fb6e2beaa6765cdd8e608a329",
+      "role": "Selected geometric ecliptic J2000 Sun-centered vector rows from raw response; positions au and velocities au/day.",
+      "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%27499%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%272025-10-03%27&STOP_TIME=%272025-10-06%27&STEP_SIZE=%276+h%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&CSV_FORMAT=%27YES%27&REF_PLANE=%27ECLIPTIC%27&OBJ_DATA=%27YES%27"
+    },
+    {
+      "file": "inputs/miriade_3I.json",
+      "sha256": "a241b9124261b95d792906cf0ef26012b97de2a5b12a00411a63d4a381a5946e",
+      "role": "Unmodified JSON response.",
+      "url": "https://ssp.imcce.fr/webservices/miriade/api/ephemcc.php?-name=3I&-type=Comet&-mime=json&-tscale=TT&-teph=4&-tcoor=2&-rplane=2&-observer=%40sun&-ep=2025-10-02&-step=6h&-nbd=20"
+    },
+    {
+      "file": "inputs/miriade_383P.json",
+      "sha256": "91434ff2ea6603e0b62a8adfcbcebb2a44184fe6937f03161fcadab281c6503e",
+      "role": "Unmodified JSON response.",
+      "url": "https://ssp.imcce.fr/webservices/miriade/api/ephemcc.php?-name=383P&-type=Comet&-mime=json&-tscale=TT&-teph=4&-tcoor=2&-rplane=2&-observer=%40sun&-ep=2025-10-09&-step=6h&-nbd=20"
+    },
+    {
+      "file": "inputs/planets.csv",
+      "sha256": "b0b135cf34b89907e58fca04f35a69b696a65bd7f192fe6e369326cc13af0b34",
+      "role": "Windowed rows from eight planet-barycenter queries, in order of NAIF ID, serialized to 14 significant digits.",
+      "urls": [
+        "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%271%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%271990-01-01%27&STOP_TIME=%272051-01-01%27&STEP_SIZE=%274+d%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&CSV_FORMAT=%27YES%27&REF_PLANE=%27ECLIPTIC%27&OBJ_DATA=%27YES%27",
+        "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%272%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%271990-01-01%27&STOP_TIME=%272051-01-01%27&STEP_SIZE=%274+d%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&CSV_FORMAT=%27YES%27&REF_PLANE=%27ECLIPTIC%27&OBJ_DATA=%27YES%27",
+        "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%273%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%271990-01-01%27&STOP_TIME=%272051-01-01%27&STEP_SIZE=%274+d%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&CSV_FORMAT=%27YES%27&REF_PLANE=%27ECLIPTIC%27&OBJ_DATA=%27YES%27",
+        "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%274%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%271990-01-01%27&STOP_TIME=%272051-01-01%27&STEP_SIZE=%274+d%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&CSV_FORMAT=%27YES%27&REF_PLANE=%27ECLIPTIC%27&OBJ_DATA=%27YES%27",
+        "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%275%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%271990-01-01%27&STOP_TIME=%272051-01-01%27&STEP_SIZE=%274+d%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&CSV_FORMAT=%27YES%27&REF_PLANE=%27ECLIPTIC%27&OBJ_DATA=%27YES%27",
+        "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%276%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%271990-01-01%27&STOP_TIME=%272051-01-01%27&STEP_SIZE=%274+d%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&CSV_FORMAT=%27YES%27&REF_PLANE=%27ECLIPTIC%27&OBJ_DATA=%27YES%27",
+        "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%277%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%271990-01-01%27&STOP_TIME=%272051-01-01%27&STEP_SIZE=%274+d%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&CSV_FORMAT=%27YES%27&REF_PLANE=%27ECLIPTIC%27&OBJ_DATA=%27YES%27",
+        "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%278%27&CENTER=%27500%4010%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%271990-01-01%27&STOP_TIME=%272051-01-01%27&STEP_SIZE=%274+d%27&VEC_TABLE=%272%27&OUT_UNITS=%27AU-D%27&CSV_FORMAT=%27YES%27&REF_PLANE=%27ECLIPTIC%27&OBJ_DATA=%27YES%27"
+      ]
+    },
+    {
+      "file": "inputs/CometEls.txt",
+      "sha256": "cd3c8accf5bbb7de4be2bf00651473ed8122711b7e6359044e514fd69dd22c15",
+      "url": "https://minorplanetcenter.net/iau/MPCORB/CometEls.txt",
+      "role": "Full 973-line fixed-width catalogue, MPC elements dated through 2026-11-14."
+    },
+    {
+      "file": "inputs/maven_hourly.csv",
+      "sha256": "3fff53cfdf9463bc35d5f9650c8ef13720408f70b07c4b5100ec9216cbec1ce3",
+      "url": "https://lasp.colorado.edu/maven/sdc/public/data/sci/kp/insitu/2025/10/mvn_kp_insitu_20251004_v26_r01.tab",
+      "role": "Hourly summaries of selected dayside outward SWIA velocities with daily source digest checked by wind.py."
+    }
+  ]
+}
