@@ -1,0 +1,29 @@
+name: NICER timescale forensic checks
+on:
+  pull_request:
+    paths:
+      - "results/nicer-magnetar-microbursts/timescale-forensics/**"
+      - "results/nicer-magnetar-microbursts/catalog-clock/windows.csv"
+      - ".github/workflows/nicer-timescale-forensics.yml"
+  push:
+    paths:
+      - "results/nicer-magnetar-microbursts/timescale-forensics/**"
+      - "results/nicer-magnetar-microbursts/catalog-clock/windows.csv"
+      - ".github/workflows/nicer-timescale-forensics.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  forensic-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        python: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Verify the frozen year strata and independent published timestamps
+        run: python results/nicer-magnetar-microbursts/timescale-forensics/verify.py
