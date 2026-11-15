@@ -4,7 +4,7 @@ Eleven component identifiers in Heintz et al. (2022), machine-readable double-wh
 
 ## A false double-helium classification
 
-Joining row 1582 by its two published IDs retrieves Gaia 5874024769842933760 twice. Vincent et al. (2024) classify this star as DB with a score of 0.99. The second position and G magnitude resolve to 5874024774146311808, classified DA with a score of 1.00. The original paper's spectral types, DBA and DA, corroborate this distinction. The two stars are 2.57 arcsec apart. An ID-only join would both fabricate a DB+DB pair and remove the real hydrogen-atmosphere counterpart. The correction recovers known objects.
+Joining row 1582 by its two published IDs retrieves Gaia 5874024769842933760 twice. Vincent et al. (2024) classify this star as DB with a score of 0.99. The second position and G magnitude resolve to 5874024774146311808, classified DA with a score of 1.00. The original paper's spectral types, DBA and DA, corroborate this distinction. The two catalog classifications are preserved in `xp-classifications.csv`. The two stars are 2.57 arcsec apart. An ID-only join would both fabricate a DB+DB pair and remove the real hydrogen-atmosphere counterpart. The correction recovers known objects.
 
 ## Scope and falsification
 
