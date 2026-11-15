@@ -2,7 +2,7 @@
 
 Each archived before/after image is read in its native detector orientation. The
 rounded corner metadata supply a starting guess. We then register the surrounding
-terrain globally and locally, without using the candidate crater to choose a shift.
+terrain globally and locally, using median-smoothed displacements on a grid.
 """
 import argparse
 import concurrent.futures
