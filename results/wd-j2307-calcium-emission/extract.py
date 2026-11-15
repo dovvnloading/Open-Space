@@ -3,7 +3,6 @@ import argparse
 import csv
 import gzip
 import hashlib
-import json
 import shutil
 import tarfile
 from pathlib import Path
@@ -12,7 +11,7 @@ from urllib.request import urlopen
 import numpy as np
 from astropy.io import fits
 
-from analyze import BAND, ROOT, fit, write_csv
+from analyze import ROOT, fit, write_csv
 
 SDSS = 'https://data.sdss.org/sas/dr17/'
 WARWICK = 'https://cygnus.astro.warwick.ac.uk/phsdaj/WhiteDwarfs/'
