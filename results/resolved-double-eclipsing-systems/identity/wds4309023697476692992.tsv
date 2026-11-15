@@ -1,0 +1,41 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T05:30:04 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T05:30:04	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fwds%2Fwds&-c=289.44640854510703+9.712107042222724&-c.rs=60&-out=WDS%2CDisc%2CComp%2CObs1%2CObs2%2Csep2%2CRAJ2000%2CDEJ2000	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	MaxTuples=50000	
+#INFO	-c=289.446409+09.712107,rs=60.	
+#Constraint -out=WDS,Disc,Comp,Obs1,Obs2,sep2,RAJ2000,DEJ2000
+
+#RESOURCE=yCat_102026
+#Name: B/wds
+#Title: The Washington Visual Double Star Catalog (Mason+ 2001-) Supersedes {\bf I/237}
+#INFO	ivoid=ivo://cds.vizier/b/wds	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/b/wds	    IVOID of underlying data collection
+#INFO	creator=Mason B.D.	    First author or institution
+#INFO	cites=bibcode:2001AJ....122.3466M	    Article or Data origin sources
+#INFO	journal=AJ	    Journal name
+#INFO	original_date=2001	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/B/wds	    Dataset landing page
+#INFO	publication_date=2026-10-19	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	J2000_2000.000:	eq_FK5 J2000
+#Table	B_wds_wds:
+#Name: B/wds/wds
+#Title: The Washington Double Star Catalog (main part)
+#Column	WDS	(A10)	WDS name (based on J2000 position)	[ucd=meta.id;meta.main]
+#Column	Disc	(A7)	Discoverer Code (1 to 4 letters) and Number (5)	[ucd=meta.id]
+#Column	Comp	(A5)	Components when more than 2 (1)	[ucd=meta.code.multip]
+#Column	Obs1	(I4)	? Date of first satisfactory observation	[ucd=time]
+#Column	Obs2	(I4)	? Date of last satisfactory observation	[ucd=time]
+#Column	sep2	(F6.2)	? Separation at date Obs12	[ucd=pos.angDistance;src.orbital]
+#Column	RAJ2000	(A11)	? Right Ascension J2000 (Ep=J2000, hours)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(A11)	Declination J2000 (Ep=J2000, sign)	[ucd=pos.eq.dec;meta.main]
