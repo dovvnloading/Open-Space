@@ -15,6 +15,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install numerical replay dependencies
+        run: python -m pip install numpy scipy
+      - name: Independent GP, spline, held-out seasons and toy lens check
+        run: |
+          python results/j0826-lens-delay/followup/gaussian_process.py --quick
+          python results/j0826-lens-delay/followup/free_knots.py --quick
+          python results/j0826-lens-delay/followup/seasonal_template.py --quick
+          python results/j0826-lens-delay/followup/sis_sanity.py
       - name: Archive and independent PTF cone query
         run: |
           python results/j0826-lens-delay/followup/ptf_probe.py
