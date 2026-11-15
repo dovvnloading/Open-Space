@@ -1,0 +1,26 @@
+name: Replay Galactic-bulge photometry
+on:
+  push:
+    branches:
+      - research/bulge-giant-pulsation-changes
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy pandas 'scipy>=1.15'
+      - name: Rebuild from the archive
+        working-directory: results/bulge-giant-pulsation
+        run: |
+          python replay.py "$RUNNER_TEMP/bulge" --screen
+          python validate.py "$RUNNER_TEMP/bulge"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: galactic-bulge-replay
+          path: ${{ runner.temp }}/bulge
