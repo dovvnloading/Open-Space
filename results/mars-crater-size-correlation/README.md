@@ -2,9 +2,9 @@
 
 Across 259 independently cataloged Martian impact fields containing 13,034 mapped craters at least 1 m across, the crater nearest a given crater has a more similar diameter than expected after accounting for broad size sorting along the field. Mean absolute difference in diameter-percentile rank was **32.57 percentile points**, against **35.57** when sizes are exchanged within bands along the field's long axis. The site-weighted reduction was **3.00 points** (95% field-bootstrap interval 2.29–3.69), or **8.4%** of the expected gap. The reduction occurred in 191 of 259 fields. The fourth-nearest crater shows no detectable residual similarity.
 
-This is a new analysis of existing measurements of individual craters. It measures an ensemble spatial association in the published catalog. Correlated fragment sizes from related breakup events, spatially varying crater formation conditions, and correlated mapping or visibility errors can all produce local size similarity. The measurements do not uniquely identify a fragmentation mechanism.
+This is a new analysis of existing measurements of individual craters. It measures an ensemble spatial association in the published catalog. Correlated fragment sizes from related breakup events, spatially varying crater formation conditions, and correlated mapping or visibility errors can all produce local size similarity. The measurements do not uniquely identify a fragmentation mechanism. **Fragmentation physics, terrain, and image completeness remain open explanations.**
 
-The [comparison with a published atmospheric-breakup simulation](MODEL.md) finds that it reproduces part of the nearest-neighbor effect. The observed and simulated fields differ most clearly at the two smallest measured diameter thresholds.
+The [comparison with a published atmospheric-breakup simulation](MODEL.md) finds that it reproduces part of the nearest-neighbor effect. The observed and simulated fields differ at the 1 m and 1.5 m diameter cuts; **the comparison with the simulation is inconclusive at the 2 m and 3 m cuts** because both uncertainty intervals include zero. Neither a fragmentation-physics mismatch nor an effect of terrain or image completeness has been established.
 
 ## Measurement and countertests
 
