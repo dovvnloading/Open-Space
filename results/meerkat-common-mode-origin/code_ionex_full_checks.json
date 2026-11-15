@@ -1,0 +1,33 @@
+{
+  "baseline": "CODE-JPL daily difference centered at 2020-21 training median separately by source half; original PR #47 local source baselines retained; not a full ionFR re-reduction",
+  "caution": "IGRF-14 thin shell and two-decimal-MJD precision; source groups share telescope; no calibrator/subarray metadata; not physical attribution. CODE-JPL delta can include geometry implementation differences.",
+  "center_delta_train_A": 0.210643212686785,
+  "center_delta_train_B": 0.20081953455693052,
+  "description": "CODE final IONEX+IGRF independent correction on predeclared 124 source-disjoint UTC days",
+  "heldout": {
+    "CODE_A_B_pearson": 0.780598614244305,
+    "CODE_B_rmse": 0.3932618810020979,
+    "CODE_vs_JPL_offset_B_pearson": 0.6683938382276995,
+    "JPL_A_B_pearson": 0.7362229979490875,
+    "JPL_B_rmse": 0.33155563036904045,
+    "median_abs_delta_CODE_JPL_B": 0.31895205023113543,
+    "n": 68,
+    "peer_differential_CODE_rmse": 0.24729798585598997,
+    "peer_differential_JPL_rmse": 0.23060721476137744
+  },
+  "maps": 124,
+  "n_heldout": 68,
+  "n_train": 56,
+  "source": "https://download.aiub.unibe.ch/CODE/YYYY/...",
+  "train": {
+    "CODE_A_B_pearson": 0.8577943864142316,
+    "CODE_B_rmse": 0.3154575709740196,
+    "CODE_vs_JPL_offset_B_pearson": 0.5343534019638789,
+    "JPL_A_B_pearson": 0.7108288804936105,
+    "JPL_B_rmse": 0.23599830697031948,
+    "median_abs_delta_CODE_JPL_B": 0.3027224745306535,
+    "n": 56,
+    "peer_differential_CODE_rmse": 0.16468025917094023,
+    "peer_differential_JPL_rmse": 0.1689103074542395
+  }
+}
