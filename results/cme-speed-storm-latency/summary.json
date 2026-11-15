@@ -1,0 +1,102 @@
+{
+  "claim_class": "exploratory_archive_association_not_prospective_prediction",
+  "cohorts": {
+    "all": {
+      "fast_cme_ge1000_n": 40,
+      "fast_median_h": 10.933333,
+      "n": 113,
+      "pearson_r": -0.379398,
+      "slow_cme_lt700_n": 51,
+      "slow_median_h": 22.75,
+      "slow_minus_fast_median_h": 11.816667
+    },
+    "earlier_1996_2010": {
+      "fast_cme_ge1000_n": 24,
+      "fast_median_h": 10.883333,
+      "n": 68,
+      "pearson_r": -0.310064,
+      "slow_cme_lt700_n": 30,
+      "slow_median_h": 21.7,
+      "slow_minus_fast_median_h": 10.816667
+    },
+    "first_shock_per_72h": {
+      "fast_cme_ge1000_n": 34,
+      "fast_median_h": 10.666667,
+      "n": 104,
+      "pearson_r": -0.385328,
+      "slow_cme_lt700_n": 49,
+      "slow_median_h": 22.75,
+      "slow_minus_fast_median_h": 12.083333
+    },
+    "later_2011_2025": {
+      "fast_cme_ge1000_n": 16,
+      "fast_median_h": 12.766667,
+      "n": 45,
+      "pearson_r": -0.496963,
+      "slow_cme_lt700_n": 21,
+      "slow_median_h": 25.6,
+      "slow_minus_fast_median_h": 12.833333
+    },
+    "plausible_speed_delay_trim": {
+      "fast_cme_ge1000_n": 39,
+      "fast_median_h": 10.716667,
+      "n": 109,
+      "pearson_r": -0.428755,
+      "slow_cme_lt700_n": 49,
+      "slow_median_h": 22.75,
+      "slow_minus_fast_median_h": 12.033333
+    }
+  },
+  "cutoffs_km_s": {
+    "fast_at_least": 1000,
+    "slow_strictly_below": 700
+  },
+  "five_year_stratified_permutation": {
+    "null_95_r": [
+      -0.202491,
+      0.137494
+    ],
+    "null_mean_r": -0.034941,
+    "permutations": 10000,
+    "seed": 20261116,
+    "two_sided_empirical_p": 0.0001
+  },
+  "limitations": [
+    "The source catalog selects on Dst severity; it cannot predict WHETHER a severe storm occurs.",
+    "CME/storm matching is made retrospectively by observers.",
+    "1996-2010 vs 2011-2025 are retrospective era comparisons, not sealed blind holdouts.",
+    "Speed cutpoints were selected after inspecting this dataset; no confirmatory threshold test.",
+    "Dst and Bz are end-of-event diagnostic adjustment covariates, NOT usable pre-arrival.",
+    "Published literature already establishes storm timing and shock/sheath physics; no discovery priority asserted."
+  ],
+  "partial_r_dst_bz_quiet_source_era_diagnostic_only": -0.28089,
+  "sample_definition": "Severe Dst<=-100 nT catalog, 1996-2025, ICME shock at L1 and valid CME plane-of-sky speed",
+  "source_bytes": 15608,
+  "source_commit": "97747daa2ab3256986bdeafa707dd8214da71911",
+  "source_counts": {
+    "cme_speed_analyzable": 113,
+    "icme_with_shock": 120,
+    "missing_cme_speed": 7,
+    "no_shock_timestamp": 19,
+    "total_storm_rows": 139
+  },
+  "source_sha256": "8794251f244af391ab275ae6e10d5ca36c37c591461ca7dd8d3d4d31d2de0eb2",
+  "source_url": "https://raw.githubusercontent.com/vema1818/GeoMagStorms_SolarSources/97747daa2ab3256986bdeafa707dd8214da71911/List_GMS_Storms.csv",
+  "time_zone": "UTC",
+  "uncertainty": {
+    "calendar_year_block_pearson_95_interval": [
+      -0.483985,
+      -0.276756
+    ],
+    "draws": 4000,
+    "median_gap_hours_95_percentile_interval": [
+      4.666667,
+      15.783333
+    ],
+    "pearson_95_percentile_interval": [
+      -0.511301,
+      -0.240599
+    ],
+    "seed": 20261115
+  }
+}
