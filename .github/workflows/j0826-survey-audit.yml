@@ -1,0 +1,37 @@
+name: J0826 follow-up survey audit
+on:
+  push:
+    paths: [results/j0826-lens-delay/followup/**, .github/workflows/j0826-survey-audit.yml]
+  pull_request:
+    paths: [results/j0826-lens-delay/followup/**, .github/workflows/j0826-survey-audit.yml]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical replay dependencies
+        run: python -m pip install numpy scipy
+      - name: Independent GP, spline, held-out seasons and toy lens check
+        run: |
+          python results/j0826-lens-delay/followup/gaussian_process.py --quick
+          python results/j0826-lens-delay/followup/free_knots.py --quick
+          python results/j0826-lens-delay/followup/seasonal_template.py --quick
+          python results/j0826-lens-delay/followup/sis_sanity.py
+          python results/j0826-lens-delay/followup/robustness.py --quick
+          python -m unittest discover -s results/j0826-lens-delay/followup -p 'test_followup.py' -v
+      - name: Archive and independent PTF cone query
+        run: |
+          python results/j0826-lens-delay/followup/ptf_probe.py
+          python results/j0826-lens-delay/followup/ptf_direct.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: j0826-survey-snapshots
+          path: results/j0826-lens-delay/followup/runner-output
+          retention-days: 30
