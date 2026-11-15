@@ -11,6 +11,10 @@ The narrow He I emission core at 4921.931 Å lies **66.9 ± 5.2 km/s** redward o
 
 The errors in the table come from the fit covariance and pipeline pixel uncertainties. Leaving out one exposure at a time gives a jackknife uncertainty of 5.1 km/s for X-shooter. Twelve of thirteen individual paired differences have the same sign. Twelve combinations of fitting window (±190 to ±350 km/s) and polynomial background (degrees 0–2) give +66.3 to +75.5 km/s. The 2021 BOSS line cores are poorly resolved and do not independently establish the difference.
 
+![Observed X-shooter line cores with fitted centroid markers](line-profiles.png)
+
+The dashed lines mark the fitted centroids on each transition’s own velocity scale. Error bars show the propagated pixel uncertainties. Run `python plot_profiles.py` with Matplotlib installed after regenerating `fits.csv` to recreate the figure.
+
 ## Interpretation and prior work
 
 Inight et al. confirmed the known binary's helium-dominated spectrum. Schwope et al. measured its He I 5875 velocities from the 2021 BOSS exposures and described weak variability near an hour. The new quantity reported here is the simultaneous difference between the 4922 and 5016 cores in a later observing programme. A target-and-alias literature search did not identify this pairwise measurement for J0903. No orbital period follows from the centroid difference. [Inight et al. 2023, Appendix B22](https://arxiv.org/abs/2305.13371) · [Schwope et al. 2024, §3.1.14 and Fig. 6](https://arxiv.org/abs/2401.17304)
