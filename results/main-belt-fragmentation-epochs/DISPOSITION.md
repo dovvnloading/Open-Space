@@ -1,0 +1,3 @@
+# Pilot retired after the overlap check
+
+Of the common-epoch multi-opposition main-belt rows passing the pilot cuts, 1,330,090 were available at epoch K2669 in the MPCORB gzip with SHA-256 `10e29c5e55c33598e5891025d4db70bc4990fed51e90f0c70b5c0d10b69533cb`. The nearest-neighbor screen recovered the published (458271)–(796785) pair and the repository's (863192)–2025 UC18 pair. Although the pilot incorporated orbital phase, the prior project's retained candidate table already covered the intended main-belt population. We stopped without advancing a new asteroid-pair claim or requesting a merge. [Prior investigation and shortlist](../asteroid-863192/README.md)
