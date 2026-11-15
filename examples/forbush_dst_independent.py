@@ -122,7 +122,11 @@ def stratified_null(events: list[dict], onsets: list[int], hours_by_month: dict[
     """Month/year matched random *eligible* UTC hours; episode-level draws."""
     rng = random.Random(seed)
     panels = [hours_by_month[hour_to_month(utc_hour(e["time"]))] for e in events]
-    draws = [sum(lag_to_next(rng.choice(hours), onsets) is not None for hours in panels)
+    # Preserve the event minute within each sampled hour. Using only hour
+    # boundaries can artificially align controls with Dst threshold crossings.
+    fractions = [e["time"].timestamp()/3600 - utc_hour(e["time"]) for e in events]
+    draws = [sum(lag_to_next(rng.choice(hours) + fraction, onsets) is not None
+                 for hours, fraction in zip(panels, fractions))
              for _ in range(repetitions)]
     draws.sort()
     return {"draws": repetitions, "seed": seed,
@@ -131,12 +135,44 @@ def stratified_null(events: list[dict], onsets: list[int], hours_by_month: dict[
             "p975_hits": draws[int((repetitions-1)*0.975)],
             "draws_sorted": draws}
 
+def time_shift_controls(events: list[dict], eligible_event_hours: set[int],
+                        onsets: list[int], shifts_days: tuple[int, ...] = (-14, -7, 7, 14)) -> dict:
+    """Deterministic same-month 1/2-week shifts: not independent stations.
+
+    Only compare rates among shifted events with complete prior-hour coverage.
+    A shift crossing a month boundary or a Dst coverage gap is ineligible.
+    """
+    output = {}
+    for days in shifts_days:
+        usable, hits = 0, 0
+        for event in events:
+            hour = utc_hour(event["time"])
+            shifted_hour = hour + 24 * days
+            if hour_to_month(hour) != hour_to_month(shifted_hour):
+                continue
+            if shifted_hour not in eligible_event_hours:
+                continue
+            shifted_time = event["time"].timestamp() / 3600 + 24 * days
+            usable += 1
+            hits += lag_to_next(shifted_time, onsets) is not None
+        output[str(days)] = {
+            "eligible_shifted_episodes": usable,
+            "hits_48h": hits,
+            "rate": round(hits / usable, 6) if usable else None
+        }
+    return output
+
+
 def analyze(feid: list[dict], omni: list[dict], draws: int = 2000, seed: int = SEED) -> dict:
     dst = make_hourly_dst(omni)
     onsets, eligible = severe_onsets_and_eligibility(dst)
-    eligible_set = set(eligible)
+    # Do not use a Dst hour that could contain post-event observations.
+    # For an event during hour H, require hour H-1 to be fully observed
+    # and non-storm. Dst onset is still evaluated strictly after exact
+    # event time; subhour order cannot be determined from hourly means.
+    eligible_event_hours = {hour + 1 for hour in eligible}
     by_month = defaultdict(list)
-    for hour in eligible:
+    for hour in sorted(eligible_event_hours):
         by_month[hour_to_month(hour)].append(hour)
     episodes = cluster_events(feid)
     output = {
@@ -145,7 +181,9 @@ def analyze(feid: list[dict], omni: list[dict], draws: int = 2000, seed: int = S
         "dst_period": {"start": datetime.fromtimestamp(min(dst)*3600, timezone.utc).isoformat(),
                        "end": datetime.fromtimestamp(max(dst)*3600, timezone.utc).isoformat()},
         "dst_hours": len(dst), "dst_valid_hours": sum(v is not None for v in dst.values()),
-        "severe_storm_onsets": len(onsets), "eligible_utc_hours": len(eligible),
+        "severe_storm_onsets": len(onsets),
+        "eligible_utc_hours": len(eligible),
+        "eligible_event_hour_slots": len(eligible_event_hours),
         "raw_feid_rows": len(feid), "feid_72h_episodes": len(episodes),
         "filters": {"prior_quiet_hours": PREVIOUS_HOURS, "dst_threshold_nt_strict": LIMIT_NT,
                     "outcome_hours": LAG_HOURS, "first_event_per_72h_episode": True},
@@ -157,7 +195,7 @@ def analyze(feid: list[dict], omni: list[dict], draws: int = 2000, seed: int = S
         "all_1963_2016": (1963, 2016),
     }.items():
         subset = [e for e in episodes if start <= e["time"].year <= end]
-        accepted = [e for e in subset if utc_hour(e["time"]) in eligible_set and
+        accepted = [e for e in subset if utc_hour(e["time"]) in eligible_event_hours and
                     by_month.get(hour_to_month(utc_hour(e["time"])))]
         lags = [lag_to_next(e["time"].timestamp()/3600, onsets) for e in accepted]
         hit_lags = [x for x in lags if x is not None]
@@ -191,6 +229,8 @@ def analyze(feid: list[dict], omni: list[dict], draws: int = 2000, seed: int = S
             controls["lower_tail_p"] = round((1+sum(x <= observed for x in outcomes))/(1+draws), 6)
             controls["observed_to_expected_ratio"] = (
                 round(observed/controls["mean_hits"], 4) if controls["mean_hits"] else None)
+            controls["time_shift_controls"] = time_shift_controls(
+                events_of_type, eligible_event_hours, onsets)
             type_controls[code] = controls
         output["cohorts"][name] = {
             "episodes_in_period": len(subset), "eligible_episodes": len(accepted),
@@ -199,6 +239,7 @@ def analyze(feid: list[dict], omni: list[dict], draws: int = 2000, seed: int = S
             "wilson_95_rate": wilson_bounds(hits, len(accepted)),
             "lag_bins_0_6_6_12_12_24_24_48": bins,
             "types_eligible": dict(type_counts), "types_hit": dict(type_hits),
+            "time_shift_controls": time_shift_controls(accepted, eligible_event_hours, onsets),
             "type_specific_month_matched_controls": type_controls,
             "null_year_month_matched": null
         }
