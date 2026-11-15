@@ -26,4 +26,6 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Verify the frozen year strata and independent published timestamps
-        run: python results/nicer-magnetar-microbursts/timescale-forensics/verify.py
+        run: |
+          python results/nicer-magnetar-microbursts/timescale-forensics/verify.py
+          python results/nicer-magnetar-microbursts/timescale-forensics/frame_controls.py
