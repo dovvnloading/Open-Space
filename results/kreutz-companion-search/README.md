@@ -1,0 +1,16 @@
+# LASCO C2 search for additional Kreutz companions
+
+A shift-and-stack search in 988 original SOHO/LASCO C2 exposures recovered the tracks of known sungrazers on 2020 June 7–9. June 9 was selected because the 2020 discovery table lists five Kreutz objects on that date, the largest same-date group in that table. The surrounding high-cadence June 7–10 observations provide additional screening and comparison fields. The four-day search yielded no additional object we could verify. The apparent companion closest to SOHO-3995 was already reported by Worachate Boonplod as SOHO-3996 in June 2020. [Discovery table](https://sungrazer.nrl.navy.mil/comets_table_2020) · [Original reports](https://sungrazer.nrl.navy.mil/sites/sungrazer.local/files/html/legacy_reports/comets202006_arch.html)
+
+| June day | C2 exposures | Strongest stack, UTC hours | Image column, row | Comparison with contemporaneous reports |
+|---|---:|---:|---|---|
+| 7 | 251 | 15.85 | 954, 87 | 0.90 px from the fitted SOHO-3989 track |
+| 8 | 250 | 8.65 | 860, 99 | 1.18 px from SOHO-3991 |
+| 9 | 237 | 11.05 | 824, 116 | 2.46 px from SOHO-3995, close to the known 3995/3996 blend |
+| 10 | 250 | 15.85 | 595, 85 | Weak response, score 0.65. No source identification |
+
+A June 7 residual at UTC hour 3.85, column 526 and row 111, survived the alternating-frame split. Short consecutive blocks showed a long column feature, and extrapolation to the following hours failed to recover a compact source. Interleaving exposures alone can preserve detector structure. No population upper limit was derived. The screen samples a limited image area and set of projected velocities, and did not include an injection-completeness experiment.
+
+`frames.csv` gives the day, exact Level 0.5 FITS ID, UTC time, exposure from the daily header list, and SHA-256 for every image. A daily median and a median absolute deviation normalize each pixel. Images are clipped and spatially filtered before shifting. The grid uses 35 velocities and 18 overlapping 2.8-hour windows per day. The center of a trial is restricted to columns 505–1004 and rows 75–189, in unrotated detector coordinates with the origin at the lower left. Within each velocity/window, eligible local maxima require a response above 0.25 in both alternating subsets. The nine largest by mean response enter the next stage. Suppressing duplicates within six pixels across velocities leaves up to 14 proposals per window. `peaks.csv` retains all 1,008 such proposals. Their scores are filtered detector contrasts, with neither an astrophysical flux calibration nor a calibrated false-alarm probability.
+
+Run `python screen.py --cache /path/to/lasco-cache --output peaks.csv` from this directory with NumPy and SciPy. Cold replay reads about 2.1 GB. The date and FITS filenames resolve under the [NRL LASCO archive](https://lasco-www.nrl.navy.mil/lz/level_05/200609/c2/). Known-track distances come from quadratic fits in time to the C2 positions in the [Sungrazer guide tables](https://sungrazer.nrl.navy.mil/soho-discoveries). Those public position tables are preliminary and incomplete. The pixel search uses the original SOHO/LASCO exposures. SOHO is a project of international cooperation between ESA and NASA.
