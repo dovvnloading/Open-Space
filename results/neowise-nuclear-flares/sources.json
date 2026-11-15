@@ -54,6 +54,9 @@
   "data/flares.csv": "7df7fc416c598a9cecfffca1e49183529df89abe2d1471ef9ae04bdd876640aa",
   "data/gaia-alert-matches.json": "8b2de9c1686d6b95c5388850f9fb1b9737eaf64b76e60a031858fa6409b3b7ff",
   "data/published-flares.csv": "419a4b8741f25b04aef7c8a6fc9181263ff9926abf8cb0b2d096c9b67dcfb13b",
+  "data/radio.json": "8d27bce54110efc35befaa624e9b8975d128a42c3d358fd14ff605d6c776c3e6",
+  "data/spherex-colours-ring3-5.json": "4b6e62498d483a70762a8d0e511a4d4fe92a19fd8ed2d538c083121f67b87058",
+  "data/spherex-colours.json": "e1639709707c9ab0cec451e46b6df6217af94aab46e7d268eae6a9d999ce0a4d",
   "data/supergiant-dropouts.csv": "a5c3553577c087482a2f37e203008cb321240557022d0783e09cf47a67158960",
   "data/supergiant-flares.csv": "197f075cee455e8527de9c3dededdb28cd775a09beacd51a785811f4f40c5969",
   "data/supergiant-positions.csv.gz": "4db96c3545ba7e460a2ba2e94db91a13a44f62bd226c1f073ef57d0595ea60c6",
@@ -65,7 +68,16 @@
   "python": "3.14.0",
   "numpy": "2.5.4",
   "pandas": "3.1.1",
-  "scipy": "1.18.1"
+  "scipy": "1.18.1",
+  "astropy": "8.0.2",
+  "requests": "2.34.2"
  },
- "hash_note": "SHA-256 of the files as stored in Git (LF line endings)."
+ "hash_note": "SHA-256 of the files as stored in Git (LF line endings).",
+ "follow_up_2026_11_15": {
+  "SPHEREx": "DR1 HiPS spectral cubes, https://nasa-irsa-spherex.s3.amazonaws.com/dr1/hips5_cube/hips_20261026/Norder5/, order-5 tiles 416, 601, 6180, 7438, 8763, 9764, 11277; HTTP byte ranges of the IMAGE and FLAGS planes 58-101 (2.951-4.988 um) and the SPECTRAL_CHANNELS table",
+  "AllWISE": "IRSA Gator allwise_p3as_psd multi-object upload, 3 arcsec, for the galaxies in those tiles",
+  "VLASS": "CADC TAP https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync (caom2 quick-look Stokes I artifacts covering each nucleus) and SODA cutouts https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/caom2ops/sync, 90 arcsec radius",
+  "NVSS and FIRST": "VizieR VIII/65/nvss (30 arcsec) and VIII/92/first14 (5 arcsec) via https://vizier.cfa.harvard.edu/viz-bin/asu-tsv",
+  "SN 2007D position": "SIMBAD TAP basic table via https://simbad.harvard.edu/simbad/sim-tap/sync: 49.661292, +37.607333"
+ }
 }
