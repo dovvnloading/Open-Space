@@ -31,8 +31,11 @@ Run from this directory using Python, NumPy, SciPy, Astropy and Matplotlib. `ima
 ```bash
 python screen.py
 python images.py
+python check_pixels.py stamps
 python measure.py
 python figure.py
 ```
 
 Searches on 2026-11-14 for M87 nova 66 with “secondary maximum”, “rebrightening”, “precursor” and “44.9 days” found the catalog paper and its figure. We found no explicit earlier isolation or split-exposure test of this pulse in those searches. The 2024 analysis of this sample tested spatial concentration near the M87 jet and population-level properties. Galactic nova studies already document secondary maxima and flares. The contribution here is specific to the verified morphology of M87 nova 66. This is a limited prior-art check. Attribution of the individual data points belongs to the observing team. [Survey light curves and recurrence discussion, Section 5](https://arxiv.org/abs/2308.15599) · [2024 M87 follow-up](https://arxiv.org/abs/2309.16856) · [Strope et al. nova morphology atlas](https://doi.org/10.1088/0004-6256/140/1/34)
+
+The [cutout checksums](pixel-digests.csv) identify the little-endian float32 arrays of resampled image pixels used for the reported measurements. MAST product identifiers in the file names identify the parent observations.
