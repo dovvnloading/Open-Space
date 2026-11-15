@@ -48,7 +48,69 @@
       "event_type": 0,
       "part_ii_flag": 5,
       "part_i_wwlln_drift_flag": 3
-    }
+    },
+    "agile_photon_product": {
+      "file_rows": 12,
+      "window_ms_from_t0": [
+        -0.1,
+        0.1
+      ],
+      "prompt_counts": 11,
+      "prompt_span_us": 69.0,
+      "prompt_gt_10_MeV": 3,
+      "prompt_max_energy_MeV": 17.27,
+      "all_time_ms_energy_MeV": [
+        [
+          -0.025,
+          3.088
+        ],
+        [
+          -0.021,
+          17.27
+        ],
+        [
+          -0.018,
+          0.981
+        ],
+        [
+          -0.014,
+          13.502
+        ],
+        [
+          -0.008,
+          5.123
+        ],
+        [
+          -0.002,
+          10.26
+        ],
+        [
+          0.005,
+          4.115
+        ],
+        [
+          0.01,
+          0.667
+        ],
+        [
+          0.013,
+          1.319
+        ],
+        [
+          0.019,
+          0.657
+        ],
+        [
+          0.044,
+          0.952
+        ],
+        [
+          0.61,
+          22.388
+        ]
+      ]
+    },
+    "gbm_teb_or_special_comment": false
   },
   "scan": {
     "fermi_full": 4135,
@@ -166,6 +228,18 @@
     "agile.html": {
       "url": "https://www.ssdc.asi.it/mcal3tgfcat/",
       "sha256": "f8353373783d228f14da3377c9b73b7c1ab250e2a29ced944d206a3972e9eaf6"
+    },
+    "agile_photons.dat": {
+      "url": "https://www.ssdc.asi.it/mcal3tgfcat/lc2/20160320.075550.776435.dat",
+      "sha256": "fc7a003b4e5f732287600cc60c44d9ae4fc4e5dcb0e5cecdf3f1f05361826811"
+    },
+    "teb.csv": {
+      "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/gbm/tgf/gbm_tgf_catalog_teb.csv",
+      "sha256": "65fad0fb4ba4c9592af549a3c0b38af2c25f46cde845a39004bf5d42a10526a6"
+    },
+    "comments.csv": {
+      "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/gbm/tgf/gbm_tgf_catalog_comments.csv",
+      "sha256": "f4f0fd9bae1bb788280a1bd66576c214313a8e138dcf66924797ec13bd5e86df"
     },
     "radio_event.txt": {
       "url": "https://heasarc.gsfc.nasa.gov/FTP/fermi/data/gbm/tgf/cat_files/tgf_wwlln_data/gbm_WWLLN.oTGF160320330.txt",

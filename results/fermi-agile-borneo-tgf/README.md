@@ -10,8 +10,10 @@ The new result here is the cross-identification and its viewing geometry. Both o
 |---|---|
 | Fermi GBM offline detection | oTGF160320330, discovery window starts 07:55:50.783900 UTC and spans 200 μs. Catalog counts are 5 and 4 in the two BGO detectors and 15 summed over NaI. GBM reports a corrected joint Poisson probability of 2.11 × 10⁻¹³. This tests the GBM count burst. |
 | Fermi hourly event files | The all-channel extraction gives 5 and 6 events in BGO 0 and 1, against 0.297 and 0.298 expected from adjacent exposures. Nine events have channel lower boundaries above 300 keV, five in BGO 0 and four in BGO 1. Three channels have lower boundaries above 1 MeV. The all-channel stream includes two additional low-energy events. Energy intervals describe recorded detector channels. |
-| AGILE MCAL photon selection | 20160320.075550.776435, orbit 46084. The independent Part II event selection reports 11.0 ± 3.3 fitted counts, a single pulse, and a middle-50% duration of 27 ± 5 μs. The source is the published MCAL photon fit. |
+| AGILE MCAL photon selection | 20160320.075550.776435, orbit 46084. The independent Part II event selection reports 11.0 ± 3.3 fitted counts, a single pulse, and a middle-50% duration of 27 ± 5 μs. The individual event file contains 11 deposits within ±100 μs of the fit epoch, spanning 69 μs (−25 to +44 μs). Three exceed 10 MeV, with a maximum of 17.270 MeV. A twelfth deposit at +610 μs falls outside the prompt window. |
 | WWLLN field | The GBM event file contains 556 radio strokes in the surrounding 20 minutes. The matched stroke has a travel-corrected absolute offset of 208 μs. The next closest in time is 1.044 s away. AGILE Part I lists the same coordinates rounded to 0.01°. Both catalog checks use one radio network. |
+
+AGILE classifies this event as a single gamma-ray pulse. The GBM terrestrial-electron-beam list and special-comments file have no entry for it. The official MCAL time/energy plot labels the event table’s units and records the fitted epoch and orbit. [AGILE event-level counts](https://www.ssdc.asi.it/mcal3tgfcat/lc2/20160320.075550.776435.dat) · [AGILE light curve and energy scatter](https://www.ssdc.asi.it/mcal3tgfcat/lc2/20160320.075550.776435.pdf)
 
 The Fermi radio offset meets GBM’s 3.5 ms association criterion and narrowly exceeds its stricter 200 μs “simultaneous” convention. A common lightning flash is well supported. The radio data alone cannot identify the microscopic emission episode within the flash. [GBM field definitions and selection](https://fermi.gsfc.nasa.gov/ssc/data/access/gbm/tgf/) · [AGILE catalog and samples](https://www.ssdc.asi.it/mcal3tgfcat/) · [AGILE photon selection](https://doi.org/10.1029/2019JD031986)
 
@@ -31,7 +33,7 @@ The observed directions span more than a right angle. A single circular cone con
 
 ## Reproduce
 
-From this directory, run the following with Python, NumPy, and Astropy. Allow about 65 MB for six public input files. The script writes the field values, source URLs and SHA-256 hashes to [evidence.json](evidence.json) and the eleven all-channel BGO events to [gbm_photons.csv](gbm_photons.csv). The hourly Fermi FITS streams are re-read directly. AGILE measurements use the publicly tabulated event fit.
+From this directory, run the following with Python, NumPy, and Astropy. Allow about 65 MB for nine public input files. The script writes the field values, source URLs and SHA-256 hashes to [evidence.json](evidence.json) and the eleven all-channel BGO events to [gbm_photons.csv](gbm_photons.csv). The script reads the two hourly Fermi FITS streams and the AGILE event-level time/energy file directly, and preserves every row of the latter in the evidence record.
 
 ```sh
 python analyze.py --cache /tmp/fermi-agile-borneo --output /tmp/fermi-agile-result

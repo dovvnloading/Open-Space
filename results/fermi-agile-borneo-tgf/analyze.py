@@ -17,6 +17,9 @@ URLS = {
     "off.csv": GBM + "gbm_tgf_catalog_offline.csv",
     "ww.csv": GBM + "gbm_tgf_catalog_wwlln.csv",
     "agile.html": "https://www.ssdc.asi.it/mcal3tgfcat/",
+    "agile_photons.dat": "https://www.ssdc.asi.it/mcal3tgfcat/lc2/20160320.075550.776435.dat",
+    "teb.csv": GBM + "gbm_tgf_catalog_teb.csv",
+    "comments.csv": GBM + "gbm_tgf_catalog_comments.csv",
     "radio_event.txt": ("https://heasarc.gsfc.nasa.gov/FTP/fermi/data/gbm/tgf/cat_files/"
                        "tgf_wwlln_data/gbm_WWLLN.oTGF160320330.txt"),
     **{f"{d}.gz": TTE + f"glg_tte_{d}_160320_07z_v00.fit.gz" for d in ("b0", "b1")},
@@ -195,6 +198,20 @@ def main():
     assert len(strokes) == n_strokes and float(strokes[0][1][1]) == float(fr["WWLLN_Lon"])
     field = {"n_strokes_in_20_minutes": n_strokes, "closest_abs_offset_s": strokes[0][0],
              "next_closest_abs_offset_s": strokes[1][0]}
+    # The official event plot labels the two columns in ms and MeV relative to MCAL T0.
+    # Compare the prompt cluster to the fitted 27 us duration without assigning the late hit.
+    mcal = np.loadtxt(args.cache / "agile_photons.dat", delimiter=",")
+    prompt = mcal[abs(mcal[:, 0]) <= 0.1]
+    mcal_report = {"file_rows": len(mcal), "window_ms_from_t0": [-0.1, 0.1],
+                   "prompt_counts": len(prompt), "prompt_span_us": round(np.ptp(prompt[:, 0]) * 1000, 3),
+                   "prompt_gt_10_MeV": int(sum(prompt[:, 1] > 10)),
+                   "prompt_max_energy_MeV": float(max(prompt[:, 1])),
+                   "all_time_ms_energy_MeV": mcal.tolist()}
+    event["agile_photon_product"] = mcal_report
+    event["gbm_teb_or_special_comment"] = any(
+        FERMI_ID.removeprefix("oTGF") in (args.cache / name).read_text()
+        for name in ("teb.csv", "comments.csv"))
+    assert not event["gbm_teb_or_special_comment"] and int(a[19]) == 0
     report = {"event": event, "scan": scan, "geometry": geom, "radio_field": field,
               "tte_background": background, "sources": sources}
     args.output.mkdir(parents=True, exist_ok=True)
