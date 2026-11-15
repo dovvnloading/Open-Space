@@ -121,6 +121,30 @@ def phase_sensitivity():
     }
 
 
+def final_season():
+    """Predict the last ZTF season using periods fixed independently of these data."""
+    rows = sorted((row for row in read("ztf_dr24.csv")
+                   if (row["case"], row["filtercode"], row["catflags"]) == ("96", "zi", "0")),
+                  key=lambda row: float(row["mjd"]))
+    t = np.array([float(row["mjd"]) for row in rows])
+    mag = np.array([float(row["mag"]) for row in rows])
+    train = t < 60000
+    actual = mag[~train]
+
+    def rms(predicted):
+        return round(float(np.sqrt(np.mean((actual - predicted)**2))), 3)
+
+    result = {"training_epochs": int(sum(train)), "later_epochs": len(actual),
+              "cut_mjd": 60000, "training_mean_rms_mag": rms(np.mean(mag[train]))}
+    for period in [543.85, 543.85 / 2, 543.85 * 2]:
+        phase = 2 * np.pi * (t - 59000) / period
+        design = np.column_stack((np.ones(len(t)), np.cos(phase), np.sin(phase)))
+        coefficients = np.linalg.lstsq(design[train], mag[train], rcond=None)[0]
+        result[f"period_{period:g}_d_rms_mag"] = rms(design[~train] @ coefficients)
+    return result
+
+
 if __name__ == "__main__":
-    results = {"positions": spatial(), "modern_photometry": light_curves(), "constant_period_sensitivity": phase_sensitivity()}
+    results = {"positions": spatial(), "modern_photometry": light_curves(), "constant_period_sensitivity": phase_sensitivity(),
+               "ztf_final_season": final_season()}
     print(json.dumps(results, indent=2))

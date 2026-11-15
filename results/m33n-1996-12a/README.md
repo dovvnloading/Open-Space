@@ -2,6 +2,8 @@
 
 Williams & Shafter measured a transient in M33 on 1996 December 9 in their 70 Å Hα filter. Their six-object survey gives one magnitude for this candidate, 19.1 after extinction correction, with no tabulated B magnitude or spectrum. The published position is **0.394 arcsec** from the oxygen-rich fundamental-mode Mira candidate **01342067+3034391**. The authors quote approximately 1 arcsec positional accuracy. The later CFHT catalog gives a period of **543.85 days**, assigns all six machine classifiers to the positive class and reports a high-confidence visual check. This association supplies a specific alternative to a thermonuclear eruption. [Original survey, Tables 2–4](https://doi.org/10.1086/422833) · [CFHT catalog, Table A7](https://doi.org/10.1093/mnras/stae1140)
 
+![Independent i-band photometry of the Mira from Pan-STARRS1 and ZTF](mira-photometry.png)
+
 ## Independent observations
 
 | Measurement | Observed property |
@@ -12,6 +14,8 @@ Williams & Shafter measured a transient in M33 on 1996 December 9 in their 70 Å
 | ZTF public alerts | Fifteen positive r difference detections of ZTF19aawtdor in two seasons. The first nine span 92 days in 2020–2021. Six more span 54 days in 2023, alongside one g-band alert. Difference magnitudes refer to the excess over the ZTF reference. |
 
 These measurements independently establish a large-amplitude red variable at the cataloged eruption position. Neither broadband i magnitudes nor ZTF r difference magnitudes measure the 1996 Hα flux. Mira pulsation shocks can produce Balmer emission, and a narrowband image admits stellar continuum. The strength of either contribution on the discovery date is unknown. [Balmer emission in Miras](https://ned.ipac.caltech.edu/level5/Gray/Gray29.html) · [PS1 detection columns](https://outerspace.stsci.edu/spaces/PANSTARRS/pages/298812397/PS1+Detection+table+fields) · [IRSA ZTF archive](https://irsa.ipac.caltech.edu/Missions/ztf.html)
+
+A retrospective last-season check fits a sinusoid to the 20 ZTF i observations before MJD 60000. At the published 543.85-day period, it predicts the four later measurements with a root-mean-square error of 0.398 mag. A constant fitted to the same data gives 1.088 mag. The half-period alias gives 0.242 mag and the double-period model 0.599 mag. These four observations support recurrent brightening and leave the pulsation period ambiguous in ZTF alone.
 
 ## A comparison from the same survey
 
@@ -24,6 +28,8 @@ The other four historical objects are more than 2.9 arcsec from the nearest gold
 A 543.85-day constant-period sinusoid fitted to Pan-STARRS1 and ZTF nightly i data places the 1996 date about 0.12 cycle before maximum. A free long-period solution near 546 days shifts that estimate. Half-period aliases, irregular sampling, selection at the detection limit, cycle-to-cycle changes and filter-dependent phase limit this extrapolation over more than 16 cycles. The historical phase does not establish that the Mira produced the Hα brightening.
 
 An unrelated nova within the historical position error, or a white dwarf eruption in a symbiotic system with a Mira donor, remains possible. The survey found its faint candidates by inspecting aligned CCD frames at different epochs. Its published observing log is not a list of source-level nondetections. The original discovery and comparison CCD images and a contemporaneous spectrum were not obtained in this study. Relative registration of the historical residual against modern stars would test the blend alternative. A nova-line spectrum or a contemporaneous broadband flux history would help distinguish an eruption from a Mira maximum. The 1996 and 1997 detections were both below the original survey's 18-mag magnitude-limited threshold. We do not infer a revised M33 nova rate.
+
+The DIRECT observing log for central M33 brackets the event with observations on 1996 November 14 and 1997 January 3. It lists no December 1996 exposure. Its BVI stellar catalog puts the nearest detected star 3.0 arcsec away, outside the quoted nova position accuracy. Shafter’s living M33 nova catalog retains the Hα measurement and leaves the spectral classification blank. [DIRECT observing log and catalog](https://vizier.cfa.harvard.edu/viz-bin/VizieR?-source=J/AJ/121/861) · [Living M33 nova catalog](https://ashafter.sdsu.edu/m33_nova_table.html)
 
 ## Reproduction
 
