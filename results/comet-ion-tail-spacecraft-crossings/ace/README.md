@@ -1,0 +1,7 @@
+# ACE heavy-ion background near the Wind O+ observation
+
+ACE/ULEIS recorded a multiday decline in energetic oxygen and iron across 29 September 2011 near Earth. From 26 to 30 September, daily median oxygen intensities in the 40–90 keV/nucleon channel were 30.221, 6.448, 2.217, 0.997 and 0.197. Iron at 35–40 keV/nucleon gave 21.9585, 8.159, 2.017, 0.942 and 0.335. All five days contributed 24 valid hourly measurements per channel. The reported differential intensities are in particles per cm² per second per steradian per MeV/nucleon.
+
+The independent spacecraft establishes that the Wind observation took place during a decaying population of energetic heavy ions. ULEIS measures elemental oxygen here, with no charge-state separation, and samples a higher energy band than the proposed Wind pickup-ion signature. These data alone cannot identify the source of the Wind O+ or determine how many counts came from this population.
+
+The table gives UTC daily medians for the full query interval, 18 September through 3 October, including two additional oxygen energy bands. Run `python reproduce.py` to retrieve the original hourly measurements and rebuild the table and receipt using the Python standard library. `source.json` gives the exact queries, raw-response SHA-256 hashes, primary channel definitions and fill values. [ACE/ULEIS product metadata](https://cdaweb.gsfc.nasa.gov/hapi/info?id=AC_H2_ULE)
