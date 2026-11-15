@@ -1,0 +1,71 @@
+{
+ "retrieved_utc": "2026-11-15T01:00Z to 03:10Z (14 November 2026, US Eastern evening)",
+ "neowise": {
+  "table": "neowiser_p1bs_psd (NEOWISE-R Single Exposure L1b Source Table, final 2024 release)",
+  "doi": "10.26131/IRSA144",
+  "service": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query (multi-object upload, 5 arcsec radius for galaxies, 3 arcsec for supergiants)",
+  "galaxy_batches": 149,
+  "galaxy_positions": 44599,
+  "galaxies_with_any_visit": 44371,
+  "galaxies_with_12_two_band_visits": 43916,
+  "supergiant_batches": 60,
+  "supergiant_positions": 17704,
+  "failed_batches": 0
+ },
+ "parent_samples": {
+  "2MRS": "Huchra et al. 2012, VizieR J/ApJS/199/26/table3 via vizier.cfa.harvard.edu",
+  "supergiants": "Ren et al. 2021 (ApJ 907, 18; ApJ 923, 232), VizieR J/ApJ/907/18 tables 4-5 and J/ApJ/923/232 tables 5-6"
+ },
+ "comparison_catalogues": {
+  "Masterson et al. 2024": "18 positions transcribed from arXiv:2401.01403 table 1",
+  "Jiang et al. 2021 (MIRONG)": "VizieR J/ApJS/252/32/irflares, 137 rows",
+  "Necker et al. 2025 (Flaires)": "VizieR J/A+A/695/A228/tablea1, 823 rows (corrected version of 30 June 2026)"
+ },
+ "services": {
+  "SIMBAD": "https://simbad.harvard.edu/simbad/sim-tap/sync, 10 arcsec cones",
+  "TNS": "https://www.wis-tns.org/search, 10 arcsec cones, all 113 flare positions",
+  "ZTF alerts": "https://api.alerce.online/ztf/v1/objects, 5 arcsec, 80 positions north of -28 deg",
+  "ZTF photometry": "https://irsa.ipac.caltech.edu/cgi-bin/ZTF/nph_light_curves",
+  "Gaia alerts": "http://gsaweb.ast.cam.ac.uk/alerts/alerts.csv, 27,076 alerts, 10 arcsec match",
+  "NED": "https://ned.ipac.caltech.edu/srs/ObjectLookup (redshifts of seven hosts)"
+ },
+ "x_ray_checks": {
+  "eRASS1 main catalogue (VizieR J/A+A/682/A34/erass1-m), 30 arcsec": {
+   "ESO 161-23": "no source",
+   "LEDA 140951": "no source",
+   "NGC 1566 (control)": "1eRASS J042000.3-545616 at 0.9 arcsec"
+  },
+  "ROSAT 2RXS (VizieR J/A+A/588/A103/cat2rxs), 60 arcsec": {
+   "CGCG 539-025": "no source",
+   "ESO 161-23": "no source",
+   "LEDA 140951": "no source"
+  }
+ },
+ "literature_searches": "Web searches on 2026-11-14 for each of the seven hosts by catalogue names (CGCG 539-025, IRAS 02237+4127, PGC 9307; ESO 161-23, IRAS 06431-5551; UGC 2653, MCG+06-08-012, IRAS 03154+3725; IRAS 21102-8100 and the 2MASX names of the others) with 'flare', 'transient', 'tidal disruption' found no report of these events.",
+ "deposited": {
+  "data/2mrs-positions.csv.gz": "49601aa1b1a98f014eca72fbce8687a11426b57525aea3e5ff54167706e8f7f8",
+  "data/catalogue-records.json": "49c1f96f65ee22ddcf001c0ebdeaec4ba4f87200fa9e0627aac1279c34f19cb0",
+  "data/centroid.csv": "f5bedd5da7f9edb47b1716c3fb038214f09816abcf583b4dcc3782bb83c136ff",
+  "data/cgcg-539-025-checks.json": "e289cbd2ed4e7d4836db762f0444bd0aa9259b1597a0ea5f463c15464c1d8ca8",
+  "data/detections.csv": "91278f9f666b7840ed9f3d22964e98d6f985493085aa160579c1d5df6d80fdaa",
+  "data/eso-161-23-checks.json": "48ec6f546f79c909cae48f97c6f840d13371d2e16cb9ddd8cb3f3f4a245fe7c6",
+  "data/flaires-positions.csv": "065e2be98d9d1569fbca2f43e0698bd7fce4c716915597c97a4b8647738a0f02",
+  "data/flare-light-curves.csv": "9c52a6815c534f085cfbfe7a76bc99e66a834dd33ea69f10f7551401a214b09d",
+  "data/flares.csv": "7df7fc416c598a9cecfffca1e49183529df89abe2d1471ef9ae04bdd876640aa",
+  "data/gaia-alert-matches.json": "8b2de9c1686d6b95c5388850f9fb1b9737eaf64b76e60a031858fa6409b3b7ff",
+  "data/published-flares.csv": "419a4b8741f25b04aef7c8a6fc9181263ff9926abf8cb0b2d096c9b67dcfb13b",
+  "data/supergiant-dropouts.csv": "a5c3553577c087482a2f37e203008cb321240557022d0783e09cf47a67158960",
+  "data/supergiant-flares.csv": "197f075cee455e8527de9c3dededdb28cd775a09beacd51a785811f4f40c5969",
+  "data/supergiant-positions.csv.gz": "4db96c3545ba7e460a2ba2e94db91a13a44f62bd226c1f073ef57d0595ea60c6",
+  "data/supergiants.json": "3012ac038f81bc99d17a05db12e6b0239f20adc6d218ff71b457adc5b57890ef",
+  "data/ugc-2653-checks.json": "87bb2b868dd61ae09e440df3852d5585223a480826dcb7ebeeaff07c66b82742",
+  "data/ztf-alerts.json": "19edcab53a9d5d93efa9042e2692d5150a0118477029ed3e2c368151f7ad2ac2"
+ },
+ "software": {
+  "python": "3.14.0",
+  "numpy": "2.5.4",
+  "pandas": "3.1.1",
+  "scipy": "1.18.1"
+ },
+ "hash_note": "SHA-256 of the files as stored in Git (LF line endings)."
+}
