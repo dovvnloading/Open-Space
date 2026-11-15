@@ -1,0 +1,40 @@
+# Three close alignments along the path of Gaia BH3
+
+Gaia BH3's measured motion takes the black hole past three catalogue stars within one arcsecond between 1900 and 2125. The closest modeled crossing occurred in late 1928, when a G = 19.20 star passed about 0.164 arcsec from the system's barycentre. Two other stars approach in 2106 and 2118. Gaia identified the black hole in 2024. These are predictions of its effect on three other sightlines. No deflection has been measured here. [Discovery paper, Tables 1–3](https://doi.org/10.1051/0004-6361/202449763)
+
+| Gaia DR3 background source | Closest Julian year | Separation, arcsec (95% simulation range) | Predicted source-image centroid shift, mas | Pan-STARRS detections |
+| --- | ---: | ---: | ---: | ---: |
+| 4318465062103815552 | 1928.89 | 0.164 (0.124–0.205) | 2.38 | 52 |
+| 4318465066397284608 | 2106.42 | 0.523 (0.446–0.599) | 0.78 | 7 |
+| 4318465066396437504 | 2118.21 | 0.808 (0.731–0.886) | 0.51 | 57 |
+
+## Observations and selection
+
+An 80-arcsec cone centered on the DR3 optical counterpart contains 564 sources. Of these, 466 other stars have measured motion in both axes and RUWE below 1.4. For each star we propagated the J2016.0 DR3 solution on a local east/north tangent plane against the **barycentric** J2017.5 solution in Table 2 of the discovery paper. The visible giant's single-star DR3 motion includes orbital motion, especially in right ascension. Of 150 stars with nominal closest approach in the search interval, three pass within one arcsecond. The window and distance cuts were chosen during exploration. This is a bounded geometric search with incomplete coverage of faint, blended and two-parameter Gaia sources. Preliminary inspections also covered BH1 and BH2. The deposited population and denominators apply only to BH3. [Gaia catalogue](https://doi.org/10.17876/gaia/dr.3/1) · [Barycentric orbit and spectroscopic checks](https://www.eso.org/public/archives/releases/sciencepapers/eso2408/eso2408a-panuzzo-et-al.pdf)
+
+The stars' nominal Bailer-Jones geometric distances are 5.66, 6.46 and 6.43 kpc in time order, behind the 0.59-kpc lens. These estimates use Gaia parallaxes and a Galactic prior. The nominal point-lens calculation uses a black-hole mass of 32.7 solar masses, a lens parallax of 1.6933 mas, and the median source distances. With angular separations in mas, the squared Einstein radius is `8.144 M (parallax_lens − parallax_source)`. For separation `b`, the shift of the combined images of the source is `theta_E² b / (b² + 2 theta_E²)`. The bright foreground giant is excluded from that centroid. Using the raw parallax of each source instead gives 2.58, 0.68 and 0.55 mas. At the published 16th and 84th percentile geometric distances, the shifts span 2.26–2.47, 0.73–0.80 and 0.48–0.52 mas, holding the trajectories fixed. [Geometric distance catalogue and priors](https://bailer-jones.www3.mpia.de/gedr3_distances.html)
+
+For each source, 15,000 seeded draws propagate the four-parameter Gaia position–motion covariance, the reported marginal lens position and proper-motion errors, black-hole mass error and lens parallax error. The lens parameters are sampled independently because the combined-fit covariance is unavailable here. The 95% modeled year intervals are 1928.59–1929.19, 2105.90–2106.97 and 2117.72–2118.70. At fixed median source distances the corresponding shift ranges are 1.92–3.11, 0.67–0.92 and 0.46–0.57 mas. They exclude source accelerations and catalogue systematics. Annual relative parallax at these distances is about 1.5 mas. Perspective acceleration from the lens's radial velocity changes its propagated position by about 1 mas or less across the three baselines. The black hole orbits the barycentre within about 1.1 mas. The giant's own deflection can add a few percent. These barycentric forecasts do not specify the peak date at an individual observatory. [Orbital scale and component masses](https://doi.org/10.1051/0004-6361/202449763)
+
+## Cross-checks and observing limits
+
+A second fit using Gaia DR2 source positions and motions gives minimum separations of 0.185, 0.633 and 0.911 arcsec. Gaia DR2 and DR3 share observations. The differences between releases demonstrate why the simulated intervals cannot capture every systematic error. Independent Pan-STARRS measurements locate three separate stars within 0.128, 0.070 and 0.025 arcsec of their propagated Gaia positions. This checks source identity. The two future sources are only 1.82 arcsec apart at J2016.0. The 2118 source carries Gaia's duplicated-source flag and a distinct DR2 ID, 4318465066396437632. Rejecting all duplicate-flagged rows leaves the 1928 and 2106 candidates. The 2106 star has truncated or otherwise nonstandard Gaia windows in 24% of image-parameter determinations. A source's unresolved binary orbit would also undermine long extrapolations. [Gaia DR3 column definitions](https://gea.esac.esa.int/archive/documentation/GDR3/Gaia_archive/chap_datamodel/sec_dm_main_tables/ssec_dm_gaia_source.html) · [Pan-STARRS DR2 at MAST](https://catalogs.mast.stsci.edu/panstarrs/)
+
+The giant is about 8.0, 8.9 and 8.0 magnitudes brighter than the sources. The calculated displacement describes the background images alone. An unresolved observation would dilute it heavily. We found no observation that resolves the historical deflection. A modern test need not wait for closest approach. At J2035.0, the forecast offsets of the two future stars from the system barycentre are (−1.244, −10.687) and (−1.270, −12.506) arcsec in east and north. Apply annual parallax and the giant's orbit before comparing images centered on the giant. Revised proper motions from resolved observations can falsify the predicted paths decades before either peak.
+
+## Prior reports
+
+On 2026-11-14 (US Eastern), searches used the exact three Gaia identifiers, `Gaia BH3 microlensing background star`, and the lens aliases `LS II +14 13` and `4318465066420528000` with `microlensing`. We found the original orbital solution and mass measurements, with no report identifying these three passages in those searches. A cone query over this field in the Klüter et al. prediction service returned zero rows with query status OK. Their survey covers 2010–2066. Su et al. cover 2010–2070, and the older Bramich & Nielsen catalogue predicts events through 2100. All three epochs here fall outside those intervals. These checks support a new-to-project prediction and leave open unindexed or independent prior work. [Klüter catalogue query](https://dc.g-vo.org/amlensing/q3/q/scs.xml?RA=294.82785023&DEC=14.93091909&SR=0.02222222&VERB=1) · [Su et al.](https://doi.org/10.1093/mnras/stad3022) · [Bramich & Nielsen](https://ui.adsabs.harvard.edu/abs/2018AcA....68..183B/abstract)
+
+## Replay
+
+Run from the repository root with Python 3.10 or newer.
+
+```sh
+python results/gaia-bh3-lensing/verify.py
+python results/gaia-bh3-lensing/archive.py
+```
+
+The first command analyzes the complete normalized field and follow-up rows offline. The second reissues the exact queries at AIP, MAST and VizieR and checks the deposited inputs. The machine-readable result includes all three historical/forecast geometries, parameter sensitivity, both cross-checks and a reference epoch for independent astrometry. The field SHA-256 is `a78f318987000b5a40b272d2c04c463179bba68893294a76ad9c0cfd8116c359`. See the Git commit for the replay revision. [Field](field.csv) · [Follow-up measurements](followup.json) · [Computed results](measurements.json)
+
+This work uses the ESA Gaia mission and data processed by the Gaia Data Processing and Analysis Consortium funded through national institutions participating in the Gaia Multilateral Agreement. We credit the Pan-STARRS1 Surveys and PS1 public archive, the Bailer-Jones distance catalogue, VizieR at CDS, MAST at STScI, and the Gaia archive at AIP. [Gaia credit and data policy](https://www.cosmos.esa.int/web/gaia-users/credits) · [Pan-STARRS acknowledgments](https://outerspace.stsci.edu/display/PANSTARRS/PS1+Acknowledgments)
