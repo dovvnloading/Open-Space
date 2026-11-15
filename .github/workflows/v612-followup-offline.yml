@@ -19,8 +19,11 @@ jobs:
           python-version: "3.12"
       - run: python -m pip install numpy pandas scipy astropy
       - run: python results/v612-sct-clock/followup/reanalysis.py --check --output /tmp/v612-followup.json
+      - run: python results/v612-sct-clock/followup/band_waveform.py --check --output /tmp/v612-bands.json
       - uses: actions/upload-artifact@v4
         with:
           name: v612-additive-reanalysis
-          path: /tmp/v612-followup.json
+          path: |
+            /tmp/v612-followup.json
+            /tmp/v612-bands.json
           retention-days: 60
