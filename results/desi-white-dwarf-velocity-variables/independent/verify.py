@@ -69,3 +69,37 @@ points = np.column_stack([x[selected], y[selected]])
 _, basis = np.linalg.eigh(np.cov(points.T))
 print('trail N, length, cross-track rms, WD offset [pixel]', len(points),
       np.ptp(points @ basis[:, 1]), np.std(points @ basis[:, 0]), abs((center-points.mean(axis=0)) @ basis[:, 0]))
+
+# Use Gaia's epoch-2016.0 proper motion to isolate the target in each PS1 exposure.
+from astropy import units as u
+from astropy.coordinates import EarthLocation, SkyCoord
+from astropy.time import Time
+from astropy.utils import iers
+iers.conf.auto_download = False
+panstarrs = EarthLocation.from_geodetic(-156.2569*u.deg, 20.7075*u.deg, 3055*u.m)
+objects = [('0421',65.48040660076,-13.42532402194,34.897,11.456,54.323502),
+           ('0238',39.53931386723,27.55791404235,-1.229,-81.414,47.353499)]
+for name, ra, dec, pmra, pmdec, freq in objects:
+    data = pd.read_csv(here / f'{name}_ps1_detection.csv')
+    year = 2000 + (data.obsTime-51544.5)/365.25
+    east = (data.ra-ra)*np.cos(np.deg2rad(dec))*3600 - (year-2016)*pmra/1000
+    north = (data.dec-dec)*3600 - (year-2016)*pmdec/1000
+    good = (np.hypot(east,north)<1) & (data.psfQfPerfect>.9) & (data.psfFlux>0) & (data.psfFluxErr/data.psfFlux<.1)
+    data = data[good].copy()
+    data['magnitude'] = -2.5*np.log10(data.psfFlux)
+    residual = (data.magnitude-data.groupby('filterID').magnitude.transform('median')).to_numpy()
+    error = np.hypot(.01,1.086*data.psfFluxErr/data.psfFlux).to_numpy()
+    direction = SkyCoord(ra*u.deg, dec*u.deg)
+    times = Time(data.obsTime.to_numpy(), format='mjd', scale='utc', location=panstarrs)
+    hjd = times.utc.jd + times.light_travel_time(direction,kind='heliocentric').to_value('d')
+    phase = 2*np.pi*freq*(hjd-2458000)
+    design = np.column_stack([np.ones(len(phase)),np.cos(phase),np.sin(phase)])
+    weighted = design/error[:,None]
+    beta = np.linalg.lstsq(weighted,residual/error,rcond=None)[0]
+    chi = (residual-design@beta)/error
+    cov = np.linalg.inv(weighted.T@weighted)*(chi@chi)/(len(chi)-3)
+    amp = np.linalg.norm(beta[1:])
+    err = np.sqrt(beta[1:]@cov[1:,1:]@beta[1:])/amp
+    print(name, 'PS1 N, amplitude, conditional error [mmag]',len(data),amp*1000,err*1000)
+dr5 = fits.getheader(here / 'lamost-257903093-dr5.fits.gz')
+print('Same observation in DR5',dr5['SUBCLASS'],299792.458*dr5['Z'],299792.458*dr5['Z_ERR'])
