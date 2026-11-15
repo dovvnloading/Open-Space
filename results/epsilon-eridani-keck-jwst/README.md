@@ -2,6 +2,8 @@
 
 The elongated JWST source S2, described in 2025 as previously undetected, overlaps the position of **Macintosh et al. (2003) source 7**. Five original 2001 Keck frames and the 2023 JWST F444W mosaic reproduce the association to **0.183 arcsec** relative to a bright field object. The evidence supports a historical positional identification. The Keck and JWST measurements can also arise from different components within an extended object or a chance projection. The large discrepancy near 2.1 μm merits a check with matched extended-source photometry.
 
+![Keck and JWST cutouts centered at the Keck prediction](source-cutouts.png)
+
 ## What was measured
 
 The observing unit is one image of the source pair. The local reference is Keck source 1, identified here with JWST HST 1. East is positive in right ascension multiplied by cos(declination), and north is positive in declination. Subtracting each catalog's reference removes the primary's proper motion, parallax, and translation errors.
@@ -42,3 +44,5 @@ Llop-Sayson et al. report 8.8 ± 1.4 μJy at F444W, a 5σ upper limit of 0.17 μ
 Use Python 3.11+ with NumPy, SciPy and Astropy. The tested versions are NumPy 2.3.5, SciPy 1.17.0 and Astropy 8.0.2. From this directory run `python reproduce.py --cache /path/to/fits-cache --output /path/to/results`. The script retrieves approximately 430 MB of public FITS files, verifies their SHA-256 digests and writes the Keck and JWST CSVs. The MAST mosaics used JWST calibration pipeline 3.0.0 and context jwst_1584.pmap. A later archive reprocessing can change the product bytes.
 
 The Keck reduction uses a per-frame median subtraction, a five-frame median sky, a bad-pixel filter and an unsharp mask. It registers each frame to source 1 and fits Moffat profiles to the two sources. The detector orientation comes from the FITS CD matrix, with both off-diagonal terms negative, and scale 0.039686 arcsec/pixel. The JWST reduction uses the FITS science-plane WCS, identifies the reference in a small search box and applies the published Keck vector. It fits an elliptical Gaussian to the F444W peak for the independent position comparison. Gaussian widths and rotated-aperture ranks are descriptive. All seven product IDs, original download URLs and digests are in manifest.csv.
+
+To regenerate the registered cutouts, install Matplotlib and run `python plot_cutouts.py --cache /path/to/fits-cache --output source-cutouts.png`.

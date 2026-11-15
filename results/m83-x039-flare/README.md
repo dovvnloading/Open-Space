@@ -19,7 +19,9 @@ At X039, 32 of 41 photons in the 2.324-arcsec aperture arrived during 23,698 sec
 | 65,000–79,000 | 10 | 11 | 0.50 | 1.13 |
 | 79,000–100,047 | 6 | 17 | 0.77 | 0.96 |
 
-The time–energy Spearman correlation is −0.568 for the 41 photons. A two-sided permutation of energy across the observed times gives p = 0.000160 (100,000 shuffles, fixed seed). Multiplying by all 11 source–observation pairs with a time-clustering bound below 0.05 gives 0.00176 as a sensitivity check. The ranking statistic and X039 follow-up were chosen during exploration, which limits interpretation of that number. The local annulus has 86 photons and a weaker correlation of −0.171. The source correlation stays negative from 1 to 3 arcsec (−0.76 to −0.58 at the endpoints). An independent X-ray exposure showing a second softening flare would test repeatability. The analysis has not established a thermal temperature or a recurrence interval.
+The time–energy Spearman correlation is −0.568 for the 41 photons. A two-sided permutation of energy across the observed times gives p = 0.000160 (100,000 shuffles, fixed seed). Multiplying by all 11 source–observation pairs with a time-clustering bound below 0.05 gives 0.00176 as a sensitivity check. The ranking statistic and X039 follow-up were chosen during exploration, which limits interpretation of that number. The local annulus has 86 photons and a weaker correlation of −0.171. The source correlation stays negative from 1 to 3 arcsec (−0.76 to −0.58 at the endpoints). An independent 29.59-ks Chandra ACIS-I observation on 2014 June 7, withheld from the screen, contains two source-aperture photons versus 0.44 expected background. It provides no second flare. Because the hot-state duration and duty cycle are unknown, this single quiet epoch places little constraint on recurrence. The event does not yield an established thermal temperature. [Independent ObsID 16024](https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/16024/primary/acisf16024N004_evt2.fits.gz)
+
+![Chandra count rate and the measured time and energy of all 41 source-aperture photons](x039-flare.png)
 
 ## Optical counterpart and limits
 
@@ -35,7 +37,9 @@ Python 3 with NumPy, SciPy and Astropy is required. Run the commands from this d
 
 ```bash
 python analyze.py --cache x039-cache --output reproduced
+python holdout.py --cache x039-cache
 python screen.py --cache screen-cache --output screen.csv
+python plot.py  # Optional figure, requires Matplotlib
 ```
 
 The optical measurements from two surveys supply independent positional evidence. They are survey averages from other epochs and do not show an optical flare simultaneous with the Chandra event.

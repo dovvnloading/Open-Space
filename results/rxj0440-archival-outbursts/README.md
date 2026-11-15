@@ -43,6 +43,10 @@ To assess accidental cross-mission alignment, the replay circularly shifts the c
 
 The MAXI team reported four outbursts in March, May, July and September 2026 with an approximate 60-day recurrence. GBM subsequently measured **205.609 ± 0.041 s** at MJD 61356.52529, on November 12, **55.54 days** after its first September pulse epoch. The archive integration is MJD 61356–61358, ending November 14 at 00 UT. Its amplitude/error ratio is 6.59. MAXI's sole daily point within that interval lies 1.94 quoted standard errors above the available local baseline, and the frozen BAT series ends in October. The GBM result supports renewed November pulsed activity. Its total-flux peak and duration remain unmeasured here. [September activity report](https://www.astronomerstelegram.org/?read=18071) · [GBM November measurement](data/gbm-detections.csv)
 
+## The original 113-day lead
+
+Two separate searches tested a near-113-day recurrence in Swift hard-X-ray flux and in Jodrell Bank radio pulsar glitches. The handoff did not specify a target or measured quantity. The strongest Swift result belongs to the known orbit of A 0535+26. No new recurrence met the validation criteria. [Searches, controls and full source lists](lead-113d/README.md)
+
 ## Reproduce
 
 Run from this directory with Python and NumPy. The replay uses frozen full daily series and the complete GBM detection table. The two short February CSVs expose the event and its background in plain text.
