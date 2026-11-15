@@ -16,6 +16,14 @@ Uncertainties are eight-block delete-one jackknife standard errors within each s
 
 Each curve shows 40 median phase bins over two cycles, independently scaled to its largest absolute bin, shifted to a common maximum phase and vertically offset. The right panels give the fitted sky offsets from the Gaia optical counterpart (cross).
 
+## Two earlier epochs recover the 87.89-minute clock
+
+A separately extracted 5 × 5 pixel full-frame light curve of J234504.4−430343 ranked the same peak first in sector 2 (2018) and sector 29 (2020). These add 1,196 and 3,572 independent cadences to the 2026 SPOC light curves. The earlier epochs span different exposure times, 30 and 10 minutes. This gives five sector recoveries over almost eight years. They do not determine an unambiguous orbital cycle count across that interval.
+
+For J150721.5−391052, the 127-minute peak also ranks first in sector 38 (2021, 3,464 cadences). The longer-cadence sector 11 aperture (2019, 942 cadences) has its strongest peak at 2.653 cycles/day, and fails to recover the predicted frequency as its highest peak. These are same-instrument measurements at separate epochs, with a distinct reduction.
+
+The aperture uses pixels whose centers are within 1.6 pixels of the Gaia position, and subtracts the median of pixels outside a 2.2-pixel radius. We subtract a 0.6-day running median, clip at four robust standard deviations and search from 2 cycles/day to 0.49 divided by the median cadence in days. The observation dates, SHA-256 values, original cutout URLs, frequency grid maxima and power at the fixed later-sector frequency are in [early-sectors.json](early-sectors.json). Reproduce with `python replay_ffi.py --id 156 --cache /tmp/erass-cv-data` and ID 110 for the magnetic CV candidate.
+
 ## How these sources were found
 
 The starting set comprised the 116 Table 5 rows with a blank primary period among 156 objects. Their Gaia DR3 identifiers were resolved to coordinates. A two-arcsecond VizieR TIC 8.2 cone supplied candidate TIC identifiers. These were matched against TESS 2-minute light-curve manifests requested for sectors 90–111. The screen had 111 accessible star-sector products for 66 distinct Table 5 rows. The target selection, covered product names and each sector's highest peak are in [search-coverage.csv](search-coverage.csv). Empty entries denote no matched light curve in this screen. The per-sector rankings were exploratory. This is not a significance-calibrated catalogue of every detection.
