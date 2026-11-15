@@ -54,6 +54,35 @@ class ForbushIndependentTests(unittest.TestCase):
         event[0]["fd_magnitude_pct"]=0
         self.assertEqual(a,mod.analyze(event,dst,draws=20))
 
+    def test_current_dst_hour_is_not_lookahead_for_eligibility(self):
+        # Dst hour 90 contains a storm, but an event at 90:15 may not
+        # use that hour-average to decide whether it was at-risk.
+        dst=[{"datetime":START+timedelta(hours=i),
+              "dst_index_nt":(-120 if i==90 else 0)} for i in range(180)]
+        e={"datetime_utc":START+timedelta(hours=90,minutes=15),
+           "onset_type":9}
+        result=mod.analyze([e],dst,draws=20)
+        self.assertEqual(result["cohorts"]["holdout_2001_2016"]["eligible_episodes"],1)
+        self.assertEqual(result["cohorts"]["holdout_2001_2016"]["hits_48h"],0)
+
+    def test_shifted_controls_preserve_month_and_eligibility(self):
+        h=mod.utc_hour(START)
+        e=[{"time":START+timedelta(hours=25,minutes=30)}]
+        slots={h+i for i in range(744)}
+        r=mod.time_shift_controls(e,slots,[h+25+7*24+12])
+        self.assertEqual(r["7"]["eligible_shifted_episodes"],1)
+        self.assertEqual(r["7"]["hits_48h"],1)
+        self.assertEqual(r["-14"]["eligible_shifted_episodes"],0)
+
+    def test_stratified_null_preserves_event_minute(self):
+        # A hazard at hour 12 must NOT be counted for a sampled timestamp
+        # at hour 12:30 (past the nominal onset).
+        h=mod.utc_hour(START)
+        events=[{"time":START+timedelta(hours=12,minutes=30)}]
+        slots={mod.hour_to_month(h+12):[h+12]}
+        r=mod.stratified_null(events,[h+12],slots,repetitions=30)
+        self.assertEqual(r["mean_hits"],0)
+
     def test_month_matched_control_deterministic(self):
         event=[{"time":START+timedelta(hours=1)}]
         anchor=mod.utc_hour(START)
