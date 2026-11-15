@@ -1,0 +1,345 @@
+[
+  {
+    "year": "2024",
+    "archive": "ESO",
+    "url": "https://archive.eso.org/tap_obs/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+200+obs_collection%2Cobs_id%2Ct_min%2Ct_max+FROM+ivoa.ObsCore+WHERE+1%3DINTERSECTS%28s_region%2CCIRCLE%28%27ICRS%27%2C356.4842526%2C-2.8498067%2C0.003%29%29+AND+t_min%3C60347.78407407+AND+t_max%3E60347.70074074",
+    "request": {
+      "REQUEST": "doQuery",
+      "LANG": "ADQL",
+      "FORMAT": "csv",
+      "QUERY": "SELECT TOP 200 obs_collection,obs_id,t_min,t_max FROM ivoa.ObsCore WHERE 1=INTERSECTS(s_region,CIRCLE('ICRS',356.4842526,-2.8498067,0.003)) AND t_min<60347.78407407 AND t_max>60347.70074074"
+    },
+    "matches": []
+  },
+  {
+    "year": "2024",
+    "archive": "CADC",
+    "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+200+obs_collection%2Cobs_id%2Ct_min%2Ct_max+FROM+ivoa.ObsCore+WHERE+1%3DINTERSECTS%28s_region%2CCIRCLE%28%27ICRS%27%2C356.4842526%2C-2.8498067%2C0.003%29%29+AND+t_min%3C60347.78407407+AND+t_max%3E60347.70074074",
+    "request": {
+      "REQUEST": "doQuery",
+      "LANG": "ADQL",
+      "FORMAT": "csv",
+      "QUERY": "SELECT TOP 200 obs_collection,obs_id,t_min,t_max FROM ivoa.ObsCore WHERE 1=INTERSECTS(s_region,CIRCLE('ICRS',356.4842526,-2.8498067,0.003)) AND t_min<60347.78407407 AND t_max>60347.70074074"
+    },
+    "matches": []
+  },
+  {
+    "year": "2024",
+    "archive": "MAST",
+    "url": "https://mast.stsci.edu/vo-tap/api/v0.1/caom/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+200+obs_collection%2Cobs_id%2Ct_min%2Ct_max%2Cs_ra%2Cs_dec%2Cs_region%2Cs_fov+FROM+ivoa.ObsCore+WHERE+%28%28s_ra%3E352.4842526+OR+s_ra%3C0.4842525999999907%29%29+AND+s_dec+BETWEEN+-6.8498067+AND+1.1501933000000002+AND+t_min%3C60347.78407407+AND+t_max%3E60347.70074074",
+    "request": {
+      "REQUEST": "doQuery",
+      "LANG": "ADQL",
+      "FORMAT": "csv",
+      "QUERY": "SELECT TOP 200 obs_collection,obs_id,t_min,t_max,s_ra,s_dec,s_region,s_fov FROM ivoa.ObsCore WHERE ((s_ra>352.4842526 OR s_ra<0.4842525999999907)) AND s_dec BETWEEN -6.8498067 AND 1.1501933000000002 AND t_min<60347.78407407 AND t_max>60347.70074074"
+    },
+    "boresight_query_rows": 100,
+    "distinct_footprints": [
+      {
+        "obs_collection": "HST",
+        "obs_id": "lext06ovq",
+        "t_min": "60347.71888503472",
+        "t_max": "60347.71902392361",
+        "s_ra": "0.0",
+        "s_dec": "0.0",
+        "s_region": "CIRCLE 210.20700833 48.0163647 0.00034722",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "HST",
+        "obs_id": "lext06p1q",
+        "t_min": "60347.766674652776",
+        "t_max": "60347.76681354167",
+        "s_ra": "0.0",
+        "s_dec": "0.0",
+        "s_region": "CIRCLE 210.20700833 48.0163647 0.00034722",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "HST",
+        "obs_id": "lext06otq",
+        "t_min": "60347.71750760417",
+        "t_max": "60347.71764649305",
+        "s_ra": "0.0",
+        "s_dec": "0.0",
+        "s_region": "CIRCLE 210.20700833 48.0163647 0.00034722",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "HST",
+        "obs_id": "lext06ozq",
+        "t_min": "60347.73326021991",
+        "t_max": "60347.733399108794",
+        "s_ra": "0.0",
+        "s_dec": "0.0",
+        "s_region": "CIRCLE 210.20700833 48.0163647 0.00034722",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000000313885725",
+        "t_min": "59447.18930997685",
+        "t_max": "60829.13469561343",
+        "s_ra": "353.992143892645",
+        "s_dec": "-5.66699338469951",
+        "s_region": "CIRCLE 353.99214389 -5.66699338 0.00138889",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000000313886837",
+        "t_min": "59447.189218611114",
+        "t_max": "60829.13447585648",
+        "s_ra": "354.055087904964",
+        "s_dec": "-0.312871609628494",
+        "s_region": "CIRCLE 354.0550879 -0.31287161 0.00138889",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000000398572544",
+        "t_min": "59447.189261087966",
+        "t_max": "60829.1345662963",
+        "s_ra": "353.616173300507",
+        "s_dec": "-1.58003134315841",
+        "s_region": "CIRCLE 353.6161733 -1.58003134 0.00138889",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000000422618449",
+        "t_min": "59447.18920645833",
+        "t_max": "60829.13445583334",
+        "s_ra": "353.955354500317",
+        "s_dec": "0.445511880093788",
+        "s_region": "CIRCLE 353.9553545 0.44551188 0.00138889",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "HST",
+        "obs_id": "hst_hsla_bd-004534--5999",
+        "t_min": "58266.26299559",
+        "t_max": "60884.49451272",
+        "s_ra": "353.95535445204",
+        "s_dec": "0.44551237952",
+        "s_region": "CIRCLE 353.9539857614765 0.4444446456975176 0.00034722222222222224",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000000038351851",
+        "t_min": "59447.18919878472",
+        "t_max": "60829.13443949074",
+        "s_ra": "356.389418757996",
+        "s_dec": "-4.7899409311686",
+        "s_region": "CIRCLE 356.38941876 -4.78994093 0.00138889",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000000250111245",
+        "t_min": "60207.85330490741",
+        "t_max": "60829.13854723379",
+        "s_ra": "355.828754341316",
+        "s_dec": "-2.04509620171795",
+        "s_region": "CIRCLE 355.82875434 -2.0450962 0.00138889",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000000250130512",
+        "t_min": "60207.85330642361",
+        "t_max": "60829.138454085645",
+        "s_ra": "356.250201187372",
+        "s_dec": "-0.660327621474526",
+        "s_region": "CIRCLE 356.25020119 -0.66032762 0.00138889",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000000267215820",
+        "t_min": "60207.85330481482",
+        "t_max": "60829.138389340274",
+        "s_ra": "356.481067485549",
+        "s_dec": "0.458987473516538",
+        "s_region": "CIRCLE 356.48106749 0.45898747 0.00138889",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000000293303832",
+        "t_min": "59447.1891224537",
+        "t_max": "60829.134267789355",
+        "s_ra": "356.034999964619",
+        "s_dec": "0.342295764564353",
+        "s_region": "CIRCLE 356.03499996 0.34229576 0.00138889",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000002052425771",
+        "t_min": "59447.18925001157",
+        "t_max": "60829.134576226854",
+        "s_ra": "355.72750674464",
+        "s_dec": "-6.63873137763811",
+        "s_region": "CIRCLE 355.72750674 -6.63873138 0.00138889",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000002052467424",
+        "t_min": "60207.85330425926",
+        "t_max": "60829.1385059838",
+        "s_ra": "356.644737021536",
+        "s_dec": "-2.88576792660253",
+        "s_region": "CIRCLE 356.64473702 -2.88576793 0.00138889",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000002052452318",
+        "t_min": "59447.18917951389",
+        "t_max": "60829.13440534722",
+        "s_ra": "356.968626505977",
+        "s_dec": "-5.24202444005479",
+        "s_region": "CIRCLE 356.96862651 -5.24202444 0.00138889",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000000009762091",
+        "t_min": "59447.18908638889",
+        "t_max": "60829.13423984954",
+        "s_ra": "359.264029610085",
+        "s_dec": "-6.2572158687829",
+        "s_region": "CIRCLE 359.26402961 -6.25721587 0.00138889",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "TESS",
+        "obs_id": "tess2018206190142-s0001-s0092-0000002052454520",
+        "t_min": "60207.853291377316",
+        "t_max": "60829.13833418982",
+        "s_ra": "359.424036734158",
+        "s_dec": "-4.85632973429193",
+        "s_region": "CIRCLE 359.42403673 -4.85632973 0.00138889",
+        "s_fov": ""
+      }
+    ]
+  },
+  {
+    "year": "2024",
+    "archive": "NOIRLab",
+    "url": "https://astroarchive.noirlab.edu/api/adv_search/find/?rectype=file",
+    "request": {
+      "outfields": [
+        "archive_filename",
+        "dateobs_center",
+        "ra_center",
+        "dec_center",
+        "instrument"
+      ],
+      "search": [
+        [
+          "dateobs_center",
+          "2024-02-07 16:49:04",
+          "2024-02-07 18:49:04"
+        ],
+        [
+          "dec_center",
+          -6.8498067,
+          1.1501933000000002
+        ]
+      ]
+    },
+    "declination_band_rows": 0,
+    "matches": []
+  },
+  {
+    "year": "2026",
+    "archive": "ESO",
+    "url": "https://archive.eso.org/tap_obs/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+200+obs_collection%2Cobs_id%2Ct_min%2Ct_max+FROM+ivoa.ObsCore+WHERE+1%3DINTERSECTS%28s_region%2CCIRCLE%28%27ICRS%27%2C0.2954826%2C-1.3025397%2C0.003%29%29+AND+t_min%3C61071.06587963+AND+t_max%3E61070.98254630",
+    "request": {
+      "REQUEST": "doQuery",
+      "LANG": "ADQL",
+      "FORMAT": "csv",
+      "QUERY": "SELECT TOP 200 obs_collection,obs_id,t_min,t_max FROM ivoa.ObsCore WHERE 1=INTERSECTS(s_region,CIRCLE('ICRS',0.2954826,-1.3025397,0.003)) AND t_min<61071.06587963 AND t_max>61070.98254630"
+    },
+    "matches": []
+  },
+  {
+    "year": "2026",
+    "archive": "CADC",
+    "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+200+obs_collection%2Cobs_id%2Ct_min%2Ct_max+FROM+ivoa.ObsCore+WHERE+1%3DINTERSECTS%28s_region%2CCIRCLE%28%27ICRS%27%2C0.2954826%2C-1.3025397%2C0.003%29%29+AND+t_min%3C61071.06587963+AND+t_max%3E61070.98254630",
+    "request": {
+      "REQUEST": "doQuery",
+      "LANG": "ADQL",
+      "FORMAT": "csv",
+      "QUERY": "SELECT TOP 200 obs_collection,obs_id,t_min,t_max FROM ivoa.ObsCore WHERE 1=INTERSECTS(s_region,CIRCLE('ICRS',0.2954826,-1.3025397,0.003)) AND t_min<61071.06587963 AND t_max>61070.98254630"
+    },
+    "matches": []
+  },
+  {
+    "year": "2026",
+    "archive": "MAST",
+    "url": "https://mast.stsci.edu/vo-tap/api/v0.1/caom/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+200+obs_collection%2Cobs_id%2Ct_min%2Ct_max%2Cs_ra%2Cs_dec%2Cs_region%2Cs_fov+FROM+ivoa.ObsCore+WHERE+%28%28s_ra%3E356.2954826+OR+s_ra%3C4.2954826%29%29+AND+s_dec+BETWEEN+-5.3025397000000005+AND+2.6974603+AND+t_min%3C61071.06587963+AND+t_max%3E61070.98254630",
+    "request": {
+      "REQUEST": "doQuery",
+      "LANG": "ADQL",
+      "FORMAT": "csv",
+      "QUERY": "SELECT TOP 200 obs_collection,obs_id,t_min,t_max,s_ra,s_dec,s_region,s_fov FROM ivoa.ObsCore WHERE ((s_ra>356.2954826 OR s_ra<4.2954826)) AND s_dec BETWEEN -5.3025397000000005 AND 2.6974603 AND t_min<61071.06587963 AND t_max>61070.98254630"
+    },
+    "boresight_query_rows": 12,
+    "distinct_footprints": [
+      {
+        "obs_collection": "HST",
+        "obs_id": "iflu1acaq",
+        "t_min": "61071.03339325231",
+        "t_max": "61071.043810069445",
+        "s_ra": "0.0",
+        "s_dec": "0.0",
+        "s_region": "POLYGON 239.6456428197358 35.45456067609767 239.69864882146317 35.46840358043929 239.70879193785456 35.44727672934359 239.65579810357565 35.43343826075579 239.6456428197358 35.45456067609767",
+        "s_fov": ""
+      },
+      {
+        "obs_collection": "HST",
+        "obs_id": "iflu1ac9q",
+        "t_min": "61071.02136805555",
+        "t_max": "61071.03178452546",
+        "s_ra": "0.0",
+        "s_dec": "0.0",
+        "s_region": "POLYGON 239.6456428197358 35.45456067609767 239.69864882146317 35.46840358043929 239.70879193785456 35.44727672934359 239.65579810357565 35.43343826075579 239.6456428197358 35.45456067609767",
+        "s_fov": ""
+      }
+    ]
+  },
+  {
+    "year": "2026",
+    "archive": "NOIRLab",
+    "url": "https://astroarchive.noirlab.edu/api/adv_search/find/?rectype=file",
+    "request": {
+      "outfields": [
+        "archive_filename",
+        "dateobs_center",
+        "ra_center",
+        "dec_center",
+        "instrument"
+      ],
+      "search": [
+        [
+          "dateobs_center",
+          "2026-01-30 23:34:52",
+          "2026-01-31 01:34:52"
+        ],
+        [
+          "dec_center",
+          -5.3025397000000005,
+          2.6974603
+        ]
+      ]
+    },
+    "declination_band_rows": 35,
+    "matches": [],
+    "nearest_boresight_deg": 150.77
+  }
+]
