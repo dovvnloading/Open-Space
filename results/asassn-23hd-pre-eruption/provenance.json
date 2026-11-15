@@ -1,0 +1,33 @@
+{
+  "inputs": {
+    "science.fits": {
+      "url": "https://ogle.astrouw.edu.pl/ogle4/transients/2014/imagesSELECTED/frameLMC541.27.I.577.6936.75103.fts",
+      "sha256": "a1bb747c47f2ad44ccffe6775c17083d009ff7960ccb38ba8cc103dc2fda5b7f"
+    },
+    "reference.fits": {
+      "url": "https://ogle.astrouw.edu.pl/ogle4/transients/2014/imagesSELECTED/chartLMC541.27.I.577.fts",
+      "sha256": "91bd0df91b56f6239aa9e39bb443cf492228805aedf9d513938840a41cfb68e1"
+    },
+    "difference.fits": {
+      "url": "https://ogle.astrouw.edu.pl/ogle4/transients/2014/imagesSELECTED/subLMC541.27.I.577.6936.75103.fts",
+      "sha256": "0d4cb5cfad5d9f5377c94ae12735e4d9ad649652977daa1e4c7c1a20799892b4"
+    },
+    "ogle_photometry.dat": {
+      "url": "https://ogle.astrouw.edu.pl/ogle4/transients/2017a/imagesSELECTED/OGLE-2014-SN-094.dat",
+      "sha256": "375f0fc8f7e6e457d18cfc04f624a683cd919c3f74f5c418bc7e9e9929f7b255"
+    },
+    "gaia_field.csv": {
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cpmra%2Cpmdec+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C71.718411%2C-65.897314%2C0.05%29%29",
+      "sha256": "123a1389d2877463d2091029cdb8c1fdcf7e5b5e6fdeb19c9d78f5dbf9f142c9"
+    },
+    "simbad_aliases.csv": {
+      "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Ci.id+FROM+basic+AS+b+JOIN+ident+AS+i+ON+b.oid%3Di.oidref+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C71.718411%2C-65.897314%2C0.002%29%29",
+      "sha256": "40442b0a54f92241371874fdae04f76232b5e032cafb60f80b1bc2c3baa6b075"
+    },
+    "gaia_classifier.csv": {
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiadr3.vari_classifier_result+WHERE+source_id%3D4662989888116855808",
+      "sha256": "b4fa84daa557296dd3cb401c7944b1c92aac8ce748183529ece330c79b0f8a7f"
+    }
+  },
+  "gaia_query": "SELECT source_id,ra,dec,phot_g_mean_mag,bp_rp,pmra,pmdec FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',71.718411,-65.897314,0.05))"
+}
