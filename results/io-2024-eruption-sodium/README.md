@@ -20,6 +20,8 @@ R denotes Rayleighs of surface brightness. Each entry is the median of nightly m
 | Feb 21–Mar 20 | 49.95 (13) | 28.24 (9) | 33.27 (4) |
 | Mar 21–Apr 17 | 52.09 (15) | 26.57 (10) | 45.06 (5) |
 
+Restricting the comparison to nights with all three channels gives 15 reference and 13 November nights. The medians then change from 72.72 to 66.99 R for sodium, 18.11 to 51.69 R for dawn sulfur, and 41.98 to 65.53 R for dusk sulfur. The median within-night dawn sulfur/Na ratio rises from 0.298 to 0.831. This checks whether unequal dates in the three channels produced the apparent change.
+
 The **25 nights from January 24 to March 20** had a 6-radius median **28.4% below reference**. The ratio was 0.716, with an exploratory 95% week-block bootstrap interval of 0.665–0.791. The 3- and 12-radius apertures also faded. These apertures share images and a background measurement. The two sulfur sides likewise share exposures. IoIO and JIRAM are independent instruments. The sulfur measurements after December have sparse coverage in several bins, especially on the dusk side.
 
 ## Cadence, sensitivity and alternative explanations
@@ -41,7 +43,7 @@ python reproduce.py --cache /path/to/cache
 
 Requires Python with NumPy, pandas and Matplotlib. The first run downloads 9.3 MB of ECSV data. The output includes the 945-date union of nightly measurements in [nightly.csv](nightly.csv), window medians, interquartile ranges and counts in [windows.csv](windows.csv), season controls in [historical.csv](historical.csv), and sensitivity calculations in [checks.json](checks.json). The script uses a fixed random seed. Figure lines are medians in nonoverlapping 14-day intervals with at least three nights. Points are individual nightly medians.
 
-**Literature scope.** Mura et al. publish the thermal discovery and its persistence. Morgenthaler et al. characterize the earlier 2017–2023 optical sequence, including the strong 2022 Na event. Yoneda et al. describe earlier Juno-era Na events. A search of the JIRAM discovery paper, the IoIO data release, and indexed work using the event date, Pfd454, IoIO, sodium nebula and plasma torus found no prior quantitative publication of this particular two-tracer chronology. The 2025 EGU abstract describes longer-term monitoring without giving these measurements. Unindexed observing reports and unpublished analyses could exist.
+**Literature scope.** Mura et al. publish the thermal discovery and its persistence. Morgenthaler et al. characterize the earlier 2017–2023 optical sequence, including the strong 2022 Na event. Yoneda et al. describe earlier Juno-era Na events. Wang et al. (2026) compare IoIO torus emission to independent Juno/JADE plasma density using data through 2023. A search of the JIRAM discovery paper, the IoIO data release, and indexed work using the event date, Pfd454, IoIO, sodium nebula and plasma torus found no prior quantitative publication of this particular two-tracer chronology. The 2025 EGU abstract describes longer-term monitoring without giving these measurements. Unindexed observing reports and unpublished analyses could exist.
 
 - [Mura et al. 2026, JIRAM eruption observations and images](https://doi.org/10.1029/2025JE009047)
 - [Morgenthaler et al. 2026, IoIO v2.1 data and checksums](https://doi.org/10.5281/zenodo.21420670)
@@ -49,3 +51,4 @@ Requires Python with NumPy, pandas and Matplotlib. The first run downloads 9.3 M
 - [Morgenthaler et al. 2024, reduction methods and 2017–2023 observations](https://doi.org/10.1029/2023JA032081)
 - [Yoneda et al. 2025, extended-Na observations](https://doi.org/10.1016/j.icarus.2024.116301)
 - [Yoneda et al., 2025 conference abstract](https://doi.org/10.5194/egusphere-egu25-14285)
+- [Wang et al. 2026, Juno/JADE plasma-disk densities and the earlier IoIO series](https://doi.org/10.1029/2026GL123313)

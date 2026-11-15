@@ -163,6 +163,12 @@ def checks(n, t, daily):
     nov = cut(daily,"2024-11-01","2024-11-29")
     out["november_1_28"] = {col:{"n":int(nov[col].count()),"R":nov[col].median()}
                             for col in COLUMNS}
+    out["same_night_three_channels"] = {}
+    for label, subset in [("reference",cut(daily,OCT-42*DAY,OCT)),("november",nov)]:
+        paired = subset[["Na6","dawn","dusk"]].dropna()
+        out["same_night_three_channels"][label] = {"n":len(paired), **paired.median().to_dict(),
+               "median_dawn_over_Na6":(paired.dawn/paired.Na6).median(),
+               "median_dusk_over_Na6":(paired.dusk/paired.Na6).median()}
     sulfur=t.loc[t.airmass.le(1.5)].copy()
     sulfur["lonbin"] = (sulfur.Jupiter_PDObsLon%360//45).astype(int)
     out["november_torus_by_longitude"] = {}
