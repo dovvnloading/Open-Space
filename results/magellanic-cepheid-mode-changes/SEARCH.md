@@ -1,0 +1,5 @@
+# Search for a change of pulsation mode in a Magellanic Cloud classical Cepheid
+
+This search starts with the OGLE Collection of Variable Stars classical Cepheids in the Magellanic Clouds. The observing unit is an individual star in a given observing season. Compare the amplitudes of independently resolved radial modes over time. A candidate must show a change beyond its measurement scatter, survive a change of data partition and retain its interpretation when the seasonal window and the primary period are accounted for. Check catalog classifications, published modulation and mode-switching studies before assigning novelty. Preserve the number screened and distinguish a change in measured mode amplitude from a complete change in the pulsation state.
+
+The epsilon Eridani astrometric association and the reported 113-day pulsar recurrence are separate archival leads. Their target identification, prior literature and underlying observations require independent checks. No asteroid-breakup search is part of this campaign.

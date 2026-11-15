@@ -1,0 +1,4 @@
+file,sha256,url,bytes
+2332_simbad.csv,d2ce7f7ba571c960a9a5ee983c26f774d4e02dcbbb2c281f0cf738c40d7d99f5,https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+oid%2Cmain_id%2Cra%2Cdec%2Cotype%2Cnbref+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C13.762583333333332%2C-73.23308333333334%2C0.00055556%29%29,98
+2332_references.csv,23d5319c79c523f85b9d4ff0a4889734b12e3884fc30ccbc51e86fadeb8bf6e6,https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+bibcode%2Ctitle%2Cdoi+FROM+has_ref+JOIN+ref+ON+has_ref.oidbibref%3Dref.oidbib+WHERE+has_ref.oidref%3D5569686,884
+2332_identifiers.csv,00b6e2bcb01ee5f1b028fc250b3c8cf47107e90911b12f15a2192ded494b7249,https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+id+FROM+ident+WHERE+oidref%3D5569686,162
