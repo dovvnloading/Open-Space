@@ -1,0 +1,328 @@
+\                                                                               
+\fixlen = T
+\RowsRetrieved =                 0
+\ORIGIN  = 'IPAC Infrared Science Archive (IRSA), Caltech/JPL'
+\SIMULATED_TABLE  = 'n'
+\DATETIME= '2026-11-15 02:44:10'
+\DATABASE= 'The SPHEREx Target List of Ice Sources (SPLICES) (splices)'
+\EQUINOX = 'J2000'
+\SKYAREA = 'within 4 arcsec of  ra=242.65032 dec=-51.36495 Eq J2000 '
+\StatusFile = '/workspace/TMP_73EuqS_2905770/Gator/irsa/2905770/log.2905770.html'
+\SQL     = 'WHERE (no constraints) 
+\SQL     = 'SELECT (153 column names follow in next row.)'
+\ 
+\ source_id 
+\ ___ SPLICES source ID
+\ designation 
+\ ___ Source Designation
+\ ra (deg) 
+\ ___ Right Ascension (J2000)
+\ dec (deg) 
+\ ___ Declination (J2000)
+\ clon 
+\ ___ Right ascention in Sexagesimal format.
+\ clat 
+\ ___ Declination in Sexagesimal format.
+\ gal_long (deg) 
+\ ___ Galactic Longitude
+\ gal_lat (deg) 
+\ ___ Galactic Latitude
+\ tmassdesignation 
+\ ___ 2MASS source designation
+\ tmassra (deg) 
+\ ___ 2MASS right ascension
+\ tmassdec (deg) 
+\ ___ 2MASS declination
+\ j (mag) 
+\ ___ 2MASS J magnitude
+\ jerr (mag) 
+\ ___ 2MASS J magnitude uncertainty
+\ h (mag) 
+\ ___ 2MASS H magnitude
+\ herr (mag) 
+\ ___ 2MASS H magnitude uncertainty
+\ k (mag) 
+\ ___ 2MASS K magnitude
+\ kerr (mag) 
+\ ___ 2MASS K magnitude uncertainty
+\ ph_qual 
+\ ___ 2MASS photometric quality flag
+\ rd_flg 
+\ ___ 2MASS rd_flg
+\ prox (arcsec) 
+\ ___ 2MASS prox value
+\ w1 (mag) 
+\ ___ WISE band 1 magnitude
+\ w1err (mag) 
+\ ___ WISE band 1 magnitude uncertainty
+\ w2 (mag) 
+\ ___ WISE band 2 magnitude
+\ w2err (mag) 
+\ ___ WISE band 2 magnitude uncertainty
+\ w3 (mag) 
+\ ___ WISE band 3 magnitude
+\ w3err (mag) 
+\ ___ WISE band 3 magnitude uncertainty
+\ w4 (mag) 
+\ ___ WISE band 4 magnitude
+\ w4err (mag) 
+\ ___ WISE band 4 magnitude uncertainty
+\ cc_flags 
+\ ___ WISE cc_flags
+\ ext_flg 
+\ ___ WISE ext_flg
+\ var_flg 
+\ ___ WISE var_flg
+\ irac_designation 
+\ ___ IRAC source designation
+\ ra_irac (deg) 
+\ ___ IRAC right ascension
+\ dec_irac (deg) 
+\ ___ IRAC declination
+\ mag3_6 (mag) 
+\ ___ IRAC 3.6 micron magnitude
+\ d3_6m (mag) 
+\ ___ IRAC 3.6 micron magnitude uncertainty
+\ mag4_5 (mag) 
+\ ___ IRAC 4.5 micron magnitude
+\ d4_5m (mag) 
+\ ___ IRAC 4.5 micron magnitude uncertainty
+\ mag5_8 (mag) 
+\ ___ IRAC 5.8 micron magnitude
+\ d5_8m (mag) 
+\ ___ IRAC 5.8 micron magnitude uncertainty
+\ mag8_0 (mag) 
+\ ___ IRAC 8.0 micron magnitude
+\ d8_0m (mag) 
+\ ___ IRAC 8.0 micron magnitude uncertainty
+\ sel_type 
+\ ___ Source selection method
+\ class_1 
+\ ___ Source Class
+\ yso_pub 
+\ ___ Publication source of YSO classification
+\ stype_ml 
+\ ___ Machine Learning Source Class
+\ stype_ml_prob1 
+\ ___ Machine Learning Source Type Probability Stage 1
+\ stype_ml_prob2 
+\ ___ Machine Learning Source Type Probability Stage 2
+\ name 
+\ ___ Proper Name
+\ gaia_dr3 
+\ ___ Gaia DR3 source designation
+\ gaiadr3_g (mag) 
+\ ___ Gaia G band magnitude
+\ gaiadr3_gerr (mag) 
+\ ___ Gaia G band magnitude uncertainty
+\ gaiadr3_b (mag) 
+\ ___ Gaia B band magnitude
+\ gaiadr3_berr (mag) 
+\ ___ Gaia B band magnitude
+\ gaiadr3_r (mag) 
+\ ___ Gaia R band magnitude
+\ gaiadr3_rerr (mag) 
+\ ___ Gaia R band magnitude
+\ plx (mas) 
+\ ___ Gaia parallax
+\ e_plx (mas) 
+\ ___ Gaia parallax uncertainty
+\ pmra (mas.yr**-1) 
+\ ___ Right ascension proper motion
+\ pmra_err (mas.yr**-1) 
+\ ___ Right ascension proper motion uncertainty
+\ pmdec (mas.yr**-1) 
+\ ___ Declination proper motion
+\ pmdec_err (mas.yr**-1) 
+\ ___ Declination proper motion uncertainty
+\ gaiadist (pc) 
+\ ___ Distance derived by Gaia
+\ e_dist_upper (pc) 
+\ ___ Upper limit of distance 68% confidence range
+\ e_dist_lower (pc) 
+\ ___ Lower limit of distance 68% confidence range
+\ classvar 
+\ ___ Source Class from variability analysis
+\ w1var 
+\ ___ W1 variability flag
+\ w1var_class 
+\ ___ W1 variability class
+\ w2var 
+\ ___ W2 variability flag
+\ w2var_class 
+\ ___ W2 variability class
+\ w1varavg (mag) 
+\ ___ NEOWISE W1 mean mag
+\ w2varavg (mag) 
+\ ___ NEOWISE W2 mean mag
+\ w1varamp (mag) 
+\ ___ NEOWISE W1 variability amplitude
+\ w2varamp (mag) 
+\ ___ NEOWISE W2 variability amplitude
+\ av (mag) 
+\ ___ Estimate of Av from H-W2 or K-W2
+\ mc 
+\ ___ Molecular Cloud name
+\ mc_lon (deg) 
+\ ___ Galactic longitude of cloud sightline
+\ mc_lat (deg) 
+\ ___ Galactic latitude of cloud sightline
+\ mc_dist (pc) 
+\ ___ Distance of cloud
+\ mc_avf (mag) 
+\ ___ Foreground Av to cloud
+\ mc_los 
+\ ___ Position class
+\ numgaianb 
+\ ___ Number of Gaia sources &lt;7.6 arcsec from target
+\ maxrmag (mag) 
+\ ___ Maximum Gaia R mag of neighbors
+\ sumrflux (uJy) 
+\ ___ Sum of Gaia R band fluxes of neighbors
+\ mainrflux (uJy) 
+\ ___ SPLICES target Gaia R flux
+\ fluxratiogaia (%) 
+\ ___ Ratio of bkgnd Gaia flux to SPLICES source flux
+\ mingaiadist (arcsec) 
+\ ___ Distance to nearest Gaia neighbor
+\ mindistgaiaflux (uJy) 
+\ ___ Flux of nearest Gaia neighbor
+\ noc 
+\ ___ Number of clouds along the line of sight (Dame et al.)
+\ noc_gl (deg) 
+\ ___ Galactic longitude of Dame et al. pixel
+\ noc_gb (deg) 
+\ ___ Galactic latitude of Dame et al. pixel
+\ numiracnbors 
+\ ___ Number of IRAC sources &lt;7.6 arcsec from target
+\ mindistirac (arcsec) 
+\ ___ Distance of closest neighbor
+\ i1mag (mag) 
+\ ___ I1 mag of SPLICES target
+\ maxi1mag (mag) 
+\ ___ I1 mag of brightest neighbor
+\ sumi1flux (uJy) 
+\ ___ Sum of I1 neighbor fluxes
+\ maini1flux (uJy) 
+\ ___ I1 Flux of SPLICES target
+\ mindisti1flux (uJy) 
+\ ___ I1 Flux of closest neighbor
+\ i2mag (mag) 
+\ ___ I2 mag of SPLICES target
+\ maxi2mag (mag) 
+\ ___ I2 mag of brightest neighbor
+\ sumi2flux (uJy) 
+\ ___ Sum of I2 neighbor fluxes
+\ maini2flux (uJy) 
+\ ___ I2 Flux of SPLICES target
+\ mindisti2flux (uJy) 
+\ ___ I2 Flux of closest neighbor
+\ fluxratioi1 (%) 
+\ ___ Ratio of bkgnd I1 flux to SPLICES source flux
+\ fluxratioi2 (%) 
+\ ___ Ratio of bkgnd I2 flux to SPLICES source flux
+\ numvvvneighbors 
+\ ___ Number of VVV sources &lt;7.6 arcsec from target
+\ mindistvvv (arcsec) 
+\ ___ Distance to nearest VVV neighbor
+\ vvvjmag (mag) 
+\ ___ VVVJ mag of SPLICES target
+\ maxvvvjmag (mag) 
+\ ___ VVVJ mag of brightest nearby source
+\ sumvvvjflux (uJy) 
+\ ___ Sum of VVVJ fluxes of background sources
+\ mainvvvjflux (uJy) 
+\ ___ J band Flux of SPLICES source
+\ mindistvvvjflux (uJy) 
+\ ___ Flux of nearest VVVJ background source
+\ vvvhmag (mag) 
+\ ___ VVVH mag of SPLICES target
+\ maxvvvhmag (mag) 
+\ ___ VVVH mag of brightest nearby source
+\ sumvvvhflux (uJy) 
+\ ___ Sum of VVVH fluxes of background sources
+\ mainvvvhflux (uJy) 
+\ ___ H band Flux of SPLICES source
+\ mindistvvvhflux (uJy) 
+\ ___ Flux of nearest VVVH background source
+\ vvvkmag (mag) 
+\ ___ VVVK band mag of SPLICES source
+\ maxvvvkmag (mag) 
+\ ___ VVVK mag of brightest nearby source
+\ sumvvvkflux (uJy) 
+\ ___ Sum of VVVK fluxes of background sources
+\ mainvvvkflux (uJy) 
+\ ___ K band Flux of SPLICES source
+\ mindistvvvkflux (uJy) 
+\ ___ Flux of nearest VVVK background source
+\ fluxratiovvvj (%) 
+\ ___ Ratio of bkgnd VVVJ flux to SPLICES source flux
+\ fluxratiovvvh (%) 
+\ ___ Ratio of bkgnd VVVH flux to SPLICES source flux
+\ fluxratiovvvk (%) 
+\ ___ Ratio of bkgnd VVVK flux to SPLICES source flux
+\ numuksnbors 
+\ ___ Number of UKIDSS sources &lt;7.6 arcsec from target
+\ mindistuks (arcsec) 
+\ ___ Distance to closest UKIDSS neighbor
+\ uksjmag (mag) 
+\ ___ UKSJ band mag of SPLICES source
+\ maxuksjmag (mag) 
+\ ___ UKSJ mag of brightest nearby source
+\ sumuksjflux (uJy) 
+\ ___ Sum of UKSJ fluxes of background sources
+\ mainuksjflux (uJy) 
+\ ___ J band Flux of SPLICES source
+\ mindistuksjflux (uJy) 
+\ ___ Flux of nearest UKSJ background source
+\ ukshmag (mag) 
+\ ___ UKSH band mag of SPLICES source
+\ maxukshmag (mag) 
+\ ___ UKSH mag of brightest nearby source
+\ sumukshflux (uJy) 
+\ ___ Sum of UKSH fluxes of background sources
+\ mainukshflux (uJy) 
+\ ___ H band Flux of SPLICES source
+\ mindistukshflux (uJy) 
+\ ___ Flux of nearest UKSH background source
+\ ukskmag (mag) 
+\ ___ UKSK band mag of SPLICES source
+\ maxukskmag (mag) 
+\ ___ UKSK mag of brightest nearby source
+\ sumukskflux (uJy) 
+\ ___ Sum of UKSK fluxes of background sources
+\ mainukskflux (uJy) 
+\ ___ K band Flux of SPLICES source
+\ mindistukskflux (uJy) 
+\ ___ Flux of nearest UKSK background source
+\ fluxratiouksj (%) 
+\ ___ Ratio of bkgnd UKSJ flux to SPLICES source flux
+\ fluxratiouksh (%) 
+\ ___ Ratio of bkgnd UKSH flux to SPLICES source flux
+\ fluxratiouksk (%) 
+\ ___ Ratio of bkgnd UKSK flux to SPLICES source flux
+\ varclassgaia 
+\ ___ Gaia Variability best class
+\ varclassgaiasc 
+\ ___ Score of the best Gaia class
+\ sv_w1 
+\ ___ NEOWISE W1 short-term variability flag
+\ sv_w1_v 
+\ ___ Number of W1 variable short-term epoch
+\ sv_w1_t 
+\ ___ Number of W1 total short-term epochs
+\ sv_w2 
+\ ___ NEOWISE W2 short-term variability flag
+\ sv_w2_v 
+\ ___ Number of W2 variable short-term epochs
+\ sv_w2_t 
+\ ___ Number of W2 total short-term epochs
+\ dist (arcsec) 
+\ ___ Distance between the target position and each source in arcsec.
+\ angle (deg) 
+\ ___ Position Angle in degree.
+\ 
+|            source_id|          designation|         ra|        dec|          clon|          clat|   gal_long|    gal_lat|  tmassdesignation|    tmassra|   tmassdec|      j|   jerr|      h|   herr|      k|   kerr|  ph_qual| rd_flg|   prox|     w1|  w1err|     w2|  w2err|     w3|  w3err|     w4|  w4err|  cc_flags| ext_flg|  var_flg|             irac_designation|    ra_irac|   dec_irac| mag3_6|  d3_6m| mag4_5|  d4_5m| mag5_8|  d5_8m| mag8_0|  d8_0m|  sel_type|  class_1| yso_pub|           stype_ml| stype_ml_prob1| stype_ml_prob2|                 name|             gaia_dr3| gaiadr3_g| gaiadr3_gerr| gaiadr3_b| gaiadr3_berr| gaiadr3_r| gaiadr3_rerr|                 plx|               e_plx|                pmra|            pmra_err|               pmdec|           pmdec_err|            gaiadist|        e_dist_upper|        e_dist_lower|  classvar| w1var|  w1var_class| w2var|  w2var_class| w1varavg| w2varavg| w1varamp| w2varamp|     av|              mc|     mc_lon|     mc_lat| mc_dist| mc_avf|  mc_los| numgaianb| maxrmag|    sumrflux|   mainrflux| fluxratiogaia| mingaiadist| mindistgaiaflux|  noc|     noc_gl|     noc_gb| numiracnbors| mindistirac|  i1mag| maxi1mag|   sumi1flux|  maini1flux| mindisti1flux|  i2mag| maxi2mag|   sumi2flux|  maini2flux| mindisti2flux| fluxratioi1| fluxratioi2| numvvvneighbors| mindistvvv| vvvjmag| maxvvvjmag| sumvvvjflux| mainvvvjflux| mindistvvvjflux| vvvhmag| maxvvvhmag| sumvvvhflux| mainvvvhflux| mindistvvvhflux| vvvkmag| maxvvvkmag| sumvvvkflux| mainvvvkflux| mindistvvvkflux| fluxratiovvvj| fluxratiovvvh| fluxratiovvvk| numuksnbors| mindistuks| uksjmag| maxuksjmag| sumuksjflux| mainuksjflux| mindistuksjflux| ukshmag| maxukshmag| sumukshflux| mainukshflux| mindistukshflux| ukskmag| maxukskmag| sumukskflux| mainukskflux| mindistukskflux| fluxratiouksj| fluxratiouksh| fluxratiouksk|                varclassgaia|      varclassgaiasc|  sv_w1| sv_w1_v| sv_w1_t|  sv_w2| sv_w2_v| sv_w2_t|           dist|       angle|
+|                 long|                 char|     double|     double|          char|          char|     double|     double|              char|     double|     double| double| double| double| double| double| double|     char|    int| double| double| double| double| double| double| double| double| double|      char|     int|     char|                         char|     double|     double| double| double| double| double| double| double| double| double|      char|     char|     int|               char|         double|         double|                 char|                 long|    double|       double|    double|       double|    double|       double|              double|              double|              double|              double|              double|              double|              double|              double|              double|      char|   int|         char|   int|         char|   double|   double|   double|   double| double|            char|     double|     double|  double| double|    char|       int|  double|      double|      double|        double|      double|          double|  int|     double|     double|          int|      double| double|   double|      double|      double|        double| double|   double|      double|      double|        double|      double|      double|             int|     double|  double|     double|      double|       double|          double|  double|     double|      double|       double|          double|  double|     double|      double|       double|          double|        double|        double|        double|         int|     double|  double|     double|      double|       double|          double|  double|     double|      double|       double|          double|  double|     double|      double|       double|          double|        double|        double|        double|                        char|              double|   char|  double|  double|   char|  double|  double|         double|      double|
+|                     |                     |        deg|        deg|              |              |        deg|        deg|                  |        deg|        deg|    mag|    mag|    mag|    mag|    mag|    mag|         |       | arcsec|    mag|    mag|    mag|    mag|    mag|    mag|    mag|    mag|          |        |         |                             |        deg|        deg|    mag|    mag|    mag|    mag|    mag|    mag|    mag|    mag|          |         |        |                   |               |               |                     |                     |       mag|          mag|       mag|          mag|       mag|          mag|                 mas|                 mas|          mas.yr**-1|          mas.yr**-1|          mas.yr**-1|          mas.yr**-1|                  pc|                  pc|                  pc|          |      |             |      |             |      mag|      mag|      mag|      mag|    mag|                |        deg|        deg|      pc|    mag|        |          |     mag|         uJy|         uJy|             %|      arcsec|             uJy|     |        deg|        deg|             |      arcsec|    mag|      mag|         uJy|         uJy|           uJy|    mag|      mag|         uJy|         uJy|           uJy|           %|           %|                |     arcsec|     mag|        mag|         uJy|          uJy|             uJy|     mag|        mag|         uJy|          uJy|             uJy|     mag|        mag|         uJy|          uJy|             uJy|             %|             %|             %|            |     arcsec|     mag|        mag|         uJy|          uJy|             uJy|     mag|        mag|         uJy|          uJy|             uJy|     mag|        mag|         uJy|          uJy|             uJy|             %|             %|             %|                            |                    |       |        |        |       |        |        |         arcsec|         deg|
+|                 null|                 null|       null|       null|          null|          null|       null|       null|              null|       null|       null|   null|   null|   null|   null|   null|   null|     null|   null|   null|   null|   null|   null|   null|   null|   null|   null|   null|      null|    null|     null|                         null|       null|       null|   null|   null|   null|   null|   null|   null|   null|   null|      null|     null|    null|               null|           null|           null|                 null|                 null|      null|         null|      null|         null|      null|         null|                null|                null|                null|                null|                null|                null|                null|                null|                null|      null|  null|         null|  null|         null|     null|     null|     null|     null|   null|            null|       null|       null|    null|   null|    null|      null|    null|        null|        null|          null|        null|            null| null|       null|       null|         null|        null|   null|     null|        null|        null|          null|   null|     null|        null|        null|          null|        null|        null|            null|       null|    null|       null|        null|         null|            null|    null|       null|        null|         null|            null|    null|       null|        null|         null|            null|          null|          null|          null|        null|       null|    null|       null|        null|         null|            null|    null|       null|        null|         null|            null|    null|       null|        null|         null|            null|          null|          null|          null|                        null|                null|   null|    null|    null|   null|    null|    null|           null|        null|

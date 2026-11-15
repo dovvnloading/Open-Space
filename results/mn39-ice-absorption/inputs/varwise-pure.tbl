@@ -1,0 +1,107 @@
+\                                                                               
+\fixlen = T
+\RowsRetrieved =                 1
+\ORIGIN  = 'IPAC Infrared Science Archive (IRSA), Caltech/JPL'
+\SIMULATED_TABLE  = 'n'
+\DATETIME= '2026-11-15 02:36:31'
+\DATABASE= 'VarWISE Pure Catalog (varwisepure)'
+\EQUINOX = 'J2000'
+\SKYAREA = 'within 6 arcsec of  ra=242.61063 dec=-51.35703 Eq J2000 '
+\StatusFile = '/workspace/TMP_cZ0Z6Q_2725436/Gator/irsa/2725436/log.2725436.html'
+\SQL     = 'WHERE (no constraints) 
+\SQL     = 'SELECT (42 column names follow in next row.)'
+\ 
+\ cluster_id 
+\ ___ Internal VarWISE Cluster Identification Number
+\ designation 
+\ ___ VarWISE Designation
+\ ra 
+\ ___ Right Ascension (J2000)
+\ dec 
+\ ___ Declination (J2000)
+\ clon 
+\ ___ Right ascention in Sexagesimal format.
+\ clat 
+\ ___ Declination in Sexagesimal format.
+\ vartype 
+\ ___ Predicted variable type
+\ confidence 
+\ ___ Confidence in the predicted variable type
+\ variability_snr 
+\ ___ Variability signal to noise ratio
+\ period1 
+\ ___ Value of the best-fit period
+\ period2 
+\ ___ Value of the alternate fit period
+\ period_significance 
+\ ___ Plavchan-type power of the phase folding for period1
+\ suspect_period 
+\ ___ Flag indicating whether the period is likely an alias
+\ w1_amp 
+\ ___ Span between the 95th and 5th percentile for the W1 magnitude
+\ w2_amp 
+\ ___ Span between the 95th and 5th percentile for the W2 magnitude
+\ n_obs 
+\ ___ Number of NEOWISE single-exposure photometric measurements at W1
+\ w1mag 
+\ ___ Value of w1mpro from the AllWISE Source Catalog
+\ w1emag 
+\ ___ Value of w1sigmpro from the AllWISE Source Catalog
+\ w2mag 
+\ ___ Value of w2mpro from the AllWISE Source Catalog
+\ w2emag 
+\ ___ Value of w2sigmpro from the AllWISE Source Catalog
+\ w3mag 
+\ ___ Value of w3mpro from the AllWISE Source Catalog
+\ w3emag 
+\ ___ Value of w3sigmpro from the AllWISE Source Catalog
+\ w4mag 
+\ ___ Value of w4mpro from the AllWISE Source Catalog
+\ w4emag 
+\ ___ Value of w4sigmpro from the AllWISE Source Catalog
+\ jmag 
+\ ___ Value of j_m from the 2MASS All-Sky Point Source Catalog
+\ jemag 
+\ ___ Value of j_msigcom from the 2MASS All-Sky Point Source Catalog
+\ hmag 
+\ ___ Value of h_m from the 2MASS All-Sky Point Source Catalog
+\ hemag 
+\ ___ Value of h_msigcom from the 2MASS All-Sky Point Source Catalog
+\ kmag 
+\ ___ Value of k_m from the 2MASS All-Sky Point Source Catalog
+\ kemag 
+\ ___ Value of k_msigcom from the 2MASS All-Sky Point Source Catalog
+\ gmag 
+\ ___ Value of Gmag from the VizieR version of Gaia DR3
+\ gemag 
+\ ___ Value of e_Gmag from the VizieR version of Gaia DR3
+\ bpmag 
+\ ___ Value of BPmag from the VizieR version of Gaia DR3
+\ bpemag 
+\ ___ Value of e_BPmag from the VizieR version of Gaia DR3
+\ rpmag 
+\ ___ Value of RPmag from the VizieR version of Gaia DR3
+\ rpemag 
+\ ___ Value of e_RPmag from the VizieR version of Gaia DR3
+\ plx 
+\ ___ Gaia DR3 measured parallax
+\ e_plx 
+\ ___ Gaia DR3 measured parallax error
+\ simbad_type 
+\ ___ SIMBAD variable source type
+\ known_extragalactic 
+\ ___ Indicates whether object is in the Gaia QSO/Galaxy catalog
+\ blended_source 
+\ ___ Likelihood of spurious variability due to WISE source confusion
+\ latent_artifact 
+\ ___ Likelihood of spurious variability due to WISE latent artifacts
+\ dist (arcsec) 
+\ ___ Distance between the target position and each source in arcsec.
+\ angle (deg) 
+\ ___ Position Angle in degree.
+\ 
+|          cluster_id|                   designation|        ra|       dec|          clon|          clat|  vartype| confidence| variability_snr|    period1|    period2| period_significance| suspect_period| w1_amp| w2_amp| n_obs|  w1mag| w1emag|  w2mag| w2emag|  w3mag| w3emag|  w4mag| w4emag|   jmag|  jemag|   hmag|  hemag|   kmag|  kemag|   gmag|  gemag|  bpmag| bpemag|  rpmag| rpemag|      plx|  e_plx|             simbad_type| known_extragalactic| blended_source| latent_artifact|           dist|       angle|
+|                long|                          char|    double|    double|          char|          char|     char|     double|          double|     double|     double|              double|            int| double| double|  long| double| double| double| double| double| double| double| double| double| double| double| double| double| double| double| double| double| double| double| double|   double| double|                    char|                 int|         double|          double|         double|      double|
+|                    |                              |          |          |              |              |         |           |                |           |           |                    |               |       |       |      |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |         |       |                        |                    |               |                |         arcsec|         deg|
+|                null|                          null|      null|      null|          null|          null|     null|       null|            null|       null|       null|                null|           null|   null|   null|  null|   null|   null|   null|   null|   null|   null|   null|   null|   null|   null|   null|   null|   null|   null|   null|   null|   null|   null|   null|   null|     null|   null|                    null|                null|           null|            null|           null|        null|
+  2967349907789550019    VarWISE J161026.53-512125.5  242.61057  -51.35710   16h10m26.54s  -51d21m25.56s        cv        null          111.997        null        null                 null               0   1.285   1.490    234   8.625   0.020   6.665   0.020    6.17    0.07    3.06    0.04   17.65    null   15.36    null   11.26    0.02    null    null    null    null    null    null      null    null                     null                    0            0.04             0.15        0.285827   208.158150 

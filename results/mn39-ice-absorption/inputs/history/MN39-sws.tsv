@@ -1,0 +1,41 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T10:45:51 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T10:45:51	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=III%2F242&-c=242.61056+-51.35704&-c.rs=60&-out.max=200&-out.add=_r	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=242.610560-51.357040,rs=60.	
+#Constraint -out.add=_r
+
+#RESOURCE=yCat_3242
+#Name: III/242
+#Title: ISO Astrophysical Spectroscopic Database (Jourdain de Muizon, 2005)
+#INFO	ivoid=ivo://cds.vizier/iii/242	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/iii/242	    IVOID of underlying data collection
+#INFO	creator=Jourdain de Muizon Marie	    First author or institution
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/III/242	    Dataset landing page
+#INFO	publication_date=2005-11-19	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	III_242_iasd:
+#Name: III/242/iasd
+#Title: The ISO Astrophysical Spectroscopic Database
+#Column	_r	(F6.3)	Distance from center (16 10 26.53-51 21 25.34)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	TDT	(I8)	Number that identifies an ISO observation in ISO log (Cat. VI/111)	[ucd=]
+#Column	ISO	(A3)	View the ISO observation on the ISO Postcard Server	[ucd=]
+#Column	RAJ2000	(A11)	Actual Pointing Right Ascension J2000 (1)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(A12)	Actual Pointing Declination J2000 (1)	[ucd=pos.eq.dec;meta.main]
+#Column	Target	(a16)	Target Name, as given by the observer	[ucd=]
+#Column	Ext	(A1)	[PE] Source Extent: "P" for point source, "E" for extended source	[ucd=]
+#Column	cLambda	(F6.2)	Central Wavelength, in micron	[ucd=]
+#Column	sigma	(F9.4)	Wavenumber, in inverse centimeter	[ucd=]
+#Column	FWHM	(F7.2)	? Line Width (FWHM) as given in the article	[ucd=]
+#Column	x_FWHM	(A4)	Line Width Unit as given in the relevant article	[ucd=]
+#Column	Det	(I1)	[1,3] Detection Flag: 3 = quantitative detection, 2 = qualitative detection, 1 = upper limit	[ucd=]
+#Column	Element	(a32)	The chemical component responsible for the relevant spectral line	[ucd=]
