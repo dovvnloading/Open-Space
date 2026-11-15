@@ -1,0 +1,61 @@
+name: EXO 2030 archive replay
+on:
+  push:
+    branches: ["research/be-pulsar-orbital-outbursts"]
+    paths:
+      - "results/be-pulsar-orbital-outbursts/**"
+      - ".github/workflows/exo-2030-replay.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install numpy scipy astropy
+      - name: Replay eight orbits and both timing apertures
+        run: python results/be-pulsar-orbital-outbursts/replay.py "$RUNNER_TEMP/exo"
+      - name: Compare rounded measurements
+        run: |
+          python - "$RUNNER_TEMP/exo" <<'PY'
+          import csv, math, pathlib, sys
+          results = pathlib.Path("results/be-pulsar-orbital-outbursts")
+          cache = pathlib.Path(sys.argv[1])
+          for name in ("photon-replay.csv", "monitor-replay.csv"):
+              with (cache / name).open() as stream:
+                  for row in csv.DictReader(stream):
+                      if name == "photon-replay.csv" or row["series"] in ("BAT", "EXO 2-20"):
+                          print("Replayed", row, flush=True)
+          def tables(file):
+              with file.open() as f:
+                  return list(csv.DictReader(f))
+          measurements = tables(results / "observations.csv")
+          rates = {(r["orbit"], r["series"]): r for r in tables(cache / "monitor-replay.csv")}
+          photons = {(r["orbit"],r["region"]): r for r in tables(cache / "photon-replay.csv")}
+          for r in measurements:
+              n = r["orbit"]
+              for series, column in [("EXO 2-20","maxi_excess_ph_cm-2_s-1"),("BAT","bat_excess_counts_cm-2_s-1")]:
+                  actual = float(rates[n, series]["excess"])
+                  if r[column]:
+                      assert abs(actual-float(r[column])) <= .00006, (n, series, actual, r[column])
+                  else:
+                      assert math.isnan(actual), (n, series, actual)
+              q = photons[n,"EXO"]
+              assert int(q["photons"]) == int(r["source_photons"]), (n,q)
+              assert int(q["scans"]) == int(r["source_scans"]), (n,q)
+              if r["fundamental_power"]:
+                  for k,raw in [("power_1","fundamental_power"),("power_2","second_harmonic_power")]:
+                      assert abs(float(q[k])-float(r[raw])) <= .051, (n,k,q[k],r[raw])
+                  assert abs(float(q["scan_rotation_p_two_harmonics"])-float(r["scan_rotation_p_2harm"])) <= .00006
+          print("Verified flux contrasts, sampling, harmonic powers and per-orbit scan nulls.")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: exo-2030-replay
+          path: ${{ runner.temp }}/exo/*.csv
