@@ -11,7 +11,7 @@
 | 2017 DO171 | 104/128 | 54/64 | 12/64 |
 | 2022 GV6 | 93/128 | 4/64 | 0/64 |
 
-Each draw uses all six fitted orbital coordinates and their correlations. The counts measure sensitivity to the current orbit fit and gravitational model. They give no survey-wide false-positive probability. For 2017 DO171, most plausible trajectories support the present association across four million years, while only a minority preserve it across twenty million. [Matched sample at ten baselines](work/duration.csv) · [Full sample summary](work/current-summary.csv)
+Each draw uses all six fitted orbital coordinates and their correlations. The counts measure sensitivity to the current orbit fit and gravitational model. They give no survey-wide false-positive probability. For 2017 DO171, 54 of the 64 sampled trajectories pass the ±2 Myr range test, but only 12 pass the ±10 Myr test; these sample fractions are not a calibrated probability of resonance. [Matched sample at ten baselines](work/duration.csv) · [Full sample summary](work/current-summary.csv)
 
 ## What Rubin changed
 
