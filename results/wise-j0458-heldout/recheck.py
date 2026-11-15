@@ -2,21 +2,52 @@
 """Adversarial, reproducible fixed-position tests against PR #41 frozen FITS data.
 
 Run from any directory: python results/wise-j0458-heldout/recheck.py
-Requires numpy, astropy, scipy (used by the upstream replay.Image).
+Requires numpy and astropy. The FITS reader and beam kernel are independent
+of PR #41's Python code, while using the same frozen input images.
 This writes ONLY results/wise-j0458-heldout/measurements.json.
 """
 import csv
 import json
 import math
-import sys
 from pathlib import Path
 
 import numpy as np
+from astropy.io import fits
+from astropy.time import Time
+from astropy.wcs import WCS
 
 HERE = Path(__file__).resolve().parent
 PARENT = HERE.parent / "wise-j0458-radio"
-sys.path.insert(0, str(PARENT))
-from replay import Image, predicted  # noqa: E402
+
+RA, DEC, MJD, PMRA, PMDEC = 74.7268, 64.5825, 60859.0, 218.0, 300.0
+
+
+def predicted(date):
+    """Linear ICRS propagation, matching the catalog-only PR #41 hypothesis."""
+    years = (Time(date).mjd - MJD) / 365.25
+    return (RA + PMRA * years / 3.6e6 / np.cos(np.deg2rad(DEC)),
+            DEC + PMDEC * years / 3.6e6)
+
+
+class Image:
+    """Minimal independent reader and native restoring-beam evaluator."""
+    def __init__(self, path):
+        with fits.open(path) as hdus:
+            self.header = hdus[0].header.copy()
+            self.image = np.asarray(hdus[0].data.squeeze(), dtype=float) * 1e3
+        self.wcs = WCS(self.header).celestial
+        self.date = self.header["DATE-OBS"]
+        self.yy, self.xx = np.indices(self.image.shape)
+        self.jac = self.wcs.pixel_scale_matrix * 3600
+        self.pa = np.deg2rad(self.header["BPA"])
+        self.axes = np.array([self.header["BMAJ"], self.header["BMIN"]]) * 3600
+
+    def kernel(self, dx, dy):
+        east, north = self.jac @ np.array([dx, dy])
+        u = (east * np.sin(self.pa) + north * np.cos(self.pa)) / self.axes[0]
+        v = (east * np.cos(self.pa) - north * np.sin(self.pa)) / self.axes[1]
+        return np.exp(-4 * np.log(2) * (u*u + v*v))
+
 
 LOFAR_CATALOG = PARENT / "independent-radio/lotss-source-cone.csv"
 POINTING_CATALOG = PARENT / "independent-radio/pointings-within-3deg.csv"
