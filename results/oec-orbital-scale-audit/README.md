@@ -84,7 +84,7 @@ A deterministic search over a **2023-10-15 OEC generated CSV**, not the live 202
    python -m unittest discover -s tests -p 'test_oec_orbital_scale_audit.py' -v
    ```
 
-3. Inspect `/tmp/oec-orbit-replay/flags.csv`, `summary.json`, and `unit_conversion_checks.csv`. The audit reports the actual SHA-256 of input bytes and refuses an explicit `--expect-sha256` mismatch. It does not download live data or mutate existing campaigns. Its separate primary check uses independently published transit ratios, stellar temperatures and irradiation rather than fitting the orbital audit metric to the answer. **Never** apply the curated correction values across a different stellar-model epoch without checking compatibility.
+3. Inspect `/tmp/oec-orbit-replay/flags.csv`, `summary.json`, and `unit_conversion_checks.csv`. The audit **verifies the input's Git blob SHA-1 against the pinned 2023 snapshot by default** and fails closed on different bytes. It also reports the actual SHA-256 of its input and refuses an explicit `--expect-sha256` mismatch. To analyze fixtures or newer archives, pass `--allow-unpinned-input`; the resulting JSON then marks `pinned_input_verified: false` and does **not** attribute the input to the pinned OEC commit. It does not download live data or mutate existing campaigns. Its separate primary check uses independently published transit ratios, stellar temperatures and irradiation rather than fitting the orbital audit metric to the answer. **Never** apply the curated correction values across a different stellar-model epoch without checking compatibility.
 
 ### Evidence provenance and limits
 
