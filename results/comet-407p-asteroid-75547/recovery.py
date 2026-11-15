@@ -7,10 +7,6 @@ from pathlib import Path
 from urllib.request import urlopen
 
 import numpy as np
-from astropy.io import fits
-from astropy.wcs import WCS
-from scipy.ndimage import map_coordinates, median_filter
-from scipy.signal import fftconvolve
 
 ROOT = Path(__file__).resolve().parent
 Y, X = np.mgrid[-26:26.1:0.5, -26:26.1:0.5]
@@ -26,6 +22,11 @@ def normalized(image, mask=None):
 
 
 def project(row, cache):
+    # Only FITS rebuilding needs Astropy and SciPy; offline summary replay does not.
+    from astropy.io import fits
+    from astropy.wcs import WCS
+    from scipy.ndimage import map_coordinates, median_filter
+    from scipy.signal import fftconvolve
     path = cache / (row["exposure"] + ".fits")
     if not path.exists():
         with urlopen(row["cutout_url"], timeout=90) as response:
