@@ -2,6 +2,8 @@
 
 On 13 March 2018 the Murchison Widefield Array (MWA) resolved a pair of peaks in bright profiles of the main emission component of this 1,091-second Galactic radio transient. Across 11 separate rotations their median fitted separation decreased from **8.20 seconds at 88 MHz to 6.62 seconds at 216 MHz**. The 1.58-second difference is 19% of the low-frequency separation and just over three native time samples. Every change of observing band between consecutive eligible rotations changed the measured separation in the opposite direction.
 
+**Band cycling is a competing explanation for the apparent frequency trend.** The MWA switched observing bands between rotations; those 11 measurements were **not simultaneous across 88–216 MHz**. Pulse-to-pulse variation linked to the observing sequence could mimic the ordering. Within-rotation channel comparisons partly constrain this alternative, but the upper bands give mixed behavior and do not establish a persistent broadband frequency law.
+
 | Band center (MHz) | Rotations | Leading peak (s) | Trailing peak (s) | Separation (s) | Separation from smoothed maxima (s) |
 |---:|---:|---:|---:|---:|---:|
 | 88.16 | 2 | 12.32 | 20.52 | 8.20 | 7.93 |
