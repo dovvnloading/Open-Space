@@ -1,0 +1,64 @@
+{
+  "gaia_fpr.csv": {
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+transit_id%2Cepoch%2Cepoch_utc%2Cra%2Cdec%2Cra_error_random%2Cdec_error_random%2Cra_dec_correlation_random%2Cposition_angle_scan%2Cx_gaia%2Cy_gaia%2Cz_gaia%2Cis_rejected+FROM+gaiafpr.sso_observation+WHERE+number_mp%3D664",
+    "sha256": "d1392ad26ee4179aa25827b7f1de42293ed870cc23c2ff8f7f2ea18edf3be9fc",
+    "bytes": 149868
+  },
+  "gaia_dr2.csv": {
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+transit_id%2Cobservation_id%2Cepoch%2Cresidual_al%2Cselected+from+gaiadr2.aux_sso_orbit_residuals+where+number_mp%3D664",
+    "sha256": "f542a9bc9f667abdac8ea57f7c8a7a5920fb0768dbf65d9b46c5428db14beea0",
+    "bytes": 14176
+  },
+  "gaia_dr3_photometry.csv": {
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+transit_id%2Cepoch%2Cg_mag+from+gaiadr3.sso_observation+where+number_mp%3D664+and+g_mag+is+not+null",
+    "sha256": "ce4453f9db3d3c1981333267ffb0c5ec60d787efd0bde266c20cd128d76296e8",
+    "bytes": 16292
+  },
+  "5664-IAUspin": {
+    "url": "https://damit.cuni.cz/projects/damit/stored_files/open/60937/IAUspin",
+    "sha256": "0a0aa7ed35810b6aa5052c7be68b4104907cffa69713aa9e9d6527eb9ddee124",
+    "bytes": 34
+  },
+  "5664-shape.txt": {
+    "url": "https://damit.cuni.cz/projects/damit/stored_files/open/60939/shape.txt",
+    "sha256": "3db0ee89321ed0fa62e76fe4f20a77289418f68b04360c9f40e0b58838cbedf0",
+    "bytes": 46419
+  },
+  "5665-IAUspin": {
+    "url": "https://damit.cuni.cz/projects/damit/stored_files/open/60944/IAUspin",
+    "sha256": "117c5623a9295fc378f92d2f6baacd40247e76693e49340f7cc699aa3d289afd",
+    "bytes": 34
+  },
+  "5665-shape.txt": {
+    "url": "https://damit.cuni.cz/projects/damit/stored_files/open/60946/shape.txt",
+    "sha256": "792f924979f77ed2682713e4c727dd184e7270508bb166ed1094ce7514b2f251",
+    "bytes": 45447
+  },
+  "jpl_sbdb.json": {
+    "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?sstr=664&phys-par=1",
+    "sha256": "249704b29e70c4eaf7683d6fc19f0b0baab152fcf3dcbfe3f0b8be907e4d5112",
+    "bytes": 4356
+  },
+  "horizons-0.json": {
+    "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27664%3B%27&CENTER=%27%400%27&EPHEM_TYPE=VECTORS&REF_PLANE=FRAME&OUT_UNITS=AU-D&CSV_FORMAT=YES&VEC_TABLE=2&VEC_CORR=NONE&TLIST=%272456967.5273091872+2456967.7034635847+2456967.7774407477+2456967.9535936331+2456968.2037497531+2456973.7812173171+2456973.9573290292+2456974.0313289994+2456974.2075684322+2456974.2814411987+2457015.1759665208+2457045.6572271991+2457045.7312647160+2457065.2314905082+2457065.4076422569+2457162.9822260798+2457163.0562042734+2457163.2323899274+2457202.9549664855+2457203.0289099929+2457238.5073399781+2457238.6836065808+2457258.6868258785+2457258.7609344479+2457459.6700730161+2457459.7441236135+2457477.4242224749+2457477.4981557187+2457514.1490410552+2457549.4497930724+2457566.9537992594+2457567.1299567237+2457657.9520546901+2457658.0260589560+2457671.2806080226+2457671.4567646729+2457741.6538222497+2457758.4074655627+2457758.4815000785+2457961.5446894076+2457961.7206945186+2458015.0326106595+2458015.2087769313+2458101.2608608194+2458101.5110326507+2458101.5850413516+2458101.7611748581+2458101.8352112947+2458102.0113439402+2458102.0853800648%27",
+    "sha256": "37d0cc1173c03b1205477e5a3e430eab9914f2cf17cee315eb826e091e8de732",
+    "bytes": 16929
+  },
+  "horizons-50.json": {
+    "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27664%3B%27&CENTER=%27%400%27&EPHEM_TYPE=VECTORS&REF_PLANE=FRAME&OUT_UNITS=AU-D&CSV_FORMAT=YES&VEC_TABLE=2&VEC_CORR=NONE&TLIST=%272458102.2615472162+2458102.3355399235+2458102.5117075653+2458102.5856870785+2458102.7618745291+2458102.8358539538+2458103.0120413657+2458103.0860207882+2458103.2622083719+2458103.3362160032+2458103.5123477061+2458103.5863836328+2458104.0127132409+2458104.2628837945+2458195.2186882570+2458195.2926919893+2458347.5827631634+2458347.7589358143+2458366.0131006623+2458366.0870870040+2458400.7415481457+2458528.0190357356+2458528.0930175204+2458551.2674717954+2458551.3415388986+2458580.0062074172+2458580.0802097581+2458776.8335699225+2458776.9076122297+2458802.1225975812+2458802.1966276206+2458828.7415455300%27",
+    "sha256": "1941200c547a987cd84764a04f28a211bf05624574ad0fd9b769e7629da7837c",
+    "bytes": 13401
+  },
+  "gaia_candidate.csv": {
+    "url": "https://zenodo.org/records/18675577/files/FPR_343_binary_candidates_Zenodo.csv",
+    "sha256": "337249a98af4f1de00d3e79ed7c58ca27dd6617846ecbc554a0cba6000353a1c",
+    "bytes": 548,
+    "transform": "Read non-comment CSV lines. Select MPC_Id 664. Re-serialize with Python csv.DictWriter default dialect.",
+    "archive_sha256": "6054f441504dcf4368c58ed9a0cbdca67bc4224bb5437c4e70753ea3762e3431"
+  },
+  "sun.json": {
+    "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&CENTER=%27%400%27&EPHEM_TYPE=VECTORS&REF_PLANE=FRAME&OUT_UNITS=AU-D&CSV_FORMAT=YES&VEC_TABLE=2&VEC_CORR=NONE&START_TIME=%272014-07-01%27&STOP_TIME=%272020-02-01%27&STEP_SIZE=%2710+d%27",
+    "sha256": "a31a6eb1a64eeeb8c368ae8c06f4250f67579f2f6089378d62d53b7b92257837",
+    "bytes": 46542
+  }
+}
