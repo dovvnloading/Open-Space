@@ -1,6 +1,6 @@
 # A roughly 600-day dimming timescale in NGC 1893 V22
 
-Gaia23bop (AT 2023gdq) is the previously catalogued UX Orionis-type variable [LPC2012] V22. Three observing programs independently record a broad recurrence of optical faint states. The best periods in individual light curves span **595–619 days**. An equal-weight average of their periodograms peaks at **605.25 days**. The spread between surveys and the changing depths make approximately 600 days the appropriate precision. At the faint phase defined from Gaia alone, ZTF is typically **0.58 mag fainter** in both g and r.
+Gaia23bop (AT 2023gdq) is the previously catalogued UX Orionis-type variable [LPC2012] V22. Gaia and ZTF record broadly compatible long-timescale faint states, and an ASAS-SN aperture shows similar variability but is blended with neighboring stars. The best periods in individual light curves span **595–619 days**. An equal-weight average of their periodograms peaks at **605.25 days**. The spread between surveys and the changing depths make approximately 600 days the appropriate precision. **The dimming times and depths vary, and some chronological fits failed to predict later fades.** This is a candidate recurrence timescale, not a stable ephemeris or a demonstrated periodic eclipse. At the faint phase defined from Gaia alone, ZTF is typically **0.58 mag fainter** in both g and r.
 
 ## Identity and prior work
 
