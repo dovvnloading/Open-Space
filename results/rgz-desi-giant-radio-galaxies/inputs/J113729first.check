@@ -1,0 +1,59 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T09:13:40 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T09:13:40	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=VIII%2F92%2Ffirst14&-c=174.37476+26.32746&-c.rm=2.5&-out.max=100&-out.add=_r%2C_RAJ2000%2C_DEJ2000	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=174.374760+26.327460,rm=2.5	
+#Constraint -out.add=_r,_RAJ2000,_DEJ2000
+
+#RESOURCE=yCat_8092
+#Name: VIII/92
+#Title: The FIRST Survey Catalog, Version 2014Dec17 (Helfand+ 2015)
+#INFO	ivoid=ivo://cds.vizier/viii/92	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/viii/92	    IVOID of underlying data collection
+#INFO	creator=Helfand D.J.	    First author or institution
+#INFO	cites=bibcode:2015ApJ...801...26H	    Article or Data origin sources
+#INFO	journal=ApJ	    Journal name
+#INFO	original_date=2015	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/VIII/92	    Dataset landing page
+#INFO	publication_date=2018-01-30	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	VIII_92_first14:
+#Name: VIII/92/first14
+#Title: The FIRST survey catalog, 14Dec17 Version
+#Column	_r	(F6.4)	Distance from center (11 37 29.942+26 19 38.86)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	_RAJ2000	(F12.8)	Right ascension (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)	[ucd=pos.eq.ra]
+#Column	_DEJ2000	(F12.8)	Declination (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)	[ucd=pos.eq.dec]
+#Column	FIRST	(A16)	FIRST Source designation (1)	[ucd=meta.id;meta.main]
+#Column	FITS	(A4)	Get a fully WCS-qualified FITS image of the target	[ucd=meta.ref.url]
+#Column	RAJ2000	(A12)	Right Ascension J2000 (2)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(A12)	Declination J2000 (2)	[ucd=pos.eq.dec;meta.main]
+#Column	p(S)	(F6.3)	[0,1] Probability of being a side lobe (3)	[ucd=stat.fit.goodness]
+#Column	Fpeak	(F8.2)	Peak flux density at 1.4GHz (4)	[ucd=phot.flux.density;em.radio.750-1500MHz]
+#Column	Fint	(F9.2)	Integrated flux density at 1.4GHz (4)	[ucd=phot.flux.density;em.radio.750-1500MHz]
+#Column	Rms	(F6.3)	Local noise estimate (5)	[ucd=stat.stdev;instr.det.noise]
+#Column	Maj	(F6.2)	Major axis (FWHM) (6)	[ucd=phys.angSize]
+#Column	Min	(F6.2)	Minor axis (FWHM) (6)	[ucd=phys.angSize]
+#Column	PA	(F5.1)	[0/180] Position angle (6)	[ucd=pos.posAng]
+#Column	N1	(I2)	[0/10]? Number of SDSS-DR10 counterparts (9)	[ucd=obs.image]
+#Column	c1	(A1)	[sg-] SDSS class: s=star, g=galaxy	[ucd=src.class.starGalaxy]
+#Column	N2	(I2)	Number of 2MASS counterparts (10)	[ucd=obs.image]
+#Column	Ep	(F8.3)	Mean epoch of the FIRST flux density (11)	[ucd=time.epoch]
+#Column	Ep(JD)	(F9.1)	Mean epoch in Julian Day (11)	[ucd=time.epoch]
+#Column	s_Ep(JD)	(F8.3)	Epoch rms (11)	[ucd=time.epoch]
+_r	_RAJ2000	_DEJ2000	FIRST	FITS	RAJ2000	DEJ2000	p(S)	Fpeak	Fint	Rms	Maj	Min	PA	N1	c1	N2	Ep	Ep(JD)	s_Ep(JD)
+arcmin	deg	deg	 	 	"h:m:s"	"d:m:s"	 	mJy	mJy	mJy	arcsec	arcsec	deg	 	 	 	yr	d	d
+------	------------	------------	----------------	----	------------	------------	------	--------	---------	------	------	------	-----	--	-	--	--------	---------	--------
+0.5142	174.37326667	+26.31899444	J113729.5+261908	FITS	11 37 29.584	+26 19 08.38	 0.014	  164.70	   181.89	 0.137	  2.34	  0.89	  2.6	 1	s	 0	1995.881	2450040.1	   0.000
+0.3322	174.37356667	+26.32202778	J113729.6+261919	FITS	11 37 29.656	+26 19 19.30	 0.014	   29.93	   114.61	 0.137	 12.32	  6.30	176.6	 1	g	 0	1995.881	2450040.1	   0.000
+1.0049	174.37706667	+26.34408056	J113730.4+262038	FITS	11 37 30.496	+26 20 38.69	 0.014	   36.78	    69.34	 0.137	  8.18	  1.51	 14.4	 0	 	 0	1995.881	2450040.0	   0.788
+2.1895	174.33930833	+26.34541111	J113721.4+262043	FITS	11 37 21.434	+26 20 43.48	 0.014	    1.74	     2.00	 0.136	  2.24	  1.93	178.1	 1	s	 0	1995.880	2450039.9	   1.039
+
