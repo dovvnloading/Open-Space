@@ -1,6 +1,6 @@
 # The predicted 2017 RB15 track in three CFHT images
 
-Three Canada–France–Hawaii Telescope MegaCam exposures on September 15, 2017 contain a moving trail at the position predicted by the 2017 RB15 / 2026 RG39 joint orbit. None of the three timestamps appears in the frozen MPC astrometry for either designation. The orbit fit contains CFHT observations from **September 13**, a different night. The new measurements verify the joint orbit on independent pixels within the older apparition. They provide no constraint on the acceleration of the separate object 2007 VE138 / 2026 VV15.
+Three Canada–France–Hawaii Telescope MegaCam exposures on September 15, 2017 contain a moving trail at the position predicted by the 2017 RB15 / 2026 RG39 joint orbit. None of the three timestamps appears in the frozen MPC astrometry for either designation. The orbit fit contains CFHT observations from **September 13**, a different night. The new measurements support the joint-orbit prediction on different pixels within the **same 2017 apparition**; they are a useful out-of-fit check, not a third-apparition confirmation or official identification. They provide no constraint on the acceleration of the separate object 2007 VE138 / 2026 VV15.
 
 | CADC image | UTC exposure midpoint | Measured RA (°) | Measured Dec (°) | Separation from prediction |
 |---|---|---:|---:|---:|
