@@ -1,0 +1,233 @@
+{
+  "J1057": {
+    "n": 53,
+    "peer_iono_beta": -0.41324518141808797,
+    "peer_iono_r": -0.908682949245537,
+    "slopes": {
+      "observed_rm": {
+        "conditional_se": 0.070764861076832,
+        "slope": -0.25134212193002364
+      },
+      "peer_prediction": {
+        "conditional_se": 0.04727306329246386,
+        "slope": 0.13302571023383764
+      },
+      "post_iono_rm": {
+        "conditional_se": 0.035536139413961096,
+        "slope": 0.13308497291569296
+      },
+      "post_peer_rm": {
+        "conditional_se": 0.02686414446951493,
+        "slope": 5.9262681851267135e-05
+      },
+      "published_iono": {
+        "conditional_se": 0.09796431847957546,
+        "slope": -0.3844270948457184
+      }
+    }
+  },
+  "fixed_effects": {
+    "all_iono": {
+      "n_dates": 157,
+      "n_pulsars": 362,
+      "n_visits": 12357,
+      "partial_R2": 0.03175505933952616,
+      "terms": {
+        "iono": {
+          "beta": -0.722653554587666,
+          "day_cluster_se": 0.08825902132405289
+        }
+      }
+    },
+    "all_iono_and_geometry": {
+      "n_dates": 157,
+      "n_pulsars": 362,
+      "n_visits": 12357,
+      "partial_R2": 0.044032007288936637,
+      "terms": {
+        "cosSun": {
+          "beta": 0.4812148904355402,
+          "day_cluster_se": 0.07015573030846906
+        },
+        "iono": {
+          "beta": -0.9964056260687423,
+          "day_cluster_se": 0.09739451846014521
+        },
+        "sec": {
+          "beta": 0.05629288096554971,
+          "day_cluster_se": 0.06042794910905527
+        },
+        "sinSun": {
+          "beta": 0.1633739983703561,
+          "day_cluster_se": 0.056311875400918136
+        }
+      }
+    },
+    "daylight_iono": {
+      "n_dates": 58,
+      "n_pulsars": 362,
+      "n_visits": 3761,
+      "partial_R2": 0.05225251616235582,
+      "terms": {
+        "iono": {
+          "beta": -1.1111242648214876,
+          "day_cluster_se": 0.07071787228559366
+        }
+      }
+    },
+    "other_hours_iono": {
+      "n_dates": 129,
+      "n_pulsars": 362,
+      "n_visits": 8438,
+      "partial_R2": 0.008100761578040627,
+      "terms": {
+        "iono": {
+          "beta": -0.44267469413773086,
+          "day_cluster_se": 0.07563557994313817
+        }
+      }
+    }
+  },
+  "provenance": {
+    "input_sha256": "0536aac6f163dfba2191f8728a073a2fb9b38c03ce33425376091172cbd490ab",
+    "matching": "frozen PR47 selection; target excluded from peers",
+    "source_rows": 20365
+  },
+  "published_risk_scope": {
+    "full_series_3sigma": 38,
+    "full_series_3sigma_to_subthreshold": 18,
+    "matched_series_3sigma": 35,
+    "matched_series_3sigma_to_subthreshold": 15,
+    "matched_sources": 304,
+    "new_matched_3sigma": 10
+  },
+  "sky_sector": {
+    "early_late_enough": 295,
+    "early_late_sign_concordant": 273,
+    "matched_sources": 304,
+    "n_r_above_plus_half": 49,
+    "n_r_below_minus_half": 168,
+    "ra_bins": {
+      "03-06h": {
+        "median_beta": 0.6599420926924422,
+        "median_r": 0.05540153132259523,
+        "n": 2,
+        "r_above_plus_half": 1,
+        "r_below_minus_half": 1
+      },
+      "06-09h": {
+        "median_beta": 0.0604543792908372,
+        "median_r": 0.08565901506528367,
+        "n": 18,
+        "r_above_plus_half": 7,
+        "r_below_minus_half": 7
+      },
+      "09-12h": {
+        "median_beta": -0.37677112781954814,
+        "median_r": -0.9166427441740431,
+        "n": 57,
+        "r_above_plus_half": 1,
+        "r_below_minus_half": 55
+      },
+      "12-15h": {
+        "median_beta": -0.404499500792463,
+        "median_r": -0.9170084024136769,
+        "n": 29,
+        "r_above_plus_half": 0,
+        "r_below_minus_half": 29
+      },
+      "15-18h": {
+        "median_beta": -0.269698008584314,
+        "median_r": -0.713059617122031,
+        "n": 94,
+        "r_above_plus_half": 1,
+        "r_below_minus_half": 71
+      },
+      "18-21h": {
+        "median_beta": 0.22889538639377613,
+        "median_r": 0.35448528020909076,
+        "n": 103,
+        "r_above_plus_half": 38,
+        "r_below_minus_half": 5
+      },
+      "21-24h": {
+        "median_beta": 1.0299648946840418,
+        "median_r": 0.8184210826417125,
+        "n": 1,
+        "r_above_plus_half": 1,
+        "r_below_minus_half": 0
+      }
+    }
+  },
+  "year_holdout": {
+    "heldout": {
+      "no_correction": {
+        "mae": 0.24356617647058823,
+        "rmse": 0.33155563036904045
+      },
+      "trained_ionosphere": {
+        "mae": 0.2619418762038201,
+        "rmse": 0.38305471278078324
+      },
+      "trained_peers": {
+        "mae": 0.17080289394888556,
+        "rmse": 0.22209171304770403
+      },
+      "trained_peers_plus_iono": {
+        "mae": 0.18770370860518706,
+        "rmse": 0.24149103214822937
+      },
+      "unscaled_peers": {
+        "mae": 0.17841911764705887,
+        "rmse": 0.23060721476137744
+      }
+    },
+    "heldout_day_bootstrap_95pct": [
+      0.1669423537235334,
+      0.41712625022519834
+    ],
+    "heldout_peer_correlation": 0.7362229979490875,
+    "heldout_uncalibrated_rmse_gain": 0.3044690132250254,
+    "n_heldout_days": 68,
+    "n_training_days": 56,
+    "test_period": "2022-2023",
+    "train": {
+      "no_correction": {
+        "mae": 0.1847767857142857,
+        "rmse": 0.23599830697031948
+      },
+      "trained_ionosphere": {
+        "mae": 0.17331284942978759,
+        "rmse": 0.22629521707027692
+      },
+      "trained_peers": {
+        "mae": 0.13498026720127249,
+        "rmse": 0.16593389010078358
+      },
+      "trained_peers_plus_iono": {
+        "mae": 0.13251526475554926,
+        "rmse": 0.16504864413414772
+      },
+      "unscaled_peers": {
+        "mae": 0.1388839285714286,
+        "rmse": 0.1689103074542395
+      }
+    },
+    "train_beta": {
+      "ionosphere": [
+        -0.0163653919009981,
+        -0.1987531088831342
+      ],
+      "peers": [
+        -0.001635741379628843,
+        0.8416080088412412
+      ],
+      "peers_and_ionosphere": [
+        -0.00449578266220877,
+        0.8145664392822507,
+        -0.05349054634755526
+      ]
+    },
+    "train_period": "2020-2021"
+  }
+}
