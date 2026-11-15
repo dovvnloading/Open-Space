@@ -1,6 +1,8 @@
-# Four spectroscopic quasars within 0.97 proper Mpc in XMM-LSS
+# Candidate quasar association: four spectra within 0.97 proper Mpc in XMM-LSS
 
-Four separate DESI targets centered on **RA 36.31513°, Dec −4.78245°** have quasar spectra near **z = 1.9295**. All six pairwise projected separations lie between **357 and 966.5 proper kpc**. The maximum rest-frame velocity difference calculated from the four DESI catalog redshifts is **453 km/s**. This was the most compact of 13 qualifying quartets in a survey-wide search of 1,372,972 quality-screened targets. Earlier catalogs list all four quasars individually. The archival finding is their four-member configuration. Whether the four nuclei occupy a single halo remains open.
+**Status: candidate association, not a confirmed gravitationally bound group or single halo.** In a redshift-randomization test preserving real coherent triplets, **809 of 10,000 surveys** (8.09%) produced at least one comparable quartet somewhere in the survey. This is a conditional survey-wide chance-completion frequency, **not** the probability that this quartet is a projection or a blind discovery significance. The search and some control thresholds were exploratory.
+
+Four separately targeted DESI quasar spectra centered on **RA 36.31513°, Dec −4.78245°** have quasar spectra near **z = 1.9295**. All six pairwise projected separations lie between **357 and 966.5 proper kpc**. The maximum rest-frame velocity difference calculated from the four DESI catalog redshifts is **453 km/s**. This was the most compact of 13 qualifying quartets in a survey-wide search of 1,372,972 quality-screened targets. Earlier catalogs list all four quasars individually. The archival finding is their four-member configuration. Whether the four nuclei occupy a single halo remains open.
 
 | Member | DESI target ID | DESI z | Milliquas v8 z | Mg II fit z | Mg II FWHM (km/s) | 4XMM offset (arcsec) | XMM-SERVS full-band net counts |
 |---|---|---:|---:|---:|---:|---:|---:|
