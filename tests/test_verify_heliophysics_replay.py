@@ -12,6 +12,8 @@ spec.loader.exec_module(mod)
 class ArchiveReplayValidatorTests(unittest.TestCase):
     def test_missing_or_changed_fields_reported(self):
         self.assertEqual(mod.mismatches({"x":[1,2]}, {"x":[1,2]}), [])
+        self.assertEqual(mod.mismatches({"x":1,"zero":0}, {"x":1.0,"zero":0.0}), [])
+        self.assertTrue(mod.mismatches({"flag":True}, {"flag":1}))
         self.assertTrue(any("x[1]" in d for d in mod.mismatches({"x":[1,2]}, {"x":[1,3]})))
         self.assertTrue(any("missing" in d for d in mod.mismatches({"x":1}, {})))
         self.assertTrue(any("unexpected" in d for d in mod.mismatches({}, {"x":1})))
