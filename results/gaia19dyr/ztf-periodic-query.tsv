@@ -1,0 +1,62 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T08:06:34 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T08:06:35	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJS%2F249%2F18%2Ftable2&-c=283.58793+0.87774&-c.rs=4&-out.all=1&-out.max=8	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=283.587930+00.877740,rs=4.	
+#Constraint -out.max=8
+
+#RESOURCE=yCat_22490018
+#Name: J/ApJS/249/18
+#Title: The ZTF catalog of periodic variable stars (Chen+, 2020)
+#INFO	ivoid=ivo://cds.vizier/j/apjs/249/18	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/apjs/249/18	    IVOID of underlying data collection
+#INFO	creator=Chen X.	    First author or institution
+#INFO	cites=bibcode:2020ApJS..249...18C	    Article or Data origin sources
+#INFO	journal=ApJS	    Journal name
+#INFO	original_date=2020	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJS/249/18	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.22490018	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-06-07	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_ApJS_249_18_table2:
+#Name: J/ApJS/249/18/table2
+#Title: ZTF variables catalog
+#Column	_r	(F4.2)	Distance from center (283.58793+00.87774)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	ID	(A22)	ZTF variables catalog identifier	[ucd=meta.id;meta.main]
+#Column	Seq	(I6)	[1/781604] Internal source identifier	[ucd=meta.id]
+#Column	RAJ2000	(F9.5)	Right Ascension in decimal degrees (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F9.5)	Declination in decimal degrees (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	Per	(F11.7)	[0.03/973.5] Period	[ucd=time.period]
+#Column	R21	(F6.3)	[0/71] Amplitude ratio (a_2_/a_1_)	[ucd=phot.mag;arith.ratio]
+#Column	phi21	(F6.3)	[3.14/9.5] Phase difference ({phi}_2_-2*{phi}_1_)	[ucd=time;arith.diff]
+#Column	T0	(F13.7)	HJD of minimum; HJD-2400000.5	[ucd=time.epoch]
+#Column	gmag	(F6.3)	[11.7/22]? Mean Palomar/ZTF g band magnitude	[ucd=phot.mag;em.opt.B]
+#Column	rmag	(F6.3)	[11.2/21.4]? Mean Palomar/ZTF r band magnitude	[ucd=phot.mag;em.opt.R]
+#Column	Per-g	(F13.7)	[0.02/18340]? Period determined in g band	[ucd=time.period]
+#Column	Per-r	(F13.7)	[0.02/13242]? Period determined in r band	[ucd=time.period]
+#Column	Ng	(I4)	[0/2084] Number of detections in g band	[ucd=meta.number]
+#Column	Nr	(I4)	[0/3300] Number of detections in r band	[ucd=meta.number]
+#Column	R21-g	(F6.3)	[0/96] Ratio of a_2_/a_1_ in g band	[ucd=phot.mag;arith.ratio]
+#Column	R21-r	(F6.3)	[0/71] Ratio of a_2_/a_1_ in r band	[ucd=phot.mag;arith.ratio]
+#Column	phi21-g	(F6.3)	[0/9.5] The {phi}_2_-2*{phi}_1_ in g band	[ucd=time;arith.diff]
+#Column	phi21-r	(F6.3)	[0/9.5] The {phi}_2_-2*{phi}_1_ in r band	[ucd=time;arith.diff]
+#Column	R2-g	(F6.3)	[-0.96/1] R-square in g band	[ucd=stat.fit.param]
+#Column	R2-r	(F6.3)	[-0.05/1] R-square in r band	[ucd=stat.fit.param]
+#Column	gAmp	(F6.3)	[0.006/8.11]? Amplitude in g band	[ucd=phot.mag;arith.ratio]
+#Column	rAmp	(F6.3)	[0.01/7]? Amplitude in r band	[ucd=phot.mag;arith.ratio]
+#Column	log(FAP-g)	(F8.3)	[-226.2/0] False alarm probability in g band	[ucd=stat.fit.goodness]
+#Column	log(FAP-r)	(F8.3)	[-223.2/0] False alarm probability in r band	[ucd=stat.fit.goodness]
+#Column	Type	(a5)	Variable type (1)	[ucd=src.class]
+#Column	Dmin-g	(F6.3)	[0/2.5] Minimum difference in g band	[ucd=phot.mag;arith.diff]
+#Column	Dmin-r	(F6.3)	[0/2.6] Minimum difference in r band	[ucd=phot.mag;arith.diff]
+#Column	Simbad	(a6)	Simbad column added by the CDS	[ucd=meta.ref.url]
