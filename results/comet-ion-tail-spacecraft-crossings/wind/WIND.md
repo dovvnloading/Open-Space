@@ -1,6 +1,6 @@
 # A September 2011 oxygen-ion pulse at Wind
 
-On 29 September 2011, 06:00–09:00 UTC, Wind/STICS recorded singly charged oxygen in 17 of 54 available three-minute double-coincidence scans. This was the highest fraction in the year's 2,515 disjoint UTC three-hour windows with at least 45 scans. The runner-up had 14 of 59 scans on 26 September. Elenin's nominal trajectory passes near straight-line backprojections of the plasma at Wind during the pulse. The oxygen measurements establish an annual extreme in this specific observable. They leave the ions' origin open.
+On 29 September 2011, 06:00–09:00 UTC, Wind/STICS recorded singly charged oxygen in 17 of 54 available three-minute double-coincidence scans. This was the highest fraction in the year's 2,515 disjoint UTC three-hour windows with at least 45 scans. The runner-up had 14 of 59 scans on 26 September. Elenin's nominal trajectory passes near straight-line backprojections of the plasma at Wind during the pulse. The oxygen measurements establish an annual extreme in this specific observable. They leave the ions' origin open. **The putative Elenin association may fail:** the backprojection is a conditional geometry calculation, not evidence that Elenin debris was chemically identified at Wind.
 
 ![Wind STICS oxygen detections and measured flow trajectories](wind_elenin.png)
 
