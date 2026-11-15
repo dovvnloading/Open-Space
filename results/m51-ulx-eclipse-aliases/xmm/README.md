@@ -1,8 +1,8 @@
 # XMM-Newton imaging of the 2018 M51 ULX-1 brightening
 
-The three EPIC detectors locate the low-to-high transition at M51 ULX-1 (13h29m39.94s, +47°12′36.6″). Its companion ULX-2 lies 8.42″ to the northwest. Di Stefano et al. studied the distinct M51-ULS-1, approximately one arcminute away, in the same observation. The parent report contains the Chandra timing and relevant literature.
+The three EPIC detectors locate the low-to-high transition at M51 ULX-1 (13h29m39.94s, +47°12′36.6″). Its companion ULX-2 lies 8.42″ to the northwest. Di Stefano et al. studied the distinct M51-ULS-1, at a different sky position, in the same observation. The parent report contains the Chandra timing and relevant literature.
 
-In ObsID 0824450901, profiling a common sharp transition over three independent cameras yields geocentric barycenter-corrected MJD(TDB) 58252.13450. The profile envelope at ΔC ≤ 3.84 is [58252.13375, 58252.14425]. This is a conditional sharp-step localization and lacks coverage calibration for a changepoint. The MOS1, MOS2 and pn best splits are 58252.13250, .14500 and .14425. At the common split, observed pn source rates rise from 1.85 ± 0.67 to 15.67 ± 1.15 counts/ks in 0.9–7 keV. Source amplitudes and background can change independently on either side. Freeing ULX-1 individually improves Cash by 55.5, 47.3 and 106.5 in MOS1, MOS2 and pn, respectively. Labels describe a brightening. An eclipse egress is one interpretation.
+In ObsID 0824450901, profiling a common sharp transition over three independent cameras yields geocentric barycenter-corrected MJD(TDB) 58252.13450. The profile envelope at ΔC ≤ 3.84 is [58252.13375, 58252.14425]. This is a conditional sharp-step localization and lacks coverage calibration for a changepoint. A smooth transition model gives midpoint 58252.1402 and a 10–90% transition time of 0.076 d (6.6 ks). Its profiled midpoint grid spans 58252.128–.152 at ΔC ≤ 3.84. Both timing envelopes are conditional on their assumed light-curve shape. The MOS1, MOS2 and pn best splits are 58252.13250, .14500 and .14425. At the common split, observed pn source rates rise from 1.85 ± 0.67 to 15.67 ± 1.15 counts/ks in 0.9–7 keV. Source amplitudes and background can change independently on either side. Freeing ULX-1 individually improves Cash by 55.5, 47.3 and 106.5 in MOS1, MOS2 and pn, respectively. Labels describe a brightening. An eclipse egress is one interpretation.
 
 The next pn visit covers 58264.72976, the first 12.59526-day return or second 6.29763-day return from this transition. In a 22.03 ks interval before that instant, ULX-1 gives 15.53 ± 1.32 counts/ks. Afterward it gives 11.50 ± 1.40 counts/ks over 16.51 ks. The 2018 May low-to-high transition did not repeat at that cycle count. MOS was in partial-window mode in the three subsequent 2018 visits and the target had no local MOS event coverage there.
 
@@ -14,6 +14,7 @@ Python dependencies are NumPy, Pandas and SciPy. Rebuilding the compact inputs a
 OPENBLAS_NUM_THREADS=1 python analyze.py
 OPENBLAS_NUM_THREADS=1 python egress.py
 OPENBLAS_NUM_THREADS=1 python transition_checks.py
+OPENBLAS_NUM_THREADS=1 python ramp_sensitivity.py
 OPENBLAS_NUM_THREADS=1 python robustness.py
 OPENBLAS_NUM_THREADS=1 python recurrence.py
 ```

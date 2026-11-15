@@ -2,7 +2,7 @@
 
 On 14 May 2018, all three XMM-Newton EPIC cameras measured a rise in CXOM51 J132940.0+471237 (M51 ULX-1). A second XMM observation covered the time at which a deep eclipse should end 12.595 days later. ULX-1 was already bright for 22 ks before that predicted return. A new Chandra measurement in June 2021 resolves an even sharper rise at the same source. The neighboring binary M51 ULX-2 is 8.4 arcseconds away and was measured separately throughout.
 
-The May 2018 rise falls **four minutes** from the date predicted by a 6.297632-day spacing between the 2012 and 2021 rises. That numerical agreement is real. The immediate repeat test fails. A stable orbit with a deep eclipse on every predicted cycle cannot account for all three observations under this identification. Variable obscuration, changes in eclipse visibility or unrelated dips remain possible. These observations establish two source-specific transitions and a missing repeat. They leave the binary orbital period open.
+The fitted sharp edge of the May 2018 rise falls **four minutes** from the date predicted by a 6.297632-day spacing between the 2012 and 2021 rises. That numerical agreement is real. The immediate repeat test fails. A stable orbit with a deep eclipse on every predicted cycle cannot account for all three observations under this identification. Variable obscuration, changes in eclipse visibility or unrelated dips remain possible. These observations establish two source-specific transitions and a missing repeat. They leave the binary orbital period open.
 
 ![Source-resolved XMM-Newton pn measurements before and after the May rise and the predicted return](xmm-repeat.png)
 
@@ -18,7 +18,7 @@ The May 2018 rise falls **four minutes** from the date predicted by a 6.297632-d
 
 Rates are counts per kilosecond. XMM entries are fitted counts in a registered two-source spatial model, using 0.9–7 keV. Quoted errors come from the spatial fit at the chosen windows. Chandra entries are direct 1.8-arcsecond aperture counts in 0.3–7 keV. The different instruments and energy bands have different throughput. The two XMM cameras named MOS and the pn camera independently record photons during the same astrophysical event.
 
-The best joint XMM sharp-step time is MJD 58252.13450. Its conditional profile bracket (ΔC ≤ 3.84) is 58252.13375–58252.14425. Separate camera fits and the finite shape of the rise limit the precision of a physical contact time. Chandra gives MJD 59373.11583 for the June rise, with a corresponding profile bracket 59373.11167–59373.12139. All times here are MJD on a TDB timescale with projected Earth-to-barycenter light time included. Omission of the spacecraft position contributes less than one second. [XMM timing profile and camera checks](xmm/) · [Chandra fits](step-fits.csv)
+The best joint XMM sharp-step time is MJD 58252.13450. Its conditional profile bracket (ΔC ≤ 3.84) is 58252.13375–58252.14425. A smooth-rise fit gives a midpoint near MJD 58252.1402 and a 10–90% rise duration of roughly 6.6 ks. The four-minute residual compares fitted epochs and is smaller than the uncertainty in the physical contact time. Chandra gives MJD 59373.11583 for the June rise, with a corresponding profile bracket 59373.11167–59373.12139. All times here are MJD on a TDB timescale with projected Earth-to-barycenter light time included. Omission of the spacecraft position contributes less than one second. [XMM timing profile and camera checks](xmm/) · [Chandra fits](step-fits.csv)
 
 ## How the repeat test was constructed
 
@@ -44,7 +44,7 @@ A search by source names, Chandra and XMM observation IDs, event dates and perio
 
 ## Reproduce
 
-Use Python 3.11 or later with NumPy, SciPy, pandas, Matplotlib and Astropy. From this directory, run the commands below. The 27 Chandra files require about 440 MB. The XMM directory contains compact photon lists, good-time intervals and instructions to reproduce the fits or rebuild the extraction from mission products.
+Use Python 3.11 or later with NumPy, SciPy, pandas, Matplotlib and Astropy. From this directory, run the commands below. Budget about 450 MB for the Chandra cache. The XMM directory contains compact photon lists, good-time intervals and instructions to reproduce the fits or rebuild the extraction from mission products.
 
 ```sh
 python fetch.py /tmp/m51-acis
