@@ -1,7 +1,6 @@
 """Restoring-beam fits, sky-registered comparison positions and free radio centroids."""
 import argparse
 import hashlib
-import sys
 from pathlib import Path
 
 import numpy as np

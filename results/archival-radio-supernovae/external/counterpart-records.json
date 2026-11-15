@@ -1,0 +1,114 @@
+{
+  "Richards_2009_complete_row": {
+    "_r": "0.001",
+    "recno": "307485",
+    "Seq": "359643",
+    "SDSS": "103504.84+463338.1",
+    "zph": "1.115",
+    "zph.L": "0.910",
+    "zph.U": "1.400",
+    "zpprob": "0.910",
+    "umag": "19.224",
+    "e_umag": "0.174",
+    "gmag": "19.643",
+    "e_gmag": "0.493",
+    "rmag": "19.030",
+    "e_rmag": "0.462",
+    "imag": "19.666",
+    "e_imag": "0.745",
+    "zmag": "20.159",
+    "e_zmag": "0.597",
+    "E(B-V)": "0.022",
+    "c": "0.063",
+    "F20cm": "",
+    "FX": "",
+    "pm": "",
+    "mov": "-1",
+    "fz": "1",
+    "lz": "1",
+    "mz": "0",
+    "hz": "0",
+    "uv": "0",
+    "log(q)": "-14.151",
+    "log(s)": "-24.823",
+    "good": "0",
+    "Class": "U",
+    "z": "",
+    "Sloan": "Sloan",
+    "RAJ2000": "158.770194",
+    "DEJ2000": "+46.560596"
+  },
+  "gaia_dr3_source": {
+    "Source": "830717048086240000",
+    "RA_ICRS": "158.77032646431",
+    "DE_ICRS": "+46.56065341902",
+    "Plx": "",
+    "e_Plx": "",
+    "pmRA": "",
+    "pmDE": "",
+    "Gmag": "20.236832",
+    "RUWE": ""
+  },
+  "gaia_dr3_dsc_combmod": {
+    "Source": "830717048086240000",
+    "PQSO": "0.00856964",
+    "PGal": "0.97526103",
+    "Pstar": "0.00000000",
+    "PWD": "0.01616935",
+    "Pbin": "0.00000000"
+  },
+  "sdss_dr18_spectra_within_15arcsec": [
+    {
+      "specObjID": "1082011019947042816",
+      "ra": "158.77022",
+      "dec": "46.561452",
+      "z": "0.01119638",
+      "zErr": "1.104562E-05",
+      "zWarning": "0",
+      "class": "GALAXY",
+      "subClass": "STARFORMING",
+      "plate": "961",
+      "mjd": "52615",
+      "fiberID": "77"
+    }
+  ],
+  "desi_dr1_nearest_spectrum": {
+    "targetid": "39633191329334637",
+    "target_ra": 158.7700198,
+    "target_dec": 46.5615833,
+    "z": 0.011162796857270233,
+    "zwarn": 0,
+    "spectype": "GALAXY",
+    "survey": "main",
+    "program": "bright",
+    "healpix": 5902
+  },
+  "VLASS_epoch3_position_deg": [
+    158.77006,
+    46.56064
+  ],
+  "TNS_SN_position_deg": [
+    158.77014172,
+    46.56060076
+  ],
+  "offsets_arcsec": {
+    "radio_to_Richards": 0.36757,
+    "TNS_to_Richards": 0.13054,
+    "Gaia_to_Richards": 0.38761,
+    "SDSS_fiber_to_Richards": 3.08227,
+    "DESI_fiber_to_Richards": 3.58034
+  },
+  "sources": {
+    "Richards_2009": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJS%2F180%2F67%2Fcatalog&-c=158.770194+46.560596&-c.rs=3&-out=%2A%2A",
+    "Richards_flags": "https://cdsarc.cds.unistra.fr/viz-bin/ReadMe/J/ApJS/180/67?format=html",
+    "Gaia_DR3_astrometry": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F355%2Fgaiadr3&-c=158.770194+46.560596&-c.rs=8&-out=Source%2CRA_ICRS%2CDE_ICRS%2CPlx%2Ce_Plx%2CpmRA%2CpmDE%2CGmag%2CRUWE",
+    "Gaia_DR3_classifications": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F355%2Fparamp&-c=158.770194+46.560596&-c.rs=1&-out.all=1",
+    "SDSS_SpecObjAll": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch?cmd=SELECT+s.specObjID%2Cs.ra%2Cs.dec%2Cs.z%2Cs.zErr%2Cs.zWarning%2Cs.class%2Cs.subClass%2Cs.plate%2Cs.mjd%2Cs.fiberID+FROM+SpecObjAll+s+JOIN+dbo.fGetNearbySpecObjEq%28158.770194%2C46.560596%2C0.25%29+n+ON+s.specObjID%3Dn.specObjID&format=csv",
+    "PS1_product_list": "https://ps1images.stsci.edu/cgi-bin/ps1filenames.py?ra=158.770194&dec=46.560596&filters=griz",
+    "DESI_spectrum": "https://data.desi.lbl.gov/public/dr1/spectro/redux/iron/healpix/main/bright/59/5902/redrock-main-bright-5902.fits",
+    "NED_candidate_redshift": "https://ned.ipac.caltech.edu/cgi-bin/nph-datasearch?objname=SDSS+J103504.84%2B463338.1&search_type=Redshifts&of=ascii_tab",
+    "DESI_DR1_data": "https://data.desi.lbl.gov/doc/releases/dr1/",
+    "PS1_preexplosion_gri": "https://ps1images.stsci.edu/cgi-bin/fitscut.cgi?ra=158.770194&dec=46.560596&size=240&format=jpg&red=/rings.v3.skycell/2253/062/rings.v3.skycell.2253.062.stk.i.unconv.fits&green=/rings.v3.skycell/2253/062/rings.v3.skycell.2253.062.stk.r.unconv.fits&blue=/rings.v3.skycell/2253/062/rings.v3.skycell.2253.062.stk.g.unconv.fits",
+    "PS1_date_range": "https://outerspace.stsci.edu/spaces/PANSTARRS/pages/298812309/PS1+Description+of+the+surveys"
+  }
+}
