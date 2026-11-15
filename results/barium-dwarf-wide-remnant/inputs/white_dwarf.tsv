@@ -1,0 +1,64 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T08:26:13 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T08:26:13	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FMNRAS%2F508%2F3877%2Fmaincat&GaiaEDR3=5707071698757576576&-out.all=	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	MaxTuples=50000	
+
+#RESOURCE=yCat_75083877
+#Name: J/MNRAS/508/3877
+#Title: Catalogue of white dwarfs in Gaia EDR3 (Gentile+, 2021)
+#INFO	ivoid=ivo://cds.vizier/j/mnras/508/3877	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/mnras/508/3877	    IVOID of underlying data collection
+#INFO	creator=Gentile Fusillo N.P.	    First author or institution
+#INFO	cites=bibcode:2021MNRAS.508.3877G	    Article or Data origin sources
+#INFO	journal=MNRA	    Journal name
+#INFO	original_date=2021	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/MNRAS/508/3877	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.75083877	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-08-21	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	H_2016.000:	ICRS
+#Table	J_MNRAS_508_3877_maincat:
+#Name: J/MNRAS/508/3877/maincat
+#Title: White dwarf main catalog
+#Column	WDJname	(A23)	WD name (JHHMMSS.ss+DDMMSS.ss) equinox and epoch 2000 (G1)	[ucd=meta.id;meta.main]
+#Column	GaiaEDR3	(I19)	Gaia EDR3 source_id (source_id)	[ucd=meta.id]
+#Column	RA_ICRS	(F15.11)	Gaia EDR3 Barycentric right ascension (ICRS) at Ep=2016.0 (ra)	[ucd=pos.eq.ra;meta.main]
+#Column	DE_ICRS	(F15.11)	Gaia EDR3 Barycentric declination (ICRS) at Ep=2016.0 (dec)	[ucd=pos.eq.dec;meta.main]
+#Column	Plx	(F10.4)	Gaia EDR3 Absolute stellar parallax at Ep=2016.0 (parallax)	[ucd=pos.parallax]
+#Column	Pwd	(F9.6)	The probability of being a white dwarf (Pwd)	[ucd=stat.fit.goodness]
+#Column	pmRA	(F9.3)	Gaia EDR3 Proper motion in RA, pmRA*cosDE (pmra)	[ucd=pos.pm;pos.eq.ra]
+#Column	pmDE	(F9.3)	Gaia EDR3 Proper motion in DE (pmdec)	[ucd=pos.pm;pos.eq.dec]
+#Column	Gmag	(F7.4)	G-band mean magnitude (Vega) (phot_g_mean_mag)	[ucd=phot.mag;em.opt]
+#Column	BPmag	(F7.4)	Integrated BP mean magnitude (Vega) (phot_bp_mean_mag)	[ucd=phot.mag;em.opt.B]
+#Column	RPmag	(F7.4)	Integrated RP mean magnitude (Vega) (phot_rp_mean_mag)	[ucd=phot.mag;em.opt.R]
+#Column	TeffH	(F9.2)	? Effective temperature from fitting the dereddened G, BP, and RP absolute fluxes with pure-H model atmospheres (teff_H)	[ucd=phys.temperature.effective]
+#Column	loggH	(F9.6)	? Log of surface gravity from fitting the dereddened G, BP, and RP absolute fluxes with pure-H model atmospheres (logg_H)	[ucd=phys.gravity]
+#Column	MassH	(F9.6)	? Stellar mass resulting from the adopted mass-radius relation and best fit parameters (mass_H)	[ucd=phys.mass]
+#Column	TeffHe	(F9.2)	? Effective temperature from fitting the dereddened G, BP, and RP absolute fluxes with pure-He model atmospheres (teff_He)	[ucd=phys.temperature.effective]
+#Column	loggHe	(F9.6)	? Log of surface gravity from fitting the dereddened G, BP, and RP absolute fluxes (logg_He)	[ucd=phys.gravity]
+#Column	MassHe	(F9.6)	? Stellar mass resulting from the adopted mass-radius relationand best fit parameters (mass_He)	[ucd=phys.mass]
+#Column	rgeo	(F15.8)	Median of the geometric distance posterior (Bailer-Jones et al., 2021AJ....161..147B, Cat. I/352) (r_med_geo)	[ucd=pos.distance]
+#Column	rpgeo	(F15.8)	? Median of the photogeometric distance posterior (Bailer-Jones et al., 2021AJ....161..147B, Cat. I/352) (r_med_photogeo)	[ucd=pos.distance]
+#Column	SDSS12	(A19)	SDSS object name if available (SDSS + J2000 coordinates) (SDSS12)	[ucd=meta.id]
+#Column	umag	(F6.3)	? SDSS u band magnitude	[ucd=phot.mag;em.opt.U]
+#Column	gmag	(F6.3)	? SDSS g band magnitude	[ucd=phot.mag;em.opt.B]
+#Column	rmag	(F6.3)	? SDSS r band magnitude	[ucd=phot.mag;em.opt.R]
+#Column	imag	(F6.3)	? SDSS i band magnitude	[ucd=phot.mag;em.opt.I]
+#Column	zmag	(F6.3)	? SDSS z band magnitude	[ucd=phot.mag;em.opt.I]
+#Column	_RA.icrs	(F15.11)	Right ascension (ICRS) at Epoch=J2000, proper motions taken into account	[ucd=pos.eq.ra]
+#Column	_DE.icrs	(F15.11)	Declination (ICRS) at Epoch=J2000, proper motions taken into account	[ucd=pos.eq.dec]
+WDJname	GaiaEDR3	RA_ICRS	DE_ICRS	Plx	Pwd	pmRA	pmDE	Gmag	BPmag	RPmag	TeffH	loggH	MassH	TeffHe	loggHe	MassHe	rgeo	rpgeo	SDSS12	umag	gmag	rmag	imag	zmag	_RA.icrs	_DE.icrs
+ 	 	deg	deg	mas	 	mas/yr	mas/yr	mag	mag	mag	K	[cm/s2]	Msun	K	[cm/s2]	Msun	pc	pc	 	mag	mag	mag	mag	mag	deg	deg
+-----------------------	-------------------	---------------	---------------	----------	---------	---------	---------	-------	-------	-------	---------	---------	---------	---------	---------	---------	---------------	---------------	-------------------	------	------	------	------	------	---------------	---------------
+WDJ083100.66-190310.14 	5707071698757576576	127.75227810681	-19.05311380677	    7.7971	 0.971597	  -99.811	  -66.699	20.6057	21.0187	19.9152	  4941.72	 8.100914	 0.642586	  4871.71	 8.048534	 0.598287	   141.62500000	   151.90150500	                   	      	      	      	      	      	127.75274742121	-19.05281736618
+

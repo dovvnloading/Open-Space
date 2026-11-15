@@ -1,0 +1,45 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T08:29:04 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T08:29:04	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FMNRAS%2F506%2F2269%2Fcatalog&-out=Source1%2CSource2%2CsepAU%2CR%2CGmag1%2CGmag2%2Ctheta%2CPlx1%2CPlx2%2CBinType&-out.max=unlimited&Source2=%3D%2C3036788173176962048%2C4790658375100436736%2C3208829887146528384%2C5620705644518714752%2C6091100873778091392%2C5406806102703951360%2C3772123820203876736%2C5397347794427206656%2C6181668466886465280%2C5722712938857848192%2C2914005812780342272%2C5164360455867611264%2C4795585179328518016%2C5550946678313327744%2C2923820637686349568%2C5327240562221030528%2C5329433194583181952%2C2964151136511557120%2C6169594184243050752%2C6300835156308377344%2C5317828124219671168%2C2919286664051008640%2C5744310130364616576%2C5890631694717361408%2C3697174751104247808%2C6192821814055372800%2C3147042801161881472%2C2923409729576118912%2C5091887624392418816%2C3633619813626022784%2C6472197475176313472%2C6645994082722928768%2C4878036323641744384%2C4646881493008180352%2C4774266821393569792%2C6489348928855798272%2C5495572631335262208%2C5707071630039205248%2C4715941990147018752%2C4881348087024892416%2C5363208336349003648%2C2436150255390344320%2C3623765616756619392%2C6669412928776138112%2C4693571910684108928%2C6081919436288801024%2C5435770125183875200%2C2600643791975931264%2C2545472433093014912%2C4650039354829199616%2C3285029929897944320%2C4622751301587564416%2C5371201888966580992%2C5386048560107201792%2C6402712399045698560	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+
+#RESOURCE=yCat_75062269
+#Name: J/MNRAS/506/2269
+#Title: Validation of Gaia EDR3 parallaxes (El-Badry+, 2021)
+#INFO	ivoid=ivo://cds.vizier/j/mnras/506/2269	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/mnras/506/2269	    IVOID of underlying data collection
+#INFO	creator=El-Badry K.	    First author or institution
+#INFO	cites=bibcode:2021MNRAS.506.2269E	    Article or Data origin sources
+#INFO	journal=MNRA	    Journal name
+#INFO	original_date=2021	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/MNRAS/506/2269	    Dataset landing page
+#INFO	publication_date=2026-08-07	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	H_2016.000:	ICRS
+#Table	J_MNRAS_506_2269_catalog:
+#Name: J/MNRAS/506/2269/catalog
+#Title: *Full binary catalogue
+#Column	Source1	(I19)	Unique source identifier from Gaia EDR3 (I/350) (source_id1)	[ucd=meta.id;meta.main]
+#Column	Source2	(I19)	Unique source identifier from Gaia EDR3 (I/350) (source_id2)	[ucd=meta.id.assoc]
+#Column	sepAU	(F22.15)	Projected separation (sep_AU)	[ucd=pos.distance;src.orbital]
+#Column	R	(D25.18)	R chance align (R_chance_align) (2)	[ucd=stat.fit.param]
+#Column	Gmag1	(F10.7)	G-band mean magnitude (phot_g_mean_mag1)	[ucd=phot.mag;em.opt]
+#Column	Gmag2	(F10.7)	G-band mean magnitude (phot_g_mean_mag2)	[ucd=phot.mag;em.opt]
+#Column	theta	(D25.18)	Angular separation (pairdistance)	[ucd=pos.angDistance]
+#Column	Plx1	(F20.16)	Parallax (parallax1)	[ucd=pos.parallax.trig]
+#Column	Plx2	(F20.16)	Parallax (parallax2)	[ucd=pos.parallax.trig]
+#Column	BinType	(A4)	Binary type (binary_type) (1)	[ucd=meta.code]
+Source1	Source2	sepAU	R	Gmag1	Gmag2	theta	Plx1	Plx2	BinType
+ 	 	AU	 	mag	mag	deg	mas	mas	
+-------------------	-------------------	----------------------	-------------------------	----------	----------	-------------------------	--------------------	--------------------	----
+5327240562221031040	5327240562221030528	  2843.511302677819003	 1.416586958942226630e-04	10.7946120	13.0490690	 2.491220408792608424e-03	  3.1539855189629766	  3.2218747557475371	MSMS
+
