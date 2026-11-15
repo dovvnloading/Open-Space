@@ -13,6 +13,7 @@ LUM_FACTOR = 4 * np.pi * (3.085677581491367e18**2) * 1e-26
 
 def summarize(screen, objects):
     valid = screen.dropna(subset=["snr"]).copy()
+    valid["snr"] = valid.snr.astype(float).round(3)
     controls = valid[[f"control{i}" for i in range(8)]].to_numpy()
     plx = objects.reindex(valid.id).set_axis(valid.index)
     sample = valid[
@@ -28,7 +29,8 @@ def summarize(screen, objects):
     for r in sample.sort_values("id").itertuples():
         if any(
             np.hypot(
-                (r.ra_obs - a.ra_obs) * np.cos(np.deg2rad(r.dec_obs)),
+                ((r.ra_obs - a.ra_obs + 180) % 360 - 180)
+                * np.cos(np.deg2rad(r.dec_obs)),
                 r.dec_obs - a.dec_obs,
             )
             * 3600
@@ -63,6 +65,15 @@ def summarize(screen, objects):
         positive_at_6=int((valid.snr >= 6).sum()),
         controls=int(np.isfinite(controls).sum()),
         controls_at_6=int((controls >= 6).sum()),
+        fourth_epoch_weak_lead=dict(
+            threshold_in_pixel_noise_units=3.681,
+            on_target_at_or_above=int((valid.snr >= 3.681).sum()),
+            offset_positions_at_or_above=int((controls >= 3.681).sum()),
+            T8_or_later_targets=int(valid.sp.ge(28).sum()),
+            T8_or_later_targets_at_or_above=int(
+                (valid.sp.ge(28) & valid.snr.ge(3.681)).sum()
+            ),
+        ),
         conditional_limits=limits,
     )
 

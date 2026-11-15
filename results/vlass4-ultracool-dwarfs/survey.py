@@ -29,7 +29,7 @@ def xyz(ra, dec):
     return np.column_stack([np.cos(r) * np.cos(d), np.sin(r) * np.cos(d), np.sin(d)])
 
 
-def target_list(root):
+def target_list(root, exclude_uris=()):
     objects = pd.read_csv(root / "ucd.csv", low_memory=False)
     tiles = pd.read_csv(root / "tiles.csv").merge(
         pd.read_csv(root / "files.csv").rename(columns={"observationID": "obs_id"}),
@@ -40,6 +40,7 @@ def target_list(root):
         .dropna(subset=["s_ra", "s_dec", "s_region"])
         .reset_index(drop=True)
     )
+    tiles = tiles[~tiles.uri.isin(exclude_uris)].reset_index(drop=True)
     good = objects.sptnum_formula.ge(6) & (
         objects.spt_ir.notna() | objects.spt_opt.notna()
     )
@@ -120,8 +121,14 @@ def measure(data, row):
     med = np.median(bg)
     noise = 1.482602 * np.median(np.abs(bg - med))
 
+    if not np.isfinite(noise) or noise <= 0:
+        raise ValueError("invalid background noise")
+
     def peak(x0, y0):
-        return float(np.nanmax(flux[np.hypot(xx - x0, yy - y0) <= 1.5]) - med)
+        pixels = flux[np.hypot(xx - x0, yy - y0) <= 1.5]
+        if not np.isfinite(pixels).any():
+            return np.nan
+        return float(np.nanmax(pixels) - med)
 
     peakflux = peak(x, y)
     controls = [
@@ -136,7 +143,7 @@ def measure(data, row):
         sha256=hashlib.sha256(data).hexdigest(),
         peak_mjy=round(peakflux, 5),
         rms_mjy=round(float(noise), 5),
-        snr=round(peakflux / noise, 3),
+        snr=round(float(peakflux / noise), 3),
         **{f"control{i}": round(float(v), 3) for i, v in enumerate(controls)},
     )
 
@@ -178,6 +185,11 @@ def main():
     cache = args.cache
     (cache / "fits").mkdir(parents=True, exist_ok=True)
     targets = target_list(cache)
+    # Resume a successful overlap choice made in a previous run.
+    receipt = cache / "overlap-tiles.csv"
+    if receipt.exists():
+        replacements = pd.read_csv(receipt).set_index("id").uri
+        targets["uri"] = targets.id.map(replacements).fillna(targets.uri)
     targets.to_csv(cache / "targets.csv", index=False)
     print(f"{len(targets)} targets", flush=True)
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
@@ -197,6 +209,35 @@ def main():
                     "above 6",
                     flush=True,
                 )
+
+    # A catalog footprint can extend beyond its finite science pixels.
+    # Try a second covering image only for targets with insufficient coverage.
+    replacements = []
+    for failed in frame[
+        frame.get("error", pd.Series("", index=frame.index)).eq("incomplete cutout")
+    ].itertuples():
+        alternatives = target_list(cache, exclude_uris=[failed.uri])
+        for alt in alternatives[alternatives.id.eq(failed.id)].itertuples():
+            retry_dir = cache / "overlap"
+            retry_dir.mkdir(exist_ok=True)
+            measured = fetch_measure(alt, retry_dir)
+            if "snr" in measured:
+                (retry_dir / f"{alt.id}.fits").replace(
+                    cache / "fits" / f"{alt.id}.fits"
+                )
+                targets.loc[targets.id.eq(alt.id), "uri"] = alt.uri
+                for k, v in {**measured, "uri": alt.uri, "error": ""}.items():
+                    frame.loc[frame.id.eq(alt.id), k] = v
+                replacements.append({"id": alt.id, "uri": alt.uri})
+    if replacements:
+        receipt_rows = pd.DataFrame(replacements)
+        if receipt.exists():
+            receipt_rows = pd.concat(
+                [pd.read_csv(receipt), receipt_rows]
+            ).drop_duplicates("id", keep="last")
+        receipt_rows.to_csv(receipt, index=False)
+        targets.to_csv(cache / "targets.csv", index=False)
+        frame.to_csv(cache / "screen.csv", index=False)
 
 
 if __name__ == "__main__":
