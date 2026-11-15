@@ -13,7 +13,7 @@ from pathlib import Path
 import time
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
-from urllib.request import Request, urlopen
+from urllib.request import urlopen
 
 import numpy as np
 import pandas as pd
@@ -51,7 +51,8 @@ class Archive:
         if not path.exists():
             for attempt in range(3):
                 try:
-                    with urlopen(Request(url, headers={"User-Agent":"Open-Space archival analysis"}), timeout=90) as response:
+                    request_url = url.replace("www.astrouw.edu.pl", "ogle.astrouw.edu.pl") if attempt == 1 and url.startswith(OGLE) else url
+                    with urlopen(request_url, timeout=90) as response:
                         data = response.read()
                     break
                 except HTTPError as exc:
