@@ -1,0 +1,67 @@
+{
+  "lens": "WISEPC J131106.24+012252.4",
+  "source_id": "3690955123061984640",
+  "original_frame": "Kirkpatrick et al. 2019 Table 6, 18 NPARSEC epochs, 5.1 years, 99 reference objects; printed J2013.23 position 197.776260 deg, +1.3810927 deg, without coordinate uncertainties.",
+  "original_date": "2038-09-13",
+  "original_separation_mas": 47.4,
+  "gaia_query": "SELECT source_id,ra,dec,pmra,pmdec,parallax,phot_g_mean_mag,ruwe FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',197.77626,1.3810927,0.21)) AND phot_g_mean_mag<18.5",
+  "procedure": "Select local Gaia with G<17.5, RUWE<1.4, finite parallax and distance from nominal dwarf <480 arcsec. Propagate their catalog positions to observation time, find nearest VIKING detection within 500 mas and subtract the median east/north reference offset from the target. Propagate the position change alone with the original proper motion and parallax. Round numbers here to catalog resolution.",
+  "vista": [
+    {
+      "url": "https://dataportal.eso.org/dataPortal/file/ADP.2020-03-02T18:38:36.566",
+      "sha256": "cd95ea7ebe507ab361adc6a47ba191ea9f2893729525226e5d5dae9adb04d9dc",
+      "epoch_jyear": 2014.14875,
+      "J_aper3": 20.1095,
+      "J_error": 0.08975,
+      "PPERRBITS": 16,
+      "local_median_radial_residual_mas": 89.6,
+      "gaia_reference_stars": 39,
+      "target_registered_minus_predicted_mas": [
+        -222.8,
+        -311.4
+      ],
+      "date": "2038-04-27",
+      "separation_mas": 284.7,
+      "peak_shift_mas_at_005Msun": 0.0982
+    },
+    {
+      "url": "https://dataportal.eso.org/dataPortal/file/ADP.2020-03-02T18:38:36.567",
+      "sha256": "761107e352f3308e6ec964e2b90fec79e92c57061c1e5062b884cd52b3de458b",
+      "epoch_jyear": 2016.36045,
+      "J_aper3": 18.8832,
+      "J_error": 0.03717,
+      "PPERRBITS": 0,
+      "local_median_radial_residual_mas": 87.8,
+      "gaia_reference_stars": 39,
+      "target_registered_minus_predicted_mas": [
+        -256.7,
+        -425.9
+      ],
+      "date": "2038-03-05",
+      "separation_mas": 303.5,
+      "peak_shift_mas_at_005Msun": 0.0921
+    }
+  ],
+  "disposition": "Several-tenths-arcsecond position differences across independent J band catalogs move this pairing below the nominal 0.1 mas displacement threshold. Screen only.",
+  "gaia_source_five": {
+    "ra": 197.77829029359071,
+    "dec": 1.3753537432690692,
+    "pmra": -13.221983660499369,
+    "pmdec": -4.049515389926564,
+    "parallax": 0.1048344545022975,
+    "ruwe": 0.9911474
+  },
+  "ntt_lens": {
+    "ra": 197.77626,
+    "dec": 1.3810927,
+    "epoch": 2013.23,
+    "parallax": 68.8,
+    "parallax_error": 2.7,
+    "pmra": 277.9,
+    "pmdec": -813.9,
+    "pmra_error": 0.9,
+    "pmdec_error": 0.9,
+    "ref": "https://vizier.cfa.harvard.edu/viz-bin/VizieR?-source=J/ApJS/240/19"
+  },
+  "replay": "For each product, obtain registered VISTA east/north position relative to the NTT anchor by subtracting the tabulated frame medians from the VISTA tangent-plane coordinate offsets. Subtract the NTT proper-motion displacement and ERFA Earth parallax at the VISTA epoch. Add this estimated constant bias to the NTT foreground in the parent forecast.py model. Daily sampling is sufficient to reproduce the published rounded values."
+}
