@@ -41,6 +41,10 @@ MAXI's Gas Slit Camera measured a brighter middle third than the two outer sixth
 | 4–10 keV | 0.05707 | 0.01825 | +0.03883 | +0.03289 to +0.04486 |
 | 10–20 keV | 0.02625 | 0.01880 | +0.00745 | +0.00052 to +0.01419 |
 
+![MAXI middle-minus-outer band fluxes with eclipse controls, alongside individual and combined XRT annular count rates](xray-energy-bands.png)
+
+Left, the bars span the 95% within-cycle day-bootstrap interval. Right, open symbols show each XRT visit outside eclipse and filled symbols show combined exposure-weighted rates. The instruments have distinct energy bands and units. [Figure code](plot_energy_bands.py)
+
 Values are band-integrated photon fluxes in photons cm⁻² s⁻¹. We interpolated phase separately between consecutive *Swift* troughs, removed MAXI pointings within 0.17 orbital cycles of binary mid-eclipse, and included negative fluxes. We averaged orbit bins within each sampled integer MJD day, days within each phase region, and then the four cycles with equal weights. The middle and outer intervals contribute 434 and 247 orbit bins, respectively, across 44 and 27 day-by-cycle cells. Flux cuts could favor positive noise in the faint sample. We applied quality cuts only to flux uncertainties and finite values.
 
 The 10–20 keV fraction of the summed three-band flux rose from 0.202 in the middle to 0.346 near the troughs. The middle-minus-outer difference is −0.144, with a stratified day-bootstrap interval of −0.204 to −0.085. Using windows a quarter-cycle wide gives −0.135. Omitting each cycle in turn gives −0.178 to −0.125 with the original windows. The bootstrap resamples days within the eight cycle and phase cells and preserves all three bands together. It conditions on these four cycles and the Swift trough times. Serial dependence, diffuse background, the instrument response and missing days can affect the estimate. In particular, the eclipse-core control also has a positive middle-minus-outer contrast of 0.0109 and 0.0104 in the two softer bands. Its 10–20 keV contrast is −0.0039. The core has only 13 middle and 10 outer day-by-cycle cells. Its near-zero outer summed flux makes a hardness ratio unstable.
