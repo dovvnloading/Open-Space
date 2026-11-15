@@ -4,6 +4,8 @@ on:
     paths:
       - examples/forbush_dst_independent.py
       - tests/test_forbush_dst_independent.py
+      - examples/audit_neutron_monitor_identity.py
+      - tests/test_audit_neutron_monitor_identity.py
       - .github/workflows/forbush-dst-replay.yml
   workflow_dispatch:
 
@@ -21,6 +23,7 @@ jobs:
           python-version: "3.12"
       - run: python -m pip install 'pyarrow>=17,<24'
       - run: python -m unittest discover -s tests -p test_forbush_dst_independent.py -v
+      - run: python -m unittest discover -s tests -p test_audit_neutron_monitor_identity.py -v
       - name: Download public archives and compute independent holdout
         run: python examples/forbush_dst_independent.py --fetch --output /tmp/forbush-dst-summary.json --draws 3000
       - name: Show compact archived findings
@@ -35,8 +38,12 @@ jobs:
                     'hits',part['hits_48h'],
                     'null',part['null_year_month_matched'])
           PY
+      - name: Independently audit neutron-monitor station identity provenance
+        run: python examples/audit_neutron_monitor_identity.py --fetch --output /tmp/neutron-identity-audit.json
       - uses: actions/upload-artifact@v4
         with:
           name: independent-forbush-dst-results
-          path: /tmp/forbush-dst-summary.json
+          path: |
+            /tmp/forbush-dst-summary.json
+            /tmp/neutron-identity-audit.json
           if-no-files-found: error
