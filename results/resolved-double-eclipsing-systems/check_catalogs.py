@@ -10,6 +10,8 @@ import numpy as np
 from scipy.spatial import cKDTree
 
 CATALOGS = {
+    "zasche22a": "J/A+A/659/A8",
+    "zasche22b": "J/A+A/664/A96",
     "hartman": "J/ApJ/934/72",
     "msc": "J/ApJS/235/6",
     "vaessen": "J/A+A/682/A164",
@@ -24,6 +26,15 @@ def vectors(ra, dec):
     return np.stack([np.cos(dec)*np.cos(ra),np.cos(dec)*np.sin(ra),np.sin(dec)],axis=-1)
 
 
+def angle(value, hour_angle=False):
+    parts = value.strip().split()
+    if len(parts) == 1:
+        return float(value)
+    degrees, minutes, seconds = map(float, parts)
+    sign = -1 if value.lstrip().startswith("-") else 1
+    return sign * (abs(degrees) + minutes / 60 + seconds / 3600) * (15 if hour_angle else 1)
+
+
 def read_points(content):
     header = []
     coords = []
@@ -36,7 +47,7 @@ def read_points(content):
         if cells[0].strip().isdigit():
             row = dict(zip(header,cells))
             if "RAJ2000" in row:
-                coords.append((float(row["RAJ2000"]),float(row["DEJ2000"])))
+                coords.append((angle(row["RAJ2000"], hour_angle=True),angle(row["DEJ2000"])))
             elif "RA_ICRS" in row:
                 coords.extend([(float(row["RA_ICRS"]),float(row["DE_ICRS"])),(float(row["RA2deg"]),float(row["DE2deg"]))])
             elif "_RA" in row:

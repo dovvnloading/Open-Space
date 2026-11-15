@@ -1,4 +1,4 @@
-"""Draw red-band, time-split phase curves for the three candidates."""
+"""Draw red-band, time-split phase curves for the two candidates."""
 import csv
 import json
 from pathlib import Path
@@ -10,8 +10,8 @@ import pandas as pd
 root = Path(__file__).resolve().parent
 epochs = pd.read_csv(root / "ztf_epochs.csv.gz", dtype={"source_id":str,"oid":str})
 validation = json.loads((root / "validation.json").read_text())
-systems = [r for r in csv.DictReader((root / "four_recoveries.csv").open()) if r["previous_fezenko"]=="False"]
-fig, axes = plt.subplots(3, 2, figsize=(9.7,7.7),layout="constrained")
+systems = [r for r in csv.DictReader((root / "four_recoveries.csv").open()) if r["prior_architecture"]=="no match in audited literature"]
+fig, axes = plt.subplots(2, 2, figsize=(9.7,5.7),layout="constrained")
 for row,system in enumerate(systems):
     for col in range(2):
         ax=axes[row,col]
@@ -35,7 +35,7 @@ for row,system in enumerate(systems):
         ax.grid(alpha=.18)
         ax.set_title(f"Gaia {sid}\n{fit['own_period']:.6f} d",fontsize=10)
         if col==0:ax.set_ylabel("Relative r magnitude")
-        if row==2:ax.set_xlabel("Orbital phase")
+        if row==len(systems)-1:ax.set_xlabel("Orbital phase")
 axes[0,0].legend(loc="best",fontsize=8)
-fig.suptitle("Resolved ZTF eclipse clocks in three candidate quadruples",fontsize=14)
+fig.suptitle("Resolved ZTF eclipse clocks in two candidate quadruples",fontsize=14)
 fig.savefig(root/"folded_clocks.png",dpi=145)
