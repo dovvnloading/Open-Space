@@ -52,10 +52,11 @@ We searched the identifiers and temporary discovery names together in the MPC qu
 
 ## Reproduction
 
-Run the population screen with Python, NumPy and SciPy. An existing snapshot is read as supplied. An absent path triggers a current JPL query. The live catalog can change. Compare the digest and denominators with the archived receipt.
+Replay all 928,697,253 possible pair comparisons with Python, NumPy and SciPy. The compressed table preserves the JPL values used by the screen for every object. Its 730 ranked results reproduce the archived CSV byte for byte. To rerun on the live catalog, supply a new JSON file path in place of the compressed table. The original HTTP response digest and the selection-table digest are recorded separately. [Original source receipt](screen.json) · [Frozen selection-table receipt](population.json)
 
 ```sh
-python screen.py /tmp/neo-sbdb.json /tmp/nea-ranking.csv
+python screen.py population.csv.gz /tmp/nea-ranking.csv
+cmp ranking.csv /tmp/nea-ranking.csv
 ```
 
 The orbit tests replay from frozen telescope measurements, station coordinates and seed elements. Each fit produces a state vector, osculating elements, residuals for every observation, and separate-label and station-withheld checks. [Build and replay instructions](orbits/README.md) · [Original observing positions](orbits/astrometry.csv) · [Fitted states and residuals](orbits/fits)

@@ -1,7 +1,9 @@
 """Rank pairs in a JPL SBDB near-Earth asteroid snapshot. Requires NumPy and SciPy."""
 import argparse
 import csv
+import gzip
 import hashlib
+import io
 import json
 from pathlib import Path
 from urllib.parse import urlencode
@@ -32,8 +34,11 @@ def orbit_vectors(table):
 
 
 def rank(raw, output):
-    catalog = json.loads(raw)
-    rows = [dict(zip(catalog["fields"], values)) for values in catalog["data"]]
+    if raw.startswith(b"\x1f\x8b"):
+        rows = list(csv.DictReader(io.StringIO(gzip.decompress(raw).decode())))
+    else:
+        catalog = json.loads(raw)
+        rows = [dict(zip(catalog["fields"], values)) for values in catalog["data"]]
     vectors = orbit_vectors(rows)
     indices = cKDTree(vectors).query_pairs(THRESHOLD, output_type="ndarray")
     scores = np.linalg.norm(vectors[indices[:, 0]] - vectors[indices[:, 1]], axis=1)

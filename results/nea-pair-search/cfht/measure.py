@@ -86,8 +86,15 @@ def main():
         if not path.exists():
             with urlopen(meta['cutout_url'], timeout=100) as response:
                 path.write_bytes(response.read())
-        if hashlib.sha256(path.read_bytes()).hexdigest() != meta['cutout_sha256']:
-            raise ValueError('CADC cutout differs from frozen bytes: '+frame)
+        with fits.open(path) as hdus:
+            hdu = next(h for h in hdus if h.data is not None)
+            props = {k: hdu.header[k] for k in ('MJD-OBS', 'EXPTIME', 'FILTER', 'OBJECT')}
+            wcs = dict(WCS(hdu.header).to_header(relax=True))
+            metadata = json.dumps([wcs, props, list(hdu.data.shape)], sort_keys=True,
+                                  separators=(',', ':')).encode()
+            pixels = np.asarray(hdu.data, dtype='<f8').tobytes(order='C')
+            if hashlib.sha256(metadata + pixels).hexdigest() != meta['measurement_input_sha256']:
+                raise ValueError('CADC image pixels, astrometry or exposure metadata changed: ' + frame)
         row, (patch,predicted,measured), ctrl = measure(frame, meta, path)
         rows.append(row)
         controls.append(ctrl)

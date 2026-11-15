@@ -20,7 +20,7 @@ A separate fixed-position test convolves each image with a 1.9-pixel Gaussian tr
 
 ## Replay
 
-From this directory, with Python 3, NumPy, SciPy, Astropy and Matplotlib installed, run the following command. Input cutouts are cached and their SHA-256 digests checked before fitting.
+From this directory, with Python 3, NumPy, SciPy, Astropy and Matplotlib installed, run the following command. Input cutouts are cached. The manifest records the initial response digest and a second SHA-256 digest covering pixel values, WCS, image shape, target, filter, exposure time and start time. CADC can reserialize the same FITS image differently on repeat requests. The replay verifies the measurement inputs.
 
 ```sh
 python measure.py /tmp/nea-cfht-images /tmp/nea-cfht-measurements
