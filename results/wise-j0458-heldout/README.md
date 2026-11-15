@@ -84,10 +84,10 @@ Propagate the parent fixed catalog coordinate and proper motion to **2028-09-06*
 
 ## Reproduce and review
 
-The only repository changes in this PR are **new files in this directory**. They do not modify PR #41's sources, computations, or other science projects. After PR #41 is merged (or with this PR stacked on PR #41), run:
+The only repository changes in this PR are **four new files in this directory plus one new CI regression test in `tests/`**. No file introduced before this PR is modified; PR #41's sources, computations, and other science projects are untouched. After PR #41 is merged (or with this PR stacked on PR #41), run:
 
 ~~~sh
 python results/wise-j0458-heldout/recheck.py
 ~~~
 
-This reads the frozen four source FITS images, LOFAR catalog row and five local pointing dates in the pre-existing parent folder, recalculates all patches and matched off-source controls, and writes a full-precision local **measurements.json**. The checked-in [native-pixel-tests.csv](native-pixel-tests.csv) reports independently recomputed rounded results. The [protocol](protocol.md) records the competing hypotheses and pre-specified falsifiers. No new full-sky false-alarm probability, calibrated visibilities, or archival non-VLASS data reduction is claimed.
+This independently reads the frozen four source FITS images (NumPy/Astropy only), LOFAR catalog row and five local pointing dates in the pre-existing parent folder, recalculates all patches and matched off-source controls, and writes a full-precision local **measurements.json**. The new regression test `tests/test_wise_j0458_heldout.py` executes the analysis in CI with temporary output and checks source coefficients, null ranks, morphology and the 2028 astrometric prediction. The checked-in [native-pixel-tests.csv](native-pixel-tests.csv) reports independently recomputed rounded results. The [protocol](protocol.md) records the competing hypotheses and pre-specified falsifiers. No new full-sky false-alarm probability, calibrated visibilities, or archival non-VLASS data reduction is claimed.
