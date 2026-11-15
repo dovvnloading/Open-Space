@@ -4,6 +4,10 @@ Gaia DR3 5853391820057551616 (TIC 384244835), an eclipsing binary 10.435 arcsec 
 
 This is a source attribution for a previously recorded signal. The Gaia object was already classified as an eclipsing binary. ExoFOP still labels the TOI a planet candidate, lists zero time-series follow-up observations, and gives a nominal radius of 140 Earth radii, itself a reason to question the planetary interpretation. The TESS pipeline had already measured the positional offset. The contribution here is its cross-identification with a specified, independently timed Gaia eclipsing binary. The automated catalog and follow-up history retain their published dispositions.
 
+![Projected eclipse centroids and aperture flux controls in all eight TESS sectors](centroids.png)
+
+*Intervals span the 5th–95th percentiles after resampling whole eclipses. Two brown points denote the sectors with inconclusive localizations. [Recreate this figure](plot.py)*
+
 ## Measurements
 
 | Quantity | Measurement |
