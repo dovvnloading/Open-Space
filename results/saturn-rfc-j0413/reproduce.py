@@ -48,6 +48,9 @@ def load_ephemeris(entry):
         frame = doc["ephemeris"]["reference_frame"]
         if doc["ephemeris"]["planetary_theory"] != "INPOP19" or "astrometric J2000" != frame["type"]:
             raise ValueError("Unexpected Miriade model or frame")
+        expected_center = "geocenter" if entry["station"]=="geocenter" else "topocenter"
+        if frame["center"] != expected_center:
+            raise ValueError("Unexpected Miriade observing site")
         jd = np.array([2451545 + (datetime.fromisoformat(r["Date"]).replace(tzinfo=timezone.utc)
                                   - J2000).total_seconds()/86400 for r in rows])
         ra = np.array([15 * sexagesimal(r["RA"]) for r in rows])
