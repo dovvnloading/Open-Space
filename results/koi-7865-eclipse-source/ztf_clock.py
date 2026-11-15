@@ -47,9 +47,11 @@ def fit(label, use, time, band, oid, mag):
                           x_scale='jac',max_nfev=300)
     # Cluster-robust covariance for soft-L1 estimating equations. Group all
     # measurements on the same Palomar night, including both filters.
-    from scipy.optimize._numdiff import approx_derivative
     v=solution.x
-    jac=approx_derivative(residual,v,abs_step=np.repeat(1e-5,len(v)))
+    step = 1e-5
+    shifts = np.eye(len(v)) * step
+    jac = np.column_stack([(residual(v+delta)-residual(v-delta))/(2*step)
+                           for delta in shifts])
     r=residual(v); frac=(1+(r/1.5)**2)
     projected=np.linalg.pinv(jac.T@(jac*frac[:,None]**-1.5))
     nights,night=np.unique(np.floor(t),return_inverse=True)

@@ -1,5 +1,4 @@
 """Repeat the identifier checks against three published Kepler catalogs."""
-import hashlib
 import re
 from urllib.parse import urlencode
 from urllib.request import urlopen
