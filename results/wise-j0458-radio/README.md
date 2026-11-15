@@ -22,6 +22,10 @@ The 2025 visit prompted the follow-up. All three available earlier visits were t
 - Each visit uses its actual FITS observing date. The published 2025 July 3 position is (74.7268°, +64.5825°), with proper motion (+218, +300) mas/yr in (α cos δ, δ). At each fixed position, fit the FITS restoring beam by ordinary least squares together with a background plane. Repeat on 100 controls in a 7–35″ annulus at six-pixel spacing, then on 8,260 positions translated along the same sky track across a 10′ image. Noise estimates come from the fits to controls, which preserve beam-scale noise correlations. The free centroids use a separate local Gaussian-beam fit with floating amplitude and position. [Catalog and data URLs](sources.json) · [Local control amplitudes](controls.csv)
 - The available images measure visit-integrated Stokes I. The evidence constrains a moving source near WISE J0458+6434AB. Component assignment, emission mechanism, polarization, burst profile and duty cycle require additional data. In particular, the 2020 nondetection alone cannot establish a variability period.
 
+## A stationary-source test
+
+We also let a single stationary radio source choose its best position and vary its flux freely between visits. A fit using the catalog motion and one shared position offset returned 0.757, −0.157, 0.466 and 0.470 mJy/beam in chronological order. The best stationary fit returned 0.755, −0.147, 0.357 and 0.066 mJy/beam. The 2025 image provides most of the discrimination. Removing the 2020 visit, widening the search in position, or changing the local background window preserved the preference for motion. The score difference of 14.44 compares fitted amplitudes in units of empirical noise. It has no calibrated chi-squared interpretation. A blend of individually variable sources is still possible. The relative orbit, parallax and astrometric calibration limit sub-arcsecond interpretation. [Fit and local controls](track-fit.json) · [Reproduce the position fit](track_fit.py)
+
 ## Prior reports
 
 A search for WISE J0458+6434, WISEPA J045853.89+643452.9, WISEP J045853.90+643452.6 and corresponding coordinate abbreviations with “radio”, “VLA” and “VLASS” located the infrared binary and variability literature. A 2026 radio census enumerated seven confirmed radio T-dwarf systems, including the T8 WISE J0623−0456. It did not list WISE J0458+6434AB. A separate VLASS investigation reported no associated radio emission for its brown-dwarf sample. Searches and catalog comparisons cannot establish unconditional priority. [2026 radio census](https://academic.oup.com/mnras/article/546/4/stag085/8431331) · [2025 VLASS survey](https://doi.org/10.1051/0004-6361/202555032)
@@ -33,8 +37,10 @@ The four frozen science cutouts hold the source data in Jy/beam. Their original 
 ```sh
 python replay.py
 python figure.py
+python check.py
 python acquire.py /tmp/wise0458-wide --side 601
 python field_controls.py /tmp/wise0458-wide .
+python registration.py /tmp/wise0458-wide field-registration.csv
 ```
 
-The archived files permit the four-epoch replay offline. The last two commands retrieve the larger original fields and regenerate the 8,260 translated control tracks. A reader can check the flags and synthesis beam directly in each FITS header. [Input receipts](sources.json) · [NRAO VLASS data](https://science.nrao.edu/vlass/)
+The archived files permit the four-epoch replay offline. The last three commands retrieve the larger original fields and regenerate the 8,260 translated control tracks. A reader can check the flags and synthesis beam directly in each FITS header. [Input receipts](sources.json) · [NRAO VLASS data](https://science.nrao.edu/vlass/)
