@@ -1,0 +1,186 @@
+\                                                                               
+\fixlen = T
+\RowsRetrieved =                 0
+\ORIGIN  = 'IPAC Infrared Science Archive (IRSA), Caltech/JPL'
+\SIMULATED_TABLE  = 'n'
+\DATETIME= '2026-11-15 02:45:23'
+\DATABASE= 'IRS Enhanced Products (irs_enhv211)'
+\EQUINOX = 'J2000'
+\SKYAREA = 'within 60 arcsec of  ra=242.65032 dec=-51.36495 Eq J2000 '
+\StatusFile = '/workspace/TMP_Gx6fSE_2940548/Gator/irsa/2940548/log.2940548.html'
+\SQL     = 'WHERE (no constraints) 
+\SQL     = 'SELECT (82 column names follow in next row.)'
+\ 
+\ reqkey 
+\ ___ Spitzer Request ID
+\ tn 
+\ ___ Nth Target in this AOR
+\ object 
+\ ___ Object name specified by observer
+\ ra (deg) 
+\ ___ Primary Extraction RA J2000.
+\ dec (deg) 
+\ ___ Primary Extraction DEC J2000
+\ clon 
+\ ___ Right ascention in Sexagesimal format.
+\ clat 
+\ ___ Declination in Sexagesimal format.
+\ cra 
+\ ___ HHhMMmSS.SSs form for RA
+\ cdec 
+\ ___ +DDdMMmSS.Ss form for DEC
+\ irac8 (Jy) 
+\ ___ IRAC 8 um flux
+\ irac8u (Jy) 
+\ ___ IRAC 8 um flux unc
+\ iras12 (Jy) 
+\ ___ IRAS 12 um flux
+\ iras12u (Jy) 
+\ ___ IRAS 12 um flux unc
+\ irs16 (Jy) 
+\ ___ IRS 16 um flux
+\ irs16u (Jy) 
+\ ___ IRS 16 um flux unc
+\ irs22 (Jy) 
+\ ___ IRS 22 um flux
+\ irs22u (Jy) 
+\ ___ IRS 22 um flux unc
+\ mips24 (Jy) 
+\ ___ MIPS 24 um flux
+\ mips24u (Jy) 
+\ ___ MIPS 24 um flux unc
+\ iras25 (Jy) 
+\ ___ IRAS 25 um flux
+\ iras25u (Jy) 
+\ ___ IRAS 25 um flux unc
+\ mips24_irac8 
+\ ___ color ratio: MIPS24 / IRAC8
+\ mips24_irs16 
+\ ___ color ratio: MIPS24 / IRS16
+\ irs16_irac8 
+\ ___ color ratio: IRS16  / IRAC8
+\ iras25_iras12 
+\ ___ color ratio: IRAS25 / IRAS12
+\ ra_sl (deg) 
+\ ___ Mean extraction RA for SL (orders 1&2)
+\ dec_sl (deg) 
+\ ___ Mean extraction DEC for SL (orders 1&2)
+\ pa_sl (deg) 
+\ ___ Mean FOV_PA for SL (orders 1&2)
+\ ra_ll (deg) 
+\ ___ Mean extraction RA for LL (orders 3&4)
+\ dec_ll (deg) 
+\ ___ Mean extraction DEC for LL (orders 3&4)
+\ pa_ll (deg) 
+\ ___ Mean FOV_PA for LL (orders 3&4)
+\ date_obs 
+\ ___ Date/Time of first observation (UTCS)
+\ campname 
+\ ___ Spitzer campaign name
+\ bandpass 
+\ ___ Bandpass definition
+\ oflag 
+\ ___ Order flags, sum of: 1=SL2 2=SL1 4=LL2 8=LL1
+\ ratio_sl2_sl1 
+\ ___ flux ratio SL2 / SL1
+\ ratio_sl1_ll2 
+\ ___ flux ratio SL1 / LL2
+\ ratio_ll2_ll1 
+\ ___ flux ratio LL2 / LL1
+\ ra_rqst (deg) 
+\ ___ Requested RA J2000
+\ dec_rqst (deg) 
+\ ___ Requested DEC J2000
+\ ra_del (deg) 
+\ ___ delta RA = (RA-RQST_RA) * cos(DEC)
+\ dec_del (deg) 
+\ ___ delta DEC = DEC - RQST_DEC
+\ width_sl2 (arcsec) 
+\ ___ SL2 width of profile
+\ width_sl1 (arcsec) 
+\ ___ SL1 width of profile
+\ width_ll2 (arcsec) 
+\ ___ LL2 width of profile
+\ width_ll1 (arcsec) 
+\ ___ LL1 width of profile
+\ ra1 (deg) 
+\ ___ Primary extraction corner 1 RA J2000
+\ dec1 (deg) 
+\ ___ Primary extraction corner 1 DEC J2000
+\ ra2 (deg) 
+\ ___ Primary extraction corner 2 RA J2000
+\ dec2 (deg) 
+\ ___ Primary extraction corner 2 DEC J2000
+\ ra3 (deg) 
+\ ___ Primary extraction corner 3 RA J2000
+\ dec3 (deg) 
+\ ___ Primary extraction corner 3 DEC J2000
+\ ra4 (deg) 
+\ ___ Primary extraction corner 4 RA J2000
+\ dec4 (deg) 
+\ ___ Primary extraction corner 4 DEC J2000
+\ ra1_sl (deg) 
+\ ___ SL extraction corner 1 RA J2000
+\ dec1_sl (deg) 
+\ ___ SL extraction corner 1 DEC J2000
+\ ra2_sl (deg) 
+\ ___ SL extraction corner 2 RA J2000
+\ dec2_sl (deg) 
+\ ___ SL extraction corner 2 DEC J2000
+\ ra3_sl (deg) 
+\ ___ SL extraction corner 3 RA J2000
+\ dec3_sl (deg) 
+\ ___ SL extraction corner 3 DEC J2000
+\ ra4_sl (deg) 
+\ ___ SL extraction corner 4 RA J2000
+\ dec4_sl (deg) 
+\ ___ SL extraction corner 4 DEC J2000
+\ ra1_ll (deg) 
+\ ___ LL extraction corner 1 RA J2000
+\ dec1_ll (deg) 
+\ ___ LL extraction corner 1 DEC J2000
+\ ra2_ll (deg) 
+\ ___ LL extraction corner 2 RA J2000
+\ dec2_ll (deg) 
+\ ___ LL extraction corner 2 DEC J2000
+\ ra3_ll (deg) 
+\ ___ LL extraction corner 3 RA J2000
+\ dec3_ll (deg) 
+\ ___ LL extraction corner 3 DEC J2000
+\ ra4_ll (deg) 
+\ ___ LL extraction corner 4 RA J2000
+\ dec4_ll (deg) 
+\ ___ LL extraction corner 4 DEC J2000
+\ heritagefilename 
+\ ___ full path filename to product in SHA
+\ xtable 
+\ ___ HTML link to product for Gator
+\ enhid 
+\ ___ Spitzer database Enhanced Product ID
+\ campid 
+\ ___ Campaign ID in Spitzer database
+\ obsrvr 
+\ ___ Name of observer
+\ progid 
+\ ___ Observation program ID
+\ wave_min (um) 
+\ ___ wavelength of first data line
+\ wave_max (um) 
+\ ___ wavelength of last data line
+\ filetype 
+\ ___ Type of file (always "Table")
+\ filedesc 
+\ ___ File description (always "IRS Merged Spectrum")
+\ instmode 
+\ ___ Instrument mode (always "Irs Stare")
+\ equinox 
+\ ___ Equinox of observation (always 2000)
+\ dist (arcsec) 
+\ ___ Distance between the target position and each source in arcsec.
+\ angle (deg) 
+\ ___ Position Angle in degree.
+\ 
+|   reqkey|   tn|               object|        ra|       dec|          clon|          clat|          cra|         cdec|      irac8|     irac8u|     iras12|    iras12u|      irs16|     irs16u|      irs22|     irs22u|     mips24|    mips24u|     iras25|    iras25u| mips24_irac8| mips24_irs16| irs16_irac8| iras25_iras12|     ra_sl|    dec_sl|      pa_sl|     ra_ll|    dec_ll|      pa_ll|            date_obs|   campname|                 bandpass| oflag| ratio_sl2_sl1| ratio_sl1_ll2| ratio_ll2_ll1|   ra_rqst|  dec_rqst|    ra_del|   dec_del| width_sl2| width_sl1| width_ll2| width_ll1|       ra1|      dec1|       ra2|      dec2|       ra3|      dec3|       ra4|      dec4|    ra1_sl|   dec1_sl|    ra2_sl|   dec2_sl|    ra3_sl|   dec3_sl|    ra4_sl|   dec4_sl|    ra1_ll|   dec1_ll|    ra2_ll|   dec2_ll|    ra3_ll|   dec3_ll|    ra4_ll|   dec4_ll|                                                                 heritagefilename|                                                                                                                                 xtable|    enhid| campid|             obsrvr| progid|  wave_min|  wave_max| filetype|             filedesc|  instmode| equinox|           dist|       angle|
+|      int|  int|                 char|    double|    double|          char|          char|         char|         char|     double|     double|     double|     double|     double|     double|     double|     double|     double|     double|     double|     double|       double|       double|      double|        double|    double|    double|     double|    double|    double|     double|                char|       char|                     char|   int|        double|        double|        double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|    double|                                                                             char|                                                                                                                                   char|      int|    int|               char|    int|    double|    double|     char|                 char|      char|     int|         double|      double|
+|         |     |                     |       deg|       deg|              |              |             |             |         Jy|         Jy|         Jy|         Jy|         Jy|         Jy|         Jy|         Jy|         Jy|         Jy|         Jy|         Jy|             |             |            |              |       deg|       deg|        deg|       deg|       deg|        deg|                    |           |                         |      |              |              |              |       deg|       deg|       deg|       deg|    arcsec|    arcsec|    arcsec|    arcsec|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|       deg|                                                                                 |                                                                                                                                       |         |       |                   |       |        um|        um|         |                     |          |        |         arcsec|         deg|
+|     null| null|                 null|      null|      null|          null|          null|         null|         null|       null|       null|       null|       null|       null|       null|       null|       null|       null|       null|       null|       null|         null|         null|        null|          null|      null|      null|       null|      null|      null|       null|                null|       null|                     null|  null|          null|          null|          null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|      null|                                                                             null|                                                                                                                                   null|     null|   null|               null|   null|      null|      null|     null|                 null|      null|    null|           null|        null|

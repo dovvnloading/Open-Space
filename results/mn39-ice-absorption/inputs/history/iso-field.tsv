@@ -1,0 +1,43 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T10:45:51 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T10:45:51	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=VI%2F111%2Fisolog&-c=242.63+-51.36&-c.rm=15&-out.max=200&-out.add=_r	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=242.630000-51.360000,rm=15.	
+#Constraint -out.add=_r
+
+#RESOURCE=yCat_6111
+#Name: VI/111
+#Title: ISO Observation Log (ISO Data Centre, 2004)
+#INFO	ivoid=ivo://cds.vizier/vi/111	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/vi/111	    IVOID of underlying data collection
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/VI/111	    Dataset landing page
+#INFO	publication_date=2021-01-28	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	VI_111_isolog:
+#Name: VI/111/isolog
+#Title: *The ISO Observation Log
+#Column	_r	(F6.3)	Distance from center (242.6300-51.3600)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	Target	(a30)	Target Name, as given by the observer	[ucd=meta.id;obs.observer]
+#Column	AOT	(A5)	Astronomical observing template (2)	[ucd=phys.atmol.configuration;instr.setup]
+#Column	TDT	(A8)	Number that identifies an ISO Observation	[ucd=meta.id;obs.param;obs]
+#Column	RAJ2000	(F8.4)	Actual pointing Right Ascension (J2000) (3)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F8.4)	Actual pointing Declination (J2000) (3)	[ucd=pos.eq.dec;meta.main]
+#Column	abs	(A1)	[+] '+' when the abstract is available (5)	[ucd=meta.code]
+#Column	oLen	(I5)	Duration of observation	[ucd=time.duration;obs]
+_r	Target	AOT	TDT	RAJ2000	DEJ2000	abs	oLen
+arcmin	 	 	 	deg	deg	 	s
+------	------------------------------	-----	--------	--------	--------	-	-----
+13.242	SDP -29 0.0                   	CAM01	27300704	242.2930	-51.4270	+	 7060
+ 4.242	Lo 14 off                     	LWS01	81400156	242.6610	-51.2920	+	 1330
+12.172	Lo 14                         	SWS01	81600133	242.9397	-51.2991	+	 1912
+12.174	Lo 14                         	LWS01	81700132	242.9397	-51.2990	+	 2230
+
