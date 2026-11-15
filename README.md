@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 94 contributions. The catalog below has 167 entries: 79 new measurements, 40 candidate discoveries, 20 forecasts of specific events, 19 corrections to published catalogs and papers, and 9 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 170 entries: 79 new measurements, 42 candidate discoveries, 20 forecasts of specific events, 19 corrections to published catalogs and papers, and 10 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -42,6 +42,7 @@ These forecasts give a date and a geometry that anyone can test. Times and condi
 | --- | --- | --- |
 | 24 Dec 2026 | During its Venus flyby, Solar Orbiter sees Venus hide Earth (22:55 UTC) and then Jupiter (22:57 UTC), each for about 19 seconds | [Link](results/solar-orbiter-venus-jovian-occultations/README.md) |
 | 6 Feb 2027 | Venus passes in front of the radio pulsar PSR J1813−2113, as seen from the South Pole and New Zealand | [Link](results/venus-psr-j1813-2113/README.md) |
+| Feb–Jun 2027 | The star magnified by the black-hole candidate OGLE-2026-BLG-0058 should be 2–5% fainter than a simple lensing curve predicts, if its measured parallax is real | [Link](results/ogle-dark-lenses/README.md) |
 | 8, 9 and 11 Oct 2027 | Phobos casts its partial shadow on Mars's other moon, Deimos | [Link](results/deimos-penumbra-2027/README.md) |
 | 25 Nov 2027 | ESA's JUICE spacecraft passes 49,751 km from asteroid (41013) 1999 UH22 | [Link](results/juice-41013/README.md) |
 | About Sep 2028 | A radio observation can decide whether the brown-dwarf pair WISE J0458+6434 is a radio source | [Link](results/wise-j0458-heldout/README.md) |
@@ -251,10 +252,12 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 **Black holes, outbursts and supernovae**
 
+- **A candidate lone black hole bending a star's light.** Since 2025 an unseen object has magnified a star near the centre of our Galaxy (OGLE-2026-BLG-0058). Its slow, steady passage points to a dark object of about 11 solar masses, most likely a black hole, though a slow-moving ordinary star or white dwarf is not ruled out. Only one lone black hole has been confirmed so far. *Candidate* · [Details](results/ogle-dark-lenses/README.md)
 - **Infrared light from a black-hole candidate 3.3 days before its X-ray outburst was detected.** Swift J1745−26. *Measured* · [Details](results/swift-j1745-infrared/README.md)
 - **AT 2021aeuk entered a second bright-ultraviolet, faint-X-ray state.** *Measured* · [Details](results/at-2021aeuk/README.md)
 - **A recurring optical source beside an X-ray source that faded tenfold.** Gaia24dbq. *Candidate* · [Details](results/gaia24dbq/README.md)
 - **A galaxy core dimmed for years before a star was torn apart.** The host of the tidal disruption event AT 2023ugy faded in infrared and visible light before the 2023 outburst. The cause of the fading is open. *Measured* · [Details](results/at2023ugy-preflare-fading/README.md)
+- **Seven galaxy cores that flared in infrared light with no reported outburst.** In NASA's NEOWISE survey of 43,916 nearby galaxies, seven nuclei brightened suddenly and then faded for years without anyone reporting them. The largest, in CGCG 539-025, became seven times brighter in 2017. They may be stars torn apart by central black holes and hidden by dust, though a dust-buried supernova or a waking active nucleus is not excluded. *Candidate* · [Details](results/neowise-nuclear-flares/README.md)
 - **A second brightening at the core of galaxy CGCG 476-019.** *Measured* · [Details](results/cgcg-476-019-nuclear-rebrightening/README.md)
 - **An X-ray source in M51 kept its clock but skipped an eclipse.** Two rises of M51 ULX-1 fit a 6.3-day cycle, but the source stayed bright when an eclipse was expected. *Measured* · [Details](results/m51-ulx-eclipse-aliases/README.md)
 - **An X-ray flare in M83 with a red counterpart, likely a foreground star.** *Candidate* · [Details](results/m83-x039-flare/README.md)
@@ -263,6 +266,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **A faint X-ray source at SN 2009ib about seven years after the explosion.** *Candidate* · [Details](results/sn-2009ib-chandra/README.md)
 - **A "second explosion" of SN 2019bns is a different supernova 3.6 arcseconds away.** *Correction* · [Details](results/ztf-supernova-projection/README.md)
 - **Radio emission that moves with a pair of cold brown dwarfs.** WISE J0458+6434 follows the radio source across three survey visits. A blend of fixed background sources is not yet excluded. *Candidate* · [Radio detection](results/wise-j0458-radio/README.md) · [Follow-up tests](results/wise-j0458-heldout/README.md) · [Survey](results/vlass4-ultracool-dwarfs/README.md)
+- **No massive star vanished without a supernova.** None of 9,551 red supergiants in nearby galaxies faded for good in NEOWISE data, as a star collapsing straight into a black hole would. *Null result* · [Details](results/neowise-nuclear-flares/README.md#no-vanishing-supergiant)
 
 ### Galaxies and the distant universe
 
