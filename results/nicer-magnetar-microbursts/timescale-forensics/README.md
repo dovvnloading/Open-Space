@@ -1,6 +1,6 @@
 # Time-scale forensics: new holdouts and a discordant earlier burst table
 
-**Scope:** This is an additive follow-up to [PR #23](../../../../pull/23) and its
+**Scope:** This is an additive follow-up to [PR #23](https://github.com/dovvnloading/Open-Space/pull/23) and its
 [catalog-wide NICER clock test](../catalog-clock/README.md). No files in that
 analysis are altered. The new measurements here are (1) disjoint *calendar-year
 strata* of the existing event-based count table and (2) a previously unused
@@ -149,7 +149,7 @@ can be reconciled without the 69.184-s correction; (v) a future leap-second
 boundary, if data were available, fails the one-second jump predicted by an
 actual TT−UTC misuse. A **fixed 69.184-s literal subtraction** would *not*
 jump, making the alternatives observationally degenerate in NICER's
-2017–2025 span without the original serialization code.
+2017–2024 analyzed span without the original serialization code.
 
 ### Reproduction
 
@@ -160,6 +160,6 @@ python results/nicer-magnetar-microbursts/timescale-forensics/header_audit.py /p
 ```
 
 Primary references: [Chu et al. 2026, ApJS 284:25](https://doi.org/10.3847/1538-4365/ae5655);
-[Shao et al. 2024, ApJ 976:99](https://doi.org/10.3847/1538-4357/ad85f3)
-(verify final article DOI against the journal record before citing it outside this note);
+[Shao et al. 2024, ApJ 976:99](https://doi.org/10.3847/1538-4357/ad822f)
+([journal listing](https://www.iaa.es/en/publications/gtc-opticalnear-infrared-upper-limits-and-nicer-x-ray-analysis-sgr-j19352154-outburst));
 [NASA NICER timing guide](https://heasarc.gsfc.nasa.gov/docs/nicer/analysis_threads/time/).
