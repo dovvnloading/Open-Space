@@ -28,7 +28,7 @@ This is more specific than just identifying a mismatch with Kepler's third law: 
 | Kepler-446 c | 10.54 | 10.57 | 0.611 |
 | Kepler-446 d | 5.30 | 5.31 | 0.306 |
 
-Insolation scales as `1/a²`. The reported OEC axes would reduce incident flux by roughly **17–23 times** versus the source publication, substantially affecting habitability or irradiation-bin studies using these fields. The **same primary paper** (Muirhead et al. 2015, *ApJ* 801, 18, [DOI](https://doi.org/10.1088/0004-637X/801/1/18), Tables 3 and 4 and stellar properties) supplies both transit `a/Rstar` and incident flux; the irradiation calculation from the corrected axes is an additional, nonorbital cross-check, not independent telescope data. A separate [NASA Exoplanet Archive system record](https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-445) confirms the source-model parameters and presents other, distinct later models. Recomputations and diagnostics are machine readable in `primary_checks.csv` and the generated `unit_conversion_checks.csv`.
+Insolation scales as `1/a²`. The reported OEC axes would reduce incident flux by roughly **17–23 times** versus the source publication, substantially affecting habitability or irradiation-bin studies using these fields. The **same primary paper** (Muirhead et al. 2015, *ApJ* 801, 18, [DOI](https://doi.org/10.1088/0004-637X/801/1/18), Tables 3 and 4 and stellar properties) supplies both transit `a/Rstar` and incident flux; the irradiation calculation from the corrected axes is an additional, nonorbital cross-check, not independent telescope data. A separate [NASA Exoplanet Archive system record](https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-445) confirms the source-model parameters and presents other, distinct later models. Recomputations and diagnostics are machine readable in `primary_checks.csv` and the checked-in `unit_conversion_checks.csv`.
 
 **Important interpretation:** We do not declare the exact current best-fit orbital axes. The quoted stellar radii have uncertainties and the NASA archive contains later models. These are corrected values **on the OEC's adopted original 2015 stellar/transit solution**, not replacements for a new joint fit. Their uncertainty bars must be propagated in any upstream correction; the OEC's present `a` uncertainty must not simply be retained unchanged.
 
@@ -55,7 +55,7 @@ The 2019 *A&A* study of **K2-285** ([Palle et al. 2019](https://doi.org/10.1051/
 | K2-285 d | 10.45582 | 0.11780 | 1.995 | 2.403 |
 | K2-285 e | 14.76289 | 0.18041 | 3.594 | 4.330 |
 
-The relative mismatch is particularly large for e and cannot be explained by the reported small planetary masses. All four reported `a` values nevertheless agree closely with the paper's **separately fitted transit** `a/Rstar` ratios multiplied by its stellar radius **0.787 Rsun**. Thus this is **not** an OEC conversion mistake: it is an **internal tension between published transit-fit geometry and the stated shared stellar mass/periods**, propagated by downstream catalogues. It requires a review of transit fit, circularity, transit-duration systematics and any priors or parameter definitions before any physical explanation or replacement axis is claimed. Report as an **unresolved source-model consistency finding**, not four confirmed transcription errors. Exoplanet multiplicity, eccentricity and transit-fit systematics must be investigated. This contrasts with the strongly diagnosed 445/446 unit mistake.
+The relative mismatch is particularly large for e and cannot be explained by the reported small planetary masses. All four reported `a` values nevertheless agree closely with the paper's **separately fitted transit** `a/Rstar` ratios multiplied by its stellar radius **0.787 Rsun**. Thus this is **not** an OEC conversion mistake: it is an **internal tension between published transit-fit geometry and the stated shared stellar mass/periods**, propagated by downstream catalogues. It requires a review of transit fit, circularity, transit-duration systematics and any priors or parameter definitions before any physical explanation or replacement axis is claimed. Report as an **unresolved source-model consistency finding**, not four confirmed transcription errors. Exoplanet multiplicity, eccentricity and transit-fit systematics must be investigated. This contrasts with the strongly diagnosed 445/446 unit mistake. Inputs and numeric checks are in `k2_285_primary_checks.csv` and `source_model_checks.csv` (the latter produced by the same standard-library replay).
 
 ## Frozen screening denominator, and what 70 flags do *not* mean
 
@@ -79,6 +79,7 @@ A deterministic search over a **2023-10-15 OEC generated CSV**, not the live 202
    python results/oec-orbital-scale-audit/audit.py \
      --input /path/to/open_exoplanet_catalogue.txt \
      --primary-checks results/oec-orbital-scale-audit/primary_checks.csv \
+     --source-model-checks results/oec-orbital-scale-audit/k2_285_primary_checks.csv \
      --out /tmp/oec-orbit-replay
    python -m unittest discover -s tests -p 'test_oec_orbital_scale_audit.py' -v
    ```

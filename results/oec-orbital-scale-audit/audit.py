@@ -36,6 +36,13 @@ RESULT_FIELDS = (
     "host_radius_solar", "mass_inferred_solar", "mass_ratio_q",
     "disagreement_factor", "kepler_a_au", "discoverymethod", "catalogue_lastupdate",
 )
+SOURCE_FIELDS = (
+    "planet", "period_d", "paper_a_au", "paper_a_over_rstar",
+    "paper_host_mass_solar", "paper_host_radius_solar",
+    "mass_implied_by_p_and_a_solar", "mass_ratio_to_paper_host",
+    "axis_predicted_by_p_and_host_mass_au", "axis_from_paper_a_over_rstar_au",
+    "paper_axis_to_ratio_axis_percent",
+)
 PRIMARY_FIELDS = (
     "planet", "oec_reported_a_au", "paper_a_over_rstar",
     "oec_host_radius_solar", "paper_flux_earth", "temperature_k",
@@ -183,6 +190,50 @@ def primary_paper_diagnostics(stream):
     return result
 
 
+
+def source_paper_consistency(stream):
+    """Disentangle source-publication conflicts from OEC copying mistakes.
+
+    This independent check evaluates K2-285 reported transit a/Rstar vs its
+    quoted semimajor axis, and separately checks the shared stellar mass.
+    """
+    reader = csv.DictReader(stream)
+    required = {
+        "planet", "period_d", "paper_a_au", "paper_a_over_rstar",
+        "paper_host_mass_solar", "paper_host_radius_solar",
+    }
+    if required - set(reader.fieldnames or ()):
+        raise ValueError("missing source-paper check columns")
+    out = []
+    for row in reader:
+        def field(key):
+            val = positive_float(row[key])
+            if val is None:
+                raise ValueError(f"{row['planet']}: invalid {key}")
+            return val
+        a = field("paper_a_au")
+        p = field("period_d")
+        mass = field("paper_host_mass_solar")
+        radius = field("paper_host_radius_solar")
+        ar = field("paper_a_over_rstar")
+        a_ratio = ar * radius * SOLAR_RADIUS_IN_AU
+        m_dyn = implied_mass_solar(p, a)
+        out.append({
+            "planet": row["planet"],
+            "period_d": f"{p:.10g}",
+            "paper_a_au": f"{a:.9g}",
+            "paper_a_over_rstar": f"{ar:.7g}",
+            "paper_host_mass_solar": f"{mass:.7g}",
+            "paper_host_radius_solar": f"{radius:.7g}",
+            "mass_implied_by_p_and_a_solar": f"{m_dyn:.9g}",
+            "mass_ratio_to_paper_host": f"{m_dyn/mass:.9g}",
+            "axis_predicted_by_p_and_host_mass_au": f"{predicted_axis_au(p,mass):.9g}",
+            "axis_from_paper_a_over_rstar_au": f"{a_ratio:.9g}",
+            "paper_axis_to_ratio_axis_percent": f"{100*(a/a_ratio-1):.7g}",
+        })
+    return out
+
+
 def write_csv(path: Path, rows: list[dict], fieldnames):
     with path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator="\n")
@@ -198,6 +249,8 @@ def main(argv=None):
     parser.add_argument("--threshold", type=float, default=1.5)
     parser.add_argument("--primary-checks", type=Path, default=None,
                         help="curated Kepler-445/446 primary publication and 2026 XML values")
+    parser.add_argument("--source-model-checks", type=Path, default=None,
+                        help="four-planet K2-285 original-paper model consistency")
     parser.add_argument("--expect-sha256", default=None,
                         help="optional fail-closed SHA-256 of original CSV bytes")
     args = parser.parse_args(argv)
@@ -226,6 +279,11 @@ def main(argv=None):
             primary = primary_paper_diagnostics(f)
         write_csv(args.out / "unit_conversion_checks.csv", primary, PRIMARY_FIELDS)
         summary["independently_checked_primary_paper_rows"] = len(primary)
+    if args.source_model_checks:
+        with args.source_model_checks.open(encoding="utf-8", newline="") as f:
+            source_diagnostics = source_paper_consistency(f)
+        write_csv(args.out / "source_model_checks.csv", source_diagnostics, SOURCE_FIELDS)
+        summary["source_paper_model_rows_checked"] = len(source_diagnostics)
     (args.out / "summary.json").write_text(
         json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )

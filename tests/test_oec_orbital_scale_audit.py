@@ -71,6 +71,18 @@ class OrbitAuditTests(unittest.TestCase):
                             float(check['paper_flux_earth']) / 16)
             self.assertGreater(float(check['apparent_mass_ratio_q']), 70)
 
+    def test_k2_285_source_paper_not_oec_transcription(self):
+        with (HERE / 'k2_285_primary_checks.csv').open(newline='', encoding='utf-8') as f:
+            cases = audit.source_paper_consistency(f)
+        self.assertEqual(len(cases), 4)
+        expected_m = [0.6155, 1.4649, 1.9948, 3.5943]
+        for case, target_mass in zip(cases, expected_m):
+            self.assertAlmostEqual(float(case['mass_implied_by_p_and_a_solar']),
+                                   target_mass, delta=0.001)
+            self.assertLess(abs(float(case['paper_axis_to_ratio_axis_percent'])), 0.5)
+        self.assertLess(float(cases[0]['mass_ratio_to_paper_host']), 0.75)
+        self.assertGreater(float(cases[3]['mass_ratio_to_paper_host']), 4.3)
+
     def test_cli_output_sha_and_deterministic_serialization(self):
         with tempfile.TemporaryDirectory() as tmp:
             work = Path(tmp)
@@ -78,10 +90,12 @@ class OrbitAuditTests(unittest.TestCase):
             source.write_text(example_table().getvalue(), encoding='utf-8')
             out = work / 'report'
             self.assertEqual(audit.main(['--input', str(source), '--out', str(out),
-                                         '--primary-checks', str(HERE / 'primary_checks.csv')]), 0)
+                                         '--primary-checks', str(HERE / 'primary_checks.csv'),
+                                         '--source-model-checks', str(HERE / 'k2_285_primary_checks.csv')]), 0)
             summary = json.loads((out / 'summary.json').read_text())
             self.assertEqual(summary['counts']['source_rows'], 8)
             self.assertEqual(summary['independently_checked_primary_paper_rows'], 6)
+            self.assertEqual(summary['source_paper_model_rows_checked'], 4)
             with (out / 'flags.csv').open(newline='', encoding='utf-8') as f:
                 self.assertEqual(len(list(csv.DictReader(f))), 3)
             with (out / 'unit_conversion_checks.csv').open(newline='', encoding='utf-8') as f:
