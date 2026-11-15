@@ -1,0 +1,73 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-15T09:21:20 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-15T09:21:20	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=VII%2F221&-c=238.01452+7.52835&-c.rm=5&-out.max=10&-out.all=	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=238.014520+07.528350,rm=5.	
+#Constraint -out.all=
+
+#RESOURCE=yCat_7221
+#Name: VII/221
+#Title: PSCz catalog (Saunders+, 2000)
+#INFO	ivoid=ivo://cds.vizier/vii/221	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/vii/221	    IVOID of underlying data collection
+#INFO	creator=Saunders W.	    First author or institution
+#INFO	cites=bibcode:2000MNRAS.317...55S	    Article or Data origin sources
+#INFO	journal=MNRA	    Journal name
+#INFO	original_date=2000	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/VII/221	    Dataset landing page
+#INFO	publication_date=2012-09-28	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	B1950:	eq_FK4 B1950
+#Table	VII_221_pscz:
+#Name: VII/221/pscz
+#Title: Main catalogue
+#Column	CNAME	(A11)	Name e.g. Q12345+4856	[ucd=meta.id;meta.main]
+#Column	S60	(F8.2)	Flux at 60um	[ucd=phot.flux.density;em.IR.30-60um]
+#Column	q_S60	(I1)	[1,9] Flux origin and quality flag at 60um	[ucd=meta.code.qual]
+#Column	RAo	(A11)	? Optical right ascension B1950	[ucd=pos.eq.ra]
+#Column	DEo	(A11)	? Optical declination B1950	[ucd=pos.eq.dec]
+#Column	ADX	(I3)	? North/South Delta Optical/IRAS position	[ucd=pos.eq.dec;arith.diff]
+#Column	ADY	(I3)	? East/West Delta Optical/IRAS position	[ucd=pos.angDistance;pos.eq.ra]
+#Column	CAND	(A1)	? Optical candidate A,B etc	[ucd=meta.code]
+#Column	Bmag	(F6.2)	? Estimated optical B magnitude	[ucd=phot.mag;em.opt.B]
+#Column	MajAxiO	(I3)	? Optical major axis	[ucd=phys.angSize;em.opt]
+#Column	MinAxiO	(I3)	? Optical minor axis	[ucd=phys.angSize;em.opt]
+#Column	Oname	(A12)	Optical name	[ucd=meta.id]
+#Column	Hvel	(I6)	Best available heliocentric velocity (cz)	[ucd=spect.dopplerVeloc;pos.heliocentric;meta.modelled]
+#Column	e_Hvel	(I4)	Error on heliocentric velocity	[ucd=stat.error]
+#Column	r_Hvel	(I3)	Reference for heliocentric velocity	[ucd=meta.ref;pos.frame]
+#Column	RAB1950	(F8.4)	Right ascension B1950 (IRAS source)	[ucd=pos.eq.ra]
+#Column	DEB1950	(F8.4)	Declination B1950 (IRAS source)	[ucd=pos.eq.dec]
+#Column	_RA.icrs	(F8.4)	Right ascension (ICRS) (computed by VizieR, not part of the original data)	[ucd=pos.eq.ra]
+#Column	_DE.icrs	(F8.4)	Declination (ICRS) (computed by VizieR, not part of the original data)	[ucd=pos.eq.dec]
+#Table	VII_221_psczcg:
+#Name: VII/221/psczcg
+#Title: Sources close to coverage gap
+#Column	CNAME	(A11)	Name e.g. Q12345+4856	[ucd=meta.id;meta.main]
+#Column	S60	(F8.2)	Flux at 60um	[ucd=phot.flux.density;em.IR.30-60um]
+#Column	q_S60	(I1)	[1,9] Flux origin and quality flag at 60um	[ucd=meta.code.qual]
+#Column	RAo	(A11)	? Optical right ascension B1950	[ucd=pos.eq.ra]
+#Column	DEo	(A11)	? Optical declination B1950	[ucd=pos.eq.dec]
+#Column	ADX	(I3)	? North/South Delta Optical/IRAS position	[ucd=pos.eq.dec;arith.diff]
+#Column	ADY	(I3)	? East/West Delta Optical/IRAS position	[ucd=pos.angDistance;pos.eq.ra]
+#Column	CAND	(A1)	? Optical candidate A,B etc	[ucd=meta.code]
+#Column	Bmag	(F6.2)	? Estimated optical B magnitude	[ucd=phot.mag;em.opt.B]
+#Column	MajAxiO	(I3)	? Optical major axis	[ucd=phys.angSize;em.opt]
+#Column	MinAxiO	(I3)	? Optical minor axis	[ucd=phys.angSize;em.opt]
+#Column	Oname	(A12)	Optical name	[ucd=meta.id]
+#Column	Hvel	(I6)	Best available heliocentric velocity (cz)	[ucd=spect.dopplerVeloc;pos.heliocentric;meta.modelled]
+#Column	e_Hvel	(I4)	Error on heliocentric velocity	[ucd=stat.error]
+#Column	r_Hvel	(I3)	Reference for heliocentric velocity	[ucd=meta.ref;pos.frame]
+#Column	RAB1950	(F8.4)	Right ascension B1950 (IRAS source)	[ucd=pos.eq.ra]
+#Column	DEB1950	(F8.4)	Declination B1950 (IRAS source)	[ucd=pos.eq.dec]
+#Column	_RA.icrs	(F8.4)	Right ascension (ICRS) (computed by VizieR, not part of the original data)	[ucd=pos.eq.ra]
+#Column	_DE.icrs	(F8.4)	Declination (ICRS) (computed by VizieR, not part of the original data)	[ucd=pos.eq.dec]
