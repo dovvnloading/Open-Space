@@ -210,6 +210,7 @@ def verify_screen(rows, groups, partitions):
     if len(listed_names) != len(set(listed_names)) or set(listed_names) != set(partitions):
         raise ValueError("Published sources disagree with the complete eligible population")
     training = {}
+    scores = {}
     p_values = []
     for row in rows:
         name = row["name"]
@@ -230,6 +231,9 @@ def verify_screen(rows, groups, partitions):
             check(name + " " + key, metrics[key], row[key])
         p = permutation_p(name, waits, forecast)
         check(name + " permutation", p, row["p_value"])
+        scores[name] = {**metrics, "n_train": len(train), "n_test": len(test),
+                        "permutation_p": p, "holm_p": None, "promotion": None,
+                        "role": "positive_control" if name == CONTROL else "exploratory"}
         if name != CONTROL:
             p_values.append((p, row, slope))
         elif row["p_adjusted"]:
@@ -240,9 +244,13 @@ def verify_screen(rows, groups, partitions):
         running = max(running, prob * (len(p_values) - i))
         adjusted = min(1., running)
         check(row["name"] + " Holm", adjusted, row["p_adjusted"])
-        if slope > 0 and float(row["skill"]) >= .25 and float(row["min_loo_gain_days"]) > 0 and adjusted <= .05:
+        score = scores[row["name"]]
+        score["holm_p"] = adjusted
+        score["promotion"] = (slope > 0 and score["skill"] >= .25 and
+                              score["min_loo_gain_days"] > 0 and adjusted <= .05)
+        if score["promotion"]:
             raise ValueError(f"Contradicts the published zero promotions: {row['name']} passes")
-    return training
+    return training, scores
 
 
 def gain_bounds(w_lo, w_hi, p_lo, p_hi, baseline):
@@ -347,8 +355,9 @@ def verify_external(data, training, last_catalogue_epoch):
                    n_train=len(training), n_test=len(obs), p_value=permutation_p("J1341-6220", obs, pred))
     for key, value in metrics.items():
         check(key, value, summary[key])
-    for i in (0, 1):
-        check("mean gain bounds", mean(b[i] for b in all_bounds), summary["mean_gain_bounds_days"][i])
+    metrics["mean_gain_bounds_days"] = [mean(b[i] for b in all_bounds) for i in (0, 1)]
+    for i, bound in enumerate(metrics["mean_gain_bounds_days"]):
+        check("mean gain bounds", bound, summary["mean_gain_bounds_days"][i])
     print(f"Parkes MAE: {metrics['model_mae_days']:.2f} vs {metrics['baseline_mae_days']:.2f} days")
     comparison = data["post_hoc_checks"]
     best_constant = median(obs)
@@ -358,6 +367,7 @@ def verify_external(data, training, last_catalogue_epoch):
     g42 = predict(intercept, slope, [events[-1]["size"]])[0]
     check("unscored G42 size forecast", g42, comparison["g42_wait_days"])
     check("unscored G42 forecast epoch", events[-1]["mjd"] + g42, comparison["g42_forecast_mjd"])
+    return metrics
 
 
 def read_snapshot(path, url, digest):
@@ -371,29 +381,48 @@ def read_snapshot(path, url, digest):
     return raw
 
 
+def replay(catalog_html=None, atnf_html=None, paper_pdf=None):
+    """Run every numerical check. Return computed values only after all checks pass."""
+    data = json.loads((HERE / "parkes-intervals.json").read_text(encoding="utf-8"))
+    if data["jbo_sha256"] != JBO_HASH or data["primary_pdf"]["sha256"] != PAPER_HASH:
+        raise ValueError("The result files and verifier identify different snapshots")
+    if paper_pdf:
+        verify_proof(paper_pdf, data["events"])
+    else:
+        print("Using transcribed Parkes epochs and sizes. Supply --paper-pdf to check the original Table 2.")
+    groups = parse_jodrell(read_snapshot(catalog_html, URL, JBO_HASH))
+    atnf = atnf_intervening_epochs(read_snapshot(atnf_html, ATNF, ATNF_HASH), groups)
+    splits, kept = derive_partitions(groups, atnf)
+    if kept != 483 or len(splits) != 7:
+        raise ValueError(f"The declared coverage differs from the independently derived {kept} intervals and {len(splits)} eligible sources")
+    with (HERE / "screen.csv").open(encoding="utf-8", newline="") as f:
+        summary = list(csv.DictReader(f))
+    populations, scores = verify_screen(summary, groups, splits)
+    print(f"Verified {kept} eligible intervals, {len(splits)} source partitions, six Holm results and zero promotions")
+    external = verify_external(data, populations["J1341-6220"], groups["J1341-6220"][-1].epoch)
+    event_count = sum(len(star) for star in groups.values())
+    adjacent = event_count - len(groups)
+    return {
+        "input_sha256": {"jodrell_bank_html": JBO_HASH, "atnf_html": ATNF_HASH},
+        "parkes_proof": {"status": "verified" if paper_pdf else "transcription_only",
+                         "verified_pdf_sha256": PAPER_HASH if paper_pdf else None},
+        "coverage": {"events": event_count, "pulsars": len(groups), "adjacent_intervals": adjacent,
+                     "eligible_intervals": kept, "excluded_intervals": adjacent - kept,
+                     "scored_pulsars": len(splits),
+                     "exploratory_followups": sum(s["promotion"] is True for s in scores.values())},
+        "historical_screen": scores,
+        "external": {"pulsar": "J1341-6220", "selection": "retrospective",
+                     "reported_events": len(data["events"]), **external},
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--catalog-html", type=Path, help="Local copy of the pinned Jodrell Bank table")
     parser.add_argument("--atnf-html", type=Path, help="Local copy of the pinned ATNF table")
     parser.add_argument("--paper-pdf", type=Path, help="Also check the Parkes transcription using pdftotext")
     args = parser.parse_args()
-    data = json.loads((HERE / "parkes-intervals.json").read_text(encoding="utf-8"))
-    if data["jbo_sha256"] != JBO_HASH or data["primary_pdf"]["sha256"] != PAPER_HASH:
-        parser.error("The result files and verifier identify different snapshots")
-    if args.paper_pdf:
-        verify_proof(args.paper_pdf, data["events"])
-    else:
-        print("Using transcribed Parkes epochs and sizes. Supply --paper-pdf to check the original Table 2.")
-    groups = parse_jodrell(read_snapshot(args.catalog_html, URL, JBO_HASH))
-    atnf = atnf_intervening_epochs(read_snapshot(args.atnf_html, ATNF, ATNF_HASH), groups)
-    splits, kept = derive_partitions(groups, atnf)
-    if kept != 483 or len(splits) != 7:
-        parser.error(f"The declared coverage differs from the independently derived {kept} intervals and {len(splits)} eligible sources")
-    with (HERE / "screen.csv").open(encoding="utf-8", newline="") as f:
-        summary = list(csv.DictReader(f))
-    populations = verify_screen(summary, groups, splits)
-    print(f"Verified {kept} eligible intervals, {len(splits)} source partitions, six Holm results and zero promotions")
-    verify_external(data, populations["J1341-6220"], groups["J1341-6220"][-1].epoch)
+    replay(args.catalog_html, args.atnf_html, args.paper_pdf)
 
 
 if __name__ == "__main__":

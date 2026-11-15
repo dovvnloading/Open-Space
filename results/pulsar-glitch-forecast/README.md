@@ -77,3 +77,23 @@ python -m unittest discover -s results/pulsar-glitch-forecast -p 'test_*.py'
 The ATNF check matches J-names and accepts epoch differences within the larger of three days or twice the sum of reported uncertainties. The floor rises to 30 days when either epoch uncertainty is missing. When an ATNF event has several plausible matches, the verifier leaves the identity unresolved and retains those intervals unless another rule excludes them. Separate exclusions cover early low-cadence Crab monitoring, a disputed Crab event near MJD 50489.7, the RXTE–NICER gap and two intervening CHIME events. A retained pair may still contain missed glitches. The replay applies the cited literature decisions and cannot establish complete exposure or guarantee the physical event sequence. [Crab cadence](https://academic.oup.com/mnras/article/482/3/3736/5142868) · [Disputed Crab event](https://doi.org/10.1093/mnras/sty1294) · [RXTE/NICER observing spans](https://doi.org/10.1093/mnras/staf2264) · [CHIME timings](https://arxiv.org/html/2605.13011v1#S3.T1)
 
 The Jodrell Bank compilation credits Basu et al. and Espinoza et al. External dates, sizes and uncertainties are a transcription of selected columns of Table 2 in L. H. Shang, Y. L. Liang, Y. Z. Qiao, P. Liu and W. J. Xiao, *Astronomy & Astrophysics* 715, A132 (2026). The authors published the article under CC BY 4.0. Waiting times, forecasts, error comparisons and sensitivity bounds were calculated for this analysis. [Basu et al.](https://doi.org/10.1093/mnras/stab3336) · [Espinoza et al.](https://doi.org/10.1111/j.1365-2966.2011.18503.x) · [Shang et al.](https://doi.org/10.1051/0004-6361/202661329) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+
+## Machine-readable replay
+
+Run the JSON entry point from the repository root. It performs the same input and numerical checks as the human-readable verifier. The example includes the original proof so an agent can confirm the transcription.
+
+```sh
+python results/pulsar-glitch-forecast/agent_check.py \
+  --catalog-html /path/to/jodrell.html --atnf-html /path/to/atnf.html \
+  --paper-pdf /path/to/shang2026.pdf > verified.json
+```
+
+With no local catalogue arguments, the command fetches and validates both live snapshots. A run without `--paper-pdf` explicitly reports `parkes_proof.status = "transcription_only"` and a null verified PDF digest. Supplying the correct PDF and Poppler produces `"verified"` for that field. An incorrect PDF, a missing file, an unavailable parser or a snapshot mismatch fails the run.
+
+| Process result | Standard output |
+| --- | --- |
+| Exit 0 | A version 1 JSON object with `status = "verified"`, calculated coverage, per-source historical scores and the retrospective Parkes result. The named control has null promotion and Holm fields. |
+| Exit 1 | A single error object with a type and message. Scientific results are omitted. |
+| Exit 2 | A single JSON error object describing invalid command arguments. |
+
+Progress is written to standard error. Check the process exit code and the separate proof status before using the output. `--help` prints ordinary command help. The measured advantage applies to the scored intervals; later performance requires another timing series.
