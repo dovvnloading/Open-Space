@@ -1,6 +1,6 @@
 # Two hydrogen-atmosphere white dwarfs with large radial-velocity excursions
 
-The visible white dwarfs **WD J023809.44+273329.79** (Gaia DR3 127800157802418304) and **WD J042155.26−132531.35** (Gaia DR3 3176896324264567552) exhibit shifts of about 250 km/s between DESI exposures. Hα, Hβ, Hγ and Hδ shift in the same direction in both stars. Orbital motion is a plausible explanation. The companion types, masses and periods remain open. Both stars were previously catalogued, including as photometric candidates for low-mass white dwarfs. The result here is their measured velocity variability.
+**Both stars were already known before this analysis.** The catalogued white dwarfs **WD J023809.44+273329.79** (Gaia DR3 127800157802418304) and **WD J042155.26−132531.35** (Gaia DR3 3176896324264567552) exhibit shifts of about 250 km/s between DESI exposures. Hα, Hβ, Hγ and Hδ shift in the same direction in both stars. The new result is their measured radial-velocity variability, **not the discovery of either white dwarf**. Orbital motion is a plausible interpretation, but **neither star has an established orbital period or companion type or mass**. Both were previously catalogued, including as photometric candidates for low-mass white dwarfs.
 
 ## Measured excursions
 

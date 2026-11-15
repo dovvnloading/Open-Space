@@ -1,6 +1,6 @@
-# Two carbon-poor, helium-rich solar ejecta near 5 AU
+# Two catalogued helium-rich solar ejecta with selective C⁶⁺ suppression near 5 AU
 
-Ulysses measured a sustained suppression of fully stripped carbon in two separate solar ejecta on 9 June and 17–18 June 2003. The spacecraft was at 4.94 and 4.96 AU. In both intervals oxygen and iron remained highly ionized, and a separate plasma instrument measured abundant fully stripped helium. These are the longest and second-longest intervals meeting the composition cut below across the archived 1990–2009 Ulysses/SWICS series.
+Ulysses measured a sustained suppression of fully stripped carbon in two separate solar ejecta on 9 June and 17–18 June 2003. The spacecraft was at 4.94 and 4.96 AU. In both intervals oxygen and iron remained highly ionized, and a separate plasma instrument measured abundant fully stripped helium. These are the longest and second-longest intervals meeting the composition cut below across the archived 1990–2009 Ulysses/SWICS series. **Both ejecta had already been catalogued as ICMEs. The new result is the selective deficit of fully stripped carbon (C⁶⁺) relative to O⁶⁺ in those known events**, together with its duration ranking and the independent helium comparison. The observations do **not** establish depletion of total elemental carbon.
 
 | Median or count | June 9 | June 17–18 | Other fast, high-charge June samples |
 |---|---:|---:|---:|
@@ -29,7 +29,7 @@ The SWOOPS plasma instrument supplies the independent alpha/proton number ratio 
 
 ## Prior work and scope
 
-ACE/SWICS established depleted regions within near-Earth ejecta, and Solar Orbiter later measured analogous charge-ratio outliers. Ulysses magnetic-cloud studies have also used high oxygen charge states. A search for these two Ulysses dates, the carbon-selective composition, and the paired outer-heliosphere observation found no earlier event-specific report of this result. The underlying ICMEs, the individual spacecraft measurements, and the general class of ion anomaly are already public. This analysis identifies the intervals, quantifies their exceptional duration in this archive, and measures their carbon and helium abundances against contemporaneous controls.
+ACE/SWICS established depleted regions within near-Earth ejecta, and Solar Orbiter later measured analogous charge-ratio outliers. Ulysses magnetic-cloud studies have also used high oxygen charge states. A bounded search for these Ulysses dates, their carbon charge-state contrast and the paired outer-heliosphere observation did not locate an earlier event-specific report of this combination; it does not establish publication priority. The underlying ICMEs, the individual spacecraft measurements, and the general class of ion anomaly are already public. This analysis identifies the intervals, quantifies their exceptional duration in this archive, and measures their carbon and helium abundances against contemporaneous controls.
 
 C⁶⁺ is measured by one composition spectrometer. A second composition instrument or a separate reduction of individual pulse-height events could test the absolute abundances and the detector response to nearby species. The spacecraft sampled different parcels and heliocentric locations. The measured helium enrichment permits comparison with models of depleted ejecta, while specific acceleration, composition-gradient and transport explanations require additional evidence.
 
