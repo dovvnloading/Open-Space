@@ -142,6 +142,21 @@ def main():
     p = scan(early)[0]
     result['chronological_Gaia_test'] = {'train_bins': len(early), 'test_bins': len(late),
         'training_period_days': p, 'test_correlation': fixed_score(late, p, sine_phase(early, p))}
+    result['ASASSN_chronological_cross_survey'] = {}
+    # A discovery curve from a separate ground survey, evaluated on later
+    # Gaia and ZTF nights. Adjacent cut dates expose sensitivity to the split.
+    for cutoff in [58300, 58500, 58700, 58900]:
+        a = grouped['ASAS-SN']
+        train = a[a.mjd < cutoff]
+        p = scan(train)[0]
+        epoch = sine_phase(train, p)
+        scores = {}
+        for name in ['ASAS-SN', 'Gaia G', 'ZTF g', 'ZTF r']:
+            g = grouped[name]
+            test = g[g.mjd >= cutoff]
+            scores[name] = {'bins': len(test), 'correlation': fixed_score(test, p, epoch)}
+        result['ASASSN_chronological_cross_survey'][str(cutoff)] = {
+            'train_bins': len(train), 'training_period_days': p, 'future_fixed_scores': scores}
     print(json.dumps(result, indent=2))
 
 
