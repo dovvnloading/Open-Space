@@ -37,3 +37,28 @@ The tested image pipeline used Python 3.12, NumPy 2.3.5, SciPy 1.17.0 and Matplo
 The pipeline runs offline and writes the astrometry, full fits, constant-vector stress test, model-sensitivity table and figure to the output directory. On other BLAS or SciPy builds, nearly degenerate solutions may vary in the least significant digits. The cutouts script accepts --refresh to download and verify the original packet pixels. Running verify_data.py with --refresh-dir /tmp/jr80-live saves the current ADQL responses outside the frozen sample. The database can change after retrieval.
 
 [ALeRCE Rubin services](https://science.alerce.online/alerce-lsst/) · [ALeRCE TAP schema](https://tap.alerce.online/browse/alerce_tap/multisurvey_lowercase) · [Fink LSST cutout service](https://doc.lsst.fink-broker.org/services/api/solar_system/)
+
+## Field rotation and empirical stellar PSFs
+
+The camera orientation changed from 14.46° to 42.72° to 70.46° across the three Rubin nights. This aligns closely enough with the sky PA change to make a persistent detector anisotropy a serious alternative to relative orbital motion when only catalogue shapes are used. After averaging bands within a night and applying a systematic floor only once per night, a fixed sky vector has χ² = 39.04 for 4 degrees of freedom with a 0.06-arcsec floor. A fixed detector-frame vector has χ² = 5.15 for 4 degrees of freedom under the same test. Thus the time sequence alone cannot exclude an instrument-fixed pattern with that floor.
+
+To check the actual local PSF, we independently rebuilt it from images of nonmoving sources on the **same visit and same CCD** as JR80. Fink reference-epoch flux identifies persistent sources. Five 500-arcsec cones in the Fink LSST alert database supplied the candidates. Fink's date selection also returns objects active across the time interval, so we imposed an exact visit and detector match on the returned records. We required science S/N ≥ 35, science flux ≤ 300,000 nJy, and template flux between 0.5 and 1.5 times the science flux. Within each visit we retained the twelve highest S/N candidates at most. The 52 retrieved images have S/N 38.8–421.7 and separations of 79–495 arcsec from the moving target. They are persistent point-source candidates, without independent catalogue classification as individual stars.
+
+Pixel cuts check valid coverage, nearby secondary peaks, center offsets and aperture concentration. Two of 52 images failed the one-pixel centering cut. For the 50 retained references, we estimated central positions within 5.5 pixels using the packet PSF, sky-subtracted, resampled with cubic splines, normalized each star by its own aperture flux, and took the pixel-wise median on a common centered grid. The empirical profile's **shape** comes directly from the field pixels; the packet PSF enters only when estimating the position of each comparison star. Every target was then fit with the empirical PSF, and again with each star left out in turn. Each held-out star was fit as a putative double using the remaining reference stars. The input cone responses, full URLs, candidates, FITS, per-image digests and rejection flags accompany the results.
+
+| UTC date in 2026 | Band | Reference stars | Empirical separation (arcsec) | Empirical PA (deg) | Δχ², one PSF minus two |
+|---|---|---:|---:|---:|---:|
+| June 27 | i | 12 | 0.632 | 55.69 | 813.5 |
+| June 27 | z | 12 | 0.672 | 55.81 | 325.0 |
+| July 7 | i | 8 | 0.545 | 94.51 | 306.7 |
+| July 7 | z | 11 | 0.594 | 94.41 | 163.2 |
+| July 9 | i | 7 | 0.580 | 104.84 | 821.7 |
+
+The empirical i-band endpoint displacement is 49.15° in PA; the supplied packet PSFs gave 49.46°. All leave-one-star-out target PAs stayed within 0.65° of the corresponding full empirical result. This is a stability check against individual references, not a complete uncertainty interval. Local empirical PSFs preserve the displacement despite the camera geometry. One of 50 held-out reference sources mimicked a close pair under descriptive cuts of separation >0.45 arcsec, faint fraction >0.35 and Δχ² >100. It was on July 7 in i (DIA source 170635504327328187, fitted PA 98.4°, separation 0.456 arcsec, Δχ² 163); the target that night had Δχ² 307. None of the 19 reference sources from the i-band endpoint images met all three criteria. A few other sources show high fit improvement from crowding or anisotropy. The test does not prove that any comparison source is single, or rule out position-dependent effects between stars and the target. The independent HST measurement is especially important given the changing camera orientation.
+
+Run the additional offline diagnostics:
+
+    python stellar_sample.py
+    OPENBLAS_NUM_THREADS=1 python empirical_psf.py
+    python epoch_checks.py
+
