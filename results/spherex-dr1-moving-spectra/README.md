@@ -34,4 +34,4 @@ Moving-object access: https://irsa.ipac.caltech.edu/Missions/spherex.html
 
 An unavailable product or missing wavelength coverage is an inconclusive
 result, never evidence of absent absorption/emission. This checkpoint records
-the question before looking at target spectra. No target has yet been selected.
+the question before looking at target spectra. Subsequent work selected 29P as a known-gas positive control and 174P/Echeclus for an independent sensitivity pilot; see SCREEN_STATUS.md and CONTROL_RESULT.md. Neither constitutes a discovery.
