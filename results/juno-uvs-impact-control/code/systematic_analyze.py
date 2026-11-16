@@ -23,7 +23,7 @@ for s in [2,3]:
     x1,x2,y1,y2=[int(m[f'MSK{k}_{z}'][i]) for z in ['X_START','X_STOP','Y_START','Y_STOP']]
     if [x1,x2,y1,y2]!=[0,0,0,0]:masked|=(x['DETECTOR_X']>=x1)&(x['DETECTOR_X']<=x2)&(x['DETECTOR_Y']>=y1)&(x['DETECTOR_Y']<=y2)
   aq=(anc['EPHEMERIS_TIME_SLOW']>=lo)&(anc['EPHEMERIS_TIME_SLOW']<=hi);stim=np.zeros(len(x),bool);centers=[]
-  assert aq.any()
+  assert aq.any() or len(x)==0
   for k in [1,2]:
    pairs=np.unique(np.stack([anc[f'STIM_{k}_X'][aq],anc[f'STIM_{k}_Y'][aq]],axis=1),axis=0)
    for cx,cy in pairs:
