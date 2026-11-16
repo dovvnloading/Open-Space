@@ -46,7 +46,7 @@ for t in 20 60 100 200; do
   --data-urlencode file@psg/co2_shape_${t}K.cfg \
   https://psg.gsfc.nasa.gov/api.php -o psg/co2_shape_${t}K_response.txt
 done
-python fit_psg_feature.py --input psg_fit_input_snapshot.json \
+python ../../examples/fit_psg_feature.py --input psg_fit_input_snapshot.json \
  --output psg_feature_fit.json --calibration-root calibration --model-root psg
 ```
 
