@@ -24,10 +24,13 @@ def aperture(im,var,flags,x,y,r,allow_outlier=False):
     flux=float(np.sum(im[ap]-b)); error=float(np.sqrt(np.sum(var[ap])+n*n*sigma_b*sigma_b))
     return dict(sum_mjysr=flux,error_mjysr=error,snr=flux/error,npix=n,background=b,sky_n=int(sky.sum()))
 
+def cache_path(cache,url):
+    return cache/(hashlib.sha256(url.encode()).hexdigest()+'.fits')
+
 def process(row,cache):
     url='https://irsa.ipac.caltech.edu/'+row['uri']+'?center='+row['ra_obj']+','+row['dec_obj']+'&size=0.1'
     # Include target center and cutout size: an exposure can contain many targets.
-    key=hashlib.sha256(url.encode()).hexdigest(); path=cache/(key+'.fits')
+    path=cache_path(cache,url)
     out=dict(observationid=row['observationid'],detector=row['productid'],start=row['start_date'],ra=float(row['ra_obj']),dec=float(row['dec_obj']),url=url)
     try:
         if not path.exists():
