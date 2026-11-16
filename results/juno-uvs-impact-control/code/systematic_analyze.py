@@ -1,10 +1,21 @@
 """Exposure-support diagnostics; occupied photon bins are NOT geometric exposure."""
-import pathlib,json,numpy as np
+import pathlib,json,re,math,io,numpy as np
+from astropy.io import fits
 p=pathlib.Path(__file__).resolve().parents[1];o=p/'systematic';results=[]
+def load_masks(name):
+ f=p/'clean-screen'/(name+'.tail');b=f.read_bytes();http=f.with_suffix('.http').read_text();start=int(re.findall(r'content-range: bytes (\d+)-',http,re.I)[-1])
+ for match in re.finditer(b'XTENSION=',b):
+  j=match.start()
+  if (start+j)%2880:continue
+  e=next(k+80 for k in range(j,len(b)-80,80) if b[k:k+8]==b'END     ');hs=math.ceil((e-j)/2880)*2880;h=fits.Header.fromstring(b[j:j+hs].decode(),sep='')
+  if 'mask' not in h.get('EXTNAME','').lower():continue
+  size=h['NAXIS1']*h['NAXIS2'];d=fits.open(io.BytesIO(fits.PrimaryHDU().header.tostring().encode()+b[j:j+hs+math.ceil(size/2880)*2880]))[1].data
+  return {k:d[k] for k in d.names}
+ raise RuntimeError('No mask table in verified source tail')
 for s in [2,3]:
  frames=np.load(o/f's{s}-frames.npz');anc=np.load(o/f's{s}-ancillary.npz')
  for a in json.load(open(o/f's{s}-acquisition.json')):
-  lo,hi=a['et_bounds'];ha,hb=a['hk_indices'];x=np.load(o/f's{s}-{ha}-{hb}.npz')['photons'];t=x['EPHEMERIS_TIME']-lo;m=np.load(p/'clean-screen'/(a['file']+'.masks.npz'));fq=(frames['ET_LAST_HACK']>=lo)&(frames['ET_FIRST_HACK']<hi);tags=np.unique(frames['FRAME_TAG'][fq]);masked=np.zeros(len(x),bool);masknames=[]
+  lo,hi=a['et_bounds'];ha,hb=a['hk_indices'];x=np.load(o/f's{s}-{ha}-{hb}.npz')['photons'];t=x['EPHEMERIS_TIME']-lo;m=load_masks(a['file']);fq=(frames['ET_LAST_HACK']>=lo)&(frames['ET_FIRST_HACK']<hi);tags=np.unique(frames['FRAME_TAG'][fq]);masked=np.zeros(len(x),bool);masknames=[]
   for tag in tags:
    ids=[i for i,v in enumerate(m['DATA_TAG']) if int(v.strip(),16)==tag];assert len(ids)==1;i=ids[0];masknames.append(str(m['MASK_NAME'][i]).strip())
    # Conservative union over actual active tags; intervals here are tiny.
