@@ -1,0 +1,57 @@
+{
+  "seed": 406150,
+  "threshold": 20.0,
+  "Q": 9.0,
+  "HL_live_s": 40315,
+  "foreground_seconds_ge_threshold": 0,
+  "confidence_budget": {
+    "efficiency_one_sided_alpha": 0.05,
+    "count_one_sided_alpha": 0.05
+  },
+  "cases": {
+    "primary": {
+      "f_Hz": 150.0,
+      "hrss_Hz_mhalf": 1e-21,
+      "n": 2048,
+      "recovered": 1792,
+      "efficiency": 0.875,
+      "lower_efficiency_95": 0.8623360608472281,
+      "poisson95_count_upper": 2.9957322735539895,
+      "effective_live_s_lower": 34765.078293056,
+      "rate_upper_per_day_pointwise90": 7.445151316882374
+    },
+    "lower": {
+      "f_Hz": 150.0,
+      "hrss_Hz_mhalf": 2e-22,
+      "n": 512,
+      "recovered": 320,
+      "efficiency": 0.625,
+      "lower_efficiency_95": 0.5883577059378072,
+      "poisson95_count_upper": 2.9957322735539895,
+      "effective_live_s_lower": 23719.640914882697,
+      "rate_upper_per_day_pointwise90": 10.912107369747876
+    },
+    "middle": {
+      "f_Hz": 150.0,
+      "hrss_Hz_mhalf": 5e-22,
+      "n": 512,
+      "recovered": 407,
+      "efficiency": 0.794921875,
+      "lower_efficiency_95": 0.7633566750165385,
+      "poisson95_count_upper": 2.9957322735539895,
+      "effective_live_s_lower": 30774.72435329175,
+      "rate_upper_per_day_pointwise90": 8.410514598398974
+    },
+    "higher_frequency": {
+      "f_Hz": 350.0,
+      "hrss_Hz_mhalf": 1e-21,
+      "n": 512,
+      "recovered": 437,
+      "efficiency": 0.853515625,
+      "lower_efficiency_95": 0.8253176999213634,
+      "poisson95_count_upper": 2.9957322735539895,
+      "effective_live_s_lower": 33272.68307232977,
+      "rate_upper_per_day_pointwise90": 7.779092172170329
+    }
+  }
+}

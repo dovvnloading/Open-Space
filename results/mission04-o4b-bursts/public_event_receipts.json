@@ -1,0 +1,40 @@
+{
+  "bounds_gps": [
+    1396796418,
+    1422118818
+  ],
+  "margin_seconds": 32,
+  "full_records": {
+    "LVK": 1886,
+    "GWOSC": 671,
+    "GraceDB": 1820
+  },
+  "rows_in_bounds": {
+    "LVK": 1857,
+    "GWOSC": 160,
+    "GraceDB": 1820
+  },
+  "csv_sha256": "35ff843ece778b5bd8859176fe1006a9f5d442a5bd175c5931832de9543a5178",
+  "inputs": [
+    {
+      "url": "https://zenodo.org/records/20348004/files/IGWN-GWTC5p0-29ebe06b7_25-SearchSummaryTable.hdf5?download=1",
+      "bytes": 1333132,
+      "sha256": "419ce370a6778990665813277f7300233b395a24c4350c5d2bf91022720f14f3"
+    },
+    {
+      "url": "https://gwosc.org/eventapi/json/allevents/",
+      "bytes": 1267691,
+      "sha256": "731f167b5545db5b3b4345994fde52730e260bb1112a739051be7f884fca7969"
+    },
+    {
+      "url": "https://gracedb.ligo.org/api/v2/superevents/?query=gpstime%3A+1396796418+..+1422118818&count=1000",
+      "bytes": 2292746,
+      "sha256": "9a464b2cc7f4779040b294b10ebd909f24b5c6f16c986652ea25d0ee2afef8dc"
+    },
+    {
+      "url": "https://gracedb.ligo.org/api/v2/superevents/?start=1000&count=1000&query=gpstime%3A+1396796418+..+1422118818",
+      "bytes": 1893346,
+      "sha256": "e7d42428c4410479cb06eb90bdaac2ecf868f24f7c9370c729992cb3d8051996"
+    }
+  ]
+}

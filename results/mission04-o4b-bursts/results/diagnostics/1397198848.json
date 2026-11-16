@@ -1,0 +1,321 @@
+{
+  "gps": 1397202026.03125,
+  "duration": 0.125,
+  "band_hz": [
+    32.0,
+    96.0
+  ],
+  "strain": {
+    "H1": {
+      "available": true,
+      "fraction_band_notched": 0.0,
+      "average_to_offsource_median": 4.024997633054989,
+      "offsource_ge": 0,
+      "offsource_n": 57,
+      "peak_bin_hz": 80.0,
+      "bin_width_hz": 8.0,
+      "peak_share_of_band_power": 0.3817071887706972,
+      "after_catalog_line_removal": {
+        "available": true,
+        "fraction_band_notched": 0.07283653846153847,
+        "average_to_offsource_median": 3.299834620207383,
+        "offsource_ge": 0,
+        "offsource_n": 57,
+        "peak_bin_hz": 80.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.4348327947547235
+      },
+      "dominant_bin_overlaps": [
+        {
+          "low_hz": 77.7,
+          "high_hz": 77.76,
+          "label": "Calibration line (systematic error line)"
+        },
+        {
+          "low_hz": 79.91840400000001,
+          "high_hz": 79.919004,
+          "label": "Unknown comb; suspicious numerology - related?"
+        },
+        {
+          "low_hz": 77.776435,
+          "high_hz": 77.777035,
+          "label": "Unknown comb; at both detectors"
+        },
+        {
+          "low_hz": 83.33192222000001,
+          "high_hz": 83.33252222,
+          "label": "Unknown comb; at both detectors"
+        }
+      ]
+    },
+    "L1": {
+      "available": true,
+      "fraction_band_notched": 0.0,
+      "average_to_offsource_median": 3.6459429199242064,
+      "offsource_ge": 0,
+      "offsource_n": 57,
+      "peak_bin_hz": 80.0,
+      "bin_width_hz": 8.0,
+      "peak_share_of_band_power": 0.4141921387702823,
+      "after_catalog_line_removal": {
+        "available": true,
+        "fraction_band_notched": 0.09326923076923077,
+        "average_to_offsource_median": 3.3135064988780223,
+        "offsource_ge": 0,
+        "offsource_n": 57,
+        "peak_bin_hz": 80.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.4839955602223821
+      },
+      "dominant_bin_overlaps": [
+        {
+          "low_hz": 78.2,
+          "high_hz": 78.26,
+          "label": "Calibration line (systematic error line)"
+        },
+        {
+          "low_hz": 79.99986,
+          "high_hz": 80.00014,
+          "label": "Unknown comb; probably digital"
+        },
+        {
+          "low_hz": 83.3323987,
+          "high_hz": 83.33299869999999,
+          "label": "Unknown comb; at both detectors; suspicious numerology - related?"
+        }
+      ]
+    },
+    "V1": {
+      "available": false,
+      "reason": "DQ/injection mask excludes target"
+    }
+  },
+  "auxiliary": {
+    "query": "https://datafind.gwosc.org/api/v1/gwf/H/H1_AUX_AR1/1397202026,1397202027/osdf.json",
+    "object_url": "osdf:///gwdata/O4b/AUX/AUX_AR1/H1/H-H1_AUX_AR1-13972/H-H1_AUX_AR1-1397201984-64.gwf",
+    "sha256": "299ad761636462f0c5a3560df5c028aecbce71a5e4b3ebbe67590b1916a40c8e",
+    "channels": {
+      "H1:CAL-PCALX_RX_PD_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.0710923016955358,
+        "offsource_ge": 12,
+        "offsource_n": 56,
+        "peak_bin_hz": 88.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.16631192447408824
+      },
+      "H1:CAL-PCALY_RX_PD_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 2.3236114823780336,
+        "offsource_ge": 0,
+        "offsource_n": 56,
+        "peak_bin_hz": 40.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.4552630630796714
+      },
+      "H1:IMC-WFS_A_DC_PIT_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.7921113614810893,
+        "offsource_ge": 5,
+        "offsource_n": 56,
+        "peak_bin_hz": 64.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.29446425602506193
+      },
+      "H1:IMC-WFS_A_DC_YAW_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.0192697578022947,
+        "offsource_ge": 28,
+        "offsource_n": 56,
+        "peak_bin_hz": 56.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.21414516903302103
+      },
+      "H1:LSC-POP_A_LF_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.9327555349326275,
+        "offsource_ge": 4,
+        "offsource_n": 56,
+        "peak_bin_hz": 64.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.24656848591653066
+      },
+      "H1:LSC-REFL_A_RIN_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.952560683485514,
+        "offsource_ge": 3,
+        "offsource_n": 56,
+        "peak_bin_hz": 40.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.44979415661855693
+      },
+      "H1:OAF-IMC_WFS_A_DC_PIT_PREFILT_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.7999651650178954,
+        "offsource_ge": 5,
+        "offsource_n": 56,
+        "peak_bin_hz": 64.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.2895646199209495
+      },
+      "H1:OAF-IMC_WFS_A_DC_YAW_PREFILT_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.0150460497802258,
+        "offsource_ge": 28,
+        "offsource_n": 56,
+        "peak_bin_hz": 56.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.21308225421630572
+      },
+      "H1:OAF-REFL_A_RIN_PREFILT_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.952970046900601,
+        "offsource_ge": 3,
+        "offsource_n": 56,
+        "peak_bin_hz": 40.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.45011365605913667
+      },
+      "H1:PEM-EY_MAINSMON_EBAY_1_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.9929620381844295,
+        "offsource_ge": 56,
+        "offsource_n": 56,
+        "peak_bin_hz": 48.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.12614592663220714
+      },
+      "H1:SUS-ETMX_L1_CAL_LINE_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.2363702523497322,
+        "offsource_ge": 11,
+        "offsource_n": 56,
+        "peak_bin_hz": 88.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.18780341877940812
+      },
+      "H1:SUS-ETMX_L2_CAL_LINE_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.0,
+        "offsource_ge": 34,
+        "offsource_n": 56,
+        "peak_bin_hz": 32.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.125
+      },
+      "H1:SUS-ETMX_L3_CAL_LINE_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.0004130306910706,
+        "offsource_ge": 23,
+        "offsource_n": 56,
+        "peak_bin_hz": 88.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.12507525694504248
+      },
+      "H1:SUS-PI_PROC_COMPUTE_MODE29_RMSMON": {
+        "available": false,
+        "reason": "no usable Fourier bins"
+      },
+      "L1:ASC-X_TR_A_NSUM_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.6412064621976676,
+        "offsource_ge": 46,
+        "offsource_n": 56,
+        "peak_bin_hz": 40.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.2851475174479468
+      },
+      "L1:CAL-PCALX_RX_PD_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.114060138913869,
+        "offsource_ge": 8,
+        "offsource_n": 56,
+        "peak_bin_hz": 88.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.18069195014666622
+      },
+      "L1:CAL-PCALY_RX_PD_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.6007233892275804,
+        "offsource_ge": 48,
+        "offsource_n": 56,
+        "peak_bin_hz": 40.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.3966622043677907
+      },
+      "L1:IMC-WFS_B_I_PIT_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.0381182547359513,
+        "offsource_ge": 26,
+        "offsource_n": 56,
+        "peak_bin_hz": 56.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.20086002967358318
+      },
+      "L1:OAF-IMC_WFS_B_I_PIT_PREFILT_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.046460704428972,
+        "offsource_ge": 24,
+        "offsource_n": 56,
+        "peak_bin_hz": 56.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.20049124407895327
+      },
+      "L1:PEM-EX_VMON_ETMX_ESDPOWER24_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.9144633158349106,
+        "offsource_ge": 34,
+        "offsource_n": 56,
+        "peak_bin_hz": 80.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.2203911880666808
+      },
+      "L1:PEM-EY_MAINSMON_EBAY_1_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.0000885371570853,
+        "offsource_ge": 27,
+        "offsource_n": 56,
+        "peak_bin_hz": 48.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.1261432099563349
+      },
+      "L1:SUS-ETMX_L1_CAL_LINE_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.2726966878373358,
+        "offsource_ge": 56,
+        "offsource_n": 56,
+        "peak_bin_hz": 32.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.31270984600485136
+      },
+      "L1:SUS-ETMX_L2_CAL_LINE_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.0,
+        "offsource_ge": 34,
+        "offsource_n": 56,
+        "peak_bin_hz": 40.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.1601936360918467
+      },
+      "L1:SUS-ETMX_L3_CAL_LINE_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.0,
+        "offsource_ge": 34,
+        "offsource_n": 56,
+        "peak_bin_hz": 32.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.125
+      },
+      "L1:SUS-PI_PROC_COMPUTE_MODE5_RMSMON": {
+        "available": false,
+        "reason": "no usable Fourier bins"
+      }
+    },
+    "max_over_channels": {
+      "on_source": 2.3236114823780336,
+      "offsource_ge": 8,
+      "offsource_n": 56,
+      "channels": 23
+    }
+  }
+}
