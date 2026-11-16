@@ -13,6 +13,7 @@ from dataclasses import asdict
 import hashlib
 import io
 import json
+import subprocess
 from pathlib import Path
 import time
 from zipfile import ZipFile, ZIP_DEFLATED, ZipInfo
@@ -104,6 +105,21 @@ def calculate(cache, block, draws):
     return report, fg_rows, tails, injections
 
 
+
+def verified_pair(cache, block):
+    try:
+        return holdout_data.acquire_holdout(cache, block)
+    except (OSError, ValueError, subprocess.CalledProcessError):
+        # OSDF serves the same immutable release; always use the pinned MD5.
+        mirror = {**block, "sources": {}}
+        for det, source in block["sources"].items():
+            directory, name = source["url"].rsplit("/", 2)[1:]
+            url = (f"https://origin.ligo.caltech.edu:8443/gwdata/O4b/{acquire.RELEASE}/"
+                   f"STRAIN_HDF/{det}/{directory}/{name}")
+            mirror["sources"][det] = {**source, "url": url}
+        return holdout_data.acquire_holdout(cache, mirror)
+
+
 def execute(cache, checkpoints, block, draws, fingerprint, retain):
     gps = block["gps"]
     path = checkpoints / f"{gps}.zip"
@@ -113,7 +129,7 @@ def execute(cache, checkpoints, block, draws, fingerprint, retain):
                 raise ValueError(f"Invalid/incompatible checkpoint {path}")
         return gps, 0.
     start = time.monotonic()
-    files = holdout_data.acquire_holdout(cache, block)
+    files = verified_pair(cache, block)
     report, fg_rows, tails, injections = calculate(cache, block, draws)
     report["configuration_sha256"] = fingerprint
     tmp = path.with_suffix(".part")
