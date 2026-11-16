@@ -1,14 +1,16 @@
 # High water reduces the elevation drop across the Congo’s Kinsuka rapids
 
-During the January 2024 flood, the Congo rose 15.68 m at a reach below the outlet of Malebo Pool and 4.94 m at the adjacent reach upstream, relative to low water that July. **The water-surface drop between them contracted by 10.74 m, from 19.53 m to 8.79 m.** A second SWOT ground track observed a similar range, and the association recurred in later acquisitions. Independent field gauges recorded the same behavior in 1954. The evidence supports a stage-dependent response at the rapids. A lasting shift in the river’s hydraulic relationship has yet to be demonstrated.
+In SWOT RiverSP 2.0, the January 2024 flood stood 15.68 m above July low water at a reach below the outlet of Malebo Pool and 4.94 m above it at the adjacent upstream reach. **The water-surface drop between them contracted by 10.74 m, from 19.53 m to 8.79 m.** Reprocessing the same orbit in RiverSP D gives a 10.73 m contraction before filtering, but the upper reach fails the January quality cutoff. Later low- and intermediate-stage observations and independent gauges from 1954 support a recurring response to river stage. A lasting change in the rapids remains unestablished.
 
 ![Congo reach water levels in January and July, and outlet elevation drop against an upstream reference stage on the original and later visits](congo-outlet.png)
 
 ## The spatial result
 
-Across a roughly 2 km section near 15.22° E, 4.32° S, the median high-water rise in five-node groups fell from **13.52 m downstream to 5.46 m upstream**. That section accounts for an 8.06 m contraction in local surface drop. The second orbit measured 7.35 m across the same groups on different dates. The full profile includes all 106 high/low node pairs on the first track and 98 on the second. Published gauges and engineering surveys already document a hydraulic control at Kinsuka. The event-specific profile is the contribution for which our literature review found no equivalent published measurement. [Node locations, movement sensitivity and all values](congo/profile/README.md) · [Bilingual prior-art audit](congo/literature.md)
+Across roughly 2 km near 15.22° E, 4.32° S, the median January–July elevation rise in five-node groups fell from **13.52 m downstream to 5.46 m upstream**. RiverSP 2.0 thus places 8.06 m of the contraction in this section. RiverSP D retains all five downstream nodes and none of the five upstream nodes for that pair of dates. Published gauges and engineering surveys already document a hydraulic control at Kinsuka. Our literature review found no equivalent published measurement of this event-specific profile. [Node locations, movement sensitivity and all values](congo/profile/README.md) · [Bilingual prior-art audit](congo/literature.md)
 
-![Water level rise at every quality-screened node on two ground tracks of the same satellite](outlet-profile.png)
+On a second orbit, in December 2023 and August 2024, RiverSP 2.0 measured a local contraction of 7.35 m. Restricting both releases to the same usable nodes gives **7.11 m in 2.0 and 7.62 m in D**. The December node elevations changed by about 22 m between releases in this section. Much of that offset cancels in a local elevation difference. At the scale of the two full reaches, the same orbit gives a 9.67 m contraction in 2.0 and a 2.92 m increase in D before filtering. Upper-reach coverage in D was below the 80% threshold on both dates. The cross-release agreement applies only to the local contrast on those shared nodes. [Same-acquisition reach values and eligibility](congo/holdout/event_by_release.csv) · [Node-level comparison](congo/profile/README.md)
+
+![RiverSP 2.0 water level rise at every quality-screened node on two SWOT ground tracks](outlet-profile.png)
 
 ## Congo measurements
 
@@ -31,7 +33,9 @@ At Chavuma, 33 quality-screened **unconstrained** consensus estimates had a same
 
 A matched comparison between processing releases exposed a false stage-change candidate. On the same 18 April 2025 pass at Chavuma, RiverSP D put the surface **19.83 m higher** than v2.0. Three corresponding water-pixel node centroids shifted 266–547 m. The 14 April control pass differed by only 0.012–0.047 m at the three comparable nodes. The ground record and independent optical extent support a real seasonal recovery, while the same-acquisition discrepancy identifies an additional processing or geolocation problem. [Node comparisons](zambezi/reprocessing/nodes/node_comparison.csv) · [Sentinel-2 extent](optical/README.md)
 
-For each of the 12 reaches we matched distinct visits by orbit and calendar date within 14 days of a one-year shift. For width and slope we also required the two stages to agree within 0.20 m. Exact two-sided sign tests used nonoverlapping 42-day block medians, with a Bonferroni correction across 12 reaches and six outcomes. Nine reaches contributed any primary annual pairs and five contributed stage-matched pairs. No adjusted test passed 0.05. At most six blocks supported an annual test, no pair had the same processor ID across both years, and no upper Zambezi v2.0 record had the highest quality flag of zero. These comparisons have little power to exclude a smaller persistent change. [All pairs](zambezi/annual_pairs.csv) · [Screen results](zambezi/annual_screen.csv)
+For each of the 12 reaches we matched distinct visits on the same orbit within 14 days of their one-year anniversaries. We tested width and slope both with and without a requirement that paired stages agree within 0.20 m. Nine reaches contributed annual pairs under the primary quality criteria, and five contributed stage-matched pairs. Every pair crossed a processor change, and all accepted primary observations had quality flag 1 (suspect).
+
+The annual comparisons are descriptive at this sample size. Each primary test had at most six nonzero 42-day block medians. Even if all six changes had the same sign, the two-sided sign test would give a raw p-value of 2/2⁶ = 0.03125. Correcting across 12 reaches and six outcomes gives an adjusted p-value of 1. A test would require at least 12 nonzero blocks, all with the same sign at that minimum, to pass the familywise 0.05 threshold. The available observations therefore cannot distinguish a persistent change from year-to-year variation with this test. [All pairs](zambezi/annual_pairs.csv) · [Screen results](zambezi/annual_screen.csv)
 
 ## Scope and reproduction
 
@@ -43,7 +47,9 @@ From this directory the following commands replay the principal tables and figur
 python congo/analyze.py
 python congo/holdout/test_d.py
 python congo/profile/profile.py
+python congo/profile/compare_d.py
 python congo/historical_gauges/analyze.py
+python laser/check.py --event-only
 python zambezi/coverage.py zambezi/data zambezi/coverage.csv
 python zambezi/seasonal_screen.py
 python zambezi/matchup.py zambezi/data context/zra_daily_gauges.csv zambezi

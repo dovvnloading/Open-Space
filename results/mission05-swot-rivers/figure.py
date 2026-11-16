@@ -52,7 +52,7 @@ ax.axvspan(51,65,color='#414c54',alpha=.08)
 ax.axvline(60.5,color='#7b8386',ls='--',lw=1)
 ax.set(ylabel='High-water minus low-water elevation (m)',
        xlabel='SWORD v16 node sequence, downstream to upstream (nominal spacing 200 m)',
-       title='Most of the change in water-surface drop occurs near the reach boundary')
+       title='RiverSP 2.0 places most of the change in fall near the reach boundary')
 ax.spines[['top','right']].set_visible(False)
 ax.set_axisbelow(True)
 ax.grid(axis='y',color='#e0e5e5')

@@ -25,6 +25,44 @@ MAP = {'lower':('13217000061','13217000061'),
 FIELDS = ('reach_id,time_str,cycle_id,pass_id,wse,wse_u,reach_q,partial_f,obs_frac_n,'
           'loc_offset,node_dist,xtrk_dist,dark_frac,width,width_u,slope,slope_u,'
           'crid,sword_version,granuleUR,p_lon,p_lat,p_length,p_dist_out')
+EVENT_VISITS = {(7, 570), (9, 111), (18, 111), (19, 570)}
+
+
+def reach_eligible(rows):
+    return (rows.date.notna() & rows.reach_q.isin([0, 1]) & rows.partial_f.eq(0)
+            & rows.obs_frac_n.ge(.8) & rows.wse_u.between(0, .30, inclusive='right')
+            & rows.wse.notna())
+
+
+def compare_event_releases():
+    """Retain the four original acquisitions in both releases, including failed flags."""
+    fields = ['date', 'cycle_id', 'pass_id', 'wse', 'wse_u', 'reach_q', 'partial_f',
+              'obs_frac_n', 'crid', 'granuleUR', 'eligible']
+    tables = []
+    for release in ('2.0', 'D'):
+        sides = []
+        for side in ('upper', 'lower'):
+            if release == '2.0':
+                raw = BASE.parent / 'raw' / f'{MAP[side][0]}.json'
+                rows = pd.read_csv(StringIO(json.loads(raw.read_bytes())['results']['csv']))
+            else:
+                rows = pd.read_csv(BASE / f'{side}.csv')
+            rows = rows.replace(-999999999999., np.nan)
+            rows = rows[rows.set_index(['cycle_id', 'pass_id']).index.isin(EVENT_VISITS)].copy()
+            rows['date'] = rows.time_str.str[:10]
+            rows['eligible'] = reach_eligible(rows)
+            rows['revision'] = rows.granuleUR.str.extract(r'_(\d+)\.zip$').astype(int)
+            rows = rows.sort_values('revision').drop_duplicates(['cycle_id', 'pass_id'], keep='last')
+            sides.append(rows[fields])
+        pair = sides[0].merge(sides[1], on=['date', 'cycle_id', 'pass_id'],
+                              suffixes=('_upper', '_lower'), validate='one_to_one')
+        if len(pair) != len(EVENT_VISITS):
+            raise ValueError(f'Missing source visit in RiverSP {release}')
+        pair.insert(0, 'release', release)
+        pair['drop_m'] = pair.wse_upper - pair.wse_lower
+        pair['both_eligible'] = pair.eligible_upper & pair.eligible_lower
+        tables.append(pair.sort_values('date'))
+    pd.concat(tables).to_csv(BASE / 'event_by_release.csv', index=False, float_format='%.10g')
 
 
 def acquire():
@@ -58,8 +96,7 @@ def summarize():
         d['date'] = pd.to_datetime(d.time_str,utc=True,errors='coerce').dt.normalize()
         d['revision'] = d.granuleUR.str.extract(r'_(\d+)\.zip$').astype(int)
         d = d.sort_values('revision').drop_duplicates(['cycle_id','pass_id'],keep='last')
-        d = d[d.date.notna()&d.reach_q.isin([0,1])&d.partial_f.eq(0)&(d.obs_frac_n>=.8)
-              &d.wse_u.between(0,.30,inclusive='right')&d.wse.notna()]
+        d = d[reach_eligible(d)]
         d = d[['cycle_id','pass_id','date','wse','crid']].rename(columns={'wse':name,'crid':f'crid_{name}'})
         if pair is None:
             pair = d
@@ -88,3 +125,4 @@ if __name__=='__main__':
     if parser.parse_args().retrieve:
         acquire()
     summarize()
+    compare_event_releases()
