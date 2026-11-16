@@ -1,4 +1,5 @@
-"""Compare pre-image forecasts to independently accepted DECam axes."""
+"""Compare frozen forecasts or the final refit with the accepted DECam axes."""
+import argparse
 import csv
 from pathlib import Path
 import sys
@@ -14,11 +15,24 @@ def read(path):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--final-fit", action="store_true",
+                        help="evaluate the final 103- and 155-day fits on the same images")
+    args = parser.parse_args()
     measured = read(BASE.parent / "archive" / "measurements.csv")
     forecasts = []
-    for label in ("blind", "deep", "second", "last"):
-        for row in read(BASE / f"{label}_predictions.csv"):
-            forecasts.append((label, row))
+    if args.final_fit:
+        from historical_predictions import SETS, calculate
+
+        solutions = read(BASE / "fit_all.csv")[:2]
+        ref = next(row for row in read(BASE / "observations.csv") if row["id"] == "HST")
+        for _, ephemeris, exposure in SETS:
+            for row in calculate(ephemeris, exposure, solutions, ref):
+                forecasts.append(("final_refit", row))
+    else:
+        for label in ("blind", "deep", "second", "last"):
+            for row in read(BASE / f"{label}_predictions.csv"):
+                forecasts.append((label, row))
     writer = csv.DictWriter(sys.stdout, fieldnames=["frame","prediction_batch","mjd","period_days",
                             "measured_sep","measured_pa","predicted_sep","predicted_pa",
                             "axial_pa_error_deg","axial_vector_error_arcsec"], lineterminator="\n")

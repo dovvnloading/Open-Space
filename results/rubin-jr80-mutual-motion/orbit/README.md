@@ -19,6 +19,8 @@ The HST per-coordinate error floor is 0.006″. Ground-based nights receive 0.04
 
 Within the 103-day family the nominal conditional standard errors are 0.029 d, 0.019, 608 km and 0.71 × 10¹⁹ kg respectively. Inflating all ground errors by 75% gives 0.050 d, 0.034, 1,060 km and 1.24 × 10¹⁹ kg. The 103-to-155-day Δχ² then decreases from 14.86 to 4.95. The leading family also survives independent component signs per Rubin night, equalization of the total weight per observing block, and replacement of the pipeline-PSF science fits by difference-image or empirical-stellar-PSF fits. [Alias search](fit_all.csv) · [Robustness and mass propagation](sensitivity.csv)
 
+CFHT exposure 2616044p, at MJD 59371, has a two-source separation of 0.767″ and a position angle of 73.3°. The aperture-moment axis is 70.9°. The nominal analysis excluded this point because it disagreed with nearby dates. Its sign-independent residual against the nominal 103-day fit is 0.30754″. We restored both measured coordinates at the 0.04″ floor, kept the other nights’ quadrant assignments, and refit the two leading families with both component assignments for the extra image. The 103-day fit shifts to 103.004 days and χ² = 54.46 for 21 degrees of freedom. The 155-day fit shifts to 154.577 days and χ² = 72.27 for 21 degrees of freedom. The ordering survives this test, while the low nominal χ² depends on the exclusion. [Inputs and image quality](../archive/measurements.csv) · [Sensitivity results](excluded_cfht.csv)
+
 ## What the Rubin data test
 
 Holding all three Rubin nights out of a new period search leaves 103.025 d, 154.689 d and 309.659 d as the best three families. With no Rubin vector used to fit them, they give these observable errors, each the smaller of the residual lengths for the two possible component orderings. Thus Rubin tests an archive-only prediction separately on each night.
@@ -41,6 +43,8 @@ The August 6, 2022 DECam i-band exposure supplies a blind archival test outside 
 
 A second admitted frame, June 2, 2019 (MJD 58636.35649), independently gives **0.654″ at 30.92°**. The frozen 103-day prediction, **0.667″ at 29.05°**, is 0.026″ away; the 155- and 309-day predictions miss by 0.622″ and 2.164″. An aperture-moments measurement gives 30.71°. This second observation is a different year, sky field, and detector pointing. A third independently accepted frame from May 19, 2023 gives **0.660″ at 42.09°**, compared with the frozen 103-day **0.618″ at 46.19°**, a 0.062″ vector residual. Its alternative moments axis is 39.04°. The 155- and 309-day predictions miss by 1.241″ and 2.025″. All three DECam vectors stay outside the orbit fit. The release preserves all five forecast families at every admitted epoch.
 
+The final 13-night fit also omits all three DECam images. Its 103-day position residuals are 0.02264″ (2019), 0.07216″ (2022) and 0.06301″ (2023). The blind test above uses coefficients frozen before the DECam measurements were shared. [Final DECam residuals for both families](final_decam_residuals.csv)
+
 Two future measurements around opposition can distinguish the final 103- and 155-day families. Dates were chosen to maximize sign-independent vector differences subject to two conditions at 05:00 UTC as seen from Rubin: solar elongation exceeds 160° and target elevation exceeds 60°. The two dates must be at least ten days apart. These are model-conditioned predictions; position angle is east of north, modulo 180°. [Full coordinates, ranges, and observability](forecast.csv) · [JPL Horizons response](opposition_horizons.txt)
 
 | UTC date at 05:00 | 103 d predicted separation and PA | 155 d predicted separation and PA |
@@ -60,7 +64,9 @@ for omitted in 2020 2021 no_rubin HST CFHT_59403 2026-07-09; do
 done
 python sensitivity.py
 python historical_predictions.py
-python validate_blind.py
+python validate_blind.py | diff - blind_residuals.csv
+python validate_blind.py --final-fit | diff - final_decam_residuals.csv
+python excluded_cfht.py | diff - excluded_cfht.csv
 python forecast.py
 ```
 

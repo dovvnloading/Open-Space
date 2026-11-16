@@ -15,23 +15,30 @@ SETS = [
 ]
 
 
-def reproduce(name, ephemeris, exposure):
+def calculate(ephemeris, exposure, solutions, ref):
     values = (BASE / ephemeris).read_text().split("$$SOE")[1].split("$$EOE")[0]
     data = np.array([[float(row[i]) for i in (0,3,4,5)] for row in csv.reader(values.splitlines()) if len(row)>6])
     jd, ra, dec, dist = data.T
     east, north = fit.tangent_axes(ra, dec)
-    observed = list(csv.DictReader((BASE/"prediction_training.csv").open()))
-    ref = next(r for r in observed if r["id"] == "HST")
     t0 = float(ref["mjd_utc"])-float(ref["distance_AU"])*499.004783836/86400
     t = jd-2400000.5 + np.array(exposure)/172800 - dist*499.004783836/86400 - t0
     out = []
-    for source in list(csv.DictReader((BASE/"prediction_fits.csv").open()))[:5]:
+    for source in solutions:
         x = [float(source[k]) for k in fit.PARAMETERS]
         prediction = fit.predict(x, t, east, north, 40/dist)
         for moment, (e,n) in zip(jd, prediction):
             out.append(dict(mjd=round(moment-2400000.5,6), P=round(1/x[0],5),
                             east=round(e,6),north=round(n,6),separation=round(np.hypot(e,n),6),
                             pa_mod180=round(np.degrees(np.arctan2(e,n))%180,5)))
+    return out
+
+
+def reproduce(name, ephemeris, exposure):
+    with (BASE / "prediction_training.csv").open() as stream:
+        ref = next(row for row in csv.DictReader(stream) if row["id"] == "HST")
+    with (BASE / "prediction_fits.csv").open() as stream:
+        solutions = list(csv.DictReader(stream))[:5]
+    out = calculate(ephemeris, exposure, solutions, ref)
     original=list(csv.DictReader((BASE/name).open()))
     for line, recorded in zip(out, original, strict=True):
         if any(float(recorded[k]) != float(v) for k,v in line.items()):

@@ -23,6 +23,14 @@ def download(url, path):
     return path
 
 
+def file_checksum(path, algorithm):
+    digest = hashlib.new(algorithm)
+    with path.open("rb") as stream:
+        while chunk := stream.read(1024 * 1024):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def reduce_decam(image, target_ra, target_dec, output):
     with fits.open(image) as hdus:
         for extension in hdus[1:]:
@@ -56,8 +64,7 @@ def main():
             reference = args.cache / (key + ".fits.fz")
             if not reference.exists():
                 download(r["url"], reference)
-        with reference.open("rb") as src:
-            digest = hashlib.file_digest(src, r["checksum_algorithm"]).hexdigest()
+        digest = file_checksum(reference, r["checksum_algorithm"])
         if digest != r["checksum"]:
             raise ValueError(f"Checksum mismatch for {key}: {digest}")
         if r["survey"] == "DECam" and not reduce_decam(
