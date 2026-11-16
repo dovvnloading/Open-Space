@@ -1,0 +1,11 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [],
+  "acknowledged": [
+    {
+      "rule": "replay/drift",
+      "key": "validate.py",
+      "reason": "One value moves: the conditional simulation probability for the 16.92 km/s line, a count of 18 in 20,000 seeded draws in the committed run and 17 or 22 in reruns. NumPy's default multivariate-normal sampler factors the covariance by SVD, which is not unique to the last bit, so the draws depend on the NumPy and LAPACK build. The spread equals the counting error. See 'How closely a rerun matches' in torun/README.md."
+    }
+  ]
+}

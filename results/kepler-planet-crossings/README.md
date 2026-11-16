@@ -46,6 +46,22 @@ python injections.py
 
 The included windows, event centers and isolated-shape fit table support offline replay. To refresh the nine event windows from the original MAST FITS files listed in products.csv, install Astropy and run `python replay.py --fetch`. To recalculate isolated shapes, install Astropy and batman-package, run `python prepare_isolated.py`, then `python fit_isolated.py`, and repeat the angular scans. The extraction reads 44 short-cadence FITS products, selects isolated transits from epochs.csv, detrends each transit against its nearby baseline, and bins exposures into three-minute samples. The shape fitter uses BATMAN's quadratic kernel and three sub-samples per bin.
 
+### How closely a rerun matches
+
+The four replay commands do not regenerate the committed tables digit for digit. Every per-event fit uses SciPy's bounded least-squares solver with a finite-difference step of 1e-4 and the default stopping tolerances. The fit has several nearby local minima, so the point where the solver stops depends on rounding in the installed NumPy and SciPy. No random numbers are involved except in injections.py, which is seeded. The committed tables are unchanged. They were compared on 16 November 2026 with two reruns on Windows 11 under Python 3.14.0: one with NumPy 2.5.4 and SciPy 1.18.1, one with NumPy 2.2.6 and SciPy 1.17.1.
+
+| Quantity at +60° under the isolated-transit geometry | Committed | NumPy 2.5.4, SciPy 1.18.1 | NumPy 2.2.6, SciPy 1.17.1 |
+| --- | ---: | ---: | ---: |
+| Direct refit, summed Δχ², PDCSAP | 23.547 | 23.546 | 23.579 |
+| Direct refit, summed Δχ², SAP | 23.511 | 23.496 | 23.496 |
+| Angular scan Δχ², PDCSAP | 69.280 | 69.282 | 69.274 |
+| Angular scan Δχ², SAP | 70.613 | 70.642 | 70.638 |
+| Angular scan Δχ², long cadence only | 5.807 | 5.795 | 5.796 |
+| Matched-template S/N | 7.0469 | 7.0469 | 7.0465 |
+| Injections recovered of 2,000 (full, half, zero) | 1,999, 638, 0 | 1,999, 638, 0 | 1,999, 638, 0 |
+
+Read the Δχ² values in this document as reproducible to about ±0.1 for the direct refit and ±0.3 for the angular scan under the isolated-transit geometry. The second decimal is not stable: a rerun can print 23.50 for 23.51, 70.64 for 70.61 and 5.79 for 5.81. The grids for the other geometries are less stable. Single grid points move by up to 10 under the Cochran et al. geometry and by up to 6 under the stronger limb-darkening law, where the per-event baseline fit settles in a different minimum. In all three runs the largest value that all seven shape and sensitivity fits reach at a common grid point is 15.19, so no common point exceeds 25. Tighter stopping tolerances remove most of the spread but not the choice between local minima, and they change the second decimal of the headline values, so the scripts are left as they were run.
+
 ### Repeat the exploratory survey
 
 Run these commands from the screen subdirectory using NumPy, pandas, SciPy and Astropy. They fetch the original tables and STScI products and write a fresh screen.csv locally. Compare that file with the survey table in the parent directory. The original 743 exposure-product names are listed in screen/products.txt.

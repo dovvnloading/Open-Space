@@ -1,0 +1,16 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [],
+  "acknowledged": [
+    {
+      "rule": "replay/drift",
+      "key": "python check.py",
+      "reason": "The Huber-loss fit with wrapped phases stops at a point that depends on rounding in the installed NumPy and SciPy. Losses reproduce to 0.002 and depths to 0.00013 mag; no quoted number and no sign of a loss difference changes. See ground/README.md."
+    },
+    {
+      "rule": "replay/drift",
+      "key": "python fit_time.py",
+      "reason": "Four of 5,400 numbers, all timing residuals within 0.03 minutes of zero, move by at most 0.0000003 minutes for the same reason. See the replay section of the README."
+    }
+  ]
+}

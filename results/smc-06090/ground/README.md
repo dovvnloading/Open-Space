@@ -26,4 +26,6 @@ The resolved neighbor is fainter than the target by 3.565, 2.696, and 2.279 mag 
 
 Run `python check.py` with NumPy, SciPy and Astropy installed. This recreates results.json from the files in inputs. Magnitudes use their original passbands. Phases use P = 1.1696719 d and OGLE epoch HJD 2460000.0369. Ground-based MJD exposure start times were shifted to midpoint with their published integration times and heliocentrically corrected from CTIO or Siding Spring using the target coordinates. OGLE times are already heliocentric. Photometric zero points and source associations can differ across surveys.
 
+results.json was regenerated on 16 November 2026 with Python 3.14.0, NumPy 2.5.4, SciPy 1.18.1 and Astropy 8.0.2 on Windows 11, after the script was changed to list the input hashes in name order. It had listed them in directory order, which differs between file systems, so the file's layout changed from machine to machine. Every number agrees with the earlier file to two parts in a billion.
+
 The input hashes and per-epoch measures are in results.json. Read queries are recorded in sources.json. Credit belongs to OGLE, DELVE-MC, NSC, SMASH, SkyMapper, ESO/VMC, EROS-2, 2MASS and their contributing observatories and archives.

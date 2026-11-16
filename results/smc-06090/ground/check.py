@@ -112,7 +112,7 @@ def fit(data):
 
 
 def main():
-    inputs={f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in RAW.iterdir() if f.is_file()}
+    inputs={f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(RAW.iterdir(),key=lambda f:f.name) if f.is_file()}  # name order: directory order differs between file systems
     groups=archive_epochs()
     out={'input_hashes_sha256':inputs,'photometry':{k:photometry(v) for k,v in groups.items()}}
     out['DELVE_spacing_diagnostic']=fit(out['photometry']['delve-meas.csv']['epochs'])

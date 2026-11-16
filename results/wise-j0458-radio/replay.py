@@ -53,6 +53,10 @@ class Image:
             return a*self.kernel(dx-xo,dy-yo) + bg + gx*dx + gy*dy - pixels
         sol = least_squares(residual, [.6,0,0,0,0,0],bounds=([0,-3,-3,-2,-1,-1],[10,3,3,2,1,1]))
         a, xo, yo = sol.x[:3]
+        if a < 1e-9:
+            # The amplitude sits on its lower bound of zero. The solver stops a round-off
+            # step inside the bound (about 1e-16 mJy), which differs between machines.
+            a = 0.0
         e, n = self.jac @ [xo,yo]
         rc, dc = self.wcs.pixel_to_world_values(x+xo,y+yo)
         return float(rc), float(dc), a, e, n
