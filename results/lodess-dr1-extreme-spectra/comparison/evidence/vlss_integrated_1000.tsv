@@ -1,0 +1,56 @@
+#
+#   VizieR Astronomical Server vizier.idia.ac.za
+#    Date: 2026-11-16T16:43:08 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-16T16:43:08	  Query execution date
+#INFO	request=https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=VIII%2f97&-c=150.02463+81.45076&-c.rs=60&-out.all=1	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	MaxTuples=50000	
+#INFO	-c=150.024630+81.450760,rs=60.	
+#Constraint -out.all=1
+
+#RESOURCE=yCat_8097
+#Name: VIII/97
+#Title: 74MHz VLA Low-frequency Sky Survey Redux (VLSSr) (Lane+, 2014)
+#INFO	ivoid=ivo://cds.vizier/viii/97	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/viii/97	    IVOID of underlying data collection
+#INFO	creator=Lane W.M.	    First author or institution
+#INFO	cites=bibcode:2014MNRAS.440..327L	    Article or Data origin sources
+#INFO	journal=MNRA	    Journal name
+#INFO	original_date=2014	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/VIII/97	    Dataset landing page
+#INFO	publication_date=2017-07-10	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	VIII_97_catalog:
+#Name: VIII/97/catalog
+#Title: VLSSr catalog
+#Column	_r	(F5.2)	Distance from center (10 00 05.91+81 27 02.7)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	RAJ2000	(A11)	Right ascension (J2000) (RA2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(A11)	Declination (J2000) (DEC2000)	[ucd=pos.eq.dec;meta.main]
+#Column	Sp	(F7.2)	[0.2/8498] Peak intensity at 74MHz; in Jy/beam (PEAK_INT)	[ucd=phot.flux.density;em.radio.20-100MHz]
+#Column	e_Sp	(F5.2)	[0.05/7.1] Intensity RMS in Jy/beam (I_RMS)	[ucd=stat.error;src.spType]
+#Column	MajAx	(F5.2)	[0.02/0.03] Major axis of deconvolved component size (MAJOR_AX)	[ucd=phys.angSize]
+#Column	MinAx	(F5.2)	[0.02/0.03] Minor axis of deconvolved component size (MINOR_AX)	[ucd=phys.angSize;src]
+#Column	PA	(F6.2)	[-90/90] Position angle of Major Ax (POSANGLE)	[ucd=pos.posAng]
+#Column	Rrms	(F6.2)	[0.02/353] Residual RMS, in Jy/beam (RES_RMS)	[ucd=stat.fit.residual]
+#Column	Rpk	(F7.2)	[0.05/3824] Residual peak intensity, in Jy/beam (RES_PEAK)	[ucd=stat.fit.residual]
+#Column	RFlx	(F7.2)	[-102/105] Residual integrated flux (RES_FLUX)	[ucd=stat.fit.residual]
+#Column	Xpos	(F6.1)	[332/3745] X position of source on map (CENTER_X)	[ucd=pos.cartesian.x;instr.det]
+#Column	Ypos	(F6.1)	[332/3745] Y position of source on map (CENTER_Y)	[ucd=pos.cartesian.y;instr.det]
+#Column	Field	(A8)	Field designation (HHMM+DDd; J2000) (FIELD)	[ucd=meta.id;meta.main]
+#Column	JD	(I7)	[2456435] Julian Date field processed (2456435) (JD_PROCESSED)	[ucd=time.epoch]
+#Column	VLSS	(I3)	Cross-match within 75" with the VLSS data (Cat. VIII/79)	[ucd=meta.ref.url]
+#Column	img	(A3)	FITS Image of the target (about 200x200 pixels for a field of view of 17'x17')	[ucd=meta.ref.url]
+#Column	SED	(A3)	Plot the spectrum with SPECFIND (Vollmer et al. 2009, Cat. VIII/85)	[ucd=meta.ref.url]
+_r	recno	RAJ2000	DEJ2000	Sp	e_Sp	MajAx	MinAx	PA	Rrms	Rpk	RFlx	Xpos	Ypos	Field	JD	VLSS	img	SED
+arcsec	 	"h:m:s"	"d:m:s"	Jy	Jy	deg	deg	deg	Jy	Jy	Jy	pix	pix	 	d	 	 	
+-----	--------	-----------	-----------	-------	-----	-----	-----	------	------	-------	-------	------	------	--------	-------	---	---	---
+ 5.50	   42536	10 00 07.67	+81 27 06.6	   2.19	 0.12	 0.02	 0.02	-87.24	  0.15	   0.50	   0.01	3061.0	1461.2	1200+850	2456435	  1	img	SED
+

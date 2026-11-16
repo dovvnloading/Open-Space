@@ -1,0 +1,66 @@
+#
+#   VizieR Astronomical Server vizier.idia.ac.za
+#    Date: 2026-11-16T16:30:46 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-16T16:30:46	  Query execution date
+#INFO	request=https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=J%2FA%2BA%2F370%2F78&-c=150.0246+%2B81.45076&-c.rm=2&-out.max=200&-out.all=1	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=150.024600+81.450760,rm=2.	
+#Constraint -out.all=1
+
+#RESOURCE=yCat_33700078
+#Name: J/A+A/370/78
+#Title: RATAN-600 NCP bright radio sources (Mingaliev+, 2001)
+#INFO	ivoid=ivo://cds.vizier/j/a+a/370/78	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/a+a/370/78	    IVOID of underlying data collection
+#INFO	creator=Mingaliev M.G.	    First author or institution
+#INFO	cites=bibcode:2001A&A...370...78M	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2001	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/370/78	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.33700078	    Dataset identifier that can be used for citation
+#INFO	publication_date=2001-07-28	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_A_A_370_78_table3:
+#Name: J/A+A/370/78/table3
+#Title: Complex sources list
+#Column	_r	(F5.3)	Distance from center (150.025+81.4508)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	NVSS	(a14)	Name in NVSS	[ucd=meta.id.assoc]
+#Column	Source	(a14)	Name in the Table 4	[ucd=meta.id;meta.main]
+#Column	_RA	(F7.3)	Position (derived from the NSS Name) (right ascension part)	[ucd=pos.eq.ra;meta.main]
+#Column	_DE	(F8.4)	Position (derived from the NSS Name) (declination part)	[ucd=pos.eq.dec;meta.main]
+#Table	J_A_A_370_78_table4:
+#Name: J/A+A/370/78/table4
+#Title: Fluxes of the sources in the NCP region
+#Column	_r	(F5.3)	Distance from center (150.025+81.4508)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	Source	(a14)	Source name (NVSS notation), corresponding to epoch J2000 coordinates	[ucd=meta.id;meta.main]
+#Column	S0.325GHz	(F6.3)	? Flux density at 0.325GHz (WENSS catalog, Rengelink et al., 1997, Cat. <VIII/62>)	[ucd=phot.flux.density;em.radio.200-400MHz]
+#Column	e_S0.325GHz	(F6.3)	? rms uncertainty on S0.325GHz	[ucd=stat.error]
+#Column	S1.4GHz	(F6.3)	NVSS Flux density at 1.4GHz (NVSS catalogue, Condon et al., 1998, Cat. <VIII/65>)	[ucd=phot.flux.density;em.radio.750-1500MHz]
+#Column	e_S1.4GHz	(F6.3)	rms uncertainty on S1.4GHz	[ucd=stat.error]
+#Column	S2.3GHz	(F6.3)	? Flux density at 2.3GHz	[ucd=phot.flux.density;em.radio.1500-3000MHz]
+#Column	e_S2.3GHz	(F6.3)	? rms uncertainty on S2.3GHz	[ucd=stat.error]
+#Column	S3.9GHz	(F6.3)	? Flux density at 3.9GHz	[ucd=phot.flux.density;em.radio.3-6GHz]
+#Column	e_S3.9GHz	(F6.3)	? rms uncertainty on S3.9GHz	[ucd=stat.error]
+#Column	S7.7GHz	(F6.3)	? Flux density at 7.7GHz	[ucd=phot.flux.density;em.radio.6-12GHz]
+#Column	e_S7.7GHz	(F6.3)	? rms uncertainty on S7.7GHz	[ucd=stat.error]
+#Column	S11.2GHz	(F6.3)	? Flux density at 11.2GHz	[ucd=phot.flux.density;em.radio.6-12GHz]
+#Column	e_S11.2GHz	(F6.3)	? rms uncertainty on 11.2GHz	[ucd=stat.error]
+#Column	S21.7GHz	(F6.3)	? Flux density at 21.7GHz	[ucd=phot.flux.density;em.radio.12-30GHz]
+#Column	e_S21.7GHz	(F6.3)	? rms uncertainty 21.7GHz	[ucd=stat.error]
+#Column	Sp-Index	(F5.2)	Spectral index 0.325 to 11.2 (1)	[ucd=spect.index]
+#Column	_RA	(F7.3)	Position (derived from the Source name) (right ascension part)	[ucd=pos.eq.ra;meta.main]
+#Column	_DE	(F8.4)	Position (derived from the Source name) (declination part)	[ucd=pos.eq.dec;meta.main]
+_r	recno	Source	S0.325GHz	e_S0.325GHz	S1.4GHz	e_S1.4GHz	S2.3GHz	e_S2.3GHz	S3.9GHz	e_S3.9GHz	S7.7GHz	e_S7.7GHz	S11.2GHz	e_S11.2GHz	S21.7GHz	e_S21.7GHz	Sp-Index	_RA	_DE
+arcmin	 	 	Jy	Jy	Jy	Jy	Jy	Jy	Jy	Jy	Jy	Jy	Jy	Jy	Jy	Jy	 	deg	deg
+-----	--------	--------------	------	------	------	------	------	------	------	------	------	------	------	------	------	------	-----	-------	--------
+0.036	      64	J100005+812702	 2.541	 0.102	 0.864	 0.029	 0.561	 0.050	 0.304	 0.017	 0.122	 0.007	 0.069	 0.008	      	      	 1.02	150.021	+81.4506
+

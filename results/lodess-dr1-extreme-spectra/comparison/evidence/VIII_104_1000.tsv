@@ -1,0 +1,123 @@
+#
+#   VizieR Astronomical Server vizier.idia.ac.za
+#    Date: 2026-11-16T16:30:46 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-16T16:30:46	  Query execution date
+#INFO	request=https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=VIII%2F104&-c=150.0246+%2B81.45076&-c.rm=2&-out.max=200&-out.all=1	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=150.024600+81.450760,rm=2.	
+#Constraint -out.all=1
+
+#RESOURCE=yCat_8104
+#Name: VIII/104
+#Title: SPECFIND V3.0 Catalog of radio continuum spectra (Stein+, 2021)
+#INFO	ivoid=ivo://cds.vizier/viii/104	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/viii/104	    IVOID of underlying data collection
+#INFO	creator=Stein Y.	    First author or institution
+#INFO	cites=bibcode:2021A&A...655A..17S	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2021	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/VIII/104	    Dataset landing page
+#INFO	publication_date=2025-10-09	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	VIII_104_spectra:
+#Name: VIII/104/spectra
+#Title: The parameters of the radio spectra
+#Column	_r	(F5.3)	Distance from center (150.0246+81.4508)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	Seq	(I6)	[1/339592] Sequential number of the spectrum (1)	[ucd=meta.record]
+#Column	Name	(a35)	Main name of the radio source (G1)	[ucd=meta.id;meta.main]
+#Column	N	(I2)	[2/34] Number of points in spectrum	[ucd=meta.number]
+#Column	a	(F6.2)	Slope of spectrum (3)	[ucd=arith.grad;spect.index]
+#Column	b	(F7.2)	Abscissa of spectrum (3)	[ucd=stat.fit;arith.zp]
+#Column	nu	(I5)	[16/31000] Frequency	[ucd=em.freq]
+#Column	S(nu)	(E9.2)	Flux density at frequency nu	[ucd=phot.flux.density;em.radio]
+#Column	e_S(nu)	(E8.1)	Mean error on S(nu)	[ucd=stat.error]
+#Column	RAJ2000	(F8.4)	Right ascension (J2000) of source	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F8.4)	Declination (J2000) of source	[ucd=pos.eq.dec;meta.main]
+#Column	dFlux	(F11.2)	Difference with flux expected from NVSS	[ucd=stat.fit.residual]
+#Column	dRA	(F7.1)	? Offset in RA from NVSS source	[ucd=pos.eq.ra;arith.diff]
+#Column	dDE	(F7.1)	? Offset in DE from NVSS source	[ucd=pos.eq.dec;arith.diff]
+#Column	zSim	(A4)	Display the Object type and redshift form Simbad	[ucd=meta.ref.url]
+#Column	SED	(A3)	VizieR added column, not part of original data	[ucd=meta.ref.url]
+#Column	Radio+Opt	(a9)	Get an optical image, with an overplot of radio contours	[ucd=meta.ref.url]
+#Column	beam	(F12.4)	Size of beam	[ucd=phys.angSize;instr.beam]
+_r	recno	Seq	Name	N	a	b	nu	S(nu)	e_S(nu)	RAJ2000	DEJ2000	dFlux	dRA	dDE	zSim	SED	Radio+Opt	beam
+arcmin	 	 	 	 	 	[mJy]	MHz	mJy	mJy	deg	deg	mJy	arcsec	arcsec	 	 	 	arcsec
+-----	--------	------	-----------------------------------	--	------	-------	-----	---------	--------	--------	--------	-----------	-------	-------	----	---	---------	------------
+0.054	   54720	325295	7C 095342.29+814121.00             	 7	 -0.63	   4.87	  151	 2.54e+03	 5.1e+02	150.0279	+81.4500	    -602.28	    1.9	    2.5	zSim	SED	Radio+Opt	     70.2000
+0.076	   54719	325295	6C 095339+814122                   	 7	 -0.66	   4.98	  151	 3.55e+03	 7.1e+02	150.0167	+81.4503	      67.63	    4.1	    1.4	zSim	SED	Radio+Opt	    252.0000
+0.024	   54721	325295	TGSSADR J100005.6+812701           	 7	 -0.66	   4.98	  150	 3.49e+03	 7.0e+02	150.0234	+81.4504	      -7.68	    0.5	    1.1	zSim	SED	Radio+Opt	     25.0020
+0.042	   54718	325295	6C 095343+814123                   	 7	 -0.63	   4.87	  151	 3.20e+03	 6.4e+02	150.0292	+81.4506	      57.72	    2.6	    0.4	zSim	SED	Radio+Opt	    252.0000
+0.004	   54716	325295	NVSS J100005+812702                	 7	 -0.50	   4.52	 1400	 8.63e+02	 1.7e+02	150.0243	+81.4507	     -21.99	    0.0	    0.0	zSim	SED	Radio+Opt	     45.0000
+0.020	   54715	325295	WN B0953.6+8141                    	 7	 -0.66	   4.98	  325	 2.54e+03	 5.1e+02	150.0226	+81.4509	     440.30	    0.9	    0.7	zSim	SED	Radio+Opt	     54.0000
+0.199	   54717	325295	WB 0953+8141                       	 7	 -0.66	   4.98	 1400	 7.94e+02	 1.6e+02	150.0037	+81.4519	      -6.86	   11.0	    4.3	zSim	SED	Radio+Opt	    120.0000
+
+#Table	VIII_104_waste:
+#Name: VIII/104/waste
+#Title: Source parameters based on positional cross-id
+#Column	_r	(F5.3)	Distance from center (150.0246+81.4508)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	Assoc	(a31)	Main name of the radio association (G1)	[ucd=meta.id.assoc]
+#Column	Seq	(I8)	[-3326064/339592] Spectrum Sequential number (1)	[ucd=meta.record]
+#Column	nu	(I6)	[16/31000] Frequency	[ucd=em.freq]
+#Column	S(nu)	(E9.2)	Flux density at frequency nu	[ucd=phot.flux.density;em.radio]
+#Column	e_S(nu)	(E8.1)	Mean error on S(nu)	[ucd=stat.error]
+#Column	RAJ2000	(F8.4)	Right ascension (J2000) of source	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F8.4)	Declination (J2000) of source	[ucd=pos.eq.dec;meta.main]
+#Column	Name	(a32)	Name of the associated radio source (G1)	[ucd=meta.id;meta.main]
+#Column	SED	(A3)	VizieR added column, not part of original data	[ucd=meta.ref.url]
+#Column	Radio+Opt	(a9)	Get an optical image, with an overplot of radio contours	[ucd=meta.ref.url]
+#Column	beam	(F12.4)	Size of beam	[ucd=phys.angSize;instr.beam]
+#Table	VIII_104_ghzbreak_cand:
+#Name: VIII/104/ghzbreak_cand
+#Title: Spectral break source candidates at 1.4 GHz (table A2)
+#Column	_r	(F5.3)	Distance from center (150.0246+81.4508)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	Seq	(I5)	[1/18075] The sources belonging to the same spectrum have the same sequence number (1)	[ucd=meta.id]
+#Column	Name	(a40)	Source name	[ucd=meta.id;meta.main]
+#Column	cat	(A4)	Spectral break code (2)	[ucd=meta.code]
+#Column	Resolved	(I1)	[0/1] Resolved (1) flag (3)	[ucd=meta.code]
+#Column	a	(F5.2)	Spectral slope associated with the source	[ucd=meta.id.assoc]
+#Column	b	(F5.2)	? Abscissa associated with the source	[ucd=stat.fit.param]
+#Column	alow	(F5.2)	Spectral slope at low frequencies	[ucd=spect.index]
+#Column	e_alow	(F5.2)	rms uncertainty on spectral slope at low frequencies	[ucd=stat.error]
+#Column	ahigh	(F5.2)	Spectral slope at high frequencies	[ucd=spect.index]
+#Column	e_ahigh	(F5.2)	rms uncertainty on spectral slope at high frequencies	[ucd=stat.error]
+#Column	Freq	(I5)	Frequency	[ucd=em.freq]
+#Column	S	(E10.3)	Flux density at Freq	[ucd=phot.flux.density;em.radio]
+#Column	e_S	(E9.2)	rms uncertainty on S	[ucd=stat.error]
+#Column	RAJ2000	(F8.4)	Right ascension (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F8.4)	Declination (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	Beam	(F7.4)	beam/resolution	[ucd=phys.angSize]
+#Column	SED	(A3)	Plot of the Spectral Energy Distribution	[ucd=meta.ref.url]
+#Column	Radio+Opt	(a9)	Get an optical image, with an overplot of radio contours	[ucd=meta.ref.url]
+#Table	VIII_104_mhzbreak_cand:
+#Name: VIII/104/mhzbreak_cand
+#Title: Spectral break source candidates at 325 MHz (table A3)
+#Column	_r	(F5.3)	Distance from center (150.0246+81.4508)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	Seq	(I5)	[1/18075] The sources belonging to the same spectrum have the same sequence number (1)	[ucd=meta.id]
+#Column	Name	(a40)	Source name	[ucd=meta.id;meta.main]
+#Column	cat	(A4)	Spectral break code (2)	[ucd=meta.code]
+#Column	Resolved	(I1)	[0/1] Resolved (1) flag (3)	[ucd=meta.code]
+#Column	a	(F5.2)	Spectral slope associated with the source	[ucd=meta.id.assoc]
+#Column	b	(F5.2)	? Abscissa associated with the source	[ucd=stat.fit.param]
+#Column	alow	(F5.2)	Spectral slope at low frequencies	[ucd=spect.index]
+#Column	e_alow	(F5.2)	rms uncertainty on spectral slope at low frequencies	[ucd=stat.error]
+#Column	ahigh	(F5.2)	Spectral slope at high frequencies	[ucd=spect.index]
+#Column	e_ahigh	(F5.2)	rms uncertainty on spectral slope at high frequencies	[ucd=stat.error]
+#Column	Freq	(I5)	Frequency	[ucd=em.freq]
+#Column	S	(E10.3)	Flux density at Freq	[ucd=phot.flux.density;em.radio]
+#Column	e_S	(E9.2)	rms uncertainty on S	[ucd=stat.error]
+#Column	RAJ2000	(F8.4)	Right ascension (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F8.4)	Declination (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	Beam	(F7.4)	beam/resolution	[ucd=phys.angSize]
+#Column	SED	(A3)	Plot of the Spectral Energy Distribution	[ucd=meta.ref.url]
+#Column	Radio+Opt	(a9)	Get an optical image, with an overplot of radio contours	[ucd=meta.ref.url]
