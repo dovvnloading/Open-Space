@@ -95,6 +95,9 @@ def summaries(timings):
             cycles, oc = np.array(epochs).T
             original_clock = np.polyfit(cycles[[0, 3]], oc[[0, 3]], 1)
             excess = oc - np.polyval(original_clock, cycles)
+            # Sectors 12 and 93 define the clock, so their delay is zero by construction.
+            # Writing the round-off left by the fit (about 1e-16) made the table differ between machines.
+            excess[[0, 3]] = 0.0
             for sector, (cycle, m), delay in zip((12, 39, 66, 93), epochs, excess):
                 out.append(dict(flux_column=column, eclipse=name, sector=sector,
                                 mean_cycle=cycle, median_oc_minutes=m,

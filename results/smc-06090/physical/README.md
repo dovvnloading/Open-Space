@@ -51,4 +51,21 @@ Python, NumPy and SciPy suffice. Run with OPENBLAS_NUM_THREADS=1. The initial ge
 3. Run `python predictions.py`, `python rate.py` `python ellipsoidal.py`, `python joint_tide.py` and `python width_boot.py`.
 4. See ../widths/README.md for the TESS aperture and uncertainty checks. The original 400-replicate individual-cycle summary is retained in tess_widths.json.
 
+### How closely a rerun matches
+
+The fitting commands do not regenerate the committed JSON files digit for digit. Each fit stops at loose tolerances (5e-7) or after at most 140 function evaluations, and several commands start each fit from the previous one, so rounding differences in the installed NumPy and SciPy carry forward. The bootstraps are seeded and draw the same resamples everywhere. The committed files are unchanged. They were compared on 16 November 2026 with a rerun on Windows 11 under Python 3.14.0, NumPy 2.5.4 and SciPy 1.18.1, each command started from the committed files. Setting OPENBLAS_NUM_THREADS=1 made no difference on that machine.
+
+| Command | File | Numbers that moved by more than one part in a million | Largest change |
+| --- | --- | ---: | --- |
+| `geometry.py` | full.json | 4 of 63 | 5e-5 of the value, in terms fitted near zero |
+| `geometry.py --run cv` | cv.json | 28 of 396 | 6e-4 of the value, in a cosine of inclination near zero |
+| `geometry.py --run profiles` | profiles.json | 17 of 308 | 3e-5 of the value |
+| `geometry.py --run sensitivity` | sensitivity.json | 11 of 184 | 4e-5 of the value |
+| `checks.py` | dilution.json | 222 of 1,192 | solver evaluation counts (51 became 74); reverse-sense inclination at 35% extra light 89.944° became 89.937° |
+| `checks.py --bootstrap 120` | bootstrap.json | 3 of 495 | 4e-5 of the value, in one draw near zero |
+| `joint_tide.py` | joint_tide.json | 8 of 156 | 9e-4 of the value, in a cosine of inclination at the edge-on bound |
+| `width_boot.py` | width_boot.json | 193 of 996 | 0.6% in single draws; 0.003 h in one quantile |
+
+The values that move most are solver evaluation counts and terms fitted within about 0.001 of zero: the cosine of inclination at the edge-on bound and the once-per-orbit cosine amplitude. Robust losses, U, e and the forward inclination agree to better than one part in ten thousand, and the bootstrap quantiles to 0.003. No number quoted in this document changes at its printed precision.
+
 All observational credits belong to the OGLE and TESS collaborations and STScI/MAST. Use results with the observing limits and assumptions described above. [MAST TESScut](https://mast.stsci.edu/tesscut/)

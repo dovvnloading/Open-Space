@@ -47,6 +47,6 @@ python torun/validate.py
 python plot.py
 ```
 
-The full selection can be replayed separately with `python screen.py --cache /tmp/imet-panels --out screening.csv`. The [Toruń extraction notes](torun/README.md) give its source download, hash and extraction command.
+The full selection can be replayed separately with `python screen.py --cache /tmp/imet-panels --out screening.csv`. The [Toruń extraction notes](torun/README.md) give its source download, hash and extraction command. They also record how closely a rerun of `torun/validate.py` matches: the conditional simulation probability quoted above as 0.00095 is a count of 18 in 20,000 draws, and reruns under other NumPy builds counted 17 and 22.
 
 This work is partially supported by the Inter-university collaborative project "Japanese VLBI Network (JVN)" of NAOJ and by the Japan Society for the Promotion of Science (JSPS) KAKENHI Grant Numbers JP21H01120 and JP21H00032.

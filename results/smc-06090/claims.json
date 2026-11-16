@@ -1,0 +1,26 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [],
+  "acknowledged": [
+    {
+      "rule": "replay/drift",
+      "key": "geometry.py",
+      "reason": "The geometry fits stop at loose tolerances (5e-7) or after at most 140 evaluations, so the stopping point depends on rounding in the installed NumPy and SciPy. Terms fitted near zero move by up to 6e-4 of their value; losses and orbital parameters agree to better than one part in ten thousand. See 'How closely a rerun matches' in physical/README.md."
+    },
+    {
+      "rule": "replay/drift",
+      "key": "python checks.py",
+      "reason": "Same solver sensitivity, carried forward because each dilution fit starts from the previous one. Solver evaluation counts and a cosine of inclination at the edge-on bound move most; no quoted number changes. The bootstrap is seeded and moves in 3 of 495 numbers. See 'How closely a rerun matches' in physical/README.md."
+    },
+    {
+      "rule": "replay/drift",
+      "key": "python joint_tide.py",
+      "reason": "Eight of 156 numbers move, by up to 9e-4 of their value, in terms fitted at the edge-on bound or near zero. See 'How closely a rerun matches' in physical/README.md."
+    },
+    {
+      "rule": "replay/drift",
+      "key": "python width_boot.py",
+      "reason": "The resamples are seeded; the refits have the same solver sensitivity. Single draws move by up to 0.6% and the quoted quantiles by at most 0.003 h, below their printed precision. See 'How closely a rerun matches' in physical/README.md."
+    }
+  ]
+}

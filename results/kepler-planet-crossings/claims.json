@@ -1,0 +1,26 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [],
+  "acknowledged": [
+    {
+      "rule": "replay/drift",
+      "key": "python replay.py",
+      "reason": "The per-event bounded least-squares fits stop at a point that depends on rounding in the installed NumPy and SciPy. Under the isolated-transit geometry the scan values reproduce to about 0.3 in delta chi-square; single grid points under the Cochran et al. geometry move by up to 10. See 'How closely a rerun matches' in the README."
+    },
+    {
+      "rule": "replay/drift",
+      "key": "python sensitivity.py",
+      "reason": "Same solver sensitivity as replay.py. Single grid points under the stronger limb-darkening law move by up to 6 in delta chi-square. The largest value all seven fits reach at a common grid point stays 15.19. See 'How closely a rerun matches' in the README."
+    },
+    {
+      "rule": "replay/drift",
+      "key": "python refit.py",
+      "reason": "The direct refit chooses among five starts per event and has nearby local minima. Summed delta chi-square reproduces to about 0.1; fitted timing offsets and per-event values near zero move by more. See 'How closely a rerun matches' in the README."
+    },
+    {
+      "rule": "replay/drift",
+      "key": "python injections.py",
+      "reason": "The generator is seeded; the residuals it shuffles come from the same solver-dependent fits. Scores move by less than 0.001 and the recovered counts (1,999, 638 and 0 of 2,000) do not change. See 'How closely a rerun matches' in the README."
+    }
+  ]
+}
