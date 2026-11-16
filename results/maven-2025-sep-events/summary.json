@@ -1,0 +1,277 @@
+{
+  "status": "instrument-space screening; no claim of novel solar eruption, radiation dose or MAVEN failure cause",
+  "input_product": "2026-updated third-party Parquet mirror of the original NASA LASP MAVEN KP in-situ product; NOT the separately released 2026-10-30 PDS Level-2 SEP product",
+  "independent_followup_archive": "urn:nasa:pds:maven.sep.calibrated / Release 45 / 2026-10-30; not used in this computation",
+  "input": {
+    "sep": {
+      "url": "https://huggingface.co/datasets/juliensimon/nasa-maven-kp-insitu/resolve/main/data/sep/sep.parquet",
+      "sha256": "e3ea044212db893dcdcc050c5b1aa28257b05f483c9952258bc715e9631dec03",
+      "bytes": 41118339
+    },
+    "spice": {
+      "url": "https://huggingface.co/datasets/juliensimon/nasa-maven-kp-insitu/resolve/main/data/spice/spice.parquet",
+      "sha256": "997fa7e3bce857722232531fa18beed4a843eca27aa0ecde910ca01ee5bf1ee0",
+      "bytes": 189440294
+    },
+    "mag": {
+      "url": "https://huggingface.co/datasets/juliensimon/nasa-maven-kp-insitu/resolve/main/data/mag/mag.parquet",
+      "sha256": "45b2e91ead4d5aba3aa68a2a2170f4f224681f3c47117c011aa65b8f20b8ce8c",
+      "bytes": 17994998
+    },
+    "swia": {
+      "url": "https://huggingface.co/datasets/juliensimon/nasa-maven-kp-insitu/resolve/main/data/swia/swia.parquet",
+      "sha256": "186c741f2f04938ce46ebcfe3d2886f77f24b9b794b9872fc3d859268ac05a87",
+      "bytes": 16722939
+    }
+  },
+  "original_kp_archive": "https://lasp.colorado.edu/maven/sdc/public/data/sci/kp/insitu/",
+  "original_instrument_sis": "https://pds-ppi.igpp.ucla.edu/data/maven-insitu-calibrated/document/maven_sis_kp_insitu_r05.2.pdf",
+  "flux_units": "(cm^2 s sr)^-1",
+  "sensor_energy_windows": {
+    "ions": "30-1000 keV",
+    "electrons": "30-300 keV"
+  },
+  "field_quality_semantics": "SEP *_quality stores standard Poisson flux uncertainties, NOT binary quality flags; see PDS SIS/SPASE",
+  "time_convention": "UTC; hourly aggregation by floor UTC, no implicit interpolation across missing hours",
+  "sample_cadence": "time-indexed original KP at nominal ~4-8s; no assumption of complete coverage",
+  "selection_frozen_before_full_run": {
+    "valid_views": ">=3/4 for both species",
+    "signal_to_uncertainty_per_view": ">=8, at least 3/4 views of each species",
+    "row_flux": {
+      "ion_median_min": 400,
+      "electron_median_min": 1000
+    },
+    "event_hour": ">=100 source samples; >=75 joint; joint fraction>=0.60; >=20 joint at altitude>=3000km",
+    "event": ">=2 selected UTC hours linked by <=5h gaps; at least 2 distinct orbits with joint samples during selected hours to qualify for independent-orbit evidence"
+  },
+  "coverage": {
+    "sep_distinct_times": 1189114,
+    "start_utc": "2025-08-01T00:00:00+00:00",
+    "end_utc": "2025-12-05T23:59:44+00:00",
+    "distinct_spice_matched": 1189114,
+    "hours_with_100_samples": 2376,
+    "selected_hours": 176,
+    "days_observed": 99,
+    "dual_species_joint_rows": 102094,
+    "dual_species_joint_rows_highalt": 56416
+  },
+  "survey_hourly_reference": {
+    "median_ion_flux_at_100plus_sample_hours": 30.549999999999997,
+    "median_electron_flux_at_100plus_sample_hours": 25.212500000000002,
+    "median_mag_magnitude_nt_across_valid_hours": 9.33155970187916,
+    "median_swia_dynamic_pressure_npa_across_valid_hours": 0.52675
+  },
+  "ranked_events": [
+    {
+      "start_utc": "2025-08-22T21:00:00+00:00",
+      "last_selected_hour_utc": "2025-08-29T18:00:00+00:00",
+      "selected_hours": 125,
+      "joint_8s_samples": 56032,
+      "joint_highalt_8s_samples": 38385,
+      "peak_hourly_median_ion": 157000.0,
+      "peak_hourly_median_electron": 616500.0,
+      "median_hourly_ion": 1425.0,
+      "median_hourly_electron": 15050.0,
+      "distinct_joint_orbits": 46,
+      "full_window_distinct_joint_orbits": 46,
+      "full_window_hours": 166,
+      "mag_hourly_median_nt": 15.163111566202993,
+      "swia_hourly_median_dynamic_pressure_npa": 0.609,
+      "complete_independent_mag_hours": 166,
+      "complete_independent_swia_hours": 166
+    },
+    {
+      "start_utc": "2025-10-30T07:00:00+00:00",
+      "last_selected_hour_utc": "2025-11-01T03:00:00+00:00",
+      "selected_hours": 34,
+      "joint_8s_samples": 14394,
+      "joint_highalt_8s_samples": 10214,
+      "peak_hourly_median_ion": 3447.5,
+      "peak_hourly_median_electron": 1795.0,
+      "median_hourly_ion": 1192.5,
+      "median_hourly_electron": 1610.0,
+      "distinct_joint_orbits": 13,
+      "full_window_distinct_joint_orbits": 13,
+      "full_window_hours": 45,
+      "mag_hourly_median_nt": 3.74091987079289,
+      "swia_hourly_median_dynamic_pressure_npa": 0.9245000000000001,
+      "complete_independent_mag_hours": 45,
+      "complete_independent_swia_hours": 45
+    },
+    {
+      "start_utc": "2025-11-03T14:00:00+00:00",
+      "last_selected_hour_utc": "2025-11-04T11:00:00+00:00",
+      "selected_hours": 15,
+      "joint_8s_samples": 6459,
+      "joint_highalt_8s_samples": 4741,
+      "peak_hourly_median_ion": 2230.0,
+      "peak_hourly_median_electron": 3180.0,
+      "median_hourly_ion": 1001.0,
+      "median_hourly_electron": 1395.0,
+      "distinct_joint_orbits": 7,
+      "full_window_distinct_joint_orbits": 7,
+      "full_window_hours": 22,
+      "mag_hourly_median_nt": 9.013621472556139,
+      "swia_hourly_median_dynamic_pressure_npa": 1.135,
+      "complete_independent_mag_hours": 22,
+      "complete_independent_swia_hours": 22
+    },
+    {
+      "start_utc": "2025-10-29T23:00:00+00:00",
+      "last_selected_hour_utc": "2025-10-30T00:00:00+00:00",
+      "selected_hours": 2,
+      "joint_8s_samples": 759,
+      "joint_highalt_8s_samples": 709,
+      "peak_hourly_median_ion": 29850.0,
+      "peak_hourly_median_electron": 1470.0,
+      "median_hourly_ion": 28675.0,
+      "median_hourly_electron": 1272.5,
+      "distinct_joint_orbits": 1,
+      "full_window_distinct_joint_orbits": 1,
+      "full_window_hours": 2,
+      "mag_hourly_median_nt": 8.155828680252412,
+      "swia_hourly_median_dynamic_pressure_npa": 1.51,
+      "complete_independent_mag_hours": 2,
+      "complete_independent_swia_hours": 2
+    }
+  ],
+  "top_observed_hourly_fluxes": [
+    {
+      "hour_utc": "2025-08-24T05:00:00+00:00",
+      "ion_median": 157000.0,
+      "electron_median": 616500.0,
+      "joint_samples": 450,
+      "joint_highalt": 205,
+      "samples": 450
+    },
+    {
+      "hour_utc": "2025-08-24T03:00:00+00:00",
+      "ion_median": 145000.0,
+      "electron_median": 589250.0,
+      "joint_samples": 450,
+      "joint_highalt": 350,
+      "samples": 450
+    },
+    {
+      "hour_utc": "2025-08-24T02:00:00+00:00",
+      "ion_median": 131500.0,
+      "electron_median": 565250.0,
+      "joint_samples": 450,
+      "joint_highalt": 450,
+      "samples": 450
+    },
+    {
+      "hour_utc": "2025-08-24T06:00:00+00:00",
+      "ion_median": 120000.0,
+      "electron_median": 437500.0,
+      "joint_samples": 450,
+      "joint_highalt": 450,
+      "samples": 450
+    },
+    {
+      "hour_utc": "2025-08-24T04:00:00+00:00",
+      "ion_median": 112000.0,
+      "electron_median": 244500.0,
+      "joint_samples": 636,
+      "joint_highalt": 0,
+      "samples": 636
+    },
+    {
+      "hour_utc": "2025-08-24T07:00:00+00:00",
+      "ion_median": 101250.0,
+      "electron_median": 336500.0,
+      "joint_samples": 450,
+      "joint_highalt": 195,
+      "samples": 450
+    },
+    {
+      "hour_utc": "2025-08-24T09:00:00+00:00",
+      "ion_median": 87475.0,
+      "electron_median": 241000.0,
+      "joint_samples": 450,
+      "joint_highalt": 359,
+      "samples": 450
+    },
+    {
+      "hour_utc": "2025-08-24T10:00:00+00:00",
+      "ion_median": 74600.0,
+      "electron_median": 233000.0,
+      "joint_samples": 450,
+      "joint_highalt": 450,
+      "samples": 450
+    },
+    {
+      "hour_utc": "2025-08-24T12:00:00+00:00",
+      "ion_median": 58200.0,
+      "electron_median": 204500.0,
+      "joint_samples": 482,
+      "joint_highalt": 64,
+      "samples": 531
+    },
+    {
+      "hour_utc": "2025-08-24T13:00:00+00:00",
+      "ion_median": 58025.0,
+      "electron_median": 182750.0,
+      "joint_samples": 450,
+      "joint_highalt": 450,
+      "samples": 450
+    },
+    {
+      "hour_utc": "2025-08-24T11:00:00+00:00",
+      "ion_median": 54150.0,
+      "electron_median": 197000.0,
+      "joint_samples": 358,
+      "joint_highalt": 40,
+      "samples": 556
+    },
+    {
+      "hour_utc": "2025-08-24T08:00:00+00:00",
+      "ion_median": 53375.0,
+      "electron_median": 244000.0,
+      "joint_samples": 543,
+      "joint_highalt": 0,
+      "samples": 636
+    },
+    {
+      "hour_utc": "2025-08-24T01:00:00+00:00",
+      "ion_median": 44450.0,
+      "electron_median": 229500.0,
+      "joint_samples": 418,
+      "joint_highalt": 50,
+      "samples": 545
+    },
+    {
+      "hour_utc": "2025-08-23T23:00:00+00:00",
+      "ion_median": 33200.0,
+      "electron_median": 159500.0,
+      "joint_samples": 449,
+      "joint_highalt": 449,
+      "samples": 449
+    },
+    {
+      "hour_utc": "2025-08-24T14:00:00+00:00",
+      "ion_median": 30350.0,
+      "electron_median": 113000.0,
+      "joint_samples": 321,
+      "joint_highalt": 312,
+      "samples": 450
+    },
+    {
+      "hour_utc": "2025-10-29T23:00:00+00:00",
+      "ion_median": 29850.0,
+      "electron_median": 1470.0,
+      "joint_samples": 449,
+      "joint_highalt": 449,
+      "samples": 449
+    }
+  ],
+  "essential_limits": [
+    "Four directional look channels are not four independently calibrated instruments.",
+    "The file is a third-party Parquet repackaging of NASA LASP KP. Verify candidate timings against original daily KP and independently calibrated SEP L2 files.",
+    "MAG and SWIA are environmental context, not independent confirmation of SEP flux.",
+    "High-altitude does not ensure upstream solar wind. Analyze spacecraft viewing geometry and solar magnetic connection before claiming interplanetary impact.",
+    "Multiple-hypothesis top-hour selection is exploratory; no survey false-alarm rate calibrated yet.",
+    "MAVEN spacecraft loss in Dec 2025 cannot be connected causally to earlier SEP events without independent evidence.",
+    "SEP *_quality suffix is incorrectly called a binary quality flag in the third-party mirror README; the PDS specifies a one-sigma Poisson statistical uncertainty."
+  ]
+}
