@@ -1,0 +1,7 @@
+# Veneto field casts, November 4–6, 2025
+
+ARPAV sampled 29 distinct stations on November 4 (9), 5 (10), and 6 (10). In the 2025 marine profile export we selected the shallowest observation with paired turbidity and chlorophyll for each station and date. Measurements were 0.22–0.52 m deep. Median turbidity was 2.67 FTU (interquartile range 1.97–4.04) and median chlorophyll a was 0.56 µg/L (0.33–0.81). The archive preserves native Gauss–Boaga coordinates and acquisition time. The station transects provide regional context on and before the November 6 peak. The campaign ended before the November 7 decline.
+
+ARPAV's report gives six water-body mean turbidity values of 1.81–14.38 FTU and chlorophyll a of 0.22–0.84 µg/L. Underwater cameras recorded high turbidity in all surveyed water bodies. The field campaign did not distinguish how much of the next day's offshore reflectance change came from particles, colored dissolved matter or plankton. [Monthly report](https://www.arpa.veneto.it/api/temi-ambientali/mare-e-lagune/acque-marino-costiere/qualita-acque-2025/informare-novembre_2025.pdf/@@download/file)
+
+Run `python profiles.py` to retrieve the source and regenerate the table, or supply the original CSV as an argument for offline processing. The script checks the SHA-256. ARPAV provides the source under CC BY 4.0. This subset retains and renames selected fields from the original, one row per cast. [Data and license](https://www.arpa.veneto.it/dati-ambientali/open-data/idrosfera/acque-marino-costiere-e-transizione-profili-sonda)
