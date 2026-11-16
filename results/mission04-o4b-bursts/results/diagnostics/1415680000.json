@@ -1,0 +1,351 @@
+{
+  "gps": 1415682476.53125,
+  "duration": 0.125,
+  "band_hz": [
+    32.0,
+    96.0
+  ],
+  "strain": {
+    "H1": {
+      "available": true,
+      "fraction_band_notched": 0.0,
+      "average_to_offsource_median": 3.270944943982424,
+      "offsource_ge": 0,
+      "offsource_n": 58,
+      "peak_bin_hz": 48.0,
+      "bin_width_hz": 8.0,
+      "peak_share_of_band_power": 0.31936710295846954,
+      "after_catalog_line_removal": {
+        "available": true,
+        "fraction_band_notched": 0.07283653846153847,
+        "average_to_offsource_median": 3.1888725763624746,
+        "offsource_ge": 0,
+        "offsource_n": 58,
+        "peak_bin_hz": 48.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.276670668157498
+      },
+      "dominant_bin_overlaps": [
+        {
+          "low_hz": 47.3710655,
+          "high_hz": 47.371765499999995,
+          "label": "PSL chiller flow sensor comb"
+        },
+        {
+          "low_hz": 47.371625,
+          "high_hz": 47.372325,
+          "label": "PSL chiller flow sensor comb"
+        },
+        {
+          "low_hz": 47.376808000000004,
+          "high_hz": 47.377508,
+          "label": "PSL chiller flow sensor comb"
+        },
+        {
+          "low_hz": 47.377340000000004,
+          "high_hz": 47.37804,
+          "label": "PSL chiller flow sensor comb"
+        },
+        {
+          "low_hz": 47.4025995,
+          "high_hz": 47.403299499999996,
+          "label": "PSL chiller flow sensor comb"
+        },
+        {
+          "low_hz": 47.403355000000005,
+          "high_hz": 47.404055,
+          "label": "PSL chiller flow sensor comb"
+        },
+        {
+          "low_hz": 49.94889,
+          "high_hz": 49.949490000000004,
+          "label": "Unknown comb; suspicious numerology - related?"
+        },
+        {
+          "low_hz": 44.44354857142857,
+          "high_hz": 44.44414857142858,
+          "label": "Unknown comb; at both detectors"
+        },
+        {
+          "low_hz": 44.4447,
+          "high_hz": 44.4453,
+          "label": "Unknown comb"
+        },
+        {
+          "low_hz": 45.800001110000004,
+          "high_hz": 46.400001110000005,
+          "label": "PR3 roll mode"
+        }
+      ]
+    },
+    "L1": {
+      "available": true,
+      "fraction_band_notched": 0.0,
+      "average_to_offsource_median": 2.413758093016618,
+      "offsource_ge": 0,
+      "offsource_n": 58,
+      "peak_bin_hz": 80.0,
+      "bin_width_hz": 8.0,
+      "peak_share_of_band_power": 0.2420719770002335,
+      "after_catalog_line_removal": {
+        "available": true,
+        "fraction_band_notched": 0.08918269230769231,
+        "average_to_offsource_median": 2.421961332898428,
+        "offsource_ge": 0,
+        "offsource_n": 58,
+        "peak_bin_hz": 88.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.2326285962801385
+      },
+      "dominant_bin_overlaps": [
+        {
+          "low_hz": 78.2,
+          "high_hz": 78.26,
+          "label": "Calibration line (systematic error line)"
+        },
+        {
+          "low_hz": 79.99986,
+          "high_hz": 80.00014,
+          "label": "Unknown comb; probably digital"
+        },
+        {
+          "low_hz": 83.3323987,
+          "high_hz": 83.33299869999999,
+          "label": "Unknown comb; at both detectors; suspicious numerology - related?"
+        }
+      ]
+    },
+    "V1": {
+      "available": false,
+      "reason": "DQ/injection mask excludes target"
+    }
+  },
+  "auxiliary": {
+    "query": "https://datafind.gwosc.org/api/v1/gwf/H/H1_AUX_AR1/1415682476,1415682477/osdf.json",
+    "object_url": "osdf:///gwdata/O4b/AUX/AUX_AR1/H1/H-H1_AUX_AR1-14156/H-H1_AUX_AR1-1415682432-64.gwf",
+    "sha256": "2e319000b0cc6156f4acedb1126c3a529155deeb283b6e0c78137fd15f0ecb63",
+    "channels": {
+      "H1:CAL-PCALX_RX_PD_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.9425512849155895,
+        "offsource_ge": 42,
+        "offsource_n": 57,
+        "peak_bin_hz": 40.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.15400519380680155
+      },
+      "H1:CAL-PCALY_RX_PD_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.642547025346606,
+        "offsource_ge": 47,
+        "offsource_n": 57,
+        "peak_bin_hz": 64.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.40391008137068124
+      },
+      "H1:IMC-WFS_A_DC_PIT_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.7805002674099671,
+        "offsource_ge": 35,
+        "offsource_n": 57,
+        "peak_bin_hz": 72.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.3253462717126209
+      },
+      "H1:IMC-WFS_A_DC_YAW_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.1725627720674452,
+        "offsource_ge": 17,
+        "offsource_n": 57,
+        "peak_bin_hz": 72.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.25698911688927295
+      },
+      "H1:LSC-POP_A_LF_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.315564028077354,
+        "offsource_ge": 22,
+        "offsource_n": 57,
+        "peak_bin_hz": 72.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.4253447916495513
+      },
+      "H1:LSC-REFL_A_RIN_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.6012260127330846,
+        "offsource_ge": 46,
+        "offsource_n": 57,
+        "peak_bin_hz": 32.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.23106145230271571
+      },
+      "H1:OAF-IMC_WFS_A_DC_PIT_PREFILT_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.7648187407850019,
+        "offsource_ge": 36,
+        "offsource_n": 57,
+        "peak_bin_hz": 72.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.3286661146269108
+      },
+      "H1:OAF-IMC_WFS_A_DC_YAW_PREFILT_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.1659552162674516,
+        "offsource_ge": 17,
+        "offsource_n": 57,
+        "peak_bin_hz": 72.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.2553405244129543
+      },
+      "H1:OAF-REFL_A_RIN_PREFILT_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.6024937261584362,
+        "offsource_ge": 46,
+        "offsource_n": 57,
+        "peak_bin_hz": 32.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.2308138630177182
+      },
+      "H1:PEM-EY_MAINSMON_EBAY_1_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.0039062819168048,
+        "offsource_ge": 10,
+        "offsource_n": 57,
+        "peak_bin_hz": 32.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.13010087958882477
+      },
+      "H1:SUS-ETMX_L1_CAL_LINE_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.7393370348758906,
+        "offsource_ge": 57,
+        "offsource_n": 57,
+        "peak_bin_hz": 32.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.19676122701254964
+      },
+      "H1:SUS-ETMX_L2_CAL_LINE_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.87081346147779,
+        "offsource_ge": 22,
+        "offsource_n": 57,
+        "peak_bin_hz": 88.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.13796526781689766
+      },
+      "H1:SUS-ETMX_L3_CAL_LINE_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.0,
+        "offsource_ge": 34,
+        "offsource_n": 57,
+        "peak_bin_hz": 32.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.125
+      },
+      "H1:SUS-PI_PROC_COMPUTE_MODE29_RMSMON": {
+        "available": false,
+        "reason": "no usable Fourier bins"
+      },
+      "L1:ASC-X_TR_A_NSUM_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.2101583196401163,
+        "offsource_ge": 57,
+        "offsource_n": 57,
+        "peak_bin_hz": 40.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.27403574093072164
+      },
+      "L1:CAL-PCALX_RX_PD_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.0460454751988117,
+        "offsource_ge": 13,
+        "offsource_n": 57,
+        "peak_bin_hz": 40.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.15422926661035502
+      },
+      "L1:CAL-PCALY_RX_PD_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.9466396913573841,
+        "offsource_ge": 31,
+        "offsource_n": 57,
+        "peak_bin_hz": 32.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.3271898834648945
+      },
+      "L1:IMC-WFS_B_I_PIT_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.24802966762819,
+        "offsource_ge": 11,
+        "offsource_n": 57,
+        "peak_bin_hz": 48.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.3802491305033338
+      },
+      "L1:OAF-IMC_WFS_B_I_PIT_PREFILT_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.2306665560420287,
+        "offsource_ge": 11,
+        "offsource_n": 57,
+        "peak_bin_hz": 48.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.3631598262625598
+      },
+      "L1:PEM-EX_VMON_ETMX_ESDPOWER24_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.7115175855654758,
+        "offsource_ge": 55,
+        "offsource_n": 57,
+        "peak_bin_hz": 48.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.2058681754961425
+      },
+      "L1:PEM-EY_MAINSMON_EBAY_1_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.0070221871586393,
+        "offsource_ge": 0,
+        "offsource_n": 57,
+        "peak_bin_hz": 32.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.1301330606008152
+      },
+      "L1:SUS-ETMX_L1_CAL_LINE_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.7015215306585969,
+        "offsource_ge": 40,
+        "offsource_n": 57,
+        "peak_bin_hz": 88.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.17890887742505363
+      },
+      "L1:SUS-ETMX_L2_CAL_LINE_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 1.4605940359566243,
+        "offsource_ge": 11,
+        "offsource_n": 57,
+        "peak_bin_hz": 88.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.16371504656644814
+      },
+      "L1:SUS-ETMX_L3_CAL_LINE_OUT_DQ": {
+        "available": true,
+        "average_to_offsource_median": 0.631024819869868,
+        "offsource_ge": 46,
+        "offsource_n": 57,
+        "peak_bin_hz": 32.0,
+        "bin_width_hz": 8.0,
+        "peak_share_of_band_power": 0.1750445029911051
+      },
+      "L1:SUS-PI_PROC_COMPUTE_MODE5_RMSMON": {
+        "available": false,
+        "reason": "no usable Fourier bins"
+      }
+    },
+    "max_over_channels": {
+      "on_source": 1.87081346147779,
+      "offsource_ge": 46,
+      "offsource_n": 57,
+      "channels": 23
+    }
+  }
+}
