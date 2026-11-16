@@ -26,7 +26,8 @@ def aperture(im,var,flags,x,y,r,allow_outlier=False):
 
 def process(row,cache):
     url='https://irsa.ipac.caltech.edu/'+row['uri']+'?center='+row['ra_obj']+','+row['dec_obj']+'&size=0.1'
-    key=row['observationid']+row['productid']; path=cache/(key+'.fits')
+    # Include target center and cutout size: an exposure can contain many targets.
+    key=hashlib.sha256(url.encode()).hexdigest(); path=cache/(key+'.fits')
     out=dict(observationid=row['observationid'],detector=row['productid'],start=row['start_date'],ra=float(row['ra_obj']),dec=float(row['dec_obj']),url=url)
     try:
         if not path.exists():
@@ -52,8 +53,9 @@ def process(row,cache):
     return out
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('manifest');p.add_argument('--cache',default='/tmp/spherex-cache');p.add_argument('--output',required=True);a=p.parse_args()
-    rows=[r for r in parse_most(a.manifest) if r['productid'] in ('D4','D5','D6')]
+    p=argparse.ArgumentParser();p.add_argument('manifest');p.add_argument('--cache',default='/tmp/spherex-cache');p.add_argument('--output',required=True);p.add_argument('--detectors',nargs='+',default=['D4','D5','D6']);p.add_argument('--limit',type=int);a=p.parse_args()
+    rows=[r for r in parse_most(a.manifest) if r['productid'] in a.detectors]
+    if a.limit is not None: rows=rows[:a.limit]
     cache=Path(a.cache);cache.mkdir(parents=True,exist_ok=True)
     results=[]
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as ex:
