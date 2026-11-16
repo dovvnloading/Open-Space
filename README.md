@@ -312,6 +312,7 @@ Some multi-part investigations also keep index pages and search logs: [15 Nov ar
 
 - **Public data only.** Every result re-analyses openly available archives, including TESS, Kepler, Gaia, ZTF, OGLE, DESI, SDSS, Pan-STARRS, WISE, SPHEREx, JWST, Hubble, Chandra, XMM-Newton, Swift, NICER, Fermi, MeerKAT, the VLA, CHIME, FAST, Parker Solar Probe, Solar Orbiter, Ulysses, Wind, ACE, the Mars rovers and orbiters, the Lunar Reconnaissance Orbiter and the Apollo seismometers.
 - **Reproducible.** Each results folder contains the measurements, the scripts that replay them, source checksums and the controls used to test for false alarms.
+- **Checked by machine.** One command, `python -m open_space.verify`, re-checks the repository against itself: that recorded checksums match the committed files, that the numbers printed in each README exist in its deposited data, that declared key numbers recompute independently, and that the catalog counts and links hold. It says how often a mistyped number would have been caught, and it does not judge whether an interpretation is right. [How the checks work](docs/VERIFICATION.md)
 - **AI research agents.** Most investigations were carried out by autonomous AI research agents following the project's written protocol, directed by Matthew Wesney. Each contribution was reviewed in a separate pass before it was merged. [Agent operating instructions](AGENTS.md) · [Scientific protocol](docs/SCIENCE.md)
 - **Honest limits.** These results have not been peer reviewed. "No earlier report found" means our literature search found none, not that priority is guaranteed. Candidates need independent confirmation. Corrections, confirmations and refutations are all welcome.
 
@@ -393,7 +394,10 @@ Run the checks from the repository root. CI exercises the pilot, software tests 
 ```sh
 python -m unittest discover -s tests -v
 python -m open_space benchmark --seeds 12
+python -m open_space.verify --worktree
 ```
+
+The last command verifies your uncommitted work as it would be committed. A false checksum, a broken link, a wrong catalog count or a declared number that no longer recomputes fails the test run. [Verification guide](docs/VERIFICATION.md)
 
 Observational work, calibration experiments, data adapters and negative results are welcome. [Contributor guide and first research projects](CONTRIBUTING.md) · [Agent operating instructions](AGENTS.md)
 
