@@ -77,6 +77,20 @@ Independent environmental context for the long August episode, from *different M
 
 This is a high-significance screening rule (especially for repeated, large amplitudes), not a calibrated global false-positive probability. There are multiple selection criteria and search across all dates. Further independent data are needed for causal claims.
 
+## Independent primary NASA PDS4 product verification — **PASSED**
+
+After the initial mirror-based survey and forecast match were locked, an independent source-file replay retrieved the original NASA PDS **MAVEN in-situ KP collection 41.0**, product **`mvn_kp_insitu_20250824_v26_r01`** (created June 10, 2026). This is a **NASA-produced, labeled, fixed-record 45,698,463-byte file**, not a repackaging supplied by the third-party mirror.
+
+- The downloaded primary `.tab` **matched NASA's published MD5 `377f757a180b34c7af46b2937831c181`**, byte-for-byte identity of the primary archive file. Primary PDS SHA-256: `ad8807ac1922dfbb92a806cd49af8ae1a02cab7a18f46030129ec98395a4f723`.
+- The original `.xml` PDS4 label was separately downloaded and parsed to derive the byte offsets and widths of the **8 SEP species/directional-view flux fields and 8 statistical uncertainty fields**. No numeric column positions were taken from the mirror.
+- The NASA PDS file contains **12,106** Aug 24 records; the rehosted Parquet contains **12,105** records that date (one-row day-level coverage difference, not a flux disagreement).
+- During the decisive **05:00–05:59 UTC** peak hour, **450/450 timestamps** matched between primary NASA PDS and the independent rehosting, with **450 positive matched measurements in each of all 16 channels**.
+- The **median and 95th-percentile absolute fractional differences were exactly zero for each of all 16 flux/uncertainty channels**. This independently confirms the primary NASA archive amplitude and timestamp provenance of the peak and the correctness of interpreting `*_quality` as numeric uncertainties.
+
+[Primary NASA PDS product detail and original `.tab`/`.xml`](https://search-pdsppi.igpp.ucla.edu/search/view/?f=no&id=pds%3A%2F%2FPPI%2Fmaven.insitu.calibrated%2Fdata%2F2025%2F08%2Fmvn_kp_insitu_20250824_v26_r01&o=1) · [Machine-readable original-archive audit, official hash and per-channel comparisons](primary_pds_audit.json)
+
+The independent download and comparison are reproducible via `examples/maven_pds_kp_primary_audit.py`, `tests/test_maven_pds_kp_primary_audit.py` and [the dedicated primary PDS check workflow](../../.github/workflows/maven-pds-kp-primary-audit.yml). The audit passed its PDS parser tests, checksum, source-schema validation, and numeric cross-check and published its result. **This is cross-validation of NASA's original KP data representation, not a second independent instrument or the separately calibrated 2026-10-30 SEP L2 data**. It validates the *measured peak*, not unique CME association, exact impact time, surface exposure, or all survey days.
+
 ## Primary sources, hashes, reproducibility
 
 **Primary spacecraft archive:** NASA MAVEN Science Data Center at University of Colorado LASP, https://lasp.colorado.edu/maven/sdc/public/data/sci/kp/insitu/ . The analysis used an openly available **2026-updated third-party Parquet conversion of NASA LASP MAVEN KP**, https://huggingface.co/datasets/juliensimon/nasa-maven-kp-insitu (updated **2026-10-01**, as of this analysis), with the following exact input-file SHA-256 checksums:
@@ -98,7 +112,7 @@ python -m unittest discover -s tests -p test_maven_sep_final_season.py -v
 python examples/maven_sep_final_season.py --output /tmp/maven-summary.json --daily /tmp/maven-daily.csv
 ```
 
-The branch workflow [MAVEN final-season four-look particle-event screen](../../.github/workflows/maven-final-season-sep.yml) successfully ran the **real full-data scan**, tests, and published these compact results with source hashes. Other repo investigations and earlier measurements are unmodified.
+The branch workflow [MAVEN final-season four-look particle-event screen](../../.github/workflows/maven-final-season-sep.yml) successfully ran the **real full-data scan**, tests, and published these compact results plus the [machine-verifiable independent NASA DONKI forecast comparison](forecast_alignment.json) with source hashes. Other repo investigations and earlier measurements are unmodified.
 
 ## Critical falsifiable next measurements
 
