@@ -4,6 +4,7 @@ on:
     branches: ["research/mars-2026-gravity-model-audit"]
     paths:
       - "results/mars-gravity-mro120g-2026/analyze.py"
+      - "results/mars-gravity-mro120g-2026/test_analyze.py"
       - ".github/workflows/mars-mro120g-audit.yml"
   workflow_dispatch:
 
@@ -19,6 +20,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Verify synthetic yaw, SHADR parser and label controls
+        run: python -m unittest discover -s results/mars-gravity-mro120g-2026 -p test_analyze.py -v
       - name: Independently acquire and validate NASA PDS 2020 and 2026 full gravity models
         run: |
           python results/mars-gravity-mro120g-2026/analyze.py \
