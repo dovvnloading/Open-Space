@@ -1,7 +1,13 @@
 import unittest
 import numpy as np
-from examples.spherex_moving_screen import aperture
+from pathlib import Path
+from examples.spherex_moving_screen import aperture,cache_path
 class ApertureTests(unittest.TestCase):
+ def test_cache_separates_target_centers(self):
+  a='https://example.org/exposure.fits?center=1,2&size=0.1'
+  b='https://example.org/exposure.fits?center=3,4&size=0.1'
+  self.assertNotEqual(cache_path(Path('/tmp'),a),cache_path(Path('/tmp'),b))
+  self.assertEqual(cache_path(Path('/tmp'),a),cache_path(Path('/tmp'),a))
  def test_constant_background(self):
   im=np.ones((60,60));v=np.ones_like(im);f=np.zeros(im.shape,dtype=int)
   self.assertEqual(aperture(im,v,f,30,30,2.5)['sum_mjysr'],0)
