@@ -1,0 +1,144 @@
+{
+  "status": "passed: original NASA PDS Aug24 KP flux and 1-sigma uncertainty values independently retrieved and numerically consistent with mirror",
+  "source": "NASA PDS Planetary Plasma Interactions, KP collection 41.0, version v26_r01 (2026-06-10)",
+  "official_primary_pds_id": "maven.insitu.calibrated/data/2025/08/mvn_kp_insitu_20250824_v26_r01",
+  "official_primary_md5": "377f757a180b34c7af46b2937831c181",
+  "source_link": "https://search-pdsppi.igpp.ucla.edu/search/view/?f=no&id=pds%3A%2F%2FPPI%2Fmaven.insitu.calibrated%2Fdata%2F2025%2F08%2Fmvn_kp_insitu_20250824_v26_r01&o=1",
+  "limitations": [
+    "Different file conversions of the SAME underlying KP sensor data; not an independent instrument or an independent SEP L2 calibration.",
+    "This checks the high-energy SEP peak day, not full-survey completeness or all named CMEs."
+  ],
+  "primary_xml": {
+    "url": "https://search-pdsppi.igpp.ucla.edu/ditdos/download?id=pds%3A%2F%2FPPI%2Fmaven.insitu.calibrated%2Fdata%2F2025%2F08%2Fmvn_kp_insitu_20250824_v26_r01.xml",
+    "bytes": 115601,
+    "sha256": "1ace809c2d5931fb8f1f68afb6ac32808b138836c07506c59de8e14a27d16eed",
+    "md5": "53d4bf5c25a1e12791a2fda9573d7e13"
+  },
+  "primary_tab": {
+    "url": "https://search-pdsppi.igpp.ucla.edu/ditdos/download?id=pds%3A%2F%2FPPI%2Fmaven.insitu.calibrated%2Fdata%2F2025%2F08%2Fmvn_kp_insitu_20250824_v26_r01.tab",
+    "bytes": 45698463,
+    "sha256": "ad8807ac1922dfbb92a806cd49af8ae1a02cab7a18f46030129ec98395a4f723",
+    "md5": "377f757a180b34c7af46b2937831c181"
+  },
+  "pds_schema": {
+    "expected_records": 12106,
+    "parsed_records": 12106,
+    "record_length": 3765,
+    "data_offset": 119373,
+    "label_columns_used": {
+      "time": "Time (UTC/SCET)",
+      "sep_ion_fov1f": "SEP:Ion Flux (30-1000 keV), FOV 1-F",
+      "sep_ion_fov1r": "SEP:Ion Flux (30-1000 keV), FOV 1-R",
+      "sep_ion_fov2f": "SEP:Ion Flux (30-1000 keV), FOV 2-F",
+      "sep_ion_fov2r": "SEP:Ion Flux (30-1000 keV), FOV 2-R",
+      "sep_electron_fov1f": "SEP:Electron Flux (30 keV - 300 keV) - FOV 1-F",
+      "sep_electron_fov1r": "SEP:Electron Flux (30 keV - 300 keV) - FOV 1-R",
+      "sep_electron_fov2f": "SEP:Electron Flux (30 keV - 300 keV) - FOV 2-F",
+      "sep_electron_fov2r": "SEP:Electron Flux (30 keV - 300 keV) - FOV 2-R",
+      "sep_ion_fov1f_quality": "SEP:Ion Flux (30-1000 keV), FOV 1-F uncertainty",
+      "sep_ion_fov1r_quality": "SEP:Ion Flux (30-1000 keV), FOV 1-R uncertainty",
+      "sep_ion_fov2f_quality": "SEP:Ion Flux (30-1000 keV), FOV 2-F uncertainty",
+      "sep_ion_fov2r_quality": "SEP:Ion Flux (30-1000 keV), FOV 2-R uncertainty",
+      "sep_electron_fov1f_quality": "SEP:Electron Flux (30 keV - 300 keV) - FOV 1-F uncertainty",
+      "sep_electron_fov1r_quality": "SEP:Electron Flux (30 keV - 300 keV) - FOV 1-R uncertainty",
+      "sep_electron_fov2f_quality": "SEP:Electron Flux (30 keV - 300 keV) - FOV 2-F uncertainty",
+      "sep_electron_fov2r_quality": "SEP:Electron Flux (30 keV - 300 keV) - FOV 2-R uncertainty"
+    }
+  },
+  "mirror_parquet": {
+    "url": "https://huggingface.co/datasets/juliensimon/nasa-maven-kp-insitu/resolve/main/data/sep/sep.parquet",
+    "bytes": 41118339,
+    "sha256": "e3ea044212db893dcdcc050c5b1aa28257b05f483c9952258bc715e9631dec03",
+    "md5": "323bbfe51b4788a55e6bb3dd5d180720"
+  },
+  "overlap": {
+    "pds_full_day_rows": 12106,
+    "mirror_full_day_rows": 12105,
+    "mirror_peak_hour_rows": 450,
+    "pds_peak_hour_rows": 450,
+    "matched_peak_hour_times": 450,
+    "fraction_mirror_peak_rows_matched": 1.0
+  },
+  "flux_and_uncertainty_checks": {
+    "sep_ion_fov1f": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_ion_fov1r": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_ion_fov2f": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_ion_fov2r": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_electron_fov1f": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_electron_fov1r": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_electron_fov2f": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_electron_fov2r": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_ion_fov1f_quality": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_ion_fov1r_quality": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_ion_fov2f_quality": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_ion_fov2r_quality": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_electron_fov1f_quality": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_electron_fov1r_quality": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_electron_fov2f_quality": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    },
+    "sep_electron_fov2r_quality": {
+      "matched_positive_values": 450,
+      "median_absolute_fractional_difference": 0.0,
+      "p95_absolute_fractional_difference": 0.0
+    }
+  }
+}
