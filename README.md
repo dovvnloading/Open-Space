@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 171 entries: 80 new measurements, 42 candidate discoveries, 20 forecasts of specific events, 19 corrections to published catalogs and papers, and 10 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 172 entries: 81 new measurements, 42 candidate discoveries, 20 forecasts of specific events, 19 corrections to published catalogs and papers, and 10 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -88,6 +88,10 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **Two fireballs 2.3 seconds apart over the Pacific (21 Nov 2023).** The lightning cameras on two GOES weather satellites resolve two separate fireballs about 315 km apart. *Measured* · [Details](results/goes-pacific-double-bolide/README.md)
 - **Fireballs recorded by instruments on the ground.** The Sims Corner fireball (Washington, 14 Aug 2026) and an Interior Alaska fireball (1 Jan 2022) left matching signals in seismometers and pressure sensors. Satellites place Sims Corner's brightest flash about 32 km up. *Measured* · [Details](results/sims-corner-seismoacoustic/README.md)
 - **Four meteors in under nine seconds (24 Aug 2026).** Four meteors over Germany and Denmark appeared to come from nearly the same point in the sky. A chance grouping is still possible. *Candidate* · [Details](results/gmn-meteor-clusters/README.md)
+
+### Rivers and wetlands on Earth
+
+- **Two floods left the Niger unusually high downstream at the same upstream stage (2024–26).** On repeat SWOT visits, Diré was 4.64 and 3.55 m higher in January than in the preceding July while the level at Mopti was nearly unchanged. Independent gauges and another satellite support the measured seasonal contrasts, not a new permanent hydraulic regime. *Measured* · [Details](results/mission05-swot-rivers/inner-niger/README.md)
 
 ### The Moon and Mars
 

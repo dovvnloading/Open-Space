@@ -1,5 +1,7 @@
 # High water reduces the elevation drop across the Congo’s Kinsuka rapids
 
+**Separate Mission 05 study:** [Inner Niger Delta, Mopti–Diré](inner-niger/README.md) documents two July–January water-level contrasts confirmed by independent gauges and nadir altimetry. Its nine reaches are not part of the Congo–Zambezi search reported below.
+
 In SWOT RiverSP 2.0, the January 2024 flood stood 15.68 m above July low water at a reach below the outlet of Malebo Pool and 4.94 m above it at the adjacent upstream reach. **The water-surface drop between them contracted by 10.74 m, from 19.53 m to 8.79 m.** Reprocessing the same orbit in RiverSP D gives a 10.73 m contraction before filtering, but the upper reach fails the January quality cutoff. Later low- and intermediate-stage observations and independent gauges from 1954 support a recurring response to river stage. A lasting change in the rapids remains unestablished.
 
 ![Congo reach water levels in January and July, and outlet elevation drop against an upstream reference stage on the original and later visits](congo-outlet.png)
