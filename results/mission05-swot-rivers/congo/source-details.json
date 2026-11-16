@@ -1,0 +1,101 @@
+{
+  "retrieved_date_utc": "2026-11-16",
+  "geometry": {
+    "title": "SWOT River Database (SWORD), v16",
+    "doi": "10.5281/zenodo.10013982",
+    "url": "https://zenodo.org/records/10013982/files/SWORD_v16_shp.zip",
+    "archive_md5_publisher": "50c8677cab0c7ab0dbc335dbef63cb24",
+    "access": "HTTP Range; selected members verified against ZIP CRC32. Archived CSV and GeoJSON are selected source rows.",
+    "members": [
+      {
+        "member": "shp/AF/af_sword_reaches_hb13_v16.cpg",
+        "zip_crc32": "70ee4b6c",
+        "source_bytes": 10
+      },
+      {
+        "member": "shp/AF/af_sword_reaches_hb13_v16.shp",
+        "zip_crc32": "70ce30c0",
+        "source_bytes": 35087388,
+        "member_sha256": "4be022d46f005c60ad1c0ed11bd231f672bd5430e0daafd272aebf5b7f349515"
+      },
+      {
+        "member": "shp/AF/af_sword_reaches_hb13_v16.shx",
+        "zip_crc32": "eb60f3fa",
+        "source_bytes": 49964,
+        "member_sha256": "0110aca4300fd6f856379022cca4a64487a09dcca31d1a3cc86597275ddc725b"
+      },
+      {
+        "member": "shp/AF/af_sword_reaches_hb13_v16.dbf",
+        "zip_crc32": "4c29409a",
+        "source_bytes": 5604429,
+        "member_sha256": "6ab80838f2e8cbe627d645d74202993936171b7070fc81c3555623b66d21c648"
+      },
+      {
+        "member": "shp/AF/af_sword_reaches_hb13_v16.prj",
+        "zip_crc32": "af437f55",
+        "source_bytes": 145,
+        "member_sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+      }
+    ]
+  },
+  "iris": {
+    "authors": "Scherer, Schwatke, Dettmering and Seitz",
+    "doi": "10.5281/zenodo.14616357",
+    "url": "https://zenodo.org/records/14616357/files/IRIS_2.9.nc",
+    "md5_publisher_and_computed": "8c8bbd11f6e7d938f6849c95b6ca3baa",
+    "sha256": "baea41fbda9b1d885c7c86df06949bad1731821d6cdd4bdf10c0a31f155ca6c3",
+    "rows": "SWORD v16 reach IDs in sword-v16.csv; original fields selected with GDAL multidimensional array reader. Slopes mm/km, dates days since 2000-01-01. Integer fill −2147483647."
+  },
+  "nadir_height": {
+    "authors": [
+      "Papa, Fabrice",
+      "M. Kitambo, Benjamin",
+      "Paris, Adrien"
+    ],
+    "doi": "10.23708/ASY30O",
+    "url": "https://dataverse.ird.fr/api/access/datafile/46329",
+    "license": "CC BY 4.0",
+    "sha256": "847da6a31211d3c249f05d32ef82c56f8584ffac40911c49ffe4b63f6f37de9b",
+    "members": [
+      {
+        "filename": "R_CONGO_CONGO_ENV_KM0521.csv",
+        "sha256": "0182410bab54f6be867de9e091a68057e7417a92a335e643318b4b05fa4d5f9e",
+        "zip_crc32": "2827f2c0"
+      },
+      {
+        "filename": "R_CONGO_CONGO_ENV_KM0522.csv",
+        "sha256": "da8852f84c7d38d6aa59035d3f61a7bac09e780848664001deb5e7805e61b111",
+        "zip_crc32": "ef3972bc"
+      },
+      {
+        "filename": "R_CONGO_CONGO_SRL_KM0521.csv",
+        "sha256": "dd27a807bc7a31701bb23698b3ea890228d564a6a580615a461c8c440c8fc312",
+        "zip_crc32": "b2da720f"
+      }
+    ]
+  },
+  "satellite_optical": {
+    "source_manifest": "independent/optical-source.json",
+    "derived_grid_sha256": "83e54a26845a7b4b969b7eec5da9b8ce4cdf2c5e7a0dd9099d2dea17cc69eb99",
+    "attribution": "Contains modified Copernicus Sentinel data (2024), served through Element 84 Earth Search."
+  },
+  "field_adcp": {
+    "source": "https://gdh-hydrometrie.org/wp-content/uploads/2024/03/NL_GDH9.pdf",
+    "sha256": "50f447f164b62128a029cf733568f79b4d8c0235a5e1fa78f9550265f93cab51",
+    "observation_local_date": "2024-01-10",
+    "location": "Brazzaville–Kinshasa",
+    "method": "Four ADCP crossings with SonTek M9 and Teledyne RDI RioGrande, QRevInt postprocessing, p. 3",
+    "discharge_m3_s": 75000,
+    "relative_uncertainty_reported_percent": 5,
+    "stage_m_above_Beach_local_datum": 5.47
+  },
+  "external_rainfall": {
+    "source": "https://doi.org/10.5194/acp-25-17301-2025",
+    "source_figure": 2,
+    "period": "November 2023",
+    "products": [
+      "GPM IMERG",
+      "CPC gauge analysis"
+    ]
+  }
+}

@@ -1,6 +1,15 @@
 """Capture unmodified Hydrocron response and reproducible manifest for selected Congo reaches."""
 
-import csv, concurrent.futures, hashlib, io, json, pathlib, time, urllib.parse, urllib.request, datetime
+import concurrent.futures
+import csv
+import datetime
+import hashlib
+import io
+import json
+import pathlib
+import time
+import urllib.parse
+import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent
 REACHES = [
@@ -19,7 +28,7 @@ REACHES = [
 FIELDS = "reach_id,time_str,wse,wse_u,slope,slope_u,slope2,slope2_u,width,width_u,sos_consensus_q,sos_hivdi_q,sos_metroman_q,sos_momma_q,sos_sad_q,sos_sic4dvar_q,reach_q,reach_q_b,partial_f,n_good_nod,obs_frac_n,loc_offset,xtrk_dist,cycle_id,pass_id,crid,sword_version,granuleUR,collection_shortname,collection_version"
 
 
-def fetch(rid):
+def fetch(rid, recorded):
     url = (
         "https://soto.podaac.earthdatacloud.nasa.gov/hydrocron/v1/timeseries?"
         + urllib.parse.urlencode(
@@ -36,21 +45,31 @@ def fetch(rid):
     )
     target = ROOT / "raw" / f"{rid}.json"
     target.parent.mkdir(exist_ok=True)
-    if not target.exists():
-        for attempt in range(3):
-            try:
-                with urllib.request.urlopen(url, timeout=45) as response:
-                    data = response.read()
-                    assert response.status == 200
-                parsed = json.loads(data)
-                assert parsed["status"] == "200 OK", parsed
-                target.write_bytes(data)
-                break
-            except Exception as exc:
-                if attempt == 2:
-                    raise
-                print(rid, str(exc)[:160], flush=True)
-                time.sleep(3)
+    name = "raw/" + target.name
+    if target.exists() and name in recorded:
+        entry = recorded[name]
+        if (
+            entry["query_url"] != url
+            or hashlib.sha256(target.read_bytes()).hexdigest() != entry["sha256"]
+        ):
+            raise ValueError(
+                f"Archived source or query differs from manifest for {name}"
+            )
+        return entry
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(url, timeout=45) as response:
+                data = response.read()
+                assert response.status == 200
+            parsed = json.loads(data)
+            assert parsed["status"] == "200 OK", parsed
+            target.write_bytes(data)
+            break
+        except Exception as exc:
+            if attempt == 2:
+                raise
+            print(rid, str(exc)[:160], flush=True)
+            time.sleep(3)
     data = target.read_bytes()
     rows = list(csv.DictReader(io.StringIO(json.loads(data)["results"]["csv"])))
     print(
@@ -61,14 +80,15 @@ def fetch(rid):
         "query_url": url,
         "bytes": len(data),
         "sha256": hashlib.sha256(data).hexdigest(),
-        "retrieved_utc": datetime.datetime.fromtimestamp(
-            target.stat().st_mtime, datetime.timezone.utc
-        ).isoformat(),
+        "retrieved_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "rows": len(rows),
     }
 
 
 if __name__ == "__main__":
+    manifest = ROOT / "manifest.json"
+    entries = json.loads(manifest.read_text()) if manifest.exists() else []
+    recorded = {row["filename"]: row for row in entries}
     with concurrent.futures.ThreadPoolExecutor(5) as pool:
-        entries = list(pool.map(fetch, REACHES))
-    (ROOT / "manifest.json").write_text(json.dumps(entries, indent=2) + "\n")
+        entries = list(pool.map(lambda rid: fetch(rid, recorded), REACHES))
+    manifest.write_text(json.dumps(entries, indent=2) + "\n")

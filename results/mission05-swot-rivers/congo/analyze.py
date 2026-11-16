@@ -147,7 +147,7 @@ def main():
                 )
             )
     pd.DataFrame(stats).to_csv(ROOT / "rank-and-slope.csv", index=False)
-    # Assess departures from the relationship fitted without the predeclared flood window.
+    # Assess departures from the relationship fitted without the independently dated flood window.
     data = (
         pair[(pair.pass_id == 111) & pair.chenal_wse.notna()].sort_values("date").copy()
     )
