@@ -62,10 +62,19 @@ Plan: search the repository and its history for the scripts. If they exist under
 
 ## Outcome
 
-To be filled in.
+Filled in on 16 November 2026, after the work. Each row is one commit unless it says otherwise.
 
 | Item | Cause | Change | Left open |
 | --- | --- | --- | --- |
+| A. Eight unlisted results | Merged without a catalog entry. | Eight entries in `README.md`; counts raised from 176 to 184 (86 measured, 44 candidate, 20 forecasts, 20 corrections, 14 null). | Labels and wording need the owner's review. |
+| A. `mex-vmc-2025h2-atmospheric-transients` | The folder holds a search plan and no result. | Recorded as an acknowledgement in a new `claims.json`. No catalog entry. | It needs an entry once the search is run. |
+| B. `juno-uvs-impact-control`, 12,441,537 | The sentence prints the last row, inclusive. The evidence stores the exclusive bound, 12,441,538. First row 12,431,751 and 9,787 rows agree with both. | Acknowledgement in a new `claims.json`. | Nothing. |
+| C. `mission05-swot-rivers`, `compare_d.py` | The regenerated table holds the same 16 rows in a different order. The script sorts by revision with an unstable sort, so tied rows come out in a library-dependent order. | The script sorts the rows by pair, reach, bin and node before writing; `d-node-common.csv` regenerated in that order. No value changes. | Nothing. |
+| C. `mission04-o4b-bursts`, `noise_controls.py` | The output records the NumPy and SciPy versions it ran under. Those two strings are the only values that differ. | Acknowledgement in a new `claims.json`. | Nothing. |
+| C. `mission03-dr15-thermal-ins`, `analysis/ledger.py` | Verifier mistake. The command reads a download cache that is not deposited, finished anyway and wrote empty tables. | Verifier: a command that finishes after looking for inputs that are not in the tree, or after a refused connection, is reported as needing inputs or the network, not as a difference. Test added. The result is unchanged. | Nothing. |
+| C. Seven commands in `koi-7865-eclipse-source`, `rubin-jr80-mutual-motion`, `smc-04602`, `tic-43472931`, `tic-96100077`, `v612-sct-clock` | An iterative fit or linear solve whose last digits depend on the installed NumPy and SciPy. The largest change is 1.3 parts in 100,000, apart from one interval bound near zero. The printed-number check finds the same numbers on the regenerated outputs as on the committed ones in all six folders. | One commit: a short note beside each replay command, an acknowledgement in each `claims.json`, and updated `SHA256SUMS` entries for the three READMEs they list. Committed outputs untouched. | The differences remain; they are documented, not removed. |
+| D. `pace-ocean-optical-transitions`, two commands | Verifier mistake. Both load the system Blosc library through `ctypes`. It is not installed on the test machine, and the README says it is required. | Verifier: a library named in `find_library()` that the interpreter cannot locate is reported as a missing dependency. Test added. Same commit as the `mission03` row. | Not replayed with Blosc installed. |
+| E. `spherex-dr1-moving-spectra`, three scripts | The scripts are deposited under `examples/`, and the reports named them without a path. Two match the digests recorded in the folder's hash files. The third, `spherex_swan_broadening.py`, takes the same arguments and writes the same keys as `swan_broadening_review.json`, and was added in the same commit. | The three commands name `../../examples/<script>`. The recorded digests of the two edited reports are updated. | All three still need inputs that are not deposited, so none was replayed to the end. |
 
 ## How it will be checked
 
