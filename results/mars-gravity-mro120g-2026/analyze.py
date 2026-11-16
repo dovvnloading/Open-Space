@@ -21,7 +21,17 @@ LABELS = {"MRO120F": "jgmro_120f_sha.lbl", "MRO120G": "jgmro_120g_sha.lbl"}
 ARCSEC_PER_RAD = 180.0 * 3600.0 / math.pi
 RADIUS_M = 3396000.0
 BANDS = [(2, 5), (6, 10), (11, 20), (21, 40), (41, 60), (61, 79), (80, 120)]
-K = ["C", "S", "sigmaC", "sigmaS"]
+# Pin exact NASA PDS product bytes so a mutable cache/archive cannot silently shift results.
+EXPECTED_SHA256 = {
+    "MRO120F": {
+        "table": "ddd3de9c30d75879fe37aa17a1149e7c96c141c095962954cb7ea865a2c025b6",
+        "label": "bf50ba3a03c1c2ec8d63c3132a9b3cd89a5e880d546f195d9eb10a902ea0c80a",
+    },
+    "MRO120G": {
+        "table": "b296318066d6e8b8ab5a3ca4878d99635f1cf0e977c39e3efb3f36bfcb06a569",
+        "label": "c112b25087a5acf179916a8576edc38b7aa536e070d98bbd1e0ad2cada326f62",
+    },
+}
 
 
 def download(url: str, path: pathlib.Path) -> bytes:
@@ -147,6 +157,13 @@ def run(cache: pathlib.Path, out: pathlib.Path, altitude_km: float = 400.0) -> d
         path = cache / FILES[model]
         content = download(ARCHIVE + FILES[model], path)
         label_bytes = download(ARCHIVE + LABELS[model], cache / LABELS[model])
+        for kind, raw in (("table", content), ("label", label_bytes)):
+            observed = hashlib.sha256(raw).hexdigest()
+            expected = EXPECTED_SHA256[model][kind]
+            if observed != expected:
+                raise ValueError(
+                    f"{model} {kind} PDS SHA-256 mismatch: {observed} != {expected}"
+                )
         validate_label(label_bytes, model)
         tables[model] = parse_table(content)
         receipts[model] = {
