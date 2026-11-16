@@ -44,6 +44,9 @@ def process(row,cache):
                 if re.match(r'^(A|B|AP|BP)_(ORDER|\d+_\d+)$',k):del hdr[k]
             wave,width=WCS(hdr,hdus,key='W').wcs_pix2world([[x,y]],0)[0]
             out.update(x=float(x),y=float(y),wavelength_um=float(wave),bandwidth_um=float(width),mjd=float(h['MJD-AVG']),image_quality=h.get('L2DQAFLG'),pipeline=hdus[0].header.get('VERSION'))
+            if out['image_quality'] != 'Pass':
+                out['rejected_quality']=True
+                return out
             out['apertures']={str(r):aperture(im,var,flags,x,y,r) for r in (2.5,3.5,5.)}
             out['diagnostic_outlier_inclusive']={str(r):aperture(im,var,flags,x,y,r,True) for r in (2.5,3.5,5.)}
             yy,xx=np.indices(im.shape);core=np.hypot(xx-x,yy-y)<=2.5
