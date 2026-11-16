@@ -12,10 +12,10 @@ def parse_most(path):
     names=[header[a+1:b].strip() for a,b in zip(bounds,bounds[1:])]
     return [{n:line[a+1:b].strip() for n,a,b in zip(names,bounds,bounds[1:])} for line in lines if line.strip() and not line.startswith(('\\','|'))]
 
-def aperture(im,var,flags,x,y,r):
+def aperture(im,var,flags,x,y,r,allow_outlier=False):
     if x-r<0 or y-r<0 or x+r>=im.shape[1] or y+r>=im.shape[0]: return None
     yy,xx=np.indices(im.shape);rr=np.hypot(xx-x,yy-y)
-    good=np.isfinite(im)&np.isfinite(var)&(var>0)&((flags & ~2097152)==0)
+    good=np.isfinite(im)&np.isfinite(var)&(var>0)&((flags & ~(2097152 | (524288 if allow_outlier else 0)))==0)
     ap=rr<=r; sky=(rr>=8)&(rr<=12)&good
     if np.sum(sky)<50 or not np.all(good[ap]) or not np.any(ap):return None
     b=float(np.median(im[sky])); n=int(ap.sum())
@@ -44,6 +44,9 @@ def process(row,cache):
             wave,width=WCS(hdr,hdus,key='W').wcs_pix2world([[x,y]],0)[0]
             out.update(x=float(x),y=float(y),wavelength_um=float(wave),bandwidth_um=float(width),mjd=float(h['MJD-AVG']),image_quality=h.get('L2DQAFLG'),pipeline=hdus[0].header.get('VERSION'))
             out['apertures']={str(r):aperture(im,var,flags,x,y,r) for r in (2.5,3.5,5.)}
+            out['diagnostic_outlier_inclusive']={str(r):aperture(im,var,flags,x,y,r,True) for r in (2.5,3.5,5.)}
+            yy,xx=np.indices(im.shape);core=np.hypot(xx-x,yy-y)<=2.5
+            out['core_flag_counts']={str(int(v)):int(np.sum(flags[core]==v)) for v in np.unique(flags[core])}
             out['controls']=[aperture(im,var,flags,x+dx,y+dy,2.5) for dx,dy in [(15,0),(-15,0),(0,15),(0,-15)]]
     except Exception as e:out['error']=str(e)
     return out
