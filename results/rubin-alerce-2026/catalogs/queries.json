@@ -1,0 +1,272 @@
+[
+  {
+    "oid": "313761042359910519",
+    "service": "gaia",
+    "status": "ok",
+    "rows": 1,
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+gs.source_id%2Cgs.ra%2Cgs.dec%2Cgs.pmra%2Cgs.pmdec%2Cgs.parallax%2Cgs.parallax_error%2Cgs.ruwe%2Cgs.bp_rp%2Cgs.phot_g_mean_mag%2Cgs.phot_variable_flag%2Cgs.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+gs+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+gs.source_id%3Dv.source_id+WHERE+gs.source_id%3D4830606754977252992",
+    "sha256": "801b89008b5f6e953d588431de984f6b1635215a9984cbf9a6df3cc750b7cfb9",
+    "diagnostic": null
+  },
+  {
+    "oid": "313761042359910519",
+    "service": "simbad",
+    "status": "ok",
+    "rows": 0,
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+100+main_id%2Cra%2Cdec%2Cotype%2Cnbref+FROM+basic+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C61.057494%2C-49.129764%2C0.0008333333333333334%29%29%3D1",
+    "sha256": "0a641b305fa681159c32b118377de5d96c099737f8c32ec2a5fbd025d094d53e",
+    "diagnostic": null
+  },
+  {
+    "oid": "313761042359910519",
+    "service": "ztf",
+    "status": "ok",
+    "rows": 0,
+    "url": "https://irsa.ipac.caltech.edu/cgi-bin/ZTF/nph_light_curves?POS=CIRCLE+61.057494+-49.129764+0.0008333333333333334&FORMAT=csv",
+    "sha256": "d35b7925f47f608072ad81c389b36e208216ae1a595ed8ba811c945cf77d7a34",
+    "diagnostic": null
+  },
+  {
+    "oid": "313761042359910519",
+    "service": "ps1",
+    "status": "ok",
+    "rows": 0,
+    "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/detection.csv?ra=61.057494&dec=-49.129764&radius=0.0008333333333333334&pagesize=5000&columns=%5BobjID%2CdetectID%2CobsTime%2CfilterID%2Cra%2Cdec%2CpsfFlux%2CpsfFluxErr%2CinfoFlag%2CinfoFlag2%2CinfoFlag3%2CpsfQfPerfect%5D",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diagnostic": null
+  },
+  {
+    "oid": "313761042359910519",
+    "service": "skymapper",
+    "status": "ok",
+    "rows": 0,
+    "url": "https://api.skymapper.nci.org.au/public/tap/sync/?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+2000+p.object_id%2Cp.image_id%2Cp.filter%2Ci.date+AS+mjd_start%2Ci.exp_time%2Cp.ra_img%2Cp.decl_img%2Cp.mag_psf%2Cp.e_mag_psf%2Cp.flags%2Cp.nimaflags+FROM+dr4.photometry+AS+p+JOIN+dr4.images+AS+i+ON+p.image_id%3Di.image_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cp.ra_img%2Cp.decl_img%29%2CCIRCLE%28%27ICRS%27%2C61.057494%2C-49.129764%2C0.0008333333333333334%29%29",
+    "sha256": "26b8fe32b205ef241a9459d62bc99947919c3a2c9055c070510ce9080563c5a3",
+    "diagnostic": null
+  },
+  {
+    "oid": "313761042359910519",
+    "service": "nsc_objects",
+    "status": "ok",
+    "rows": 1,
+    "url": "https://datalab.noirlab.edu/query/query?sql=SELECT+id%2Cra%2Cdec%2Cndet+FROM+nsc_dr2.object+WHERE+q3c_radial_query%28ra%2Cdec%2C61.057494%2C-49.129764%2C0.0011111111%29+LIMIT+50&ofmt=csv&async=False",
+    "sha256": "d9930861cc7bd4f944c31019c59f4322d87de10b6ef30a2e05c829dc708058d8",
+    "diagnostic": null
+  },
+  {
+    "oid": "313761042359910519",
+    "service": "nsc_epochs",
+    "status": "ok",
+    "rows": 40,
+    "url": "https://datalab.noirlab.edu/query/query?sql=SELECT+objectid%2Cmeasid%2Cexposure%2Cra%2Cdec%2Cmjd%2Cfilter%2Cmag_auto%2Cmagerr_auto%2Cflags+FROM+nsc_dr2.meas+WHERE+objectid+IN+%28%27172262_4315%27%29&ofmt=csv&async=False",
+    "sha256": "a235e9b56564b635aac117f7d8cb566e883886461364f751ab41fbefe576ec12",
+    "diagnostic": null
+  },
+  {
+    "oid": "313761042359910519",
+    "service": "references",
+    "status": "ok",
+    "rows": 0,
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cr.bibcode%2Cr.title+FROM+basic+as+b+JOIN+has_ref+AS+h+ON+h.oidref%3Db.oid+JOIN+ref+AS+r+ON+r.oidbib%3Dh.oidbibref+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C61.057494%2C-49.129764%2C0.0008333333%29%29%3D1",
+    "sha256": "4bebd55b67db52a72461b887f98dbc8b6974f00853ff5fab143a7b71d503c056",
+    "diagnostic": null
+  },
+  {
+    "oid": "313761042359910519",
+    "service": "galex",
+    "status": "ok",
+    "rows": 3,
+    "url": "https://mastcomp.stsci.edu/portal/Mashup/MashupQuery.asmx/GalexPhotonListQueryTest?query=select+vpo.objid%2Cra%2Cdec%2Cnuv_mag%2Cfuv_mag%2Cvpe.fexptime%2Cvpe.nexptime%2Cvpe.fexpstar%2Cvpe.fexpend%2Cvpe.nexpstar%2Cvpe.nexpend+from+GR6Plus7.dbo.visitphotoobjall+as+vpo+inner+join+GR6Plus7.dbo.visitphotoextract+as+vpe+on+vpo.photoextractid%3Dvpe.photoextractid+inner+join+GR6Plus7.dbo.fGetNearbyVisitObjEq%2861.057494%2C-49.129764%2C0.08%29+as+nb+on+vpo.objid%3Dnb.objid&format=extjs",
+    "sha256": "f4e61b0dba2bed6fae103eff431f479ee8edfbdcd345c416e5e3fc3d3fc11d88",
+    "diagnostic": null
+  },
+  {
+    "oid": "313761042359910519",
+    "service": "vsx",
+    "status": "ok",
+    "rows": 0,
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-c=61.057494+-49.129764&-c.rs=3&-out.max=2000&-source=B%2Fvsx&-out.all=1",
+    "sha256": "7d807fad5d85a2939ab740cdd6a7311fe059731c95f5d267ff10c1a0d6fcd74e",
+    "diagnostic": null
+  },
+  {
+    "oid": "170028535480582190",
+    "service": "gaia",
+    "status": "ok",
+    "rows": 1,
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+gs.source_id%2Cgs.ra%2Cgs.dec%2Cgs.pmra%2Cgs.pmdec%2Cgs.parallax%2Cgs.parallax_error%2Cgs.ruwe%2Cgs.bp_rp%2Cgs.phot_g_mean_mag%2Cgs.phot_variable_flag%2Cgs.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+gs+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+gs.source_id%3Dv.source_id+WHERE+gs.source_id%3D3901001804343462400",
+    "sha256": "8ff94d07533a689793515735145fd0b5af61657d8771a0ce0c3e9fba0469a66e",
+    "diagnostic": null
+  },
+  {
+    "oid": "170028535480582190",
+    "service": "simbad",
+    "status": "ok",
+    "rows": 1,
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+100+main_id%2Cra%2Cdec%2Cotype%2Cnbref+FROM+basic+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C186.597955%2C7.018868%2C0.0008333333333333334%29%29%3D1",
+    "sha256": "dd67d8b2c8eac0d32f3b4830e48af512e5210de6b227ad15f40c61c0c7c8e4cb",
+    "diagnostic": null
+  },
+  {
+    "oid": "170028535480582190",
+    "service": "ztf",
+    "status": "error",
+    "rows": null,
+    "url": "https://irsa.ipac.caltech.edu/cgi-bin/ZTF/nph_light_curves?POS=CIRCLE+186.597955+7.018868+0.0008333333333333334&FORMAT=csv",
+    "sha256": null,
+    "diagnostic": "The read operation timed out"
+  },
+  {
+    "oid": "170028535480582190",
+    "service": "ps1",
+    "status": "ok",
+    "rows": 65,
+    "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/detection.csv?ra=186.597955&dec=7.018868&radius=0.0008333333333333334&pagesize=5000&columns=%5BobjID%2CdetectID%2CobsTime%2CfilterID%2Cra%2Cdec%2CpsfFlux%2CpsfFluxErr%2CinfoFlag%2CinfoFlag2%2CinfoFlag3%2CpsfQfPerfect%5D",
+    "sha256": "2275f49a68bb11a7a5b3430d7b6c1b4499210eb496223c089de93f20035ab40a",
+    "diagnostic": null
+  },
+  {
+    "oid": "170028535480582190",
+    "service": "skymapper",
+    "status": "ok",
+    "rows": 1,
+    "url": "https://api.skymapper.nci.org.au/public/tap/sync/?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+2000+p.object_id%2Cp.image_id%2Cp.filter%2Ci.date+AS+mjd_start%2Ci.exp_time%2Cp.ra_img%2Cp.decl_img%2Cp.mag_psf%2Cp.e_mag_psf%2Cp.flags%2Cp.nimaflags+FROM+dr4.photometry+AS+p+JOIN+dr4.images+AS+i+ON+p.image_id%3Di.image_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cp.ra_img%2Cp.decl_img%29%2CCIRCLE%28%27ICRS%27%2C186.597955%2C7.018868%2C0.0008333333333333334%29%29",
+    "sha256": "3893a1bd6e2ebb4cdc3997775f79bab41be795f0dba0f7c8faa7e6df8996a483",
+    "diagnostic": null
+  },
+  {
+    "oid": "170028535480582190",
+    "service": "nsc_objects",
+    "status": "ok",
+    "rows": 1,
+    "url": "https://datalab.noirlab.edu/query/query?sql=SELECT+id%2Cra%2Cdec%2Cndet+FROM+nsc_dr2.object+WHERE+q3c_radial_query%28ra%2Cdec%2C186.597955%2C7.018868%2C0.0011111111%29+LIMIT+50&ofmt=csv&async=False",
+    "sha256": "89cf39fe659b98eab492649c9fb91c2e6df461b6ccbf9ab859c981c8f130c676",
+    "diagnostic": null
+  },
+  {
+    "oid": "170028535480582190",
+    "service": "nsc_epochs",
+    "status": "ok",
+    "rows": 10,
+    "url": "https://datalab.noirlab.edu/query/query?sql=SELECT+objectid%2Cmeasid%2Cexposure%2Cra%2Cdec%2Cmjd%2Cfilter%2Cmag_auto%2Cmagerr_auto%2Cflags+FROM+nsc_dr2.meas+WHERE+objectid+IN+%28%2786025_1820%27%29&ofmt=csv&async=False",
+    "sha256": "c3139c39c6256aef75a3b56bec5e117291df2f6c3cff69852eb9785137fa7702",
+    "diagnostic": null
+  },
+  {
+    "oid": "170028535480582190",
+    "service": "references",
+    "status": "ok",
+    "rows": 5,
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cr.bibcode%2Cr.title+FROM+basic+as+b+JOIN+has_ref+AS+h+ON+h.oidref%3Db.oid+JOIN+ref+AS+r+ON+r.oidbib%3Dh.oidbibref+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C186.597955%2C7.018868%2C0.0008333333%29%29%3D1",
+    "sha256": "c189c8ee3d8dae593db5dc23319591bfea806dfded7b296213e688d15f82c1b5",
+    "diagnostic": null
+  },
+  {
+    "oid": "170028535480582190",
+    "service": "galex",
+    "status": "ok",
+    "rows": 8,
+    "url": "https://mastcomp.stsci.edu/portal/Mashup/MashupQuery.asmx/GalexPhotonListQueryTest?query=select+vpo.objid%2Cra%2Cdec%2Cnuv_mag%2Cfuv_mag%2Cvpe.fexptime%2Cvpe.nexptime%2Cvpe.fexpstar%2Cvpe.fexpend%2Cvpe.nexpstar%2Cvpe.nexpend+from+GR6Plus7.dbo.visitphotoobjall+as+vpo+inner+join+GR6Plus7.dbo.visitphotoextract+as+vpe+on+vpo.photoextractid%3Dvpe.photoextractid+inner+join+GR6Plus7.dbo.fGetNearbyVisitObjEq%28186.597955%2C7.018868%2C0.08%29+as+nb+on+vpo.objid%3Dnb.objid&format=extjs",
+    "sha256": "ce1a523eafc7750c0f73a491e79a52de77159b871981fbfbbf0ce280cccb3647",
+    "diagnostic": null
+  },
+  {
+    "oid": "170028535480582190",
+    "service": "vsx",
+    "status": "ok",
+    "rows": 0,
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-c=186.597955+%2B7.018868&-c.rs=3&-out.max=2000&-source=B%2Fvsx&-out.all=1",
+    "sha256": "703b6043339330f7355d07bc0b2a2a88e1ca5a593ea1d2f8152bee0612d6390d",
+    "diagnostic": null
+  },
+  {
+    "oid": "313893022856118297",
+    "service": "gaia",
+    "status": "ok",
+    "rows": 1,
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+gs.source_id%2Cgs.ra%2Cgs.dec%2Cgs.pmra%2Cgs.pmdec%2Cgs.parallax%2Cgs.parallax_error%2Cgs.ruwe%2Cgs.bp_rp%2Cgs.phot_g_mean_mag%2Cgs.phot_variable_flag%2Cgs.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+gs+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+gs.source_id%3Dv.source_id+WHERE+gs.source_id%3D4830106374107511552",
+    "sha256": "7885d160f1daf2e8ed70f05917ac474da4419d3a2259f5deaa90ed57d87dc502",
+    "diagnostic": null
+  },
+  {
+    "oid": "313893022856118297",
+    "service": "simbad",
+    "status": "ok",
+    "rows": 1,
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+100+main_id%2Cra%2Cdec%2Cotype%2Cnbref+FROM+basic+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C57.871813%2C-48.389903%2C0.0008333333333333334%29%29%3D1",
+    "sha256": "9b6ac8281f4f165b2bb48075283d50dfa7598a7754a016f434910abbbe8c92fb",
+    "diagnostic": null
+  },
+  {
+    "oid": "313893022856118297",
+    "service": "ztf",
+    "status": "ok",
+    "rows": 0,
+    "url": "https://irsa.ipac.caltech.edu/cgi-bin/ZTF/nph_light_curves?POS=CIRCLE+57.871813+-48.389903+0.0008333333333333334&FORMAT=csv",
+    "sha256": "d35b7925f47f608072ad81c389b36e208216ae1a595ed8ba811c945cf77d7a34",
+    "diagnostic": null
+  },
+  {
+    "oid": "313893022856118297",
+    "service": "ps1",
+    "status": "ok",
+    "rows": 0,
+    "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/detection.csv?ra=57.871813&dec=-48.389903&radius=0.0008333333333333334&pagesize=5000&columns=%5BobjID%2CdetectID%2CobsTime%2CfilterID%2Cra%2Cdec%2CpsfFlux%2CpsfFluxErr%2CinfoFlag%2CinfoFlag2%2CinfoFlag3%2CpsfQfPerfect%5D",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diagnostic": null
+  },
+  {
+    "oid": "313893022856118297",
+    "service": "skymapper",
+    "status": "ok",
+    "rows": 15,
+    "url": "https://api.skymapper.nci.org.au/public/tap/sync/?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+2000+p.object_id%2Cp.image_id%2Cp.filter%2Ci.date+AS+mjd_start%2Ci.exp_time%2Cp.ra_img%2Cp.decl_img%2Cp.mag_psf%2Cp.e_mag_psf%2Cp.flags%2Cp.nimaflags+FROM+dr4.photometry+AS+p+JOIN+dr4.images+AS+i+ON+p.image_id%3Di.image_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cp.ra_img%2Cp.decl_img%29%2CCIRCLE%28%27ICRS%27%2C57.871813%2C-48.389903%2C0.0008333333333333334%29%29",
+    "sha256": "747069eaefdd467833c20f9253b23a2ad9bc065878d324d2f5b62827add9f731",
+    "diagnostic": null
+  },
+  {
+    "oid": "313893022856118297",
+    "service": "nsc_objects",
+    "status": "ok",
+    "rows": 1,
+    "url": "https://datalab.noirlab.edu/query/query?sql=SELECT+id%2Cra%2Cdec%2Cndet+FROM+nsc_dr2.object+WHERE+q3c_radial_query%28ra%2Cdec%2C57.871813%2C-48.389903%2C0.0011111111%29+LIMIT+50&ofmt=csv&async=False",
+    "sha256": "3f4cf5b4e0b4aa925e26983f9e4799c37211e241cf7989301aa6936fa9a232e3",
+    "diagnostic": null
+  },
+  {
+    "oid": "313893022856118297",
+    "service": "nsc_epochs",
+    "status": "ok",
+    "rows": 36,
+    "url": "https://datalab.noirlab.edu/query/query?sql=SELECT+objectid%2Cmeasid%2Cexposure%2Cra%2Cdec%2Cmjd%2Cfilter%2Cmag_auto%2Cmagerr_auto%2Cflags+FROM+nsc_dr2.meas+WHERE+objectid+IN+%28%27171815_462%27%29&ofmt=csv&async=False",
+    "sha256": "9778ee6401958d466ee515fb0555871bb411d52fd2ef13e6f19d67aa70e2d424",
+    "diagnostic": null
+  },
+  {
+    "oid": "313893022856118297",
+    "service": "references",
+    "status": "ok",
+    "rows": 1,
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cr.bibcode%2Cr.title+FROM+basic+as+b+JOIN+has_ref+AS+h+ON+h.oidref%3Db.oid+JOIN+ref+AS+r+ON+r.oidbib%3Dh.oidbibref+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C57.871813%2C-48.389903%2C0.0008333333%29%29%3D1",
+    "sha256": "345e9c7a67c041700e9e1c3a017f58832954c4cc6315edaa8ebed26993436dcd",
+    "diagnostic": null
+  },
+  {
+    "oid": "313893022856118297",
+    "service": "galex",
+    "status": "ok",
+    "rows": 0,
+    "url": "https://mastcomp.stsci.edu/portal/Mashup/MashupQuery.asmx/GalexPhotonListQueryTest?query=select+vpo.objid%2Cra%2Cdec%2Cnuv_mag%2Cfuv_mag%2Cvpe.fexptime%2Cvpe.nexptime%2Cvpe.fexpstar%2Cvpe.fexpend%2Cvpe.nexpstar%2Cvpe.nexpend+from+GR6Plus7.dbo.visitphotoobjall+as+vpo+inner+join+GR6Plus7.dbo.visitphotoextract+as+vpe+on+vpo.photoextractid%3Dvpe.photoextractid+inner+join+GR6Plus7.dbo.fGetNearbyVisitObjEq%2857.871813%2C-48.389903%2C0.08%29+as+nb+on+vpo.objid%3Dnb.objid&format=extjs",
+    "sha256": "ddfdb206184d292fb1c0e35eb584df0276619d3a1df6e98ff08bf3903c78c085",
+    "diagnostic": null
+  },
+  {
+    "oid": "313893022856118297",
+    "service": "vsx",
+    "status": "ok",
+    "rows": 0,
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-c=57.871813+-48.389903&-c.rs=3&-out.max=2000&-source=B%2Fvsx&-out.all=1",
+    "sha256": "fd80950e996326a6c4544b2c610311f1230e761578b698ab7a0d63e2b6e4f584",
+    "diagnostic": null
+  }
+]

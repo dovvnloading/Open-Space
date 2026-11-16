@@ -1,0 +1,194 @@
+[
+  {
+    "key": "blue",
+    "rows": 377,
+    "sha256": "d01fe88f78b8eaca5d3996dfa961a54d06618f68a339480ce25d44e06823645c",
+    "adql": "SELECT TOP 1500 o.oid,o.meanra,o.meandec,o.n_det,o.n_forced,o.firstmjd,o.lastmjd,x.dist,g.oid_catalog,g.bp_rp,g.phot_g_mean_mag,g.parallax,g.ruwe FROM alerce_tap.object AS o JOIN alerce_tap.xmatch AS x ON o.oid=x.oid AND o.sid=x.sid JOIN alerce_tap.gaiadr3_source AS g ON g.oid_catalog=x.oid_catalog WHERE o.sid=1 AND x.catid=1 AND x.dist<0.8 AND o.n_det>=10 AND o.n_forced>=30 AND g.bp_rp<0.25 AND g.phot_g_mean_mag>16"
+  },
+  {
+    "key": "phot00",
+    "rows": 4810,
+    "sha256": "5ad62e6a04d3f96f67e36e4285b019a8c350c3d8ca5dfd26e25dcac868d8c635",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170019696403809402,170028485662212104,170028485694717961,170028485728796793,170028485784896134,170028485792759925,170028485801148473,170028485863014479,170028485867209280,170028485904957531,170028485937463434,170028486041796789,170028486069059608,170028486088458304,170028486119915644,170028486244171878,170028486335922254,170028486525714586,170028486579191924,170028486592299009) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot01",
+    "rows": 4919,
+    "sha256": "ad4aa9787b97b02bb3e97ad9f3a9b36411a11e22800d80b868e724e481427890",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170028486610124889,170028487185793105,170028487197851762,170028487314243738,170028487392886994,170028487427489936,170028487588970583,170028488463482894,170028488480784403,170028488526397518,170028488533213360,170028488591933478,170028488618672159,170028488645935146,170028488735588417,170028489070084153,170028489454911794,170028490071474320,170028490089824375,170028490132291590) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot02",
+    "rows": 10178,
+    "sha256": "b2a8818bb376dc91f11215a721c470c460c03ff758805ef732afd571c9fc322e",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170028491728224367,170028492680855669,170028496653385917,170028496727310451,170028496727834874,170028496915005480,170028497128915052,170028497594482794,170028498070012007,170028498711740546,170028499097092489,170028499119636543,170028500537835649,170028500551467207,170028500558807154,170028500578730078,170028500594458776,170028500602847443,170028500604420198,170028500615430253) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot03",
+    "rows": 11936,
+    "sha256": "00f36fb55e66caecbeda22aaa739f310cb55022962eb9827f1caa5e6dc726257",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170028510516609156,170028510541250674,170028510554882192,170028510647156838,170028510668128333,170028510683332610,170028510771413189,170028511452987430,170028511944770157,170028512422920261,170028512482164861,170028512517816425,170028512636829791,170028513113407570,170028516416421991,170028518337938106,170028519067747102,170028520561442863,170028526468071482,170028526511063186) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot04",
+    "rows": 7723,
+    "sha256": "24dff17bf50be7e9f4d840ce8397bab0190f9822c7aaa7f2fbdff40023c73b1f",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170028526512112447,170028526519975954,170028526623785066,170028526651047983,170028526655766635,170028526734409750,170028526783168548,170028526786838639,170028526787362821,170028526890123337,170028527055798415,170028527466840152,170028527548629133,170028528010526837,170028528143695984,170028528377528438,170028528742957120,170028528999333927,170028529279303731,170028530020122634) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot05",
+    "rows": 2338,
+    "sha256": "651e9e014bcbb13e6dfda39c471564908e5f82b30495c45e3897bea741f702b2",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170028532436566226,170028532551385192,170028534417326100,170028535480582190,170032879748776017,170032880394174650,170032881675534346,170032882225512573,170032884529234028,170032884975927400,170032886280355935,170032891355463772,170032902779175024,170230797033799732,170587116640141485,170587116671074453,170587116779601969,170591537493180454,170591537513103393,170591537517297683) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot06",
+    "rows": 816,
+    "sha256": "82fff0b0de91f79281bbb87c12c21ed0e1b08b90c1c9801acfbbf87fb0d7b653",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170591537537744992,170591537537745211,170591537539842205,170591537555570889,170591537675632926,170591537949311109,170591538158501936,170591538164269150,170591538186813647,170591538188386484,170591538805473506,170591538823299306,170591538824347734,170591538829590773,170591538848464979,170591545420415255,170591545543622736,170591546228343269,170604728121032725,170604728161402918) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot07",
+    "rows": 750,
+    "sha256": "2b46a69a509c6515336453880f925297b4c3d5f9e40236e93dffb24a2ed68385",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170604728184471694,170604728188665871,170604728191811650,170604728395759692,170644257836630207,170644264815427600,170644272063709271,170644272086777957,171141193172256603,171141193193227811,171141193194274980,171141193221013678,171141193221537995,171141193233072324,171141199263957154,171141199284404412,171141200176218202,171141200177791075,171141200202957013,171141200212918274) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot08",
+    "rows": 3734,
+    "sha256": "97df8b0f88b3a3e6ba50338d741ae237f623bd0a553899936aed5d3083d85bda",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (171141200279502899,171141200283697324,171141200286319363,171141200327213100,171141200329310469,171141200330883199,171141200346612050,313637935277670452,313677513711157260,313677516550701062,313677516550701102,313677516799737880,313677516830670918,313677517295714377,313681913787711503,313690716838035481,313690716932407315,313690717157326935,313690717203464242,313690717334536236) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot09",
+    "rows": 3488,
+    "sha256": "735def5647858ee70210ce1041d36ccc1c5f2b438c341d21d4024da428220435",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (313690717559455817,313695087488401469,313695087505178664,313695087516188697,313695087633104958,313695100670574639,313695109482807303,313699505044717570,313699505045766172,313699505124933692,313699505131749393,313699506883395603,313699506931630163,313699506934775809,313699506946310165,313699507015516224,313703904908411210,313703904925188171,313703904937771022,313703905117077624) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot10",
+    "rows": 3901,
+    "sha256": "7618ccf0efbb023a1ab0c841760235b903209de2f6bcfd02bf7515e486b798ee",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (313708285383409705,313708285457334308,313708285496131629,313708285517627453,313708285537550418,313708288995229728,313708288998899737,313708288999424032,313708289057095748,313708289059192838,313708289146748960,313708289173487653,313721465954893865,313730259780894783,313739053980713015,313739054162641016,313752245508243530,313752245644034116,313756671659737131,313756671672844519) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot11",
+    "rows": 5633,
+    "sha256": "e1cc6a1617e6eb9ec125bb2d5a3f554019790c84a20e3d9cc1dde2d81a90152f",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (313756671677562995,313756671683854427,313756671691194533,313756671726321728,313756671729991764,313756671738904606,313756673039663263,313761042218352737,313761042224644191,313761042224644192,313761042228314131,313761042229887008,313761042237751351,313761042237751357,313761042243518573,313761042249285735,313761042249285741,313761042249285761,313761042261344361,313761042261868596) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot12",
+    "rows": 6585,
+    "sha256": "2645aa31eddc3683ce285cbc2614d8a849f272591006465d67d44929fb2bfe35",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (313761042342084694,313761042352570483,313761042354667606,313761042356240500,313761042359910519,313761042371969195,313761042374590566,313761042376687835,313761042382454908,313761042390843413,313761042392416330,313761042393464847,313761042397134944,313761042397659262,313761042399232015,313761042400280709,313761042402377836,313761042406047796,313761042412863503,313765480718401752) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot13",
+    "rows": 11397,
+    "sha256": "21120d96b19822f57dcee4f22c83e3821e850415306e323e227c2ba320af3ee0",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (313765480722071702,313769858578776099,313769858587688981,313769858598174773,313769858723479604,313787429990957058,313800663756701772,313831458372321369,313831458463547657,313831458504966158,313831458534850565,313853517414531101,313853517417676886,313853517476397066,313853517476397176,313853517490028584,313853517533544491,313853517550846030,313853517741162561,313853517746405385) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot14",
+    "rows": 14112,
+    "sha256": "3b290ec9c696d7d7462b84be70ccc5c69dec6737aa4b2dadf78672f044f3140b",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (313853533288398943,313871013135253645,313871013218615310,313871013309317217,313871013500682271,313871013501206590,313871013823119428,313871013942132857,313871014488965184,313871014725419040,313871014974980245,313871015252852886,313875416785879049,313875416792694837,313875416819957922,313879818740957384,313879819420434459,313888627017908404,313888627031015551,313888627034685592) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot15",
+    "rows": 9412,
+    "sha256": "611e77b7d2201fdb45f574ec615e530a9658a5228a2327dcba0a8cfa4a31b7a1",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (313888627036782664,313888627047269146,313888627062472856,313888627088162946,313893021628235840,313893022779572301,313893022784815423,313893022856118297,313893022952587289,313893023066357806,313893023122980916,313893023128748094,313893023136612473,313893023235702889,313893023253004388,313893023259820145,313897381668585553,313897383651967048,313897383685521424,313897383692861520) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot16",
+    "rows": 5841,
+    "sha256": "8ece1bd1f310a87153f089a08ce975ee75abeec6f8d5c0836347f72c0acee66b",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (313897383733231731,313897383788806252,313897383829176434,313897384048328938,313928194935226370,313932587824841249,313945769593798669,313945770362404919,313958953556377677,313963359308350705,313963359324078138,313963359329845252,313963359339806811,313963359349768245,313963359350816848,313963359461441628,313963359506530828,313963359519637515,313963405828948098,313967752722776167) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot17",
+    "rows": 6642,
+    "sha256": "05a9c80c7a89120f11b2bf842fc9c1ccf42b0099b1faa080580e1a9ca5e234a7",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (313967752791457913,313972150252339334,313972150727344214,313972153328336936,313972153436864673,313972153445777500,313972153461506229,313972183909531813,313985346332262403,313985346404614398,313985346502656188,313985346642116609,313985346653126775,313985347862659352,313985347976953947,313985348105928953,313994141012328449,313994144428589218,313994144457424998,313994144482066460) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "phot18",
+    "rows": 4253,
+    "sha256": "bda899701f6103e5e9c1cf944632166d88e0f8d5a1d74182cddb94454c960c90",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (313998534869254150,313998534906478620,313998539393335373,313998539480891507,313998539713150997,313998539719442593,313998539790222201,313998539809095881,313998539825348941,313998540596576655,313998540641140807,313998570810245124,314002971673231589,314007345705779214,314007345735139341,314011741926195228,314051321186484740) AND f.mjd >=61041 AND f.mjd <61361"
+  },
+  {
+    "key": "first_light0",
+    "rows": 3054,
+    "sha256": "4e939ea5c740052c93920fc3cde26219cf7ce43a32a9103cc07d7b2f45cc7414",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (313761042359910519,313893022955208833,170028486346407948,313761042493603846,314007345740382264,313853497291309068,170028497087496318,313853501385998524,313703904920469598,313761042493603843,313967752874295304,313972153447874698) AND f.mjd>=61041 AND f.mjd<61361"
+  },
+  {
+    "key": "first_light12",
+    "rows": 2570,
+    "sha256": "cd3791e87397d0d213d06346c6bf1b75b08d46d22087995522db7bc3996a76a1",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170028486346407969,170028486080069689,313756671679660047,170032882093391918,313879819919032395,313761042206818324,170028490349346923,170028486080069692,313831458329854024,170028487418576901,170028496795992156,313985346491646133) AND f.mjd>=61041 AND f.mjd<61361"
+  },
+  {
+    "key": "first_light24",
+    "rows": 3235,
+    "sha256": "c2fb047f6a10d6db8393aea6ba638da03e07de3aff3bc21f252592a367442ca9",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170028485814255688,170028497334960255,313871015265960071,314002971544781089,313756671683330206,313897384009007194,313893022820991076,170032880749117450,313774269212917928,313774269212917909,170028486346407982,313897383648297053) AND f.mjd>=61041 AND f.mjd<61361"
+  },
+  {
+    "key": "first_ref",
+    "rows": 118,
+    "sha256": "6d2ad1296114531221d9e57d36270cf36460c2f911130bf89a3b588578a30b1b",
+    "adql": "SELECT TOP 1000 oid,meanra,meandec,n_det,n_forced FROM alerce_tap.object WHERE sid=1 AND n_forced>=30 AND 1=CONTAINS(POINT('ICRS',meanra,meandec),CIRCLE('ICRS',61.057494,-49.129764,0.07)) ORDER BY oid"
+  },
+  {
+    "key": "second_light0",
+    "rows": 3353,
+    "sha256": "07143823114f5105f522e1c270f2bc15e93dba3e8b569e95278d42181f2b0876",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170028535480582190,170028527697002573,170028527586902097,170032923326021653,170028526626930739,170046110509826136,170028527294349408,170028535480582183,170028530517672011,170028526754332752,170032918226796620,170046109950410827) AND f.mjd>=61041 AND f.mjd<61361"
+  },
+  {
+    "key": "second_light12",
+    "rows": 2153,
+    "sha256": "18d902172894a5e2d69f7b7d005697d808ce3781502aadfee85614e09c8582ab",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170028532931493976,170032917689925695,170028527697002584,170032921312755840,170028526626930743,170032920395251803,170028532931493961,170028530517672103,170046110509826107,170028531320356951,170028526626930774,170032916887240927) AND f.mjd>=61041 AND f.mjd<61361"
+  },
+  {
+    "key": "second_light24",
+    "rows": 2043,
+    "sha256": "165ecb8960e141845bb2685b6427bbd6a08351ef56e7c4fb24b390f51918e52c",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170046113460518990,170032916887765053,170028527697002585,170028527294349409,170028528640196700,170028527294349405,170028527294349413,170028529601740819,170032921312755837,170032918628401261,170046109568204888,170028526491140196) AND f.mjd>=61041 AND f.mjd<61361"
+  },
+  {
+    "key": "second_ref",
+    "rows": 123,
+    "sha256": "0ffc9ab7c52290a6dedc698e00ae9f17d6f142f7a6a67a8656c140be09f57743",
+    "adql": "SELECT TOP 1000 oid,meanra,meandec,n_det,n_forced FROM alerce_tap.object WHERE sid=1 AND n_forced>=30 AND 1=CONTAINS(POINT('ICRS',meanra,meandec),CIRCLE('ICRS',186.597955,7.018868,0.07)) ORDER BY oid"
+  },
+  {
+    "key": "fourth_light0",
+    "rows": 2111,
+    "sha256": "1ee63667c6efd98bf98c0d45bdaef99d32e2011ab2fca9a832c832ce2b090238",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170032886280355935,170028486219006119,313871013934268557,170028485952667817,170019696437362689,313761042366201999,170028485952667651,170028488631779352,170028488906506258,313871015406469145,170028487293796508,170028486219006010) AND f.mjd>=61041 AND f.mjd<61361"
+  },
+  {
+    "key": "fourth_light12",
+    "rows": 2000,
+    "sha256": "900eb1f792f05d2e7aeccbd9e8c366f1f89d21c875a38d8b4b57d8fbe260957a",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170028485952667673,313862204953723079,313756671844286497,170028499085033603,170028487293796506,170028486219006019,313756671844286512,313853501982638170,170032897286733995,313831458494480401,170028490510827645,170019696437362856) AND f.mjd>=61041 AND f.mjd<61361"
+  },
+  {
+    "key": "fourth_light24",
+    "rows": 1542,
+    "sha256": "933327628ba01c10ec76b1ecf4b22e805b5b4cdeebb2b0a9f2ad46afc07a48d8",
+    "adql": "SELECT f.oid,f.measurement_id,f.mjd,f.band,p.visit,p.detector,p.scienceflux,p.sciencefluxerr,p.psfflux,p.psffluxerr FROM alerce_tap.forced_photometry AS f JOIN alerce_tap.lsst_forced_photometry AS p ON f.measurement_id=p.measurement_id AND f.oid=p.oid AND f.sid=p.sid WHERE f.sid=1 AND f.oid IN (170028489977626740,313761042366201936,170046088475574277,313871015121780926,170028486219006121,170028485952667677,170032883329663049,170028498835472394,170046086324420763,170032881174839426,313871015406469313,170032899704225928) AND f.mjd>=61041 AND f.mjd<61361"
+  },
+  {
+    "key": "fourth_ref",
+    "rows": 98,
+    "sha256": "35868ee4dbffcf3b57488197b0d8beb82b2ff24f89aec3c80ad239218f760717",
+    "adql": "SELECT TOP 1000 oid,meanra,meandec,n_det,n_forced FROM alerce_tap.object WHERE sid=1 AND n_forced>=30 AND 1=CONTAINS(POINT('ICRS',meanra,meandec),CIRCLE('ICRS',63.481,-47.809,0.07)) ORDER BY oid"
+  }
+]

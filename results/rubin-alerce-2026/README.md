@@ -1,0 +1,7 @@
+# 2026 Rubin public-alert investigation
+
+The principal measurement is relative motion of the distant binary (556068) 2014 JR80 in five Rubin exposures on three nights. The analysis joins ALeRCE’s alert tables to individual Rubin cutouts and uses HST and historical ground-based exposures to test the interpretation. [Binary astrometry, evidence and reproduction](../rubin-jr80-mutual-motion/README.md)
+
+The same database enabled two exploratory searches. The blue-source search identified a tentative five-minute signal; sparse independent data and differences between photometry products limit the interpretation. The nearby-white-dwarf screen found apparent deep dropouts affected by focal-plane edges and simultaneous deficits in adjacent sources. Neither search establishes a new compact binary or planetary-debris transit. [Rapid variability](rapid/README.md) · [White-dwarf controls](white-dwarf-screen/README.md)
+
+Before observing results were analyzed, the repository audit found 115 existing branch heads, 182 result directories and three open PRs (#102, #104, #105). Earlier research used Rubin astrometry distributed by the Minor Planet Center to study Neptune resonators. No branch or result found in the audit studied ALeRCE’s Rubin public alerts for these questions or measured the mutual motion of 2014 JR80. The snapshot includes all names, branch SHAs and PR titles. The working branch was created independently from a62807165dd86b1c405751042dbd0a98be00a777. [Repository snapshot](repository-audit.json)

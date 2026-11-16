@@ -1,0 +1,1 @@
+SELECT TOP 2000 l.oid,COUNT(*) AS n,MIN(l.visit) AS vmin,MAX(l.visit) AS vmax FROM alerce_tap.lsst_detection AS l WHERE l.sid=2 AND l.snr>25 AND l.isdipole='f' AND l.psfflux_flag='f' AND l.apflux_flag='f' AND l.pixelflags_saturatedcenter='f' AND l.pixelflags_bad='f' AND l.shape_flag='f' AND l.apflux>1.25*l.psfflux AND l.extendedness>0.8 GROUP BY l.oid HAVING COUNT(*)>=3
