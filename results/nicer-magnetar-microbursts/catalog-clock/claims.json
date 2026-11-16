@@ -1,0 +1,113 @@
+{
+  "schema": "open-space/claims/1",
+  "let": {
+    "windows": "table('windows.csv')",
+    "paired": "windows[~isnan(windows['narrow_literal']) & ~isnan(windows['narrow_plus69'])]",
+    "others": "paired[paired['source'] != 'SGR 1935+2154']",
+    "all_four": "windows[~isnan(windows['narrow_literal']) & ~isnan(windows['narrow_plus69']) & ~isnan(windows['narrow_minus69']) & ~isnan(windows['narrow_plus138'])]"
+  },
+  "claims": [
+    {
+      "id": "offset-equals-tt-minus-utc-2018",
+      "printed": "69.184000 seconds later",
+      "statement": "The measured offset equals TT minus UTC on the date of the 2018 flash: 32.184 s plus 37 leap seconds.",
+      "compute": "tt_minus_utc('2018-11-22')"
+    },
+    {
+      "id": "offset-equals-tt-minus-utc-2020",
+      "expect": 69.184,
+      "statement": "TT minus UTC was unchanged at the 2020 epoch, so one constant explains both flashes.",
+      "compute": "tt_minus_utc('2020-05-01')"
+    },
+    {
+      "id": "catalog-rows",
+      "printed": "1,132 rows",
+      "statement": "Rows of the electronic burst table that were tested.",
+      "compute": "len(windows)"
+    },
+    {
+      "id": "catalog-observations",
+      "printed": "159 NICER observations",
+      "statement": "Distinct observations in the electronic table.",
+      "compute": "nunique(windows['obsid'])"
+    },
+    {
+      "id": "eligible-pairs",
+      "printed": "944 narrow pairs",
+      "statement": "Rows with complete exposure in both the printed-time and the shifted 0.25 s windows.",
+      "compute": "len(paired)"
+    },
+    {
+      "id": "later-window-wins",
+      "printed": "843 /",
+      "statement": "Rows where the window shifted by +69.184 s holds more cleaned events than the printed-time window.",
+      "compute": "count(paired['narrow_plus69'] > paired['narrow_literal'])"
+    },
+    {
+      "id": "later-window-ties",
+      "expect": 1,
+      "statement": "Rows where both windows hold the same number of events.",
+      "compute": "count(paired['narrow_plus69'] == paired['narrow_literal'])"
+    },
+    {
+      "id": "later-window-losses",
+      "printed": "100 narrow-window losses",
+      "statement": "Rows where the printed-time window holds more events.",
+      "compute": "count(paired['narrow_plus69'] < paired['narrow_literal'])"
+    },
+    {
+      "id": "events-at-printed-time",
+      "printed": "115,351",
+      "statement": "Cleaned events summed over the printed-time windows.",
+      "compute": "sum(paired['narrow_literal'])"
+    },
+    {
+      "id": "events-at-shifted-time",
+      "printed": "274,146",
+      "statement": "Cleaned events summed over the windows shifted by +69.184 s.",
+      "compute": "sum(paired['narrow_plus69'])"
+    },
+    {
+      "id": "sgr-1935-share",
+      "printed": "798 of the",
+      "statement": "Narrow pairs contributed by SGR 1935+2154.",
+      "compute": "len(paired) - len(others)"
+    },
+    {
+      "id": "sgr-1935-losses",
+      "printed": "99 of the",
+      "statement": "Narrow-window losses that belong to SGR 1935+2154.",
+      "compute": "count((paired['source'] == 'SGR 1935+2154') & (paired['narrow_plus69'] < paired['narrow_literal']))"
+    },
+    {
+      "id": "other-sources-eligible",
+      "printed": "| 146 |",
+      "statement": "Narrow pairs from every source other than SGR 1935+2154.",
+      "compute": "len(others)"
+    },
+    {
+      "id": "other-sources-wins",
+      "printed": "145 /",
+      "statement": "Later-window wins among the other sources.",
+      "compute": "count(others['narrow_plus69'] > others['narrow_literal'])"
+    },
+    {
+      "id": "other-sources-events-shifted",
+      "printed": "8,258",
+      "statement": "Events at the shifted time among the other sources.",
+      "compute": "sum(others['narrow_plus69'])"
+    },
+    {
+      "id": "continuous-exposure-rows",
+      "printed": "783 rows",
+      "statement": "Rows with exposure at all four narrow windows, used for the direction control.",
+      "compute": "len(all_four)"
+    },
+    {
+      "id": "only-the-plus-shift-doubles-the-count",
+      "expect": true,
+      "statement": "Among rows with all four windows, only the +69.184 s window holds more than twice the events of the printed-time window.",
+      "compute": "sum(all_four['narrow_plus69']) > 2 * sum(all_four['narrow_literal']) and sum(all_four['narrow_minus69']) <= 2 * sum(all_four['narrow_literal']) and sum(all_four['narrow_plus138']) <= 2 * sum(all_four['narrow_literal'])"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "open-space/claims/1",
+  "let": {
+    "matches": "table('matches.csv')",
+    "streams": "table('coverage.csv')",
+    "branch": "streams[streams['stream_id'] == 14]"
+  },
+  "claims": [
+    {
+      "id": "stars-with-velocities",
+      "printed": "All 12 stars",
+      "statement": "Stars of the NGC 1261b list that carry a published radial velocity.",
+      "compute": "first(branch['published_rvs'])"
+    },
+    {
+      "id": "every-velocity-star-is-matched",
+      "expect": true,
+      "statement": "Each of those stars matches a Reticulum II spectroscopic target by exact Gaia source ID, and none is left over.",
+      "compute": "len(matches) == first(branch['published_rvs']) and first(branch['ji_id_matches']) == len(matches) and first(branch['remaining_rvs']) == 0"
+    },
+    {
+      "id": "list-size",
+      "printed": "70-star",
+      "statement": "Size of the STREAMFINDER list for the branch.",
+      "compute": "first(branch['rows'])"
+    },
+    {
+      "id": "candidates-left",
+      "printed": "58 candidates",
+      "statement": "Candidates that remain once the twelve Reticulum II stars are removed.",
+      "compute": "first(branch['rows']) - len(matches)"
+    },
+    {
+      "id": "all-are-members-or-candidates",
+      "expect": 12,
+      "statement": "Matched stars listed as members or candidate members in the first spectroscopic study.",
+      "compute": "count((matches['ji_member'] == 1) | (matches['ji_candidate'] == 1))"
+    },
+    {
+      "id": "all-are-firm-in-at-least-one-study",
+      "expect": 12,
+      "statement": "Matched stars classified as firm members by at least one of the two studies.",
+      "compute": "count((matches['ji_member'] == 1) | (matches['simon_member'] == 'M'))"
+    },
+    {
+      "id": "velocity-minimum",
+      "printed": "56.68",
+      "statement": "Lowest published velocity among the twelve, km/s.",
+      "compute": "min(matches['ibata_v_kms'])"
+    },
+    {
+      "id": "velocity-maximum",
+      "printed": "70.40 km/s",
+      "statement": "Highest published velocity among the twelve.",
+      "compute": "max(matches['ibata_v_kms'])"
+    },
+    {
+      "id": "velocity-median",
+      "printed": "63.35 km/s",
+      "statement": "Median published velocity of the twelve.",
+      "compute": "median(matches['ibata_v_kms'])"
+    }
+  ]
+}
