@@ -23,6 +23,12 @@ import numpy as np
 import pandas as pd
 
 MIRROR = "https://huggingface.co/datasets/juliensimon/nasa-maven-kp-insitu/resolve/main/data/{0}/{0}.parquet"
+INPUT_SHA256 = {
+    "sep": "e3ea044212db893dcdcc050c5b1aa28257b05f483c9952258bc715e9631dec03",
+    "spice": "997fa7e3bce857722232531fa18beed4a843eca27aa0ecde910ca01ee5bf1ee0",
+    "mag": "45b2e91ead4d5aba3aa68a2a2170f4f224681f3c47117c011aa65b8f20b8ce8c",
+    "swia": "186c741f2f04938ce46ebcfe3d2886f77f24b9b794b9872fc3d859268ac05a87",
+}
 NAMES = ("1f", "1r", "2f", "2r")
 ION = ["sep_ion_fov" + name for name in NAMES]
 ELECTRON = ["sep_electron_fov" + name for name in NAMES]
@@ -146,6 +152,20 @@ def find_events(hourly: pd.DataFrame) -> list[dict]:
     return events
 
 
+def event_orbit_counts(
+    joint_orbits: pd.DataFrame, selected_hours: pd.Series,
+    start: pd.Timestamp, end: pd.Timestamp,
+) -> dict:
+    """Count joint-sample orbits within the selected hours and their enclosing span."""
+    in_span = joint_orbits[joint_orbits["hour"].between(start, end)]
+    in_selected = in_span[in_span["hour"].isin(selected_hours)]
+    return {
+        "distinct_joint_orbits": int(in_selected["spice_orbit_number"].nunique()),
+        "full_window_distinct_joint_orbits": int(in_span["spice_orbit_number"].nunique()),
+        "full_window_hours": int((end - start) / pd.Timedelta(hours=1)) + 1,
+    }
+
+
 def summarize_independent_hourly(df: pd.DataFrame, value: str) -> dict:
     tmp = df[["time", value]].copy()
     tmp[value] = pd.to_numeric(tmp[value], errors="coerce")
@@ -157,22 +177,24 @@ def summarize_independent_hourly(df: pd.DataFrame, value: str) -> dict:
 
 
 def run(output: Path, daily_output: Path) -> dict:
-    input_records: dict[str, dict] = {}
     with tempfile.TemporaryDirectory(prefix="openspace-maven-") as root:
         rootpath = Path(root)
 
-        def load(instrument: str, cols: list[str]) -> pd.DataFrame:
-            path = rootpath / (instrument + ".parquet")
-            input_records[instrument] = download_parquet(instrument, path)
-            return read_table(path, cols)
+        inputs = {name: rootpath / (name + ".parquet") for name in INPUT_SHA256}
+        input_records = {}
+        for name, path in inputs.items():
+            receipt = download_parquet(name, path)
+            if receipt["sha256"] != INPUT_SHA256[name]:
+                raise ValueError(f"{name} SHA-256 mismatch: expected {INPUT_SHA256[name]}, received {receipt['sha256']}")
+            input_records[name] = receipt
 
         sep_columns = ["time"] + [v for c in ION + ELECTRON for v in (c, c + "_quality")]
-        sep = load("sep", sep_columns)
+        sep = read_table(inputs["sep"], sep_columns)
         s = sep_metrics(sep)
         del sep
 
         # Must use the spacecraft geometry to control orbital effects.
-        spice = load("spice", ["time", "spice_altitude", "spice_orbit_number", "spice_mso_x"])
+        spice = read_table(inputs["spice"], ["time", "spice_altitude", "spice_orbit_number", "spice_mso_x"])
         s = pd.merge_asof(s, spice, on="time", direction="nearest", tolerance=pd.Timedelta("9s"))
         s["highalt"] = s["spice_altitude"].ge(3000)
         s["joint_highalt"] = s["highalt"] & s["joint"]
@@ -196,13 +218,13 @@ def run(output: Path, daily_output: Path) -> dict:
 
         # Independent environmental context, not automatic confirmation:
         # magnetic field and solar-wind pressure are geometry dependent.
-        mag = load("mag", ["time", "mag_mso_x", "mag_mso_y", "mag_mso_z"])
+        mag = read_table(inputs["mag"], ["time", "mag_mso_x", "mag_mso_y", "mag_mso_z"])
         magvec = mag[["mag_mso_x", "mag_mso_y", "mag_mso_z"]].apply(pd.to_numeric, errors="coerce")
         mag["field_magnitude_nt"] = np.sqrt((magvec ** 2).sum(axis=1, min_count=3))
         mag_context = summarize_independent_hourly(mag, "field_magnitude_nt")
         del mag
 
-        swia = load("swia", ["time", "swia_dynamic_pressure", "swia_dynamic_pressure_quality"])
+        swia = read_table(inputs["swia"], ["time", "swia_dynamic_pressure", "swia_dynamic_pressure_quality"])
         # SWIA quality flag is nonzero in some valid samples; keep both
         # analyses descriptive without pretending it means a SEP detection.
         swia_context = summarize_independent_hourly(swia, "swia_dynamic_pressure")
@@ -211,6 +233,9 @@ def run(output: Path, daily_output: Path) -> dict:
         def median(series: pd.Series) -> float | None:
             x = series.dropna()
             return float(x.median()) if len(x) else None
+        selected_hours = h.loc[h["event_hour"], "hour"]
+        joint_orbits = s.loc[s["joint"], ["time", "spice_orbit_number"]].copy()
+        joint_orbits["hour"] = joint_orbits["time"].dt.floor("h")
         context = []
         for event in events[:20]:
             start = pd.Timestamp(event["start_utc"])
@@ -218,8 +243,7 @@ def run(output: Path, daily_output: Path) -> dict:
             window = pd.date_range(start, end, freq="h", tz="UTC")
             mag_vals = [mag_context.get(t.isoformat()) for t in window if t.isoformat() in mag_context]
             swia_vals = [swia_context.get(t.isoformat()) for t in window if t.isoformat() in swia_context]
-            selected_s = s[(s["time"] >= start) & (s["time"] < end + pd.Timedelta(hours=1)) & s["joint"]]
-            event["distinct_joint_orbits"] = int(selected_s["spice_orbit_number"].nunique())
+            event.update(event_orbit_counts(joint_orbits, selected_hours, start, end))
             event["mag_hourly_median_nt"] = float(np.median(mag_vals)) if mag_vals else None
             event["swia_hourly_median_dynamic_pressure_npa"] = float(np.median(swia_vals)) if swia_vals else None
             event["complete_independent_mag_hours"] = len(mag_vals)
@@ -243,7 +267,7 @@ def run(output: Path, daily_output: Path) -> dict:
                 "signal_to_uncertainty_per_view": ">=8, at least 3/4 views of each species",
                 "row_flux": {"ion_median_min": 400, "electron_median_min": 1000},
                 "event_hour": ">=100 source samples; >=75 joint; joint fraction>=0.60; >=20 joint at altitude>=3000km",
-                "event": ">=2 selected UTC hours linked by <=5h gaps; at least 2 distinct orbits to qualify for independent-orbit evidence",
+                "event": ">=2 selected UTC hours linked by <=5h gaps; at least 2 distinct orbits with joint samples during selected hours to qualify for independent-orbit evidence",
             },
             "coverage": {
                 "sep_distinct_times": int(len(s)),

@@ -1,12 +1,15 @@
 """PDS4 NASA primary archive decoder, independent label-offset unit tests."""
+import io
+import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 try:
     import numpy as np
     import pandas as pd
-    from examples.maven_pds_kp_primary_audit import CHANNELS, parse_pds, pds_url, OFFICIAL_MD5
+    from examples.maven_pds_kp_primary_audit import CHANNELS, audit, parse_pds, pds_url, OFFICIAL_MD5
     HAS_SCIENCE = True
 except ImportError:
     HAS_SCIENCE = False
@@ -38,6 +41,15 @@ class PDSPrimaryFormatTests(unittest.TestCase):
             self.assertEqual(df.iloc[0]["sep_ion_fov1f"], 1000)
             self.assertEqual(df.iloc[0]["sep_ion_fov1f_quality"], 1008)
             self.assertEqual(df.iloc[1]["sep_electron_fov2r_quality"], 2015)
+
+    def test_wrong_primary_bytes_fail_audit_and_record_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "receipt.json"
+            responses = [io.BytesIO(b"<label/>"), io.BytesIO(b"wrong PDS data")]
+            with patch("urllib.request.urlopen", side_effect=responses):
+                with self.assertRaisesRegex(AssertionError, "official label MD5/size"):
+                    audit(output)
+            self.assertIn("NOT validated", json.loads(output.read_text())["status"])
 
     def test_primary_archive_is_specific_pds4_release_not_mirror(self):
         self.assertIn("mvn_kp_insitu_20250824_v26_r01", pds_url("tab"))

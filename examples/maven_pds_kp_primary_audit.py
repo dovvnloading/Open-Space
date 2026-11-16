@@ -15,6 +15,8 @@ import argparse
 import hashlib
 import json
 import tempfile
+import time
+import urllib.error
 import urllib.request
 import urllib.parse
 import xml.etree.ElementTree as ET
@@ -48,15 +50,22 @@ def pds_url(extension: str) -> str:
 
 
 def download(url: str, path: Path) -> dict:
-    dig = hashlib.sha256()
-    md5 = hashlib.md5()
     req = urllib.request.Request(url, headers={"User-Agent": "Open-Space-scientific-validation/1.0"})
-    with urllib.request.urlopen(req, timeout=240) as response, path.open("wb") as output:
-        for chunk in iter(lambda: response.read(1024 * 1024), b""):
-            dig.update(chunk)
-            md5.update(chunk)
-            output.write(chunk)
-    return {"url": url, "bytes": path.stat().st_size, "sha256": dig.hexdigest(), "md5": md5.hexdigest()}
+    for attempt in range(3):
+        dig = hashlib.sha256()
+        md5 = hashlib.md5()
+        try:
+            with urllib.request.urlopen(req, timeout=240) as response, path.open("wb") as output:
+                for chunk in iter(lambda: response.read(1024 * 1024), b""):
+                    dig.update(chunk)
+                    md5.update(chunk)
+                    output.write(chunk)
+            return {"url": url, "bytes": path.stat().st_size, "sha256": dig.hexdigest(), "md5": md5.hexdigest()}
+        except urllib.error.HTTPError as exc:
+            if exc.code not in (429, 500, 502, 503, 504) or attempt == 2:
+                raise
+            time.sleep(2 ** attempt)
+    raise AssertionError("unreachable")
 
 
 def item(parent, name: str) -> str:

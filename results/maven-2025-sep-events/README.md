@@ -20,8 +20,9 @@ The newly indexed/repackaged MAVEN Key Parameters reveal an **extreme, sustained
 | Predeclared dual-species candidate hours | **176** |
 | Main event's selected hours | **125** |
 | Main event's high-significance dual-species samples | **56,032** |
-| Of these, samples at >3,000 km spacecraft altitude | **38,385** |
-| Distinct MAVEN orbits containing joint event detections | **46** |
+| Of these, samples at ≥3,000 km spacecraft altitude | **38,385** |
+| Distinct MAVEN orbits with joint samples in the 125 selected hours | **46** |
+| Distinct MAVEN orbits with joint samples anywhere in the enclosing 166 hours | **46** |
 | Strongest ion and electron hourly medians, at **2025-08-24 05:00 UTC** | **157,000 and 616,500 (cm² s sr)⁻¹** |
 | Survey reference of hourly median ion/electron flux, ≥100-sample hours | **30.55 and 25.2125 (cm² s sr)⁻¹** |
 | Peak / survey reference | **~5,140× ions, ~24,450× electrons** |
@@ -53,12 +54,12 @@ The event **does not** establish new-onset solar physics, an exact shock-arrival
 
 The same *frozen* detection threshold, without per-date tuning, found:
 
-| Period, selected clock hours UTC | Selected hours | Joint SEP rows | High-altitude joint rows | Distinct orbits | Disposition |
-|---|---:|---:|---:|---:|---|
-| Aug 22 21:00 – Aug 29 18:00 | 125 | 56,032 | 38,385 | **46** | **Strongest episode; pre-event Mars-forecast temporal corroboration** |
-| Oct 30 07:00 – Nov 01 03:00 | 34 | 14,394 | 10,214 | **13** | Independent additional event candidate; source unassociated |
-| Nov 03 14:00 – Nov 04 11:00 | 15 | 6,459 | 4,741 | **7** | Independent additional event candidate; source unassociated |
-| Oct 29 23:00 – Oct 30 00:00 | 2 | 759 | 709 | **1** | **Reject as independent multi-orbit confirmation; track as possible precursor/single-orbit** |
+| Period, selected clock hours UTC | Selected hours | Joint SEP rows | High-altitude joint rows | Orbits in selected hours | Orbits in full window (hours) | Disposition |
+|---|---:|---:|---:|---:|---:|---|
+| Aug 22 21:00 – Aug 29 18:00 | 125 | 56,032 | 38,385 | **46** | 46 (166) | **Strongest episode; pre-event Mars-forecast temporal corroboration** |
+| Oct 30 07:00 – Nov 01 03:00 | 34 | 14,394 | 10,214 | **13** | 13 (45) | Independent additional event candidate; source unassociated |
+| Nov 03 14:00 – Nov 04 11:00 | 15 | 6,459 | 4,741 | **7** | 7 (22) | Independent additional event candidate; source unassociated |
+| Oct 29 23:00 – Oct 30 00:00 | 2 | 759 | 709 | **1** | 1 (2) | **Reject as independent multi-orbit confirmation; track as possible precursor/single-orbit** |
 
 All values are reproducibly copied from [the derived machine-readable evidence](summary.json) and [full day-wise counts](daily.csv). The *third-party mirror* includes no rows for **2025-11-05 through 2025-12-02**; the full 127-day calendar period has only 99 observed days, not an unbroken dataset. Do **not** infer that no radiation events occurred during its 28 absent days.
 
@@ -72,7 +73,7 @@ Independent environmental context for the long August episode, from *different M
 1. Screen **every available** SEP row in the 2025-08-01 to 2025-12-05 time series. Retain valid, finite, nonnegative flux, removing spurious >10¹⁰ fills. Require **≥3 valid directional views out of four** for each species.
 2. Use the companion `sep_ion_fov*_quality` and `sep_electron_fov*_quality` fields as **1σ Poisson statistical flux uncertainties**, **not a binary 0-good data-quality flag** (the third-party dataset card erroneously describes these as quality flags; refer to primary MAVEN SEP/KP documentation). Require flux/uncertainty **≥8** in **≥3/4 views of each species**, with per-sample median ion ≥400 and electron ≥1,000.
 3. Require ≥100 observed samples per UTC hour, ≥75 qualifying joint samples, ≥60% of that hour jointly qualifying, and ≥20 qualifying samples at spacecraft altitude ≥3,000 km.
-4. Link selected hours if separated by ≤5h, require ≥2 selected hours. Count distinct MAVEN SPICE orbits; **report but demote single-orbit cases**. Apply the same selection to the entire survey; no event-specific threshold changes.
+4. Link selected hours if separated by ≤5h, require ≥2 selected hours. Count distinct MAVEN SPICE orbits with joint detections in the selected hours. Also report the count over all clock hours between the endpoints. Retain single-orbit cases as lower-confidence candidates. Apply the same selection to the entire survey; no event-specific threshold changes.
 5. Preserve original sensor UTC timestamps; use nearest SPICE geometry within 9 s, not interpolated artificial measurements. Coarsen independent MAG/SWIA context into hourly medians, not falsely synchronous 8-second claims.
 
 This is a high-significance screening rule (especially for repeated, large amplitudes), not a calibrated global false-positive probability. There are multiple selection criteria and search across all dates. Further independent data are needed for causal claims.
@@ -102,7 +103,7 @@ The independent download and comparison are reproducible via `examples/maven_pds
 | `mag.parquet` | `45b2e91ead4d5aba3aa68a2a2170f4f224681f3c47117c011aa65b8f20b8ce8c` |
 | `swia.parquet` | `186c741f2f04938ce46ebcfe3d2886f77f24b9b794b9872fc3d859268ac05a87` |
 
-Sensor-data source attribution: **NASA/University of Colorado LASP MAVEN mission**; mirror curator: `juliensimon`. File receipts and byte counts are in `summary.json`. There is a newer **2026-10-30** dedicated *PDS calibrated SEP L2 archive release*, but **those Level-2 files were not used to produce these numbers**; they are a pending, genuinely independent product-level follow-up. The mirror publication/refresh date does not mean the actual spacecraft measurement date was 2026.
+Sensor-data source attribution: **NASA/University of Colorado LASP MAVEN mission**; mirror curator: `juliensimon`. The replay verifies all four file digests before reading any Parquet table. File receipts and byte counts are in `summary.json`. There is a newer **2026-10-30** dedicated *PDS calibrated SEP L2 archive release*, but **those Level-2 files were not used to produce these numbers**; they are a pending, genuinely independent product-level follow-up. The mirror publication/refresh date does not mean the actual spacecraft measurement date was 2026.
 
 To repeat independently:
 

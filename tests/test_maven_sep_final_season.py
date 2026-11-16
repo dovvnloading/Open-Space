@@ -1,11 +1,15 @@
 """Offline invariants for the independent 2025 MAVEN particle-event scan."""
+import io
+import tempfile
 import unittest
+from pathlib import Path
+from unittest.mock import patch
 
 try:
     import numpy as np
     import pandas as pd
     from examples.maven_sep_final_season import (
-        ELECTRON, ION, find_events, sep_metrics, summarize_hours,
+        ELECTRON, INPUT_SHA256, ION, event_orbit_counts, find_events, run, sep_metrics, summarize_hours,
     )
     HAS_ANALYSIS_EXTRA = True
 except ImportError:
@@ -63,6 +67,32 @@ class MavenSepFinalSeasonTests(unittest.TestCase):
         sig["highalt"] = False
         sig["joint_highalt"] = False
         self.assertEqual(int(summarize_hours(sig)["event_hour"].sum()), 0)
+
+    def test_orbit_seen_only_in_gap_is_excluded_from_selected_hours(self):
+        hours = pd.date_range("2025-08-23", periods=3, freq="h", tz="UTC")
+        joint_orbits = pd.DataFrame({"hour": hours, "spice_orbit_number": [100, 101, 102]})
+        selected = pd.Series([hours[0], hours[2]])
+        counts = event_orbit_counts(joint_orbits, selected, hours[0], hours[2])
+        self.assertEqual(counts, {
+            "distinct_joint_orbits": 2,
+            "full_window_distinct_joint_orbits": 3,
+            "full_window_hours": 3,
+        })
+
+    def test_substituted_input_stops_replay_before_reading_or_writing_results(self):
+        for instrument in tuple(INPUT_SHA256):
+            with self.subTest(instrument=instrument), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                output, daily = root / "summary.json", root / "daily.csv"
+                # Exercise the real downloader and digest check for each frozen instrument.
+                with patch.dict(INPUT_SHA256, {instrument: INPUT_SHA256[instrument]}, clear=True), \
+                     patch("urllib.request.urlopen", return_value=io.BytesIO(b"changed input")), \
+                     patch("pandas.read_parquet") as read_parquet:
+                    with self.assertRaisesRegex(ValueError, f"{instrument} SHA-256 mismatch"):
+                        run(output, daily)
+                read_parquet.assert_not_called()
+                self.assertFalse(output.exists())
+                self.assertFalse(daily.exists())
 
     def test_isolated_hour_rejected(self):
         df = self.make_data(200)
