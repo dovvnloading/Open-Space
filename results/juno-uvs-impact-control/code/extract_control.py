@@ -23,6 +23,7 @@ def lower(t):
  for _ in range(40):
   if hi-lo<2:return hi
   mid=max(lo+1,min(hi-1,int(lo+(hi-lo)*(t-tl)/(th-tl))))
+  if hi-lo<2000: mid=(lo+hi)//2
   tm=float(rows(mid,mid+1)['et'][0]);print('probe',mid,tm-target,flush=True)
   if tm<t:lo,tl=mid,tm
   else:hi,th=mid,tm
