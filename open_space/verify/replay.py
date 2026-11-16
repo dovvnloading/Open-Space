@@ -311,6 +311,43 @@ def missing_modules(python: str, names: set[str]) -> set[str]:
     return {line.strip() for line in done.stdout.splitlines() if line.strip()}
 
 
+LIBRARY_LOOKUP = re.compile(r"""find_library\(\s*(['"])([\w.+\-]+)\1\s*\)""")
+
+
+def system_libraries(tree: RepoTree, script: str) -> set[str]:
+    """Shared libraries a script, or a module beside it that it imports, asks the system for through ctypes."""
+    folder = posixpath.dirname(script)
+    sources = [script]
+    try:
+        for node in ast.walk(ast.parse(tree.text(script))):
+            modules = [alias.name for alias in node.names] if isinstance(node, ast.Import) else \
+                [node.module] if isinstance(node, ast.ImportFrom) and node.module and node.level == 0 else []
+            sources += [beside for module in modules
+                        if (beside := posixpath.join(folder, module.split(".")[0] + ".py")) in tree]
+    except (SyntaxError, ValueError, RecursionError):
+        pass
+    names: set[str] = set()
+    for source in sources:
+        try:
+            names.update(match.group(2) for match in LIBRARY_LOOKUP.finditer(tree.text(source)))
+        except (UnicodeDecodeError, ValueError):
+            continue
+    return names
+
+
+def missing_libraries(python: str, names: set[str]) -> set[str]:
+    """Which of ``names`` the target interpreter cannot locate as a shared library."""
+    if not names:
+        return set()
+    probe = ("import ctypes.util, sys\n"
+             "print('\\n'.join(n for n in sys.argv[1:] if ctypes.util.find_library(n) is None))")
+    try:
+        done = subprocess.run([python, "-c", probe, *sorted(names)], capture_output=True, text=True, timeout=120)
+    except (OSError, subprocess.TimeoutExpired):
+        return set()
+    return {line.strip() for line in done.stdout.splitlines() if line.strip()}
+
+
 # ---------------------------------------------------------------- comparing outputs
 
 
@@ -484,6 +521,20 @@ class Sandbox:
                                       + (f" and {len(looked) - 3} more" if len(looked) > 3 else "")
                                       + ", not deposited: " + outcome.detail,
                                       data=dict(outcome.data, looked_for=looked[:20]))
+        elif outcome.status == "drift":
+            # It finished, but without something it went looking for. What it wrote then says nothing
+            # about whether the committed outputs can be regenerated.
+            looked = self._looked_for()
+            if attempts:
+                outcome = Outcome(command, "needs-network", f"tried to reach the network ({attempts} "
+                                  f"{'attempt' if attempts == 1 else 'attempts'}) and carried on without it, so its "
+                                  "outputs cannot be compared with the committed ones",
+                                  data=dict(outcome.data, network_attempts=attempts))
+            elif looked:
+                outcome = Outcome(command, "needs-input", "looked for " + ", ".join(looked[:3])
+                                  + (f" and {len(looked) - 3} more" if len(looked) > 3 else "")
+                                  + ", not deposited, and carried on without it, so its outputs cannot be "
+                                  "compared with the committed ones", data=dict(outcome.data, looked_for=looked[:20]))
         outcome.seconds = round(seconds, 2)
         self._restore(changed)
         return outcome
@@ -665,6 +716,7 @@ def run(tree: RepoTree, only: set[str] | None = None, *, python: str | None = No
     findings: list[Finding] = []
     runnable: list[Command] = []
     needed: dict[str, set[str]] = {}
+    libraries: dict[str, set[str]] = {}
     for command in commands:
         if command.script is None:
             findings.append(_finding(command, "script-missing",
@@ -674,8 +726,10 @@ def run(tree: RepoTree, only: set[str] | None = None, *, python: str | None = No
             findings.append(_finding(command, "template", "contains a placeholder, so it was not run"))
             continue
         needed[command.key] = third_party_imports(tree, command.script)
+        libraries[command.key] = system_libraries(tree, command.script)
         runnable.append(command)
     absent = missing_modules(python, set().union(*needed.values()) if needed else set())
+    unlinked = missing_libraries(python, set().union(*libraries.values()) if libraries else set())
     queue: list[Command] = []
     for command in runnable:
         lacking = sorted(needed[command.key] & absent)
@@ -683,6 +737,11 @@ def run(tree: RepoTree, only: set[str] | None = None, *, python: str | None = No
             findings.append(_finding(command, "needs-dependency",
                                      "needs packages that are not installed here: " + ", ".join(lacking),
                                      {"modules": lacking}))
+        elif libraries[command.key] & unlinked:
+            lacking = sorted(libraries[command.key] & unlinked)
+            findings.append(_finding(command, "needs-dependency",
+                                     "needs system libraries that are not installed here: " + ", ".join(lacking),
+                                     {"libraries": lacking}))
         else:
             queue.append(command)
     if limit is not None:

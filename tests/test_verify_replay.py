@@ -169,7 +169,16 @@ class WhyACommandStoppedTest(unittest.TestCase):
     FILES = {
         "results/demo/README.md": "```sh\npython swallow.py\npython stamps.py\npython listing.py\n"
                                   "python thesis.py thesis.pdf out.json\npython prepare.py /tmp/wide\n"
-                                  "python scratch.py /tmp/wide\npython bug.py\n```\n",
+                                  "python scratch.py /tmp/wide\npython bug.py\npython carryon.py\n"
+                                  "python honest.py\npython native.py\npython wrapper.py\n```\n",
+        "results/demo/table.csv": "n\n3\n",
+        "results/demo/other.csv": "n\n3\n",
+        "results/demo/carryon.py": "from pathlib import Path\nrows = sorted(Path('cache').glob('*.json'))\n"
+                                   "Path('table.csv').write_text('n\\n%d\\n' % len(rows))\n",
+        "results/demo/honest.py": "from pathlib import Path\nPath('other.csv').write_text('n\\n4\\n')\n",
+        "results/demo/native.py": "import ctypes, ctypes.util\n"
+                                  "LIB = ctypes.CDLL(ctypes.util.find_library('no_such_library_xyz'))\n",
+        "results/demo/wrapper.py": "import native\n",
         "results/demo/inputs/sources.json": "{}\n",
         "results/demo/swallow.py": "import urllib.request\ntry:\n    urllib.request.urlopen('http://example.org/x', timeout=5)\n"
                                    "except Exception:\n    rows = []\nprint(rows[0])\n",
@@ -217,6 +226,22 @@ class WhyACommandStoppedTest(unittest.TestCase):
         status, message = self.outcome("scratch.py")
         self.assertEqual(status, "needs-input")
         self.assertIn("/tmp/wide", message)
+
+    def test_finishing_without_an_input_it_looked_for_is_not_a_difference(self):
+        status, message = self.outcome("carryon.py")
+        self.assertEqual(status, "needs-input")
+        self.assertIn("carried on without it", message)
+        self.assertIn("results/demo/cache", message)
+
+    def test_a_difference_with_every_input_present_stays_a_difference(self):
+        self.assertEqual(self.outcome("honest.py")[0], "drift")
+        self.assertEqual(self.by_script["honest.py"].severity, WARN)
+
+    def test_a_system_library_that_cannot_be_found_is_a_missing_dependency(self):
+        for script in ("native.py", "wrapper.py"):
+            status, message = self.outcome(script)
+            self.assertEqual(status, "needs-dependency")
+            self.assertIn("no_such_library_xyz", message)
 
     def test_a_crash_on_deposited_data_stays_a_failure(self):
         status, message = self.outcome("bug.py")

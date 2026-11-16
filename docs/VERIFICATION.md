@@ -138,9 +138,9 @@ Every `python …` command found in a result folder's Markdown is run in a scrat
 | ran | Exit code 0, but the command changed no committed file, so there was nothing to compare. |
 | drift | Outputs regenerated with different contents. The report names the file, how many of its numbers moved and by how much. |
 | failed | Non-zero exit for a reason other than the three below. |
-| needs the network | The command tried to download something. The sandbox counts every refused connection, so this also covers a script that swallows the refusal and stops later on the data it never received. |
-| needs a missing package | A package the script imports is not installed in the interpreter used. |
-| needs inputs that are not deposited | It asked for a file or an argument that is not in the repository. This includes a file named on the command line, and a file, folder or file pattern the script searched for inside the tree and did not find before it stopped. |
+| needs the network | The command tried to download something. The sandbox counts every refused connection, so this also covers a script that swallows the refusal and stops later on the data it never received, or carries on and writes outputs without it. |
+| needs a missing package | A package the script imports is not installed in the interpreter used, or a system library it asks for by name through `ctypes` (in the script or a module beside it) cannot be found. |
+| needs inputs that are not deposited | It asked for a file or an argument that is not in the repository. This includes a file named on the command line, and a file, folder or file pattern the script searched for inside the tree and did not find, whether it then stopped or carried on. A command that finishes without an input it looked for is not counted as a difference, because what it wrote says nothing about the committed outputs. |
 | names a script that does not exist | The README documents a script that is not there. |
 
 A stopped command is explained only from what the sandbox saw it do: the connections it attempted and the paths it looked for. Where a command sits in a document is not used, so a crash on deposited data stays a failure even when an earlier step of the same block needed the network.
