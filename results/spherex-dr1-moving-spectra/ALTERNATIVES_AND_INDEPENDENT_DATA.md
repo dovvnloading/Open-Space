@@ -27,7 +27,7 @@ New useful primary-source lead:
 
 Previously verified optical observations remain context only:
 - Jena Oct18 optical spectrum: https://www2.astro.uni-jena.de/Users/markus/C2025R2.html (C2,[OI],NH2; not aCO2 measurement).
-- TRAPPIST Nov27 narrowband production rates: https://orbi.uliege.be/bitstream/2268/338585/1/ATel%2317538.pdf . Not contemporaneous enough to combine directly with December CO2 candidate for an abundance ratio.
+- TRAPPIST-North observations on **2025-11-27 UT**, reported in [ATel 17538](https://orbi.uliege.be/bitstream/2268/338585/1/ATel%2317538.pdf) on December 10, provide independent **optical activity context**, not infrared CO2 confirmation. The preliminary OH, CN, C2 and C3 production estimates and phase-corrected dust proxies use profiles at 10,000 km and a Haser model with parent and daughter speeds of 1 km/s. These model assumptions and spatial sampling differ from our SPHEREx apertures, and the observations precede our December 22/25 spectra by 25/28 days. Do not combine them directly into a CO2/H2O abundance ratio or treat them as contemporaneous validation of the infrared feature.
 
 Next productive independent check is to retrieve actual LOOK images near the SPHEREx dates for coma morphology/dust evolution, while separately auditing infrared archive holdings with target aliases and ephemeris-aware footprints. Optical data alone cannot confirm a4.26µm molecular identification.
 
