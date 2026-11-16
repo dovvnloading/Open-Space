@@ -2,7 +2,8 @@
 
 Usage: python fetch.py POSITIONS.csv OUTDIR [--radius ARCSEC] [--batch N] [--workers N]
 
-POSITIONS.csv needs columns `id,ra,dec` (degrees, J2000). Positions are sent to
+POSITIONS.csv needs columns `id,ra,dec` (degrees, J2000) and may be gzip-compressed
+(a name ending in `.gz`). Positions are sent to
 the IRSA Gator multi-object service in batches. Each batch is stored as a
 gzip-compressed IPAC table whose `cntr_01` column is the 1-based row number
 within the batch; `batch_NNNNN.ids` lists the corresponding identifiers.
@@ -23,6 +24,13 @@ import requests
 URL = "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query"
 COLUMNS = ("mjd,w1mpro,w1sigmpro,w2mpro,w2sigmpro,w1rchi2,w2rchi2,"
            "qual_frame,qi_fact,saa_sep,moon_masked,cc_flags,sso_flg")
+
+
+def read_rows(path):
+    """Rows of a CSV table, which may be gzip-compressed (the deposited positions file is)."""
+    opener = gzip.open if str(path).endswith(".gz") else open
+    with opener(path, "rt", encoding="utf-8", newline="") as handle:
+        return list(csv.DictReader(handle))
 
 
 def run_batch(outdir, index, rows, radius):
@@ -63,7 +71,7 @@ def main():
     args = parser.parse_args()
     outdir = pathlib.Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
-    rows = list(csv.DictReader(open(args.positions)))
+    rows = read_rows(args.positions)
     batches = [rows[i:i + args.batch] for i in range(0, len(rows), args.batch)]
     print(len(rows), "positions in", len(batches), "batches", flush=True)
     start = time.time()

@@ -1,0 +1,59 @@
+{
+  "schema": "open-space/claims/1",
+  "let": {
+    "components": "table('triple-components.csv')",
+    "wrong": "components[components['published_id'] != components['matched_id']]",
+    "primaries": "components[components['component'] == 'P']",
+    "secondaries": "components[components['component'] == 'S']"
+  },
+  "claims": [
+    {
+      "id": "pair-rows",
+      "printed": "26 pair rows",
+      "statement": "Pair rows of the published table that belong to a triple system.",
+      "compute": "nunique(components['pair_row'])"
+    },
+    {
+      "id": "wrong-identifiers",
+      "printed": "affect 11 of",
+      "statement": "Component identifiers whose published Gaia ID differs from the star at the published position. Identifiers are compared as exact 19-digit integers.",
+      "compute": "len(wrong)"
+    },
+    {
+      "id": "each-wrong-identifier-is-in-a-different-row",
+      "expect": 11,
+      "statement": "The eleven wrong identifiers fall in eleven different pair rows.",
+      "compute": "nunique(wrong['pair_row'])"
+    },
+    {
+      "id": "affected-systems",
+      "printed": "10 of the",
+      "statement": "Triple systems with at least one wrong identifier.",
+      "compute": "nunique(wrong['system'])"
+    },
+    {
+      "id": "distinct-systems",
+      "printed": "24 distinct triple systems",
+      "statement": "Distinct triple systems. The table labels the one three-white-dwarf system with two anchor IDs across its three pair rows, so it is counted once.",
+      "compute": "nunique(components[~startswith(components['system'], 'WDWDWD')]['system']) + 1"
+    },
+    {
+      "id": "same-id-given-to-both-stars",
+      "expect": 10,
+      "statement": "Ten rows assign the same published ID to both stars of the pair.",
+      "compute": "count(primaries['published_id'] == secondaries['published_id']) if all(primaries['pair_row'] == secondaries['pair_row']) else -1"
+    },
+    {
+      "id": "every-position-resolves-to-one-star",
+      "expect": true,
+      "statement": "Every published position has exactly one Gaia source in its search cone, so each identifier is resolved without ambiguity.",
+      "compute": "min(components['cone_count']) == 1 and max(components['cone_count']) == 1"
+    },
+    {
+      "id": "stars-in-the-table",
+      "expect": 49,
+      "statement": "Distinct stars among the 52 component records.",
+      "compute": "nunique(components['matched_id'])"
+    }
+  ]
+}

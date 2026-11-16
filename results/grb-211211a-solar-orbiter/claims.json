@@ -1,0 +1,105 @@
+{
+  "schema": "open-space/claims/1",
+  "let": {
+    "profiles": "table('profiles.csv')",
+    "burst": "profiles[profiles['gbm_id'] == 211211549]",
+    "control": "profiles[profiles['gbm_id'] == 230307656]",
+    "rejected": "profiles[profiles['gbm_id'] == 250920121]",
+    "measured": "json('measurements.json')",
+    "event": "json('inputs.json', '/events/0')",
+    "goes": "table('goes16.csv')['flux_1_8_angstrom_W_m2']",
+    "c_km": "c / 1000"
+  },
+  "claims": [
+    {
+      "id": "hard-band-correlation",
+      "printed": "0.96857",
+      "statement": "Pearson correlation of STIX 50-84 keV counts with the Fermi template at the predicted delay, 20 four-second samples.",
+      "compute": "pearson(burst['stix_50_84'], burst['gbm_channels_2_4_rate'])"
+    },
+    {
+      "id": "hard-band-samples",
+      "printed": "20 four-second samples",
+      "statement": "Number of aligned samples behind the correlation.",
+      "compute": "len(burst)"
+    },
+    {
+      "id": "correlation-4-10-kev",
+      "printed": "0.659",
+      "statement": "Fixed-delay correlation in the 4-10 keV channel.",
+      "compute": "pearson(burst['stix_4_10'], burst['gbm_channels_2_4_rate'])"
+    },
+    {
+      "id": "correlation-10-15-kev",
+      "printed": "0.280",
+      "statement": "Fixed-delay correlation in the 10-15 keV channel.",
+      "compute": "pearson(burst['stix_10_15'], burst['gbm_channels_2_4_rate'])"
+    },
+    {
+      "id": "correlation-15-25-kev",
+      "printed": "0.913",
+      "statement": "Fixed-delay correlation in the 15-25 keV channel.",
+      "compute": "pearson(burst['stix_15_25'], burst['gbm_channels_2_4_rate'])"
+    },
+    {
+      "id": "correlation-25-50-kev",
+      "printed": "0.744",
+      "statement": "Fixed-delay correlation in the 25-50 keV channel.",
+      "compute": "pearson(burst['stix_25_50'], burst['gbm_channels_2_4_rate'])"
+    },
+    {
+      "id": "positive-control-correlation",
+      "printed": "0.94192",
+      "statement": "The same fixed-delay correlation for the published STIX detection of GRB 230307A.",
+      "compute": "pearson(control['stix_50_84'], control['gbm_channels_2_4_rate'])"
+    },
+    {
+      "id": "rejected-candidate-correlation",
+      "printed": "−0.23044",
+      "statement": "The same correlation for the rejected single-bin excess, GBM trigger bn250920121.",
+      "compute": "pearson(rejected['stix_50_84'], rejected['gbm_channels_2_4_rate'])"
+    },
+    {
+      "id": "hard-band-peak",
+      "printed": "927 counts",
+      "statement": "Largest 50-84 keV count in the aligned profile.",
+      "compute": "max(burst['stix_50_84'])"
+    },
+    {
+      "id": "control-tail-fraction",
+      "printed": "0.00093",
+      "statement": "Plus-one empirical tail fraction: no control block among 1,075 matched the candidate.",
+      "compute": "(measured['211211549']['controls_ge_r'] + 1) / (measured['211211549']['same_day_controls'] + 1)"
+    },
+    {
+      "id": "goes-sample-count",
+      "printed": "26 one-minute",
+      "statement": "Number of GOES-16 one-minute samples spanning the event.",
+      "compute": "len(goes)"
+    },
+    {
+      "id": "goes-irradiance-minimum",
+      "printed": "3.85",
+      "statement": "Lowest GOES-16 1-8 Angstrom irradiance in the window, in units of 1e-8 W/m^2.",
+      "compute": "min(goes) * 1e8"
+    },
+    {
+      "id": "goes-irradiance-maximum",
+      "printed": "4.49 × 10⁻⁸",
+      "statement": "Highest GOES-16 1-8 Angstrom irradiance in the window.",
+      "compute": "max(goes)"
+    },
+    {
+      "id": "delay-agrees-with-geometry",
+      "expect": true,
+      "statement": "The 30.6996 s Fermi-to-Solar-Orbiter delay must equal the delay from Earth's centre, recomputed here from the committed Horizons vector and the burst position, to within the light-time across Fermi's orbit (7,000 km).",
+      "compute": "abs(-dot(event['solar_orbiter_km'], unit(event['ra'], event['dec'])) / c_km - measured['211211549']['delay_s']) <= 7000 / c_km"
+    },
+    {
+      "id": "baseline-agrees-with-geometry",
+      "expect": true,
+      "statement": "The 43.815 light-second spacecraft separation must equal Solar Orbiter's distance from Earth's centre to within the light-time across Fermi's orbit.",
+      "compute": "abs(norm(event['solar_orbiter_km']) / c_km - measured['211211549']['baseline_light_s']) <= 7000 / c_km"
+    }
+  ]
+}

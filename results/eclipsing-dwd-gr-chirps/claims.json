@@ -1,0 +1,135 @@
+{
+  "schema": "open-space/claims/1",
+  "let": {
+    "inputs": "table('parameters.csv')",
+    "j0720": "inputs[inputs['target'] == 'J0720+6439']",
+    "j1356": "inputs[inputs['target'] == 'J1356+5705']",
+    "j0238": "inputs[inputs['target'] == 'J0238+0933']",
+    "j1758": "inputs[inputs['target'] == 'J1758+7642']",
+    "decade": "10 * jyear",
+    "p0720": "first(j0720['period_d']) * day",
+    "pdot0720": "-(192 * pi / 5) * (tau * GM_sun / (c**3 * p0720))**(5/3) * first(j0720['m1_msun']) * first(j0720['m2_msun']) / (first(j0720['m1_msun']) + first(j0720['m2_msun']))**(1/3)",
+    "advance0720": "-0.5 * pdot0720 * decade**2 / p0720",
+    "p1356": "first(j1356['period_d']) * day",
+    "pdot1356": "-(192 * pi / 5) * (tau * GM_sun / (c**3 * p1356))**(5/3) * first(j1356['m1_msun']) * first(j1356['m2_msun']) / (first(j1356['m1_msun']) + first(j1356['m2_msun']))**(1/3)",
+    "advance1356": "-0.5 * pdot1356 * decade**2 / p1356",
+    "contrast_error": "sqrt(1.5) * 0.5",
+    "n0238": "tau / (first(j0238['period_d']) * day)",
+    "apsidal0238": "degrees(3 * n0238 * (n0238 * GM_sun * (first(j0238['m1_msun']) + first(j0238['m2_msun'])) / c**3)**(2/3)) * jyear",
+    "n1758": "tau / (first(j1758['period_d']) * day)",
+    "apsidal1758": "degrees(3 * n1758 * (n1758 * GM_sun * (first(j1758['m1_msun']) + first(j1758['m2_msun'])) / c**3)**(2/3)) * jyear",
+    "offset0238": "first(j0238['secondary_offset_s']) - first(j0238['romer_s'])",
+    "offset1758": "first(j1758['secondary_offset_s']) - first(j1758['romer_s'])"
+  },
+  "claims": [
+    {
+      "id": "j0720-ten-year-advance",
+      "printed": "12.99-second",
+      "statement": "Quadrupole orbital decay of ZTF J0720+6439 from its tabulated period and masses (Peters 1964), as the timing advance after ten Julian years.",
+      "compute": "advance0720"
+    },
+    {
+      "id": "missing-normalisation-factor",
+      "printed": "21.3944",
+      "statement": "Ratio between the correct (2 pi)^(8/3) and the printed 2 pi factor.",
+      "compute": "(2 * pi)**(5/3)"
+    },
+    {
+      "id": "j0720-midpoint-quarter",
+      "expect": 3.25,
+      "tolerance": {"abs": 0.005},
+      "statement": "Three equally spaced timings retain one quarter of the ten-year advance at the midpoint.",
+      "compute": "advance0720 / 4"
+    },
+    {
+      "id": "contrast-uncertainty",
+      "printed": "0.612",
+      "statement": "Uncertainty of the midpoint-minus-chord contrast for three timings of 0.5 s each.",
+      "compute": "contrast_error"
+    },
+    {
+      "id": "j0720-curvature-significance",
+      "printed": "5.30-sigma",
+      "statement": "Expected curvature significance for J0720 under those timing assumptions.",
+      "compute": "advance0720 / 4 / contrast_error"
+    },
+    {
+      "id": "j1356-curvature-significance",
+      "printed": "1.06 sigma",
+      "statement": "The same for J1356.",
+      "compute": "advance1356 / 4 / contrast_error"
+    },
+    {
+      "id": "j0720-lifetime-from-printed-rate",
+      "printed": "957 Myr",
+      "statement": "Merger lifetime 3P / (8 |dP/dt|) implied by the rate printed in the preprint.",
+      "compute": "3 * p0720 / (8 * first(j0720['printed_abs_pdot_e15']) * 1e-15) / jyear / 1e6"
+    },
+    {
+      "id": "j0720-lifetime-from-masses",
+      "printed": "45.5 Myr",
+      "statement": "Merger lifetime from the recomputed rate.",
+      "compute": "3 * p0720 / (8 * abs(pdot0720)) / jyear / 1e6"
+    },
+    {
+      "id": "j0651-control-rate",
+      "printed": "-8.19\\times10^{-12}",
+      "statement": "The same formula applied to SDSS J0651+2844 (P = 765.206543 s, 0.26 and 0.50 solar masses), whose decay has been measured.",
+      "compute": "-(192 * pi / 5) * (tau * GM_sun / (c**3 * 765.206543))**(5/3) * 0.26 * 0.50 / (0.26 + 0.50)**(1/3)"
+    },
+    {
+      "id": "j0651-within-measurement",
+      "expect": true,
+      "statement": "The recomputed J0651 rate lies within one standard error of the measured (-9.8 +/- 2.8)e-12.",
+      "compute": "abs(-(192 * pi / 5) * (tau * GM_sun / (c**3 * 765.206543))**(5/3) * 0.26 * 0.50 / (0.26 + 0.50)**(1/3) + 9.8e-12) <= 2.8e-12"
+    },
+    {
+      "id": "j0720-advance-from-velocities",
+      "printed": "17.69 s",
+      "statement": "Ten-year advance from the double-lined velocity amplitudes alone: |dP/dt| = (192 pi / 5) K1 K2 (K1 + K2)^3 / (c sin i)^5.",
+      "compute": "0.5 * (192 * pi / 5) * (first(j0720['k1_kms']) * 1000) * (first(j0720['k2_kms']) * 1000) * ((first(j0720['k1_kms']) + first(j0720['k2_kms'])) * 1000)**3 / (c * sin(radians(first(j0720['incl_deg']))))**5 * decade**2 / p0720"
+    },
+    {
+      "id": "j0238-apsidal-rate",
+      "printed": "4.1048°/year",
+      "statement": "First post-Newtonian apsidal advance of J0238+0933 at zero eccentricity.",
+      "compute": "apsidal0238"
+    },
+    {
+      "id": "j1758-apsidal-rate",
+      "printed": "3.6936°/year",
+      "statement": "First post-Newtonian apsidal advance of J1758+7642.",
+      "compute": "apsidal1758"
+    },
+    {
+      "id": "j0238-apsidal-period",
+      "printed": "**88 and",
+      "statement": "Apsidal period of J0238+0933 in years.",
+      "compute": "360 / apsidal0238"
+    },
+    {
+      "id": "j1758-apsidal-period",
+      "printed": "97 years**",
+      "statement": "Apsidal period of J1758+7642 in years.",
+      "compute": "360 / apsidal1758"
+    },
+    {
+      "id": "j0238-three-epoch-bound",
+      "printed": "**2.65 s**",
+      "statement": "Orientation-independent lower bound on the larger eclipse-offset change at ten or twenty years: 2 |D0| (1 - u) / (1 + 2u) with u = cos(rate x 10 yr).",
+      "compute": "2 * abs(offset0238) * (1 - cos(radians(apsidal0238 * 10))) / (1 + 2 * cos(radians(apsidal0238 * 10)))"
+    },
+    {
+      "id": "j1758-three-epoch-bound",
+      "printed": "**1.82 s**",
+      "statement": "The same bound for J1758+7642.",
+      "compute": "2 * abs(offset1758) * (1 - cos(radians(apsidal1758 * 10))) / (1 + 2 * cos(radians(apsidal1758 * 10)))"
+    },
+    {
+      "id": "rank-coincidence-count",
+      "printed": "816 assignments",
+      "statement": "Ways to choose the three faintest of 18 r-band detections.",
+      "compute": "comb(18, 3)"
+    }
+  ]
+}
