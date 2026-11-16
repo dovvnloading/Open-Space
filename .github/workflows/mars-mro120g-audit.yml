@@ -5,6 +5,7 @@ on:
     paths:
       - "results/mars-gravity-mro120g-2026/analyze.py"
       - "results/mars-gravity-mro120g-2026/test_analyze.py"
+      - "results/mars-gravity-mro120g-2026/gmm3_crosscheck.py"
       - ".github/workflows/mars-mro120g-audit.yml"
   workflow_dispatch:
 
@@ -27,17 +28,24 @@ jobs:
           python results/mars-gravity-mro120g-2026/analyze.py \
             --cache "$RUNNER_TEMP/pds-mars-gravity" \
             --output results/mars-gravity-mro120g-2026/source-model-comparison.json
+      - name: External-institution comparison against original NASA GSFC GMM-3
+        run: |
+          python results/mars-gravity-mro120g-2026/gmm3_crosscheck.py \
+            --cache "$RUNNER_TEMP/pds-mars-gravity" \
+            --output results/mars-gravity-mro120g-2026/gmm3-control.json
       - name: Upload reviewable model comparison and receipt
         uses: actions/upload-artifact@v4
         with:
           name: mars-mro120g-archive-audit
-          path: results/mars-gravity-mro120g-2026/source-model-comparison.json
+          path: |
+            results/mars-gravity-mro120g-2026/source-model-comparison.json
+            results/mars-gravity-mro120g-2026/gmm3-control.json
           if-no-files-found: error
       - name: Push fully computed source receipt to research branch
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-          git add results/mars-gravity-mro120g-2026/source-model-comparison.json
+          git add results/mars-gravity-mro120g-2026/source-model-comparison.json results/mars-gravity-mro120g-2026/gmm3-control.json
           if ! git diff --cached --quiet; then
             git commit -m "data: reproduce NASA PDS MRO120G vs MRO120F full-field audit"
             git push origin HEAD:research/mars-2026-gravity-model-audit
