@@ -1,5 +1,5 @@
 """Bounded HTTP range acquisition of a published control; not a blind search."""
-import hashlib,json,pathlib,subprocess,tempfile
+import argparse,hashlib,json,pathlib,subprocess
 import numpy as np
 from astropy.time import Time
 URL='https://pds-atmospheres.nmsu.edu/PDS/data/jnouvs_3001/DATA/ORBIT-26/UVS_S01_639769969_2020101_P26OBS_V01.FIT'
@@ -28,8 +28,12 @@ def lower(t):
   if tm<t:lo,tl=mid,tm
   else:hi,th=mid,tm
  raise RuntimeError('search failed')
-a=lower(target-2);b=lower(target+2);assert (b-a)*WIDTH<20_000_000
+parser=argparse.ArgumentParser();parser.add_argument('--rediscover-bounds',action='store_true');args=parser.parse_args()
+# Frozen bounds recovered from sorted photon timestamps; default replay is one request.
+a,b=(lower(target-2),lower(target+2)) if args.rediscover_bounds else (12332139,12444381)
+assert (b-a)*WIDTH<20_000_000
 x=rows(a,b);assert np.all(np.diff(x['et'])>=0)
+assert np.all((x['et']>=target-2)&(x['et']<target+2))
 np.savez_compressed(ROOT/'control-photons.npz',photons=x)
 json.dump({'url':URL,'target_et':target,'first_row':a,'last_row_exclusive':b,'records':len(x),'receipts':receipts},open(ROOT/'acquisition.json','w'),indent=2)
 print('DONE',a,b,len(x),flush=True)
