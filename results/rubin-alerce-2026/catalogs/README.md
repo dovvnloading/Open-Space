@@ -1,0 +1,13 @@
+# Independent catalog and telescope checks
+
+Catalog status is recorded at the positions of three Rubin alerts on 2026 November 16. Each source has a Gaia DR3 counterpart with a positional match within 0.5 arcsec in the original broker query. The 2016.0 Gaia positions, proper motions and formal parallax uncertainties are in `gaia.csv`. The 3-arcsec SIMBAD, VSX, SkyMapper, ZTF and PS1 searches tolerate the listed proper motions across these surveys' epochs. The NSC selection used a 4-arcsec radius and a subsequent retrieval by NSC object ID. The ZTF query for 170028535480582190 timed out and supplies no evidence for absence of a counterpart.
+
+| Rubin object ID | Checks |
+|---|---|
+| 313761042359910519 | No SIMBAD/VSX source in the searched cone. No published Gaia DR3 epoch series at its Gaia ID. NOIRLab NSC DR2 contains 40 optical measurements in four bands. GALEX has three source associations within 4.8 arcsec, with NUV exposures of 96–112 s. Each is shorter than the tentative Rubin modulation. |
+| 170028535480582190 | SIMBAD identifies the spectroscopically catalogued white dwarf GALEX J122623.5+070109. Five papers are listed by SIMBAD. There are 65 PS1 detections in the cone, eight GALEX visits and NSC photometry. |
+| 313893022856118297 | The Rubin object itself was already identified as an SX Phe variable in the Euclid Deep Field South in 2026RNAAS..10..110T. Its independent SkyMapper record includes 15 detections. |
+
+The GALEX negative placeholder magnitude −999 denotes missing photometry. Its magnitude pairs and visit lengths come from the GR6/7 visit catalog, without custom photon extraction. The columns within `nsc-epochs.csv`, `skymapper.csv` and `ps1.csv` use each survey's native times, fluxes or magnitudes. A PS1 detection in a cone can belong to a neighboring catalog source. Group by object ID and inspect positions and flags before any time-series fit. Detection lists and Gaia parallax significance alone establish neither compact binarity nor pulsation.
+
+`queries.json` gives the exact public requests, original response SHA-256 values, and status. For the NOIRLab SQL requests, supply the archive's public anonymous HTTP header `X-DL-AuthToken: anonymous.0.0.anon_access`. A service may refresh its catalog or row order. Zero rows refer to the recorded catalog/service and cone only. The CSVs retain the alert IDs as strings and use original survey fields. The March 2026 [Green et al. mass-transferring ultracompact binary compilation](https://zenodo.org/records/18842123) contained no object within one degree of these three positions. The compilation omits detached binaries and is incomplete at its faint end.
