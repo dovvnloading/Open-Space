@@ -91,7 +91,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Rivers and wetlands on Earth
 
-- **Two floods left the Niger unusually high downstream at the same upstream stage (2024–26).** On repeat SWOT visits, Diré was 4.64 and 3.55 m higher in January than in the preceding July while the level at Mopti was nearly unchanged. Independent gauges and another satellite support the measured seasonal contrasts, not a new permanent hydraulic regime. *Measured* · [Details](results/mission05-swot-rivers/inner-niger/README.md)
+- **Mali’s Inner Niger Delta shows a delayed seasonal flood wave (2024–26).** On two same-track SWOT RiverSP D July–January comparisons, Diré stood 4.64 m and 3.55 m higher while Mopti changed by no more than 0.18 m. Independent gauges and a second altimeter corroborate the stage contrasts; a persistent change in discharge was not established. *Measured* · [Details](results/mission05-swot-rivers/inner-niger/README.md)
 
 ### The Moon and Mars
 
