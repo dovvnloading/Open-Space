@@ -1,0 +1,79 @@
+name: Verify claims
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  verify:
+    name: Catalog, checksums, printed numbers and declared claims
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify the committed tree
+        run: python -m open_space.verify --report verification.md --json verification-ledger.json
+      - name: Publish the report
+        if: always()
+        run: |
+          if [ -f verification.md ]; then cat verification.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification
+          path: |
+            verification.md
+            verification-ledger.json
+          if-no-files-found: warn
+
+  replay:
+    name: Replay documented commands of the results this change touches
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Choose the result folders to replay
+        id: scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            folders=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD" -- results \
+              | awk -F/ 'NF >= 3 {print $2}' | sort -u)
+            flags=""
+            for folder in $folders; do
+              if [ -d "results/$folder" ]; then flags="$flags --result $folder"; fi
+            done
+            if [ -z "$flags" ]; then echo "run=false" >> "$GITHUB_OUTPUT"; else echo "run=true" >> "$GITHUB_OUTPUT"; fi
+            echo "flags=$flags" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "flags=" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Install the packages most result scripts use
+        if: steps.scope.outputs.run == 'true'
+        run: python -m pip install numpy scipy astropy pandas matplotlib
+      - name: Replay offline and compare with the committed outputs
+        if: steps.scope.outputs.run == 'true'
+        run: >
+          python -m open_space.verify --checks replay ${{ steps.scope.outputs.flags }}
+          --replay-timeout 120 --replay-jobs 4 --report replay.md --json replay-ledger.json
+      - name: Publish the replay report
+        if: always() && steps.scope.outputs.run == 'true'
+        run: |
+          if [ -f replay.md ]; then cat replay.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.scope.outputs.run == 'true'
+        with:
+          name: replay
+          path: |
+            replay.md
+            replay-ledger.json
+          if-no-files-found: warn
