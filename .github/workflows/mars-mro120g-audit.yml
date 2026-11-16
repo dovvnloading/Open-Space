@@ -1,0 +1,51 @@
+name: "Mars MRO120G independent PDS model audit"
+on:
+  pull_request:
+    paths:
+      - "results/mars-gravity-mro120g-2026/**"
+      - ".github/workflows/mars-mro120g-audit.yml"
+  push:
+    branches: ["main", "research/mars-2026-gravity-model-audit"]
+    paths:
+      - "results/mars-gravity-mro120g-2026/**"
+      - ".github/workflows/mars-mro120g-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  archive-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests for SHADR parsing and numerical frame controls
+        run: python -m unittest discover -s results/mars-gravity-mro120g-2026 -p test_analyze.py -v
+      - name: Reacquire NASA PDS MRO120F and MRO120G; verify source hashes
+        run: |
+          python results/mars-gravity-mro120g-2026/analyze.py \
+            --cache "$RUNNER_TEMP/pds-mars-gravity" \
+            --output "$RUNNER_TEMP/source-model-comparison.json"
+      - name: Reacquire NASA GSFC GMM-3; verify independent-center receipt
+        run: |
+          python results/mars-gravity-mro120g-2026/gmm3_crosscheck.py \
+            --cache "$RUNNER_TEMP/pds-mars-gravity" \
+            --output "$RUNNER_TEMP/gmm3-control.json"
+      - name: Require replay to match both committed scientific results exactly
+        run: |
+          diff -u results/mars-gravity-mro120g-2026/source-model-comparison.json \
+            "$RUNNER_TEMP/source-model-comparison.json"
+          diff -u results/mars-gravity-mro120g-2026/gmm3-control.json \
+            "$RUNNER_TEMP/gmm3-control.json"
+      - name: Preserve independently recalculated evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: mars-mro120g-source-verified-replay
+          path: |
+            ${{ runner.temp }}/source-model-comparison.json
+            ${{ runner.temp }}/gmm3-control.json
+          if-no-files-found: error
