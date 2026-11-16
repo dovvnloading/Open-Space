@@ -36,7 +36,7 @@ class PDSPrimaryFormatTests(unittest.TestCase):
             self.assertEqual(len(df), 2)
             self.assertEqual(schema["record_length"], rec_length)
             self.assertEqual(df.iloc[0]["sep_ion_fov1f"], 1000)
-            self.assertEqual(df.iloc[0]["sep_ion_fov1f_quality"], 1001)
+            self.assertEqual(df.iloc[0]["sep_ion_fov1f_quality"], 1008)
             self.assertEqual(df.iloc[1]["sep_electron_fov2r_quality"], 2015)
 
     def test_primary_archive_is_specific_pds4_release_not_mirror(self):
