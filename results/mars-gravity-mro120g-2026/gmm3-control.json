@@ -1,0 +1,74 @@
+{
+  "interpretation_warning": [
+    "GSFC GMM3 (2016) is independently inverted but uses some same MRO/MGS/Odyssey tracking as JPL models.",
+    "GMM3's label explicitly says its reference frame is NOT IAU; its fitted yaw has no direct absolute geographic meaning.",
+    "Pairwise best-fit yaw is not an exactly transitive physical rotation when model harmonics change.",
+    "Differences can reflect model data epochs, different regularization, tides, reference/pole, or data weighting.",
+    "Do not report these differences as secular variation in Mars mass, mantle or rotation."
+  ],
+  "pairs": {
+    "GMM3_to_MRO120F": {
+      "effective_yaw_arcsec": -6.371444985380161,
+      "fit_training_degrees": [
+        2,
+        10
+      ],
+      "heldout_11_20_fraction_removed": 0.9634319086184838,
+      "heldout_21_40_fraction_removed": 0.6372007649566368,
+      "heldout_individually_fitted_yaw_arcsec": {
+        "11-20": -6.293374386998724,
+        "21-40": -6.3027175125803705
+      },
+      "trained_fraction_mismatch_removed": 0.9717910816090264
+    },
+    "GMM3_to_MRO120G": {
+      "effective_yaw_arcsec": -0.30455360875052234,
+      "fit_training_degrees": [
+        2,
+        10
+      ],
+      "heldout_11_20_fraction_removed": 0.03616080247445963,
+      "heldout_21_40_fraction_removed": 0.003146149711513724,
+      "heldout_individually_fitted_yaw_arcsec": {
+        "11-20": -0.26259851947434965,
+        "21-40": -0.2650547396887694
+      },
+      "trained_fraction_mismatch_removed": 0.21893839653337543
+    },
+    "MRO120F_to_MRO120G": {
+      "effective_yaw_arcsec": 6.066891320722208,
+      "fit_training_degrees": [
+        2,
+        10
+      ],
+      "heldout_11_20_fraction_removed": 0.9907767896450169,
+      "heldout_21_40_fraction_removed": 0.8845188115579936,
+      "heldout_individually_fitted_yaw_arcsec": {
+        "11-20": 6.030773740548645,
+        "21-40": 6.0376891091300875
+      },
+      "trained_fraction_mismatch_removed": 0.9854871031102397
+    }
+  },
+  "pairwise_angle_triangle_nonclosure_arcsec": 5.590743068495385e-08,
+  "purpose": "Stress test of cross-institution frame sensitivity; not a fit to new tracking data",
+  "sources": {
+    "GMM3": {
+      "GM_km3_s2": 42828.37285418776,
+      "label_bytes": 12085,
+      "label_url": "https://pds-geosciences.wustl.edu/mro/mro-m-rss-5-sdp-v1/mrors_1xxx/data/shadr/gmm3_120_sha.lbl",
+      "reference_warning": "GMM-3 PDS label: reference system is NOT the IAU Mars system",
+      "rows": 7380,
+      "sha256_label": "097f9989fc87bc9adbf04be754734349160228de940f9a242164f3be1b80bb7d",
+      "sha256_table": "eb4913b1afb6682406e6a9dad5be7918a162fa8462473c9a2e7aae258d4c2c9c",
+      "table_bytes": 900604,
+      "table_url": "https://pds-geosciences.wustl.edu/mro/mro-m-rss-5-sdp-v1/mrors_1xxx/data/shadr/gmm3_120_sha.tab"
+    },
+    "MRO120F": {
+      "sha256_table": "ddd3de9c30d75879fe37aa17a1149e7c96c141c095962954cb7ea865a2c025b6"
+    },
+    "MRO120G": {
+      "sha256_table": "b296318066d6e8b8ab5a3ca4878d99635f1cf0e977c39e3efb3f36bfcb06a569"
+    }
+  }
+}
