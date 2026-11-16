@@ -19,3 +19,6 @@ Falsification gates:
 
 A failed reproduction blocks population claims. A candidate count without exposure and completeness cannot establish an impact rate. No new impact or new physics is claimed here.
 
+## Executed newer-data pilot
+
+The preregistered first-500,000-photon PJ74 pilot is now complete. Its naive trigger fails against dayside scan background and telemetry-overflow evidence; no credible new impact is established. See [measured result, instrument checks and exact next barriers](PJ74_PILOT_RESULT.md) and [machine-readable evidence](newer-pj74/evidence.json).
