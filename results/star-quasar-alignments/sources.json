@@ -3,7 +3,13 @@
     "file": "gaia.csv",
     "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=5000000&QUERY=SELECT+source_id%2Cra%2Cdec%2Cpmra%2Cpmdec%2Cparallax%2Cphot_g_mean_mag%2Cruwe+FROM+gaiadr3.gaia_source+WHERE+pm+%3E+100+AND+parallax_over_error+%3E+5+AND+ruwe+%3C+1.4",
     "bytes": 53558888,
-    "sha256": "4125b94d81e7902aa75ca94dfe44aa6f956cc13bc57fa7c8e65969ac2a1e4f98"
+    "sha256": "4125b94d81e7902aa75ca94dfe44aa6f956cc13bc57fa7c8e65969ac2a1e4f98",
+    "note": "Full TAP response that screen.py downloads to its cache. The gaia.csv committed in this folder is a different table: the Gaia DR3 rows for the lens and the background source that forecast.py reads.",
+    "committed_table": {
+      "file": "gaia.csv",
+      "bytes": 715,
+      "sha256": "ca9668882bce47bad47b761ab33dacf8af74aee370dfa333fca86df2e7c8bf40"
+    }
   },
   {
     "file": "gcsext.csv",
