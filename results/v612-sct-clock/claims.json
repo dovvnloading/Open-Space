@@ -1,0 +1,16 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [],
+  "acknowledged": [
+    {
+      "rule": "replay/drift",
+      "key": "python replay.py",
+      "reason": "Values in measurements.json move by at most 2.9 parts in a million, because the scalar minimisation and linear solve depend on rounding in the installed NumPy and SciPy. The periods agree to thirteen significant figures and no quoted number changes. See the Replay section of the README."
+    },
+    {
+      "rule": "replay/drift",
+      "key": "python figure.py",
+      "reason": "figure.py calls the same replay and rewrites measurements.json with the same late-digit differences. See the Replay section of the README."
+    }
+  ]
+}
