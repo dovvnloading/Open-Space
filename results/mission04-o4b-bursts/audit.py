@@ -146,6 +146,12 @@ def audit_holdout(results, selection, pilot_gps):
     camp = read_json(root/"campaign.json")
     sel_path = results/"holdout_selection.json"
     verify(sha(sel_path) == camp["selection_sha256"], "Holdout selection checksum mismatch")
+    cfg = hashlib.sha256(sel_path.read_bytes())
+    for filename in ("core.py", "holdout_data.py", "holdout_sensitivity.py", "sensitivity.py",
+                     "acquire.py", "survey.py", "vetting.py", "public_events.csv"):
+        cfg.update((Path(__file__).parent / filename).read_bytes())
+    cfg.update(str((tuple(SHIFTS), CUT, FLOOR)).encode())
+    verify(camp["configuration_sha256"] == cfg.hexdigest(), "Holdout source/configuration fingerprint mismatch")
     blocks = {b["gps"]: b for b in selection["blocks"]}
     verify(len(blocks) == len(selection["blocks"]) == camp["n_frames"], "Duplicate or missing blocks")
     starts = sorted(blocks)
@@ -258,13 +264,22 @@ def audit_pilot(results, pilot_manifest, cache):
     targets = {"primary":2048, "lower":512, "middle":512, "higher_frequency":512}
     verify(set(sensitivity["cases"]) == set(targets) and len(trials) == sum(targets.values()),
            "Missing or unexpected pilot population")
-    for case, summary in sensitivity["cases"].items():
+    rng = np.random.default_rng(406150)
+    ordered_seconds = list(scores)
+    for case in targets:
+        summary = sensitivity["cases"][case]
         rows = [t for t in trials if t["case"] == case]
         verify(len(rows) == targets[case] == summary["n"] and
                sorted(int(r["trial"]) for r in rows) == list(range(targets[case])), "Pilot trial IDs mismatch")
         k = 0
-        for r in rows:
+        for r in sorted(rows, key=lambda d: int(d["trial"])):
             sec = int(r["block"])+int(r["second"])
+            chosen = ordered_seconds[rng.integers(len(ordered_seconds))]
+            offset, z = rng.random(), rng.uniform(-1, 1)
+            az, psi, phase = rng.random(3) * [2*np.pi, np.pi, 2*np.pi]
+            verify((sec, float(r["offset"]), float(r["cos_theta"]), float(r["azimuth"]),
+                    float(r["polarization"]), float(r["phase"])) == (chosen, offset, z, az, psi, phase),
+                   "Pilot sampling differs from registered seed and live ledger")
             actual = scores[sec] < CUT <= float(r["injected_score"])
             verify(scores[sec] == float(r["baseline"]) and int(actual) == int(r["recovered"]), "Pilot injection mismatch")
             k += actual
@@ -272,6 +287,8 @@ def audit_pilot(results, pilot_manifest, cache):
         verify(k == summary["recovered"] and close(lim["efficiency_lower"], summary["lower_efficiency_95"]) and
                close(lim["upper_per_day"], summary["rate_upper_per_day_pointwise90"]), f"Pilot rate mismatch: {case}")
         out["cases"][case] = {"n": len(rows), "k": k, **lim}
+    primary = out["cases"]["primary"]
+    out["primary_two_campaign_simultaneous90"] = limits(len(scores), count, primary["n"], primary["k"], .025)
     if cache is not None:
         out["raw_replay"] = raw_pilot(cache, pilot_manifest, blocks, trials, live_by_block, shiftrows)
     return out
@@ -323,7 +340,7 @@ def raw_pilot(cache, manifest, blocks, trials, live_by_block, shiftrows):
             err = abs(float(r["injected_score"])-val)
             verify(err < 1e-4 and (val >= CUT) == bool(int(r["recovered"])), "Raw pilot replay mismatch")
             errors.append(err)
-    return {"source_md5":source_hashes, "raw_injection_trials":len(errors), "maximum_score_abs_error":max(errors),
+    return {"source_md5": source_hashes, "raw_injection_trials":len(errors), "maximum_score_abs_error":max(errors),
             "detector_mask_shift_intersections_checked":len(blocks)*len(SHIFTS)}
 
 

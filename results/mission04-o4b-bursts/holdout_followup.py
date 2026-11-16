@@ -9,11 +9,15 @@ import hashlib
 import json
 import math
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 
-from acquire import DURATION, FS, fetch, load_detector
+import h5py
+import numpy as np
+
+from acquire import DURATION, FS, DQ_REQUIRED, INJ_REQUIRED, fetch, load_detector, require_flags
 from core import confirm
 from detector_context import acquire_context, summarize_calibration
-from diagnose import auxiliary, strain_data
+from diagnose import auxiliary, strain_data, centers_near, local_power
 from holdout_data import acquire_holdout
 import vetting
 
@@ -49,13 +53,51 @@ def calibration(cache, blocks):
                       "Envelope extrema are descriptive, not a simultaneous probability band."}
 
 
+def virgo_delays(cache, block, gps, duration, band):
+    """Allow terrestrial delay uncertainty; maximize same delay grid off source."""
+    if "V1" not in block["files"]:
+        return {"available":False,"reason":"no published file"}
+    start = block["gps"]
+    offsets = np.linspace(-0.028,0.028,7)
+    second = int(gps-start)
+    with h5py.File(cache/block["files"]["V1"]) as f:
+        good = require_flags(f["quality/simple"],"DQmask","DQShortnames",DQ_REQUIRED,start)
+        good &= require_flags(f["quality/injections"],"Injmask","InjShortnames",INJ_REQUIRED,start)
+        if not good[second]:
+            return {"available":False,"reason":"Virgo masks exclude target"}
+        left, right = max(0,second-32),min(DURATION,second+33)
+        bad_left, bad_right = np.flatnonzero(~good[left:second]), np.flatnonzero(~good[second:right])
+        if bad_left.size:
+            left += int(bad_left[-1])+1
+        if bad_right.size:
+            right = second+int(bad_right[0])
+        centers = centers_near(gps,start+left,start+right,duration+0.056)
+        if centers is None or len(centers)<8:
+            return {"available":False,"reason":"insufficient contiguous Virgo data"}
+        data = f["strain/Strain"][left*FS:right*FS]
+    measured = [local_power(data,FS,start+left,centers+lag,duration,band) for lag in offsets]
+    if any(not m["available"] for m in measured):
+        return {"available":False,"reason":"nonfinite or degenerate Virgo power"}
+    power = np.vstack([m["all_norm_energies"] for m in measured])
+    maxima = np.max(power,axis=0)
+    return {"available":True,"trial_lags_s":offsets.tolist(),"strongest_lag_s":float(offsets[np.argmax(power[:,0])]),
+            "max_normalized_band_energy":float(maxima[0]),"offsource_ge":int(np.sum(maxima[1:]>=maxima[0])),
+            "offsource_n":len(maxima)-1}
+
+
 def follow(cache, block, target):
     gps, band, duration = target["gps"], target["band"], target["duration"]
-    paths = acquire_holdout(cache,block)
+    # Overlap public strain transfers; each file is verified independently.
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        hl = pool.submit(acquire_holdout,cache,block)
+        if "virgo_source" in block:
+            r = block["virgo_source"]
+            virgo = pool.submit(fetch,r["url"],cache/r["name"],r["md5"])
+            virgo.result()
+        paths = hl.result()
     files = dict(block["files"])
     if "virgo_source" in block:
         r = block["virgo_source"]
-        fetch(r["url"],cache/r["name"],r["md5"])
         files["V1"] = r["name"]
     block = {**block, "files":files}
     info = {"target":target, "survey_block_gps":block["gps"], "catalog_matches_within_32s":[],
@@ -65,6 +107,20 @@ def follow(cache, block, target):
         e = min((e for e in all_events if e["source"] == source),key=lambda e:abs(e["gps"]-gps))
         info.setdefault("nearest_published_by_source",{})[source] = {**e,"delta_s":e["gps"]-gps}
     info["catalog_matches_within_32s"] = vetting.matches(gps-32,gps+32)
+    info["released_masks_in_winning_window"] = {}
+    low = math.floor(gps-duration/2)-block["gps"]
+    high = math.ceil(gps+duration/2)-block["gps"]
+    for ifo,name in files.items():
+        with h5py.File(cache/name) as source:
+            flags = {}
+            for group,mask,labels,required in (
+                ("quality/simple","DQmask","DQShortnames",DQ_REQUIRED),
+                ("quality/injections","Injmask","InjShortnames",(*INJ_REQUIRED,"NO_CW_HW_INJ")),
+            ):
+                for flag in required:
+                    v = require_flags(source[group],mask,labels,(flag,),block["gps"])
+                    flags[flag] = bool(np.all(v[low:high]))
+            info["released_masks_in_winning_window"][ifo] = flags
     orig, good = [], []
     for ifo in ("H1","L1"):
         start, strain, mask = load_detector(paths[ifo])
@@ -78,6 +134,7 @@ def follow(cache, block, target):
     info["strain"] = strain_data(cache, block, gps, duration, band)
     if "V1" not in files:
         info["strain"]["V1"] = {"available":False, "reason":"no GWOSC file listed for block"}
+    info["virgo_travel_time_check"] = virgo_delays(cache,block,gps,duration,band)
     info["auxiliary"] = auxiliary(cache,gps,duration,band)
     return info
 

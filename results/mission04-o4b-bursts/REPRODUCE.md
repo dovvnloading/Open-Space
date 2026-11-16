@@ -61,6 +61,8 @@ python holdout.py "$STORE/stream" "$STORE/checkpoints" --workers 4
 python common_exposure.py
 python holdout_followup.py calibration "$STORE"
 python holdout_followup.py follow "$STORE"
+python audit.py --results results --pilot-cache "$STORE" --output results/audit_results.json
+python plot_campaigns.py
 ```
 
 To resume an interrupted extension, repeat the same command and checkpoint path. The runner validates the configuration fingerprint and CRC before reusing per-frame results. To rebuild the monthly ZIPs and summary without downloading any strain, run `python holdout.py "$STORE/stream" "$STORE/checkpoints" --aggregate-only`. To verify the calendar selection independently, fetch the H1 and L1 timeline text and MD5 index from the recorded URLs under the frozen manifest's `inputs`; then run `python holdout_data.py "$STORE" "$STORE/regenerated-selection.json"` and compare its SHA-256 to the committed file.
