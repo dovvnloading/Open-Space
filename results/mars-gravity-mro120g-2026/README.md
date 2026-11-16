@@ -52,8 +52,25 @@ Standard-library Python 3.10+; no package installation needed. The code verifies
 
     python -m unittest discover -s results/mars-gravity-mro120g-2026 -p test_analyze.py -v
     python results/mars-gravity-mro120g-2026/analyze.py --cache /tmp/open-space-mro120g-pds --output /tmp/mars-gravity-mro120g-summary.json
+    python results/mars-gravity-mro120g-2026/gmm3_crosscheck.py --cache /tmp/open-space-mro120g-pds --output /tmp/mars-gmm3-control.json
 
 The [GitHub Actions archive replay](../../.github/workflows/mars-mro120g-audit.yml) runs synthetic rotation, normalization and parser tests before downloading both original source tables and labels, then writes the full comparison and uploads a result artifact. These measurements were generated from the verified NASA files in GitHub Actions, **not simulated gravity data**. The synthetic data exist only to test the numerical algorithm.
+
+## External-center control: NASA Goddard's independently inverted 2016 GMM-3
+
+To stress-test whether the JPL F→G offset is merely a quirk of comparing two releases from one team, we independently acquired NASA/GSFC's [GMM-3 2016 SHADR table](https://pds-geosciences.wustl.edu/mro/mro-m-rss-5-sdp-v1/mrors_1xxx/data/shadr/gmm3_120_sha.tab) and [original label](https://pds-geosciences.wustl.edu/mro/mro-m-rss-5-sdp-v1/mrors_1xxx/data/shadr/gmm3_120_sha.lbl). That adds **7,380 separately modeled coefficient entries** to the experiment, or **22,140 across all three archived solutions**. GMM-3 is developed at Goddard rather than JPL, but **the models draw on overlapping MRO, Odyssey and MGS tracking data** and its label specifically warns that its reference frame is *NOT* the IAU system.
+
+| Source → target | Fitted effective yaw, degrees 2–10 | Fraction of raw 11–20 squared mismatch removed using the frozen yaw |
+| --- | ---: | ---: |
+| Goddard GMM-3 (2016) → JPL MRO120F (2020) | **−6.37144″** | **96.34%** |
+| Goddard GMM-3 (2016) → JPL MRO120G (2026) | **−0.30455″** | **3.62%** |
+| JPL MRO120F (2020) → JPL MRO120G (2026) | **+6.06689″** | **99.08%** |
+
+**Consequential cross-center observation:** On the same harmonics, the independently derived Goddard model is only about **0.305 arcseconds (~5.0 m equatorial arc distance)** out of effective yaw from JPL's *2026* solution, but **6.371 arcseconds (~104.9 m)** from JPL's *2020* field. The 2020 frame mismatch is therefore not confined to a comparison against 2026 from the same producer. The three pairwise best-fit angles close to numerical precision (~5.6e−8 arcseconds), but this is an algebraic consistency diagnostic, not independent scientific significance.
+
+**Caveats:** Goddard's gravity coefficients are an independently *modeled* product with overlapping tracking observations. A single fit angle does not prove globally identical 3D frames, an absolute orientation, a correct prime meridian, or true mass change. In particular, the GMM-3 label explicitly says its 2006-based reference system is **not IAU**; the relative alignments above must not be mistaken for literal IAU coordinates. Different reference periods, regularization and estimated parameters influence these fit angles.
+
+The replayable [Goddard/JPL three-model control](gmm3-control.json) contains *all* pairwise held-out statistics, Goddard model GM, exact 900,604-byte source receipt and verified SHA-256 values. [Reproduction code](gmm3_crosscheck.py) independently downloads original 2016 PDS files and checks their source bytes. Pinned GMM-3 table SHA-256: eb4913b1afb6682406e6a9dad5be7918a162fa8462473c9a2e7aae258d4c2c9c; label SHA-256: 097f9989fc87bc9adbf04be754734349160228de940f9a242164f3be1b80bb7d.
 
 ## Falsification, unresolved alternatives and the next major discovery test
 
