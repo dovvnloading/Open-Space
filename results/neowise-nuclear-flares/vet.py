@@ -2,13 +2,15 @@
 
 Usage: python vet.py FLARES.csv POSITIONS.csv OUT.json [--radius ARCSEC]
 
-For every row of FLARES.csv (column `id`), the position from POSITIONS.csv is
+For every row of FLARES.csv (column `id`), the position from POSITIONS.csv (which
+may be gzip-compressed, with a name ending in `.gz`) is
 searched in SIMBAD (object identifiers and types) and in the Transient Name
 Server (reported and classified transients). Results are cached in OUT.json so
 the command can be rerun as the flare list grows.
 """
 import argparse
 import csv
+import gzip
 import io
 import json
 import pathlib
@@ -19,6 +21,13 @@ import requests
 SIMBAD = "https://simbad.harvard.edu/simbad/sim-tap/sync"
 TNS = "https://www.wis-tns.org/search"
 AGENT = {"User-Agent": "Mozilla/5.0 (compatible; open-space-research/0.2)"}
+
+
+def read_rows(path):
+    """Rows of a CSV table, which may be gzip-compressed (the deposited positions file is)."""
+    opener = gzip.open if str(path).endswith(".gz") else open
+    with opener(path, "rt", encoding="utf-8", newline="") as handle:
+        return list(csv.DictReader(handle))
 
 
 def simbad(ra, dec, radius):
@@ -58,10 +67,10 @@ def main():
     parser.add_argument("out")
     parser.add_argument("--radius", type=float, default=10.0)
     args = parser.parse_args()
-    positions = {r["id"]: (float(r["ra"]), float(r["dec"])) for r in csv.DictReader(open(args.positions))}
+    positions = {r["id"]: (float(r["ra"]), float(r["dec"])) for r in read_rows(args.positions)}
     out = pathlib.Path(args.out)
     cache = json.loads(out.read_text()) if out.exists() else {}
-    for row in csv.DictReader(open(args.flares)):
+    for row in read_rows(args.flares):
         name = row["id"]
         if name in cache:
             continue
