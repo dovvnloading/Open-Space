@@ -11,7 +11,7 @@ def f(x):
         y=float(x);return y if math.isfinite(y) else None
     except (ValueError,TypeError): return None
 
-def get_nearest(survey,rows,ra,dec):
+def get_nearest(survey,rows,ra,dec,epoch_range):
     def measure(row):
         if survey=='ps1':
             if row.get('primaryDetection')!='1':return
@@ -20,13 +20,13 @@ def get_nearest(survey,rows,ra,dec):
         if a is None or b is None: return
         sep=separation(ra,dec,a,b)
         if survey=='gaia':
-            # Closest point of linear proper-motion track during the release interval.
+            # Closest point of the proper-motion track during this source's covered epochs.
             # This is deliberately conservative until an observation epoch is known.
             east=((a-ra+180)%360-180)*3600*math.cos(math.radians(dec))
             north=(b-dec)*3600
             ve,vn=(f(row.get('pmra')) or 0)/1000,(f(row.get('pmdec')) or 0)/1000
             if ve*ve+vn*vn:
-                dt=max(-16,min(8.80,-(east*ve+north*vn)/(ve*ve+vn*vn)))
+                dt=max(epoch_range[0]-2016,min(epoch_range[1]-2016,-(east*ve+north*vn)/(ve*ve+vn*vn)))
                 sep=math.hypot(east+ve*dt,north+vn*dt)
             obj,mag=row['source_id'],f(row.get('phot_g_mean_mag'))
         elif survey=='legacy':
@@ -46,15 +46,23 @@ def summarize(targets,cache):
         sigma=math.hypot(float(r.get('radec_err') or r.get('error_radius'))/math.sqrt(2),0.88)
         pos95=sigma*math.sqrt(-2*math.log(.05));pos99=sigma*math.sqrt(-2*math.log(.01))
         out=dict(srcid=sid,name=(r.get('iauname') or r.get('name')),ra=ra,dec=dec,r95_arcsec=round(pos95,3),r99_arcsec=round(pos99,3),fsoft=r.get('f_soft') or r.get('fsoft'))
+        mjd=(f(r.get('mjd_first')),f(r.get('mjd_last')))
+        epoch_range=tuple(2000+(v-51544.5)/365.25 for v in mjd) if None not in mjd else (2000.,2024.80)
         for cat in ('gaia','allwise','legacy','ps1'):
             path=cache/f'{sid}-{cat}.json'
             data=json.loads(path.read_text()) if path.exists() else {}
             out[cat+'_status']=data.get('status','not_queried')
-            near=get_nearest(cat,data.get('rows',[]),ra,dec)
+            near=get_nearest(cat,data.get('rows',[]),ra,dec,epoch_range)
             out[cat+'_sep']=round(near[0],3) if near else ''
             out[cat+'_id']=near[1] if near else ''
             out[cat+'_mag']=round(near[2],3) if near and near[2] is not None else ''
             out[cat+'_ncone']=len(data['rows']) if data.get('status')=='ok' else ''
+            if cat=='ps1':
+                good=[q for q in data.get('rows',[]) if (f(q.get('rPSFMagErr')) or -1)>0 and float(q['rPSFMagErr'])<0.22 and (f(q.get('rPSFMag')) or -1)>0 and (f(q.get('nDetections')) or 0)>0]
+                reliable=get_nearest(cat,good,ra,dec,epoch_range)
+                out['ps1_r_snr5_sep']=round(reliable[0],3) if reliable else ''
+                out['ps1_r_snr5_mag']=round(reliable[2],3) if reliable else ''
+
         yield out
 
 if __name__=='__main__':

@@ -69,14 +69,14 @@ def read(path,minimum):
         m*=a['SPECRESP']*(true_hi-true_lo)*meta['EXPOSURE']
     # Drop bins with no good channels. Ignore out-of-calibration true energies below 0.03 keV.
     keep=np.bincount(bins[legit],minlength=nb)>0; te=(e>=.03)&(e<=10.)
-    return e[te],m[keep][:,te],sn[keep],bn[keep],float(alpha),bounds[:-1][keep],bounds[1:][keep]
+    return e[te],m[keep][:,te],sn[keep],bn[keep],float(alpha),bounds[:-1][keep],bounds[1:][keep],true_lo[te],true_hi[te]
 
-def run(path,minimum):
-    energy,m,n,b,alpha,lo,hi=read(path,minimum)
+def run(path,minimum,fixed_nh=None):
+    energy,m,n,b,alpha,lo,hi,_,_=read(path,minimum)
     nh_scale=sigma(energy)*1.e21
     result={'file':path.name,'energy_edges_keV':[[float(l),float(h)] for l,h in zip(lo,hi)],'source_counts':n.astype(int).tolist(),'background_counts':b.astype(int).tolist(),'background_scale':alpha,'models':{}}
     for model,shape_bounds in [('blackbody',[.02,.8]),('powerlaw',[.5,8.]),('brems_continuum',[.025,10.])]:
-        limits=[(-8,16),(0,10),tuple(np.log(shape_bounds))]
+        limits=[(-8,16),(0,10) if fixed_nh is None else (fixed_nh,fixed_nh),tuple(np.log(shape_bounds))]
         def stat(x):
             total,nh,theta=np.exp(x[0]),x[1],np.exp(x[2])
             shape=photon_shape(energy,model,theta)
@@ -104,6 +104,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('spectrum',type=Path)
     p.add_argument('--minimum',type=float,choices=(.2,.3),default=.2)
+    p.add_argument('--fixed-nh',type=float,help='Freeze column in units of 1e21 cm^-2')
     a=p.parse_args()
-    print(json.dumps(run(a.spectrum,a.minimum),indent=2))
+    print(json.dumps(run(a.spectrum,a.minimum,a.fixed_nh),indent=2))
 if __name__=='__main__':main()

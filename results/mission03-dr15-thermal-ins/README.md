@@ -18,3 +18,10 @@ This research has made use of data obtained from the 5XMM serendipitous source c
 - Completed SIMBAD screens for all 321 rows. Of 195 within the public eRASS1 hemisphere, 121 have a catalogue entry within 30 arcsec. Each is a positional association for review. The other 126 lack public eRASS1 hemisphere coverage.
 - Checked 166 prior positions against all queues. Seven selected sky positions require review against previous work. The bright J114051.9−641848 lead is already a published 4XMM INS candidate.
 - Fitted J085618's original pn spectrum and verified the sub-keV excess in independent pn and MOS2 events. Its 54 eV blackbody fit and the alternative thermal-continuum fit differ by less than one unit of Poisson deviance. Deeper optical astrometry and photometry are in progress.
+
+### Third checkpoint
+
+- Reached 338 distinct review positions after adding 22 sources more than 15 arcsec from every DR14 slim source. Five already appeared in the first four queues. The independent Gaia DR3, AllWISE and Legacy catalogue queries returned valid responses at all 338 positions.
+- Measured deep CFHT g/r photometry at the native X-ray position and after a local Gaia alignment. The conservative full-region limits are g_AB >25.09 and r_AB >24.84. The resulting catalogue-flux ratio exceeds 7.9. See [optical photometry](OPTICAL.md).
+- Fitted a solar-abundance line-emitting plasma through the same pn response as the blackbody. At the measured total Galactic atomic column the blackbody and plasma deviances are 25.66 and 28.30. A second pointed epoch and deeper optical imaging are required for a stronger physical interpretation.
+- Documented the pointing-level analysis, hash-verified products and eROSITA upper limits in [the X-ray report](XRAY.md). The [review ledger](results/review-ledger.csv) retains ambiguous neighbors and incomplete coverage statuses.

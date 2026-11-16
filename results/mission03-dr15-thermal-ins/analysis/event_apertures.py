@@ -53,6 +53,8 @@ def evaluate(path,ra,dec):
                  'strongest_soft_pixel': [[int(i) for i in pix]+[int(v)] for pix,v in pixels.most_common(3)],
                  'strongest_soft_column': [[int(i) for i in col]+[int(v)] for col,v in cols.most_common(3)],
                  'soft_time_span_s':float(np.ptp(times)) if len(times) else None,
+                 'soft_unique_raw_pixels':len(pixels),
+                 'soft_centroid_radec':w.all_pix2world([[e['X'][sel].mean(),e['Y'][sel].mean()]],1)[0].tolist() if len(times) else None,
                  'soft_pattern':{str(k):v for k,v in sorted(Counter(e['PATTERN'][sel].tolist()).items())},
                  'soft_xy_std_arcsec':[float(np.std(a[sel])) for a in (xx,yy)] if len(times) else None}
         return summary
