@@ -1,0 +1,1585 @@
+Row Type,Variable Name,Attribute Name,Data Type,Value
+attribute,NC_GLOBAL,_NCProperties,String,"version=2,netcdf=4.7.4,hdf5=1.8.12"
+attribute,NC_GLOBAL,cdm_data_type,String,Grid
+attribute,NC_GLOBAL,contact,String,Dan Otis - dotis@usf.edu
+attribute,NC_GLOBAL,Conventions,String,"COARDS, CF-1.6, ACDD-1.3"
+attribute,NC_GLOBAL,CreationDate,String,03/18/2026 10:59:33
+attribute,NC_GLOBAL,creator_email,String,dotis@usf.edu
+attribute,NC_GLOBAL,creator_name,String,DOTIS
+attribute,NC_GLOBAL,creator_type,String,institution
+attribute,NC_GLOBAL,Easternmost_Easting,double,-79.01073404059092
+attribute,NC_GLOBAL,geospatial_lat_max,double,31.0
+attribute,NC_GLOBAL,geospatial_lat_min,double,24.01110708955012
+attribute,NC_GLOBAL,geospatial_lat_resolution,double,0.008983152841195219
+attribute,NC_GLOBAL,geospatial_lat_units,String,degrees_north
+attribute,NC_GLOBAL,geospatial_lon_max,double,-79.01073404059092
+attribute,NC_GLOBAL,geospatial_lon_min,double,-89.0
+attribute,NC_GLOBAL,geospatial_lon_resolution,double,0.008983152841195217
+attribute,NC_GLOBAL,geospatial_lon_units,String,degrees_east
+attribute,NC_GLOBAL,Image_date,String,12-Mar-2026
+attribute,NC_GLOBAL,Image_size,String,779 pixels(N-S) x 1113 pixels(E-W)
+attribute,NC_GLOBAL,infoUrl,String,imars.usf.edu
+attribute,NC_GLOBAL,institution,String,USF IMaRS
+attribute,NC_GLOBAL,keywords,String,"apparent_optical_properties, PACE, remote_sensing_reflectance"
+attribute,NC_GLOBAL,keywords_vocabulary,String,GCMD Science Keywords
+attribute,NC_GLOBAL,Lat_Lon_Limits,String,24.0N to 31.0N -86.0E to -79.0E
+attribute,NC_GLOBAL,LatLon_Limits,String,24.0111N to 31N -89W to -79.0107W
+attribute,NC_GLOBAL,Level2_processing_version,String,V3_1
+attribute,NC_GLOBAL,license,String,"The data may be used and redistributed for free but is not intended\nfor legal use, since it may contain inaccuracies. Neither the data\nContributor, ERD, NOAA, nor the United States Government, nor any\nof their employees or contractors, makes any warranty, express or\nimplied, including warranties of merchantability and fitness for a\nparticular purpose, or assumes any legal liability for the accuracy,\ncompleteness, or usefulness, of this information."
+attribute,NC_GLOBAL,Northernmost_Northing,double,31.0
+attribute,NC_GLOBAL,Ocean_color_masks_based_on_L2_flags,String,"ATMFAIL,LAND,CLDICE,HILT"
+attribute,NC_GLOBAL,Original_Image_Format,String,Level-2(NetCDF)
+attribute,NC_GLOBAL,Original_Image_Source,String,NASA Ocean Biology Processing Group
+attribute,NC_GLOBAL,Processing_and_binning,String,USF IMaRS
+attribute,NC_GLOBAL,Projection,String,Equidistant Cylindrical
+attribute,NC_GLOBAL,Region,String,Florida
+attribute,NC_GLOBAL,Sensor,String,PACE-OCI
+attribute,NC_GLOBAL,sourceUrl,String,(local files)
+attribute,NC_GLOBAL,Southernmost_Northing,double,24.01110708955012
+attribute,NC_GLOBAL,standard_name_vocabulary,String,CF Standard Name Table v70
+attribute,NC_GLOBAL,summary,String,USF IMaRS PACE-OCI FL 1-Day Composite Ocean Color AOP (preliminary)
+attribute,NC_GLOBAL,time_coverage_end,String,2026-03-12T00:00:00Z
+attribute,NC_GLOBAL,time_coverage_start,String,2024-03-05T00:00:00Z
+attribute,NC_GLOBAL,Time_interval,String,1-Day Composite
+attribute,NC_GLOBAL,title,String,PACE-OCI Ocean Color AOP (includes hyperspectral Rrs) 1-Day composite for Florida (preliminary)
+attribute,NC_GLOBAL,Westernmost_Easting,double,-89.0
+dimension,time,,double,"nValues=687, evenlySpaced=false, averageSpacing=1 day 1h 47m 3s"
+attribute,time,_CoordinateAxisType,String,Time
+attribute,time,actual_range,double,"1.7095968E9, 1.7732736E9"
+attribute,time,axis,String,T
+attribute,time,ioos_category,String,Time
+attribute,time,long_name,String,Time
+attribute,time,standard_name,String,time
+attribute,time,time_origin,String,01-JAN-1970 00:00:00
+attribute,time,units,String,seconds since 1970-01-01T00:00:00Z
+dimension,latitude,,double,"nValues=779, evenlySpaced=true, averageSpacing=-0.008983152841195219"
+attribute,latitude,_CoordinateAxisType,String,Lat
+attribute,latitude,actual_range,double,"24.01110708955012, 31.0"
+attribute,latitude,axis,String,Y
+attribute,latitude,ioos_category,String,Location
+attribute,latitude,long_name,String,Latitude
+attribute,latitude,standard_name,String,latitude
+attribute,latitude,units,String,degrees_north
+dimension,longitude,,double,"nValues=1113, evenlySpaced=true, averageSpacing=0.008983152841195217"
+attribute,longitude,_CoordinateAxisType,String,Lon
+attribute,longitude,actual_range,double,"-89.0, -79.01073404059092"
+attribute,longitude,axis,String,X
+attribute,longitude,ioos_category,String,Location
+attribute,longitude,long_name,String,Longitude
+attribute,longitude,standard_name,String,longitude
+attribute,longitude,units,String,degrees_east
+variable,Rrs_346,,double,"time, latitude, longitude"
+attribute,Rrs_346,colorBarMaximum,double,0.01
+attribute,Rrs_346,colorBarMinimum,double,0.0
+attribute,Rrs_346,colorBarScale,String,Linear
+attribute,Rrs_346,ioos_category,String,Ocean Color
+attribute,Rrs_346,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_346,Product,String,Rrs_346
+attribute,Rrs_346,spectral_wavelength,String,346.0
+attribute,Rrs_346,standard_name,String,remote_sensing_reflectance_at_346nm
+attribute,Rrs_346,units,String,sr^-1
+variable,Rrs_348,,double,"time, latitude, longitude"
+attribute,Rrs_348,colorBarMaximum,double,0.01
+attribute,Rrs_348,colorBarMinimum,double,0.0
+attribute,Rrs_348,colorBarScale,String,Linear
+attribute,Rrs_348,ioos_category,String,Ocean Color
+attribute,Rrs_348,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_348,Product,String,Rrs_348
+attribute,Rrs_348,spectral_wavelength,String,348.0
+attribute,Rrs_348,standard_name,String,remote_sensing_reflectance_at_348nm
+attribute,Rrs_348,units,String,sr^-1
+variable,Rrs_351,,double,"time, latitude, longitude"
+attribute,Rrs_351,colorBarMaximum,double,0.01
+attribute,Rrs_351,colorBarMinimum,double,0.0
+attribute,Rrs_351,colorBarScale,String,Linear
+attribute,Rrs_351,ioos_category,String,Ocean Color
+attribute,Rrs_351,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_351,Product,String,Rrs_351
+attribute,Rrs_351,spectral_wavelength,String,351.0
+attribute,Rrs_351,standard_name,String,remote_sensing_reflectance_at_351nm
+attribute,Rrs_351,units,String,sr^-1
+variable,Rrs_353,,double,"time, latitude, longitude"
+attribute,Rrs_353,colorBarMaximum,double,0.01
+attribute,Rrs_353,colorBarMinimum,double,0.0
+attribute,Rrs_353,colorBarScale,String,Linear
+attribute,Rrs_353,ioos_category,String,Ocean Color
+attribute,Rrs_353,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_353,Product,String,Rrs_353
+attribute,Rrs_353,spectral_wavelength,String,353.0
+attribute,Rrs_353,standard_name,String,remote_sensing_reflectance_at_353nm
+attribute,Rrs_353,units,String,sr^-1
+variable,Rrs_356,,double,"time, latitude, longitude"
+attribute,Rrs_356,colorBarMaximum,double,0.01
+attribute,Rrs_356,colorBarMinimum,double,0.0
+attribute,Rrs_356,colorBarScale,String,Linear
+attribute,Rrs_356,ioos_category,String,Ocean Color
+attribute,Rrs_356,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_356,Product,String,Rrs_356
+attribute,Rrs_356,spectral_wavelength,String,356.0
+attribute,Rrs_356,standard_name,String,remote_sensing_reflectance_at_356nm
+attribute,Rrs_356,units,String,sr^-1
+variable,Rrs_358,,double,"time, latitude, longitude"
+attribute,Rrs_358,colorBarMaximum,double,0.01
+attribute,Rrs_358,colorBarMinimum,double,0.0
+attribute,Rrs_358,colorBarScale,String,Linear
+attribute,Rrs_358,ioos_category,String,Ocean Color
+attribute,Rrs_358,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_358,Product,String,Rrs_358
+attribute,Rrs_358,spectral_wavelength,String,358.0
+attribute,Rrs_358,standard_name,String,remote_sensing_reflectance_at_358nm
+attribute,Rrs_358,units,String,sr^-1
+variable,Rrs_361,,double,"time, latitude, longitude"
+attribute,Rrs_361,colorBarMaximum,double,0.01
+attribute,Rrs_361,colorBarMinimum,double,0.0
+attribute,Rrs_361,colorBarScale,String,Linear
+attribute,Rrs_361,ioos_category,String,Ocean Color
+attribute,Rrs_361,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_361,Product,String,Rrs_361
+attribute,Rrs_361,spectral_wavelength,String,361.0
+attribute,Rrs_361,standard_name,String,remote_sensing_reflectance_at_361nm
+attribute,Rrs_361,units,String,sr^-1
+variable,Rrs_363,,double,"time, latitude, longitude"
+attribute,Rrs_363,colorBarMaximum,double,0.01
+attribute,Rrs_363,colorBarMinimum,double,0.0
+attribute,Rrs_363,colorBarScale,String,Linear
+attribute,Rrs_363,ioos_category,String,Ocean Color
+attribute,Rrs_363,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_363,Product,String,Rrs_363
+attribute,Rrs_363,spectral_wavelength,String,363.0
+attribute,Rrs_363,standard_name,String,remote_sensing_reflectance_at_363nm
+attribute,Rrs_363,units,String,sr^-1
+variable,Rrs_366,,double,"time, latitude, longitude"
+attribute,Rrs_366,colorBarMaximum,double,0.01
+attribute,Rrs_366,colorBarMinimum,double,0.0
+attribute,Rrs_366,colorBarScale,String,Linear
+attribute,Rrs_366,ioos_category,String,Ocean Color
+attribute,Rrs_366,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_366,Product,String,Rrs_366
+attribute,Rrs_366,spectral_wavelength,String,366.0
+attribute,Rrs_366,standard_name,String,remote_sensing_reflectance_at_366nm
+attribute,Rrs_366,units,String,sr^-1
+variable,Rrs_368,,double,"time, latitude, longitude"
+attribute,Rrs_368,colorBarMaximum,double,0.01
+attribute,Rrs_368,colorBarMinimum,double,0.0
+attribute,Rrs_368,colorBarScale,String,Linear
+attribute,Rrs_368,ioos_category,String,Ocean Color
+attribute,Rrs_368,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_368,Product,String,Rrs_368
+attribute,Rrs_368,spectral_wavelength,String,368.0
+attribute,Rrs_368,standard_name,String,remote_sensing_reflectance_at_368nm
+attribute,Rrs_368,units,String,sr^-1
+variable,Rrs_371,,double,"time, latitude, longitude"
+attribute,Rrs_371,colorBarMaximum,double,0.01
+attribute,Rrs_371,colorBarMinimum,double,0.0
+attribute,Rrs_371,colorBarScale,String,Linear
+attribute,Rrs_371,ioos_category,String,Ocean Color
+attribute,Rrs_371,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_371,Product,String,Rrs_371
+attribute,Rrs_371,spectral_wavelength,String,371.0
+attribute,Rrs_371,standard_name,String,remote_sensing_reflectance_at_371nm
+attribute,Rrs_371,units,String,sr^-1
+variable,Rrs_373,,double,"time, latitude, longitude"
+attribute,Rrs_373,colorBarMaximum,double,0.01
+attribute,Rrs_373,colorBarMinimum,double,0.0
+attribute,Rrs_373,colorBarScale,String,Linear
+attribute,Rrs_373,ioos_category,String,Ocean Color
+attribute,Rrs_373,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_373,Product,String,Rrs_373
+attribute,Rrs_373,spectral_wavelength,String,373.0
+attribute,Rrs_373,standard_name,String,remote_sensing_reflectance_at_373nm
+attribute,Rrs_373,units,String,sr^-1
+variable,Rrs_375,,double,"time, latitude, longitude"
+attribute,Rrs_375,colorBarMaximum,double,0.01
+attribute,Rrs_375,colorBarMinimum,double,0.0
+attribute,Rrs_375,colorBarScale,String,Linear
+attribute,Rrs_375,ioos_category,String,Ocean Color
+attribute,Rrs_375,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_375,Product,String,Rrs_375
+attribute,Rrs_375,spectral_wavelength,String,375.0
+attribute,Rrs_375,standard_name,String,remote_sensing_reflectance_at_375nm
+attribute,Rrs_375,units,String,sr^-1
+variable,Rrs_378,,double,"time, latitude, longitude"
+attribute,Rrs_378,colorBarMaximum,double,0.01
+attribute,Rrs_378,colorBarMinimum,double,0.0
+attribute,Rrs_378,colorBarScale,String,Linear
+attribute,Rrs_378,ioos_category,String,Ocean Color
+attribute,Rrs_378,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_378,Product,String,Rrs_378
+attribute,Rrs_378,spectral_wavelength,String,378.0
+attribute,Rrs_378,standard_name,String,remote_sensing_reflectance_at_378nm
+attribute,Rrs_378,units,String,sr^-1
+variable,Rrs_380,,double,"time, latitude, longitude"
+attribute,Rrs_380,colorBarMaximum,double,0.01
+attribute,Rrs_380,colorBarMinimum,double,0.0
+attribute,Rrs_380,colorBarScale,String,Linear
+attribute,Rrs_380,ioos_category,String,Ocean Color
+attribute,Rrs_380,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_380,Product,String,Rrs_380
+attribute,Rrs_380,spectral_wavelength,String,380.0
+attribute,Rrs_380,standard_name,String,remote_sensing_reflectance_at_380nm
+attribute,Rrs_380,units,String,sr^-1
+variable,Rrs_383,,double,"time, latitude, longitude"
+attribute,Rrs_383,colorBarMaximum,double,0.01
+attribute,Rrs_383,colorBarMinimum,double,0.0
+attribute,Rrs_383,colorBarScale,String,Linear
+attribute,Rrs_383,ioos_category,String,Ocean Color
+attribute,Rrs_383,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_383,Product,String,Rrs_383
+attribute,Rrs_383,spectral_wavelength,String,383.0
+attribute,Rrs_383,standard_name,String,remote_sensing_reflectance_at_383nm
+attribute,Rrs_383,units,String,sr^-1
+variable,Rrs_385,,double,"time, latitude, longitude"
+attribute,Rrs_385,colorBarMaximum,double,0.01
+attribute,Rrs_385,colorBarMinimum,double,0.0
+attribute,Rrs_385,colorBarScale,String,Linear
+attribute,Rrs_385,ioos_category,String,Ocean Color
+attribute,Rrs_385,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_385,Product,String,Rrs_385
+attribute,Rrs_385,spectral_wavelength,String,385.0
+attribute,Rrs_385,standard_name,String,remote_sensing_reflectance_at_385nm
+attribute,Rrs_385,units,String,sr^-1
+variable,Rrs_388,,double,"time, latitude, longitude"
+attribute,Rrs_388,colorBarMaximum,double,0.01
+attribute,Rrs_388,colorBarMinimum,double,0.0
+attribute,Rrs_388,colorBarScale,String,Linear
+attribute,Rrs_388,ioos_category,String,Ocean Color
+attribute,Rrs_388,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_388,Product,String,Rrs_388
+attribute,Rrs_388,spectral_wavelength,String,388.0
+attribute,Rrs_388,standard_name,String,remote_sensing_reflectance_at_388nm
+attribute,Rrs_388,units,String,sr^-1
+variable,Rrs_390,,double,"time, latitude, longitude"
+attribute,Rrs_390,colorBarMaximum,double,0.01
+attribute,Rrs_390,colorBarMinimum,double,0.0
+attribute,Rrs_390,colorBarScale,String,Linear
+attribute,Rrs_390,ioos_category,String,Ocean Color
+attribute,Rrs_390,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_390,Product,String,Rrs_390
+attribute,Rrs_390,spectral_wavelength,String,390.0
+attribute,Rrs_390,standard_name,String,remote_sensing_reflectance_at_390nm
+attribute,Rrs_390,units,String,sr^-1
+variable,Rrs_393,,double,"time, latitude, longitude"
+attribute,Rrs_393,colorBarMaximum,double,0.01
+attribute,Rrs_393,colorBarMinimum,double,0.0
+attribute,Rrs_393,colorBarScale,String,Linear
+attribute,Rrs_393,ioos_category,String,Ocean Color
+attribute,Rrs_393,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_393,Product,String,Rrs_393
+attribute,Rrs_393,spectral_wavelength,String,393.0
+attribute,Rrs_393,standard_name,String,remote_sensing_reflectance_at_393nm
+attribute,Rrs_393,units,String,sr^-1
+variable,Rrs_395,,double,"time, latitude, longitude"
+attribute,Rrs_395,colorBarMaximum,double,0.01
+attribute,Rrs_395,colorBarMinimum,double,0.0
+attribute,Rrs_395,colorBarScale,String,Linear
+attribute,Rrs_395,ioos_category,String,Ocean Color
+attribute,Rrs_395,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_395,Product,String,Rrs_395
+attribute,Rrs_395,spectral_wavelength,String,395.0
+attribute,Rrs_395,standard_name,String,remote_sensing_reflectance_at_395nm
+attribute,Rrs_395,units,String,sr^-1
+variable,Rrs_398,,double,"time, latitude, longitude"
+attribute,Rrs_398,colorBarMaximum,double,0.01
+attribute,Rrs_398,colorBarMinimum,double,0.0
+attribute,Rrs_398,colorBarScale,String,Linear
+attribute,Rrs_398,ioos_category,String,Ocean Color
+attribute,Rrs_398,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_398,Product,String,Rrs_398
+attribute,Rrs_398,spectral_wavelength,String,398.0
+attribute,Rrs_398,standard_name,String,remote_sensing_reflectance_at_398nm
+attribute,Rrs_398,units,String,sr^-1
+variable,Rrs_400,,double,"time, latitude, longitude"
+attribute,Rrs_400,colorBarMaximum,double,0.01
+attribute,Rrs_400,colorBarMinimum,double,0.0
+attribute,Rrs_400,colorBarScale,String,Linear
+attribute,Rrs_400,ioos_category,String,Ocean Color
+attribute,Rrs_400,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_400,Product,String,Rrs_400
+attribute,Rrs_400,spectral_wavelength,String,400.0
+attribute,Rrs_400,standard_name,String,remote_sensing_reflectance_at_400nm
+attribute,Rrs_400,units,String,sr^-1
+variable,Rrs_403,,double,"time, latitude, longitude"
+attribute,Rrs_403,colorBarMaximum,double,0.01
+attribute,Rrs_403,colorBarMinimum,double,0.0
+attribute,Rrs_403,colorBarScale,String,Linear
+attribute,Rrs_403,ioos_category,String,Ocean Color
+attribute,Rrs_403,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_403,Product,String,Rrs_403
+attribute,Rrs_403,spectral_wavelength,String,403.0
+attribute,Rrs_403,standard_name,String,remote_sensing_reflectance_at_403nm
+attribute,Rrs_403,units,String,sr^-1
+variable,Rrs_405,,double,"time, latitude, longitude"
+attribute,Rrs_405,colorBarMaximum,double,0.01
+attribute,Rrs_405,colorBarMinimum,double,0.0
+attribute,Rrs_405,colorBarScale,String,Linear
+attribute,Rrs_405,ioos_category,String,Ocean Color
+attribute,Rrs_405,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_405,Product,String,Rrs_405
+attribute,Rrs_405,spectral_wavelength,String,405.0
+attribute,Rrs_405,standard_name,String,remote_sensing_reflectance_at_405nm
+attribute,Rrs_405,units,String,sr^-1
+variable,Rrs_408,,double,"time, latitude, longitude"
+attribute,Rrs_408,colorBarMaximum,double,0.01
+attribute,Rrs_408,colorBarMinimum,double,0.0
+attribute,Rrs_408,colorBarScale,String,Linear
+attribute,Rrs_408,ioos_category,String,Ocean Color
+attribute,Rrs_408,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_408,Product,String,Rrs_408
+attribute,Rrs_408,spectral_wavelength,String,408.0
+attribute,Rrs_408,standard_name,String,remote_sensing_reflectance_at_408nm
+attribute,Rrs_408,units,String,sr^-1
+variable,Rrs_410,,double,"time, latitude, longitude"
+attribute,Rrs_410,colorBarMaximum,double,0.01
+attribute,Rrs_410,colorBarMinimum,double,0.0
+attribute,Rrs_410,colorBarScale,String,Linear
+attribute,Rrs_410,ioos_category,String,Ocean Color
+attribute,Rrs_410,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_410,Product,String,Rrs_410
+attribute,Rrs_410,spectral_wavelength,String,410.0
+attribute,Rrs_410,standard_name,String,remote_sensing_reflectance_at_410nm
+attribute,Rrs_410,units,String,sr^-1
+variable,Rrs_413,,double,"time, latitude, longitude"
+attribute,Rrs_413,colorBarMaximum,double,0.01
+attribute,Rrs_413,colorBarMinimum,double,0.0
+attribute,Rrs_413,colorBarScale,String,Linear
+attribute,Rrs_413,ioos_category,String,Ocean Color
+attribute,Rrs_413,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_413,Product,String,Rrs_413
+attribute,Rrs_413,spectral_wavelength,String,413.0
+attribute,Rrs_413,standard_name,String,remote_sensing_reflectance_at_413nm
+attribute,Rrs_413,units,String,sr^-1
+variable,Rrs_415,,double,"time, latitude, longitude"
+attribute,Rrs_415,colorBarMaximum,double,0.01
+attribute,Rrs_415,colorBarMinimum,double,0.0
+attribute,Rrs_415,colorBarScale,String,Linear
+attribute,Rrs_415,ioos_category,String,Ocean Color
+attribute,Rrs_415,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_415,Product,String,Rrs_415
+attribute,Rrs_415,spectral_wavelength,String,415.0
+attribute,Rrs_415,standard_name,String,remote_sensing_reflectance_at_415nm
+attribute,Rrs_415,units,String,sr^-1
+variable,Rrs_418,,double,"time, latitude, longitude"
+attribute,Rrs_418,colorBarMaximum,double,0.01
+attribute,Rrs_418,colorBarMinimum,double,0.0
+attribute,Rrs_418,colorBarScale,String,Linear
+attribute,Rrs_418,ioos_category,String,Ocean Color
+attribute,Rrs_418,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_418,Product,String,Rrs_418
+attribute,Rrs_418,spectral_wavelength,String,418.0
+attribute,Rrs_418,standard_name,String,remote_sensing_reflectance_at_418nm
+attribute,Rrs_418,units,String,sr^-1
+variable,Rrs_420,,double,"time, latitude, longitude"
+attribute,Rrs_420,colorBarMaximum,double,0.01
+attribute,Rrs_420,colorBarMinimum,double,0.0
+attribute,Rrs_420,colorBarScale,String,Linear
+attribute,Rrs_420,ioos_category,String,Ocean Color
+attribute,Rrs_420,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_420,Product,String,Rrs_420
+attribute,Rrs_420,spectral_wavelength,String,420.0
+attribute,Rrs_420,standard_name,String,remote_sensing_reflectance_at_420nm
+attribute,Rrs_420,units,String,sr^-1
+variable,Rrs_422,,double,"time, latitude, longitude"
+attribute,Rrs_422,colorBarMaximum,double,0.01
+attribute,Rrs_422,colorBarMinimum,double,0.0
+attribute,Rrs_422,colorBarScale,String,Linear
+attribute,Rrs_422,ioos_category,String,Ocean Color
+attribute,Rrs_422,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_422,Product,String,Rrs_422
+attribute,Rrs_422,spectral_wavelength,String,422.0
+attribute,Rrs_422,standard_name,String,remote_sensing_reflectance_at_422nm
+attribute,Rrs_422,units,String,sr^-1
+variable,Rrs_425,,double,"time, latitude, longitude"
+attribute,Rrs_425,colorBarMaximum,double,0.01
+attribute,Rrs_425,colorBarMinimum,double,0.0
+attribute,Rrs_425,colorBarScale,String,Linear
+attribute,Rrs_425,ioos_category,String,Ocean Color
+attribute,Rrs_425,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_425,Product,String,Rrs_425
+attribute,Rrs_425,spectral_wavelength,String,425.0
+attribute,Rrs_425,standard_name,String,remote_sensing_reflectance_at_425nm
+attribute,Rrs_425,units,String,sr^-1
+variable,Rrs_427,,double,"time, latitude, longitude"
+attribute,Rrs_427,colorBarMaximum,double,0.01
+attribute,Rrs_427,colorBarMinimum,double,0.0
+attribute,Rrs_427,colorBarScale,String,Linear
+attribute,Rrs_427,ioos_category,String,Ocean Color
+attribute,Rrs_427,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_427,Product,String,Rrs_427
+attribute,Rrs_427,spectral_wavelength,String,427.0
+attribute,Rrs_427,standard_name,String,remote_sensing_reflectance_at_427nm
+attribute,Rrs_427,units,String,sr^-1
+variable,Rrs_430,,double,"time, latitude, longitude"
+attribute,Rrs_430,colorBarMaximum,double,0.01
+attribute,Rrs_430,colorBarMinimum,double,0.0
+attribute,Rrs_430,colorBarScale,String,Linear
+attribute,Rrs_430,ioos_category,String,Ocean Color
+attribute,Rrs_430,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_430,Product,String,Rrs_430
+attribute,Rrs_430,spectral_wavelength,String,430.0
+attribute,Rrs_430,standard_name,String,remote_sensing_reflectance_at_430nm
+attribute,Rrs_430,units,String,sr^-1
+variable,Rrs_432,,double,"time, latitude, longitude"
+attribute,Rrs_432,colorBarMaximum,double,0.01
+attribute,Rrs_432,colorBarMinimum,double,0.0
+attribute,Rrs_432,colorBarScale,String,Linear
+attribute,Rrs_432,ioos_category,String,Ocean Color
+attribute,Rrs_432,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_432,Product,String,Rrs_432
+attribute,Rrs_432,spectral_wavelength,String,432.0
+attribute,Rrs_432,standard_name,String,remote_sensing_reflectance_at_432nm
+attribute,Rrs_432,units,String,sr^-1
+variable,Rrs_435,,double,"time, latitude, longitude"
+attribute,Rrs_435,colorBarMaximum,double,0.01
+attribute,Rrs_435,colorBarMinimum,double,0.0
+attribute,Rrs_435,colorBarScale,String,Linear
+attribute,Rrs_435,ioos_category,String,Ocean Color
+attribute,Rrs_435,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_435,Product,String,Rrs_435
+attribute,Rrs_435,spectral_wavelength,String,435.0
+attribute,Rrs_435,standard_name,String,remote_sensing_reflectance_at_435nm
+attribute,Rrs_435,units,String,sr^-1
+variable,Rrs_437,,double,"time, latitude, longitude"
+attribute,Rrs_437,colorBarMaximum,double,0.01
+attribute,Rrs_437,colorBarMinimum,double,0.0
+attribute,Rrs_437,colorBarScale,String,Linear
+attribute,Rrs_437,ioos_category,String,Ocean Color
+attribute,Rrs_437,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_437,Product,String,Rrs_437
+attribute,Rrs_437,spectral_wavelength,String,437.0
+attribute,Rrs_437,standard_name,String,remote_sensing_reflectance_at_437nm
+attribute,Rrs_437,units,String,sr^-1
+variable,Rrs_440,,double,"time, latitude, longitude"
+attribute,Rrs_440,colorBarMaximum,double,0.01
+attribute,Rrs_440,colorBarMinimum,double,0.0
+attribute,Rrs_440,colorBarScale,String,Linear
+attribute,Rrs_440,ioos_category,String,Ocean Color
+attribute,Rrs_440,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_440,Product,String,Rrs_440
+attribute,Rrs_440,spectral_wavelength,String,440.0
+attribute,Rrs_440,standard_name,String,remote_sensing_reflectance_at_440nm
+attribute,Rrs_440,units,String,sr^-1
+variable,Rrs_442,,double,"time, latitude, longitude"
+attribute,Rrs_442,colorBarMaximum,double,0.01
+attribute,Rrs_442,colorBarMinimum,double,0.0
+attribute,Rrs_442,colorBarScale,String,Linear
+attribute,Rrs_442,ioos_category,String,Ocean Color
+attribute,Rrs_442,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_442,Product,String,Rrs_442
+attribute,Rrs_442,spectral_wavelength,String,442.0
+attribute,Rrs_442,standard_name,String,remote_sensing_reflectance_at_442nm
+attribute,Rrs_442,units,String,sr^-1
+variable,Rrs_445,,double,"time, latitude, longitude"
+attribute,Rrs_445,colorBarMaximum,double,0.01
+attribute,Rrs_445,colorBarMinimum,double,0.0
+attribute,Rrs_445,colorBarScale,String,Linear
+attribute,Rrs_445,ioos_category,String,Ocean Color
+attribute,Rrs_445,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_445,Product,String,Rrs_445
+attribute,Rrs_445,spectral_wavelength,String,445.0
+attribute,Rrs_445,standard_name,String,remote_sensing_reflectance_at_445nm
+attribute,Rrs_445,units,String,sr^-1
+variable,Rrs_447,,double,"time, latitude, longitude"
+attribute,Rrs_447,colorBarMaximum,double,0.01
+attribute,Rrs_447,colorBarMinimum,double,0.0
+attribute,Rrs_447,colorBarScale,String,Linear
+attribute,Rrs_447,ioos_category,String,Ocean Color
+attribute,Rrs_447,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_447,Product,String,Rrs_447
+attribute,Rrs_447,spectral_wavelength,String,447.0
+attribute,Rrs_447,standard_name,String,remote_sensing_reflectance_at_447nm
+attribute,Rrs_447,units,String,sr^-1
+variable,Rrs_450,,double,"time, latitude, longitude"
+attribute,Rrs_450,colorBarMaximum,double,0.01
+attribute,Rrs_450,colorBarMinimum,double,0.0
+attribute,Rrs_450,colorBarScale,String,Linear
+attribute,Rrs_450,ioos_category,String,Ocean Color
+attribute,Rrs_450,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_450,Product,String,Rrs_450
+attribute,Rrs_450,spectral_wavelength,String,450.0
+attribute,Rrs_450,standard_name,String,remote_sensing_reflectance_at_450nm
+attribute,Rrs_450,units,String,sr^-1
+variable,Rrs_452,,double,"time, latitude, longitude"
+attribute,Rrs_452,colorBarMaximum,double,0.01
+attribute,Rrs_452,colorBarMinimum,double,0.0
+attribute,Rrs_452,colorBarScale,String,Linear
+attribute,Rrs_452,ioos_category,String,Ocean Color
+attribute,Rrs_452,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_452,Product,String,Rrs_452
+attribute,Rrs_452,spectral_wavelength,String,452.0
+attribute,Rrs_452,standard_name,String,remote_sensing_reflectance_at_452nm
+attribute,Rrs_452,units,String,sr^-1
+variable,Rrs_455,,double,"time, latitude, longitude"
+attribute,Rrs_455,colorBarMaximum,double,0.01
+attribute,Rrs_455,colorBarMinimum,double,0.0
+attribute,Rrs_455,colorBarScale,String,Linear
+attribute,Rrs_455,ioos_category,String,Ocean Color
+attribute,Rrs_455,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_455,Product,String,Rrs_455
+attribute,Rrs_455,spectral_wavelength,String,455.0
+attribute,Rrs_455,standard_name,String,remote_sensing_reflectance_at_455nm
+attribute,Rrs_455,units,String,sr^-1
+variable,Rrs_457,,double,"time, latitude, longitude"
+attribute,Rrs_457,colorBarMaximum,double,0.01
+attribute,Rrs_457,colorBarMinimum,double,0.0
+attribute,Rrs_457,colorBarScale,String,Linear
+attribute,Rrs_457,ioos_category,String,Ocean Color
+attribute,Rrs_457,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_457,Product,String,Rrs_457
+attribute,Rrs_457,spectral_wavelength,String,457.0
+attribute,Rrs_457,standard_name,String,remote_sensing_reflectance_at_457nm
+attribute,Rrs_457,units,String,sr^-1
+variable,Rrs_460,,double,"time, latitude, longitude"
+attribute,Rrs_460,colorBarMaximum,double,0.01
+attribute,Rrs_460,colorBarMinimum,double,0.0
+attribute,Rrs_460,colorBarScale,String,Linear
+attribute,Rrs_460,ioos_category,String,Ocean Color
+attribute,Rrs_460,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_460,Product,String,Rrs_460
+attribute,Rrs_460,spectral_wavelength,String,460.0
+attribute,Rrs_460,standard_name,String,remote_sensing_reflectance_at_460nm
+attribute,Rrs_460,units,String,sr^-1
+variable,Rrs_462,,double,"time, latitude, longitude"
+attribute,Rrs_462,colorBarMaximum,double,0.01
+attribute,Rrs_462,colorBarMinimum,double,0.0
+attribute,Rrs_462,colorBarScale,String,Linear
+attribute,Rrs_462,ioos_category,String,Ocean Color
+attribute,Rrs_462,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_462,Product,String,Rrs_462
+attribute,Rrs_462,spectral_wavelength,String,462.0
+attribute,Rrs_462,standard_name,String,remote_sensing_reflectance_at_462nm
+attribute,Rrs_462,units,String,sr^-1
+variable,Rrs_465,,double,"time, latitude, longitude"
+attribute,Rrs_465,colorBarMaximum,double,0.01
+attribute,Rrs_465,colorBarMinimum,double,0.0
+attribute,Rrs_465,colorBarScale,String,Linear
+attribute,Rrs_465,ioos_category,String,Ocean Color
+attribute,Rrs_465,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_465,Product,String,Rrs_465
+attribute,Rrs_465,spectral_wavelength,String,465.0
+attribute,Rrs_465,standard_name,String,remote_sensing_reflectance_at_465nm
+attribute,Rrs_465,units,String,sr^-1
+variable,Rrs_467,,double,"time, latitude, longitude"
+attribute,Rrs_467,colorBarMaximum,double,0.01
+attribute,Rrs_467,colorBarMinimum,double,0.0
+attribute,Rrs_467,colorBarScale,String,Linear
+attribute,Rrs_467,ioos_category,String,Ocean Color
+attribute,Rrs_467,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_467,Product,String,Rrs_467
+attribute,Rrs_467,spectral_wavelength,String,467.0
+attribute,Rrs_467,standard_name,String,remote_sensing_reflectance_at_467nm
+attribute,Rrs_467,units,String,sr^-1
+variable,Rrs_470,,double,"time, latitude, longitude"
+attribute,Rrs_470,colorBarMaximum,double,0.01
+attribute,Rrs_470,colorBarMinimum,double,0.0
+attribute,Rrs_470,colorBarScale,String,Linear
+attribute,Rrs_470,ioos_category,String,Ocean Color
+attribute,Rrs_470,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_470,Product,String,Rrs_470
+attribute,Rrs_470,spectral_wavelength,String,470.0
+attribute,Rrs_470,standard_name,String,remote_sensing_reflectance_at_470nm
+attribute,Rrs_470,units,String,sr^-1
+variable,Rrs_472,,double,"time, latitude, longitude"
+attribute,Rrs_472,colorBarMaximum,double,0.01
+attribute,Rrs_472,colorBarMinimum,double,0.0
+attribute,Rrs_472,colorBarScale,String,Linear
+attribute,Rrs_472,ioos_category,String,Ocean Color
+attribute,Rrs_472,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_472,Product,String,Rrs_472
+attribute,Rrs_472,spectral_wavelength,String,472.0
+attribute,Rrs_472,standard_name,String,remote_sensing_reflectance_at_472nm
+attribute,Rrs_472,units,String,sr^-1
+variable,Rrs_475,,double,"time, latitude, longitude"
+attribute,Rrs_475,colorBarMaximum,double,0.01
+attribute,Rrs_475,colorBarMinimum,double,0.0
+attribute,Rrs_475,colorBarScale,String,Linear
+attribute,Rrs_475,ioos_category,String,Ocean Color
+attribute,Rrs_475,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_475,Product,String,Rrs_475
+attribute,Rrs_475,spectral_wavelength,String,475.0
+attribute,Rrs_475,standard_name,String,remote_sensing_reflectance_at_475nm
+attribute,Rrs_475,units,String,sr^-1
+variable,Rrs_477,,double,"time, latitude, longitude"
+attribute,Rrs_477,colorBarMaximum,double,0.01
+attribute,Rrs_477,colorBarMinimum,double,0.0
+attribute,Rrs_477,colorBarScale,String,Linear
+attribute,Rrs_477,ioos_category,String,Ocean Color
+attribute,Rrs_477,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_477,Product,String,Rrs_477
+attribute,Rrs_477,spectral_wavelength,String,477.0
+attribute,Rrs_477,standard_name,String,remote_sensing_reflectance_at_477nm
+attribute,Rrs_477,units,String,sr^-1
+variable,Rrs_480,,double,"time, latitude, longitude"
+attribute,Rrs_480,colorBarMaximum,double,0.01
+attribute,Rrs_480,colorBarMinimum,double,0.0
+attribute,Rrs_480,colorBarScale,String,Linear
+attribute,Rrs_480,ioos_category,String,Ocean Color
+attribute,Rrs_480,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_480,Product,String,Rrs_480
+attribute,Rrs_480,spectral_wavelength,String,480.0
+attribute,Rrs_480,standard_name,String,remote_sensing_reflectance_at_480nm
+attribute,Rrs_480,units,String,sr^-1
+variable,Rrs_482,,double,"time, latitude, longitude"
+attribute,Rrs_482,colorBarMaximum,double,0.01
+attribute,Rrs_482,colorBarMinimum,double,0.0
+attribute,Rrs_482,colorBarScale,String,Linear
+attribute,Rrs_482,ioos_category,String,Ocean Color
+attribute,Rrs_482,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_482,Product,String,Rrs_482
+attribute,Rrs_482,spectral_wavelength,String,482.0
+attribute,Rrs_482,standard_name,String,remote_sensing_reflectance_at_482nm
+attribute,Rrs_482,units,String,sr^-1
+variable,Rrs_485,,double,"time, latitude, longitude"
+attribute,Rrs_485,colorBarMaximum,double,0.01
+attribute,Rrs_485,colorBarMinimum,double,0.0
+attribute,Rrs_485,colorBarScale,String,Linear
+attribute,Rrs_485,ioos_category,String,Ocean Color
+attribute,Rrs_485,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_485,Product,String,Rrs_485
+attribute,Rrs_485,spectral_wavelength,String,485.0
+attribute,Rrs_485,standard_name,String,remote_sensing_reflectance_at_485nm
+attribute,Rrs_485,units,String,sr^-1
+variable,Rrs_487,,double,"time, latitude, longitude"
+attribute,Rrs_487,colorBarMaximum,double,0.01
+attribute,Rrs_487,colorBarMinimum,double,0.0
+attribute,Rrs_487,colorBarScale,String,Linear
+attribute,Rrs_487,ioos_category,String,Ocean Color
+attribute,Rrs_487,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_487,Product,String,Rrs_487
+attribute,Rrs_487,spectral_wavelength,String,487.0
+attribute,Rrs_487,standard_name,String,remote_sensing_reflectance_at_487nm
+attribute,Rrs_487,units,String,sr^-1
+variable,Rrs_490,,double,"time, latitude, longitude"
+attribute,Rrs_490,colorBarMaximum,double,0.01
+attribute,Rrs_490,colorBarMinimum,double,0.0
+attribute,Rrs_490,colorBarScale,String,Linear
+attribute,Rrs_490,ioos_category,String,Ocean Color
+attribute,Rrs_490,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_490,Product,String,Rrs_490
+attribute,Rrs_490,spectral_wavelength,String,490.0
+attribute,Rrs_490,standard_name,String,remote_sensing_reflectance_at_490nm
+attribute,Rrs_490,units,String,sr^-1
+variable,Rrs_492,,double,"time, latitude, longitude"
+attribute,Rrs_492,colorBarMaximum,double,0.01
+attribute,Rrs_492,colorBarMinimum,double,0.0
+attribute,Rrs_492,colorBarScale,String,Linear
+attribute,Rrs_492,ioos_category,String,Ocean Color
+attribute,Rrs_492,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_492,Product,String,Rrs_492
+attribute,Rrs_492,spectral_wavelength,String,492.0
+attribute,Rrs_492,standard_name,String,remote_sensing_reflectance_at_492nm
+attribute,Rrs_492,units,String,sr^-1
+variable,Rrs_495,,double,"time, latitude, longitude"
+attribute,Rrs_495,colorBarMaximum,double,0.01
+attribute,Rrs_495,colorBarMinimum,double,0.0
+attribute,Rrs_495,colorBarScale,String,Linear
+attribute,Rrs_495,ioos_category,String,Ocean Color
+attribute,Rrs_495,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_495,Product,String,Rrs_495
+attribute,Rrs_495,spectral_wavelength,String,495.0
+attribute,Rrs_495,standard_name,String,remote_sensing_reflectance_at_495nm
+attribute,Rrs_495,units,String,sr^-1
+variable,Rrs_497,,double,"time, latitude, longitude"
+attribute,Rrs_497,colorBarMaximum,double,0.01
+attribute,Rrs_497,colorBarMinimum,double,0.0
+attribute,Rrs_497,colorBarScale,String,Linear
+attribute,Rrs_497,ioos_category,String,Ocean Color
+attribute,Rrs_497,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_497,Product,String,Rrs_497
+attribute,Rrs_497,spectral_wavelength,String,497.0
+attribute,Rrs_497,standard_name,String,remote_sensing_reflectance_at_497nm
+attribute,Rrs_497,units,String,sr^-1
+variable,Rrs_500,,double,"time, latitude, longitude"
+attribute,Rrs_500,colorBarMaximum,double,0.01
+attribute,Rrs_500,colorBarMinimum,double,0.0
+attribute,Rrs_500,colorBarScale,String,Linear
+attribute,Rrs_500,ioos_category,String,Ocean Color
+attribute,Rrs_500,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_500,Product,String,Rrs_500
+attribute,Rrs_500,spectral_wavelength,String,500.0
+attribute,Rrs_500,standard_name,String,remote_sensing_reflectance_at_500nm
+attribute,Rrs_500,units,String,sr^-1
+variable,Rrs_502,,double,"time, latitude, longitude"
+attribute,Rrs_502,colorBarMaximum,double,0.01
+attribute,Rrs_502,colorBarMinimum,double,0.0
+attribute,Rrs_502,colorBarScale,String,Linear
+attribute,Rrs_502,ioos_category,String,Ocean Color
+attribute,Rrs_502,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_502,Product,String,Rrs_502
+attribute,Rrs_502,spectral_wavelength,String,502.0
+attribute,Rrs_502,standard_name,String,remote_sensing_reflectance_at_502nm
+attribute,Rrs_502,units,String,sr^-1
+variable,Rrs_505,,double,"time, latitude, longitude"
+attribute,Rrs_505,colorBarMaximum,double,0.01
+attribute,Rrs_505,colorBarMinimum,double,0.0
+attribute,Rrs_505,colorBarScale,String,Linear
+attribute,Rrs_505,ioos_category,String,Ocean Color
+attribute,Rrs_505,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_505,Product,String,Rrs_505
+attribute,Rrs_505,spectral_wavelength,String,505.0
+attribute,Rrs_505,standard_name,String,remote_sensing_reflectance_at_505nm
+attribute,Rrs_505,units,String,sr^-1
+variable,Rrs_507,,double,"time, latitude, longitude"
+attribute,Rrs_507,colorBarMaximum,double,0.01
+attribute,Rrs_507,colorBarMinimum,double,0.0
+attribute,Rrs_507,colorBarScale,String,Linear
+attribute,Rrs_507,ioos_category,String,Ocean Color
+attribute,Rrs_507,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_507,Product,String,Rrs_507
+attribute,Rrs_507,spectral_wavelength,String,507.0
+attribute,Rrs_507,standard_name,String,remote_sensing_reflectance_at_507nm
+attribute,Rrs_507,units,String,sr^-1
+variable,Rrs_510,,double,"time, latitude, longitude"
+attribute,Rrs_510,colorBarMaximum,double,0.01
+attribute,Rrs_510,colorBarMinimum,double,0.0
+attribute,Rrs_510,colorBarScale,String,Linear
+attribute,Rrs_510,ioos_category,String,Ocean Color
+attribute,Rrs_510,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_510,Product,String,Rrs_510
+attribute,Rrs_510,spectral_wavelength,String,510.0
+attribute,Rrs_510,standard_name,String,remote_sensing_reflectance_at_510nm
+attribute,Rrs_510,units,String,sr^-1
+variable,Rrs_512,,double,"time, latitude, longitude"
+attribute,Rrs_512,colorBarMaximum,double,0.01
+attribute,Rrs_512,colorBarMinimum,double,0.0
+attribute,Rrs_512,colorBarScale,String,Linear
+attribute,Rrs_512,ioos_category,String,Ocean Color
+attribute,Rrs_512,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_512,Product,String,Rrs_512
+attribute,Rrs_512,spectral_wavelength,String,512.0
+attribute,Rrs_512,standard_name,String,remote_sensing_reflectance_at_512nm
+attribute,Rrs_512,units,String,sr^-1
+variable,Rrs_515,,double,"time, latitude, longitude"
+attribute,Rrs_515,colorBarMaximum,double,0.01
+attribute,Rrs_515,colorBarMinimum,double,0.0
+attribute,Rrs_515,colorBarScale,String,Linear
+attribute,Rrs_515,ioos_category,String,Ocean Color
+attribute,Rrs_515,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_515,Product,String,Rrs_515
+attribute,Rrs_515,spectral_wavelength,String,515.0
+attribute,Rrs_515,standard_name,String,remote_sensing_reflectance_at_515nm
+attribute,Rrs_515,units,String,sr^-1
+variable,Rrs_517,,double,"time, latitude, longitude"
+attribute,Rrs_517,colorBarMaximum,double,0.01
+attribute,Rrs_517,colorBarMinimum,double,0.0
+attribute,Rrs_517,colorBarScale,String,Linear
+attribute,Rrs_517,ioos_category,String,Ocean Color
+attribute,Rrs_517,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_517,Product,String,Rrs_517
+attribute,Rrs_517,spectral_wavelength,String,517.0
+attribute,Rrs_517,standard_name,String,remote_sensing_reflectance_at_517nm
+attribute,Rrs_517,units,String,sr^-1
+variable,Rrs_520,,double,"time, latitude, longitude"
+attribute,Rrs_520,colorBarMaximum,double,0.01
+attribute,Rrs_520,colorBarMinimum,double,0.0
+attribute,Rrs_520,colorBarScale,String,Linear
+attribute,Rrs_520,ioos_category,String,Ocean Color
+attribute,Rrs_520,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_520,Product,String,Rrs_520
+attribute,Rrs_520,spectral_wavelength,String,520.0
+attribute,Rrs_520,standard_name,String,remote_sensing_reflectance_at_520nm
+attribute,Rrs_520,units,String,sr^-1
+variable,Rrs_522,,double,"time, latitude, longitude"
+attribute,Rrs_522,colorBarMaximum,double,0.01
+attribute,Rrs_522,colorBarMinimum,double,0.0
+attribute,Rrs_522,colorBarScale,String,Linear
+attribute,Rrs_522,ioos_category,String,Ocean Color
+attribute,Rrs_522,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_522,Product,String,Rrs_522
+attribute,Rrs_522,spectral_wavelength,String,522.0
+attribute,Rrs_522,standard_name,String,remote_sensing_reflectance_at_522nm
+attribute,Rrs_522,units,String,sr^-1
+variable,Rrs_525,,double,"time, latitude, longitude"
+attribute,Rrs_525,colorBarMaximum,double,0.01
+attribute,Rrs_525,colorBarMinimum,double,0.0
+attribute,Rrs_525,colorBarScale,String,Linear
+attribute,Rrs_525,ioos_category,String,Ocean Color
+attribute,Rrs_525,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_525,Product,String,Rrs_525
+attribute,Rrs_525,spectral_wavelength,String,525.0
+attribute,Rrs_525,standard_name,String,remote_sensing_reflectance_at_525nm
+attribute,Rrs_525,units,String,sr^-1
+variable,Rrs_527,,double,"time, latitude, longitude"
+attribute,Rrs_527,colorBarMaximum,double,0.01
+attribute,Rrs_527,colorBarMinimum,double,0.0
+attribute,Rrs_527,colorBarScale,String,Linear
+attribute,Rrs_527,ioos_category,String,Ocean Color
+attribute,Rrs_527,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_527,Product,String,Rrs_527
+attribute,Rrs_527,spectral_wavelength,String,527.0
+attribute,Rrs_527,standard_name,String,remote_sensing_reflectance_at_527nm
+attribute,Rrs_527,units,String,sr^-1
+variable,Rrs_530,,double,"time, latitude, longitude"
+attribute,Rrs_530,colorBarMaximum,double,0.01
+attribute,Rrs_530,colorBarMinimum,double,0.0
+attribute,Rrs_530,colorBarScale,String,Linear
+attribute,Rrs_530,ioos_category,String,Ocean Color
+attribute,Rrs_530,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_530,Product,String,Rrs_530
+attribute,Rrs_530,spectral_wavelength,String,530.0
+attribute,Rrs_530,standard_name,String,remote_sensing_reflectance_at_530nm
+attribute,Rrs_530,units,String,sr^-1
+variable,Rrs_532,,double,"time, latitude, longitude"
+attribute,Rrs_532,colorBarMaximum,double,0.01
+attribute,Rrs_532,colorBarMinimum,double,0.0
+attribute,Rrs_532,colorBarScale,String,Linear
+attribute,Rrs_532,ioos_category,String,Ocean Color
+attribute,Rrs_532,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_532,Product,String,Rrs_532
+attribute,Rrs_532,spectral_wavelength,String,532.0
+attribute,Rrs_532,standard_name,String,remote_sensing_reflectance_at_532nm
+attribute,Rrs_532,units,String,sr^-1
+variable,Rrs_535,,double,"time, latitude, longitude"
+attribute,Rrs_535,colorBarMaximum,double,0.01
+attribute,Rrs_535,colorBarMinimum,double,0.0
+attribute,Rrs_535,colorBarScale,String,Linear
+attribute,Rrs_535,ioos_category,String,Ocean Color
+attribute,Rrs_535,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_535,Product,String,Rrs_535
+attribute,Rrs_535,spectral_wavelength,String,535.0
+attribute,Rrs_535,standard_name,String,remote_sensing_reflectance_at_535nm
+attribute,Rrs_535,units,String,sr^-1
+variable,Rrs_537,,double,"time, latitude, longitude"
+attribute,Rrs_537,colorBarMaximum,double,0.01
+attribute,Rrs_537,colorBarMinimum,double,0.0
+attribute,Rrs_537,colorBarScale,String,Linear
+attribute,Rrs_537,ioos_category,String,Ocean Color
+attribute,Rrs_537,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_537,Product,String,Rrs_537
+attribute,Rrs_537,spectral_wavelength,String,537.0
+attribute,Rrs_537,standard_name,String,remote_sensing_reflectance_at_537nm
+attribute,Rrs_537,units,String,sr^-1
+variable,Rrs_540,,double,"time, latitude, longitude"
+attribute,Rrs_540,colorBarMaximum,double,0.01
+attribute,Rrs_540,colorBarMinimum,double,0.0
+attribute,Rrs_540,colorBarScale,String,Linear
+attribute,Rrs_540,ioos_category,String,Ocean Color
+attribute,Rrs_540,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_540,Product,String,Rrs_540
+attribute,Rrs_540,spectral_wavelength,String,540.0
+attribute,Rrs_540,standard_name,String,remote_sensing_reflectance_at_540nm
+attribute,Rrs_540,units,String,sr^-1
+variable,Rrs_542,,double,"time, latitude, longitude"
+attribute,Rrs_542,colorBarMaximum,double,0.01
+attribute,Rrs_542,colorBarMinimum,double,0.0
+attribute,Rrs_542,colorBarScale,String,Linear
+attribute,Rrs_542,ioos_category,String,Ocean Color
+attribute,Rrs_542,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_542,Product,String,Rrs_542
+attribute,Rrs_542,spectral_wavelength,String,542.0
+attribute,Rrs_542,standard_name,String,remote_sensing_reflectance_at_542nm
+attribute,Rrs_542,units,String,sr^-1
+variable,Rrs_545,,double,"time, latitude, longitude"
+attribute,Rrs_545,colorBarMaximum,double,0.01
+attribute,Rrs_545,colorBarMinimum,double,0.0
+attribute,Rrs_545,colorBarScale,String,Linear
+attribute,Rrs_545,ioos_category,String,Ocean Color
+attribute,Rrs_545,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_545,Product,String,Rrs_545
+attribute,Rrs_545,spectral_wavelength,String,545.0
+attribute,Rrs_545,standard_name,String,remote_sensing_reflectance_at_545nm
+attribute,Rrs_545,units,String,sr^-1
+variable,Rrs_547,,double,"time, latitude, longitude"
+attribute,Rrs_547,colorBarMaximum,double,0.01
+attribute,Rrs_547,colorBarMinimum,double,0.0
+attribute,Rrs_547,colorBarScale,String,Linear
+attribute,Rrs_547,ioos_category,String,Ocean Color
+attribute,Rrs_547,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_547,Product,String,Rrs_547
+attribute,Rrs_547,spectral_wavelength,String,547.0
+attribute,Rrs_547,standard_name,String,remote_sensing_reflectance_at_547nm
+attribute,Rrs_547,units,String,sr^-1
+variable,Rrs_550,,double,"time, latitude, longitude"
+attribute,Rrs_550,colorBarMaximum,double,0.01
+attribute,Rrs_550,colorBarMinimum,double,0.0
+attribute,Rrs_550,colorBarScale,String,Linear
+attribute,Rrs_550,ioos_category,String,Ocean Color
+attribute,Rrs_550,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_550,Product,String,Rrs_550
+attribute,Rrs_550,spectral_wavelength,String,550.0
+attribute,Rrs_550,standard_name,String,remote_sensing_reflectance_at_550nm
+attribute,Rrs_550,units,String,sr^-1
+variable,Rrs_553,,double,"time, latitude, longitude"
+attribute,Rrs_553,colorBarMaximum,double,0.01
+attribute,Rrs_553,colorBarMinimum,double,0.0
+attribute,Rrs_553,colorBarScale,String,Linear
+attribute,Rrs_553,ioos_category,String,Ocean Color
+attribute,Rrs_553,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_553,Product,String,Rrs_553
+attribute,Rrs_553,spectral_wavelength,String,553.0
+attribute,Rrs_553,standard_name,String,remote_sensing_reflectance_at_553nm
+attribute,Rrs_553,units,String,sr^-1
+variable,Rrs_555,,double,"time, latitude, longitude"
+attribute,Rrs_555,colorBarMaximum,double,0.01
+attribute,Rrs_555,colorBarMinimum,double,0.0
+attribute,Rrs_555,colorBarScale,String,Linear
+attribute,Rrs_555,ioos_category,String,Ocean Color
+attribute,Rrs_555,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_555,Product,String,Rrs_555
+attribute,Rrs_555,spectral_wavelength,String,555.0
+attribute,Rrs_555,standard_name,String,remote_sensing_reflectance_at_555nm
+attribute,Rrs_555,units,String,sr^-1
+variable,Rrs_558,,double,"time, latitude, longitude"
+attribute,Rrs_558,colorBarMaximum,double,0.01
+attribute,Rrs_558,colorBarMinimum,double,0.0
+attribute,Rrs_558,colorBarScale,String,Linear
+attribute,Rrs_558,ioos_category,String,Ocean Color
+attribute,Rrs_558,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_558,Product,String,Rrs_558
+attribute,Rrs_558,spectral_wavelength,String,558.0
+attribute,Rrs_558,standard_name,String,remote_sensing_reflectance_at_558nm
+attribute,Rrs_558,units,String,sr^-1
+variable,Rrs_560,,double,"time, latitude, longitude"
+attribute,Rrs_560,colorBarMaximum,double,0.01
+attribute,Rrs_560,colorBarMinimum,double,0.0
+attribute,Rrs_560,colorBarScale,String,Linear
+attribute,Rrs_560,ioos_category,String,Ocean Color
+attribute,Rrs_560,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_560,Product,String,Rrs_560
+attribute,Rrs_560,spectral_wavelength,String,560.0
+attribute,Rrs_560,standard_name,String,remote_sensing_reflectance_at_560nm
+attribute,Rrs_560,units,String,sr^-1
+variable,Rrs_563,,double,"time, latitude, longitude"
+attribute,Rrs_563,colorBarMaximum,double,0.01
+attribute,Rrs_563,colorBarMinimum,double,0.0
+attribute,Rrs_563,colorBarScale,String,Linear
+attribute,Rrs_563,ioos_category,String,Ocean Color
+attribute,Rrs_563,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_563,Product,String,Rrs_563
+attribute,Rrs_563,spectral_wavelength,String,563.0
+attribute,Rrs_563,standard_name,String,remote_sensing_reflectance_at_563nm
+attribute,Rrs_563,units,String,sr^-1
+variable,Rrs_565,,double,"time, latitude, longitude"
+attribute,Rrs_565,colorBarMaximum,double,0.01
+attribute,Rrs_565,colorBarMinimum,double,0.0
+attribute,Rrs_565,colorBarScale,String,Linear
+attribute,Rrs_565,ioos_category,String,Ocean Color
+attribute,Rrs_565,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_565,Product,String,Rrs_565
+attribute,Rrs_565,spectral_wavelength,String,565.0
+attribute,Rrs_565,standard_name,String,remote_sensing_reflectance_at_565nm
+attribute,Rrs_565,units,String,sr^-1
+variable,Rrs_568,,double,"time, latitude, longitude"
+attribute,Rrs_568,colorBarMaximum,double,0.01
+attribute,Rrs_568,colorBarMinimum,double,0.0
+attribute,Rrs_568,colorBarScale,String,Linear
+attribute,Rrs_568,ioos_category,String,Ocean Color
+attribute,Rrs_568,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_568,Product,String,Rrs_568
+attribute,Rrs_568,spectral_wavelength,String,568.0
+attribute,Rrs_568,standard_name,String,remote_sensing_reflectance_at_568nm
+attribute,Rrs_568,units,String,sr^-1
+variable,Rrs_570,,double,"time, latitude, longitude"
+attribute,Rrs_570,colorBarMaximum,double,0.01
+attribute,Rrs_570,colorBarMinimum,double,0.0
+attribute,Rrs_570,colorBarScale,String,Linear
+attribute,Rrs_570,ioos_category,String,Ocean Color
+attribute,Rrs_570,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_570,Product,String,Rrs_570
+attribute,Rrs_570,spectral_wavelength,String,570.0
+attribute,Rrs_570,standard_name,String,remote_sensing_reflectance_at_570nm
+attribute,Rrs_570,units,String,sr^-1
+variable,Rrs_573,,double,"time, latitude, longitude"
+attribute,Rrs_573,colorBarMaximum,double,0.01
+attribute,Rrs_573,colorBarMinimum,double,0.0
+attribute,Rrs_573,colorBarScale,String,Linear
+attribute,Rrs_573,ioos_category,String,Ocean Color
+attribute,Rrs_573,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_573,Product,String,Rrs_573
+attribute,Rrs_573,spectral_wavelength,String,573.0
+attribute,Rrs_573,standard_name,String,remote_sensing_reflectance_at_573nm
+attribute,Rrs_573,units,String,sr^-1
+variable,Rrs_575,,double,"time, latitude, longitude"
+attribute,Rrs_575,colorBarMaximum,double,0.01
+attribute,Rrs_575,colorBarMinimum,double,0.0
+attribute,Rrs_575,colorBarScale,String,Linear
+attribute,Rrs_575,ioos_category,String,Ocean Color
+attribute,Rrs_575,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_575,Product,String,Rrs_575
+attribute,Rrs_575,spectral_wavelength,String,575.0
+attribute,Rrs_575,standard_name,String,remote_sensing_reflectance_at_575nm
+attribute,Rrs_575,units,String,sr^-1
+variable,Rrs_578,,double,"time, latitude, longitude"
+attribute,Rrs_578,colorBarMaximum,double,0.01
+attribute,Rrs_578,colorBarMinimum,double,0.0
+attribute,Rrs_578,colorBarScale,String,Linear
+attribute,Rrs_578,ioos_category,String,Ocean Color
+attribute,Rrs_578,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_578,Product,String,Rrs_578
+attribute,Rrs_578,spectral_wavelength,String,578.0
+attribute,Rrs_578,standard_name,String,remote_sensing_reflectance_at_578nm
+attribute,Rrs_578,units,String,sr^-1
+variable,Rrs_580,,double,"time, latitude, longitude"
+attribute,Rrs_580,colorBarMaximum,double,0.01
+attribute,Rrs_580,colorBarMinimum,double,0.0
+attribute,Rrs_580,colorBarScale,String,Linear
+attribute,Rrs_580,ioos_category,String,Ocean Color
+attribute,Rrs_580,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_580,Product,String,Rrs_580
+attribute,Rrs_580,spectral_wavelength,String,580.0
+attribute,Rrs_580,standard_name,String,remote_sensing_reflectance_at_580nm
+attribute,Rrs_580,units,String,sr^-1
+variable,Rrs_583,,double,"time, latitude, longitude"
+attribute,Rrs_583,colorBarMaximum,double,0.01
+attribute,Rrs_583,colorBarMinimum,double,0.0
+attribute,Rrs_583,colorBarScale,String,Linear
+attribute,Rrs_583,ioos_category,String,Ocean Color
+attribute,Rrs_583,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_583,Product,String,Rrs_583
+attribute,Rrs_583,spectral_wavelength,String,583.0
+attribute,Rrs_583,standard_name,String,remote_sensing_reflectance_at_583nm
+attribute,Rrs_583,units,String,sr^-1
+variable,Rrs_586,,double,"time, latitude, longitude"
+attribute,Rrs_586,colorBarMaximum,double,0.01
+attribute,Rrs_586,colorBarMinimum,double,0.0
+attribute,Rrs_586,colorBarScale,String,Linear
+attribute,Rrs_586,ioos_category,String,Ocean Color
+attribute,Rrs_586,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_586,Product,String,Rrs_586
+attribute,Rrs_586,spectral_wavelength,String,586.0
+attribute,Rrs_586,standard_name,String,remote_sensing_reflectance_at_586nm
+attribute,Rrs_586,units,String,sr^-1
+variable,Rrs_588,,double,"time, latitude, longitude"
+attribute,Rrs_588,colorBarMaximum,double,0.01
+attribute,Rrs_588,colorBarMinimum,double,0.0
+attribute,Rrs_588,colorBarScale,String,Linear
+attribute,Rrs_588,ioos_category,String,Ocean Color
+attribute,Rrs_588,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_588,Product,String,Rrs_588
+attribute,Rrs_588,spectral_wavelength,String,588.0
+attribute,Rrs_588,standard_name,String,remote_sensing_reflectance_at_588nm
+attribute,Rrs_588,units,String,sr^-1
+variable,Rrs_613,,double,"time, latitude, longitude"
+attribute,Rrs_613,colorBarMaximum,double,0.01
+attribute,Rrs_613,colorBarMinimum,double,0.0
+attribute,Rrs_613,colorBarScale,String,Linear
+attribute,Rrs_613,ioos_category,String,Ocean Color
+attribute,Rrs_613,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_613,Product,String,Rrs_613
+attribute,Rrs_613,spectral_wavelength,String,613.0
+attribute,Rrs_613,standard_name,String,remote_sensing_reflectance_at_613nm
+attribute,Rrs_613,units,String,sr^-1
+variable,Rrs_615,,double,"time, latitude, longitude"
+attribute,Rrs_615,colorBarMaximum,double,0.01
+attribute,Rrs_615,colorBarMinimum,double,0.0
+attribute,Rrs_615,colorBarScale,String,Linear
+attribute,Rrs_615,ioos_category,String,Ocean Color
+attribute,Rrs_615,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_615,Product,String,Rrs_615
+attribute,Rrs_615,spectral_wavelength,String,615.0
+attribute,Rrs_615,standard_name,String,remote_sensing_reflectance_at_615nm
+attribute,Rrs_615,units,String,sr^-1
+variable,Rrs_618,,double,"time, latitude, longitude"
+attribute,Rrs_618,colorBarMaximum,double,0.01
+attribute,Rrs_618,colorBarMinimum,double,0.0
+attribute,Rrs_618,colorBarScale,String,Linear
+attribute,Rrs_618,ioos_category,String,Ocean Color
+attribute,Rrs_618,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_618,Product,String,Rrs_618
+attribute,Rrs_618,spectral_wavelength,String,618.0
+attribute,Rrs_618,standard_name,String,remote_sensing_reflectance_at_618nm
+attribute,Rrs_618,units,String,sr^-1
+variable,Rrs_620,,double,"time, latitude, longitude"
+attribute,Rrs_620,colorBarMaximum,double,0.01
+attribute,Rrs_620,colorBarMinimum,double,0.0
+attribute,Rrs_620,colorBarScale,String,Linear
+attribute,Rrs_620,ioos_category,String,Ocean Color
+attribute,Rrs_620,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_620,Product,String,Rrs_620
+attribute,Rrs_620,spectral_wavelength,String,620.0
+attribute,Rrs_620,standard_name,String,remote_sensing_reflectance_at_620nm
+attribute,Rrs_620,units,String,sr^-1
+variable,Rrs_623,,double,"time, latitude, longitude"
+attribute,Rrs_623,colorBarMaximum,double,0.01
+attribute,Rrs_623,colorBarMinimum,double,0.0
+attribute,Rrs_623,colorBarScale,String,Linear
+attribute,Rrs_623,ioos_category,String,Ocean Color
+attribute,Rrs_623,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_623,Product,String,Rrs_623
+attribute,Rrs_623,spectral_wavelength,String,623.0
+attribute,Rrs_623,standard_name,String,remote_sensing_reflectance_at_623nm
+attribute,Rrs_623,units,String,sr^-1
+variable,Rrs_625,,double,"time, latitude, longitude"
+attribute,Rrs_625,colorBarMaximum,double,0.01
+attribute,Rrs_625,colorBarMinimum,double,0.0
+attribute,Rrs_625,colorBarScale,String,Linear
+attribute,Rrs_625,ioos_category,String,Ocean Color
+attribute,Rrs_625,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_625,Product,String,Rrs_625
+attribute,Rrs_625,spectral_wavelength,String,625.0
+attribute,Rrs_625,standard_name,String,remote_sensing_reflectance_at_625nm
+attribute,Rrs_625,units,String,sr^-1
+variable,Rrs_627,,double,"time, latitude, longitude"
+attribute,Rrs_627,colorBarMaximum,double,0.01
+attribute,Rrs_627,colorBarMinimum,double,0.0
+attribute,Rrs_627,colorBarScale,String,Linear
+attribute,Rrs_627,ioos_category,String,Ocean Color
+attribute,Rrs_627,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_627,Product,String,Rrs_627
+attribute,Rrs_627,spectral_wavelength,String,627.0
+attribute,Rrs_627,standard_name,String,remote_sensing_reflectance_at_627nm
+attribute,Rrs_627,units,String,sr^-1
+variable,Rrs_630,,double,"time, latitude, longitude"
+attribute,Rrs_630,colorBarMaximum,double,0.01
+attribute,Rrs_630,colorBarMinimum,double,0.0
+attribute,Rrs_630,colorBarScale,String,Linear
+attribute,Rrs_630,ioos_category,String,Ocean Color
+attribute,Rrs_630,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_630,Product,String,Rrs_630
+attribute,Rrs_630,spectral_wavelength,String,630.0
+attribute,Rrs_630,standard_name,String,remote_sensing_reflectance_at_630nm
+attribute,Rrs_630,units,String,sr^-1
+variable,Rrs_632,,double,"time, latitude, longitude"
+attribute,Rrs_632,colorBarMaximum,double,0.01
+attribute,Rrs_632,colorBarMinimum,double,0.0
+attribute,Rrs_632,colorBarScale,String,Linear
+attribute,Rrs_632,ioos_category,String,Ocean Color
+attribute,Rrs_632,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_632,Product,String,Rrs_632
+attribute,Rrs_632,spectral_wavelength,String,632.0
+attribute,Rrs_632,standard_name,String,remote_sensing_reflectance_at_632nm
+attribute,Rrs_632,units,String,sr^-1
+variable,Rrs_635,,double,"time, latitude, longitude"
+attribute,Rrs_635,colorBarMaximum,double,0.01
+attribute,Rrs_635,colorBarMinimum,double,0.0
+attribute,Rrs_635,colorBarScale,String,Linear
+attribute,Rrs_635,ioos_category,String,Ocean Color
+attribute,Rrs_635,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_635,Product,String,Rrs_635
+attribute,Rrs_635,spectral_wavelength,String,635.0
+attribute,Rrs_635,standard_name,String,remote_sensing_reflectance_at_635nm
+attribute,Rrs_635,units,String,sr^-1
+variable,Rrs_637,,double,"time, latitude, longitude"
+attribute,Rrs_637,colorBarMaximum,double,0.01
+attribute,Rrs_637,colorBarMinimum,double,0.0
+attribute,Rrs_637,colorBarScale,String,Linear
+attribute,Rrs_637,ioos_category,String,Ocean Color
+attribute,Rrs_637,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_637,Product,String,Rrs_637
+attribute,Rrs_637,spectral_wavelength,String,637.0
+attribute,Rrs_637,standard_name,String,remote_sensing_reflectance_at_637nm
+attribute,Rrs_637,units,String,sr^-1
+variable,Rrs_640,,double,"time, latitude, longitude"
+attribute,Rrs_640,colorBarMaximum,double,0.01
+attribute,Rrs_640,colorBarMinimum,double,0.0
+attribute,Rrs_640,colorBarScale,String,Linear
+attribute,Rrs_640,ioos_category,String,Ocean Color
+attribute,Rrs_640,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_640,Product,String,Rrs_640
+attribute,Rrs_640,spectral_wavelength,String,640.0
+attribute,Rrs_640,standard_name,String,remote_sensing_reflectance_at_640nm
+attribute,Rrs_640,units,String,sr^-1
+variable,Rrs_641,,double,"time, latitude, longitude"
+attribute,Rrs_641,colorBarMaximum,double,0.01
+attribute,Rrs_641,colorBarMinimum,double,0.0
+attribute,Rrs_641,colorBarScale,String,Linear
+attribute,Rrs_641,ioos_category,String,Ocean Color
+attribute,Rrs_641,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_641,Product,String,Rrs_641
+attribute,Rrs_641,spectral_wavelength,String,641.0
+attribute,Rrs_641,standard_name,String,remote_sensing_reflectance_at_641nm
+attribute,Rrs_641,units,String,sr^-1
+variable,Rrs_642,,double,"time, latitude, longitude"
+attribute,Rrs_642,colorBarMaximum,double,0.01
+attribute,Rrs_642,colorBarMinimum,double,0.0
+attribute,Rrs_642,colorBarScale,String,Linear
+attribute,Rrs_642,ioos_category,String,Ocean Color
+attribute,Rrs_642,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_642,Product,String,Rrs_642
+attribute,Rrs_642,spectral_wavelength,String,642.0
+attribute,Rrs_642,standard_name,String,remote_sensing_reflectance_at_642nm
+attribute,Rrs_642,units,String,sr^-1
+variable,Rrs_643,,double,"time, latitude, longitude"
+attribute,Rrs_643,colorBarMaximum,double,0.01
+attribute,Rrs_643,colorBarMinimum,double,0.0
+attribute,Rrs_643,colorBarScale,String,Linear
+attribute,Rrs_643,ioos_category,String,Ocean Color
+attribute,Rrs_643,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_643,Product,String,Rrs_643
+attribute,Rrs_643,spectral_wavelength,String,643.0
+attribute,Rrs_643,standard_name,String,remote_sensing_reflectance_at_643nm
+attribute,Rrs_643,units,String,sr^-1
+variable,Rrs_645,,double,"time, latitude, longitude"
+attribute,Rrs_645,colorBarMaximum,double,0.01
+attribute,Rrs_645,colorBarMinimum,double,0.0
+attribute,Rrs_645,colorBarScale,String,Linear
+attribute,Rrs_645,ioos_category,String,Ocean Color
+attribute,Rrs_645,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_645,Product,String,Rrs_645
+attribute,Rrs_645,spectral_wavelength,String,645.0
+attribute,Rrs_645,standard_name,String,remote_sensing_reflectance_at_645nm
+attribute,Rrs_645,units,String,sr^-1
+variable,Rrs_646,,double,"time, latitude, longitude"
+attribute,Rrs_646,colorBarMaximum,double,0.01
+attribute,Rrs_646,colorBarMinimum,double,0.0
+attribute,Rrs_646,colorBarScale,String,Linear
+attribute,Rrs_646,ioos_category,String,Ocean Color
+attribute,Rrs_646,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_646,Product,String,Rrs_646
+attribute,Rrs_646,spectral_wavelength,String,646.0
+attribute,Rrs_646,standard_name,String,remote_sensing_reflectance_at_646nm
+attribute,Rrs_646,units,String,sr^-1
+variable,Rrs_647,,double,"time, latitude, longitude"
+attribute,Rrs_647,colorBarMaximum,double,0.01
+attribute,Rrs_647,colorBarMinimum,double,0.0
+attribute,Rrs_647,colorBarScale,String,Linear
+attribute,Rrs_647,ioos_category,String,Ocean Color
+attribute,Rrs_647,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_647,Product,String,Rrs_647
+attribute,Rrs_647,spectral_wavelength,String,647.0
+attribute,Rrs_647,standard_name,String,remote_sensing_reflectance_at_647nm
+attribute,Rrs_647,units,String,sr^-1
+variable,Rrs_648,,double,"time, latitude, longitude"
+attribute,Rrs_648,colorBarMaximum,double,0.01
+attribute,Rrs_648,colorBarMinimum,double,0.0
+attribute,Rrs_648,colorBarScale,String,Linear
+attribute,Rrs_648,ioos_category,String,Ocean Color
+attribute,Rrs_648,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_648,Product,String,Rrs_648
+attribute,Rrs_648,spectral_wavelength,String,648.0
+attribute,Rrs_648,standard_name,String,remote_sensing_reflectance_at_648nm
+attribute,Rrs_648,units,String,sr^-1
+variable,Rrs_650,,double,"time, latitude, longitude"
+attribute,Rrs_650,colorBarMaximum,double,0.01
+attribute,Rrs_650,colorBarMinimum,double,0.0
+attribute,Rrs_650,colorBarScale,String,Linear
+attribute,Rrs_650,ioos_category,String,Ocean Color
+attribute,Rrs_650,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_650,Product,String,Rrs_650
+attribute,Rrs_650,spectral_wavelength,String,650.0
+attribute,Rrs_650,standard_name,String,remote_sensing_reflectance_at_650nm
+attribute,Rrs_650,units,String,sr^-1
+variable,Rrs_651,,double,"time, latitude, longitude"
+attribute,Rrs_651,colorBarMaximum,double,0.01
+attribute,Rrs_651,colorBarMinimum,double,0.0
+attribute,Rrs_651,colorBarScale,String,Linear
+attribute,Rrs_651,ioos_category,String,Ocean Color
+attribute,Rrs_651,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_651,Product,String,Rrs_651
+attribute,Rrs_651,spectral_wavelength,String,651.0
+attribute,Rrs_651,standard_name,String,remote_sensing_reflectance_at_651nm
+attribute,Rrs_651,units,String,sr^-1
+variable,Rrs_652,,double,"time, latitude, longitude"
+attribute,Rrs_652,colorBarMaximum,double,0.01
+attribute,Rrs_652,colorBarMinimum,double,0.0
+attribute,Rrs_652,colorBarScale,String,Linear
+attribute,Rrs_652,ioos_category,String,Ocean Color
+attribute,Rrs_652,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_652,Product,String,Rrs_652
+attribute,Rrs_652,spectral_wavelength,String,652.0
+attribute,Rrs_652,standard_name,String,remote_sensing_reflectance_at_652nm
+attribute,Rrs_652,units,String,sr^-1
+variable,Rrs_653,,double,"time, latitude, longitude"
+attribute,Rrs_653,colorBarMaximum,double,0.01
+attribute,Rrs_653,colorBarMinimum,double,0.0
+attribute,Rrs_653,colorBarScale,String,Linear
+attribute,Rrs_653,ioos_category,String,Ocean Color
+attribute,Rrs_653,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_653,Product,String,Rrs_653
+attribute,Rrs_653,spectral_wavelength,String,653.0
+attribute,Rrs_653,standard_name,String,remote_sensing_reflectance_at_653nm
+attribute,Rrs_653,units,String,sr^-1
+variable,Rrs_655,,double,"time, latitude, longitude"
+attribute,Rrs_655,colorBarMaximum,double,0.01
+attribute,Rrs_655,colorBarMinimum,double,0.0
+attribute,Rrs_655,colorBarScale,String,Linear
+attribute,Rrs_655,ioos_category,String,Ocean Color
+attribute,Rrs_655,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_655,Product,String,Rrs_655
+attribute,Rrs_655,spectral_wavelength,String,655.0
+attribute,Rrs_655,standard_name,String,remote_sensing_reflectance_at_655nm
+attribute,Rrs_655,units,String,sr^-1
+variable,Rrs_656,,double,"time, latitude, longitude"
+attribute,Rrs_656,colorBarMaximum,double,0.01
+attribute,Rrs_656,colorBarMinimum,double,0.0
+attribute,Rrs_656,colorBarScale,String,Linear
+attribute,Rrs_656,ioos_category,String,Ocean Color
+attribute,Rrs_656,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_656,Product,String,Rrs_656
+attribute,Rrs_656,spectral_wavelength,String,656.0
+attribute,Rrs_656,standard_name,String,remote_sensing_reflectance_at_656nm
+attribute,Rrs_656,units,String,sr^-1
+variable,Rrs_657,,double,"time, latitude, longitude"
+attribute,Rrs_657,colorBarMaximum,double,0.01
+attribute,Rrs_657,colorBarMinimum,double,0.0
+attribute,Rrs_657,colorBarScale,String,Linear
+attribute,Rrs_657,ioos_category,String,Ocean Color
+attribute,Rrs_657,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_657,Product,String,Rrs_657
+attribute,Rrs_657,spectral_wavelength,String,657.0
+attribute,Rrs_657,standard_name,String,remote_sensing_reflectance_at_657nm
+attribute,Rrs_657,units,String,sr^-1
+variable,Rrs_658,,double,"time, latitude, longitude"
+attribute,Rrs_658,colorBarMaximum,double,0.01
+attribute,Rrs_658,colorBarMinimum,double,0.0
+attribute,Rrs_658,colorBarScale,String,Linear
+attribute,Rrs_658,ioos_category,String,Ocean Color
+attribute,Rrs_658,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_658,Product,String,Rrs_658
+attribute,Rrs_658,spectral_wavelength,String,658.0
+attribute,Rrs_658,standard_name,String,remote_sensing_reflectance_at_658nm
+attribute,Rrs_658,units,String,sr^-1
+variable,Rrs_660,,double,"time, latitude, longitude"
+attribute,Rrs_660,colorBarMaximum,double,0.01
+attribute,Rrs_660,colorBarMinimum,double,0.0
+attribute,Rrs_660,colorBarScale,String,Linear
+attribute,Rrs_660,ioos_category,String,Ocean Color
+attribute,Rrs_660,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_660,Product,String,Rrs_660
+attribute,Rrs_660,spectral_wavelength,String,660.0
+attribute,Rrs_660,standard_name,String,remote_sensing_reflectance_at_660nm
+attribute,Rrs_660,units,String,sr^-1
+variable,Rrs_661,,double,"time, latitude, longitude"
+attribute,Rrs_661,colorBarMaximum,double,0.01
+attribute,Rrs_661,colorBarMinimum,double,0.0
+attribute,Rrs_661,colorBarScale,String,Linear
+attribute,Rrs_661,ioos_category,String,Ocean Color
+attribute,Rrs_661,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_661,Product,String,Rrs_661
+attribute,Rrs_661,spectral_wavelength,String,661.0
+attribute,Rrs_661,standard_name,String,remote_sensing_reflectance_at_661nm
+attribute,Rrs_661,units,String,sr^-1
+variable,Rrs_662,,double,"time, latitude, longitude"
+attribute,Rrs_662,colorBarMaximum,double,0.01
+attribute,Rrs_662,colorBarMinimum,double,0.0
+attribute,Rrs_662,colorBarScale,String,Linear
+attribute,Rrs_662,ioos_category,String,Ocean Color
+attribute,Rrs_662,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_662,Product,String,Rrs_662
+attribute,Rrs_662,spectral_wavelength,String,662.0
+attribute,Rrs_662,standard_name,String,remote_sensing_reflectance_at_662nm
+attribute,Rrs_662,units,String,sr^-1
+variable,Rrs_663,,double,"time, latitude, longitude"
+attribute,Rrs_663,colorBarMaximum,double,0.01
+attribute,Rrs_663,colorBarMinimum,double,0.0
+attribute,Rrs_663,colorBarScale,String,Linear
+attribute,Rrs_663,ioos_category,String,Ocean Color
+attribute,Rrs_663,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_663,Product,String,Rrs_663
+attribute,Rrs_663,spectral_wavelength,String,663.0
+attribute,Rrs_663,standard_name,String,remote_sensing_reflectance_at_663nm
+attribute,Rrs_663,units,String,sr^-1
+variable,Rrs_665,,double,"time, latitude, longitude"
+attribute,Rrs_665,colorBarMaximum,double,0.01
+attribute,Rrs_665,colorBarMinimum,double,0.0
+attribute,Rrs_665,colorBarScale,String,Linear
+attribute,Rrs_665,ioos_category,String,Ocean Color
+attribute,Rrs_665,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_665,Product,String,Rrs_665
+attribute,Rrs_665,spectral_wavelength,String,665.0
+attribute,Rrs_665,standard_name,String,remote_sensing_reflectance_at_665nm
+attribute,Rrs_665,units,String,sr^-1
+variable,Rrs_666,,double,"time, latitude, longitude"
+attribute,Rrs_666,colorBarMaximum,double,0.01
+attribute,Rrs_666,colorBarMinimum,double,0.0
+attribute,Rrs_666,colorBarScale,String,Linear
+attribute,Rrs_666,ioos_category,String,Ocean Color
+attribute,Rrs_666,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_666,Product,String,Rrs_666
+attribute,Rrs_666,spectral_wavelength,String,666.0
+attribute,Rrs_666,standard_name,String,remote_sensing_reflectance_at_666nm
+attribute,Rrs_666,units,String,sr^-1
+variable,Rrs_667,,double,"time, latitude, longitude"
+attribute,Rrs_667,colorBarMaximum,double,0.01
+attribute,Rrs_667,colorBarMinimum,double,0.0
+attribute,Rrs_667,colorBarScale,String,Linear
+attribute,Rrs_667,ioos_category,String,Ocean Color
+attribute,Rrs_667,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_667,Product,String,Rrs_667
+attribute,Rrs_667,spectral_wavelength,String,667.0
+attribute,Rrs_667,standard_name,String,remote_sensing_reflectance_at_667nm
+attribute,Rrs_667,units,String,sr^-1
+variable,Rrs_668,,double,"time, latitude, longitude"
+attribute,Rrs_668,colorBarMaximum,double,0.01
+attribute,Rrs_668,colorBarMinimum,double,0.0
+attribute,Rrs_668,colorBarScale,String,Linear
+attribute,Rrs_668,ioos_category,String,Ocean Color
+attribute,Rrs_668,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_668,Product,String,Rrs_668
+attribute,Rrs_668,spectral_wavelength,String,668.0
+attribute,Rrs_668,standard_name,String,remote_sensing_reflectance_at_668nm
+attribute,Rrs_668,units,String,sr^-1
+variable,Rrs_670,,double,"time, latitude, longitude"
+attribute,Rrs_670,colorBarMaximum,double,0.01
+attribute,Rrs_670,colorBarMinimum,double,0.0
+attribute,Rrs_670,colorBarScale,String,Linear
+attribute,Rrs_670,ioos_category,String,Ocean Color
+attribute,Rrs_670,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_670,Product,String,Rrs_670
+attribute,Rrs_670,spectral_wavelength,String,670.0
+attribute,Rrs_670,standard_name,String,remote_sensing_reflectance_at_670nm
+attribute,Rrs_670,units,String,sr^-1
+variable,Rrs_671,,double,"time, latitude, longitude"
+attribute,Rrs_671,colorBarMaximum,double,0.01
+attribute,Rrs_671,colorBarMinimum,double,0.0
+attribute,Rrs_671,colorBarScale,String,Linear
+attribute,Rrs_671,ioos_category,String,Ocean Color
+attribute,Rrs_671,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_671,Product,String,Rrs_671
+attribute,Rrs_671,spectral_wavelength,String,671.0
+attribute,Rrs_671,standard_name,String,remote_sensing_reflectance_at_671nm
+attribute,Rrs_671,units,String,sr^-1
+variable,Rrs_672,,double,"time, latitude, longitude"
+attribute,Rrs_672,colorBarMaximum,double,0.01
+attribute,Rrs_672,colorBarMinimum,double,0.0
+attribute,Rrs_672,colorBarScale,String,Linear
+attribute,Rrs_672,ioos_category,String,Ocean Color
+attribute,Rrs_672,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_672,Product,String,Rrs_672
+attribute,Rrs_672,spectral_wavelength,String,672.0
+attribute,Rrs_672,standard_name,String,remote_sensing_reflectance_at_672nm
+attribute,Rrs_672,units,String,sr^-1
+variable,Rrs_673,,double,"time, latitude, longitude"
+attribute,Rrs_673,colorBarMaximum,double,0.01
+attribute,Rrs_673,colorBarMinimum,double,0.0
+attribute,Rrs_673,colorBarScale,String,Linear
+attribute,Rrs_673,ioos_category,String,Ocean Color
+attribute,Rrs_673,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_673,Product,String,Rrs_673
+attribute,Rrs_673,spectral_wavelength,String,673.0
+attribute,Rrs_673,standard_name,String,remote_sensing_reflectance_at_673nm
+attribute,Rrs_673,units,String,sr^-1
+variable,Rrs_675,,double,"time, latitude, longitude"
+attribute,Rrs_675,colorBarMaximum,double,0.01
+attribute,Rrs_675,colorBarMinimum,double,0.0
+attribute,Rrs_675,colorBarScale,String,Linear
+attribute,Rrs_675,ioos_category,String,Ocean Color
+attribute,Rrs_675,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_675,Product,String,Rrs_675
+attribute,Rrs_675,spectral_wavelength,String,675.0
+attribute,Rrs_675,standard_name,String,remote_sensing_reflectance_at_675nm
+attribute,Rrs_675,units,String,sr^-1
+variable,Rrs_676,,double,"time, latitude, longitude"
+attribute,Rrs_676,colorBarMaximum,double,0.01
+attribute,Rrs_676,colorBarMinimum,double,0.0
+attribute,Rrs_676,colorBarScale,String,Linear
+attribute,Rrs_676,ioos_category,String,Ocean Color
+attribute,Rrs_676,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_676,Product,String,Rrs_676
+attribute,Rrs_676,spectral_wavelength,String,676.0
+attribute,Rrs_676,standard_name,String,remote_sensing_reflectance_at_676nm
+attribute,Rrs_676,units,String,sr^-1
+variable,Rrs_677,,double,"time, latitude, longitude"
+attribute,Rrs_677,colorBarMaximum,double,0.01
+attribute,Rrs_677,colorBarMinimum,double,0.0
+attribute,Rrs_677,colorBarScale,String,Linear
+attribute,Rrs_677,ioos_category,String,Ocean Color
+attribute,Rrs_677,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_677,Product,String,Rrs_677
+attribute,Rrs_677,spectral_wavelength,String,677.0
+attribute,Rrs_677,standard_name,String,remote_sensing_reflectance_at_677nm
+attribute,Rrs_677,units,String,sr^-1
+variable,Rrs_678,,double,"time, latitude, longitude"
+attribute,Rrs_678,colorBarMaximum,double,0.01
+attribute,Rrs_678,colorBarMinimum,double,0.0
+attribute,Rrs_678,colorBarScale,String,Linear
+attribute,Rrs_678,ioos_category,String,Ocean Color
+attribute,Rrs_678,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_678,Product,String,Rrs_678
+attribute,Rrs_678,spectral_wavelength,String,678.0
+attribute,Rrs_678,standard_name,String,remote_sensing_reflectance_at_678nm
+attribute,Rrs_678,units,String,sr^-1
+variable,Rrs_679,,double,"time, latitude, longitude"
+attribute,Rrs_679,colorBarMaximum,double,0.01
+attribute,Rrs_679,colorBarMinimum,double,0.0
+attribute,Rrs_679,colorBarScale,String,Linear
+attribute,Rrs_679,ioos_category,String,Ocean Color
+attribute,Rrs_679,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_679,Product,String,Rrs_679
+attribute,Rrs_679,spectral_wavelength,String,679.0
+attribute,Rrs_679,standard_name,String,remote_sensing_reflectance_at_679nm
+attribute,Rrs_679,units,String,sr^-1
+variable,Rrs_681,,double,"time, latitude, longitude"
+attribute,Rrs_681,colorBarMaximum,double,0.01
+attribute,Rrs_681,colorBarMinimum,double,0.0
+attribute,Rrs_681,colorBarScale,String,Linear
+attribute,Rrs_681,ioos_category,String,Ocean Color
+attribute,Rrs_681,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_681,Product,String,Rrs_681
+attribute,Rrs_681,spectral_wavelength,String,681.0
+attribute,Rrs_681,standard_name,String,remote_sensing_reflectance_at_681nm
+attribute,Rrs_681,units,String,sr^-1
+variable,Rrs_682,,double,"time, latitude, longitude"
+attribute,Rrs_682,colorBarMaximum,double,0.01
+attribute,Rrs_682,colorBarMinimum,double,0.0
+attribute,Rrs_682,colorBarScale,String,Linear
+attribute,Rrs_682,ioos_category,String,Ocean Color
+attribute,Rrs_682,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_682,Product,String,Rrs_682
+attribute,Rrs_682,spectral_wavelength,String,682.0
+attribute,Rrs_682,standard_name,String,remote_sensing_reflectance_at_682nm
+attribute,Rrs_682,units,String,sr^-1
+variable,Rrs_683,,double,"time, latitude, longitude"
+attribute,Rrs_683,colorBarMaximum,double,0.01
+attribute,Rrs_683,colorBarMinimum,double,0.0
+attribute,Rrs_683,colorBarScale,String,Linear
+attribute,Rrs_683,ioos_category,String,Ocean Color
+attribute,Rrs_683,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_683,Product,String,Rrs_683
+attribute,Rrs_683,spectral_wavelength,String,683.0
+attribute,Rrs_683,standard_name,String,remote_sensing_reflectance_at_683nm
+attribute,Rrs_683,units,String,sr^-1
+variable,Rrs_684,,double,"time, latitude, longitude"
+attribute,Rrs_684,colorBarMaximum,double,0.01
+attribute,Rrs_684,colorBarMinimum,double,0.0
+attribute,Rrs_684,colorBarScale,String,Linear
+attribute,Rrs_684,ioos_category,String,Ocean Color
+attribute,Rrs_684,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_684,Product,String,Rrs_684
+attribute,Rrs_684,spectral_wavelength,String,684.0
+attribute,Rrs_684,standard_name,String,remote_sensing_reflectance_at_684nm
+attribute,Rrs_684,units,String,sr^-1
+variable,Rrs_686,,double,"time, latitude, longitude"
+attribute,Rrs_686,colorBarMaximum,double,0.01
+attribute,Rrs_686,colorBarMinimum,double,0.0
+attribute,Rrs_686,colorBarScale,String,Linear
+attribute,Rrs_686,ioos_category,String,Ocean Color
+attribute,Rrs_686,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_686,Product,String,Rrs_686
+attribute,Rrs_686,spectral_wavelength,String,686.0
+attribute,Rrs_686,standard_name,String,remote_sensing_reflectance_at_686nm
+attribute,Rrs_686,units,String,sr^-1
+variable,Rrs_687,,double,"time, latitude, longitude"
+attribute,Rrs_687,colorBarMaximum,double,0.01
+attribute,Rrs_687,colorBarMinimum,double,0.0
+attribute,Rrs_687,colorBarScale,String,Linear
+attribute,Rrs_687,ioos_category,String,Ocean Color
+attribute,Rrs_687,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_687,Product,String,Rrs_687
+attribute,Rrs_687,spectral_wavelength,String,687.0
+attribute,Rrs_687,standard_name,String,remote_sensing_reflectance_at_687nm
+attribute,Rrs_687,units,String,sr^-1
+variable,Rrs_688,,double,"time, latitude, longitude"
+attribute,Rrs_688,colorBarMaximum,double,0.01
+attribute,Rrs_688,colorBarMinimum,double,0.0
+attribute,Rrs_688,colorBarScale,String,Linear
+attribute,Rrs_688,ioos_category,String,Ocean Color
+attribute,Rrs_688,long_name,String,Remote_Sensing_Reflectance(Rrs)
+attribute,Rrs_688,Product,String,Rrs_688
+attribute,Rrs_688,spectral_wavelength,String,688.0
+attribute,Rrs_688,standard_name,String,remote_sensing_reflectance_at_688nm
+attribute,Rrs_688,units,String,sr^-1
+variable,avw,,double,"time, latitude, longitude"
+attribute,avw,colorBarMaximum,double,705.0
+attribute,avw,colorBarMinimum,double,335.0
+attribute,avw,colorBarScale,String,Linear
+attribute,avw,ioos_category,String,Ocean Color
+attribute,avw,long_name,String,Apparent_Visible_Wavelength
+attribute,avw,Product,String,avw
+attribute,avw,standard_name,String,apparent_visible_wavelength
+attribute,avw,units,String,nm
+variable,ABI,,double,"time, latitude, longitude"
+attribute,ABI,colorBarMaximum,double,0.4
+attribute,ABI,colorBarMinimum,double,0.0
+attribute,ABI,colorBarScale,String,Linear
+attribute,ABI,ioos_category,String,Ocean Color
+attribute,ABI,long_name,String,Algal Bloom Index (ABI)
+attribute,ABI,Product,String,ABI
+attribute,ABI,standard_name,String,algal bloom index (abi)
+attribute,ABI,units,String,mW cm^-2 um^-1 sr^-1
+variable,STRAYLIGHT_MASK,,double,"time, latitude, longitude"
+attribute,STRAYLIGHT_MASK,colorBarMaximum,double,1.0
+attribute,STRAYLIGHT_MASK,colorBarMinimum,double,0.0
+attribute,STRAYLIGHT_MASK,ioos_category,String,Ocean Color
+attribute,STRAYLIGHT_MASK,long_name,String,Straylight mask based on Level-2 straylight flag
+attribute,STRAYLIGHT_MASK,Product,String,STRAYLIGHT_MASK
+attribute,STRAYLIGHT_MASK,units,String,none
