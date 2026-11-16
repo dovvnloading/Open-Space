@@ -28,17 +28,34 @@ for s in [2,3]:
    pairs=np.unique(np.stack([anc[f'STIM_{k}_X'][aq],anc[f'STIM_{k}_Y'][aq]],axis=1),axis=0)
    for cx,cy in pairs:
     centers.append([int(cx),int(cy)]);stim|=(abs(x['DETECTOR_X']-cx)<=16)&(abs(x['DETECTOR_Y']-cy)<=16)
-  lat,lon,inc,em,w=[x[k] for k in ['JUPITER_LAT_400km','JUPITER_LON_400km','INCIDENCE_ANGLE','EMISSION_ANGLE','WAVELENGTH']];on=(abs(lat)<=90)&(lon>=0)&(lon<360)&(em>=0)&(em<90);night=on&(inc>90)&(inc<=180);long=(w>=170)&(w<200);valid=~masked&~stim;bn=np.floor(t/.02).astype(int);cells=np.floor((np.clip(lat,-90,90)+90)/2).astype(int)*180+np.floor(np.clip(lon,0,359.999)/2).astype(int)
-  def scan(q):
-   c=np.bincount(bn[q],minlength=int(np.ceil((hi-lo)/.02)));tr=[]
-   for j in np.flatnonzero(c>=20):
-    v,n=np.unique(cells[q&(bn==j)],return_counts=True)
-    if n.max()/c[j]>=.6:tr.append({'bin':int(j),'counts':int(c[j]),'cell':int(v[n.argmax()]),'fraction':float(n.max()/c[j])})
-   return {'max_counts':int(c.max()),'count_cut_bins':int((c>=20).sum()),'triggers':tr,'occupied_bins':int((c>0).sum())}
+  lat,lon,inc,em,w=[x[k] for k in ['JUPITER_LAT_400km','JUPITER_LON_400km','INCIDENCE_ANGLE','EMISSION_ANGLE','WAVELENGTH']];on=(abs(lat)<=90)&(lon>=0)&(lon<360)&(em>=0)&(em<90);night=on&(inc>90)&(inc<=180);long=(w>=170)&(w<200);valid=~masked&~stim;bn=np.floor(t/.02).astype(int)
+  def scan(q, *, localize=True):
+   counts = np.bincount(bn[q], minlength=int(np.ceil((hi-lo)/.02)))
+   above = np.flatnonzero(counts >= 20)
+   result = {'max_counts': int(counts.max()), 'count_cut_bins': len(above),
+             'occupied_bins': int((counts > 0).sum())}
+   if not localize:
+    result['count_threshold_bins'] = [{'bin': int(j), 'counts': int(counts[j])} for j in above]
+    return result
+   if np.any(q & ~on):
+    raise ValueError('Planetary localization requires on-disc photons')
+   triggers = []
+   for j in above:
+    in_bin = q & (bn == j)
+    lat_cell = np.minimum(np.floor((lat[in_bin] + 90) / 2).astype(int), 89)
+    lon_cell = np.floor(lon[in_bin] / 2).astype(int)
+    cells, totals = np.unique(lat_cell * 180 + lon_cell, return_counts=True)
+    peak = totals.argmax()
+    fraction = totals[peak] / counts[j]
+    if fraction >= .6:
+     triggers.append({'bin': int(j), 'counts': int(counts[j]),
+                      'cell': int(cells[peak]), 'fraction': float(fraction)})
+   result['triggers'] = triggers
+   return result
   groups=np.floor(t/.1).astype(int)*10000+(x['DETECTOR_Y']//16)*10+night.astype(int);idx=[np.flatnonzero(groups==g) for g in np.unique(groups)];null=[]
   for seed in range(20):
    rng=np.random.default_rng(seed);lab=long.copy()
    for ids in idx:lab[ids]=rng.permutation(lab[ids])
    z=scan(night&valid&lab);null.append({'seed':seed,'max_counts':z['max_counts'],'triggers':len(z['triggers'])})
-  nt=t[night&valid];r={**a,'mask_names':masknames,'actual_tags':tags.tolist(),'frame_quality':np.unique(frames['FRAME_QUALITY'][fq]).tolist(),'masked_photons':int(masked.sum()),'stim_centers':centers,'stim_box_half_width':16,'stim_removed_photons':int(stim.sum()),'stim_removed_night_photons':int((stim&night).sum()),'on_disc_photons':int(on.sum()),'nightside_valid_photons':int((night&valid).sum()),'nightside_longwave_valid_photons':int((night&long&valid).sum()),'night_photon_time_support':[float(nt.min()),float(nt.max())] if len(nt) else [],'max_gap_between_night_photons':float(np.diff(nt).max()) if len(nt)>1 else None,'night_any_wavelength_occupied_20ms_bins':int(len(np.unique(bn[night&valid]))),'nightside':scan(night&long&valid),'dayside':scan(on&~night&long&valid),'off_disc':scan(~on&long&valid),'conditional_diagnostics':null};results.append(r)
+  nt=t[night&valid];r={**a,'mask_names':masknames,'actual_tags':tags.tolist(),'frame_quality':np.unique(frames['FRAME_QUALITY'][fq]).tolist(),'masked_photons':int(masked.sum()),'stim_centers':centers,'stim_box_half_width':16,'stim_removed_photons':int(stim.sum()),'stim_removed_night_photons':int((stim&night).sum()),'on_disc_photons':int(on.sum()),'nightside_valid_photons':int((night&valid).sum()),'nightside_longwave_valid_photons':int((night&long&valid).sum()),'night_photon_time_support':[float(nt.min()),float(nt.max())] if len(nt) else [],'max_gap_between_night_photons':float(np.diff(nt).max()) if len(nt)>1 else None,'night_any_wavelength_occupied_20ms_bins':int(len(np.unique(bn[night&valid]))),'nightside':scan(night&long&valid),'dayside':scan(on&~night&long&valid),'off_disc':scan(~on&long&valid, localize=False),'conditional_diagnostics':null};results.append(r)
 (o/'systematic-results.json').write_text(json.dumps({'intervals':results,'limits':['Nominal time and photon-occupied bins are not effective exposure','No injection completeness or physical false-alarm calibration','Conditional wavelength labels break exact detector-X mapping','Masks unioned conservatively across actual tags; STIM unioned across sampled centers','Sampled HK does not prove loss-free observing']},indent=2));print([(r['file'][:7],r['hk_indices'],r['nightside_valid_photons'],r['nightside_longwave_valid_photons'],r['nightside']['max_counts'],len(r['nightside']['triggers'])) for r in results])
