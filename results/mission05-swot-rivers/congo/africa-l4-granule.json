@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "concept-type": "granule",
+    "concept-id": "G3927135650-POCLOUD",
+    "revision-id": 4,
+    "native-id": "af_sword_v16_SOS_results_unconstrained_20230502T204408_20250502T204408_20251219T163700",
+    "collection-concept-id": "C3905028734-POCLOUD",
+    "provider-id": "POCLOUD",
+    "format": "application/vnd.nasa.cmr.umm+json",
+    "revision-date": "2026-01-13T00:21:09.820Z"
+  },
+  "umm": {
+    "TemporalExtent": {
+      "RangeDateTime": {
+        "EndingDateTime": "2025-05-02T21:56:59.000Z",
+        "BeginningDateTime": "2023-03-30T20:20:53.000Z"
+      }
+    },
+    "MetadataSpecification": {
+      "URL": "https://cdn.earthdata.nasa.gov/umm/granule/v1.6.7",
+      "Name": "UMM-G",
+      "Version": "1.6.7"
+    },
+    "GranuleUR": "af_sword_v16_SOS_results_unconstrained_20230502T204408_20250502T204408_20251219T163700",
+    "ProviderDates": [
+      {
+        "Type": "Insert",
+        "Date": "2026-01-13T00:21:01.096Z"
+      },
+      {
+        "Type": "Update",
+        "Date": "2026-01-13T00:21:01.096Z"
+      }
+    ],
+    "SpatialExtent": {
+      "HorizontalSpatialDomain": {
+        "Geometry": {
+          "BoundingRectangles": [
+            {
+              "WestBoundingCoordinate": -16.598,
+              "SouthBoundingCoordinate": -34.496,
+              "EastBoundingCoordinate": 180,
+              "NorthBoundingCoordinate": 37.025
+            },
+            {
+              "WestBoundingCoordinate": -180,
+              "SouthBoundingCoordinate": -34.496,
+              "EastBoundingCoordinate": -34.496,
+              "NorthBoundingCoordinate": 37.025
+            }
+          ]
+        }
+      }
+    },
+    "DataGranule": {
+      "ArchiveAndDistributionInformation": [
+        {
+          "SizeUnit": "MB",
+          "Size": 4239.068767547607,
+          "SizeInBytes": 4444985772,
+          "Name": "af_sword_v16_SOS_results_unconstrained_20230502T204408_20250502T204408_20251219T163700.nc"
+        }
+      ],
+      "DayNightFlag": "Unspecified",
+      "ProductionDateTime": "2025-12-19T23:21:10.000Z"
+    },
+    "CollectionReference": {
+      "Version": "3",
+      "ShortName": "SWOT_L4_HR_DAWG_SOS_DISCHARGE_V3"
+    },
+    "RelatedUrls": [
+      {
+        "URL": "https://archive.swot.podaac.earthdata.nasa.gov/podaac-swot-ops-cumulus-protected/SWOT_L4_HR_DAWG_SOS_DISCHARGE_V3/af_sword_v16_SOS_results_unconstrained_20230502T204408_20250502T204408_20251219T163700.nc",
+        "Description": "Download af_sword_v16_SOS_results_unconstrained_20230502T204408_20250502T204408_20251219T163700.nc",
+        "Type": "GET DATA"
+      },
+      {
+        "URL": "s3://podaac-swot-ops-cumulus-protected/SWOT_L4_HR_DAWG_SOS_DISCHARGE_V3/af_sword_v16_SOS_results_unconstrained_20230502T204408_20250502T204408_20251219T163700.nc",
+        "Description": "This link provides direct download access via S3 to the granule",
+        "Type": "GET DATA VIA DIRECT ACCESS"
+      },
+      {
+        "URL": "https://archive.swot.podaac.earthdata.nasa.gov/s3credentials",
+        "Description": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+        "Type": "VIEW RELATED INFORMATION"
+      }
+    ]
+  }
+}
