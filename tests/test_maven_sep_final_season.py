@@ -1,14 +1,18 @@
 """Offline invariants for the independent 2025 MAVEN particle-event scan."""
 import unittest
 
-import numpy as np
-import pandas as pd
+try:
+    import numpy as np
+    import pandas as pd
+    from examples.maven_sep_final_season import (
+        ELECTRON, ION, find_events, sep_metrics, summarize_hours,
+    )
+    HAS_ANALYSIS_EXTRA = True
+except ImportError:
+    HAS_ANALYSIS_EXTRA = False
 
-from examples.maven_sep_final_season import (
-    ELECTRON, ION, find_events, sep_metrics, summarize_hours,
-)
 
-
+@unittest.skipUnless(HAS_ANALYSIS_EXTRA, 'needs the optional numpy+pandas analysis environment')
 class MavenSepFinalSeasonTests(unittest.TestCase):
     def make_data(self, count=400):
         times = pd.date_range("2025-08-25T20:00:00Z", periods=count, freq="8s")
