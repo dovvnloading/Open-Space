@@ -6,7 +6,7 @@ A structured excess is inconsistent with the simplest smooth continua at nominal
 ## Model
 Use exact official Band5 shifted middle-pixel responses from `swan_response.py`, which locates the target on full-resolution band-center maps. Convolve a normalized Gaussian in F_lambda with each response and ideal photon-count response weighting. This is a phenomenological shape, NOT a CO2 rotational/fluorescence model. Different epochs have separate amplitude and constant continuum. Training center permitted4.23–4.29um, Gaussian sigma0.0005–0.04um. Positive emission amplitude required. Background continuum may be signed.
 
-Fit December22 and25: three accepted samples per epoch, six measurements total. Two shared shape parameters plus two amplitudes plus two constants = SIX parameters. Training has ZERO degrees of freedom. Exact interpolation must not be sold as detection-model validation. Allowing a linear continuum gives eight parameters for six observations: the shape is underidentified. A best-fit optimizer output in that model has no unique physical meaning.
+Fit December22 and25: three accepted samples per epoch, six measurements total. Two shared shape parameters plus two amplitudes plus two constants = SIX parameters. Training has ZERO residual degrees of freedom. Exact interpolation must not be sold as detection-model validation. Allowing a linear continuum gives eight parameters for six observations: the shape is underidentified. A best-fit optimizer output in that model has no unique physical meaning.
 
 Hold out January2 four-point sequence; freeze December shape but refit January2 amplitude and continuum. This tests shape transfer, not completely parameter-free prediction.
 
@@ -33,6 +33,6 @@ tar -xf calibration.tar -C calibration --wildcards 'ChannelMaps/*17*' 'FidSpecSu
 python examples/swan_response.py --input results/spherex-dr1-moving-spectra/swan-full-d5.json --output swan_response_full.json --calibration-root calibration --cache-root FITS_CACHE
 python examples/fit_empirical_feature.py --input swan_response_full.json --output empirical_feature_fit.json --calibration-root calibration
 ```
-Each FITS_CACHE filename is SHA256(exact URL UTF-8)+'.fits'. Download the URL verbatim and validate bytes against its recorded sha256. Input snapshot may include extra unneeded epochs; the empirical script explicitly selects December22,25 and January2 withbandcenter>4.1um. Archive snapshots before updating partial survey inputs.
+The frozen fit verifies all ten expected exposure IDs. The response replay checks the archived checksum of each acquired FITS and reports acquisition or calibration exclusions by exposure ID. Each FITS_CACHE filename is SHA256(exact URL UTF-8)+'.fits'. Download the URL verbatim and validate bytes against its recorded sha256. Input snapshot may include extra unneeded epochs; the empirical script explicitly selects December22,25 and January2 withbandcenter>4.1um. Archive snapshots before updating partial survey inputs.
 
 Do not commit the436MB tar unnecessarily. The source route, exact hash and selected calibration products preserve provenance.

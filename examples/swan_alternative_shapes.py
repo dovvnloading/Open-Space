@@ -3,11 +3,13 @@ Input is output of swan_response.py. Model outputs remain aperture MJy/sr sums.
 """
 import argparse,json
 from pathlib import Path
+from swan_fit_sample import residual_dof, verify_fit_sample
 import numpy as np
 from scipy.integrate import trapezoid
 from scipy.optimize import differential_evolution
 ap=argparse.ArgumentParser();ap.add_argument('--input',required=True);ap.add_argument('--output',required=True);ap.add_argument('--calibration-root',required=True);ap.add_argument('--profile',choices=['gaussian','lorentzian','triangle'],default='lorentzian');args=ap.parse_args()
 rows=json.load(open(args.input));cal=Path(args.calibration_root);epochs=['2025-12-22','2025-12-25','2026-01-02'];rows=[r for r in rows if r['start'][:10] in epochs and r['map_bc_um']>4.1 and r['diagnostic_outlier_inclusive'].get('2.5')]
+verify_fit_sample(rows)
 wave=np.linspace(4.05,4.48,4301);resp=[]
 for r in rows:
  ch=r['channel'];p=cal/f'MiddlePixel/SubChannel17/Band5/FiducialSpec_Band5_SubCh{ch:02d}_17_Cent.csv';s=np.genfromtxt(p,delimiter=',',names=True);w=s['Wavelength_um']+r['shift_um'];R=s['NormTransmission'];resp.append(np.interp(wave,w,R,left=0,right=0)/trapezoid(R/w,w))
@@ -27,7 +29,7 @@ def run(aperture='2.5',floor=0.,linear=False):
   return sum(f['chi2'] for f in fits)
  opt=differential_evolution(objective,[(4.23,4.29),(.0005,.08)],seed=17,tol=1e-8,popsize=12,maxiter=100,polish=True)
  t=modelshape(*opt.x);tr=[regress(t,group==i) for i in [0,1]];te=regress(t,test);null=[regress(t,group==i,False) for i in range(3)]
- return dict(aperture=aperture,fractional_error_floor=floor,continuum='linear' if linear else 'constant',center_um=float(opt.x[0]),sigma_um=float(opt.x[1]),train_chi2=float(opt.fun),train_dof=6-(2*(3 if linear else 2)+2),train=tr,heldout=te,heldout_dof=4-(3 if linear else 2),continuum_only=null,template=t.tolist(),observed=y.tolist(),errors=e.tolist())
+ return dict(aperture=aperture,fractional_error_floor=floor,continuum='linear' if linear else 'constant',center_um=float(opt.x[0]),sigma_um=float(opt.x[1]),train_chi2=float(opt.fun),train_dof=residual_dof(tr, shared_parameters=2),train=tr,heldout=te,heldout_dof=residual_dof([te]),continuum_only=null,template=t.tolist(),observed=y.tolist(),errors=e.tolist())
 results=[run(),run(aperture='3.5')]
 grid=[]
 report=dict(profile=args.profile,warning='Empirical response-shape test only; no molecular identification. Training has zero degrees of freedom with constant baselines; linear baseline underidentified. Heldout permits amplitude/baseline refit, not wholly parameter-free prediction. Noise floors are sensitivity assumptions, not calibrated errors.',observations=[dict(observationid=r['observationid'],start=r['start'],bc=r['map_bc_um']) for r in rows],fits=results,training_near_fit_grid=grid)

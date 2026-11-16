@@ -17,4 +17,24 @@ class ApertureTests(unittest.TestCase):
   self.assertEqual(aperture(im,v,f,30,30,2.5,True)['sum_mjysr'],9)
  def test_edge(self):
   a=np.ones((60,60));self.assertIsNone(aperture(a,a,np.zeros(a.shape,dtype=int),0,0,2.5))
-if __name__=='__main__':unittest.main()
+
+
+class FrozenFitTests(unittest.TestCase):
+    def test_missing_january_exposure_is_named(self):
+        from examples.swan_fit_sample import FROZEN_EXPOSURES, verify_fit_sample
+
+        rows = [{'observationid': name} for name in FROZEN_EXPOSURES]
+        verify_fit_sample(rows)
+        with self.assertRaisesRegex(ValueError, '2026W01_2A_0193_4'):
+            verify_fit_sample(rows[:-1])
+
+    def test_residual_dof_uses_fitted_rank(self):
+        from examples.swan_fit_sample import residual_dof
+
+        self.assertEqual(residual_dof([{'n': 4, 'rank': 2}]), 2)
+        self.assertEqual(residual_dof([{'n': 3, 'rank': 2}]), 1)
+        self.assertEqual(residual_dof([{'n': 3, 'rank': 3}] * 2, shared_parameters=2), 0)
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -15,14 +15,23 @@ bc=fits.getdata(cal/'ParameterFiles/20260604_SSDC_BC_Band5.fits',1);bw=fits.getd
 summary=np.genfromtxt(next((cal/'FidSpecSummary/SubChannel17/Band5').glob('*.csv')),delimiter=',',names=True)
 rows=json.load(open(args.input));out=[]
 for r in rows:
- if r.get('detector')!='D5' or 'error' in r:continue
+ if r.get('detector') != 'D5':
+  continue
+ if 'error' in r:
+  print(r['observationid'], 'archived acquisition failure:', r['error'], file=sys.stderr)
+  continue
  file=Path(args.cache_root)/(hashlib.sha256(r['url'].encode()).hexdigest()+'.fits')
- if not file.exists():continue
+ if not file.is_file():
+  raise FileNotFoundError(f"Missing cached FITS for {r['observationid']}: {file}")
+ if hashlib.sha256(file.read_bytes()).hexdigest() != r['sha256']:
+  raise ValueError(f"FITS checksum mismatch for {r['observationid']}: {file}")
  with fits.open(file) as h:
   wa=WCS(h['IMAGE'].header,key='A');wa.sip=None;x,y=wa.wcs_pix2world(r['x'],r['y'],0)
   x=float(x);y=float(y)
  cen=float(map_coordinates(bc,[[y],[2039-x]],order=1)[0]);width=float(map_coordinates(bw,[[y],[2039-x]],order=1)[0]);channel=int(ch[int(round(y)),int(round(x))]);
- if not 1<=channel<=17:continue
+ if not 1 <= channel <= 17:
+  print(r['observationid'], 'outside the calibrated channels:', channel, file=sys.stderr)
+  continue
  spec=np.genfromtxt(cal/f'MiddlePixel/SubChannel17/Band5/FiducialSpec_Band5_SubCh{channel:02d}_17_Cent.csv',delimiter=',',names=True)
  fidcen=float(summary['BandCenter_um'][channel-1]);wave=spec['Wavelength_um']+(cen-fidcen);R=spec['NormTransmission'];normal=trapezoid(R/wave,wave)
  # Relative photon-count response for delta f_lambda line in F_nu-calibrated image: lambda_line R(lambda_line) / integral(R/lambda dlambda). Arbitrary common normalization.

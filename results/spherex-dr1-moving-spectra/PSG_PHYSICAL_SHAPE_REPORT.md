@@ -14,7 +14,7 @@ The original 67P configuration explicitly supplies GSFC[CO2] fluorescence and a 
 All four successful responses identify Cometary Emission Model, CO2, and GSFC[CO2]. Only their final **CO2 column** is used; nucleus and dust columns are excluded. Output is F_lambda in W/m²/µm at R=3000 from 4.10 to 4.45 µm. Each spectrum is area-normalized before fitting. The model is integrated through the official Band5 MiddlePixel response shifted to each target's exact calibration-map wavelength. Photon weighting is integral(R F_lambda lambda)/integral(R/lambda), appropriate to an ideal flat-Fnu calibration; independent radiometric color-correction verification remains necessary. Only centroid response is used, not a full spatially weighted aperture convolution.
 
 ## Split and results
-Dec22 and Dec25 are exploratory training dates, three usable aperture measurements each. For each fixed physical spectrum, each date fits a signed constant continuum plus nonnegative amplitude. Jan2 is a withheld epoch of four points; template is fixed and only its amplitude and continuum are refit. Thus heldout is a response-shape check, not a fully parameter-free prediction, and not a new independent dataset.
+Dec22 and Dec25 are exploratory training dates, three usable aperture measurements each. For each fixed physical spectrum, each date fits a signed constant continuum plus nonnegative amplitude. The four January 2 measurements were held out for the original December-trained Gaussian test. Its failure on January 2 was known when the CO2 and other model-family comparisons were designed. Here January measures later-epoch shape transfer with amplitude and continuum refitted.
 
 | Fixed CO2 temperature | Dec training chi-square | Jan2 chi-square (2 residual DOF) |
 |---|---:|---:|

@@ -1,11 +1,13 @@
 """Alternative Eq22 Fnu-weight interpretation; not a SWAN production-rate retrieval."""
 import argparse,json,hashlib
 from pathlib import Path
+from swan_fit_sample import verify_fit_sample
 import numpy as np
 from scipy.integrate import trapezoid
 from scipy.optimize import lsq_linear
 p=argparse.ArgumentParser();p.add_argument('--input',required=True);p.add_argument('--output',required=True);p.add_argument('--calibration-root',required=True);p.add_argument('--model-root',required=True);a=p.parse_args()
 epochs=['2025-12-22','2025-12-25','2026-01-02']; rows=json.load(open(a.input)); rows=[r for r in rows if r['start'][:10] in epochs and 4.1<r['map_bc_um']<4.45 and r['diagnostic_outlier_inclusive'].get('2.5')]
+verify_fit_sample(rows)
 group=np.array([epochs.index(r['start'][:10]) for r in rows]);bc=np.array([r['map_bc_um'] for r in rows]);cal=Path(a.calibration_root);mr=Path(a.model_root);out=[]; provenance={}
 for t in [20,60,100,200]:
  f=mr/f'co2_shape_{t}K_response.txt'
