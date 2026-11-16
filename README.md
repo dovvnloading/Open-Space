@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 170 entries: 79 new measurements, 42 candidate discoveries, 20 forecasts of specific events, 19 corrections to published catalogs and papers, and 10 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 171 entries: 80 new measurements, 42 candidate discoveries, 20 forecasts of specific events, 19 corrections to published catalogs and papers, and 10 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -274,6 +274,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **Three quasars behind the same foreground gas.** Strong magnesium absorption at nearly the same distance appears across 2.5 million parsecs. *Candidate* · [Details](results/mgii-j0108-environment/README.md)
 - **A compact trio of quasars, J1013−0148.** *Candidate* · [Details](results/independent-archive-coronal-transients/SEARCH.md)
 - **Four quasars within one million parsecs in the XMM-LSS field.** *Candidate* · [Details](results/xmm-lss-quasar-quartet/README.md)
+- **A low-frequency turnover in the radio source NVSS J100005+812702.** Independent 23, 74 and 144–150 MHz measurements show a curved spectrum that peaks near 180 MHz; a second source has weaker low-frequency evidence. *Measured* · [Details](results/lodess-dr1-extreme-spectra/README.md)
 - **A newly measured giant radio galaxy.** RGZ J000314.9+111544 spans 1.13 million parsecs. A second galaxy confirms a 2014 volunteer estimate. *Candidate* · [Details](results/rgz-desi-giant-radio-galaxies/README.md)
 - **Two possible distant "space masers" mistaken for nearby galaxies.** FAST sources toward WISEA J044309.47−064913.0 and IRAS F15496+0740 may be OH megamasers. Each candidate has only one detected line. *Candidate* · [Details](results/fashi-oh-j0443/README.md)
 - **The quasar 4C +49.29 flared again in gamma rays and visible light (Feb 2026).** *Measured* · [Details](results/4c-49-29-recurrent-flares/README.md)
