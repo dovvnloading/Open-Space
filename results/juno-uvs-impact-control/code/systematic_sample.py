@@ -30,9 +30,14 @@ def run(s):
  # photon header may fit at end of initial range; otherwise fetch
  ph=get(name,o,o+287999);h,hs,n=header(ph);offset=o+hs;N=h['NAXIS2'];width=h['NAXIS1'];types={'J':'>i4','E':'>f4','D':'>f8'};dt=np.dtype([(h[f'TTYPE{i}'],types[h[f'TFORM{i}'].strip()]) for i in range(1,h['TFIELDS']+1)]);assert dt.itemsize==width
  (out/f's{s}-photon-header.txt').write_text(h.tostring())
- def rows(a,b):return np.frombuffer(get(name,offset+width*a,offset+width*b-1),dtype=dt)
+ def rows(a,b):
+  assert 0<=a<=b<=N
+  if a==b:return np.empty(0,dtype=dt)
+  return np.frombuffer(get(name,offset+width*a,offset+width*b-1),dtype=dt)
  first,last=float(rows(0,1)['EPHEMERIS_TIME'][0]),float(rows(N-1,N)['EPHEMERIS_TIME'][0])
  def locate(t):
+  if t<=first:return 0
+  if t>last:return N
   lo,hi,tl,th=0,N-1,first,last
   for k in range(24):
    guess=(lo+hi)//2;a=max(lo,guess-4096);b=min(hi+1,guess+4096);x=rows(a,b);q=x['EPHEMERIS_TIME'];assert np.all(np.diff(q)>=0)
