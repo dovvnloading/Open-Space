@@ -1,0 +1,7 @@
+# Metadata-first clean-interval follow-through
+
+After the first PJ74 pilot failed, inspect housekeeping from all five remaining PJ74 products before photon selection. Initial 5-MB tail reads did not include housekeeping; 12-MB tails did. Screen overflow=0, checksum error=0, voltage limiting=0, high voltage on, safety inactive. Detector STIM remains active, so passing these conditions is telemetry-clear, not proof of a completely artifact-free science observation.
+
+Choose the earliest uninterrupted ≥20-second clear run under a normal, not dark, planned mask. This selects S02 P74OBS, 2025-07-11 13:56:37.207–13:56:57.207 UTC, housekeeping rows 729–739, under edgemsk1. Selection is independent of photon brightness. Extract its photons by timestamp and then verify incidence angle. If no sufficient nightside coverage exists, report no qualified nightside test rather than silently changing the sample.
+
+If nightside photons exist, preserve detector coordinates, scan phase and 100-ms time strata when randomizing wavelength labels. This conditional diagnostic retains local geometry and total count structure but still does not yield a validated survey false-alarm probability. Compare rare 20-ms longwave/localized excesses to this conditioned diagnostic; do not count consecutive bins as independent events. Verify planned mask and STIM locations before a physical interpretation. No discovery claim can rest on this small pilot alone.
