@@ -16,11 +16,17 @@ import analyze as g
 
 GMM_TABLE = "gmm3_120_sha.tab"
 GMM_LABEL = "gmm3_120_sha.lbl"
+GMM_TABLE_SHA256 = "eb4913b1afb6682406e6a9dad5be7918a162fa8462473c9a2e7aae258d4c2c9c"
+GMM_LABEL_SHA256 = "097f9989fc87bc9adbf04be754734349160228de940f9a242164f3be1b80bb7d"
 
 
 def read_gmm3(cache: pathlib.Path) -> tuple[dict, dict]:
     binary = g.download(g.ARCHIVE + GMM_TABLE, cache / GMM_TABLE)
     label = g.download(g.ARCHIVE + GMM_LABEL, cache / GMM_LABEL)
+    if hashlib.sha256(binary).hexdigest() != GMM_TABLE_SHA256:
+        raise ValueError("GMM3 2016 PDS model checksum mismatch")
+    if hashlib.sha256(label).hexdigest() != GMM_LABEL_SHA256:
+        raise ValueError("GMM3 2016 PDS label checksum mismatch")
     txt = label.decode("ascii").upper()
     assert re.search(r'ORIGINAL_PRODUCT_ID\s*=\s*"GMM-3"', txt)
     assert re.search(r"ROWS\s*=\s*7380\b", txt)
