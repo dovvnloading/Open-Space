@@ -1,0 +1,7 @@
+# Systematic PJ74 OBS extension: frozen sample
+
+Select every run of at least 3 consecutive telemetry-clear HK samples in S02 and S03 of UVS_Sxx_805506529_2025192_P74OBS_V01.FIT, using overflow=0, checksum=0, HVPS status=1, limited=0, safety inactive=0. Use the first/last HK timestamps as strict bounds. Reject planned dark-mask runs before photon inspection; validate actual frame tags against masks after extraction. Do not fill gaps or extrapolate clean status beyond bounds. The known S02 729–739 pilot remains a previously inspected control, not new blind data.
+
+Frozen runs: S02 145–148, 428–435, 729–739; S03 3464–3470, 4257–4262, 4646–4655, 5066–5076, 5364–5367. Exclude S03 74–322 due to dark acquisition. Expected nominal bounded duration 106 seconds (20 seconds previously inspected), not necessarily nightside observing exposure.
+
+Retain all outcomes including off-disc/day-side-only intervals. Use prior fixed 20ms, >=20 longwave (170–200nm) photons, >=60% in one fixed 2-degree cell trigger, restricting valid on-disc incidence >90 and <=180 degrees. Report photon support per interval, occupied 20ms bins, maximum gaps and off-disc/day-side controls, not nominal wallclock as effective exposure. Apply actual masks and conservative STIM-coordinate boxes if ancillary support exists. Conditional-label diagnostics remain exploratory; no false-alarm probability, impact-rate bound or discovery claim without independent controls and injection completeness.

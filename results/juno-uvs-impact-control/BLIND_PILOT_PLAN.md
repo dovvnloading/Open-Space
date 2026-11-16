@@ -1,0 +1,9 @@
+# Frozen bounded newer-data pilot
+
+Frozen before downloading photon rows from PJ74 S01: inspect the first 500,000 calibrated rows of `UVS_S01_805506529_2025192_P74OBS_V01.FIT` (July 11, 2025). Choice is mechanical, not based on a bright event. This is a bounded engineering pilot, not a full perijove or an unbiased impact-rate survey; row-count selection has a rate-dependent time span.
+
+Candidate rule: in non-overlapping 20-ms native ET bins, at least 20 photons at170–200nm, at least 60% of longwave photons contained within a2° by2° planetographic-grid cell, and valid on-disc geometry (|latitude|≤90°,0≤longitude<360°,emission angle<90°). This is an exploratory trigger, not a significance or impact classification. Do not retune after seeing the pilot. Also retain all high-longwave-count bins regardless of localization to inspect instrumental artifacts.
+
+Controls: run identical temporal and localization cuts on deterministic independently shuffled photon times (20 seeds); run identical count threshold on off-disc geometry as detector/background control. Shuffling within this short scan does not preserve changing exposure, so resulting counts are diagnostic only, not global false alarm probabilities. Check concentration in detector X/Y and pulse-height distribution, finite positive radiometric weights, deadtime factors, acquisition quality and housekeeping/mask descriptions before any physical interpretation. Record which controls are unavailable and why.
+
+Compare the known bolide only as a positive control, not as independent evidence for any new event. No null-trigger absence proves completeness. New candidates require neighboring rotations, spectral radiometric calibration and an independently frozen follow-up. A zero-candidate pilot is not a discovery and must be reported as such.
