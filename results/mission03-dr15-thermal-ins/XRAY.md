@@ -27,6 +27,8 @@ We fit the un-subtracted pn PHA with its own ARF, the exact redistribution matri
 
 Parentheses give one-parameter approximate 90% profile intervals (Δ deviance 2.706). The MEKAL fit uses the original XSPEC additive table, each elemental abundance set to one solar, with all continuum and line emission included. Other fits use the Morrison–McCammon (1983) effective photoelectric absorption cross sections as does MEKAL here. The blackbody's absorbed 0.2–2.0 keV flux is 2.46 × 10⁻¹⁴ erg cm⁻² s⁻¹. The 0.2–0.3 keV contribution is extrapolated from the quality-good PHA, although this band contributes to the event and catalogue detections.
 
+For each trial temperature or power-law slope, the replay solves the Poisson source-count score at each absorbing column and refines the column minima bracketed by a nine-point grid, including the column bounds. Each reported interval endpoint must reproduce Δ deviance 2.706 within 0.00001. Repeating the J085618 fit with 18 column grid points reproduced both blackbody and both free-free limits within 0.000001 keV. The earlier 41.8 and 65.0 eV blackbody limits gave profiled increases of only 1.36 and 0.63. The 0.2 and 0.3 keV lower-cut commands retained the same 28 quality-good bins and now produce identical JSON results. Each receipt records the deviance increase achieved at each finite endpoint. The corrected Morrison–McCammon coefficient gives σ(5 keV) = 3.5252 × 10⁻²⁴ cm² per H atom.
+
 Bilinear interpolation of the 16.2 arcmin FWHM HI4PI map yields a Galactic atomic column of 3.08 × 10²⁰ cm⁻². This beam-averaged atomic measurement omits molecular and intrinsic absorption. Fixing the model column to this value gives kT = 57.9 eV and deviance 25.66 for the blackbody and kT = 67.0 eV and deviance 28.30 for solar MEKAL. The data admit both a thermal surface and a cool line-emitting plasma. A typical hard AGN continuum is disfavored by the steep spectral slope; soft-excess AGN, thermally emitting accretors, and a very soft plasma remain relevant. Spectra alone do not distinguish the broad population classes.
 
 For the blackbody, the intrinsic photon spectrum is K E²/[exp(E/kT)−1] with E in keV. Equating K to 2π(R∞/d)² (1 keV in erg)³/(h³c²) gives R∞/d = 1.76 × 10⁻¹⁶, or 5.43 km/kpc, at the free-column best fit. A 10 km apparent emitting radius corresponds to 1.84 kpc; a 1 km cap to 184 pc. A 7,000 km full white-dwarf surface would require about 1.29 Mpc at this temperature and normalization. Smaller accretion-heated regions are possible. At fixed HI4PI column, the inferred radius per kpc falls to 3.58 km; the free-column best fit is model dependent. These are normalization examples, not distance measurements. NS atmospheric color corrections, emitting fraction and gravitational redshift affect the physical radius.
@@ -53,6 +55,8 @@ python analysis/fetch_manifest.py products --group erass1
 python analysis/event_apertures.py 134.077254 38.119831 products
 python analysis/exposure_timing.py 134.077254 38.119831 products
 python analysis/fit_pha.py products/P0302581801PNS003SRSPEC000E.FTZ
+python analysis/fit_pha.py --minimum .3 --profile-grid-points 18 products/P0302581801PNS003SRSPEC000E.FTZ
+python -m unittest discover -s analysis -p test_fit_pha.py
 python analysis/fit_plasma.py products/P0302581801PNS003SRSPEC000E.FTZ products/mekal.mod
 python analysis/fit_pha.py --fixed-nh .30810075 products/P0302581801PNS003SRSPEC000E.FTZ
 python analysis/fit_plasma.py --fixed-nh .30810075 products/P0302581801PNS003SRSPEC000E.FTZ products/mekal.mod

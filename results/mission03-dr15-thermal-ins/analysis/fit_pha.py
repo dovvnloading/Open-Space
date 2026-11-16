@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 import numpy as np
-from scipy.optimize import minimize, brentq
+from scipy.optimize import minimize, minimize_scalar, brentq
 from scipy.special import xlogy
 from astropy.io import fits
 
@@ -76,7 +76,7 @@ C2 = np.array(
         -17.0,
         0.0,
         0.0,
-        0.0,
+        0.75,
         0.0,
         0.0,
     ]
@@ -96,14 +96,18 @@ def photon_shape(e, shape, param):
     return e ** (-param)
 
 
-def profile_stat(n, b, alpha, s):
+def background_expectation(n, b, alpha, s):
     # Profile nuisance expectation beta in background aperture; n~Pois(s+a*beta), b~Pois(beta).
     linear = (1 + alpha) * s - alpha * (n + b)
-    beta = np.maximum(
-        (-linear + np.sqrt(linear**2 + 4 * alpha * (1 + alpha) * b * s))
-        / (2 * alpha * (1 + alpha)),
-        1.0e-200,
-    )
+    root = np.sqrt(linear**2 + 4 * alpha * (1 + alpha) * b * s)
+    beta = (root - linear) / (2 * alpha * (1 + alpha))
+    # Rationalize the positive root where subtraction loses precision.
+    np.divide(2 * b * s, root + linear, out=beta, where=linear > 0)
+    return np.maximum(beta, 1.0e-200)
+
+
+def profile_stat(n, b, alpha, s):
+    beta = background_expectation(n, b, alpha, s)
     mu = np.maximum(s + alpha * beta, 1.0e-200)
     return 2 * np.sum(mu - n + xlogy(n, n / mu) + beta - b + xlogy(b, b / beta))
 
@@ -194,7 +198,54 @@ def read(path, minimum):
     )
 
 
-def run(path, minimum, fixed_nh=None):
+def profile_shape(shape, m, nh_scale, n, b, alpha, limits, grid_points):
+    """Minimize over source counts and bounded absorbing column at a fixed shape."""
+    low, high = np.exp(limits[0])
+    high = min(high, max(low, float(n.sum())))
+
+    def at_column(nh):
+        counts = m @ (np.exp(-nh * nh_scale) * shape)
+        weights = counts / counts.sum()
+
+        def score(total):
+            source = total * weights
+            mu = source + alpha * background_expectation(n, b, alpha, source)
+            return 1.0 - np.sum(weights * (n / mu))
+
+        # At fixed shape the profiled Poisson likelihood is concave in source counts.
+        if score(low) >= 0:
+            total = low
+        elif score(high) <= 0:
+            total = high
+        else:
+            total = brentq(score, low, high)
+        return profile_stat(n, b, alpha, total * weights)
+
+    if grid_points < 3:
+        raise ValueError("Column profile requires at least three grid points")
+    nh_low, nh_high = limits[1]
+    if nh_low == nh_high:
+        return at_column(nh_low)
+    # Concentrate trials near small columns, and refine every sampled local minimum.
+    grid = nh_low + (nh_high - nh_low) * np.linspace(0, 1, grid_points) ** 2
+    values = [at_column(nh) for nh in grid]
+    candidates = list(values)
+    for i, value in enumerate(values):
+        left, right = max(i - 1, 0), min(i + 1, len(grid) - 1)
+        if value <= values[left] and value <= values[right]:
+            optimum = minimize_scalar(
+                at_column,
+                bounds=(grid[left], grid[right]),
+                method="bounded",
+                options={"xatol": 1.0e-9},
+            )
+            if not optimum.success or not np.isfinite(optimum.fun):
+                raise RuntimeError("Absorbing-column profile did not converge")
+            candidates.append(optimum.fun)
+    return min(candidates)
+
+
+def run(path, minimum, fixed_nh=None, *, profile_grid_points=9):
     energy, m, n, b, alpha, lo, hi, _, _ = read(path, minimum)
     nh_scale = sigma(energy) * 1.0e21
     result = {
@@ -234,26 +285,39 @@ def run(path, minimum, fixed_nh=None):
             for st in starts
             for nh in [0.0, 1.0]
         ]
-        best = min(fits_, key=lambda z: z.fun)
+        converged = [fit for fit in fits_ if fit.success and np.isfinite(fit.fun)]
+        if not converged:
+            raise RuntimeError(f"No converged {model} fit")
+        best = min(converged, key=lambda fit: fit.fun)
         total, nh, theta = np.exp(best.x[0]), best.x[1], np.exp(best.x[2])
         norm = total / np.sum(
             m @ (np.exp(-nh * nh_scale) * photon_shape(energy, model, theta))
         )
 
-        def profile(theta_log):
-            def objective(remaining):
-                return stat([remaining[0], remaining[1], theta_log])
-
-            pair = minimize(objective, best.x[:2], bounds=limits[:2], method="L-BFGS-B")
-            return pair.fun - best.fun - 2.706
-
-        ci = []
-        for end in limits[-1]:
-            ci.append(
-                float(np.exp(brentq(profile, min(best.x[2], end), max(best.x[2], end))))
-                if abs(end - best.x[2]) > 1e-6 and profile(end) > 0
-                else None
+        def delta(theta_log):
+            shape = photon_shape(energy, model, np.exp(theta_log))
+            return (
+                profile_shape(
+                    shape, m, nh_scale, n, b, alpha, limits, profile_grid_points
+                )
+                - best.fun
             )
+
+        if abs(delta(best.x[2])) > 1.0e-5:
+            raise RuntimeError(f"{model} minimum disagrees with the profiled deviance")
+        ci = []
+        endpoint_deltas = []
+        for end in limits[-1]:
+            endpoint = None
+            achieved = None
+            if abs(end - best.x[2]) > 1.0e-6 and delta(end) > 2.706:
+                root = brentq(lambda z: delta(z) - 2.706, *sorted((best.x[2], end)))
+                achieved = float(delta(root))
+                if abs(achieved - 2.706) > 1.0e-5:
+                    raise RuntimeError(f"{model} profile endpoint failed verification")
+                endpoint = float(np.exp(root))
+            ci.append(endpoint)
+            endpoint_deltas.append(achieved)
         egrid = np.linspace(0.2, 2, 4001)
         energy_flux = 1.602176634e-9 * np.trapezoid(
             norm
@@ -268,6 +332,7 @@ def run(path, minimum, fixed_nh=None):
             "NH_1e21": nh,
             "shape": theta,
             "shape_profile90": ci,
+            "shape_profile90_delta_deviance": endpoint_deltas,
             "absorbed_flux_0.2_2": float(energy_flux),
             "optimizer_converged": bool(best.success),
         }
@@ -281,8 +346,17 @@ def main():
     p.add_argument(
         "--fixed-nh", type=float, help="Freeze column in units of 1e21 cm^-2"
     )
+    p.add_argument(
+        "--profile-grid-points",
+        type=int,
+        default=9,
+        help="Number of absorbing-column search points before local refinement",
+    )
     a = p.parse_args()
-    print(json.dumps(run(a.spectrum, a.minimum, a.fixed_nh), indent=2))
+    result = run(
+        a.spectrum, a.minimum, a.fixed_nh, profile_grid_points=a.profile_grid_points
+    )
+    print(json.dumps(result, indent=2))
 
 
 if __name__ == "__main__":
