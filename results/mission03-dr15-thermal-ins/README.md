@@ -11,3 +11,10 @@
 This checkpoint records the run so far. No new neutron-star identification is established.
 
 This research has made use of data obtained from the 5XMM serendipitous source catalog compiled by the XMM-Newton Survey Science Center, the XMM2ATHENA project and in collaboration with the XMM-Newton SOC.
+
+### Second checkpoint
+
+- Completed four disjoint queues and the recovery test. The selection retained two of eight known thermal controls. All six missed controls passed the primary hardness cuts and triggered the variability veto. Selection and recovery details are in [SELECTION.md](SELECTION.md).
+- Completed SIMBAD screens for all 321 rows. Of 195 within the public eRASS1 hemisphere, 121 have a catalogue entry within 30 arcsec. Each is a positional association for review. The other 126 lack public eRASS1 hemisphere coverage.
+- Checked 166 prior positions against all queues. Seven selected sky positions require review against previous work. The bright J114051.9−641848 lead is already a published 4XMM INS candidate.
+- Fitted J085618's original pn spectrum and verified the sub-keV excess in independent pn and MOS2 events. Its 54 eV blackbody fit and the alternative thermal-continuum fit differ by less than one unit of Poisson deviance. Deeper optical astrometry and photometry are in progress.
