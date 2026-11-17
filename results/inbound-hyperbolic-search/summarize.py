@@ -85,6 +85,17 @@ def main(out):
     extra=ROOT/"orbits/slow/evidence/results.json"
     if extra.exists():
         focused.update(json.loads(extra.read_text())["objects"])
+    fast={}
+    for path in sorted((ROOT/"batch/fast-priority/evidence").glob("*shard-*.json")):
+        for rec in json.loads(path.read_text())["records"]:
+            fast[str(rec["spkid"])]=rec
+    event={}
+    for path in sorted((ROOT/"orbits/census/evidence").glob("*summary*.csv")):
+        with path.open() as f:
+            for rec in csv.DictReader(f):
+                event[str(rec["spkid"])]=rec
+    current_event_path=ROOT/"orbits/recent/evidence/results.json"
+    current_event=json.loads(current_event_path.read_text())["objects"] if current_event_path.exists() else {}
     # Only the following two identifications include a checked pre-encounter bound state.
     ejections={"1980 E1":"Jupiter","2024 L5":"Saturn"}
     model_checks={"2025 V1","1997 P2","2008 J4","1877 G2"}
@@ -107,6 +118,17 @@ def main(out):
         focus=focused.get(focused_id,{}).get("models",{})
         g250=(focus.get("gravity",{}).get("boundaries",{}).get("250au") or {})
         ng250=(focus.get("marsden_outward",{}).get("boundaries",{}).get("250au") or {})
+        independent_current=current_event.get(key,{}).get("models",{}).get("gravity",{}).get("boundaries",{}).get("250au") or {}
+        priority=fast.get(key,{})
+        ground=event.get(key,{})
+        boundary=independent_current or g250
+        exact_inv=boundary.get("inverse_a_au_inv")
+        exact_sig=boundary.get("formal_sigma_inverse_a")
+        event_source="recent MPC sample" if independent_current else "targeted object fit" if g250 else ""
+        if exact_inv is None and ground.get("inverse_a_au_inv") not in ("",None):
+            exact_inv=float(ground["inverse_a_au_inv"])
+            exact_sig=float(ground["formal_sigma_inverse_a"]) if ground.get("formal_sigma_inverse_a") else None
+            event_source="seeded ground-based census"
         disposition="no accepted original-energy determination"
         if row["known_iso"]:
             disposition="known interstellar control"
@@ -128,6 +150,10 @@ def main(out):
                 disposition="published preferred original negative beyond 5 formal sigma; review"
             else:
                 disposition="published preferred original negative within 5 formal sigma"
+        elif exact_inv is not None:
+            disposition="independent 250 au gravity solution; physical origin requires model checks"
+        elif priority.get("far_inbound_100au"):
+            disposition="longer-budget independent far-inbound fit; see retained arc and quality"
         elif best:
             disposition="independent gravity-only inbound estimate; origin unvalidated"
         states[disposition]+=1
@@ -147,6 +173,12 @@ def main(out):
                       "batch_sign_disagreement":bool(alternate and old_orig and alternate["inv_a_au_inv"]*old_orig["inv_a_au_inv"]<0),
                       "inbound_gravity_source":"live MPC" if new_orig else "live MPC station/night sample" if sampled_orig else "bulk unpenalized" if alternate else "bulk default" if old_orig else "",
                       **{k:best.get(k) for k in ("inbound_radius_au","inv_a_au_inv","z_e_one_model","v_kms","n_used","n_total","rms_arcsec","used_arc_days")},
+                      "long_budget_status":priority.get("status"),"long_budget_far_100au":priority.get("far_inbound_100au"),
+                      "long_budget_inv_a":priority.get("inv_a") if priority.get("far_inbound_100au") else None,
+                      "long_budget_formal_e_z":priority.get("formal_e_excess_sigma") if priority.get("far_inbound_100au") else None,
+                      "long_budget_used":priority.get("used"),"long_budget_input_days":priority.get("input_days"),"long_budget_used_days":priority.get("used_days"),
+                      "ground_census_status":ground.get("status"),"ground_census_reason":ground.get("reason"),
+                      "event_250au_source":event_source,"event_250au_inv_a":exact_inv,"event_250au_sigma_inv_a":exact_sig,
                       "CODE_model":code.get("model"),"CODE_original_micro_au_inv":code.get("published_original_1_over_a_micro_au_inv"),
                       "CODE_sigma_micro_au_inv":code.get("sigma"),"focused_models":bool(focus),
                       "independent_gravity_inv_a_250au":g250.get("inverse_a_au_inv"),
@@ -163,6 +195,8 @@ def main(out):
         "independent_far_inbound_negative":sum((r["inv_a_au_inv"] or 0)<0 for r in items),
         "inputs_for_inbound":dict(collections.Counter(r["inbound_gravity_source"] for r in items if r["inbound_gravity_source"])),
         "published_CODE":sum(bool(r["CODE_model"]) for r in items),
+        "records_with_actual_inbound_250au":sum(r["event_250au_inv_a"] is not None for r in items),
+        "records_with_any_far_inbound_independent_fit":sum(bool(r["inbound_gravity_source"] or r["long_budget_far_100au"] or r["event_250au_inv_a"] is not None) for r in items),
         "individual_fit_objects":sum(bool(r["focused_models"]) for r in items),
         "interpretation":dict(states)
     }
