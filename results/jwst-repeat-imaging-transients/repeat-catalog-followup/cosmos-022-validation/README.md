@@ -1,6 +1,6 @@
 # COSMOS-022 detector validation and archival host spectrum
 
-At (150.122033°, +2.323386208°), the compact central signal increases in independent, unresampled JWST CAL exposures. The host is SMUVS 90474 / COSMOS2020 Classic 953994, with a pre-event VLT/MUSE spectroscopic redshift **0.5067**. The variability mechanism remains undetermined.
+At (150.122033°, +2.323386208°), the compact central signal increases in independent, unresampled JWST CAL exposures. The host is SMUVS 90474 / COSMOS2020 Classic 953994, with a pre-event VLT/MUSE spectroscopic redshift **0.5067**. The variability mechanism remains undetermined: **an unclassified nuclear brightening**, consistent with weak AGN variability or a nuclear transient. A new classification-quality spectrum during the bright state and a later NIRCam epoch in matching filters are the decisive missing observations.
 
 ## Native pixels
 

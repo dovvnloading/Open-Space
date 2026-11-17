@@ -1,0 +1,29 @@
+# W1 colors on the W2-selected trajectories
+
+Of the ten trajectories supported by at least ten W2 epochs, nine have repeated W1 counterparts in both scan directions with median measured W1−W2 of 0.21–0.76 mag. The tenth is WISE 0855−0714, which has isolated W1 catalog dropouts in both directions. This screen evaluates the proposed trajectory and its infrared color. A blue association in a crowded field can come from a blended background source.
+
+The complete check used 837 paired epoch/source measurements across 138 tracks in 39 tiles. Exactly 98 trajectories have repeated blue counterparts, 39 have inconclusive colors, and WISE 0855 is the one red catalog-dropout control. No initially unknown track passes the two-direction positive-color criteria. The three largest track-level 90th-percentile W2 centroid error norms are 1.224, 1.201 and 1.195 arcsec for track0500m258_2 (six epochs), track0610m470_4 (seven) and track0521m303_1 (eight). A 2 arcsec association radius can miss individual detections at these uncertainties.
+
+## Paired W1 and W2 epochs
+
+The unTimely catalog contains independent detections from each scan pass in W1 and W2. Flux and formal errors are Vega nanomaggies. We pair the W2 measurements named by the blind linker's detection IDs with the nearest W1 catalog in time in the same scan direction, requiring a time difference of at most three days. We test the measured W2 sky position advanced by the trial motion over this small time offset. This preserves the seasonal displacement present in the original W2 positions. For tracks with at least ten W2 epochs we use every synchronized epoch. For the other links we select up to three evenly spaced linked indices per direction, independently of W1 flux. The catalog and its field definitions are published by [Meisner et al.](https://arxiv.org/abs/2209.14327) and [IRSA](https://www.ipac.caltech.edu/doi/10.26131/IRSA580).
+
+Each row in paired_epochs.csv gives the nearest W1 catalog entry. Its flux belongs to the named W1 detection and is evidence for the W2 trajectory only after association. A usable match requires separation ≤2 arcsec, W1 quality factor ≥0.85, zero unWISE mask, and W1 S/N ≥5. A repeated blue classification requires at least three matches across both scan directions. In each direction, the median conservative color computed as 2.5 log10[(F2+2σ2)/(F1−2σ1)] must be <2 mag. Repeated red measurements use the inverse flux uncertainty shifts and require ≥2 mag in each direction. The summary reports both direction-specific medians and the raw count of matches. Catalog flux and error correlations, deblending and the probability of accidental associations are additional uncertainties. The 2 arcsec tolerance is fixed. The W2 position uncertainty column is the 90th percentile of 2.75 times the quadrature sum of the two unTimely centroid errors in pixels.
+
+A clean W1 dropout requires no W1 catalog detections of any quality within 6 arcsec and W2 FRACFLUX ≥0.70. For the local depth calculation we take the 90th percentile of W1 flux errors from at least ten unflagged, quality ≥0.85, FRACFLUX ≥0.6, S/N 4–15 comparison sources in a 12–180 arcsec annulus. The sensitivity color proxy is 2.5 log10[(F2−2σ2)/(6σ_local)]. The dropout label requires at least two clean samples per scan direction, median proxy ≥2 in each direction and zero usable blue matches with an upper color <2. The local noise proxy describes catalog sensitivity. Source crowding, source-dependent flags and incompleteness prevent interpreting it as a per-source photometric upper limit. Inconclusive tracks have insufficient color evidence under these rules.
+
+W2 FRACFLUX reports the fraction of the modeled light in the fitted PSF attributed to that detection. For example, the ten-epoch track2726p651_1 has median W2 FRACFLUX 0.38. Background light and blending dominate the uncertainty for this link even though repeated W1 matches place the associated total colors below the red cut.
+
+## Replay
+
+Run from the repository results directory with the paths to this directory and the W2 linker's tracks and optional input cache. W1 catalogs are downloaded into memory and never stored on disk. The script uses indexed W2 files from the supplied cache when present and retrieves missing W2 inputs from the same archive. Per-catalog SHA-256 values refer to the original compressed files at the path in the file column relative to the [unTimely archive](https://portal.nersc.gov/project/cosmo/data/unwise/neo7/untimely-catalog/).
+
+~~~bash
+python fast/w1/check_w1.py fast/tracks.csv /path/to/optional_w2_cache fast/w1
+python fast/w1/summarize_w1.py fast/tracks.csv fast/w1
+python fast/w1/control_w1_pixels.py . fast/w1
+~~~
+
+## Independent WISE 0855 W1 pixels
+
+Thirty final NEOWISE W1 single-exposure images provide an independent check at the W2 track. They are the W1 counterparts of the 30 exposures already selected for the W2 control (six images in each of five visits). The reduction scales DN by each image's MAGZP, projects each frame onto a 1.375-arcsec tangent grid, makes a per-visit median, subtracts the median of the other four visits and sums an 8.25-arcsec-radius aperture with 13.75–22 arcsec local background. A grid of 53–55 nearby, nonoverlapping aperture cores estimates the blank median and robust scatter per visit. Visit and image tables contain the signed results and input header/strip SHA-256 hashes. All five visits span 2014–2024 on the W2-fitted trajectory. The aperture-only fluxes are −12, +188, +60, +28 and +11 Vega nanomaggies; local MAD-based scatters are 62, 52, 59, 65 and 40 nanomaggies. The second visit has a positive residual at 3.6 times its local scatter; the other four are ≤1.1 times theirs. This check has no aperture correction or injection-calibrated throughput, so we report aperture noise and variability rather than an absolute W1 total-flux limit.

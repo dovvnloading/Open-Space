@@ -2,14 +2,14 @@
 
 ## November 2026 continuation
 
-Two previously unmatched **nuclear brightenings** pass individual-exposure checks. The existing catalog identifications refer to their host galaxies. The cause of each flux increase remains unclassified.
+Two **unclassified nuclear brightenings** pass individual-exposure checks. The existing catalog identifications refer to their host galaxies, not to a classified flare. Weak AGN variability versus a nuclear supernova/TDE-like transient remains open for each. Both require a classification-quality spectrum during activity and a later, matched-filter JWST epoch to establish fading or continued nuclear variability.
 
 | Position (J2000, degrees) | Change in aperture flux | Host distance and interpretation |
 |---|---|---|
 | **COSMOS-022**, 150.122033, +2.323386 | F162M +236.2 ± 18.2 nJy, F182M +212.1 ± 18.1 nJy. Both late-May observing dates are elevated relative to December–January. | COSMOS2020 953994, MUSE z = 0.5067. The source is coincident with the galaxy center. The matched rest-band F162M absolute difference magnitude is −16.45. [Images, exposures and host evidence](repeat-catalog-followup/README.md) |
 | **GOODS-S 185**, 53.188672, −27.812554 | F277W +22.25 ± 1.15 nJy from October 2025 to October 2026. The earlier 2022–25 measurements were near 49–52 nJy. Five filters brighten. | JADES DR2 103607, host photo-z 2.47 (68% 1.91–2.51). The matched rest-band F277W absolute difference magnitude is −17.18. [Flux history, stamps and host evidence](goods-s-oct2026/README.md) |
 
-The absolute magnitudes refer to the measured change in a fixed aperture under the host association. Neither object has a transient spectrum. AGN variability and a transient projected onto the host nucleus remain possible. TNS mirrors, published transient/AGN lists and the available program target lists constrain novelty. The direct TNS guest snapshot was inaccessible.
+The absolute magnitudes refer to the measured change in a fixed aperture under the host association. Neither object has a transient spectrum. AGN variability and a transient projected onto the host nucleus remain possible. TNS broker mirrors, published transient/AGN lists and available program target lists constrain novelty only within those snapshots. A new public-guest TNS HTML/CSV cone retry returned mixed HTTP 429 and non-machine-verifiable HTML responses, not an official negative match. The two objects are unclassified and **not** claimed as newly discovered transients. [Independent referee replay and TNS guest receipt](REFEREE_REVIEW.md)
 
 | Selection | Measured outcome |
 |---|---|

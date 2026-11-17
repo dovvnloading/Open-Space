@@ -1,0 +1,13 @@
+# Two bright apparent tracks fail a nine-year W2 image check
+
+**The W2 source flux expected on the two literature-unmatched CatWISE tracks is absent from the native 2015 and 2024 frames. A known T8 dwarf selected in the same sky cap shows the expected moving residual.** Both test targets also lack any individual-exposure W2 S/N ≥3 centroid within 5 arcsec of the forecast track after January 2019. In the same independent-exposure test, the T8 gives 157 such entries. The images test the proposed CatWISE flux and proper motion at the expected positions.
+
+| CatWISE source | W2 mag | 2015 + 2024 frames | Fitted moving flux | Nominal flux | Two exposure splits | Off-track MAD scale |
+|---|---:|---:|---:|---:|---:|---:|
+| [J085014.24+541123.2](J085014.24+541123.2/difference.png) | 13.271 | 16 + 15 | +8.93 | 491.59 | −5.13, +28.05 | 8.19 |
+| [J092244.78+640537.8](J092244.78+640537.8/difference.png) | 14.256 | 16 + 15 | −0.36 | 198.43 | +16.95, −16.55 | 10.86 |
+| [J085715.68+560405.8, known T8](J085715.68+560405.8/difference.png) | 14.185 | 14 + 16 | +187.61 | 211.84 | +201.62, +174.21 | 8.83 |
+
+The nominal flux is in zero-point-20 DN. We compare the sky-registered early and late stacks using a common-amplitude moving Gaussian template (3.25 arcsec sigma), plus a fitted local sky plane. The expected W2 photometry assumes a nonvariable source. The known dwarf returns 89% of the nominal flux and is visible independently in both splits. The template and photometric response depend on the PSF, source blending and local background. Translated templates overlap; their MAD measures local scatter and gives no Gaussian significance. These image tests cover two rejected tracks and one positive control. Other wide-screen entries have individual-exposure catalogue checks.
+
+The source rows and nominal motion are in [targets.csv](targets.csv). Each subdirectory has the native image URLs and byte-range hashes, the fitted amplitudes and positions, the translated controls and the image. For each source named in the table, run the sibling [replay](../heldout1825/epochs.py) from this directory with `python ../heldout1825/epochs.py --cache /path/to/separate/cache --target SOURCE_NAME --targets targets.csv --out SOURCE_NAME`. Use a separate cache for each source. This uses the same calibrated W2 stack and translation test as the [J1825 analysis](../heldout1825/README.md), selecting up to 16 quality ≥5 exposures in each matched-season window. The wider frames preserve the approximately 53-arcsec forecast displacement of J085014 and the known dwarf's substantially shorter displacement.
