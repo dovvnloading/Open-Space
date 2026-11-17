@@ -2,12 +2,11 @@
 import argparse
 import concurrent.futures
 import csv
-import gzip
+import shutil
 import hashlib
 import io
 import json
 import re
-import shutil
 import tarfile
 import time
 import urllib.error
@@ -68,7 +67,12 @@ def index(cache):
                             at_0p50=sum(x==.50 for x in vals), at_or_below_2=sum(x<=2 for x in vals),
                             fields=dict(sorted(counts.items()))))
         receipts.append(rec)
-        # 2026 is labeled proprietary; keep an aggregate and index receipt only.
+        if not public:
+            with (HERE/f'event-pages-{year}.tsv').open('w') as h:
+                w=csv.writer(h,delimiter='\t',lineterminator='\n')
+                w.writerow(('event','event_page'))
+                for r in rows:
+                    w.writerow((r['Event'],f"{url}view.php?event={r['Event']}"))
         if public:
             dest = HERE / f'catalog-{year}.tsv'
             with dest.open('w') as out:
@@ -96,8 +100,10 @@ def fetch(row, cache):
     url = row['url']
     path = cache / f'{event}.tar.gz'
     receipt = cache / f'{event}.receipt.json'
-    if path.is_file() and receipt.is_file():
+    if receipt.is_file() and (path.is_file() or (cache / f'{event}.evicted').is_file()):
         return
+    while shutil.disk_usage(cache).free < 120*1024**2:
+        time.sleep(10)
     for attempt in range(3):
         try:
             if path.exists():

@@ -13,7 +13,7 @@ from lxml import html
 from freeze import HERE, BASE, get
 from neighbours import angle
 
-LEADS={'KMT-2024-BLG-'+i for i in ('0456','0816','1157','0792','3237')} | {
+LEADS={'KMT-2024-BLG-'+i for i in ('0456','0816','1157','0792','3237','3429','0909','3326')} | {
     'KMT-2025-BLG-'+i for i in ('0300','1213','1446','1507','1760','1836','2510','3173','2093')}
 
 
@@ -52,11 +52,11 @@ def main():
             dict(REQUEST='doQuery',LANG='ADQL',FORMAT='csv',QUERY=adql))
         urls[name+'-vsx']='https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?'+urlencode(
             {'-source':'B/vsx/vsx','-c':f'{ra:.9f} {dec:.9f}','-c.rs':'2','-out.max':'100','-out':'Name,Type,RAJ2000,DEJ2000'})
-        if name in {'KMT-2024-BLG-0456','KMT-2025-BLG-1507','KMT-2025-BLG-1213'}:
+        if name in {'KMT-2024-BLG-0456','KMT-2025-BLG-1507','KMT-2025-BLG-1213','KMT-2024-BLG-3326','KMT-2024-BLG-3429'}:
             # A 5-arcmin cone dwarfs the time-scale offset between HJD and geocentric JD.
             # SkyBoT predicts known objects only; a negative query cannot veto all moving objects.
             urls[name+'-skybot']='https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?'+urlencode(
-                {'-ra':f'{ra:.9f}','-dec':f'{dec:.9f}','-rd':'0.083333','-epoch':str(r['t0']+2400000),
+                {'RA':f'{ra:.9f}','DEC':f'{dec:.9f}','SR':'0.083333','TIME':str(r['t0']+2400000),
                  '-loc':'500','-mime':'text','-output':'object'})
     with concurrent.futures.ThreadPoolExecutor(5) as run:
         list(run.map(fetch,[(key,url,cache) for key,url in urls.items()]))
