@@ -20,7 +20,10 @@ def fit(w,y,iv,shift,width,broad=20,degree=2):
  A=np.column_stack(cont+[g(w,4862.68+shift,7),g(w,4862.68+shift,width),doublet(width),doublet(2*width),g(w,4862.68+shift,broad)]);weight=np.sqrt(iv)/1.2;Aw=A*weight[:,None];yw=y*weight;lo=[-np.inf]*n+[-np.inf,0,0,0,0];hi=[np.inf]*n+[0,np.inf,np.inf,np.inf,np.inf];r=lsq_linear(Aw,yw,bounds=(lo,hi),tol=1e-9,max_iter=300);cov=np.linalg.pinv(Aw.T@Aw);oi=r.x[n+2]+r.x[n+3];bi=r.x[n+4];ov=cov[n+2,n+2]+cov[n+3,n+3]+2*cov[n+2,n+3];oe=np.sqrt(max(0,ov));be=np.sqrt(max(0,cov[n+4,n+4]));ratio=bi/oi if oi>5*oe else np.nan;v=np.zeros(len(r.x));
  if oi>5*oe:v[n+4]=1/oi;v[n+2]=v[n+3]=-bi/(oi*oi)
  re=np.sqrt(max(0,v@cov@v)) if oi>5*oe else np.nan
- return dict(success=r.success,chi2=float(np.sum((Aw@r.x-yw)**2)),dof=len(y)-len(r.x),broad=float(bi),broad_err=float(be),oiii=float(oi),oiii_err=float(oe),ratio=float(ratio),ratio_err=float(re))
+ nr=r.x[n+1]/oi if oi>5*oe else np.nan;nv=np.zeros(len(r.x))
+ if oi>5*oe:nv[n+1]=1/oi;nv[n+2]=nv[n+3]=-r.x[n+1]/(oi*oi)
+ ne=np.sqrt(max(0,nv@cov@nv)) if oi>5*oe else np.nan
+ return dict(narrow_ratio=float(nr),narrow_ratio_err=float(ne),success=r.success,chi2=float(np.sum((Aw@r.x-yw)**2)),dof=len(y)-len(r.x),broad=float(bi),broad_err=float(be),oiii=float(oi),oiii_err=float(oe),ratio=float(ratio),ratio_err=float(re))
 rows=[]
 for sid,pair in sorted(pairs.items()):
  if not all(float(q[sid][k]['domain_coverage'])>=.8 and float(q[sid][k]['continuum_snr'])>=5 for k in ('baseline','dev')):continue
