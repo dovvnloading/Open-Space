@@ -87,7 +87,13 @@ def run(refit=False):
                                 max_abs_chi2=max(diffs.values()),chi2_by_model=scores,
                                 deposited_binary_converged=rec["models"].get("bin",{}).get("converged"))
                 if refit and (event in (TARGETS[0], OGLE)) and {"ps","fs","bin"}.issubset(rec["models"]):
-                    fresh=solve(job,seed_from(rec),rec["cap_factor"],binary_trials=3,
+                    # Preserve the exact original comparison window: solve() takes
+                    # the epoch origin from fs_t0 in its seed. Moving this origin
+                    # changes which epochs enter the objective and makes the
+                    # absolute chi2 values scientifically non-comparable.
+                    fixed_seed=seed_from(rec)
+                    fixed_seed["fs_t0"]=rec["reference_jd"]
+                    fresh=solve(job,fixed_seed,rec["cap_factor"],binary_trials=12,
                                 profiles=True,**kw)
                     f=fresh["models"]
                     comparison["fresh_optimization"]={
