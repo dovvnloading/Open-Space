@@ -32,9 +32,22 @@ def original_fields(fit):
     sigma = fit.get("sigma_e")
     z = (float(fit["e"])-1)/float(sigma) if sigma and float(sigma)>0 else None
     return {"inbound_radius_au":round(float(fit["r_au"]),5), "inv_a_au_inv":inv,
-            "z_e_one_model":z,"v_kms":math.sqrt(-inv*888.32) if inv<0 else None,
+            "z_e_one_model":z,"v_kms":math.sqrt(-inv*audit.GM_SUN/audit.AU_KM*1.001341838645975) if inv<0 else None,
             "n_used":fit["used"],"n_total":fit["total"],"rms_arcsec":fit["rms_arcsec"],
             "used_arc_days":float(fit["last_used_jd"])-float(fit["first_used_jd"])}
+
+
+def read_softened_shards():
+    paths=sorted((ROOT/"batch/evidence/unpenalized").glob("*.csv.gz"))
+    assert len(paths)==12, "Expected twelve independent slices"
+    result={}
+    for path in paths:
+        with gzip.open(path,"rt") as stream:
+            for row in csv.DictReader(stream):
+                key=row["spkid"]
+                assert key not in result
+                result[key]=row
+    return result
 
 
 def main(out):
@@ -42,11 +55,16 @@ def main(out):
     with gzip.open(ROOT/"batch/evidence/refits.csv.gz","rt") as f:
         batch = {r["spkid"]:r for r in csv.DictReader(f)}
     assert {str(r["spkid"]) for r in rows} == set(batch)
+    relaxed=read_softened_shards()
+    assert set(batch)==set(relaxed)
     recent_rows = json.loads(gzip.decompress((ROOT/"batch/evidence/latest_mpc_refits.json.gz").read_bytes()))
     recent = {str(r["spkid"]):r for r in recent_rows if r["selection"]=="catalogue refresh"}
     with (ROOT/"catalog/code-original.csv").open() as f:
         published = {r["spkid"]:r for r in csv.DictReader(f)}
     focused = json.loads((ROOT/"orbits/data/refits.json").read_text())
+    extra=ROOT/"orbits/slow/data/refits.json"
+    if extra.exists():
+        focused.update(json.loads(extra.read_text()))
     # Only the following two identifications include a checked pre-encounter bound state.
     ejections={"1980 E1":"Jupiter","2024 L5":"Saturn"}
     model_checks={"2025 V1","1997 P2","2008 J4","1877 G2"}
@@ -54,11 +72,13 @@ def main(out):
     for row in rows:
         key=str(row["spkid"])
         old=batch[key]
+        free=relaxed[key]
         update=recent.get(key,{})
         new=update.get("fit",{})
         old_orig=original_fields(old)
         new_orig=original_fields(new)
-        best = new_orig or old_orig or {}
+        alternate=original_fields(free)
+        best = new_orig or alternate or old_orig or {}
         code=published.get(key,{})
         pdes=row["pdes"]
         disposition="no accepted original-energy determination"
@@ -88,7 +108,14 @@ def main(out):
                       "catalogue_e":row["e"],"catalogue_sigma_e":row["sigma_e"],
                       "catalogue_ng_fields":row["nonzero_model_fields"],"status":disposition,
                       "batch_fit":old["status"],"latest_fit":new.get("status",update.get("error","")),
-                      "inbound_gravity_source":"live MPC" if new_orig else "bulk MPC" if old_orig else "",
+                      "unpenalized_fit":free["status"],
+                      "default_inverse_a":(old_orig or {}).get("inv_a_au_inv"),
+                      "unpenalized_inverse_a":(alternate or {}).get("inv_a_au_inv"),
+                      "live_inverse_a":(new_orig or {}).get("inv_a_au_inv"),
+                      "default_z":(old_orig or {}).get("z_e_one_model"),
+                      "unpenalized_z":(alternate or {}).get("z_e_one_model"),
+                      "batch_sign_disagreement":bool(alternate and old_orig and alternate["inv_a_au_inv"]*old_orig["inv_a_au_inv"]<0),
+                      "inbound_gravity_source":"live MPC" if new_orig else "bulk unpenalized" if alternate else "bulk default" if old_orig else "",
                       **{k:best.get(k) for k in ("inbound_radius_au","inv_a_au_inv","z_e_one_model","v_kms","n_used","n_total","rms_arcsec","used_arc_days")},
                       "CODE_model":code.get("model"),"CODE_original_micro_au_inv":code.get("published_original_1_over_a_micro_au_inv"),
                       "CODE_sigma_micro_au_inv":code.get("sigma"),"focused_models":bool(row["known_iso"] or pdes.replace(" ","-") in focused)})
@@ -96,6 +123,8 @@ def main(out):
     metrics = {
         "catalogue_rows":len(items),
         "bulk_status":dict(collections.Counter(r["batch_fit"] for r in items)),
+        "unpenalized_status":dict(collections.Counter(r["unpenalized_fit"] for r in items)),
+        "batch_sign_disagreements":sum(r["batch_sign_disagreement"] for r in items),
         "independent_far_inbound":sum(bool(r["inbound_gravity_source"]) for r in items),
         "independent_far_inbound_negative":sum((r["inv_a_au_inv"] or 0)<0 for r in items),
         "inputs_for_inbound":dict(collections.Counter(r["inbound_gravity_source"] for r in items if r["inbound_gravity_source"])),
