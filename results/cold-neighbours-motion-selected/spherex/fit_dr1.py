@@ -8,6 +8,8 @@ import time
 from pathlib import Path
 from urllib.request import urlopen
 
+from frame_inputs import read_frames
+
 import numpy as np
 from astropy import log
 from astropy.io import fits
@@ -90,10 +92,11 @@ def main():
     args = parser.parse_args()
     fields = ["target","cutout_url","ra","dec","sha256","status","wavelength_um","bandwidth_um",
               "mjd","flux_ujy","sigma_ujy","chi2red","n_good","n_neighbors","nearest_pixels"]
-    with args.manifest.open() as inf, args.out.open("w") as outf:
+    rows = read_frames([args.manifest])
+    with args.out.open("w") as outf:
         writer = csv.DictWriter(outf,fieldnames=fields)
         writer.writeheader()
-        for row in csv.DictReader(inf):
+        for row in rows:
             out = {k:row[k] for k in ("target","cutout_url","ra","dec")}
             try:
                 local = args.cache/row["cache_path"] if args.cache else None

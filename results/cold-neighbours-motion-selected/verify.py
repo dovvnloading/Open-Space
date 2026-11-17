@@ -3,7 +3,7 @@ import csv
 import gzip
 import hashlib
 import json
-import math
+from urllib.parse import urlsplit
 from pathlib import Path
 
 BASE=Path(__file__).resolve().parent
@@ -52,6 +52,13 @@ def main():
     f=rows("fast/l1b/summary.csv")
     check([r["source"] for r in f if r["triage"].startswith("track-supported")]==["track1342m076_1"],"NEOWISE fast holdout")
     spectral=[r for name in ("wise0855","shortlist","wide","additional") for r in rows(f"spherex/{name}_fits.csv")]
-    check(len(spectral)==1115,"SPHEREx frame count")
-    print("Verified 3,601,560 pilot catalogue entries, 24 wide caps, 41 control objects, 138 W2 links, and 1,115 spectral frame measurements.")
+    pairs={(r["target"],urlsplit(r["cutout_url"]).path) for r in spectral}
+    check(len(spectral)==len(pairs)==1113 and len({uri for _,uri in pairs})==1112,"distinct SPHEREx measurements")
+    check(sum(r["status"]=="fit" for r in spectral)==919,"SPHEREx quality selection")
+    counts=info("widecheck/counts.json")
+    check(counts["sources"]==1017 and counts["files"]==792 and counts["passing_without_literature_alert"]==5,"wide W2 tracks")
+    check(counts["passing_with_literature_alert"]==24 and len(counts["unmatched_passes"])==5,"wide literature comparison")
+    for name in counts["unmatched_passes"]:
+        check((BASE/"wide_deep"/name/"inputs.csv").is_file(),"wide image follow-up "+name)
+    print("Verified 3,601,560 pilot catalogue entries, 24 wide caps, 41 control objects, 138 W2 links, and 1,113 distinct spectral measurements.")
 if __name__=="__main__":main()

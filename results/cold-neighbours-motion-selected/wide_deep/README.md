@@ -1,6 +1,6 @@
 # Native W2 tests of the literature-unmatched wide-area trajectory alerts
 
-These sources passed the six-epoch catalogue triage. None of the four targets below produced a repeated positive motion residual at its reported flux and velocity in both scan seasons. The image tests compare new, held-out 2021–2024 NEOWISE visits to the early mission, with seven visits for J192049 and eight each for the other targets (248 native exposures total). Detection of a stationary mid-infrared source or a chance catalogue alignment is insufficient for assigning distance, temperature or a brown-dwarf type.
+These sources passed the six-epoch catalogue triage. None of the five targets below produced a repeated positive motion residual at its reported flux and velocity in both scan seasons. The image tests compare new, held-out 2021–2024 NEOWISE visits to the early mission, with seven visits for J192049 and eight each for the other targets (312 native exposures total). Detection of a stationary mid-infrared source or a chance catalogue alignment is insufficient for assigning distance, temperature or a brown-dwarf type.
 
 | CatWISE source | W2 Vega | W1−W2 | Moving / best alternative in expanded half-year sample | Native motion contrast, seasons 1 / 2 | Same position after adding a catalogue-flux mover, seasons 1 / 2 |
 |---|---:|---:|---:|---:|---:|
@@ -8,8 +8,11 @@ These sources passed the six-epoch catalogue triage. None of the four targets be
 | J213348.06+391040.9 | 14.917 | 3.091 | 3 / 3 (16 catalogues) | −0.06 / +1.28 | +6.28 / +9.31 |
 | J192049.57+111222.6 | 15.042 | >3.875 | 10 / 11 (16 catalogues) | +0.51 / +0.03 | +3.67 / +2.23 |
 | J152220.04−512432.2 | 15.134 | 2.018 | 5 / 2 (16 catalogues) | +0.68 / −0.97 | +4.84 / +1.98 |
+| J175039.41−182034.4 | 15.135 | 2.395 | 4 / 5 (16 catalogues) | +0.04 / +0.20 | +5.57 / +3.22 |
 
 J010638 has a weak positive difference in one season. It has only two expanded-sample centroid matches, with both in the same scan direction. J213348 has as many nominal matches along a rotated path as along its reported motion. The centroid cluster for J192049 also fits a static source. Its six-pass moving and stationary tracks each match all six visits when given the same freedom in reference position; the expanded sample matches 12 on each optimized track. J152220 crosses a crowded stellar field. Its best stationary location within 3″ matches six expanded-sample epochs and its optimized moving path matches seven. Only one of five nominal moving matches falls after CatWISE. The direct images show static features along the path and no positive moving signal in the later frames.
+
+J175039 supplied only one scan direction in its primary triage. In the expanded sample the best alternative has five matches and the optimized stationary and moving models both have seven. Both direct-image seasons are consistent with zero motion contrast.
 
 ## Measurements and reproduction
 

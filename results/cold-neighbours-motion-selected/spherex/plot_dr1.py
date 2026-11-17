@@ -1,11 +1,12 @@
 """Plot signed 3.10–4.97 µm DR1 photometry with a fixed 0.12 µm display bin."""
-import csv
 import sys
 from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from frame_inputs import read_frames
+
 import numpy as np
 
 LABELS = {
@@ -20,10 +21,7 @@ LABELS = {
     'J192049.57+111222.6':'J192049.57+111222.6',
 }
 def main(inputs,output):
-    entries=[]
-    for path in inputs:
-        with Path(path).open() as f:
-            entries.extend(csv.DictReader(f))
+    entries=read_frames(inputs)
     panels=[(k,v) for k,v in LABELS.items() if any(r['target']==k for r in entries)]
     ncol=2 if len(panels)>3 else 1
     nrow=(len(panels)+ncol-1)//ncol

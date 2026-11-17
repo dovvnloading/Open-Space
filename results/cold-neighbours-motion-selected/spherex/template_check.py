@@ -12,6 +12,8 @@ import zipfile
 from pathlib import Path
 from urllib.request import urlopen
 
+from frame_inputs import read_frames
+
 import numpy as np
 
 FILES = {
@@ -65,8 +67,7 @@ def main():
     p.add_argument('--templates',type=Path,required=True)
     args=p.parse_args()
     grid=templates(args.templates)
-    with args.measurements.open() as f:
-        fitrows=[r for r in csv.DictReader(f) if r['status']=='fit' and 3.1<=float(r['wavelength_um'])<=4.97]
+    fitrows=[r for r in read_frames([args.measurements]) if r['status']=='fit' and 3.1<=float(r['wavelength_um'])<=4.97]
     out=[]
     for target in sorted({r['target'] for r in fitrows}):
         data=[r for r in fitrows if r['target']==target]

@@ -3,6 +3,8 @@ import csv
 import sys
 from pathlib import Path
 
+from frame_inputs import read_frames
+
 import numpy as np
 
 BANDS = [(3.20, 3.45), (4.05, 4.19), (4.20, 4.35), (4.40, 4.62), (4.62, 4.82)]
@@ -14,10 +16,7 @@ def weighted(f, sigma):
 
 
 def main(inputs, output):
-    rows = []
-    for fn in inputs:
-        with Path(fn).open() as f:
-            rows.extend(csv.DictReader(f))
+    rows = read_frames(inputs)
     result = []
     for name in sorted({r['target'] for r in rows}):
         accepted = sorted((r for r in rows if r['target']==name and r['status']=='fit'),
