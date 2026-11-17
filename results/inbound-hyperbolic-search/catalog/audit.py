@@ -9,7 +9,7 @@ import json
 import math
 from pathlib import Path
 from urllib.parse import urlencode
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 BASE = "https://ssd-api.jpl.nasa.gov/sbdb_query.api"
 FIELDS = (
@@ -52,6 +52,8 @@ def process(row):
 
 def summarize(out, raw):
     snapshot = json.loads(raw)
+    if snapshot["signature"]["version"] != "1.0":
+        raise ValueError("unexpected JPL query API version")
     if snapshot["fields"] != FIELDS.split(","):
         raise ValueError("field names/order changed")
     rows = [process(dict(zip(snapshot["fields"], r, strict=True))) for r in snapshot["data"]]
@@ -63,6 +65,9 @@ def summarize(out, raw):
         w.writeheader()
         for row in rows:
             w.writerow(row)
+    for r in rows[:30]:
+        print("RANK", r["spkid"], r["full_name"], r["nominal_osculating_v_km_s"],
+              r["formal_heliocentric_z_e"], r["data_arc"], r["n_obs_used"], r["nonzero_model_fields"])
     counts = collections.Counter
     status = {
         "total": len(rows),
@@ -71,9 +76,9 @@ def summarize(out, raw):
         "formal_sigma_e_positive": sum(r["formal_heliocentric_z_e"] is not None for r in rows),
         "formal_z_e_ge_5": sum((r["formal_heliocentric_z_e"] or 0) >= 5 for r in rows),
         "has_nonzero_model_field": sum(bool(r["nonzero_model_fields"]) for r in rows),
-        "by_class": dict(counts(r["class"] for r in rows)),
-        "by_source": dict(counts(r["source"] for r in rows)),
-        "by_kind": dict(counts(r["kind"] for r in rows)),
+        "by_class": dict(counts(r["class"] or "(missing)" for r in rows)),
+        "by_source": dict(counts(r["source"] or "(missing)" for r in rows)),
+        "by_kind": dict(counts(r["kind"] or "(missing)" for r in rows)),
         "solution_dates_missing": sum(not r["soln_date"] for r in rows),
         "latest_last_obs": max(r["last_obs"] or "" for r in rows),
         "latest_solution_Pacific": max(r["soln_date"] or "" for r in rows),
@@ -105,7 +110,8 @@ def main():
     raw_path = out / "sbdb.json.gz"
     receipt_path = out / "receipt.json"
     if args.fetch:
-        with urlopen(URL, timeout=120) as resp:
+        request = Request(URL, headers={"User-Agent": "Open-Space-inbound-audit/1.0 (+https://github.com/dovvnloading/Open-Space)"})
+        with urlopen(request, timeout=120) as resp:
             raw = resp.read()
             receipt = {"url": resp.geturl(), "http_status": resp.status,
                        "http_date": resp.headers.get("Date"), "accessed_utc": dt.datetime.now(dt.timezone.utc).isoformat()}
