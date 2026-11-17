@@ -16,6 +16,7 @@ def main():
     vb=VBMicrolensing.VBMicrolensing()
     vb.LoadESPLTable(str(pathlib.Path(VBMicrolensing.__file__).parent/'data/ESPL.tbl'))
     plt.rcParams['svg.fonttype']='none'
+    plt.rcParams['svg.hashsalt']='OpenSpace-OGLE-EWS-v1'
     fig,axes=plt.subplots(2,2,figsize=(9,5.7),layout='constrained')
     windows=[(-.4,.4),(-.8,1.1),(-.34,.16),(-1.6,1.3)]
     for ax,rec,(left,right) in zip(axes.flat,json.loads((HERE/'short-fits.json').read_text()),windows):

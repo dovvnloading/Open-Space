@@ -17,6 +17,7 @@ from scipy.stats import spearmanr
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / "ogle-dark-lenses"))
 import lens
+from freeze import catalog, fetch_curve
 
 
 def boxfit(fn, bounds, seed, iterations, starts=()):
@@ -24,6 +25,8 @@ def boxfit(fn, bounds, seed, iterations, starts=()):
                                  polish=False, tol=0.0001)
     best = opt.fun, opt.x
     for p in [opt.x, *starts]:
+        # EWS can print a zero impact parameter for high magnification.
+        p=np.clip(p,[lo for lo,_ in bounds],[hi for _,hi in bounds])
         result = minimize(fn, p, method="Nelder-Mead", bounds=bounds,
                           options=dict(maxiter=1100, xatol=0.0001, fatol=0.005))
         if result.fun < best[0]:
@@ -101,7 +104,7 @@ def solve(arguments):
         fn=lambda p:fitflux(amp(p,kind))
         starts=[]
         if kind=="PSPL":
-            starts=[[0,np.log(float(row["umin"])),np.log(float(row["tau_days"]))]]
+            starts=[[0,np.log(max(.001,float(row["umin"]))),np.log(float(row["tau_days"]))]]
         else:
             single=fits["PSPL"]["params"]
             if kind=="FSPL":
@@ -153,12 +156,26 @@ def solve(arguments):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("cache",type=pathlib.Path)
+    parser.add_argument("--events", nargs="+", help="Specific additional BLG IDs to fit")
+    parser.add_argument("--output", default="short-fits.json")
     args=parser.parse_args()
     rows=list(csv.DictReader((HERE/"catalog.csv").open()))
-    short=[r for r in rows if 0<float(r["tau_days"])<.5]
+    if args.events:
+        other_years={e.split('-')[0] for e in args.events}-{"2025","2026"}
+        for yr in sorted(other_years):
+            _,season=catalog(args.cache,yr)
+            for row in season:
+                if row["event"] in args.events:
+                    state=fetch_curve(args.cache,row)
+                    if state["status"]!="ok":raise RuntimeError(state)
+            rows.extend(season)
+        short=[r for r in rows if r["event"] in args.events]
+        if len(short)!=len(set(args.events)): raise ValueError("unknown event ID")
+    else:
+        short=[r for r in rows if 0<float(r["tau_days"])<.5]
     with ProcessPoolExecutor(4) as pool:
         records=list(pool.map(solve,[(args.cache,r) for r in short]))
-    (HERE/"short-fits.json").write_text(json.dumps(records,indent=2,allow_nan=False)+"\n")
+    (HERE/args.output).write_text(json.dumps(records,indent=2,allow_nan=False)+"\n")
 
 if __name__=="__main__":
     main()

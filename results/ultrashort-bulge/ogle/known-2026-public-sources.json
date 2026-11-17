@@ -1,0 +1,48 @@
+{
+  "paper": "Qian et al. arXiv:2611.00754v1",
+  "pdf": "https://arxiv.org/pdf/2611.00754",
+  "pdf_sha256": "c2c3e7de5d8f256dfcd0032a1582c7454e118403215907506e892fcc95aebc14",
+  "photometry_link_explicit_in_paper": false,
+  "paper_values": {
+    "tE_days": 1.667,
+    "sigma_tE_days": 0.011,
+    "rho": 0.1783,
+    "sigma_rho": 0.0014,
+    "thetaE_uas": 36.5,
+    "sigma_thetaE_uas": 3.7
+  },
+  "independent_photometry": "https://www.astrouw.edu.pl/ogle/ogle4/ews/2026/blg-0156/phot.dat",
+  "independent_sha256": "c58eb7c78e63c48d3ba617e7eb9495cc38eb44f5368d62e79c7ec4342c74ffbb",
+  "queries": [
+    {
+      "service": "LCO public frames, target in footprint and observing window",
+      "url": "https://archive-api.lco.global/frames/?start=2026-03-30T00%3A00%3A00Z&end=2026-04-04T00%3A00%3A00Z&intersects=POINT%28268.59783333+-28.23340000%29&limit=10",
+      "checked_utc": "2026-11-17T11:04:28+00:00",
+      "status": 200,
+      "sha256": "ee6ee51eb43fac2ad809da3f38f5c230b0b18f44b19a180c55d6332206da89b4",
+      "bytes": 76,
+      "public_records": 0,
+      "first_records": []
+    },
+    {
+      "service": "LCO public frames, footprint and program",
+      "url": "https://archive-api.lco.global/frames/?start=2026-03-30T00%3A00%3A00Z&end=2026-04-04T00%3A00%3A00Z&intersects=POINT%28268.59783333+-28.23340000%29&limit=10&proposal_id=KEY2023B-003",
+      "checked_utc": "2026-11-17T11:04:28+00:00",
+      "status": 200,
+      "sha256": "ee6ee51eb43fac2ad809da3f38f5c230b0b18f44b19a180c55d6332206da89b4",
+      "bytes": 76,
+      "public_records": 0,
+      "first_records": []
+    },
+    {
+      "service": "DataCite dataset-title search",
+      "url": "https://api.datacite.org/dois?query=titles.title%3A%22KMT-2026-BLG-0357%22+AND+types.resourceTypeGeneral%3ADataset&page%5Bsize%5D=5",
+      "checked_utc": "2026-11-17T11:04:28+00:00",
+      "status": 200,
+      "sha256": "e89faa565344249327067241725ccba81fdfc540cb936bc3e521f8fd2e5b1498",
+      "bytes": 210,
+      "public_records": 0,
+      "first_ids": []
+    }
+  ]
+}

@@ -11,7 +11,7 @@ This is a research checkpoint from 17 November 2026. [OGLE fits and measured cov
 | OGLE-2025-BLG-0867 | The binary-lens fit improves chi-square by about 285 relative to the finite-source single lens in the OGLE peak window. |
 | OGLE-2025-BLG-1151 | The last eight observations sample the rise, followed by a 0.683-day gap. A timescale of at least half a day costs less than one unit of chi-square. |
 | OGLE-2025-BLG-1201 | A finite-source fit gives 0.075 d and rho 1.32. Imposing rho ≤ 1 costs only 1.9 in chi-square. The binary and flare fits both improve on the finite-source single lens. |
-| OGLE-2026-BLG-0843 | The continuous OGLE peak-window fit favors 3.80 days. The constrained short fit costs 180 in chi-square. The KMT alert independently lists 3.40 days. |
+| OGLE-2026-BLG-0843 | The continuous OGLE peak-window fit favors 3.80 days. The constrained short fit costs 180 in chi-square. |
 | KMT-2024-BLG-0456 | Two observatories confirm the peak. The unconstrained finite-source model uses tens of times the reported baseline flux. With a source-flux ceiling of 1.15 times the photometric baseline, the best tested binary has chi-square 267 versus 449 for the finite-source single lens in the same window. |
 | KMT-2025-BLG-1507 | Under the same ceiling, the binary gives chi-square 178 versus 338 for the best tested finite-source single lens. |
 | MOA-2025-BLG-0198 | The alert team lists a cataclysmic variable. The public difference photometry records repeated brightenings in 2008, 2011, 2016 and 2025. |
