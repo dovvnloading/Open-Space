@@ -1,0 +1,494 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html><head><title>Resolve NXB Database and Recipes</title>
+
+<meta name="keywords" Content="XRISM, hitomi, astro-h, astroh, x-ray, xray, science, astronomy, observatory, recovery">
+<meta name="orgcode" content="662">
+<meta name="rno" content="Phillip.A.Newman.1">
+<meta name="content-owner" content="John.D.Myers.1">
+<meta name="webmaster" content="Stephan.F.Fantasia.1">
+<meta name="description" content="The X-ray Imaging and Spectroscopy Mission">
+<!-- Custom Styles Unique to Site - Rest are in /docs/nasa_header_xrism.html -->
+<link rel="stylesheet" type="text/css" href="/docs/xrism/inc/xrism.css" media="projection, screen"/>
+<link rel="stylesheet" type="text/css" href="/docs/xrism/inc/xrism_buttons_font.css" media="projection, screen"/>
+<link rel="alternate" type="application/rss+xml" href="https://heasarc.gsfc.nasa.gov/docs/rss/xrism.xml" title="RSS 2.0">
+
+<link rel="stylesheet" type="text/css" href="/docs/css/reset.css" media="projection, screen" />
+<link rel="stylesheet" type="text/css" href="/docs/css/base.css" media="projection, screen" />
+<link rel="stylesheet" type="text/css" href="/docs/css/dropdown.css" media="projection, screen" />
+<link rel="stylesheet" type="text/css" href="/docs/css/AstroTheme.css" media="projection, screen" />
+<link rel="stylesheet" type="text/css" href="/docs/nicer/inc/css/nicer.css" media="projection, screen" />
+<script src="/docs/js/jquery.min.js" type="text/javascript"></script>
+<!--[if IE 6]>
+	<link rel="stylesheet" type="text/css" href="/docs/css/ie6.css" media="projection, screen" />
+	<script src="/docs/js/DD_belatedPNG_0.0.8a-min.js" type="text/javascript"></script>
+	<script>
+		DD_belatedPNG.fix('div#bannerImg, li.tab1-on, li.tab1-off, li.tab-on, li.tab-off, #footer-signature, img');
+	</script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="/docs/portal.css">
+<link rel="stylesheet" type="text/css" href="/docs/print.css" media="print">
+<link rel="stylesheet" type="text/css" href="/docs/css/asd.css" media="projection, screen" />
+<script type="text/javascript" src="/scripts/overlib.js"><!-- overLIB (c) Erik Bosrup --></script>
+
+<!-- Google Analytics -->
+	<script type="text/javascript" language="javascript" id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NASA"></script>
+
+</head>
+
+<body>
+<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+
+	<div id="page-wrapper">
+    	<div id="page">
+<div class="navigation">
+
+
+            <div id="nasaHeader">
+                <div>
+                    <a href="https://www.nasa.gov" class="imageLink"><img class="logo" src="/Images/portal_new/nasa_header_logo1.gif" alt="NASA Logo, National Aeronautics and Space Administration" width="140" height="98"></a>
+                </div><!--class="nasaLogo"-->
+
+               <div id="headerTxtWrapper">
+                    <h1><a href="https://www.nasa.gov">National Aeronautics and Space Administration</a></h1>
+                    <h2><a href="https://www.nasa.gov/goddard/">Goddard Space Flight Center</a></h2>
+
+
+	   <h3><a href="https://science.gsfc.nasa.gov/">Sciences and Exploration</a></h3>
+
+               </div><!--headerTxtWrapper-->
+
+               <div id="HEASARCsearchbox">
+
+					<h3>Search:</h3>
+            <form action="/cgi-bin/search/search.pl" method="post" id="HEASARCsearch" name="HEASARCsearch">
+            <input type="text" name="tquery" id="search" value="Search HEASARC website" title="tquery" size="34" class="flt_left" onfocus="if(this.value=='Search HEASARC website') this.value='';">
+            <input type="image" alt="Search" src="/Images/portal_new/search_go.jpg" onclick="this.form.submit();" class="flt_left">
+            <input type="hidden" value="search.quick" id="fuseaction" name="fuseaction">
+            </form>
+            <div class="divClear"></div>
+		      <p style="font-size:10px;margin-top:1px"><a href="/cgi-bin/search/search.pl">[Advanced Search]</a></p>
+
+<br>
+<div style="margin-top:5px;"></div>
+<form name="QuickLinksForm" action=""><font size=-2>
+<label for="QuickLinksMenu"><a class="menu" href="/docs/corp/goto_text.html"><u>HEASARC Quick Links</u></a></label></font><br>
+<select class="Menu" name="QuickLinksMenu" size=1 id="QuickLinksMenu" style="display:none;">
+<option class="MenuColorHEADER" value="/" selected>---Quick Links---</option>
+<option class="MenuColorHEADER" value="/docs/archive.html">---Archive Interfaces---</option>
+<option value="/cgi-bin/argus/argus.pl">Argus: proposal info</option>
+<option value="/docs/archive.html">Browse: search HEASARC archives</option>
+<option value="/vo/">NVO DataScope</option>
+<option value="https://skyview.gsfc.nasa.gov/">SkyView: virtual observatory</option>
+<option value="/xamin">Xamin: powerful archive search</option>
+<option class="MenuColorHEADER" value="/docs/software.html">---Software &amp; Tools---</option>
+<option value="/docs/heasarc/caldb/caldb_intro.html">CalDB: Calibration database</option>
+<option value="/cgi-bin/Tools/convcoord/convcoord.pl">Coordinate Converter</option>
+<option value="/cgi-bin/Tools/energyconv/energyConv.pl">Energy Converter</option>
+<option value="/docs/heasarc/fits.html">FITS: standard data format</option>
+<option value="/docs/software/fitsio/fitsio.html">FITSIO: FITS subroutine library</option>
+<option value="/docs/software/ftools/ftools_menu.html">FTOOLS: general s/w for FITS files</option>
+<option value="/docs/software/ftools/fv.html">fv: FITS file editor</option>
+<option value="/cgi-bin/Tools/HEXTErock/HEXTErock.pl">HEXTErock</option>
+<option value="/cgi-bin/Tools/w3nh/w3nh.pl">nH: Column Density</option>
+<option value="/RPS/">RPS proposal submission</option>
+<option value="/xte_weather/">RXTE ASM weather map</option>
+<option value="/cgi-bin/Tools/DateConv/dateconv.pl">Time/Date Converter (xTime)</option>
+<option value="/cgi-bin/Tools/timeline/timeline.pl">Timeline (RXTE, Swift, &amp; HETE-2)</option>
+<option value="/cgi-bin/Tools/viewing/viewing.pl">Viewing: possible obs. times</option>
+<option value="/cgi-bin/Tools/w3pimms/w3pimms.pl">WebPIMMS: flux/count converter</option>
+<option value="/webspec/webspec.html">WebSpec: spectral sims</option>
+<option value="/docs/xanadu/xanadu.html">Xanadu: data analysis suite</option>
+<option value="/cgi-bin/Tools/xraybg/xraybg.pl">X-ray Background Tool</option>
+<option value="/cgi-bin/Tools/high_energy_source/high_energy_source.pl">X-ray, Gamma-ray, EUV Source Finder</option>
+<option class="MenuColorHEADER" value="/docs/HHP_heasarc_info.html">---Resources---</option>
+<option value="/docs/heasarc/biblio/pubs/">Bibliography</option>
+<option value="/docs/heasarc/contact.html">Contact Info</option>
+<option value="/docs/heasarc/headates/headates.html">Deadlines (proposals &amp; meeting regist.)</option>
+<option value="/docs/heasarc/headates/heahistory.html">History of High-Energy Astronomy</option>
+<option value="/docs/heasarc/staff/OGIP_staff.html">Staff</option>
+<option value="/docs/heasarc/meetings.html">Upcoming Meetings</option>
+<option value="/docs/heasarc/summer_schools.html">Upcoming Summer Schools</option>
+<option value="/docs/heasarc/whatsnew.html">What&#39;s New</option>
+<option class="MenuColorHEADER" value="/docs/outreach.html">---Education &amp; Pub. Outreach---</option>
+<option value="https://apod.nasa.gov/apod/astropix.html">APOD: Astronomy Picture of the Day</option>
+<option value="https://imagine.gsfc.nasa.gov/docs/ask_astro/ask_an_astronomer.html">Ask an Astrophysicist</option>
+<option value="/docs/objects/heapow/heapow.html">HEASARC Picture of the Week</option>
+<option value="/docs/objects/">Images, Spectra, Light Curves</option>
+<option value="https://imagine.gsfc.nasa.gov/">Imagine the Universe!</option>
+<option value="https://starchild.gsfc.nasa.gov/">StarChild (K-8 EPO)</option>
+<option value="/docs/outreach/webstars.html">WebStars: gen. astronomy info/news</option>
+</select>
+<script src="/docs/js/goto_handler.js" type="text/javascript"></script>
+</form>
+
+
+
+</div>
+
+            </div><!--id = nasaHeader -->
+<div style="margin-top:2px;"></div>
+            <div class="hidden">
+					<a href="#skipping" title="Skip Navigation" accesskey="2">Skip Navigation (press 2)</a>
+			</div>
+</div><!-- end navigation -->
+
+<!-- Banner -->
+  <div id="banner">
+    <div class="navigation">
+    <!--TOP MENU GOES HERE -->
+    <div id="siteMenuTop">
+      <ul id="menutopNav">
+        <li><a href="/" class="siteMenuTop-frst-itm">HEASARC Home</a></li>
+      	<li class="active"><a href="/docs/xrism/index.html" class="">XRISM Home</a></li>
+      	<li><a href="/docs/xrism/archive/index.html" class="">Archive</a></li>
+      	<li><a href="/docs/xrism/calib/index.html" class="">Calibration</a></li>
+      	<li><a href="/docs/xrism/analysis/index.html" class="">Analysis</a></li>
+        <li><a href="/docs/xrism/proposals/index.html" class="">Proposals &amp; Tools</a></li>
+        <li><a href="/docs/xrism/epo/index.html" class="siteMenuTop-last-itm">Students/Teachers/Public</a></li>
+      </ul>
+    </div><!-- id="siteMenuTop" -->
+</div><!-- end navigation -->
+    <!-- BANNER IMAGE GOES HERE -->
+    <div id="bannerImg">
+      <a href="/docs/xrism/"><img src="/docs/xrism/inc/XRISM_banner.jpg" width="952" class="logo" alt="X-ray Imaging and Spectroscopy Mission"></a>
+    </div><!-- id=bannerImg -->
+  </div><!-- id=banner -->
+  <div class="divClear"></div>
+  <div class="navigation">
+    <!-- BOTTOM MENU GOES HERE -->
+  <div id="siteMenuBottom">
+    <ul id="menuBottomNav">
+      <li><a href="/docs/xrism/about/index.html" class="siteMenuBottom-frst-itm">About XRISM</a></li>
+      <li><a href="/docs/xrism/whatsnew/index.html" class="">What's New</a></li>
+      <li><a href="/docs/xrism/timelines/index.html" class="">Schedules</a></li>
+      <li><a href="/docs/xrism/results/index.html" class="">Meetings &amp; Results</a></li>
+      <li><a href="/docs/xrism/documents/index.html" class="">Documentation</a></li>
+      <li><a href="/docs/xrism/xrism_faq.html" class="">FAQ/Help</a></li>
+      <li><a href="/docs/xrism/sites.html" class="">Related Sites</a></li>
+      <li><a href="/docs/xrism/gallery/index.html" class="siteMenuBottom-last-itm" style="min-width:
+90px;">Gallery</a></li>
+    </ul>
+  </div><!--id="siteMenuBottom"-->
+</div><!-- end navigation -->
+			<div id="content">
+          	<a name="skipping" id="skipping"></a>
+            	<div id="content-wrapper">
+                            <div class="maincontent" id="OneColumn">
+<div class="shim"></div>
+
+                                <div class="full-width-content-item">
+<script src="/docs/tagline.js" type="text/javascript" language="JavaScript"></script>
+<table width="100%">
+<tr><td style="vertical-align:top;">
+
+
+<!-- Start Section Wrapper -->
+<div id="sec-wrapper">
+
+<h1 class=center>Resolve NXB Database and Spectral Extraction Recipes</h1>
+
+<h2>Overview</h2>
+
+<p>This page provides the provisional NXB database of Resolve. It also provides an example of how to prepare the data and run 'rslnxbgen' to extract an NXB spectrum. For this provisional database (and your source), we recommend that users select only Hi-res events and apply screening manually as shown below.</p>
+
+<br>
+
+<h2>Data Files</h2>
+
+<p>The following files are used to extract an NXB spectrum and perform spectral fitting. These files can be found in the <a href="https://heasarc.gsfc.nasa.gov/FTP/xrism/postlaunch/nxb/provisional/resolve/">Resolve NXB database repository</a> or by following the links provided.</p>
+
+<ul>
+    <li>NXB database covering the period 2023-12-25 to 2026-01-31</li>
+    <ul>
+	<li>Merged Resolve NXB event list: <a href="https://heasarc.gsfc.nasa.gov/FTP/xrism/postlaunch/nxb/provisional/resolve/xrism_nxbdb_v3_rsl.evt.gz">xrism_nxbdb_v3_rsl.evt.gz</a></li>
+	<li>Merged Extended House-Keeping (EHK) file: <a href="https://heasarc.gsfc.nasa.gov/FTP/xrism/postlaunch/nxb/provisional/resolve/xrism_nxbdb_v3_rsl.ehk.gz">xrism_nxbdb_v3_rsl.ehk.gz</a></li>
+    </ul>
+    <li>Science data for your source; here we use a public observation of N132, OBSID 000126000, taken with the OPEN filter as an example. Replace that with your data OBSID in the commands below.</li>
+    <ul>
+        <li>Source event list: xa000126000rsl_p0px1000_cl.evt</li>
+	<ul>
+	    <li>This is located in OBSID/resolve/event_cl in the archive data.</li>
+	</ul>
+        <li>EHK file: xa000126000.ehk</li>
+        <ul>
+            <li>This is located in OBSID/auxil in the archive data.</li>
+        </ul>
+    </ul>
+    <li>Other files</li>
+    <ul>
+       	<li>RMF file for use with the NXB spectrum: <a href="https://heasarc.gsfc.nasa.gov/FTP/xrism/postlaunch/nxb/provisional/resolve/xrism_nxb_v3_rsl_M.rmf">xrism_nxb_v3_rsl_M.rmf</a></li>
+	<ul>
+	<li>Medium-sized RMF made from the above merged Resolve NXB event list, with the following filtering:</li>
+	<ul>
+		<li>Recommended screening to remove pixel-to-pixel coincident events; see below under <a href="https://heasarc.gsfc.nasa.gov/docs/xrism/analysis/nxb/resolve_nxb_db.html#ex_commands">Example of Commands to Extract the NXB Spectrum</a></li>
+		<li>PIXEL &excl;&equals; 27</li>
+		<li>CORTIME &ge; 6</li>
+		<li>GRADE &equals;&equals; 0 (Hp events only)</li>
+	</ul>
+	<li>This likely suffices for most applications, but for sub-array analysis, we recommend making an RMF from the event file that is output of rslnxbgen. See <a href="https://heasarc.gsfc.nasa.gov/docs/xrism/analysis/abc_guide/Resolve_Data_Analysis.html#SECTION00970000000000000000">Section 6.7 of the XRISM Data Analysis Guide</a> for more information.</li>
+	<li>Please see <a href="https://heasarc.gsfc.nasa.gov/docs/xrism/analysis/nxb/resolve_nxb_spectral_model.html">Resolve NXB Spectral Model</a> for more information on how to use this response.</li>
+</ul>
+<li>Science data RMF file: <a href="https://heasarc.gsfc.nasa.gov/FTP/xrism/postlaunch/nxb/provisional/resolve/xa000126000rsl_p0px1000.rmf">xa000126000rsl_p0px1000.rmf</a></li>
+<ul>
+    <li>Please replace this with the RMF you produced for your source spectrum.</li>
+        </ul>
+    </ul>
+    <p>The NXB event list was constructed by hand from the Resolve NXB trend repository, selecting suitable observations and applying some additional screening. These events are restricted to times when XRISM was pointed toward the dark limb of the Earth ("night Earth" data), and they have the same screening as the science event data (see <a href="https://heasarc.gsfc.nasa.gov/docs/xrism/analysis/abc_guide/XRISM_Data_Analysis.html#SECTION00860000000000000000">Table 5.1 of the XRISM Data Analysis Guide</a>) with the following exceptions:</p>
+    <ul>
+    <li>The NXB events are screened differently for Earth elevation (ELV&lt;-5).</li>
+    <li>The NXB events are not screened on the distance between the aimpoint and target (ANG_DIST), since the NXB is not a target with defined coordinates.</li>
+    </ul>
+    <p>We recommend additional screening of both the NXB events and science data events in the examples below to ensure that the two datasets are similarly filtered.</p>
+</ul>
+
+<br>
+
+<h2 id="ex_commands">Example of Commands to Extract the NXB Spectrum</h2>
+
+<h3 style="color: gray;">Extract the source spectrum</h3>
+
+<p>We provide an example of extracting a source spectrum here to point out that any filtering applied to the source events must also be applied to the NXB events to ensure consistency. If you have already extracted your source spectrum, you can skip this step, but you must ensure any non-standard event filtering is also applied to the NXB in the section below. Please see the <a href="https://heasarc.gsfc.nasa.gov/docs/xrism/analysis/abc_guide/Resolve_Data_Analysis.html">XRISM Data Reduction Guide Section 6</a> for more information on default and optional Resolve screening criteria.</p>
+
+<p>We first apply the recommended screening to remove pixel-to-pixel coincident events and Ls events:</p>
+
+<pre>
+     <code>ftcopy \
+          infile=&apos;xa000126000rsl_p0px1000_cl.evt[EVENTS][(PI&gt;=600) &amp;&amp;
+	  ((RISE_TIME+0.00075*DERIV_MAX)&gt;46) &amp;&amp;
+	  ((RISE_TIME+0.00075*DERIV_MAX)&lt;58) &amp;&amp; (ITYPE&lt;4) &amp;&amp; 
+	  (STATUS[4]==b0)]&apos; \
+               outfile=&apos;xa000126000rsl_p0px1000_cl2.evt&apos; \
+               copyall=yes history=yes</code>
+</pre>
+
+<p>Apply time-based filtering. Prepare a GTI file for the source data, and use it to filter the event list. The CORTIME cut for the source is optional, however you must apply the same cut to the NXB data. <span style="color: red;"><i><b>The XRISM Resolve team currently recommends using data with CORTIME&gt;&equals;6</b></i></span>, so that selection is used here. This will result in the exclusion of some data, and the user is responsible for assessing the effects of different CORTIME filtering on their data and science goals; please see the <a href="https://heasarc.gsfc.nasa.gov/docs/xrism/analysis/nxb/resolve_nxb_db.html#additional_information">Additional information</a> below for more information. Note that this filtering can also be performed in Xselect, see the <a href="https://heasarc.gsfc.nasa.gov/docs/xrism/analysis/abc_guide/Resolve_Data_Analysis.html">XRISM Data Reduction Guide Section 6</a> for more information.</p>
+
+<pre>
+    <code>maketime \
+        infile='xa000126000.ehk' \
+        outfile='ehkSel_src.gti' \
+        expr='CORTIME&gt;&equals;6' \
+        name=- value=- time=TIME compact=no
+
+    extractor \
+        filename='xa000126000rsl_p0px1000_cl2.evt' \
+        eventsout='xa000126000rsl_p0px1000_cl3.evt' \
+        timefile='ehkSel_src.gti' \
+        imgfile=NONE phafile=NONE fitsbinlc=NONE regionfile=NONE \
+        xcolf=X ycolf=Y tcol=TIME ecol=PI xcolh=DETX ycolh=DETY
+
+    # Output:
+    # ========================================================================
+    #    Grand Total      Good    Bad: Time     Phase     Grade       Cut
+    #          13620     11462         2158         0         0         0
+    #   in 1.04809E+05 seconds</code>
+</pre>
+
+<p>Next extract the source spectrum for the entire array except pixel 27, including only Hp events. This filtering depends on your observation and science goals. In Xselect, run the following commands:</p>
+
+<pre>
+    <code># Run in Xselect
+    read events xa000126000rsl_p0px1000_cl3.evt ./
+    filter column "PIXEL=0:26,28:35"
+    filter GRADE "0"
+    extract events
+       # Output:
+       # =====================================================================
+       #    Grand Total      Good    Bad: Time     Phase     Grade       Cut
+       #          11462     11166            0         0        88       208
+       #   in 1.04809E+05 seconds
+    extract spectrum
+    save spectrum src.pi clobber=yes
+    set image DET
+    extract image
+    save image src_det.img clobber=yes
+    exit</code>
+</pre>
+
+<p>Here is the DET image of the source:</p>
+
+<img src=
+"src_det_img.png"
+    alt="DET image" width="700;"/>
+
+<h3 style="color: gray;">Generate the NXB spectrum</h3>
+
+<p>Generate the NXB spectrum for the same region that you used for your science data. Please see the help for 'rslnxbgen' for full details, but here are several things to keep in mind:</p>
+
+<ul>
+    <li>The 'infile' must be the CORTIME-filtered source event list, the same event list used to extract the source spectrum above.</li>
+    <li><i><b>There is currently a bug in rslnxbgen so that the 'pixels' parameter does not work.</b></i> As a work-around, use 'pixels=-' and specify the pixel filtering in the 'expr' parameter, as shown in bold in the command below. We use this method to exclude pixel 27 as we did in the source event list above.</li>
+    <li>We apply the same screening for Hi-res events and the rise-time-based cuts as we did to the science event list. Note the '(ITYPE==0)' filter in bold, which includes only Hp events. This screening may be done with a separate ftcopy command as for the source data, or using the 'expr' parameter directly in rslnxbgen as we do here.</li>
+    <li>There is no explicit CORTIME filtering performed on the NXB events using a maketime or similar command here. Instead, the 'sortbin' parameter of rslnxbgen is used to exclude CORTIME &lt; 6.</li>
+    <li><i><b>There is currently a bug in rslnxbgen that produces unpredictable results for some values and formats of 'timefirst'and 'timelast'.</b></i> In addition, we recommend users include the entire existing database regardless of when the observations were taken. The settings below of ±1700 days will accomplish this for any XRISM observation until May 2028. Please use the exact expressions shown in bold below, including minus and plus signs and single quotes, to ensure correct operation.</li>
+</ul>
+
+<pre>
+    <code>rslnxbgen \
+         infile='xa000126000rsl_p0px1000_cl3.evt' \
+         ehkfile='xa000126000.ehk' \
+         regfile='NONE' \
+         pixels='-' \
+         innxbfile='xrism_nxbdb_v3_rsl.evt' \
+         innxbehk='xrism_nxbdb_v3_rsl.ehk' \
+         database='LOCAL' db_location='./' \
+	 <b>timefirst='-1700' timelast='+1700'</b> \
+         sortcol='CORTIME' sortbin='6,8,10,12,99' \
+	 expr='(PI&gt;=600) &amp;&amp; ((RISE_TIME+0.00075*DERIV_MAX)&gt;46) &amp;&amp; 
+	 ((RISE_TIME+0.00075*DERIV_MAX)&lt;58) &amp;&amp; <b>(ITYPE&equals;&equals;0)</b> &amp;&amp;
+	 (STATUS[4]&equals;&equals;b0) &amp;&amp; <b>(PIXEL&excl;&equals;27)</b>' \
+         outpifile='rsl_nxb.pi' \
+         outnxbfile='rsl_nxb.evt'</code>
+</pre>
+
+<p>We’ll make a DET coordinate image of the NXB data just to compare to the source and make sure the proper pixels are excluded:</p>
+<pre>
+    <code>ftcopy 'rsl_nxb.evt[EVENTS][bin DETX&equals;1:8:1,DETY&equals;1:8:1]' nxb_det.img clobber=yes</code>
+</pre>
+
+<img src=
+"nxb_det_img.png"
+    alt="DET image" width="700;"/>
+
+<h2>Using the NXB Spectrum</h2>
+
+<p>You can compare the generated NXB spectrum with the source spectrum using the Xspec commands below.</p>
+<pre>
+    <code># Run in Xspec
+    data 1:1 src.pi
+    resp 1 xa000126000rsl_p0px1000.rmf
+    data 2:2 rsl_nxb.pi
+    resp 2 xrism_nxb_v3_rsl_M.rmf
+    setplot device /xw
+    setplot energy
+    ignore *:**-1.0 12.0-**
+    setplot rebin 1000 100 -1
+    setplot xlog off
+    iplot ld
+    rescale y 1e-4 1e-1
+    color 2 on 2
+    time off
+    plot
+    hard test-rslnxbgen-N132D_plot.gif/gif
+    exit
+    exit</code>
+</pre>
+
+<img src=
+"test-rslnxbgen-N132D_plot.gif"
+    alt="Comparison between generated NXB spectrum and source spectrum." width="800;"/>
+
+<p>To fit the Resolve NXB spectrum, either on its own or simultaneously with a source spectrum, please see the information about using a <a href="https://heasarc.gsfc.nasa.gov/docs/xrism/analysis/nxb/resolve_nxb_spectral_model.html">Resolve NXB spectral model.</a></p>
+
+<h2 id="additional_information">Additional information</h2>
+<h3 style="color: gray;">Spatial non-uniformity</h3>
+
+<p>The images below show the spatial uniformity of the v2 Resolve NXB data in various energy bins. The events have been screened as described above, except to increase statistics and complete the array map, no CORTIME filtering was performed and pixel 27 is included. Note that the coordinate system shown here is different from the DET coordinates used in the images above; the pixel number is listed in the upper left corner of each pixel, and the total counts in each pixel is shown in the pixel center and by the pixel color. (From left to right: 1–17 keV, 2–12 keV, Mn Ka (5.880–5.910 keV), Au La and Lb, 3–5 keV (line-free region))</p>
+
+<ul style="list-style: none;">
+	<div style="height:340px;width:800px;overflow-y:hidden;overflow-x:scroll;white-space:nowrap;display:inline-block;">
+		<li>
+			<img src=
+			"map1_cropped.png"
+			alt="Spatial uniformity of the v2 Resolve NXB data in the 1–17 keV energy bin" width="300;" height="290;"/>
+			<img src=
+			"map2_cropped.png"
+			alt="Spatial uniformity of the v2 Resolve NXB data in the 2–12 keV energy bin" width="300;" height="290;"/>
+			<img src=
+			"map4_cropped.png"
+			alt="Spatial uniformity of the v2 Resolve NXB data in the Mn Ka (5.880–5.910 keV) energy bin" width="300;" height="290;"/>
+			<img src=
+                        "map5_cropped.png"
+	                alt="Spatial uniformity of the v2 Resolve NXB data in the Au La and Lb energy bin" width="300;" height="290;"/>
+			<img src=
+                        "map3_cropped.png"
+	                alt="Spatial uniformity of the v2 Resolve NXB data in the 3–5 keV (line-free region) energy bin" width="300;" height="290;"/>
+		</li>
+	</div>
+</ul>
+
+<h3 style="color: gray;">Cut-off rigidity (CORTIME) filtering</h3>
+<p>The Resolve team recommends excluding times of low cut-off rigidity (specifically CORTIME &lt; 6) because the background  level is found to be more variable in these parts of the orbit, as shown in the plots below.</p>
+<ul>
+	<li>For the graph below, the Resolve NXB database was divided into CORTIME intervals, and each of these was divided into 15 equal exposures. CORTIME &lt; 6 shows greater absolute (top plot with linear Y axis) and fractional (bottom plot with log Y axis) variation in count rate than the other CORTIME ranges.</li>
+        <img src=
+        "NXBv3_GTIbyCOR.png"
+	     alt="Example of background level variability in times of low cut-off rigidity." width="800;"/>
+	<br>
+	<img src=
+        "NXBv3_GTIbyCOR_log.png"
+	     alt="Example of background level variability in times of low cut-off rigidity, log-scale." width="800;"/>
+	 <li>The light curve of screened NXB data below shows intervals that are unusually high. With one exception, these deviations occurred when CORTIME &lt; 6, thus they may be a source of the variability</li>
+	 <img src=
+         "NXBv3_lightcurve_wCORTIME.png"
+	      alt="Light curve of screened NXB data" width="800;"/>
+</ul>
+<p>In the full v3 NXB database filtered as described above and excluding pixel 27, applying a CORTIME &gt;&equals; 6 filter reduces the full-band counts by 17.6&percnt; (12,088 out of 68,826 counts removed) and the exposure time by 9.5&percnt; (383 ks out of 4046 ks). This gives an idea of the effect of applying this filter, however the following caveats must be kept in mind:</p>
+<ul>
+	<li>The exposure fraction occurring during CORTIME &lt; 6 could be more or less than this in a given observation, depending on where in the orbit the eclipses occur.</li>
+	<li>Variability in the NXB at low CORTIME occurs on a number of different timescales, and by definition the Good Time Intervals of the science observation and NXB do not overlap. Therefore it is not sufficient to look at the NXB light curve around the observation and conclude that you may use CORTIME &lt; 6 because the NXB is stable; the science observation samples a different portion of the orbit and may be affected differently.</li>
+	<li>If the user is concerned about the loss of exposure from performing this cut, they should investigate the effect on their observation’s signal-to-noise with and without the cut.</li>
+</ul>
+<p>The user is responsible for assessing the effects of various CORTIME cuts, as these depend sensitively on several factors, including the brightness of the object under study, the energy band used, and the particular science goals of the analysis.</p>
+
+<br>
+
+</div> <!-- End Section Wrapper -->
+
+</td></tr>
+</table>
+
+<!-- This is portalfooter.html -->
+<!-- Because some pages don't use the header files that include the css, the styles need to be written out here. -->
+</div>
+<!-- full-width-content-item -->
+                         <div class="divClear" style="clear:both;"></div>
+                      </div><!-- id=maincontent -->
+                   </div><!-- id="content-wrapper" -->
+		</div><!-- id="content" -->
+	<div class="divClear" style="clear:both;"></div>
+<div class="navigation">
+<div id="HEASARCfooter" style="background-color:#2E2E2E;height:20px;width:952px;border-top:none;margin:0 auto;margin-top:5px;">
+<table width="100%">
+<tr><td style="text-align:center;vertical-align:middle;">
+<p style="color:#B2B2B2;font-size:11px;text-decoration:none;font-family:Arial,Helvetica,sans-serif;margin:0;">A service of the <a href="https://science.gsfc.nasa.gov/astrophysics" style="color:#B2B2B2;font-size:11px;text-decoration:none;font-family:Arial,Helvetica,sans-serif;">Astrophysics Science Division</a> at <a href="http://www.nasa.gov/" style="color:#B2B2B2;font-size:11px;text-decoration:none;font-family:Arial,Helvetica,sans-serif;">NASA/</a><a href="http://www.nasa.gov/goddard" style="color:#B2B2B2;font-size:11px;text-decoration:none;font-family:Arial,Helvetica,sans-serif;">GSFC</a>.</p>
+</td></tr>
+</table>
+</div>
+
+<div id="footer" style="background-color:#2E2E2E;height:98px;width:952px;border-top:2px solid #222222;margin:0 auto;">
+                <div>
+               		<a href="http://www.nasa.gov" class="imageLink" style="display:block;float:left;"><img class="logo" style="border:0;" src="/Images/portal_new/nasa_header_logo1.gif" alt="NASA Logo, National Aeronautics and Space Administration" width="140" height="98"></a>
+                </div><!-- class="nasaLogo" -->
+
+                <div id="footer-signature" style="padding-left:20px;padding-top:19px;float:left;">
+               		<a href="http://www.nasa.gov/goddard/" class="imageLink" style="display:block;float:left;"><img class="logo" style="border:0;" src="/Images/portal_new/goddardsignature2.png" alt="Goddard Space Flight Center Signature Logo" width="172" height="68"></a>
+                </div>
+                <div class="nasafootlinks" style="float:left;height:84px;margin-left:15px;padding-left:0px;padding-top:14px;width:295px;">
+                	<ul style="list-style:none;padding:0;margin:0;">
+                		<li style="margin-bottom:2px;color:#B2B2B2;font-size:11px;font-family:Arial,Helvetica,sans-serif;">HEASARC Director: Vacant</li>
+                		<li style="margin-bottom:2px;color:#B2B2B2;font-size:11px;font-family:Arial,Helvetica,sans-serif;">NASA Official: Ryan Smallcomb</li>
+                		<li style="margin-bottom:2px;color:#B2B2B2;font-size:11px;font-family:Arial,Helvetica,sans-serif;">Web Curator: <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#46;&#100;&#46;&#109;&#121;&#101;&#114;&#115;&#64;&#110;&#97;&#115;&#97;&#46;&#103;&#111;&#118;">J.D. Myers</a></li>
+	        		<li style="margin-bottom:2px;color:#B2B2B2;font-size:11px;font-family:Arial,Helvetica,sans-serif;">Last Modified:  9-Nov-2026</li>
+                	</ul>
+                </div><!-- nasafootlinks -->
+                <div class="nasafootlinks" id="footerRight" style="float:left;height:84px;margin-left:15px;padding-left:0px;padding-top:14px;width:295px;">
+                	<ul style="list-style:none;padding:0;margin:0;">
+                		<li style="margin-bottom:2px;padding-left:12px;background:url(/Images/portal_new/rsaquo_gray.gif) no-repeat scroll 0 1px transparent;color:#B2B2B2;font-size:11px;"><a href="http://science.nasa.gov/astrophysics/" style="color:#B2B2B2;font-size:11px;text-decoration:none;font-family:Arial,Helvetica,sans-serif;">NASA Astrophysics</a></li>
+                		<li style="margin-bottom:2px;padding-left:12px;background:url(/Images/portal_new/rsaquo_gray.gif) no-repeat scroll 0 1px transparent;color:#B2B2B2;font-size:11px;text-decoration:none;font-family:Arial,Helvetica,sans-serif;"><a href="/docs/faq.html" style="color:#B2B2B2;font-size:11px;text-decoration:none;font-family:Arial,Helvetica,sans-serif;">FAQ/Comments/Feedback</a></li>
+                		<li style="margin-bottom:2px;padding-left:12px;background:url(/Images/portal_new/rsaquo_gray.gif) no-repeat scroll 0 1px transparent;color:#B2B2B2;font-size:11px;"><a href="/docs/outreach.html" style="color:#B2B2B2;font-size:11px;text-decoration:none;font-family:Arial,Helvetica,sans-serif;">Education Resources</a></li>
+                		<li style="margin-bottom:2px;padding-left:12px;background:url(/Images/portal_new/rsaquo_gray.gif) no-repeat scroll 0 1px transparent;color:#B2B2B2;font-size:11px;"><a href="/docs/plugins.html" style="color:#B2B2B2;font-size:11px;text-decoration:none;font-family:Arial,Helvetica,sans-serif;">Find helper applications like Adobe Acrobat</a></li>
+                		<li style="margin-bottom:2px;padding-left:12px;background:url(/Images/portal_new/rsaquo_gray.gif) no-repeat scroll 0 1px transparent;color:#B2B2B2;font-size:11px;"><a target="_blank" href="http://www.nasa.gov/about/highlights/HP_Privacy.html" style="color:#B2B2B2;font-size:11px;text-decoration:none;font-family:Arial,Helvetica,sans-serif;">Privacy Policy &amp; Important Notices</a></li>
+                	</ul>
+                </div><!-- nasafootlinks -->
+</div><!-- id=footer -->
+</div><!-- class=navigation -->
+</div><!-- id=page -->
+</div><!-- id=page-wrapper -->
+
+
+
+
+
+</body>
+</html>

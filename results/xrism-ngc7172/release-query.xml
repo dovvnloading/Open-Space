@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<VOTABLE xmlns="http://www.ivoa.net/xml/VOTable/v1.3" xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/v1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.4">
+ <RESOURCE type="results">
+  <INFO name="QUERY_STATUS" value="OK">No errors detected in query preprocessing</INFO>
+  <TABLE>
+   <DESCRIPTION>Query result for:&#xA;SELECT TOP 200 obsid,name,time,end_time,exposure,rslcode,public_date,processing_date,status,title FROM xrismmastr WHERE public_date &gt;= 61300 AND public_date &lt;= 61360 AND time &gt;= 60676 AND exposure &gt; 10000 ORDER BY public_date DESC</DESCRIPTION>
+   <FIELD datatype="char" arraysize="*" ucd="meta.id;obs" name="obsid" ID="DataLinkID">
+    <DESCRIPTION>Unique Observation/Sequence Number</DESCRIPTION>
+   </FIELD>
+   <FIELD datatype="char" arraysize="*" ucd="meta.id;meta.main" name="name">
+    <DESCRIPTION>Designation of the Pointed Source</DESCRIPTION>
+   </FIELD>
+   <FIELD unit="d" datatype="double" ucd="time.start;obs" precision="F5" name="time">
+    <DESCRIPTION>Start Time of the Observation</DESCRIPTION>
+   </FIELD>
+   <FIELD unit="d" datatype="double" ucd="time.end;obs" precision="F5" name="end_time">
+    <DESCRIPTION>Stop Time of the Observation</DESCRIPTION>
+   </FIELD>
+   <FIELD unit="s" datatype="double" ucd="time.duration;obs.exposure" precision="F5" name="exposure">
+    <DESCRIPTION>Effective Total Observation Exposure (s)</DESCRIPTION>
+   </FIELD>
+   <FIELD datatype="char" arraysize="*" ucd="meta.code;obs" name="rslcode">
+    <DESCRIPTION>Code for Resolve Data Processing</DESCRIPTION>
+   </FIELD>
+   <FIELD unit="d" datatype="int" ucd="time.release" name="public_date">
+    <DESCRIPTION>Date That Data Was or Will Be Made Available to the Public</DESCRIPTION>
+    <VALUES null="-2147483648"/>
+   </FIELD>
+   <FIELD unit="d" datatype="double" ucd="time.processing" precision="F5" name="processing_date">
+    <DESCRIPTION>Date That Data Was Last Processed</DESCRIPTION>
+   </FIELD>
+   <FIELD datatype="char" arraysize="*" ucd="meta.code.status;obs" name="status">
+    <DESCRIPTION>Observation Status of the Target</DESCRIPTION>
+   </FIELD>
+   <FIELD datatype="char" arraysize="*" ucd="meta.title;obs.proposal" name="title">
+    <DESCRIPTION>Proposal Title</DESCRIPTION>
+   </FIELD>
+   <DATA>
+    <BINARY>
+     <STREAM encoding="base64">
+AAAACTIwMjA2MzAxMAAAAAlTSUdNQV9HRU1A7cc9wc0t40Dtx4vS3j7vQPqhOb0n
+PVwAAAAGMzEzNDMwAADvr0DtyCsE1eb7AAAACXByb2Nlc3NlZAAAAGtTVEVM
+TEFSIENPUk9OQUwgSEVBVElORyBQUk9CTEVNIFNUVURJRUQgQlkgT0JTRVJW
+QVRJT05TIE9GIFRIRSBGRSBLQSBMSU5FIE9GIFRIRSBSUyBDVk4tVFlQRSBT
+VEFSIFNJR01BIEdFTQAAAAkyMDIwNDAwMTAAAAAMQUJFTEwyMjU2X1AyQO3G
+UqVbZspA7ca8W2bHfUEG46q+1SflAAAABjMxMzQzMAAA761A7cdP+XUw7gAA
+AAlwcm9jZXNzZWQAAAAxSUNNIFRVUkJVTEVOQ0UgSU4gVEhFIE1FUkdJTkcg
+Q0hBT1MgT0YgQUJFTEwgMjI1NgAAAAkyMDIwNjgwMTAAAAALTUNHLTUtMjMt
+MTZA7ca8W2bHfUDtxz3BzS3jQQc3oWANG3EAAAAGMzEzNDMwAADvrUDtx8wM
+tIcBAAAACXByb2Nlc3NlZAAAAERUSEUgTElOSyBCRVRXRUVOIFJFTEFUSVZJ
+U1RJQyBESVNLIEFORCBVTFRSQUZBU1QgV0lORCBJTiBNQ0ctNS0yMy0xNgAA
+AAkyMDIwMzkwMTAAAAAMQUJFTEwyMjU2X1AxQO3F6D71AGNA7cZSpVtmykEG
+LB3Z9/jLAAAABjMxMzQzMAAA761A7cdP8xrtZwAAAAlwcm9jZXNzZWQAAAAx
+SUNNIFRVUkJVTEVOQ0UgSU4gVEhFIE1FUkdJTkcgQ0hBT1MgT0YgQUJFTEwg
+MjI1NgAAAAkyMDIwNTcwMTAAAAAPSVJBU18wOTEwNCs0MTA5QO3Ec1tmx31A
+7cU3W2bHfUERKZRrl3hXAAAABjMxMzQzMAAA76RA7cW2DDsqHwAAAAhhcmNo
+aXZlZAAAAHhFWFBMT1JJTkcgQSBORVcgRkFDRSBPRiBRVUFTQVItTU9ERSBG
+RUVEQkFDSyBXSVRIIEEgQ09PTC1DT1JFIENMVVNURVIgSE9TVElORyBBTiBY
+LVJBWSBMVU1JTk9VUywgSEVBVklMWSBPQlNDVVJFRCBRVUFTQVIAAAAJMjAy
+MDc0MDEwAAAAB05HQzcxNzJA7cU3W2bHfUDtxeg+9QBjQQpJmDt5UtIAAAAG
+MzEzNDMwAADvpEDtxtHZyiUkAAAACGFyY2hpdmVkAAAAKlVOVkVJTElORyBO
+QVRVUkUgT0YgTkVXIFRZUEUgQUdOOiBOR0MgNzE3MgAAAAkyMDIwNzIwMTAA
+AAAPQUJFTEwzNjY3X0NFTl9OQO3EMSgzlElA7cRzW2bHfUD31M2UY8+zAAAA
+BjMxMzQzMAAA751A7cVs0aKzyAAAAAhhcmNoaXZlZAAAAE1DT05TVFJBSU5J
+TkcgSU5UUkFDTFVTVEVSIE1JQ1JPUEhZU0lDUyBWSUEgU0hFQVIgQU5EIFRV
+UkJVTEVOQ0UgSU4gQUJFTEwgMzY2NwAAAAkyMDExMTkwMTAAAAAFSUM0NDNA
+7cJc71AGF0DtwwE5RKVWQQrUnUNWluYAAAAGMzEzNDMwAADvmUDtxHUSNFZ2
+AAAACGFyY2hpdmVkAAAAeEEgVEhPUk9VR0ggU1RVRFkgT0YgVEhFIFNVUEVS
+Tk9WQSBSRU1OQU5UIElDNDQzOiBQUk9CSU5HIFBMQVNNQSBDT05ESVRJT05T
+IEFORCBDT1NNSUMgUkFZIERJRkZVU0lPTiBJTiBTSE9DSy1DTE9VRCBJTlRF
+UgAAAAkyMDEwODIwMTAAAAAQVjEyMjNfU0FHSVRUQVJJSUDtwwE5RKVWQO3D
+i9iOmf1BDN+neSOinAAAAAYzMTM0MzAAAO+YQO3EbQH9uXsAAAAIYXJjaGl2
+ZWQAAABHTU9ERUwtSU5ERVBFTkRFTlQgTUFTUyBBTkQgUkFESVVTIE1FQVNV
+UkVNRU5UIE9GIEEgTUFHTkVUSUMgV0hJVEUgRFdBUkY=
+     </STREAM>
+    </BINARY>
+   </DATA>
+  </TABLE>
+ </RESOURCE>
+ <RESOURCE utype="adhoc:service" type="meta">
+  <PARAM datatype="char" arraysize="*" name="standardID" value="ivo://ivoa.net/std/DataLink#links-1.1"/>
+  <PARAM datatype="char" arraysize="*" name="accessURL" value="https://heasarc.gsfc.nasa.gov/xamin/vo/datalink/xrismmastr?datalink_key&amp;"/>
+  <GROUP name="inputParams">
+   <PARAM ref="DataLinkID" datatype="char" arraysize="*" name="id" value=""/>
+  </GROUP>
+ </RESOURCE>
+</VOTABLE>
