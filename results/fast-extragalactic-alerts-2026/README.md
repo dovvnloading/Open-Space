@@ -20,3 +20,9 @@ Archived the photometry, screened all eligible pairs, checked the public ZTF exp
 ## Pending at this checkpoint
 
 The final object-by-object audit, supplementary older-object tests, and linked cross-survey evidence are being assembled. No photometric class or discovery priority has been established for the compact Rubin source.
+
+## Frozen replay and flux interpretation
+
+Rubin PSF fluxes and ZTF positive `magpsf` are difference-image quantities. Their magnitude changes describe the difference flux; they are not necessarily changes in the total source brightness. Visits can share a reference template, so their systematic errors need not be independent. Nondetection records describe only their particular observation and limiting measurement. The 17 unflagged Rubin objects and nine ZTF photometric rankings are screening outputs; individual physical identifications, localization and residual alternatives must be assessed with their evidence.
+
+The Rubin screen verifies the byte count and SHA-256 of the frozen parent and every daily response before writing to a new output directory: `python rubin/screen.py rubin/data /path/to/new-output --flux-unit nJy`. The unit is an operator declaration based on the [ALeRCE LSST schema](https://alerce.readthedocs.io/en/latest/models/lsst_detection.html), not a unit validated from the archived CSV metadata. The ZTF screen verifies all 16 raw detection bodies and count responses against receipts in `ztf/ztf_evidence_supplement.tar.gz`: `python ztf/scripts/ztf_screen.py /path/to/new-output`. Both reject existing output directories. Rubin live retrieval requires a new directory. Set `FAST_ALERTS_NEW_CAMPAIGN` to a new directory for ZTF live retrieval; this creates distinct responses and receipts, not a replacement of this frozen cohort. Other follow-up scripts and the recovery script still require separate scratch copies and have not yet been made immutable replay tools.

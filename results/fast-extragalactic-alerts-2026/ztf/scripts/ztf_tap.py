@@ -10,13 +10,14 @@ import gzip
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(os.environ['FAST_ALERTS_NEW_CAMPAIGN']).resolve() if os.environ.get('FAST_ALERTS_NEW_CAMPAIGN') else Path(__file__).resolve().parents[1]
 RAW = ROOT / 'data' / 'ztf'
 META = ROOT / 'receipts' / 'ztf'
 TAP = 'https://tap.alerce.online/tap/sync'
@@ -26,6 +27,12 @@ o.meanra,o.meandec,d.candid,d.pid,d.mjd,d.fid,d.magpsf,d.sigmapsf,
 d.isdiffpos,d.drb,d.rb,d.ra,d.dec,d.has_stamp,d.dubious,d.rfid,d.diffmaglim'''
 # CSV avoids loss of 64-bit integer candidate/processing IDs.
 def get(tag, q, bodydir=RAW):
+    if not os.environ.get('FAST_ALERTS_NEW_CAMPAIGN') or Path(os.environ['FAST_ALERTS_NEW_CAMPAIGN']).resolve() != ROOT.resolve():
+        raise RuntimeError('Live retrieval requires a separate exclusive FAST_ALERTS_NEW_CAMPAIGN directory')
+    if ROOT.is_relative_to(Path(__file__).resolve().parents[2]):
+        raise ValueError('Live responses must be outside the frozen result')
+    if (bodydir / (tag + '.csv.gz')).exists() or (META / (tag + '.json')).exists():
+        raise FileExistsError(tag)
     params = dict(REQUEST='doQuery', LANG='ADQL', FORMAT='csv', MAXREC='200000', QUERY=q)
     url = TAP + '?' + urllib.parse.urlencode(params)
     last = None
@@ -58,8 +65,13 @@ def day(n):
         raise ValueError(f'{n}: {count} expected; received {len(rows)}')
     print(f'{n} {len(rows)}',flush=True)
 def main():
-    RAW.mkdir(exist_ok=True, parents=True)
-    META.mkdir(exist_ok=True, parents=True)
+    if not os.environ.get('FAST_ALERTS_NEW_CAMPAIGN'):
+        raise RuntimeError('Set FAST_ALERTS_NEW_CAMPAIGN to a new empty directory')
+    if ROOT.is_relative_to(Path(__file__).resolve().parents[2]):
+        raise ValueError('New acquisition must be outside the frozen result')
+    ROOT.mkdir(exist_ok=False, parents=True)
+    RAW.mkdir(exist_ok=False, parents=True)
+    META.mkdir(exist_ok=False, parents=True)
     get('columns', "SELECT table_name,column_name,description FROM TAP_SCHEMA.columns WHERE table_name IN ('ztf.object','ztf.detection','ztf.magstat','ztf.ps1_ztf','ztf.gaia_ztf','ztf.ss_ztf')", META)
     get('objects_total', 'SELECT COUNT(*) AS nobj FROM ztf.object WHERE firstmjd >= 61345 AND firstmjd < 61361 AND ndet >= 2', META)
     get('latest_object', 'SELECT TOP 1 firstmjd FROM ztf.object ORDER BY firstmjd DESC', META)

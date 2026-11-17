@@ -5,13 +5,20 @@ import datetime as dt
 import gzip
 import hashlib
 import json
+import os
 from pathlib import Path
 import urllib.request
 from ztf_tap import ROOT, RAW, META, get
 
 def fink(oid):
+    if not os.environ.get('FAST_ALERTS_NEW_CAMPAIGN') or Path(os.environ['FAST_ALERTS_NEW_CAMPAIGN']).resolve() != ROOT.resolve():
+        raise RuntimeError('Use a separate new campaign for live retrieval')
+    if ROOT.is_relative_to(Path(__file__).resolve().parents[2]):
+        raise ValueError('Live responses must be outside the frozen result')
     url='https://api.ztf.fink-portal.org/api/v1/objects'
     for tag,params in [('fink_history',{'objectId':oid,'withupperlim':True,'output-format':'json'}),('fink_stamps',{'objectId':oid,'withcutouts':True,'output-format':'json','columns':'i:objectId,i:candid,i:jd,i:fid,i:magpsf,i:ra,i:dec'})]:
+        if (RAW / f'{oid}_{tag}.json.gz').exists() or (META / f'{oid}_{tag}.json').exists():
+            raise FileExistsError(oid + '_' + tag)
         req=urllib.request.Request(url,data=json.dumps(params).encode(),headers={'Content-Type':'application/json'})
         with urllib.request.urlopen(req,timeout=65) as h:
             raw=h.read()

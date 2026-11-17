@@ -59,7 +59,9 @@ if __name__ == "__main__":
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("directory",type=Path)
     args=parser.parse_args()
-    args.directory.mkdir(parents=True,exist_ok=True)
+    if args.directory.resolve().is_relative_to(ROOT.parent.resolve()):
+        raise ValueError('New acquisition must be outside the frozen result')
+    args.directory.mkdir(parents=True,exist_ok=False)
     with ThreadPoolExecutor(3) as executor:
         receipts=list(executor.map(lambda item:fetch(item,args.directory),queries().items()))
     if any("error" in item for item in receipts):

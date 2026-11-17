@@ -1,5 +1,9 @@
 """Reproduce the same-band ZTF selection from the per-discovery-date replies."""
 import collections
+import argparse
+import hashlib
+import io
+import tarfile
 import csv
 import gzip
 import itertools
@@ -20,13 +24,31 @@ def num(row, field):
     except (ValueError, TypeError):
         return math.nan
 
-def main():
+def main(output):
+    # The supplement contains the original count bodies and receipts. Verify
+    # every response before parsing measurements or touching outputs.
+    archive = ROOT / 'ztf_evidence_supplement.tar.gz'
+    with tarfile.open(archive, 'r:gz') as tar:
+        for day in range(*WINDOW):
+            for tag in (f'{day}_count', f'{day}_detections'):
+                rec = json.load(tar.extractfile(f'receipts/ztf/{tag}.json'))
+                if tag.endswith('_count'):
+                    raw = gzip.decompress(tar.extractfile(f'receipts/ztf/{tag}.csv.gz').read())
+                else:
+                    raw = gzip.decompress((RAW / (tag + '.csv.gz')).read_bytes())
+                if rec.get('http_status') != 200 or len(raw) != rec.get('bytes') or hashlib.sha256(raw).hexdigest() != rec.get('sha256'):
+                    raise ValueError('Frozen input mismatch: ' + tag)
+    if output.resolve().is_relative_to(ROOT.resolve()):
+        raise ValueError('Output must be outside the frozen result')
+    if output.exists():
+        raise FileExistsError(output)
     objects = collections.defaultdict(list)
     counts = collections.Counter()
     max_magerr = 2.5 / math.log(10) / 5
     for date in range(*WINDOW):
-        with gzip.open(META / f'{date}_count.csv.gz','rt') as count_file:
-            expected = int(next(csv.DictReader(count_file))['nrows'])
+        with tarfile.open(archive, 'r:gz') as tar:
+            raw_count = gzip.decompress(tar.extractfile(f'receipts/ztf/{date}_count.csv.gz').read()).decode()
+        expected = int(next(csv.DictReader(io.StringIO(raw_count)))['nrows'])
         with gzip.open(RAW / f'{date}_detections.csv.gz','rt') as file:
             rows = list(csv.DictReader(file))
         if len(rows) != expected:
@@ -64,11 +86,12 @@ def main():
     counts['objects'] = len(objects)
     counts['selected_pairs'] = len(pairs)
     counts['selected_objects'] = len({p['oid'] for p in pairs})
-    output=ROOT/'derived'
-    output.mkdir(exist_ok=True)
+    output.mkdir(parents=True, exist_ok=False)
     fields='oid fid candid1 candid2 mjd1 mjd2 mag1 mag2 err1 err2 dt dm mag_per_day sigma meanra meandec firstmjd lastmjd mjdstarthist drb1 drb2 stellar'.split()
     write_csv(output/'ztf_pairs.csv',pairs,fields)
     (output/'ztf_counts.json').write_text(json.dumps(dict(sorted(counts.items())),indent=2)+'\n')
     print(dict(counts))
 if __name__=='__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('output', type=Path, help='new output directory')
+    main(parser.parse_args().output)
