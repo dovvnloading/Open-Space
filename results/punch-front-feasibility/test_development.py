@@ -61,6 +61,14 @@ class Tests(unittest.TestCase):
   out=d.project(image,valid,w0,w1,(12,12)); l0,b0=w0.all_pix2world(xx,yy,0); good=np.isfinite(out)
   self.assertGreater(good.sum(),20); self.assertLess(good.sum(),144); np.testing.assert_allclose(out[good],(100+((l0+180)%360-180)+2*b0)[good],atol=1e-8)
   moved=d.project(image+3,valid,w0,w1,(12,12)); np.testing.assert_allclose((moved-out)[good],3,atol=1e-8)
+ def test_compact_and_front_shift(self):
+  from astropy.wcs import WCS
+  h=fits.Header()
+  for k,v in {'NAXIS':2,'NAXIS1':24,'NAXIS2':24,'CTYPE1':'HPLN-ARC','CTYPE2':'HPLT-ARC','CRPIX1':12.,'CRPIX2':12.,'CRVAL1':0.,'CRVAL2':0.,'CDELT1':0.01,'CDELT2':0.01}.items(): h[k]=v
+  w=WCS(h); y,x=np.mgrid[:24,:24]; valid=np.ones((24,24),bool)
+  for signal in (np.exp(-((x-12)**2+(y-12)**2)/3),np.exp(-(x-12)**2/8)):
+   stationary=d.project(signal,valid,w,w,signal.shape); moving=d.project(np.roll(signal,2,axis=1),valid,w,w,signal.shape)
+   self.assertLess(np.nanmax(np.abs(stationary-signal)),1e-8); self.assertGreater(np.nanmax(np.abs(moving-stationary)),0.2)
  def test_observer_mismatch(self):
   with fits.open(self.y,mode='update') as h: h['PRIMARY DATA ARRAY'].header['HGLT_OBS']=9.
   with self.assertRaises(ValueError): d.characterize([self.x,self.y])
