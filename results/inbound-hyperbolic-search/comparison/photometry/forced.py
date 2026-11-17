@@ -139,19 +139,25 @@ def main():
         entry.update(mid_jd_utc=jd,position=point,seeing=sci[1].get("SEEING"),infobits=sci[1].get("INFOBITS"),
                      magzp=sci[1].get("MAGZP"))
         try:
-            mask,_,rec=read_stamp(row,"mskimg.fits")
+            mask,mask_header,rec=read_stamp(row,"mskimg.fits")
             if mask.shape!=sci[0].shape:
                 raise ValueError("mask shape mismatch")
+            ny,nx=mask.shape
+            coords=np.array([[0.,0.],[nx-1.,0.],[0.,ny-1.],[nx-1.,ny-1.],[(nx-1.)/2,(ny-1.)/2]])
+            world=WCS(sci[1]).celestial.all_pix2world(coords,0)
+            back=WCS(mask_header).celestial.all_world2pix(world,0)
+            if not np.isfinite(back).all() or np.max(np.abs(back-coords))>1e-3:
+                raise ValueError("mask WCS mismatch")
             entry["mask"]=rec
             sci[0][mask!=0]=np.nan
         except Exception as exc:
             entry["mask_error"]=str(exc)
+            entry["science"]={"error":"required science mask unavailable"}
+            entry["difference"]={"error":"no validated difference-image mask"}
+            continue
         entry["science"]=measure(sci,point,entry["magzp"])
-        try:
-            diff=read_stamp(row,"scimrefdiffimg.fits.fz")
-            entry["difference"]=measure(diff,point,None)
-        except Exception as exc:
-            entry["difference"]={"error":str(exc),"url":image_url(row,"scimrefdiffimg.fits.fz")}
+        # Difference products need their own validated quality mask and WCS.
+        entry["difference"]={"error":"no validated difference-image mask"}
         print("MEASUREMENT",entry["filefracday"],entry["science"].get("snr_empirical"),entry["difference"].get("snr_empirical"),flush=True)
     result={"footprint_input_sha256":hashlib.sha256(METADATA.read_bytes()).hexdigest(),"horizons_receipts":receipts,"exposures":out}
     dest=OUT/"ztf_forced.json"
