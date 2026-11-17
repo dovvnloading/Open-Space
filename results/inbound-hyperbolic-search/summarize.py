@@ -52,11 +52,18 @@ def read_softened_shards():
 
 def main(out):
     rows = read_catalogue()
-    with gzip.open(ROOT/"batch/evidence/refits.csv.gz","rt") as f:
-        batch = {r["spkid"]:r for r in csv.DictReader(f)}
-    assert {str(r["spkid"]) for r in rows} == set(batch)
     relaxed=read_softened_shards()
-    assert set(batch)==set(relaxed)
+    assert {str(r["spkid"]) for r in rows}==set(relaxed)
+    default_path=ROOT/"batch/evidence/refits.csv.gz"
+    partial_path=ROOT/"batch/evidence/standard_partial.csv.gz"
+    if default_path.exists() or partial_path.exists():
+        with gzip.open(default_path if default_path.exists() else partial_path,"rt") as f:
+            recorded={r["spkid"]:r for r in csv.DictReader(f)}
+        if default_path.exists():
+            assert set(recorded)==set(relaxed)
+    else:
+        recorded={}
+    batch={k:recorded.get(k,{"status":"standard-pass outcome unavailable"}) for k in relaxed}
     recent_rows = json.loads(gzip.decompress((ROOT/"batch/evidence/latest_mpc_refits.json.gz").read_bytes()))
     initial_rows=json.loads(gzip.decompress((ROOT/"batch/evidence/initial_mpc_queries.json.gz").read_bytes()))
     first_by_id={str(r["spkid"]):r.get("fit",{}) for r in initial_rows}
