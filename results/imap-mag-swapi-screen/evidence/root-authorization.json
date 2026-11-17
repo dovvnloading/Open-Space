@@ -1,0 +1,18 @@
+{
+  "authorized": true,
+  "phase": "mag_development",
+  "manifest_sha256": "96cc21b13211e23170f74aeaee8d0b48ac3a1e252706bdd3b5c82e482a344382",
+  "git_head": "0695ac72304f0078306f52a45b67c346ed75aeec",
+  "reviewer": "root",
+  "question": "First eligible localized five-minute magnetic-strength depletion in the fixed first12UTC hours; freeze before proton response test",
+  "observing_unit": "One event bin with its two adjacent five-minute control bins",
+  "scope": "Analyze returned MAG records only in [2026-07-31T00:00,2026-07-31T12:00) UTC; SWAPI physical values and later MAG values remain unanalyzed",
+  "limits": [
+    "Engineering thresholds, not a calibrated false-alarm test",
+    "Both controls >=3nT; event <=80% of each and >=1nT below their mean",
+    "Stop at first selection; preserve all quality and gate attrition; no threshold changes or backfill",
+    "Separate root review and exact prediction digest required before SWAPI access",
+    "Downloaded native files are complete; this is analysis isolation, not byte-level isolation",
+    "No physical novelty or total-pressure-balance claim"
+  ]
+}
