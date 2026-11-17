@@ -113,22 +113,16 @@ def visit_epochs(row,cache,queries):
     valid={}
     for tag,url in queries.items():
         path=cache/(tic+"-"+tag+".gz")
-        previous=path.with_suffix(".receipt")
-        failed=json.loads(previous.read_text()) if previous.exists() else {}
-        if tag=="ztf" and failed.get("error"):
-            raw,rec=b"",failed
+        native=cache/(tic+"-ztf-native.gz")
+        native_receipt=native.with_suffix(".receipt")
+        if tag=="ztf" and native.exists() and native_receipt.exists():
+            raw=gzip.decompress(native.read_bytes())
+            rec=json.loads(native_receipt.read_text())
+            if hashlib.sha256(raw).hexdigest()!=rec["sha256"] or not raw:
+                raise ValueError("Native ZTF photometry digest mismatch for "+tic)
+            rec=dict(rec,cache_name=native.name)
         else:
             raw,rec=fetch(url,path)
-        if tag=="ztf" and rec.get("error"):
-            # The DR24 observations fit within 2017–2027. This smaller cone
-            # still includes the 2 arcsec association circle at every epoch.
-            ra,dec,ra0,dec0=(float(row[k]) for k in ("ra_2016","dec_2016","ra_2000","dec_2000"))
-            speed=np.hypot(((ra-ra0+180)%360-180)*np.cos(np.radians(dec)),dec-dec0)/16
-            radius=min(.006,11*speed+2.5/3600)
-            subset=url.replace("+0.006&",f"+{radius:.8f}&")
-            raw,part=fetch(subset,cache/(tic+"-ztf-subset.gz"))
-            if raw:
-                rec=dict(part,original_query=rec,cache_name=tic+"-ztf-subset.gz")
         valid[tag]=(raw,rec)
     return parse_epochs(row,valid)
 
