@@ -1,0 +1,44 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-17T04:37:20 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-17T04:37:20	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F574%2FA112&-c=150.122033+%2B2.323386208&-c.rs=100&-out.add=_r&-sort=_r&-out.max=8	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=150.122033+02.323386,rs=100.	
+#Constraint -out.max=8
+
+#RESOURCE=yCat_35740112
+#Name: J/A+A/574/A112
+#Title: COSMOS field variability-selected AGN nuclei (De Cicco+, 2015)
+#INFO	ivoid=ivo://cds.vizier/j/a+a/574/a112	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/a+a/574/a112	    IVOID of underlying data collection
+#INFO	creator=De Cicco D.	    First author or institution
+#INFO	cites=bibcode:2015A&A...574A.112D	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2015	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/574/A112	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.35740112	    Dataset identifier that can be used for citation
+#INFO	publication_date=2017-11-29	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_A_A_574_A112_table3:
+#Name: J/A+A/574/A112/table3
+#Title: List of the 83 optically variable sources in the secure sample (qualities 1 and 2)
+#Column	_r	(F6.2)	Distance from center (10 00 29.3+02 19 24.2)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	Seq	(I2)	[1/83] Sequential identification number	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(A10)	Right ascension (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(A11)	Declination (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	rmag	(F5.2)	[18.5/23] Average VST r(AB) magnitude	[ucd=phot.mag;em.opt.R]
+#Column	s_rmag	(F5.2)	rms of the light curve, <{sigma}^ltc^> (Eq.(2))	[ucd=stat.stdev;phot.mag]
+#Column	S/G	(F5.2)	[0/1] SExtractor stellarity index (1=stellar)	[ucd=src.class.starGalaxy]
+#Column	Qual	(I1)	[1/2] Quality label: 1=strong candidate, 2=likely variable candidate	[ucd=meta.code.qual]
+#Column	signi	(F4.1)	[3/29] Significance (Eq.(3))	[ucd=stat.fit.goodness]
+#Column	z	(F6.3)	[0.3/3]? Spectroscopic redshift (1)	[ucd=src.redshift]
+#Column	Class	(I2)	[-2/7] Source classification (2)	[ucd=meta.code.class]
+#Column	Simbad	(a6)	Simbad column added by the CDS	[ucd=meta.ref.url]

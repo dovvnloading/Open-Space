@@ -73,13 +73,13 @@ def compare(row, cache):
     return stats,phot,selected
 
 
-def main():
+def main(directory=HERE):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('cache', type=Path)
     args=parser.parse_args()
-    prepare(args.cache)  # Verify frozen raw bytes before any comparison output is written.
+    prepare(args.cache, directory)  # Verify frozen raw bytes before any comparison output is written.
     summary, triggers, chosen, curves = [],[],[],[]
-    for name, pairs in pd.read_csv(HERE/'pairs.csv').groupby('pair'):
+    for name, pairs in pd.read_csv(directory/'pairs.csv').groupby('pair'):
         bands={}
         for row in pairs.itertuples():
             stat, frame, subset = compare(row,args.cache)
@@ -113,7 +113,7 @@ def main():
                 if ds[j]<=RADIUS:
                     curves.append(dict(candidate=cid,**table.iloc[j].to_dict()))
     for filename,rows in [('screen_counts',summary),('single_band',triggers),('coincidences',chosen),('matched_photometry',curves)]:
-        pd.DataFrame(rows).to_csv(HERE/(filename+'.csv'),index=False,float_format='%.10g')
+        pd.DataFrame(rows).to_csv(directory/(filename+'.csv'),index=False,float_format='%.10g')
     print(len(summary),'pairs by filter,',len(triggers),'single-filter triggers,',len(chosen),'coincidences')
 
 

@@ -1,0 +1,32 @@
+[
+  {
+    "source": "inventory_cosmos.csv",
+    "url": "https://jwst.esac.esa.int/server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+10000+obs_id%2Ct_min%2Ct_max%2Caccess_url+FROM+ivoa.ObsCore+WHERE+calib_level%3D3+AND+instrument_name%3D%27NIRCAM%2FIMAGE%27+AND+dataproduct_type%3D%27image%27+AND+1%3DCONTAINS%28POINT%28%27ICRS%27%2C150.132%2C2.349%29%2Cs_region%29+ORDER+BY+t_max+DESC",
+    "bytes": 15536,
+    "sha256": "4261af68b038a2f333caf37d7e6823058c7bdbad1987f23daa5079491cec19af"
+  },
+  {
+    "source": "inventory_ceers.csv",
+    "url": "https://jwst.esac.esa.int/server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+10000+obs_id%2Ct_min%2Ct_max%2Caccess_url+FROM+ivoa.ObsCore+WHERE+calib_level%3D3+AND+instrument_name%3D%27NIRCAM%2FIMAGE%27+AND+dataproduct_type%3D%27image%27+AND+1%3DCONTAINS%28POINT%28%27ICRS%27%2C214.8788%2C52.8688%29%2Cs_region%29+ORDER+BY+t_max+DESC",
+    "bytes": 6937,
+    "sha256": "05faa40c879817b38a38e1b21efeba7ab29987413e40ccf869900f3bbeca656d"
+  },
+  {
+    "source": "inventory_a370.csv",
+    "url": "https://jwst.esac.esa.int/server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+10000+obs_id%2Ct_min%2Ct_max%2Caccess_url+FROM+ivoa.ObsCore+WHERE+calib_level%3D3+AND+instrument_name%3D%27NIRCAM%2FIMAGE%27+AND+dataproduct_type%3D%27image%27+AND+1%3DCONTAINS%28POINT%28%27ICRS%27%2C39.97%2C-1.576%29%2Cs_region%29+ORDER+BY+t_max+DESC",
+    "bytes": 14596,
+    "sha256": "e5373bc93355ab94ab637442446e7b020e8fc4e4c66f56babb4bec741a14b525"
+  },
+  {
+    "source": "inventory_macs0138.csv",
+    "url": "https://jwst.esac.esa.int/server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+10000+obs_id%2Ct_min%2Ct_max%2Caccess_url+FROM+ivoa.ObsCore+WHERE+calib_level%3D3+AND+instrument_name%3D%27NIRCAM%2FIMAGE%27+AND+dataproduct_type%3D%27image%27+AND+1%3DCONTAINS%28POINT%28%27ICRS%27%2C24.515%2C-21.928%29%2Cs_region%29+ORDER+BY+t_max+DESC",
+    "bytes": 5012,
+    "sha256": "b10a03bfbbfb6112181e36503d793448899a84fcd512da0128394a430f499755"
+  },
+  {
+    "source": "inventory_whl0137.csv",
+    "url": "https://jwst.esac.esa.int/server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+10000+obs_id%2Ct_min%2Ct_max%2Caccess_url+FROM+ivoa.ObsCore+WHERE+calib_level%3D3+AND+instrument_name%3D%27NIRCAM%2FIMAGE%27+AND+dataproduct_type%3D%27image%27+AND+1%3DCONTAINS%28POINT%28%27ICRS%27%2C24.346%2C-8.45%29%2Cs_region%29+ORDER+BY+t_max+DESC",
+    "bytes": 3099,
+    "sha256": "d71fc246542c3094211a534c2d7aad87947b18368ca3fdc13b92a291c34f57de"
+  }
+]
