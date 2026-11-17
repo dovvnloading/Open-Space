@@ -27,14 +27,30 @@ def cone(order, ra, dec, radius):
     return set(grid.cone_search_lonlat(ra*u.deg, dec*u.deg, radius*u.arcsec).tolist())
 
 
+def leaf_paths(remote, order, pixel):
+    from re import search
+    folder = f"Norder={order}/Dir={pixel//10000*10000}"
+    for base in (f"{CAT}/dataset", CAT):
+        prefix = f"{base}/{folder}"
+        direct = f"{prefix}/Npix={pixel}.parquet"
+        if remote.get_file_info(direct).type == fs.FileType.File:
+            return [direct]
+        entries = remote.get_file_info(fs.FileSelector(prefix, recursive=True, allow_not_found=True))
+        matches = [p.path for p in entries if p.type == fs.FileType.File
+                   and search(rf"/Npix=0*{pixel}([^0-9]|$)", p.path) and ".par" in p.path.rsplit("/",1)[-1]]
+        if matches:
+            return sorted(matches)
+    raise FileNotFoundError(f"No Parquet files for order {order}, pixel {pixel}")
+
+
 def retrieve(t, remote, partitions):
     ra, dec = position(t, 2022)
     included = {}
     for order in sorted({key[0] for key in partitions}):
         for pix in cone(order, ra, dec, 2.5):
             if (order, pix) in partitions:
-                leaf = f"{CAT}/dataset/Norder={order}/Dir={pix//10000*10000}/Npix={pix}.parquet"
-                included[leaf] = [order, pix]
+                for path in leaf_paths(remote, order, pix):
+                    included[path] = [order, pix]
     narrow = sorted(cone(16, ra, dec, 2.5))
     width = 4**(29-16)
     bounds = [[("filterid", "=", 2), ("_healpix_29", ">=", p*width),
