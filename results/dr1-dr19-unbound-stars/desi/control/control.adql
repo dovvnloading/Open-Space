@@ -1,0 +1,1 @@
+SELECT d.targetid,d.source_id,d.target_ra,d.target_dec,d.glon,d.glat,d.vrad,d.vrad_err,d.rvs_warn,d.sn_b,d.sn_r,d.sn_z,d.rr_spectype,d.survey,d.program,d.healpix,d.teff,d.logg,d.feh,d.rr_z FROM desi_dr1.mws AS d WHERE d.rvs_warn=0 AND d.vrad_err>0 AND d.vrad_err<20 AND d.rr_spectype='STAR' AND d.random_id < 0.1

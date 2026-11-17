@@ -13,13 +13,19 @@ OUT=Path(__file__).resolve().parent
 TMP=Path(sys.argv[1]);TMP.mkdir(exist_ok=True,parents=True)
 source_id=sys.argv[2] if len(sys.argv)>2 else '1717410430709663616'
 import csv
-with (OUT/'leads.csv').open() as f: lead=next(row for row in csv.DictReader(f) if row['source_id']==source_id)
+with (OUT/'leads.csv').open() as f: leads=list(csv.DictReader(f))
+if source_id not in {r['source_id'] for r in leads}:
+    with (OUT.parent/'queries/coadds.csv').open() as f:leads.extend(csv.DictReader(f))
+if source_id not in {r['source_id'] for r in leads}:
+    with (OUT.parent.parent/'moderate/desi/queries/coadds.csv').open() as f:leads.extend(csv.DictReader(f))
+lead=next(row for row in leads if row['source_id']==source_id)
 target=int(lead['targetid']); adopted_rv=float(lead['vrad'])
 survey,program,h=lead['survey'],lead['program'],lead['healpix']
 prefix=h[:-2]
 p=f'{survey}-{program}-{h}'
 base=f'https://data.desi.lbl.gov/public/dr1/spectro/redux/iron/healpix/{survey}/{program}/{prefix}/{h}/'
-out_fit=OUT if source_id=='1717410430709663616' else OUT/source_id
+out_fit=OUT if source_id=='1717410430709663616' else ((OUT.parent/'tangential' if source_id in ['6340918677332110720','2752545725694798336'] else OUT)/source_id)
+if source_id in ['4435527217525195264','4550108286326235520']:out_fit=OUT.parent/'moderate'/source_id
 out_fit.mkdir(exist_ok=True)
 name='coadd-'+p+'.fits'
 def download(name):
@@ -45,8 +51,8 @@ with fits.open(fits_path) as hdus:
         ok=(abs(v-adopted_rv)<850)&(mask==0)&(iv>0)&np.isfinite(flux)&np.isfinite(iv)
         v,y,e=v[ok],flux[ok],1/np.sqrt(iv[ok])
         def model(x,c,s,depth,cen,width):
-            return c+s*(x-500)/1000-depth*np.exp(-.5*((x-cen)/width)**2)
-        prof,pcov=curve_fit(model,v,y,sigma=e,absolute_sigma=True,p0=[np.median(y),0,max(np.median(y)*.2,.1),503.,100.],bounds=([-np.inf,-np.inf,0,-300,20],[np.inf,np.inf,np.inf,1200,450]),maxfev=4000)
+            return c+s*(x-adopted_rv)/1000-depth*np.exp(-.5*((x-cen)/width)**2)
+        prof,pcov=curve_fit(model,v,y,sigma=e,absolute_sigma=True,p0=[np.median(y),0,max(np.median(y)*.2,.1),adopted_rv,100.],bounds=([-np.inf,-np.inf,0,adopted_rv-500,20],[np.inf,np.inf,np.inf,adopted_rv+500,450]),maxfev=4000)
         c,s,d,cen,width=prof; err=np.sqrt(pcov[3,3]);sig=d/np.sqrt(pcov[2,2]);results.append({'line':label,'vacuum_A':rest,'rv_kms':cen,'rv_formal_error_kms':err,'line_depth_snr':sig})
         for vi,yi,ei in zip(v,y,e):profiles.append((label,rest,vi,yi,ei))
         ax.errorbar(v,y,yerr=e,color='#657481',ls='none',marker='.',ms=3,lw=.5)
