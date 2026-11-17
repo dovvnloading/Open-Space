@@ -1,0 +1,100 @@
+name: Check dated public-source receipts and SWAN precovery context
+on:
+  push:
+    branches: [research/inbound-hyperbolic-search]
+    paths: [".github/workflows/inbound-source-referee.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  upstream:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Re-fetch original ITF and MPC bulk URLs, verify source fingerprints
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,hashlib,urllib.request
+          from pathlib import Path
+          root=Path('results/inbound-hyperbolic-search')
+          itf=json.loads((root/'tracklets/run/input.json').read_text())
+          mpc=json.loads((root/'orbits/data/acquisition.json').read_text())['inputs'][0]
+          for name,url,expected in [
+            ('ITF',itf['url'],itf['source_sha256']),
+            ('MPC_CmtObs',mpc['requested_url'],mpc['sha256'])]:
+            request=urllib.request.Request(url,headers={'User-Agent':'Open-Space-referee/1.0'})
+            with urllib.request.urlopen(request,timeout=120) as r:
+              h=hashlib.sha256();n=0
+              while True:
+                chunk=r.read(1024*1024)
+                if not chunk:break
+                n+=len(chunk);h.update(chunk)
+              actual=h.hexdigest()
+              print('UPSTREAM_SHA256',name,'sha256',actual,'bytes',n,'expected',expected,'equal',actual==expected,'Last-Modified',r.headers.get('Last-Modified'),flush=True)
+          PY
+  rubin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replay all 29 generation-pinned Rubin MPC exports and dates
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,urllib.request,hashlib,gzip,csv,io,collections
+          from pathlib import Path
+          root=Path('results/inbound-hyperbolic-search/tracklets/run')
+          archive=json.loads((root/'rubin-feed.json').read_text())
+          assert len(archive['retrieved'])==29
+          status=collections.Counter();obsdate=collections.Counter();seen=set();duplicates=0
+          for part in archive['retrieved']:
+            with urllib.request.urlopen(urllib.request.Request(part['url'],headers={'User-Agent':'Open-Space-referee/1.0'}),timeout=120) as r:
+              b=r.read()
+            assert len(b)==part['bytes']
+            assert hashlib.sha256(b).hexdigest()==part['sha256'],part['url']
+            rows=list(csv.DictReader(io.StringIO(gzip.decompress(b).decode())))
+            for row in rows:
+              assert row['stn']=='X05'
+              if row['id'] in seen:
+                duplicates+=1
+                continue
+              seen.add(row['id']);status[row['status']]+=1;obsdate[row['obstime'][:10]]+=1
+          assert len(seen)==archive['rows']==45440
+          assert status==archive['by_status'] and status=={'P':59,'p':45352,'I':29}
+          assert duplicates==archive['duplicate_ids']==0
+          assert dict(sorted(obsdate.items()))==archive['by_observation_date']
+          assert not any('2026-10-19'<=d<'2026-11-17' and n>0 for d,n in obsdate.items())
+          print('REFEREE_RUBIN',{'input_parts':len(archive['retrieved']),'unique_rows':len(seen),'status_counts':dict(status),'observation_dates':[min(obsdate),max(obsdate)],'no_primary_window_observation':True})
+          PY
+  swan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Re-run the published SWAN directions and two ground-orbit ephemerides
+        shell: bash
+        run: |
+          set -euo pipefail
+          python results/inbound-hyperbolic-search/catalog/h6-archive/check_swan.py --output "$RUNNER_TEMP/swan-independent.json"
+          python - <<'PY'
+          from pathlib import Path
+          import json,os
+          prior=json.loads(Path('results/inbound-hyperbolic-search/catalog/h6-archive/swan-receipts.json').read_text())
+          now=json.loads((Path(os.environ['RUNNER_TEMP'])/'swan-independent.json').read_text())
+          assert prior['quicklook_images']==now['quicklook_images']==9
+          assert len(prior['positions'])==len(now['positions'])==4
+          for p,q in zip(prior['positions'],now['positions']):
+            assert p['day']==q['day']
+            assert abs(p['SWAN_minus_Horizons_00UT_separation_deg']-q['SWAN_minus_Horizons_00UT_separation_deg'])<0.01
+            assert abs(p['two_body_L42_vs_N33_00TDB_separation_arcsec']-q['two_body_L42_vs_N33_00TDB_separation_arcsec'])<0.1
+          original={x['input']:x for x in prior['receipts']}
+          same=0
+          for rec in now['receipts']:
+            if rec['sha256']==original[rec['input']]['sha256'] and rec['bytes']==original[rec['input']]['bytes']:
+              same+=1
+          print('REFEREE_SWAN',{'dates':[x['day'] for x in now['positions']],'discovery_directions_offset_deg':[round(x['SWAN_minus_Horizons_00UT_separation_deg'],6) for x in now['positions']],'orbital_model_sep_arcsec':[round(x['two_body_L42_vs_N33_00TDB_separation_arcsec'],6) for x in now['positions']],'source_receipt_matching':same,'all_source_receipts':len(now['receipts'])})
+          PY
