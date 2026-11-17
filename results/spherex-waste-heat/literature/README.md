@@ -31,7 +31,7 @@ In `candidates.csv`, `ra`, `dec`, `pmra`, `pmdec` are Gaia DR3 at J2016.0 in ICR
 
 ## Other published searches
 
-The targeted FGK sample contains all 53 optical/near-IR selected main-sequence candidates flagged by Contardo & Hogg for excess unWISE W1/W2 flux among 4,898,812 stars. Sixteen published fitted temperatures fall within 100–600 K. These temperatures and luminosity fractions in `contardo_hogg.csv` are hypotheses about unresolved emission. The first three entries in Appendix A Table 2 were specified as the SPHEREx subset before spectrum inspection. All three lie beyond 300 pc. [Contardo & Hogg 2024](https://doi.org/10.3847/1538-3881/ad6b90) · [author catalog and code](https://doi.org/10.5281/zenodo.13171690)
+The targeted FGK sample contains all 53 optical/near-IR selected main-sequence candidates flagged by Contardo & Hogg for excess unWISE W1/W2 flux among 4,898,812 stars. Sixteen published fitted temperatures fall within 100–600 K. These temperatures and luminosity fractions in `contardo_hogg.csv` are hypotheses about unresolved emission. The first three entries in Appendix A Table 2 were specified as the SPHEREx subset before spectrum inspection. All three lie beyond 300 pc. The two stars within 300 pc were added to the targeted spectra as a distance-complete supplement. [Contardo & Hogg 2024](https://doi.org/10.3847/1538-3881/ad6b90) · [author catalog and code](https://doi.org/10.5281/zenodo.13171690)
 
 Both FGK sources with Gaia parallax > 3.333… mas have published natural explanations or disqualifying evidence.
 
