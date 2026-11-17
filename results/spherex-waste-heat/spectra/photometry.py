@@ -16,6 +16,7 @@ FEATURES = {
     'H2O3.0': ((2.60,2.78),(2.92,3.12),(3.42,3.57)),
     'CO2_4.27': ((4.13,4.21),(4.23,4.31),(4.34,4.43)),
     'CO4.67': ((4.40,4.54),(4.59,4.75),(4.82,4.98)),
+    'PAH_E_z0.410': ((4.49,4.58),(4.61,4.66),(4.70,4.79)),
 }
 
 def dist_arcsec(lon,lat,ra,dec):
@@ -28,6 +29,7 @@ def extract(stamp):
     img=stamp['IMAGE'].astype(float)
     nh,fl=stamp['NHITS'],stamp['FLAGS']
     w=WCS(fits.Header.fromstring(str(stamp['wcs']),sep=''))
+    w.wcs.bounds_check(False,False)
     xy=stamp['xy']
     ox,oy=stamp['origin']
     ny,nx=img.shape[1:]
@@ -80,7 +82,7 @@ def feature(y,wl,intervals):
     return fm-base,base
 
 def measure(files):
-    spectral,feature_rows,summaries=[],[],[]
+    spectral,feature_rows,summaries,indices=[],[],[],[]
     for path in sorted(files):
         label=path.stem
         with np.load(path) as stamp:
@@ -95,19 +97,43 @@ def measure(files):
                                      aperture_mJy=f[idx],sky_sigma_mJy=s[idx],n_sky=n[idx],
                                      aperture_coverage=cov[idx],outlier_included_mJy=loose[idx]))
             for name,intervals in FEATURES.items():
-                # Force the blank apertures to share the target's available channels.
-                use=np.isfinite(f)
-                a,base=feature(f,wl,intervals)
-                sky_a=np.array([feature(np.where(use,b,np.nan),wl,intervals)[0] for b in blanks])
-                v=sky_a[np.isfinite(sky_a)]
-                zero,err=np.nan,np.nan
-                if len(v)>=8:
-                    zero=np.median(v)
-                    err=1.4826*np.median(abs(v-zero))
-                z=(a-zero)/err if err>0 else np.nan
-                feature_rows.append(dict(label=label,feature=name,contrast_mJy=a,continuum_mJy=base,
-                                         blank_median_mJy=zero,sky_sigma_mJy=err,sky_z=z,n_blank=len(v)))
-    return spectral,feature_rows,summaries
+                if name=='PAH_E_z0.410' and label.split('_')[0]!='E': continue
+                for extraction,flux in [('strict',f),('include_OUTLIER',loose)]:
+                    use=np.isfinite(flux)
+                    val,base=feature(flux,wl,intervals)
+                    sky_val=np.array([feature(np.where(use,b,np.nan),wl,intervals)[0] for b in blanks])
+                    v=sky_val[np.isfinite(sky_val)]
+                    zero,err=np.nan,np.nan
+                    if len(v)>=8:
+                        zero=np.median(v)
+                        err=1.4826*np.median(abs(v-zero))
+                    z=(val-zero)/err if err>0 else np.nan
+                    feature_rows.append(dict(label=label,feature=name,extraction=extraction,contrast_mJy=val,
+                                             continuum_mJy=base,blank_median_mJy=zero,sky_sigma_mJy=err,
+                                             sky_z=z,n_blank=len(v)))
+            for extraction,flux in [('strict',f),('include_OUTLIER',loose)]:
+                band={}
+                perturb={}
+                for key,(lo,hi) in {'H':(1.51,1.72),'W1core':(3.16,3.62),'W2core':(4.42,4.90)}.items():
+                    ind=(wl>=lo)&(wl<=hi)
+                    valid=ind&np.isfinite(flux)
+                    if valid.sum()<2 or valid.sum()<np.ceil(ind.sum()/2):
+                        band[key]=np.nan
+                        perturb[key]=np.full(blanks.shape[0],np.nan)
+                    else:
+                        band[key]=np.median(flux[valid])
+                        with warnings.catch_warnings():
+                            warnings.simplefilter('ignore',RuntimeWarning)
+                            perturb[key]=np.nanmedian(flux[valid][None,:]+blanks[:,valid],axis=1)
+                        perturb[key][np.isfinite(blanks[:,valid]).sum(axis=1)<np.ceil(valid.sum()/2)]=np.nan
+                ratio=band['W2core']/band['H'] if band['H']>0 else np.nan
+                with np.errstate(divide='ignore',invalid='ignore'):
+                    ratios=perturb['W2core']/perturb['H']
+                rgood=ratios[np.isfinite(ratios)&(perturb['H']>0)]
+                sig=1.4826*np.median(np.abs(rgood-np.median(rgood))) if len(rgood)>=8 else np.nan
+                indices.append(dict(label=label,extraction=extraction,H_mJy=band['H'],W1core_mJy=band['W1core'],
+                                    W2core_mJy=band['W2core'],W2core_over_H=ratio,ratio_sky_sigma=sig,n_blank=len(rgood)))
+    return spectral,feature_rows,summaries,indices
 
 def save(name,rows):
     with (ROOT/name).open('w') as out:
@@ -119,6 +145,6 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument('cache',type=Path)
     a=p.parse_args()
-    spectra,features,summaries=measure(a.cache.glob('*.npz'))
-    save('channel_spectra.csv',spectra); save('feature_tests.csv',features); save('coverage.csv',summaries)
+    spectra,features,summaries,indices=measure(a.cache.glob('*.npz'))
+    save('channel_spectra.csv',spectra); save('feature_tests.csv',features); save('coverage.csv',summaries); save('continuum.csv',indices)
 if __name__=='__main__': main()

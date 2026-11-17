@@ -27,7 +27,7 @@ from spherex_tools import tile_url
 
 RADIUS=17
 
-def unpack(data, rows, cache, tile):
+def unpack(data, rows, cache, tile, sink=None):
     with fits.open(io.BytesIO(data),memmap=False,do_not_scale_image_data=True) as hdus:
         img=hdus['IMAGE']
         assert img.header['NPIX']==tile and img.header['ORDER']==5 and img.header['BUNIT']=='MJy/sr'
@@ -39,12 +39,22 @@ def unpack(data, rows, cache, tile):
                 del hdr[key]
         hdr['NAXIS']=hdr['WCSAXES']=2
         w=WCS(hdr)
+        w.wcs.bounds_check(False,False)  # valid tiles can cross the 180-degree HPX seam
         meta={'start':hdus[0].header['DATE-BEG'],'end':hdus[0].header['DATE-END'],
               'pipeline':hdus[0].header['VERSION'],'positions':[]}
         for row in rows:
             x,y=map(float,w.world_to_pixel_values(float(row['ra_2025_9']),float(row['dec_2025_9'])))
             if not(-.5<=x<511.5 and -.5<=y<511.5):
-                raise ValueError(f"position {row['label']} projects outside its HEALPix tile: {(x,y)}")
+                # HPX's longitude discontinuity at RA=180 has two equivalent projected X values.
+                wrap=np.linalg.solve(w.pixel_scale_matrix,[360.,0.])
+                solutions=[(x+sign*wrap[0],y+sign*wrap[1]) for sign in (-1,1)]
+                inside=[(xx,yy) for xx,yy in solutions if -.5<=xx<511.5 and -.5<=yy<511.5]
+                if len(inside)!=1:
+                    raise ValueError(f"position {row['label']} projects outside its HEALPix tile: {(x,y)}")
+                x,y=map(float,inside[0])
+            lon,lat=w.pixel_to_world_values(x,y)
+            if not np.isfinite(lon+lat) or abs((lon-float(row['ra_2025_9'])+180)%360-180)>1e-6 or abs(lat-float(row['dec_2025_9']))>1e-6:
+                raise ValueError('HPX position failed sky-coordinate round trip')
             left,right=max(0,round(x)-RADIUS),min(512,round(x)+RADIUS+1)
             lower,upper=max(0,round(y)-RADIUS),min(512,round(y)+RADIUS+1)
             stamp={}
@@ -57,15 +67,19 @@ def unpack(data, rows, cache, tile):
                 stamp[name]=raw.astype({'IMAGE':'f4','NHITS':'i4','FLAGS':'u4'}[name])
             for name in ('WAVELENGTH','WL_MIN','WL_MAX','DETECTOR','SUBCHAN'):
                 stamp[name]=hdus['SPECTRAL_CHANNELS'].data[name]
-            np.savez_compressed(cache/(row['label']+'.npz'),**stamp,wcs=hdr.tostring(),xy=np.array([x,y]),origin=[left,lower])
+            stamp.update(wcs=hdr.tostring(),xy=np.array([x,y]),origin=[left,lower])
+            if sink is None:
+                np.savez_compressed(cache/(row['label']+'.npz'),**stamp)
+            else:
+                sink(row,stamp)
             meta['positions'].append(dict(label=row['label'],pixel_x=x,pixel_y=y))
         return meta
 
-def fetch_tile(task):
+def fetch_tile(task, sink=None):
     tile,rows,cache,out=task
     url=tile_url(tile)
     marker=out/f'{tile}.json'
-    if marker.exists() and all((cache/(r['label']+'.npz')).exists() for r in rows): return
+    if sink is None and marker.exists() and all((cache/(r['label']+'.npz')).exists() for r in rows): return
     for attempt in range(4):
         try:
             # Several positions share each object. Read whole objects in auditable
@@ -91,7 +105,7 @@ def fetch_tile(task):
                     data.extend(chunk)
             if '-' not in etag and hashlib.md5(data).hexdigest()!=etag.strip('"'):
                 raise IOError('archive ETag differs from MD5')
-            meta=unpack(data,rows,cache,tile)
+            meta=unpack(data,rows,cache,tile,sink=sink)
             receipt=dict(tile=tile,url=url,etag=etag,size=total,sha256=hashlib.sha256(data).hexdigest(),
                          retrieved_utc=start,**meta)
             marker.write_text(json.dumps(receipt,indent=2)+'\n')
