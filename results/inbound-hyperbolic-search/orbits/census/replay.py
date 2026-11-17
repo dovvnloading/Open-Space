@@ -44,7 +44,7 @@ def limited_ephemeris(eph,first,last,step):
         return PAST
     return ORIGINAL_EPHEMERIS(eph,first,last,step)
 
-def representatives(lines,sites):
+def representatives(lines,sites,short=False):
     groups=defaultdict(list)
     for raw in lines:
         line=raw.decode("ascii","replace").rstrip("\r\n")
@@ -52,7 +52,21 @@ def representatives(lines,sites):
             # Reject the continuation of two-line records and invalid dates.
             if line[15:19].isdigit() and line[15:25].count(" ")==2:
                 groups[(line[15:25],line[77:80])].append(line[:80])
-    reps=[sorted(g,key=lambda s:s[15:32])[(len(g)-1)//2] for _,g in sorted(groups.items())]
+    reps=[]
+    for _,group in sorted(groups.items()):
+        group=sorted(group,key=lambda s:(s[15:32],s[32:56]) if short else (s[15:32],))
+        if short:
+            # Preserve angular-rate information within sparse nights.
+            seen=set()
+            raw=[]
+            for line in group:
+                if line[15:56] not in seen:
+                    seen.add(line[15:56])
+                    raw.append(line)
+            k=min(8,len(raw))
+            reps.extend([raw[round(i*(len(raw)-1)/(k-1))] for i in range(k)] if k>1 else raw)
+        else:
+            reps.append(group[(len(group)-1)//2])
     if len(reps)>MAX_POSITIONS:
         reps=[reps[round(i*(len(reps)-1)/(MAX_POSITIONS-1))] for i in range(MAX_POSITIONS)]
     return len(groups),reps
@@ -61,35 +75,43 @@ def abort(signum,frame):
     raise TimeoutError("180 s per-object wall-clock budget")
 
 def measure(item):
-    row,lines=item
+    row,lines,short=item
     key=str(row["spkid"])
     names=["q","e","i","om","w","tp","epoch"]
     start=time.monotonic()
-    rec={"spkid":key,"name":row["full_name"].strip(),"reported_arc_days":float(row["data_arc"]),
+    rec={"spkid":key,"name":row["full_name"].strip(),"reported_arc_days":float(row["data_arc"]) if row["data_arc"] else None,
          "bulk_lines":len(lines),"bulk_astrometry_sha256":digest(b"".join(lines)) if lines else None}
     signal.signal(signal.SIGALRM,abort)
     signal.alarm(180)
+    minimum=6 if short else 10
+    span_min=2 if short else 30
     try:
         sites=fit.stations()
-        nights,selected=representatives(lines,sites)
+        nights,selected=representatives(lines,sites,short)
         raw=("\n".join(selected)+"\n").encode("ascii")
         rec.update(available_station_nights=nights,selected_mpc80=selected,
                    selected_sha256=digest(raw) if selected else None)
-        if nights<10:
-            raise ValueError("fewer than ten ground optical station-nights")
+        if not short and nights<10: raise ValueError("fewer than ten ground optical station-nights")
+        if not lines: raise ValueError("no matching packed-designation records in CmtObs snapshot")
+        if not selected: raise ValueError("no supported ground optical station-nights")
+        if nights<(3 if short else 10): raise ValueError("insufficient ground optical station-nights")
+        if len(selected)<minimum: raise ValueError("insufficient distinct ground optical positions")
         if not all(row.get(k) is not None for k in names):
             raise ValueError("frozen SBDB conic missing fields")
         (CACHE/(key+".obs")).write_bytes(raw)
         with SPK.open(str(CACHE/"de440.bsp")) as eph:
-            t,observer,east,north,errors,groups,dropped=fit.observations(key,eph)
+            t,observer,east,north,errors,groups,dropped=fit.observations(key,eph,minimum_positions=6 if short else 7)
             epoch=float(np.ceil(t.max())+1)
             span=float(np.ptp(t))
             rec.update(supported=len(t),supported_arc_days=span,parser_dropped=dropped)
-            if len(t)<10 or span<30: raise ValueError("supported arc shorter than 30 days or ten positions")
+            if not short and (len(t)<10 or span<30):
+                raise ValueError("supported arc shorter than 30 days or ten positions")
+            if len(t)<minimum or span<span_min or (short and len(set(groups))<3):
+                raise ValueError("supported arc below required span, positions, or distinct station-nights")
             el={k:float(row[k]) for k in names}
             initial=conic_seed(el,el["epoch"],epoch,eph)
             eph_short=fit.ephemeris(eph,t.min()-fit.OBS_TIME_LIMIT-2,epoch+1,.25)
-            state,cov,keep,res,chi=fit.fit(initial,epoch,t,observer,east,north,errors,eph_short)
+            state,cov,keep,res,chi=fit.fit(initial,epoch,t,observer,east,north,errors,eph_short,minimum_positions=6 if short else None)
             # Check for the antipodal tangent-plane degeneracy.
             sol=fit.integrate(state,epoch,t.min()-fit.OBS_TIME_LIMIT,eph_short).sol
             emit=t.copy()
@@ -104,11 +126,16 @@ def measure(item):
                        excluded_indices=np.where(~keep)[0].tolist(),rms_coordinate_arcsec=float(np.sqrt(np.mean(res[keep]**2))),
                        reduced_chi2=float(chi),fit_epoch_jd_tdb=epoch,state_ssb_icrf=state.tolist(),
                        covariance=cov.tolist())
-            if keep.sum()<10 or np.ptp(t[keep])<30 or np.ptp(t[keep])<.7*span:
+            used_groups={g for g,flag in zip(groups,keep) if flag}
+            if not short and (keep.sum()<10 or np.ptp(t[keep])<30 or np.ptp(t[keep])<.7*span):
                 raise ValueError("retained fit spans <30 d, <70% of arc, or <10 points")
+            if keep.sum()<minimum or (short and len(used_groups)<3) or np.ptp(t[keep])<span_min or np.ptp(t[keep])<.7*span:
+                raise ValueError("retained arc below span, 70% coverage, positions, or station-night floor")
             rec["boundaries"]=fit.inbound(key,state,cov,epoch,eph)
             b=rec["boundaries"].get("250au")
             rec["status"]="inbound 250 au" if b and b["inbound_radial_au_d"]<0 else "no inbound 250 au"
+            if short and b and (not np.isfinite(b["formal_sigma_inverse_a"]) or b["formal_sigma_inverse_a"]<=0):
+                raise ValueError("nonpositive or nonfinite energy uncertainty")
     except Exception as exc:
         rec.update(status="unresolved",reason=str(exc))
     finally:
@@ -116,7 +143,7 @@ def measure(item):
     rec["elapsed_seconds"]=round(time.monotonic()-start,3)
     return rec
 
-def main(src,shard,parts):
+def main(src,shard,parts,short=False):
     global PAST
     rows,url,cat_sha=batch.cat()
     source=src/"CmtObs.txt.gz"
@@ -131,7 +158,8 @@ def main(src,shard,parts):
     eligible=[]
     for r in rows:
         speed=np.sqrt(SUN_MU_KM*(float(r["e"])-1)/float(r["q"]))
-        if speed<1 and float(r["data_arc"] or -1)>=30 and str(r["spkid"]) not in recent and r["pdes"] not in SPECIFIC:
+        long_arc=float(r["data_arc"] or -1)>=30
+        if speed<1 and long_arc!=short and str(r["spkid"]) not in recent and r["pdes"] not in SPECIFIC:
             eligible.append(r)
     assigned=sorted(eligible,key=lambda r:int(r["spkid"]))[shard::parts]
     ids={str(r["spkid"]) for r in assigned}
@@ -162,7 +190,7 @@ def main(src,shard,parts):
     dest=OUT/f"shard-{shard:02}.json.gz"
     records=[]
     with concurrent.futures.ProcessPoolExecutor(max_workers=3,mp_context=multiprocessing.get_context("fork")) as pool:
-        futures=[pool.submit(measure,(r,groups[str(r["spkid"])])) for r in assigned]
+        futures=[pool.submit(measure,(r,groups[str(r["spkid"])],short)) for r in assigned]
         for future in concurrent.futures.as_completed(futures):
             r=future.result()
             records.append(r)

@@ -53,7 +53,7 @@ def stations():
         out[row[:3]] = (6378.137 / AU) * np.array([rho_c*np.cos(lam),rho_c*np.sin(lam),rho_s])
     return out
 
-def observations(obj, eph):
+def observations(obj, eph, minimum_positions=7):
     sites = stations()
     groups, jd, angles, geoc, seen = [], [], [], [], set()
     rejected = Counter()
@@ -83,7 +83,7 @@ def observations(obj, eph):
         jd.append(t)
         angles.append([ra,dec])
         geoc.append(sites[site])
-    if len(jd)<7:
+    if len(jd)<minimum_positions:
         raise ValueError(f"Only {len(jd)} supported optical records")
     utc=np.asarray(jd)
     tai=erfa.utctai(2400000.5,utc-2400000.5)
@@ -180,10 +180,11 @@ def integrate(params,start,stop,positions,events=None,dense=True):
         raise RuntimeError(solution.message)
     return solution
 
-def fit(seed_state,epoch,t,observers,east,north,sig,positions,outward=False,return_predictor=False):
+def fit(seed_state,epoch,t,observers,east,north,sig,positions,outward=False,return_predictor=False,minimum_positions=None):
     npar=len(seed_state)
     memo={}
-    if len(t)<max(7,npar+1):
+    required=max(7,npar+1) if minimum_positions is None else max(minimum_positions,(npar+1)//2+1)
+    if len(t)<required:
         raise ValueError("Too few positions for independent refit")
     def calc(state):
         key=tuple(state)
@@ -226,7 +227,7 @@ def fit(seed_state,epoch,t,observers,east,north,sig,positions,outward=False,retu
         x0=result.x
         if passno<2:
             mask=np.linalg.norm(calc(x0)[0],axis=1)<4*sig
-            if mask.sum()<max(7,.5*len(mask)):
+            if mask.sum()<max(7 if minimum_positions is None else required,.5*len(mask)):
                 raise ValueError("Fit excludes too many observations")
     res=calc(x0)[0]
     u,s,vt=np.linalg.svd(j(x0),full_matrices=False)
