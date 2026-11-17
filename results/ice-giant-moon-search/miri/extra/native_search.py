@@ -11,8 +11,14 @@ from miri_audit import write_csv
 SIGMA={'F560W':.75,'F1000W':1.3,'F1280W':1.75,'F1800W':2.4,'F2100W':2.8,'F2550W':3.3}
 
 
-def maps(g,p,cache):
+def maps(g,p,cache,injections=()):
     dat,_=read_product(p,cache,True);val=dat['SCI'].astype('f4');err=dat['ERR'];dq=dat['DQ'];sig=SIGMA[g['f']['filter']]
+    for x,y,flux_ujy in injections:
+        # Add a pixel-sampled Gaussian to the native calibrated science before masks and background.
+        half=int(np.ceil(5*sig));yy,xx=np.mgrid[-half:half+1,-half:half+1]
+        ix,iy=int(round(x)),int(round(y));psf=np.exp(-((xx+ix-x)**2+(yy+iy-y)**2)/(2*sig**2));psf/=psf.sum()
+        xi=xx+ix;yi=yy+iy;use=(xi>=0)&(xi<val.shape[1])&(yi>=0)&(yi<val.shape[0])
+        val[yi[use],xi[use]]+=psf[use]*flux_ujy/(1.e12*g['pixar_sr'])
     ok=np.isfinite(val)&np.isfinite(err)&(err>0)&((dq==0)|(dq==4))
     yy,xx=np.indices(val.shape); pix=.11
     for code,r in g['states'].items():

@@ -30,7 +30,7 @@ def frame(f,product,cache,states,receipts):
     edges=np.linspace(0,1,65);x=np.r_[edges*(nx-1),edges*0+nx-1,(1-edges)*(nx-1),edges*0];y=np.r_[edges*0,edges*(ny-1),edges*0+ny-1,(1-edges)*(ny-1)]
     ra,dec=w.all_pix2world(x,y,0)
     dra=(ra-state[0]+180)%360-180
-    return dict(f=f,w=w,nx=nx,ny=ny,state=state,states=states,t=emission(f,state),u=u,v=v,
+    return dict(f=f,w=w,nx=nx,ny=ny,state=state,states=states,pixar_sr=h['PIXAR_SR'],t=emission(f,state),u=u,v=v,
                 dist=state[4]*AU,los=los,skybox=(dra.min()-.0001,dra.max()+.0001,dec.min()-.0001,dec.max()+.0001))
 
 

@@ -128,6 +128,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Planets, moons and rings in our Solar System
 
+- **Uranus’s moon Perdita was about 1.9 arcseconds from its predicted position in October 2026.** Four JWST exposures in three visits measured the displacement. The same search set detection limits for additional moons around Uranus and Neptune. *Measured* · [Details](results/ice-giant-moon-search/README.md)
 - **Io's record 2024 eruption brightened Jupiter's sulfur glow but barely its sodium cloud.** *Measured* · [Details](results/io-2024-eruption-sodium/README.md)
 - **A 9.5-hour eclipse of Jupiter's moon Sinope (17–18 Oct 2037).** The moon will sit far enough from Jupiter in our sky to be observed during the eclipse. *Prediction* · [Details](results/sinope-2037-jupiter-eclipse/README.md)
 - **Saturn's rings will shade its moon Phoebe (1–3 Mar 2032).** The B ring should twice remove about 98% of Phoebe's sunlight. *Prediction* · [Details](results/phoebe-ring-shadow-2032/README.md)
