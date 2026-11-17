@@ -9,7 +9,7 @@ import sys
 
 import numpy as np
 import scipy
-from scipy import ndimage, signal
+from scipy import ndimage, signal, sparse
 from scipy.stats import binomtest
 
 
@@ -46,7 +46,7 @@ def gaussian(sigma):
     return kernel / kernel.sum()
 
 
-def validate_cube(cube):
+def validate_cube(cube, min_visits=2):
     image = cube['image']
     if image.ndim != 3 or min(image.shape[1:]) < 12:
         raise ValueError('image must have axes exposure,y,x with spatial coverage')
@@ -58,13 +58,17 @@ def validate_cube(cube):
             raise ValueError(f'{key} must contain one entry per exposure')
     if not np.isfinite(cube['mjd']).all() or np.unique(strvec(cube['exposure_id'])).size != n:
         raise ValueError('finite epochs and unique exposure IDs required')
-    if np.any(strvec(cube['visit']) == '') or np.unique(strvec(cube['visit'])).size < 2:
-        raise ValueError('two distinct archive visit IDs required')
+    if np.any(strvec(cube['visit']) == '') or np.unique(strvec(cube['visit'])).size < min_visits:
+        raise ValueError(f'{min_visits} distinct archive visit IDs required')
     for key in ['band', 'flux_unit']:
         if cube[key].size == 0 or np.unique(strvec(cube[key])).size != 1 or not strvec(cube[key]).flat[0]:
             raise ValueError(f'supply one nonempty {key} per run')
     if cube['valid'].dtype.kind != 'b':
         raise ValueError('valid must be boolean with all geometry and quality masks applied')
+    if 'geometry_valid' in cube:
+        geom = cube['geometry_valid']
+        if geom.shape != image.shape or geom.dtype.kind != 'b' or np.any(cube['valid'] & ~geom):
+            raise ValueError('geometry_valid must be boolean and include every valid pixel')
     if 'ring_mask' in cube and np.any(cube['valid'] & cube['ring_mask']):
         raise ValueError('ring_mask is not excluded in valid')
     centers = np.broadcast_to(cube['center_xy'], (n, 2))
@@ -78,7 +82,10 @@ def validate_cube(cube):
             raise ValueError('supply odd-sized pixel-centered PSF stamps')
         if not np.isfinite(psfs).all() or np.any(psfs < 0) or np.any(psfs.sum(axis=(1, 2)) <= 0):
             raise ValueError('PSF must contain finite nonnegative source flux')
-        return [p / p.sum() for p in psfs]
+        fractions = np.broadcast_to(cube.get('psf_fraction', 1.0), (n,))
+        if np.any((fractions <= 0) | (fractions > 1)) or not np.isfinite(fractions).all():
+            raise ValueError('psf_fraction must be in (0, 1]')
+        return [p * (f / p.sum()) for p, f in zip(psfs, fractions, strict=True)]
     return [gaussian(s) for s in np.broadcast_to(cube['psf_sigma_px'], (n,))]
 
 
@@ -137,7 +144,7 @@ def filtered_frame(data, variance, valid, kernel, center, cuts):
     numerator = corr(residual * invvar, kernel)
     information = np.maximum(corr(invvar, kernel**2), 0.0)
     pixel_good = good.copy()
-    good &= (corr((invvar > 0).astype(float), kernel) >= cuts.psf_support) & (information > 0)
+    good &= (corr((invvar > 0).astype(float), kernel) >= cuts.psf_support * kernel.sum()) & (information > 0)
     snr = np.divide(numerator, np.sqrt(information), where=good, out=np.zeros(data.shape))
     yy, xx = np.indices(data.shape)
     annulus = (np.hypot(xx - center[0], yy - center[1]) / 12).astype(int)
@@ -163,8 +170,15 @@ def filtered_frame(data, variance, valid, kernel, center, cuts):
 
 def prepare(cube, kernels, cuts):
     centers = np.broadcast_to(cube['center_xy'], (len(kernels), 2))
-    return [filtered_frame(*args, cuts) for args in zip(
-        cube['image'], cube['variance'], cube['valid'], kernels, centers, strict=True)]
+    maps = []
+    for i, args in enumerate(zip(cube['image'], cube['variance'], cube['valid'], kernels, centers, strict=True)):
+        frame = filtered_frame(*args, cuts)
+        # Hard masks apply to the entire path. Individual DQ samples contribute
+        # zero information and are accounted for in total supported PSF flux.
+        geometric = cube.get('geometry_valid')
+        mask = frame[2] if geometric is None else geometric[i].astype(float)
+        maps.append((*frame, mask))
+    return maps
 
 
 def sample(maps, x, y):
@@ -206,9 +220,59 @@ def clipped_stamp(shape, top, left, stamp):
     return (np.s_[y0:y1, x0:x1], stamp[y0-top:y1-top, x0-left:x1-left])
 
 
+class TemplateCache:
+    """Sparse exposure templates for repeated full-bank injections in one cube."""
+    def __init__(self, cube, tracks, kernels):
+        self.nodes = []
+        self.templates = []
+        self.squared = []
+        for t, psf in enumerate(kernels):
+            px = tracks['x_path'][:, t]
+            py = tracks['y_path'][:, t]
+            valid = cube.get('geometry_valid', cube['valid'])[t]
+            ny, nx = valid.shape
+            inside = np.all(np.isfinite(px+py) & (px >= 0) & (py >= 0)
+                            & (px <= nx-1) & (py <= ny-1), axis=1)
+            index = np.flatnonzero(inside)
+            center = ndimage.map_coordinates(valid.astype(float), [py[index], px[index]], order=1)
+            index = index[np.min(center, axis=1) >= 1-1e-6]
+            offsets = [0]
+            cols, data = [], []
+            for k in index:
+                cut, stamp = clipped_stamp(valid.shape, *trail_kernel(px[k], py[k], psf))
+                yy = np.arange(cut[0].start, cut[0].stop)
+                xx = np.arange(cut[1].start, cut[1].stop)
+                col = (yy[:, None] * nx + xx).ravel()
+                coeff = stamp.ravel()
+                good = coeff > 0
+                cols.append(col[good])
+                data.append(coeff[good])
+                offsets.append(offsets[-1] + good.sum())
+            ii = np.concatenate(cols) if cols else np.empty(0, dtype=int)
+            dd = np.concatenate(data) if data else np.empty(0)
+            mat = sparse.csr_matrix((dd, ii, offsets), shape=(len(index), ny*nx))
+            self.nodes.append((index, py[index], px[index]))
+            self.templates.append(mat)
+            self.squared.append(mat.power(2))
+
+    def measure(self, maps, ntrial, cuts):
+        num, info = np.zeros((2, ntrial, len(maps)))
+        for t, (_, _, _, weighted, weight, psf, center_ok) in enumerate(maps):
+            index, py, px = self.nodes[t]
+            if len(index) == 0:
+                continue
+            center = ndimage.map_coordinates(center_ok, [py, px], order=1)
+            mat = self.templates[t]
+            use = ((center.min(axis=1) >= 1-1e-6)
+                   & (mat @ (weight.ravel() > 0) >= cuts.psf_support * psf.sum()))
+            num[index, t] = (mat @ weighted.ravel()) * use
+            info[index, t] = (self.squared[t] @ weight.ravel()) * use
+        return num, info
+
+
 def sample_paths(maps, px, py, cuts):
     num, info = np.zeros((2, *px.shape[:2]))
-    for t, (_, _, center_ok, image_weighted, weight, psf) in enumerate(maps):
+    for t, (_, _, _, image_weighted, weight, psf, center_ok) in enumerate(maps):
         ny, nx = weight.shape
         for k in range(len(px)):
             x, y = px[k, t], py[k, t]
@@ -219,7 +283,7 @@ def sample_paths(maps, px, py, cuts):
                 continue
             cut, stamp = clipped_stamp(weight.shape, *trail_kernel(x, y, psf))
             w = weight[cut]
-            if stamp[w > 0].sum() < cuts.psf_support:
+            if stamp[w > 0].sum() < cuts.psf_support * psf.sum():
                 continue
             num[k, t] = np.sum(stamp * image_weighted[cut])
             info[k, t] = np.sum(stamp**2 * w)
@@ -260,7 +324,10 @@ def score(nums, info, visits, cuts):
                 dropout=dropout.T, n=counts.T, eligible=(counts >= cuts.min_exposures).sum(0) >= 2)
 
 
-def scan(maps, tracks, visits, cuts, negative=False, chunk=4096):
+def scan(maps, tracks, visits, cuts, negative=False, chunk=4096, cache=None):
+    if cache is not None:
+        num, info = cache.measure(maps, len(tracks['x']), cuts)
+        return score(-num if negative else num, info, visits, cuts)
     fields = {}
     for start in range(0, len(tracks['x']), chunk):
         stop = start + chunk
@@ -285,7 +352,7 @@ def add_stamp(image, x, y, psf, flux):
     if y1 >= y2 or x1 >= x2:
         return
     shifted = ndimage.shift(psf, (y - iy, x - ix), order=1, mode='constant')
-    shifted /= shifted.sum()
+    shifted *= psf.sum() / shifted.sum()
     image[y1:y2, x1:x2] += flux * shifted[y1-y0:y2-y0, x1-x0:x2-x0]
 
 
@@ -308,7 +375,7 @@ def matched(index, plant_x, plant_y, tracks, samples, visits, cuts, radius):
     return None
 
 
-def plants(cube, kernels, tracks, injections, cuts, baseline, levels, n_per_level, seed, radius):
+def plants(cube, kernels, tracks, injections, cuts, baseline, levels, n_per_level, seed, radius, cache=None):
     if len(injections['x']) < n_per_level:
         raise ValueError('off-grid bank must contain at least --n-plants distinct orbits')
     if np.intersect1d(strvec(injections['orbit_id']), strvec(tracks['orbit_id'])).size:
@@ -348,7 +415,7 @@ def plants(cube, kernels, tracks, injections, cuts, baseline, levels, n_per_leve
                 for frame, px, py, psf in zip(image, x, y, kernels, strict=True):
                     add_stamp(frame, px, py, psf, flux)
             maps = prepare({**cube, 'image': image}, kernels, cuts)
-            result = scan(maps, tracks, visits, cuts)
+            result = scan(maps, tracks, visits, cuts, cache=cache)
             peaks = np.flatnonzero(result['rank'] >= 1)
             peaks = peaks[np.argsort(-result['rank'][peaks])]
             k = matched(peaks, x, y, tracks, result, visits, cuts, radius)
@@ -386,19 +453,24 @@ def main():
     p.add_argument('--plants', type=Path, help='independently sampled off-grid orbit bank')
     p.add_argument('--flux', nargs='+', type=float, help='integrated PSF flux in cube units')
     p.add_argument('--n-plants', type=int, default=100, help='per flux per supplied orbital population')
+    p.add_argument('--cache-templates', action='store_true',
+                   help='keep sparse trailed PSF weights in RAM for repeated injections')
     p.add_argument('--seed', type=int, default=23017)
     p.add_argument('--match-px', type=float, default=1.0)
     p.add_argument('--visit-snr', type=float, default=5.0)
     p.add_argument('--total-snr', type=float, default=7.0)
     p.add_argument('--dropout-snr', type=float, default=2.0)
+    p.add_argument('--psf-support', type=float, default=.9)
     p.add_argument('--glare-sigma', type=float, default=12.0)
     args = p.parse_args()
     if bool(args.flux) != bool(args.plants):
         p.error('--plants and --flux must be supplied together')
     positive = [args.match_px, args.visit_snr, args.total_snr, args.dropout_snr,
-                args.glare_sigma, *(args.flux or [])]
+                args.glare_sigma, args.psf_support, *(args.flux or [])]
     if not np.isfinite(positive).all() or min(positive) <= 0 or args.n_plants < 1:
         p.error('thresholds, scales, fluxes and plant count must be positive and finite')
+    if args.psf_support > 1:
+        p.error('PSF support must be at most one')
     if args.flux and len(set(args.flux)) != len(args.flux):
         p.error('duplicate injected flux level')
     cube, tracks = load_npz(args.cube), load_npz(args.tracks)
@@ -410,11 +482,14 @@ def main():
         if ('x_path' in tracks) != ('x_path' in injections):
             p.error('plant and search bank must share the same exposure timing model')
     cuts = Cuts(visit_snr=args.visit_snr, total_snr=args.total_snr, dropout_snr=args.dropout_snr,
-                glare_sigma=args.glare_sigma)
+                glare_sigma=args.glare_sigma, psf_support=args.psf_support)
     maps = prepare(cube, kernels, cuts)
     visits = strvec(cube['visit'])
-    measured = scan(maps, tracks, visits, cuts)
-    negative = scan(maps, tracks, visits, cuts, negative=True)
+    if args.cache_templates and 'x_path' not in tracks:
+        p.error('template caching requires exposure-integrated tracks')
+    cache = TemplateCache(cube, tracks, kernels) if args.cache_templates else None
+    measured = scan(maps, tracks, visits, cuts, cache=cache)
+    negative = scan(maps, tracks, visits, cuts, negative=True, cache=cache)
     out = args.out
     out.mkdir(parents=True, exist_ok=False)
     report = dict(status='image screening only', cube_sha256=file_hash(args.cube),
@@ -447,7 +522,7 @@ def main():
             writer = csv.DictWriter(stream, fieldnames=fields)
             writer.writeheader()
             for row in plants(cube, kernels, tracks, injections, cuts, measured, args.flux,
-                              args.n_plants, args.seed, args.match_px):
+                              args.n_plants, args.seed, args.match_px, cache):
                 rows.append(row)
                 writer.writerow(row)
                 stream.flush()

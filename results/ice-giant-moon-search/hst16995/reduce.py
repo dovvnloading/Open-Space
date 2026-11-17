@@ -314,6 +314,16 @@ def run(args):
     rank=np.concatenate(ranks);validated=np.concatenate(vetted); hits=np.flatnonzero(rank>=1)
     peaks=[dict(a_km=bank[k,0],phase_rad=bank[k,1],rank=round(rank[k],5)) for k in np.argsort(rank)[-40:][::-1]]
     write_csv(out/'highest_scores.csv',peaks)
+    secure=np.flatnonzero(validated>=1)
+    if len(secure):
+        records=[]
+        for start in range(0,len(secure),5000):
+            ids=secure[start:start+5000]
+            raw,ok=samples(frames,planet,bank[ids])
+            for k,z,support in zip(ids,raw,ok):
+                records.append(dict(a_km=bank[k,0],phase_rad=bank[k,1],screen_rank=rank[k],dropout_rank=validated[k],
+                                    exposure_scores=' '.join(f'{v:.3f}' for v in z),supported=''.join('1' if v else '0' for v in support)))
+        write_csv(out/'dropout_candidates.csv',records)
     summary=dict(planet=planet,filter=getattr(args,'band','F845M'),exposures=len(frames),visits=len(set(visits)),grid_tracks=len(bank),
                  supported_tracks=num_eligible,threshold_crossings=len(hits),top_rank=float(rank.max()),dropout_crossings=int((validated>=1).sum()),top_dropout_rank=float(validated.max()),
                  psf_control_stamps=npsf,control_orbit=control_orbit(frames,planet),median_delta_au=np.median([f['dist'] for f in frames]),

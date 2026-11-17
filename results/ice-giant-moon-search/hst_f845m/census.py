@@ -1,18 +1,14 @@
-"""Freeze the complete inventory-selected HST F845M sample and run each short epoch."""
+"""Fetch the compact WFC3 F845M sample for reuse across HST screening passes."""
 import argparse
 import csv
 from concurrent.futures import ThreadPoolExecutor
-import gzip
 import hashlib
-import json
 from pathlib import Path
 import sys
 import time
 from urllib.request import urlopen
-import numpy as np
 ROOT=Path(__file__).resolve().parent
 sys.path.insert(0,str(ROOT.parent/'hst16995'))
-import fetch
 import reduce
 
 
@@ -40,47 +36,20 @@ def acquire(cache,freeze):
     else:rows=list(csv.DictReader((ROOT/'selection.csv').open()))
     cache.mkdir(exist_ok=True,parents=True)
     with ThreadPoolExecutor(4) as ex:list(ex.map(lambda r:download(r,cache),rows))
-    old=fetch.ROOT;fetch.ROOT=ROOT
-    try:
-        for trial in range(6):
-            try:
-                fetch.run(cache,freeze);break
-            except Exception:
-                if trial==5:raise
-                time.sleep(2**trial)
-    finally:fetch.ROOT=old
-
-
-def screen(cache):
-    original=reduce.read_csv
-    load=lambda n:list(csv.DictReader((ROOT/n).open()))
-    eph=load('ephemerides.csv'); hashes=load('inputs.csv');selection=load('selection.csv')
-    summary=[]
-    for planet in reduce.DOMAINS:
-        proposals=sorted({r['proposal'] for r in selection if r['target']==planet.upper()})
-        for pid in proposals:
-            rows=sorted([r for r in selection if r['target']==planet.upper() and r['proposal']==pid],key=lambda r:float(r['mjd_start']))
-            chunks=np.split(np.arange(len(rows)),np.flatnonzero(np.diff([float(r['mjd_start']) for r in rows])>3)+1)
-            for indices in chunks:
-                part=[rows[k] for k in indices]; names={r['rootname'] for r in part};begin=part[0]['mjd_start'].split('.')[0]
-                tag=f'{planet.lower()}-{pid}-{begin}'; visits={r['visit'] for r in part}
-                result=dict(epoch=tag,archive_exposures=len(part),archive_visits=len(visits),used_exposures=0,used_visits=0,
-                            bank=0,supported=0,screen_hits=0,dropout_hits=0,highest_dropout_rank='',status='under_four_visits')
-                if len(visits)>=4:
-                    mapping={'selection.csv':part,'inputs.csv':hashes,'ephemerides.csv':[r for r in eph if r['rootname'] in names]}
-                    reduce.read_csv=lambda n:mapping[n]
-                    try:
-                        out=ROOT/tag
-                        reduce.run(argparse.Namespace(out=out,cache=cache,planet=planet,no_plants=True))
-                        s=json.loads((out/'summary.json').read_text())
-                        result.update(used_exposures=s['exposures'],used_visits=s['visits'],bank=s['grid_tracks'],supported=s['supported_tracks'],
-                                      screen_hits=s['threshold_crossings'],dropout_hits=s['dropout_crossings'],highest_dropout_rank=round(s['top_dropout_rank'],4),status='screened')
-                    finally:reduce.read_csv=original
-                summary.append(result);reduce.write_csv(ROOT/'coverage.csv',summary)
+    hashes=[]
+    for r in rows:
+        name=r['rootname']+'_flt.fits'
+        path=cache/name
+        hashes.append(dict(file=name,bytes=path.stat().st_size,sha256=hashlib.sha256(path.read_bytes()).hexdigest()))
+    if freeze:
+        reduce.write_csv(ROOT/'inputs.csv',hashes)
+    else:
+        frozen=list(csv.DictReader((ROOT/'inputs.csv').open()))
+        if frozen != [{k:str(v) for k,v in r.items()} for r in hashes]:
+            raise ValueError('F845M input checksum or size changed')
 
 
 if __name__=='__main__':
-    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('action',choices=['acquire','screen'])
-    ap.add_argument('cache',type=Path);ap.add_argument('--freeze',action='store_true');a=ap.parse_args()
-    if a.action=='acquire':acquire(a.cache,a.freeze)
-    else:screen(a.cache)
+    ap=argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('cache',type=Path);ap.add_argument('--freeze',action='store_true')
+    a=ap.parse_args();acquire(a.cache,a.freeze)

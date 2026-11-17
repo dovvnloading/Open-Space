@@ -37,15 +37,21 @@ def resample(image, error, dq, x, y, factor, allow_jumps=False):
     return result.astype('f4'),variance.astype('f4'),valid
 
 
-def prepare(files, ephemeris, output, centers, size, scale, samples, sigma, pad, allow_jumps=False, control_body=None):
+def prepare(files, ephemeris, output, centers, size, scale, samples, sigma, pad, allow_jumps=False, control_body=None, offset_target=False):
     if size%2 != 1 or samples%2 != 1 or samples<3 or scale<=0 or sigma<=0:
         raise ValueError("positive scale, positive PSF sigma, odd image and odd trail sample count >=3 required")
     center = np.full(2, (size-1)/2)
     yy,xx = np.indices((size,size))
     fit = {}
+    sky_fit = {}
     if centers:
         with open(centers) as f:
-            fit = {r["exposure_id"]:(float(r["x"]),float(r["y"])) for r in csv.DictReader(f)}
+            for r in csv.DictReader(f):
+                fit[r["exposure_id"]] = (float(r["x"]),float(r["y"]))
+                if r.get("ra_deg") and r.get("dec_deg"):
+                    sky_fit[r["exposure_id"]] = (float(r["ra_deg"]),float(r["dec_deg"]))
+    if offset_target and (not fit or set(fit) != set(sky_fit)):
+        raise ValueError("offset-target processing requires sky and pixel centers for every exposure")
     times,ids,visits,bands,records = [],[],[],[],[]
     images,variances,valids,footprints = [],[],[],[]
     for file in sorted(map(Path,files)):
@@ -64,7 +70,13 @@ def prepare(files, ephemeris, output, centers, size, scale, samples, sigma, pad,
             if ref is None:
                 # This header pair is authoritative only for exposures tracking the planet itself.
                 ref = wcs.all_world2pix(sci.header["MT_RA"], sci.header["MT_DEC"],0)
-            ra,dec = wcs.all_pix2world(*ref, 0)
+            ra,dec = sky_fit.get(exp, wcs.all_pix2world(*ref, 0))
+            if offset_target:
+                if not np.isfinite([*ref,ra,dec]).all() or not (0 <= ra < 360 and -90 <= dec <= 90):
+                    raise ValueError(f"invalid planet center for {exp}")
+                wx,wy=wcs.all_world2pix(ra,dec,0)
+                if np.hypot(wx-ref[0],wy-ref[1]) > 0.5:
+                    raise ValueError(f"inconsistent sky and pixel planet center for {exp}")
             wr,wd = inverse_sky(ra,dec,-(xx-center[0])*scale/ARCSEC,(yy-center[1])*scale/ARCSEC)
             dx,dy = wcs.all_world2pix(wr,wd,0,quiet=True)
             flux,var,valid = resample(sci.data,hdul["ERR"].data,hdul["DQ"].data,dx,dy,1e6*(scale/ARCSEC)**2,allow_jumps)
@@ -78,7 +90,7 @@ def prepare(files, ephemeris, output, centers, size, scale, samples, sigma, pad,
                 digest = hashlib.file_digest(f,"sha256").hexdigest()
             records.append(dict(exposure_id=exp,filename=file.name,sha256=digest,
                                 center_native_x=float(ref[0]),center_native_y=float(ref[1]),
-                                center_source="limb CSV" if centers else "MT_RA/DEC",
+                                center_source="external sky+pixel center" if offset_target else ("limb CSV" if centers else "MT_RA/DEC"),
                                 allowed_dq=[0,4] if allow_jumps else [0],
                                 mjd_start=obs["EXPSTART"],mjd_end=obs["EXPEND"],
                                 integration_count=obs.get("NINTS"),effexptm_s=obs.get("EFFEXPTM"),
@@ -98,7 +110,7 @@ def prepare(files, ephemeris, output, centers, size, scale, samples, sigma, pad,
     if control_body is not None and control_body not in bodies[1:]:
         raise ValueError("unknown positive control ID")
     for k in range(len(ids)):
-        if planet.upper() not in str(records[k]["target"]).upper():
+        if not offset_target and planet.upper() not in str(records[k]["target"]).upper():
             raise ValueError("tracking target and requested planet differ; inspect pointing")
         ra,dec,diam,_,delta = body[k,mid]
         rings.append(ring_mask(planet,ra,dec,delta,times[k,mid]+2400000.5,scale,center,xx.shape,pad))
@@ -143,6 +155,7 @@ if __name__=="__main__":
     p.add_argument("--psf-sigma",type=float,required=True)
     p.add_argument("--mask-pad",type=float,default=5.)
     p.add_argument("--allow-corrected-jumps",action="store_true")
+    p.add_argument("--offset-target",action="store_true",help="use verified planet sky+pixel centers for exposures tracking another target")
     p.add_argument("--control-body",type=int,help="unmask one named moon for positive-control data only")
     a=p.parse_args()
-    prepare(a.files,a.ephemeris,a.output,a.centers,a.size,a.scale,a.samples,a.psf_sigma,a.mask_pad,a.allow_corrected_jumps,a.control_body)
+    prepare(a.files,a.ephemeris,a.output,a.centers,a.size,a.scale,a.samples,a.psf_sigma,a.mask_pad,a.allow_corrected_jumps,a.control_body,a.offset_target)
