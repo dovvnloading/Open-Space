@@ -1,0 +1,15 @@
+{
+  "endpoint": "https://dc.g-vo.org/tap/sync",
+  "params": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "csv",
+    "MAXREC": "350000",
+    "QUERY": "SELECT source_id, ra, dec, pmra, pmdec, dist_50 FROM gcns.main WHERE dist_50 < 0.1"
+  },
+  "rows": 300526,
+  "sha256_csv": "90e447bd8148c24ad2872394a6a0068d30cb38a8e0887058e730ba2042e7ef01",
+  "reference_epoch": "J2016.0",
+  "catalogue": "Gaia Collaboration 2021, A&A 649 A6",
+  "dist_50_unit": "kpc"
+}

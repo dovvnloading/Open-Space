@@ -1,0 +1,50 @@
+[
+  {
+    "service": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+    "params": {
+      "REQUEST": "doQuery",
+      "LANG": "ADQL",
+      "FORMAT": "csv",
+      "QUERY": "SELECT DISTINCT main_id,bibcode,title,doi FROM basic JOIN has_ref ON oid=has_ref.oidref JOIN ref ON oidbib=oidbibref WHERE oid IN (SELECT oidref FROM ident WHERE id IN ('Gaia DR3 3316364602541746048','Gaia DR3 2595284016771502080','Gaia DR3 3098328182579892096','Gaia DR3 1893189736896880640'))"
+    },
+    "sha256": "6eac834bddb6354d63735f6688b5502da849fa836eae330dc99e5d41371ed9f4",
+    "file": "go8826-host-bibliography.csv",
+    "retrieved_utc": "2026-11-17T07:02:45.071049+00:00"
+  },
+  {
+    "service": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+    "params": {
+      "REQUEST": "doQuery",
+      "LANG": "ADQL",
+      "FORMAT": "csv",
+      "QUERY": "SELECT main_id,otype,ra,dec,pmra,pmdec,plx_value,ids FROM basic JOIN ids ON oidref=oid WHERE oid IN (SELECT oidref FROM ident WHERE id IN ('Gaia DR3 3316364602541746048','Gaia DR3 2595284016771502080','Gaia DR3 3098328182579892096','Gaia DR3 1893189736896880640'))"
+    },
+    "sha256": "d1eec78f40039824a6ae77f2a27e50e5350cd9957f94b0e55cfd3e2da55267ca",
+    "file": "go8826-simbad-hosts.csv",
+    "retrieved_utc": "2026-11-17T07:02:44.763642+00:00"
+  },
+  {
+    "service": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync",
+    "params": {
+      "REQUEST": "doQuery",
+      "LANG": "ADQL",
+      "FORMAT": "csv",
+      "QUERY": "SELECT DISTINCT hostname,pl_name,gaia_dr3_id,ra,dec FROM ps WHERE gaia_dr3_id IN ('Gaia DR3 3316364602541746048','Gaia DR3 2595284016771502080','Gaia DR3 3098328182579892096','Gaia DR3 1893189736896880640') OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',90.01682122458972,2.706263164562291,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',335.7814769701343,-17.61246778180866,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',122.9976375540415,8.736494793482313,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',330.3077219073228,28.30722647497072,0.016666667))"
+    },
+    "sha256": "3e21f3396210ec8f0c83dc73fd8a2871d77504319e6ae627326d556a8d794482",
+    "file": "go8826-confirmed-planets.csv",
+    "retrieved_utc": "2026-11-17T07:02:48.628205+00:00"
+  },
+  {
+    "service": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+    "params": {
+      "REQUEST": "doQuery",
+      "LANG": "ADQL",
+      "FORMAT": "csv",
+      "QUERY": "SELECT main_id,otype,ra,dec,pmra,pmdec,plx_value,ids FROM basic JOIN ids ON oidref=oid WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',90.01682122458972,2.706263164562291,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',335.7814769701343,-17.61246778180866,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',122.9976375540415,8.736494793482313,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',330.3077219073228,28.30722647497072,0.016666667))"
+    },
+    "sha256": "177c6ae8c39324830c1962c0fac732baff64508afa6352a4a28ea14d055d6212",
+    "file": "go8826-simbad.csv",
+    "retrieved_utc": "2026-11-17T07:02:47.466127+00:00"
+  }
+]
