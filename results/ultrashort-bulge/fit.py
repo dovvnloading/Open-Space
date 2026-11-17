@@ -47,10 +47,10 @@ def templates():
     return np.ascontiguousarray(rows), labels
 
 
-def setup():
+def setup(library_path=None):
     global bank, labels, native
     bank, labels = templates()
-    native = ctypes.CDLL(str(ROOT / 'grid.so')).evaluate
+    native = ctypes.CDLL(str(library_path if library_path is not None else ROOT / 'grid.so')).evaluate
     f64 = np.ctypeslib.ndpointer(np.float64, flags='C_CONTIGUOUS')
     i32 = np.ctypeslib.ndpointer(np.int32, flags='C_CONTIGUOUS')
     integer = ctypes.c_int

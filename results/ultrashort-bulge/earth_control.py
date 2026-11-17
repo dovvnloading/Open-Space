@@ -1,4 +1,5 @@
 """Recover the published OGLE-2016-BLG-1928 signal outside the search years."""
+import argparse
 import csv
 import gzip
 import hashlib
@@ -11,12 +12,13 @@ from urllib.request import urlopen
 import numpy as np
 from scipy.optimize import least_squares
 import fit
+from replay_guard import fresh,external
 
 ROOT=Path(__file__).resolve().parent
 URL='https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJ%2F903%2FL11&-out.max=unlimited&-out.all=1'
 
 
-def run(raw):
+def run(raw,library_path=None):
     data=[]
     for line in raw.decode().splitlines():
         cols=line.strip().split('\t')
@@ -25,7 +27,7 @@ def run(raw):
     t,m,e,site=map(np.asarray,zip(*data))
     f,se=fit.lens.to_flux(m,e)
     g=np.unique(site,return_inverse=True)[1]
-    fit.setup()
+    fit.setup(library_path)
     # Use the published observing night as a position hint and no timescale hint.
     summary=fit.screen(t,f,se,g,2457557.8,np.nan,2016,False)
     vb=fit.engine()
@@ -64,9 +66,15 @@ def run(raw):
 
 
 if __name__=='__main__':
-    raw=Path(sys.argv[1]).read_bytes() if len(sys.argv)>1 else urlopen(URL,timeout=60).read()
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--input',type=Path,required=True)
+    parser.add_argument('--out',type=Path,required=True)
+    parser.add_argument('--grid-library',type=Path,required=True)
+    args=parser.parse_args()
+    input_path=external(args.input);raw=input_path.read_bytes()
     if raw[:2]==b'\x1f\x8b':raw=gzip.decompress(raw)
-    dest=ROOT/'controls';dest.mkdir(exist_ok=True)
-    (dest/'earth-figure1.tsv.gz').write_bytes(gzip.compress(raw,mtime=0))
-    result=run(raw)
-    (dest/'earth-recovery.json').write_text(json.dumps(result,indent=2,default=lambda v:v.item())+'\n')
+    expected='819169bc4c6ab82941c2c01b48c8ba9c331bd55735348d30f2d5715bc2cb8c0c'
+    if hashlib.sha256(raw).hexdigest()!=expected:raise ValueError('frozen positive-control input mismatch')
+    out=fresh(args.out)
+    result=run(raw,external(args.grid_library))
+    (out/'earth-recovery.json').write_text(json.dumps(result,indent=2,default=lambda v:v.item())+'\n')

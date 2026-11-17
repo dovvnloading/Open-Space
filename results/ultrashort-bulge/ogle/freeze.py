@@ -15,6 +15,8 @@ from datetime import datetime, timezone
 import numpy as np
 
 HERE = pathlib.Path(__file__).resolve().parent
+sys.path.insert(0,str(HERE.parent))
+from replay_guard import external, fresh_for_inputs, verified,verify_receipt
 sys.path.insert(0, str(HERE.parents[1] / "ogle-dark-lenses"))
 from fetch import BASE, events, get
 
@@ -28,7 +30,7 @@ def sha(data):
 
 
 def write_csv(name, records):
-    path = HERE / name
+    path = OUT / name
     tmp = path.with_suffix(".tmp")
     with tmp.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(records[0]), lineterminator="\n")
@@ -42,11 +44,8 @@ def catalog(cache, year):
     directory.mkdir(parents=True, exist_ok=True)
     path = directory / "lenses.par"
     url = f"{BASE}/{year}/lenses.par"
-    if not path.exists():
-        data = get(url)
-        if not list(events(data)):
-            raise ValueError(f"empty EWS table {url}")
-        path.write_bytes(data)
+    expected=next(r for r in FROZEN_TABLES if r['year']==year)
+    verified(path,expected['sha256'])
     data = path.read_bytes()
     names = set(events(data))
     rows = []
@@ -70,7 +69,10 @@ def fetch_curve(cache, row):
                 n_before_30d="", n_after_30d="", n_peak_0p5d="", peak_gap_hours="",
                 searched_utc="", status="")
     try:
-        data = path.read_bytes() if path.exists() else get(url)
+        expected=FROZEN_CURVES[row['event']]
+        verified(path,expected['sha256'])
+        if path.stat().st_size!=int(expected['bytes']):raise ValueError('frozen input size mismatch')
+        data = path.read_bytes()
         from io import BytesIO
         t = np.loadtxt(BytesIO(data), usecols=0, ndmin=1)
         if len(t) == 0 or not np.all(np.isfinite(t)) or np.any(t < 2400000):
@@ -100,14 +102,24 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("cache", type=pathlib.Path)
     parser.add_argument("--jobs", type=int, default=6)
+    parser.add_argument("--out",type=pathlib.Path,required=True)
     args = parser.parse_args()
+    global OUT,FROZEN_TABLES,FROZEN_CURVES
+    args.cache=external(args.cache)
+    verify_receipt('ogle/tables.json');verify_receipt('ogle/photometry.csv')
+    FROZEN_TABLES=json.loads((HERE/'tables.json').read_bytes())
+    with (HERE/'photometry.csv').open(newline='',encoding='utf-8-sig') as f:FROZEN_CURVES={r['event']:r for r in csv.DictReader(f)}
+    for table in FROZEN_TABLES:verified(args.cache/table['year']/'lenses.par',table['sha256'])
+    for name,row in FROZEN_CURVES.items():
+        year,_,number=name.split('-');verified(args.cache/year/f'blg-{number}.dat',row['sha256'])
+    OUT=fresh_for_inputs(args.out,args.cache)
     all_rows, sources = [], []
     for year in ["2025","2026"]:
         info, rows = catalog(args.cache, year)
         all_rows.extend(rows)
         sources.append(info)
     write_csv("catalog.csv", all_rows)
-    (HERE/"tables.json").write_text(json.dumps(sources, indent=2)+"\n")
+    (OUT/"tables.json").write_text(json.dumps(sources, indent=2)+"\n")
     def rank(row):
         try:
             te = float(row["tau_days"])

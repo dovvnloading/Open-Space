@@ -2,6 +2,9 @@
 import argparse
 import csv
 import json
+import gzip
+import platform
+import sys
 import multiprocessing as mp
 import tarfile
 from pathlib import Path
@@ -9,6 +12,7 @@ from pathlib import Path
 import numpy as np
 import fit
 from kmt.flux import baseline_caps
+from replay_guard import external, fresh, verified, sha, identity,verify_receipt
 
 HERE = Path(__file__).resolve().parent
 
@@ -99,22 +103,42 @@ def main():
     parser.add_argument('--checkpoint',type=Path,required=True)
     parser.add_argument('--kmt-bound',action='store_true',help='KMT-only sensitivity with a cap of 1.15 times the reference baseline')
     parser.add_argument('--workers',type=int,default=4)
+    parser.add_argument('--grid-library',type=Path,required=True)
     parser.add_argument('--export',type=Path)
     args=parser.parse_args()
-    args.checkpoint.mkdir(parents=True,exist_ok=True)
+    args.cache=external(args.cache)
     if args.export:
-        rows=[json.loads(p.read_text()) for p in sorted(args.checkpoint.glob('*.json'))]
-        cols=list(dict.fromkeys(k for row in rows for k in row))
-        with args.export.open('w') as f:
-            w=csv.DictWriter(f,cols);w.writeheader();w.writerows(rows)
-        return
-    jobs=[(j,args.kmt_bound) for j in inputs(args.cache) if (not args.kmt_bound or j[0].startswith('KMT')) and not (args.checkpoint/(j[0]+'.json')).is_file()]
+        raise ValueError('legacy in-place checkpoint export disabled; use a verified new output')
+    for name in ('ogle/catalog.csv','kmt/catalog-2024.tsv','kmt/catalog-2025.tsv'):verify_receipt(name)
+    jobs=[(j,args.kmt_bound) for j in inputs(args.cache) if (not args.kmt_bound or j[0].startswith('KMT'))]
+    verify_receipt('tables/grid-fits.csv.gz')
+    with gzip.open(HERE/'tables/grid-fits.csv.gz','rt',newline='') as f:
+        frozen={r['event']:r['input_sha256'] for r in csv.DictReader(f)}
+    expected={name for name in frozen if not args.kmt_bound or name.startswith('KMT-')}
+    if {j[0] for j,_ in jobs}!=expected:raise ValueError('incomplete or changed frozen event membership')
+    target=external(args.checkpoint)
+    if target==args.cache or args.cache in target.parents or target in args.cache.parents:raise ValueError('input/output overlap')
+    for job,_ in jobs:
+        name,path,_,_=job
+        if not (name.startswith('OGLE-') or name.startswith('KMT-')):
+            raise ValueError('derived survey NPZ cannot be bound to frozen raw bytes: '+name)
+        if name not in frozen:raise ValueError('event absent from frozen receipt: '+name)
+        verified(path,frozen[name])
+    args.grid_library=external(args.grid_library)
+    codepaths=[HERE/'run_grid.py',HERE/'fit.py',HERE/'grid.cpp',args.grid_library,HERE/'kmt/flux.py',HERE/'replay_guard.py',HERE/'ogle/catalog.csv',HERE/'kmt/catalog-2024.tsv',HERE/'kmt/catalog-2025.tsv',HERE.parent/'ogle-dark-lenses/lens.py']
+    code_hashes={str(p):sha(p) for p in codepaths}
+    runtime={'python':sys.version,'platform':platform.platform(),'numpy':np.__version__,'vbm':getattr(fit.vbm,'__version__','unknown')}
+    if 'fork' not in mp.get_all_start_methods():raise RuntimeError('full grid requires Linux/WSL fork')
+    args.checkpoint=fresh(args.checkpoint)
+    (args.checkpoint/'campaign.json').write_text(json.dumps({'model':'frozen grid','cap':args.kmt_bound,'code_sha256':code_hashes,'runtime':runtime},indent=2)+'\n')
+    identities={j[0]:identity(j[1],j[0],bound,code_hashes,runtime,{'t0':float(j[2]) if np.isfinite(j[2]) else None,'te':float(j[3]) if np.isfinite(j[3]) else None}) for j,bound in jobs}
     print('Queued',len(jobs),flush=True)
-    fit.setup()
+    fit.setup(args.grid_library)
     with mp.get_context('fork').Pool(args.workers) as pool:
         for res in pool.imap_unordered(work,jobs,chunksize=1):
             path=args.checkpoint/(res['event']+'.json')
             tmp=path.with_suffix('.tmp')
+            res['_identity']=identities[res['event']]
             tmp.write_text(json.dumps(res,default=lambda v:v.item())+'\n')
             tmp.replace(path)
 
