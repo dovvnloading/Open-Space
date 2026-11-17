@@ -3,6 +3,7 @@
 Run: python mcc124_sed.py /path/to/model_cache > mcc124_sed.csv
 Requires numpy>=2 and astropy. Inputs and digests in photometry_inputs.json.
 """
+import argparse
 import csv
 import hashlib
 import json
@@ -51,20 +52,21 @@ def band_integral(wavelength, flam, band):
     return np.trapezoid(np.interp(grid, wavelength, flam) * weights, grid)
 
 
-def main(cache):
+def main(cache, catalogues):
     get_inputs(cache)
     bands = [get_band(cache / (name + ".xml")) for name in ("ks", "w2", "f444w")]
     with fits.open(cache / "vega.fits") as f:
         w, flux = f[1].data["WAVELENGTH"], f[1].data["FLUX"]
         vega = np.array([band_integral(w, flux, b) for b in bands])
-    with (HERE / "catalogue_receipts" / "twomass.csv").open() as f:
+    with (catalogues / "twomass.csv").open() as f:
         ks = float(next(csv.DictReader(f))["k_m"])
-    with (HERE / "catalogue_receipts" / "allwise.csv").open() as f:
+    with (catalogues / "allwise.csv").open() as f:
         w2 = float(next(csv.DictReader(f))["w2mpro"])
     out = csv.writer(sys.stdout, lineterminator="\n")
     out.writerow(["teff_K", "logg", "f444w_minus_ks_vega", "f444w_minus_w2_vega",
                   "ks_anchored_f444w_mJy", "w2_anchored_f444w_mJy"])
-    for name in sorted(cache.glob("ph[0-9][0-9][0-9][0-9].fits")):
+    model_inputs = json.loads((HERE / "photometry_inputs.json").read_text())
+    for name in sorted(cache / key for key in model_inputs if key.startswith("ph") and key.endswith(".fits")):
         with fits.open(name) as f:
             table = f[1].data
             for logg, col in ((4.5, "g45"), (5., "g50")):
@@ -78,4 +80,8 @@ def main(cache):
 
 
 if __name__ == "__main__":
-    main(Path(sys.argv[1]))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("cache", type=Path)
+    parser.add_argument("--catalogue-dir", type=Path, default=HERE / "catalogue_receipts")
+    args = parser.parse_args()
+    main(args.cache, args.catalogue_dir)

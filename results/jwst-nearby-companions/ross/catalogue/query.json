@@ -1,0 +1,20 @@
+{
+  "gaia_dr3": {
+    "query": "SELECT source_id,ra,dec,parallax,parallax_error,pmra,pmra_error,pmdec,pmdec_error,phot_g_mean_mag,astrometric_params_solved,ruwe\nFROM gaiadr3.gaia_source\nWHERE 1=CONTAINS(POINT('ICRS',ra,dec), CIRCLE('ICRS',282.4606,-23.8376,0.014))",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cparallax%2Cparallax_error%2Cpmra%2Cpmra_error%2Cpmdec%2Cpmdec_error%2Cphot_g_mean_mag%2Castrometric_params_solved%2Cruwe%0AFROM+gaiadr3.gaia_source%0AWHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C282.4606%2C-23.8376%2C0.014%29%29",
+    "started_utc": "2026-11-17T06:59:19.244201+00:00",
+    "http_status": 200,
+    "content_type": "text/csv",
+    "bytes": 17100,
+    "sha256": "76da72bbabadea6830cac0db009bb2ada5ac1e916c05bc17c8c3353177a39619"
+  },
+  "confirmed_planets": {
+    "query": "SELECT DISTINCT hostname,pl_name FROM ps WHERE hip_name='HIP 92403' OR gaia_dr3_id='Gaia DR3 4075141768785646848' OR tic_id='TIC 224752354' OR hostname IN ('Ross 154','GJ 729','HIP 92403','V1216 Sgr')",
+    "url": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+DISTINCT+hostname%2Cpl_name+FROM+ps+WHERE+hip_name%3D%27HIP+92403%27+OR+gaia_dr3_id%3D%27Gaia+DR3+4075141768785646848%27+OR+tic_id%3D%27TIC+224752354%27+OR+hostname+IN+%28%27Ross+154%27%2C%27GJ+729%27%2C%27HIP+92403%27%2C%27V1216+Sgr%27%29",
+    "started_utc": "2026-11-17T06:59:19.245315+00:00",
+    "http_status": 200,
+    "content_type": "text/plain",
+    "bytes": 17,
+    "sha256": "8f95419e6a50edc3273f46bedada85f8171a1149f139c5c7e536233815d81fbe"
+  }
+}
