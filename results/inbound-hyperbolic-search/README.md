@@ -1,23 +1,42 @@
 # Search for inbound hyperbolic small bodies
 
-**No previously unrecognised interstellar object has been validated.** The November 17 JPL snapshot contains 2,290 records with nominal heliocentric eccentricity at least one. Eight have an osculating excess speed of at least 5 km/s. Three are the known interstellar controls. For each of the other five, the eccentricity exceeds one by less than 0.36 of its quoted standard error. This is a census of catalogue solutions meeting those thresholds. Objects with short arcs, missing uncertainties or less extreme nominal speeds can escape the screen.
+**No previously unrecognised interstellar object has been validated.** Searching 2,130 eligible Pan-STARRS 1 tracklets on 17 nights produced no three-night orbit passing the high-speed selection. Testing at locations close to actual detections recovered 35 of 37 simulated objects for which three nights of nearby observations existed. Only 37 of 20,000 simulated paths met that sky-and-time condition. These numbers measure the search on a particular sample and cadence.
 
-## Completed
+## Completed measurements
 
-- The [JPL extraction and row-level audit](catalog/) include 527 strictly hyperbolic solutions and 1,763 set exactly to a parabola. The latter supply no positive nominal excess speed. The newest observation represented in this selected JPL snapshot is November 9, 2026.
-- In the [bound-orbit comparison](comparison/evidence/screen_summary.json), 91 of the 902 entries with `0.95 ≤ e < 1` have an MPC single-opposition source or a measured arc of at most 30 days. Forty-two of the 76 with usable eccentricity errors reach the parabolic boundary within three formal standard deviations. Two of those 42 have observations in 2025 or later. This comparison includes comets and asteroids. The other 15 of 91 lack a usable error.
-- The [Get-CP rolling NEOCP/PCCP orbit file](comparison/evidence/neocp_rolling.orb.gz) contained 275 distinct temporary IDs and zero nominal eccentricities of one or greater. The provider retains current objects plus the last nominal orbit of recent removals. These short-arc nominal solutions have no demonstrated completeness for interstellar visitors.
-- A three-night Pan-STARRS F51 search returned zero proposals from 2,130 eligible tracklets on 17 UTC dates. The first injection run recovered 97/100 synthetic hyperbolic objects inserted as three groups of observations at real times (95% exact binomial interval 91.48–99.38%). The later positions are forced into the input regardless of telescope pointing or flux. See [tracklet search](tracklets/).
-- The full November 17 isolated-tracklet file contained no Rubin X05 rows from October 19 through November 16 UTC. The latest available 29-day X05 slice ended July 14, 2026 and contained 36 observation lines. [Extract and query receipts](tracklets/)
+| Test | Result | Scope |
+| --- | --- | --- |
+| [Full-precision JPL census](catalog/README.md) | 2,290 unique records with heliocentric `e ≥ 1`, including 527 strictly above one. Eight have nominal excess speed ≥5 km/s. Only 1I, 2I and 3I also exceed five quoted eccentricity errors. | For each of the five other fast nominal solutions, `(e−1)/σₑ < 0.36`. Only 537 of all 2,290 had a positive quoted eccentricity error. |
+| [Published original barycentric comparison](catalog/code-original.csv) | 301 catalogue matches. Their preferred original reciprocal semimajor axes were positive in 286 cases and negative in 15. | Two negative preferred solutions exceeded five formal errors. Both have published alternative force models or arc selections compatible with binding. See the [object-by-object discussion](catalog/README.md). |
+| [Independent astrometric fits](orbits/README.md) | All three interstellar controls recovered at 250 au, with incoming speeds of 26.34, 32.28 and 57.97 km/s. C/1980 E1 and C/2024 L5 were bound before their Jupiter and Saturn encounters, respectively. | Distinguishes incoming energy from the heliocentric osculating energy used to select the catalogue. |
+| [Bound-side comparison](comparison/evidence/screen_summary.json) | Of 902 JPL orbits with `0.95 ≤ e < 1`, 91 were from an MPC single-opposition source or had arcs ≤30 days. Of those, 76 had usable eccentricity errors and 42 reached the parabolic boundary within three formal errors. | Thirteen of the 91 had observations in 2025 or later, including two of those 42. |
+| [NEOCP/PCCP rolling orbit file](comparison/evidence/neocp_rolling.orb.gz) | 275 distinct current or recently removed temporary IDs, zero nominal `e ≥ 1`. | File published November 15, 2026. Nominal solutions on short arcs do not exclude unbound alternatives. |
 
-The speed used for triage is `sqrt(GM_sun (e−1)/q)`. It describes a heliocentric two-body orbit at the catalogue epoch. An incoming speed needs a fit to astrometry and propagation backwards past the planets. The single-element significance omits systematic errors and sensitivity to non-gravitational acceleration.
+### C/2025 V1 (Borisov)
 
-## Pending at this checkpoint
+This previously identified active comet is distinct from 2I/Borisov. Its catalogue orbit has a nominal osculating excess speed of 3.85 km/s. The current MPC record contains 117 observations on ten days. A gravity-only fit gave an incoming `1/a = −0.01598 ± 0.00316 au⁻¹` at 250 au (5.05 formal standard deviations). Allowing radial and transverse water-ice outgassing gave `−0.02682 ± 0.02618 au⁻¹` (1.02). Dropping all seven ZTF observations reduced the gravity-only result to 1.71. The known ZTF measurements include reported r magnitudes of 17.49 and 17.70 on October 29, 2025, and 15.41 on November 1. [Fits and holdouts](orbits/README.md) · [ZTF observation matches](comparison/photometry/evidence/mpc_ztf_matches.json)
 
-The three known interstellar controls were recovered at 250 au. Independent fits of C/2025 V1 to 117 retained positions gave an inbound excess near 3.77 km/s under gravity. Dropping two observations from its final night reduced the formal significance from 5.05 to 2.53 standard deviations. Wider force-law checks, a bulk refit against the MPC observation file, tracklet linking and recovery tests, and archival follow-up of any surviving lead. No population bound has been derived. C/2025 V1 (Borisov), a previously designated comet distinct from 2I, has a nominal 3.85 km/s excess on a ten-day JPL arc and is under review.
+In a direct fit constrained to zero incoming energy at 50 au, the cost was Δχ² = 25.37 under gravity. It fell to 1.06 with freely signed radial and transverse Marsden accelerations and 3.39 when enforcing outward radial acceleration. These are differences in fit quality. They do not quantify the probability of an interstellar origin. [Independent model definitions and evidence](orbits/)
+
+### What the tracklet search measures
+
+The 29-day window ran from October 19 through November 16, 2026 UTC. The full MPC Isolated Tracklet File contained 7,170 F51 observations in that window. Eight real triples survived the broad angular prefilter, and zero had a common trial orbit passing the next gate. The final orbit-fit selection required a nominal heliocentric excess speed above 10 km/s. Five shuffled-sky controls produced zero accepted links. [Tracklet selection, dynamics and receipts](tracklets/README.md)
+
+| Injection experiment | Result | Interpretation |
+| --- | --- | --- |
+| Supply three detections groups at real observing times | 99/100 recovered, exact 95% binomial interval 94.55–99.97% | Measures linkage given the three tracklets. The later visits were chosen without a sky-coverage requirement. |
+| Require nearby real astrometry at each exposure on three nights | 37/20,000 synthetic paths qualified within 1.5°. Of those, 35/37 were recovered, 94.6% (exact 95% interval 81.8–99.3%). Fourteen of 15 inbound examples were recovered. | The proxy uses detections near each predicted direction. Thirty-five of the 37 supported paths relied on November 1–3. Within 0.5° only one path qualified, and within 0.1° none did. |
+
+The simulated geocentric distances span 0.45–2.8 au and the injected heliocentric excess speeds span 15–60 km/s. Real-pointing proximity does not establish exposure on a working detector, flux sensitivity, trailing loss or survey completeness. No bound on interstellar space density follows. The latest 29-day ITF window had zero Rubin X05 rows. The last populated X05 window ended July 14, 2026, with only two nights of eligible observations. The [Rubin submission-feed audit](tracklets/) separately checks observation dates against ingestion dates.
+
+## Checks in progress at this checkpoint
+
+The bulk independent Find_Orb fit to the published MPC observation file is running. Its row-level output will distinguish far-inbound solutions from insufficient observations, failed fits and model-dependent solutions. Direct MPC queries supplement the dated bulk file with recent arcs. Archived observations of recently unconfirmed NEOCP objects are also being checked.
+
+A public ZTF footprint search for C/2025 V1 identified ten exposures before the known October 29 arc. Pixel tests on the nominal ephemeris and its uncertainty region are running. One science-frame aperture is elevated on October 25. It requires a stationary-source, repeated-motion and reference-image test before it can supply a position. [Footprints, epochs and archive receipts](catalog/image-search/)
 
 ## Prior work and reproduction
 
-The [NEA identity study](../nea-pair-search/README.md) established station holdouts and archival checks. The [Borisov encounter study](../borisov-704021/README.md) supplies orbit constants and an example of testing predicted image positions. The [Rubin binary study](../rubin-jr80-mutual-motion/README.md) documents public Rubin alert cutouts. This search covers different observations and hypotheses. See [the repository's inclusion criteria](../../docs/REMARKABLE_FINDINGS.md).
+The [Borisov encounter study](../borisov-704021/README.md) supplied the starting propagation conventions, the [NEA identity study](../nea-pair-search/README.md) established station holdouts, and the [Rubin binary study](../rubin-jr80-mutual-motion/README.md) documented the status of public Rubin alert cutouts. The results here use different observations or test different hypotheses. The subdirectories provide the scripts, frozen inputs or their hashes, query receipts and controls.
 
-The result subdirectories contain the scripts, input hashes and machine-readable evidence. Archive inputs change over time. Compare their hashes and dates before comparing separate runs.
+This research uses data and services from the IAU Minor Planet Center, NASA/JPL, CODE, Pan-STARRS, ZTF, the Asteroid Institute and other archives credited in each analysis. [Repository inclusion criteria](../../docs/REMARKABLE_FINDINGS.md)
