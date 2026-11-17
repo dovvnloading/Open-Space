@@ -1,0 +1,65 @@
+{
+  "seip": {
+    "query": "SELECT objid,ra,dec,i1_f_ap1,i1_df_ap1,i2_f_ap1,i2_df_ap1,i3_f_ap1,i4_f_ap1,m1_f_psf,m1_df_psf,m1_f_psf_bf,m1_df_psf_bf,m1_f_psf_3siglim,nbands FROM slphotdr4 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',352.193797,5.246759,0.00139))",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+objid%2Cra%2Cdec%2Ci1_f_ap1%2Ci1_df_ap1%2Ci2_f_ap1%2Ci2_df_ap1%2Ci3_f_ap1%2Ci4_f_ap1%2Cm1_f_psf%2Cm1_df_psf%2Cm1_f_psf_bf%2Cm1_df_psf_bf%2Cm1_f_psf_3siglim%2Cnbands+FROM+slphotdr4+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C352.193797%2C5.246759%2C0.00139%29%29",
+    "started_utc": "2026-11-17T07:20:01.555030+00:00",
+    "http_status": 200,
+    "content_type": "text/csv",
+    "bytes": 260,
+    "sha256": "af604c91d5c9831c752fabf81674a7848ca38988d0d99ef939fc55b4e9450ddc"
+  },
+  "twomass": {
+    "query": "SELECT designation,ra,dec,j_m,h_m,k_m,ph_qual FROM fp_psc WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',352.193797,5.246759,0.00139))",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+designation%2Cra%2Cdec%2Cj_m%2Ch_m%2Ck_m%2Cph_qual+FROM+fp_psc+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C352.193797%2C5.246759%2C0.00139%29%29",
+    "started_utc": "2026-11-17T07:20:01.556483+00:00",
+    "http_status": 200,
+    "content_type": "text/csv",
+    "bytes": 39,
+    "sha256": "f16841f29ed5dd6b6981d76a780cf7ba0fbe83d317e98f4097f9933fa1d597a7"
+  },
+  "catwise": {
+    "query": "SELECT source_name,ra,dec,w1mpro,w2mpro FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',352.193797,5.246759,0.00139))",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_name%2Cra%2Cdec%2Cw1mpro%2Cw2mpro+FROM+catwise_2020+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C352.193797%2C5.246759%2C0.00139%29%29",
+    "started_utc": "2026-11-17T07:20:01.557135+00:00",
+    "http_status": 200,
+    "content_type": "text/csv",
+    "bytes": 33,
+    "sha256": "9e6aabac804db9d1323e8f1febf09176e8879dfe5d57d84e45973c1f2b51a169"
+  },
+  "mips_control": {
+    "query": "SELECT objid,ra,dec,m1_f_psf,m1_df_psf,m1_fluxflag FROM slphotdr4 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',53.12,-27.8,0.06)) AND m1_f_psf >= 80 AND m1_fluxflag=0",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+objid%2Cra%2Cdec%2Cm1_f_psf%2Cm1_df_psf%2Cm1_fluxflag+FROM+slphotdr4+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C53.12%2C-27.8%2C0.06%29%29+AND+m1_f_psf+%3E%3D+80+AND+m1_fluxflag%3D0",
+    "started_utc": "2026-11-17T07:20:01.558401+00:00",
+    "http_status": 200,
+    "content_type": "text/csv",
+    "bytes": 10754,
+    "sha256": "ec89f38828f82a4282e943795bc7278e2b13ca031e3bd0ffaef3b2b07e25b5c1"
+  },
+  "gaia_control": {
+    "query": "SELECT COUNT(*) AS n FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',352.1956,5.2465,0.1)) AND phot_g_mean_mag IS NOT NULL",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+COUNT%28%2A%29+AS+n+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C352.1956%2C5.2465%2C0.1%29%29+AND+phot_g_mean_mag+IS+NOT+NULL",
+    "started_utc": "2026-11-17T07:20:21.584542+00:00",
+    "http_status": 200,
+    "content_type": "text/csv",
+    "bytes": 6,
+    "sha256": "f7fdd57f46ec188070ddb0ec109933ca5150278c7409df5a598cf70e70ae722e"
+  },
+  "gaia": {
+    "query": "SELECT source_id,ra,dec,parallax,parallax_error,pmra,pmra_error,pmdec,pmdec_error,phot_g_mean_mag,astrometric_params_solved,ruwe\nFROM gaiadr3.gaia_source\nWHERE 1=CONTAINS(POINT('ICRS',ra,dec), CIRCLE('ICRS',352.19561,5.24648,0.012))",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cparallax%2Cparallax_error%2Cpmra%2Cpmra_error%2Cpmdec%2Cpmdec_error%2Cphot_g_mean_mag%2Castrometric_params_solved%2Cruwe%0AFROM+gaiadr3.gaia_source%0AWHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C352.19561%2C5.24648%2C0.012%29%29",
+    "started_utc": "2026-11-17T07:20:21.587516+00:00",
+    "http_status": 200,
+    "content_type": "text/csv",
+    "bytes": 802,
+    "sha256": "f1236a47a6db1adb2025a3865f56ac8d8a9d7080a77b361f1f6dceb6070af956"
+  },
+  "confirmed_planets": {
+    "query": "SELECT DISTINCT hostname,pl_name FROM ps WHERE gaia_dr3_id='Gaia DR3 2660358032257156736' OR hostname IN ('G 29-38','G29-38','WD 2326+049','ZZ Psc')",
+    "url": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+DISTINCT+hostname%2Cpl_name+FROM+ps+WHERE+gaia_dr3_id%3D%27Gaia+DR3+2660358032257156736%27+OR+hostname+IN+%28%27G+29-38%27%2C%27G29-38%27%2C%27WD+2326%2B049%27%2C%27ZZ+Psc%27%29",
+    "started_utc": "2026-11-17T07:20:21.588234+00:00",
+    "http_status": 200,
+    "content_type": "text/plain",
+    "bytes": 17,
+    "sha256": "8f95419e6a50edc3273f46bedada85f8171a1149f139c5c7e536233815d81fbe"
+  }
+}

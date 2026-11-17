@@ -61,14 +61,18 @@ def fill(image):
     return image[tuple(idx)]
 
 
+from standard_photometry import band_jy
+
+
 def offaxis_psf(paths):
-    # Normalize by the flux inside 30 px per dither before cropping the PSF.
-    # 30 px corresponds to 1.88 arcsec. Lost wings are a calibration systematic.
+    # Use total incident CALSPEC flux. The template includes the measured
+    # off-axis response; the trial map is relative to that same clear substrate.
     stamps = []
     growth = []
     y, x = np.indices((320, 320))
     for path in sorted(paths):
-        image = fill(median(cube(path)[0], axis=0))
+        data, header, _ = cube(path)
+        image = fill(median(data, axis=0))
         iy, ix = np.unravel_index(image.argmax(), image.shape)
         core = image[iy - 1 : iy + 2, ix - 1 : ix + 2]
         cy, cx = ndi.center_of_mass(core - np.min(core))
@@ -78,12 +82,23 @@ def offaxis_psf(paths):
         background = median(image[(rad >= 35) & (rad < 43)])
         image -= background
         flux = image[rad < 30].sum()
-        growth.append(float(image[rad < 25].sum() / flux))
+        standard_jy = band_jy(
+            path.parent / "g191b2b_mod_012.fits", path.parent / "F444W.vot"
+        )
+        total_units = standard_jy / (header["PIXAR_SR"] * 1e6)
+        growth.append(
+            dict(
+                filename=path.name,
+                model_jy=standard_jy,
+                aperture30_over_model=float(flux / total_units),
+                aperture25_over_aperture30=float(image[rad < 25].sum() / flux),
+            )
+        )
         cen = 18
         stamp = ndi.map_coordinates(
             image, [y[:37, :37] + cy - cen, x[:37, :37] + cx - cen], order=3
         )
-        stamps.append(stamp / flux)
+        stamps.append(stamp / total_units)
     return median(stamps, axis=0), growth
 
 
@@ -312,7 +327,7 @@ def main():
     ]
     standards = sorted(args.inputs.glob(CALIBRATOR + "*long_calints.fits"))
     assert len(refs) == nref and len(standards) == 5
-    detection_psf, _ = offaxis_psf(standards[:2])
+    detection_psf, detection_cal = offaxis_psf(standards[:2])
     psf, growth = offaxis_psf(standards[2:])
     kernel = detection_psf[14:23, 14:23]
     cd = np.array(
@@ -426,7 +441,7 @@ def main():
         min_transmission_relative=float(
             np.min(trans[(radius >= INNER) & (radius < OUTER)])
         ),
-        calibration_growth_25px_over_30px=growth,
+        flux_calibration=detection_cal + growth,
         n_injections=len(trial),
         center_xy0=center.tolist(),
         cal_ver=primary.get("CAL_VER"),
