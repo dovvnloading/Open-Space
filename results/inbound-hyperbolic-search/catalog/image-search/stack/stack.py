@@ -225,14 +225,16 @@ def scan(frames, science=False):
             "frame_flux_sigmas":sig.tolist(),"nominal_frame_snr":((samples[:,0,center]-median)/sig).tolist()}
 
 
-def main(folder,science=False):
+def main(folder,science=False,quality=False):
     dataset=json.loads((folder/"archive-results.json").read_text())
     rows=dataset["ztf"]["ztf_nominal_footprints"]
     # The first catalogued night serves as a blind pipeline positive control.
     rows=[r for r in rows if r["filefracday"][:8]<="20251029"]
     if science:
         rows=[r for r in rows if r["filefracday"][:8] in ("20251018","20251025","20251029")]
-    out=folder/("science-pairs" if science else "stack")
+    if quality:
+        rows=[r for r in dataset["ztf"]["ztf_nominal_footprints"] if r["filefracday"][:8]=="20251027"]
+    out=folder/(("quality-science" if science else "quality-difference") if quality else ("science-pairs" if science else "stack"))
     out.mkdir(exist_ok=True)
     receipts,errors,frames=[],[],[]
     for r in rows:
@@ -253,6 +255,10 @@ def main(folder,science=False):
         try:
             if len(group)<2:
                 raise ValueError("Insufficient images to check motion")
+            if quality:
+                group=[f for f in group if f["infobits"] is not None and int(f["infobits"])<33554432]
+                if len(group)<2:
+                    raise ValueError("Insufficient frames after applying ZTF INFOBITS bit 25 cut")
             result[date]=scan(group,science)
         except Exception as exc:
             result[date]={"error":str(exc)}
@@ -267,5 +273,6 @@ if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("folder",type=Path)
     p.add_argument("--science-pairs",action="store_true",help="Subtract local sky measured in the other science exposures")
+    p.add_argument("--quality-oct27",action="store_true",help="Restrict to the Oct 27 night and exclude bad-quality quadrants")
     args=p.parse_args()
-    main(args.folder,args.science_pairs)
+    main(args.folder,args.science_pairs,args.quality_oct27)
