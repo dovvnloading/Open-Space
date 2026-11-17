@@ -1,0 +1,7 @@
+{
+  "query": "SELECT source_id,ra,dec,pmra,pmdec,parallax,phot_g_mean_mag FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',257.8632000000,-14.7999000000,0.0125))",
+  "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cpmra%2Cpmdec%2Cparallax%2Cphot_g_mean_mag+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C257.8632000000%2C-14.7999000000%2C0.0125%29%29",
+  "response_sha256": "5c856dadbc3be13738022243a3adde3299a2309d4fd2131ba4acdd9f59af9633",
+  "http_status": 200,
+  "retrieved_utc": "2026-11-17T08:29:16.286883+00:00"
+}

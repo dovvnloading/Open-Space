@@ -94,8 +94,13 @@ def main(cache,out):
     out.mkdir(exist_ok=True,parents=True)
     fetch_inputs(cache,False)
     rows=json.loads((HERE/'inputs.json').read_text())
+    analyze(cache, out, rows, [('F2100W', .685), ('F2550W', .83)])
+
+def analyze(cache, out, rows, bands):
+    """Search each band using its science mosaic followed by two standard-star epochs."""
+    out.mkdir(exist_ok=True, parents=True)
     metadata=[]; curves=[]; trials=[]; detections=[]; checks=[]
-    for band, fwhm_as in [('F2100W',.685),('F2550W',.83)]:
+    for band, fwhm_as in bands:
         rr=[r for r in rows if r['filters']==band]
         s=prepare(cache/rr[0]['filename'])
         std=[prepare(cache/r['filename']) for r in rr[1:]]
@@ -113,7 +118,7 @@ def main(cache,out):
         scale=s['scale']; fwhm=fwhm_as/scale
         metadata.append(dict(filter=band,mjd=s['mjd'],x=s['x'],y=s['y'],scale_arcsec=scale,core_weight_fraction=s['coreweight'],
                              host_core_flux_mJy=flux*s['solid']*1e9,host_core_radius_arcsec=CUT*scale,
-                             gaussian_sigma_pix=s['gaussian_sigma'],effexptm_s=s['time'],fit_ref_target='BD+60-1753'))
+                             gaussian_sigma_pix=s['gaussian_sigma'],effexptm_s=s['time'],fit_ref_target=rr[1]['target_name']))
         rawpeaks=[]
         for lo,hi in zip(EDGES,EDGES[1:]):
             reg=(R*scale>=lo)&(R*scale<hi)
