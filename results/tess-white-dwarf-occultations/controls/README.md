@@ -26,3 +26,15 @@ Run from this controls directory, with its parent on PYTHONPATH for the shared r
 4. Run 'python control_pixels.py control_results.json . cache control_pixel_results.json --pixel-tools ../../tess-asymmetric-dips/pixels.py'.
 
 The supplied inventory freezes the sector, TIC and product selection. Rerunning its first command updates archive timestamps and listing hashes. The committed Gaia cone replies preserve the measured field. The output retains the full difference matrices, fitted offsets, bootstrap results, two extraction results and input hashes.
+
+## WD 1856 b in custom short-cadence apertures
+
+The planet's published clock ranked first in blind searches of both Sector 86 target-pixel files after a noise-based small-aperture selection. In 20-second pixels the period was 1.40794276 d with 11 supported events and a midpoint phase offset of 0.22 minutes from the literature. In 120-second pixels it was 1.40793894 d with 10 supported events and a 0.005-minute offset. A fixed 1.5-pixel-radius aperture on each stamp missed the clock. These simultaneous reductions test the pipeline on a known positive control and carry no survey occurrence weight. [Blind results, input hashes and selected pixel coordinates](planet_target_pixel_results.json)
+
+The short-cadence FLUX pixels already have SPOC background subtraction. A propagated Gaia coordinate sets the target location in each product's aperture WCS. Each alternative aperture sums a subset of pixels within two pixels of the predicted position. The subset maximizes expected target signal divided by the quadrature sum of pixel uncertainties, using a 0.85-pixel-width Gaussian integrated over each pixel and the median archived pixel variances on every 100th quality-zero exposure. The selection uses no ephemeris or in-transit flux. The five-pixel fast aperture returned a 7.14% observed box depth and the six-pixel two-minute aperture returned 4.72%. Neighbour models give nominal WD-light fractions of 7.88% and 5.13%, respectively. Varying the Gaussian width from 0.65 to 1.05 pixels spans 3.41–26.34% and 2.53–15.45%, respectively. Blending limits interpretation of the depth. The known planet remains outside the survey crowding cut.
+
+Run from the parent result directory with the same Python dependencies as the primary survey.
+
+```sh
+PYTHONPATH=. python controls/planet_target_pixels.py controls/control_inventory.json controls/control-gaia-267574918.tsv cache controls/planet_target_pixel_results.json
+```
