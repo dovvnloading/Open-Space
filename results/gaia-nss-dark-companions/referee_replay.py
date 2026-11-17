@@ -145,6 +145,15 @@ def verify_receipts():
             if z:z.close()
     assert stats["lamost"]["returned_rows"]==load_json(ROOT/"lamost/depth.json")["returned_rows"]
     assert stats["extension/lamost"]["returned_rows"]==load_json(ROOT/"extension/lamost/depth.json")["returned_rows"]
+    simbad=load_json(ROOT/"orbit/lead_simbad_receipt.json")
+    raw=ROOT/"orbit/lead_simbad.csv"
+    check_hash(raw,simbad["sha256"])
+    matches=read_csv(raw)
+    exact_ids={r["id"].removeprefix("Gaia DR3 ") for r in matches}
+    assert len(matches)==simbad["returned_matches"]==23
+    assert exact_ids==set(simbad["requested_source_ids"])
+    assert simbad["unmatched_exact_ids"]==[]
+    print("SIMBAD exact-ID query: 23/23 matches, raw SHA-256 verified")
     print("LAMOST original/extension compressed server replies verified:",stats)
     return stats
 
