@@ -88,6 +88,15 @@ def observations(obj, eph):
     utc=np.asarray(jd)
     tai=erfa.utctai(2400000.5,utc-2400000.5)
     tt=erfa.taitt(*tai)
+    # The 1877 catalogue dates approximate UT1. UTC leap seconds did not exist.
+    # Espenak & Meeus 1860–1900 delta-T polynomial (year since 1860).
+    historical=(utc>=2400410.5) & (utc<2415020.5)
+    if np.any(historical):
+        yy,mm,dd,frac=erfa.jd2cal(2400000.5,utc[historical]-2400000.5)
+        y=yy+(mm-.5)/12-1860
+        delta=7.62+.5737*y-.251754*y**2+.01680668*y**3-.0004473624*y**4+y**5/233174
+        tt=(np.full_like(utc,2400000.5),np.where(historical,utc-2400000.5,tt[0]+tt[1]-2400000.5))
+        tt[1][historical]+=delta/DAY
     tdb=tt[0]+tt[1]  # TT-TDB <2 ms
     rot=erfa.c2t06a(*tt,np.full_like(utc,2400000.5),utc-2400000.5,0.,0.)
     geoc=np.einsum("nji,nj->ni",rot,geoc)
@@ -365,18 +374,23 @@ def run():
                     models.append("radial_r2")
                 if obj=="2025-V1":
                     models.extend(["marsden_signed","marsden_outward"])
+                if obj=="1877-G2":
+                    models.extend(["gravity_2as","gravity_10as"])
                 gravity_seed=initial
                 for kind in models:
                     try:
+                        scale={"gravity_2as":.4,"gravity_10as":2.}.get(kind,1.)
+                        weights=sig*scale
                         nng=2 if kind.startswith("marsden") else int(kind=="radial_r2")
                         state=np.r_[gravity_seed,np.zeros(nng)]
                         x,cov,mask,res,redchi,predict=fit(
-                            state,epoch,t,stations_,east,north,sig,pos,
+                            state,epoch,t,stations_,east,north,weights,pos,
                             outward=kind=="marsden_outward",return_predictor=True)
                         if kind=="gravity":
                             gravity_seed=x.copy()
                         summary={"epoch_jd_tdb":epoch,"state_ssb_icrf":x.tolist(),"covariance":cov.tolist(),
-                                 "used":int(mask.sum()),"omitted_by_clipping":int((~mask).sum()),
+                                 "used":int(mask.sum()),"used_indices_in_supported_records":np.flatnonzero(mask).tolist() if obj in ("1877-G2","2008-J4") else None,
+                                 "omitted_by_clipping":int((~mask).sum()),
                                  "rms_per_coordinate_as":float(np.sqrt(np.mean(res[mask]**2))),
                                  "weighted_reduced_chi2":float(redchi),
                                  "boundaries":inbound(obj,x,cov,epoch,eph)}
