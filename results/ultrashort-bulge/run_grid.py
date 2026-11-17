@@ -60,13 +60,13 @@ def read_curve(job):
         return t,-df,e,g,True
     with np.load(path) as inp:
         t,f,e=inp['data'].T
-    return t,f,e,np.zeros(len(t),int),True
+    return t,f,e,np.zeros(len(t),int),not name.startswith('Gaia')
 
 
 def work(job):
     name,path,t0,te=job
     try:
-        year=int(next(part for part in name.split('-') if part.isdigit() and len(part)==4))
+        year=(2000+int(name[4:6]) if name.startswith('Gaia') else int(name.split('-')[1]))
         t,f,e,g,diff=read_curve(job)
         res=fit.screen(t,f,e,g,t0,te,year,diff)
         return dict(event=name,status='ok',**res)

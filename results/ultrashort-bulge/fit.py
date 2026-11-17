@@ -61,10 +61,19 @@ def setup():
 
 def clean(t, f, e, g):
     t, f, e, g = map(np.asarray, (t, f, e, g))
-    keep = np.isfinite(t) & np.isfinite(f) & np.isfinite(e) & (e>0)
+    keep = (t > 2450000) & (t < 2470000) & np.isfinite(t) & np.isfinite(f) & np.isfinite(e) & (e>0)
     ii = np.where(keep)[0]
     ii = ii[np.argsort(t[ii], kind='stable')]
     return t[ii], f[ii], e[ii], np.unique(g[ii], return_inverse=True)[1]
+
+
+def reported_error_floor(e, g):
+    """Protect difference-image fits against near-zero reported uncertainties."""
+    e = e.copy()
+    for stream in np.unique(g):
+        mask = g == stream
+        e[mask] = np.maximum(e[mask], 0.15*np.median(e[mask]))
+    return e
 
 
 def axes(t, f, e, g, t0, te, season):
@@ -99,6 +108,8 @@ def axes(t, f, e, g, t0, te, season):
 
 def screen(t, f, e, g, t0=np.nan, te=np.nan, year=2025, difference=False):
     t,f,e,g = clean(t,f,e,g)
+    if difference:
+        e=reported_error_floor(e,g)
     if len(t)<6:
         raise ValueError('fewer than six usable epochs')
     season_start = 2458849.5 + (np.datetime64(f'{year}-01-01')-np.datetime64('2020-01-01')).astype(int)
