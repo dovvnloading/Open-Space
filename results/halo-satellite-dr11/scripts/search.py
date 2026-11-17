@@ -1,12 +1,15 @@
 """Blind resolved-population search and family-wise permutation calibration."""
 from pathlib import Path
 import json
+import os
 import numpy as np
 import pandas as pd
 from scipy import fft, ndimage
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'measurement'
+OUT = Path(os.environ.get('HALO_REPLAY_OUTPUT', ''))
+if not os.environ.get('HALO_REPLAY_OUTPUT') or not OUT.is_absolute() or OUT.resolve() != (ROOT / 'measurement').resolve() or not os.environ.get('HALO_REPLAY_ISOLATED'):
+    raise RuntimeError('Use run_guarded.py with a fresh isolated output directory')
 STEP = 1.5 / 60
 RADII = np.array([3., 6., 12.])
 DM = np.arange(16., 23.01, .5)
