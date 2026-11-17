@@ -14,6 +14,8 @@ def authorize(manifest, authorization, expected_manifest, expected_authorization
     if Path(output).exists(): raise ValueError('output already exists')
     if m['python']!=sys.version.split()[0]: raise ValueError('python version mismatch')
     if digest(__file__)!=m['code_sha256']: raise ValueError('code mutation')
+    expected=('PUNCH_L2_CTM_20261101000029_v0l.fits','PUNCH_L2_CTM_20261101000829_v0l.fits')
+    if tuple(r['name'] for r in m['inputs']) != expected: raise ValueError('unexpected fixed input names')
     for path, row in zip(input_paths,m['inputs']):
         if Path(path).name!=row['name'] or digest(path)!=row['sha256']: raise ValueError('input mismatch')
     if len(m['inputs'])!=2: raise ValueError('invalid manifest input count')
@@ -38,7 +40,9 @@ def characterize(paths):
 
 def main():
     p=argparse.ArgumentParser(); p.add_argument('--manifest',required=True); p.add_argument('--manifest-sha256',required=True); p.add_argument('--authorization',required=True); p.add_argument('--authorization-sha256',required=True); p.add_argument('--input',nargs=2,required=True); p.add_argument('--output',required=True); args=p.parse_args()
-    authorize(args.manifest,args.authorization,args.manifest_sha256,args.authorization_sha256,args.input,args.output)
+    m=authorize(args.manifest,args.authorization,args.manifest_sha256,args.authorization_sha256,args.input,args.output)
+    import numpy, astropy
+    if numpy.__version__!=m['numpy'] or astropy.__version__!=m['astropy']: raise ValueError('dependency version mismatch')
     result=characterize(args.input)
     with open(args.output,'x',encoding='utf-8',newline='\n') as f: json.dump(result,f,indent=2,allow_nan=False); f.write('\n')
 if __name__=='__main__': main()
