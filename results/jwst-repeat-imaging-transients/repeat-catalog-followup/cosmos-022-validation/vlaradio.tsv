@@ -1,0 +1,58 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-17T04:42:42 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-17T04:42:42	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F602%2FA1&-c=150.122033+%2B2.323386208&-c.rs=100&-out.add=_r&-sort=_r&-out.max=8	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=150.122033+02.323386,rs=100.	
+#Constraint -out.max=8
+
+#RESOURCE=yCat_36020001
+#Name: J/A+A/602/A1
+#Title: VLA-COSMOS 3 GHz Large Project (Smolcic+, 2017)
+#INFO	ivoid=ivo://cds.vizier/j/a+a/602/a1	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/a+a/602/a1	    IVOID of underlying data collection
+#INFO	creator=Smolcic V.	    First author or institution
+#INFO	cites=bibcode:2017A&A...602A...1S	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2017	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/602/A1	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.36020001	    Dataset identifier that can be used for citation
+#INFO	publication_date=2017-07-03	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_A_A_602_A1_table1:
+#Name: J/A+A/602/A1/table1
+#Title: VLA-COSMOS 3GHz radio catalog
+#Column	_r	(F7.3)	Distance from center (150.122033+02.323386)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	ID	(I5)	Numerical ID of the source (1)	[ucd=meta.id]
+#Column	COSMOSVLA3	(A19)	COSMOSVLA3 name (JHHMMSS.ss+DDMMSS.s)	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F10.6)	Right ascension (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	e_RAJ2000	(F6.3)	? Positional error in RAdeg (4)	[ucd=stat.error;pos.eq.ra]
+#Column	DEJ2000	(F10.6)	Declination (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	e_DEJ2000	(F6.3)	? Positional error in DEdeg (4)	[ucd=stat.error;pos.eq.dec]
+#Column	Flux	(F7.1)	Total integrated flux density at 3GHz (2)	[ucd=phot.flux.density;em.radio.1500-3000MHz]
+#Column	e_Flux	(F5.1)	? Error on the total integrated flux density	[ucd=stat.error;phot.flux]
+#Column	rms	(F5.2)	Local rms noise at the source position	[ucd=stat.stdev;instr.det.noise]
+#Column	SNR	(F7.2)	? Signal-to-noise ratio (S/N) (5)	[ucd=stat.snr]
+#Column	Npix	(I5)	Number of pixels used for flux integration (3)	[ucd=meta.number]
+#Column	Res	(I1)	[0/1] Resolved flag (1 for yes)	[ucd=meta.code.error]
+#Column	Multi	(I1)	[0/1] Multi-component flag (1 for yes)	[ucd=meta.code]
+_r	ID	COSMOSVLA3	RAJ2000	e_RAJ2000	DEJ2000	e_DEJ2000	Flux	e_Flux	rms	SNR	Npix	Res	Multi
+arcsec	 	 	deg	arcsec	deg	arcsec	uJy	uJy	uJy/beam	 	 	 	
+-------	-----	-------------------	----------	------	----------	------	-------	-----	-----	-------	-----	-	-
+ 11.481	 2196	J100028.56+021928.0	150.119032	 0.036	+02.324472	 0.036	   34.0	  2.8	 2.18	  15.60	   35	0	0
+ 26.115	 2353	J100027.62+021916.5	150.115093	 0.037	+02.321256	 0.037	   37.4	  2.9	 2.18	  14.90	   34	1	0
+ 28.818	 9177	J100028.19+021947.8	150.117467	 0.096	+02.329964	 0.096	   12.4	  2.3	 2.21	   5.60	   16	0	0
+ 35.998	 5227	J100031.02+021859.2	150.129257	 0.066	+02.316466	 0.066	   35.7	  2.9	 2.25	   8.17	   40	1	0
+ 61.093	10598	J100025.25+021933.1	150.105231	 0.100	+02.325866	 0.100	   11.7	  2.3	 2.26	   5.18	   13	0	0
+ 64.473	 3393	J100029.22+022028.6	150.121752	 0.048	+02.341293	 0.048	   26.5	  2.7	 2.33	  11.40	   29	0	0
+ 68.990	 2074	J100033.89+021922.8	150.141209	 0.034	+02.323001	 0.034	   36.2	  2.9	 2.19	  16.60	   26	0	0
+ 70.901	 2256	J100025.29+021846.1	150.105394	 0.036	+02.312828	 0.036	   34.7	  2.9	 2.27	  15.30	   31	0	0
+

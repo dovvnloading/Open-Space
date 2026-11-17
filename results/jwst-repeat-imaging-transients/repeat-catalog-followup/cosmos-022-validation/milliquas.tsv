@@ -1,0 +1,54 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-17T04:42:42 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-17T04:42:42	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=VII%2F294&-c=150.122033+%2B2.323386208&-c.rs=100&-out.add=_r&-sort=_r&-out.max=8	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=150.122033+02.323386,rs=100.	
+#Constraint -out.max=8
+
+#RESOURCE=yCat_7294
+#Name: VII/294
+#Title: The Million Quasars (Milliquas) catalogue, version 8 (Flesch, 2023)
+#INFO	ivoid=ivo://cds.vizier/vii/294	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/vii/294	    IVOID of underlying data collection
+#INFO	creator=Flesch E.W	    First author or institution
+#INFO	cites=bibcode:2023OJAp....6E..49F	    Article or Data origin sources
+#INFO	journal=OJAp	    Journal name
+#INFO	original_date=2023	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/VII/294	    Dataset landing page
+#INFO	publication_date=2024-02-12	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	VII_294_catalog:
+#Name: VII/294/catalog
+#Title: The catalogue (v8), 30-Jul-2023
+#Column	_r	(F7.3)	Distance from center (150.1220330+02.3233862)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	RAJ2000	(F11.7)	Right ascension (J2000) (1)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F11.7)	Declination (J2000) (1)	[ucd=pos.eq.dec;meta.main]
+#Column	Name	(A25)	ID from the literature, or J2000 (2)	[ucd=meta.id;meta.main]
+#Column	Type	(A4)	Classification of object, and associations (3)	[ucd=meta.code.class;src.class]
+#Column	Rmag	(F5.2)	? Red optical magnitude (4)	[ucd=phot.mag;em.opt.R]
+#Column	Bmag	(F5.2)	? Blue optical magnitude (4)	[ucd=phot.mag;em.opt.B]
+#Column	Comment	(A3)	Comment on optical object (5)	[ucd=meta.note;spect.dopplerVeloc.opt]
+#Column	R	(A1)	[1nx-] Red optical PSF class (6)	[ucd=src.class.starGalaxy]
+#Column	B	(A1)	[1nx-] Blue optical PSF class (6)	[ucd=src.class.starGalaxy]
+#Column	z	(F6.3)	? Redshift from the literature or estimated (7)	[ucd=src.redshift]
+#Column	rName	(A6)	Citation for name (8)	[ucd=meta.bib]
+#Column	rz	(A6)	Citation for redshift (8)	[ucd=meta.bib]
+#Column	XName	(A22)	X-ray ID, if any (9)	[ucd=meta.id.assoc]
+#Column	RName	(A22)	Radio ID, if any (9)	[ucd=meta.id.assoc]
+#Column	Lobe1	(A22)	Radio lobe ID or extra R/X ID, if any (9)	[ucd=meta.id.assoc]
+#Column	Lobe2	(A22)	Radio lobe ID or extra R/X ID, if any (9)	[ucd=meta.id.assoc]
+_r	RAJ2000	DEJ2000	Name	Type	Rmag	Bmag	Comment	R	B	z	rName	rz	XName	RName	Lobe1	Lobe2
+arcsec	deg	deg	 	 	mag	mag	 	 	 	 	 	 	 	 	 	
+-------	-----------	-----------	-------------------------	----	-----	-----	---	-	-	------	------	------	----------------------	----------------------	----------------------	----------------------
+ 82.488	150.1330400	+02.3032850	XMMC_150.13303+2.30324   	QX  	24.03	     	   	n	x	 1.598	0272  	0272  	CXOG J100031.9+021811 	                      	2XMM J100031.9+021811 	
+ 99.298	150.1195525	+02.2959150	COSM J10004+0217         	NX  	23.10	     	i  	n	x	 1.039	1885  	1885  	CXOG J100028.6+021744 	                      	4XMM J100028.6+021744 	
+
