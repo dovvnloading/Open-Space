@@ -1,5 +1,8 @@
 """Measure WISE counterparts and per-visit statistics from the archived CSVs."""
+import argparse
 import csv
+import hashlib
+from pathlib import Path
 import gzip
 import io
 import itertools
@@ -9,13 +12,17 @@ from statistics import median
 from fetch import ROOT, TABLES, position, separation, targets
 
 
-def read(target, kind):
-    raw = (ROOT/'archive'/(target['label']+'_'+kind+'.csv.gz')).read_bytes()
-    return list(csv.DictReader(io.StringIO(gzip.decompress(raw).decode())))
+def read(target, kind, archive):
+    key=target['label']+'_'+kind
+    raw=gzip.decompress((archive/(key+'.csv.gz')).read_bytes())
+    rec=json.loads((archive/(key+'.json')).read_text(encoding='utf-8'))
+    if len(raw)!=rec['bytes'] or hashlib.sha256(raw).hexdigest()!=rec['sha256']:
+        raise ValueError(f'Archived response mismatch: {key}')
+    return list(csv.DictReader(io.StringIO(raw.decode('utf-8-sig'))))
 
 
-def write(name, rows, fields=None):
-    with (ROOT/name).open('w', newline='') as f:
+def write(output, name, rows, fields=None):
+    with (output/name).open('x', newline='', encoding='utf-8') as f:
         w = csv.DictWriter(f, fields or list(rows[0]), lineterminator='\n')
         w.writeheader()
         w.writerows(rows)
@@ -33,10 +40,10 @@ def arc(row, target, kind):
     return angular_distance(row,target,epoch)
 
 
-def summarize_catalogs(target):
+def summarize_catalogs(target,archive):
     fields=dict(label=target['label'],gaia_source_id=target['source_id'])
     for kind in ('catwise','unwise','allwise'):
-        rows=read(target,kind)
+        rows=read(target,kind,archive)
         ranked=sorted(rows,key=lambda r:arc(r,target,kind))
         pref=kind+'_'
         fields[pref+'neighbors_12arcsec']=len(rows)
@@ -63,9 +70,9 @@ def summarize_catalogs(target):
     return fields
 
 
-def single_exposures(target, band):
+def single_exposures(target, band,archive):
     selected={}
-    for r in read(target,'neo'):
+    for r in read(target,'neo',archive):
         mjd=float(r['mjd'])
         epoch=2000+(mjd-51544.5)/365.25
         sep=angular_distance(r,target,epoch)
@@ -84,9 +91,9 @@ def single_exposures(target, band):
     return sorted(selected.values(),key=lambda p:p[1])
 
 
-def summarize_visits(target,band):
+def summarize_visits(target,band,archive):
     visits=[]
-    for _,mjd,mag,err in single_exposures(target,band):
+    for _,mjd,mag,err in single_exposures(target,band,archive):
         if not visits or mjd-visits[-1][-1][0]>20:
             visits.append([])
         visits[-1].append((mjd,mag,err))
@@ -99,12 +106,16 @@ def summarize_visits(target,band):
         yield dict(label=target['label'],band='W'+str(band),mjd_start=round(visit[0][0],5),mjd_end=round(visit[-1][0],5),n=len(visit),median_mag=round(center,4),scaled_mad_mag=round(scatter,4),stat_err_mag=round(stat,4))
 
 
-def main():
+def main(archive,output):
+    archive=Path(archive);output=Path(output)
+    if not archive.is_dir():raise ValueError('archive directory missing')
+    if output.exists():raise FileExistsError('derived output directory must be new')
+    output.mkdir(parents=True)
     cats=[]; visits=[]; tests=[]
     for t in targets():
-        cats.append(summarize_catalogs(t))
+        cats.append(summarize_catalogs(t,archive))
         for b in (1,2):
-            v=list(summarize_visits(t,b))
+            v=list(summarize_visits(t,b,archive))
             visits.extend(v)
             usable=[r for r in v if r['n']>=3]
             diffs=[]
@@ -113,13 +124,17 @@ def main():
                 sigma=math.hypot(a['stat_err_mag'],c['stat_err_mag'],(0.02,0.06)[b-1])
                 diffs.append((abs(diff)/sigma,diff,sigma))
             score,d,s=max(diffs) if diffs else ('','','')
-            tests.append(dict(label=t['label'],band=f'W{b}',raw_neighbors=len(read(t,'neo')),n_kept=sum(r['n'] for r in v),visits_ge3=len(usable),signed_later_minus_earlier_mag=round(d,4) if diffs else '',difference_error_incl_floor=round(s,4) if diffs else '',max_pair_score=round(score,2) if diffs else ''))
-    write('catalog_photometry.csv',cats)
-    write('visits.csv',visits,['label','band','mjd_start','mjd_end','n','median_mag','scaled_mad_mag','stat_err_mag'])
-    write('variability.csv',tests)
-    recs={p.stem:json.loads(p.read_text()) for p in sorted((ROOT/'archive').glob('*.json'))}
-    (ROOT/'queries.json').write_text(json.dumps(recs,indent=2,sort_keys=True)+'\n')
+            tests.append(dict(label=t['label'],band=f'W{b}',raw_neighbors=len(read(t,'neo',archive)),n_kept=sum(r['n'] for r in v),visits_ge3=len(usable),signed_later_minus_earlier_mag=round(d,4) if diffs else '',difference_error_incl_floor=round(s,4) if diffs else '',max_pair_score=round(score,2) if diffs else ''))
+    write(output,'catalog_photometry.csv',cats)
+    write(output,'visits.csv',visits,['label','band','mjd_start','mjd_end','n','median_mag','scaled_mad_mag','stat_err_mag'])
+    write(output,'variability.csv',tests)
+    recs={p.stem:json.loads(p.read_text()) for p in sorted(archive.glob('*.json'))}
+    (output/'queries.json').write_text(json.dumps(recs,indent=2,sort_keys=True)+'\n')
 
 
 if __name__=='__main__':
-    main()
+    ap=argparse.ArgumentParser()
+    ap.add_argument('--archive',type=Path,required=True)
+    ap.add_argument('--output',type=Path,required=True)
+    args=ap.parse_args()
+    main(args.archive,args.output)

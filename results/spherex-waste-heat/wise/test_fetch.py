@@ -44,4 +44,22 @@ class CacheTest(unittest.TestCase):
         p=self.p/'A_allwise.error.json';before=p.read_bytes()
         with self.assertRaises(ValueError):m.fetch('allwise',T,self.p)
         self.assertEqual(before,p.read_bytes())
+    def test_fetch_to_measure_workflow(self):
+        import sys
+        sys.modules['fetch']=m
+        spec2=importlib.util.spec_from_file_location('wise_measure',Path(__file__).with_name('measure.py'))
+        measure=importlib.util.module_from_spec(spec2);spec2.loader.exec_module(measure)
+        archive=self.p/'archive';out=self.p/'derived'
+        class BandResponse(Response):
+            def __init__(self,kind):self.kind=kind
+            def read(self):return (m.TABLES[self.kind][1]+'\n').encode()
+        for kind in m.TABLES:
+            with patch.object(m,'urlopen',return_value=BandResponse(kind)):
+                m.fetch(kind,T,archive)
+        before={x.name:x.read_bytes() for x in archive.iterdir()}
+        with patch.object(measure,'targets',return_value=[dict(T,source_id='123')]):
+            measure.main(archive,out)
+        self.assertEqual(before,{x.name:x.read_bytes() for x in archive.iterdir()})
+        self.assertEqual({x.name for x in out.iterdir()},{'catalog_photometry.csv','visits.csv','variability.csv','queries.json'})
+        with self.assertRaises(FileExistsError):measure.main(archive,out)
 if __name__=='__main__':unittest.main()
