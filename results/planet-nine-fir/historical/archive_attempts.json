@@ -1,0 +1,44 @@
+[
+  {
+    "name": "irsa_tap",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+5+%2A+FROM+irasfsc+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C35.74075%2C-48.5125%2C0.02%29%29",
+    "utc": "2026-11-17T07:43:33.702676+00:00",
+    "error": "The read operation timed out"
+  },
+  {
+    "name": "cds_viz_cone",
+    "url": "https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source=II%2F156A&-c=35.74075+-48.5125&-c.rs=60&-out.all=1",
+    "utc": "2026-11-17T07:43:33.703642+00:00",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "name": "iris60",
+    "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FIRIS%2F60&width=120&height=120&fov=1.8&projection=TAN&coordsys=icrs&ra=35.45&dec=-48.85&format=fits",
+    "utc": "2026-11-17T07:43:33.705533+00:00",
+    "error": "HTTP Error 503: Service Unavailable"
+  },
+  {
+    "name": "akari90",
+    "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=ESAVO%2FP%2FAKARI%2FWideS&width=320&height=320&fov=1.8&projection=TAN&coordsys=icrs&ra=35.45&dec=-48.85&format=fits",
+    "utc": "2026-11-17T07:43:33.706531+00:00",
+    "error": "HTTP Error 503: Service Unavailable"
+  },
+  {
+    "name": "iris_plate_centers",
+    "url": "https://www.cita.utoronto.ca/~mamd/IRIS/IrisDownload.html",
+    "utc": "2026-11-17T07:43:33.713262+00:00",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "name": "issa_list2",
+    "url": "https://lambda.gsfc.nasa.gov/product/iras/iras_issa_get.html",
+    "utc": "2026-11-17T07:45:15.286312+00:00",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "name": "scanpi_get",
+    "url": "https://irsa.ipac.caltech.edu/cgi-bin/Scanpi/nph-scanpi?markersize=10&debug=0&outtype=single&locstr=35.74075+-48.5125+eq&outscan=1002&det_distance=2.2&cross_scan=1.7&band1=12um&band2=25um&band3=60um&band4=100um&src_fit1=1.7&src_fit2=1.7&src_fit3=3.2&src_fit4=6.4&bg_fit1=30&bg_fit2=30&bg_fit3=30&bg_fit4=30&srcex_fit1=2.0&srcex_fit2=2.0&srcex_fit3=4.0&srcex_fit4=6.0&disp1=12.0&disp2=12.0&disp3=20.0&disp4=26.0&extra=1",
+    "utc": "2026-11-17T07:45:18.942290+00:00",
+    "error": "The read operation timed out"
+  }
+]

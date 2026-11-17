@@ -1,0 +1,28 @@
+## Conditional orbit reconstruction
+
+The two quoted directions admit a continuum of bound orbits. The original 42–69.6 arcmin search annulus comes from Phan et al.'s circular-speed scaling over 23 years. Their 500–700 au interval serves as the adopted distance at the AKARI epoch. Neither a range measurement nor an orbit posterior follows from those directions. [Phan et al. §3, Table 2 and Fig. 6](https://doi.org/10.1017/pasa.2025.10024)
+
+The grid varies the IRAS effective date across the published 1983-06-26 through 1983-09-01 scan span, the heliocentric radius at AKARI (500–700 au), and the signed difference between the endpoint heliocentric radii. The AKARI epoch is the midpoint of the two successful December 26 scans. At each triple, the code places both positions on their observed rays, corrects for light time, and solves for the velocity by shooting between the two positions. The barycentric two-body monopole includes the Sun and planetary masses. ERFA supplies the geocentre's barycentric and heliocentric coordinates. Distances are heliocentric and coincident orientation axes are J2000 equatorial. These are astrometric directions, with annual parallax and without stellar aberration. Observatory-dependent spacecraft positions can be supplied to the projection function. [DE440 masses](https://ssd.jpl.nasa.gov/astro_par.html) · [ERFA epv00](https://github.com/liberfa/erfa/blob/master/src/epv00.c)
+
+The 9 × 21 × 41 grid spans end-to-end radial changes from −1.05 to +1.05 times the local escape speed multiplied by the elapsed time. Positive-energy solutions are rejected. The 3,617 retained trajectories all have ecliptic inclinations of 115.03–117.33°. A 17 × 41 × 81 grid produced 26,820 bound solutions with the same Nov 17, 2026 coordinate extrema. Random-access grid indices refer to the row order returned by the default script. They carry no astrophysical probability weight. A single Keplerian trajectory must be used across all epochs. Independent draws from the printed right ascension and declination extrema would produce spurious trajectories.
+
+At 00:00 UTC on 2026-11-17, the nominal family spans RA 34.9358–35.0616° and Dec −49.8341 to −49.7047°, with apparent speed 0.197–0.278 arcsec/hour. Evaluating single effective dates and mixtures of those dates with a weighted endpoint coadd gave the same marginal bounds at this epoch. Shifting the IRAS position to the four extrema of its 18 × 7 arcsec one-sigma ellipse at PA 79°, and varying AKARI along the cardinal directions by an **assumed** 40 arcsec, gives a sensitivity envelope of RA 34.8997–35.0994°, Dec −49.8566 to −49.6829°. This finite sensitivity test has no calibrated joint confidence level. Membership in an observed chip or image search still requires a mask check at the exposure midpoint. Optical limits additionally require calibrated image injections.
+
+The nominal models predict **302–423 arcsec of apparent motion** across the first and last dates of the IRAS coadd, including parallax. The smaller estimate of approximately 18 arcsec in Phan et al. refers to the orbital contribution. A scan crossing an endpoint does not establish that the source was detected in that scan. Individual scan offsets, directions, fluxes and centroid weights are needed to turn this difference into a historical test.
+
+The monthly geocentric table covers 2006–2026. Entries after the data cutoff are forecasts. Use the actual exposure midpoint or spacecraft ephemeris for image work. The spacecraft observer correction for Euclid is several arcseconds. Numerical agreement with an independently integrated DOP853 two-body orbit is in validation.json. That consistency check does not measure catalogue or dynamical error.
+
+```bash
+python -m pip install numpy scipy pyerfa
+python propagate.py --out .
+python validate.py
+python brightness.py
+# ISO UTC exposure midpoints, one per line, with a trajectory ID across all dates
+python propagate.py --epochs midpoints.txt --out run --tracks run/tracks.csv.gz
+```
+
+## Brightness assumptions
+
+The mass, radius and effective temperature triplets in brightness.py use the 5, 8 and 10 Earth-mass rows of Fortney et al. Table 1 and the nominal 10 Earth-mass Linder–Mordasini model (3.7 Earth radii, 47 K). Radius depends on envelope and core properties. For each triplet the grid uses 500, 600 and 700 au, observer distance equal to solar distance, full phase, and geometric Sloan r albedos 0.10, 0.30 and 0.75. The solar apparent r magnitude is −26.93 AB. With radius in au, the reflected-light flux ratio is p_r R²/(r² Δ²). The albedo cases yield r_AB ranges of 20.88–23.71, 19.69–22.52 and 18.69–21.52 respectively. The largest phase angle at 500 au is about 0.115°. [Fortney et al.](https://arxiv.org/abs/1604.07424) · [Linder & Mordasini](https://arxiv.org/abs/1602.07465) · [Willmer's solar photometry](https://mips.as.arizona.edu/~cnaw/sun)
+
+Thermal fluxes in the CSV use an isotropically emitting unit-emissivity blackbody at the listed model temperature, with flux density π Bν(T) (R/Δ)². The monochromatic ranges are 0.033–0.353 Jy at 60 microns and 0.078–0.621 Jy at 90 microns. The corresponding published 0.24 and 0.27 Jy each lie inside the marginal ranges. This is not a joint fit, and the 65-micron catalogue measurement is explicitly uncertain. A band-integrated atmosphere spectrum is needed to predict W1, W2, SPHEREx or Euclid VIS magnitudes for a specified planet. In particular, 3–5 micron atmospheric windows can produce much more emission than a blackbody. The brightness grid gives example planet properties and predicted fluxes, not an empirical limit. [Fortney et al.](https://arxiv.org/abs/1604.07424)
