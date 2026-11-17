@@ -1,0 +1,27 @@
+{
+  "query": "SELECT TOP 10 s.specObjID,s.ra,s.dec,s.z,s.zWarning,s.class,s.subClass,\ng.h_alpha_flux,g.h_alpha_flux_err,g.h_beta_flux,g.h_beta_flux_err,\ng.nii_6584_flux,g.nii_6584_flux_err,g.oiii_5007_flux,g.oiii_5007_flux_err\nFROM dbo.fGetNearbySpecObjEq(209.0330736,30.0813453,0.25) n\nJOIN SpecObj s ON n.specObjID=s.specObjID\nLEFT JOIN galSpecLine g ON s.specObjID=g.specObjID ORDER BY n.distance",
+  "rows": [
+    {
+      "specObjID": "2382543355759323136",
+      "ra": "209.03292",
+      "dec": "30.081348",
+      "z": "0.0310622",
+      "zWarning": "0",
+      "class": "GALAXY",
+      "subClass": "STARBURST",
+      "h_alpha_flux": "1296.546",
+      "h_alpha_flux_err": "9.602874",
+      "h_beta_flux": "175.2008",
+      "h_beta_flux_err": "3.493124",
+      "nii_6584_flux": "628.4804",
+      "nii_6584_flux_err": "5.733972",
+      "oiii_5007_flux": "88.04588",
+      "oiii_5007_flux_err": "3.154259"
+    }
+  ],
+  "url": "https://skyserver.sdss.org/dr16/SkyServerWS/SearchTools/SqlSearch?cmd=SELECT+TOP+10+s.specObjID%2Cs.ra%2Cs.dec%2Cs.z%2Cs.zWarning%2Cs.class%2Cs.subClass%2C%0Ag.h_alpha_flux%2Cg.h_alpha_flux_err%2Cg.h_beta_flux%2Cg.h_beta_flux_err%2C%0Ag.nii_6584_flux%2Cg.nii_6584_flux_err%2Cg.oiii_5007_flux%2Cg.oiii_5007_flux_err%0AFROM+dbo.fGetNearbySpecObjEq%28209.0330736%2C30.0813453%2C0.25%29+n%0AJOIN+SpecObj+s+ON+n.specObjID%3Ds.specObjID%0ALEFT+JOIN+galSpecLine+g+ON+s.specObjID%3Dg.specObjID+ORDER+BY+n.distance&format=csv",
+  "status": 200,
+  "utc": "2026-11-17T09:42:38.979780+00:00",
+  "bytes": 316,
+  "sha256": "1dbf2879418a946e1bdb76ad5151d9e4ee3a9f4738cf6cdbfb2862f13d8dc8b4"
+}

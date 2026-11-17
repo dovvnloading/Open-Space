@@ -19,7 +19,7 @@ SOURCE = 1 << 21
 OFFSETS = [(9*np.cos(a),9*np.sin(a)) for a in np.arange(8)*np.pi/4]
 
 
-def choose_images(index, calibration, ra, dec, center, scale, per_bin):
+def choose_images(index, calibration, ra, dec, center, scale, per_bin, all_options=False):
     wl = RegularGridInterpolator((calibration['y'],calibration['x']),calibration['wave_um'])
     choices = {}
     with index.open() as f:
@@ -40,6 +40,10 @@ def choose_images(index, calibration, ra, dec, center, scale, per_bin):
     records=[]
     for (release,label),entries in sorted(choices.items()):
         # First maximize independent dates, then proximity to the requested wavelength.
+        if all_options:
+            for t,delta,uri,pred in sorted(entries,key=lambda a:(a[1],a[0],a[2])):
+                records.append(dict(release=release,bin=label,mjd=t,uri=uri,pred_um=round(pred,6)))
+            continue
         days={}
         for t,delta,uri,pred in sorted(entries,key=lambda a:(a[1],a[0],a[2])):
             days.setdefault(int(t),(t,delta,uri,pred))
@@ -198,10 +202,11 @@ def run(args):
                 expected=original.get('sha256')
                 if expected and row.get('sha256')!=expected:
                     row['status']='archive_bytes_changed_or_unavailable'
-        if rows:
-            keys=list(dict.fromkeys(k for row in rows for k in row))
-            with (args.out/f'{stem}.csv').open('w') as f:
-                w=csv.DictWriter(f,fieldnames=keys);w.writeheader();w.writerows(rows)
+        keys=list(dict.fromkeys(k for row in rows for k in row)) or ['release','bin','mjd','pred_um','url','sha256','status']
+        with (args.out/f'{stem}.csv').open('w') as f:
+            w=csv.DictWriter(f,fieldnames=keys)
+            w.writeheader()
+            w.writerows(rows)
         summary=dict(source_id=name,ra=ra,dec=dec,center_um=center,scale_um=scale,
                      attempted=len(rows),status_counts={s:sum(r['status']==s for r in rows) for s in sorted({r['status'] for r in rows})},groups=analyse(rows))
         (args.out/f'{stem}.json').write_text(json.dumps(summary,indent=2,allow_nan=False)+'\n')
