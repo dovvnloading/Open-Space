@@ -15,14 +15,20 @@ LABELS = {
     'J182532':'J182532+671906 · CatWISE trial track',
     'J085014':'J085014+541123 · CatWISE trial track',
     'J092244':'J092244+640537 · CatWISE trial track',
+    'J010638.19+122908.3':'J010638.19+122908.3',
+    'J213348.06+391040.9':'J213348.06+391040.9',
+    'J192049.57+111222.6':'J192049.57+111222.6',
 }
 def main(inputs,output):
     entries=[]
     for path in inputs:
         with Path(path).open() as f:
             entries.extend(csv.DictReader(f))
-    fig,axes=plt.subplots(3,2,figsize=(10,8.5),sharex=True,layout='constrained')
-    for ax,(name,title) in zip(axes.flat,LABELS.items()):
+    panels=[(k,v) for k,v in LABELS.items() if any(r['target']==k for r in entries)]
+    ncol=2 if len(panels)>3 else 1
+    nrow=(len(panels)+ncol-1)//ncol
+    fig,axes=plt.subplots(nrow,ncol,figsize=(5*ncol,2.8*nrow),sharex=True,squeeze=False,layout='constrained')
+    for ax,(name,title) in zip(axes.flat,panels):
         rows=[r for r in entries if r['target']==name and r['status']=='fit' and 3.1<=float(r['wavelength_um'])<=4.97]
         if not rows:
             ax.set_visible(False)
@@ -43,7 +49,8 @@ def main(inputs,output):
         ax.set_ylabel('Flux density (µJy)')
     for ax in axes[-1]:
         ax.set_xlabel('Wavelength (µm)')
-    fig.suptitle('SPHEREx DR1 flux measured at the predicted positions',fontsize=15)
+    title='SPHEREx DR1 trial-track photometry' if ncol==1 else 'SPHEREx DR1 flux measured at the predicted positions'
+    fig.suptitle(title,fontsize=13 if ncol==1 else 15)
     fig.savefig(output,dpi=175)
 if __name__=='__main__':
     main(sys.argv[1:-1],sys.argv[-1])

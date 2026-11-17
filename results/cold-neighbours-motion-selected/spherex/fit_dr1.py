@@ -30,7 +30,7 @@ def stamp(table, header, x, y, xx, yy):
     return psf / np.sum(psf)
 
 
-def fit_frame(row, payload, neighbors):
+def fit_frame(row, payload, neighbors, quadratic_sky=False):
     with fits.open(io.BytesIO(payload), memmap=False) as data:
         im = data["IMAGE"].data.astype(float)
         var = data["VARIANCE"].data.astype(float)
@@ -52,7 +52,10 @@ def fit_frame(row, payload, neighbors):
         if not np.all(clean[central]) or valid.sum() < 25:
             raise ValueError("quality_or_mask")
         target_psf = stamp(data["EPSF"], h, x, y, xx, yy)
-        sky = [np.ones_like(xx), xx-x, yy-y]
+        dx,dy = xx-x, yy-y
+        sky = [np.ones_like(xx),dx,dy]
+        if quadratic_sky:
+            sky.extend([dx*dx,dx*dy,dy*dy])
         # Static catalog positions, explicit nuisance parameters, including close blends.
         refs = []
         for neighbor in neighbors:
@@ -83,6 +86,7 @@ def main():
     parser.add_argument("manifest", type=Path)
     parser.add_argument("out", type=Path)
     parser.add_argument("--cache", type=Path)
+    parser.add_argument("--quadratic-sky", action="store_true")
     args = parser.parse_args()
     fields = ["target","cutout_url","ra","dec","sha256","status","wavelength_um","bandwidth_um",
               "mjd","flux_ujy","sigma_ujy","chi2red","n_good","n_neighbors","nearest_pixels"]
@@ -111,7 +115,7 @@ def main():
                 out["sha256"] = hashlib.sha256(payload).hexdigest()
                 with (args.manifest.parent/row["neighbor_file"]).open() as file:
                     neighbors = list(csv.DictReader(file))
-                out.update(fit_frame(row,payload,neighbors))
+                out.update(fit_frame(row,payload,neighbors,args.quadratic_sky))
                 out["status"] = "fit"
             except (OSError, ValueError, np.linalg.LinAlgError) as exc:
                 out["status"] = str(exc)

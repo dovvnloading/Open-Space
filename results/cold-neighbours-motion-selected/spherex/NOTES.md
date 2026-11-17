@@ -1,6 +1,6 @@
 # SPHEREx DR1 spectral measurements
 
-WISE 0855−0714 is a positive control at a supplied trajectory. The in-field T9 WISE J041358.14−475039.3 is a separate control selected by the blind CatWISE screen. Four additional CatWISE tracks received exploratory follow-up. One, J181125, has published astrometry and an early-Y estimate in the Kirkpatrick et al. 20 pc census.
+WISE 0855−0714 is a positive control at a supplied trajectory. The in-field T9 WISE J041358.14−475039.3 is a separate control selected by the blind CatWISE screen. Seven additional CatWISE tracks received exploratory follow-up. One, J181125, has published astrometry and an early-Y estimate in the Kirkpatrick et al. 20 pc census.
 
 ## Inputs and scope
 
@@ -8,9 +8,9 @@ The spectral images are SPHEREx DR1, DOI [10.26131/IRSA678](https://www.ipac.cal
 
 For WISE 0855 the exposure and pointing list comes from the [Cold Movers snapshot](https://github.com/WilmerGaspar/cold-movers/blob/58ad127da016c2e6d12704b368036f3b25356418/data/precomputed/wise0855/photometry.csv), SHA-256 8bd7a250c152163fcabfcbab46c013e8663ba6d0f1e645ecf702467821081b68. Its 254 image links all identify DR1. All 62 entries in the five specified wavelength windows were selected independently of upstream measured flux, flags or S/N. We measured the flux anew from the IRSA pixels at the snapshot's epoch-specific positions.
 
-For the four exploratory tracks, the archive search covered the DR1 wide and deep collections at a position advanced 10.5 yr from epoch 2015.405. The SIA constraint was 3.10–5.0 µm with a 0.001 degree cone. The T9 lookup used a 0.0005 degree cone centered at (63.4930, −47.8430). Detector coverage bounding boxes give a superset of the wavelengths at the source. After deduplicating parent URLs, each detector 4–6 was sampled using up to 48 evenly spaced indices from its time-sorted frame list. The actual wavelengths and widths come from the FITS WCS-WAVE at the target position. This sampling uses part of the available deep-field DR1 data. The CatWISE RA motion is multiplied by sec(dec) when converting to RA in degrees. The candidate trial tracks assume zero parallax.
+For the seven exploratory tracks, the archive search covered the DR1 wide and deep collections at a position advanced 10.5 yr from epoch 2015.405. The SIA constraint was 3.10–5.0 µm with a 0.001 degree cone. The T9 lookup used a 0.0005 degree cone centered at (63.4930, −47.8430). Detector coverage bounding boxes give a superset of the wavelengths at the source. After deduplicating parent URLs, each detector 4–6 was sampled using up to 48 evenly spaced indices from its time-sorted frame list. The actual wavelengths and widths come from the FITS WCS-WAVE at the target position. This sampling uses part of the available deep-field DR1 data. The CatWISE RA motion is multiplied by sec(dec) when converting to RA in degrees. The candidate trial tracks assume zero parallax.
 
-An IRSA TAP cone around each CatWISE 2015.405 position (0.035 degrees) supplied AllWISE neighbors from allwise_p3as_psd using designation, ra, dec, w1mpro and w2mpro. WISE 0855 used (133.76, −7.2423), radius 0.02 degrees and ordering by W1. Positions were held fixed. AllWISE J041358.14−475039.4 is the known T9 itself and was removed from that control's stationary background list. The four exploratory trials retained every returned neighbor as a competing stationary source. Closely spaced objects can be unresolved, and an uncataloged background source can bias the fitted amplitudes.
+An IRSA TAP cone around each CatWISE 2015.405 position (0.035 degrees) supplied AllWISE neighbors from allwise_p3as_psd using designation, ra, dec, w1mpro and w2mpro. WISE 0855 used (133.76, −7.2423), radius 0.02 degrees and ordering by W1. Positions were held fixed. AllWISE J041358.14−475039.4 is the known T9 itself and was removed from that control's stationary background list. The seven exploratory trials retained every returned neighbor as a competing stationary source. Closely spaced objects can be unresolved, and an uncataloged background source can bias the fitted amplitudes.
 
 ## Reduction
 
@@ -28,6 +28,9 @@ From this directory, with numpy, scipy and astropy installed, run the following.
 python fit_dr1.py wise0855_frames.csv wise0855_fits.csv --cache fits_cache
 python fit_dr1.py shortlist_frames.csv shortlist_fits.csv --cache fits_cache
 python fit_dr1.py wide_frames.csv wide_fits.csv --cache fits_cache
+python fit_dr1.py additional_frames.csv additional_fits.csv --cache fits_cache
+python summarize.py additional_fits.csv additional_bands.csv
+python template_check.py additional_fits.csv additional_templates.csv --templates templates
 python summarize.py wide_fits.csv wide_bands.csv
 python template_check.py wide_fits.csv wide_templates.csv --templates templates
 python summarize.py wise0855_fits.csv wise0855_bands.csv
@@ -40,6 +43,17 @@ The six-panel [DR1 spectral figure](dr1_spectra.png) uses 0.12 µm display bins.
 
 ~~~bash
 python plot_dr1.py wise0855_fits.csv shortlist_fits.csv wide_fits.csv dr1_spectra.png
+python plot_dr1.py additional_fits.csv additional_spectra.png
 ~~~
 
-J181125 denotes J181125.34+665806.4, J182532 denotes J182532.09+671906.2, and J041358 denotes J041358.20−475038.1. J085014 denotes J085014.24+541123.2 and J092244 denotes J092244.78+640537.8. The field search and WISE image checks set the evidentiary status of these specific tracks.
+J181125 denotes J181125.34+665806.4, J182532 denotes J182532.09+671906.2, and J041358 denotes J041358.20−475038.1. J085014 denotes J085014.24+541123.2 and J092244 denotes J092244.78+640537.8. The three additional follow-ups use full CatWISE designations to distinguish nearby objects. Their [spectral figure](additional_spectra.png) uses the same binning. The field search and WISE image checks set the evidentiary status of these specific tracks.
+
+## Background sensitivity in the three additional fields
+
+The additional targets were remeasured with quadratic spatial terms (x², xy, y²) added to the sky plane. Source, neighbors, pixels and weighting remain the same. At 4.40–4.62 µm, the planar and curved fits give +73±36 and +34±39 µJy for J010638.19+122908.3, −46±43 and +55±45 µJy for J213348.06+391040.9, and −300±89 and +83±95 µJy for J192049.57+111222.6. For J192049 even the curved fit has median image-level reduced χ² of 16.3, and a galaxy template fits at least as well as a known Y dwarf. The negative planar amplitude is evidence of background-model misspecification. J010638 separates a cold template from the best galaxy by less than 1.1 χ² with either background. J213348 favors a galaxy template with the curved background. These results give no robust spectral classification for the three tracks. The planar 3.1–4.97 µm figure can be compared to the corresponding curved-background band and model tables.
+
+~~~bash
+python fit_dr1.py additional_frames.csv additional_quadratic_fits.csv --cache fits_cache --quadratic-sky
+python summarize.py additional_quadratic_fits.csv additional_quadratic_bands.csv
+python template_check.py additional_quadratic_fits.csv additional_quadratic_templates.csv --templates templates
+~~~

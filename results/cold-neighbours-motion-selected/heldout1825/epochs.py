@@ -50,6 +50,7 @@ def main():
     parser.add_argument("--cache",type=Path,required=True)
     parser.add_argument("--target", help="one source_name in --targets")
     parser.add_argument("--targets", type=Path)
+    parser.add_argument("--deep-pole",action="store_true",help="use two 64-frame NEP windows for a specified target")
     parser.add_argument("--out", type=Path, default=BASE)
     args=parser.parse_args()
     outdir=args.out; outdir.mkdir(parents=True,exist_ok=True)
@@ -59,6 +60,9 @@ def main():
         target=pd.read_csv(args.targets).set_index("source_name").loc[args.target]
         ra,dec,pmx,pmy,mag=(float(target[k]) for k in ["ra2015_deg","dec2015_deg","pmra","pmdec","w2"])
         windows,count,quality,grid,half_width,labels=[(57065.,57185.),(60352.,60472.)],16,5,72,59,["Spring 2015","Spring 2024"]
+    if args.deep_pole:
+        if not args.target: raise ValueError("--deep-pole requires --target")
+        windows,count,quality,grid,half_width,labels=WINDOWS,64,5,42,38,["Jan 2014","Dec 2023"]
     cd=np.cos(np.deg2rad(dec))
     args.cache.mkdir(parents=True,exist_ok=True)
     manifest=outdir/"manifest.csv"
