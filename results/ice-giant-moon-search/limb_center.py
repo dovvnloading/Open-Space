@@ -10,7 +10,7 @@ import numpy as np
 from scipy import ndimage, optimize
 
 
-def measure(path, radius):
+def measure(path, radius, keep_partial_saturation=False):
     with fits.open(path, memmap=False) as hdus:
         sci = hdus['SCI']
         with warnings.catch_warnings():
@@ -18,7 +18,8 @@ def measure(path, radius):
             w = WCS(sci.header, naxis=2)
         center = w.all_world2pix([[sci.header['MT_RA'], sci.header['MT_DEC']]], 0)[0]
         data = sci.data.astype(float)
-        good = np.isfinite(data) & ((hdus['DQ'].data & 3) == 0)
+        veto = 1 if keep_partial_saturation else 3
+        good = np.isfinite(data) & ((hdus['DQ'].data & veto) == 0)
     if not np.all((center > radius+7) & (center < np.array(data.shape[::-1]) - radius-7)):
         return
     # DQ holes receive interpolated values for derivatives only.
@@ -59,8 +60,10 @@ if __name__ == '__main__':
     parser.add_argument('output', type=Path)
     parser.add_argument('files', nargs='+', type=Path)
     parser.add_argument('--radius-px', type=float, required=True)
+    parser.add_argument('--use-finite-partly-saturated-limb',action='store_true',
+                        help='fit finite limb slopes carrying SATURATED; geometric centering only')
     args = parser.parse_args()
-    rows = [row for f in sorted(args.files) if (row := measure(f, args.radius_px)) is not None]
+    rows = [row for f in sorted(args.files) if (row := measure(f, args.radius_px, args.use_finite_partly_saturated_limb)) is not None]
     if not rows:
         raise ValueError('no fully enclosed planet limbs')
     with open(args.output, 'w', newline='') as out:

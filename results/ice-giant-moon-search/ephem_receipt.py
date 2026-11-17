@@ -32,12 +32,16 @@ def freeze(ephemeris, cache, prefix, kernel=None):
             for path in Path(cache).glob(f'{body}-*.json'):
                 raw=json.loads(path.read_bytes())['result']
                 rows=raw.split('$$SOE')[1].split('$$EOE')[0].strip().splitlines()
-                if len(rows)==len(mjds) and np.allclose([float(r.split(',')[0])-2400000.5 for r in rows],mjds,rtol=0,atol=1e-8):
-                    identity=raw.split('Target body name:')[1].splitlines()[0].strip()
-                    hits.append([body,identity,path.stem,digest(path)])
-            if len(hits)!=1:
-                raise RuntimeError(f'expected one matching response for {body}, found {len(hits)}')
-            out.writerow(hits[0])
+                dates=np.array([float(r.split(',')[0])-2400000.5 for r in rows])
+                for origin in range(0,len(mjds),60):
+                    chunk=mjds[origin:origin+60]
+                    if len(rows)==len(chunk) and np.allclose(dates,chunk,rtol=0,atol=1e-8):
+                        identity=raw.split('Target body name:')[1].splitlines()[0].strip()
+                        hits.append((origin,[body,identity,path.stem,digest(path)]))
+            if sorted(i for i,_ in hits)!=list(range(0,len(mjds),60)):
+                raise RuntimeError(f'incomplete or ambiguous response set for {body}')
+            out.writerows(row for _,row in sorted(hits))
+
 
 
 if __name__=='__main__':

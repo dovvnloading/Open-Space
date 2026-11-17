@@ -9,7 +9,7 @@ from geometry import generate
 from search import Cuts, file_hash, load_npz, prepare, sample_paths, score, validate_cube, validate_tracks
 
 
-def run(cube, output, lo, hi, da, dphase, support):
+def run(cube, output, lo, hi, da, dphase, support, epoch=None):
     out=Path(output)
     out.mkdir(parents=True,exist_ok=True)
     with np.load(cube) as f:
@@ -19,7 +19,7 @@ def run(cube, output, lo, hi, da, dphase, support):
     kernels=validate_cube(c)
     cuts=Cuts(psf_support=support)
     maps=prepare(c,kernels,cuts)
-    epoch=None
+    digest=file_hash(cube)
     progress=[]
     # Periodic radii avoid losing work if interrupted. Each output contains all
     # sky phases, including screened-out trials and their exposure counts.
@@ -36,9 +36,9 @@ def run(cube, output, lo, hi, da, dphase, support):
                 pos=score(n,w,c['visit'],cuts)
                 neg=score(-n,w,c['visit'],cuts)
                 np.savez_compressed(name,phase_deg=tracks['phase_deg'],negative_rank=neg['rank'],
-                                    epoch_jd_tdb=epoch,cube_sha256=file_hash(cube),support=support,**pos)
+                                    epoch_jd_tdb=epoch,cube_sha256=digest,support=support,**pos)
             with np.load(name) as data:
-                if (str(data['cube_sha256'])!=file_hash(cube) or float(data['support'])!=support
+                if (str(data['cube_sha256'])!=digest or float(data['support'])!=support
                         or not np.array_equal(data['phase_deg'],np.arange(0,360,dphase))):
                     raise ValueError("refusing to mix incompatible scan checkpoints")
                 epoch=float(data['epoch_jd_tdb'])
@@ -50,7 +50,9 @@ def run(cube, output, lo, hi, da, dphase, support):
     with (out/'radii.csv').open('w',newline='') as f:
         w=csv.writer(f);w.writerow(['a_km','trials','eligible','passing','negative_passing','max_rank','max_negative_rank']);w.writerows(progress)
     with (out/'passing.csv').open('w',newline='') as f:
-        w=csv.writer(f);w.writerow(['a_km','phase_deg','pooled_score','visit1_score','visit2_score','dropout1','dropout2','fit_jy','n_visit1','n_visit2'])
+        w=csv.writer(f);vis=range(1,len(np.unique(c['visit']))+1)
+        w.writerow(['a_km','phase_deg','pooled_score',*[f'visit{v}_score' for v in vis],
+                    *[f'dropout{v}' for v in vis],'fit_jy',*[f'n_visit{v}' for v in vis]])
         for row in progress:
             with np.load(out/f"r{row[0]:g}.npz") as d:
                 for i in np.flatnonzero(d['rank']>=1):
@@ -64,5 +66,6 @@ if __name__=='__main__':
     p.add_argument('output')
     p.add_argument('--grid',nargs=4,type=float,required=True,metavar=('RMIN','RMAX','DR_KM','DPHASE_DEG'))
     p.add_argument('--support',type=float,default=.90)
+    p.add_argument('--epoch-jd-tdb',type=float)
     a=p.parse_args()
-    run(a.cube,a.output,*a.grid,a.support)
+    run(a.cube,a.output,*a.grid,a.support,a.epoch_jd_tdb)
