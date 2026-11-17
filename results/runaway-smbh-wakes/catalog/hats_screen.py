@@ -124,10 +124,10 @@ def main():
                                 request_timeout=90,connect_timeout=20)
     def attempt(item):
         for n in range(4):
-            try:return inspect(item,a.cache,native)
+            try:return inspect(item,a.cache,native if n<2 else None)
             except OSError:
                 if n==3:raise
-                time.sleep(2**n)
+                time.sleep(7*2**n)
     with ThreadPoolExecutor(a.workers) as pool: records=list(pool.map(attempt,items))
     records.sort(key=lambda r:r['key'])
     for r in records:assert expected[r['key'].split('dataset/')[1].rsplit('/',1)[0]]==r['n']

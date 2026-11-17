@@ -30,3 +30,14 @@ Each trial samples a 192 × 192 real VIS patch and a random center within a fixe
 The pilot uses 12 positions per length in the three nonempty large stamps. The fourth large center has no valid VIS pixels. The second sample uses eight additional centers per deep field, selected by sorting the SHA-256 of `wake-centres-1/{tile}`, with two positions per length in each. Empty centers remain eligible in this sample. Sampling at each tile is seeded by its numeric tile ID. `recovery_by_sample.csv` distinguishes all attempted positions from the subset for which the injected axial strip and flanking region (±4 FWHM) have fully valid sampling. Repeated brightness trials, and sites sharing a stamp or patch, are correlated. A zero in a finite trial cell is an observed count.
 
 The rows in the shortlist are photometric segments for further inspection. The data establish neither projected physical length nor a common redshift of a putative host and filament. Continuity, gate failure or success, or an isolated imaging score cannot establish the origin.
+
+## Shape measurements and inspection
+
+`morphology.py` measures the distribution of flux in eight bins on each gated segment, using a separate flanking sky estimate in each bin. Its center-of-light coordinate, central-half flux fraction and reversal asymmetry describe the axial shape. `centerline_scatter_in_fwhm` is the RMS residual of positive-light transverse centroids about a fitted line, in units of the measured width, requiring five usable bins. Source confusion and noise affect all of these descriptors. They are reported without disk, stream or jet classifications.
+
+`montage.py` uses the Euclid host and filament tables to render the host-matched, VIS-continuous positive subset. Each panel pairs a full-stamp image with a local view. Cyan rings mark measured endpoints and an amber ring marks a catalogued host proxy. When an endpoint lies short of a catalogued object on the same axis the marker follows the reported axial gap and cross-track offset. An asinh stretch centers on the local median sky and uses the median absolute deviation for display scaling. The source counts and measurements come from the calibrated FITS arrays.
+
+```bash
+python morphology.py --runs "$RUNS" --images "$INPUTS" --out tables/shapes.csv
+python montage.py --hosts ../euclid/endpoint_candidates.csv --photometry ../euclid/filament_photometry.csv --images "$INPUTS" --out review
+```
