@@ -134,6 +134,10 @@ def main(out):
             disposition="known interstellar control"
         elif pdes in ejections:
             disposition="known planetary ejection; checked pre-encounter"
+        elif pdes in {"2005 D3","2006 S8","2004 D4","2006 S9"}:
+            disposition="SOHO sungrazer on a short spacecraft arc; see parabolic and free fits"
+        elif pdes=="1996 J1-A":
+            disposition="post-breakup arc of a known fragment; see parent comparison"
         elif pdes=="2024 U2":
             disposition="independent bound incoming state at 250 au"
         elif pdes in model_checks:
