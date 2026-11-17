@@ -42,9 +42,13 @@ The free Marsden fit omitting the last night failed in backward propagation. The
 | C/1980 E1 | 180 | Bound on entry at 250 au before its Jupiter encounter, 1/a = (+26.02 ± 1.20) × 10⁻⁶ au⁻¹. |
 | C/1997 P2 | 95 | Gravity gives 1/a = (−38.0 ± 23.1) × 10⁻⁶ au⁻¹ at 250 au. An unconstrained inverse-square fit returns a large inward radial acceleration and never reaches the outer boundary. |
 | C/2008 J4 | 18 of 25 | Gravity gives −0.01932 ± 0.00367 au⁻¹ at 250 au after seven rejections. With free radial acceleration the fit keeps 21 observations and never reaches 50 au within the integration interval. The inferred energy depends on force law and data selection. |
-| C/1877 G2 | 11 | With a 5″ coordinate error floor the eleven micrometer positions give an excess below two formal standard deviations. |
+| C/1877 G2 | 11 at 5″ | All eleven micrometer positions yield −0.00514 ± 0.00362 au⁻¹ at 250 au. Tightening the error floor to 2″ rejects two dates and changes the apparent significance to 5.09σ. |
 
 These classifications are consistent with the published planetary-ejection mechanisms for C/1980 E1 and C/2024 L5. C/1997 P2 also has an independent CODE original-orbit solution of (−13.94 ± 13.77) × 10⁻⁶ au⁻¹. C/1997 P2 and C/2008 J4 were both discussed as possible interstellar objects in 2018. [de la Fuente Marcos et al., 2024](https://doi.org/10.1051/0004-6361/202451920) · [CODE C/1997 P2 original solution](https://pad2.astro.amu.edu.pl/CODE/orbit.php?int=1997p2a5&orb=original) · [2018 MNRAS Letters study](https://academic.oup.com/mnrasl/article/476/1/L1/4840245)
+
+## Historical error sensitivity
+
+For C/1877 G2 the 2″ fit rejects the 1877 April 16 and 20 measurements from station 520, leaving nine positions and giving 1/a = −0.00842 ± 0.00165 au⁻¹ at 250 au. Both the 5″ and the 10″ fits retain all eleven. At 10″, 1/a = −0.00514 ± 0.00724 au⁻¹. The fitted arc alone does not establish which uncertainty to assign to these measurements. We interpret the MPC M records as micrometer J2000 positions, use their tabulated times as UT1 and use the historical ΔT approximation for terrestrial time. Assessment of the original nineteenth-century reductions remains open. [MPC format](https://docs.minorplanetcenter.net/mpc-ops-docs/observations/mpc1992-format/) · [Historical ΔT](https://eclipse.gsfc.nasa.gov/LEcat5/deltatpoly.html)
 
 ## Data and reproduction
 
