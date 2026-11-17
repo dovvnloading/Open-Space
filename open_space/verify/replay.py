@@ -484,6 +484,19 @@ class Sandbox:
                                       + (f" and {len(looked) - 3} more" if len(looked) > 3 else "")
                                       + ", not deposited: " + outcome.detail,
                                       data=dict(outcome.data, looked_for=looked[:20]))
+        elif outcome.status == "drift":
+            # A failed probe can be optional. Preserve the observed drift and its severity;
+            # report the probe as context without asserting that it caused the difference.
+            looked = self._looked_for()
+            context = []
+            if attempts:
+                context.append(f"{attempts} network attempt(s) were refused")
+                outcome.data["network_attempts"] = attempts
+            if looked:
+                context.append("searched without finding " + ", ".join(looked[:3]))
+                outcome.data["looked_for"] = looked[:20]
+            if context:
+                outcome.detail += "; replay also " + "; ".join(context) + "; effect on output is unknown"
         outcome.seconds = round(seconds, 2)
         self._restore(changed)
         return outcome
@@ -553,6 +566,14 @@ def _classify(tree: RepoTree, command: Command, code: int | None, out: bytes, er
     if code != 0:
         both = stderr + "\n" + stdout
         last = _last_line(stderr) or _last_line(stdout)
+        # Only an actual loader error identifies a missing shared library. A static
+        # find_library call may be optional or unreachable.
+        native = (re.search(r"OSError: ([^\s:]+): cannot open shared object file: No such file or directory", both)
+                  or re.search(r"(?:FileNotFoundError|OSError): Could not find module '([^']+)'", both))
+        if native:
+            library = native.group(1)
+            return Outcome(command, "needs-dependency", f"could not load system library {library}",
+                           data={"libraries": [library]})
         missing = PACKAGE_SIGN.search(both)
         if missing:
             package = next(group for group in missing.groups() if group).split(".")[0]

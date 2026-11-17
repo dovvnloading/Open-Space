@@ -40,6 +40,8 @@ python ground-check/eclipse_controls.py
 python ground-check/uncertainty_controls.py
 ```
 
+A rerun of `eclipse_controls.py` can differ from the committed `eclipse-controls.csv` in one column. That column holds remainders between one hundred-millionth and one millionth, which are round-off of the linear solve and depend on the installed NumPy. On 16 November 2026 a rerun on Windows 11 with Python 3.14.0, NumPy 2.5.4 and SciPy 1.18.1 changed them in their fifth significant figure. Every other value was identical. No number quoted in this folder changes, and the committed table is unchanged.
+
 To regenerate the compact input from the raw products, use the URLs above for `asascgi.txt` and `asphoto_csv`. Obtain `patrollc.parquet` with the Sky Patrol client cone search at RA 264.526816°, Dec −49.349215°, radius 0.002°, catalog master_list, with download enabled and columns asas_sn_id, ra_deg, dec_deg and catalog_sources. The official client retrieves block 0 for that cone, which supplied the parquet named below. Run `python ground-check/prepare.py /path/to/downloads` with pyarrow installed. Live archive responses may gain observations. [Official Sky Patrol client](https://github.com/asas-sn/skypatrol/blob/master/pyasassn/client.py)
 
 | Original product | Source rows | Raw SHA-256 on retrieval |

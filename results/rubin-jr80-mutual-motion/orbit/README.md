@@ -70,4 +70,6 @@ python excluded_cfht.py | diff - excluded_cfht.csv
 python forecast.py
 ```
 
+A rerun of `sensitivity.py` can differ from the committed `sensitivity.csv` in late digits. The script uses SciPy's least-squares solver with its default stopping tolerances, so the stopping point depends on rounding in the installed NumPy and SciPy. On 16 November 2026 a rerun on Windows 11 with Python 3.14.0, NumPy 2.5.4 and SciPy 1.18.1 changed 8 of 271 numbers, by at most 1.9 parts in a million. No number quoted in this folder changes, and the committed table is unchanged.
+
 `opposition_horizons.url` gives the exact forward ephemeris request. The archived Horizons responses for CFHT and blind DECam frames contain the observer code, target and UTC epoch list. All angles in `fit_*.csv` parameter columns are radians, except where degrees are explicitly named. Repeated rows in these files can represent separate grid starts converging on the same local solution.

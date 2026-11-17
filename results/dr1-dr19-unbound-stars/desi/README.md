@@ -1,6 +1,6 @@
 # DESI DR1 radial velocities and spectroscopic validation
 
-**Two Gaia-matched stars have high line-of-sight speeds confirmed by absorption lines, each on one observing night.** Gaia DR3 1717410430709663616 has an uncorrected DESI RV of +503.49 ± 4.20 km/s. The published backup-program correction gives **+501.74 km/s** and a solar-motion-corrected line-of-sight component of approximately **+658 km/s**. Gaia DR3 4444095982221534720 has +473.53 ± 5.88 km/s and a line-of-sight component of +589 km/s. One night cannot constrain the centre-of-mass speed of an unresolved binary. The main README gives Galactic-frame posteriors, catalogue matches and origin tests.
+**Two Gaia-matched stars have high line-of-sight speeds confirmed by absorption lines, each on one observing night.** Gaia DR3 1717410430709663616 has an uncorrected DESI RV of +503.49 ± 4.20 km/s. The published backup-program correction gives **+501.74 km/s** and a solar-motion-corrected line-of-sight component of approximately **+657 km/s**. Gaia DR3 4444095982221534720 has +473.53 ± 5.88 km/s and a line-of-sight component of +589 km/s. One night cannot constrain the centre-of-mass speed of an unresolved binary. The main README gives Galactic-frame posteriors, catalogue matches and origin tests.
 
 ## What survived the radial search
 

@@ -1,0 +1,13 @@
+column_name,datatype,description
+planeid,char,foreign key: caom.plane.planeid
+artifactid,char,unique artifact identifier: 32-bit UUID
+uri,char,artifact access url
+producttype,char,"product type (e.g. science, calibration, auxiliary, preview, info)"
+releasetype,char,"release type (data, meta)"
+contenttype,char,artifact file type
+contentlength,long,artifact size in bytes
+contentchecksum,char,checksum of the content (URI of the form {algorithm}:{hex value})
+ipac_gid,int,IRSA access control identifier: group ID
+mission_id,int,IRSA access control identifier: mission ID
+ipac_pub_date,char,public release date (UTC)
+lastmodified,char,timestamp of last modification of this row

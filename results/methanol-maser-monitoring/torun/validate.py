@@ -44,7 +44,9 @@ def red_noise_test(t, y, baseline, cosine, rng):
     cov = np.linalg.inv(X.T@KX)
     weights = (cov@KX.T)[-1]
     amplitude = weights@y
-    null = rng.multivariate_normal(mu,K,20000)@weights
+    # Cholesky factor: the default SVD factor is not unique to the last bit, so the
+    # same seed gave different draws under different NumPy and LAPACK builds.
+    null = rng.multivariate_normal(mu,K,20000,method="cholesky")@weights
     white, red, tau = np.exp(best.x)
     return {"white_jy":white, "OU_jy":red,"OU_decay_days":tau,"amplitude_jy":amplitude,
             "conditional_se_jy":np.sqrt(cov[-1,-1]),"simulated_p_one_sided":
