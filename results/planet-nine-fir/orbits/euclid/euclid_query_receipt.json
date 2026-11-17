@@ -1,0 +1,11 @@
+{
+  "label": "euclid_dated",
+  "url": "https://eas.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+obs_id%2Cobs_collection%2Cem_min%2Cem_max%2Ct_min%2Ct_max%2Ct_exptime%2Cs_region%2Cs_ra%2Cs_dec%2Caccess_url+FROM+ivoa.obscore+WHERE+dataproduct_type%3D%27image%27+AND+1%3DINTERSECTS%28s_region%2CCIRCLE%28%27ICRS%27%2C35%2C-49.5%2C2%29%29&MAXREC=50000",
+  "utc": "2026-11-17T07:44:17.563670+00:00",
+  "status": 200,
+  "size": 549721,
+  "mime": "text/csv",
+  "sha256": "c57bb0ba3ff545c6477e78ab99bb63aa546b2933914118e08a657023999a450d",
+  "sample": "b'obs_id,obs_collection,em_min,em_max,t_min,t_max,t_exptime,s_region,s_ra,s_dec,access_url\\n5519,dr1,,,60671.78676394676,60671.81478616898,2421.12,Polygon 34.63698448586359 -48.07882086529656 3'",
+  "elapsed_s": 22.11
+}

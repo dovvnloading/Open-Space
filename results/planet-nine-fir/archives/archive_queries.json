@@ -1,0 +1,417 @@
+[
+  {
+    "id": "calibrated_nsa",
+    "label": "calibrated_nsa",
+    "url": "https://datalab.noirlab.edu/sia/calibrated/nsa?POS=34.8%2C-49.75&SIZE=0.15%2C0.10&VERB=2",
+    "utc": "2026-11-17T07:41:13.745727+00:00",
+    "status": 200,
+    "size": 131284,
+    "mime": "text/xml;x-votable",
+    "sha256": "0916f8a23b8399bc83426f580f15f9336d988472bd6bb804a8ee4628d73d7d1f"
+  },
+  {
+    "id": "des_dr2_se",
+    "label": "des_dr2_se",
+    "url": "https://datalab.noirlab.edu/sia/des_dr2_se?POS=34.8%2C-49.75&SIZE=0.15%2C0.10&VERB=2",
+    "utc": "2026-11-17T07:41:13.744029+00:00",
+    "status": 200,
+    "size": 48838,
+    "mime": "text/xml;x-votable",
+    "sha256": "19a2f2decb01a70d2de3b1f9ecaea2dd72ecf5f12f5423523c1e8d4c93142a92"
+  },
+  {
+    "id": "delve_dr3",
+    "label": "delve_dr3",
+    "url": "https://datalab.noirlab.edu/sia/delve_dr3?POS=34.8%2C-49.75&SIZE=0.15%2C0.10&VERB=2",
+    "utc": "2026-11-17T07:41:13.744512+00:00",
+    "status": 200,
+    "size": 14490,
+    "mime": "text/xml;x-votable",
+    "sha256": "db412bbc38605755091b19e31bb8e2fb71a3ed6d9de2e21f0d55f78fae661aaf"
+  },
+  {
+    "id": "ls_dr10",
+    "label": "ls_dr10",
+    "url": "https://datalab.noirlab.edu/sia/ls_dr10?POS=34.8%2C-49.75&SIZE=0.15%2C0.10&VERB=2",
+    "utc": "2026-11-17T07:41:13.745199+00:00",
+    "status": 200,
+    "size": 27590,
+    "mime": "text/xml;x-votable",
+    "sha256": "07c52f05ee24da37af8fbba4177cad6068b95b542f87689b1f5e97c649942f26"
+  },
+  {
+    "id": "ls-dr10",
+    "label": "ls-dr10",
+    "url": "https://www.legacysurvey.org/viewer/fits-cutout?ra=34.8&dec=-49.75&layer=ls-dr10&pixscale=0.262&size=128&bands=r",
+    "utc": "2026-11-17T07:41:13.750913+00:00",
+    "status": 200,
+    "size": 69120,
+    "mime": "image/fits",
+    "sha256": "9ac8e085d1e617dac6a213595507c7473edf9ccc221fb1408b7e9da41863c407"
+  },
+  {
+    "id": "ls-dr11",
+    "label": "ls-dr11",
+    "url": "https://www.legacysurvey.org/viewer/fits-cutout?ra=34.8&dec=-49.75&layer=ls-dr11&pixscale=0.262&size=128&bands=r",
+    "utc": "2026-11-17T07:41:13.752044+00:00",
+    "status": 200,
+    "size": 69120,
+    "mime": "image/fits",
+    "sha256": "40883c800fb8fa48d43617808d7cfff2688c569908ca3a6c365be49dd8a4168f"
+  },
+  {
+    "id": "gaia",
+    "label": "gaia",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+1+source_id%2Cra%2Cdec+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C34.8%2C-49.75%2C0.02%29%29",
+    "utc": "2026-11-17T07:41:13.752868+00:00",
+    "status": 200,
+    "size": 75,
+    "mime": "text/csv",
+    "sha256": "d7ca2fbd3c1e044beb430eed04360a43bcdc35218019b7e8f8e186ed465fe274"
+  },
+  {
+    "id": "ps1",
+    "label": "ps1",
+    "url": "https://ps1images.stsci.edu/cgi-bin/ps1filenames.py?ra=34.8&dec=-49.75&filters=r",
+    "utc": "2026-11-17T07:41:13.752410+00:00",
+    "status": 200,
+    "size": 66,
+    "mime": "text/plain; charset=UTF-8",
+    "sha256": "1afd321479138b7add7d8f2bdac441fbd0e9f0c8ae90e9ae926a2be6af5cdafc"
+  },
+  {
+    "id": "nsa_region_valid",
+    "label": "nsa_region_valid",
+    "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+s_ra%2Cs_dec%2Cdate_obs%2Cexptime%2Cobs_bandpass%2Cmagzero%2Cobs_collection%2Cobs_id%2Cfileref%2Cexpnum%2Cra1%2Cra2%2Cra3%2Cra4%2Cdec1%2Cdec2%2Cdec3%2Cdec4%2Caccess_url+FROM+ivoa_calibrated.nsa+WHERE+s_ra+BETWEEN+33.9+AND+35.9+AND+s_dec+BETWEEN+-50.35+AND+-49.0+AND+instrument_name%3D%27DECam%27+AND+proctype%3D%27InstCal%27+AND+prodtype%3D%27image%27&MAXREC=50000",
+    "utc": "2026-11-17T07:43:26.814011+00:00",
+    "status": 200,
+    "size": 789969,
+    "mime": "text/csv; header=present",
+    "sha256": "858aca7790acb7a5c732e03cbb5788f69679d13549a0d6fe2a66549b0e967c30"
+  },
+  {
+    "id": "newest",
+    "url": "https://astroarchive.noirlab.edu/api/adv_search/find/?rectype=file&limit=20000",
+    "request": {
+      "outfields": [
+        "archive_filename",
+        "md5sum",
+        "dateobs_center",
+        "caldat",
+        "ra_center",
+        "dec_center",
+        "ifilter",
+        "exposure",
+        "proposal",
+        "proc_type",
+        "prod_type"
+      ],
+      "search": [
+        [
+          "ra_center",
+          32.6,
+          37.3
+        ],
+        [
+          "dec_center",
+          -51.2,
+          -47.8
+        ],
+        [
+          "caldat",
+          "2023-01-01",
+          "2026-11-17"
+        ],
+        [
+          "instrument",
+          "decam"
+        ],
+        [
+          "proc_type",
+          "instcal"
+        ],
+        [
+          "prod_type",
+          "image"
+        ]
+      ]
+    },
+    "utc": "2026-11-17T07:46:15.239617+00:00",
+    "status": 200,
+    "sha256": "df7ea94d4deb5056fcce294f32ac191f6c48fc4e6a1ab85a72876c792cfcb3cf",
+    "size": 53571
+  },
+  {
+    "id": "region_release",
+    "request": "https://astroarchive.noirlab.edu/api/adv_search/find/?rectype=file&limit=20000",
+    "method": "POST",
+    "utc": "2026-11-17T07:50:26.517224+00:00",
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "content-length": "60837"
+    },
+    "sha256": "f03f15b0758d2a91712e3f548492f498bbdce5240b1593f85f337557acbf930e",
+    "bytes_read": 60837,
+    "query": {
+      "outfields": [
+        "archive_filename",
+        "md5sum",
+        "dateobs_center",
+        "caldat",
+        "ra_center",
+        "dec_center",
+        "ifilter",
+        "exposure",
+        "proposal",
+        "proc_type",
+        "prod_type",
+        "release_date",
+        "OBJECT"
+      ],
+      "search": [
+        [
+          "ra_center",
+          32.6,
+          37.3
+        ],
+        [
+          "dec_center",
+          -51.2,
+          -47.8
+        ],
+        [
+          "caldat",
+          "2023-01-01",
+          "2026-11-17"
+        ],
+        [
+          "instrument",
+          "decam"
+        ],
+        [
+          "proc_type",
+          "instcal"
+        ],
+        [
+          "prod_type",
+          "image"
+        ]
+      ]
+    }
+  },
+  {
+    "id": "2026_metadata",
+    "request": "https://astroarchive.noirlab.edu/api/adv_search/find/?rectype=file&limit=1000",
+    "method": "POST",
+    "utc": "2026-11-17T07:47:53.390994+00:00",
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "content-length": "8254"
+    },
+    "sha256": "140532b9d9056c0d560204e5412ba0d5fe833479d2ae3273f944727d98ea143c",
+    "bytes_read": 8254,
+    "query": {
+      "outfields": [
+        "archive_filename",
+        "md5sum",
+        "dateobs_center",
+        "release_date",
+        "OBJECT",
+        "proposal",
+        "instrument"
+      ],
+      "search": [
+        [
+          "proposal",
+          "2026B-649930"
+        ],
+        [
+          "instrument",
+          "decam"
+        ],
+        [
+          "proc_type",
+          "instcal"
+        ],
+        [
+          "prod_type",
+          "image"
+        ]
+      ]
+    }
+  },
+  {
+    "id": "2026_access",
+    "request": "https://astroarchive.noirlab.edu/api/retrieve/a137d8a52b9aa91a6594fdd59feae6e4/",
+    "method": "GET",
+    "utc": "2026-11-17T07:47:53.391657+00:00",
+    "status": 403,
+    "headers": {
+      "content-type": "application/json",
+      "content-length": "127"
+    },
+    "sha256": "f8dc1d034d0614f15c0406dde73042b21df3c2ffda7564edae0d92bf6ffc34da",
+    "bytes_read": 127
+  },
+  {
+    "id": "euclid_region",
+    "label": "euclid_region",
+    "url": "https://eas.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+obs_collection%2Cdataproduct_type%2CCOUNT%28%2A%29+AS+n%2CMIN%28t_min%29+AS+mjd_begin%2CMAX%28t_max%29+AS+mjd_end+FROM+ivoa.obscore+WHERE+1%3DINTERSECTS%28s_region%2CCIRCLE%28%27ICRS%27%2C35%2C-49.5%2C2%29%29+GROUP+BY+obs_collection%2Cdataproduct_type&MAXREC=50000",
+    "utc": "2026-11-17T07:42:26.488349+00:00",
+    "status": 200,
+    "size": 118,
+    "mime": "text/csv",
+    "sha256": "927aa4fd59b7fd5c7e037a6a034aba2ad6176ba61c96fb060f0d6c03dc4a6b56"
+  },
+  {
+    "id": "euclid_dated",
+    "label": "euclid_dated",
+    "url": "https://eas.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+obs_id%2Cobs_collection%2Cem_min%2Cem_max%2Ct_min%2Ct_max%2Ct_exptime%2Cs_region%2Cs_ra%2Cs_dec%2Caccess_url+FROM+ivoa.obscore+WHERE+dataproduct_type%3D%27image%27+AND+1%3DINTERSECTS%28s_region%2CCIRCLE%28%27ICRS%27%2C35%2C-49.5%2C2%29%29&MAXREC=50000",
+    "utc": "2026-11-17T07:44:17.563670+00:00",
+    "status": 200,
+    "size": 549721,
+    "mime": "text/csv",
+    "sha256": "c57bb0ba3ff545c6477e78ab99bb63aa546b2933914118e08a657023999a450d"
+  },
+  {
+    "id": "spherex_dr1_one",
+    "label": "spherex_dr1_one",
+    "url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_dr1&POS=CIRCLE+35+-49.75+0.01&MAXREC=1&RESPONSEFORMAT=CSV",
+    "utc": "2026-11-17T07:43:26.817122+00:00",
+    "status": 200,
+    "size": 1558,
+    "mime": "text/csv",
+    "sha256": "1dac36b6e1510e70a085a5462a3f9a4ea5370bec64fb798db7377d9e4a58da75"
+  },
+  {
+    "id": "spherex_qr3_one",
+    "label": "spherex_qr3_one",
+    "url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=CIRCLE+35+-49.75+0.01&MAXREC=1&RESPONSEFORMAT=CSV",
+    "utc": "2026-11-17T07:43:26.817724+00:00",
+    "status": 200,
+    "size": 1556,
+    "mime": "text/csv",
+    "sha256": "cdea49c41be0c4e5d52ceb7982916b5bb7fd58ec6351c6c7971936ab2e6e3840"
+  },
+  {
+    "id": "neowiser_one",
+    "label": "neowiser_one",
+    "url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=neowiser&POS=CIRCLE+35+-49.75+0.01&MAXREC=1&RESPONSEFORMAT=CSV",
+    "utc": "2026-11-17T07:43:26.818406+00:00",
+    "status": 200,
+    "size": 1505,
+    "mime": "text/csv",
+    "sha256": "a3d201bc20d33d3e2e8115e6e22c089e65c8bcd65d91e19048cb67e0663d5791"
+  },
+  {
+    "id": "all_decam_files",
+    "request": "https://astroarchive.noirlab.edu/api/adv_search/find/?rectype=file&limit=30000",
+    "method": "POST",
+    "utc": "2026-11-17T08:01:39.726773+00:00",
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "content-length": "391619"
+    },
+    "sha256": "50345aca7e1384f043cddfb400daaa739b7121ff501ce34fe4b0b343e5d4acd7",
+    "bytes_read": 391619,
+    "query": {
+      "outfields": [
+        "archive_filename",
+        "md5sum",
+        "dateobs_center",
+        "caldat",
+        "ra_center",
+        "dec_center",
+        "ifilter",
+        "exposure",
+        "proposal",
+        "proc_type",
+        "prod_type",
+        "release_date",
+        "OBJECT"
+      ],
+      "search": [
+        [
+          "ra_center",
+          32.6,
+          37.3
+        ],
+        [
+          "dec_center",
+          -51.2,
+          -47.8
+        ],
+        [
+          "caldat",
+          "2000-01-01",
+          "2026-11-17"
+        ],
+        [
+          "instrument",
+          "decam"
+        ],
+        [
+          "proc_type",
+          "instcal"
+        ],
+        [
+          "prod_type",
+          "image"
+        ]
+      ]
+    }
+  },
+  {
+    "id": "modern_dq_list",
+    "request": "https://astroarchive.noirlab.edu/api/adv_search/find/?rectype=file&limit=2000",
+    "method": "POST",
+    "utc": "2026-11-17T07:54:11.658402+00:00",
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "content-length": "3384"
+    },
+    "sha256": "8cc50a628e482d96b3c0d9041999c78b739fec1930e5d438a083d5afbe408943",
+    "bytes_read": 3384,
+    "query": {
+      "outfields": [
+        "md5sum",
+        "archive_filename",
+        "dateobs_center",
+        "prod_type"
+      ],
+      "search": [
+        [
+          "caldat",
+          "2024-11-11",
+          "2025-07-22"
+        ],
+        [
+          "ra_center",
+          32.6,
+          37.3
+        ],
+        [
+          "dec_center",
+          -51.2,
+          -47.8
+        ],
+        [
+          "instrument",
+          "decam"
+        ],
+        [
+          "proc_type",
+          "instcal"
+        ],
+        [
+          "prod_type",
+          "dqmask"
+        ]
+      ]
+    }
+  }
+]
