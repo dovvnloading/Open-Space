@@ -1,7 +1,6 @@
 """Apply the same photometry/motion thresholds to blind fields and controls."""
 import csv
 import math
-import statistics
 from collections import Counter
 from pathlib import Path
 from urllib.request import urlopen
@@ -9,7 +8,7 @@ from urllib.request import urlopen
 ROOT = Path(__file__).resolve().parent
 OFFSETS_URL = "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/CatWISE2020_Table1_20201012.tbl"
 FLOOR = 0.035  # arcsec/year in each axis, for ranking motion estimates
-ZP = 22.5  # Vega magnitude in the catalog's flux units for both bands
+
 
 def number(row, key):
     return float(row[key]) if row[key].strip() else math.nan
@@ -25,6 +24,17 @@ def load_corrections():
         tile, ra_true, _, dec, pmra, pmdec = line.split()
         offsets[tile] = tuple(map(float, (ra_true, dec, pmra, pmdec)))
     return offsets
+
+def prefilter(r):
+    """Same inclusion rule as the SQL, including W1 non-detections."""
+    sn1 = number(r,"w1snr_pm")
+    raw_mu = math.hypot(number(r,"pmra"),number(r,"pmdec"))
+    return (number(r,"w2snr_pm") >= 8 and raw_mu >= .2
+            and (not math.isfinite(sn1) or sn1 < 3
+                 or number(r,"w1mpro_pm")-number(r,"w2mpro_pm") >= 1.5))
+
+def select(r, offsets):
+    return measure(r, offsets) if prefilter(r) else None
 
 def measure(r, offsets):
     dpra, dpdec, dmra, dmdec = offsets[r["source_id"][:8]]
@@ -48,6 +58,12 @@ def measure(r, offsets):
         if w2lo <= 0: return
         color=2.5*math.log10(w2lo/w1hi)
     if not (color >= 2 and mu >= .3 and z >= 5): return
+    # A motion component pinned to +/-100 arcsec/yr indicates a boundary fit.
+    motion_boundary = max(abs(number(r,"pmra")),abs(number(r,"pmdec"))) >= 99.99
+    w2cc = r["cc_flags"][1:2]
+    bright_tier = (not motion_boundary and number(r,"w2mpro_pm") <= 16.5
+                   and number(r,"w2rchi2_pm") <= 3 and r["w2ab_map"] == "0"
+                   and w2cc in ("","0"))
     dec = number(r,"dec_pm")
     return dict(source_name=r["source_name"],source_id=r["source_id"],
         ra2015_deg=round(number(r,"ra_pm")+dpra/math.cos(math.radians(dec)),7),
@@ -55,14 +71,15 @@ def measure(r, offsets):
         sigpmra=r["sigpmra"],sigpmdec=r["sigpmdec"],mu=round(mu,5),z_axis=round(z,3),
         w1w2=round(color,4),w1_mode="measured" if strong_w1 else "lower_bound",
         w2=r["w2mpro_pm"],sn2=r["w2snr_pm"],rchi2=r["w2rchi2_pm"],
-        w2ab_map=r["w2ab_map"],w2cc=r["cc_flags"][1:2],pmcode=r["pmcode"])
+        w2ab_map=r["w2ab_map"],w2cc=w2cc,pmcode=r["pmcode"],
+        motion_boundary=int(motion_boundary),bright_tier=int(bright_tier))
 
 def main():
     offsets = load_corrections()
     rows=[]
     for file in sorted((ROOT/"inputs").glob("*_rows.csv")):
         for r in csv.DictReader(file.open()):
-            candidate=measure(r,offsets)
+            candidate=select(r,offsets)
             if candidate: rows.append(dict(field=file.stem.split("_")[0],**candidate))
     if not rows: print("zero rows"); return
     with (ROOT/"shortlist.csv").open("w") as f:
