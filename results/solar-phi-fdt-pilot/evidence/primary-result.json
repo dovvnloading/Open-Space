@@ -1,0 +1,61 @@
+{
+  "status": "evaluated",
+  "scans": [
+    {
+      "obs_id": "solo_L2_phi-fdt-blos_20260815T162509_V03_0648150506.fits",
+      "tracked_proxy_gauss": -80.7288614497645,
+      "signed_excess_gauss": -9.845524483728292,
+      "passes_prediction": false,
+      "fixed_detector_change_gauss": 99.59467310130367
+    },
+    {
+      "obs_id": "solo_L2_phi-fdt-blos_20260815T192509_V03_0648150507.fits",
+      "tracked_proxy_gauss": -65.58773584646052,
+      "signed_excess_gauss": 5.295601119575684,
+      "passes_prediction": true,
+      "fixed_detector_change_gauss": 83.7888258605819
+    }
+  ],
+  "both_pass": false,
+  "meaning": "conditional signed radial-proxy persistence screen; detector control is diagnostic; no p-value or true flux-emergence claim",
+  "prediction_sha256": "973bd0f0a701399fb6a0540a81efd69750d1765895be1ad6e5b16eb61c47fdee",
+  "authorization": {
+    "authorized": true,
+    "authorized_utc": "2026-11-17T06:03:32.791810+00:00",
+    "phase": "frozen conditional proxy persistence test",
+    "code_sha": "24ec48d083e4214d5e2cb3eb5c17eaf3ccf169b2",
+    "packet_sha256": "4827108044a5c777728cd85c455be20eaf7610f866059f384279c40b9404138b",
+    "prediction_sha256": "973bd0f0a701399fb6a0540a81efd69750d1765895be1ad6e5b16eb61c47fdee",
+    "development_sha256": "f64370e6128241a487baae281c193db26a37fe449692d7f9fab7fd0aecbeb93f",
+    "root_independent_review_sha256": "bd9c535dcec010ab60904c14fa29c3df5e67128684e8c4c860e7913a6bf9604e",
+    "allowed_holdout_names": [
+      "solo_L2_phi-fdt-blos_20260815T162509_V03_0648150506.fits",
+      "solo_L2_phi-fdt-blos_20260815T192509_V03_0648150507.fits"
+    ],
+    "allowed_holdout_sha256": [
+      "783784008c4f4f4c0d017e89f94d22d327a6f4a987b1af0cbbf303087d358664",
+      "e9a974446e3e77d44bf08d1652d58050ccfd8974923926cd76410ae80e06e1cd"
+    ],
+    "primary_rule": "for both scans: predicted_sign * (holdout_median - baseline_median - control_median) > threshold_gauss",
+    "threshold_gauss": 3.23618701332982,
+    "pre_unblind_statement": "Both August15 primary arrays remain unopened when this record is written. Root reviewed all packet source, reran synthetic tests and manually reproduced all24 development patches, scale and prediction.",
+    "secondary_diagnostics_predeclared": [
+      "fixed-detector control already frozen in prediction",
+      "all25 fixed-grid dispositions with unchangedgeometry/dust/finite-stencil criteria",
+      "candidate and otherpatch +/-1pixel shifts in both heldmaps; report sensitivity without changing primaryrule",
+      "median/MAD otherpatch changes from originaldevelopmentbaseline; not independent solar noise or falsealarm calibration"
+    ],
+    "limitations": [
+      "quality-limited standardL2 mode; ACCSTAT2=64 unknown, late-development Bmag ring/stripe note unresolved",
+      "BLOS/mu radial proxy, changing line-of-sight and horizontal fields can alter measurement",
+      "No externally calibrated uncertainty/globalfalsealarm, trueflux emergence or novelphysicaldiscovery claim",
+      "Secondary diagnostics cannot rescue failedprimaryprediction or selectnewcandidate; record invalid inputs/inconclusive separately"
+    ],
+    "not_authorized": [
+      "EUI/HMI pixels or unrelated target thumbnails under this record",
+      "adaptive selection/backfill or revised favorable threshold"
+    ]
+  },
+  "code_sha": "24ec48d083e4214d5e2cb3eb5c17eaf3ccf169b2",
+  "packet_sha256": "4827108044a5c777728cd85c455be20eaf7610f866059f384279c40b9404138b"
+}
