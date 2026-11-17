@@ -185,7 +185,7 @@ def verify_dynamics():
     assert_near(g["mass_models"]["30pct_lower_primary"]["m2_min_q16_q50_q84"][1],2.99,.02)
     desi=load_json(ROOT/"orbit/desi_lpv_fits.json")
     assert_near(desi["span_days"],45.87,.02)
-    assert_near(desi["models"]["nominal"]["mass_function_msun"][1],.561,.008)
+    assert_near(desi["models"]["nominal"]["f_rv_msun"][1],.561,.008)
     controls=load_json(ROOT/"orbit/control_fits.json")
     for name,mass in {"BH1":9.63,"BH2":8.93,"NS1":1.90,"BH3":33.12}.items():
         assert_near(controls[name]["m2_msun"][1],mass,.02)
