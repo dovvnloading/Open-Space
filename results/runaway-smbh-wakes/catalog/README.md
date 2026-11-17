@@ -9,8 +9,10 @@ The release's [catalogue dictionary](https://euclid.esac.esa.int/dr/q1/dpdd/merd
 Run the following from this directory. The Q1 tile and product lists are in the sibling euclid directory. Each script supports a cache outside the repository. The surface-brightness completeness measurements in the detector directory apply to the independent pixel search.
 
 ```sh
-python hats_screen.py --cache /path/to/hats-partitions
+python hats_screen.py --cache D:/new-campaign/partitions --out D:/new-campaign/results
 WAKE_GAIA_CACHE=/path/to/gaia python gaia_stars.py
 python star_alignment.py --stars /path/to/gaia
 python targeted.py --cache /path/to/vis-h-cutouts
 ```
+
+A new full catalogue acquisition requires distinct, initially absent external D: cache and output directories. Existing partition JSON is never reused, and generated tables are written to the new output, preserving the deposited historical receipts. The compact selected rows and partition totals were checked offline; the full native catalogue columns were not independently replayed.

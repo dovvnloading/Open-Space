@@ -7,17 +7,19 @@ from pathlib import Path
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
+sys.path.insert(0,str(Path(__file__).resolve().parent.parent))
+from replay_guard import frozen_tiles,validate_cutouts,fresh_output,absolute_external,seal
 
 
 def run(tile, args):
     image = args.input_dir / f"{tile}_VIS.fits"
     mask = args.input_dir / f"{tile}_rms.fits"
     if not (image.is_file() and mask.is_file()):
-        return
+        raise FileNotFoundError(tile)
     for name in ("search","invert"):
         dest = args.out / f"{tile}_{name}.json"
-        if dest.exists() and not args.replace:
-            continue
+        if dest.exists():
+            raise FileExistsError(dest)
         cmd = [sys.executable, str(Path(__file__).with_name("wake_search.py")), "search",
                str(image), "--mask", str(mask), "--mask-type", "rms", "--ignore-zero",
                "--scale", ".1", "--lengths", "6,10", "--widths", ".2",
@@ -32,14 +34,12 @@ if __name__ == "__main__":
     p.add_argument("--input-dir",required=True,type=Path)
     p.add_argument("--out",required=True,type=Path)
     p.add_argument("--jobs",type=int,default=4)
-    p.add_argument("--replace",action="store_true")
-    p.add_argument("--tiles",type=Path,help="optional frozen CSV with a tile column")
+    p.add_argument("--tiles",type=Path,required=True,help="frozen q1_tiles.csv")
     args = p.parse_args()
-    args.out.mkdir(parents=True,exist_ok=True)
-    if args.tiles:
-        with args.tiles.open() as f:
-            tiles = [r["tile"] for r in csv.DictReader(f)]
-    else:
-        tiles = sorted(f.name.split("_")[0] for f in args.input_dir.glob("*_VIS.fits"))
+    args.input_dir=absolute_external(args.input_dir)
+    tiles=frozen_tiles(args.tiles)
+    validate_cutouts(args.input_dir,tiles)
+    args.out=fresh_output(args.input_dir,args.out)
     with ThreadPoolExecutor(args.jobs) as pool:
         list(pool.map(lambda t:run(t,args),tiles))
+    seal(args.out,"screen")

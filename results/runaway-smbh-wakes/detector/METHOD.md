@@ -7,11 +7,16 @@ Run with Python, NumPy, SciPy and the system CFITSIO shared library. The summary
 Run from the directory containing this file. `INPUTS` is the cutout cache from the Q1 acquisition script, `TILES` is its frozen tile CSV, and `RUNS` is an empty or matching per-stamp checkpoint directory.
 
 ```bash
-OPENBLAS_NUM_THREADS=1 python screen_centers.py --input-dir "$INPUTS" --tiles "$TILES" --out "$RUNS" --jobs 4
-OPENBLAS_NUM_THREADS=1 python calibrate_centers.py --input-dir "$INPUTS" --tiles "$TILES" --out "$RUNS" --jobs 3
-python summarize.py --runs "$RUNS" --images "$INPUTS" --out tables
+# All input and output paths are absolute D: paths. Each output must be new.
+OPENBLAS_NUM_THREADS=1 python screen_centers.py --input-dir "$INPUTS" --tiles "$TILES" --out "$SCREEN" --jobs 4
+OPENBLAS_NUM_THREADS=1 python calibrate_centers.py --input-dir "$INPUTS" --tiles "$TILES" --out "$CALIBRATION" --jobs 3
+python merge_runs.py --screen "$SCREEN" --calibration "$CALIBRATION" --out "$COMBINED"
+python summarize.py --runs "$COMBINED" --images "$INPUTS" --out "$SUMMARY"
 python test_wake.py
 ```
+
+The original inputs and receipts stay unchanged. Screen and calibration require the exact frozen tile list and verify every selected image and RMS file against the recorded size and SHA-256 before creating a new output. Each stage seals its output files; merging and summary fail on changed or incomplete stages. A failed or interrupted stage remains unsealed and must not be resumed in place. The compact audit reproduced the 344/272 area and 840 injection counts and matched 688 coverage input hashes to receipt entries; it did not replay the native images.
+
 
 1. The Q1 mask accepts finite nonzero VIS, with finite positive RMS below 10⁸. The RMS identifies coverage. The detection score uses the dispersion of the filtered coadd. A mesh of 48-pixel median sky estimates is bilinearly interpolated and subtracted.
 2. A Fourier-domain matched filter uses axial top hats of 6 and 10 arcsec, an observed transverse Gaussian FWHM of 0.20 arcsec, and negative flanking templates displaced by 2.5 FWHM. The tested unoriented angles uniformly span 180 degrees, with angular spacing at most 1.25 FWHM/length radians. For each filter the response is centered on its median and divided by the interquartile range / 1.349 on a grid of valid interior pixels. A threshold of six is a ranking cut. The correlated noise and trials over position, angle and scale preclude a Gaussian false-alarm interpretation.

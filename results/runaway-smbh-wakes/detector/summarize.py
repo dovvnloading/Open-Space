@@ -6,6 +6,7 @@ import gzip
 import io
 import json
 import math
+import sys
 from pathlib import Path
 from collections import Counter, defaultdict
 
@@ -16,6 +17,8 @@ from scipy.ndimage import distance_transform_edt, map_coordinates
 from scipy.spatial import cKDTree
 
 from wake_image import ImagePlane
+sys.path.insert(0,str(Path(__file__).resolve().parent.parent))
+from replay_guard import absolute_external,verify_seal,frozen_tiles,validate_cutouts,fresh_output
 
 
 def save_rows(path, rows, fields=None):
@@ -36,7 +39,12 @@ def main():
     p.add_argument("--images",type=Path,required=True)
     p.add_argument("--out",type=Path,required=True)
     a = p.parse_args()
-    a.out.mkdir(exist_ok=True,parents=True)
+    a.runs=absolute_external(a.runs);a.images=absolute_external(a.images)
+    verify_seal(a.runs,'combined')
+    validate_cutouts(a.images,frozen_tiles(Path(__file__).resolve().parent.parent/'euclid/q1_tiles.csv'))
+    out=absolute_external(a.out)
+    if out==a.runs or a.runs in out.parents or out in a.runs.parents:raise ValueError('run/output overlap')
+    a.out=fresh_output(a.images,out)
     coverage,segments,trials,short = [],[],[],[]
     centers = []
     for f in sorted(a.runs.glob("*_search.json")):

@@ -6,6 +6,7 @@ import io
 import json
 import os
 import time
+import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from urllib.parse import urlencode
@@ -18,6 +19,8 @@ import pyarrow.fs as afs
 import pyarrow.parquet as pq
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0,str(HERE.parent))
+from replay_guard import fresh_dirs
 S3 = 'https://nasa-irsa-euclid-q1.s3.us-east-1.amazonaws.com/'
 PREFIX = 'contributed/q1/merged_objects/hats/euclid_q1_merged_objects-hats/'
 CUTS = ['mer_vis_det', 'mer_ellipticity', 'mer_semimajor_axis']
@@ -63,8 +66,7 @@ def inspect(item,cache,filesystem=None):
     name=key.split('/Npix=')[1].replace('/','_')+'.json'
     part=cache/name
     if part.exists():
-        prev=json.loads(part.read_text())
-        if prev['etag']==etag:return prev
+        raise FileExistsError('partition checkpoint already exists: '+str(part))
     if filesystem is None:
         f=RangeFile(S3+key,size,etag)
     else:
@@ -107,9 +109,10 @@ def table(path,rows,fields):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--cache',type=Path,required=True)
+    p.add_argument('--out',type=Path,required=True)
     p.add_argument('--workers',type=int,default=6)
     p.add_argument('--transport',choices=['native','ranges'],default='native')
-    a=p.parse_args();a.cache.mkdir(exist_ok=True,parents=True)
+    a=p.parse_args();a.cache,a.out=fresh_dirs(a.cache,a.out)
     listurl=S3+'?'+urlencode({'list-type':2,'prefix':PREFIX+'dataset/Norder'})
     _,_,raw=download(listurl);root=ET.fromstring(raw)
     assert root.find('{*}IsTruncated').text=='false'
@@ -132,17 +135,17 @@ def main():
     records.sort(key=lambda r:r['key'])
     for r in records:assert expected[r['key'].split('dataset/')[1].rsplit('/',1)[0]]==r['n']
     rows=sorted([s for r in records for s in r['selected']],key=lambda s:s['object_id'])
-    table(HERE/'hats_selected.csv',rows,COLUMNS)
-    table(HERE/'hats_partitions.csv',[{k:r[k] for k in ('key','bytes','etag','n','n_vis','n_selected')} for r in records],
+    table(a.out/'hats_selected.csv',rows,COLUMNS)
+    table(a.out/'hats_partitions.csv',[{k:r[k] for k in ('key','bytes','etag','n','n_vis','n_selected')} for r in records],
           ['key','bytes','etag','n','n_vis','n_selected'])
     import gzip
-    with (HERE/'hats_ranges.jsonl.gz').open('wb') as dest, gzip.GzipFile(fileobj=dest,mode='wb',mtime=0) as gz:
+    with (a.out/'hats_ranges.jsonl.gz').open('wb') as dest, gzip.GzipFile(fileobj=dest,mode='wb',mtime=0) as gz:
         for r in records:
             gz.write((json.dumps({'key':r['key'],'ranges':r['ranges'],'projected_ipc_sha256':r.get('projected',[])},separators=(',',':'))+'\n').encode())
     report=dict(list_url=listurl,list_sha256=SHA(raw),partition_info_url=S3+PREFIX+'partition_info.csv',partition_info_sha256=SHA(meta),
                 expected_partitions=len(expected),partitions=len(records),n=sum(r['n'] for r in records),
                 n_vis=sum(r['n_vis'] for r in records),n_selected=len(rows),unique_selected_ids=len({s['object_id'] for s in rows}))
-    (HERE/'hats_summary.json').write_text(json.dumps(report,indent=2)+'\n')
+    (a.out/'hats_summary.json').write_text(json.dumps(report,indent=2)+'\n')
     print(report,flush=True)
 
 if __name__=='__main__':main()

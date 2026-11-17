@@ -7,6 +7,8 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 import subprocess
 import sys
+sys.path.insert(0,str(Path(__file__).resolve().parent.parent))
+from replay_guard import frozen_tiles,validate_cutouts,fresh_output,absolute_external,seal
 
 LARGE = {"102020065","102022484","102044820","102159484"}
 
@@ -28,11 +30,13 @@ def main():
     p.add_argument("--input-dir",type=Path,required=True)
     p.add_argument("--out",type=Path,required=True)
     p.add_argument("--jobs",type=int,default=3)
-    p.add_argument("--replace",action="store_true")
     a=p.parse_args()
-    a.out.mkdir(parents=True,exist_ok=True)
+    a.input_dir=absolute_external(a.input_dir)
+    frozen_tiles(a.tiles)
     with a.tiles.open() as f:
         tasks = select(list(csv.DictReader(f)))
+    validate_cutouts(a.input_dir,[t for t,_,_ in tasks])
+    a.out=fresh_output(a.input_dir,a.out)
     with (a.out/"injection_sample.csv").open("w") as f:
         w = csv.writer(f,lineterminator="\n")
         w.writerow(["tile","trials_per_bin","selection"])
@@ -42,8 +46,10 @@ def main():
         im = a.input_dir/f"{t}_VIS.fits"
         mask = a.input_dir/f"{t}_rms.fits"
         out = a.out/f"{t}_inject.json"
-        if not (im.exists() and mask.exists()) or (out.exists() and not a.replace):
-            return
+        if not (im.exists() and mask.exists()):
+            raise FileNotFoundError(t)
+        if out.exists():
+            raise FileExistsError(out)
         cmd = [sys.executable,str(Path(__file__).with_name("wake_search.py")),
                "inject",str(im),"--mask",str(mask),"--mask-type","rms","--ignore-zero",
                "--scale",".1","--zeropoint","24.6","--trials",str(n),"--seed",t,
@@ -51,6 +57,7 @@ def main():
         subprocess.run(cmd,check=True)
     with ThreadPoolExecutor(a.jobs) as pool:
         list(pool.map(execute,tasks))
+    seal(a.out,"calibration")
 
 
 if __name__ == "__main__":
