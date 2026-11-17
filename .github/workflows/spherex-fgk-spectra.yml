@@ -1,0 +1,82 @@
+name: SPHEREx follow-up of the complete published FGK list
+on:
+  push:
+    branches: [research/spherex-waste-heat]
+    paths: [.github/workflows/spherex-fgk-spectra.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: spherex-fgk-spectra
+  cancel-in-progress: false
+
+jobs:
+  measure:
+    if: github.ref == 'refs/heads/research/spherex-waste-heat'
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    defaults:
+      run:
+        shell: bash
+        working-directory: results/spherex-waste-heat/fgk_spectra
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/spherex-waste-heat
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy>=2' astropy
+      - name: Select all remaining source IDs and their Gaia comparisons
+        run: python run.py select
+      - name: Measure FITS cubes and screen WISE comparison colors
+        run: |
+          python run.py controls > "$RUNNER_TEMP/fgk-controls.log" 2>&1 &
+          controls_pid=$!
+          python run.py extract --cache "$RUNNER_TEMP/fgk-stamps"
+          wait "$controls_pid" || { cat "$RUNNER_TEMP/fgk-controls.log"; exit 1; }
+      - name: Summarize all 53 published source IDs
+        run: |
+          # The original comparison table can arrive on the branch from the
+          # independent full-input replay while this added scope is running.
+          git fetch origin research/spherex-waste-heat
+          prior_file="$RUNNER_TEMP/prior_comparisons.csv"
+          if ! git show FETCH_HEAD:results/spherex-waste-heat/spectra/comparison_wise.csv > "$prior_file"; then
+            python - "$prior_file" <<'PY'
+          import sys
+          from pathlib import Path
+          from concurrent.futures import ThreadPoolExecutor
+          from run import SPX, read_rows, retrieve, retry, write_csv
+          peers=[r for r in read_rows(SPX/"positions_fgk.csv") if "_cmp" in r["label"]]
+          with ThreadPoolExecutor(4) as pool: results=list(pool.map(lambda r:retry(retrieve,r),peers))
+          write_csv(Path(sys.argv[1]),[r for r,_ in results])
+          PY
+          fi
+          python run.py summarize --prior-controls "$prior_file"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: full-FGK-spectrum-data
+          path: |
+            results/spherex-waste-heat/fgk_spectra/*.csv
+            results/spherex-waste-heat/fgk_spectra/*.json
+            results/spherex-waste-heat/fgk_spectra/cube_receipts/
+      - name: Publish only the additional dataset
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- *.csv *.json cube_receipts
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Measure the remaining published FGK fields and record the full 53-star comparison'
+          for attempt in 1 2 3 4; do
+            git fetch origin research/spherex-waste-heat
+            git rebase FETCH_HEAD
+            if git push origin HEAD:research/spherex-waste-heat; then exit 0; fi
+            sleep "$((attempt * 3))"
+          done
+          exit 1
