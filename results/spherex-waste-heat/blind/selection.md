@@ -1,0 +1,9 @@
+# Blind pilot selection frozen before examining colors
+
+Use the 2.0-degree spherical cap centered on ICRS (180.0°, +30.0°), inside the all-sky DR1 footprint and the northern optical imaging footprint. The site was chosen for a simple high-Galactic-latitude field, independently of any catalogued excess. Flag the footprint as WISE-selected; availability of DR1 channels is per source.
+
+Retrieve Gaia DR3 parallax ≥ 1000/300 mas, parallax/error ≥ 10, G < 17, 0.5 ≤ BP−RP ≤ 3.5. Require nonduplicated solutions, RUWE < 1.4, and a color–absolute-magnitude main-sequence window. Flag cuts and unmatched objects in the denominator. Cross-match the official Gaia DR3 AllWISE association and require a unique match without mates. Filter saturation, WISE artifacts, extended sources, and poor profile fits. Screen W1−W3 and W1−W4 only; retain WISE nondetections as censored unless signed flux/error are available. Source association at W1/W2 need not hold in the much larger W4 beam.
+
+Use leave-one-out median photospheric colors of comparable stars matched in BP−RP and apparent W1. Apply a 5σ excess threshold and ≥0.25 mag color excess. Retain the matched-control IDs. Inject 100, 200, 300, 400, 500 and 600 K blackbodies into the controls and rerun selection. Quantify recovery conditional on actual usable photometry, and report any untested population separately. Record the assumptions in the report. No optical-dimming, dust, companion, or confusion exclusion follows from this screen.
+
+For any surviving excess, explicitly inspect Gaia and WISE neighborhoods, SIMBAD classifications and Legacy Survey/unWISE images before inferring an intrinsic excess; require independent optical epochs and spectroscopy to assess a featureless emitter.
