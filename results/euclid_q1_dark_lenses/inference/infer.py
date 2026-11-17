@@ -34,7 +34,7 @@ def write(path, rows):
         w = csv.DictWriter(f, fieldnames=list(rows[0]), lineterminator='\n')
         w.writeheader()
         for row in rows:
-            w.writerow({k: (f'{v:.7g}' if isinstance(v, (float, np.floating)) and np.isfinite(v)
+            w.writerow({k: ((f'{v:.9f}' if k in ('ra','dec','ra_deg','dec_deg','ra_center','dec_center') else f'{v:.7g}') if isinstance(v, (float, np.floating)) and np.isfinite(v)
                             else '' if isinstance(v, (float, np.floating)) else v) for k, v in row.items()})
 
 
