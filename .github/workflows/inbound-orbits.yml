@@ -1,14 +1,17 @@
 name: Inbound orbit refits
 on:
-  push:
-    branches: [research/inbound-hyperbolic-search]
+  pull_request:
     paths:
       - 'results/inbound-hyperbolic-search/orbits/*.py'
       - '.github/workflows/inbound-orbits.yml'
+concurrency:
+  group: inbound-orbits-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
   refit:
+    if: github.head_ref == 'research/inbound-hyperbolic-search'
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
