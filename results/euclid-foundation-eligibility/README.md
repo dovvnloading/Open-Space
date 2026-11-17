@@ -1,5 +1,7 @@
 # Euclid DR1-Foundation: bounded visit eligibility check
 
+**Update:** [Layering-table follow-up](followup/README.md) recovered three point-covered, pairwise-disjoint exposure sets and a provisional visit sequence. The text below records the earlier SIA-only result.
+
 The IRSA image service returns **21 VIS science mosaics** intersecting a 10-arcsecond circle at ICRS RA 273.1670 degrees, Dec 64.3687 degrees in the Euclid Deep Field North. They have 21 distinct archive observation IDs across two overlapping mosaic tiles. None has both time bounds populated in the returned SIA metadata. This does not demonstrate 21 independent visits: overlapping tiles and coadds can share exposures. The number of eligible three-visit sets is **unknown**, not zero.
 
 This is an archive eligibility result, not an astrophysical discovery or a variability measurement. We did not run a source search. The precondition for freezing a disjoint third-visit holdout has not been established, and no sensitivity or false-alarm result is claimed. A download of pixel cutouts would not by itself establish independence.
@@ -23,3 +25,4 @@ python results/euclid-foundation-eligibility/replay.py
 ```
 
 The standard-library script reads the frozen VOTable and headers and regenerates `inventory.csv` and `summary.json`. Verify the deposited bytes with `SHA256SUMS`. The raw SIA response is a service snapshot, not all Euclid coverage, and the outputs can change if the live archive is queried again. The archive's [DR1-Foundation supplement](https://euclid.esac.esa.int/dr/dr1/expsup/) describes the release and its multiple deep-field passes.
+
