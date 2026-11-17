@@ -4,16 +4,15 @@ This replay keeps the original nine-object input set intact. Freeze each newly
 acquired measurement set and report failures without replacing them with catalogue orbits.
 """
 import base64
-import csv
 import gzip
 import hashlib
-import io
 import json
 from pathlib import Path
 import sys
 import urllib.parse
 
 import numpy as np
+from scipy.integrate import solve_ivp
 from jplephem.spk import SPK
 
 ROOT = Path(__file__).resolve().parent
@@ -62,21 +61,40 @@ def observations(obj,name,packed,receipts):
     return {"source":source,"sha256":hashlib.sha256(b).hexdigest(),"records":len(lines),
             "start_date":min(l[15:32] for l in lines).strip(),"end_date":max(l[15:32] for l in lines).strip()}
 
-def initial_state(obj,spk,epoch,receipts):
-    params={"format":"json","COMMAND":"'"+spk+"'","OBJ_DATA":"NO","EPHEM_TYPE":"VECTORS",
-            "CENTER":"'500@0'","TLIST":f"'{epoch:.8f}'","CSV_FORMAT":"YES","REF_PLANE":"FRAME",
-            "VEC_TABLE":"2","OUT_UNITS":"AU-D","VEC_CORR":"NONE"}
-    url="https://ssd.jpl.nasa.gov/api/horizons.api?"+urllib.parse.urlencode(params)
-    wire=acquire.retrieve(url,obj+"-seed.json",receipts)
-    text=json.loads(wire)["result"]
-    row=next(csv.reader(io.StringIO(text.split("$$SOE")[1].split("$$EOE")[0].strip())))
-    return np.array([float(x) for x in row[2:8]])
+def initial_state(obj,spk,epoch,eph,receipts):
+    """Prefer a designation query; a catalogue conic is only a starting point."""
+    try:
+        return fit.seed(obj,epoch,receipts)
+    except (ValueError,KeyError,IndexError,OSError) as exc:
+        print("Horizons designation seed unavailable",obj,str(exc)[:200])
+    url="https://ssd-api.jpl.nasa.gov/sbdb.api?"+urllib.parse.urlencode({"sstr":spk,"full-prec":"1"})
+    doc=json.loads(acquire.retrieve(url,obj+"-sbdb.json",receipts))
+    orb=doc["orbit"]; el={v["name"]:float(v["value"]) for v in orb["elements"] if v.get("value") is not None}
+    O,w,inc=np.deg2rad([el["om"],el["w"],el["i"]])
+    c,s=np.cos,np.sin
+    p=np.array([c(w)*c(O)-s(w)*s(O)*c(inc),c(w)*s(O)+s(w)*c(O)*c(inc),s(w)*s(inc)])
+    q=np.array([-s(w)*c(O)-c(w)*s(O)*c(inc),-s(w)*s(O)+c(w)*c(O)*c(inc),c(w)*s(inc)])
+    eps=np.deg2rad(23.439291111)
+    rot=np.array([[1,0,0],[0,c(eps),-s(eps)],[0,s(eps),c(eps)]])
+    state=np.r_[rot@(p*el["q"]),rot@(q*np.sqrt(fit.prior.GM*(1+el["e"])/el["q"]))]
+    t0=float(orb["epoch"]); tp=el["tp"]
+    def two_body(t,y): return np.r_[y[3:],-fit.prior.GM*y[:3]/np.linalg.norm(y[:3])**3]
+    if t0!=tp:
+        solution=solve_ivp(two_body,(tp,t0),state,method="DOP853",rtol=1e-12,atol=1e-13)
+        if not solution.success: raise ValueError(solution.message)
+        state=solution.y[:,-1]
+    a,b=eph[0,10].compute_and_differentiate(t0)
+    state+=np.r_[a,b]/fit.AU
+    if epoch!=t0:
+        ep=fit.ephemeris(eph,min(t0,epoch)-2,max(t0,epoch)+2,.5)
+        state=fit.integrate(state,t0,epoch,ep,dense=False).y[:6,-1]
+    return state
 
 def measure(obj,name,packed,spk,eph,receipts,entry):
     entry["input"]=observations(obj,name,packed,receipts)
     t,observers,east,north,sig,groups,rejected=fit.observations(obj,eph)
     epoch=float(np.ceil(max(t))+1)
-    seed=initial_state(obj,spk,epoch,receipts)
+    seed=initial_state(obj,spk,epoch,eph,receipts)
     positions=fit.ephemeris(eph,min(t)-fit.OBS_TIME_LIMIT-2,epoch+1,.25)
     entry.update(supported=len(t),n_station_nights=len(set(groups)),selection_rejections=rejected,
                  fit_epoch_jd_tdb=epoch,initial_state=seed.tolist(),models={})
@@ -119,5 +137,7 @@ def main():
     (OUT/"results.json").write_bytes(b)
     archive("results.json.gz",b)
     print("SLOW_QUERIES",json.dumps(receipts),flush=True)
+    if not any("boundaries" in m for row in rows.values() for m in row.get("models",{}).values()):
+        raise RuntimeError("No fitted trajectory reached an integration endpoint")
 
 if __name__=="__main__": main()
