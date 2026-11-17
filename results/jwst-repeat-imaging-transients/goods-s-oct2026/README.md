@@ -1,6 +1,6 @@
 # GOODS-S · the October 2026 repeat
 
-**One nuclear brightening merits further follow-up.** At (53.188672°, −27.812554°), site **185** coincides within 0.005″ with JADES DR2 galaxy 103607. Independent F277W measurements in a 0.15″-radius aperture cluster around 49–52 nJy between 2022 and late 2025. The October 2026 measurement is 70.07 ± 1.81 nJy. The annual difference is positive and centrally concentrated in five filters. An AGN fluctuation and a transient projected on the nucleus remain viable. No classification spectrum or transient redshift is established here. A second, weaker nuclear variation carries substantial dither scatter. Neither site demonstrates a redshift above five.
+**GOODS-S 185 is an unclassified nuclear brightening that merits further follow-up.** At (53.188672°, −27.812554°), site **185** coincides within 0.005″ with JADES DR2 galaxy 103607. Independent F277W measurements in a 0.15″-radius aperture cluster around 49–52 nJy between 2022 and late 2025. The October 2026 measurement is 70.07 ± 1.81 nJy. The annual difference is positive and centrally concentrated in five filters. An AGN fluctuation and a transient projected on the nucleus remain viable. No classification spectrum or transient redshift is established here. A second, weaker nuclear variation carries substantial dither scatter. Neither site demonstrates a redshift above five.
 
 ![Site 185 and its multiyear light curve](goods-185.png)
 
