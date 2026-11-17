@@ -1,4 +1,5 @@
 """Refit MPC comet observations by designation using a separately compiled Find_Orb."""
+import argparse
 import base64
 import collections
 import concurrent.futures
@@ -106,7 +107,10 @@ def fit(part):
     with tempfile.TemporaryDirectory() as d:
         stage = Path(d)
         inp = stage/"observations.mpc"
-        inp.write_bytes(raw)
+        unpenalized=os.environ.get("FO_UNPENALIZED","0")=="1"
+        staged=(b"#interstellar\n" if unpenalized else b"")+raw
+        inp.write_bytes(staged)
+        meta.update(unpenalized_initial_hyperbola=unpenalized,staged_sha256=hashlib.sha256(staged).hexdigest())
         # Unique output directory avoids reuse of another object's results.
         cmd = [str(FITTER), str(inp), "-i", "-h-1", "-tEjd"+str(target),
                "-O"+d, "-r18,20", "PERTURBERS=7fe", "JSON_SHORT_ELEMENTS="+d+"/solution.json",
@@ -132,43 +136,50 @@ def fit(part):
             return {**meta,"status":"unusable fit output","diagnostic":str(exc)}
 
 
-def main():
+def download_source(directory):
+    directory.mkdir(exist_ok=True,parents=True)
+    request=Request(SOURCE, headers={"User-Agent":"Open-Space-public-astrometry-research/1"})
+    path=directory/"CmtObs.txt.gz"
+    with urlopen(request,timeout=150) as response,path.open("wb") as out:
+        digest=hashlib.sha256()
+        for chunk in iter(lambda:response.read(1<<20),b""):
+            out.write(chunk)
+            digest.update(chunk)
+        receipt={"mpc_url":response.url,"http_date":response.headers.get("Date"),
+                 "last_modified":response.headers.get("Last-Modified"),"bytes":out.tell(),
+                 "sha256_compressed":digest.hexdigest()}
+    (directory/"source.json").write_text(json.dumps(receipt,indent=2)+"\n")
+
+
+def main(source_dir,shard,parts):
     rows, caturl, cathash = cat()
     keys = collections.defaultdict(set)
     for row in rows:
         for k in aliases(row):
             keys[k].add(row["spkid"])
     grouped = collections.defaultdict(list)
-    req = Request(SOURCE, headers={"User-Agent":"Open-Space-public-astrometry-research/1"})
-    with urlopen(req, timeout=150) as response, tempfile.TemporaryFile() as fp:
-        digest = hashlib.sha256()
-        nbytes = 0
-        for chunk in iter(lambda: response.read(1<<20), b""):
-            fp.write(chunk)
-            digest.update(chunk)
-            nbytes += len(chunk)
-        fp.seek(0)
-        n = 0
-        ambiguous = 0
-        with gzip.GzipFile(fileobj=fp) as records:
-            for line in records:
-                n += 1
-                num, prov = line[:5].decode("ascii","replace").strip(), line[5:12].decode("ascii","replace").strip()
-                ids = keys.get(prov, set()) if prov else keys.get(num,set())
-                if len(ids) == 1:
-                    grouped[next(iter(ids))].append(line)
-                elif len(ids) > 1:
-                    ambiguous += 1
-        receipt = {"mpc_url":response.url,"http_date":response.headers.get("Date"),
-                   "last_modified":response.headers.get("Last-Modified"),"bytes":nbytes,"sha256_compressed":digest.hexdigest(),
-                   "total_input_lines":n,"ambiguous_input_lines":ambiguous,"matched_ids":len(grouped),
-                   "catalogue_url":caturl,"catalogue_sha256":cathash,
-                   "kernel_sha256":hashlib.sha256((Path.home()/".find_orb/linux_p1550p2650.430t").read_bytes()).hexdigest()}
+    source=source_dir/"CmtObs.txt.gz"
+    receipt=json.loads((source_dir/"source.json").read_text())
+    if hashlib.sha256(source.read_bytes()).hexdigest()!=receipt["sha256_compressed"]:
+        raise ValueError("MPC snapshot checksum mismatch")
+    n=ambiguous=0
+    with gzip.open(source,"rb") as records:
+        for line in records:
+            n+=1
+            num,prov=line[:5].decode("ascii","replace").strip(),line[5:12].decode("ascii","replace").strip()
+            ids=keys.get(prov,set()) if prov else keys.get(num,set())
+            if len(ids)==1:
+                grouped[next(iter(ids))].append(line)
+            elif len(ids)>1:
+                ambiguous+=1
+    receipt.update(total_input_lines=n,ambiguous_input_lines=ambiguous,matched_ids=len(grouped),
+                   catalogue_url=caturl,catalogue_sha256=cathash,
+                   kernel_sha256=hashlib.sha256((Path.home()/".find_orb/linux_p1550p2650.430t").read_bytes()).hexdigest())
     print("INPUT", json.dumps(receipt), flush=True)
     (OUT/"inputs.json").write_text(json.dumps(receipt,indent=2)+"\n")
     # Examine strongly hyperbolic and usable recent arcs first; every row receives a disposition.
     rows.sort(key=lambda r: -((float(r["e"])-1)/float(r["q"])))
-    ids = [(r,grouped[r["spkid"]]) for r in rows]
+    ids = [(r,grouped[r["spkid"]]) for r in rows[shard::parts]]
     output = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
         for index, obj in enumerate(pool.map(fit,ids),1):
@@ -182,11 +193,28 @@ def main():
         w.writerows(output)
     states = collections.Counter(r["status"] for r in output)
     print("STATUS",dict(states),flush=True)
-    for p in sorted(OUT.iterdir()):
+    for p in (OUT/"inputs.json",OUT/"refits.csv"):
         # The compressed tables can be deposited from a read-only runner.
         data = gzip.compress(p.read_bytes(),mtime=0)
-        print("ARCHIVE",p.name+".gz",base64.b64encode(data).decode())
+        encoded=base64.b64encode(data).decode()
+        for start in range(0,len(encoded),4000):
+            print("ARCHPART",p.name+".gz",start,encoded[start:start+4000])
 
 
 if __name__ == "__main__":
-    main()
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--download-source",type=Path)
+    parser.add_argument("--source",type=Path)
+    parser.add_argument("--shard",type=int,default=0)
+    parser.add_argument("--parts",type=int,default=1)
+    args=parser.parse_args()
+    if args.download_source:
+        download_source(args.download_source)
+    elif not 0<=args.shard<args.parts:
+        parser.error("invalid shard number")
+    elif args.source:
+        main(args.source,args.shard,args.parts)
+    else:
+        with tempfile.TemporaryDirectory() as tmp:
+            download_source(Path(tmp))
+            main(Path(tmp),args.shard,args.parts)
