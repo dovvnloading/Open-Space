@@ -53,6 +53,30 @@ def check(root):
         assert sum(int(t['recovered']) for t in group)==int(r['recovered'])
         assert int(r['trials'])==50 and r['target'] in accepted
         assert all(int(t['recovered'])==int(bool(t['first_visit_index'])) for t in group)
+        # Rebuild the compatible-host numerator from the original blind search.
+        m = accepted[r['target']]
+        period, radius = key(r)[1:]
+        mass, rs = m['mass_solar'], m['radius_solar']*6.957e8
+        a = (1.3271244e20*mass*(period*86400/(2*math.pi))**2)**(1/3)
+        g = (rs + radius*6.3781e6)/a
+        assert math.isclose(float(r['geometry_probability']), g, rel_tol=1e-12)
+        max_width = period*math.asin(g)/math.pi
+        cycles = math.floor((m['end_btjd']-m['start_btjd'])/period)
+        tolerance = max_width + 2*m['cadence_s']/86400
+        eligible = any(cycles*abs(x['period_days']-period) <= tolerance
+                       for x in m['search']['periodic'])
+        assert int(eligible) == int(r['possible_host'])
+        key_bytes = f"{r['target']}|{period:.12g}|{radius:.12g}|337109".encode()
+        seed = int.from_bytes(hashlib.sha256(key_bytes).digest()[:8], 'big')
+        rng = np.random.default_rng(seed)
+        for trial in sorted(group, key=lambda t: int(t['trial'])):
+            epoch = m['start_btjd']+rng.random()*period
+            impact = rng.random()
+            assert abs(epoch-float(trial['epoch_btjd'])) < 1e-10
+            assert impact == float(trial['impact_fraction'])
+            fraction = g*math.sqrt((1-impact**2)/(1-(g*impact)**2))
+            duration = period*1440*math.asin(fraction)/math.pi
+            assert math.isclose(duration, float(trial['duration_min']), rel_tol=1e-10)
     for cell in json.loads((root/'extension_limits.json').read_text()):
         rows=[r for r in summaries if key(r)[1:]==(cell['period_days'],cell['radius_earth'])]
         n=len(rows)
@@ -78,6 +102,29 @@ def check(root):
                 assert tail >= .025-1e-12
             else:
                 assert math.isclose(tail,.025,rel_tol=1e-8)
+    # Reconcile the separate aggregation method using only the trial ledger.
+    for cell in json.loads((root/'weighted_bounds.json').read_text()):
+        groups = {target: group for (target, period, radius), group in trials.items()
+                  if (period, radius) == (cell['period'], cell['radius_earth'])}
+        assert set(groups) == set(accepted)
+        assert cell['targets'] == len(groups) and cell['possible'] == 0
+        summary = {r['target']: r for r in summaries if key(r)[1:] == (cell['period'], cell['radius_earth'])}
+        assert all(int(r['possible_host']) == 0 for r in summary.values())
+        for label in ('transiting', 'intrinsic'):
+            mean, variance_scale = 0., 0.
+            for target, group in groups.items():
+                weight = 1. if label == 'transiting' else float(summary[target]['geometry_probability'])
+                mean += weight*sum(int(t['recovered']) for t in group)/len(group)
+                variance_scale += weight**2/len(group)
+            penalty = math.sqrt(-.5*variance_scale*math.log(.005))
+            floor = max(0., mean-penalty)
+            result = cell[label]
+            assert math.isclose(mean, result['effective_stars'])
+            assert math.isclose(penalty, result['mc_penalty'])
+            assert math.isclose(floor, result['mc_lower'])
+            f = result['upper95']
+            tail = (1.-(1. if f is None else f)*floor/len(groups))**len(groups)
+            assert tail >= .045 if f is None else math.isclose(tail, .045, rel_tol=1e-10)
     print(f'Checked {len(roster)} parent records, {len(accepted)} independent stars and {sum(map(len,trials.values()))} injections.')
 
 
