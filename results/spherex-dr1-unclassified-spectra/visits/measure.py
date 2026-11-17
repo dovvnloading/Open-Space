@@ -199,6 +199,8 @@ def run(args):
             rows=list(pool.map(lambda r:fetch_one(r,ra,dec,center,scale,cache,maps),records))
         if args.replay_dir:
             for row,original in zip(rows,receipts):
+                if 'selection_reason' in original:
+                    row['selection_reason']=original['selection_reason']
                 expected=original.get('sha256')
                 if expected and row.get('sha256')!=expected:
                     row['status']='archive_bytes_changed_or_unavailable'
