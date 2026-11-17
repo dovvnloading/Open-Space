@@ -75,6 +75,10 @@ def invoke(service, params, page_size=5000):
 
 
 def image_mode(row):
+    # Shuttered darks, biases and lamp calibrations can inherit a nearby
+    # telescope pointing, including the preceding planet's sky coordinates.
+    if str(row['target_name']).upper() in {"DARK", "DARK-NM", "DARK-EARTH-CALIB", "BIAS", "TUNGSTEN"}:
+        return False
     instr = row["instrument_name"].upper().split("/")[0]
     return (instr in {"WFC3", "MIRI", "NIRCAM", "NIRISS"} and
             row["dataproduct_type"] == "image")
