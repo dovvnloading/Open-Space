@@ -59,6 +59,10 @@ The central comparison uses AllWISE and the authors' predicted stellar W1/W2 flu
 
 A source-by-source [literature disposition ledger](literature/fgk_dispositions.md) records the ten Hephaistos and 53 Contardo–Hogg follow-ups, their established natural explanations, and the distinction between measured spectral redness and physical attribution.
 
+## Independent referee replay and acceptance
+
+The [independent referee report](REFEREE.md) records the completed input-hash audit, 40 verified HTTP 200 WISE receipts, 23 offline-replayed derived tables, fresh byte-range FITS re-extractions and outcome of the 48 additional FGK tiles. All three [referee workflow jobs](https://github.com/dovvnloading/Open-Space/actions/runs/44038729766) passed, including the 14,688-channel full extension. This is an audit of the deposited computations and their reproducibility, not a new source-resolved identification or a scientific claim beyond the bounded null.
+
 ## Pending validation and scope
 
 The source spectrum of a subarcsecond interloper is inseparable from the M dwarf in a 19 arcsec DR1 aperture. Candidate-level dust or companion exclusion requires source-resolved mid-infrared photometry or spectroscopy, independent epochs and a photospheric model with quantified systematics. A low RUWE does not exclude all companions. SPHEREx DR1 combines scans into a single coadded spectrum at each position: this is **not a test of independent SPHEREx visits or infrared temporal stability**. The two unresolved 708 pc and 529 pc warm FGK sightlines each have one qualifying final-year NEOWISE visit per band. A sparse optical time series cannot exclude permanent dimming or dips between visits. No population rate or artificial-source claim follows from this study.

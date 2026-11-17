@@ -18,8 +18,10 @@
 
 ## Independent replay receipts
 
-- [Referee workflow, offline and fresh-tile jobs](https://github.com/dovvnloading/Open-Space/actions/runs/44038729766) — the `offline` and `fresh` jobs completed successfully using [referee_review.py](referee_review.py). The offline stage replays 23 derived products and confirms input receipts; the fresh stage performs independent FITS reads and reconstructs the original, warm and blind spectra.
-- The same workflow includes a separate **48-tile full FGK replay**. **Pending at this revision:** independent full-extension byte-by-byte receipt and 14,688-channel comparison. This stage does not alter the established 5/13/35 dispositions unless its data disagree.
+- [Referee workflow, offline and fresh-tile jobs](https://github.com/dovvnloading/Open-Space/actions/runs/44038729766) — all three (`offline`, `fresh`, `full_fgk`) jobs completed successfully using [referee_review.py](referee_review.py). The offline stage replays 23 derived products and confirms input receipts; the fresh stage performs independent FITS reads and reconstructs the original, warm and blind spectra.
+- **Full FGK independent extension passed** in the same workflow. New HTTP 206 byte-range reads independently retrieved **48 complete order-5 FITS tiles**, matching every archived FITS SHA-256, size, ETag and pipeline/epoch field. The full 144 positions (48 literature targets and 96 matched stars) yielded **14,688 spectral channels**. The four reduction tables and combined 53-star disposition/count tables all reproduced, for **six derived tables**, preserving the 5/13/35 split. [Referee full-extension job](https://github.com/dovvnloading/Open-Space/actions/runs/44038729766/job/133887835967) · [48 FITS hash receipts](fgk_spectra/cube_receipts/).
+
+**Three reproducible referee outputs:** [offline input and count replay](https://github.com/dovvnloading/Open-Space/actions/runs/44038729766/job/133887836261), [fresh initial/warm/blind tiles](https://github.com/dovvnloading/Open-Space/actions/runs/44038729766/job/133887836228), and [48 additional FGK tiles](https://github.com/dovvnloading/Open-Space/actions/runs/44038729766/job/133887835967). The workflow retains JSON artifacts for the measured coverage, without putting the full raw FITS objects into Git.
 
 ## Remaining scientific checks
 
