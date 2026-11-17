@@ -1,0 +1,91 @@
+# Independent referee audit — Gaia DR3 NSS compact-companion screen
+
+**Disposition: research screen and orbital measurements only; not a compact-object discovery.** Reviewed 16 November 2026. The [repository finding bar](../../docs/REMARKABLE_FINDINGS.md) requires a validated discovery-level result, not an exciting conditional mass. **No lead here excludes every luminous alternative.** Neither a \`[REMARKABLE]\` label nor a remarkable-findings log entry is justified.
+
+## Completed checks
+
+1. **Deposited initial screen independently rechecked.** [The offline referee program](referee_replay.py) reads every deposited Gaia IsocLum screen row, verifies each mass-function-to-mass equation, the >1.4 M☉ selection, disjoint source IDs, 984 rows/983 sources, 112 sources >3 M☉, and the primary-mass-table SHA-256. This does **not** pretend the original 167 MB NSS compressed source was deposited.
+2. **FLAME-extension deposited rows rechecked.** Every one of 6,880 selected rows (6,797 source IDs, using FLAME flags 00 and 10) has a self-consistent positive mass function and conditionally inferred M2. Relative to the initial screen the extension contributes 6,750 sources >1.4 M☉ and 271 new sources >3 M☉. The union comprises 7,733 / 383 sources. Note: these are *selection counts under heterogeneous stellar-mass and zero-light assumptions*, not compact-object counts.
+3. **Independent epoch and prior-table accounting.** Recomputed the source IDs and cross-survey quality counts from [coverage.csv.gz](coverage.csv.gz): 568 selected sources with any quality-passing independent RV; 257 with a repeat in the same instrument; of 383 above 3 M☉, 24 / 12 respectively. There are 138 deposited source–solution–instrument external-RV shape comparisons without skipped solutions; those are not a number of independent candidates. All archived original and extension LAMOST compressed CSV response files have been decompressed and their source-query membership, row counts and SHA-256 digests checked against [initial receipts](lamost/raw/receipts.json) and [extension receipts](extension/lamost/raw/receipts.json). The SDSS/DESI visit-table SHA-256 values are in [survey shape receipts](orbit/survey_union_shapes.json).
+4. **HD 264291 independently refitted.** A new CI replay runs the deposited [fit_lamost.py](orbit/fit_lamost.py) into a separate destination, not over frozen data products, and compares every orbital scenario with the deposited posterior. The published central case is Gaia NSS + **100 DR11 LAMOST exposures on 18 nights**: P = **1,007.33 [1,001.83, 1,013.07] days**, mass function **0.384 [0.360, 0.410] M☉**, dark-solution companion **1.770 [1.710, 1.835] M☉**, RV residual RMS **0.6906 km/s**. The last seven nights were held out: predictive RMS **1.199 km/s** and empirical predictive tail fraction **0.471**. On inflated Gaia ×3, RV floor 2 km/s, the companion is **1.766 [1.666, 1.892] M☉**. Replacing the luminous-mass prior with 1.814 ± 0.055 M☉ shifts the inferred companion to **1.706 [1.647, 1.770] M☉**. The comparisons allow minor numerical floating-point differences but never treat a successful convergence as proof of companion darkness. [Input hashes, model and holdout](orbit/lamost_candidate_fits.json) · [Nightly residuals](orbit/lamost_candidate_residuals.csv).
+5. **Other orbital leads and controls reviewed.** Gaia+LAMOST agrees on a roughly **470-day** single-lined orbit for UCAC4 720-033289 with RV mass function **0.640 [0.606, 0.675] M☉**. Its FLAME mass gives edge-on M2,min **3.60 [3.51, 3.69]**, while reducing the primary by 30% gives **2.99 [2.91, 3.06] M☉** and a spectroscopically constrained giant model gives **2.81 [2.65, 2.93] M☉**. Four DESI exposures support a **276-day** Gaia SB1 RV trend for a long-period variable but do not reject an ordinary-star or pulsational explanation. Published Gaia BH1, BH2, NS1 and BH3 fits recover **9.63, 8.93, 1.90 and 33.12 M☉**, respectively; they are designated positive controls, not new discoveries. Two independent Kepler eclipsing-binary cross-checks show how inflated FLAME giant masses can mimic neutron-star candidates. [Fits](orbit/) · [Giant stellar-model tests](extension/followup/MASS.md) · [Seismic reclassifications](vetting/seismic_depth.json).
+6. **Published-ID review.** The initial and extension exact-Gaia-ID matches were compared with Jayasinghe et al. 2023's complete 234-SB1 table, Shahaf et al. 2023, El-Badry et al. 2024 Gaia neutron-star candidates and their earlier comparison IDs, El-Badry et al. 2026 selected BH/NS targets, the Gaia DR3 \`vari_compact_companion\` list, Gaia multiplicity/compact samples, Andrews et al., Stewart et al., and the retrieved Li/Liu/Müller-Horn samples. In all, **1,627** selected sources appear in at least one retrieved prior screening table. Each specific input URL, original bytes and SHA-256 appears in [initial](novelty/inputs.json) and [extension](extension/novelty/inputs.json) receipts; [exact-ID matched rows](novelty/prior_matches.csv) and [extension rows](extension/novelty/prior_matches.csv) permit checking each lead. The initial [nine-source SIMBAD exact-ID result](orbit/candidate_identifications.csv) and [SIMBAD URL/hash](orbit/identification_inputs.json) identify the named bright stars; the [expanded exact-ID query program](simbad_leads.py) attempts all 23 explicitly discussed IDs in separate CI and saves the response/checksum. **A non-match in a finite published table is never a proof of novelty.**
+
+## Standing of named and high-mass leads
+
+The twelve rows below exhaust the **>3 M☉ union with quality-passing repeat RV in one instrument**. “No listed prior-table match” only means absent from the retrieved exact-ID catalogs; it is *not* a negative SIMBAD or literature result. M2 values in the screen are conditional masses or lower bounds, not compact-object identifications.
+
+| Gaia DR3 source | Prior exact-ID screening in deposited tables | Referee standing |
+|---|---|---|
+| 182029303939094784 | Jayasinghe 2023; El-Badry 2026 | Two LAMOST nights, one RV difference; previously selected; companion light untested |
+| **275582835635329024** (UCAC4 720-033289) | No listed prior-table match; SIMBAD “SB*” | Reproducible SB1 orbit; primary mass crosses 3 M☉ criterion; UV/Hα favor luminous companion, not BH |
+| 422991301559494528 | No listed prior-table match | Three LAMOST nights, observed span 0.42 vs predicted 0.59 km/s; weak phase leverage |
+| 460498563758448512 | Jayasinghe 2023 | Four LAMOST nights disagree with nominal orbit (81 vs 247 km/s); **no** physical covariance draw passes p > 0.01; not validated |
+| 878555832642451968 | Jayasinghe 2023; El-Badry 2026 | Three-night RV span disagrees with Gaia model; no physical draw passes; not a compact lead |
+| 1594082579405063168 | Li 2026 printed table; Müller-Horn 2026 RGB parent | APOGEE baseline is 17 days of a long orbit, and constant RV is compatible; prior listed |
+| 2224573745414713984 | No listed prior-table match | Three APOGEE visits at narrow phase range; 30%-lower flagged giant mass moves screen to 2.49 M☉ |
+| **2951241529971223808** (DESI long-period variable) | No listed prior-table match | Independent four-DESI-visit SB1 trend; variable-star period nearly P/2, model-dependent edge-on mass, luminosity unexcluded |
+| 3372818683473351936 | Jayasinghe 2023; El-Badry 2026 | Four-night RV shape strongly rejects catalog orbit (χ² 193.1/3); not validated |
+| 3664684869697065984 | El-Badry 2026; Li 2026 printed sample | Three APOGEE epochs span only 27/1220 days; inconclusive; previously selected |
+| 3998734261904478848 | Jayasinghe 2023; El-Badry 2026 | Two LAMOST nights and uncertain ephemeris; no compact object established |
+| 5713565792393224960 (TYC 6004-1519-1) | No listed prior-table match; SIMBAD “SB*” | APOGEE 26-day trend consistent with orbit; 30%-lower mass reduces 3.24 to 2.64 M☉; luminosity untested |
+
+Additional discussed leads and controls:
+
+| Gaia DR3 source | Prior identification and final standing |
+|---|---|
+| **3378588057203660160** (HD 264291) | SIMBAD A1 IV Sr Si chemically peculiar / emission-line star; no exact match in the ingested Jayasinghe/El-Badry/Gaia NS tables. **Confirmed primary RV orbit, ambiguous companion identity**. A physically allowed close pair of about 0.885+0.885 M☉ normal dwarfs has 3.2% predicted G light, and the actual spectral injection controls do not rule it out; no new neutron star |
+| **1830677037678583680** (HD 192288) | SIMBAD B9 spectroscopic binary. Thirteen flagged APOGEE visits yield nominal RV χ² 189.4/12; acceptable only with an extra 5 km/s floor. A normal 4.05 M☉ dwarf contributes an allowed ~13% of optical light. **Not validated** |
+| **4661290764764683776** (LHA 120-S 80) | SIMBAD B8 Ie emission-line LMC supergiant, already in Gaia DR3 multiplicity, Jayasinghe and El-Badry screening. Flagged APOGEE pair inconsistent with Gaia orbit; **spurious/unvalidated** |
+| 4685960537144695552 | Jayasinghe selection; three APOGEE visits at nearly equal phase, predicted ~0.003 km/s change; **uninformative** |
+| 902085660651149440 (BD+33 1653B) | SIMBAD G0 giant, nine APOGEE nights show variable velocities; ordinary stellar companion not excluded; **orbit support, no compact ID** |
+| 2077800002648034944; 2130638481326861824 | SIMBAD IDs 2MASS J19315429+4232516 and TYC 3546-941-1; **previously known luminous Kepler eclipsing-binary negative controls**, seismically/photometrically overestimated primary masses under FLAME |
+| 4658457941738020736 | SIMBAD WOH S 415 K4 II; included in original name-resolution check, but not promoted to a validated compact lead |
+| 4373465352415301632; 5870569352746779008; 6328149636482597888 | Already **Gaia BH1**, **Gaia BH2** and **Gaia NS1**: prior published control objects, never discoveries from this screen; BH3 is an additional published control |
+
+For every row, see [source-by-source shape/cadence](high_mass_audit.md), [all individual decisions](orbit/CANDIDATES.md), and [SIMBAD archive names](orbit/candidate_identifications.csv). The live expanded SIMBAD exact-ID lookup is a *separate query* rather than a claim that the original nine-name file covered all 23. SIMBAD type “SB*” identifies a spectroscopic binary, not the nature of its companion.
+
+## Provenance: frozen input hashes and query receipts
+
+These are original source-byte receipts, not hashes inferred from regenerated fits.
+
+| Input | Original source location / query | Bytes | SHA-256 |
+|---|---|---:|---|
+| Gaia DR3 NSS two-body CSV gzip | ESA \`Gaia/gdr3/Non-single_stars/nss_two_body_orbit/NssTwoBodyOrbit_1.csv.gz\` (publisher MD5 \`6ca835765e60066bbbeb353a83b749c7\`) | 167,383,676 | \`df1b93069a88b36ae45d299f351eaf7b30edc00b9f959a7023e29214144b36ce\` |
+| Gaia DR3 binary masses gzip | ESA \`Gaia/gdr3/Performance_verification/binary_masses/BinaryMasses-001.csv.gz\` (publisher MD5 \`ec2b0ec0ca54d7ee67a232cf07d4befb\`) | 7,061,656 | \`827da2af9304b5b42ec133304c9059c4c73e32f3f0a5b8dbbaaf537ddba8abcf\` |
+| Gaia DR3 FLAME TAP response | The exact \`SELECT DISTINCT ... WHERE a.mass_flame IS NOT NULL\` query in [extension/depth.json](extension/depth.json) | 12,517,722 | \`b7184e60f49ed05e988beb727cba5aa3381f60962584aa8be001dc397948bd0b\` |
+| HD 264291 NSS covariance CSV | [orbit/lamost_candidate_nss.csv](orbit/lamost_candidate_nss.csv) | see deposited CSV | \`d47f0ec2935678f3061ef24242af7455f45f79c63e0eeb4dc9d5742083c64a57\` |
+| Initial LAMOST quality exposures | [lamost/exposures.csv](lamost/exposures.csv) | see deposited CSV | \`a01a0f69358313a937b2c614402c5bdb15c3c0781d7fe39e503e9f427714ec22\` |
+| Initial screen | [gaia/mass_screen.csv](gaia/mass_screen.csv) | see deposited CSV | \`3d988b369c11e7071787b216c8c4fedc6ebf852c6bb6cd1de5add2ff97a30625\` |
+| FLAME screen | [extension/mass_screen.csv](extension/mass_screen.csv) | see deposited CSV | \`a41e3f97a1d8a2d5a65cce38c9fb7992af5a2ff897661f22511381ca790a213a\` |
+| Giant NSS covariance CSV | [orbit/flame_giant_nss.csv](orbit/flame_giant_nss.csv) | see deposited CSV | \`973165ccca3677c71b4c8d7f22c55015af281cf4a544ce897c0116e05b24a77b\` |
+| Giant LAMOST quality exposures | [extension/lamost/exposures.csv](extension/lamost/exposures.csv) | see deposited CSV | \`8bf51c6e2acdc322e4560537ae8d5d440a94103ec0afb71f427b2dd4275eb966\` |
+| DESI LPV visits | [extension/epochs/desi_visits.csv](extension/epochs/desi_visits.csv) | see deposited CSV | \`7f57515c493892515f027090f2bd1fd8388267032743f54a39b4114de394175c\` |
+| Nine-source SIMBAD names response | Exact Gaia DR3 IDs in [SIMBAD TAP receipt](orbit/identification_inputs.json) | see deposited CSV | \`3b7e76a0356d590a63e2769a2f59c6141d380699f940a614ef6c953eb8dfc7a3\` |
+
+The ADS/arXiv/VizieR/Gaia ellipsoidal, NS/BH, Jayasinghe and El-Badry **query URLs, source SHA-256 values and per-table ID counts** are recorded in [initial prior receipts](novelty/inputs.json), [FLAME prior receipts](extension/novelty/inputs.json), the per-object [SIMBAD bibliographic response](orbit/hd264291_bibliography.csv) and [control source receipts](orbit/sources.json). Exact LAMOST online request URLs and hashes for every compressed answer live in the two \`raw/receipts.json\` files; they are *retested against the response bytes* by the referee script.
+
+**Live-query byte drift is not silently accepted.** The first independent ESA TAP repeat returned **12,517,722 bytes, SHA-256 \`0fa10fab32f56de57438d061aa8f253434e4df56f63bd29fc23ebe54ce4fe8a9\`**, differing from the original FLAME response SHA despite identical length. This may be row order or a real content change: the original raw receipt remains authoritative, and the updated CI additionally compares *the complete regenerated screening CSV* with the frozen CSV. A matching derived selection does not imply the raw byte strings are equal.
+
+## Remaining work: no claim of exhaustive validation
+
+- **Coverage**: among the 383 conditional >3 M☉ sources, **359 lack even one accepted survey RV**, and **12 further sources lack same-instrument repeat epochs**. Repeated-epoch selection is incomplete and phase dependent; no population completeness, true false-positive fraction or compact-object occurrence rate follows.
+- **Companion luminosity**: high-resolution multi-epoch spectral decomposition, near-IR companion spectroscopy, actual contrasts, triple-star stability/inner-orbit solution and a quantitative upper limit on all ordinary stellar light are absent. R≈7,500 LAMOST spectra can hide a broad-lined or rapidly moving inner pair.
+- **Stellar primary models**: FLAME masses (particularly giant flag 10) depend on adopted Gaia temperature and extinction. GSP-Phot Teff **7,209 K** conflicts with GSP-Spec **4,998 K** and LASP **4,850–4,904 K** for UCAC4 720-033289. Isochrones/GSP-Spec/LASP/CNN change the bound below/above 3 M☉ and allow one ordinary luminous companion; GALEX NUV and Hα favor it. The data do not determine whether any source conceals a compact companion in addition to luminous stars.
+- **Literature priority**: 1,835-source Li et al. 2026 printed excerpts were checked, but its complete machine-readable list was not recovered. Exhaustive aliases, unseen subsequent papers and unpublished follow-up are not covered by exact-ID table matches. Report priority as **unresolved**, even for HD 264291.
+- **Raw-source exact replay**: the two original ESA bulk files were reacquired successfully for a full initial rescreen in GitHub Actions; the first new FLAME TAP response failed its **byte-identical** check as described above. The extension selection has an offline row-level replay; full *byte-identical source* validation remains pending even if a new selection agrees. [CI referee workflow](../../.github/workflows/gaia-nss-referee.yml).
+- **Independent model checks**: the fit tests reproduce the code and conditional posteriors, but they are not a fully independent physical model, orbital perturbation fit, or independent primary-star calibration.
+
+## Most decisive single follow-up
+
+**Obtain a high-resolution (R ≥ 50,000), high-S/N, red-optical/near-infrared echelle spectrum of HD 264291 near the *predicted outer-orbit RV extremum*, followed at the opposite extremum, and disentangle the putative two late-dwarf components in antiphase.** At R≈7,500 the actual LAMOST lines cannot exclude two ~0.885 M☉ stars contributing only ~3.2% of Gaia G-band light (but more in the near infrared). Two precisely phase-separated, line-resolving spectra would either reveal stellar companions and their velocities, or produce a credible flux limit on the principal luminous-hierarchy alternative. A non-detection alone still requires quantitative injection-completeness and an improved primary mass before calling the remainder a neutron star.
+
+## Replay commands
+
+```sh
+python results/gaia-nss-dark-companions/referee_replay.py
+OPENBLAS_NUM_THREADS=1 python results/gaia-nss-dark-companions/orbit/fit_lamost.py --out /tmp/hd264291-independent
+python results/gaia-nss-dark-companions/referee_replay.py --check-fit /tmp/hd264291-independent/lamost_candidate_fits.json
+```
+
+The [GitHub referee workflow](../../.github/workflows/gaia-nss-referee.yml) runs these and the receipt-failure tests on PR updates, optionally re-acquires ESA source files, compares the full screens, and attempts a separate SIMBAD expanded-query check. No original data product is overwritten. **Merge is a peer-reviewed publication of a qualified screen, not a confirmed discovery.**
