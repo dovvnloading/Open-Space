@@ -19,6 +19,10 @@ The filter is normalized to the host's 1.33″ core aperture. The detection crit
 
 Entries give the smallest tested companion/host core flux ratio reaching at least 95% recovery. Each single-roll annulus passed the pixel support rule over its full area with 48 sampled angles. The combined inner annulus has little coverage under that same weight rule and yields no useful faint-companion sensitivity at 3.75″. The single-roll thresholds are the appropriate inner limits. The output is [per mosaic](measurements/) and includes all 3,138 injection trials and full-image versus linear-injection checks.
 
+## Forced comparison with the earlier NIRCam peaks
+
+The [track ledger](nircam_forced_tracks.csv) applies both the stationary-background and co-moving predictions from April 2024 to every F444W crossing in both MIRI rolls and the combined product. For the bright source in NIRCam observation 001, the fixed-sky predictions yield 0.98 and 1.04 local MAD units in the separate rolls. The co-moving predictions yield 1.89 and 2.13. The combined image lacks usable support at those locations under the same weight mask. The 25.5 µm data do not distinguish the tracks. The NICI and JWST measurements provide the classification. Run `python test_nircam_positions.py /path/to/fits-cache` after the blind reduction to regenerate this comparison.
+
 ## Replay
 
 From this directory, run `python run.py /path/to/fits-cache` with NumPy, SciPy and Astropy. The driver downloads missing files, verifies their SHA-256 and writes the measurements. To reproduce the archive selection independently, run `python freeze_inputs.py /path/to/fits-cache --freeze` in a clean working copy. Later archive releases can change the response.
