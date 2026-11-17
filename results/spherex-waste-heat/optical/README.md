@@ -19,7 +19,21 @@
 
 D measured r = 17.969 ± 0.028 in field 497 on MJD 58745.172. Five hours later field 1544 recorded r = 18.404 ± 0.044 and 18.640 ± 0.052 in two 30-second exposures separated by 39 seconds. That field's nightly median was 0.574 mag below its normal brightness. Combining the independent field medians for the same date gives 0.304 mag and a local score of 8.0. D returned to r = 17.928 the next observed night. Its infrared source has independently been spatially separated into a foreground M dwarf and a background obscured galaxy. [JWST/MIRI follow-up](https://arxiv.org/abs/2607.09460)
 
-Both faint exposures pass the public catalog flags, but their ZTF PSF-fit χ values, 1.925 and 1.832, exceed all 101 other retained measurements of D in field 1544 (median 0.688, maximum 1.776). Their centroids also sit 0.50 and 0.73 arcsec from the propagated Gaia position, compared with a median 0.11 arcsec on the other dates in this field. These diagnostics motivate a check of the science pixels before assigning the fading to D.
+Both faint exposures pass the public catalog flags, but their ZTF PSF-fit χ values, 1.925 and 1.832, exceed all 101 other retained measurements of D in field 1544 (median 0.688, maximum 1.776). Their centroids also sit 0.50 and 0.73 arcsec from the propagated Gaia position, compared with a median 0.11 arcsec on the other dates in this field.
+
+### D on the original exposures
+
+Seven complete ZTF science-image and mask pairs were available, including both faint exposures and five comparison exposures on September 9, 22 and 23. The other September 9 baseline image and mask remained unavailable. Six isolated comparison stars have clean cores and positive flux in all seven images. After centering each aperture time series on the five baseline exposures and correcting for comparison-star throughput, both event frames show a flux deficit at D's position. The measured magnitudes depend on the extraction aperture. [Image and mask receipts](d_science_receipts.json) · [Calibrated cutouts](d_science_cutouts.zip) · [Per-star fluxes](d_aperture_controls.csv)
+
+| Aperture radius | First exposure fading (mag) | Second exposure fading (mag) | Comparison-star 95th percentile of absolute residuals, first / second (mag) |
+|---|---:|---:|---:|
+| 4 pixels | 0.131 | 0.319 | 0.165 / 0.126 |
+| 6 pixels | 0.203 | 0.337 | 0.125 / 0.235 |
+| 8 pixels | 0.191 | 0.287 | 0.128 / 0.188 |
+
+Both event cores carry the standard source-detection bits (mask value 2050) with no flagged contamination bits. Apertures use a local 10–15 pixel background annulus. The second exposure exceeds the tabulated comparison-star residual scale in all three apertures. Six comparison stars and a posteriori inspection of an outlier do not calibrate a detection false-alarm probability. Run `python d_science.py` to verify hashes and repeat the photometry on the archived cutouts. [Aperture results](d_aperture_summary.csv) · [ZTF pixel-mask definitions, §10.3](https://irsa.ipac.caltech.edu/data/ZTF/docs/ztf_explanatory_supplement.pdf)
+
+An independent extraction from IRSA's public DR24 HATS light-curve archive found nine nearby comparison stars in **all eight** catalog exposures. Their median shifts were +0.004 and +0.002 mag in the faint pair. D's catalog PSF-fit residuals relative to these stars were +0.433 and +0.671 mag, larger than those of any control. The local deficits in the images, the catalog–aperture discrepancy, and the displaced centroids constrain the observation. The stellar origin and physical cause remain unresolved. The known galaxy independently explains the WISE excess. [Eight-exposure comparison](d_catalog_controls.csv) · [Matched input photometry](d_catalog_control_input.csv.gz) · [Archive receipts](d_catalog_control_receipt.json)
 
 ## Measurement and replay
 
@@ -29,4 +43,4 @@ Both faint exposures pass the public catalog flags, but their ZTF PSF-fit χ val
 
 ## Pending checks and limits
 
-The r-band archive selects detections. Rare eclipses, faint states below the detection threshold, events between the sampled times and dimming averaged out within a night remain possible. The recorded passbands and dates do not establish continuous optical stability or a survey-wide occultation occurrence rate. B and C have no optical constraint from these queries. The same-field science-image check for D is in progress.
+The r-band archive selects detections. Rare eclipses, faint states below the detection threshold, events between the sampled times and dimming averaged out within a night remain possible. The recorded passbands and dates do not establish continuous optical stability or a survey-wide occultation occurrence rate. B and C have no optical constraint from these queries. Independent simultaneous imaging would be required to distinguish intrinsic variability from local extraction or image systematics in D's two exposures.
