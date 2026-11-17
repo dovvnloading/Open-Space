@@ -83,7 +83,7 @@ def analyze(obj, mass, archive, make_stamp, out):
         h,im=raw[band+"_FLUX"]
         im=im.astype(float)
         rms=raw[band+"_RMS"][1]
-        valid=np.isfinite(im)&np.isfinite(rms)&(rms>0)
+        valid=np.isfinite(im)&np.isfinite(rms)&(rms>0)&(rms<1e15)
         pix=float(abs(float(h["CD2_2"]))*3600)
         ny,nx=im.shape
         # The release pipeline crops the central 150x150 pixels. Its FITS writer
@@ -113,11 +113,12 @@ def analyze(obj, mass, archive, make_stamp, out):
             src_flux=np.sum(model[yy,xx]) if model is not None else np.nan
             lens_flux=np.sum(light[yy,xx]) if light is not None else np.nan
             err_diag=np.sqrt(np.sum(np.square(rms[yy,xx].astype(float))))
-            sigma=max(sky_sigma,err_diag) if np.isfinite(sky_sigma) else np.nan
+            good=bool(valid[yy,xx].all())
+            sigma=max(sky_sigma,err_diag) if good and np.isfinite(sky_sigma) else np.nan
             zero=float(h["MAGZERO"])
             rows.append(dict(id_str=obj,ra_cutout=float(info["target_ra"]),dec_cutout=float(info["target_dec"]),
                 band=band,aperture=label,radius_arcsec=a,mass_dy_arcsec=centre_y,mass_dx_arcsec=centre_x,
-                npix=len(dx),n_sky=nsky,zp_ab=zero,aperture_sky_counts=bg,aperture_sky_mad=sky_sigma,rms_quadrature=err_diag,
+                npix=len(dx),coverage_ok=good,n_sky=nsky,zp_ab=zero,aperture_sky_counts=bg,aperture_sky_mad=sky_sigma,rms_quadrature=err_diag,
                 observed_counts=counts,source_model_counts=src_flux,lens_model_counts=lens_flux,
                 source_subtracted_counts=counts-src_flux,observed_snr=counts/sigma,
                 source_subtracted_snr=(counts-src_flux)/sigma,source_subtracted_mag=ab(zero,counts-src_flux),
@@ -151,12 +152,13 @@ def main():
     out.mkdir(parents=True,exist_ok=True)
     priority=set((HERE/"priority.txt").read_text().split())
     mass={r["id_str"]:r for r in csv.DictReader(args.mass_csv.open())}
+    stamps=priority | {"102158887_2655306065654633189","102042915_NEG528545016288651034"}
     ids=[i for i in mass if (i in priority or args.all) and mass[i]["centre_0_median_pdf"] and mass[i]["einstein_radius_effective_median_pdf"]]
     if not priority.issubset(ids):
         raise ValueError("Missing a priority ID")
     arc=CutoutArchive("lens",args.index_cache)
     rows,hashes=[],[]
-    if args.all and (out/"apertures.csv").exists() and (out/"input_members.csv").exists():
+    if args.all and (out/"apertures.csv").exists() and "coverage_ok" in (out/"apertures.csv").open().readline() and (out/"input_members.csv").exists():
         rows=list(csv.DictReader((out/"apertures.csv").open()))
         hashes=list(csv.DictReader((out/"input_members.csv").open()))
         done={r["id_str"] for r in rows} & {r["id_str"] for r in hashes}
@@ -164,7 +166,7 @@ def main():
         rows=[r for r in rows if r["id_str"] in done]
         hashes=[r for r in hashes if r["id_str"] in done]
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        futures={pool.submit(analyze,i,mass[i],arc,i in priority,out):i for i in ids}
+        futures={pool.submit(analyze,i,mass[i],arc,i in stamps,out):i for i in ids}
         errors=[]
         for j,f in enumerate(as_completed(futures),1):
             try:
