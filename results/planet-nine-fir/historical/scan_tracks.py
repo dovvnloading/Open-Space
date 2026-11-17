@@ -25,7 +25,7 @@ def offsets(xy, pa):
     return dx.arcmin*np.sin(th)+dy.arcmin*np.cos(th),dx.arcmin*np.cos(th)-dy.arcmin*np.sin(th)
 
 
-def filtered(x,f,width):
+def filtered(x,f,width,window_fwhm=3):
     """Fixed-width template amplitude with local constant and slope nuisance terms.
 
     The symmetric window makes the linear term orthogonal to the template.
@@ -33,7 +33,7 @@ def filtered(x,f,width):
     """
     step=np.median(np.diff(x))
     assert np.allclose(np.diff(x),step)
-    n=int(round(3*width/step))
+    n=int(round(window_fwhm*width/step))
     dx=np.arange(-n,n+1)*step
     kernel=np.exp(-4*np.log(2)*(dx/width)**2)
     kernel-=kernel.mean()
