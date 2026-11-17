@@ -1,0 +1,39 @@
+name: Fast extragalactic alerts 32-object referee audit
+on:
+  push:
+    branches: [research/fast-extragalactic-alerts-2026]
+    paths:
+      - 'results/fast-extragalactic-alerts-2026/audit/validate.py'
+      - '.github/workflows/fast-extragalactic-alerts-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  crossmatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/fast-extragalactic-alerts-2026
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Query bounded public TNS, Gaia and PS1 catalogues
+        run: python results/fast-extragalactic-alerts-2026/audit/validate.py
+      - name: Archive concise dispositions and hashes on the PR branch
+        run: |
+          git add results/fast-extragalactic-alerts-2026/audit/dispositions.csv results/fast-extragalactic-alerts-2026/audit/query_receipts.json results/fast-extragalactic-alerts-2026/audit/secondary_lookup.json results/fast-extragalactic-alerts-2026/audit/referee_checks.json
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Archive 32-object referee dispositions and catalogue query hashes'
+            git push origin HEAD:research/fast-extragalactic-alerts-2026
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fast-extragalactic-catalogue-audit
+          path: |
+            results/fast-extragalactic-alerts-2026/audit/dispositions.csv
+            results/fast-extragalactic-alerts-2026/audit/query_receipts.json
+            results/fast-extragalactic-alerts-2026/audit/secondary_lookup.json
+            results/fast-extragalactic-alerts-2026/audit/referee_checks.json

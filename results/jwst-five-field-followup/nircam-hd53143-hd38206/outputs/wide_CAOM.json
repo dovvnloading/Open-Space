@@ -1,0 +1,107 @@
+{
+  "request": {
+    "service": "Mast.Caom.Filtered",
+    "format": "json",
+    "params": {
+      "columns": "obsid,obs_id,target_name,filters,calib_level,dataRights,t_min,t_max,t_obs_release,dataURL",
+      "filters": [
+        {
+          "paramName": "obs_collection",
+          "values": [
+            "JWST"
+          ]
+        },
+        {
+          "paramName": "proposal_id",
+          "values": [
+            "3973"
+          ]
+        },
+        {
+          "paramName": "calib_level",
+          "values": [
+            3
+          ]
+        }
+      ]
+    },
+    "pagesize": 1000,
+    "page": 1
+  },
+  "response_sha256": "b9c3e95bb617287d032c9377f6b8be7a177c560a061ff6659b52d82efbadddc6",
+  "retrieved_utc": "2026-11-17T08:25:08.838671+00:00",
+  "rows": [
+    {
+      "obsid": 216572951,
+      "calib_level": 3,
+      "dataRights": "PUBLIC",
+      "t_min": 60479.19660091435,
+      "t_max": 60479.22468586806,
+      "filters": "F444W",
+      "t_obs_release": 60844.31351847,
+      "target_name": "HD-53143",
+      "dataURL": "mast:JWST/product/jw03973-o006_t001_nircam_clear-f444w_i2d.fits",
+      "obs_id": "jw03973-o006_t001_nircam_clear-f444w"
+    },
+    {
+      "obsid": 216572952,
+      "calib_level": 3,
+      "dataRights": "PUBLIC",
+      "t_min": 60479.19660091435,
+      "t_max": 60479.22468586806,
+      "filters": "F200W",
+      "t_obs_release": 60844.31351847,
+      "target_name": "HD-53143",
+      "dataURL": "mast:JWST/product/jw03973-o006_t001_nircam_clear-f200w_i2d.fits",
+      "obs_id": "jw03973-o006_t001_nircam_clear-f200w"
+    },
+    {
+      "obsid": 213035610,
+      "calib_level": 3,
+      "dataRights": "PUBLIC",
+      "t_min": 60404.70257877315,
+      "t_max": 60404.89591693287,
+      "filters": "F200W;MASKRND",
+      "t_obs_release": 60770.11812504,
+      "target_name": "HD-53143",
+      "dataURL": "mast:JWST/product/jw03973-c1004_t001_nircam_f200w-maskrnd-sub320a335r_i2d.fits",
+      "obs_id": "jw03973-c1004_t001_nircam_f200w-maskrnd-sub320a335r"
+    },
+    {
+      "obsid": 213035611,
+      "calib_level": 3,
+      "dataRights": "PUBLIC",
+      "t_min": 60404.70257877315,
+      "t_max": 60404.89592063658,
+      "filters": "F444W;MASKRND",
+      "t_obs_release": 60770.11812504,
+      "target_name": "HD-53143",
+      "dataURL": "mast:JWST/product/jw03973-c1004_t001_nircam_f444w-maskrnd-sub320a335r_i2d.fits",
+      "obs_id": "jw03973-c1004_t001_nircam_f444w-maskrnd-sub320a335r"
+    },
+    {
+      "obsid": 216541243,
+      "calib_level": 3,
+      "dataRights": "PUBLIC",
+      "t_min": 60479.24320753472,
+      "t_max": 60479.27141693287,
+      "filters": "F200W",
+      "t_obs_release": 60844.36274305,
+      "target_name": "HD-53143",
+      "dataURL": "mast:JWST/product/jw03973-o007_t001_nircam_clear-f200w_i2d.fits",
+      "obs_id": "jw03973-o007_t001_nircam_clear-f200w"
+    },
+    {
+      "obsid": 216514144,
+      "calib_level": 3,
+      "dataRights": "PUBLIC",
+      "t_min": 60479.24320827546,
+      "t_max": 60479.27141693287,
+      "filters": "F444W",
+      "t_obs_release": 60844.36274305,
+      "target_name": "HD-53143",
+      "dataURL": "mast:JWST/product/jw03973-o007_t001_nircam_clear-f444w_i2d.fits",
+      "obs_id": "jw03973-o007_t001_nircam_clear-f444w"
+    }
+  ]
+}

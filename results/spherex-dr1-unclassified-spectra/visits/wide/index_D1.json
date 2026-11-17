@@ -1,0 +1,9 @@
+{
+  "query": "SELECT a.uri,p.time_bounds_lower,p.poly\nFROM spherex.artifact a JOIN spherex.plane p ON a.planeid=p.planeid\nWHERE 1=INTERSECTS(p.poly,CIRCLE('ICRS',209.53125000,30.00000000,0.5))\nAND p.energy_bandpassname='SPHEREx-D1'\nORDER BY p.time_bounds_lower,a.uri",
+  "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+  "sha256": "fefbad222830b44ca82ae70a8fb33ef1ee36c873cf04f406c1eb88d13478fc12",
+  "qr3_rows": 26,
+  "n_rows": 93,
+  "first_mjd": "60837.782330",
+  "last_mjd": "61207.259231"
+}

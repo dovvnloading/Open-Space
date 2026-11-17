@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 195 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 21 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 199 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 25 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -129,6 +129,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Planets, moons and rings in our Solar System
 
+- **An infrared Planet Nine candidate did not reappear in public follow-up images.** A 2025 paper linked two far-infrared sources seen by IRAS in 1983 and AKARI in 2006. The old IRAS detector scans instead favour fixed sky emission, possibly from a nearby galaxy. DES and Euclid recovered 397/400 simulated dark planets (388/400 with perturbed historical positions), but uncertain AKARI timing and unmeasured regions prevent exclusion of the entire proposed orbit family. *Null result* · [Details](results/planet-nine-fir/README.md)
 - **Io's record 2024 eruption brightened Jupiter's sulfur glow but barely its sodium cloud.** *Measured* · [Details](results/io-2024-eruption-sodium/README.md)
 - **A 9.5-hour eclipse of Jupiter's moon Sinope (17–18 Oct 2037).** The moon will sit far enough from Jupiter in our sky to be observed during the eclipse. *Prediction* · [Details](results/sinope-2037-jupiter-eclipse/README.md)
 - **Saturn's rings will shade its moon Phoebe (1–3 Mar 2032).** The B ring should twice remove about 98% of Phoebe's sunlight. *Prediction* · [Details](results/phoebe-ring-shadow-2032/README.md)
@@ -148,6 +149,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 ### Planets around other stars
 
 - **A JWST search found no new wide planet around ten nearby stars.** Archive checks show that three apparent companions are previously recorded background sources. Contrast and injection tests describe only the searched parts of those images, not every possible companion. *Null result* · [Details](results/jwst-nearby-companions/README.md)
+- **Five more nearby stars checked for hidden planets with JWST.** No new companion was confirmed. One bright source proved to be a known background object and other peaks failed repeat-image checks; two faint signals still need deeper observations in later years to settle what they are. *Null result* · [Details](results/jwst-five-field-followup/README.md)
 - **Four "planets" that are really eclipsing stars.** TOI-3143.01's signal comes from the neighbouring binary TIC 384244835. A single eclipsing binary produced the two Kepler candidates KOI-7865.01 and KOI-7866.01. KOI-5275.01 is light from a binary 30 arcseconds away. *Correction* · [TOI-3143.01](results/tess-off-target-eclipse-sources/README.md) · [KOI-7865.01 and KOI-7866.01](results/koi-7865-eclipse-source/README.md) · [KOI-5275.01](results/koi-5275-eclipse-contamination/README.md)
 - **A neighbouring eclipsing binary shifts KELT-8 b's measured transit times.** *Measured* · [Details](results/kelt-8-timing/README.md)
 - **No sign of the proposed eighth TRAPPIST-1 planet.** JWST's dedicated observation shows no dip deeper than about 330 parts per million, while a transit at the shallow end of the proposal would usually have been detected. *Null result* · [Details](results/trappist-1-jwst-timing/README.md)
@@ -170,6 +172,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 - **No verified laser-like emission in a targeted DESI DR1 stellar search.** All 10 persistent narrow residuals in 190 audited repeat-observed stars match the stellar Li I doublet; five independent-field stars reproduced a template false positive on separate nights. Per-star conditional laser-power limits are provided. This does not constrain unsearched fields or intermittent emitters. *Null result* · [Details](results/desi_dr1_optical_seti/README.md)
 - **No verified stellar waste heat in a small infrared sky survey.** SPHEREx and WISE found no qualifying excess around 404 nearby stars across 12.6 square degrees; published candidates remain affected by dusty galaxies, blends or unresolved mid-infrared emission. SPHEREx recovered none of the injected 100 K or 300 K excesses at 1% of stellar luminosity in its controls, so this is a limited null, not a Galaxy-wide constraint. *Null result* · [Details](results/spherex-waste-heat/README.md)
+- **No new kind of infrared spectrum confirmed in two SPHEREx sky patches.** A search ranked 107 sources and flagged 57 for closer checks. Later observations could test 29 of those, and none retained an unexplained fitted feature; the other 28 lack complete comparisons. One bright spike did not repeat, and a real galaxy emission band matches a known type. These two patches cannot set an all-sky limit. *Null result* · [Details](results/spherex-dr1-unclassified-spectra/README.md)
 
 **Eclipsing binaries and star systems**
 
@@ -231,6 +234,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### White dwarfs
 
+- **No new planet or debris transit confirmed around 42 bright white dwarfs.** In 39 uncrowded TESS targets, injections place a 95% upper limit of 11.13% on the fraction with a transiting companion 11.2 Earth radii in size on a 1.40794-day orbit. The fraction with planets at other orbital tilts, and the occurrence of irregular debris, remain unmeasured. *Null result* · [Details](results/tess-white-dwarf-occultations/README.md)
 - **No faster supernova survivor found in the surveyed star catalogues.** None of 67,433 Gaia stars with well-measured parallaxes in four white-dwarf-oriented spectral catalogues had a measured sideways speed above 1,000 km/s. The all-sky speed cut missed 8 of 11 already known D⁶ white dwarfs, so this is a weak limit; one blended-looking fast star still needs follow-up. *Null result* · [Details](results/gaia-dr3-supernova-survivors/README.md)
 - **Two white dwarfs with speed swings of about 250 km/s.** WD J0238+2733 and WD J0421−1325 are strong candidates for hidden companions. *Candidate* · [Details](results/desi-white-dwarf-velocity-variables/README.md)
 - **Revised gravitational-wave clocks for eclipsing white-dwarf pairs.** Using the published parameters, ZTF J0720+6439's eclipses should drift about 13 seconds in 10 years rather than the 0.6 seconds stated in a preprint. Older survey data extend the eclipse record of seven pairs. *Prediction* · [Details](results/eclipsing-dwd-gr-chirps/README.md)
@@ -280,6 +284,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 **Black holes, outbursts and supernovae**
 
+- **No fast cosmic explosion confirmed in Rubin and ZTF public alerts.** A screen of observations from 1–16 November 2026 found 32 rapidly changing objects, but no validated explosion outside our Galaxy. Most coincide with older point sources, stars or flagged image residuals; two remain unresolved. Two of the alerts were the same asteroid. *Null result* · [Details](results/fast-extragalactic-alerts-2026/README.md)
 - **A candidate lone black hole bending a star's light.** Since 2025 an unseen object has magnified a star near the centre of our Galaxy (OGLE-2026-BLG-0058). Its slow, steady passage points to a dark object of about 11 solar masses, most likely a black hole, though a slow-moving ordinary star or white dwarf is not ruled out. Only one lone black hole has been confirmed so far. *Candidate* · [Details](results/ogle-dark-lenses/README.md)
 - **Infrared light from a black-hole candidate 3.3 days before its X-ray outburst was detected.** Swift J1745−26. *Measured* · [Details](results/swift-j1745-infrared/README.md)
 - **AT 2021aeuk entered a second bright-ultraviolet, faint-X-ray state.** *Measured* · [Details](results/at-2021aeuk/README.md)
@@ -354,6 +359,7 @@ The [cold-neighbour search methods and reproduction evidence](results/cold-neigh
 - [XRISM count-comparison methods and offline replay](results/xrism-ngc7172/README.md), documenting the calibration limits of the observed-count test.
 - [IXPE Mrk 501 conditional repeatability methods and evidence](results/ixpe-mrk501-repeat/README.md).
 - [MMS four-spacecraft planar-screen methods and bounded negative result](results/mms-planar-screen/README.md).
+- [IMAP magnetic-depletion screen and proton-test protocol](results/imap-mag-swapi-screen/README.md).
 - [SO/PHI-FDT magnetic-proxy persistence screen and evidence](results/solar-phi-fdt-pilot/README.md).
 - [VAST TDE-candidate conditional repeatability and offline replay](results/vast-tde-repeatability/README.md). Its frozen stages document the [initial metadata pilot](results/vast-tde-metadata/README.md), [expanded cohort and development](results/vast-tde-expanded/README.md), and [holdout protocol](results/vast-tde-holdout/README.md).
 

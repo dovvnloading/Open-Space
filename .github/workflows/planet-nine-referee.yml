@@ -1,0 +1,51 @@
+name: Planet Nine independent referee replay
+
+on:
+  push:
+    paths:
+      - 'results/planet-nine-fir/**'
+      - 'README.md'
+      - '.github/workflows/planet-nine-referee.yml'
+  pull_request:
+    paths:
+      - 'results/planet-nine-fir/**'
+      - 'README.md'
+      - '.github/workflows/planet-nine-referee.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  referee:
+    name: Verify raw receipts, regenerate summaries and check conditional claims
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install reproducibility dependencies
+        run: python -m pip install numpy scipy astropy
+      - name: Recompute matched counts, confidence intervals, hashes and source positions
+        run: |
+          python results/planet-nine-fir/verify_results.py
+          python results/planet-nine-fir/referee_audit.py
+          (cd results/planet-nine-fir/orbits && python -m unittest test_timing_scenarios.py -v)
+      - name: Independently regenerate summary products from the deposited rows and IRAS profiles
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp -a results/planet-nine-fir "$RUNNER_TEMP/planet-nine-fir"
+          (
+            cd "$RUNNER_TEMP/planet-nine-fir"
+            python joint/join.py
+            python spherex/combine.py --root spherex
+            python spherex/combine.py --root spherex/centroid_stress
+            cd historical
+            python verify_scan_sign.py
+            python scan_tracks.py --orbit-dir ../orbits
+            python all_scan_tracks.py --orbit-dir ../orbits --output scanpi/all_scan_tracks.json
+          )
+          python results/planet-nine-fir/referee_audit.py --replayed "$RUNNER_TEMP/planet-nine-fir"
