@@ -1,0 +1,42 @@
+column_name,datatype,description
+obsid,char,unique observation identifier: 32-bit UUID
+collection,char,data collection this observation belongs to
+observationid,char,unique observation identifier (human readable)
+metarelease,char,metadata public release date
+sequencenumber,int,sequence number of the observation
+type,char,"type of data, often from FITS OBSTYPE keyword, e.g. exposure, spectrum, object, dark"
+intent,char,"intended purpose of data (one of: science, calibration)"
+algorithm_name,char,"algorithm that defines the observation (e.g. exposure, coadd, cube)"
+telescope_name,char,name of telescope used to acquire observation
+telescope_geolocationx,double,x component of geocentric location of telescope
+telescope_geolocationy,double,y component of geocentric location of telescope
+telescope_geolocationz,double,z component of geocentric location of telescope
+telescope_keywords,char,telescope keywords (JSON of key/value pairs)
+instrument_name,char,name of instrument used to acquire observation
+instrument_keywords,char,instrument keywords (JSON of key/value pairs)
+environment_seeing,double,atmospheric seeing (FWHM)
+environment_humidity,double,humidity at telescope during observation
+environment_elevation,double,elevation above horizon (0 to 90)
+environment_tau,double,zenith optical depth
+environment_wavelengthtau,double,wavelength at which Tau has been measured
+environment_ambienttemp,double,ambient temperature telescope during observation
+environment_photometric,boolean,"conditions were photometric (0=false, 1=true)"
+proposal_id,char,collection-specific unique proposal identifier
+proposal_pi,char,proposal principal investigator
+proposal_project,char,project that created/acquired the observation
+proposal_title,char,proposal title
+proposal_keywords,char,proposal keywords (JSON of key/value pairs)
+target_name,char,name of intended target
+target_type,char,classification of intended target
+target_redshift,double,redshift of intended target
+target_standard,boolean,"intended target is a standard (0=false, 1=true)"
+target_moving,boolean,flag for moving target
+target_keywords,char,target keywords (JSON of key/value pairs)
+targetposition_coordinates,char,coordiantes of the target position
+targetposition_coordsys,char,coordinate system for target position
+targetposition_equinox,double,equinox of target position coordinate system
+requirements_flag,char,"flag describing satisfied proposal requirements (possible values: fail,null)"
+ipac_gid,int,IRSA access control identifier: group ID
+mission_id,int,IRSA access control identifier: mission ID
+ipac_pub_date,char,public release date (UTC)
+lastmodified,char,timestamp of last modification of this row

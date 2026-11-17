@@ -330,7 +330,8 @@ Some multi-part investigations also keep index pages and search logs: [15 Nov ar
 
 ## For researchers and developers
 
-The [XRISM count-comparison methods and offline replay](results/xrism-ngc7172/README.md) document a calibration-limited instrument check.
+- [Euclid DR1 repeat-visit development screen and failure-mode evidence](results/euclid-foundation-eligibility/README.md)
+- [XRISM count-comparison methods and offline replay](results/xrism-ngc7172/README.md), documenting the calibration limits of the observed-count test.
 
 ### Run the survey workers
 
