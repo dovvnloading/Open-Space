@@ -1,0 +1,12 @@
+{
+  "key": "parent",
+  "adql": "SELECT o.oid,o.firstmjd,o.lastmjd,o.n_det,o.meanra,o.meandec FROM alerce_tap.object AS o WHERE o.sid=1 AND o.n_det>=2 AND o.firstmjd>=61345.000428240739 AND o.firstmjd<61361.000428240739",
+  "url": "https://tap.alerce.online/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=100000&QUERY=SELECT+o.oid%2Co.firstmjd%2Co.lastmjd%2Co.n_det%2Co.meanra%2Co.meandec+FROM+alerce_tap.object+AS+o+WHERE+o.sid%3D1+AND+o.n_det%3E%3D2+AND+o.firstmjd%3E%3D61345.000428240739+AND+o.firstmjd%3C61361.000428240739",
+  "utc_start": "2026-11-17T09:26:10.177305+00:00",
+  "status": 200,
+  "http_date": "Tue, 17 Nov 2026 09:26:20 GMT",
+  "rows": 22365,
+  "bytes": 2153493,
+  "sha256": "49bf50d97711b6b9215fcc1091f4a99012d2802620acd571ca3cb68cbb33fa3d",
+  "utc_end": "2026-11-17T09:26:20.793703+00:00"
+}
