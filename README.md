@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 184 entries: 86 new measurements, 44 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 14 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 185 entries: 86 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 14 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -158,6 +158,8 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **A transit-like dip that flips sign.** On the flaring red dwarf TIC 257433294, a reported dip reappears in new TESS data but changes sign between two TESS data products, so its origin is uncertain. *Measured* · [Details](results/tess-sector108/README.md)
 
 ### Stars, binaries and multiple-star systems
+
+- **A high-speed star may escape the Milky Way.** DESI DR1 and Gaia DR3 give source 1717410430709663616 a Galactocentric speed of 697 km/s. It escapes in two reference Galactic potentials but remains bound in a heavier halo. The DESI velocity has only one epoch (binary motion untested), the traceback favours the disk rather than Sgr A* or the LMC centre, and discovery priority remains open. *Candidate* · [Details](results/dr1-dr19-unbound-stars/README.md)
 
 **Eclipsing binaries and star systems**
 

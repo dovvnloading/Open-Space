@@ -1,0 +1,1 @@
+SELECT d.targetid,d.source_id,d.vrad,d.vrad_err,d.survey,d.program,d.healpix,d.target_ra,d.target_dec,d.glon,d.glat FROM desi_dr1.mws AS d WHERE d.rvs_warn=0 AND d.vrad_err>0 AND d.vrad_err<20 AND d.rr_spectype='STAR' AND ABS(d.vrad+11.1*COS(RADIANS(d.glon))*COS(RADIANS(d.glat))+245.6*SIN(RADIANS(d.glon))*COS(RADIANS(d.glat))+7.25*SIN(RADIANS(d.glat)))>580
