@@ -1,6 +1,8 @@
-# A detected-light grade B system has a high conditional Einstein-aperture M/L
+# Redshift ambiguity prevents a high mass-to-light claim for two apparent M/L outliers
 
-At (265.97538953°, +65.38710524°), the published 0.936″ mass model and independently remeasured H-band aperture flux give a median M/L of **54.4** (16th–84th percentiles 35.1–76.3) under the Legacy Surveys DR9 photometric-redshift distribution and a background source at z = 2. Under Euclid's photometric redshift the median is **105.2** (89.0–123.1). The central galaxy is detected, and a second image with matching colours and a source redshift have yet to be established. A false lens or an erroneous assignment of mass or redshift could remove the excess. The two estimates are conditional on the same foreground interpretation.
+At (265.97538953°, +65.38710524°), a grade-B lens candidate has detectable central light and a high Einstein-aperture M/L **only under its lower foreground-redshift interpretations**. With a source fixed at z = 2, the median is 54.4 (16th–84th percentiles 35.1–76.3) using the Legacy Surveys DR9 photo-z distribution, or 105.2 (89.0–123.1) using Euclid's principal PHZ estimate. A separate Euclid physical-parameter fit to the same merged detection gives median z = **2.457**, mode 2.526 and a broad 68% interval 0.208–2.595, despite zero published flags. At that median the H-band geometric floor falls to **0.97**. For a source behind that deflector at z = 3, 4 or 6, the conditional median M/L is **10.7, 5.02 or 3.26**, respectively. The combined NISP spectrum gives no secure component redshift here. The catalogue returns no attenuation estimate for either lead. Strong lensing, the source identity and an exceptional mass-to-light ratio all remain unconfirmed. [Physical-parameter query](lead_physical_query.json) · [Conditional models](conditional_ML_posterior.csv)
+
+For a separate grade-A lens candidate, the two redshift estimates that make the foreground mass-to-light ratio extreme or ordinary also disagree. Three independently fitted emission features in its observed red-grism spectrum support **z = 2.53878 ± 0.00038** for an emitting component. The spectrum integrates over the foreground and arcs, so it cannot locate that emitter by itself.
 
 | System | Redshift evidence | H-band evidence |
 |---|---|---|
@@ -8,6 +10,20 @@ At (265.97538953°, +65.38710524°), the published 0.936″ mass model and indep
 | 102158887_2655306065654633189, grade A, (265.53060656°, +65.46331893°) | The Euclid and DR9 95% ranges are disjoint. Euclid gives 0.02 (0.01–0.05), whereas an extended DR9 source 0.242″ away has 0.721 (0.290–0.930). No DESI redshift within 3.5″. | H AB = 20.79 inside 0.607″. At zₛ = 2 the conditional median M/L changes from 133 to 3.80 using DR9. The apparent extreme breaks under independent photometry. |
 
 For grade B, none of 25 other A/B deflectors closest to the Legacy median redshift exceeds its median ratio under the same zₛ = 2 assumption. Their z range is 0.27–0.38, median M/L is 2.64 and maximum is 18.3. Reducing 54.4 to 2.64 by dust alone would require 3.29 magnitudes of attenuation in observed H (rest near 1.35 μm for z ≃ 0.32). This calculation measures the size of the required correction. There is no independent extinction measurement here. Diffuse or missed extended light, an incorrect source reconstruction, and external convergence remain unquantified. The released lens model has external shear 0.110 and a mass–light centroid separation of 0.214″. Euclid MER has one object within 3.5″, coincident with the catalogue centre. This tests for resolved companions at that distance. The two comparison photo-zs can both blend the deflector and arcs. Local ranks after selecting the largest ratios do not constitute a false-alarm probability. See [pixel measurements and cutouts](../imaging/) and [posterior quantiles](conditional_ML_posterior.csv).
+
+## Spectroscopic and same-position checks
+
+![Euclid NISP combined spectra at the two lead positions](nisp_spectra.png)
+
+The official ESA SPE rank-0 galaxy table returns entries for **427 of 497** primary A/B objects. The full query covered 554 distinct MER IDs including all model keys and 51 MER sources from the seven morphology triggers, two re-centred Agile targets and two M/L leads. Three primary objects pass the published Q1 criteria (rank zero, 0.9 < z < 1.8, probability ≥0.99, Gaussian-fit Hα flux ≥2 × 10⁻¹⁶ erg s⁻¹ cm⁻² and S/N ≥5). No object from the 11 follow-up cones passes. The three passing IDs and redshifts are −584961967491933103 (1.0343), −624049517477067447 (1.4479) and 2755778332656876880 (1.7942). These are integrated-object spectra; the line origin can be in the background. [Q1 thresholds](https://euclid.caltech.edu/page/euclid-q1-data-faq) · [Official rank-zero matches](spe_rank0.csv) · [Official fitted lines](spe_lines.csv) · [Query hashes](spe_manifest.json)
+
+For the **grade-B** system, the official best galaxy solution gives z = 1.436 and probability 0.524. Its Hα Gaussian-fit flux is negative (−4.93 × 10⁻¹⁷ erg s⁻¹ cm⁻²). We inspected the calibrated combined 1D SIR spectrum for this exact MER ID and fit local linear continua plus Gaussian line profiles. At that redshift the candidate Hα feature reaches 2.73σ or 1.58σ for assumed FWHM of 50 or 85 Å. At the alternative merged physical-parameter z = 2.457, Hβ and the [O III] doublet are below 2σ in the 50 Å fits. The failure to detect an emission line does not exclude a quiescent high-redshift deflector. Only one bright arc-like knot is measurable in the images. See [image evidence and competing fits](../imaging/) and [spectral window tests](sir_line_checks.csv).
+
+For the **grade-A** system, the Q1 pipeline reports z = 2.540 and Hβ S/N = 5.34 outside its recommended Hα redshift range. A new fit to the combined calibrated SIR spectrum gives free line amplitudes with S/N 4.22, 4.79 and 12.03 for Hβ, [O III] 4960 and [O III] 5008. The [O III] flux ratio is 3.59 ± 0.67. The shared-redshift fit gives χ² = 60.95 over 50 degrees of freedom and FWHM = 64.3 Å. Statistical errors include residual scatter and omit wavelength calibration and slitless contamination systematics. This corroborates the published high-redshift solution for the unresolved emitter. The inclusion of this redshift in the grade-A M/L table explicitly assumes that the arcs produce the emission. There is no separate foreground spectrum. [Observed-spectrum fit](sir_gradeA_features.json) · [1D source IDs and FITS extensions](lead_spectra_query.json)
+
+In the spectrum fits, each retained bin has a valid calibrated flux (MASK even and <64), at least two contributing dithers and a positive error. The 50/85 Å diagnostics use a local linear continuum within 260 Å, an additional fixed-ratio [O III] 4960 component for the doublet test, and no photometric-redshift prior. The separate grade-A fit frees both [O III] amplitudes and fits a common redshift and width. A single SIR aperture cannot establish matching spectra for multiple images.
+
+We separately matched both M/L leads on the sky against all 15,072 entries of the released ECLIPSE-D v1 table. The closest entries are 2.4800° away for A and 2.4782° for B. Neither has a deblended-redshift counterpart in that release. [Nearest neighbours and file fingerprints](eclipse_nearest.csv)
 
 ## Sample and mass conventions
 
@@ -25,19 +41,24 @@ The released mass table has 335 rows. Exactly 334 IDs occur in the discovery cat
 
 [posterior.py](posterior.py) makes 48,000 draws per scenario (seed 16032025). It treats the published radius median and nominal one-sigma limits as a two-sided Gaussian scale and propagates independent Gaussian aperture-flux noise with a positive-flux prior. The aperture is fixed at the nominal model radius; radius–flux, source–deflector and redshift–photometry covariances, PSF/deblending errors, profile choice, extinction and lens-identification probabilities are outside these conditional intervals. The radius fits for the two leads are narrow. The quoted intervals quantify measurement precision under the chosen model.
 
-For photometric leads, percentile knots are interpolated and samples restricted to the published 95% lens-redshift interval. The Euclid 70% and 95% interval endpoints are treated as approximate equal-tailed quantiles (the tabulated intervals come from the merged detection). DR9 supplies the median and 68%/95% endpoints. These are separate conditional approximations; multiplying the likelihoods would artificially sharpen the result. Three fixed source-redshift scenarios (1.5, 2, 3) expose the geometry dependence. Spectroscopic controls fix the two available spectroscopic redshifts. [Per-band conditional posteriors](conditional_ML_posterior.csv) · [H-band comparison populations](redshift_matched_peers.csv)
+For photometric leads, percentile knots are interpolated and samples restricted to the published 95% lens-redshift interval. The Euclid 70% and 95% interval endpoints are treated as approximate equal-tailed quantiles (the tabulated intervals come from the merged detection). DR9 supplies the median and 68%/95% endpoints. These are separate conditional approximations; multiplying the likelihoods would artificially sharpen the result. Three fixed source-redshift scenarios (1.5, 2, 3) expose the geometry dependence for the two low-redshift models. The grade-A table also tests the redshift measured from its unresolved line emission as a possible source plane. For grade B, an additional fixed foreground-redshift branch uses the alternative PHZ physical-parameter median and background sources at 3, 4 and 6. Its posterior omits the unmeasured probability of that branch and its enormous redshift uncertainty. Spectroscopic controls fix the two available spectroscopic redshifts. [Per-band conditional posteriors](conditional_ML_posterior.csv) · [H-band comparison populations](redshift_matched_peers.csv)
 
 The comparison chooses the closest 25 other grade A/B systems in adopted z with ≥5σ H-aperture light, omitting both leads, requiring zₗ < zₛ, and accepting spectroscopic deflectors or unflagged merged photo-zs with 95% width ≤0.3(1+z). The grade-A Euclid z = 0.02 interpretation has **no close redshift-matched population**. Its nearest 25 span 0.14–0.37; the 25-object statistic there is extrapolative. Under DR9 its nearest 25 span 0.69–0.75 and five exceed its median. The foreground light requirement, unknown source redshifts and human lens grades limit population interpretation.
 
 ## Reproduction and provenance
 
-Run these commands with Python 3, NumPy, SciPy and lxml from this directory. DATA denotes the directory containing the hash-verified Zenodo SLDE CSVs used by catalog/screen.py. Products in this directory include the input solar calibration, extracted catalogue controls and exact-match query snapshots.
+Run these commands with Python 3, NumPy, SciPy, Matplotlib and lxml from this directory. DATA denotes the directory containing the hash-verified Zenodo SLDE CSVs used by catalog/screen.py. Products in this directory include the input solar calibration, extracted catalogue controls and exact-match query snapshots.
 
 ```sh
 python prepare_reference.py /tmp/euclid_ref .
 python desi.py "$DATA" /tmp/euclid_desi .
 python legacy_check.py
+python eclipse_check.py
 python trigger_cones.py ../arc_search/profiles
+python spe_check.py "$DATA" /tmp/euclid_spe
+python sir_check.py /tmp/euclid_sir
+python sir_features.py /tmp/euclid_sir
+python sir_plot.py /tmp/euclid_sir
 python infer.py "$DATA" ../catalog/phz_merged.csv ../imaging/apertures.csv
 python posterior.py "$DATA" ../catalog/phz_merged.csv
 ```

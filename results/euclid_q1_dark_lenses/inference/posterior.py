@@ -60,6 +60,9 @@ def run(models, phz_file):
             if key == LEADS[1]:
                 scenarios.append(('PHZ_PP_median_fixed',[.5],[pp[key.split('_')[1]]]))
             source_z = [1.5,2.,3.]
+            if key == LEADS[0]:
+                # Only applies if the emission is from the lensed source.
+                source_z.append(json.loads((HERE/'sir_gradeA_features.json').read_text())['z_fit'])
         else:
             scenarios = [('spectroscopic_fixed', [.5],[float(g['zl'])])]
             source_z = [float(g['zs'])]
