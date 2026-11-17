@@ -1,0 +1,16 @@
+[
+  {
+    "file": "galex.json",
+    "url": "https://mast.stsci.edu/api/v0/invoke?request=%7B%22service%22%3A+%22Mast.Galex.Catalog%22%2C+%22params%22%3A+%7B%22ra%22%3A+64.17228966221347%2C+%22dec%22%3A+53.858009373216746%2C+%22radius%22%3A+0.0008333333333333334%7D%2C+%22format%22%3A+%22json%22%7D",
+    "rows": 1,
+    "sha256": "1871c04ca0abe8b17e3194fbb5c3c15757ec97be6566d2bfac9525ef6d5ed70e",
+    "radius_arcsec": 3
+  },
+  {
+    "file": "allwise.csv",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw2mpro%2Cw2sigmpro%2Cw3mpro%2Cw3sigmpro%2Cw4mpro%2Cph_qual%2Ccc_flags+FROM+allwise_p3as_psd+WHERE+1%3DCONTAINS%28POINT%28%27J2000%27%2Cra%2Cdec%29%2CCIRCLE%28%27J2000%27%2C64.17228966221347%2C53.858009373216746%2C0.00083333333%29%29",
+    "rows": 1,
+    "sha256": "4f9a004b0e37432cd959791953957a8ef48d672f5d86138e93255f5061b87a1d",
+    "radius_arcsec": 3
+  }
+]

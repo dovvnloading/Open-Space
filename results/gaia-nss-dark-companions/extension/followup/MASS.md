@@ -1,0 +1,15 @@
+# The visible giant's stellar model determines the three-solar-mass crossing
+
+UCAC4 720-033289 has a joint RV mass function of 0.640 [0.606, 0.675] solar masses. At the central value, the primary must exceed 3.49 solar masses for the edge-on companion to exceed 3. Gaia GSP-Phot returns 7,209 K for the visible star. Gaia GSP-Spec gives 4,998 K, and seven independent LAMOST blue-arm LASP fits give 4,850–4,904 K. The FLAME mass of 4.95 solar masses uses the photometric temperature and carries the giant caution flag. [Gaia stellar parameters](star.csv) · [LAMOST measurements](lasp_visits.csv) · [Joint orbit and mass function](../../orbit/giant_sb1_fits.json)
+
+We fitted the Gaia G, BP and RP and 2MASS J, H and Ks magnitudes to rotating MIST v1.2 isochrones. The distance modulus was allowed to vary within the parallax uncertainty. We fitted extinction between 0 and 6 magnitudes and used finite photometric systematic floors. The tabulated model grid covers five metallicities from −0.75 to +0.25. Temperature, surface gravity and metallicity use conservative 150 K, 0.25 dex and 0.25 dex errors. We evaluated each spectroscopic pipeline separately. We weighted isochrone bins by their initial-mass interval, a Salpeter IMF and a constant star-formation rate in linear time. Unresolved stellar models use a coeval main-sequence companion at the edge-on mass or a pair of equally massive coeval main-sequence stars. The inclinations, distance calibration, atmosphere systematics, evolutionary grid, extinction law and fixed joint mass function condition these results. [Fit code](isochrone.py) · [MIST grids](https://mist.science/model_grids.html)
+
+| Spectroscopic constraints | Primary mass under dark model | Edge-on companion under dark model | Minimum χ², dark | Minimum χ², one luminous companion |
+|---|---:|---:|---:|---:|
+| Gaia GSP-Spec | 3.71 [3.48, 3.91] | 3.09 [2.99, 3.18] | 7.02 | 3.60 |
+| LAMOST LASP | 3.08 [2.75, 3.33] | 2.81 [2.65, 2.93] | 6.87 | 4.87 |
+| LAMOST CNN | 3.59 [2.98, 3.88] | 3.04 [2.76, 3.17] | 5.84 | 3.22 |
+
+Masses are in solar units with grid-weighted 16th and 84th percentiles at fixed mass function. These intervals omit the orbital mass-function uncertainty. The orbit packet propagates that uncertainty separately. The optical/IR data permit an ordinary stellar companion for all three sets of stellar constraints. Fits restricted to JHKs give the same qualitative result. The spectroscopic pipelines disagree on metallicity, which contributes to the spread in inferred primary mass. [Full fit predictions](isochrone_fits.json) · [Line profiles and sensitivity to companion light](SPECTRA.md)
+
+Run `python isochrone.py /path/to/MIST_v1.2_vvcrit0.4_UBVRIplus.txz /path/to/mist_rows.npz` from this directory. Missing archives are downloaded from MIST. Use an empty grid-cache path when changing models. The input tables include source and instrument identifiers, and the receipts preserve the source addresses and hashes. [Gaia, SIMBAD and 2MASS](inputs.json) · [LAMOST](lasp_input.json) · [GALEX and AllWISE](uv_ir_inputs.json)
