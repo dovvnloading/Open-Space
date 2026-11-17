@@ -84,3 +84,5 @@ Running `acquire.py` on its own queries public archives anew. Restoring the comp
 The fits test the designated objects and published arcs. No occurrence rate or survey detection probability follows from this set.
 
 The [fourteen recent station/night refits](recent/README.md) give actual inbound 250 au energies for thirteen nominally bound objects and the 3I/ATLAS positive control.
+
+The [578 long-arc objects](census/README.md) and [1,615 complementary catalogue IDs](census_short/README.md) yielded 392 additional original-energy measurements. The [17 dense force-law rechecks](robust/README.md) and [pre-split Evans–Drinkwater fit](fragment/README.md) document the resulting formal outliers.
