@@ -73,6 +73,12 @@ class CacheTest(unittest.TestCase):
         with patch.object(measure,'targets',return_value=[dict(T,source_id='123')]):
             with self.assertRaises(ValueError):measure.main(archive,self.p/'default')
             measure.main(archive,self.p/'legacy',allow_legacy_status=True)
+        sys.modules['measure']=measure
+        spec3=importlib.util.spec_from_file_location('within_visit',Path(__file__).with_name('within_visit.py'))
+        within=importlib.util.module_from_spec(spec3);spec3.loader.exec_module(within)
+        with patch.object(within,'targets',return_value=[dict(T,source_id='123')]):
+            with self.assertRaises(ValueError):within.compute(archive)
+            self.assertEqual(within.compute(archive,allow_legacy_status=True),[])
         provenance=json.loads((self.p/'legacy'/'replay-provenance.json').read_text())
         self.assertEqual(provenance['unknown_status_receipts'],['A_neo'])
         self.assertNotIn('status',json.loads(legacy.read_text()))
@@ -81,5 +87,7 @@ class CacheTest(unittest.TestCase):
         with patch.object(measure,'targets',return_value=[dict(T,source_id='123')]):
             with self.assertRaises(ValueError):measure.main(archive,self.p/'bad',allow_legacy_status=True)
         self.assertFalse((self.p/'bad').exists())
+        with patch.object(within,'targets',return_value=[dict(T,source_id='123')]):
+            with self.assertRaises(ValueError):within.compute(archive,allow_legacy_status=True)
         with self.assertRaises(ValueError):m.fetch('neo',T,archive)
 if __name__=='__main__':unittest.main()
