@@ -9,6 +9,7 @@ import json
 import os
 import sys
 import time
+import tempfile
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
@@ -35,6 +36,7 @@ NEIGHBORS = f"""SELECT designation,ra,dec,w1mpro,w2mpro,cc_flags,ext_flg,nb
 FROM allwise_p3as_psd
 WHERE 1=CONTAINS(POINT('ICRS',ra,dec), CIRCLE('ICRS',{CENTER},0.51))
 AND w1mpro < 16 ORDER BY designation"""
+PHOT = WISE.replace("designation,ra,dec,w1mpro,w2mpro,w1sigmpro,cc_flags,ext_flg,nb", "designation,j_m_2mass,h_m_2mass,k_m_2mass,w1mpro,w2mpro,ph_qual")
 BRIGHT = f"""SELECT designation,ra,dec,w1mpro,w2mpro
 FROM allwise_p3as_psd
 WHERE 1=CONTAINS(POINT('ICRS',ra,dec), CIRCLE('ICRS',{CENTER},0.75))
@@ -47,6 +49,12 @@ AND phot_g_mean_mag < 19 ORDER BY source_id"""
 def now():
     return datetime.now(timezone.utc).isoformat()
 
+def pinned(name, size, digest):
+    with (HERE/'input_hashes.csv').open() as file:
+        record=next(r for r in csv.DictReader(file) if r['field']==FIELD and r['name']==name)
+    if (int(record['bytes']),record['sha256'])!=(size,digest):
+        raise RuntimeError(f"{name}: archive response differs from frozen input")
+
 def fetch_catalog(name, service, query):
     uri = service+'?'+urlencode(dict(REQUEST='doQuery',LANG='ADQL',FORMAT='csv',QUERY=query,MAXREC=50000))
     start = now()
@@ -57,6 +65,7 @@ def fetch_catalog(name, service, query):
         hdr = r.headers
     lines = list(csv.DictReader(data.decode().splitlines()))
     if not lines or len(lines)>=50000: raise ValueError('empty or possibly truncated catalog')
+    pinned(name,len(data),hashlib.sha256(data).hexdigest())
     (ROOT/'inputs'/f'{name}.csv').write_bytes(data)
     meta = dict(service=service,url=uri,query=query,retrieved_utc=start,rows=len(lines),maxrec=50000,
                 http_status=200,content_type=hdr.get('Content-Type'),size=len(data),sha256=hashlib.sha256(data).hexdigest())
@@ -72,7 +81,9 @@ def fetch_cube():
         size = int(r.headers['Content-Range'].split('/')[1]); etag = r.headers['ETag']
         if len(r.read()) != 2880: raise IOError('incomplete initial block')
         modified = r.headers['Last-Modified']
-    target = ROOT/'localcache'/f'Npix{TILE}_cube.fits'
+    finalpath = ROOT/'localcache'/f'Npix{TILE}_cube.fits'
+    with tempfile.NamedTemporaryFile(dir=finalpath.parent,prefix=f'Npix{TILE}.',suffix='.part',delete=False) as tmp:
+        target=Path(tmp.name)
     step = 8*1024**2
     def download(lo):
         hi = min(lo+step,size)-1
@@ -95,6 +106,8 @@ def fetch_cube():
     with target.open('rb') as f: sha=hashlib.file_digest(f,'sha256').hexdigest()
     with target.open('rb') as f: md5=hashlib.file_digest(f,'md5').hexdigest()
     if '-' not in etag and md5!=etag.strip('"'): raise IOError('full cube MD5/ETag mismatch')
+    pinned('cube',size,sha)
+    target.replace(finalpath)
     meta = dict(url=url,tile=TILE,retrieved_utc=start,completed_utc=now(),size=size,etag=etag,
                 last_modified=modified,sha256=sha,md5=md5,ranges=ranges)
     (ROOT/'receipts'/'cube.json').write_text(json.dumps(meta,indent=2)+'\n')
@@ -104,6 +117,7 @@ if __name__=='__main__':
     for folder in ['inputs','receipts','localcache']: (ROOT/folder).mkdir(exist_ok=True,parents=True)
     tasks = dict(cube=fetch_cube,allwise=lambda:fetch_catalog('allwise','https://irsa.ipac.caltech.edu/TAP/sync',WISE),
                  neighbors=lambda:fetch_catalog('neighbors','https://irsa.ipac.caltech.edu/TAP/sync',NEIGHBORS),
+                 phot=lambda:fetch_catalog('phot','https://irsa.ipac.caltech.edu/TAP/sync',PHOT),
                  bright=lambda:fetch_catalog('bright','https://irsa.ipac.caltech.edu/TAP/sync',BRIGHT),
                  gaia=lambda:fetch_catalog('gaia','https://gea.esac.esa.int/tap-server/tap/sync',GAIA))
     with ThreadPoolExecutor(len(tasks)) as pool:
