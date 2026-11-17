@@ -1,13 +1,19 @@
-import urllib.request as u, urllib.parse as p, json, re
+import argparse
+import urllib.request as u, urllib.parse as p, json
 from astropy.coordinates import SkyCoord
 import astropy.units as au
 from pathlib import Path
 
-s = SkyCoord(53.214163, -27.769795, unit="deg")
-jd = "2461323.5"  # overwritten by astropy Time in UTC/TD below
+parser = argparse.ArgumentParser(description="Two-pass known small-body check with a JWST observer state")
+parser.add_argument("--ra", type=float, default=53.214163)
+parser.add_argument("--dec", type=float, default=-27.769795)
+parser.add_argument("--utc", default="2026-10-10T00:00:00")
+parser.add_argument("--output", type=Path, default=Path("known_moving_objects.json"))
+args = parser.parse_args()
+s = SkyCoord(args.ra, args.dec, unit="deg")
 from astropy.time import Time
 
-utc = "2026-10-10T00:00:00"
+utc = args.utc
 jd = str(Time(utc, scale="utc").tdb.jd)
 params = {
     "format": "json",
@@ -31,9 +37,9 @@ q = {
     "xobs": vec,
     "obs-time": utc,
     "fov-ra-center": s.ra.to_string(unit=au.hour, sep="-", precision=2, pad=True),
-    "fov-dec-center": s.dec.to_string(
+    "fov-dec-center": ("M" if s.dec.deg < 0 else "") + abs(s.dec).to_string(
         unit=au.deg, sep="-", precision=1, pad=True
-    ).replace("-", "M", 1),
+    ),
     "fov-ra-hwidth": ".0166667",
     "fov-dec-hwidth": ".0166667",
     "mag-required": "false",
@@ -49,6 +55,6 @@ print(
 )
 json.dump(
     {"horizons_url": hor, "query": url, "horizons": r, "identification": res},
-    open("known_moving_objects.json", "w"),
+    args.output.open("w"),
     indent=2,
 )
