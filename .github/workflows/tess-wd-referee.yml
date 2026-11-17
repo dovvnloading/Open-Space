@@ -1,0 +1,36 @@
+name: TESS white-dwarf occultation referee
+on:
+  push:
+    branches:
+      - research/tess-white-dwarf-occultations
+  pull_request:
+    paths:
+      - 'results/tess-white-dwarf-occultations/**'
+      - 'README.md'
+      - '.github/workflows/tess-wd-referee.yml'
+permissions:
+  contents: read
+jobs:
+  deposited-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: results/tess-white-dwarf-occultations
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install statistical packages
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.12,<2'
+      - name: Independently verify frozen sample, control pixels, artifacts and confidence bounds
+        run: python referee_verify.py
+      - name: Replay all 1200 original injection trials and upper limits
+        run: python audit_recovery.py sector109
+      - name: Replay 7800 extension draws, 140 sample decisions, and two confidence methods
+        run: python audit_extension.py extension
+      - name: Replay 2100 continuous-period draws and two possible hosts
+        run: python audit_population.py extension record/s109_ffi_visits.csv extension/extension_visits.csv --survey-record .
+      - name: Reconcile 1693 short-cadence products and all 272 optical-event records
+        run: python archive_followup.py --root .
