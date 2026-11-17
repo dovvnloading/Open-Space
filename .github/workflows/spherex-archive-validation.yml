@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        study: [blind, spectra, literature, imaging, optical]
+        study: ${{ fromJSON(contains(github.event.head_commit.message, '[imaging replay]') && '["imaging"]' || '["blind","spectra","literature","imaging","optical"]') }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -77,9 +77,12 @@ jobs:
           import sys
           from concurrent.futures import ThreadPoolExecutor
           sys.path.insert(0,'wise')
+          from pathlib import Path
           from fetch import fetch,targets
+          dest=Path('wise/archive')
+          dest.mkdir(parents=True,exist_ok=True)
           with ThreadPoolExecutor(4) as ex:
-              list(ex.map(lambda s:fetch('catwise',s),targets()))
+              list(ex.map(lambda s:fetch('catwise',s,dest),targets()))
           PY
               python imaging/neighborhoods.py
               cp imaging/*neighborhood*.csv imaging/*queries.json imaging/optical_unwise.jpg "$product/"
