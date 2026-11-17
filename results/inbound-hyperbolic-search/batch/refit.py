@@ -112,11 +112,13 @@ def fit(part):
         inp.write_bytes(staged)
         meta.update(unpenalized_initial_hyperbola=unpenalized,staged_sha256=hashlib.sha256(staged).hexdigest())
         # Unique output directory avoids reuse of another object's results.
+        cpu_seconds=int(os.environ.get("FO_CPU_SECONDS","18"))
+        timeout_seconds=27 if cpu_seconds==18 else 2*cpu_seconds+15
         cmd = [str(FITTER), str(inp), "-i", "-h-1", "-tEjd"+str(target),
-               "-O"+d, "-r18,20", "PERTURBERS=7fe", "JSON_SHORT_ELEMENTS="+d+"/solution.json",
+               "-O"+d, f"-r{cpu_seconds},{cpu_seconds+2}", "PERTURBERS=7fe", "JSON_SHORT_ELEMENTS="+d+"/solution.json",
                "JSON_ELEMENTS_NAME="+d+"/long.json", "JSON_COMBINED_NAME="+d+"/combined.json"]
         try:
-            run = subprocess.run(cmd, cwd=d, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=27)
+            run = subprocess.run(cmd, cwd=d, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=timeout_seconds)
             dest = stage/"solution.json"
             if run.returncode != 0 or not dest.is_file():
                 return {**meta, "status":"fit timeout" if run.returncode in (-9, -15, -24) else "fitter did not return elements",
