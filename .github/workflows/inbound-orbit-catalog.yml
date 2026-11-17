@@ -1,0 +1,27 @@
+name: Inbound orbit search replay
+on:
+  push:
+    branches: ['research/inbound-hyperbolic-search']
+    paths:
+      - 'results/inbound-hyperbolic-search/catalog/audit.py'
+      - '.github/workflows/inbound-orbit-catalog.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: results/inbound-hyperbolic-search
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/inbound-hyperbolic-search
+      - run: python catalog/audit.py catalog --fetch
+      - uses: actions/upload-artifact@v4
+        with:
+          name: catalog-audit
+          path: results/inbound-hyperbolic-search/catalog
