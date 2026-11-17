@@ -89,11 +89,35 @@ def main(out):
     for path in sorted((ROOT/"batch/fast-priority/evidence").glob("*shard-*.json")):
         for rec in json.loads(path.read_text())["records"]:
             fast[str(rec["spkid"])]=rec
+    review_path=ROOT/"batch/fast-priority/evidence/station-review.json"
+    if review_path.exists():
+        review=json.loads(review_path.read_text())
+        rec=fast[review["spkid"]]
+        assert rec["raw_sha256"] == review["input_sha256"]
+        rec.update(status=review["reviewed_status"],far_inbound_100au=review["reviewed_far_inbound_100au"],
+                   far_inbound_250au=review["reviewed_far_inbound_250au"])
+    # Native alias grouping succeeds for controls with permanent and provisional MPC labels.
+    for path in sorted((ROOT/"batch/fast-priority/evidence").glob("control-shard-*.json")):
+        for rec in json.loads(path.read_text())["records"]:
+            control_review_path=ROOT/"batch/fast-priority/evidence/control-station-review.json"
+            if rec["status"]!="identity and observation epochs verified" and control_review_path.exists():
+                control_review=json.loads(control_review_path.read_text())
+                if str(rec["spkid"])==str(control_review.get("spkid")):
+                    assert rec["raw_sha256"]==control_review["input_sha256"]
+                    rec.update(status=control_review["reviewed_status"],far_inbound_100au=control_review["reviewed_far_inbound_100au"],
+                               far_inbound_250au=control_review["reviewed_far_inbound_250au"])
+            if rec["far_inbound_100au"]:
+                fast[str(rec["spkid"])]=rec
     event={}
-    for path in sorted((ROOT/"orbits/census/evidence").glob("*summary*.csv")):
+    for group in ("census","census_short"):
+        path=ROOT/f"orbits/{group}/evidence/summary.csv"
         with path.open() as f:
             for rec in csv.DictReader(f):
-                event[str(rec["spkid"])]=rec
+                key=str(rec["spkid"])
+                assert key not in event
+                event[key]=rec
+    with (ROOT/"orbits/robust/evidence/dispositions.csv").open() as f:
+        robustness={r["spkid"]:r for r in csv.DictReader(f)}
     current_event_path=ROOT/"orbits/recent/evidence/results.json"
     current_event=json.loads(current_event_path.read_text())["objects"] if current_event_path.exists() else {}
     # Only the following two identifications include a checked pre-encounter bound state.
@@ -121,10 +145,13 @@ def main(out):
         independent_current=current_event.get(key,{}).get("models",{}).get("gravity",{}).get("boundaries",{}).get("250au") or {}
         priority=fast.get(key,{})
         ground=event.get(key,{})
+        robustness_row=robustness.get(key,{})
         boundary=independent_current or g250
         exact_inv=boundary.get("inverse_a_au_inv")
         exact_sig=boundary.get("formal_sigma_inverse_a")
         event_source="recent MPC sample" if independent_current else "targeted object fit" if g250 else ""
+        if ground.get("inverse_a_au_inv") not in ("",None):
+            assert ground["status"] == "inbound 250 au" and float(ground["inbound_radial_au_d"])<0 and abs(float(ground["radius_au"])-250)<0.1
         if exact_inv is None and ground.get("inverse_a_au_inv") not in ("",None):
             exact_inv=float(ground["inverse_a_au_inv"])
             exact_sig=float(ground["formal_sigma_inverse_a"]) if ground.get("formal_sigma_inverse_a") else None
@@ -137,9 +164,13 @@ def main(out):
         elif pdes in {"2005 D3","2006 S8","2004 D4","2006 S9"}:
             disposition="SOHO sungrazer on a short spacecraft arc; see parabolic and free fits"
         elif pdes=="1996 J1-A":
-            disposition="post-breakup arc of a known fragment; see parent comparison"
+            disposition="post-breakup fragment; intact parent is compatible with parabolic entry"
+        elif pdes in {"2025 K1-D","2025 K1-B","2019 Y4-A","2019 Y4-C"}:
+            disposition="documented comet fragment; component orbit is not an independent incoming body"
         elif pdes=="2024 U2":
             disposition="independent bound incoming state at 250 au"
+        elif robustness_row:
+            disposition=robustness_row["status"]
         elif pdes in model_checks:
             disposition="see individual astrometric models and uncertainty"
         elif pdes in {"1995 Y1","2007 W1"}:
@@ -181,6 +212,7 @@ def main(out):
                       "long_budget_inv_a":priority.get("inv_a") if priority.get("far_inbound_100au") else None,
                       "long_budget_formal_e_z":priority.get("formal_e_excess_sigma") if priority.get("far_inbound_100au") else None,
                       "long_budget_used":priority.get("used"),"long_budget_input_days":priority.get("input_days"),"long_budget_used_days":priority.get("used_days"),
+                      "activity_or_holdout_status":robustness_row.get("status"),"activity_or_holdout_note":robustness_row.get("note"),
                       "ground_census_status":ground.get("status"),"ground_census_reason":ground.get("reason"),
                       "event_250au_source":event_source,"event_250au_inv_a":exact_inv,"event_250au_sigma_inv_a":exact_sig,
                       "CODE_model":code.get("model"),"CODE_original_micro_au_inv":code.get("published_original_1_over_a_micro_au_inv"),
@@ -201,6 +233,10 @@ def main(out):
         "published_CODE":sum(bool(r["CODE_model"]) for r in items),
         "records_with_actual_inbound_250au":sum(r["event_250au_inv_a"] is not None for r in items),
         "records_with_any_far_inbound_independent_fit":sum(bool(r["inbound_gravity_source"] or r["long_budget_far_100au"] or r["event_250au_inv_a"] is not None) for r in items),
+        "records_with_250au_signed_uncertainty":sum(r["event_250au_sigma_inv_a"] is not None for r in items),
+        "independent_far_inbound_long_budget":sum(bool(r["long_budget_far_100au"]) for r in items),
+        "independent_far_or_published_CODE":sum(bool(r["inbound_gravity_source"] or r["long_budget_far_100au"] or r["event_250au_inv_a"] is not None or r["CODE_model"]) for r in items),
+        "records_with_negative_250au_gravity":sum((r["event_250au_inv_a"] or 0)<0 for r in items),
         "individual_fit_objects":sum(bool(r["focused_models"]) for r in items),
         "interpretation":dict(states)
     }
