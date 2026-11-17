@@ -3,7 +3,7 @@ on:
   push:
     branches: ['research/inbound-hyperbolic-search']
     paths:
-      - 'results/inbound-hyperbolic-search/comparison/screen.py'
+      - 'results/inbound-hyperbolic-search/comparison/*.py'
       - '.github/workflows/inbound-orbit-comparison.yml'
   workflow_dispatch:
 permissions:
@@ -20,7 +20,9 @@ jobs:
         with:
           persist-credentials: false
           sparse-checkout: results/inbound-hyperbolic-search
-      - run: python comparison/screen.py comparison/evidence
+      - run: python comparison/screen.py comparison/evidence --replay
+      - run: python -m pip install beautifulsoup4==4.13.4
+      - run: python comparison/code_original.py
       - uses: actions/upload-artifact@v4
         with:
           name: comparison

@@ -12,11 +12,18 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 OUT = Path(sys.argv[1] if len(sys.argv) > 1 else "evidence")
+REPLAY = "--replay" in sys.argv[2:]
 OUT.mkdir(exist_ok=True, parents=True)
-RECEIPTS = {}
+RECEIPTS = json.loads((OUT/"receipts.json").read_text()) if REPLAY else {}
 
 
 def get(name, url):
+    if REPLAY:
+        raw = gzip.decompress((OUT/(name+".gz")).read_bytes())
+        expected = RECEIPTS[name]
+        if expected["sha256"] != hashlib.sha256(raw).hexdigest() or expected["request"] != url:
+            raise ValueError("query or snapshot hash mismatch for "+name)
+        return raw
     request = Request(url, headers={"User-Agent": "Open-Space-public-astrometry-research/1"})
     with urlopen(request, timeout=120) as response:
         raw = response.read()
@@ -90,6 +97,8 @@ for name, value in [("screen_summary.json", results), ("receipts.json", RECEIPTS
     (OUT/name).write_text(json.dumps(value, indent=2, sort_keys=True)+"\n")
 print(json.dumps(results))
 for path in sorted(OUT.iterdir()):
+    if path.name.startswith("code_"):
+        continue
     if path.suffix == ".gz" and path.stat().st_size > 200000:
         continue
     encoded = base64.b64encode(path.read_bytes()).decode()
