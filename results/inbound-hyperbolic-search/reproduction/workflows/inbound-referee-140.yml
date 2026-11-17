@@ -1,0 +1,214 @@
+name: Independent referee replay for inbound-hyperbolic-search PR 140
+on:
+  push:
+    branches: [research/inbound-hyperbolic-search]
+    paths: [".github/workflows/inbound-referee-140.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  receipts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replay frozen input hashes and independent catalogue aggregation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python results/inbound-hyperbolic-search/verify_inputs.py
+          python results/inbound-hyperbolic-search/batch/fast-priority/verify.py
+          cd results/inbound-hyperbolic-search
+          python summarize.py "$RUNNER_TEMP/counts"
+          python - <<'PY'
+          from pathlib import Path
+          import json,gzip,hashlib,csv,io,os
+          root=Path('.')
+          stored=json.loads((root/'batch/evidence/counts.json').read_text())
+          fresh=json.loads((Path(os.environ['RUNNER_TEMP'])/'counts/counts.json').read_text())
+          assert fresh==stored,(fresh,stored)
+          assert stored['catalogue_rows']==2290
+          assert stored['records_with_any_far_inbound_independent_fit']==603
+          assert stored['records_with_actual_inbound_250au']==416
+          assert stored['catalogue_rows']-stored['records_with_any_far_inbound_independent_fit']==1687
+          cat=gzip.decompress((root/'catalog/sbdb.json.gz').read_bytes())
+          receipt=json.loads((root/'catalog/receipt.json').read_text())
+          assert hashlib.sha256(cat).hexdigest()==receipt['sha256']
+          assert len(json.loads(cat)['data'])==2290
+          data=gzip.decompress((root/'batch/evidence/dispositions.csv.gz').read_bytes())
+          fresh_data=gzip.decompress((Path(os.environ['RUNNER_TEMP'])/'counts/dispositions.csv.gz').read_bytes())
+          assert data==fresh_data
+          rows=list(csv.DictReader(io.StringIO(data.decode())))
+          assert len(rows)==len({x['spkid'] for x in rows})==2290
+          print('REFEREE_CATALOGUE',json.dumps({k:stored[k] for k in ('catalogue_rows','records_with_any_far_inbound_independent_fit','records_with_actual_inbound_250au','records_with_250au_signed_uncertainty','unpenalized_status')},sort_keys=True))
+          print('REFEREE_CATALOGUE_RECEIPT',receipt)
+          PY
+  forced:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install "numpy==2.2.6" "scipy==1.15.3" "pyerfa==2.0.1.5"
+      - name: Recompute 2,130 and forced 99/100 and compare original saved trials
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd results/inbound-hyperbolic-search/tracklets
+          cp run/f51-all-result.json "$RUNNER_TEMP/forced.json"
+          cp run/f51-all-injections.json "$RUNNER_TEMP/injections.json"
+          python link.py --data run --survey F51-all --trials 100
+          python - <<'PY'
+          import json,os,math
+          from pathlib import Path
+          from scipy.stats import binomtest
+          old=json.loads((Path(os.environ['RUNNER_TEMP'])/'forced.json').read_text())
+          new=json.loads(Path('run/f51-all-result.json').read_text())
+          assert new==old,(new,old)
+          draws=json.loads(Path('run/f51-all-injections.json').read_text())
+          assert draws==json.loads((Path(os.environ['RUNNER_TEMP'])/'injections.json').read_text())
+          assert new['qc']['lines']==7170 and new['qc']['eligible_tracks']==2130
+          assert new['injected']==100 and new['recovered']==99 and new['mixed_passes']==0
+          assert len(draws)==100 and sum(x['recovered'] for x in draws)==99 and len(new['real_passing'])==0
+          lower=binomtest(99,100).proportion_ci(confidence_level=.95).low
+          assert abs(new['exact_95pct_recovery_interval'][0]-lower)<1e-10
+          upper=(-math.log(.025))/lower
+          assert round(upper,2)==3.90
+          print('REFEREE_FORCED',json.dumps({'eligible_tracks':2130,'recovered':99,'injected':100,'lower_efficiency':lower,'poisson_upper':upper}))
+          PY
+  pointing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install "numpy==2.2.6" "scipy==1.15.3" "pyerfa==2.0.1.5"
+      - name: Independently replay 20,000 sky-time paths, 37 supported and 35 recovered
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd results/inbound-hyperbolic-search/tracklets
+          cp run/pointing-result.json "$RUNNER_TEMP/pointing.json"
+          cp run/pointing-trials.json "$RUNNER_TEMP/trials.json"
+          python pointing/replay.py --data run --states 20000 --fit-cap 100
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          from scipy.stats import binomtest
+          old=json.loads((Path(os.environ['RUNNER_TEMP'])/'pointing.json').read_text())
+          new=json.loads(Path('run/pointing-result.json').read_text())
+          assert new==old,(new,old)
+          trials=json.loads(Path('run/pointing-trials.json').read_text())
+          assert trials==json.loads((Path(os.environ['RUNNER_TEMP'])/'trials.json').read_text())
+          q=new['by_radius_deg']['1.5']
+          assert new['anchor_state_trials']==20000 and q['geometric_states']==37
+          assert q['fitted']==37 and q['eligible']==35 and q['recovered']==35
+          assert q['inbound']==15 and q['inbound_recovered']==14 and q['mixed_passing']==0
+          assert len(trials)==37
+          ci=binomtest(35,37).proportion_ci(confidence_level=.95)
+          assert abs(ci.low-q['conditional_recovery_ci95'][0])<1e-10
+          print('REFEREE_POINTING',json.dumps(q))
+          PY
+  soho:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install "numpy==2.2.6" "scipy==1.15.3" "astropy==7.1.1"
+      - name: Refit all 123 SOHO directions with fixed parabolic eccentricity
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp results/inbound-hyperbolic-search/catalog/soho/results.json "$RUNNER_TEMP/soho.json"
+          python results/inbound-hyperbolic-search/catalog/soho_models.py
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          prev=json.loads((Path(os.environ['RUNNER_TEMP'])/'soho.json').read_text())['targets']
+          fresh=json.loads(Path('results/inbound-hyperbolic-search/catalog/soho/results.json').read_text())['targets']
+          assert len(prev)==len(fresh)==4 and sum(x['positions'] for x in fresh)==123
+          for a,b in zip(prev,fresh):
+              assert a['target']==b['target'] and a['positions']==b['positions'] and b['converged']
+              assert a['obs_sha256']==b['obs_sha256']
+              rms=b['optimized_residuals']['coordinate_rms_arcsec']
+              assert abs(rms-a['optimized_residuals']['coordinate_rms_arcsec'])<0.05,(a['target'],rms)
+              assert rms < a['published_residuals']['coordinate_rms_arcsec']
+          print('REFEREE_SOHO',[(b['target'],b['positions'],b['optimized_residuals']['coordinate_rms_arcsec']) for b in fresh])
+          PY
+  orbits:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        object: ["1I", "2I", "3I", "2025-V1"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install "numpy==2.5.5" "scipy==1.18.1" "pyerfa==2.0.1.5" "jplephem==2.24"
+      - name: Verify original planetary kernel and station coordinate source checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results/inbound-hyperbolic-search/orbits/cache
+          cd results/inbound-hyperbolic-search/orbits/cache
+          python - <<'PY'
+          import hashlib,urllib.request
+          for fn,url,digest in [
+            ('de440.bsp','https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de440.bsp','a4ce9bf9b3282becc9f4b2ac3cebe03a2ae7599981aabd7265fd8482fff7c4b5'),
+            ('stations.txt','https://minorplanetcenter.net/iau/lists/ObsCodes.html','fc7a5c9e7259ef93a5b93eb4c69984980ba775803cfb93e6f8376fee81c0d45f')
+          ]:
+            with urllib.request.urlopen(urllib.request.Request(url,headers={'User-Agent':'Open-Space-replay/1.0'}),timeout=120) as resp:
+              data=resp.read()
+            actual=hashlib.sha256(data).hexdigest()
+            assert actual==digest,(fn,actual,digest)
+            open(fn,'wb').write(data)
+            print('REFEREE_EXTERNAL_INPUT',fn,len(data),actual)
+          PY
+      - name: Independently refit one frozen MPC astrometric arc and test barycentric entry
+        shell: bash
+        env:
+          TARGET: ${{ matrix.object }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import gzip,json,os,sys,numpy as np
+          from pathlib import Path
+          root=Path('results/inbound-hyperbolic-search/orbits')
+          sys.path.insert(0,str(root))
+          import refit
+          name=os.environ['TARGET']
+          stored=json.loads((root/'data/refits.json').read_text())
+          old=stored[name]
+          raw=gzip.decompress((root/'data'/f'{name}.obs.gz').read_bytes())
+          (root/'data'/f'{name}.obs').write_bytes(raw)
+          refit.NAMES={name:refit.NAMES[name]}
+          refit.seed=lambda obj,epoch,receipts: np.array(old['initial_horizons_seed_ssb_icrf'],dtype=float)
+          refit.run()
+          new=json.loads((root/'data/refits.json').read_text())[name]
+          models=['gravity','marsden_signed'] if name=='2025-V1' else ['gravity']
+          for kind in models:
+            prev=old['models'][kind];now=new['models'][kind]
+            assert 'failed' not in now,(name,kind,now)
+            assert prev['used']==now['used'],(name,kind,prev['used'],now['used'])
+            p=prev['boundaries']['250au'];n=now['boundaries']['250au']
+            assert abs(n['inverse_a_au_inv']-p['inverse_a_au_inv'])<0.0005,(name,kind,n,p)
+            assert abs(n['v_inf_km_s']-p['v_inf_km_s'])<0.08,(name,kind,n,p)
+            print('REFEREE_ORBIT',name,kind,'used',now['used'],'v_inf',n['v_inf_km_s'],'inverse_a',n['inverse_a_au_inv'],'sigma',n['formal_sigma_inverse_a'])
+          if name=='2025-V1':
+            a=new['models']['gravity']['boundaries']['250au']
+            b=new['models']['marsden_signed']['boundaries']['250au']
+            z0=-a['inverse_a_au_inv']/a['formal_sigma_inverse_a']
+            z1=-b['inverse_a_au_inv']/b['formal_sigma_inverse_a']
+            assert abs(z0-5.05)<0.12 and abs(z1-1.02)<0.15,(z0,z1)
+            print('REFEREE_V1_SIGMA',z0,z1)
+          PY

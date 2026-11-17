@@ -1,0 +1,101 @@
+{
+  "receipt": {
+    "mpc_url": "https://www.minorplanetcenter.net/iau/ECS/MPCAT-OBS/CmtObs.txt.gz",
+    "http_date": "Tue, 17 Nov 2026 06:23:21 GMT",
+    "last_modified": "Fri, 11 Sep 2026 20:30:58 GMT",
+    "bytes": 25344602,
+    "sha256_compressed": "680c9ee88ef6f615c30ca4faa347a77d5bed5787c8bbc74d8c7257c62a2aa54f",
+    "snapshot_run_id": 44029645452,
+    "snapshot_artifact_id": 14304767729,
+    "catalog_url": "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=spkid%2Cpdes%2Cfull_name%2Ckind%2Cclass%2Corbit_id%2Cepoch%2Ce%2Cq%2Ci%2Com%2Cw%2Ctp%2Csigma_e%2Csigma_q%2Csource%2Csoln_date%2Cdata_arc%2Cfirst_obs%2Clast_obs%2Cn_obs_used%2Ctwo_body%2CA1%2CA2%2CA3%2CDT%2CS0&full-prec=true&sb-cdata=%7B%22AND%22%3A%5B%22e%7CGE%7C1%22%5D%7D&sort=spkid",
+    "catalog_sha256": "90e391ede544a92c4648436656f38a42cc81f7d2ef7fea3b70dd832c24a26022",
+    "selection_count": 3,
+    "shard": 0,
+    "parts": 3,
+    "target_file_sha256": "81d385c927ecbc50b38000c8c82d2d9fa31e91a9d1a22d0cca42bde0cb80abb5",
+    "fitter_sha256": "7c126536dafd0c8f42008ba26a6d143624f6626993e0bd523c67603b592699ba",
+    "kernel_sha256": "dc8fa8136e71df25c1e4183cd777e6ae536eac099dc6225ad77192cf2192221d",
+    "flags": [
+      "-i",
+      "-h-1",
+      "-tEjd<target>",
+      "-r120,122",
+      "PERTURBERS=7fe",
+      "LINUX_JPL_FILENAME=<DE430t>"
+    ],
+    "input_header": "#interstellar\\n#Combine all",
+    "uses_catalogue_seed": false
+  },
+  "status_counts": {
+    "identity and observation epochs verified": 1
+  },
+  "records": [
+    {
+      "spkid": "1003639",
+      "pdes": "2019 Q4",
+      "name": "C/2019 Q4 (Borisov)",
+      "catalogue_vinf_kms": 32.277713317141995,
+      "catalogue_e": 3.356475782676596,
+      "catalogue_first": "2019-02-24",
+      "catalogue_last": "2020-09-30",
+      "catalogue_n": 964,
+      "catalogue_non_grav": {
+        "A1": "4.859588264027485E-8",
+        "A2": "1.879898690951361E-8",
+        "A3": "2.835503220128475E-9",
+        "DT": "-65.13009704907404"
+      },
+      "aliases": [
+        "0002I",
+        "K19Q040"
+      ],
+      "bulk_input_lines": 4024,
+      "source": "frozen CmtObs",
+      "input_lines": 4024,
+      "raw_sha256": "495a072d244995939c7771ef5aa65a61f4ecb80fb755a599145d1709635444a7",
+      "input_stations": 122,
+      "input_first_jd": 2458465.97655,
+      "input_last_jd": 2459122.769747,
+      "merged_input_identifiers": [
+        "    CK19Q040",
+        "0002I       ",
+        "0002IK19Q040"
+      ],
+      "cpu_seconds": 120,
+      "wall_limit_s": 300,
+      "unpenalized": true,
+      "staged_sha256": "43730b5e4e9974f10fdf8fd59e4c93620db28903c706c188410f02a3dde66612",
+      "requested_epoch": 2349251.052845906,
+      "returncode": 0,
+      "status": "identity and observation epochs verified",
+      "returned_name": "2I/Borisov = C/2019 Q4",
+      "returned_packed": "0002I",
+      "packed_residual_mismatches": [],
+      "station_time_mismatches": 0,
+      "mismatch_examples": [],
+      "returned_epoch": 2349251.05284591,
+      "center": "Object_-1",
+      "r_au": 2048.4031586629953,
+      "inbound": true,
+      "e": 3.3629661806392,
+      "q_au": 2.0140243134564,
+      "sigma_e": 1.91e-05,
+      "inv_a": -1.1732560351190389,
+      "vinf_bary_kms": 32.283505820567754,
+      "formal_e_excess_sigma": 123715.5068397487,
+      "rms_per_coordinate_arcsec": 0.59215,
+      "weighted_rms": 1.1744,
+      "used": 2424,
+      "total": 3361,
+      "used_fraction": 0.7212139244272537,
+      "first_used_jd": 2458725.54398,
+      "last_used_jd": 2459101.566182,
+      "used_days": 376.02220200002193,
+      "input_days": 656.7931970003992,
+      "used_span_fraction": 0.5725123276509719,
+      "solution_sha256": "84bfc1c4a2c7dd23112d11aff1cefe4bd233d913145c7355f63d5b9bdb2efc08",
+      "far_inbound_100au": true,
+      "far_inbound_250au": true
+    }
+  ]
+}

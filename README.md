@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 192 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 18 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 196 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 22 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -122,12 +122,14 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **The two bright knots of comet C/2020 P4-B.** Their separation is measured at 38.5 arcseconds. The discoverers first showed both knots in 2020. *Measured* · [Details](results/2020-p4-condensations/README.md)
 - **An unexplained infrared excess in comet C/2025 R2 (SWAN).** In single exposures from NASA's SPHEREx telescope the comet shows extra infrared light on 22 and 25 December 2025 and again on 2 January 2026. It is not a validated identification of any gas: calibration questions remain open, and a shape fitted to December failed to carry over to January. *Candidate* · [Details](results/spherex-dr1-moving-spectra/FINAL_STATUS.md)
 - **No new sungrazing comets in 988 SOHO images.** A search for undiscovered members of the Kreutz comet family recovered only known comets. *Null result* · [Details](results/kreutz-companion-search/README.md)
+- **No new interstellar body in a month of isolated survey tracklets.** No three-night high-speed link held up among 2,130 Pan-STARRS 1 tracklets. In a conditional synthetic-track test, 35 of 37 simulated paths near timed real sky detections linked correctly; detector footprints, brightness, encounter rate and 1,687 unresolved catalog entries remain unmeasured. *Null result* · [Details](results/inbound-hyperbolic-search/README.md)
 - **Repeated dips in two asteroids, but no confirmed moons.** TESS saw regular dimming of (29489) 1997 WQ and (3177) Chillicothe in 2018. Later visits did not show a steady rhythm. *Candidate* · [Details](results/tess-asteroid-mutual-events/README.md)
 - **Asteroid 2025 UQ146 keeps returning to Jupiter.** It was temporarily captured by Jupiter in 1984–1987 and should be again in 2069–2071. *Prediction* · [Details](results/jupiter-temporary-captures/README.md)
 - **ESA's JUICE will fly past an asteroid (25 Nov 2027).** It should pass 49,751 km from (41013) 1999 UH22. *Prediction* · [Details](results/juice-41013/README.md)
 
 ### Planets, moons and rings in our Solar System
 
+- **An infrared Planet Nine candidate did not reappear in public follow-up images.** A 2025 paper linked two far-infrared sources seen by IRAS in 1983 and AKARI in 2006. The old IRAS detector scans instead favour fixed sky emission, possibly from a nearby galaxy. DES and Euclid recovered 397/400 simulated dark planets (388/400 with perturbed historical positions), but uncertain AKARI timing and unmeasured regions prevent exclusion of the entire proposed orbit family. *Null result* · [Details](results/planet-nine-fir/README.md)
 - **Io's record 2024 eruption brightened Jupiter's sulfur glow but barely its sodium cloud.** *Measured* · [Details](results/io-2024-eruption-sodium/README.md)
 - **A 9.5-hour eclipse of Jupiter's moon Sinope (17–18 Oct 2037).** The moon will sit far enough from Jupiter in our sky to be observed during the eclipse. *Prediction* · [Details](results/sinope-2037-jupiter-eclipse/README.md)
 - **Saturn's rings will shade its moon Phoebe (1–3 Mar 2032).** The B ring should twice remove about 98% of Phoebe's sunlight. *Prediction* · [Details](results/phoebe-ring-shadow-2032/README.md)
@@ -146,6 +148,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Planets around other stars
 
+- **A JWST search found no new wide planet around ten nearby stars.** Archive checks show that three apparent companions are previously recorded background sources. Contrast and injection tests describe only the searched parts of those images, not every possible companion. *Null result* · [Details](results/jwst-nearby-companions/README.md)
 - **Four "planets" that are really eclipsing stars.** TOI-3143.01's signal comes from the neighbouring binary TIC 384244835. A single eclipsing binary produced the two Kepler candidates KOI-7865.01 and KOI-7866.01. KOI-5275.01 is light from a binary 30 arcseconds away. *Correction* · [TOI-3143.01](results/tess-off-target-eclipse-sources/README.md) · [KOI-7865.01 and KOI-7866.01](results/koi-7865-eclipse-source/README.md) · [KOI-5275.01](results/koi-5275-eclipse-contamination/README.md)
 - **A neighbouring eclipsing binary shifts KELT-8 b's measured transit times.** *Measured* · [Details](results/kelt-8-timing/README.md)
 - **No sign of the proposed eighth TRAPPIST-1 planet.** JWST's dedicated observation shows no dip deeper than about 330 parts per million, while a transit at the shallow end of the proposal would usually have been detected. *Null result* · [Details](results/trappist-1-jwst-timing/README.md)
@@ -229,6 +232,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### White dwarfs
 
+- **No faster supernova survivor found in the surveyed star catalogues.** None of 67,433 Gaia stars with well-measured parallaxes in four white-dwarf-oriented spectral catalogues had a measured sideways speed above 1,000 km/s. The all-sky speed cut missed 8 of 11 already known D⁶ white dwarfs, so this is a weak limit; one blended-looking fast star still needs follow-up. *Null result* · [Details](results/gaia-dr3-supernova-survivors/README.md)
 - **Two white dwarfs with speed swings of about 250 km/s.** WD J0238+2733 and WD J0421−1325 are strong candidates for hidden companions. *Candidate* · [Details](results/desi-white-dwarf-velocity-variables/README.md)
 - **Revised gravitational-wave clocks for eclipsing white-dwarf pairs.** Using the published parameters, ZTF J0720+6439's eclipses should drift about 13 seconds in 10 years rather than the 0.6 seconds stated in a preprint. Older survey data extend the eclipse record of seven pairs. *Prediction* · [Details](results/eclipsing-dwd-gr-chirps/README.md)
 - **Calcium gas around WD J2307−0002 was already there 11 years earlier.** *Measured* · [Details](results/wd-j2307-calcium-emission/README.md)
@@ -350,7 +354,9 @@ The [cold-neighbour search methods and reproduction evidence](results/cold-neigh
 - [Euclid DR1 repeat-visit development screen and failure-mode evidence](results/euclid-foundation-eligibility/README.md)
 - [XRISM count-comparison methods and offline replay](results/xrism-ngc7172/README.md), documenting the calibration limits of the observed-count test.
 - [IXPE Mrk 501 conditional repeatability methods and evidence](results/ixpe-mrk501-repeat/README.md).
+- [MMS four-spacecraft planar-screen methods and bounded negative result](results/mms-planar-screen/README.md).
 - [SO/PHI-FDT magnetic-proxy persistence screen and evidence](results/solar-phi-fdt-pilot/README.md).
+- [VAST TDE-candidate conditional repeatability and offline replay](results/vast-tde-repeatability/README.md). Its frozen stages document the [initial metadata pilot](results/vast-tde-metadata/README.md), [expanded cohort and development](results/vast-tde-expanded/README.md), and [holdout protocol](results/vast-tde-holdout/README.md).
 
 ### Run the survey workers
 

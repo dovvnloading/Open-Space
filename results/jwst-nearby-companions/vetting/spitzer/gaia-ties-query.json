@@ -1,0 +1,11 @@
+{
+  "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+  "params": {
+    "QUERY": "SELECT source_id,ra,dec,pmra,pmdec,parallax,phot_g_mean_mag,phot_rp_mean_mag FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',335.78148,-17.61247,0.13)) AND phot_g_mean_mag<19 AND pmra IS NOT NULL ORDER BY phot_g_mean_mag",
+    "FORMAT": "csv",
+    "REQUEST": "doQuery",
+    "LANG": "ADQL"
+  },
+  "sha256": "b0e2c40411e6b2ca3f520f7ae48a06820f8938f76317e7ad3a4115a549f29e9e",
+  "utc": "2026-11-17T07:15:25.818659+00:00"
+}

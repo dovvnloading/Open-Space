@@ -1,0 +1,39 @@
+name: Refit recent MPC and short arcs
+on:
+  push:
+    branches: ['research/inbound-hyperbolic-search']
+    paths:
+      - 'results/inbound-hyperbolic-search/batch/latest.py'
+      - 'results/inbound-hyperbolic-search/batch/*.sh'
+      - '.github/workflows/inbound-latest-arcs.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  refits:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: results/inbound-hyperbolic-search/batch
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/inbound-hyperbolic-search
+      - name: Restore pinned fitter and ephemeris
+        id: fitter
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/bin/fo
+            ~/.find_orb
+          key: inbound-fo-${{ runner.os }}-${{ hashFiles('results/inbound-hyperbolic-search/batch/build.sh') }}
+      - if: steps.fitter.outputs.cache-hit != 'true'
+        run: bash build.sh "$RUNNER_TEMP/build" > "$RUNNER_TEMP/build.log" 2>&1 || { tail -100 "$RUNNER_TEMP/build.log"; exit 1; }
+      - run: python latest.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: recent-mpc-orbits
+          path: results/inbound-hyperbolic-search/batch/evidence

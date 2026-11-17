@@ -1,0 +1,7 @@
+SELECT COUNT(*) AS n
+FROM gaiadr3.gaia_source
+WHERE pm > 35
+AND bp_rp < 1.2
+AND parallax_over_error < -3
+AND 4.74047 * pm > 1000 * ABS(parallax)
+AND phot_g_mean_mag + 5 * LOG10(ABS(parallax)) - 10 > 3.5

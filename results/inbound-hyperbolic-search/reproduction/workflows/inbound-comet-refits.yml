@@ -1,0 +1,70 @@
+name: Refit archived comet astrometry
+on:
+  push:
+    branches: ['research/inbound-hyperbolic-search']
+    paths:
+      - 'results/inbound-hyperbolic-search/batch/refit.py'
+      - 'results/inbound-hyperbolic-search/batch/build.sh'
+      - '.github/workflows/inbound-comet-refits.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+defaults:
+  run:
+    working-directory: results/inbound-hyperbolic-search/batch
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/inbound-hyperbolic-search
+      - run: python refit.py --download-source "$RUNNER_TEMP/mpc"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mpc-observation-snapshot
+          path: ${{ runner.temp }}/mpc
+          compression-level: 0
+          retention-days: 2
+  refits:
+    needs: snapshot
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/inbound-hyperbolic-search
+      - uses: actions/download-artifact@v4
+        with:
+          name: mpc-observation-snapshot
+          path: ${{ runner.temp }}/mpc
+      - name: Restore pinned fitter and ephemeris
+        id: fitter
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/bin/fo
+            ~/.find_orb
+          key: inbound-fo-${{ runner.os }}-${{ hashFiles('results/inbound-hyperbolic-search/batch/build.sh') }}
+      - if: steps.fitter.outputs.cache-hit != 'true'
+        run: bash build.sh "$RUNNER_TEMP/build" > "$RUNNER_TEMP/build.log" 2>&1 || { tail -100 "$RUNNER_TEMP/build.log"; exit 1; }
+      - name: Fit without suppressing initially hyperbolic solutions
+        env:
+          FO_UNPENALIZED: '1'
+          SHARD: ${{ matrix.shard }}
+        run: python refit.py --source "$RUNNER_TEMP/mpc" --shard "$SHARD" --parts 12
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unpenalized-comet-orbits-${{ matrix.shard }}
+          path: |
+            results/inbound-hyperbolic-search/batch/evidence/inputs.json
+            results/inbound-hyperbolic-search/batch/evidence/refits.csv

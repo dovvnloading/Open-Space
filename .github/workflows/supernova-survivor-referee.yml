@@ -1,0 +1,63 @@
+name: Gaia supernova-survivor referee replay
+on:
+  pull_request:
+    paths:
+      - 'results/gaia-dr3-supernova-survivors/**'
+      - 'README.md'
+      - '.github/workflows/supernova-survivor-referee.yml'
+  push:
+    branches:
+      - research/gaia-dr3-supernova-survivors
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  frozen-inputs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install calculation versions
+        run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'gaiadr3-zeropoint==0.1.0'
+      - name: Independently check all receipts and headline arithmetic
+        working-directory: results/gaia-dr3-supernova-survivors
+        run: |
+          sha256sum -c SHA256SUMS > /tmp/survivor_sha256.log
+          python referee_check.py
+      - name: Rerun controls, 12-object astrometric propagation and all injection trials
+        working-directory: results/gaia-dr3-supernova-survivors
+        run: |
+          python control/recovery.py > /tmp/survivor_control.json
+          python search/analysis.py
+          python search/inject.py
+          python referee_check.py
+          sha256sum -c SHA256SUMS > /tmp/survivor_replay_sha256.log
+          echo 'Frozen-input replay matches every tracked output byte.'
+  orbit-and-remnant:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install orbit code dependencies at original versions
+        run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'gaiadr3-zeropoint==0.1.0' 'astropy==8.0.2' 'gala==1.12.0' 'galpy==1.12.1'
+      - name: Rerun 4096-draw posterior and 256-draw Galactic orbits from frozen Gaia rows
+        working-directory: results/gaia-dr3-supernova-survivors
+        run: |
+          python origin/run.py
+          python referee_check.py
+          sha256sum -c SHA256SUMS > /tmp/survivor_orbit_sha256.log
+      - name: Re-fetch the SHA-256-pinned Green SNR catalogue and recompute all seven angular tracks
+        working-directory: results/gaia-dr3-supernova-survivors
+        run: |
+          python origin/remnants.py
+          python referee_check.py
+          sha256sum -c SHA256SUMS > /tmp/survivor_snr_sha256.log
