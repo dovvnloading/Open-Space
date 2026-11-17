@@ -24,7 +24,7 @@ With NumPy, SciPy and Astropy installed, this single command recomputes and chec
 python results/euclid-foundation-eligibility/followup/check.py --check
 ```
 
-The WCS test was performed during the full-cutout run; stamps do not independently reconstruct the WCS or original selection. `SHA256SUMS` records deposited evidence hashes. The [Euclid DR1-Foundation supplement](https://euclid.esac.esa.int/dr/dr1/expsup/) describes the release and its deep-field observations.
+The check requires exact counts, source IDs, classifications and missing fields; floating-point values use relative tolerance 1e-10 and absolute tolerance 1e-12. The WCS test was performed during the full-cutout run; stamps do not independently reconstruct the WCS or original selection. `SHA256SUMS` records deposited evidence hashes. The [Euclid DR1-Foundation supplement](https://euclid.esac.esa.int/dr/dr1/expsup/) describes the release and its deep-field observations.
 
 ## Development history
 
