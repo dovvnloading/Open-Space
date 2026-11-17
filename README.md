@@ -231,6 +231,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### White dwarfs
 
+- **No faster supernova survivor found in the surveyed star catalogues.** None of 67,433 Gaia stars with well-measured parallaxes in four white-dwarf-oriented spectral catalogues had a measured sideways speed above 1,000 km/s. The all-sky speed cut missed 8 of 11 already known D⁶ white dwarfs, so this is a weak limit; one blended-looking fast star still needs follow-up. *Null result* · [Details](results/gaia-dr3-supernova-survivors/README.md)
 - **Two white dwarfs with speed swings of about 250 km/s.** WD J0238+2733 and WD J0421−1325 are strong candidates for hidden companions. *Candidate* · [Details](results/desi-white-dwarf-velocity-variables/README.md)
 - **Revised gravitational-wave clocks for eclipsing white-dwarf pairs.** Using the published parameters, ZTF J0720+6439's eclipses should drift about 13 seconds in 10 years rather than the 0.6 seconds stated in a preprint. Older survey data extend the eclipse record of seven pairs. *Prediction* · [Details](results/eclipsing-dwd-gr-chirps/README.md)
 - **Calcium gas around WD J2307−0002 was already there 11 years earlier.** *Measured* · [Details](results/wd-j2307-calcium-emission/README.md)

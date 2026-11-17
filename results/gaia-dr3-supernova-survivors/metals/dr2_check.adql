@@ -1,0 +1,3 @@
+SELECT n.dr2_source_id, n.dr3_source_id, n.angular_distance, n.magnitude_difference, g.parallax, g.parallax_error, g.pm, g.ruwe
+FROM gaiadr3.dr2_neighbourhood AS n JOIN gaiadr3.gaia_source AS g ON n.dr3_source_id = g.source_id
+WHERE n.dr2_source_id IN (3879130830145561856, 4554715338831623296, 4570210859279948544, 2109354444471960832)
