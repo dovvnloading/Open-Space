@@ -1,0 +1,19 @@
+{
+  "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+  "method": "GET",
+  "query": "SELECT COUNT(*) AS n\nFROM gaiadr3.gaia_source\nWHERE pm > 35\nAND bp_rp < 1.2\nAND parallax_over_error < -3\nAND 4.74047 * pm > 1000 * ABS(parallax)\nAND phot_g_mean_mag + 5 * LOG10(ABS(parallax)) - 10 > 3.5",
+  "params": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "csv",
+    "QUERY": "SELECT COUNT(*) AS n\nFROM gaiadr3.gaia_source\nWHERE pm > 35\nAND bp_rp < 1.2\nAND parallax_over_error < -3\nAND 4.74047 * pm > 1000 * ABS(parallax)\nAND phot_g_mean_mag + 5 * LOG10(ABS(parallax)) - 10 > 3.5"
+  },
+  "status": 200,
+  "server_date": "Tue, 17 Nov 2026 08:10:41 GMT",
+  "content_type": "text/csv",
+  "started_utc": "2026-11-17T08:10:39.048774+00:00",
+  "finished_utc": "2026-11-17T08:10:50.200898+00:00",
+  "rows": 1,
+  "nbytes": 4,
+  "sha256": "4faf10a245e3e66fcd73082bd500d87983f8ee368448e7de0b5a82c7b423fa41"
+}

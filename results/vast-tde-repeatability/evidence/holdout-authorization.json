@@ -1,0 +1,40 @@
+{
+  "authorized": true,
+  "authorized_by": "root orchestrator under active user research goal",
+  "authorized_utc": "2026-11-17T07:19:32.492113+00:00",
+  "phase": "holdout",
+  "git_head": "2ca26d3797e55146c5004290f12642662ebf3873",
+  "manifest_sha256": "28ce15c3b13283cfe39570c176a665c294023cc322c43abb73156291b2682354",
+  "development_summary_sha256": "a851263393a0f59609fa14da6443e9c9bb6b751b94c4821b96da9af4f6e4bb60",
+  "fixed_sources": [
+    14043503,
+    13894502,
+    14481388
+  ],
+  "primary_rule": "For each source, both frozen final24h sessions have (gain-corrected mean peak flux - frozen development baseline)/sqrt(future model variance + frozen baseline variance) >=3. Future variance follows unchanged declared algorithm; no fixed future flux limit is claimed.",
+  "operating_mode": "conditional standard-release brightness comparison; no calibrated physical/global significance or novel source association",
+  "review_completed": {
+    "packet_files_equal_git_blobs": 27,
+    "root_reran_guard_tests": 5,
+    "root_reran_synthetic_pipeline_tests": 12,
+    "original_development_hashes_verified": 3,
+    "independent_native_development_recalculation": "allrows/drops/controlIDs/gains/sessionvalues/baselines match primary <1.8e-15, same observations",
+    "independent_script_sha256": "c43f0bb9c62c6ad9bf9a38fd1bcee8900fccb0cc830a469fcecebdf4364b64bc",
+    "independent_result_sha256": "5f38a3fce4d949bc97357909c588359e139362dbd3c13647bcda9e7ed30f5504",
+    "pseudo_backgrounds": "v1caller failure retained, v2 rule/identities unchanged. AT2020nov1/20 coverage stronglylimits power; knowncontrol19/20and20/20; no independentnull/eventefficiency inferred."
+  },
+  "limits": [
+    "three percentgainfloor and crosssession/controlselection covariance unqualified",
+    "AT2018hyz and ASASSN15oi grossconstantfitfailure385.6/8and264.9/8; baselineinflation does not establish physicalpredictive uncertainty",
+    "AT2020nov alreadyhas VLA/RACS/VAST/VLASS radiohistory; AGN vsSF interpretation disputed; 888MHz peak vsolderhigherfrequency flux is not evidence of a rise",
+    "same telescope/processing common calibration and unknownimage/PSF/sourceownership remain",
+    "parent103ofheterogeneous134,100catalog nonmatchesnotnondetections; no populationclaim"
+  ],
+  "parquet_io_rule": "Chunk decoding may include unreturned rows. Only frozen control IDs plus target and fixed final image IDs may be returned, analyzed or viewed. No V/eta/maxflux columns.",
+  "not_authorized": [
+    "newtargetselection, substitutecontrols, thresholdorstatisticalmodelrevision, adaptivebackfill",
+    "nativeimagepixels or unrelatedepochs under this authorization"
+  ],
+  "after_execution": "Preserve all3outcomes, drops/failures and receipts. Independently review rawconditionalvalues before physical or novelty labels.",
+  "output_root": "D:\\Open-Space\\campaigns\\vast-tde-holdout-2ca26d3-28ce15c-20261117\\run"
+}
