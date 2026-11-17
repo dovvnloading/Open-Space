@@ -19,8 +19,10 @@ def main():
     p.add_argument('study',type=Path)
     args=p.parse_args()
     field=args.study/'wide'
-    data=pd.read_csv(args.study/'visits/wide'/f'{ID}.csv')
-    data=data.loc[data.status=='ok'].copy()
+    data=pd.read_csv(args.study/'visits/profile_J135607.csv')
+    # Match the native-profile experiment's window, retaining every good
+    # field exposure in it, independently of measured source brightness.
+    data=data.loc[(data.status=='ok') & data.wave_um.between(3.07,3.73)].copy()
     redshifts=pd.read_csv(field/'catalogs/model_redshifts.csv').set_index('source_id')
     z=redshifts.loc[ID,'redshift']
     wave=data.wave_um.to_numpy()

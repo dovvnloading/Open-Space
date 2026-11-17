@@ -42,7 +42,10 @@ def check(partial=False):
             z=g.get('signed_score');f=g.get('fractional_contrast')
             out.append(dict(source_id=key[0],template_rank=r['template_rank'],channel=key[1],
                     center_um=r['peak_wave_um'],coadd_signed_score=r['peak_signed'],coadd_local_fraction=local.get(key[0],''),release=rel,
-                    records_directory=str(base.parent.name),attempted=len(a),usable=counts['ok'],
+                    records_directory=str(base.parent.name),attempted=len(a),
+                    quality_fill_attempted=sum(x.get('selection_reason')=='missing_bin_alternate' for x in a),
+                    quality_fill_usable=sum(x.get('selection_reason')=='missing_bin_alternate' and x['status']=='ok' for x in a),
+                    usable=counts['ok'],
                     aperture_flags=counts['aperture_flags'],few_blanks=counts['few_blanks'],
                     off_bin=counts['off_bin'],edge=counts['edge'],read_errors=counts['read_error'],
                     blue_dates=n[0],core_dates=n[1],red_dates=n[2],three_bins=int(z is not None),
@@ -55,7 +58,7 @@ def check(partial=False):
     stats={}
     for rel in ('dr1','qr3'):
         rr=[x for x in out if x['release']==rel]
-        stats[rel]={k:sum(int(x[k] or 0) for x in rr) for k in ['three_bins','all_bins_2plus','attempted','usable',
+        stats[rel]={k:sum(int(x[k] or 0) for x in rr) for k in ['three_bins','all_bins_2plus','attempted','quality_fill_attempted','quality_fill_usable','usable',
                     'aperture_flags','few_blanks','off_bin','edge','read_errors','same_sign_ge3','local_sign_ge3']}
         stats[rel]['incomplete_source_windows']=len(rr)-stats[rel]['three_bins']
     pairs={r['source_id']:{x['release']:x for x in out if x['source_id']==r['source_id']} for r in out}

@@ -1,5 +1,7 @@
 # Independent exposure checks
 
+The high-priority native tests covered 23 source–wavelength pairs in 21 distinct sources. Of 447 attempted aperture measurements, 239 passed the native quality checks. Thirteen pairs had the core and both sidebands in the independent QR3 release. One is the 3.3 µm aromatic-band candidate in UGC 8856 NED01 described below. The other twelve have absolute native contrast scores below 0.65. The remaining ten pairs lack a clean three-bin QR3 comparison. The supplemental raw-trigger table is reported separately.
+
 The native-image measurements test whether the source aperture has a local spectral contrast in separate exposures. DR1 contains constituent observations of the discovery cubes. QR3 images were taken after DR1 and give the independent test. The two splits of each release are formed at the median MJD of the selected images. A missing contrast means that one or both adjacent samples, or the central sample, lacked usable data.
 
 ## Sample and method
@@ -20,7 +22,7 @@ From the study directory, run the following with Python 3, NumPy, SciPy and Astr
 
 ```sh
 python visits/choose_targets.py
-python visits/science_wcs.py /tmp/spherex-native-wcs visits 2 4 5 6
+python visits/science_wcs.py /tmp/spherex-native-wcs visits 1 2 3 4 5 6
 python visits/index_visits.py /tmp/spherex-nep-index visits/nep 270 66.56 --detectors 2 5
 python visits/index_visits.py /tmp/spherex-wide-index visits/wide 209.53125 30 --detectors 1 2 3 4 5 6
 python visits/measure.py visits/nep/targets.csv sources.csv /tmp/spherex-nep-index visits/nep visits/nep /tmp/spherex-native-wcs --replay-dir visits/nep
@@ -30,4 +32,24 @@ python visits/summarize.py
 
 Dropping `--replay-dir` performs a new selection from the available footprints. For a new selection run `python visits/complete_bins.py visits/wide/targets.csv wide/sources.csv /tmp/spherex-wide-index visits/wide visits/wide /tmp/spherex-native-wcs` to reproduce the wide-field missing-bin rule before summarizing. A live TAP query can grow as IRSA releases additional exposures. No source photometry is used to pick an exposure within a band or date.
 
+The active-detector coordinate and local pixel-area audits use the selected cutouts. The wing fits compare two unsaturated annuli for the flagged stars and a control. After the supplemental target replay, run the following from the study directory.
+
+```sh
+python visits/audit_area.py visits/nep /tmp/spherex-nep-index/cutouts
+python visits/audit_area.py visits/wide /tmp/spherex-wide-index/cutouts
+python visits/audit_area.py visits/wide_remaining /tmp/spherex-wide-index/cutouts
+python visits/wing_check.py visits/nep /tmp/spherex-nep-index/cutouts
+python visits/wing_check.py visits/wide /tmp/spherex-wide-index/cutouts
+```
+
 Archive definitions and exposure access are documented in the [SPHEREx DR1 release overview](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/overview_dr1.html), [Explanatory Supplement §§2.5, 3.2.5 and 4.3.1](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/SPHEREx_Expsupp.pdf), and [IRSA's native-image cutout tutorial](https://caltech-ipac.github.io/irsa-tutorials/spherex-cutouts/).
+
+## Resolved example in UGC 8856 NED01
+
+All 55 available native D4 footprints containing J135607.93+300452.8 were extracted with the same masks. The published target list selected the source for its negative residual relative to a galaxy template. The data show an **emission** feature at this wavelength in both releases. Fitting each native scan separately in 3.07–3.73 µm gives observed centers of 3.390 and 3.394 µm (DR1, QR3). At the catalogued redshift 0.0310622 they correspond to 3.288 and 3.292 µm. The core centroids of the selected clean native images are within 0.25 arcsec of the catalog position. In each fit the continuum is linear and the intrinsic band is a Gaussian of fixed rest FWHM 0.04 µm convolved with the per-exposure Gaussian CBAND approximation. The numerical fit precision exceeds the spectral resolving power. Detection in both releases supports a real celestial feature compatible with the known aromatic band. Neighboring-source light and non-Gaussian instrumental response remain possible contributions to the profile. Comparable 3.3 µm aromatic bands are observed across star-forming galaxies. [AKARI galaxy measurements](https://academic.oup.com/pasj/article/78/2/454/8441758)
+
+```sh
+python visits/profile.py /tmp/spherex-wide-index /tmp/spherex-native-wcs visits/profile_J135607.csv
+python visits/profile_fit.py
+python visits/profile_position.py /tmp/spherex-wide-index
+```

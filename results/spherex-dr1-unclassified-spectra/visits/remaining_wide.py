@@ -47,16 +47,32 @@ def main():
     if args.retry_errors:
         targets=[r for r in targets if not (OUT/(r['source_id']+'.json')).is_file() or
                  any(k.startswith('read_error') for k in json.loads((OUT/(r['source_id']+'.json')).read_text())['status_counts'])]
+    # Preserve the initial / quality-fill labels if a transient read failure
+    # occurs after the additional-exposure pass.
+    previous={}
+    if args.replay or args.retry_errors:
+        for t in targets:
+            path=OUT/(t['source_id']+'.csv')
+            if path.is_file():
+                saved={r['url']:r.get('selection_reason','') for r in read(path)}
+                if any(saved.values()): previous[path]=saved
     with TemporaryDirectory() as tmpdir:
         jobs=[]
-        for i in range(2):
-            part=targets[i::2]
-            if not part: continue
-            file=Path(tmpdir)/f'targets_{i}.csv';save(file,part)
-            jobs.append(SimpleNamespace(targets=file,sources=HERE.parent/'wide/sources.csv',
-                index_cache=args.index_cache,calibration=HERE/'wide',out=OUT,science_cache=args.science_cache,
-                replay_dir=OUT if args.replay else None,per_bin=args.per_bin,workers=args.workers_each))
-        with ThreadPoolExecutor(len(jobs) or 1) as pool: list(pool.map(run,jobs))
+        for replay in (False,True):
+            group=[t for t in targets if bool(args.replay or (args.retry_errors and
+                   (OUT/(t['source_id']+'.csv')).is_file()))==replay]
+            for i in range(2):
+                part=group[i::2]
+                if not part: continue
+                file=Path(tmpdir)/f'targets_{replay}_{i}.csv';save(file,part)
+                jobs.append(SimpleNamespace(targets=file,sources=HERE.parent/'wide/sources.csv',
+                    index_cache=args.index_cache,calibration=HERE/'wide',out=OUT,science_cache=args.science_cache,
+                    replay_dir=OUT if replay else None,per_bin=args.per_bin,workers=args.workers_each))
+        with ThreadPoolExecutor(2) as pool: list(pool.map(run,jobs))
+    for path,labels in previous.items():
+        data=read(path)
+        for row in data: row['selection_reason']=labels[row['url']]
+        save(path,data)
     print('requested_pairs',len(targets),flush=True)
 
 if __name__=='__main__':main()
