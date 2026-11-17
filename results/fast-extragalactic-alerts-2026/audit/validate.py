@@ -135,7 +135,11 @@ if tns_data is not None:
         archive = zipfile.ZipFile(io.BytesIO(tns_data))
         names = [n for n in archive.namelist() if n.lower().endswith(".csv")]
         with archive.open(names[0]) as z:
-            tns = list(csv.DictReader(io.TextIOWrapper(z, encoding="utf-8-sig", errors="replace")))
+            lines = io.TextIOWrapper(z, encoding="utf-8-sig", errors="replace").read().splitlines()
+            # The Nov 2026 official ZIP prepends a one-cell timestamp line.
+            while lines and ("," not in lines[0] or lines[0].startswith("#")):
+                lines.pop(0)
+            tns = list(csv.DictReader(lines))
         if len(tns) < 50000:
             raise ValueError("Unexpectedly short full TNS CSV")
         receipts["tns_rows"] = len(tns)
