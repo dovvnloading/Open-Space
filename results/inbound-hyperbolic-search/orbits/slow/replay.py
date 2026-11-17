@@ -70,6 +70,10 @@ def initial_state(obj,spk,epoch,eph,receipts):
     url="https://ssd-api.jpl.nasa.gov/sbdb.api?"+urllib.parse.urlencode({"sstr":spk,"full-prec":"1"})
     doc=json.loads(acquire.retrieve(url,obj+"-sbdb.json",receipts))
     orb=doc["orbit"]; el={v["name"]:float(v["value"]) for v in orb["elements"] if v.get("value") is not None}
+    return conic_seed(el,float(orb["epoch"]),epoch,eph)
+
+def conic_seed(el,t0,epoch,eph):
+    """Map heliocentric osculating elements at t0 to an SSB ICRF fit seed at epoch."""
     O,w,inc=np.deg2rad([el["om"],el["w"],el["i"]])
     c,s=np.cos,np.sin
     p=np.array([c(w)*c(O)-s(w)*s(O)*c(inc),c(w)*s(O)+s(w)*c(O)*c(inc),s(w)*s(inc)])
@@ -77,7 +81,7 @@ def initial_state(obj,spk,epoch,eph,receipts):
     eps=np.deg2rad(23.439291111)
     rot=np.array([[1,0,0],[0,c(eps),-s(eps)],[0,s(eps),c(eps)]])
     state=np.r_[rot@(p*el["q"]),rot@(q*np.sqrt(fit.prior.GM*(1+el["e"])/el["q"]))]
-    t0=float(orb["epoch"]); tp=el["tp"]
+    tp=el["tp"]
     def two_body(t,y): return np.r_[y[3:],-fit.prior.GM*y[:3]/np.linalg.norm(y[:3])**3]
     if t0!=tp:
         solution=solve_ivp(two_body,(tp,t0),state,method="DOP853",rtol=1e-12,atol=1e-13)
