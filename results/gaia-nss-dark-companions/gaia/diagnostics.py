@@ -4,6 +4,7 @@ import csv
 import hashlib
 import io
 import json
+import time
 import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
@@ -31,7 +32,15 @@ def query(task):
     if not dest.exists():
         url = ENDPOINT + '?' + urllib.parse.urlencode(dict(REQUEST='doQuery',LANG='ADQL',FORMAT='csv',
                                                           MAXREC=len(batch)+1,QUERY=adql))
-        data = urllib.request.urlopen(url,timeout=120).read()
+        for attempt in range(5):
+            try:
+                with urllib.request.urlopen(url,timeout=120) as response:
+                    data = response.read()
+                break
+            except OSError:
+                if attempt == 4:
+                    raise
+                time.sleep(2**attempt)
         if data.splitlines()[0].decode().casefold() != ','.join(fields):
             raise ValueError(data[:200])
         dest.write_bytes(data)

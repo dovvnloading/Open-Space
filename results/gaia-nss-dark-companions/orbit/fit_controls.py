@@ -116,7 +116,7 @@ def companion(f,m1):
     return m
 
 
-def fit(name, start, astro, t, y, error, instrument, rng, output, primary_mass=None, include_mass_density=False):
+def fit(name, start, astro, t, y, error, instrument, rng, output, primary_mass=None, include_mass_density=False, holdout=None):
     # Parameters use AU, mas, days, radians and km/s. Free nuisance
     # astrometric offsets and proper motions appear only in BH3.
     npar = len(start)
@@ -185,6 +185,25 @@ def fit(name, start, astro, t, y, error, instrument, rng, output, primary_mass=N
         masses = companion(f,m1)
         counts, edges = np.histogram(masses,bins=60,weights=w,density=True)
         fit_info["mass_posterior_density"] = dict(edges=edges.tolist(),pdf=counts.tolist())
+    if holdout is not None:
+        future_t, future_y, future_sigma = holdout
+        # Compare held-out observations with joint predictive draws. All epochs
+        # in a draw share one orbit and share its fitted systemic velocity.
+        chosen = rng.choice(len(d),size=10000,p=w)
+        predictions = np.stack([rv_model(d[j],future_t) for j in chosen])
+        noisy = predictions + rng.normal(size=predictions.shape)*future_sigma
+        mean = noisy.mean(axis=0)
+        covariance = np.cov(noisy.T)
+        Lpred = np.linalg.cholesky(covariance)
+        observed_delta = solve_triangular(Lpred,future_y-mean,lower=True)
+        mock_delta = solve_triangular(Lpred,(noisy-mean).T,lower=True)
+        observed_stat = observed_delta@observed_delta
+        fit_info["holdout"] = dict(n=len(future_y),jd_rel_reference=future_t.tolist(),
+            measured_kms=future_y.tolist(),predictive_mean_kms=mean.tolist(),
+            predictive_q16_q50_q84_kms=np.quantile(noisy,[.16,.5,.84],axis=0).tolist(),
+            rms_kms=float(np.sqrt(np.mean((future_y-mean)**2))),
+            predictive_mahalanobis_sq=float(observed_stat),
+            predictive_tail_fraction=float((1+np.sum(np.sum(mock_delta**2,axis=0)>=observed_stat))/(len(noisy)+1)))
     for time, inst, v, s, dev in zip(t,instrument,y,error,residual):
         output.writerow([name,f"{time:.6f}",inst,v,s,f"{v-dev:.6f}",f"{dev:.6f}"])
     return fit_info

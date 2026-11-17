@@ -8,6 +8,7 @@ import urllib.request
 from collections import deque
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
+import http.client
 import numpy as np
 
 BH_CONTROLS = {4373465352415301632, 5870569352746779008, 4318465066420528000}
@@ -87,7 +88,7 @@ def byte_range(url, first, last):
                 ):
                     raise OSError("Wrong archive interval or incomplete table")
                 return data, total
-        except OSError:
+        except (OSError, http.client.IncompleteRead):
             if retry == 3:
                 raise
             time.sleep(2**retry)

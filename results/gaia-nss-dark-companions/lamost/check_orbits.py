@@ -5,6 +5,7 @@ import csv
 import gzip
 import hashlib
 import json
+import zipfile
 from collections import defaultdict
 from pathlib import Path
 
@@ -94,7 +95,13 @@ def verified_rows(directory):
     matched = set()
     total = 0
     for receipt in json.loads((directory/"raw/receipts.json").read_text()):
-        data = gzip.decompress((directory/"raw"/receipt["file"]).read_bytes())
+        file = directory/"raw"/receipt["file"]
+        if file.exists():
+            compressed = file.read_bytes()
+        else:
+            with zipfile.ZipFile(directory/"raw"/"responses.zip") as archive:
+                compressed = archive.read(receipt["file"])
+        data = gzip.decompress(compressed)
         if hashlib.sha256(data).hexdigest() != receipt["sha256_csv"]:
             raise ValueError("LAMOST input hash mismatch")
         for r in csv.DictReader(data.decode("utf-8-sig").splitlines()):

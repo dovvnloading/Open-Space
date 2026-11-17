@@ -43,7 +43,20 @@ def main():
             start[8]=np.median(y)
             all_fits[label]=fit(label,start,astro,t,y,np.hypot(s,floor),["LAMOST"]*len(t),
                                  rng,writer,primary_mass=primary,include_mass_density=True)
-    details=dict(source_id=SID,exposures=len(exposures),baseline_d=np.ptp(t),
+    # Fix the temporal split at the start of the final observing season.
+    # The last seven nights are never used while fitting this prediction.
+    keep=(t+DR3_JD)<2459100.
+    astro,start=nss_constraint(row,1.)
+    start[8]=np.median(y[keep])
+    err=np.hypot(s,1.)
+    with (HERE/"lamost_training_residuals.csv").open("w") as f:
+        writer=csv.writer(f)
+        writer.writerow(["fit","jd_rel_reference","instrument","rv_kms","err_kms","model_kms",
+                         "observed_minus_model_kms"])
+        split=fit("through_March_2020",start,astro,t[keep],y[keep],err[keep],
+                  ["LAMOST"]*sum(keep),rng,writer,primary_mass=(m1,sigma),
+                  holdout=(t[~keep],y[~keep],err[~keep]))
+    details=dict(holdout_fit=split,source_id=SID,exposures=len(exposures),baseline_d=np.ptp(t),
                  sha256={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [NSS,RV,MASS]},
                  models=all_fits)
     (HERE/"lamost_candidate_fits.json").write_text(json.dumps(details,indent=2)+"\n")
