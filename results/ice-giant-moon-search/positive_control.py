@@ -105,7 +105,7 @@ def predictions(meta, kernel, horizons):
     return jobs
 
 
-def wide_images(cache, m):
+def wide_images(cache, m, reject_bits=(1|2|4|1024), *, subtract_template=True):
     x,y = m['wcs'].all_world2pix(*m['mt'],0)
     x0,y0 = int(x)-HALF_FIELD,int(y)-HALF_FIELD
     width = 2*HALF_FIELD+1
@@ -118,9 +118,11 @@ def wide_images(cache, m):
             a = np.frombuffer(data,dtype).reshape(width,-1)[:,x0:x0+width]
             layers.append(a)
         sci,dq = layers
-        return np.where((dq & (1|2|4|1024))==0,sci,np.nan)
+        return np.where((dq & reject_bits)==0,sci,np.nan)
     with ThreadPoolExecutor(10) as pool:
         images=np.array(list(pool.map(read,range(len(m['times'])))))
+    if not subtract_template:
+        return images,x0,y0
     # All integrations of one exposure track the planet at the same dither.
     # The rings are fixed in detector coordinates while each moon moves.
     with warnings.catch_warnings():

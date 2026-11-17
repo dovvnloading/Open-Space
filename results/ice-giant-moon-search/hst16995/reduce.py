@@ -58,7 +58,7 @@ def filt(image, good):
     return smooth_flux(image, good, 1.1)-smooth_flux(image, good, 6.)
 
 
-def prep(cache, planet):
+def prep(cache, planet, allow_missing_control=False):
     rows = [r for r in read_csv('selection.csv') if r['target']==planet.upper()]
     ephem = {}
     for r in read_csv('ephemerides.csv'):
@@ -191,7 +191,9 @@ def prep(cache, planet):
         frames.append(dict(c=c,project=project,mid=t-lt/1440,dt=dt,zp=zp,visit=row['visit'],good=good,
                            image=image,base_good=base_good,fixed_support=fixed_support,score=np.where(support,(filtered-zero)/np.where(noise>0,noise,1),0),
                            zero=zero,noise=noise,support=support,ctrl=positions[ctrl],check=positions[715 if planet=='Uranus' else 808], dist=delta, sun=r))
-    if not profiles: raise ValueError('No isolated control PSF')
+    if not profiles:
+        if allow_missing_control:return frames,reg,None,0
+        raise ValueError('No isolated control PSF')
     # Median registered control stamps, then average azimuthally to suppress nearby structures.
     stamp=np.median(profiles,axis=0); rr=np.hypot(LOCAL_X,LOCAL_Y)
     psf=np.zeros_like(stamp)
