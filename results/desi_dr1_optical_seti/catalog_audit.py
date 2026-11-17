@@ -1,0 +1,112 @@
+"""Freeze all assigned DR1 exposures, stellar classifications and Gaia geometric distances."""
+import argparse
+import csv
+import hashlib
+import io
+import json
+from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
+from urllib.parse import urlencode
+from urllib.request import urlopen
+from time import sleep
+
+DESI = "https://datalab.noirlab.edu/tap/sync"
+GAIA = "https://gea.esac.esa.int/tap-server/tap/sync"
+
+
+def freeze(out, name, endpoint, query, columns):
+    """Archive a successful CSV response alongside its exact query. Reject TAP error bodies."""
+    path = out / (name + ".csv")
+    receipt = out / (name + ".json")
+    url = endpoint + "?" + urlencode(dict(REQUEST="doQuery", LANG="ADQL", FORMAT="csv",
+                                           MAXREC=100000, QUERY=query))
+    for attempt in range(3):
+        try:
+            if path.exists() and receipt.exists():
+                raw = path.read_bytes()
+                old = json.loads(receipt.read_text())
+                if old["url"] != url or old["sha256"] != hashlib.sha256(raw).hexdigest():
+                    raise ValueError("query or content changed; use a new output directory")
+            else:
+                with urlopen(url, timeout=100) as response:
+                    raw = response.read()
+            reader = csv.DictReader(io.StringIO(raw.decode("utf-8")))
+            if reader.fieldnames != columns:
+                raise RuntimeError(f"{name}: unexpected TAP response {raw[:120]!r}")
+            rows = list(reader)
+            if len(rows) >= 100000:
+                raise RuntimeError("possible TAP truncation")
+            path.write_bytes(raw)
+            receipt.write_text(json.dumps(dict(url=url, adql=query, rows=len(rows),
+                                                sha256=hashlib.sha256(raw).hexdigest()), indent=2) + "\n")
+            return rows
+        except (OSError, RuntimeError):
+            if attempt == 2:
+                raise
+            sleep(2 ** attempt)
+
+
+def chunks(ids, size=55):
+    ids = sorted(set(int(key) for key in ids))
+    return [",".join(str(x) for x in ids[i:i+size]) for i in range(0, len(ids), size)]
+
+
+def gather(out, prefix, endpoint, ids, columns, query):
+    def part(pair):
+        index, group = pair
+        return freeze(out, f"{prefix}_{index:03d}", endpoint, query.format(ids=group), columns.split(","))
+    with ThreadPoolExecutor(4) as pool:
+        return [row for batch in pool.map(part, enumerate(chunks(ids))) for row in batch]
+
+
+def write_rows(path, rows, columns):
+    with path.open("w", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=columns)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def audit(target_file, out):
+    targets = list(csv.DictReader(target_file.open()))
+    ids = [r["targetid"] for r in targets]
+    out.mkdir(parents=True, exist_ok=True)
+    cols = "targetid,source_id,survey,program,rr_spectype"
+    mws = gather(out, "mws", DESI, ids, cols, f"SELECT {cols} FROM desi_dr1.mws WHERE targetid IN ({{ids}})")
+    source_ids = [r["source_id"] for r in mws if r["source_id"] and int(r["source_id"]) > 0]
+    # A single star may have several targeting identifiers or survey groups.
+    aliases = gather(out, "aliases", DESI, source_ids, cols,
+                     f"SELECT {cols} FROM desi_dr1.mws WHERE source_id IN ({{ids}})")
+    all_ids = set(ids) | {r["targetid"] for r in aliases}
+    cols = "targetid,tileid,expid,night,survey,program,fiber,petal_loc"
+    visits = gather(out, "visits", DESI, all_ids, cols,
+                    "SELECT f.targetid,f.tileid,e.expid,e.night,e.survey,e.program,f.fiber,f.petal_loc "
+                    "FROM desi_dr1.fiberassign AS f JOIN desi_dr1.exposure AS e ON f.tileid=e.tileid "
+                    "WHERE f.targetid IN ({ids})")
+    cols = "source_id,r_med_geo,r_lo_geo,r_hi_geo"
+    ds = gather(out, "distances", GAIA, source_ids, cols,
+                f"SELECT {cols} FROM external.gaiaedr3_distance WHERE source_id IN ({{ids}})")
+    distances = {r["source_id"]:r for r in ds}
+    summary = []
+    for t in targets:
+        target = t["targetid"]
+        gaia = {r["source_id"] for r in mws if r["targetid"] == target and r["source_id"] and int(r["source_id"]) > 0}
+        same = {target} | {r["targetid"] for r in aliases if r["source_id"] in gaia}
+        gids = sorted(gaia)
+        src = gids[0] if len(gids) == 1 else ""
+        expected = {int(r["expid"]) for r in visits if r["targetid"] in same}
+        available = {int(x) for x in t["expids"].split("|")}
+        spec = {r["rr_spectype"] for r in mws if r["targetid"] in same}
+        summary.append(dict(targetid=target, source_id=src, alias_targetids="|".join(sorted(same)),
+                            requested_expids=t["expids"], expected_expids="|".join(map(str, sorted(expected))),
+                            all_assigned=(expected == available and len(expected) >= 2),
+                            star_class_consistent=(spec == {"STAR"}), ambiguous_gaia=len(gaia)>1,
+                            **{k:distances.get(src, {}).get(k,"") for k in ("r_med_geo","r_lo_geo","r_hi_geo")}))
+    write_rows(out / "audit.csv", summary, list(summary[0]))
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("targets", type=Path)
+    parser.add_argument("output", type=Path)
+    args = parser.parse_args()
+    audit(args.targets, args.output)
