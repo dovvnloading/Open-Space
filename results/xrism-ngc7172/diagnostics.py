@@ -37,5 +37,5 @@ with fits.open(ep) as h,fits.open(gp) as gh:
   data['shift'].append(dict(shift_eV=shift*.5,counts=cells,p=fisher(*cells[0],*cells[1])))
  for i in range(10):
   lo,hi=at(i/10),at((i+1)/10);m=ok&(grade==0)&(t>=lo)&(t<hi)
-  data['deciles'].append(dict(decile=i+1,start=lo,stop=hi,livetime_s=total/10,broad=n(m,6000,18000),line=n(m,12620,12760),side=n(m,12400,12540)+n(m,12840,12980)))
+  data['deciles'].append(dict(decile=i+1,start=lo,stop=hi,good_time_exposure_s=total/10,broad=n(m,6000,18000),line=n(m,12620,12760),side=n(m,12400,12540)+n(m,12840,12980)))
  (dest/'diagnostics.json').write_text(json.dumps(data,indent=2)+'\n');print(json.dumps(data,indent=2))

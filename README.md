@@ -330,6 +330,8 @@ Some multi-part investigations also keep index pages and search logs: [15 Nov ar
 
 ## For researchers and developers
 
+The [XRISM count-comparison methods and offline replay](results/xrism-ngc7172/README.md) document a calibration-limited instrument check.
+
 ### Run the survey workers
 
 The optical survey screened 152 exploratory stars and a separate known-planet control. A coordinate-only image search also scanned fields in the Large Magellanic Cloud. The infrared survey assessed 644 well-sampled tracks in its exploration fields. [Investigation and results](docs/DISCOVERY_RESULTS.md) · [How the workers operate](docs/DISCOVERY.md)

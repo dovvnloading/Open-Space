@@ -10,7 +10,7 @@ The [mission energy-scale report](https://heasarc.gsfc.nasa.gov/FTP/xrism/postla
 
 Earlier BeppoSAX work [Dadina et al. 2001](https://arxiv.org/abs/astro-ph/0101324) found line intensity consistent with constant within large uncertainties; [Vasylenko 2018](https://arxiv.org/abs/1808.08457) discussed line behavior and a distant torus interpretation using NuSTAR and prior X-ray observations. This new epoch does not establish the first detection of the line or its variability. Literature checks were bounded to exact source names and ObsID, XRISM, Fe Kα and prior BeppoSAX/NuSTAR studies on 2026-11-17; ADS-specific exhaustive searching remains pending.
 
-Reproduce from the exact two upstream files with Python, NumPy and Astropy. `result.json` contains the primary counts, exact test and per-pixel live times. The script verifies both SHA-256 digests before reading.
+Reproduce from the exact two upstream files with Python, NumPy and Astropy. `result.json` contains the primary counts, exact test and per-pixel good-time exposures. The script verifies both SHA-256 digests before reading.
 
 ```sh
 python results/xrism-ngc7172/measure.py INPUT_DIRECTORY result.json
@@ -20,9 +20,9 @@ python results/xrism-ngc7172/measure.py INPUT_DIRECTORY result.json
 
 After the primary test, but before inspecting the control counts, [the diagnostic plan](PROTOCOL.md) was frozen in commit 2dcb7f9. Left/right sideband counts were 264/217 and 263/245 in the two halves (exploratory Fisher p=0.339). Broad 3–5/7–9 keV counts were 1716/3046 and 1920/3479 (p=0.633). These controls show no strong evidence of a shape change at their sensitivities; they do not prove shape stability. The central 2×2 pixels contributed 398/291 and 444/310 line/side counts; the remaining pixels contributed 310/190 and 345/198. Hp/Mp counts were 8334/20 versus 9603/24 in the center, and 9079/5 versus 10021/13 outside. Grade fractions and spectral response can still depend on energy and pixel.
 
-Moving all fixed band boundaries by −5 eV yielded counts 699/495 and 794/514 (p=0.289); +5 eV gave 697/484 and 788/509 (p=0.389). This stress test was fixed before seeing its counts; 5 eV is conservative relative to the full-array Mn Kα shift reported at 5.9 keV but is not a measured per-half gain error. The gain report's gain history shows zero failed solutions; its graphs and global calibration do not supply a numerical bound on differential half drift. There is no fitted per-half gain drift estimate here. The broad count rate varies across deciles, as shown below; the diagnostics are exploratory and their p-values are not corrected for multiple comparisons.
+Moving all fixed band boundaries by −5 eV yielded counts 699/495 and 794/514 (p=0.289); +5 eV gave 697/484 and 788/509 (p=0.389). This stress test was fixed before seeing its counts; 5 eV is conservative relative to the full-array Mn Kα shift reported at 5.9 keV but is not a measured per-half gain error. The gain report's gain history shows zero failed solutions; its graphs and global calibration do not supply a numerical bound on differential half drift. There is no fitted per-half gain drift estimate here. The broad counts vary across equal-good-time-exposure deciles, as shown below; the diagnostics are exploratory and their p-values are not corrected for multiple comparisons.
 
-![Counts in ten equal-live-time intervals](deciles.svg)
+![Counts in ten equal-good-time-exposure intervals](deciles.svg)
 
 The compressed [event subset](events.csv.gz) retains TIME, PIXEL, ITYPE, PI, DETX and DETY for all 48074 cleaned events; [GTIs](gti.json) retain the global and pixel intervals. The complete source bytes remain independently identified by hash above. Offline standard-library replay verifies the primary counts and p-value from the subset:
 
@@ -31,3 +31,5 @@ python results/xrism-ngc7172/replay.py
 ```
 
 [Diagnostics and their counts](diagnostics.json) are reproducible from the original FITS input with `diagnostics.py`; [search and release receipts](RECEIPTS.md) include the primary archive and public-date query, response listing, and background recipe. The night-Earth database exists but matching CORTIME and background were not measured. The inference therefore remains a conditional observed-count comparison, inconclusive for intrinsic line physics.
+
+GTI duration is good-time exposure, not independently deadtime-corrected livetime. Deadtime and the energy dependence of grade selection were not measured; those limitations may affect comparisons and physical interpretation. XRISM is led by JAXA in collaboration with NASA and ESA; these data were obtained from the NASA HEASARC archive.
