@@ -1,5 +1,6 @@
 """Use the 1604 visit to select fine annual-alias trials for both independent 1272 visits."""
 import argparse,csv,json
+from pathlib import Path
 import numpy as np
 from scipy import ndimage as ndi
 from coverage import OUT,frame,get_states,pixels
@@ -61,4 +62,4 @@ def run(cache,head):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('cache',type=__import__('pathlib').Path);p.add_argument('headers',type=__import__('pathlib').Path);a=p.parse_args();run(a.cache,a.headers)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('cache',type=Path);p.add_argument('headers',type=Path);a=p.parse_args();run(a.cache,a.headers)

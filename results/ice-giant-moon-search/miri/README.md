@@ -31,6 +31,8 @@ python miri_audit.py manifests /data/miri-header-and-pixel-ranges /data/horizons
 [Exposure-by-exposure geometric support](footprints.csv) · [Native pixel Triton measurements](triton_control.csv) · [Source FITS byte-range hashes](byte_ranges.csv) · [MAST JWST program 1272](https://www.stsci.edu/jwst/science-execution/program-information?id=1272)
 
 
+The [outer-field and detector-edge search](extra/README.md) covers the remaining 13 associations, including all 36 Uranus parallels. It reports a 32-orbit native-image depth calibration and cross-year tests of the additional Neptune visit.
+
 ## Orbit search and injection depth
 
 The search uses the four calibrated exposures in each band, two dithers per independent visit, separated by about 3.09 days. A native 431-pixel field around the tracked Triton direction includes Neptune in every exposure. Each cutout retains its detector SCI, ERR, DQ and shifted SIP WCS. Explicit Horizons Neptune centers anchor a 301×301 planet-centered grid at 0.11 arcsec per pixel. The procedure masks planet glare, projected rings and all 16 cataloged Neptunian satellites at nine samples during each exposure. Only fully supported pixel rectangles with all nonnegligible bilinear contributors valid enter the images. DQ values of zero and corrected jumps are admitted. Gaussian PSFs use sigma 2.8 and 3.3 pixels. These are approximations to wavelength-dependent MIRI PSFs.
