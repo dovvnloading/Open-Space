@@ -22,8 +22,8 @@ OUT=Path(__file__).resolve().parent/'classifications'
 RAW=OUT/'raw'
 SIM=['https://simbad.cds.unistra.fr/simbad/sim-tap/sync',
      'https://simbad.cfa.harvard.edu/simbad/sim-tap/sync','https://simbad.idia.ac.za/simbad/sim-tap/sync']
-VIZ=['https://vizier.cds.unistra.fr/viz-bin/votable','https://vizier.cfa.harvard.edu/viz-bin/votable',
-     'https://vizier.idia.ac.za/viz-bin/votable']
+VIZ=['https://vizier.idia.ac.za/viz-bin/votable','https://vizier.cfa.harvard.edu/viz-bin/votable',
+     'https://vizier.cds.unistra.fr/viz-bin/votable']
 GAIA=['https://gea.esac.esa.int/tap-server/tap/sync']
 SECURE_YOUNG={'Y*O','TT*','Ae*','Or*'}
 SECURE_GAL={'G','AGN','SyG','Sy1','Sy2','QSO','Bla','BLL','LIN','EmG','rG','SBG','LSB','bCG','H2G','GiP','GiG','GiC','BiC'}
@@ -153,7 +153,8 @@ def main():
         tasks={k:pool.submit(jobsafe,k,fn) for k,fn in {
             'simbad_field':sim_field,'simbad_ident':exact,'gaia_variability':variable,
             'published_kyso':lambda:viz('kyso','J/A+A/674/A21/kyso',11671),
-            'published_ir_excess':lambda:viz('cotten_song_table4','J/ApJS/225/15/table4',1200)}.items()}
+            'published_ir_prime':lambda:viz('cotten_song_table3','J/ApJS/225/15/table3',400),
+            'published_ir_reserved':lambda:viz('cotten_song_table4','J/ApJS/225/15/table4',1200)}.items()}
         data={k:v.result() for k,v in tasks.items()}
     sim=data['simbad_field'] or []
     sim_by_id={s['oid']:s for s in sim}
@@ -168,8 +169,7 @@ def main():
         young_ids=cells(kyso,'GaiaDR3')
         young=set(young_ids)
         young_xy=coords(kyso)
-    disks=data['published_ir_excess']
-    disk_xy=coords(disks) if disks is not None else np.empty((0,2))
+    disk_catalogs={key:coords(data[key]) for key in ['published_ir_prime','published_ir_reserved'] if data[key] is not None}
     summary=[];nearby=[]
     for sid in ids:
         star=allstar[sid]
@@ -181,11 +181,11 @@ def main():
         if len(young_xy) and any((not young_ids[k]) for k in np.flatnonzero(sky_distance(ra0,dec0,young_xy)<=2)):
             uncertain.add('KYSO position only')
         # Literature coordinates may trace J2000 or WISE-epoch positions.
-        if len(disk_xy):
+        for catalog,disk_xy in disk_catalogs.items():
             sep=np.minimum(sky_distance(ra0,dec0,disk_xy),sky_distance(ra10,dec10,disk_xy))
             for i in np.flatnonzero(sep<=3):
-                uncertain.add('published IR-excess coordinate match')
-                nearby.append(dict(source_id=sid,catalog='Cotten-Song table4',object_id=str(i+1),
+                uncertain.add('published IR-excess coordinate match: '+catalog)
+                nearby.append(dict(source_id=sid,catalog=catalog,object_id=str(i+1),
                                   distance_arcsec=round(float(sep[i]),3),types='IR-excess list'))
         gr=gaia.get(sid,{})
         if int(gr.get('non_single_star') or 0)>0:known.add('Gaia non-single-star solution')

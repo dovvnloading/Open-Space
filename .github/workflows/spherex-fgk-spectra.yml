@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   measure:
-    if: github.ref == 'refs/heads/research/spherex-waste-heat'
+    if: github.ref == 'refs/heads/research/spherex-waste-heat' && !contains(github.event.head_commit.message, '[FGK scenes]')
     runs-on: ubuntu-latest
     timeout-minutes: 75
     defaults:
@@ -73,6 +73,45 @@ jobs:
           git add -f -- *.csv *.json cube_receipts
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Measure the remaining published FGK fields and record the full 53-star comparison'
+          for attempt in 1 2 3 4; do
+            git fetch origin research/spherex-waste-heat
+            git rebase FETCH_HEAD
+            if git push origin HEAD:research/spherex-waste-heat; then exit 0; fi
+            sleep "$((attempt * 3))"
+          done
+          exit 1
+
+  scenes:
+    if: github.ref == 'refs/heads/research/spherex-waste-heat' && (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[FGK scenes]'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/spherex-waste-heat
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy>=2' scipy astropy matplotlib pillow
+      - name: Measure six native AllWISE fields and check optical and Gaia neighbors
+        working-directory: results/spherex-waste-heat/fgk_spectra
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+        run: python scenes.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: warm-FGK-images
+          path: results/spherex-waste-heat/fgk_spectra/scenes/
+      - name: Publish the two warm fields
+        working-directory: results/spherex-waste-heat/fgk_spectra
+        run: |
+          git add -f -- scenes
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Archive infrared positions and optical fields for the two warm FGK targets'
           for attempt in 1 2 3 4; do
             git fetch origin research/spherex-waste-heat
             git rebase FETCH_HEAD

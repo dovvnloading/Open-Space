@@ -13,6 +13,10 @@ import zipfile
 
 from astropy.io import fits
 from astropy.wcs import WCS
+from astropy.nddata import Cutout2D
+from astropy.coordinates import SkyCoord
+from astropy import units as u
+from time import sleep
 import numpy as np
 from scipy.ndimage import gaussian_filter, maximum_filter
 from scipy.spatial import cKDTree
@@ -32,13 +36,34 @@ def fetch(row, product, center):
     root = "https://irsa.ipac.caltech.edu/ibe/data/ztf/products/sci/"
     url = f"{root}{stamp[:4]}/{stamp[4:8]}/{stamp[8:]}/{name}?" + urlencode(
         dict(center=f"{center[0]:.7f},{center[1]:.7f}", size="240arcsec", gzip="false"))
-    with urlopen(url, timeout=150) as response:
-        data = response.read()
-    with fits.open(io.BytesIO(data)) as hdu:
-        if hdu[0].data is None or hdu[0].data.ndim != 2:
-            raise ValueError(f"Invalid image at {url}")
-    return name, data, dict(expid=row["expid"], product=product, url=url, name=name, bytes=len(data),
-                            sha256=hashlib.sha256(data).hexdigest())
+    attempts = []
+    urls = [url, url.split("?")[0], url.replace("irsa.ipac.", "irsawebops2.ipac."),
+            url.split("?")[0].replace("irsa.ipac.", "irsawebops2.ipac."), url]
+    for address in urls:
+        try:
+            with urlopen(address, timeout=60) as response:
+                source = response.read()
+            full = "?" not in address
+            with fits.open(io.BytesIO(source)) as hdu:
+                if hdu[0].data is None or hdu[0].data.ndim != 2:
+                    raise ValueError("Invalid science archive response")
+                if full:
+                    image = hdu[0]
+                    crop = Cutout2D(image.data, SkyCoord(*center,unit="deg"), (240*u.arcsec, 240*u.arcsec),
+                                    wcs=WCS(image.header), mode="trim")
+                    stream = io.BytesIO()
+                    fits.PrimaryHDU(crop.data, header=crop.wcs.to_header(relax=True)).writeto(stream)
+                    data = stream.getvalue()
+                else:
+                    data = source
+            return name, data, dict(expid=row["expid"], product=product, url=address, name=name, bytes=len(data),
+                                    earlier_errors=attempts, sha256=hashlib.sha256(data).hexdigest(),
+                                    full_frame=full, source_sha256=hashlib.sha256(source).hexdigest())
+        except Exception as exc:
+            attempts.append([address,str(exc)])
+            sleep(2)
+    print(name, attempts, flush=True)
+    return name, None, dict(expid=row["expid"],product=product,name=name,errors=attempts)
 
 
 def cutouts(exposures, center):
@@ -49,12 +74,15 @@ def cutouts(exposures, center):
             results = list(pool.map(lambda t: fetch(*t), tasks))
         with zipfile.ZipFile(PIXELS, "w", zipfile.ZIP_DEFLATED) as archive:
             for name, data, _ in results:
-                archive.writestr(name, data)
+                if data is not None:
+                    archive.writestr(name, data)
         receipt_path.write_text(json.dumps([receipt for _, _, receipt in results], indent=2) + "\n")
     out = {}
     meta = json.loads(receipt_path.read_text())
     with zipfile.ZipFile(PIXELS) as archive:
         for entry in meta:
+            if "errors" in entry:
+                continue
             data = archive.read(entry["name"])
             if hashlib.sha256(data).hexdigest() != entry["sha256"]:
                 raise ValueError(entry["name"])
@@ -102,6 +130,9 @@ def main():
                  and int(float(r["mjd"])) in DAYS and int(r["catflags"])==0]
     assert len(exposures) == 8
     frames = cutouts(exposures, center)
+    missing = [r["expid"] for r in exposures if (r["expid"], "sciimg") not in frames or (r["expid"], "mskimg") not in frames]
+    if missing:
+        raise RuntimeError(f"Archive products unavailable for {missing}; see d_science_receipts.json")
     img, header = frames[exposures[0]["expid"], "sciimg"]
     sky = np.vstack([center, controls(img, WCS(header), center)])
     base = np.array([int(float(r["mjd"])) != 58745 for r in exposures])
