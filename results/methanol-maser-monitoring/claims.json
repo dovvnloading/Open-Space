@@ -5,7 +5,7 @@
     {
       "rule": "replay/drift",
       "key": "validate.py",
-      "reason": "One value moves: the conditional simulation probability for the 16.92 km/s line, a count of 18 in 20,000 seeded draws in the committed run and 17 or 22 in reruns. NumPy's default multivariate-normal sampler factors the covariance by SVD, which is not unique to the last bit, so the draws depend on the NumPy and LAPACK build. The spread equals the counting error. See 'How closely a rerun matches' in torun/README.md."
+      "reason": "The simulation counts are the same under the two NumPy builds tested since the sampler was switched to a Cholesky factor. What can still move is a fitted noise parameter: the decay time for the 16.92 km/s line differed by 1.3 parts in a million between NumPy 2.5.4 with SciPy 1.18.1 and NumPy 2.2.6 with SciPy 1.17.1, because the likelihood optimizer stops at a point that depends on rounding. No quoted number changes. See 'How closely a rerun matches' in torun/README.md."
     }
   ]
 }

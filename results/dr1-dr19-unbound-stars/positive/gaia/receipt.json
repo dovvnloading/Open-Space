@@ -1,0 +1,12 @@
+{
+  "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+  "blocks": [
+    {
+      "query": "SELECT source_id,ra,dec,parallax,pmra,pmdec,ra_error,dec_error,parallax_error,pmra_error,pmdec_error,ra_dec_corr,ra_parallax_corr,ra_pmra_corr,ra_pmdec_corr,dec_parallax_corr,dec_pmra_corr,dec_pmdec_corr,parallax_pmra_corr,parallax_pmdec_corr,pmra_pmdec_corr,ruwe,visibility_periods_used,duplicated_source,astrometric_params_solved,nu_eff_used_in_astrometry,pseudocolour,ecl_lat,phot_g_mean_mag,bp_rp,radial_velocity,radial_velocity_error,rv_nb_transits,rv_chisq_pvalue,rv_renormalised_gof,non_single_star,ipd_frac_multi_peak,ipd_gof_harmonic_amplitude FROM gaiadr3.gaia_source WHERE source_id IN (6513109241989477504) ORDER BY source_id",
+      "rows": 1,
+      "missing_ids": [],
+      "file": "rows_000.csv",
+      "sha256": "5e3f7a3136864444c40525b17972c7ba0b9c5bdd9dcfc48b9936afa1cd0a1fb9"
+    }
+  ]
+}

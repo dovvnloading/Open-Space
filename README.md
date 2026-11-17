@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 176 entries: 83 new measurements, 42 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 11 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 185 entries: 86 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 14 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -94,6 +94,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 ### Rivers and wetlands on Earth
 
 - **Mali’s Inner Niger Delta shows a delayed seasonal flood wave (2024–26).** On two same-track SWOT RiverSP D July–January comparisons, Diré stood 4.64 m and 3.55 m higher while Mopti changed by no more than 0.18 m. Independent gauges and a second altimeter corroborate the stage contrasts; a persistent change in discharge was not established. *Measured* · [Details](results/mission05-swot-rivers/inner-niger/README.md)
+- **A one-day pulse of red-reflecting water in the northern Adriatic (6 Nov 2025).** NASA's PACE satellite, an offshore tower instrument and Europe's Sentinel-3 all saw the shelf water brighten in red light for a day and fade the next; PACE measured a 56% drop at 620 nm. Stirred-up or passing particles are plausible, the cause is unresolved, and similar events appear in earlier observations. *Measured* · [Details](results/pace-ocean-optical-transitions/README.md)
 
 ### The Moon and Mars
 
@@ -105,6 +106,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **Perseverance sensed Phobos passing beside the Sun.** Sky sensors on the rover dimmed by up to about 2% when the moon passed close to, but not across, the Sun. *Candidate* · [Details](results/jezero-transit-radiometry/README.md)
 - **A candidate Mars Trojan and a possible temporary companion of Earth.** Asteroid 2026 RF64 appears to trail Mars along its orbit. A second object may briefly accompany Earth. *Candidate* · [Details](results/terrestrial-coorbitals/README.md)
 - **Phobos's shadow will touch Deimos three times (8, 9 and 11 Oct 2027).** *Prediction* · [Details](results/deimos-penumbra-2027/README.md)
+- **A week-long radiation storm at Mars (22–29 Aug 2025).** NASA's MAVEN orbiter recorded energetic ions and electrons far above their usual level for a week, peaking on 24 August at about 5,140 times (ions) and 24,450 times (electrons) the season's typical hourly value. A NASA forecast issued before the event predicted a solar eruption's arrival at Mars. Whether that eruption caused the storm is not established. *Measured* · [Details](results/maven-2025-sep-events/README.md)
 - **Phobos will hide Earth and the Moon together (5 Feb 2035).** Seen from a point on Curiosity's route, for about 9.4 seconds. *Prediction* · [Details](results/phobos-earth-moon/README.md)
 
 ### Asteroids and comets
@@ -118,6 +120,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **A comet and an asteroid passed within 31,000 km (22 Feb 2026).** Comet 407P/PANSTARRS–Fuls and asteroid (75547) 1999 XV257. *Measured* · [Details](results/comet-407p-asteroid-75547/README.md)
 - **A comet lined up behind interstellar comet 3I/ATLAS (Oct 2025).** 383P/Christensen and 3I/ATLAS lay on the same line out from the Sun on dates about a week apart. Whether any material from 3I reached 383P is unresolved. *Measured* · [Details](results/3i-atlas-383p-radial-crossing/README.md)
 - **The two bright knots of comet C/2020 P4-B.** Their separation is measured at 38.5 arcseconds. The discoverers first showed both knots in 2020. *Measured* · [Details](results/2020-p4-condensations/README.md)
+- **An unexplained infrared excess in comet C/2025 R2 (SWAN).** In single exposures from NASA's SPHEREx telescope the comet shows extra infrared light on 22 and 25 December 2025 and again on 2 January 2026. It is not a validated identification of any gas: calibration questions remain open, and a shape fitted to December failed to carry over to January. *Candidate* · [Details](results/spherex-dr1-moving-spectra/FINAL_STATUS.md)
 - **No new sungrazing comets in 988 SOHO images.** A search for undiscovered members of the Kreutz comet family recovered only known comets. *Null result* · [Details](results/kreutz-companion-search/README.md)
 - **Repeated dips in two asteroids, but no confirmed moons.** TESS saw regular dimming of (29489) 1997 WQ and (3177) Chillicothe in 2018. Later visits did not show a steady rhythm. *Candidate* · [Details](results/tess-asteroid-mutual-events/README.md)
 - **Asteroid 2025 UQ146 keeps returning to Jupiter.** It was temporarily captured by Jupiter in 1984–1987 and should be again in 2069–2071. *Prediction* · [Details](results/jupiter-temporary-captures/README.md)
@@ -134,9 +137,11 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **Uranus's moons Umbriel and Ariel will eclipse three times in 22 hours (12–13 Mar 2050).** *Prediction* · [Details](results/umbriel-ariel-2050/README.md)
 - **A 2006 crossing of the two moons of dwarf planet Haumea.** Orbit solutions place Hiʻiaka in front of Namaka on 13 Aug 2006, which archival images can test. *Prediction* · [Details](results/haumea-satellite-conjunctions/README.md)
 - **Two distant objects that may move in step with Neptune.** 2017 DO171 is a candidate member of Neptune's 8:1 resonance, using new Rubin Observatory positions. A second object is also a candidate. *Candidate* · [Details](results/distant-neptune-resonators/README.md)
+- **The distant double object 2014 JR80 seen turning.** Five Rubin Observatory exposures on three nights in 2026 show the pair's orientation turning 49.46° in 11.963 days. With older images they favour a 103.03-day mutual orbit. Proudfoot and colleagues discovered that the object is double; the new part is the motion. *Measured* · [Details](results/rubin-jr80-mutual-motion/README.md)
 - **Solar Orbiter will see Venus hide Earth, then Jupiter (24 Dec 2026).** *Prediction* · [Details](results/solar-orbiter-venus-jovian-occultations/README.md)
 - **Venus will pass in front of a pulsar (6 Feb 2027).** PSR J1813−2113, as seen from the South Pole and New Zealand. A detection with current telescopes is not assured. *Prediction* · [Details](results/venus-psr-j1813-2113/README.md)
 - **Venus and the pulsar PSR J1944−1750 (2 Mar 2054).** Radio telescopes in South Africa and India could both see the occultation, if the pulsar's unmeasured motion is small. *Prediction* · [Details](results/venus-pulsar-sightlines/README.md)
+- **A search for meteor flashes on Jupiter's night side found none.** Photon-by-photon data from the Juno spacecraft's ultraviolet instrument recover the flash published from 10 April 2020. A first frozen search of 2025 data found no trigger. Only three of the eight selected intervals held usable night-side photons, so this sets no impact rate. *Null result* · [Details](results/juno-uvs-impact-control/README.md)
 
 ### Planets around other stars
 
@@ -153,6 +158,8 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **A transit-like dip that flips sign.** On the flaring red dwarf TIC 257433294, a reported dip reappears in new TESS data but changes sign between two TESS data products, so its origin is uncertain. *Measured* · [Details](results/tess-sector108/README.md)
 
 ### Stars, binaries and multiple-star systems
+
+- **A high-speed star may escape the Milky Way.** DESI DR1 and Gaia DR3 give source 1717410430709663616 a Galactocentric speed of 697 km/s. It escapes in two reference Galactic potentials but remains bound in a heavier halo. The DESI velocity has only one epoch (binary motion untested), the traceback favours the disk rather than Sgr A* or the LMC centre, and discovery priority remains open. *Candidate* · [Details](results/dr1-dr19-unbound-stars/README.md)
 
 **Eclipsing binaries and star systems**
 
@@ -223,6 +230,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **Wrong star IDs in a white-dwarf triples table.** Eleven Gaia identifiers in a published table point to the wrong member of ten systems. *Correction* · [Details](results/wide-white-dwarf-triples/README.md)
 - **A database listed titanium as nickel.** The fix changes which white dwarfs a published study selects. Debris at WD J2236−5548 is also measured as sodium-poor. *Correction* · [Details](results/polluted-white-dwarf-composition-audit/README.md)
 - **A proposed pair of polluted white dwarfs is not established.** The two spectra attributed to J1539+3855 share the same noise pattern. *Null result* · [Details](results/wide-polluted-white-dwarf-pairs/README.md)
+- **Two exploratory searches of Rubin's first public alerts.** A search for fast-varying blue stars found one tentative five-minute signal, and a screen of nearby white dwarfs found deep dips that trace to detector edges and dimming in neighbouring stars at the same moment. Neither establishes a new object. *Null result* · [Details](results/rubin-alerce-2026/README.md)
 
 ### Neutron stars, black holes and cosmic explosions
 
@@ -257,6 +265,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **An expanding X-ray ring around GRB 180728A.** The ring is likely an echo from a dust layer about 158 parsecs away. *Candidate* · [Details](results/swift-grb-dust-echoes/README.md)
 - **An X-ray transient reconnected with its gamma-ray counterpart.** FXT 981217. *Correction* · [Details](results/fxt-981217-batse/README.md)
 - **No black hole in the latest gravitational-wave catalog merged twice.** *Null result* · [Details](results/gwtc-successive-mergers/README.md)
+- **No short 150 Hz gravitational-wave bursts in a sample of public LIGO data.** A search of 539,386 seconds of Hanford and Livingston data from the O4b run found nothing above its fixed threshold. For one specified kind of burst this limits the rate to 0.601 per day at the 90% level. *Null result* · [Details](results/mission04-o4b-bursts/README.md)
 
 **Black holes, outbursts and supernovae**
 
@@ -269,6 +278,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **A second brightening at the core of galaxy CGCG 476-019.** *Measured* · [Details](results/cgcg-476-019-nuclear-rebrightening/README.md)
 - **An X-ray source in M51 kept its clock but skipped an eclipse.** Two rises of M51 ULX-1 fit a 6.3-day cycle, but the source stayed bright when an eclipse was expected. *Measured* · [Details](results/m51-ulx-eclipse-aliases/README.md)
 - **An X-ray flare in M83 with a red counterpart, likely a foreground star.** *Candidate* · [Details](results/m83-x039-flare/README.md)
+- **A very soft, optically faint X-ray source worth a second observation.** 5XMM J085618.5+380711 has the ultrasoft X-ray spectrum and faint optical light expected of a lone cooling neutron star. Its spectrum and optical limits leave several other explanations open, and no new neutron star is established. *Candidate* · [Details](results/mission03-dr15-thermal-ins/README.md)
 - **Late radio emission from SN 2019njv and SN 2019bao.** *Candidate* · [Details](results/archival-radio-supernovae/README.md)
 - **SN 2023alo brightened again about two years after its peak.** *Measured* · [Details](results/sn-2023alo-late-brightening/README.md)
 - **A faint X-ray source at SN 2009ib about seven years after the explosion.** *Candidate* · [Details](results/sn-2009ib-chandra/README.md)
@@ -321,6 +331,8 @@ Some multi-part investigations also keep index pages and search logs: [15 Nov ar
 - **Honest limits.** These results have not been peer reviewed. "No earlier report found" means our literature search found none, not that priority is guaranteed. Candidates need independent confirmation. Corrections, confirmations and refutations are all welcome.
 
 ## For researchers and developers
+
+- [Euclid DR1 repeat-visit development screen and failure-mode evidence](results/euclid-foundation-eligibility/README.md)
 
 ### Run the survey workers
 

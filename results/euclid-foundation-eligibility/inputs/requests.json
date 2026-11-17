@@ -1,0 +1,47 @@
+{
+  "tap": {
+    "tables": {
+      "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+table_name+FROM+TAP_SCHEMA.tables+WHERE+table_name+LIKE+%27%25euclid%25dr1%25%27",
+      "adql": "SELECT table_name FROM TAP_SCHEMA.tables WHERE table_name LIKE '%euclid%dr1%'"
+    },
+    "observation_columns": {
+      "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+column_name%2Cdatatype%2Cdescription+FROM+TAP_SCHEMA.columns+WHERE+table_name%3D%27euclid.observation_euclid_dr1%27",
+      "adql": "SELECT column_name,datatype,description FROM TAP_SCHEMA.columns WHERE table_name='euclid.observation_euclid_dr1'"
+    },
+    "plane_columns": {
+      "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+column_name%2Cdatatype%2Cdescription+FROM+TAP_SCHEMA.columns+WHERE+table_name%3D%27euclid.plane_euclid_dr1%27",
+      "adql": "SELECT column_name,datatype,description FROM TAP_SCHEMA.columns WHERE table_name='euclid.plane_euclid_dr1'"
+    },
+    "artifact_columns": {
+      "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+column_name%2Cdatatype%2Cdescription+FROM+TAP_SCHEMA.columns+WHERE+table_name%3D%27euclid.artifact_euclid_dr1%27",
+      "adql": "SELECT column_name,datatype,description FROM TAP_SCHEMA.columns WHERE table_name='euclid.artifact_euclid_dr1'"
+    }
+  },
+  "sia_url": "https://irsa.ipac.caltech.edu/SIA?POS=CIRCLE+273.167+64.3687+0.0027777778&COLLECTION=euclid_dr1_wide_DpdMerBksMosaic&INSTRUMENT=VIS&MAXREC=10000",
+  "headers": [
+    {
+      "observation_id": "102158276_013663548_VIS",
+      "url": "https://irsacloud.ipac.caltech.edu/ibe/data/euclid/dr1/MER/102158276/VIS/EUC_MER_BGSUB-MOSAIC-VIS_TILE102158276-77CC0A_20250731T233547.825948Z_00.00.fits",
+      "range": "bytes=0-5759",
+      "http_status": 206,
+      "content_range": "bytes 0-5759/1474565760",
+      "file": "header-102158276_013663548_VIS.bin"
+    },
+    {
+      "observation_id": "102158276_028106832_VIS",
+      "url": "https://irsacloud.ipac.caltech.edu/ibe/data/euclid/dr1/MER/102158276/VIS/EUC_MER_BGSUB-MOSAIC-VIS_TILE102158276-68D0DD_20250710T193027.922192Z_00.00.fits",
+      "range": "bytes=0-5759",
+      "http_status": 206,
+      "content_range": "bytes 0-5759/1474565760",
+      "file": "header-102158276_028106832_VIS.bin"
+    },
+    {
+      "observation_id": "102158276_343226670_VIS",
+      "url": "https://irsacloud.ipac.caltech.edu/ibe/data/euclid/dr1/MER/102158276/VIS/EUC_MER_BGSUB-MOSAIC-VIS_TILE102158276-E8EB44_20250717T001618.494530Z_00.00.fits",
+      "range": "bytes=0-5759",
+      "http_status": 206,
+      "content_range": "bytes 0-5759/1474565760",
+      "file": "header-102158276_343226670_VIS.bin"
+    }
+  ]
+}

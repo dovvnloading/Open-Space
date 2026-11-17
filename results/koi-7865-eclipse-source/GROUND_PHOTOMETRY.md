@@ -33,4 +33,6 @@ python ztf_clock.py
 python plot_ground.py
 ```
 
+A rerun of `ztf_clock.py` can differ from the committed `ztf_periods.csv` in late digits. The script uses SciPy's least-squares solver with its default stopping tolerances, so the stopping point depends on rounding in the installed NumPy and SciPy. On 16 November 2026 a rerun on Windows 11 with Python 3.14.0, NumPy 2.5.4 and SciPy 1.18.1 changed 7 of 49 numbers, by at most 1.3 parts in 100,000. The fitted periods agree to nine significant figures. No number quoted in this folder changes, and the committed table is unchanged.
+
 The saved tables replay offline. Passing `--download` to the first script refreshes the snapshots from IRSA, whose catalog can grow. The pixel analysis uses separate data products and is documented in [KEPLER_METHOD.md](KEPLER_METHOD.md).

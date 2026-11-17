@@ -1,0 +1,11 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [],
+  "acknowledged": [
+    {
+      "rule": "replay/drift",
+      "key": "python noise_controls.py noise_controls.json",
+      "reason": "noise_controls.json records the NumPy and SciPy versions it ran under (2.3.5 and 1.17.0 in the committed file). On a rerun under NumPy 2.5.4 and SciPy 1.18.1 those two version strings are the only values that differ; every simulated value is identical."
+    }
+  ]
+}

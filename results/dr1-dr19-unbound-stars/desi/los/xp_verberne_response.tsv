@@ -1,0 +1,49 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-17T02:24:20 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-17T02:24:20	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F684%2FA29%2Fextend&GaiaDR3=1717410430709663616&-out.all=1	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	MaxTuples=50000	
+
+#RESOURCE=yCat_36840029
+#Name: J/A+A/684/A29
+#Title: Radial velocities from Gaia BP/RP spectra (Verberne+, 2024)
+#INFO	ivoid=ivo://cds.vizier/j/a+a/684/a29	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/a+a/684/a29	    IVOID of underlying data collection
+#INFO	creator=Verberne S.	    First author or institution
+#INFO	cites=bibcode:2024A&A...684A..29V	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2024	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/684/A29	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.36840029	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-11-07	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	H_2016.000:	ICRS
+#Table	J_A_A_684_A29_extend:
+#Name: J/A+A/684/A29/extend
+#Title: Extended Catalogue
+#Column	recno	(I10)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	GaiaDR3	(I19)	Gaia DR3 source_id	[ucd=meta.id;meta.main]
+#Column	RA_ICRS	(F15.11)	Rigth ascension (ICRS) at Ep=2016.0	[ucd=pos.eq.ra;meta.main]
+#Column	DE_ICRS	(F15.11)	Declination (ICRS) at Ep=2016.0	[ucd=pos.eq.dec;meta.main]
+#Column	RV	(F9.3)	Calibrated XP radial velocity	[ucd=phys.veloc;pos.heliocentric]
+#Column	e_RV	(D12.5)	? Calibrated XP radial velocity error	[ucd=stat.error]
+#Column	Offset	(F9.3)	? Offset applied to the original radial velocity measurement during calibration	[ucd=phys.veloc;arith.diff]
+#Column	UnderFactor	(F10.3)	? Underestimation factor applied to the measured uncertainties	[ucd=stat.fit.param]
+#Column	NoiseFloor	(D12.5)	? Noise floor applied to the measured uncertainties	[ucd=stat.snr;instr.det.noise]
+#Column	CMDoutfrac	(D12.5)	? CMD outlier fraction of stars in colour-mag-extinction(-log g) range that are considered outliers	[ucd=stat.fit.param]
+#Column	BadMeas	(F6.3)	Probability of a bad measurement based on the Random Forest Classifier	[ucd=stat.fit.goodness]
+#Column	warning	(I2)	Warning flag to indicate potentially problematic radial velocity measurements	[ucd=meta.code]
+#Column	Teff	(I5)	Effective temperature of the best fit model for radial velocity	[ucd=phys.temperature.effective;meta.modelled]
+#Column	logg	(F9.6)	Surface gravity of the best fit model for radial velocity	[ucd=phys.gravity;meta.modelled]
+#Column	[Fe/H]	(F9.6)	Metallicity of the best fit model for radial velocity	[ucd=phys.abund.Z;meta.modelled]
+#Column	rchi2	(D12.5)	Reduced chi squared of our best fit model	[ucd=stat.fit.chi2;stat.param;meta.modelled]
+#Column	Skew	(F8.3)	Skewness of the radial velocity posterior	[ucd=stat.fit.param]
