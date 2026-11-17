@@ -70,6 +70,12 @@ else:
 def one(r):
     ret=download(r,args.cache)
     if ret['bytes']!=r['bytes']:raise ValueError(f"truncated input {r['filename']}")
+    # These STScI S3 multipart objects use 50 MiB parts. This independently
+    # checks the frozen bytes against the service's recorded ETag.
+    with (args.cache/r['filename']).open('rb') as f:
+        parts=[hashlib.md5(b).digest() for b in iter(lambda:f.read(50*2**20),b'')]
+    etag=hashlib.md5(b''.join(parts)).hexdigest()+'-'+str(len(parts))
+    if etag!=r['etag'].strip('"'): raise ValueError(f"Etag mismatch for {r['filename']}")
     print(r['filename'],r['bytes'],flush=True)
     return ret
 with concurrent.futures.ThreadPoolExecutor(5) as pool:
