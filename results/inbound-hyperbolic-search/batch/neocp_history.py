@@ -17,6 +17,8 @@ from refit import fit
 
 ROOT=Path(__file__).resolve().parent
 TIMELINE="https://get-cp-orbits.jostjahn.de/object-timeline.html"
+INITIAL=ROOT/"evidence/neocp_history_initial.json.gz"
+PRIOR={r["id"]:r for r in json.loads(gzip.decompress(INITIAL.read_bytes()))["results"]} if INITIAL.exists() else {}
 PSEUDO="https://www.projectpluto.com/neocp2/mpecs/{}.htm"
 START,END="2026-10-19","2026-11-16"
 
@@ -39,26 +41,34 @@ def get_target(item):
         if block is None:
             raise ValueError("No astrometry block")
         page=block.get_text().replace("\xa0"," ")
-        pattern=re.compile(r"^\s*("+re.escape(ident)+r")([ *].{2}(?:19|20)\d{2} \d{2} [^\n]+)$")
         lines=[]
         for ln in page.splitlines():
-            m=pattern.fullmatch(ln)
-            if m:
-                record=ident.rjust(12)+m[2].rstrip()
-                if len(record)==80 and len(record[77:].strip())==3:
-                    lines.append(record)
+            time_field=re.search(r"(?:19|20)\d{2} \d{2} \d{2}\.\d+",ln)
+            if not time_field or not ln[:time_field.start()].strip().startswith(ident):
+                continue
+            # Short temporary IDs are left aligned in the seven-byte provisional field.
+            # Extract observation flags from the three bytes immediately before YYYY.
+            flags=ln[time_field.start()-3:time_field.start()]
+            record="     "+ident.ljust(7)+flags+ln[time_field.start():].rstrip()
+            if len(record)==80 and len(record[77:].strip())==3:
+                lines.append(record)
         # Some pages put the orbital elements in their own preformatted block.
         data=soup.get_text()
         el=re.search(r"(?ms)^Orbital elements:[^\n]*\n(.*?)(?=\n\s*(?:Residuals|Ephemeris|Ephemerides)|\Z)",data)
         body=el[1] if el else ""
-        ecc=re.search(r"(?m)^\s*e\s+([0-9.]+)",body)
+        ecc=re.search(r"(?m)^\s*e\s+([0-9.]+)(?:\s+\+/-\s+([0-9.eE+-]+))?",body)
         result.update(published_e=float(ecc[1]) if ecc else None,
+                      published_sigma_e=float(ecc[2]) if ecc and ecc[2] else None,
                       explicit_geocentric=bool(re.search(r"(?i)geocentric orbit|planetocentric|perigee",body)),
                       observations=lines,n_dates=len(set(l[15:25] for l in lines)),
                       stations=sorted(set(l[77:80] for l in lines)))
         if len(lines)>=3 and (result["n_dates"]>=3 or (result["published_e"] or 0)>=1):
             row={"spkid":ident,"full_name":ident,"tp":date.fromisoformat(dt[:10]).toordinal()+1721424.5}
-            result["fit"]=fit((row,[(l+"\n").encode("ascii") for l in lines]))
+            previous=PRIOR.get(ident,{})
+            if previous.get("observations")==lines and previous.get("fit"):
+                result["fit"]=previous["fit"]
+            else:
+                result["fit"]=fit((row,[(l+"\n").encode("ascii") for l in lines]))
     except Exception as exc:
         result["error"]=str(exc)
     sleep(.2)
