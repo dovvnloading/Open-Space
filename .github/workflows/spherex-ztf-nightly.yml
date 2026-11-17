@@ -31,7 +31,7 @@ jobs:
       - name: Calculate nightly statistics for successful API queries
         working-directory: results/spherex-waste-heat/optical
         run: |
-          python -m pip install numpy pyarrow astropy-healpix
+          python -m pip install numpy scipy pyarrow astropy-healpix
           python nightly.py
           cat nightly_summary.csv
       - name: Recover missing API results from archived DR24 partitions
@@ -42,13 +42,21 @@ jobs:
           python hats_fallback.py
           python nightly.py
           cat nightly_summary.csv
+      - name: Check D's two faint catalog detections on the science images
+        id: pixel
+        continue-on-error: true
+        working-directory: results/spherex-waste-heat/optical
+        run: python d_science.py
       - name: Record optical products
         working-directory: results/spherex-waste-heat/optical
         env:
           RECOVERY_STATUS: ${{ steps.recover.outcome }}
+          PIXEL_STATUS: ${{ steps.pixel.outcome }}
         run: |
           set -euo pipefail
           git add -f nightly.csv nightly_summary.csv
+          if [[ -f d_science_cutouts.zip ]]; then git add -f d_science_cutouts.zip d_science_receipts.json; fi
+          if [[ -f d_aperture_summary.csv ]]; then git add -f d_aperture_controls.csv d_aperture_summary.csv; fi
           if [[ -f hats_receipts.json ]]; then git add -f hats_receipts.json hats_*.csv.gz; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -59,3 +67,4 @@ jobs:
             git push origin HEAD:research/spherex-waste-heat
           fi
           test "$RECOVERY_STATUS" = success
+          test "$PIXEL_STATUS" = success
