@@ -1,0 +1,61 @@
+name: ZTF DR24 nightly photometry
+on:
+  push:
+    branches: [research/spherex-waste-heat]
+    paths: [.github/workflows/spherex-ztf-nightly.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  measure:
+    if: github.ref == 'refs/heads/research/spherex-waste-heat'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/spherex-waste-heat
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        if: ${{ hashFiles('results/spherex-waste-heat/optical/lightcurve_inputs.zip') == '' }}
+        with:
+          name: archive-optical
+          github-token: ${{ github.token }}
+          run-id: 44025746210
+          path: results/spherex-waste-heat
+      - name: Calculate nightly statistics for successful API queries
+        working-directory: results/spherex-waste-heat/optical
+        run: |
+          python -m pip install numpy pyarrow astropy-healpix
+          python nightly.py
+          cat nightly_summary.csv
+      - name: Recover missing API results from archived DR24 partitions
+        id: recover
+        continue-on-error: true
+        working-directory: results/spherex-waste-heat/optical
+        run: |
+          python hats_fallback.py
+          python nightly.py
+          cat nightly_summary.csv
+      - name: Record optical products
+        working-directory: results/spherex-waste-heat/optical
+        env:
+          RECOVERY_STATUS: ${{ steps.recover.outcome }}
+        run: |
+          set -euo pipefail
+          git add -f nightly.csv nightly_summary.csv
+          if [[ -f hats_receipts.json ]]; then git add -f hats_receipts.json hats_*.csv.gz; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record unique-night optical coverage and DR24 fallback inputs'
+            git fetch origin research/spherex-waste-heat
+            git rebase --autostash FETCH_HEAD
+            git push origin HEAD:research/spherex-waste-heat
+          fi
+          test "$RECOVERY_STATUS" = success
