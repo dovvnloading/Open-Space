@@ -1,0 +1,38 @@
+[
+  {
+    "source_name": "J213348.06+391040.9",
+    "table": "gaia_dr3_source",
+    "epoch": 2016.0,
+    "ra_deg": 323.45036066716915,
+    "dec_deg": 39.17800840792222,
+    "radius_arcsec": 8,
+    "sha256": "cb237b5688797e8eeab399972338b50c2d4170d05edd9a717947fde00a2f606d",
+    "n": 1,
+    "closest": {
+      "source_id": "1965849313551748480",
+      "ra": "323.44837574831",
+      "dec": "39.17772579768",
+      "pmra": "-5.142",
+      "pmdec": "-5.227",
+      "pmra_error": "0.693",
+      "pmdec_error": "0.687",
+      "parallax": "0.4373",
+      "parallax_error": "0.6561",
+      "phot_g_mean_mag": "20.530153",
+      "separation": 5.631917779821768
+    },
+    "query": "SELECT source_id,ra,dec,pmra,pmdec,pmra_error,pmdec_error,parallax,parallax_error,phot_g_mean_mag FROM gaia_dr3_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',323.4503607,39.1780084,0.002222222))"
+  },
+  {
+    "source_name": "J010638.19+122908.3",
+    "table": "gaia_dr3_source",
+    "epoch": 2016.0,
+    "ra_deg": 16.65904155119759,
+    "dec_deg": 12.485513753784723,
+    "radius_arcsec": 8,
+    "sha256": "a17d8b2086b92dcaf64fe5425a226d81a6f56567f3f7f27b0ac8719b2e85ce0b",
+    "n": 0,
+    "closest": null,
+    "query": "SELECT source_id,ra,dec,pmra,pmdec,pmra_error,pmdec_error,parallax,parallax_error,phot_g_mean_mag FROM gaia_dr3_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',16.6590416,12.4855138,0.002222222))"
+  }
+]
