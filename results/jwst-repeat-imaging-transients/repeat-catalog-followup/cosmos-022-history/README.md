@@ -1,6 +1,6 @@
 # COSMOS-022, time coverage back to 2022
 
-**COSMOS-022 was already present at approximately its lower near-infrared flux through early January 2026. It was brighter in all eight matched medium bands in May.** The sky position is (150.122033°, +2.323386208°). The high-state measurements span six observer days. The January 4 to May 18 observing gap is 134 days. There is no measured decay back to baseline in this NIRCam census.
+**COSMOS-022 was already present at approximately its lower near-infrared flux through early January 2026. It was brighter in all eight matched medium bands in May.** The sky position is (150.122033°, +2.323386208°). The high-state measurements span six observer days. The January 4 to May 18 observing gap is 134 days. There is no measured decay back to baseline in this NIRCam census. **COSMOS-022 is an unclassified nuclear brightening**; a later matched-filter JWST epoch and a classification-quality spectrum during activity are required to distinguish weak AGN variability from a nuclear transient.
 
 ![Multi-year COSMOS-022 aperture measurements](cosmos022-lightcurve.png)
 
