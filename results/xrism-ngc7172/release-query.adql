@@ -1,0 +1,1 @@
+SELECT TOP 200 obsid,name,time,end_time,exposure,rslcode,public_date,processing_date,status,title FROM xrismmastr WHERE public_date >= 61300 AND public_date <= 61360 AND time >= 60676 AND exposure > 10000 ORDER BY public_date DESC
