@@ -6,6 +6,7 @@ import io
 import json
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from collections import defaultdict
 from urllib.parse import urlencode
 from urllib.request import urlopen
 from time import sleep
@@ -28,7 +29,11 @@ def freeze(out, name, endpoint, query, columns):
                 if old["url"] != url or old["sha256"] != hashlib.sha256(raw).hexdigest():
                     raise ValueError("query or content changed; use a new output directory")
             else:
-                with urlopen(url, timeout=100) as response:
+                # TAP accepts either GET or form-encoded POST for synchronous ADQL.
+                # Long TARGETID lists can exceed a service's GET request-line limit.
+                post = len(url) > 3800
+                body = url.partition("?")[2].encode() if post else None
+                with urlopen(endpoint if post else url, data=body, timeout=100) as response:
                     raw = response.read()
             reader = csv.DictReader(io.StringIO(raw.decode("utf-8")))
             if reader.fieldnames != columns:
@@ -37,7 +42,7 @@ def freeze(out, name, endpoint, query, columns):
             if len(rows) >= 100000:
                 raise RuntimeError("possible TAP truncation")
             path.write_bytes(raw)
-            receipt.write_text(json.dumps(dict(url=url, adql=query, rows=len(rows),
+            receipt.write_text(json.dumps(dict(url=url, adql=query, method="POST" if len(url)>3800 else "GET", rows=len(rows),
                                                 sha256=hashlib.sha256(raw).hexdigest()), indent=2) + "\n")
             return rows
         except (OSError, RuntimeError):
@@ -92,16 +97,26 @@ def audit(target_file, out, size=55):
     ds = gather(out, "distances", GAIA, source_ids, cols,
                 f"SELECT {cols} FROM external.gaiaedr3_distance WHERE source_id IN ({{ids}})", size)
     distances = {r["source_id"]:r for r in ds}
+    star_sources, source_targets, star_types, star_visits = (defaultdict(set) for _ in range(4))
+    for row in mws:
+        star_types[row["targetid"]].add(row["rr_spectype"])
+        if has_gaia(row):
+            star_sources[row["targetid"]].add(row["source_id"])
+    for row in aliases:
+        source_targets[row["source_id"]].add(row["targetid"])
+        star_types[row["targetid"]].add(row["rr_spectype"])
+    for row in visits:
+        star_visits[row["targetid"]].add(int(row["expid"]))
     summary = []
     for t in targets:
         target = t["targetid"]
-        gaia = {r["source_id"] for r in mws if r["targetid"] == target and has_gaia(r)}
-        same = {target} | {r["targetid"] for r in aliases if r["source_id"] in gaia}
+        gaia = star_sources[target]
+        same = {target}.union(*(source_targets[s] for s in gaia))
         gids = sorted(gaia)
         src = gids[0] if len(gids) == 1 else ""
-        expected = {int(r["expid"]) for r in visits if r["targetid"] in same}
+        expected = set().union(*(star_visits[t] for t in same))
         available = {int(x) for x in t["expids"].split("|")}
-        spec = {r["rr_spectype"] for r in mws if r["targetid"] in same}
+        spec = set().union(*(star_types[t] for t in same))
         summary.append(dict(targetid=target, source_id=src, alias_targetids="|".join(sorted(same)),
                             requested_expids=t["expids"], expected_expids="|".join(map(str, sorted(expected))),
                             all_assigned=(expected == available and len(expected) >= 2),
