@@ -98,7 +98,12 @@ jobs:
         working-directory: results/spherex-waste-heat/fgk_spectra
         env:
           OPENBLAS_NUM_THREADS: '1'
-        run: python scenes.py
+        run: |
+          if [[ -s scenes/centroids.csv && -s scenes/viewer_queries.json ]]; then
+            python scenes.py --plot-only
+          else
+            python scenes.py
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
