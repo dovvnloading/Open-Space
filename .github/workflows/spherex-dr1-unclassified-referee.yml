@@ -52,6 +52,19 @@ jobs:
           python acquire.py cube
           SPHEREX_FIELD=wide python acquire.py cube
           python verify_inputs.py --require-cubes
+          # Independently rebuild the coadd photometry and image-based spike localization.
+          # Compare the outputs byte-for-byte with the deposited tables.
+          python extract.py
+          SPHEREX_FIELD=wide python extract.py
+          python scene.py nep_two_band/ranks.csv
+          SPHEREX_FIELD=wide python scene.py wide/full/ranks.csv
+          python localize.py nep_two_band/ranks.csv
+          SPHEREX_FIELD=wide python localize.py wide/full/ranks.csv
+          git diff --exit-code -- \
+            sources.csv spectra.csv coadd_checks.csv spatial_localization.csv \
+            wide/sources.csv wide/spectra.csv wide/coadd_checks.csv \
+            wide/spatial_localization.csv
+          echo 'REFEREE COADD: both cube extractions, multi-aperture scene checks and spatial localization are byte-identical'
 
   cutouts-dr1:
     name: Re-download and SHA-check every deposited DR1 native cutout
