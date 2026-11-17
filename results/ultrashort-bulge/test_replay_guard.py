@@ -1,4 +1,5 @@
-import json,os,tempfile,unittest
+import importlib.util,json,os,sys,tempfile,types,unittest
+import numpy
 from pathlib import Path
 from replay_guard import fresh,verified,sha,identity,check_checkpoint
 class GuardTests(unittest.TestCase):
@@ -15,17 +16,22 @@ class GuardTests(unittest.TestCase):
   from unittest.mock import patch
   import consolidate
   with tempfile.TemporaryDirectory() as tmp:
-   root=Path(tmp);code=root/'code';code.write_bytes(b'original');stage=root/'stage';stage.mkdir()
-   spec={'KMT-2024-BLG-0001':{'input_sha256':'rawhash'}};code_hashes={str(code):sha(code)};runtime={'python':'test'}
-   meta={'cap':True,'code_sha256':code_hashes,'runtime':runtime};(stage/'campaign.json').write_text(json.dumps(meta))
+   root=Path(tmp);code=root/'code';code.write_bytes(b'original');table=root/'ESPL.tbl';table.write_bytes(b'original table');stage=root/'stage';stage.mkdir()
+   spec={'KMT-2024-BLG-0001':{'input_sha256':'rawhash'}};code_hashes={str(code):sha(code),str(table):sha(table)};runtime={'python':'test'}
+   timing={'KMT-2024-BLG-0001':{'t0':1}}
+   meta={'cap':True,'code_sha256':code_hashes,'runtime':runtime,'parameters_sha256':consolidate.parameters_digest(timing)};(stage/'campaign.json').write_text(json.dumps(meta))
    ident={'event':'KMT-2024-BLG-0001','input_sha256':'rawhash','cap':True,'code_sha256':code_hashes,'runtime':runtime,'parameters':{'t0':1}}
    item=stage/'KMT-2024-BLG-0001.json';item.write_text(json.dumps({'status':'ok','_identity':ident}))
-   with patch.object(consolidate,'external',side_effect=lambda p:Path(p)):
+   with patch.object(consolidate,'external',side_effect=lambda p:Path(p)),patch.object(consolidate,'frozen_parameters',return_value=timing):
     self.assertEqual(len(consolidate.read_results(stage,spec,True)),1)
     with self.assertRaises(ValueError):consolidate.read_results(stage,spec,False)
     ident['input_sha256']='changed';item.write_text(json.dumps({'status':'ok','_identity':ident}))
     with self.assertRaises(ValueError):consolidate.read_results(stage,spec,True)
-    ident['input_sha256']='rawhash';item.write_text(json.dumps({'status':'ok','_identity':ident}));code.write_bytes(b'changed')
+    ident['input_sha256']='rawhash';ident['parameters']={'t0':2};item.write_text(json.dumps({'status':'ok','_identity':ident}))
+    with self.assertRaises(ValueError):consolidate.read_results(stage,spec,True)
+    ident['parameters']={'t0':1};item.write_text(json.dumps({'status':'ok','_identity':ident}));table.write_bytes(b'changed table')
+    with self.assertRaises(ValueError):consolidate.read_results(stage,spec,True)
+    table.write_bytes(b'original table');code.write_bytes(b'changed')
     with self.assertRaises(ValueError):consolidate.read_results(stage,spec,True)
  def test_real_entrypoints_reject_cached_or_corrupt_data(self):
   import importlib.util
@@ -44,6 +50,26 @@ class GuardTests(unittest.TestCase):
    with patch.object(ogle,'get',side_effect=AssertionError('network requested')):
     result=ogle.fetch_curve(d,{'event':'2025-BLG-0001','t0_hjd':'2450000'})
    self.assertIn('frozen input mismatch',result['status'])
+ def test_duplicate_jobs_rejected_before_output(self):
+  from unittest.mock import patch
+  root=Path(__file__).resolve().parent;spec=importlib.util.spec_from_file_location('guarded_run_grid',root/'run_grid.py');module=importlib.util.module_from_spec(spec)
+  with patch.dict(sys.modules,{'fit':types.ModuleType('fit')}):spec.loader.exec_module(module)
+  duplicate=("KMT-2024-BLG-0001",Path('unused'),1.,1.)
+  with tempfile.TemporaryDirectory() as tmp:
+   out=Path(tmp)/'out'
+   with patch.object(module,'external',side_effect=lambda p:Path(p)),patch.object(module,'verify_receipt'),patch.object(module,'inputs',return_value=[duplicate,duplicate]),patch.object(module,'fresh',side_effect=AssertionError('output created')),patch.object(sys,'argv',['run_grid.py','--cache',tmp,'--checkpoint',str(out),'--grid-library','unused','--kmt-bound']):
+    with self.assertRaisesRegex(ValueError,'duplicate'):module.main()
+   self.assertFalse(out.exists())
+ def test_engine_assets_include_native_and_numerical_table(self):
+  from unittest.mock import patch
+  from replay_guard import engine_assets
+  with tempfile.TemporaryDirectory() as tmp:
+   root=Path(tmp);(root/'data').mkdir();pkg=root/'__init__.py';native=root/'engine.pyd';table=root/'data'/'ESPL.tbl'
+   for p in (pkg,native,table):p.write_bytes(p.name.encode())
+   module=types.ModuleType('mock_vbm_native');module.__file__=str(native);klass=type('Engine',(),{'__module__':'mock_vbm_native'});vbm=types.SimpleNamespace(__file__=str(pkg),VBMicrolensing=klass)
+   with patch.dict(sys.modules,{'mock_vbm_native':module}):
+    assets=engine_assets(vbm);self.assertEqual(set(assets),{pkg,native,table});old={str(p):sha(p) for p in assets};table.write_bytes(b'changed');self.assertNotEqual(old[str(table)],sha(table));native.unlink()
+    with self.assertRaises(ValueError):engine_assets(vbm)
  @unittest.skipUnless(os.name=="nt", "requires external Windows D: temporary root")
  def test_exclusive_normalized_paths(self):
   with tempfile.TemporaryDirectory() as tmp:

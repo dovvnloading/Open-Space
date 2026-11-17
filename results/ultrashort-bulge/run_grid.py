@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 import fit
 from kmt.flux import baseline_caps
-from replay_guard import external, fresh, verified, sha, identity,verify_receipt
+from replay_guard import external, fresh, verified, sha, identity,verify_receipt,frozen_parameters,parameters_digest,validate_job_membership,engine_assets
 
 HERE = Path(__file__).resolve().parent
 
@@ -115,7 +115,7 @@ def main():
     with gzip.open(HERE/'tables/grid-fits.csv.gz','rt',newline='') as f:
         frozen={r['event']:r['input_sha256'] for r in csv.DictReader(f)}
     expected={name for name in frozen if not args.kmt_bound or name.startswith('KMT-')}
-    if {j[0] for j,_ in jobs}!=expected:raise ValueError('incomplete or changed frozen event membership')
+    validate_job_membership(jobs,expected)
     target=external(args.checkpoint)
     if target==args.cache or args.cache in target.parents or target in args.cache.parents:raise ValueError('input/output overlap')
     kmt_catalog={}
@@ -137,12 +137,17 @@ def main():
         if name not in frozen:raise ValueError('event absent from frozen receipt: '+name)
         verified(path,frozen[name])
     args.grid_library=external(args.grid_library)
-    codepaths=[HERE/'run_grid.py',HERE/'fit.py',HERE/'grid.cpp',args.grid_library,HERE/'kmt/flux.py',HERE/'replay_guard.py',HERE/'ogle/catalog.csv',HERE/'kmt/catalog-2024.tsv',HERE/'kmt/catalog-2025.tsv',HERE.parent/'ogle-dark-lenses/lens.py']
+    frozen_timing=frozen_parameters(args.kmt_bound)
+    for job,_ in jobs:
+        name,_,t0,te=job
+        actual={'t0':float(t0) if np.isfinite(t0) else None,'te':float(te) if np.isfinite(te) else None}
+        if name not in frozen_timing or actual!=frozen_timing[name]:raise ValueError('frozen timing identity mismatch: '+name)
+    codepaths=[*engine_assets(fit.vbm),HERE/'run_grid.py',HERE/'fit.py',HERE/'grid.cpp',args.grid_library,HERE/'kmt/flux.py',HERE/'replay_guard.py',HERE/'ogle/catalog.csv',HERE/'kmt/catalog-2024.tsv',HERE/'kmt/catalog-2025.tsv',HERE.parent/'ogle-dark-lenses/lens.py']
     code_hashes={str(p):sha(p) for p in codepaths}
     runtime={'python':sys.version,'platform':platform.platform(),'numpy':np.__version__,'vbm':getattr(fit.vbm,'__version__','unknown')}
     if 'fork' not in mp.get_all_start_methods():raise RuntimeError('full grid requires Linux/WSL fork')
     args.checkpoint=fresh(args.checkpoint)
-    (args.checkpoint/'campaign.json').write_text(json.dumps({'model':'frozen grid','cap':args.kmt_bound,'code_sha256':code_hashes,'runtime':runtime},indent=2)+'\n')
+    (args.checkpoint/'campaign.json').write_text(json.dumps({'model':'frozen grid','cap':args.kmt_bound,'code_sha256':code_hashes,'runtime':runtime,'parameters_sha256':parameters_digest(frozen_timing)},indent=2)+'\n')
     identities={j[0]:identity(j[1],j[0],bound,code_hashes,runtime,{'t0':float(j[2]) if np.isfinite(j[2]) else None,'te':float(j[3]) if np.isfinite(j[3]) else None}) for j,bound in jobs}
     print('Queued',len(jobs),flush=True)
     fit.setup(args.grid_library)

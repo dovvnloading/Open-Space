@@ -7,7 +7,7 @@ import json
 import hashlib
 from datetime import date
 from pathlib import Path
-from replay_guard import external,fresh_for_inputs,sha,verify_receipt
+from replay_guard import external,fresh_for_inputs,sha,verify_receipt,frozen_parameters,parameters_digest
 
 HERE=Path(__file__).resolve().parent
 
@@ -53,13 +53,15 @@ def write_gz(path,table):
 def read_results(folder,spec,cap):
     folder=external(folder);meta=json.loads((folder/'campaign.json').read_bytes())
     if meta['cap']!=cap:raise ValueError('wrong checkpoint cap')
+    timing=frozen_parameters(cap)
+    if meta.get('parameters_sha256')!=parameters_digest(timing):raise ValueError('campaign timing map mismatch')
     for name,digest in meta['code_sha256'].items():
         if sha(name)!=digest:raise ValueError('checkpoint code changed')
     result={}
     for path in folder.glob('*.json'):
         if path.name=='campaign.json':continue
         row=json.loads(path.read_bytes());ident=row.pop('_identity',None);name=path.stem
-        if not ident or ident['event']!=name or ident['cap']!=cap or ident['code_sha256']!=meta['code_sha256'] or ident['runtime']!=meta['runtime'] or name not in spec or ident['input_sha256']!=spec[name]['input_sha256']:raise ValueError('checkpoint identity mismatch: '+name)
+        if not ident or ident['event']!=name or ident['cap']!=cap or ident['code_sha256']!=meta['code_sha256'] or ident['runtime']!=meta['runtime'] or name not in spec or ident['input_sha256']!=spec[name]['input_sha256'] or ident.get('parameters')!=timing.get(name):raise ValueError('checkpoint identity mismatch: '+name)
         result[name]=row
     expected={n for n in spec if not cap or n.startswith('KMT-')}
     if set(result)!=expected:raise ValueError('incomplete checkpoint membership')

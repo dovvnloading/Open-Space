@@ -1,5 +1,5 @@
 """Fail-closed primitives for immutable microlensing replay campaigns."""
-import hashlib,json,os,platform,sys
+import csv,hashlib,json,math,os,platform,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 REPO=ROOT.parents[1]
@@ -39,3 +39,36 @@ def fresh_for_inputs(out,*inputs):
   src=external(item)
   if dest==src or dest in src.parents or src in dest.parents:raise ValueError('input/output overlap')
  return fresh(dest)
+
+def frozen_parameters(cap):
+ for name in ('ogle/catalog.csv','kmt/catalog-2024.tsv','kmt/catalog-2025.tsv'):verify_receipt(name)
+ def number(value):
+  try:
+   x=float(value);return x if math.isfinite(x) else None
+  except (TypeError,ValueError):return None
+ result={}
+ if not cap:
+  with (ROOT/'ogle/catalog.csv').open(newline='',encoding='utf-8-sig') as f:
+   for r in csv.DictReader(f):result['OGLE-'+r['event']]={'t0':number(r['t0_hjd']),'te':number(r['tau_days'])}
+ for year in (2024,2025):
+  with (ROOT/'kmt'/f'catalog-{year}.tsv').open(newline='',encoding='utf-8-sig') as f:
+   for r in csv.DictReader(f,delimiter='\t'):
+    t=number(r['t_0']);te=number(r['t_E'])
+    result[r['Event']]={'t0':2400000+t if t is not None and t>0 else None,'te':te if te is not None and te>0 else None}
+ return result
+
+def parameters_digest(parameters):
+ return hashlib.sha256(json.dumps(parameters,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+
+def validate_job_membership(jobs,expected):
+ names=[j[0] for j,_ in jobs]
+ if len(names)!=len(set(names)):raise ValueError('duplicate event IDs in jobs')
+ if set(names)!=set(expected):raise ValueError('incomplete or changed frozen event membership')
+
+def engine_assets(vbm):
+ package=Path(vbm.__file__).resolve()
+ module=sys.modules[vbm.VBMicrolensing.__module__]
+ native=Path(module.__file__).resolve()
+ table=package.parent/'data'/'ESPL.tbl'
+ if not all(p.is_file() for p in (package,native,table)):raise ValueError('missing microlensing engine asset')
+ return (package,native,table)
