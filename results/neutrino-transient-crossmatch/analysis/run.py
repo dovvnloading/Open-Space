@@ -1,6 +1,5 @@
 """Replay the frozen IceCube native-map search and legacy exclusion audit offline."""
 from matplotlib.path import Path as PlotPath
-from contours import contains, prepare
 from collections import defaultdict
 from datetime import datetime, timezone
 import argparse
@@ -14,6 +13,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'ice'))
+from contours import contains, prepare  # noqa: E402
 
 OUT = ROOT / 'analysis'
 WINDOWS = {'optical': (0, 365), 'xray': (-1, 7), 'gamma': (-7, 7), 'mir': (-180, 180)}
