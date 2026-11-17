@@ -52,7 +52,7 @@ def norm(a):
 
 def ray(observer, n, r):
     """Position on positive observed ray at the specified heliocentric distance."""
-    dot = observer @ n
+    dot = np.sum(observer*n,axis=-1)
     dist = -dot + np.sqrt(dot**2 + r**2 - norm(observer)**2)
     return observer + dist[..., None] * n, dist
 
@@ -78,14 +78,31 @@ def kepler(rvec, vel, dt):
     return fg_f[..., None]*rvec + fg_g[..., None]*vel
 
 
-def family(inputs, n_time=9, n_radius=21, n_rate=41, coadd_endpoint_fraction=0.):
+def family(inputs, n_time=9, n_radius=21, n_rate=41, coadd_endpoint_fraction=0., parameters=None, angular_offsets=None):
     a, b = [epoch(x) for x in inputs["iras_coadd_interval_utc"]]
     tb = epoch(inputs["akari_midpoint_utc"])
     # Bracket endpoint range changes slightly beyond the local escape speed.
-    t1, r2, fraction = [q.ravel() for q in np.meshgrid(
-        np.linspace(a, b, n_time), np.linspace(*inputs["r_akari_au"], n_radius),
-        np.linspace(-1.05, 1.05, n_rate), indexing="ij")]
+    if parameters is None:
+        t1, r2, fraction = [q.ravel() for q in np.meshgrid(
+            np.linspace(a, b, n_time), np.linspace(*inputs["r_akari_au"], n_radius),
+            np.linspace(-1.05, 1.05, n_rate), indexing="ij")]
+    else:
+        # Unit-cube draws parameterize the same support without coincident grid lines.
+        u_time,u_radius,u_rate=np.asarray(parameters).T
+        t1=a+(b-a)*u_time
+        low,high=inputs["r_akari_au"]
+        r2=low+(high-low)*u_radius
+        fraction=2.1*u_rate-1.05
     n1, n2 = [unit(*inputs[k]) for k in ("iras_radec_deg", "akari_radec_deg")]
+    if angular_offsets is not None:
+        directions=[]
+        for normal,key,offsets in zip((n1,n2),("iras_radec_deg","akari_radec_deg"),angular_offsets):
+            ra=np.radians(inputs[key][0])
+            east=np.array([-np.sin(ra),np.cos(ra),0.])
+            north=np.cross(normal,east)
+            vec=normal+offsets[:,0,None]*east/ARCSEC+offsets[:,1,None]*north/ARCSEC
+            directions.append(vec/norm(vec)[:,None])
+        n1,n2=directions
     r1 = r2 - fraction * np.sqrt(2*MU/r2) * (tb-t1)
     h1, b1 = observers(t1)
     if coadd_endpoint_fraction:
@@ -116,7 +133,7 @@ def family(inputs, n_time=9, n_radius=21, n_rate=41, coadd_endpoint_fraction=0.)
         inclination_ecliptic_deg=[float(inc.min()), float(inc.max())],
         max_endpoint_residual_arcsec=float(residual[keep].max()),
         boundary_rate_reached=bool(np.any(np.abs(fraction[keep]) >= 1.05 - 1e-12)),
-        grid=[n_time, n_radius, n_rate], coadd_endpoint_fraction=coadd_endpoint_fraction)
+        grid=[n_time, n_radius, n_rate] if parameters is None else None, coadd_endpoint_fraction=coadd_endpoint_fraction)
     return pos2[keep], v[keep], tb - dist2[keep]/C, info
 
 

@@ -447,6 +447,7 @@ def main(inputs, outdir):
         center,
         threshold,
         zp,
+        outdir / "planet_draws.csv.gz",
     )
     (outdir / "model_recovery.json").write_text(json.dumps(planets, indent=2) + "\n")
     # Plant one model at a time into copies of the registered science pixels, before PSF

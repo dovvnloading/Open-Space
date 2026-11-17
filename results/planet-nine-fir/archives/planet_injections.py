@@ -61,7 +61,7 @@ def population(p, wcs0, xs, ys, times, stress, rng, n=400):
             a, d = p.sky(ss, t)
             x, y = wcs0.world_to_pixel_values(a, d)
             pos.extend([x - xs[0], y - ys[0]])
-        for item in zip(*pos, *rd):
+        for item in zip(*pos, *rd, *ss[0].T, *ss[1].T, ss[2]):
             out.append(item)
     return np.array(out)
 
@@ -86,6 +86,7 @@ def measure(
     center,
     threshold,
     zp,
+    save_draws_path=None,
 ):
     rng = np.random.default_rng(813481)
     models = [
@@ -102,19 +103,21 @@ def measure(
         for albedo in [0.10, 0.30, 0.75]
     ]
     outputs = []
+    draw_rows = []
     for stress in [False, True]:
         rows = population(p, wcs0, xs, ys, times, stress, rng)
-        rr, dd = rows[:, 4:].T
+        rr, dd = rows[:, 4:6].T
         hits = np.zeros(len(models), int)
         trial_valid = np.zeros(len(models), int)
         mags = []
         eligible = 0
+        recovered_each = np.zeros((len(rows), len(models)), bool)
         for m, R, A in models:
             mags.append(
                 -26.93
                 - 2.5 * np.log10(A * (R * 6371000.0 / 149597870700.0 / (rr * dd)) ** 2)
             )
-        for j, (x0, y0, x1, y1, r, delta) in enumerate(rows):
+        for j, (x0, y0, x1, y1, r, delta, *state) in enumerate(rows):
             ix, iy = np.rint([x0, y0]).astype(int)
             bx, by = ix - 48, iy - 48
             if (
@@ -172,11 +175,24 @@ def measure(
                 f = filtered(ii, jj, psfs, scale)
                 fa = f[qy - by, qx - bx][:, None]
                 fb = f[ny - by, nx - bx]
-                hits[mi] += np.any(
+                hit = np.any(
                     ok
                     & lobes(fa, fb, noise)
                     & ((fa - fb - center) >= threshold * noise)
                 )
+                hits[mi] += hit
+                recovered_each[j, mi] = hit
+        for j, row in enumerate(rows):
+            draw_rows.append(
+                [
+                    "centroid_stress" if stress else "published_centroids",
+                    j,
+                    *row[6:],
+                    row[4],
+                    row[5],
+                    *[int(recovered_each[j, k]) for k in [0, 4, 16]],
+                ]
+            )
         for (m, R, A), v, tr, mag in zip(models, hits, trial_valid, mags):
             ci = binomtest(int(v), len(rows)).proportion_ci(0.95, method="wilson")
             outputs.append(
@@ -194,4 +210,28 @@ def measure(
                     r_AB_range=[float(mag.min()), float(mag.max())],
                 )
             )
+    if save_draws_path is not None:
+        import csv, gzip
+
+        with gzip.open(save_draws_path, "wt", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(
+                [
+                    "experiment",
+                    "draw",
+                    "x_au",
+                    "y_au",
+                    "z_au",
+                    "vx_au_d",
+                    "vy_au_d",
+                    "vz_au_d",
+                    "reference_emission_tt_days_since_j2000",
+                    "des_heliocentric_au",
+                    "des_geocentric_au",
+                    "hit_mass5_R2.71_p0.10",
+                    "hit_mass5_R2.94_p0.30",
+                    "hit_mass10_R3.70_p0.30",
+                ]
+            )
+            w.writerows(draw_rows)
     return outputs
