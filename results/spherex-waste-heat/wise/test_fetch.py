@@ -62,4 +62,11 @@ class CacheTest(unittest.TestCase):
         self.assertEqual(before,{x.name:x.read_bytes() for x in archive.iterdir()})
         self.assertEqual({x.name for x in out.iterdir()},{'catalog_photometry.csv','visits.csv','variability.csv','queries.json'})
         with self.assertRaises(FileExistsError):measure.main(archive,out)
+        derived_before={x.name:x.read_bytes() for x in out.iterdir()}
+        rejected=self.p/'changed-derived'
+        with patch.object(measure,'targets',return_value=[dict(T,source_id='123',ra='11')]):
+            with self.assertRaises(ValueError):measure.main(archive,rejected)
+        self.assertFalse(rejected.exists())
+        self.assertEqual(before,{x.name:x.read_bytes() for x in archive.iterdir()})
+        self.assertEqual(derived_before,{x.name:x.read_bytes() for x in out.iterdir()})
 if __name__=='__main__':unittest.main()

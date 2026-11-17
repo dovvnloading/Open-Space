@@ -9,16 +9,21 @@ import itertools
 import json
 import math
 from statistics import median
-from fetch import ROOT, TABLES, position, separation, targets
+from fetch import ROOT, TABLES, position, separation, targets, request
 
 
 def read(target, kind, archive):
     key=target['label']+'_'+kind
     raw=gzip.decompress((archive/(key+'.csv.gz')).read_bytes())
     rec=json.loads((archive/(key+'.json')).read_text(encoding='utf-8'))
-    if len(raw)!=rec['bytes'] or hashlib.sha256(raw).hexdigest()!=rec['sha256']:
+    query,url=request(kind,target)
+    reader=csv.DictReader(io.StringIO(raw.decode('utf-8-sig')))
+    rows=list(reader)
+    if (rec.get('url')!=url or rec.get('query')!=query or rec.get('status')!=200
+        or len(raw)!=rec['bytes'] or hashlib.sha256(raw).hexdigest()!=rec['sha256']
+        or reader.fieldnames!=TABLES[kind][1].split(',') or len(rows)!=rec.get('rows')):
         raise ValueError(f'Archived response mismatch: {key}')
-    return list(csv.DictReader(io.StringIO(raw.decode('utf-8-sig'))))
+    return rows
 
 
 def write(output, name, rows, fields=None):
@@ -110,9 +115,12 @@ def main(archive,output):
     archive=Path(archive);output=Path(output)
     if not archive.is_dir():raise ValueError('archive directory missing')
     if output.exists():raise FileExistsError('derived output directory must be new')
+    selection=targets()
+    for t in selection:
+        for kind in TABLES:read(t,kind,archive)
     output.mkdir(parents=True)
     cats=[]; visits=[]; tests=[]
-    for t in targets():
+    for t in selection:
         cats.append(summarize_catalogs(t,archive))
         for b in (1,2):
             v=list(summarize_visits(t,b,archive))
