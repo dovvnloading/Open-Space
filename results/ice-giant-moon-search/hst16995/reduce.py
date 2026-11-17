@@ -78,7 +78,26 @@ def prep(cache, planet):
             t=(h[0].header['EXPSTART']+h[0].header['EXPEND'])/2
             dt=float(h[0].header['EXPTIME'])
             zp=-2.5*np.log10(s.header['PHOTFLAM']*s.header['PHOTPLAM']**2/2.99792458e18)-48.60
-            if h[0].header['FILTER']!='F845M' or s.header['BUNIT']!='ELECTRONS': raise ValueError(name)
+            if h[0].header['FILTER']!=row.get('filter','F845M') or s.header['BUNIT']!='ELECTRONS': raise ValueError(name)
+            # Quad-filter exposures can be full-chip. Choose the chip that contains
+            # the predicted planet and work on a local 512-pixel detector cutout.
+            if max(image.shape)>700:
+                ref=eph[body][:2]
+                matches=[]
+                for chip in (v for v in h if v.name=='SCI'):
+                    cw=WCS(chip.header,fobj=h); px,py=cw.all_world2pix([ref],0,quiet=True)[0]
+                    ny,nx=chip.data.shape
+                    if np.isfinite(px+py) and 0<=px<nx and 0<=py<ny:
+                        matches.append((min(px,nx-1-px,py,ny-1-py),chip,cw,px,py))
+                if not matches:
+                    reg.append(dict(rootname=name,visit=row['visit'],limb_x=None,limb_y=None,dx=None,dy=None,
+                                    control_in_mask=0,control_snr=None,AB_zp=zp,status='ephemeris_off_chip'))
+                    continue
+                _,chip,w,px,py=max(matches,key=lambda v:v[0])
+                ny,nx=chip.data.shape
+                left=int(np.clip(round(px)-256,0,nx-512));top=int(np.clip(round(py)-256,0,ny-512))
+                cut=np.s_[top:top+512,left:left+512];image=chip.data[cut].copy();dq=h['DQ',chip.header['EXTVER']].data[cut].copy()
+                # All subsequent WCS operations use pixel differences; cutout origin cancels.
         planet_pos = eph[body]
         ra,dec,r,delta,lt = planet_pos
         pix0=w.all_world2pix([planet_pos[:2]],0,quiet=True)[0]
@@ -295,7 +314,7 @@ def run(args):
     rank=np.concatenate(ranks);validated=np.concatenate(vetted); hits=np.flatnonzero(rank>=1)
     peaks=[dict(a_km=bank[k,0],phase_rad=bank[k,1],rank=round(rank[k],5)) for k in np.argsort(rank)[-40:][::-1]]
     write_csv(out/'highest_scores.csv',peaks)
-    summary=dict(planet=planet,filter='F845M',exposures=len(frames),visits=len(set(visits)),grid_tracks=len(bank),
+    summary=dict(planet=planet,filter=getattr(args,'band','F845M'),exposures=len(frames),visits=len(set(visits)),grid_tracks=len(bank),
                  supported_tracks=num_eligible,threshold_crossings=len(hits),top_rank=float(rank.max()),dropout_crossings=int((validated>=1).sum()),top_dropout_rank=float(validated.max()),
                  psf_control_stamps=npsf,control_orbit=control_orbit(frames,planet),median_delta_au=np.median([f['dist'] for f in frames]),
                  median_sun_au=np.median([f['sun'] for f in frames]),reference_emission_mjd=float(np.mean([f['mid'] for f in frames])))
