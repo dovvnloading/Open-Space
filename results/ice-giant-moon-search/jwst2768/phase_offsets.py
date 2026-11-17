@@ -1,4 +1,4 @@
-"""Measure the Jan 2024 source's longitude relative to predicted Perdita and Belinda."""
+"""Measure the February 2024 source's longitude relative to predicted Perdita and Belinda."""
 import argparse
 import csv
 import json
