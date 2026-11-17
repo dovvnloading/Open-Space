@@ -1,18 +1,18 @@
-# TESS search for occultations of Gaia white dwarfs
+# No short occultation found in the clean Sector 109 white-dwarf sample
 
-No discovery or occurrence measurement has been established. This is the opening survey record.
+The blind search returned zero periodic or isolated dips in the three Sector 109 apertures that passed the TIC identity, Gaia contamination and photometric checks. At a period of 1.40794 days, it recovered 293 of 300 transiting 11.2-Earth-radius injections into those stars' observed fluxes. The pointwise 95% upper limit on the fraction with a **transiting** companion in that exact model is 77.2%. Three stars cannot constrain the fraction hosting companions at all inclinations. A separate catalogue extension and larger short-cadence search are in progress.
 
-## Scope
+## Completed measurements
 
-The parent sample is the Gentile Fusillo et al. Gaia EDR3 white-dwarf catalogue. The survey targets periodic short occultations and isolated dips using 200-second full-frame images from Cycle 5 onward and available 20- and 120-second target pixels. The selection, product availability, contamination cuts and detection efficiency must be recorded before a population claim. The known planet WD 1856+534 b and published eclipsing white-dwarf binaries serve as controls outside the blind discovery count.
+- From the all-sky parent of 157 Gaia EDR3 catalogue sources with P_WD > 0.75 and G < 14, nine fell on Sector 109 detectors. Eight had a unique TIC counterpart and three passed the Gaia crowding cut. Each contributed 11,173 clean 200-second exposures. [FFI selection and pixel measurements](FFI_METHODS.md)
+- The exact-period experiments preserve actual sampling, dilution, exposure integration, normalized flux variability and gaps. Planet injections sample random transiting inclinations and orbital phases, with the search blind to their ephemerides. [Per-star recovery](sector109/ffi_recovery_stars.csv) · [Confidence limits](sector109/ffi_limits.json)
+- All 16 released 20- and 120-second target-pixel visits of those three WDs were re-extracted. The only periodic trigger was the known binary TIC 43529091. In Sector 98 fast pixels, adding a sinusoid to a 120-minute box fit changed its fitted depth from +861 ± 74 ppm to −111 ± 95 ppm. The 120-second pixels independently give −82 ± 94 ppm after fitting the sinusoid. [Short-cadence triggers](short_cadence/pixel_search.json) · [Difference image and four-visit fits](short_cadence/known_binary_fit.json)
+- Five additional complete Cycle 5+ FFI visits were returned for the three WDs. All 24 historical isolated triggers occurred during one Sector 98 interval. Every one of the 572 simultaneous 20-second samples carried the scattered-light exclusion bit. [Matched spacecraft times and quality flags](record/historical_fastcheck.json)
+- On the latest 432 Sector 110 full frames listed for camera 1, CCD 1, a coordinate-tracked small aperture on TIC 43529091 yielded 360 quality-zero samples on 2026 November 5–6 and zero triggers. This partial-day exposure is excluded from the Sector 109 limit. [Raw FFI extraction](latest_ffi.py) · [Measurement](sector110/latest_ffi_summary.json)
+- WD 1856+534 b was recovered in 40/41 short-cadence SPOC light curves, RR Cae in 8/8 and TIC 60040774 in 7/7. In 200-second pixels the detector recovered both binary controls, while WD 1856 b failed the blind test in its heavily blended Sector 86 aperture. The model assigned 1.29% of that aperture light to the WD. [Controls, difference images and input hashes](controls/README.md)
 
-## Completed
+## Pending work
 
-- Read the inclusion bar in `docs/REMARKABLE_FINDINGS.md` and reviewed the scope of the earlier TESS asymmetric-dip and additional-transit searches. Their samples and recovery efficiencies do not describe this survey.
+The latest-visit extension to the 140 separately frozen bright catalogue targets and the full 20/120-second roster follow-up are in progress. No candidate or rate from either is asserted in this checkpoint. [Extension cohort](EXTENSION.md) · [Frozen target list](extension/extension_parent.csv) · [Short-cadence product inventory](target_pixel_products.csv)
 
-## Pending
-
-- Catalogue selection and TIC identity crossmatch, released product inventory and data hashes.
-- Real pixel photometry, Gaia neighbour dilution, periodic and aperiodic searches, and positive controls.
-- Difference images, centroids, binary alternatives, independent survey photometry and literature checks for triggers.
-- Exposure-integrated injections on real photometry, per-star completeness, and occurrence inference if warranted.
+The period search covers 0.08–7 days with 2–120-minute windows, floored at the exposure cadence. It seeds trial ephemerides with strong individual dips. Sensitivity to low-amplitude events that emerge only after many repetitions, time-variable debris, or white dwarfs outside the brightness and crowding cuts has not been calibrated by the four fixed cells. The catalogue pure-hydrogen mass and radius model is especially uncertain for the known extremely low-mass binary TIC 43529091. Excluding it weakens the Sector 109 transiting-giant ceiling at 1.40794 days to 88.8%. [Binary-excluded calculation](sector109/ffi_binary_excluded.json)
