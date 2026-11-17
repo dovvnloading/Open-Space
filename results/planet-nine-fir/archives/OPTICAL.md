@@ -1,3 +1,5 @@
+> **Timing provenance:** All orbit-dependent searches, figures, coverage counts and recovery fractions below are historical calculations conditional on the unverified AKARI epoch 2006-12-26 21:03:07.5 UTC. The published Figure 6 shows different December scan labels; the catalog centroid epoch is unverified. These images were already inspected. Scenario propagation does not validate the historical masks or recovery fractions. See [timing provenance](../orbits/TIMING.md).
+
 ## DECam and Legacy Surveys
 
 **No two-night moving point source passes the search at the trial Phan velocities.** Two public 90-second DES DECam r exposures, 605285 (2016-12-30) and 605571 (2016-12-31), observed the same CCD 21.47 hours apart. The two-lobe significance peaked at 5.23 in a dense sky-position and displacement search with threshold 5.5. At the 3,617 discrete model tracks, 3,424 passed the masks and none passed the detection criterion. The models, not a binned sky density or physical posterior, define these denominators.

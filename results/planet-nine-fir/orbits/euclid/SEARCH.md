@@ -1,3 +1,5 @@
+> **Timing provenance:** All orbit-dependent searches, figures, coverage counts and recovery fractions below are historical calculations conditional on the unverified AKARI epoch 2006-12-26 21:03:07.5 UTC. The published Figure 6 shows different December scan labels; the catalog centroid epoch is unverified. These images were already inspected. Scenario propagation does not validate the historical masks or recovery fractions. See [timing provenance](../TIMING.md).
+
 ## Euclid VIS moving-source search
 
 No source passed the motion, quality and independent-counterpart tests. Seven 560.52-second calibrated VIS exposures in pointings 5509 and 5510 cover the target on 2024-12-27 from 06:34 to 08:41 UTC (midpoints). These are exposures of one observing sequence. They constitute a 2.12-hour motion test rather than independent nights. ESA released the DR1 images in November 2026. [Euclid DR1 VIS processing](https://arxiv.org/abs/2611.15890)
