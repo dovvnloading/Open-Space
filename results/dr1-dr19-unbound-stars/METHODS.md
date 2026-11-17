@@ -28,7 +28,7 @@ For candidate origins, a kick–drift–kick integration follows 256 posterior s
 
 ## Replay
 
-From this results directory, a fresh Python 3.12 environment can replay the posteriors and orbit tables using the frozen input rows. `verify.py` checks the hashes, sample integrity, positive control and headline counts. The survey-specific reports provide upstream query replay. Install Poppler's `pdftotext` to rebuild the literature index from its source papers.
+All commands in this contribution, including survey screening and archive replay, require Python 3.12. From this results directory, a fresh Python 3.12 environment can replay the posteriors and orbit tables using the frozen input rows. The scoped `.gitattributes` preserves the exact deposited file bytes in fresh checkouts, including Windows checkouts with automatic line-ending conversion enabled. `verify.py` checks the hashes, sample integrity, positive control and headline counts. The survey-specific reports provide upstream query replay. Install Poppler's `pdftotext` to rebuild the literature index from its source papers.
 
 ```sh
 python -m pip install -r requirements.txt
