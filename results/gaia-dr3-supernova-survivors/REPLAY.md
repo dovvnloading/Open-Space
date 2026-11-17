@@ -10,11 +10,14 @@ The numerical run used Python 3.12, NumPy 2.3.5, pandas 2.2.3, SciPy 1.17.0, Ast
 
 ```sh
 sha256sum -c SHA256SUMS
+python referee_check.py
 python control/recovery.py
 python search/analysis.py
 python search/inject.py
 python plot.py
 ```
+
+The [independent referee record](REFEREE_REVIEW.md) includes a passed [two-job GitHub Actions replay](https://github.com/dovvnloading/Open-Space/actions/runs/44050032886). It confirms the frozen-input scripts, orbit outputs and newly re-fetched Green SNR catalogue. The independently recomputed spectroscopic-union counts use the saved, disjoint overlap ledger; they are **not** a second raw-archive crossmatch of all 113,166 sources. The full upstream rerun is described next.
 
 ### Full catalogue, spectra and orbit runs
 
