@@ -216,9 +216,9 @@ def check_two_sources():
     approx(w[0]["peak_wave_um"],4.6,.0002,"Spike wavelength")
     require(w[0]["peak_channel"] == "91", "Spike channel")
     spec = {int(x["channel"]): x for x in rows(wide/"spectra.csv") if x["source_id"]==name}
-    approx(spec[91]["flux_mjy"],16.44,.04,"4.6 micron central coadd flux")
+    approx(spec[91]["flux"],16.44,.04,"4.6 micron central coadd flux")
     for ch, expected in ((90,6.72),(92,6.41)):
-        approx(spec[ch]["flux_mjy"], expected, .04, f"flank {ch}")
+        approx(spec[ch]["flux"], expected, .04, f"flank {ch}")
     rows_19 = [x for x in rows(wide/"coadd_checks.csv") if x["source_id"] == name
                and x["mask"] == "strict" and x["radius_arcsec"] == "19"
                and x["sky_inner"] == "36"]
