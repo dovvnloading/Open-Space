@@ -110,8 +110,10 @@ def main():
     for name,field,rankdir in [('wide',ROOT/'wide','full'),('nep',ROOT,'nep_two_band')]:
         result,counts[name]=measure(name,field,field/rankdir)
         records.extend(result)
-    pd.DataFrame(records).to_csv(ROOT/'followup_by_feature.csv',index=False,float_format='%.9g')
-    (ROOT/'search_counts.json').write_text(json.dumps(counts,indent=2)+'\n')
+    with (ROOT/'followup_by_feature.csv').open('w', encoding='utf-8', newline='') as f:
+        pd.DataFrame(records).to_csv(f, index=False, float_format='%.9g', lineterminator='\n')
+    with (ROOT/'search_counts.json').open('w', encoding='utf-8', newline='\n') as f:
+        f.write(json.dumps(counts, indent=2) + '\n')
 
 if __name__=='__main__':
     main()

@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 199 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 25 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 201 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 27 carefully recorded null or inconclusive checks.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -272,6 +272,8 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **Earlier bursts from two radio-burst sources.** *Candidate* · [Details](results/frb-kko-associations/README.md)
 
 **Gamma-ray bursts and gravitational waves**
+
+- **A proposed gamma-ray oscillation screen failed its synthetic calibration.** The two-burst pilot provides descriptive data, but does not support a physical oscillation test. *Null result* · [Details](results/gbm-conditional-screen/README.md)
 
 - **A gamma-ray burst listed as a solar flare.** GRB 211211A in Solar Orbiter's flare catalog. *Correction* · [Details](results/grb-211211a-solar-orbiter/README.md)
 - **Gamma-ray bursts and a solar flare hidden in a neutron-star burst catalog.** *Correction* · [Details](results/minbar-external-bursts/README.md)
