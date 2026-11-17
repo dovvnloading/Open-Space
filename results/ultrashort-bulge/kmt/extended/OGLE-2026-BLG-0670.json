@@ -1,0 +1,363 @@
+[
+  {
+    "event": "2026-BLG-0670",
+    "product": "gaiaDR3_2arcsec",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Cruwe+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C268.473833333%2C-29.729805556%2C0.000555556%29%29",
+    "queried_utc": "2026-11-17T11:27:07+00:00",
+    "sha256": "25675cd35af8cb1a7227ad00c43e729b6acd8f3461f0adbbad52ffd1bbe33314",
+    "rows": [
+      {
+        "source_id": "4056495009386327936",
+        "ra": "268.47399304925545",
+        "dec": "-29.730292371203912",
+        "phot_g_mean_mag": "19.468237",
+        "bp_rp": "",
+        "phot_variable_flag": "NOT_AVAILABLE",
+        "ruwe": "",
+        "sep_arcsec": 1.822
+      }
+    ],
+    "status": "ok"
+  },
+  {
+    "event": "2026-BLG-0670",
+    "product": "vvvDR2_2arcsec",
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F348%2Fvvv2&-c=268.47383333+-29.72980556&-c.rs=2&-out.add=_r&-sort=_r&-out.max=20&-out=srcid%2Ciauname%2CRAJ2000%2CDEJ2000%2CJmag3%2CHmag3%2CKsmag3%2CJperrbits%2CHperrbits%2CKsperrbits",
+    "queried_utc": "2026-11-17T11:27:07+00:00",
+    "sha256": "8a454f4df7b49514c7ca0f37ccf12b24d7986201cbc208e651d6c982f1f84873",
+    "rows": [
+      [
+        "1.684",
+        "515534207765",
+        "VVV J175353.75-294348.91",
+        "268.473991",
+        "-29.730253",
+        " 16.920",
+        " 16.105",
+        " 15.833",
+        "       0",
+        "       0",
+        "       0"
+      ],
+      [
+        "1.884",
+        "515533840812",
+        "VVV J175353.60-294348.41",
+        "268.473348",
+        "-29.730115",
+        " 15.793",
+        " 15.025",
+        " 14.816",
+        "       0",
+        "       0",
+        "       0"
+      ]
+    ],
+    "header": "_r\tsrcid\tiauname\tRAJ2000\tDEJ2000\tJmag3\tHmag3\tKsmag3\tJperrbits\tHperrbits\tKsperrbits",
+    "status": "ok"
+  },
+  {
+    "event": "2026-BLG-0670",
+    "product": "VSX_5arcsec",
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=268.47383333+-29.72980556&-c.rs=5&-out.add=_r&-sort=_r&-out.max=20&-out=Name%2CType%2CRAJ2000%2CDEJ2000",
+    "queried_utc": "2026-11-17T11:27:06+00:00",
+    "sha256": "377abde275b02d27756a02fcbbf8a68afe11af32bde696159bfd957a7b81dc82",
+    "rows": [],
+    "header": null,
+    "status": "ok"
+  },
+  {
+    "event": "2026-BLG-0670",
+    "product": "HST_JWST_CADC_footprint",
+    "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+30+obs_collection%2Cfacility_name%2Cinstrument_name%2Cobs_id%2Cdataproduct_type%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C268.473833333%2C-29.729805556%29%2Cs_region%29+AND+%28facility_name+IN+%28%27HST%27%2C%27JWST%27%29+OR+obs_collection+IN+%28%27HST%27%2C%27JWST%27%2C%27HSTHLA%27%29%29+AND+dataproduct_type%3D%27image%27",
+    "queried_utc": "2026-11-17T11:27:14+00:00",
+    "sha256": "ad93c962d5424d171230d96b7cdb7272b7354386e161c766e05c531ad0706b27",
+    "rows": [
+      {
+        "obs_collection": "HST",
+        "facility_name": "HST",
+        "instrument_name": "STIS/CCD",
+        "obs_id": "o8w9kxfcq",
+        "dataproduct_type": "image",
+        "t_min": "53049.48037306713",
+        "t_max": "53049.48500269676"
+      },
+      {
+        "obs_collection": "HST",
+        "facility_name": "HST",
+        "instrument_name": "STIS/CCD",
+        "obs_id": "o8w9kxfaq",
+        "dataproduct_type": "image",
+        "t_min": "53049.470095289355",
+        "t_max": "53049.47472491898"
+      },
+      {
+        "obs_collection": "HST",
+        "facility_name": "HST",
+        "instrument_name": "STIS/CCD",
+        "obs_id": "o8w9kxfaq",
+        "dataproduct_type": "image",
+        "t_min": "53049.470095289355",
+        "t_max": "53049.47472491898"
+      },
+      {
+        "obs_collection": "HST",
+        "facility_name": "HST",
+        "instrument_name": "STIS/CCD",
+        "obs_id": "o8w9kxfeq",
+        "dataproduct_type": "image",
+        "t_min": "53049.490650844906",
+        "t_max": "53049.49528047453"
+      },
+      {
+        "obs_collection": "HST",
+        "facility_name": "HST",
+        "instrument_name": "STIS/CCD",
+        "obs_id": "o8w9kxfdq",
+        "dataproduct_type": "image",
+        "t_min": "53049.485511956016",
+        "t_max": "53049.49014158565"
+      },
+      {
+        "obs_collection": "HST",
+        "facility_name": "HST",
+        "instrument_name": "STIS/CCD",
+        "obs_id": "o8w9kxezq",
+        "dataproduct_type": "image",
+        "t_min": "53049.40441269676",
+        "t_max": "53049.40904232639"
+      },
+      {
+        "obs_collection": "HST",
+        "facility_name": "HST",
+        "instrument_name": "STIS/CCD",
+        "obs_id": "o8w9kxfcq",
+        "dataproduct_type": "image",
+        "t_min": "53049.48037306713",
+        "t_max": "53049.48500269676"
+      },
+      {
+        "obs_collection": "HST",
+        "facility_name": "HST",
+        "instrument_name": "STIS/CCD",
+        "obs_id": "o8w9kxfeq",
+        "dataproduct_type": "image",
+        "t_min": "53049.490650844906",
+        "t_max": "53049.49528047453"
+      },
+      {
+        "obs_collection": "HST",
+        "facility_name": "HST",
+        "instrument_name": "STIS/CCD",
+        "obs_id": "o8w9kxfbq",
+        "dataproduct_type": "image",
+        "t_min": "53049.475234178244",
+        "t_max": "53049.47986380787"
+      },
+      {
+        "obs_collection": "HST",
+        "facility_name": "HST",
+        "instrument_name": "STIS/CCD",
+        "obs_id": "o8w9kxezq",
+        "dataproduct_type": "image",
+        "t_min": "53049.40441269676",
+        "t_max": "53049.40904232639"
+      },
+      {
+        "obs_collection": "HST",
+        "facility_name": "HST",
+        "instrument_name": "STIS/CCD",
+        "obs_id": "o8w9kxfbq",
+        "dataproduct_type": "image",
+        "t_min": "53049.475234178244",
+        "t_max": "53049.47986380787"
+      },
+      {
+        "obs_collection": "HST",
+        "facility_name": "HST",
+        "instrument_name": "STIS/CCD",
+        "obs_id": "o8w9kxfdq",
+        "dataproduct_type": "image",
+        "t_min": "53049.485511956016",
+        "t_max": "53049.49014158565"
+      }
+    ],
+    "status": "ok"
+  },
+  {
+    "event": "2026-BLG-0670",
+    "product": "Euclid_EAS_footprint",
+    "url": "https://eas.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+30+obs_collection%2Cfacility_name%2Cinstrument_name%2Cobs_id%2Cdataproduct_type%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C268.473833333%2C-29.729805556%29%2Cs_region%29+AND+dataproduct_type%3D%27image%27",
+    "queried_utc": "2026-11-17T11:27:11+00:00",
+    "sha256": "448ee4bf1386374c76c3a2f4bf2eed0a95c1208abfb68e5f7f0cd0ba09bbd920",
+    "rows": [],
+    "status": "ok"
+  },
+  {
+    "event": "2026-BLG-0670",
+    "product": "ogle_bundle",
+    "url": "https://www.astrouw.edu.pl/ogle/ogle4/ews/2026/blg-0670.tar.gz",
+    "queried_utc": "2026-11-17T11:27:17+00:00",
+    "sha256": "87059d39fa9e223827c251a8331188d5c6e771533a9a197d5c498ebc2e7c892d",
+    "map_star_count": 5554,
+    "map_source_row": [
+      "139993",
+      "1635.60",
+      "1698.83",
+      "21.039",
+      "2.180",
+      "18.859",
+      "83",
+      "1",
+      "0.181",
+      "8392",
+      "17",
+      "0.100"
+    ],
+    "map_sha256": "6ecab0d7e0c5f28303e22cdb6e8873af528da095c997b75d46c47c8ed7c90465",
+    "status": "ok"
+  },
+  {
+    "event": "2026-BLG-0670",
+    "product": "virac_3arcsec",
+    "name": "0670virac",
+    "receipt": {
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F387%2Fvirac2&-c=268.473833333+-29.729805556&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CRAJ2000%2CDEJ2000%2CJmag%2CHmag%2CKsmag%2Ce_Ksmag%2Co_Ksmag%2CMedKsmag%2CSJKsmag%2CetaKs%2CKsEp1%2CKsEpl",
+      "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F387%2Fvirac2&-c=268.473833333+-29.729805556&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CRAJ2000%2CDEJ2000%2CJmag%2CHmag%2CKsmag%2Ce_Ksmag%2Co_Ksmag%2CMedKsmag%2CSJKsmag%2CetaKs%2CKsEp1%2CKsEpl",
+      "status": 200,
+      "utc": "Tue, 17 Nov 2026 11:28:01 GMT",
+      "size": 5006,
+      "sha256": "36549fbdfa028cd0f847d8712c9efa1d8cb38ea291cb1c128c8d4bf40d762ac8"
+    },
+    "rows": [
+      {
+        "_r": "0.256",
+        "srcid": "13607918019238",
+        "RAJ2000": "268.473753330738",
+        "DEJ2000": "-29.729789788746",
+        "Jmag": "17.4167",
+        "Hmag": "16.8136",
+        "Ksmag": "16.4140",
+        "e_Ksmag": "0.2370",
+        "o_Ksmag": "124",
+        "MedKsmag": "0.145134",
+        "SJKsmag": "0.4004",
+        "etaKs": "1.4950",
+        "KsEp1": "55439.14618681",
+        "KsEpl": "58359.01847767"
+      },
+      {
+        "_r": "1.233",
+        "srcid": "13607918012673",
+        "RAJ2000": "268.473444595439",
+        "DEJ2000": "-29.729747174653",
+        "Jmag": "16.4011",
+        "Hmag": "15.7606",
+        "Ksmag": "15.4896",
+        "e_Ksmag": "0.1211",
+        "o_Ksmag": "189",
+        "MedKsmag": "0.080750",
+        "SJKsmag": "0.2425",
+        "etaKs": "1.7869",
+        "KsEp1": "55439.14618681",
+        "KsEpl": "58362.00935411"
+      },
+      {
+        "_r": "1.811",
+        "srcid": "13607918017286",
+        "RAJ2000": "268.473985191419",
+        "DEJ2000": "-29.730290919730",
+        "Jmag": "16.7336",
+        "Hmag": "16.0953",
+        "Ksmag": "15.8786",
+        "e_Ksmag": "0.1595",
+        "o_Ksmag": "182",
+        "MedKsmag": "0.085311",
+        "SJKsmag": "0.6791",
+        "etaKs": "1.3858",
+        "KsEp1": "55439.14618681",
+        "KsEpl": "58362.00935411"
+      },
+      {
+        "_r": "2.050",
+        "srcid": "13607918012795",
+        "RAJ2000": "268.473180247886",
+        "DEJ2000": "-29.729753822750",
+        "Jmag": "17.6729",
+        "Hmag": "17.0876",
+        "Ksmag": "16.7302",
+        "e_Ksmag": "0.2398",
+        "o_Ksmag": "43",
+        "MedKsmag": "0.112936",
+        "SJKsmag": "-0.0475",
+        "etaKs": "1.2962",
+        "KsEp1": "55699.31925349",
+        "KsEpl": "58358.03712670"
+      },
+      {
+        "_r": "2.355",
+        "srcid": "13607918012691",
+        "RAJ2000": "268.474160392346",
+        "DEJ2000": "-29.729216389174",
+        "Jmag": "14.6913",
+        "Hmag": "13.9540",
+        "Ksmag": "13.7752",
+        "e_Ksmag": "0.0335",
+        "o_Ksmag": "192",
+        "MedKsmag": "0.018189",
+        "SJKsmag": "0.3175",
+        "etaKs": "1.6981",
+        "KsEp1": "55439.14618681",
+        "KsEpl": "58362.00935411"
+      },
+      {
+        "_r": "2.467",
+        "srcid": "13607918012170",
+        "RAJ2000": "268.473317402060",
+        "DEJ2000": "-29.730324110530",
+        "Jmag": "15.8571",
+        "Hmag": "15.1142",
+        "Ksmag": "14.8563",
+        "e_Ksmag": "0.0950",
+        "o_Ksmag": "192",
+        "MedKsmag": "0.033845",
+        "SJKsmag": "0.0970",
+        "etaKs": "1.8217",
+        "KsEp1": "55439.14618681",
+        "KsEpl": "58362.00935411"
+      },
+      {
+        "_r": "2.518",
+        "srcid": "13607918011757",
+        "RAJ2000": "268.473083238142",
+        "DEJ2000": "-29.730060103522",
+        "Jmag": "16.6863",
+        "Hmag": "16.1797",
+        "Ksmag": "16.0326",
+        "e_Ksmag": "0.1302",
+        "o_Ksmag": "174",
+        "MedKsmag": "0.089057",
+        "SJKsmag": "0.3369",
+        "etaKs": "1.6026",
+        "KsEp1": "55439.14618681",
+        "KsEpl": "58362.00935411"
+      },
+      {
+        "_r": "2.766",
+        "srcid": "13607918017434",
+        "RAJ2000": "268.473575071722",
+        "DEJ2000": "-29.730540477965",
+        "Jmag": "17.1097",
+        "Hmag": "16.5266",
+        "Ksmag": "16.5166",
+        "e_Ksmag": "0.1396",
+        "o_Ksmag": "123",
+        "MedKsmag": "0.079256",
+        "SJKsmag": "-0.0413",
+        "etaKs": "1.8312",
+        "KsEp1": "55444.14246422",
+        "KsEpl": "58362.00935411"
+      }
+    ]
+  }
+]
