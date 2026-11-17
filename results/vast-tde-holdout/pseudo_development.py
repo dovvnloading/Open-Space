@@ -31,6 +31,8 @@ def run(pseudo_path,parquet,images,out):
     held=[r for r in rows if r['image_id'] in testids and r['source'] in allowed]
     fake={'sources':{str(pseudo):{'development':train,'holdout':test}}}
     result=develop(pseudo,fake,training,candidate_controls)
+    frozen_ids=set(result['control_baselines'])|{pseudo}
+    held=[r for r in held if r['source'] in frozen_ids]
     values={}
     for injection in (0.,.5,1.,2.):
      amended=[dict(r,flux_peak=float(r['flux_peak'])+injection) if r['source']==pseudo else r for r in held]
