@@ -1,4 +1,5 @@
 """Freeze program 8142 mosaics and the two F2550W standards reused from PR 142."""
+
 import argparse
 import hashlib
 import json
@@ -40,19 +41,28 @@ def main(cache, freeze):
         for condition in request["params"]["filters"]:
             if condition["paramName"] == "proposal_id":
                 condition["values"] = ["8142"]
-        url = "https://mast.stsci.edu/api/v0/invoke?" + urlencode({"request": json.dumps(request)})
+        url = "https://mast.stsci.edu/api/v0/invoke?" + urlencode(
+            {"request": json.dumps(request)}
+        )
         with urlopen(url, timeout=120) as response:
             raw = response.read()
         result = json.loads(raw)
         if result["status"] != "COMPLETE" or len(result["data"]) >= request["pagesize"]:
             raise ValueError("Incomplete CAOM response")
         (HERE / "receipts/caom.json").write_bytes(raw)
-        receipt = dict(url=url, rows=len(result["data"]), sha256=sha(raw),
-                       retrieved_utc=datetime.now(timezone.utc).isoformat())
+        receipt = dict(
+            url=url,
+            rows=len(result["data"]),
+            sha256=sha(raw),
+            retrieved_utc=datetime.now(timezone.utc).isoformat(),
+        )
         (HERE / "receipts/query.json").write_text(json.dumps(receipt, indent=2) + "\n")
         science = []
         for row in result["data"]:
-            if row["target_name"].upper().replace("-", "").replace(" ", "") != "HD53143":
+            if (
+                row["target_name"].upper().replace("-", "").replace(" ", "")
+                != "HD53143"
+            ):
                 continue
             if row["filters"] != "F2550W" or not row["dataURL"].endswith("_i2d.fits"):
                 continue
@@ -61,11 +71,18 @@ def main(cache, freeze):
             role = "combined" if "-c" in name else "roll"
             science.append(dict(row, filename=name, url=url, role=role))
         if sorted(row["role"] for row in science) != ["combined", "roll", "roll"]:
-            raise ValueError(f"Expected two rolls and their combined mosaic, found {len(science)}")
-        standards = [dict(r, role="standard") for r in json.loads((PREVIOUS / "inputs.json").read_text())
-                     if r["target_name"] == "BD+60-1753" and r["filters"] == "F2550W"]
+            raise ValueError(
+                f"Expected two rolls and their combined mosaic, found {len(science)}"
+            )
+        standards = [
+            dict(r, role="standard")
+            for r in json.loads((PREVIOUS / "inputs.json").read_text())
+            if r["target_name"] == "BD+60-1753" and r["filters"] == "F2550W"
+        ]
         assert len(standards) == 2
-        inputs = sorted(science, key=lambda r: r["t_min"]) + sorted(standards, key=lambda r: r["t_min"])
+        inputs = sorted(science, key=lambda r: r["t_min"]) + sorted(
+            standards, key=lambda r: r["t_min"]
+        )
     else:
         inputs = json.loads(manifest.read_text())
     with ThreadPoolExecutor(max_workers=4) as pool:
