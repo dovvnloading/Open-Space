@@ -5,6 +5,7 @@ import gzip
 import io
 import hashlib
 import json
+from time import sleep
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from urllib.parse import urlencode
@@ -26,35 +27,127 @@ def tsv(raw):
     return [{k:v.strip() for k,v in r.items()} for r in csv.DictReader([lines[0],*lines[3:]],delimiter="\t")]
 def fetch(url,path):
     receipt=path.with_suffix(".receipt")
-    if path.exists() and receipt.exists():return gzip.decompress(path.read_bytes()),json.loads(receipt.read_text())
-    meta=dict(url=url,retrieved_utc=datetime.now(timezone.utc).isoformat())
-    try:
-        with urlopen(url,timeout=90) as f: raw=f.read();meta.update(http=f.status)
-        if b'QUERY_STATUS" value="ERROR"' in raw or b'#INFO\tError' in raw or raw.lstrip().startswith(b'<'): raise ValueError("service error/non-tabular response")
-        meta.update(sha256=hashlib.sha256(raw).hexdigest(),bytes=len(raw));path.write_bytes(gzip.compress(raw,mtime=0))
-    except Exception as exc:raw=b"";meta.update(error=str(exc))
-    receipt.write_text(json.dumps(meta)+"\n");return raw,meta
-def get_events(short,extended):
+    if path.exists() and receipt.exists():
+        meta=json.loads(receipt.read_text())
+        raw=gzip.decompress(path.read_bytes())
+        if meta.get("url")==url and hashlib.sha256(raw).hexdigest()==meta.get("sha256"):
+            return raw,meta
+    meta=dict(url=url,retrieved_utc=datetime.now(timezone.utc).isoformat(),failed_attempts=[])
+    raw=b""
+    attempts=6 if url.startswith(VIZ) else 3
+    for attempt in range(attempts):
+        # A failed response can remain cached at this VizieR mirror. Sorting
+        # requests the same rows with an explicit order on a retry.
+        route=url
+        if attempt and url.startswith(VIZ):
+            sort_key="TimeG" if "epphot" in url else "_r"
+            route=url+"&"+urlencode({"-sort":sort_key})
+            if attempt==2:
+                route+="&-oc.form=d"
+            if attempt==3:
+                route=url+"&-c.eq=J2000"
+            if attempt==4:
+                route=url+"&-out.all=1"
+            if attempt==5:
+                route=url+"&-oc.form=dec"
+        try:
+            with urlopen(route,timeout=65) as response:
+                raw=response.read()
+                meta["http"]=response.status
+            if not raw or b'QUERY_STATUS" value="ERROR"' in raw or b'#INFO\tError' in raw or raw.lstrip().startswith(b'<'):
+                raise ValueError("service error or non-tabular response")
+            meta.update(response_url=route,sha256=hashlib.sha256(raw).hexdigest(),bytes=len(raw))
+            path.write_bytes(gzip.compress(raw,mtime=0))
+            break
+        except (ValueError,OSError) as exc:
+            meta["failed_attempts"].append(dict(url=route,message=str(exc),bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest()))
+            raw=b""
+            if attempt+1<attempts:
+                sleep(1+attempt)
+            else:
+                meta["error"]=str(exc)
+    receipt.write_text(json.dumps(meta)+"\n")
+    return raw,meta
+
+
+def records(path):
+    paths=sorted(path.glob("*.json")) if path.is_dir() else [path]
+    for file in paths:
+        opener=gzip.open if file.suffix==".gz" else open
+        with opener(file,"rt") as stream:
+            data=json.load(stream)
+        yield from data if isinstance(data,list) else [data]
+
+
+def historical_events(path):
+    for row in records(path):
+        for e in row['image_checks']:
+            if e['diagnostic'] in ('individual trigger','periodic trigger'):
+                yield str(row['tic']), dict(product=f"tic{row['tic']}-s{row['sector']}.npz",
+                    kind='periodic' if e.get('period_days') else 'isolated',survey='historical_ffi',
+                    epoch_btjd=e['epoch_btjd'],period_days=e.get('period_days'),duration_min=e['duration_min'])
+
+
+def get_events(short,extended,historical=None,recent=None):
     by={}
-    for group,path in (("spoc",short),("ffi",extended)):
-        for f in path.glob("*.json"):
-            a=json.loads(f.read_text());v=a if group=="spoc" else a.get("search",{})
+    for path in short:
+        for a in records(path):
             for kind in ("periodic","isolated"):
-                for ev in v.get(kind,[]):
-                    by.setdefault(str(a["tic"]),[]).append(dict(product=a.get("filename",a.get("lc_file")),kind=kind,survey=group,**ev))
+                for ev in a.get("search",a).get(kind,[]):
+                    by.setdefault(str(a["tic"]),[]).append(dict(product=a["filename"],kind=kind,survey="spoc",**ev))
+    for a in records(extended):
+        for kind in ("periodic","isolated"):
+            for ev in a.get("search",{}).get(kind,[]):
+                by.setdefault(str(a["tic"]),[]).append(dict(product=a["lc_file"],kind=kind,survey="ffi",**ev))
+    if historical:
+        for tic,event in historical_events(historical):
+            by.setdefault(tic,[]).append(event)
+    if recent:
+        for a in records(recent):
+            for kind in ("periodic","isolated"):
+                for e in a['search'][kind]:
+                    by.setdefault(a['tic'],[]).append(dict(e,kind=kind,survey='raw_ffi',product=a['frames_sha256']))
     return by
 def visit_epochs(row,cache,queries):
-    source=row["gaia"];tic=row["tic"]
-    ra,dec,ra0,dec0=map(float,(row["ra_2016"],row["dec_2016"],row["ra_2000"],row["dec_2000"]))
+    tic=row["tic"]
     valid={}
     for tag,url in queries.items():
-        raw,rec=fetch(url,cache/(tic+"-"+tag+".gz"));valid[tag]=(raw,rec)
+        path=cache/(tic+"-"+tag+".gz")
+        previous=path.with_suffix(".receipt")
+        failed=json.loads(previous.read_text()) if previous.exists() else {}
+        if tag=="ztf" and failed.get("error"):
+            raw,rec=b"",failed
+        else:
+            raw,rec=fetch(url,path)
+        if tag=="ztf" and rec.get("error"):
+            # The DR24 observations fit within 2017–2027. This smaller cone
+            # still includes the 2 arcsec association circle at every epoch.
+            ra,dec,ra0,dec0=(float(row[k]) for k in ("ra_2016","dec_2016","ra_2000","dec_2000"))
+            speed=np.hypot(((ra-ra0+180)%360-180)*np.cos(np.radians(dec)),dec-dec0)/16
+            radius=min(.006,11*speed+2.5/3600)
+            subset=url.replace("+0.006&",f"+{radius:.8f}&")
+            raw,part=fetch(subset,cache/(tic+"-ztf-subset.gz"))
+            if raw:
+                rec=dict(part,original_query=rec,cache_name=tic+"-ztf-subset.gz")
+        valid[tag]=(raw,rec)
+    return parse_epochs(row,valid)
+
+
+def parse_epochs(row,valid):
+    ra,dec,ra0,dec0=map(float,(row["ra_2016"],row["dec_2016"],row["ra_2000"],row["dec_2000"]))
     zraw=valid["ztf"][0]
-    zrows=list(csv.DictReader(io.StringIO(zraw.decode()))) if zraw else []
+    if zraw:
+        reader=csv.DictReader(io.StringIO(zraw.decode()))
+        if not {"oid","mjd","mag","magerr","ra","dec","catflags","exptime"}.issubset(reader.fieldnames or []):
+            raise ValueError("Unexpected ZTF response schema for "+row["tic"])
+        zrows=list(reader)
+    else:
+        zrows=[]
     zsel=[]
     for r in zrows:
         year=2000+(float(r['mjd'])-51544.5)/365.25
-        dist=3600*np.hypot((((float(r['ra'])-ra-(ra-ra0)*(year-2016)/16)+180)%360-180)*np.cos(np.radians(dec)),float(r['dec'])-dec-(dec-dec0)*(year-2016)/16)
+        dra=(ra-ra0+180)%360-180
+        dist=3600*np.hypot((((float(r['ra'])-ra-dra*(year-2016)/16)+180)%360-180)*np.cos(np.radians(dec)),float(r['dec'])-dec-(dec-dec0)*(year-2016)/16)
         if int(r["catflags"])==0 and dist<=2 and float(r["magerr"])>0:zsel.append(r)
     epochs={}
     if zsel:
@@ -115,6 +208,10 @@ def check(item,cache,out,known):
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     for name in ("matches","short","extension","cache","out"):p.add_argument(name,type=Path)
+    p.add_argument("--extra-short",action="append",type=Path,default=[])
+    p.add_argument("--historical",type=Path)
+    p.add_argument("--recent",type=Path)
+    p.add_argument("--tic",action="append",help="Refresh only these TICs in an existing output directory")
     a=p.parse_args();a.cache.mkdir(exist_ok=True,parents=True);a.out.mkdir(exist_ok=True,parents=True)
     url="https://janvanroestel.github.io/WD-transitingdebris-alerts/"
     path=a.cache/"debris.html"
@@ -123,6 +220,6 @@ if __name__=="__main__":
     centers=SkyCoord([v["ra_sex"] for v in entries],[v["dec_sex"] for v in entries],unit=(u.hourangle,u.deg))
     known=([v["name"] for v in entries],centers)
     (a.out/"debris_list.json").write_text(json.dumps(dict(url=url,sha256=hashlib.sha256(path.read_bytes()).hexdigest(),sources=[{k:v[k] for k in ("name","ra_sex","dec_sex","group")} for v in entries]),indent=1)+"\n")
-    by=get_events(a.short,a.extension)
-    jobs=[(r,by[r["tic"]]) for r in csv.DictReader(a.matches.open()) if r["tic"] in by]
+    by=get_events([a.short,*a.extra_short],a.extension,a.historical,a.recent)
+    jobs=[(r,by[r["tic"]]) for r in csv.DictReader(a.matches.open()) if r["tic"] in by and (not a.tic or r["tic"] in a.tic)]
     with ThreadPoolExecutor(6) as ex:list(ex.map(lambda item:check(item,a.cache,a.out,known),jobs))

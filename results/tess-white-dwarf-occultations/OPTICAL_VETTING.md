@@ -1,0 +1,25 @@
+# Optical follow-up yielded no independent confirmation
+
+The ledger covers 37 stars and preserves every TESS trigger with its own product, epoch, duration and trial period. Period aliases and overlapping boxes stay in the record. For each host, searches included SIMBAD, the NASA Exoplanet Archive planet and TOI tables, the TESS eclipsing-binary catalogue, VSX, ATLAS-VAR, Gaia DR3 epoch photometry and ZTF DR24. The closest entry in the archived transiting-debris monitoring list lies 5.25 degrees from a trigger host. Catalogue membership alone cannot establish or exclude an unresolved WD + M-dwarf binary. The separate RR Cae and TIC 60040774 controls test recovery of real WD + M-dwarf eclipses. [Query strings, hashes, matches and folds](vetting/catalogue_checks.json.gz) · [Debris list snapshot](vetting/known_debris.json) · [Control measurements](controls/README.md)
+
+The NASA archive returned the directly imaged companion WD 0806−661 b for the field of TIC 306826966. Its projected separation is about 2,500 au. The isolated full-frame triggers supply no ephemeris linking them to this companion. SIMBAD returned proposed planet names near WD 1202−232 and WD 2105−82. Second-epoch JWST imaging found that the two resolved candidate sources lacked the white dwarfs’ proper motion. WD 2105−82 also has an unresolved infrared excess. These catalogue associations provide no independent timing confirmation. [WD 0806−661 discovery](https://arxiv.org/abs/1102.5411) · [MIRI second-epoch imaging](https://arxiv.org/abs/2512.08191)
+
+The 37 fields contained no listed TESS eclipsing-binary match and no TOI match in the frozen queries. VSX returned objects in 15 fields, and ATLAS-VAR returned objects in two. Field matches include neighbours. The four initial ZTF query timeouts on TICs 357686299, 408000326, 446165080 and 55997020 are recorded as missing photometry. The current matched-epoch file contains 23,365 ZTF measurements on 20 hosts and Gaia G data on 12 hosts. [All responses and per-event coverage](vetting/catalogue_checks.json.gz)
+
+## Epoch tests
+
+For TIC 91529455, two Gaia G measurements fall in the extrapolated 2.364306-day windows and give a deficit of 0.08% with a formal standard error of 0.53%. The 12 ATLAS exposures in these windows span three nights and give a median deficit of 0.072%. For TIC 220578510, the 0.966602-day fold gives a 0.048% ATLAS deficit in 23 measurements on five nights. One longer-period alias gives 5.14% on just one night across all nine tested aliases on that star. Period uncertainties grow when extrapolating a single sector over years. Neither star is removed from the occurrence numerator. [Independent ATLAS image photometry](ATLAS_EPOCHS.md) · [Gaia and ZTF epochs used in the folds](vetting/optical_epochs.json.gz)
+
+The four-site ATLAS search compared actual shutter-open and shutter-close timestamps to all 252 isolated TESS boxes. No exposure overlapped one. The nearest available shutter missed a box by 33.5 minutes. ATLAS-VAR additionally identifies field variables. Its object table does not provide simultaneous epochs. [ATLAS query receipts and timing margins](ATLAS_WINDOWS.md)
+
+ZTF matches require a good catalogue flag, positive magnitude error and agreement within 2 arcseconds with the WD’s Gaia proper-motion track at the measurement epoch. IRSA light-curve API start-of-exposure MJD is converted to the midpoint, then to BJD TDB at Palomar. Gaia uses the DR3 source identifier and band rejection flags, with published barycentric TCB timestamps converted to TDB. The fold compares in-window and out-of-window flux within an object/filter group. The weights include the measured out-of-window scatter. Formal standard errors omit period drift and correlated noise. All event windows and zero-coverage results are retained. [IRSA timestamp definition](https://irsa.ipac.caltech.edu/onlinehelp/irsaviewer/irsaviewer/overviewTSV.html) · [Gaia DR3 epoch photometry](https://gea.esac.esa.int/archive/documentation/GDR3/Gaia_archive/chap_datamodel/sec_dm_photometry/ssec_dm_epoch_photometry.html)
+
+## Replay
+
+Run from the survey directory. The first command uses the committed TESS ledgers. For a complete repackage, populate the fast and rosterpixels working directories with the commands in the short-cadence record. The last command audits the committed products directly, reconciles every original trigger and recomputes the optical phase-window counts. [Short-cadence reproduction](SHORT_CADENCE.md)
+
+```bash
+python catalog_check.py tic_match.csv short_cadence/pixel_search.json extension/extension_measurements.json work/catalog_cache work/catalog --extra-short short_cadence/roster_screen.json.gz --historical record/historical_images.json --recent sector110/tic55997020/search.json
+python archive_followup.py --pack work
+python archive_followup.py
+```
