@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 190 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 16 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 192 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 18 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -160,11 +160,14 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Stars, binaries and multiple-star systems
 
+- **No new unexplained deep dimmers in a TESS sector.** A search of 384 stars in Sector 105 (June–July 2026) found no validated irregular eclipses. A striking dimming toward TIC 316937197 repeats every 18.767 days, but which star in the close blend eclipses remains unknown. Recovery tests found 56% of 2%-deep, 12-hour dips; this single-sector search weakly constrains rare, multi-day events. *Null result* · [Details](results/tess-asymmetric-dips/README.md)
+
 - **Gaia and LAMOST confirm a long binary orbit, not a dark companion.** Eighteen nights of independent spectra follow HD 264291 through its 1,007-day orbit. The inferred companion is 1.77 solar masses only under a no-companion-light model; two normal dwarfs are still possible. Another giant's inferred minimum crosses three solar masses when its stellar mass model changes. Neither case is an identified black hole or neutron star. *Measured* · [Data and limits](results/gaia-nss-dark-companions/README.md)
 
 - **A high-speed star may escape the Milky Way.** DESI DR1 and Gaia DR3 give source 1717410430709663616 a Galactocentric speed of 697 km/s. All 4,096 draws escape in two reference Galactic potentials but remain bound in a heavier halo. The DESI velocity has only one epoch (binary motion untested), the modeled trajectory crosses the disk, but its origin remains open, and discovery priority remains open. *Candidate* · [Details](results/dr1-dr19-unbound-stars/README.md)
 
 - **No verified laser-like emission in a targeted DESI DR1 stellar search.** All 10 persistent narrow residuals in 190 audited repeat-observed stars match the stellar Li I doublet; five independent-field stars reproduced a template false positive on separate nights. Per-star conditional laser-power limits are provided. This does not constrain unsearched fields or intermittent emitters. *Null result* · [Details](results/desi_dr1_optical_seti/README.md)
+- **No verified stellar waste heat in a small infrared sky survey.** SPHEREx and WISE found no qualifying excess around 404 nearby stars across 12.6 square degrees; published candidates remain affected by dusty galaxies, blends or unresolved mid-infrared emission. SPHEREx recovered none of the injected 100 K or 300 K excesses at 1% of stellar luminosity in its controls, so this is a limited null, not a Galaxy-wide constraint. *Null result* · [Details](results/spherex-waste-heat/README.md)
 
 **Eclipsing binaries and star systems**
 
@@ -343,9 +346,11 @@ The [DR20 AGN pilot methods and calibration checks](results/dr20-clagn-pilot/REA
 
 The [cold-neighbour search methods and reproduction evidence](results/cold-neighbours-motion-selected/README.md) document bounded catalogue and image tests.
 
+- [SPHEREx stellar infrared screen and reproduction evidence](results/spherex-waste-heat/README.md)
 - [Euclid DR1 repeat-visit development screen and failure-mode evidence](results/euclid-foundation-eligibility/README.md)
 - [XRISM count-comparison methods and offline replay](results/xrism-ngc7172/README.md), documenting the calibration limits of the observed-count test.
 - [IXPE Mrk 501 conditional repeatability methods and evidence](results/ixpe-mrk501-repeat/README.md).
+- [SO/PHI-FDT magnetic-proxy persistence screen and evidence](results/solar-phi-fdt-pilot/README.md).
 - [VAST TDE-candidate conditional repeatability and offline replay](results/vast-tde-repeatability/README.md).
 
 ### Run the survey workers

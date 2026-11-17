@@ -1,0 +1,36 @@
+{
+  "authorized": true,
+  "authorized_utc": "2026-11-17T05:58:39.827682+00:00",
+  "authorized_by": "root orchestrator under active user research instruction",
+  "phase": "development only",
+  "code_sha": "24ec48d083e4214d5e2cb3eb5c17eaf3ccf169b2",
+  "packet_sha256": "4827108044a5c777728cd85c455be20eaf7610f866059f384279c40b9404138b",
+  "run_id": "phi_fdt_dev_24ec48d_rootreview_20261117",
+  "allowed_primary_science_arrays": [
+    "solo_L2_phi-fdt-blos_20260813T102509_V03_0648130504.fits",
+    "solo_L2_phi-fdt-blos_20260813T162509_V03_0648130506.fits"
+  ],
+  "holdout_science_authorized": false,
+  "operating_mode": "conditional standard-L2 development screen; quality limited",
+  "review_evidence": {
+    "packet_files_equal_git_blobs": 15,
+    "synthetic_tests": "root reran test_geometry.py, test_development.py and test_pipeline.py successfully before observed pixels",
+    "manual_ray_sphere_geometry": "100 header-derived points; max discrepancy 0.00154m, mu error <1.7e-13",
+    "metadata_review_sha256": "df14d81d4727ec1a2226246fcf0332e296f84ac9ac57069970bc2d18d0a1a888",
+    "quality_memo_sha256": "2ece5b72085205b0642245e1a90d7be61066d9c2392cf1936d8f0c8f81ddb1dc"
+  },
+  "limitations": [
+    "ACCSTAT2=64 semantics unresolved; finite values are not inversion quality certification",
+    "instrument team flags ring-like pattern and stripes in Bmag for late development scan; B_LOS derived from Bmag and inclination may inherit artifact",
+    "all four maps are onboard averages of three scans per instrument team notes, not twelve independent observing units",
+    "local real-solar control MAD plus 1G floor is a screening scale, not physical noise calibration or global false-alarm probability",
+    "radial proxy B_LOS/mu depends on radial-field approximation, changing geometry, resolution and inversion",
+    "no new discovery, alarming event, magnetic flux emergence or physical change significance can follow from development selection alone"
+  ],
+  "instructions": [
+    "Execute only exact frozen packet, all input hashes checked before arrays; retain all25patchdispositions",
+    "No candidate replacement/backfill after gate; no holdout arrays or thumbnails may be opened under this authorization",
+    "Freeze full numerical prediction and digest if gate admits a candidate, then await independent root review and separate holdout authorization",
+    "Retain no-candidate/inconclusive outcome as valid completed measurement"
+  ]
+}
