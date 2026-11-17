@@ -29,8 +29,9 @@ jobs:
       - name: Fetch public AllWISE, CatWISE, unWISE and final-year NEOWISE
         working-directory: results/spherex-waste-heat
         run: |
-          python wise/fetch.py --workers 5
-          python wise/measure.py
+          python wise/fetch.py --workers 5 --output wise/archive
+          python wise/measure.py --archive wise/archive --output wise/generated
+          cp wise/generated/*.csv wise/generated/queries.json wise/
       - name: Preserve inputs, measured visits and selection counts
         working-directory: results/spherex-waste-heat
         run: |

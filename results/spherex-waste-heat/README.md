@@ -42,4 +42,3 @@ python results/spherex-waste-heat/wise/measure.py --archive D:/Open-Space/campai
 ```
 
 The NEOWISE single-exposure request is restricted to MJD 60291–60524; it is not a full 2010–2024 motion baseline.
-
