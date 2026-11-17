@@ -40,7 +40,7 @@ def main():
         all_catalogs.append((name,hashlib.sha256(buf).hexdigest(),source))
     catalog_output=[]
     jobs=[]
-    for event in EVENTS:
+    for event in EVENTS+['KMT-2024-BLG-1762','KMT-2025-BLG-1797','KMT-2025-BLG-2489','KMT-2024-BLG-1152','KMT-2024-BLG-3413']:
         row=catalog(event)
         ra,dec=angle(row['RA'],True),angle(row['Dec'])
         matches=[]

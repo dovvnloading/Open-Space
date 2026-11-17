@@ -66,3 +66,15 @@ The [injection experiment](tables/injection-summary.csv) uses the lowest 24 dete
 A measured Einstein radius needs both the lensed source's angular radius and ρ. For a finite source, θE = θ★/ρ and μrel = θE/tE. Mass also depends on lens distance through θE² = κ M πrel, unless parallax or another mass constraint is measured. The [conditional source hypotheses](kmt/extended/angular.json) propagate candidate IR source identity, extinction and the surface-brightness relation. The [mass sensitivity table](tables/conditional-source-masses.csv) gives conditional 16th, 50th and 84th mass percentiles separately for each assigned star and each geometric model. These rows use fixed angular size and timescale within a case, two slopes for dN/dlogM (0 and −0.96), and a mass range of 0.0001–1,000,000 Earth masses.
 
 The Galactic calculation assumes bar sources at 5–12 kpc and disk/bar lenses from 0.15 kpc up to the source. It uses the repository's disk/bar density and kinematics, corrects to the geocentric frame, and weights by microlensing event rate. At fixed θE and tE, the integration samples direction at the required proper-motion magnitude in the two-dimensional velocity density. It remains numerically stable for very slow projected motions. This calculation assigns no probability to the star identification, the single-lens hypothesis, a stellar host, or free-floating status. The [published-event validation](controls/conditional-masses.json) propagates reported measurement errors and uses its stated 0.03–3,300 Earth-mass prior range.
+
+## Resolved companion limits in Euclid VIS images
+
+[image_contrast.py](image_contrast.py) uses the nearest reproducible optical peak as a hypothetical source for 0456 and 3278. For each exposure we extract the inner 3.3 pixels of its measured light profile, subtract a local annular background, register its positive core and inject flux-scaled copies at 24 fixed sky angles. The source must be independently redetected with an unmasked core in the exposure. We reuse the original frame’s smoothed background and six-MAD detection threshold. An injected companion must create a new local maximum within 1.5 pixels of the input position in at least three of six qualifying exposures. Pre-existing maxima and masked cores count as failed trials for an *additional* companion at that location. The [conditional contrast table](tables/conditional-image-contrast.csv) reports the fraction of tested angles at each separation and magnitude difference. The result uses a truncated empirical profile and interpolation, assumes the designated peak is the source, and does not convert VIS contrast to host mass, physical separation or lens association. [Frame selection](tables/image-contrast-frames.json) · [Euclid data and image measurements](other/README.md)
+
+To replay the large-source footprints and image limits after the survey-specific image steps in the linked reports, run the following commands.
+
+```sh
+python "$r/archives.py" KMT-2024-BLG-0824 KMT-2024-BLG-3278 OGLE-2026-BLG-0670 --out "$r/large-source-archive-queries.json"
+python "$r/large_source_images.py"
+python "$r/image_contrast.py"
+```
