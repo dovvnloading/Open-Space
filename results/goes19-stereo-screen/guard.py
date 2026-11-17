@@ -22,3 +22,10 @@ def predict_ray(observer,point,height):
     t=-dot-math.sqrt(disc)
     if t<=0: raise ValueError('shell behind observer')
     return tuple(a+t*b for a,b in zip(observer,d))
+
+
+def decode_packed_time(raw, scale, offset):
+    """Synthetic scalar equivalent for signed int16 storing unsigned NetCDF values."""
+    import math
+    if not isinstance(raw,int) or not -32768<=raw<=32767 or not math.isfinite(scale) or scale<=0 or not math.isfinite(offset): raise ValueError('invalid packed time')
+    return (raw % 65536)*scale+offset

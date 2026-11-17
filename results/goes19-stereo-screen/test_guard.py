@@ -1,5 +1,5 @@
 import unittest,math
-from guard import gate,predict_ray
+from guard import gate,predict_ray,decode_packed_time
 class Tests(unittest.TestCase):
  def test_phase_seal(self):
   for sat in (18,19):
@@ -8,6 +8,10 @@ class Tests(unittest.TestCase):
   self.assertEqual(gate('synthetic',19,[0,10,20,30,119.9],[0,1,3,5,0]),[0,119.9])
   for t,q in [([120],[0]),([2,1],[0,0]),([1],[2])]:
    with self.assertRaises(ValueError): gate('synthetic',19,t,q)
+ def test_unsigned_packed_time(self):
+  self.assertAlmostEqual(decode_packed_time(-1,0.00038148,-5),65535*0.00038148-5)
+  with self.assertRaises(ValueError): decode_packed_time(-32769,0.00038148,-5)
+  with self.assertRaises(ValueError): decode_packed_time(1,float('nan'),-5)
  def test_shell_geometry(self):
   for height in (60.,80.,100.):
    point=predict_ray((42164.,0.,0.),(6371.,0.,0.),height)
