@@ -63,3 +63,5 @@ done
 ```
 
 [Cutout and original data hashes](cutouts.csv) · [Native FITS byte receipts](cutout_ranges.csv) · [Ephemeris sources](horizons_sources.csv) · [F2100W support and thresholds](F2100W_radii.csv) · [F2550W support and thresholds](F2550W_radii.csv) · [F2100W depth and intervals](F2100W_plants/depth.json) · [F2550W depth and intervals](F2550W_plants/depth.json)
+
+The scan receipts bind the historical `scan_sources/prepare.py` and `scan_sources/broad_scan.py` bytes used for the recorded MIRI scans. The parent-directory scripts were subsequently extended for other observations; rerunning them is a separate reproduction check.
