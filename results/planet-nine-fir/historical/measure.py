@@ -19,7 +19,9 @@ ROOT = Path(__file__).resolve().parent
 IRAS = SkyCoord(35.74075, -48.5125, unit="deg")
 AKARI = SkyCoord(35.18379, -49.2135, unit="deg")
 CONTROL = SkyCoord(34.05346, -49.45566, unit="deg")  # AKARI BSC J0216128-492720
-TARGETS = {"IRAS endpoint": IRAS, "AKARI endpoint": AKARI, "stationary control": CONTROL}
+GALAXY = SkyCoord(35.7544007, -48.5112676, unit="deg")
+TARGETS = {"IRAS endpoint": IRAS, "AKARI endpoint": AKARI,
+           "stationary control": CONTROL, "nearby W4 galaxy": GALAXY}
 
 
 def load_inputs(cache):

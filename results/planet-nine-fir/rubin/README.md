@@ -1,0 +1,5 @@
+# Rubin public alerts
+
+The ALeRCE public TAP tables returned zero Rubin-associated object rows and zero associated detections in the Phan screening rectangle (RA 34.64–35.43°, Dec −49.96 to −49.22°). The join selects alerts associated with object centroids inside the rectangle. A positive control from the repository returned an object with 95 detections and a last observation on MJD 61359.23. The Fink cone query returned an empty payload, which is recorded without interpreting it as a flux limit. The alert tables are selected by the upstream difference-imaging pipeline. Detector pixels, masked area and injection completeness were not measured. The full-frame excluded fraction is unknown. [Prior ALeRCE retrieval](../../rubin-alerce-2026/rapid/retrieve.py) · [Rubin prompt-product access](https://prompt-products.lsst.io/access/index.html) · [Field queries and actual responses](receipts.json)
+
+Run query.py DEST and control.py DEST from this directory. The control ID was selected before examining field responses from a frozen table in the existing Rubin campaign. The queries and result hashes are dated; live broker contents can change.

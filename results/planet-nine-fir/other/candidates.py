@@ -7,7 +7,12 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'orbits'))
-from propagate import earth, epoch, unit, norm, MU, OBLIQUITY, kepler, ray
+from propagate import observers, epoch, unit, norm, OBLIQUITY, ray
+
+MU = 0.0002959122082855911  # solar GM in au^3/day^2
+
+def earth(t):
+    return observers(t)[0]
 
 def radec(v):
     v = np.atleast_2d(v)

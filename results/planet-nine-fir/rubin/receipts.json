@@ -1,0 +1,47 @@
+[
+  {
+    "name": "alerts",
+    "url": "https://tap.alerce.online/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=100000&QUERY=SELECT+TOP+100000+d.oid%2Cd.measurement_id%2Cd.mjd%2Cd.ra%2Cd.dec%2Cd.band+FROM+alerce_tap.detection+AS+d+JOIN+alerce_tap.object+AS+o+ON+d.sid%3Do.sid+AND+d.oid%3Do.oid+WHERE+o.sid%3D1+AND+o.meanra+BETWEEN+34.64+AND+35.43+AND+o.meandec+BETWEEN+-49.96+AND+-49.22+AND+d.mjd+BETWEEN+60900+AND+61362",
+    "utc": "2026-11-17T07:55:47.615490+00:00",
+    "status": 200,
+    "sha256": "8a710aeadc3e03b837041a91ff7d2620b3147104e60cb132a2188b69138d5e8e",
+    "bytes": 36,
+    "response": "oid,measurement_id,mjd,ra,dec,band\n"
+  },
+  {
+    "name": "fink",
+    "url": "https://api.lsst.fink-portal.org/api/v1/conesearch?ra=35.045&dec=-49.62&radius=1700&columns=r%3AdiaObjectId%2Cr%3AmidpointMjdTai%2Cr%3Ara%2Cr%3Adec%2Cr%3ApsfFlux%2Cr%3ApsfFluxErr&output-format=csv",
+    "utc": "2026-11-17T07:55:47.616033+00:00",
+    "status": 200,
+    "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "bytes": 1,
+    "response": "\n"
+  },
+  {
+    "name": "objects",
+    "url": "https://tap.alerce.online/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=100000&QUERY=SELECT+TOP+30000+o.oid%2Co.n_det%2Co.meanra%2Co.meandec%2Co.firstmjd%2Co.lastmjd+FROM+alerce_tap.object+AS+o+WHERE+o.sid%3D1+AND+o.meanra+BETWEEN+34.64+AND+35.43+AND+o.meandec+BETWEEN+-49.96+AND+-49.22",
+    "utc": "2026-11-17T07:55:47.614367+00:00",
+    "status": 200,
+    "sha256": "dbe748ded7cc9d8009e0796b00311c4378a2d35fcb26871ed01c8f521af6e6ee",
+    "bytes": 43,
+    "response": "oid,n_det,meanra,meandec,firstmjd,lastmjd\n"
+  },
+  {
+    "name": "positive_control",
+    "url": "https://tap.alerce.online/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=5&QUERY=SELECT+TOP+1+o.oid%2Co.n_det%2Co.meanra%2Co.meandec%2Co.firstmjd%2Co.lastmjd+FROM+alerce_tap.object+AS+o+WHERE+o.sid%3D1+AND+o.oid%3D170019696403809402",
+    "utc": "2026-11-17T07:57:11.939475+00:00",
+    "status": 200,
+    "sha256": "b3681c56f7b51247e9721a4ff391c999b7a48f8e7fe482146540e2d4fecddf28",
+    "bytes": 139,
+    "response": "oid,n_det,meanra,meandec,firstmjd,lastmjd\n170019696403809402,95,65.64344378121793,-47.04416901289589,61088.09847637328,61359.23189306874\n"
+  },
+  {
+    "name": "schema",
+    "url": "https://tap.alerce.online/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=100000&QUERY=SELECT+column_name+FROM+TAP_SCHEMA.columns+WHERE+table_name%3D%27alerce_tap.detection%27",
+    "utc": "2026-11-17T07:55:47.613344+00:00",
+    "status": 200,
+    "sha256": "69ea6783b4dea7460a065362382d30d680f689c925fec47c4d29e57ede15f2b5",
+    "bytes": 73,
+    "response": "column_name\nband\ncreated_date\ndec\nmeasurement_id\nmjd\noid\nra\nsid\n"
+  }
+]
