@@ -37,7 +37,9 @@ Two transverse candidates in the parent analysis have multiple nights of DESI da
 
 The cadence constrains detectable changes during those observations. Constant velocity across these baselines leaves longer periods, low amplitudes and low-inclination binaries viable. The coadd line plots in `tangential/` put the measured velocity on individual unmasked pixels. The strong Ca II 8542 line gives −96 ± 5 and −127 ± 8 km/s, respectively. The SPDist quantiles tabulated here are the formal published distribution. The authors recommend adding a 0.167 mag intrinsic scatter in quadrature when propagating distance errors. SPDist and SpecDis use shared DESI data and may share training information.
 
-Two additional candidates from the moderate transverse-speed branch have clean calcium triplets. Gaia 4435527217525195264 has two observations on DESI observing night 20220606 (MJD 59737) within one night. Its three Ca II centroids are −68 ± 4, −70 ± 5 and −56 ± 11 km/s. Gaia 4550108286326235520 has one observation on MJD 59732. Its calcium lines support the coadd RV of −84.9 ± 1.9 km/s. Both are cool stars with weak Balmer lines. Their calcium diagnostics and exposure tables are in `moderate/`. The DESI observing dates in `epochs.csv` use the local observing-night convention, and `mjd` specifies the UTC exposure time.
+Two additional candidates from the moderate transverse-speed branch have clean calcium triplets. Gaia 4435527217525195264 has two observations on DESI observing night 20220606 (MJD 59737) within one night. Its three Ca II centroids are −68 ± 4, −70 ± 5 and −56 ± 11 km/s. Gaia 4550108286326235520 has one observation on MJD 59732. Its calcium lines support the coadd RV of −84.9 ± 1.9 km/s. Both are cool stars with weak Balmer lines. Their calcium diagnostics and exposure tables are in `moderate/`. Exact Gaia-ID searches in LAMOST DR12 LRS and MRS found no measurements for the two moderate candidates, the two initial transverse candidates or Gaia 2294414169958935296. The DESI observing dates in `epochs.csv` use the local observing-night convention, and `mjd` specifies the UTC exposure time.
+
+Gaia GSP-Phot supplies a separate check from Gaia BP/RP spectra, photometry and parallax. At its median 3.83 kpc distance for Gaia 1717410430709663616, the nominal Galactic-frame speed is 693 km/s. At **2.39 kpc for Gaia 2752545725694798336, it is 183 km/s**. For the latter source GSP-Phot infers 5,253 K and log g 4.78, in tension with DESI's 6,092 K and log g 4.04. Independent spectra or a better parallax are needed to distinguish the luminosities. The spread across methods dominates GSP-Phot's formal uncertainty. The other four inspected stars lack a published GSP-Phot distance.
 
 ## Inputs and replay
 
@@ -46,11 +48,12 @@ Use Python with astropy, numpy, pandas, scipy and matplotlib. Start in this dire
 ```bash
 python control/requery.py replay/control
 python control/requery.py replay/lower lower/lower_all.adql
-python control/requery.py replay/los los/losall.adql los/xpavail.adql
+python control/requery.py replay/los los/losall.adql los/xpavail.adql los/aux_quality.adql los/gspphot.adql
 python control/control_rates.py
 python control/parallax_screen.py
 python mws_fetch.py ../desi_screen.csv replay/coadds
 python los/select_leads.py
+python los/gspphot_check.py
 python mws_epochs.py los/ids.txt los/leads.csv los
 python mws_epochs.py nearby_ids.txt queries/coadds.csv nearby
 python mws_epochs.py lower/ids.txt lower/lower_all.csv lower

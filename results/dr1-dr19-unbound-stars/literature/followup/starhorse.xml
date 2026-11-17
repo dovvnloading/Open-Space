@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<VOTABLE version="1.3"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.ivoa.net/xml/VOTable/v1.3"
+    xmlns:stc="http://www.ivoa.net/xml/STC/v1.30">
+    <RESOURCE type="results">
+        <LINK title="gaiaedr3_contrib.starhorse" content-role="doc" href="https://doi.org/10.17876/gaia/edr.3/52"/>
+        <INFO name="QUERY_STATUS" value="OK" />
+        <INFO name="QUERY" value="select * from gaiaedr3_contrib.starhorse where source_id in (1170190610327078144,1629431706439574528,1717410430709663616,2641617578115676160,2752545725694798336,4406622293782568192,4435527217525195264,4444095982221534720,4550108286326235520,6340918677332110720,869830353178482560)" />
+        <INFO name="QUERY_LANGUAGE" value="adql-2.1" />
+        <INFO name="SOURCE" value="gaiaedr3_contrib.starhorse" />
+        <TABLE name="gaia_user_anonymous.2026-11-17-02-35-51-186151">
+                <FIELD name="source_id" ucd="meta.id;meta.main;meta.ref" ID="datalinkID" datatype="long"> <DESCRIPTION>Gaia EDR3 unique source identifier</DESCRIPTION> </FIELD>
+                <FIELD name="dist05" unit="kpc" ucd="pos.distance" datatype="float"> <DESCRIPTION>StarHorse distance, 5th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="dist16" unit="kpc" ucd="pos.distance" datatype="float"> <DESCRIPTION>StarHorse distance, 16th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="dist50" unit="kpc" ucd="pos.distance" datatype="float"> <DESCRIPTION>StarHorse distance, 50th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="dist84" unit="kpc" ucd="pos.distance" datatype="float"> <DESCRIPTION>StarHorse distance, 84th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="dist95" unit="kpc" ucd="pos.distance" datatype="float"> <DESCRIPTION>Starhorse distance, 95th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="av05" unit="mag" ucd="phys.absorption.gal" datatype="float"> <DESCRIPTION>StarHorse line-of-sight extinction at ? = 5420 Å, AV, 5th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="av16" unit="mag" ucd="phys.absorption.gal" datatype="float"> <DESCRIPTION>StarHorse line-of-sight extinction at ? = 5420 Å, AV, 16th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="av50" unit="mag" ucd="phys.absorption.gal" datatype="float"> <DESCRIPTION>StarHorse line-of-sight extinction at ? = 5420 Å, AV, 50th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="av84" unit="mag" ucd="phys.absorption.gal" datatype="float"> <DESCRIPTION>StarHorse line-of-sight extinction at ? = 5420 Å, AV, 84th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="av95" unit="mag" ucd="phys.absorption.gal" datatype="float"> <DESCRIPTION>StarHorse line-of-sight extinction at ? = 5420 Å, AV, 95th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="teff16" unit="K" ucd="phys.temperature.effective" datatype="float"> <DESCRIPTION>StarHorse effective temperature, 16th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="teff50" unit="K" ucd="phys.temperature.effective" datatype="float"> <DESCRIPTION>StarHorse effective temperature, 50th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="teff84" unit="K" ucd="phys.temperature.effective" datatype="float"> <DESCRIPTION>StarHorse effective temperature, 84th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="logg16" unit="log(&quot;g&quot;)" ucd="phys.gravity" datatype="float"> <DESCRIPTION>StarHorse surface gravity, 16th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="logg50" unit="log(&quot;g&quot;)" ucd="phys.gravity" datatype="float"> <DESCRIPTION>StarHorse surface gravity, 50th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="logg84" unit="log(&quot;g&quot;)" ucd="phys.gravity" datatype="float"> <DESCRIPTION>StarHorse surface gravity, 84th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="met16" unit="&quot;dex&quot;" ucd="phys.abund.Z" datatype="float"> <DESCRIPTION>StarHorse metallicity, 16th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="met50" unit="&quot;dex&quot;" ucd="phys.abund.Z" datatype="float"> <DESCRIPTION>StarHorse metallicity, 50th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="met84" unit="&quot;dex&quot;" ucd="phys.abund.Z" datatype="float"> <DESCRIPTION>StarHorse metallicity, 84th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="mass16" unit="solMass" ucd="phys.mass" datatype="float"> <DESCRIPTION>StarHorse stellar mass, 16th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="mass50" unit="solMass" ucd="phys.mass" datatype="float"> <DESCRIPTION>StarHorse stellar mass, 50th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="mass84" unit="solMass" ucd="phys.mass" datatype="float"> <DESCRIPTION>StarHorse stellar mass, 84th percentile</DESCRIPTION> </FIELD>
+                <FIELD name="ag50" unit="mag" ucd="phys.absorption.gal" datatype="float"> <DESCRIPTION>StarHorse line-of-sight extinction in the G band, AG, 50th percentile, derived from AV50 and teff50</DESCRIPTION> </FIELD>
+                <FIELD name="abp50" unit="mag" ucd="phys.absorption.gal" datatype="float"> <DESCRIPTION>StarHorse line-of-sight extinction in the GBP band, ABP, 50th percentile, derived from AV50 and teff50</DESCRIPTION> </FIELD>
+                <FIELD name="arp50" unit="mag" ucd="phys.absorption.gal" datatype="float"> <DESCRIPTION>StarHorse line-of-sight extinction in the GRP band, ARP, 50th percentile, derived from AV50 and teff50</DESCRIPTION> </FIELD>
+                <FIELD name="bprp0" unit="mag" ucd="phot.mag,stat.mean" datatype="float"> <DESCRIPTION>StarHorse dereddened colour, (GBP - GRP)0, derived from phot_bp_mean_mag, phot_rp_mean_mag, ABP50, and ARP50</DESCRIPTION> </FIELD>
+                <FIELD name="mg0" unit="mag" ucd="phot.mag,stat.mean" datatype="float"> <DESCRIPTION>StarHorse absolute magnitude, derived from phot_g_mean_mag (recalibrated), dist50, and AG50</DESCRIPTION> </FIELD>
+                <FIELD name="xgal" unit="kpc" ucd="pos.distance" datatype="float"> <DESCRIPTION>StarHorse Galactocentric Cartesian X coordinate, derived from dist50 and assuming R0 = 8.2 kpc</DESCRIPTION> </FIELD>
+                <FIELD name="ygal" unit="kpc" ucd="pos.distance" datatype="float"> <DESCRIPTION>StarHorse Galactocentric Cartesian Y coordinate, derived from dist50 and assuming R0 = 8.2 kpc</DESCRIPTION> </FIELD>
+                <FIELD name="zgal" unit="kpc" ucd="pos.distance" datatype="float"> <DESCRIPTION>StarHorse Galactocentric Cartesian Z coordinate, derived from dist50 and assuming R0 = 8.2 kpc</DESCRIPTION> </FIELD>
+                <FIELD name="rgal" unit="kpc" ucd="pos.distance" datatype="float"> <DESCRIPTION>StarHorse Galactocentric planar distance, derived from XGal and YGal</DESCRIPTION> </FIELD>
+                <FIELD name="fidelity" ucd="meta.code" datatype="float"> <DESCRIPTION>Gaia EDR3 astrometric fidelity flag (Rybizki et al. 2021)</DESCRIPTION> </FIELD>
+                <FIELD name="bp_rp_excess_corr" ucd="meta.code" datatype="float"> <DESCRIPTION>"Gaia EDR3 photometric BP/RP flux excess factor (corrected following Riello et al. (2021))"</DESCRIPTION> </FIELD>
+                <FIELD name="sh_photoflag" ucd="meta.code" arraysize="80" datatype="char"> <DESCRIPTION>StarHorse photometry input flag</DESCRIPTION> </FIELD>
+                <FIELD name="sh_outflag" ucd="meta.code" arraysize="80" datatype="char"> <DESCRIPTION>StarHorse output flag</DESCRIPTION> </FIELD>
+            <DATA>
+                <TABLEDATA><TR><TD>1170190610327078144</TD><TD>5.2099376</TD><TD>5.4611564</TD><TD>5.7562337</TD><TD>5.804974</TD><TD>6.0368967</TD><TD>-0.15934904</TD><TD>-0.15141566</TD><TD>-0.08625686</TD><TD>0.06339139</TD><TD>0.10365057</TD><TD>6079.628</TD><TD>6092.3823</TD><TD>6375.291</TD><TD>2.658049</TD><TD>2.6725545</TD><TD>2.757</TD><TD>-1.882986</TD><TD>-1.5640649</TD><TD>-1.375671</TD><TD>0.73</TD><TD>0.731</TD><TD>0.7899189</TD><TD>-0.07558135</TD><TD>-0.09155777</TD><TD>-0.052937005</TD><TD>0.6252735</TD><TD>0.3309076</TD><TD>-4.9109693</TD><TD>0.92192864</TD><TD>4.633201</TD><TD>4.996756</TD><TD>1.0</TD><TD>-0.01675415</TD><TD>GBPRPy/JHKsW1W2</TD><TD>0000</TD></TR><TR><TD>1717410430709663616</TD><TD>3.278101</TD><TD>3.5877144</TD><TD>4.6540623</TD><TD>5.3074546</TD><TD>5.9401846</TD><TD>-0.17316838</TD><TD>-0.0414106</TD><TD>0.07609256</TD><TD>0.20126246</TD><TD>0.28993866</TD><TD>6156.079</TD><TD>6323.768</TD><TD>6676.6553</TD><TD>4.080707</TD><TD>4.278678</TD><TD>4.401977</TD><TD>-2.045958</TD><TD>-1.4085512</TD><TD>-0.51654625</TD><TD>0.7603487</TD><TD>0.79905033</TD><TD>0.92974925</TD><TD>0.066726245</TD><TD>0.080818616</TD><TD>0.04668544</TD><TD>0.6191032</TD><TD>3.922171</TD><TD>-10.356539</TD><TD>2.9647374</TD><TD>2.8670485</TD><TD>10.772537</TD><TD>0.9951172</TD><TD>-0.014431953</TD><TD>GBPRPgrizy/JW1W2</TD><TD>0000</TD></TR><TR><TD>2752545725694798336</TD><TD>3.837012</TD><TD>4.3934727</TD><TD>6.468315</TD><TD>9.810491</TD><TD>32.33321</TD><TD>0.48119807</TD><TD>0.5411189</TD><TD>0.7363504</TD><TD>0.7971187</TD><TD>0.84209096</TD><TD>6041.0435</TD><TD>6280.857</TD><TD>6386.5137</TD><TD>3.680711</TD><TD>4.123615</TD><TD>4.4081182</TD><TD>-1.717619</TD><TD>-1.506215</TD><TD>-1.0961554</TD><TD>0.73350835</TD><TD>0.7808795</TD><TD>0.84371036</TD><TD>0.6315951</TD><TD>0.77360934</TD><TD>0.44856653</TD><TD>0.54773515</TD><TD>3.7950091</TD><TD>-9.383766</TD><TD>3.740442</TD><TD>-5.142654</TD><TD>10.101781</TD><TD>1.0</TD><TD>0.03213942</TD><TD>GBPRPgrizy/W1W2</TD><TD>0000</TD></TR><TR><TD>4406622293782568192</TD><TD>3.5949323</TD><TD>4.307718</TD><TD>5.726994</TD><TD>6.6481915</TD><TD>7.1050444</TD><TD>0.36768433</TD><TD>0.43707475</TD><TD>0.51556677</TD><TD>0.5810733</TD><TD>0.65224713</TD><TD>5133.4478</TD><TD>5222.708</TD><TD>5293.351</TD><TD>2.4105797</TD><TD>2.5419858</TD><TD>2.8203537</TD><TD>-1.8946873</TD><TD>-1.29395</TD><TD>-0.8039998</TD><TD>0.77472967</TD><TD>0.8201201</TD><TD>0.8616414</TD><TD>0.43311775</TD><TD>0.53560716</TD><TD>0.3127206</TD><TD>0.9340472</TD><TD>0.69885266</TD><TD>-3.6342678</TD><TD>0.79868925</TD><TD>3.3637254</TD><TD>3.7209954</TD><TD>1.0</TD><TD>0.004859209</TD><TD>GBPRPgzy/grizJHKsW1W2</TD><TD>0000</TD></TR>
+                </TABLEDATA>
+            </DATA>
+        </TABLE>
+    </RESOURCE>
+    <RESOURCE type="meta" utype="adhoc:service">
+        <PARAM name="standardID" datatype="char" arraysize="*" value="ivo://ivoa.net/std/DataLink#links-1.0" />
+        <PARAM name="accessURL" datatype="char" arraysize="*" value="https://gaia.aip.de/datalink/links" />
+        <GROUP name="inputParams">
+            <PARAM name="ID" datatype="char" arraysize="*" value="" ref="datalinkID"/>
+        </GROUP>
+    </RESOURCE>
+</VOTABLE>
