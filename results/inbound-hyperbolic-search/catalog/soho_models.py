@@ -119,8 +119,14 @@ def analyze(target):
         dr=position(emitted,el)-obs
         a=np.arctan2(dr[:,1],dr[:,0]);de=np.arctan2(dr[:,2],np.hypot(dr[:,0],dr[:,1]))
         return np.column_stack([np.arctan2(np.sin(ra-a),np.cos(ra-a))*np.cos(dec),dec-de]).ravel()*206264.806247
-    fit=least_squares(res,np.zeros(5),bounds=([(.0002-seed[0])/.001,-150,-90,-180,-180],[(.08-seed[0])/.001,150,90,180,180]),
-                      x_scale="jac",max_nfev=1500,ftol=1e-10,xtol=1e-10,gtol=1e-10,diff_step=1e-5)
+    def jacobian(x):
+        # Relative differences at an initial zero can disappear when added
+        # to the absolute Julian perihelion date. Step in scaled parameters.
+        h=1e-4
+        steps=np.eye(5)*h
+        return np.column_stack([(res(x+d)-res(x-d))/(2*h) for d in steps])
+    fit=least_squares(res,np.zeros(5),jac=jacobian,bounds=([(.0002-seed[0])/.001,-150,-90,-180,-180],[(.08-seed[0])/.001,150,90,180,180]),
+                      x_scale="jac",max_nfev=1500,ftol=1e-10,xtol=1e-10,gtol=1e-10)
     def metrics(v):
         r=v.reshape(-1,2)
         return {"coordinate_rms_arcsec":float(np.sqrt(np.mean(r*r))),"two_coordinate_radial_rms_arcsec":float(np.sqrt(np.mean(np.sum(r*r,axis=1)))),
