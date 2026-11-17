@@ -21,8 +21,6 @@ jobs:
           persist-credentials: false
           sparse-checkout: results/inbound-hyperbolic-search
       - run: python comparison/screen.py comparison/evidence --replay
-      - run: python -m pip install beautifulsoup4==4.13.4
-      - run: python comparison/code_original.py
       - uses: actions/upload-artifact@v4
         with:
           name: comparison
