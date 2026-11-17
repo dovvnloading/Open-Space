@@ -1,0 +1,19 @@
+{
+  "service": "Mast.Caom.Filtered.Position",
+  "format": "json",
+  "pagesize": 5000,
+  "page": 1,
+  "params": {
+    "columns": "obsid,obs_id,target_name,proposal_id,instrument_name,filters,t_min,t_max,t_obs_release,calib_level,dataRights,dataURL",
+    "position": "52.97338, -25.61412, 0.012",
+    "filters": [
+      {
+        "paramName": "obs_collection",
+        "values": [
+          "JWST",
+          "HST"
+        ]
+      }
+    ]
+  }
+}
