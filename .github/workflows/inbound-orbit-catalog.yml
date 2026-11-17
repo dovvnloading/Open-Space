@@ -1,43 +1,14 @@
-name: Inbound orbit search image stacks
+name: Public Rubin visit footprint check
 on:
   push:
     branches: ['research/inbound-hyperbolic-search']
-    paths: ['results/inbound-hyperbolic-search/catalog/image-search/stack/stack.py','.github/workflows/inbound-orbit-catalog.yml']
+    paths: ['results/inbound-hyperbolic-search/catalog/rubin_visits.py']
 permissions:
   contents: read
 jobs:
-  stack:
-    if: github.event.head_commit.message == 'Search nightly uncertainty ellipses in motion-compensated ZTF differences'
+  footprints:
     runs-on: ubuntu-latest
-    timeout-minutes: 65
-    defaults:
-      run:
-        working-directory: results/inbound-hyperbolic-search/catalog
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-          sparse-checkout: results/inbound-hyperbolic-search/catalog
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: python -m pip install numpy==2.2.6 scipy==1.15.3 astropy==7.1.0
-      - run: python image-search/stack/stack.py image-search
-      - name: Report stack results
-        if: always()
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import base64,gzip
-          for path in Path('image-search/stack').glob('*.json'):
-              body = base64.b64encode(gzip.compress(path.read_bytes(), mtime=0)).decode()
-              for i in range(0,len(body),4000):
-                  print('STACKFILE',path.name,i,body[i:i+4000])
-          PY
-
-  cadc:
-    runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -45,12 +16,12 @@ jobs:
           sparse-checkout: results/inbound-hyperbolic-search/catalog
       - run: |
           cd results/inbound-hyperbolic-search/catalog
-          python cadc_coordinates.py
+          python rubin_visits.py
           python - <<'PY'
           from pathlib import Path
           import base64,gzip
-          for path in Path('image-search').glob('cadc-coordinate*'):
+          for path in Path('image-search').glob('rubin-*'):
               data=base64.b64encode(gzip.compress(path.read_bytes(),mtime=0)).decode()
               for i in range(0,len(data),4000):
-                  print('CADCFILE',path.name,i,data[i:i+4000])
+                  print('RUBINFILE',path.name,i,data[i:i+4000])
           PY
