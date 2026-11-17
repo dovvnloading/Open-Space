@@ -32,6 +32,7 @@ DESI documents its sky subtraction, cosmic-ray masks, cross-talk and CCD calibra
 
 | Search | Data and comparable scope |
 |---|---|
+| Zuckerman et al. (2023) | APF residual false positives from over-subtracted stellar absorption were documented in sections 4.1.3-4.1.4 and Figure 12. The searched 4997-5900 Angstrom range excluded lithium; the generic mechanism is prior work. [Primary paper](https://arxiv.org/abs/2301.06971) |
 | Tellis & Marcy (2015) | HIRES at R≈60,000, 2,796 targets, searching 2–7 arcsec from each star. [Paper](https://arxiv.org/abs/1504.03369) |
 | Tellis & Marcy (2017) | HIRES, 5,600 near-star sightlines, 3640–7890 Å, blind injection recovery and explicit 10 m transmitter-aperture power model. Their resolution and angular selection differ from DESI. [Paper](https://arxiv.org/abs/1704.02535) |
 | SDSS Borra & Trottier (2016) | 2.5 million spectra analyzed in Fourier space for periodic structure. Their observable is different from a single unresolved emission line. Isaacson et al. obtained follow-up spectra and found no evidence of those reported modulations. [SDSS paper](https://doi.org/10.1088/1538-3873/128/969/114201) · [Follow-up](https://arxiv.org/abs/1812.02258) |
