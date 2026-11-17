@@ -1,0 +1,9 @@
+# Post-selection hypothesis and independent-field test
+
+All seven persistent features in the initial four HEALPix products lie in the 6709.57–6709.93 Å vacuum interval in the stellar frame. The Li I resonance doublet is the immediate natural counterpart. At DESI resolution the components blend. This wavelength was selected after the blind scan. The following diagnostics were specified before examining the line fluxes and before searching a separate sky region.
+
+1. At a fixed stellar-rest 6709.7 Å, fit the target-specific DESI line response plus an affine local continuum to the calibrated **observed flux** and to the **stellar model flux** separately, with the same per-exposure IVAR, mask, model and profile. Retain signed amplitudes. A negative model amplitude and a more positive observed amplitude can produce a positive residual without an emission peak in the data. Apply the same calculation to nontrigger stars.
+2. Check the dependence on the local continuum using two window sizes. Test the nominal wavelength and two offset control windows at ±12 Å with the same code. These control wavelengths are descriptive and may contain other real lines.
+3. Select another region by data availability and repeat counts before viewing its spectra. Prediction: a blind search can produce a cluster at the same stellar-rest lithium wavelength in different targets, and its template will be deeper than the observed feature. Report the outcome including zero detections; no assumed frequency or astrophysical abundance. A strict all-assigned-exposure result uses an independent survey visit inventory.
+
+Laboratory references: [Li I NIST handbook](https://physics.nist.gov/PhysRefData/Handbook/Tables/lithiumtable3.htm) and [SDSS vacuum convention](https://www.sdss4.org/dr17/spectro/spectro_basics/).

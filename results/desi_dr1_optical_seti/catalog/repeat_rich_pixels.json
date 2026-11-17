@@ -1,0 +1,6 @@
+{
+  "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=100000&QUERY=SELECT+TOP+250+survey%2Cprogram%2Chealpix%2Ccount%28%2A%29+AS+n_repeat+FROM+desi_dr1.zpix+WHERE+spectype%3D%27STAR%27+AND+zwarn%3D0+AND+zcat_primary%3D%27t%27+AND+coadd_numexp%3E%3D2+GROUP+BY+survey%2Cprogram%2Chealpix+ORDER+BY+n_repeat+DESC%2Chealpix%2Csurvey%2Cprogram",
+  "adql": "SELECT TOP 250 survey,program,healpix,count(*) AS n_repeat FROM desi_dr1.zpix WHERE spectype='STAR' AND zwarn=0 AND zcat_primary='t' AND coadd_numexp>=2 GROUP BY survey,program,healpix ORDER BY n_repeat DESC,healpix,survey,program",
+  "rows": 250,
+  "sha256": "a512b5716a7be1b7810c21b876714735db3f6fbb0bc4143539d3745a66e35632"
+}
