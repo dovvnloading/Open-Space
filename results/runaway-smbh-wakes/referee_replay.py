@@ -138,7 +138,8 @@ def check_catalog_and_reviews():
     short = rows("detector/tables/profile_shortlist.csv")
     review = rows("detector/review_rows.csv")
     require(len(short) == 651 and len(review) == 68, "shortlist/review lengths")
-    ids = {f'{r["tile"]}_positive_{r["rank"]}' for r in short}
+    # Summary ranks are one-based; review IDs use zero-based source indices.
+    ids = {f'{r["tile"]}_positive_{int(r["rank"])-1}' for r in short}
     require(len({r["id"] for r in review}) == 68 and
             {r["id"] for r in review} <= ids, "review IDs trace to shortlist")
     classes = Counter(r["visual_class"] for r in review)
