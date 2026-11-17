@@ -109,7 +109,9 @@ def parse(path):
     qc["submitted_name_utc_days"] = len(raw)
     qc["eligible_tracks"] = len(tracks)
     qc["cadence_templates_before_rate_and_linearity_cuts"] = len(exposures)
-    return sorted(tracks, key=lambda a: a.mid), exposures, dict(qc)
+    time_sky = sorted((t,u) for group in raw.values() for t,u in group)
+    sky_index = (np.array([q[0] for q in time_sky]), np.array([q[1] for q in time_sky]))
+    return sorted(tracks, key=lambda a: a.mid), exposures, dict(qc), sky_index
 
 
 def motion(state, times):
@@ -224,7 +226,20 @@ def scan(tracks):
 
 
 
-def make_injection(rng, tracks, idx, epoch_triples):
+def field_distances(times, directions, sky_index):
+    real_times, real_sky = sky_index
+    nearest = []
+    for t,u in zip(times,directions):
+        i,j=np.searchsorted(real_times,[t-1/86400,t+1/86400])
+        if i == j:
+            nearest.append(180.)
+        else:
+            chord=np.linalg.norm(real_sky[i:j]-u,axis=1).min()
+            nearest.append(float(np.rad2deg(2*np.arcsin(min(1.,chord/2)))))
+    return nearest
+
+
+def make_injection(rng, tracks, idx, epoch_triples, sky_index):
     # Force three tracklets at real timestamps. Sky at the first epoch is real,
     # later positions need not be inside an acquired exposure.
     a,b,c = epoch_triples[rng.integers(len(epoch_triples))]
@@ -235,7 +250,7 @@ def make_injection(rng, tracks, idx, epoch_triples):
     direction = unit(rng.normal(size=3))
     velocity = direction*np.sqrt((vinf*KMS)**2 + 2*MU/np.linalg.norm(position))
     state = np.r_[position, velocity]
-    parts = []
+    parts, field = [], []
     for j,tr in enumerate([a,b,c]):
         off = tr.t - a.mid
         sites = np.array([observer(float(t)) for t in tr.t])
@@ -245,6 +260,7 @@ def make_injection(rng, tracks, idx, epoch_triples):
             dates = off+(rho-np.linalg.norm(pos-sites,axis=1))/C
         pred = unit(motion(state,dates)-sites)
         noisy = unit(pred+rng.normal(0,.2*ARC,pred.shape))
+        field.append(sorted(field_distances(tr.t,noisy,sky_index)))
         if SURVEY=="F51":
             ra=np.rad2deg(np.arctan2(noisy[:,1],noisy[:,0]))%360
             dec=np.rad2deg(np.arcsin(np.clip(noisy[:,2],-1,1)))
@@ -255,7 +271,9 @@ def make_injection(rng, tracks, idx, epoch_triples):
             parts.append(attributable(f"inj-{idx}-{j}",tr.t[keep],noisy[keep]))
         else:
             parts.append(attributable(f"inj-{idx}-{j}",tr.t,noisy))
-    return parts,dict(rho_au=float(rho), true_vinf_kms=float(vinf), radial_helio_kms=float(position@velocity/np.linalg.norm(position)/KMS), times_utc_days=[float(t.mid) for t in [a,b,c]])
+    return parts,dict(max_nearest_deg_by_night=[max(x) for x in field],
+                      second_smallest_nearest_deg_by_night=[x[1] for x in field],
+                      rho_au=float(rho), true_vinf_kms=float(vinf), radial_helio_kms=float(position@velocity/np.linalg.norm(position)/KMS), times_utc_days=[float(t.mid) for t in [a,b,c]])
 
 
 def cadence_templates(tracks):
@@ -296,7 +314,7 @@ def main():
     args=parser.parse_args()
     SURVEY=args.survey
     path=args.data/f"{SURVEY.lower()}.mpc"
-    real,exposures,qc=parse(path)
+    real,exposures,qc,sky_index=parse(path)
     before,accepted,pairs=scan(real)
     print("REAL_SCREEN="+json.dumps(dict(survey=SURVEY,proposals=before,passing=accepted)),flush=True)
     rng=np.random.default_rng(RNG_SEED)
@@ -314,7 +332,7 @@ def main():
                 real_3night_proposals=before,real_passing=accepted,seed=RNG_SEED)
     recovery=[]
     for idx in range(args.trials if templates else 0):
-        injected,row=make_injection(rng,real,idx,templates)
+        injected,row=make_injection(rng,real,idx,templates,sky_index)
         row["eligible"]=all(a is not None for a in injected)
         row["recovered"]=False
         row["mixed_accepts"]=0
@@ -352,6 +370,15 @@ def main():
                   recovered=k,mixed_passes=sum(x["mixed_accepts"] for x in recovery),
                   exact_95pct_recovery_interval=([0. if k==0 else float(beta.ppf(.025,k,n-k+1)),
                                                   1. if k==n else float(beta.ppf(.975,k+1,n-k))] if n else None))
+    result["three_night_sky_time_proximity"] = {}
+    for radius in [.1, .5, 1.5]:
+        record = {}
+        for key, label in [("max_nearest_deg_by_night","all_samples"),
+                           ("second_smallest_nearest_deg_by_night","at_least_two_samples")]:
+            passing=[x for x in recovery if max(x[key])<=radius]
+            record[label]={"trials":len(passing),"recovered":sum(x["recovered"] for x in passing),
+                           "per_night_trials":[sum(x[key][i]<=radius for x in recovery) for i in range(3)]}
+        result["three_night_sky_time_proximity"][str(radius)]=record
     scramble=[]
     for _ in range(5):
         nprop,hits,_=scan(rotate_sky(real,rng))
