@@ -159,7 +159,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Stars, binaries and multiple-star systems
 
-- **A high-speed star may escape the Milky Way.** DESI DR1 and Gaia DR3 give source 1717410430709663616 a Galactocentric speed of 697 km/s. It escapes in two reference Galactic potentials but remains bound in a heavier halo. The DESI velocity has only one epoch (binary motion untested), the traceback favours the disk rather than Sgr A* or the LMC centre, and discovery priority remains open. *Candidate* · [Details](results/dr1-dr19-unbound-stars/README.md)
+- **A high-speed star may escape the Milky Way.** DESI DR1 and Gaia DR3 give source 1717410430709663616 a Galactocentric speed of 697 km/s. All 4,096 draws escape in two reference Galactic potentials but remain bound in a heavier halo. The DESI velocity has only one epoch (binary motion untested), the modeled trajectory crosses the disk, but its origin remains open, and discovery priority remains open. *Candidate* · [Details](results/dr1-dr19-unbound-stars/README.md)
 
 **Eclipsing binaries and star systems**
 

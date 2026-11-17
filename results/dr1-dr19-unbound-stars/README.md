@@ -1,8 +1,10 @@
 # A candidate unbound star with a 657 km/s Galactic-rest-frame line-of-sight velocity
 
-**Gaia DR3 1717410430709663616 is a candidate for ejection from the Milky Way disk.** Five absorption lines support a heliocentric radial velocity near +502 km/s in one DESI exposure. Its inferred Galactocentric speed is **697 km/s** (691–703 km/s, central 68% interval) on the Bailer–Jones photogeometric distance scale. All 4,096 draws escape in each of two reference Milky Way potentials. An older, substantially more massive halo binds all 4,096 draws on that same distance scale. A second independent radial-velocity epoch is needed to test whether the measured speed describes the star's centre of mass.
+**Gaia DR3 1717410430709663616 is a candidate high-speed star; its physical origin remains open.** Five absorption lines support a heliocentric radial velocity near +502 km/s in one DESI exposure. Its inferred Galactocentric speed is **697 km/s** (691–703 km/s, central 68% interval) on the Bailer–Jones photogeometric distance scale. All 4,096 draws escape in each of two reference Milky Way potentials. An older, substantially more massive halo binds all 4,096 draws on that same distance scale. A second independent radial-velocity epoch is needed to test whether the measured speed describes the star's centre of mass.
 
-The star has no match in our 21-source literature index. Discovery priority remains open. The traceback favours a crossing of the ordinary Galactic disk. The search established no ejection from Sgr A* or the LMC centre above 1,000 km/s and provides no LMC black-hole mass constraint. [Literature cross-match](literature/README.md) · [Survey selections and methods](METHODS.md)
+The star has no match in our 21-source literature index. Discovery priority remains open. The modeled trajectory crosses the Galactic disk, but that crossing does not establish a launch site. The search established no ejection from Sgr A* or the LMC centre above 1,000 km/s and provides no LMC black-hole mass constraint. [Literature cross-match](literature/README.md) · [Survey selections and methods](METHODS.md)
+
+All commands for this contribution require Python 3.12; see [replay instructions](METHODS.md#replay).
 
 ## The spectrum and six-dimensional state
 
