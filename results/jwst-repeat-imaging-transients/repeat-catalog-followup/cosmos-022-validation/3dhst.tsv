@@ -1,0 +1,58 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-17T04:37:20 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-17T04:37:20	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJS%2F214%2F24%2F3dhstall&-c=150.122033+%2B2.323386208&-c.rs=3&-out.add=_r&-sort=_r&-out.max=8	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=150.122033+02.323386,rs=3.	
+#Constraint -out.max=8
+
+#RESOURCE=yCat_22140024
+#Name: J/ApJS/214/24
+#Title: 3D-HST+CANDELS catalog (Skelton+, 2014)
+#INFO	ivoid=ivo://cds.vizier/j/apjs/214/24	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/apjs/214/24	    IVOID of underlying data collection
+#INFO	creator=Skelton R.E.	    First author or institution
+#INFO	cites=bibcode:2014ApJS..214...24S	    Article or Data origin sources
+#INFO	journal=ApJS	    Journal name
+#INFO	original_date=2014	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJS/214/24	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.22140024	    Dataset identifier that can be used for citation
+#INFO	publication_date=2018-01-30	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_ApJS_214_24_3dhstall:
+#Name: J/ApJS/214/24/3dhstall
+#Title: *3D-HST+CANDELS all fields master catalog (3dhst_master.phot.v4.1)
+#Column	_r	(F5.3)	Distance from center (150.12203300+02.32338621)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	ID	(I5)	[1/50507] Sequential number (1)	[ucd=meta.record]
+#Column	Field	(A7)	Field name ("AEGIS", "COSMOS", "GOODS-N", "GOODS-S" or "UDS")	[ucd=obs.field]
+#Column	RAJ2000	(F12.8)	Right ascension in decimal degrees (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F12.8)	Declination in decimal degrees (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	zsp	(F8.4)	[0/6.2]? Spectroscopic redshift from litterature (2)	[ucd=src.redshift]
+#Column	zpk	(F8.4)	[0.01/6]? Photometric redshift from EAZY fit (z_peak)	[ucd=src.redshift.phot]
+#Column	F140Wap	(E11.4)	[-483/47052] Flux within a 0.7" aperture in F140W zeropoint 25.0 (faper_F140W) (3)	[ucd=phot.mag;em.IR.H]
+#Column	e_F140Wap	(E11.4)	[-483/10592] 1{sigma} error within a 0.7" aperture in F140W zeropoint 25.0 (eaper_F140W) (3)	[ucd=stat.error]
+#Column	F160Wap	(E11.4)	[-0.3/91185]? Flux within a 0.7" aperture in F160W zeropoint 25.0 (faper_F160W) (3)	[ucd=phot.mag;em.IR.H]
+#Column	e_F160Wap	(E11.4)	[0.01/475]? 1{sigma} error within a 0.7" aperture in F160W zeropoint 25.0 (eaper_F160W) (3)	[ucd=stat.error]
+#Column	F140W	(E11.4)	[-2/66530]? Total flux in F140W zeropoint 25 (f_F140W) (3)	[ucd=phot.mag;em.IR.H]
+#Column	e_F140W	(E11.4)	[0.001/20681]? 1{sigma} error in F140W total flux zeropoint 25 (e_F140W) (3)	[ucd=stat.error]
+#Column	F160W	(E11.4)	[-0.3/130810]? Total flux in F160W zeropoint 25 (f_F160W) (3)	[ucd=phot.mag;em.IR.H]
+#Column	e_F160W	(E11.4)	[0.02/8075]? 1{sigma} error in F160W total flux zeropoint 25 (e_F160W) (4)	[ucd=stat.error]
+#Column	Cor	(F7.4)	[1/1.3] Correction from AUTO to total flux based on F160W F140W (tot_cor)	[ucd=phot.mag;arith.diff]
+#Column	f_F140W	(I1)	[0/1] Set if F140W is used for the corrections to total i.e., no F160W coverage (f140w_flag)	[ucd=meta.code]
+#Column	S/G	(I1)	[0/2] Stellarity flag (star_flag) (4)	[ucd=meta.code.error;src.class.starGalaxy]
+#Column	Av	(F4.1)	[0/4]? Dust attenuation in the V-band from FAST fit	[ucd=phys.absorption]
+_r	ID	Field	RAJ2000	DEJ2000	zsp	zpk	F140Wap	e_F140Wap	F160Wap	e_F160Wap	F140W	e_F140W	F160W	e_F160W	Cor	f_F140W	S/G	Av
+arcsec	 	 	deg	deg	 	 	0.3631uJy	0.3631uJy	0.3631uJy	0.3631uJy	0.3631uJy	0.3631uJy	0.3631uJy	0.3631uJy	 	 	 	mag
+-----	-----	-------	------------	------------	--------	--------	-----------	-----------	-----------	-----------	-----------	-----------	-----------	-----------	-------	-	-	----
+0.136	14157	COSMOS 	150.12207031	+02.32339239	        	  0.5189	 2.6549e+00	 8.7326e-02	 2.7012e+00	 4.2512e-02	 3.6609e+00	 1.2042e-01	 3.7248e+00	 1.0754e-01	 1.0878	0	0	 0.1
+1.751	14222	COSMOS 	150.12207031	+02.32387114	        	  0.7143	 5.1396e-01	 8.6894e-02	 2.9734e-01	 4.2739e-02	 6.4972e-01	 1.0985e-01	 3.7588e-01	 7.4110e-02	 1.1350	0	2	 0.4
+2.809	14140	COSMOS 	150.12258911	+02.32283831	        	  3.5917	 1.9397e-01	 8.7496e-02	 1.4996e-01	 4.2454e-02	 2.4280e-01	 1.0952e-01	 1.8771e-01	 4.2318e-02	 1.1956	0	2	 0.8
+

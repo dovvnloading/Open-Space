@@ -1,0 +1,60 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-17T04:37:20 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-17T04:37:20	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJ%2F716%2F348&-c=150.122033+%2B2.323386208&-c.rs=100&-out.add=_r&-sort=_r&-out.max=8	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=150.122033+02.323386,rs=100.	
+#Constraint -out.max=8
+
+#RESOURCE=yCat_17160348
+#Name: J/ApJ/716/348
+#Title: The XMM-Newton survey of the COSMOS field (Brusa+, 2010)
+#INFO	ivoid=ivo://cds.vizier/j/apj/716/348	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/apj/716/348	    IVOID of underlying data collection
+#INFO	creator=Brusa M.	    First author or institution
+#INFO	cites=bibcode:2010ApJ...716..348B	    Article or Data origin sources
+#INFO	journal=ApJ	    Journal name
+#INFO	original_date=2010	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJ/716/348	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.17160348	    Dataset identifier that can be used for citation
+#INFO	publication_date=2017-09-20	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_ApJ_716_348_table2:
+#Name: J/ApJ/716/348/table2
+#Title: Basic properties of the XMM-COSMOS counterparts
+#Column	_r	(F7.3)	Distance from center (150.122033+02.323386)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	Name	(A17)	XMM-COSMOS IAU designation (ddd.ddddd+d.ddddd)	[ucd=meta.id]
+#Column	XMMC	(I5)	[1/70250] XMM-COSMOS identifier number (1)	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F10.6)	Right Ascension in decimal degrees (J2000) of the optical/IR counterpart	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F10.6)	Declination in decimal degrees (J2000) of the optical/IR counterpart	[ucd=pos.eq.dec;meta.main]
+#Column	SFlux	(E8.1)	0.5-2keV flux; erg/s/cm^2 (1)	[ucd=phot.flux;em.X-ray]
+#Column	HFlux	(E8.1)	2-10keV flux; erg/s/cm^2 (1)	[ucd=phot.flux;em.X-ray]
+#Column	UHFlux	(E8.1)	5-10keV flux; erg/s/cm^2 (1)	[ucd=phot.flux;em.X-ray]
+#Column	chid	(I5)	[12/12539]? Chandra-COSMOS identifier number (3)	[ucd=meta.id.cross]
+#Column	OF	(I2)	[0/10] Optical identification flag, 1=reliable (4)	[ucd=meta.code]
+#Column	COSMOS	(I7)	? Capak et al. 2007, Cat. II/284, catalog identifier number	[ucd=meta.id.cross]
+#Column	rmag	(F6.2)	? Capak+ 2007, Cat. II/284, r-band AB mag	[ucd=phot.mag;em.opt.R]
+#Column	Kmag	(F6.2)	? McCraken et al. 2010ApJ...708..202M K-band AB magnitude	[ucd=phot.mag;em.IR.K]
+#Column	[3.6]	(F7.2)	? IRAC 3.6 micron band AB mag (5)	[ucd=phot.mag;em.IR.3-4um]
+#Column	[24]	(F6.2)	? Le Floch et al. 2009ApJ...703..222L MIPS 24um band AB mag	[ucd=phot.flux.density;em.IR.15-30um]
+#Column	zsp	(F7.3)	? Spectroscopic redshift; see Section 5	[ucd=src.redshift]
+#Column	Cl	(I3)	? Source class (6)	[ucd=meta.code.class]
+#Column	zph	(F6.2)	? Salvato et al. 2009ApJ...690.1250S photometric redshift	[ucd=meta.note]
+#Column	OCat	(I3)	Cross-match with other COSMOS catalogs within 1.5"	[ucd=meta.ref.url]
+#Column	Sloan	(a5)	Display the online SDSS data for this object	[ucd=meta.ref.url]
+#Column	Simbad	(a6)	Simbad column added by the CDS	[ucd=meta.ref]
+#Column	NED	(A3)	Simbad column added by the CDS	[ucd=meta.ref]
+_r	Name	XMMC	RAJ2000	DEJ2000	SFlux	HFlux	UHFlux	chid	OF	COSMOS	rmag	Kmag	[3.6]	[24]	zsp	Cl	zph	OCat	Sloan	Simbad	NED
+arcsec	 	 	deg	deg	mW/m2	mW/m2	mW/m2	 	 	 	mag	mag	uJy	uJy	 	 	 	 	 	 	
+-------	-----------------	-----	----------	----------	--------	--------	--------	-----	--	-------	------	------	-------	------	-------	---	------	---	-----	------	---
+ 82.488	150.13303+2.30324	   18	150.133040	+02.303285	 1.8e-14	 6.0e-14	 3.4e-14	   87	 1	1997845	 24.03	 20.51	  44.21	  0.51	  1.598	  1	  1.45	  2	Sloan	Simbad	NED
+ 99.311	150.11924+2.29571	   78	150.119590	+02.295908	 7.3e-15	 1.7e-14	 9.1e-15	   86	 1	1961169	 23.82	 20.55	  32.13	  0.72	       	   	  2.02	  2	Sloan	Simbad	NED
+

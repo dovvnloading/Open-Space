@@ -1,0 +1,47 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-17T04:37:20 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-17T04:37:20	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F664%2FA117&-c=150.122033+%2B2.323386208&-c.rs=100&-out.add=_r&-sort=_r&-out.max=8	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=150.122033+02.323386,rs=100.	
+#Constraint -out.max=8
+
+#RESOURCE=yCat_36640117
+#Name: J/A+A/664/A117
+#Title: 677 AGN of VST-COSMOS (De Cicco+, 2022)
+#INFO	ivoid=ivo://cds.vizier/j/a+a/664/a117	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/a+a/664/a117	    IVOID of underlying data collection
+#INFO	creator=De Cicco D.	    First author or institution
+#INFO	cites=bibcode:2022A&A...664A.117D	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2022	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/664/A117	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.36640117	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-06-20	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_A_A_664_A117_table6:
+#Name: J/A+A/664/A117/table6
+#Title: *List of the 677 AGN constituting the main sample
+#Column	_r	(F7.3)	Distance from center (150.12203+02.3233862)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	ID	(I3)	Identification number	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F9.5)	Right ascension (J2000) (1)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F11.7)	Declination (J2000) (1)	[ucd=pos.eq.dec;meta.main]
+#Column	rmag	(F5.2)	Average VST r(AB) magnitude, obtained from all the visits where the source is detected	[ucd=phot.mag;em.opt.R]
+#Column	rms	(F5.2)	r.m.s. of the light curve	[ucd=stat.stdev]
+#Column	N	(I2)	number of visits where the source is detected	[ucd=meta.number]
+#Column	Length	(I4)	observed length of the light curve	[ucd=phys.size]
+#Column	z	(F7.4)	Redshift (see Sect. 2.1 of De Cicco et al., 2021A&A...645A.103D)	[ucd=src.redshift]
+#Column	XAGN	(I1)	[0/1] X-ray confirmed AGN (2)	[ucd=meta.code]
+#Column	MIRAGN	(I1)	[0/1] MIR-confirmed AGN (2)	[ucd=meta.code]
+#Column	OptAGN	(I1)	[0/1] optical variability-confirmed AGN (2)	[ucd=meta.code]
+#Column	AGNI	(I1)	[0/1] spectroscopically confirmed Type I AGN (2)	[ucd=meta.code]
+#Column	AGNII	(I1)	[0/1] spectroscopically confirmed Type II AGN (2)	[ucd=meta.code]
+#Column	SimbadName	(f)	Simbad column added by the CDS	[ucd=meta.id]
