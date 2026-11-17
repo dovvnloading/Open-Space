@@ -25,7 +25,7 @@ The 0.012-degree MAST footprint cones and frozen product-list responses are in [
 From the repository root set the variables below to the field directory containing this README, the merged analysis and a writable cache. Use Python with NumPy, SciPy and Astropy.
 
 ```sh
-field_dir=$(dirname "$(find results/jwst-five-field-followup -name reduce_f444w.py -print -quit)")
+field_dir=results/jwst-five-field-followup/hd21997-hd202628
 merged=results/jwst-nearby-companions
 cache_dir=./jwst-two-field-cache
 out_dir=./jwst-two-field-measurements
@@ -37,3 +37,40 @@ python "$field_dir/auxiliary.py" "$merged" "$cache_dir" "$out_dir"
 ```
 
 The blind F444W tables treat every threshold crossing as a trigger. Motion comparisons at two wavelengths require an independently recovered centroid and relative registration. A missing counterpart at another wavelength cannot determine motion. Atmospheric grid fits to signed flux proxies on subtraction residuals have no physical interpretation.
+
+## Auxiliary imaging and source checks
+
+The auxiliary search applies the parent MIRI difference of Gaussians, peak finder and subpixel refinement to the F200W KLIP mosaics and the individual F1140C PSF-subtracted rolls. It uses a 6-MAD cut in 0.5 arcsec radial bins, excludes a five-pixel invalid-data neighborhood and excludes locations within 0.37 arcsec of either MIRI quadrant boundary. These thresholds and footprints differ from the primary F444W search. Each HD 21997 MIRI visit searched 58.3 square arcsec. The F200W and F444W footprints cover about 66.5 and 75.2 square arcsec. Counts below refer to detections in individual products; the same detector artifact can recur.
+
+| Field | Auxiliary positive peaks | Result of independent checks |
+|---|---|---|
+| HD 21997 | 1 F200W, 2 MIRI | The F200W mosaic patch exceeds 200 local MAD but reaches at most 1.53 MAD in two native RDI reductions with different reference stars. Both MIRI peaks are near detector (151,76) at sky positions more than 9 arcsec apart. A feature recurs there in the HD 202628 field. |
+| HD 202628 | 10 F200W, 2 MIRI | Nine F200W peaks cluster near the negative reference imprint. All ten reach less than 4.4 MAD with an alternate reference. Peak 10 is 2.5 MAD in that reduction. One MIRI peak recurs at detector (151,76). The other has 6.12 MAD in one roll, with no qualifying peak in the other roll or common-position match at a distinct JWST epoch. Its identity remains open. |
+
+The two motion hypotheses use Gaia DR3 proper motion and parallax with the Earth barycentric ephemeris as an observer approximation. The JWST–Earth parallax difference is below 1 mas for these two stars. Cross-filter relative registration is limited by the adopted mask centers and the absence of a robust grid of tie objects. The expected separation of the two tracks is only 0.003–0.011 arcsec across HD 21997’s date pairs and 0.240 arcsec for HD 202628. No pair from different calendar dates lies within 0.35 arcsec of the same host-relative position. The nearest such pair is 2.52 arcsec apart for HD 21997 and 1.16 arcsec for HD 202628. The two NIRCam filters are simultaneous. [Visit denominators](measurements/auxiliary_visits.csv) · [All detections](measurements/auxiliary_peaks.csv) · [Both tracks](measurements/motion_nearest.csv) · [Independent references](measurements/F200W_reference_test.csv) · [Dispositions](measurements/dispositions.csv)
+
+- All 17 triggers have forced flux or coverage records. A 296-row solar-metallicity cloud-free Sonora Bobcat grid with free nonnegative scale tests the available co-moving-position fluxes in F200W, F444W and F1140C. Nondetections retain signed flux. The proxy apertures adopt 60% encircled energy and local angular controls, with an added 20% flux-dependent error. They lack position-specific coronagraphic throughput and absolute inter-filter registration. Weak fits cannot assign temperatures, masses or establish a companion. F444W primary-trigger fits are separately tabulated using the empirically calibrated matched F444W amplitudes. [All model tests](measurements/all_model_comparisons.csv) · [Forced fluxes and coverage](measurements/all_forced_colors.csv) · [Marley et al. grid](https://doi.org/10.5281/zenodo.5063476)
+- Each trigger was compared with Gaia, SIMBAD (including ALMA S1–S4), and 2MASS. No non-host entry falls within 1 arcsec. Both NASA confirmed-planet cones are empty. The local 10–35 arcsec control annulus contains one Gaia source around HD 21997 and two around HD 202628, giving area-scaled expectations of 0.021 and 0.043 *Gaia* objects. Counting F444W matched-filter peaks in a 6.1–8.5 arcsec outer annulus gives one positive and three negative crossings in each field, or 0.69 positive crossings scaled to each search area. This includes instrumental and astrophysical sources at a different radial sensitivity. Sparse counts and nonuniform depth limit any chance-alignment interpretation. [Catalog matches](measurements/catalog_matches.csv) · [Catalog counts](measurements/catalog_background.csv) · [Image controls](measurements/F444W_background.csv)
+- The ALMA continuum maps of HD 21997 (2019-07-28, beam major axis 3.14 arcsec) and HD 202628 (2018-12-07, 0.89 arcsec) were sampled at both predicted positions for every trigger. The strongest forced value reaches 0.82 and 3.04 local MADs respectively. Beam dilution, disk structure and wavelength-dependent flux limit this comparison. [ALMA forced photometry](measurements/ALMA_forced.csv)
+- HD 202628’s four published millimetre sources appear in the later archival map. S1 reaches 17.1 local MADs at the published stationary position. Comparing Table 4 of Faramaz et al. with Gaussian centroids in the later map and translating on S2–S4 gives an S1 residual of 0.045 arcsec under the stationary hypothesis and 0.287 arcsec for a host-following source (1.4 arcsec fit radius, tie RMS 0.101 arcsec). Changing the fit radius to 1.1 or 1.7 arcsec leaves the stationary residual below 0.079 arcsec. This favors a background source conditional on three stationary ties. The earlier arc is represented by its April 2017 midpoint. Source extension, local disk emission, the 0.8–0.9 arcsec beam, and the three-object translation limit this test. The paper gives a prospective follow-up project code; the positional archive query returns the December 2018 map under **2018.1.00045.S**. [Centroid and tie tests](measurements/ALMA_S1_motion.csv) · [Faramaz et al. Table 4](https://arxiv.org/abs/1909.04162)
+
+## HD 202628 MIRI peak in visit 007
+
+At (+1.18,+3.06) arcsec, the fixed-position F1140C flux proxies are 3.04 ± 0.59 and 2.00 ± 0.63 µJy in two same-day rolls. The pipeline response reaches 6.12 and 3.39 local MADs. Odd/even subsets return 5.33/5.19 in the first roll and 3.08/3.83 in the second. Native classical RDI of those science integrations returns 3.66 and 4.25 using the program's HD 201865 reference. Substituting nine HD 22333 dithers gives −0.77 and 1.89 (odd/even −0.86/−0.97 and 1.68/2.13). Some positive flux persists in the second roll, but its significance depends on the subtraction and these rolls cannot test common motion. [Reference and split tests](measurements/MIRI_roll_tests.csv)
+
+For the co-moving prediction in 2024 the F200W/F444W flux proxies are −0.05 ± 0.07 and +0.07 ± 0.04 µJy. At the stationary prediction they are +0.06 ± 0.08 and +0.14 ± 0.05 µJy, below the blind cut. No 2024 centroid distinguishes the tracks. The free-scale Sonora fit at the co-moving position has a minimum weighted residual sum of 9.98 for three bands (best grid point 300 K at log g 3); both the error model and throughput limit its interpretation. At the 2018 ALMA epoch the forced responses are 2.34 MAD for stationary and 3.04 MAD for co-moving, in a 0.89 arcsec beam. These data do not validate either interpretation. [All tracks](measurements/all_forced_colors.csv) · [Grid](measurements/all_model_comparisons.csv)
+
+## Limits and pending work
+
+The quantified limit applies to F444W over 2.5–5.5 arcsec at the six sampled radii. It does not cover the central mask, entire field of view, a fixed companion mass, or joint recovery across all three filters. Deep, independent, same-band astrometry would be required to classify HD 202628’s remaining one-roll MIRI peak. A future F2550W detection could test the position but would still require an astrometric and colour analysis. The companion-level claim remains a scoped null in F444W. HST pixel tests for these same triggers are documented in the [campaign archive section](../archives/).
+
+Run the remaining checks after the preceding commands.
+
+```sh
+python "$field_dir/miri_rolls.py" "$merged" "$cache_dir" "$out_dir"
+python "$field_dir/short_reference.py" "$merged" "$cache_dir" "$out_dir"
+python "$field_dir/control_annulus.py" "$merged" "$cache_dir" "$out_dir"
+python "$field_dir/counts_catalogs_colors.py" "$merged" "$cache_dir" "$out_dir"
+python "$field_dir/ground_continuum.py" "$merged" "$cache_dir" "$out_dir"
+python "$field_dir/alma_s1.py" "$cache_dir" "$out_dir"
+```
