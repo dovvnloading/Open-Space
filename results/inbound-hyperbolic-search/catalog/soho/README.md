@@ -1,4 +1,19 @@
-# Fast automatic solutions for four SOHO Kreutz comets
+# All four apparently fast SOHO comets admit ordinary near-Sun paths
+
+A heliocentric parabolic orbit fits every recorded position of each of the four rapid batch outliers. The unweighted per-coordinate RMS ranges from 22.47″ to 37.61″. Each value is lower than the corresponding unrestricted three-second orbit in the catalogue replay. This comparison uses all 123 directions and the 123 accompanying spacecraft positions. The observations do not require a strongly hyperbolic trajectory.
+
+| Object | Positions | Arc (days) | Quick-fit nominal excess speed (km/s) | Quick-fit RMS (″) | Rounded published orbit RMS (″) | Independently fitted e=1 RMS (″) | Fitted q (au) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| C/2004 D4 | 49 | 1.3383 | 47.3 | 98.4 | 48.40 | 22.47 | 0.00498 |
+| C/2005 D3 | 21 | 0.6622 | 133.0 | 68.18 | 43.13 | 28.17 | 0.00698 |
+| C/2006 S8 | 34 | 0.7167 | 72.6 | 40.10 | 90.60 | 35.49 | 0.00823 |
+| C/2006 S9 | 19 | 0.4333 | 325.4 | 43.9 | 74.53 | 37.61 | 0.00502 |
+
+The [independent orbit fitter](../soho_models.py) parses every optical direction and its paired MPC code 249 spacecraft vector. Adding that vector to ERFA's heliocentric Earth position gives the observer coordinate at each exposure. SOHO's geocentric range was 0.01084–0.01123 au across the sample. The prediction uses a two-body parabolic solar orbit at emission time with iterated light time. We vary perihelion distance, perihelion time, inclination, ascending node and argument of perihelion at fixed eccentricity, with equal weight per coordinate. The five parameters can vary substantially on a short arc. We use this calculation to test whether the extreme speed is necessary for a fit. It does not estimate an original barycentric energy or the probability of a particular energy.
+
+The angular RMS is the square root of the sum of squared east and north residuals divided by twice the number of positions, matching [the pinned Find_Orb routine](https://github.com/Bill-Gray/find_orb/blob/1de55cca12e7a585c9c7384acbb80538ea2afc3c/orb_func.cpp#L950). An unconstrained global least-squares optimum could always fit at least as well as a nested restricted model with the same residual definition and data. The three-second search's larger residual shows why its local formal uncertainty cannot decide the energy. The machine-readable [residuals, elements, input hashes and MPC receipts](results.json) accompany the four complete, unedited designation-specific observation excerpts in this directory.
+
+## Image and orbit history
 
 Each object already has identified coronagraph images, a published short observed arc and a known Kreutz-group classification. Planetary perturbations from a long solar-system passage cannot be inferred from these hours of near-Sun imaging. The comet's concentration of light can move as the nucleus loses material. An orbit formal error from a poorly fitting short-arc solution does not incorporate that systematic.
 
