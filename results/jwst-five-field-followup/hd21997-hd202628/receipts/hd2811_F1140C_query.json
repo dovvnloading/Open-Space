@@ -1,0 +1,23 @@
+{
+  "service": "Mast.Jwst.Filtered.Miri",
+  "format": "json",
+  "pagesize": 10000,
+  "page": 1,
+  "params": {
+    "columns": "fileName,targprop,targname,filter,observtn,exp_type,subarray,effexptm,publicReleaseDate",
+    "filters": [
+      {
+        "paramName": "program",
+        "values": [
+          "01536"
+        ]
+      },
+      {
+        "paramName": "filter",
+        "values": [
+          "F1140C"
+        ]
+      }
+    ]
+  }
+}

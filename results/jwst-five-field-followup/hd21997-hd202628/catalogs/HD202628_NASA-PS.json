@@ -1,0 +1,7 @@
+{
+  "query": "SELECT distinct pl_name,hostname,ra,dec FROM ps WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',319.6158800000,-43.3345100000,0.0125))",
+  "url": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+distinct+pl_name%2Chostname%2Cra%2Cdec+FROM+ps+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C319.6158800000%2C-43.3345100000%2C0.0125%29%29",
+  "response_sha256": "193572f62ea53bd4b6920896f67100b917ccde4a5b5e78a7fff24adce5e5d979",
+  "http_status": 200,
+  "retrieved_utc": "2026-11-17T08:21:41.105137+00:00"
+}

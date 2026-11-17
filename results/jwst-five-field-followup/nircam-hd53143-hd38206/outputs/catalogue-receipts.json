@@ -1,0 +1,58 @@
+[
+  {
+    "name": "HD53143-references",
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+DISTINCT+bibcode%2Ctitle%2Cdoi+FROM+ident+JOIN+has_ref+ON+ident.oidref%3Dhas_ref.oidref+JOIN+ref+ON+ref.oidbib%3Dhas_ref.oidbibref+WHERE+ident.id%3D%27Gaia+DR3+5479222240596469632%27+ORDER+BY+bibcode",
+    "rows": 192,
+    "sha256": "c0f434e3994129f9fd9691f72b91fe5bc6efd756f275b9e91a8056d4aab0b93f",
+    "utc": "2026-11-17T08:23:48.930596+00:00"
+  },
+  {
+    "name": "HD53143-gaia",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+source_id%2Cref_epoch%2Cra%2Cdec%2Cra_error%2Cdec_error%2Cparallax%2Cparallax_error%2Cpmra%2Cpmra_error%2Cpmdec%2Cpmdec_error%2Cphot_g_mean_mag%2Cruwe+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C104.9963%2C-61.3344%2C0.012%29%29",
+    "rows": 4,
+    "sha256": "6bb9320f478bbecb8213339121ee8a7b8d69e0bb60dba9fc258019c3fb80545d",
+    "utc": "2026-11-17T08:23:51.093981+00:00"
+  },
+  {
+    "name": "HD53143-2mass",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+designation%2Cra%2Cdec%2Ck_m%2Ck_cmsig%2Cph_qual+FROM+fp_psc+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C104.9963%2C-61.3344%2C0.005%29%29",
+    "rows": 1,
+    "sha256": "c106ee58b18d957f2461662c925be459fbd23fdb4cfb336d0a58afe99282dc34",
+    "utc": "2026-11-17T08:23:57.492910+00:00"
+  },
+  {
+    "name": "HD53143-allwise",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw2mpro%2Cw2sigmpro%2Cw2sat%2Ccc_flags+FROM+allwise_p3as_psd+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C104.9963%2C-61.3344%2C0.005%29%29",
+    "rows": 1,
+    "sha256": "08a4b546f8d6fdaff6e1e9ca4f8cac93642bd0785a6947517f92e7528bd4ba55",
+    "utc": "2026-11-17T08:24:06.306138+00:00"
+  },
+  {
+    "name": "HD38206-references",
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+DISTINCT+bibcode%2Ctitle%2Cdoi+FROM+ident+JOIN+has_ref+ON+ident.oidref%3Dhas_ref.oidref+JOIN+ref+ON+ref.oidbib%3Dhas_ref.oidbibref+WHERE+ident.id%3D%27Gaia+DR3+2967287596507432704%27+ORDER+BY+bibcode",
+    "rows": 123,
+    "sha256": "7d5613988fc5ec36181f9864e374b6c7059e56595863b2a8d5d33f29bd8bd3aa",
+    "utc": "2026-11-17T08:23:48.839113+00:00"
+  },
+  {
+    "name": "HD38206-gaia",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+source_id%2Cref_epoch%2Cra%2Cdec%2Cra_error%2Cdec_error%2Cparallax%2Cparallax_error%2Cpmra%2Cpmra_error%2Cpmdec%2Cpmdec_error%2Cphot_g_mean_mag%2Cruwe+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C85.8404%2C-18.5576%2C0.012%29%29",
+    "rows": 11,
+    "sha256": "2852da09593aa259f40e4cf3d3c4184db8d7e964660d4f26edc6d5c568568be3",
+    "utc": "2026-11-17T08:23:50.965947+00:00"
+  },
+  {
+    "name": "HD38206-2mass",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+designation%2Cra%2Cdec%2Ck_m%2Ck_cmsig%2Cph_qual+FROM+fp_psc+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C85.8404%2C-18.5576%2C0.005%29%29",
+    "rows": 1,
+    "sha256": "3f0c781c5dc5fa4d70a5e90bfcfa1306348a1e10ec8567e2840ed1cf0e181f28",
+    "utc": "2026-11-17T08:23:58.143275+00:00"
+  },
+  {
+    "name": "HD38206-allwise",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw2mpro%2Cw2sigmpro%2Cw2sat%2Ccc_flags+FROM+allwise_p3as_psd+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C85.8404%2C-18.5576%2C0.005%29%29",
+    "rows": 1,
+    "sha256": "34677a2ac7deddb3a80348aa1042af8ed6a409855c1649233e6711909e6edd7b",
+    "utc": "2026-11-17T08:24:05.320775+00:00"
+  }
+]
