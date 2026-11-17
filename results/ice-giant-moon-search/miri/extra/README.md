@@ -46,6 +46,13 @@ The 1604 edge visit contains three 108.227-second F1000W images separated by 11.
 
 The 1,197 cells cluster around two 2023 locations and five radial alias neighborhoods. No cell passes all three visits. The December 2, 2022 visit covers 972 cells and has no usable support for the remaining 225. At December 5, the apparent earlier F2550W counterparts lie on broad emission beside the central mask. Requiring the pixel to lie one further filter-specific PSF FWHM inside the support boundary leaves only three cells with adequate cross-year coverage. Their maximum rank is 0.160 of the threshold. **All 1,197 proposed associations fail this clearance test.** The unmasked 2023 F1000W features can be measured in single-visit images, with representative finite-aperture fluxes of 0.6–2.3 µJy and 5.2–6.5 µJy. Their three exposures provide too little sky motion for a secure orbital or sidereal classification. Neither feature establishes a two-visit detection. [All alias clearance and coverage tests](neptune_alias_validation.csv) · [Representative native photometry](neptune_alias_representatives.csv)
 
+In the middle F1000W exposure, **2023-11-30 13:36:09.673 UTC**, native Gaussian-plus-plane fits give the following coordinates in the pipeline ICRS WCS. Fit errors measure local centroid uncertainty. Absolute pointing uncertainty is additional because these frames have no independent astrometric recalibration here. All three reception times, native centroids and sky positions are available for follow-up. [Six astrometric measurements](neptune_single_visit_astrometry.csv) · [Native centroid fits](neptune_sky.py)
+
+| Single-visit feature | RA (deg) | Dec (deg) | Formal native fit error (x, y pixels) |
+|---|---:|---:|---:|
+| Inner 2023 location | 355.487373 | −3.318688 | 0.51, 0.60 |
+| Outer 2023 location | 355.485759 | −3.319674 | 0.89, 0.85 |
+
 ![Neptune single-visit F1000W features and the two earlier visits in F2100W and F2550W, with white pixels outside usable support](neptune_alias_stamps.png)
 
 The earlier program 1272 has separate image-plant depth curves. The 1604 cross-year adaptive screen has no dedicated injected-population limit. [Measured previous Neptune depths](../README.md)
@@ -65,4 +72,5 @@ python reject.py
 python depth.py /data/miri-extra /data/miri-headers
 python neptune_all.py /data/miri-extra /data/miri-headers
 python neptune_check.py /data/miri-extra /data/miri-headers
+python neptune_sky.py /data/miri-extra /data/miri-headers
 ```
