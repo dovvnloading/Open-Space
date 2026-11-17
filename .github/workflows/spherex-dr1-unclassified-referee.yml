@@ -7,6 +7,9 @@ on:
       - results/spherex-dr1-unclassified-spectra/**
       - README.md
   workflow_dispatch:
+concurrency:
+  group: spherex-dr1-unclassified-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
