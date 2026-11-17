@@ -1,0 +1,100 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-17T04:37:20 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-17T04:37:20	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJS%2F224%2F24&-c=150.122033+%2B2.323386208&-c.rs=3&-out.add=_r&-sort=_r&-out.max=8	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=150.122033+02.323386,rs=3.	
+#Constraint -out.max=8
+
+#RESOURCE=yCat_22240024
+#Name: J/ApJS/224/24
+#Title: The COSMOS2015 catalog (Laigle+, 2016)
+#INFO	ivoid=ivo://cds.vizier/j/apjs/224/24	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/apjs/224/24	    IVOID of underlying data collection
+#INFO	creator=Laigle C.	    First author or institution
+#INFO	cites=bibcode:2016ApJS..224...24L	    Article or Data origin sources
+#INFO	journal=ApJS	    Journal name
+#INFO	original_date=2016	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJS/224/24	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.22240024	    Dataset identifier that can be used for citation
+#INFO	publication_date=2022-07-08	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_ApJS_224_24_cosmos2015:
+#Name: J/ApJS/224/24/cosmos2015
+#Title: *The full COSMOS2015 catalog
+#Column	_r	(F5.3)	Distance from center (150.12203300+02.32338621)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	RAJ2000	(F12.8)	[149.2/151.1] Right ascension (J2000) (ALPHA_J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F12.8)	[1.4/3.1] Declination (J2000) (DELTA_J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	Seq	(I7)	[1/1182108] Identifier (NUMBER)	[ucd=meta.id;meta.main]
+#Column	Area	(I1)	Flag on ultraVISTA area (0=UltraVISTA area, >=1 out of UltraVISTA) (FLAG_HJMCC) (1)	[ucd=meta.code]
+#Column	Sat	(I2)	Saturated objects and bad areas (0=good area, >=1 masked in optical broad-bands) (FLAG_PETER) (1)	[ucd=meta.code]
+#Column	Cfl	(I1)	1=2deg^2^ COSMOS area (FLAG_COSMOS) (1)	[ucd=meta.code]
+#Column	Deep	(I1)	UltraVISTA Ultra-deep stripes flag (1=Ultra-deep stripes, 0=deep stripes) (FLAG_DEEP) (1)	[ucd=meta.code]
+#Column	Flag	(I1)	[0/1] Shallow flag (FLAG_SHALLOW)	[ucd=meta.code]
+#Column	Ksmag	(F8.4)	[10.7/32]? UltraVISTA DR2 Ks-band (AB) magnitude in automatic aperture (Ks_MAG_AUTO) (2)	[ucd=phot.mag;em.IR.K]
+#Column	e_Ksmag	(F10.4)	[0/598]? Ksmag uncertainty (Ks_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	Ymag	(F8.4)	[10.2/32]? UltraVISTA DR2 Y-band (AB) magnitude in automatic aperture (Y_MAG_AUTO) (2)	[ucd=phot.mag;em.IR.J]
+#Column	e_Ymag	(F9.4)	[0/186]? Ymag uncertainty (Y_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	Hmag	(F8.4)	[10.3/32]? UltraVISTA DR2 H-band (AB) magnitude in automatic aperture (H_MAG_AUTO) (2)	[ucd=phot.mag;em.IR.H]
+#Column	e_Hmag	(F10.4)	[0/272]? Hmag uncertainty (H_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	Jmag	(F8.4)	[10.5/32]? UltraVISTA DR2 J-band (AB) magnitude in automatic aperture (J_MAG_AUTO) (2)	[ucd=phot.mag;em.IR.J]
+#Column	e_Jmag	(F10.4)	[0/200]? Jmag uncertainty (J_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	Bmag	(F7.4)	[13.4/32]? Subaru/SuprimeCam B-band (AB) magnitude in automatic aperture (B_MAG_AUTO) (2)	[ucd=phot.mag;em.opt.B]
+#Column	e_Bmag	(F10.4)	[0.0002/150]? Bmag uncertainty (B_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	Vmag	(F7.4)	[13.2/32]? Subaru/SuprimeCam V-band (AB) magnitude in automatic aperture (V_MAG_AUTO)	[ucd=phot.mag;em.opt.V]
+#Column	e_Vmag	(F10.4)	[0.0002/202]? Vmag uncertainty (V_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	ipmag	(F7.4)	[13.4/32]? Subaru/SuprimeCam i^+^-band (AB) magnitude in automatic aperture (ip_MAG_AUTO) (2)	[ucd=phot.mag;em.opt.I]
+#Column	e_ipmag	(F10.4)	[0.0002/197]? ipmag uncertainty (ip_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	rmag	(F7.4)	[13.5/32]? Subaru/SuprimeCam r-band (AB) magnitude in automatic aperture (r_MAG_AUTO) (2)	[ucd=phot.mag;em.opt.R]
+#Column	e_rmag	(F11.4)	[0.0002/141]? rmag uncertainty (r_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	umag	(F8.4)	[-26.1/32]? CFHT u-band (AB) magnitude in automatic aperture (u_MAG_AUTO) (2)	[ucd=phot.mag;em.opt.U]
+#Column	e_umag	(E10.3)	[1e-13/156]? umag uncertainty (u_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	zpmag	(F7.4)	[13.2/32]? zp-band (AB) magnitude in automatic aperture (zp_MAG_AUTO) (2)	[ucd=phot.mag;em.opt.I]
+#Column	e_zpmag	(E10.3)	[9.2e-05/384]? zpmag uncertainty (zp_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	zppmag	(F7.4)	[13/32]? Subaru/SuprimeCam z++ (AB) magnitude in automatic aperture (zpp_MAG_AUTO) (2)	[ucd=phot.mag;em.opt.I]
+#Column	e_zppmag	(E10.3)	[3.6e-05/487]? zppmag uncertainty (zpp_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	3.6mag	(F8.4)	[12.5/32]? SPLASH Spitzer/IRAC 3.6um (AB) magnitude (SPLASH_1_MAG) (2)	[ucd=phot.mag;em.IR.3-4um]
+#Column	e_3.6mag	(F10.4)	[0.0007/1162]? 3.6mag uncertainty (SPLASH_1_MAGERR)	[ucd=stat.error]
+#Column	4.5mag	(F8.4)	[13.2/32]? SPLASH Spitzer/IRAC 4.5um (AB) magnitude (SPLASH_2_MAG) (2)	[ucd=phot.mag;em.IR.4-8um]
+#Column	e_4.5mag	(F11.4)	[0.001/24437]? 4.5mag uncertainty (SPLASH_2_MAGERR)	[ucd=stat.error]
+#Column	5.8mag	(F8.4)	[13/31.6]? SPLASH Spitzer/IRAC 5.8um (AB) magnitude (SPLASH_3_MAG)	[ucd=phot.flux.density;em.IR.4-8um]
+#Column	e_5.8mag	(F9.4)	[-2.7/5250]? 5.8mag uncertainty (SPLASH_3_MAGERR)	[ucd=stat.error]
+#Column	8.0mag	(F8.4)	[12.6/31.6]? SPLASH Spitzer/IRAC 8.0um (AB) magnitude (SPLASH_4_MAG)	[ucd=phot.flux.density;em.IR.8-15um]
+#Column	e_8.0mag	(F9.4)	[-0.4/6945]? 8.0mag uncertainty (SPLASH_4_MAGERR)	[ucd=stat.error]
+#Column	Hwmag	(F7.4)	[11.7/32]? CFHT/WIRCam H-band (AB) magnitude in automatic aperture (Hw_MAG_AUTO) (2)	[ucd=phot.mag;em.IR.H]
+#Column	e_Hwmag	(F11.4)	[0/2281]? Hwmag uncertainty (Hw_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	Kswmag	(F7.4)	[9.7/32]? CFHT/WIRCam Ks-band (AB) magnitude in automatic aperture (Ksw_MAG_AUTO) (2)	[ucd=phot.mag;em.IR.K]
+#Column	e_Kswmag	(F11.4)	[0/1606]? Kswmag uncertainty (Ksw_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	yHmag	(F7.4)	[11.7/32]? Subaru Hyper Suprime-Cam Y-band (AB) magnitude (yHSC_MAG_AUTO) (2)	[ucd=phot.mag;em.IR.J]
+#Column	e_yHmag	(E10.3)	[0/739]? yHmag uncertainty (yHSC_MAGERR_AUTO)	[ucd=stat.error;phot.mag]
+#Column	24mag	(F8.4)	[11.1/19.5]? Spitzer/MIPS 24um (AB) magnitude (MAG_24)	[ucd=phot.flux.density;em.IR.15-30um]
+#Column	e_24mag	(F8.4)	[0.005/1]? 24mag uncertainty (MAGERR_24)	[ucd=stat.error]
+#Column	ID24um	(I6)	[289/122265]? ID in the 24um catalog Le Floc'h+ (2009ApJ...703..222L) (ID_A24)(4)	[ucd=meta.id.cross]
+#Column	ID2006	(I8)	[0/3234777]? Match from the 1st version from Capak+ 2007, II/284 (ID2006 )	[ucd=meta.id.cross]
+#Column	ID2008	(I8)	[866/2032228]? Match from the 2nd version from Capak+ 2007 - see Ilbert+, 2009, J/ApJ/690/1236 (ID2008 )	[ucd=meta.id.cross]
+#Column	ID2013	(I7)	[1/339381]? Match from Ilbert+ 2013, J/A+A/556/A55 (ID2013 )	[ucd=meta.id.cross]
+#Column	NUVmag	(F8.4)	[13/29.2]? GALEX NUV (AB) magnitude (MAG_GALEX_NUV) (6)	[ucd=phot.mag;em.UV]
+#Column	e_NUVmag	(F8.4)	[0.003/160]? NUVmag uncertainty (MAGERR_GALEX_NUV)	[ucd=stat.error;phot.mag]
+#Column	FUVmag	(F8.4)	[14.6/28.1]? GALEX FUV (AB) magnitude (MAG_GALEX_FUV) (6)	[ucd=phot.mag;em.UV]
+#Column	e_FUVmag	(F8.4)	[0.009/134]? FUVmag uncertainty (MAGERR_GALEX_FUV)	[ucd=stat.error;phot.mag]
+#Column	zphot	(F7.3)	[-99.9/9.99]? Photometric z (0 if star; 9.99 if Xray; -99.9 if masked area otherwise zPDF) (PHOTOZ) (9)	[ucd=src.redshift.phot]
+#Column	OType	(I2)	Type=0 if galaxy, 1=star, 2=X-ray source, -9=failure in the fit (TYPE_) (8)	[ucd=meta.code]
+#Column	Age	(E9.2)	[5e+07/1.3e+10]? Best fit BC03 model at zPDF age (AGE ) (12)	[ucd=stat.param;meta.modelled]
+#Column	Mass	(F7.2)	[-99/13]? log Stellar mass from BC03 best-fit template; taken at the minimum chi2 (MASS_BEST)	[ucd=phys.mass]
+#Column	SFR	(F7.2)	[-99/4.2]? log SFR from BC03 best-fit template; taken at the minimum chi2 (SFR_BEST) (13)	[ucd=phys.SFR]
+#Column	Lnuv	(F7.2)	[21.9/32.1]? log NUV luminosity in erg/s/Hz (L_NU)	[ucd=phys.luminosity;em.UV]
+#Column	Lr	(F7.2)	[23.6/32]? log r-band luminosity in erg/s/Hz (L_R_)	[ucd=phys.luminosity]
+#Column	Lk	(F7.2)	[23.3/32.1]? log K-band luminosity in erg/s/Hz (L_K_)	[ucd=phys.luminosity;em.IR.K]
+_r	RAJ2000	DEJ2000	Seq	Area	Sat	Cfl	Deep	Flag	Ksmag	e_Ksmag	Ymag	e_Ymag	Hmag	e_Hmag	Jmag	e_Jmag	Bmag	e_Bmag	Vmag	e_Vmag	ipmag	e_ipmag	rmag	e_rmag	umag	e_umag	zpmag	e_zpmag	zppmag	e_zppmag	3.6mag	e_3.6mag	4.5mag	e_4.5mag	5.8mag	e_5.8mag	8.0mag	e_8.0mag	Hwmag	e_Hwmag	Kswmag	e_Kswmag	yHmag	e_yHmag	24mag	e_24mag	ID24um	ID2006	ID2008	ID2013	NUVmag	e_NUVmag	FUVmag	e_FUVmag	zphot	OType	Age	Mass	SFR	Lnuv	Lr	Lk
+arcsec	deg	deg	 	 	 	 	 	 	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	mag	 	 	 	 	mag	mag	mag	mag	 	 	 	 	 	 	 	
+-----	------------	------------	-------	-	--	-	-	-	--------	----------	--------	---------	--------	----------	--------	----------	-------	----------	-------	----------	-------	----------	-------	-----------	--------	----------	-------	----------	-------	----------	--------	----------	--------	-----------	--------	---------	--------	---------	-------	-----------	-------	-----------	-------	----------	--------	--------	------	--------	--------	-------	--------	--------	--------	--------	-------	--	---------	-------	-------	-------	-------	-------
+0.224	150.12208190	+02.32342463	 674418	0	 0	1	1	0	 23.4064	    0.0371	 23.4888	   0.0172	 23.5030	    0.0441	 23.5708	    0.0303	25.0206	    0.0438	24.4169	    0.0423	23.7859	    0.0266	24.0697	     0.0302	 24.8833	 2.053e-02	23.7138	 5.478e-02	23.6952	 2.397e-02	 23.7066	    0.0311	 23.8081	     0.0410	        	         	        	         	23.8911	     0.2482	23.3908	     0.1632	23.5418	 6.264e-02	        	        	      	 1993357	 1241416	 198941	 25.5034	  0.2720	 25.6423	  0.2752	  0.544	 0	 6.41e+08	   8.52	  -0.26	  27.86	  28.08	  28.06
+

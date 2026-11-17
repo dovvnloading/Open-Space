@@ -1,0 +1,10 @@
+{
+  "candidate_identifications.csv": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+a.id%2Cb.main_id%2Cb.otype%2Cb.sp_type%2Cb.ra%2Cb.dec+FROM+ident+AS+a+JOIN+basic+AS+b+ON+b.oid%3Da.oidref+WHERE+id+IN+%28%27Gaia+DR3+3378588057203660160%27%2C%27Gaia+DR3+1830677037678583680%27%2C%27Gaia+DR3+4661290764764683776%27%2C%27Gaia+DR3+275582835635329024%27%2C%27Gaia+DR3+902085660651149440%27%2C%27Gaia+DR3+2077800002648034944%27%2C%27Gaia+DR3+2130638481326861824%27%2C%27Gaia+DR3+4658457941738020736%27%2C%27Gaia+DR3+5713565792393224960%27%29",
+    "sha256": "3b7e76a0356d590a63e2769a2f59c6141d380699f940a614ef6c953eb8dfc7a3"
+  },
+  "hd264291_bibliography.csv": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+r.bibcode%2Cr.title+FROM+ident+AS+a+JOIN+has_ref+AS+h+ON+a.oidref%3Dh.oidref+JOIN+ref+AS+r+ON+r.oidbib%3Dh.oidbibref+WHERE+a.id%3D%27Gaia+DR3+3378588057203660160%27",
+    "sha256": "0ce79cc6e0abec2066d5823599b1684813172f63f1d4c9fd68ca5ab7aa429411"
+  }
+}

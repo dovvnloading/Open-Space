@@ -1,0 +1,51 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-17T04:38:55 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-17T04:38:55	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F633%2FA159&-c=150.122033+%2B2.323386208&-c.rs=100&-out.add=_r&-sort=_r&-out.max=8	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=150.122033+02.323386,rs=100.	
+#Constraint -out.max=8
+
+#RESOURCE=yCat_36330159
+#Name: J/A+A/633/A159
+#Title: Bright Lyman-alpha emitters in MUSE/COSMOS field (Rosani+, 2020)
+#INFO	ivoid=ivo://cds.vizier/j/a+a/633/a159	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/a+a/633/a159	    IVOID of underlying data collection
+#INFO	creator=Rosani G.	    First author or institution
+#INFO	cites=bibcode:2020A&A...633A.159R	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2020	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/633/A159	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.36330159	    Dataset identifier that can be used for citation
+#INFO	publication_date=2022-06-23	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_A_A_633_A159_tablea1:
+#Name: J/A+A/633/A159/tablea1
+#Title: Full MUSE redshift catalogue
+#Column	_r	(F7.3)	Distance from center (150.1220330+02.323386208)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	ID	(A5)	SMUVS/MUSE ID (NNNNN) or MUSE/NS ID (NSNNN) of the source	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F11.7)	Observed right ascension (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F13.9)	Observed declination (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	z	(F7.4)	spectroscopic redshift	[ucd=src.redshift]
+#Column	q_z	(I1)	[2/9] Redshift quality flag (1)	[ucd=meta.code.qual;src.redshift]
+#Column	SimbadName	(f)	Simbad column added by the CDS	[ucd=meta.id]
+_r	ID	RAJ2000	DEJ2000	z	q_z	SimbadName
+arcsec	 	deg	deg	 	 	
+-------	-----	-----------	-------------	-------	-	---------------
+  0.124	90474	150.1220617	+02.323405500	 0.5067	3	[RCC2020] 90474
+  6.003	90216	150.1224985	+02.321784900	 1.4312	9	[RCC2020] 90216
+  8.794	90211	150.1204337	+02.321538700	 0.4952	3	[RCC2020] 90211
+ 10.148	91187	150.1195052	+02.322134300	 0.6041	3	[RCC2020] 91187
+ 10.861	NS107	150.1216946	+02.320388333	 4.5356	9	[RCC2020] NS107
+ 11.391	91120	150.1190731	+02.324511300	 0.6044	3	[RCC2020] 91120
+ 11.881	90183	150.1197408	+02.321010000	 0.4954	3	[RCC2020] 90183
+ 12.164	90732	150.1249195	+02.325146600	 0.2493	9	[RCC2020] 90732
+

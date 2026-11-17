@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 188 entries: 87 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 16 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 190 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 16 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -160,6 +160,8 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Stars, binaries and multiple-star systems
 
+- **Gaia and LAMOST confirm a long binary orbit, not a dark companion.** Eighteen nights of independent spectra follow HD 264291 through its 1,007-day orbit. The inferred companion is 1.77 solar masses only under a no-companion-light model; two normal dwarfs are still possible. Another giant's inferred minimum crosses three solar masses when its stellar mass model changes. Neither case is an identified black hole or neutron star. *Measured* · [Data and limits](results/gaia-nss-dark-companions/README.md)
+
 - **A high-speed star may escape the Milky Way.** DESI DR1 and Gaia DR3 give source 1717410430709663616 a Galactocentric speed of 697 km/s. All 4,096 draws escape in two reference Galactic potentials but remain bound in a heavier halo. The DESI velocity has only one epoch (binary motion untested), the modeled trajectory crosses the disk, but its origin remains open, and discovery priority remains open. *Candidate* · [Details](results/dr1-dr19-unbound-stars/README.md)
 
 - **No verified laser-like emission in a targeted DESI DR1 stellar search.** All 10 persistent narrow residuals in 190 audited repeat-observed stars match the stellar Li I doublet; five independent-field stars reproduced a template false positive on separate nights. Per-star conditional laser-power limits are provided. This does not constrain unsearched fields or intermittent emitters. *Null result* · [Details](results/desi_dr1_optical_seti/README.md)
@@ -291,6 +293,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Galaxies and the distant universe
 
+- **Two galaxies brightened at their centers in JWST images (2026).** One in COSMOS brightened in eight infrared filters; another in GOODS-S brightened in five. Independent exposures confirm the changes, but neither is a classified supernova or black-hole flare. A spectrum during activity and another JWST visit are needed to determine what happened. A separate search found no confirmed event at the tested positions of galaxies beyond redshift five. *Measured* · [Details](results/jwst-repeat-imaging-transients/README.md)
 - **A seven-month echo from the gravitational lens J0826+7002.** *Measured* · [Details](results/j0826-lens-delay/README.md)
 - **No invisible lensing galaxy confirmed in a Euclid Q1 search.** All 312 published strong-lens candidates with usable fitted radii retain central visible light after subtracting the modelled lensed source. A separate search of 0.083374 square degrees found no confirmed dark lens; injection tests show limited sensitivity to open arcs. One unusually high mass-to-light candidate depends on uncertain redshifts and competing image interpretations. *Null result* · [Details](results/euclid_q1_dark_lenses/README.md)
 - **Three quasars behind the same foreground gas.** Strong magnesium absorption at nearly the same distance appears across 2.5 million parsecs. *Candidate* · [Details](results/mgii-j0108-environment/README.md)
@@ -335,6 +338,8 @@ Some multi-part investigations also keep index pages and search logs: [15 Nov ar
 - **Honest limits.** These results have not been peer reviewed. "No earlier report found" means our literature search found none, not that priority is guaranteed. Candidates need independent confirmation. Corrections, confirmations and refutations are all welcome.
 
 ## For researchers and developers
+
+The [DR20 AGN pilot methods and calibration checks](results/dr20-clagn-pilot/README.md) document a bounded multi-epoch spectroscopy experiment.
 
 The [cold-neighbour search methods and reproduction evidence](results/cold-neighbours-motion-selected/README.md) document bounded catalogue and image tests.
 
