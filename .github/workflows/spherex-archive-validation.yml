@@ -77,6 +77,8 @@ jobs:
               unzip -oq wise/archive_inputs.zip -d wise/archive
               if [ ! -f imaging/viewer_queries.json ]; then python imaging/neighborhoods.py; fi
               cp imaging/*neighborhood*.csv imaging/*queries.json imaging/optical_unwise.jpg "$product/"
+              python -m pip -q install pyflakes
+              python -m pyflakes imaging/atlas.py
               python imaging/atlas.py
               cp imaging/atlas.png imaging/centroids.csv imaging/queries.json "$product/"
               (cd imaging && zip -q -r "$product/atlas_inputs.zip" stamp_cache)

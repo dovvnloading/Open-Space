@@ -1,7 +1,7 @@
 """Locate the WISE emission on native AllWISE Atlas pixels."""
 from concurrent.futures import ThreadPoolExecutor
 import csv
-import datetime
+import datetime as dt
 import gzip
 import hashlib
 import io
@@ -10,7 +10,6 @@ from pathlib import Path
 import sys
 from urllib.request import urlopen
 from urllib.parse import urlencode
-import time
 import numpy as np
 from scipy.optimize import least_squares
 
