@@ -4,7 +4,7 @@ from itertools import combinations
 import numpy as np
 from scipy.ndimage import map_coordinates,maximum_filter,uniform_filter
 from common import CACHE,HERE,MOTION,HALF,N,world
-from search_patch import MAG,SEED,sources,psf_field,wilson
+from search_patch import MAG,SEED,sources,psf_field,wilson,injected_psf
 from dense import R,kernel,score_tile
 
 def main():
@@ -53,7 +53,7 @@ def main():
             src=[]
             for h,q in enumerate(pair):
                 ox,oy=m[h];x0=draws[k,0]-xx[k]+ox;y0=draws[k,1]-yy[k]+oy
-                src.append(map_coordinates(P[q],[dy[None]-y0[:,None,None]+11,dx[None]-x0[:,None,None]+11],order=1,prefilter=False))
+                src.append(injected_psf(P[q],dx[None],dy[None],x0[:,None,None],y0[:,None,None]))
             src=np.array(src).transpose(1,0,2,3)
             ne=counts[pair][None,:,None,None]
             for p,mag in enumerate(MAG):

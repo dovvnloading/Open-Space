@@ -38,6 +38,12 @@ The absolute CALSPEC solar spectrum integrated through the measured passband giv
 
 For the compact, low-albedo five-Earth-mass model the empirical coverage-scaled whole-grid sensitivity is 7.2%. For the extended ten-Earth-mass model at the same albedo it is 40.2%. These are finite-grid results for this date, model and field mask. They include neither a continuous-orbit prior nor the complementary coverage of other epochs. All 30 radius and albedo combinations are in `model_recovery.csv`.
 
+## Exact DES–Euclid misses
+
+We reused the saved 6D state vectors of the dark 5 Earth-mass, 2.71 Earth-radius, albedo-0.10 planets that both DES and Euclid missed in their matched experiment. The three published-centroid draws predicted N395 AB 24.87–25.04. Only one survived the original N395 mask, with real S/N +0.57, and its artificial planet missed on all 64 repeated Poisson and empirical-PSF trials. The twelve centroid-perturbed misses predicted AB 23.86–24.91. Six were eligible, four lay in the Legacy stationary-object mask and two fell outside the tested CCDs or their edge margins. Their eligible raw pixel S/N ranged from −1.80 to +1.02. None of the six first seeded injections passed. For stress draw 389 (AB 23.86) three of 64 repeats passed, and none passed for the other five. This visit added zero recoveries on the predefined first realization of those 15 specific missed states. Their limited sensitivity and masks account for the remaining uncertainty.
+
+The per-draw N395 position, magnitude, selection, real-data S/N and artificial-source response are in `paired_misses.csv`. Append `--paired-root /path/to/research/result` to the injection command to reproduce them. The paired root contains `archives/planet_draws.csv.gz` and `orbits/euclid/paired_trials.csv.gz`. The original two-survey experiments and this narrow-band check are linked by draw number and saved orbit rather than independent per-survey efficiencies.
+
 ## Reproduction
 
 The catalogue and XP response are bundled as compressed raw responses. The input SHA-256 in `receipts.json` applies to their decompressed bytes. That file also identifies the authors' source archive, the optical input FITS and mask, the two Legacy reference images and the CALSPEC solar spectrum. To recreate `bandpass.csv`, pass the downloaded arXiv source archive to `python bandpass.py PATH_TO_ARCHIVE` (PyMuPDF and NumPy). The published PDF vector is sampled directly; the response outside its available wavelength interval is taken to be zero.

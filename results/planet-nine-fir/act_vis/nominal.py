@@ -3,7 +3,7 @@ import csv,json
 import numpy as np
 from scipy.ndimage import map_coordinates,uniform_filter
 from common import CACHE,HERE,MOTION,HALF,N
-from search_patch import psf_field,sources
+from search_patch import psf_field,sources,injected_psf
 from dense import R,kernel,score_tile
 
 def main():
@@ -29,7 +29,7 @@ def main():
     score=float((coeff*ds).sum())
     assert abs(float(z[HALF,HALF])-score)<.0001
     off=np.arange(-R,R+1);dx,dy=np.meshgrid(off,off)
-    src=np.array([map_coordinates(p,[dy-oy+11,dx-ox+11],order=1,prefilter=False) for (ox,oy),p in zip(bank[0],psf)])
+    src=np.array([injected_psf(p,dx,dy,ox,oy) for (ox,oy),p in zip(bank[0],psf)])
     # A gray 5 M_earth object with 2.71 R_earth at 300 au and p=0.1.
     vis=-26.986100831142572-2.5*np.log10(.1*(2.71*6371/149597870.7)**2/(300**4))
     mags=np.array([vis,22.,23.,24.,24.5,25.,25.25,25.5,25.75,26.,26.5,27.])

@@ -11,6 +11,16 @@ from offgrid import scores,wilson
 MAG=np.array([20.,21.,22.,23.,23.5,24.,24.5,25.,25.5,26.,26.5,27.])
 SEED=264206
 
+def injected_psf(profile, dx, dy, xcenter, ycenter):
+    # Mean motion during each 560.52 s exposure is constant on this short arc.
+    drift=(MOTION[-1]-MOTION[0])*(560.52/86400)/(T.mjd[-1]-T.mjd[0])
+    stamps=[]
+    for f in (-.375,-.125,.125,.375):
+        stamps.append(map_coordinates(profile,[dy-ycenter-f*drift[1]+11,dx-xcenter-f*drift[0]+11],
+                                     order=1,prefilter=False))
+    return np.mean(stamps,axis=0)
+
+
 def sources():
     pts=[]
     for name in ('ps1','ls_dr10','des_dr2','gaia'):
@@ -118,7 +128,7 @@ def main():
         src=[]
         for i,(ox,oy) in enumerate(MOTION):
             px=draws[k,0]-ix[k]+ox;py=draws[k,1]-iy[k]+oy
-            src.append(map_coordinates(psf[i],[dy[None]-py[:,None,None]+11,dx[None]-px[:,None,None]+11],order=1,prefilter=False))
+            src.append(injected_psf(psf[i],dx[None],dy[None],px[:,None,None],py[:,None,None]))
         src=np.array(src).transpose(1,0,2,3)
         truth[k],_=scores(ds,ws,src,ks,counts,SEED+j+1,MAG,threshold[iy[k],ix[k]])
     with (HERE/'injections.csv').open('w',newline='') as f:

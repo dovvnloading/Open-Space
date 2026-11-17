@@ -40,6 +40,14 @@ def main():
                          ('either', sum(e for a,b,e in detections)),
                          ('neither', sum(1-e for a,b,e in detections))]:
                 assert reported[k] == v, (experiment, name, k)
+    model = 'mass5_R2.71_p0.10'
+    missed_keys = {(r['experiment'], int(r['draw'])) for r in trial_rows
+                   if not int(r['either_found_' + model])}
+    with (ROOT/'n395_cal/paired_misses.csv').open() as stream:
+        blue = list(csv.DictReader(stream))
+    assert {(r['experiment'], int(r['draw'])) for r in blue} == missed_keys
+    assert len(blue) == 15 and sum(int(r['eligible']) for r in blue) == 7
+    assert not any(int(r['recovered'] or 0) for r in blue)
     controls = read('historical/scanpi/all_scan_tracks.json')
     assert controls['grid_size'] == 3617
     assert controls['grid_meeting_flux_threshold_in_both_groups']['0.05'] == 0
@@ -61,7 +69,7 @@ def main():
     assert len(fields) == 46
     assert {k:r['threshold_crossings'] for k,r in fields.items() if r['threshold_crossings']} == {'RR-h270':2}
     assert sum(r['eligible'] for k,r in fields.items() if k.startswith('ACT')) == 9411
-    for manifest in [ROOT/'orbits/SHA256SUMS',ROOT/'wise_vet/SHA256SUMS']:
+    for manifest in [ROOT/'orbits/SHA256SUMS',ROOT/'wise_vet/SHA256SUMS', ROOT/'act_vis/SHA256SUMS']:
         for line in manifest.read_text().splitlines():
             digest, name = line.split(maxsplit=1)
             data = (manifest.parent / name.strip().lstrip('*')).read_bytes()

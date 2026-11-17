@@ -40,6 +40,7 @@ def main():
     ap.add_argument('--optical-dir',type=Path,required=True)
     ap.add_argument('--orbit-dir',type=Path,required=True)
     ap.add_argument('--cache',type=Path,required=True)
+    ap.add_argument('--paired-root',type=Path,help='Replay the dark-model DES–Euclid misses using the saved state vectors.')
     args=ap.parse_args()
     sys.path[:0]=[str(args.optical_dir),str(args.orbit_dir)]
     from decam_difference import sky_subtract,psf_stars,sample,mad,register,placed
@@ -47,6 +48,20 @@ def main():
     stars=list(csv.DictReader((ROOT/'standards.csv').open()))
     rng=np.random.default_rng(50723)
     states=propagate.family(json.loads((args.orbit_dir/'orbit_input.json').read_text()))
+    nominal=states
+    paired=None
+    if args.paired_root:
+        with gzip.open(args.paired_root/'archives/planet_draws.csv.gz','rt') as f:
+            des={(r['experiment'],r['draw']):r for r in csv.DictReader(f)}
+        with gzip.open(args.paired_root/'orbits/euclid/paired_trials.csv.gz','rt') as f:
+            prior=list(csv.DictReader(f))
+        misses=[r for r in prior if int(r['either_found_mass5_R2.71_p0.10'])==0]
+        design=[des[(r['experiment'],r['draw'])] for r in misses]
+        assert all(int(r['hit_mass5_R2.71_p0.10'])==0 for r in design)
+        def columns(keys):return np.array([[float(r[k]) for k in keys] for r in design])
+        states=(columns(['x_au','y_au','z_au']),columns(['vx_au_d','vy_au_d','vz_au_d']),
+                columns(['reference_emission_tt_days_since_j2000'])[:,0],{})
+        paired=[dict(experiment=r['experiment'],draw=int(r['draw'])) for r in design]
     mags=np.arange(21.,24.51,.25)
     model_rng=np.random.default_rng(507231)
     model_trials=[]
@@ -76,7 +91,14 @@ def main():
         delta=propagate.norm(position-baryobs)
         a0,d0=propagate.sky(states,start)
         a1,d1=propagate.sky(states,start+duration)
-        ids=rng.choice(len(ra),320,replace=False)
+        ids=rng.choice(len(ra),320,replace=False) if paired is None else np.arange(len(ra))
+        reference_ra,reference_dec=propagate.sky(nominal,start+duration/2)
+        if paired is not None:
+            for j,r in enumerate(paired):
+                r.update(ra_deg=float(ra[j]),dec_deg=float(dec[j]),heliocentric_au=float(helio[j]),range_au=float(delta[j]),
+                    N395_AB=float(sunmag-2.5*np.log10(.1*(2.71*6371e3/astronomical_unit/(helio[j]*delta[j]))**2)),
+                    ccd=None,selection='outside tested CCDs or their edge margins',real_snr=None,eligible=0,
+                    injected_snr=None,post_injection_sharp_reject=None,recovered=0)
         for ccd in [15,21]:
             im=fi[ccd].data;dq=fd[ccd].data;h=fi[ccd].header;w=WCS(h)
             fit=[r for r in stars if r['selection']=='accepted' and int(r['ccd'])==ccd]
@@ -86,8 +108,10 @@ def main():
             left,bot=w.world_to_pixel_values(a0,d0);right,top=w.world_to_pixel_values(a1,d1)
             trailx=right-left;traily=top-bot
             ins=(xx>=40)&(yy>=40)&(xx<im.shape[1]-40)&(yy<im.shape[0]-40)
-            xs=np.arange(max(0,int(min(xx[ins])-140)),min(im.shape[1],int(max(xx[ins])+140)))
-            ys=np.arange(max(0,int(min(yy[ins])-140)),min(im.shape[0],int(max(yy[ins])+140)))
+            nx,ny=w.world_to_pixel_values(reference_ra,reference_dec)
+            nins=(nx>=40)&(ny>=40)&(nx<im.shape[1]-40)&(ny<im.shape[0]-40)
+            xs=np.arange(max(0,int(min(nx[nins])-140)),min(im.shape[1],int(max(nx[nins])+140)))
+            ys=np.arange(max(0,int(min(ny[nins])-140)),min(im.shape[0],int(max(ny[nins])+140)))
             xx-=xs[0];yy-=ys[0]
             bad=dq[np.ix_(ys,xs)]!=0
             im=np.nan_to_num(sky_subtract(np.where(bad,np.nan,im[np.ix_(ys,xs)])))
@@ -104,8 +128,18 @@ def main():
             fm=signal.fftconvolve(im,kernel[::-1,::-1],mode='same')/norm
             zero=np.median(fm[~mask]);noise=mad(fm[~mask])
             good=ins&(sample(mask.astype('f4'),xx,yy)==0)
+            if paired is not None:
+                for j in np.where(ins)[0]:
+                    r=paired[j];r['ccd']=ccd
+                    if not (0<=xx[j]<im.shape[1] and 0<=yy[j]<im.shape[0]):
+                        r['selection']='beyond reference search window';continue
+                    r['real_snr']=float((sample(fm,[xx[j]],[yy[j]])[0]-zero)/noise)
+                    r['eligible']=int(good[j])
+                    if good[j]:r['selection']='eligible'
+                    elif sample(fixed.astype('f4'),[xx[j]],[yy[j]])[0]>0:r['selection']='static Legacy g mask'
+                    else:r['selection']='DQ, sharp-feature, registration or edge mask'
             scored=(sample(fm,xx[good],yy[good])-zero)/noise
-            candidates.append(dict(ccd=ccd,valid=int(good.sum()),above_5p5=int((scored>=5.5).sum()),max_snr=float(max(scored))))
+            candidates.append(dict(ccd=ccd,valid=int(good.sum()),above_5p5=int((scored>=5.5).sum()),max_snr=float(max(scored)) if len(scored) else None))
             center=kernel.shape[0]//2
             rad=np.hypot(*np.mgrid[-center:center+1,-center:center+1])
             pr=np.hypot(*np.mgrid[-15:16,-15:16])
@@ -113,7 +147,7 @@ def main():
                     stellar_peak_range=[float(min(p.max() for p in references)),float(max(p.max() for p in references))],
                     old_kernel_fraction_r2=float(kernel[rad<=2].sum()),
                     stellar_fraction_r2=[float(p[pr<=2].sum()) for p in references],
-                    trail_length_px_range=[float(np.hypot(trailx[good],traily[good]).min()),float(np.hypot(trailx[good],traily[good]).max())]))
+                    trail_length_px_range=[float(np.hypot(trailx[good],traily[good]).min()) if good.any() else None,float(np.hypot(trailx[good],traily[good]).max()) if good.any() else None]))
             gain=(h['GAINA']+h['GAINB'])/2
             for j in ids:
                 if not good[j]:continue
@@ -132,12 +166,34 @@ def main():
                     snr=(sample(matched,[x],[y])[0]-zero)/noise
                     return dict(ccd=ccd,track=int(j),psf_gaia_id=fit[k]['id'],N395_AB=float(magnitude),
                                 flux_total_ap13_ADU=flux,snr=float(snr),post_injection_sharp_reject=int(reject),recovered=int(snr>=5.5 and not reject))
+                if paired is not None:
+                    # The first seeded realization matches the original one-draw-per-model convention.
+                    # Further Poisson/stellar-PSF draws report the actual repeatability for each missed track.
+                    r=paired[j]
+                    trial=plant(r['N395_AB'],model_rng)
+                    r.update(injected_snr=trial['snr'],recovered=trial['recovered'],post_injection_sharp_reject=trial['post_injection_sharp_reject'])
+                    repeat=[trial['recovered']]
+                    for rep in range(63):
+                        stellar=references[model_rng.integers(len(references))]
+                        stamp=np.zeros(z.shape)
+                        for alpha in np.linspace(-.5,.5,5):
+                            placed(stamp,(x+alpha*trailx[j],y+alpha*traily[j]),stellar,.2)
+                        stamp=np.maximum(stamp,0);stamp/=stamp.sum()
+                        repeat.append(plant(r['N395_AB'],model_rng)['recovered'])
+                    r['recovery_over_64']=sum(repeat)
+                    continue
                 for magnitude in mags:
                     results.append(plant(magnitude,rng))
                 for mass,radius,teff,albedo in scenarios:
                     magnitude=sunmag-2.5*np.log10(albedo*(radius*6371e3/astronomical_unit/(helio[j]*delta[j]))**2)
                     trial=plant(magnitude,model_rng)
                     model_trials.append(dict(mass_Mearth=mass,radius_Rearth=radius,teff_K=teff,geometric_albedo_N395=albedo,**trial))
+    if paired is not None:
+        for r in paired:r.setdefault('recovery_over_64',None)
+        with (ROOT/'paired_misses.csv').open('w',newline='') as f:
+            writer=csv.DictWriter(f,paired[0]);writer.writeheader();writer.writerows(paired)
+        print(json.dumps(paired))
+        return
     for name,table in [('injections.csv.gz',results),('planet_trials.csv.gz',model_trials)]:
         text=io.StringIO(newline='')
         writer=csv.DictWriter(text,table[0]);writer.writeheader();writer.writerows(table)
