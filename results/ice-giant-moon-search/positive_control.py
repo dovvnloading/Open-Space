@@ -33,7 +33,7 @@ def ranges(cache, filename, start, length):
     USED.add(path)
     if not path.exists():
         end = start + length - 1
-        url = ("https://stpubdata.s3.amazonaws.com/jwst/public/jw06379/"
+        url = (f"https://stpubdata.s3.amazonaws.com/jwst/public/{filename[:7]}/"
                + filename.split("_")[0] + "/" + filename + f"?bytes={start}-{end}")
         for attempt in range(4):
             try:
