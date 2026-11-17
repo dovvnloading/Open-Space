@@ -3,12 +3,11 @@ on:
   push:
     branches: ['research/inbound-hyperbolic-search']
     paths:
-      - 'results/inbound-hyperbolic-search/catalog/audit.py'
+      - 'results/inbound-hyperbolic-search/catalog/*.py'
       - '.github/workflows/inbound-orbit-catalog.yml'
   workflow_dispatch:
 permissions:
   contents: read
-  actions: read
 jobs:
   catalog:
     runs-on: ubuntu-latest
@@ -21,22 +20,16 @@ jobs:
         with:
           persist-credentials: false
           sparse-checkout: results/inbound-hyperbolic-search
-      - uses: actions/download-artifact@v4
-        with:
-          name: catalog-audit
-          run-id: 44024557239
-          github-token: ${{ github.token }}
-          path: original-snapshot
+      - run: python catalog/audit.py catalog
+      - run: python catalog/archives.py catalog/image-search
       - run: |
-          cp "$GITHUB_WORKSPACE/original-snapshot/"{sbdb.json.gz,receipt.json} catalog/
-          python catalog/audit.py catalog
           python - <<'PY'
           from pathlib import Path
-          import base64
-          for name in ['sbdb.json.gz','receipt.json','summary.json']:
-              data = base64.b64encode((Path('catalog')/name).read_bytes()).decode()
-              for pos in range(0,len(data),4000):
-                  print('EXPORT', name, pos, data[pos:pos+4000])
+          import base64,gzip
+          for path in sorted(Path('catalog/image-search').glob('*')):
+              body = base64.b64encode(gzip.compress(path.read_bytes(),mtime=0)).decode()
+              for i in range(0,len(body),4000):
+                  print('ARCHIVE',path.name,i,body[i:i+4000])
           PY
       - uses: actions/upload-artifact@v4
         with:
