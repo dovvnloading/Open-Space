@@ -6,16 +6,18 @@ Three of the original seven Hephaistos WISE excesses have strong source identifi
 
 Suazo et al. selected seven M dwarfs from about five million Gaia stars within 300 pc. The reported excesses were strongest in W3/W4 at 12/22 µm. The 100–275 K temperatures in Table 5 describe fits to unresolved photometry. Later optical spectroscopy finds ordinary main-sequence properties and little evidence of youth in the spectroscopic subset. A rotation-period search supplies no sensitivity limit for isolated optical dips. [Suazo et al. 2024, Tables 4–5](https://doi.org/10.1093/mnras/stae1186) · [Korn et al. 2026, Hephaistos III](https://arxiv.org/abs/2607.25701)
 
-| Target | Published evidence and interpretation |
+| Target | Evidence-based disposition and primary source |
 |---|---|
-| A | Nearby radio source J1245−2652 has a poorly constrained spectral slope. Our calculation below yields subarcsecond W1/W2 separations. Contamination is plausible. The dominant MIR emitter remains unidentified. |
-| B | Long-wavelength WISE centroids approach a radio source with spectral slope 0.63 ± 0.11 under the convention Sν ∝ ν^(−α). Strong evidence for contamination. The contaminant lacks a confirmed extragalactic redshift. |
-| C | VISTA resolves a second source 3.75 arcsec away along the displaced MIR emission. Strong evidence for contamination. The nature of the nearby object and any physical association remain open. |
-| D | MIRI resolves a point-dominated galaxy at z ≈ 0.9 within about 1 arcsec. Its spectrum resembles a hot dust-obscured galaxy. The galaxy explains the WISE excess. |
-| E | MIRI resolves an extended, clumpy galaxy at z ≈ 0.4 about 1 arcsec away. Its spectrum resembles a dusty starburst. The galaxy explains the WISE excess. |
-| F | Weak WISE astrometric evidence and an elongated W3 image. Deep optical/near-IR imaging has yet to identify the object producing the MIR light. |
-| G | VLASS J233532.86−000424.9 lies >5 arcsec from the epoch-corrected star. Compact emission with a brightness temperature >10⁸ K identifies an AGN. W3/W4 centroids favor the AGN. |
-| H, I, J | Hephaistos III added these lower-significance targets. All have W3/W4 catalog S/N below 3.5. H and J show possible interlopers or displacements in weak imaging. I lacks an obvious archival contaminant. |
+| A | **Unresolved; contamination plausible.** A nearby radio source has a poorly constrained spectral slope. The short-band centroids are consistent with the star but the 12/22 µm emitter is unidentified. [Ren et al. 2024](https://doi.org/10.3847/2515-5172/ad5017) · [Ren et al. 2026](https://arxiv.org/abs/2607.03619) |
+| B | **Likely blended mid-infrared emission.** W3 is offset 3.061″ and favors an adjacent radio source; a background-galaxy redshift is not established. [Ren et al. 2024](https://doi.org/10.3847/2515-5172/ad5017) · [Ren et al. 2026](https://arxiv.org/abs/2607.03619) |
+| C | **Likely blend.** VISTA resolves a neighbor 3.75″ away in the direction of the W3 emission, with our W3 centroid displaced 3.284″. The object's identity is unconfirmed. [Ren et al. 2026](https://arxiv.org/abs/2607.03619) |
+| D | **Natural background projection established.** JWST/MIRI resolves a z≈0.922 galaxy within ~1″ of the star, with an obscured-AGN-like spectrum accounting for the WISE excess. A separate two-exposure ZTF r-band flux deficit cannot be attributed confidently to the star. [Zackrisson et al. 2026](https://arxiv.org/abs/2607.09460) |
+| E | **Natural background projection established.** JWST/MIRI resolves a z≈0.410 dusty starburst within ~1″, explaining the WISE excess. At the expected redshifted 4.64 µm PAH wavelength our blended spectrum is inconclusive. [Zackrisson et al. 2026](https://arxiv.org/abs/2607.09460) |
+| F | **Unresolved, possible blend.** W3 is elongated and its astrometric displacement is small; the actual mid-IR emitter has not been resolved. [Ren et al. 2026](https://arxiv.org/abs/2607.03619) |
+| G | **Background AGN strongly favored.** e-MERLIN and EVN detect a compact radio AGN >5″ away, with no radio emission at the M dwarf. WISE long-band centroids favor the AGN, though mid-IR decomposition was not performed. [Ren, Garrett & Siemion 2025](https://doi.org/10.1093/mnrasl/slaf006) |
+| H | **Lower-significance / possible blend.** W3/W4 S/N is below 3.5. An archival neighbor or centroid shift may account for the excess; no intrinsic stellar excess was validated. [Korn et al. 2026](https://arxiv.org/abs/2607.25701) · [Ren et al. 2026](https://arxiv.org/abs/2607.03619) |
+| I | **Lower-significance / unresolved.** W3/W4 S/N is below 3.5 and no convincing interloper was found in archival imaging. This does not exclude unresolved confusion or dust. [Korn et al. 2026](https://arxiv.org/abs/2607.25701) · [Ren et al. 2026](https://arxiv.org/abs/2607.03619) |
+| J | **Lower-significance / possible blend.** W3/W4 S/N is below 3.5. An archival neighbor or displacement may account for the excess; no intrinsic stellar excess was validated. [Korn et al. 2026](https://arxiv.org/abs/2607.25701) · [Ren et al. 2026](https://arxiv.org/abs/2607.03619) |
 
 The original A/B/G radio associations, the resolved G radio observations, the subsequent epoch-corrected optical/WISE investigation and the D/E JWST observations are distinct evidence. The archival null for D illustrates that centroids alone can miss a background galaxy. [Ren et al. 2024](https://doi.org/10.3847/2515-5172/ad5017) · [Ren et al. 2025](https://doi.org/10.1093/mnrasl/slaf006) · [Ren et al. 2026](https://arxiv.org/abs/2607.03619v6) · [Zackrisson et al. 2026](https://arxiv.org/abs/2607.09460)
 
@@ -41,6 +43,8 @@ Both FGK sources with Gaia parallax > 3.333… mas have published natural explan
 | 2942418533272205312 | 264.3 pc | TYC 5940-1510-1, an extreme debris-disk host. Narrow-band mid-infrared photometry across the 10 µm feature is consistent with silicate-dominated emission. [Moór et al. 2021](https://doi.org/10.3847/1538-4357/abdc26) · [Moór et al. 2024](https://doi.org/10.1093/mnras/stae155) |
 
 Their temperatures in Contardo & Hogg Table 2 are 815 and 835 K. Earlier IRAS/LRS surveys selected bright 100–600 K emitters, including evolved stars and planetary-nebula candidates. A newer machine-learning study ranked photometric outliers using earlier selections in training. This analysis supplies no new completeness estimate for either survey. [Carrigan 2009](https://arxiv.org/abs/0811.2376) · [Mignone & De Carolis 2026](https://doi.org/10.1016/j.eswa.2026.131232)
+
+The [full 53-object disposition ledger](fgk_dispositions.md) makes the observational and physical outcomes explicit for every target.
 
 ## FGK measurements
 
