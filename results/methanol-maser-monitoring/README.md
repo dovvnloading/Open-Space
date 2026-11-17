@@ -21,7 +21,7 @@ We fitted a constant and two Fourier harmonics to five-day bins for the blue, ap
 | Fifth, used in fit | 60004–60917 | 157 | 0.79 |
 | Sixth, late check | 61007–61280 | 50 | 0.79 |
 
-The Polish observations were tested after freezing the Japanese ephemeris. At the predicted maximum, the 16.92 km/s cosine amplitude is positive in both chronological halves, **+0.360 and +0.331 Jy**. A fit allowing correlated noise gives **+0.336 ± 0.109 Jy**, with a one-sided conditional simulation probability of **0.00095**. Moving-block resampling gives **0.00050–0.00140** across four block lengths. These probabilities apply to the specified line, period and phase in the independent data. The weaker Toruń 16.13 km/s feature changes in the same direction. Both features use the same 44 spectra. [Frozen-period tests](torun/fixed_phase.json) · [Vector extraction from the published figure](torun/extract.py)
+The Polish observations were tested after freezing the Japanese ephemeris. At the predicted maximum, the 16.92 km/s cosine amplitude is positive in both chronological halves, **+0.360 and +0.331 Jy**. A fit allowing correlated noise gives **+0.336 ± 0.109 Jy**, with a one-sided conditional simulation probability of **0.00105**. Moving-block resampling gives **0.00050–0.00140** across four block lengths. These probabilities apply to the specified line, period and phase in the independent data. The weaker Toruń 16.13 km/s feature changes in the same direction. Both features use the same 44 spectra. [Frozen-period tests](torun/fixed_phase.json) · [Vector extraction from the published figure](torun/extract.py)
 
 ## What varies
 
@@ -47,6 +47,6 @@ python torun/validate.py
 python plot.py
 ```
 
-The full selection can be replayed separately with `python screen.py --cache /tmp/imet-panels --out screening.csv`. The [Toruń extraction notes](torun/README.md) give its source download, hash and extraction command. They also record how closely a rerun of `torun/validate.py` matches: the conditional simulation probability quoted above as 0.00095 is a count of 18 in 20,000 draws, and reruns under other NumPy builds counted 17 and 22.
+The full selection can be replayed separately with `python screen.py --cache /tmp/imet-panels --out screening.csv`. The [Toruń extraction notes](torun/README.md) give its source download, hash and extraction command. They also record how closely a rerun of `torun/validate.py` matches. The conditional simulation probability quoted above is a count of 20 in 20,000 draws. Until 16 November 2026 this document gave 0.00095, a count of 18, from a sampler whose draws differed between NumPy builds. The sampler was changed so that the count is the same under both builds tested. The change is within the counting error of the simulation and alters no conclusion.
 
 This work is partially supported by the Inter-university collaborative project "Japanese VLBI Network (JVN)" of NAOJ and by the Japan Society for the Promotion of Science (JSPS) KAKENHI Grant Numbers JP21H01120 and JP21H00032.
