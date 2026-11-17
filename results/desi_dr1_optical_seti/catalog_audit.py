@@ -57,12 +57,12 @@ def chunks(ids, size=55):
     return [",".join(str(x) for x in ids[i:i+size]) for i in range(0, len(ids), size)]
 
 
-def gather(out, prefix, endpoint, ids, columns, query):
+def gather(out, prefix, endpoint, ids, columns, query, size=55):
     def part(pair):
         index, group = pair
         return freeze(out, f"{prefix}_{index:03d}", endpoint, query.format(ids=group), columns.split(","))
     with ThreadPoolExecutor(4) as pool:
-        return [row for batch in pool.map(part, enumerate(chunks(ids))) for row in batch]
+        return [row for batch in pool.map(part, enumerate(chunks(ids, size))) for row in batch]
 
 
 def write_rows(path, rows, columns):
@@ -72,25 +72,25 @@ def write_rows(path, rows, columns):
         writer.writerows(rows)
 
 
-def audit(target_file, out):
+def audit(target_file, out, size=55):
     targets = list(csv.DictReader(target_file.open()))
     ids = [r["targetid"] for r in targets]
     out.mkdir(parents=True, exist_ok=True)
     cols = "targetid,source_id,survey,program,rr_spectype"
-    mws = gather(out, "mws", DESI, ids, cols, f"SELECT {cols} FROM desi_dr1.mws WHERE targetid IN ({{ids}})")
+    mws = gather(out, "mws", DESI, ids, cols, f"SELECT {cols} FROM desi_dr1.mws WHERE targetid IN ({{ids}})", size)
     source_ids = [r["source_id"] for r in mws if has_gaia(r)]
     # A single star may have several targeting identifiers or survey groups.
     aliases = gather(out, "aliases", DESI, source_ids, cols,
-                     f"SELECT {cols} FROM desi_dr1.mws WHERE source_id IN ({{ids}})")
+                     f"SELECT {cols} FROM desi_dr1.mws WHERE source_id IN ({{ids}})", size)
     all_ids = set(ids) | {r["targetid"] for r in aliases}
     cols = "targetid,tileid,expid,night,survey,program,fiber,petal_loc"
     visits = gather(out, "visits", DESI, all_ids, cols,
                     "SELECT f.targetid,f.tileid,e.expid,e.night,e.survey,e.program,f.fiber,f.petal_loc "
                     "FROM desi_dr1.fiberassign AS f JOIN desi_dr1.exposure AS e ON f.tileid=e.tileid "
-                    "WHERE f.targetid IN ({ids})")
+                    "WHERE f.targetid IN ({ids})", size)
     cols = "source_id,r_med_geo,r_lo_geo,r_hi_geo"
     ds = gather(out, "distances", GAIA, source_ids, cols,
-                f"SELECT {cols} FROM external.gaiaedr3_distance WHERE source_id IN ({{ids}})")
+                f"SELECT {cols} FROM external.gaiaedr3_distance WHERE source_id IN ({{ids}})", size)
     distances = {r["source_id"]:r for r in ds}
     summary = []
     for t in targets:
@@ -114,5 +114,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("targets", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--chunk-size", type=int, default=55)
     args = parser.parse_args()
-    audit(args.targets, args.output)
+    audit(args.targets, args.output, args.chunk_size)
