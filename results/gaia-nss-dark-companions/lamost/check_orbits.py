@@ -89,12 +89,12 @@ def predictions(row, times, rng):
     return k*(np.cos(nu+omega)+e*np.cos(omega))
 
 
-def verified_rows():
+def verified_rows(directory):
     exposures = defaultdict(dict)
     matched = set()
     total = 0
-    for receipt in json.loads((HERE/"raw/receipts.json").read_text()):
-        data = gzip.decompress((HERE/"raw"/receipt["file"]).read_bytes())
+    for receipt in json.loads((directory/"raw/receipts.json").read_text()):
+        data = gzip.decompress((directory/"raw"/receipt["file"]).read_bytes())
         if hashlib.sha256(data).hexdigest() != receipt["sha256_csv"]:
             raise ValueError("LAMOST input hash mismatch")
         for r in csv.DictReader(data.decode("utf-8-sig").splitlines()):
@@ -136,11 +136,11 @@ def nightly(rows, y, sigma, model):
     return dates,np.array(obs),np.array(variance),np.array(models).T
 
 
-def main(nss):
-    mass = list(csv.DictReader((ROOT/'gaia/mass_screen.csv').open()))
+def main(nss, screen, directory):
+    mass = list(csv.DictReader(screen.open()))
     mass = {(r['source_id'],r['nss_solution_type']):float(r['m2_screen_msun']) for r in mass}
-    clean, counts = verified_rows()
-    write_csv(HERE/'exposures.csv',[r for rows in clean.values() for r in rows])
+    clean, counts = verified_rows(directory)
+    write_csv(directory/'exposures.csv',[r for rows in clean.values() for r in rows])
     multi = {sid for sid,rows in clean.items() if len({r['obsdate'] for r in rows})>=2}
     counts['clean_multinight_sources'] = len(multi)
     counts['gaia_draws_requested'] = 4096
@@ -183,11 +183,13 @@ def main(nss):
                 residuals.append(dict(source_id=sid,solution=kind,obsdate=d,rv_kms=round(obs,5),
                     err_kms=round(np.sqrt(variance),5),nominal_shifted_rv_kms=round(obs-dr,5),resid_kms=round(dr,5)))
     counts.update(evaluated_solutions=len(totals),skipped=skipped)
-    write_csv(HERE/'shape_checks.csv',sorted(totals,key=lambda x:-x['m2_screen']))
-    write_csv(HERE/'nightly_residuals.csv',residuals)
-    (HERE/'depth.json').write_text(json.dumps(counts,indent=2)+'\n')
+    write_csv(directory/'shape_checks.csv',sorted(totals,key=lambda x:-x['m2_screen']))
+    write_csv(directory/'nightly_residuals.csv',residuals)
+    (directory/'depth.json').write_text(json.dumps(counts,indent=2)+'\n')
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('nss',type=Path)
-    main(p.parse_args().nss)
+    p.add_argument('--screen',type=Path,default=ROOT/'gaia/mass_screen.csv')
+    p.add_argument('--directory',type=Path,default=HERE)
+    a=p.parse_args();main(a.nss,a.screen,a.directory)

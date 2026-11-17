@@ -63,9 +63,10 @@ def asu(data, table, col, n):
     return ids
 
 
-def main(cache):
+def main(cache, screen, directory):
+    directory.mkdir(parents=True, exist_ok=True)
     cache.mkdir(parents=True,exist_ok=True)
-    with (HERE.parent/'gaia/mass_screen.csv').open() as f:
+    with screen.open() as f:
         target = {r['source_id'] for r in csv.DictReader(f)}
     matches, manifest = [], []
     for key,url in URLS.items():
@@ -93,12 +94,14 @@ def main(cache):
                 input_key=key,url=url,sha256=hashlib.sha256(data).hexdigest(),bytes=len(data)))
             for sid in sorted(ids & target,key=int):
                 matches.append(dict(source_id=sid,study=title,table=tab))
-    with (HERE/'prior_matches.csv').open('w') as f:
+    with (directory/'prior_matches.csv').open('w') as f:
         w=csv.DictWriter(f,fieldnames=['source_id','study','table'],lineterminator='\n')
         w.writeheader();w.writerows(sorted(matches,key=lambda r:(int(r['source_id']),r['study'],r['table'])))
-    (HERE/'inputs.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
+    (directory/'inputs.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('cache',type=Path)
-    main(p.parse_args().cache)
+    p.add_argument('--screen',type=Path,default=HERE.parent/'gaia/mass_screen.csv')
+    p.add_argument('--directory',type=Path,default=HERE)
+    a=p.parse_args();main(a.cache,a.screen,a.directory)
