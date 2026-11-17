@@ -1,0 +1,30 @@
+{
+  "spkid": "1004099",
+  "name": "C/2025 K1-B (ATLAS)",
+  "shard": 3,
+  "strict_status": "output identity or astrometry mismatch",
+  "reviewed_status": "returned packed ID and all station/epoch pairs verified after rover-code expansion",
+  "input_sha256": "52a70b583699deabf313cf0f9288f85021cb354f5d1108f5b4fee5ab9fec17e1",
+  "source": "https://github.com/Bill-Gray/find_orb/blob/1de55cca12e7a585c9c7384acbb80538ea2afc3c/mpc_obs.cpp#L648-L654",
+  "reviewed_far_inbound_100au": true,
+  "reviewed_far_inbound_250au": true,
+  "returned_r_au": 282.93661078014424,
+  "position_pairs": [
+    {
+      "returned_station": "24a",
+      "returned_utc_jd": 2460995.026019,
+      "input_station": "247",
+      "position": "    CK25K01b  V2025 11 15.52601911 07 05.887+30 46 34.10         14.2 rW     247",
+      "site_coordinates": "    CK25K01b  v2025 11 15.5260191 248.56182   34.96300   2220          W     247"
+    },
+    {
+      "returned_station": "24a",
+      "returned_utc_jd": 2460995.044988,
+      "input_station": "247",
+      "position": "    CK25K01b  V2025 11 15.54498811 07 01.291+30 49 49.37         14.0 rW     247",
+      "site_coordinates": "    CK25K01b  v2025 11 15.5449881 248.56182   34.96300   2220          W     247"
+    }
+  ],
+  "first_rover_site": "    CK25K01b 0v2025 11 05.43287 1 260.6183   +31.5469     400           EA017247",
+  "reason": "The two epochs match the V/v pairs at the second distinct rover location in these rows. Find_Orb assigns its internal 24a code to this location after the first 247 site. Every other returned station and epoch passed the original guard."
+}

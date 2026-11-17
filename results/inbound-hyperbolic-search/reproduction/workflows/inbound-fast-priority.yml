@@ -1,0 +1,59 @@
+name: Refit 67 high-speed catalogue records
+on:
+  push:
+    branches: [research/inbound-hyperbolic-search]
+    paths:
+      - ".github/workflows/inbound-fast-priority.yml"
+      - "results/inbound-hyperbolic-search/batch/fast-priority/replay.py"
+      - "results/inbound-hyperbolic-search/batch/fast-priority/soho-targets.txt"
+      - "results/inbound-hyperbolic-search/batch/fast-priority/iso-targets.txt"
+permissions:
+  actions: read
+  contents: read
+jobs:
+  slice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        part: ${{ fromJSON(contains(github.event.head_commit.message, '[SOHO replay]') && '[0,1]' || contains(github.event.head_commit.message, '[ISO alias replay]') && '[0,1,2]' || '[0,1,2,3,4,5]') }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/inbound-hyperbolic-search
+          persist-credentials: false
+      - name: Download the frozen MPC bulk observation snapshot
+        uses: actions/download-artifact@v4
+        with:
+          name: mpc-observation-snapshot
+          run-id: 44029645452
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/source
+      - name: Restore pinned Find_Orb and DE430t
+        id: fitter
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/bin/fo
+            ~/.find_orb
+          key: inbound-fo-${{ runner.os }}-${{ hashFiles('results/inbound-hyperbolic-search/batch/build.sh') }}
+      - if: steps.fitter.outputs.cache-hit != 'true'
+        working-directory: results/inbound-hyperbolic-search/batch
+        run: bash build.sh "$RUNNER_TEMP/build" > "$RUNNER_TEMP/build.log" 2>&1 || { tail -100 "$RUNNER_TEMP/build.log"; exit 1; }
+      - name: Run 120 CPU seconds per target and verify observation identities
+        env:
+          ISO_ALIASES: ${{ contains(github.event.head_commit.message, '[ISO alias replay]') }}
+          SOHO: ${{ contains(github.event.head_commit.message, '[SOHO replay]') }}
+        run: |
+          directory=results/inbound-hyperbolic-search/batch/fast-priority
+          extra=()
+          if [[ "$SOHO" == "true" ]]; then extra=(--targets "$directory/soho-targets.txt" --parts 2); fi
+          if [[ "$ISO_ALIASES" == "true" ]]; then extra=(--targets "$directory/iso-targets.txt" --parts 3 --join-controls); fi
+          python "$directory/replay.py" "$RUNNER_TEMP/source" "${{ matrix.part }}" "$RUNNER_TEMP/priority" "${extra[@]}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ contains(github.event.head_commit.message, '[SOHO replay]') && 'soho-supplement' || contains(github.event.head_commit.message, '[ISO alias replay]') && 'joined-controls' || 'priority' }}-120s-${{ matrix.part }}
+          path: ${{ runner.temp }}/priority
+          retention-days: 14
