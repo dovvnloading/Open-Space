@@ -171,16 +171,27 @@ def main():
     parser.add_argument("source",type=Path)
     parser.add_argument("shard",type=int,choices=range(6))
     parser.add_argument("out",type=Path)
+    parser.add_argument("--targets",type=Path,help="One JPL primary designation per line for a separately scoped replay")
+    parser.add_argument("--parts",type=int,default=6)
     args=parser.parse_args()
+    if not 0<=args.shard<args.parts<=6:
+        parser.error("shard out of range")
     args.out.mkdir(parents=True,exist_ok=True)
     rows,url,sha=cat()
     keys=defaultdict(set)
     for row in rows:
         for alias in aliases(row):
             keys[alias].add(str(row["spkid"]))
-    selected=sorted((r for r in rows if vinf(r["e"],r["q"])>=1),key=lambda r:(-vinf(r["e"],r["q"]),str(r["spkid"])))
-    assert len(selected)==67
-    subset=selected[args.shard::6]
+    if args.targets:
+        targets=args.targets.read_text().splitlines()
+        selected=[r for r in rows if r["pdes"] in targets]
+        assert len(selected)==len(set(targets))==len(targets)
+        prefix="supplement-"
+    else:
+        selected=sorted((r for r in rows if vinf(r["e"],r["q"])>=1),key=lambda r:(-vinf(r["e"],r["q"]),str(r["spkid"])))
+        assert len(selected)==67
+        prefix=""
+    subset=selected[args.shard::args.parts]
     ids={str(r["spkid"]) for r in subset}
     collected=defaultdict(list)
     source=args.source/"CmtObs.txt.gz"
@@ -198,7 +209,8 @@ def main():
                 if sk in ids:
                     collected[sk].append(line)
     receipt.update(snapshot_run_id=44029645452,snapshot_artifact_id=14304767729,
-                   catalog_url=url,catalog_sha256=sha,selection_count=len(selected),shard=args.shard,parts=6,
+                   catalog_url=url,catalog_sha256=sha,selection_count=len(selected),shard=args.shard,parts=args.parts,
+                   target_file_sha256=hashbytes(args.targets.read_bytes()) if args.targets else None,
                    fitter_sha256=hashbytes(FITTER.read_bytes()),kernel_sha256=hashbytes(KERNEL.read_bytes()),
                    flags=["-i","-h-1","-tEjd<target>","-r120,122","PERTURBERS=7fe","LINUX_JPL_FILENAME=<DE430t>"],
                    input_header="#interstellar",uses_catalogue_seed=False)
@@ -213,11 +225,11 @@ def main():
             print("ROW",result["pdes"],result["status"],result.get("vinf_bary_kms"),result.get("formal_e_excess_sigma"),flush=True)
     assert len(records)==len(subset)
     report={"receipt":receipt,"status_counts":dict(Counter(r["status"] for r in records)),"records":records}
-    payloads={f"shard-{args.shard}.json":json.dumps(report,indent=2)+"\n",
-              f"observations-{args.shard}.json":json.dumps(observation_map,separators=(",",":"))+"\n"}
+    payloads={f"{prefix}shard-{args.shard}.json":json.dumps(report,indent=2)+"\n",
+              f"{prefix}observations-{args.shard}.json":json.dumps(observation_map,separators=(",",":"))+"\n"}
     for filename,body in payloads.items():
         raw=body.encode()
-        if filename.startswith("observations-"):
+        if "observations-" in filename:
             (args.out/(filename+".gz")).write_bytes(gzip.compress(raw,mtime=0))
         else:
             (args.out/filename).write_bytes(raw)
