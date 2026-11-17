@@ -21,6 +21,8 @@ MU = 0.0002959122082855911
 C = 299792.458 * KMS
 ARC = np.pi / (180 * 3600)
 RNG_SEED = 702613
+SURVEY = "X05"
+SITES = {"X05": (289.25058, .864981, -.500958), "F51": (203.74409, .936241, .351543)}
 J2000 = dt.date(2000, 1, 1)
 RANGES, RADIAL = [a.ravel() for a in np.meshgrid(np.geomspace(.4, 3, 13), np.arange(-90, 91, 15) * KMS)]
 
@@ -39,8 +41,9 @@ def observer(t):
     # TT approximates TDB; polar motion is omitted. MPC X05 geocentric factors.
     tt = t + 69.184 / 86400
     pv, _ = erfa.epv00(2451545., tt)
-    lon = np.deg2rad(289.25058)
-    xyz = np.array([.864981*np.cos(lon), .864981*np.sin(lon), -.500958]) * 6378.137/KM
+    lon, rc, rs = SITES[SURVEY]
+    lon = np.deg2rad(lon)
+    xyz = np.array([rc*np.cos(lon), rc*np.sin(lon), rs]) * 6378.137/KM
     return pv["p"] + erfa.c2t06a(2451545., tt, 2451545., t, 0., 0.).T @ xyz
 
 
@@ -226,7 +229,16 @@ def make_injection(rng, tracks, idx, epoch_triples):
             dates = off+(rho-np.linalg.norm(pos-sites,axis=1))/C
         pred = unit(motion(state,dates)-sites)
         noisy = unit(pred+rng.normal(0,.2*ARC,pred.shape))
-        parts.append(attributable(f"inj-{idx}-{j}",tr.t,noisy))
+        if SURVEY=="F51":
+            ra=np.rad2deg(np.arctan2(noisy[:,1],noisy[:,0]))%360
+            dec=np.rad2deg(np.arcsin(np.clip(noisy[:,2],-1,1)))
+            keep=(40<=ra)&(ra<50)&(10<=dec)&(dec<20)
+            if np.sum(keep)<2:
+                parts.append(None)
+                continue
+            parts.append(attributable(f"inj-{idx}-{j}",tr.t[keep],noisy[keep]))
+        else:
+            parts.append(attributable(f"inj-{idx}-{j}",tr.t,noisy))
     return parts,dict(rho_au=float(rho), true_vinf_kms=float(vinf), times_utc_days=[float(t.mid) for t in [a,b,c]])
 
 
@@ -260,11 +272,14 @@ def rotate_sky(tracks,rng):
 
 
 def main():
+    global SURVEY
     parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--survey",choices=sorted(SITES),default="X05")
     parser.add_argument("--data",type=Path,required=True)
     parser.add_argument("--trials",type=int,default=100)
     args=parser.parse_args()
-    path=args.data/"x05.mpc"
+    SURVEY=args.survey
+    path=args.data/f"{SURVEY.lower()}.mpc"
     real,qc=parse(path)
     before,accepted=scan(real)
     rng=np.random.default_rng(RNG_SEED)
@@ -276,7 +291,7 @@ def main():
             trio=draw_times(rng,by_day,options)
             if all(.7<=y.mid-x.mid<=3.25 for x,y in zip(trio,trio[1:])):
                 templates.append(trio)
-    result=dict(input_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),qc=qc,
+    result=dict(survey=SURVEY,input_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),qc=qc,
                 real_eligible_per_utc_night={str(J2000+dt.timedelta(days=int(k))):len(v) for k,v in sorted(by_day.items())},
                 real_3night_proposals=before,real_passing=accepted,seed=RNG_SEED)
     recovery=[]
@@ -314,8 +329,8 @@ def main():
         nprop,hits=scan(rotate_sky(real,rng))
         scramble.append([nprop,len(hits)])
     result["night_rotation_controls_proposed_passing"]=scramble
-    (args.data/"injections.json").write_text(json.dumps(recovery,indent=2)+"\n")
-    (args.data/"result.json").write_text(json.dumps(result,indent=2)+"\n")
+    (args.data/f"{SURVEY.lower()}-injections.json").write_text(json.dumps(recovery,indent=2)+"\n")
+    (args.data/f"{SURVEY.lower()}-result.json").write_text(json.dumps(result,indent=2)+"\n")
     print("RESULT_JSON="+json.dumps(result),flush=True)
 
 if __name__=="__main__":
