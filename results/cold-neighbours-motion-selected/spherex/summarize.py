@@ -40,9 +40,16 @@ def main(inputs, output):
                 if cut.any():
                     leave.append(weighted(flux[cut],sig[cut])[0])
             jack = np.sqrt((len(leave)-1)*np.var(leave)) if len(leave)>1 else None
+            blocks = np.floor((mjd-60000)/60)
+            active_blocks = np.unique(blocks[use])
+            drop_block = [weighted(flux[use & (blocks!=k)],sig[use & (blocks!=k)])[0]
+                          for k in active_blocks if np.any(use & (blocks!=k))]
+            block_jack = np.sqrt((len(drop_block)-1)*np.var(drop_block)) if len(drop_block)>1 else None
             result.append(dict(target=name,lo_um=a,hi_um=b,n_frame=int(use.sum()),
                         n_visits=len(vi),flux_ujy=round(mean,3),formal_ujy=round(formal,3),
-                        visit_jackknife_ujy=round(jack,3) if jack is not None else ''))
+                        visit_jackknife_ujy=round(jack,3) if jack is not None else '',
+                        n_60day_blocks=len(active_blocks),
+                        block_jackknife_ujy=round(block_jack,3) if block_jack is not None else ''))
     if result:
         with Path(output).open('w') as out:
             w=csv.DictWriter(out,fieldnames=list(result[0]));w.writeheader();w.writerows(result)

@@ -5,6 +5,7 @@ import io
 import json
 import math
 import sys
+from time import sleep
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from urllib.parse import urlencode
@@ -24,7 +25,7 @@ def fetch(index):
     uri = ENDPOINT + "?" + urlencode(dict(REQUEST="doQuery", LANG="ADQL", FORMAT="csv", MAXREC=50000, QUERY=query))
     path = ROOT / "inputs" / f"cap{index:02d}.csv"
     if not path.exists():
-        with urlopen(uri, timeout=300) as response:
+        with urlopen(uri, timeout=750) as response:
             payload = response.read()
         if not payload.startswith(b"source_name,"):
             raise ValueError(payload[-500:])
@@ -38,6 +39,14 @@ def fetch(index):
 
 if __name__ == "__main__":
     (ROOT / "inputs").mkdir(exist_ok=True)
-    with ThreadPoolExecutor(3) as pool:
-        manifest=list(pool.map(fetch,range(24)))
+    def run_field(i):
+        for attempt in range(2):
+            try:return fetch(i)
+            except Exception as e:
+                print(i, type(e).__name__, str(e)[:160], flush=True)
+                if attempt==1:return dict(cap=i,error=str(e))
+                sleep(3)
+    # Preserve all successful queries even if a different field is unavailable.
+    with ThreadPoolExecutor(5) as pool:
+        manifest=list(pool.map(run_field,[*range(1,24),0]))
     (ROOT/"inputs_manifest.json").write_text(json.dumps(manifest,indent=2)+"\n")

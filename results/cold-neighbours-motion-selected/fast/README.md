@@ -1,0 +1,7 @@
+# Motion-first search in unTimely W2 epoch catalogues
+
+The blind linker recovers WISE 0855 in 16 visits without a starting catalogue position or motion inside its control field. The inferred motion is −8.101, +0.657 arcsec/yr. The control field was deliberately placed on the object and excluded from blind-area accounting. The 43 other 0.4°-radius circles are centred on WISE tiles that supplied at least one candidate to the Euclid-field pilot. Selection of these fields conditions the sample. Their footprint differs from the three 3° cones.
+
+Two pairs of independent seed epochs link W2 detections with S/N ≥6, quality factor >0.85, zero unWISE flags, W2 ≤16 Vega in both seed visits and fitted proper motion 0.8–12 arcsec/yr. Persistent W2 trajectories can enter even when CatWISE fragments their flux. Each provisional link must have six or more qualifying centroids, a baseline of at least five years, fit RMS ≤0.9″ and at least three more supporting epochs than a source fixed at the fitted reference position. Nearby fixed sources can still supply chance matches at different epochs. The raw associations in tracks.csv carry native detection IDs for checking individual centroids. These are association trials, not validated objects or parallaxes.
+
+The manifest lists the input W2 catalogue URLs and their SHA-256 digests. Run link.py with numpy, scipy and astropy. Set UNTIMELY_CACHE to the same directory used by the pilot to reuse downloaded catalogues.

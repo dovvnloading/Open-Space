@@ -4,7 +4,7 @@ import csv
 import hashlib
 import io
 import math
-import warnings
+import time
 from pathlib import Path
 from urllib.request import urlopen
 
@@ -96,8 +96,15 @@ def main():
                 if local and local.exists():
                     payload = local.read_bytes()
                 else:
-                    with urlopen(row["cutout_url"], timeout=90) as response:
-                        payload = response.read()
+                    for attempt in range(3):
+                        try:
+                            with urlopen(row["cutout_url"], timeout=90) as response:
+                                payload = response.read()
+                            break
+                        except OSError:
+                            if attempt == 2:
+                                raise
+                            time.sleep(2**attempt)
                     if local:
                         local.parent.mkdir(parents=True,exist_ok=True)
                         local.write_bytes(payload)
