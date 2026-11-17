@@ -1,0 +1,81 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-17T06:21:14 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-17T06:21:14	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJ%2F942%2F9%2Ftable1&-out.all&-out.max=100	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+
+#RESOURCE=yCat_19420009
+#Name: J/ApJ/942/9
+#Title: LCs and sp. of 30 ZTF TDEs (Hammerstein+, 2023)
+#INFO	ivoid=ivo://cds.vizier/j/apj/942/9	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/apj/942/9	    IVOID of underlying data collection
+#INFO	creator=Hammerstein E.	    First author or institution
+#INFO	cites=bibcode:2023ApJ...942....9H	    Article or Data origin sources
+#INFO	journal=ApJ	    Journal name
+#INFO	original_date=2023	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJ/942/9	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.19420009	    Dataset identifier that can be used for citation
+#INFO	publication_date=2025-02-24	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	J2000_2000.000:	eq_FK5 J2000
+#Table	J_ApJ_942_9_table1:
+#Name: J/ApJ/942/9/table1
+#Title: ZTF-I tidal disruption events (TDEs)
+#Column	recno	(I8)	Record number assigned by the VizieR team. Should Not be used for identification.	[ucd=meta.record]
+#Column	Name	(A9)	IAU name (ATYYYYaaa)	[ucd=meta.id;meta.main]
+#Column	ZTF	(A12)	ZTF Name (ZTFYYaaaaaaa)	[ucd=meta.id]
+#Column	Disc	(A12)	Discovery Name	[ucd=meta.id]
+#Column	GoT	(a12)	ZTF TDE Working Group nickname	[ucd=meta.id]
+#Column	ONames	(a30)	Other name(s)	[ucd=meta.id]
+#Column	Class	(a19)	First TDE classification (1)	[ucd=meta.bib]
+#Column	r_Class	(A19)	Bibcode of the first TDE classification; column added by CDS	[ucd=meta.ref;pos.frame]
+#Column	f_Class	(A1)	[*] *:for AT2019azh see also Hinkle+ 2021MNRAS.500.1673H	[ucd=meta.code]
+#Column	Spec	(a15)	TDE spectral class (2)	[ucd=src.class]
+#Column	zspec	(F6.3)	Spectroscopic redshift (3)	[ucd=src.redshift]
+#Column	File	(a26)	Name of the file in subdirectory "lcs"; column added by CDS	[ucd=meta.id;meta.file]
+#Column	LC	(A2)	Interactive LC plot	[ucd=meta.ref.url]
+#Column	Simbad	(a6)	Simbad column added by the CDS	[ucd=meta.ref.url]
+#Column	_RA	(F9.5)	Right Ascension (J2000) from SIMBAD (not part of the original data)	[ucd=pos.eq.ra;meta.main]
+#Column	_DE	(F9.5)	Declination (J2000) from SIMBAD (not part of the original data)	[ucd=pos.eq.dec;meta.main]
+recno	Name	ZTF	Disc	GoT	ONames	Class	r_Class	f_Class	Spec	zspec	File	LC	Simbad	_RA	_DE
+ 	 	 	 	 	 	 	 	 	 	 	 	 	 	deg	deg
+--------	---------	------------	------------	------------	------------------------------	-------------------	-------------------	-	---------------	------	--------------------------	--	------	---------	---------
+       1	AT2018zr 	ZTF18aabtxvd	PS18kh      	Ned         	                              	ATel #11444        	2018ATel11444....1T	 	TDE-H          	 0.075	NedStark_all_lc.mrt       	LC	Simbad	119.22724	+34.26211
+       2	AT2018bsi	ZTF18aahqkbt	ZTF18aahqkbt	Jon         	                              	ATel #12035        	2018ATel12035....1G	 	TDE-H+He       	 0.051	JonSnow_all_lc.mrt        	LC	Simbad	123.86092	+45.59221
+       3	AT2018hco	ZTF18abxftqm	ATLAS18way  	Sansa       	                              	ATel #12263        	2018ATel12263....1V	 	TDE-H          	 0.088	SansaStark_all_lc.mrt     	LC	Simbad	016.89015	+23.47619
+       4	AT2018iih	ZTF18acaqdaa	ATLAS18yzs  	Jorah       	Gaia18dpo                     	2021ApJ...908....4V	2021ApJ...908....4V	 	TDE-He         	 0.212	JorahMormont_all_lc.mrt   	LC	Simbad	262.01637	+30.69206
+       5	AT2018hyz	ZTF18acpdvos	ASASSN-18zj 	Gendry      	ATLAS18bafs                   	ATel #12198        	2018ATel12198....1D	 	TDE-H+He       	 0.046	GendryBaratheon_all_lc.mrt	LC	Simbad	151.71198	+01.69277
+       6	AT2018lni	ZTF18actaqdw	ZTF18actaqdw	Arya        	                              	2021ApJ...908....4V	2021ApJ...908....4V	 	TDE-H+He       	 0.138	AryaStark_all_lc.mrt      	LC	Simbad	062.40688	+73.89491
+       7	AT2018lna	ZTF19aabbnzo	ZTF19aabbnzo	Cersei      	                              	ATel #12509        	2019ATel12509....1V	 	TDE-H+He       	 0.091	CerseiLannister_all_lc.mrt	LC	Simbad	105.82770	+23.02908
+       8	AT2018jbv	ZTF18acnbpmd	ZTF18acnbpmd	Samwell     	ATLAS19acl, PS19aoz           	This paper         	This paper         	 	TDE-featureless	 0.340	SamwellTarly_all_lc.mrt   	LC	Simbad	197.68983	+08.56786
+       9	AT2019cho	ZTF19aakiwze	ZTF19aakiwze	Petyr       	                              	2021ApJ...908....4V	2021ApJ...908....4V	 	TDE-H+He       	 0.193	PetyrBalish_all_lc.mrt    	LC	Simbad	193.78837	+49.51942
+      10	AT2019bhf	ZTF19aakswrb	ZTF19aakswrb	Varys       	                              	2021ApJ...908....4V	2021ApJ...908....4V	 	TDE-H+He       	 0.121	Varys_all_lc.mrt          	LC	Simbad	227.31656	+16.23959
+      11	AT2019azh	ZTF17aaazdba	ASASSN-19dj 	Jaime       	Gaia19bvo                     	ATel #12568        	2019ATel12568....1V	*	TDE-H+He       	 0.022	JaimeLannister_all_lc.mrt 	LC	Simbad	123.32057	+22.64828
+      12	AT2019dsg	ZTF19aapreis	ZTF19aapreis	Bran        	ATLAS19kl                     	ATel #12752        	2019ATel12752....1N	 	TDE-H+He       	 0.051	BranStark_all_lc.mrt      	LC	Simbad	314.26237	+14.20441
+      13	AT2019ehz	ZTF19aarioci	Gaia19bpt   	Brienne     	                              	ATel #12789        	2019ATel12789....1G	 	TDE-H          	 0.074	Brienne_all_lc.mrt        	LC	Simbad	212.42450	+55.49114
+      14	AT2019mha	ZTF19abhejal	ATLAS19qqu  	Bronn       	                              	2021ApJ...908....4V	2021ApJ...908....4V	 	TDE-H+He       	 0.148	Bronn_all_lc.mrt          	LC	Simbad	244.11583	+56.43230
+      15	AT2019meg	ZTF19abhhjcc	ZTF19abhhjcc	Margaery    	Gaia19dhd                     	AN-2019-88         	2019TNSAN..88....1V	 	TDE-H          	 0.152	MargaeryTyrell_all_lc.mrt 	LC	Simbad	281.31742	+44.43867
+      16	AT2019lwu	ZTF19abidbya	ZTF19abidbya	Robb        	ATLAS19rnz, PS19ega           	2021ApJ...908....4V	2021ApJ...908....4V	 	TDE-H          	 0.117	RobbStark_all_lc.mrt      	LC	Simbad	347.80127	-01.00297
+      17	AT2019qiz	ZTF19abzrhgq	ZTF19abzrhgq	Melisandre  	ATLAS19vfr, Gaia19eks, PS19gdd	ATel #13131        	2019ATel13131....1S	 	TDE-H+He       	 0.015	Melisandre_all_lc.mrt     	LC	Simbad	071.65783	-10.22637
+      18	AT2019teq	ZTF19accmaxo	ZTF19accmaxo	Missandei   	                              	TNSCR #7482        	2020TNSCR2829....1H	 	TDE-H+He       	 0.087	Missandei_all_lc.mrt      	LC	Simbad	284.77292	+47.51833
+      19	AT2020pj 	ZTF20aabqihu	ZTF20aabqihu	Gilly       	ATLAS20cab                    	TNSCR #7481        	2020TNSCR2829....1H	 	TDE-H+He       	 0.068	Gilly_all_lc.mrt          	LC	Simbad	232.89567	+33.09485
+      20	AT2019vcb	ZTF19acspeuw	ZTF19acspeuw	Tormund     	Gaia19feb, ATLAS19bcyz        	TNSCR #7078        	2020TNSCR2126....1D	 	TDE-H+He       	 0.088	Tormund_all_lc.mrt        	LC	Simbad	189.73492	+33.16592
+      21	AT2020ddv	ZTF20aamqmfk	ATLAS20gee  	Shae        	                              	ATel #13655        	2020ATel13655....1G	 	TDE-He         	 0.160	Shae_all_lc.mrt           	LC	Simbad	149.63902	+46.91118
+      22	AT2020ocn	ZTF18aakelin	ZTF18aakelin	Podrick     	                              	ATel #13859        	2020ATel13859....1G	 	TDE-He         	 0.070	Podrick_all_lc.mrt        	LC	Simbad	208.47418	+53.99710
+      23	AT2020opy	ZTF20abjwvae	ZTF20abjwvae	High Sparrow	PS20fxm                       	ATel #13944        	2020ATel13944....1G	 	TDE-H+He       	 0.159	HighSparrow_all_lc.mrt    	LC	Simbad	239.10720	+23.37254
+      24	AT2020mot	ZTF20abfcszi	ZTF20abfcszi	Pycelle     	Gaia20ead                     	ATel #13944        	2020ATel13944....1G	 	TDE-H+He       	 0.070	Pycelle_all_lc.mrt        	LC	Simbad	007.80650	+85.00886
+      25	AT2020mbq	ZTF20abefeab	ZTF20abefeab	Yara        	ATLAS20pfz, PS20grv           	This paper         	This paper         	 	TDE-H          	 0.093	Yara_all_lc.mrt           	LC	Simbad	235.06358	+25.00133
+      26	AT2020qhs	ZTF20abowque	ZTF20abowque	Loras       	ATLAS20upw, PS20krl           	This paper         	This paper         	 	TDE-featureless	 0.345	Loras_all_lc.mrt          	LC	Simbad	034.47479	-09.61411
+      27	AT2020riz	ZTF20abrnwfc	ZTF20abrnwfc	Talisa      	PS20jop                       	This paper         	This paper         	 	TDE-featureless	 0.435	Talisa_all_lc.mrt         	LC	Simbad	032.62812	+09.07403
+      28	AT2020wey	ZTF20acitpfz	ZTF20acitpfz	Roose       	ATLAS20belb, Gaia20fck        	TNSCR #7769        	2020TNSCR3228....1A	 	TDE-H+He       	 0.027	Roose_all_lc.mrt          	LC	Simbad	136.35783	+61.80256
+      29	AT2020zso	ZTF20acqoiyt	ZTF20acqoiyt	Hodor       	ATLAS20bfok                   	TNSCR #8025        	2020TNSCR3486....1I	 	TDE-H+He       	 0.057	Hodor_all_lc.mrt          	LC	Simbad	335.57137	-07.26641
+      30	AT2020ysg	ZTF20abnorit	ZTF20abnorit	Osha        	ATLAS20bjqp, PS21cru          	This paper         	This paper         	 	TDE-featureless	 0.277	Osha_all_lc.mrt           	LC	Simbad	171.35846	+27.44061
+
