@@ -13,7 +13,9 @@ The full [visit inventory](archive/visits.csv) preserves program ID and title, t
 
 ## Prior searches
 
-[Program–paper crosswalk](archive/program-papers.csv) contains 438 links to 334 distinct publications returned by 240 individual JWST program queries to MAST Papertrack. It returned records for 106 programs. This establishes a program association. A paper may use another target in a large survey, or use reference frames only. An empty receipt leaves target-specific prior-search status open. [Papertrack](https://mast.stsci.edu/papertrack)
+[Program–paper crosswalk](archive/program-papers.csv) contains 438 links to 334 distinct publications returned by 240 individual JWST program queries to MAST Papertrack. It returned records for 106 programs. The latest publication date returned in this snapshot is June 2026, although the archive was queried in November. Recent papers and preprints can be absent. This establishes a program association. A paper may use another target in a large survey, or use reference frames only. An empty receipt leaves target-specific prior-search status open. [Papertrack](https://mast.stsci.edu/papertrack)
+
+A separate [host-title screen](archive/target-search-status.csv) queried the 331 Gaia identifiers for object-linked papers with both an imaging and a planet/companion-related keyword in the title. The 1,313 host–paper links cover 214 hosts and 288 distinct papers. Of the 331 hosts, 83 have at least one selected title mentioning JWST or James Webb. An object association can identify an observed host, comparison object, or cited system. The other 117 hosts have no title-selected record for this identifier and remain unadjudicated. [Query receipts](archive/host-literature/) · [Screening script](host_papers.py)
 
 For the four latest public coronagraphic targets, [SIMBAD's target bibliography](archive/go8826-host-bibliography.csv) returned 803 object–paper associations. The four targets in GO 8826 released on 2026-10-29 are all nearby (5.208–9.102 pc) and have older companion-search literature. The program-specific Papertrack query has zero records. SIMBAD links G 99-49, L 788-34 and Ross 619 to Oppenheimer et al.'s 8 pc coronagraphic survey, and V374 Peg to Durkan et al.'s Spitzer search. These associations identify prior coverage to inspect before assigning novelty. [Oppenheimer et al.](https://doi.org/10.1086/319941) · [Durkan et al.](https://doi.org/10.3847/0004-637X/824/1/58)
 
@@ -28,6 +30,7 @@ python fetch_inventory.py coron nearby_programs stellar_imaging
 python nearby_inventory.py --gcns /tmp/open-space-gcns.csv coron nearby_programs stellar_imaging
 python program_papers.py
 python latest_host_search.py
+python host_papers.py --refresh
 ```
 
 The main archive search, host-position crossmatch, per-program bibliography and four-target catalogue queries are complete. For hosts outside the selected reduction, image inspection, second-epoch verification, and target-specific literature adjudication remain pending. No entry in an inventory table constitutes a new companion or an occurrence-rate constraint.

@@ -39,8 +39,10 @@ def aperture(im,x,y,r):
     rr=np.hypot(dx-x,dy-y)
     w=np.clip(r+.5-rr,0,1)
     z=im[cy-h:cy+h+1,cx-h:cx+h+1];sky=z[(rr>2.3*r)&(rr<3.4*r)]
-    if not np.all(np.isfinite(z[w>0])) or np.isfinite(sky).mean()<.75:return np.nan
-    return np.sum((z[w>0]-np.nanmedian(sky))*w[w>0])
+    use=(w>0)&np.isfinite(z)
+    area=w[w>0].sum()
+    if w[use].sum()<.75*area or np.isfinite(sky).mean()<.75:return np.nan
+    return np.sum((z[use]-np.nanmedian(sky))*w[use])*area/w[use].sum()
 
 def local_host(im,x,y,pix):
     # Within 1.4 arcsec of the catalog prediction. The 95th-percentile-clipped

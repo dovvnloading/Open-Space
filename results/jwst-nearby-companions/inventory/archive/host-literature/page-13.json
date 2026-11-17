@@ -1,0 +1,12 @@
+{
+  "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+  "params": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "csv",
+    "MAXREC": "20000",
+    "QUERY": "SELECT DISTINCT ident.id, main_id,bibcode,title,doi FROM ident JOIN basic ON ident.oidref=basic.oid JOIN has_ref ON basic.oid=has_ref.oidref JOIN ref ON ref.oidbib=has_ref.oidbibref WHERE ident.id IN ('Gaia DR3 6882838031333427456','Gaia DR3 692554890842416384','Gaia DR3 703790044252850688','Gaia DR3 710766750855439360','Gaia DR3 712888090655562624','Gaia DR3 717094512905486976','Gaia DR3 717393648787722624','Gaia DR3 74203982469858816','Gaia DR3 76868614540049408','Gaia DR3 786834302080370304','Gaia DR3 863131372427958912','Gaia DR3 87555176071871744','Gaia DR3 890661253803216896','Gaia DR3 898639447612575104','Gaia DR3 908962109449446656','Gaia DR3 923023248261420672','Gaia DR3 931573222477949696','Gaia DR3 943770757800160384','Gaia DR3 984190381489031424') AND (title LIKE '%maging%' OR title LIKE '%oronagraph%' OR title LIKE '%irect %etection%' OR title LIKE '%igh%ontrast%') AND (title LIKE '%ompanion%' OR title LIKE '%lanet%' OR title LIKE '%rown %warf%' OR title LIKE '%ubstellar%' OR title LIKE '%ub-stellar%')"
+  },
+  "sha256": "3b9a4c5ae847236bec66a2a6a3eff33bd5564e05f35f9bca5a682b99950629d2",
+  "retrieved_utc": "2026-11-17T07:23:27.373111+00:00"
+}

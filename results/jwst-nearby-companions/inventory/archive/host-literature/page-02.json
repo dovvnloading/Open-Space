@@ -1,0 +1,12 @@
+{
+  "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+  "params": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "csv",
+    "MAXREC": "20000",
+    "QUERY": "SELECT DISTINCT ident.id, main_id,bibcode,title,doi FROM ident JOIN basic ON ident.oidref=basic.oid JOIN has_ref ON basic.oid=has_ref.oidref JOIN ref ON ref.oidbib=has_ref.oidbibref WHERE ident.id IN ('Gaia DR3 2477815222028038272','Gaia DR3 2477870708709917568','Gaia DR3 2552928187080872832','Gaia DR3 2581708281894978176','Gaia DR3 2595284016771502080','Gaia DR3 2635476908753563008','Gaia DR3 2638216857371313664','Gaia DR3 2640348977921037056','Gaia DR3 2660358032257156736','Gaia DR3 2693940725141960192','Gaia DR3 2694353690543010560','Gaia DR3 2727844441062478464','Gaia DR3 2785466581298775680','Gaia DR3 2797571448406493056','Gaia DR3 2831490694929214464','Gaia DR3 2832463659640297472','Gaia DR3 2832641058969396864','Gaia DR3 2860839993168687872','Gaia DR3 2870739343031622144','Gaia DR3 2883892182159616256','Gaia DR3 2886233695250041216','Gaia DR3 2898019875782441856','Gaia DR3 2899492637251200512','Gaia DR3 2901786974419551488') AND (title LIKE '%maging%' OR title LIKE '%oronagraph%' OR title LIKE '%irect %etection%' OR title LIKE '%igh%ontrast%') AND (title LIKE '%ompanion%' OR title LIKE '%lanet%' OR title LIKE '%rown %warf%' OR title LIKE '%ubstellar%' OR title LIKE '%ub-stellar%')"
+  },
+  "sha256": "602c81f5a42fa389a65ad37e4dc2414cb037eec5ac4cf7f1e489738810800f8b",
+  "retrieved_utc": "2026-11-17T07:23:11.141121+00:00"
+}
