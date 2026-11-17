@@ -1,7 +1,6 @@
 name: Rubin ITF search
 on:
-  push:
-    branches: [research/inbound-hyperbolic-search]
+  pull_request:
     paths:
       - ".github/workflows/inbound-tracklets.yml"
       - "results/inbound-hyperbolic-search/tracklets/*.py"
@@ -9,6 +8,7 @@ permissions:
   contents: read
 jobs:
   search:
+    if: github.head_ref == 'research/inbound-hyperbolic-search'
     runs-on: ubuntu-latest
     timeout-minutes: 100
     env:
