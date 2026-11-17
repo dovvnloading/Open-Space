@@ -28,8 +28,8 @@ def image(t,band):
     coadd=nearest['source_id'].split('_')[0]+'_ac51'
     r,d=position(t,2010.5)
     url=(f'https://irsa.ipac.caltech.edu/ibe/data/wise/allwise/p3am_cdd/{coadd[:2]}/{coadd[:4]}/{coadd}/{coadd}-w{band}-int-3.fits?'
-         +urlencode(dict(center=f'{r:.7f},{d:.7f}',size='65pix')))
-    cache=ROOT/'cache';cache.mkdir(exist_ok=True)
+         +urlencode(dict(center=f'{r:.7f},{d:.7f}',size='135pix')))
+    cache=ROOT/'stamp_cache';cache.mkdir(exist_ok=True)
     file=cache/f'{t["label"]}_W{band}.fits'
     for attempt in range(3):
         try:
@@ -86,6 +86,19 @@ def analyze(args):
     sep=s*np.hypot(cx,cy)
     east,north=-s*cx,s*cy
     row=dict(label=t['label'],band=band,east_as=round(east,3),north_as=round(north,3),separation_as=round(sep,3),change_wider_psf_as=round(s*np.hypot(fit2[1]-cx,fit2[2]-cy),3),centroid_at_bound=bool(max(abs(east),abs(north))>6.98))
+    yy,xx=np.indices(a.shape)
+    recovered=[]
+    for ux in (-42,-21,0,21,42):
+        for uy in (-42,-21,0,21,42):
+            if ux==uy==0: continue
+            xx0,yy0=x+ux,y+uy
+            if not (15<xx0<a.shape[1]-15 and 15<yy0<a.shape[0]-15):continue
+            kernel=np.exp(-((xx-xx0)**2+(yy-yy0)**2)/(2*(BANDS[band]/s/2.355)**2))
+            off=fit(a+amp*kernel,xx0,yy0,s,BANDS[band])[1:3]
+            recovered.append(s*np.hypot(*off))
+    row['local_placements']=len(recovered)
+    row['placement_p68_as']=round(np.percentile(recovered,68),3) if recovered else ''
+    row['placement_p90_as']=round(np.percentile(recovered,90),3) if recovered else ''
     return row,receipt,(a,x,y,s,cx,cy)
 
 def run():
