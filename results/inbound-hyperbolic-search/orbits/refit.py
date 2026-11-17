@@ -171,7 +171,7 @@ def integrate(params,start,stop,positions,events=None,dense=True):
         raise RuntimeError(solution.message)
     return solution
 
-def fit(seed_state,epoch,t,observers,east,north,sig,positions,outward=False):
+def fit(seed_state,epoch,t,observers,east,north,sig,positions,outward=False,return_predictor=False):
     npar=len(seed_state)
     memo={}
     if len(t)<max(7,npar+1):
@@ -225,7 +225,8 @@ def fit(seed_state,epoch,t,observers,east,north,sig,positions,outward=False):
         raise ValueError("Singular normal matrix")
     redchi=np.sum(f(x0)**2)/(2*mask.sum()-npar)
     cov=(vt.T/s**2)@vt*max(redchi,1)
-    return x0,cov,mask,res,redchi
+    result=(x0,cov,mask,res,redchi)
+    return (*result,calc) if return_predictor else result
 
 def inbound(obj,params,cov,epoch,eph):
     # The outer-boundary state is measured with respect to SSB, using total
@@ -259,6 +260,52 @@ def inbound(obj,params,cov,epoch,eph):
                           "inverse_a_au_inv":ir,"formal_sigma_inverse_a":sig,
                           "v_inf_km_s":np.sqrt(-ir*GM_TOTAL)*AU/DAY if ir<0 else None}
     return summaries
+
+def parabolic_profile(epoch,eph,nominal,laws,mask,sigma,evaluate):
+    """Fit the same retained positions while imposing zero energy at inbound 50 au.
+
+    A tight energy residual is added only to find the constrained solution;
+    the reported delta chi-square uses only the actual sky measurements.
+    """
+    pos=ephemeris(eph,epoch-130*365.25,epoch+1,1.)
+    n=len(nominal)
+    cache={}
+    def event(t,y,*args):
+        return np.linalg.norm(y[:3])-50
+    event.direction=1
+    event.terminal=True
+    def alpha(x):
+        key=tuple(x)
+        if key not in cache:
+            cache.clear()
+            sol=integrate(x,epoch,epoch-129*365.25,pos,[event],False)
+            if not len(sol.t_events[0]):
+                raise ValueError("Trial missed inbound 50 au within 129 years")
+            when=sol.t_events[0][0]; y=sol.y_events[0][0]
+            r,v=y[:3],y[3:6]; R=np.linalg.norm(r); vr=r@v/R
+            if vr>=0:
+                raise ValueError("Wrong branch at 50 au")
+            stm=y[n:].reshape(6,n)
+            tgrad=-(r/R)@stm[:3]/vr
+            stm=stm+np.outer(derivative(when,y,pos,n)[:6],tgrad)
+            g=np.r_[-2*r/R**3,-2*v/GM_TOTAL]@stm
+            cache[key]=(2/R-v@v/GM_TOTAL,g)
+        return cache[key]
+    def measurements(x):
+        res,jac=evaluate(x)
+        return (res[mask]/sigma[mask,None]).ravel(),(jac[mask]/sigma[mask,None,None]).reshape(-1,n)
+    tol=2e-5 # au^-1. The achieved constraint error is reported.
+    def f(x): return np.r_[measurements(x)[0],alpha(x)[0]/tol]
+    def j(x): return np.vstack([measurements(x)[1],alpha(x)[1]/tol])
+    lo=np.full(n,-np.inf)
+    if laws=="marsden_outward": lo[6]=0
+    out=least_squares(f,nominal,jac=j,bounds=(lo,np.inf),x_scale="jac",max_nfev=120,
+                      ftol=1e-9,xtol=1e-11,gtol=1e-6)
+    if not out.success: raise ValueError(out.message)
+    before=measurements(nominal)[0]; after=measurements(out.x)[0]
+    return {"target_inverse_a_at_inbound_50au":0.,"achieved":alpha(out.x)[0],
+            "delta_chi2_sky_only":float(after@after-before@before),"same_positions":int(mask.sum()),
+            "profile_state_and_accelerations":out.x.tolist(),"n_function_evals":out.nfev}
 
 def check_holdouts(obj,initial,epoch,eph,t,observers,east,north,sig,groups,positions):
     """Drop endpoint nights and the top-contributing observatory; evaluate withheld sky positions."""
@@ -309,6 +356,7 @@ def run():
                 t,stations_,east,north,sig,groups,dropped=observations(obj,eph)
                 epoch=float(np.ceil(t.max())+1)
                 initial=seed(obj,epoch,receipts)
+                entry["initial_horizons_seed_ssb_icrf"]=initial.tolist()
                 pos=ephemeris(eph,t.min()-OBS_TIME_LIMIT-2,epoch+1,.25)
                 entry.update(n_ground_optical=len(t),n_station_nights=len(set(groups)),
                              observed_jd_tdb=[float(t.min()),float(t.max())],excluded_rows=dropped)
@@ -322,8 +370,9 @@ def run():
                     try:
                         nng=2 if kind.startswith("marsden") else int(kind=="radial_r2")
                         state=np.r_[gravity_seed,np.zeros(nng)]
-                        x,cov,mask,res,redchi=fit(state,epoch,t,stations_,east,north,sig,pos,
-                                                  outward=kind=="marsden_outward")
+                        x,cov,mask,res,redchi,predict=fit(
+                            state,epoch,t,stations_,east,north,sig,pos,
+                            outward=kind=="marsden_outward",return_predictor=True)
                         if kind=="gravity":
                             gravity_seed=x.copy()
                         summary={"epoch_jd_tdb":epoch,"state_ssb_icrf":x.tolist(),"covariance":cov.tolist(),
@@ -331,6 +380,11 @@ def run():
                                  "rms_per_coordinate_as":float(np.sqrt(np.mean(res[mask]**2))),
                                  "weighted_reduced_chi2":float(redchi),
                                  "boundaries":inbound(obj,x,cov,epoch,eph)}
+                        if obj=="2025-V1":
+                            try:
+                                summary["zero_energy_profile"]=parabolic_profile(epoch,eph,x,kind,mask,sig,predict)
+                            except Exception as exc:
+                                summary["zero_energy_profile"]={"failed":str(exc)}
                         if obj=="2025-V1" and kind in {"gravity","marsden_signed"}:
                             summary["holdouts"]=check_holdouts(obj,x,epoch,eph,t,stations_,east,north,sig,groups,pos)
                         entry["models"][kind]=summary

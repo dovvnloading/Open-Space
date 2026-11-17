@@ -110,6 +110,22 @@ def acquire():
         else:
             selected[obj] = {"records":0,"status":"no authenticated astrometric rows retrieved"}
         print(obj, selected[obj], flush=True)
+    # Check the live primary endpoint independently of the bulk-file release date.
+    # The frozen fits refer to the archived MPC80 records; report newer/changed ADES
+    # positions explicitly to prevent silently reinterpreting a different selection.
+    body=json.dumps({"desigs":["C/2025 V1"],"output_format":["ADES_DF"]}).encode()
+    try:
+        live=json.loads(retrieve("https://data.minorplanetcenter.net/api/get-obs",
+                                "live-V1.json",receipts,body))[0]["ADES_DF"]
+        if isinstance(live,str):
+            live=json.loads(live)
+        if isinstance(live,dict):
+            times=list(live["obstime"].values()) if isinstance(live["obstime"],dict) else live["obstime"]
+        else:
+            times=[r["obstime"] for r in live if r.get("obstime")]
+        selected["2025-V1"]["live_ades_date_check"]={"rows_with_dates":len(times),"first":min(times),"last":max(times)}
+    except (ValueError,OSError,IndexError,KeyError,TypeError) as exc:
+        selected["2025-V1"]["live_ades_date_check"]={"error":str(exc)}
     for file,urls in {
         "stations.txt":["https://minorplanetcenter.net/iau/lists/ObsCodes.html",
                         "https://www.projectpluto.com/obscodes.htm"],
