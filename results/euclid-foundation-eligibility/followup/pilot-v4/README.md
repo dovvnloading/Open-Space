@@ -1,0 +1,5 @@
+# Development control expansion
+
+A 2.5-arcminute field frozen in `PRECOMMIT_V4.md` yielded 209 sky-subtracted maxima, 43 selected centers and nine positive paired aperture measurements; none had ten matched controls. Among 162 matched blank-sky apertures, the robust dispersion of differences is 0.03930 compared with median formal error 0.03592. The fitted scale came from only nine source pairs, so this noise comparison is a bounded method diagnostic rather than a survey sensitivity statement. Both visit images passed the scripted WCS corner and center check. No holdout pixels were opened. A five-arcminute shifted region was subsequently frozen before its screening.
+
+The full v4 cutouts reside in `D:\Open-Space\campaigns\euclid-vis-pilot-v4-3c0afec-terra61\cutouts`; the parent image URLs are in `../inputs/cutout-requests.json`. The 1500-pixel square is centered using the fixed coordinate in the parent WCS. The script is `../pilot_v4.py`; the downloaded files are not deposited here, and recomputing selection requires retrieving them or reusing that campaign directory.

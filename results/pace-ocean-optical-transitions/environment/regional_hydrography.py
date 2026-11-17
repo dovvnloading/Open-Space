@@ -20,7 +20,7 @@ OCEANS={
     'Section-7':('blk','BLKSEA_ANALYSISFORECAST_PHY_007_001','2.5km',44.5458,29.4466,date(2026,3,7),date(2026,3,15)),
 }
 RECEIPTS={}
-BLOSC=ctypes.CDLL(ctypes.util.find_library('blosc'))
+BLOSC=ctypes.CDLL(ctypes.util.find_library('blosc') or 'libblosc.so.1')
 BLOSC.blosc_decompress.argtypes=[ctypes.c_void_p,ctypes.c_void_p,ctypes.c_size_t]
 
 def read(url):

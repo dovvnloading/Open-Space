@@ -11,6 +11,11 @@
       "rule": "trace/mismatch",
       "key": "49.349218",
       "reason": "-49.349218 is the declination propagated to epoch J2017.5. The stored -49.349215 is the J2016.0 catalogue coordinate."
+    },
+    {
+      "rule": "replay/drift",
+      "key": "python ground-check/eclipse_controls.py",
+      "reason": "Two of 34 numbers in eclipse-controls.csv move in their fifth significant figure. Both are remainders below one millionth, which are round-off of the linear solve. Every other value is identical and no quoted number changes. See ground-check/README.md."
     }
   ]
 }
