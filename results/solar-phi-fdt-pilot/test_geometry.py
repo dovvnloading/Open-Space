@@ -19,8 +19,11 @@ x,y,visible=transport(h,h,1059.,959.);assert visible and np.hypot(x-1059,y-959)<
 hrot=h.copy();hrot['PC1_1']=0.;hrot['PC1_2']=-1.;hrot['PC2_1']=1.;hrot['PC2_2']=0.
 cp=to_surface(hrot,1059.,959.);assert abs(cp.Ty.to_value(u.arcsec)-360.)<.01
 x,y,visible=transport(hrot,hrot,1059.,959.);assert visible and np.hypot(x-1059,y-959)<1e-6
+hnext=h.copy();hnext['DATE-AVG']='2026-08-15T16:27:22'
+xp,yp,visible=transport(h,hnext,959.,959.);assert visible
+xr,yr,visible=transport(hnext,h,xp,yp);assert visible and np.hypot(xr-959,yr-959)<1e-4
 h2=h.copy();h2['HGLN_OBS']=h['HGLN_OBS']+180
 _,_,visible=transport(h,h2,959.,959.);assert not visible
 c3=to_surface(h,10000.,959.);assert not np.isfinite(c3.distance.to_value(u.m))
 x,y=dust_center_zero_based(h);assert 1200<x<1300 and 900<y<1000
-print('synthetic center/off-axis, rotated WCS, far side, off disk and dust indexing pass')
+print('synthetic center/off-axis, rotated WCS, two-day return, far side, off disk and dust indexing pass')
