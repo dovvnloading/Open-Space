@@ -1,0 +1,12 @@
+{
+  "key": "day_61359",
+  "adql": "SELECT o.oid,o.meanra,o.meandec,o.n_det,o.firstmjd,d.measurement_id,d.mjd,d.band,p.visit,p.detector,\nd.ra,d.dec,p.psfflux,p.psffluxerr,p.reliability,p.ssobjectid,p.diaobjectid,\np.isnegative,p.isdipole,p.glint_trail,p.psfflux_flag,p.pixelflags_edge,p.pixelflags_crcenter,\np.pixelflags_saturatedcenter,p.pixelflags_streakcenter,p.pixelflags_injectedcenter,\np.pixelflags_injected_templatecenter\nFROM alerce_tap.object AS o\nJOIN alerce_tap.detection AS d ON d.oid=o.oid AND d.sid=o.sid\nJOIN alerce_tap.lsst_detection AS p ON p.measurement_id=d.measurement_id AND p.oid=d.oid AND p.sid=d.sid\nWHERE o.sid=1 AND o.firstmjd>=61359.000428240739 AND o.firstmjd<61360.000428240739 AND o.n_det>=2 AND d.mjd>=61345.000428240739 AND d.mjd<61361.000428240739",
+  "url": "https://tap.alerce.online/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=100000&QUERY=SELECT+o.oid%2Co.meanra%2Co.meandec%2Co.n_det%2Co.firstmjd%2Cd.measurement_id%2Cd.mjd%2Cd.band%2Cp.visit%2Cp.detector%2C%0Ad.ra%2Cd.dec%2Cp.psfflux%2Cp.psffluxerr%2Cp.reliability%2Cp.ssobjectid%2Cp.diaobjectid%2C%0Ap.isnegative%2Cp.isdipole%2Cp.glint_trail%2Cp.psfflux_flag%2Cp.pixelflags_edge%2Cp.pixelflags_crcenter%2C%0Ap.pixelflags_saturatedcenter%2Cp.pixelflags_streakcenter%2Cp.pixelflags_injectedcenter%2C%0Ap.pixelflags_injected_templatecenter%0AFROM+alerce_tap.object+AS+o%0AJOIN+alerce_tap.detection+AS+d+ON+d.oid%3Do.oid+AND+d.sid%3Do.sid%0AJOIN+alerce_tap.lsst_detection+AS+p+ON+p.measurement_id%3Dd.measurement_id+AND+p.oid%3Dd.oid+AND+p.sid%3Dd.sid%0AWHERE+o.sid%3D1+AND+o.firstmjd%3E%3D61359.000428240739+AND+o.firstmjd%3C61360.000428240739+AND+o.n_det%3E%3D2+AND+d.mjd%3E%3D61345.000428240739+AND+d.mjd%3C61361.000428240739",
+  "utc_start": "2026-11-17T09:26:25.449903+00:00",
+  "status": 200,
+  "http_date": "Tue, 17 Nov 2026 09:26:31 GMT",
+  "rows": 5022,
+  "bytes": 1421920,
+  "sha256": "a8a0b91d1f1be498bf37e5de450b3e0c5efaf6f9b4555c9db7d5f5599bd4ec3e",
+  "utc_end": "2026-11-17T09:26:32.136956+00:00"
+}

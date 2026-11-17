@@ -283,6 +283,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 **Black holes, outbursts and supernovae**
 
+- **No fast cosmic explosion confirmed in Rubin and ZTF public alerts.** A screen of observations from 1–16 November 2026 found 32 rapidly changing objects, but no validated explosion outside our Galaxy. Most coincide with older point sources, stars or flagged image residuals; two remain unresolved. Two of the alerts were the same asteroid. *Null result* · [Details](results/fast-extragalactic-alerts-2026/README.md)
 - **A candidate lone black hole bending a star's light.** Since 2025 an unseen object has magnified a star near the centre of our Galaxy (OGLE-2026-BLG-0058). Its slow, steady passage points to a dark object of about 11 solar masses, most likely a black hole, though a slow-moving ordinary star or white dwarf is not ruled out. Only one lone black hole has been confirmed so far. *Candidate* · [Details](results/ogle-dark-lenses/README.md)
 - **Infrared light from a black-hole candidate 3.3 days before its X-ray outburst was detected.** Swift J1745−26. *Measured* · [Details](results/swift-j1745-infrared/README.md)
 - **AT 2021aeuk entered a second bright-ultraviolet, faint-X-ray state.** *Measured* · [Details](results/at-2021aeuk/README.md)
