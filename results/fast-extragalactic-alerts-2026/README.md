@@ -1,19 +1,22 @@
-# Fast extragalactic transients in the November 2026 public alerts
+# Fast extragalactic optical transients in the November 2026 public alerts
 
-**Opening status.** The selection below was fixed before examining candidate photometry. Survey coverage, candidate identities and an event rate are unmeasured at this commit.
+**No new extragalactic transient is validated in the primary search.** The strongest unresolved Rubin source is 171198361324486700. Its difference flux faded from 5,900 ± 372 to 4,358 ± 307 nJy in the i band in 67.5 minutes on November 12 UTC. The 0.329 ± 0.103 mag change also appears in fixed-aperture photometry. Legacy Surveys resolves no host at the position and places a pre-existing point source 0.11 arcsec away. No distance, rise time or total duration has been measured. Lasair/Sherlock predicts a variable star on the basis of that same point source. [Lasair record](https://lasair.lsst.ac.uk/object/171198361324486700/)
 
-## Frozen search
+| Primary search, November 1–16 UTC | Rubin | ZTF |
+|---|---:|---:|
+| Broker objects first detected in the interval with at least two catalog detections | 22,365 | 41,630 |
+| Detection rows inspected | 71,725 | 90,769 |
+| Objects with two eligible same-band positive measurements 0.02–1 d apart | 1,074 | 389 |
+| Objects passing all photometric cuts | 23 | 9 |
 
-The observing window is [2026-11-01 00:00, 2026-11-17 00:00) UTC. Search the public Rubin alerts through ALeRCE (Fink/ANTARES as fallbacks) and the public ZTF alerts through ALeRCE, Fink or the University of Washington packet archive. One astrophysical position is one candidate across streams. Record each survey's time scale, broker watermarks, retrieved rows, paging/coverage and hashes. For any necessary subset, fix its boundaries before inspecting its candidates and report the actual selection exposure.
+Seventeen Rubin sources have a passing pair without the listed image or Solar System flags. All nine ZTF objects have a stellar counterpart, an image residual near a bright star, or a Solar System identification. Two IDs on successive nights trace asteroid (18150) to within 0.14 arcsec at six observed positions. The ZTF public-program verification covers all 923 eligible pairs. [ZTF results](ztf/ZTF.md) · [Horizons residuals](context/horizons_18150.csv)
 
-Select objects with their first available positive detection in the window. Require two independent, positive detections in one passband, each at signal-to-noise ≥5, separated by 0.02–1.00 observer-frame days inclusive, with an absolute change ≥0.30 mag, >1.00 mag/day and ≥3 combined magnitude errors. Either direction qualifies. Use all eligible pairs. A single steep pair does not establish that the event both rose and faded in a day. Record meaningful upper limits separately. A prior outburst more than 30 days before discovery excludes an isolated-event interpretation where history can be checked.
-
-For survivors, verify image stamps, motion, repeated stationary detections, prior activity, Gaia/Legacy/PS1 stellar or host context, source association and distance. Check public multi-survey coverage, TNS, GCN and other high-energy/multimessenger notices. Unavailable checks remain open. A redshift or a gamma-ray nondetection alone cannot establish an orphan jet. Calculate recovery separately from observational counts. A sky or volumetric rate requires measured effective exposure.
+The opening commit froze the observing interval, independent same-band positive pairs, S/N ≥5 at both epochs, 0.02–1 day between epochs, absolute change ≥0.30 mag and ≥3 combined errors, and an absolute slope >1 mag/day. Both signs of optical change were retained. In practice the primary cohorts use first broker detection of either sign. An old negative detection can therefore keep a newly positive object out of this table. [Frozen protocol](https://github.com/dovvnloading/Open-Space/blob/f351c39959d602b60fcfe85c477f792ca6e59313/results/fast-extragalactic-alerts-2026/README.md)
 
 ## Completed
 
-Read the [remarkable-findings inclusion bar](../../docs/REMARKABLE_FINDINGS.md) and the [existing Rubin investigation](../rubin-alerce-2026/README.md). This search concerns extragalactic rapid transients. The earlier binary minor-planet, blue stellar variability and white-dwarf analyses address different populations.
+Archived the photometry, screened all eligible pairs, checked the public ZTF exposures, examined survey stamps, and compared optical positions against localized triggers. An illustrative synthetic transient peaking at AB 18 with 2 mag/day rise and decay passed the two-point screen in 4.27% of Rubin and 0.436% of ZTF injections on the recorded alert epochs. Effective area-time and volumetric rates remain unmeasured. [Recovery](recovery/results.csv) · [Trigger comparisons](coincidences/README.md) · [Published-event controls](controls/README.md)
 
-## Pending
+## Pending at this checkpoint
 
-Survey retrieval, image/host/history checks, novelty checks, and recovery measurement.
+The final object-by-object audit, supplementary older-object tests, and linked cross-survey evidence are being assembled. No photometric class or discovery priority has been established for the compact Rubin source.
