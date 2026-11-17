@@ -25,7 +25,19 @@ def rows(name,expected):
  if len(r)!=expected['rows']:raise ValueError('projection row count mismatch')
  return r
 
+def check_failed_preflight():
+ raw=gzip.decompress((E/'failed-preflight-manifest.json.gz').read_bytes())
+ if hashlib.sha256(raw).hexdigest()!='27f0c6f291bd4cdbd14461d72104fe03f81fafc7207fc620a8bfe6130bc0661a':raise ValueError('failed preflight digest mismatch')
+ old=json.loads(raw)
+ if old['git_head']!='4e32585258bd2419538e9698c8821f8910778443':raise ValueError('failed preflight head mismatch')
+ blob=gzip.decompress((E/'failed-attributes-git-blob.txt.gz').read_bytes())
+ reconstructed=gzip.decompress((E/'failed-attributes-crlf-reconstructed.txt.gz').read_bytes())
+ if hashlib.sha256(blob).hexdigest()!='8c5d9c4b533c370055e534748b39c27cbe529de4769af068fafd695bdde3eede':raise ValueError('historical blob mismatch')
+ if hashlib.sha256(reconstructed).hexdigest()!=old['worktree_sha256']['results/vast-tde-expanded/.gitattributes'] or reconstructed==blob or reconstructed.replace(b'\r\n',b'\n')!=blob:raise ValueError('historical checkout reconstruction mismatch')
+ print('historical failed preflight and reconstructed EOL difference verified')
+
 def main():
+ check_failed_preflight()
  packet=guard();manifest=json.loads((E/'projection-manifest.json').read_text());observed=json.loads((E/'holdout-result.json').read_text());controls=list(csv.DictReader((ROOT.parent/'vast-tde-expanded/control-metadata.csv').open(newline='',encoding='utf-8')))
  for sid,cfg in packet['sources'].items():
   basefile=E/f'{sid}-development.json'
