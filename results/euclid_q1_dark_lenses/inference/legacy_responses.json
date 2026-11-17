@@ -1,0 +1,16 @@
+[
+ {
+  "id": "102158887_2655306065654633189",
+  "query": "SELECT t.ls_id,t.ra,t.dec,t.type,t.flux_g,t.flux_r,t.flux_z,t.flux_w1,t.flux_w2,p.z_phot_median,p.z_phot_l68,p.z_phot_u68,p.z_phot_l95,p.z_phot_u95,p.z_spec FROM ls_dr9.tractor AS t LEFT OUTER JOIN ls_dr9.photo_z AS p ON t.ls_id=p.ls_id WHERE t.ra BETWEEN 265.52760656 AND 265.53360656 AND t.dec BETWEEN 65.46211893 AND 65.46451893 ORDER BY t.ls_id",
+  "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+t.ls_id%2Ct.ra%2Ct.dec%2Ct.type%2Ct.flux_g%2Ct.flux_r%2Ct.flux_z%2Ct.flux_w1%2Ct.flux_w2%2Cp.z_phot_median%2Cp.z_phot_l68%2Cp.z_phot_u68%2Cp.z_phot_l95%2Cp.z_phot_u95%2Cp.z_spec+FROM+ls_dr9.tractor+AS+t+LEFT+OUTER+JOIN+ls_dr9.photo_z+AS+p+ON+t.ls_id%3Dp.ls_id+WHERE+t.ra+BETWEEN+265.52760656+AND+265.53360656+AND+t.dec+BETWEEN+65.46211893+AND+65.46451893+ORDER+BY+t.ls_id",
+  "raw_csv": "ls_id,ra,dec,type,flux_g,flux_r,flux_z,flux_w1,flux_w2,z_phot_median,z_phot_l68,z_phot_u68,z_phot_l95,z_phot_u95,z_spec\n9907740711059611,265.53073993182915,65.46328093711493,EXP,1.555989,3.15304,6.056567,22.93571,15.707683,0.720801,0.626333,0.810556,0.290191,0.929505,-99\n9907740711059621,265.5318187909211,65.46293991639172,PSF,0.339836,0.292916,0.102777,-2.481662,-0.00689,0.740065,0.277617,1.221042,0.089837,1.909534,-99\n",
+  "sha256": "b56000a1c35734731a0d63c973b9420e4c8f9c1ac6a9b0a4bf3a3c1368985c0d"
+ },
+ {
+  "id": "102158888_2659753895653871052",
+  "query": "SELECT t.ls_id,t.ra,t.dec,t.type,t.flux_g,t.flux_r,t.flux_z,t.flux_w1,t.flux_w2,p.z_phot_median,p.z_phot_l68,p.z_phot_u68,p.z_phot_l95,p.z_phot_u95,p.z_spec FROM ls_dr9.tractor AS t LEFT OUTER JOIN ls_dr9.photo_z AS p ON t.ls_id=p.ls_id WHERE t.ra BETWEEN 265.97238953 AND 265.97838953 AND t.dec BETWEEN 65.38590524 AND 65.38830524 ORDER BY t.ls_id",
+  "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+t.ls_id%2Ct.ra%2Ct.dec%2Ct.type%2Ct.flux_g%2Ct.flux_r%2Ct.flux_z%2Ct.flux_w1%2Ct.flux_w2%2Cp.z_phot_median%2Cp.z_phot_l68%2Cp.z_phot_u68%2Cp.z_phot_l95%2Cp.z_phot_u95%2Cp.z_spec+FROM+ls_dr9.tractor+AS+t+LEFT+OUTER+JOIN+ls_dr9.photo_z+AS+p+ON+t.ls_id%3Dp.ls_id+WHERE+t.ra+BETWEEN+265.97238953+AND+265.97838953+AND+t.dec+BETWEEN+65.38590524+AND+65.38830524+ORDER+BY+t.ls_id",
+  "raw_csv": "ls_id,ra,dec,type,flux_g,flux_r,flux_z,flux_w1,flux_w2,z_phot_median,z_phot_l68,z_phot_u68,z_phot_l95,z_phot_u95,z_spec\n9907740711062851,265.9754244759063,65.38708081600078,EXP,1.539637,2.686819,3.426062,3.610014,1.228395,0.32003,0.233865,0.504804,0.161281,0.738954,-99\n",
+  "sha256": "5b4f555423b49f5bdec422d8f972109c70f6441fcb72dc5de60c0bb8e0a4c213"
+ }
+]
