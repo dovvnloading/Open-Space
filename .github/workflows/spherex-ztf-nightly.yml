@@ -44,17 +44,31 @@ jobs:
           cat nightly_summary.csv
       - name: Check D's two faint catalog detections on the science images
         id: pixel
+        if: ${{ !contains(github.event.head_commit.message, '[warm FGK]') }}
         continue-on-error: true
         working-directory: results/spherex-waste-heat/optical
         run: python d_science.py
+      - name: Recover the three warm FGK DR24 queries
+        if: ${{ contains(github.event.head_commit.message, '[warm FGK]') }}
+        id: warm
+        continue-on-error: true
+        working-directory: results/spherex-waste-heat/warm_fgk
+        run: python recover_optical.py
       - name: Record optical products
         working-directory: results/spherex-waste-heat/optical
         env:
           RECOVERY_STATUS: ${{ steps.recover.outcome }}
           PIXEL_STATUS: ${{ steps.pixel.outcome }}
+          WARM_STATUS: ${{ steps.warm.outcome }}
         run: |
           set -euo pipefail
           git add -f nightly.csv nightly_summary.csv
+          if [[ -f ../warm_fgk/recovery_receipts.json ]]; then
+            git add -f ../warm_fgk/recovery_receipts.json ../warm_fgk/recovery_summary.csv
+            shopt -s nullglob
+            extras=(../warm_fgk/retry_*.csv.gz ../warm_fgk/hats_*.csv.gz)
+            if (("${#extras[@]}")); then git add -f "${extras[@]}"; fi
+          fi
           if [[ -f d_science_cutouts.zip ]]; then git add -f d_science_cutouts.zip d_science_receipts.json; fi
           if [[ -f d_aperture_summary.csv ]]; then git add -f d_aperture_controls.csv d_aperture_summary.csv; fi
           if [[ -f hats_receipts.json ]]; then git add -f hats_receipts.json hats_*.csv.gz; fi
@@ -67,4 +81,5 @@ jobs:
             git push origin HEAD:research/spherex-waste-heat
           fi
           test "$RECOVERY_STATUS" = success
-          test "$PIXEL_STATUS" = success
+          test "$PIXEL_STATUS" != failure
+          test "$WARM_STATUS" != failure
