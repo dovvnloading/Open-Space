@@ -1,0 +1,100 @@
+name: Gaia NSS referee replay
+on:
+  pull_request:
+    paths:
+      - 'results/gaia-nss-dark-companions/**'
+      - 'tests/test_gaia_control_replay.py'
+      - '.github/workflows/gaia-nss-referee.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  deposited-replay:
+    name: Verify deposited screens and rerun HD 264291 joint fit
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy scipy
+      - name: Check every deposited mass row and independent survey receipt
+        run: python results/gaia-nss-dark-companions/referee_replay.py
+      - name: Reject corrupted and changed control source receipts
+        run: python -m unittest discover -s tests -p 'test_gaia_control_replay.py' -v
+      - name: Rerun Gaia + 18-night LAMOST orbital posterior from frozen tables
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+        run: |
+          python results/gaia-nss-dark-companions/orbit/fit_lamost.py --out "$RUNNER_TEMP/hd264291-independent"
+          python results/gaia-nss-dark-companions/referee_replay.py \
+            --check-fit "$RUNNER_TEMP/hd264291-independent/lamost_candidate_fits.json"
+  simbad-leads:
+    name: Exact-ID SIMBAD check for every discussed lead
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Query SIMBAD TAP and retain exact response checksum
+        run: |
+          python results/gaia-nss-dark-companions/simbad_leads.py \
+            --out "$RUNNER_TEMP/simbad-nss-leads"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: simbad-nss-leads-receipt
+          path: ${{ runner.temp }}/simbad-nss-leads/
+          if-no-files-found: warn
+  upstream-screens:
+    name: Reacquire ESA bulk + FLAME TAP and independently rescreen
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch both frozen Gaia bulk files and recompute initial mass screen
+        run: |
+          python results/gaia-nss-dark-companions/gaia/screen.py \
+            --cache "$RUNNER_TEMP/gaia-bulk" --out "$RUNNER_TEMP/gaia-screen"
+      - name: Reacquire and hash-verify the FLAME TAP query response
+        run: |
+          python - <<'PY'
+          import hashlib, json, os, pathlib, urllib.request
+          root=pathlib.Path("results/gaia-nss-dark-companions")
+          spec=json.loads((root/"extension/depth.json").read_text())
+          dst=pathlib.Path(os.environ["RUNNER_TEMP"])/"gaia-bulk/flame.csv"
+          with urllib.request.urlopen(spec["url"],timeout=240) as r:
+              raw=r.read()
+          digest=hashlib.sha256(raw).hexdigest()
+          print(f"FLAME ESA TAP: {len(raw)} bytes, sha256={digest}")
+          assert len(raw)==spec["bytes"], "FLAME query row count/byte length changed; investigate independently"
+          if digest!=spec["sha256"]:
+              print("::warning::The live ESA TAP response differs at the raw-byte level. The deposited original hash is retained; only an exact regenerated screen match can establish scientific equivalence.")
+          dst.write_bytes(raw)
+          PY
+      - name: Rerun FLAME extension against bulk source and compare deposited counts
+        run: |
+          mkdir -p "$RUNNER_TEMP/flame-screen"
+          python results/gaia-nss-dark-companions/extension/flame.py \
+            "$RUNNER_TEMP/gaia-bulk/flame.csv" "$RUNNER_TEMP/gaia-bulk/nss.csv.gz" \
+            --output "$RUNNER_TEMP/flame-screen/mass_screen.csv"
+          python - <<'PY'
+          import csv,json,os,pathlib,hashlib
+          root=pathlib.Path("results/gaia-nss-dark-companions")
+          tmp=pathlib.Path(os.environ["RUNNER_TEMP"])
+          for fname,local,original in [
+              ("Gaia","gaia-screen/mass_screen.csv","gaia/mass_screen.csv"),
+              ("FLAME","flame-screen/mass_screen.csv","extension/mass_screen.csv")]:
+              generated=tmp/local; deposited=root/original
+              digest=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+              assert digest(generated)==digest(deposited),(fname,"rescreen differs from frozen deposited output")
+              print(fname,"FULL BULK RESCREEN EXACT MATCH",digest(generated))
+          PY
