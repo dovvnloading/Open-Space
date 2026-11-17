@@ -41,7 +41,7 @@ def one(name,star):
         im=fits.Header.fromfile(buf)
         offset=buf.tell()
         assert im["BITPIX"]==-32 and im["CAMERA"]==int(cam) and im["CCD"]==int(ccd)
-        assert ph["SECTOR"]==110 and im.get("BSCALE",1)==1 and im.get("BZERO",0)==0
+        assert im.get("SECTOR",int(name.split("-")[1][1:]))==110 and im.get("BSCALE",1)==1 and im.get("BZERO",0)==0
         w=WCS(im,naxis=2)
         x,y=map(float,w.all_world2pix(float(star["ra_obs"]),float(star["dec_obs"]),0))
         cx,cy=round(x),round(y)
