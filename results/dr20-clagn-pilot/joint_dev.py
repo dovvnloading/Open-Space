@@ -31,7 +31,7 @@ for sid,pair in sorted(pairs.items()):
   for shift in (-5,0,5):
    for degree in (1,2):
     a=fit(*data['baseline'],sigma,shift,degree);b=fit(*data['dev'],sigma,shift,degree)
-    diff=b['ratio']-a['ratio'];err=np.hypot(a['ratio_err'],b['ratio_err']); valid=all(x['success'] and x['oiii']>5*x['oiii_err'] for x in [a,b]);high=max(a['ratio'],b['ratio']);low=min(a['ratio'],b['ratio']);decision=bool(valid and low>0 and high/low>=5 and abs(diff)>5*err and ((a['broad']>5*a['broad_err']) if a['ratio']>=b['ratio'] else (b['broad']>5*b['broad_err'])))
+    diff=b['ratio']-a['ratio'];err=np.hypot(a['ratio_err'],b['ratio_err']); valid=all(x['success'] and x['oiii']>5*x['oiii_err'] for x in [a,b]);high=max(a['ratio'],b['ratio']);low=min(a['ratio'],b['ratio']);lowerr=b['ratio_err'] if a['ratio']>=b['ratio'] else a['ratio_err'];decision=bool(valid and low>0 and high/low>=5 and low+1.645*lowerr<0.5*high and abs(diff)>5*err and ((a['broad']>5*a['broad_err']) if a['ratio']>=b['ratio'] else (b['broad']>5*b['broad_err'])))
     rows.append(dict(sdss_id=sid,sigma=sigma,shift=shift,degree=degree,valid=int(valid),baseline_broad=a['broad'],baseline_broad_err=a['broad_err'],baseline_oiii=a['oiii'],baseline_oiii_err=a['oiii_err'],baseline_ratio=a['ratio'],baseline_ratio_err=a['ratio_err'],baseline_chi2=a['chi2'],baseline_dof=a['dof'],dev_broad=b['broad'],dev_broad_err=b['broad_err'],dev_oiii=b['oiii'],dev_oiii_err=b['oiii_err'],dev_ratio=b['ratio'],dev_ratio_err=b['ratio_err'],dev_chi2=b['chi2'],dev_dof=b['dof'],conditional_threshold=int(decision)))
  a=fit(*data['baseline']);b0=fit(*data['dev']);w,y,iv=data['dev']
  for factor in (0,.5,2):
