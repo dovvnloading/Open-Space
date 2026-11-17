@@ -1,4 +1,5 @@
 """Catalogue-level Plummer injections with a Kroupa IMF and the frozen detector."""
+import argparse
 import json
 from concurrent.futures import ProcessPoolExecutor
 from itertools import product
@@ -30,10 +31,16 @@ def luminosity_grid():
 
 
 class Campaign:
-    def __init__(self, field):
+    def __init__(self, field, off_control=False):
         self.field = field
-        self.grid = FieldGrid(field)
-        self.threshold = json.loads((OUT/'calibration.json').read_text())['strict_threshold']
+        self.off_control = off_control
+        if off_control:
+            from off_control import secondary_grid
+            self.grid = secondary_grid(field)
+        else:
+            self.grid = FieldGrid(field)
+        calibration = 'off_control_calibration.json' if off_control else 'calibration.json'
+        self.threshold = json.loads((OUT/calibration).read_text())['strict_threshold']
         raw = pd.read_csv(ROOT/f'catalog/{field}.csv.gz',usecols=['ra','dec','gdepth','rdepth','maskbits'])
         self.depth_tree = cKDTree(np.column_stack([raw.ra*self.grid.cos,raw.dec]))
         self.depth = raw[['gdepth','rdepth']].to_numpy()
@@ -73,8 +80,11 @@ class Campaign:
 
     def one(self,mv,rh,dm,cy,cx,rng):
         y,x = self.cells[(cy,cx)]
-        i = rng.integers(len(y))
-        ra0,dec0 = self.grid.coords(y[i]+rng.uniform(-.5,.5),x[i]+rng.uniform(-.5,.5))
+        while True:
+            i = rng.integers(len(y))
+            ra0,dec0 = self.grid.coords(y[i]+rng.uniform(-.5,.5),x[i]+rng.uniform(-.5,.5))
+            if not self.off_control or self.grid.dist(ra0,dec0,*CONTROLS[self.field][:2])>26:
+                break
         g,r,n = self.model
         # Restrict the draw to stars within 2 mag of the faint selection limit;
         # total expected light includes the full stellar mass interval.
@@ -100,9 +110,10 @@ class Campaign:
                     recovered=bool(recovered and not existing),recovered_score=recovered['score'] if recovered else np.nan)
 
 
-def run_field(field):
-    campaign = Campaign(field)
-    rng = np.random.default_rng(SEED+100+list(FIELDS).index(field))
+def run_field(task):
+    field, off_control = task
+    campaign = Campaign(field,off_control)
+    rng = np.random.default_rng(SEED+100+list(FIELDS).index(field)+1000*off_control)
     rows = []
     for mv,rh,dm,cy,cx in product(MAGNITUDES,SIZES_PC,MODULI,range(2),range(2)):
         for _ in range(PER_QUADRANT):
@@ -121,15 +132,18 @@ def summarize(df, keys):
     return out
 
 
-def run():
+def run(off_control=False):
+    prefix = 'off_control_' if off_control else ''
     with ProcessPoolExecutor(max_workers=min(2,os.cpu_count() or 1)) as exe:
-        rows = [row for field_rows in exe.map(run_field,FIELDS) for row in field_rows]
+        rows = [row for field_rows in exe.map(run_field,[(field,off_control) for field in FIELDS]) for row in field_rows]
     trials = pd.DataFrame(rows)
-    trials.to_csv(OUT/'injection_trials.csv.gz',index=False,float_format='%.7f',compression={'method':'gzip','mtime':0})
+    trials.to_csv(OUT/(prefix+'injection_trials.csv.gz'),index=False,float_format='%.7f',compression={'method':'gzip','mtime':0})
     keys = ['field','mv_expected','rhalf_pc','dm']
-    summarize(trials,keys).to_csv(OUT/'completeness.csv',index=False,float_format='%.6f')
-    summarize(trials,keys+['quadrant_y','quadrant_x']).to_csv(OUT/'spatial_completeness.csv',index=False,float_format='%.6f')
+    summarize(trials,keys).to_csv(OUT/(prefix+'completeness.csv'),index=False,float_format='%.6f')
+    summarize(trials,keys+['quadrant_y','quadrant_x']).to_csv(OUT/(prefix+'spatial_completeness.csv'),index=False,float_format='%.6f')
 
 
 if __name__ == '__main__':
-    run()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--off-control',action='store_true',help='Use the secondary domain and its frozen threshold.')
+    run(parser.parse_args().off_control)
