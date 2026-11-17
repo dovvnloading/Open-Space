@@ -2,6 +2,8 @@
 
 **No previously unrecognised interstellar object was validated.** The search found zero real three-night high-speed links in 2,130 eligible Pan-STARRS 1 tracklets from October 19 through November 16, 2026. It recovered 35 of 37 simulated objects whose paths came within 1.5° of actual detections on three nights. Across the full simulation, only 37 of 20,000 paths met that sky-and-time requirement. Across 2,290 catalogue IDs, independent orbit fits produced 603 numerical far-inbound estimates, including 416 actual inbound crossings of 250 au with formal uncertainties. The fastest formal outliers were known objects, fragments, or short arcs admitting better parabolic fits.
 
+The [referee replay and source-drift audit](REFEREE.md) independently checks the frozen astrometry, orbit solutions, recovery intervals, source receipts and remaining limits before merge.
+
 ## Completed catalogue audit
 
 | Selection or test | What was measured |
