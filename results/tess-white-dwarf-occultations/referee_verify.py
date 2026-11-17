@@ -166,7 +166,12 @@ def check():
     optical_curves = read("vetting/optical_epochs.json.gz")
     assert sum(len(c["btjd"]) for c in optical_curves if c["band"] == "ztf") == 32719
     ground = read("ground_windows/coverage.json")
-    assert ground["matching_boxes"] == 0 if "matching_boxes" in ground else ground["matching_boxes"] == 0
+    assert ground["matching_boxes"] == ground["matching_images"] == 0
+    assert ground["targets"] == 37 and ground["groups"] == 59
+    assert sum(ground["window_counts"].values()) == 252
+    assert ground["distinct_atlas_exposures"] == 336
+    assert sha("ground_windows/responses.json.gz") == ground["responses_sha256"]
+    assert sha("ground_windows/windows.json.gz") == ground["windows_sha256"]
 
     metrics = dict(
         parent=157, requested=140, crowding_excluded=89, included=39,
