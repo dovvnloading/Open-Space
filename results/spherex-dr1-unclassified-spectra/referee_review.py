@@ -294,6 +294,11 @@ def replay():
 
 
 def fresh_cutouts(release):
+    """Count only independently downloaded, SHA-identical cutout bytes as verified.
+
+    IRSA's IBE occasionally responds 503. Reattempt *only* failures, with
+    decreasing concurrency, and publish a receipt audit even on an outage.
+    """
     require(release in ("dr1", "qr3"), "Choose dr1 or qr3")
     _, receipts = collected_receipts()
     subset=[x for x in receipts if x["release"] == release]
@@ -312,24 +317,43 @@ def fresh_cutouts(release):
                         h.update(chunk);n+=len(chunk)
                 require(n>0, "Empty cutout")
                 require(h.hexdigest()==row["sha256"],
-                        f"Cutout changed {row['_source']} {row['url']}")
+                        f"SHA MISMATCH {row['_source']} {row['url']}")
                 return n
             except Exception as ex:
                 last=ex
-                if attempt != 3: time.sleep(1.5*(2**attempt))
+                if attempt != 3: time.sleep(2.0*(2**attempt))
         raise RuntimeError(f"{row['_source']} {row['url']}: {last}")
-    size, count=0,0
-    failures=[]
-    with ThreadPoolExecutor(max_workers=8) as pool:
-        futures={pool.submit(check_one,x):x for x in subset}
-        for future in as_completed(futures):
-            try: size += future.result()
-            except Exception as e: failures.append(str(e))
-            count+=1
-            if count%100==0 or count==len(subset):
-                print("verified",release,count,"of",len(subset),"failures",len(failures),flush=True)
-    require(not failures,f"{len(failures)} failed cutout checks: {failures[:6]}")
-    return {"release":release,"fresh_hashed_cutouts":count,"total_fetched_bytes":size}
+
+    pending=list(subset)
+    successes=0
+    size=0
+    errors=[]
+    for iteration,workers in enumerate((4,2,1),start=1):
+        if not pending: break
+        if iteration>1:
+            time.sleep(10*iteration)
+        failed=[]
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            futures={pool.submit(check_one,row):row for row in pending}
+            for n,future in enumerate(as_completed(futures),start=1):
+                row=futures[future]
+                try:
+                    size += future.result()
+                    successes+=1
+                except Exception as e:
+                    failed.append((row,str(e)))
+                if n%100==0 or n==len(pending):
+                    print("verified",release,"pass",iteration,n,"of",len(pending),
+                          "remaining",len(failed),flush=True)
+        errors=[reason for _,reason in failed]
+        pending=[row for row,_ in failed]
+        if pending: print("RETRY",release,"unavailable",len(pending),"pass",iteration,flush=True)
+    report={"release":release,"receipts":len(subset),"fresh_hashed_cutouts":successes,
+            "unverified_cutouts":len(pending),"total_fetched_bytes":size,
+            "failures":errors}
+    (ROOT/("referee_cutouts_"+release+".json")).write_text(json.dumps(report,indent=2)+"\n")
+    require(not errors, f"{len(errors)} cutouts could not be freshly verified: {errors[:6]}")
+    return report
 
 
 def main():
