@@ -107,8 +107,13 @@ def main():
         flux = b.bin_flux(b.flux)
         aux = {k: average(b, curve, x) for k,x in curve.diagnostics.items()}
         stars[(row['tic'], row['sector'])] = (curve.meta, b.centers, flux, aux)
+    out = vet_rows(stars, read_rows(args.triggers))
+    write_csv(args.out, out, sorted(set().union(*(row.keys() for row in out))) if out else ['tic','sector','peak_btjd'])
+
+
+def vet_rows(stars, triggers):
     out = []
-    for event in read_rows(args.triggers):
+    for event in triggers:
         star = event['tic'], event['sector']
         meta, t, y, aux = stars[star]
         peak, d, f = (float(event[k]) for k in ('peak_btjd', 'duration_h','ingress_fraction'))
@@ -117,7 +122,7 @@ def main():
         row = dict(tic=star[0], sector=star[1], peak_btjd=peak)
         row.update(shape_fit(t, y, peak,d,f))
         # Values as stored in the QLP product. Flux columns are normalized.
-        for k in ('SAP_BKG','SAP_X','SAP_Y','DET_FLUX','DET_FLUX_SML','DET_FLUX_LAG'):
+        for k in ('SAP_FLUX','SAP_BKG','SAP_X','SAP_Y','DET_FLUX','DET_FLUX_SML','DET_FLUX_LAG'):
             if k in aux:
                 row[k + '_r'] = correlation(t, y, aux[k], peak_loc)
                 row[k + '_amplitude'] = profile(t, aux[k], peak,d,f)
@@ -146,7 +151,7 @@ def main():
             peak_i = np.argmax(power)
             row.update(ls_period_d=1/freq[peak_i],ls_normalized_power=power[peak_i])
         out.append(row)
-    write_csv(args.out, out, sorted(set().union(*(row.keys() for row in out))) if out else ['tic','sector','peak_btjd'])
+    return out
 
 
 if __name__ == '__main__':
