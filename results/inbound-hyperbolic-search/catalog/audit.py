@@ -22,7 +22,7 @@ URL = BASE + "?" + urlencode({
 })
 GM_SUN = 132712440041.93938  # km^3 / s^2, JPL DE440
 AU_KM = 149597870.7
-ISOS = {"1I", "2I", "3I"}
+ISOS = {"50788063": "1I", "1003639": "2I", "1004083": "3I"}
 
 
 def write_json(path, data):
@@ -42,8 +42,7 @@ def process(row):
     sigma = numeric(row["sigma_e"])
     z = (e - 1) / sigma if sigma and sigma > 0 else None
     title = row["full_name"].strip()
-    known = next((code for code in sorted(ISOS)
-                  if title.startswith(code + "/") or row["pdes"] == code), "")
+    known = ISOS.get(str(row["spkid"]), "")
     ng = ",".join(field for field in ("A1", "A2", "A3", "DT", "S0")
                   if numeric(row[field]) not in (0, None))
     return {**row, "full_name": title, "nominal_osculating_v_km_s": speed,
