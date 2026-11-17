@@ -30,6 +30,26 @@ jobs:
           python results/gaia-nss-dark-companions/orbit/fit_lamost.py --out "$RUNNER_TEMP/hd264291-independent"
           python results/gaia-nss-dark-companions/referee_replay.py \
             --check-fit "$RUNNER_TEMP/hd264291-independent/lamost_candidate_fits.json"
+  simbad-leads:
+    name: Exact-ID SIMBAD check for every discussed lead
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Query SIMBAD TAP and retain exact response checksum
+        run: |
+          python results/gaia-nss-dark-companions/simbad_leads.py \
+            --out "$RUNNER_TEMP/simbad-nss-leads"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: simbad-nss-leads-receipt
+          path: ${{ runner.temp }}/simbad-nss-leads/
+          if-no-files-found: warn
   upstream-screens:
     name: Reacquire ESA bulk + FLAME TAP and independently rescreen
     runs-on: ubuntu-latest
