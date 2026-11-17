@@ -1,5 +1,5 @@
 """Fail-closed primitives for immutable microlensing replay campaigns."""
-import csv,hashlib,json,math,os,platform,sys
+import csv,hashlib,json,math,os,platform,re,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 REPO=ROOT.parents[1]
@@ -72,3 +72,27 @@ def engine_assets(vbm):
  table=package.parent/'data'/'ESPL.tbl'
  if not all(p.is_file() for p in (package,native,table)):raise ValueError('missing microlensing engine asset')
  return (package,native,table)
+
+CAMPAIGN_SCHEMA='ultrashort-grid-campaign-v1'
+RUNTIME_KEYS=('python','platform','numpy','vbm')
+ENGINE_ROLES=('vbm_package','vbm_native','espl_table','grid_library')
+
+def source_assets():
+ return {'run_grid':ROOT/'run_grid.py','fit':ROOT/'fit.py','grid_source':ROOT/'grid.cpp','kmt_flux':ROOT/'kmt/flux.py','guard':ROOT/'replay_guard.py','ogle_catalog':ROOT/'ogle/catalog.csv','kmt_catalog_2024':ROOT/'kmt/catalog-2024.tsv','kmt_catalog_2025':ROOT/'kmt/catalog-2025.tsv','lens':ROOT.parent/'ogle-dark-lenses/lens.py'}
+
+def validate_campaign(meta):
+ if meta.get('schema')!=CAMPAIGN_SCHEMA or meta.get('model')!='frozen grid' or not isinstance(meta.get('cap'),bool):raise ValueError('unsupported campaign schema/model')
+ runtime=meta.get('runtime')
+ if not isinstance(runtime,dict) or set(runtime)!=set(RUNTIME_KEYS) or any(not isinstance(runtime[k],str) or not runtime[k].strip() or runtime[k].strip().lower() in ('unknown','none') for k in RUNTIME_KEYS):raise ValueError('missing campaign runtime identity')
+ roles=meta.get('asset_roles');hashes=meta.get('code_sha256');expected=source_assets()
+ if not isinstance(roles,dict) or set(roles)!=set(expected)|set(ENGINE_ROLES):raise ValueError('missing campaign asset role')
+ if not isinstance(hashes,dict) or not hashes or len(set(roles.values()))!=len(roles) or set(hashes)!=set(roles.values()):raise ValueError('invalid campaign asset mapping')
+ if any(not isinstance(v,str) or re.fullmatch('[0-9a-f]{64}',v) is None for v in hashes.values()):raise ValueError('invalid campaign asset digest')
+ for role,path in expected.items():
+  if Path(roles[role]).resolve()!=path.resolve():raise ValueError('campaign source identity changed: '+role)
+ package=Path(roles['vbm_package']).resolve();native=Path(roles['vbm_native']).resolve();table=Path(roles['espl_table']).resolve()
+ if package.name!='__init__.py' or package.parent.name!='VBMicrolensing' or native.parent!=package.parent or not native.name.startswith('VBMicrolensing') or native.suffix.lower() not in ('.so','.pyd','.dll') or table!=package.parent/'data'/'ESPL.tbl':raise ValueError('invalid numerical engine identity')
+ if Path(roles['grid_library']).suffix.lower() not in ('.so','.dll','.dylib'):raise ValueError('invalid native grid library')
+ for name,digest in hashes.items():
+  if sha(name)!=digest:raise ValueError('checkpoint asset changed: '+name)
+ return meta

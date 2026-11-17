@@ -7,7 +7,7 @@ import json
 import hashlib
 from datetime import date
 from pathlib import Path
-from replay_guard import external,fresh_for_inputs,sha,verify_receipt,frozen_parameters,parameters_digest
+from replay_guard import external,fresh_for_inputs,sha,verify_receipt,frozen_parameters,parameters_digest,validate_campaign
 
 HERE=Path(__file__).resolve().parent
 
@@ -52,11 +52,10 @@ def write_gz(path,table):
 
 def read_results(folder,spec,cap):
     folder=external(folder);meta=json.loads((folder/'campaign.json').read_bytes())
+    validate_campaign(meta)
     if meta['cap']!=cap:raise ValueError('wrong checkpoint cap')
     timing=frozen_parameters(cap)
     if meta.get('parameters_sha256')!=parameters_digest(timing):raise ValueError('campaign timing map mismatch')
-    for name,digest in meta['code_sha256'].items():
-        if sha(name)!=digest:raise ValueError('checkpoint code changed')
     result={}
     for path in folder.glob('*.json'):
         if path.name=='campaign.json':continue

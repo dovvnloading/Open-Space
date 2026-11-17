@@ -14,16 +14,26 @@ class GuardTests(unittest.TestCase):
    with self.assertRaises(ValueError):verified(p,expected)
  def test_real_consolidation_checkpoint_identity(self):
   from unittest.mock import patch
-  import consolidate
+  import consolidate,replay_guard
   with tempfile.TemporaryDirectory() as tmp:
-   root=Path(tmp);code=root/'code';code.write_bytes(b'original');table=root/'ESPL.tbl';table.write_bytes(b'original table');stage=root/'stage';stage.mkdir()
-   spec={'KMT-2024-BLG-0001':{'input_sha256':'rawhash'}};code_hashes={str(code):sha(code),str(table):sha(table)};runtime={'python':'test'}
+   root=Path(tmp);stage=root/'stage';stage.mkdir();pkg=root/'VBMicrolensing';(pkg/'data').mkdir(parents=True)
+   package=pkg/'__init__.py';native=pkg/'VBMicrolensing.pyd';table=pkg/'data'/'ESPL.tbl';lib=root/'grid.so';code=root/'code.py'
+   for path in (package,native,table,lib,code):path.write_bytes(path.name.encode())
+   sources={'run_grid':code};roles={'run_grid':str(code),'vbm_package':str(package),'vbm_native':str(native),'espl_table':str(table),'grid_library':str(lib)}
+   spec={'KMT-2024-BLG-0001':{'input_sha256':'rawhash'}};code_hashes={str(p):sha(p) for p in (code,package,native,table,lib)};runtime={'python':'3','platform':'test','numpy':'1','vbm':'5.6.1'}
    timing={'KMT-2024-BLG-0001':{'t0':1}}
-   meta={'cap':True,'code_sha256':code_hashes,'runtime':runtime,'parameters_sha256':consolidate.parameters_digest(timing)};(stage/'campaign.json').write_text(json.dumps(meta))
-   ident={'event':'KMT-2024-BLG-0001','input_sha256':'rawhash','cap':True,'code_sha256':code_hashes,'runtime':runtime,'parameters':{'t0':1}}
+   meta={'schema':replay_guard.CAMPAIGN_SCHEMA,'model':'frozen grid','cap':True,'asset_roles':roles,'code_sha256':code_hashes,'runtime':runtime,'parameters_sha256':consolidate.parameters_digest(timing)}
+   campaign=stage/'campaign.json';campaign.write_text(json.dumps(meta));ident={'event':'KMT-2024-BLG-0001','input_sha256':'rawhash','cap':True,'code_sha256':code_hashes,'runtime':runtime,'parameters':{'t0':1}}
    item=stage/'KMT-2024-BLG-0001.json';item.write_text(json.dumps({'status':'ok','_identity':ident}))
-   with patch.object(consolidate,'external',side_effect=lambda p:Path(p)),patch.object(consolidate,'frozen_parameters',return_value=timing):
+   with patch.object(consolidate,'external',side_effect=lambda p:Path(p)),patch.object(consolidate,'frozen_parameters',return_value=timing),patch.object(replay_guard,'source_assets',return_value=sources):
     self.assertEqual(len(consolidate.read_results(stage,spec,True)),1)
+    for key,value in [('code_sha256',{}),('runtime',{}),('asset_roles',{}),('schema','old')]:
+     bad=dict(meta);bad[key]=value;campaign.write_text(json.dumps(bad))
+     with self.assertRaises(ValueError):consolidate.read_results(stage,spec,True)
+    for role in ('vbm_package','vbm_native','espl_table','grid_library'):
+     bad=dict(meta);bad['asset_roles']=dict(roles);del bad['asset_roles'][role];campaign.write_text(json.dumps(bad))
+     with self.assertRaises(ValueError):consolidate.read_results(stage,spec,True)
+    campaign.write_text(json.dumps(meta))
     with self.assertRaises(ValueError):consolidate.read_results(stage,spec,False)
     ident['input_sha256']='changed';item.write_text(json.dumps({'status':'ok','_identity':ident}))
     with self.assertRaises(ValueError):consolidate.read_results(stage,spec,True)
@@ -31,7 +41,7 @@ class GuardTests(unittest.TestCase):
     with self.assertRaises(ValueError):consolidate.read_results(stage,spec,True)
     ident['parameters']={'t0':1};item.write_text(json.dumps({'status':'ok','_identity':ident}));table.write_bytes(b'changed table')
     with self.assertRaises(ValueError):consolidate.read_results(stage,spec,True)
-    table.write_bytes(b'original table');code.write_bytes(b'changed')
+    table.write_bytes(b'ESPL.tbl');code.write_bytes(b'changed')
     with self.assertRaises(ValueError):consolidate.read_results(stage,spec,True)
  def test_real_entrypoints_reject_cached_or_corrupt_data(self):
   import importlib.util
