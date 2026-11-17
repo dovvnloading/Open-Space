@@ -38,6 +38,7 @@ def main():
     monthly = collections.Counter()
     total = 0
     ps1 = []
+    ps1_all = []
     ps1_total = 0
     first_day = CUTOFF - dt.timedelta(days=WINDOW)
     with gzip.open(source, "rb") as f:
@@ -48,6 +49,7 @@ def main():
                 day = dt.date(int(y), int(m), int(float(d)))
                 if first_day <= day < CUTOFF:
                     ps1_total += 1
+                    ps1_all.append(line)
                     try:
                         h, mi, sec = map(float, line[32:44].split())
                         de, am, asec = map(float, line[45:56].split())
@@ -80,7 +82,9 @@ def main():
                     f.write(line)
     ps1_file = args.output / "f51.mpc"
     ps1_file.write_bytes(b"".join(ps1))
-    receipt = dict(ps1_date_window_all_sky_rows=ps1_total, ps1_patch_rows=len(ps1),
+    all_file = args.output / "f51-all.mpc"
+    all_file.write_bytes(b"".join(ps1_all))
+    receipt = dict(ps1_all_sha256=digest(all_file), ps1_date_window_all_sky_rows=ps1_total, ps1_patch_rows=len(ps1),
                    ps1_ra_deg=[40,50], ps1_dec_deg=[10,20], ps1_sha256=digest(ps1_file),url=URL, retrieved_utc=retrieved, used_local_copy=bool(args.file),
                    response_headers=headers, source_sha256=digest(source), compressed_bytes=source.stat().st_size,
                    source_lines=total, cutoff_exclusive=str(CUTOFF), primary_29day_rows=primary,
