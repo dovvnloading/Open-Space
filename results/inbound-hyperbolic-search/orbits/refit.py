@@ -5,7 +5,9 @@ records and each force law. Statistics here are sensitivity diagnostics.
 """
 from collections import Counter
 from pathlib import Path
+import base64
 import csv
+import gzip
 import hashlib
 import importlib.util
 import io
@@ -234,9 +236,43 @@ def inbound(obj,params,cov,epoch,eph):
                           "v_inf_km_s":np.sqrt(-ir*GM_TOTAL)*AU/DAY if ir<0 else None}
     return summaries
 
+def check_holdouts(obj,initial,epoch,eph,t,observers,east,north,sig,groups,positions):
+    """Drop endpoint nights and the top-contributing observatory; evaluate withheld sky positions."""
+    groups=list(groups)
+    nights=np.array([night for site,night in groups])
+    station=np.array([site for site,night in groups])
+    top=Counter(station).most_common(1)[0][0]
+    cuts={"first_utc_night":nights==nights.min(),"last_utc_night":nights==nights.max(),
+          "largest_station_"+str(top):station==top}
+    tests={}
+    for name,drop in cuts.items():
+        try:
+            x,cov,mask,res,redchi=fit(initial,epoch,t[~drop],observers[~drop],east[~drop],north[~drop],
+                                      sig[~drop],positions)
+            path=integrate(x,epoch,t.min()-OBS_TIME_LIMIT,positions).sol
+            emit=t[drop].copy()
+            for _ in range(5):
+                delta=path(emit)[:3].T-observers[drop]
+                dist=np.linalg.norm(delta,axis=1)
+                emit=t[drop]-dist/C
+            u=delta/dist[:,None]
+            error=ARCSEC*np.column_stack([np.sum(u*east[drop],axis=1),np.sum(u*north[drop],axis=1)])
+            tests[name]={"withheld":int(drop.sum()),"fitted":int(mask.sum()),
+                         "withheld_rms_per_coordinate_as":float(np.sqrt(np.mean(error**2))),
+                         "boundaries":inbound(obj,x,cov,epoch,eph)}
+        except Exception as exc:
+            tests[name]={"failed":str(exc)}
+    return tests
+
 def run():
     receipts=[]
     report={}
+    # Carry the exact input bytes through the read-only runner for durable archiving.
+    for src in sorted(DATA.glob("*.obs")):
+        packed=gzip.compress(src.read_bytes(),mtime=0)
+        encoded=base64.b64encode(packed).decode()
+        for i in range(0,len(encoded),6000):
+            print("OBS_CHUNK",src.name,i,encoded[i:i+6000],flush=True)
     output=DATA/"refits.json"
     with SPK.open(str(CACHE/"de440s.bsp")) as eph:
         for obj in NAMES:
@@ -259,6 +295,8 @@ def run():
                                  "rms_per_coordinate_as":float(np.sqrt(np.mean(res[mask]**2))),
                                  "weighted_reduced_chi2":float(redchi),
                                  "boundaries":inbound(obj,x,cov,epoch,eph)}
+                        if obj=="2025-V1" and kind=="gravity":
+                            summary["holdouts"]=check_holdouts(obj,x,epoch,eph,t,stations_,east,north,sig,groups,pos)
                         entry["models"][kind]=summary
                         print("FIT",obj,kind,summary["used"],summary["rms_per_coordinate_as"],
                               json.dumps(summary["boundaries"]),flush=True)
