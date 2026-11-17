@@ -122,7 +122,19 @@ class Binning:
         return y
 
 
-def detect(y, centers):
+def passes_shoulders(y, idx, duration_bins, fraction):
+    relative = idx / duration_bins
+    shape = triangle(relative, 0, 1, fraction)
+    left = (relative >= -fraction - .5) & (relative < -fraction)
+    right = (relative > 1 - fraction) & (relative <= 1.5 - fraction)
+    core = shape > 2/3
+    if not (np.any(left) and np.any(right) and np.any(core)):
+        return False
+    central = np.median(y[core])
+    return central <= min(np.median(y[left]), np.median(y[right])) - .005
+
+
+def detect(y, centers, require_shoulders=False):
     events = []
     for hours, fraction, idx, kernel in templates():
         if len(y) < len(kernel):
@@ -137,6 +149,9 @@ def detect(y, centers):
         peaks = find_peaks(np.r_[-np.inf, score, -np.inf], height=MIN_SCORE)[0] - 1
         for i in peaks:
             if depth[i] < MIN_DEPTH:
+                continue
+            if require_shoulders and not passes_shoulders(
+                    y[i:i+len(idx)], idx, hours / (24*BIN), fraction):
                 continue
             peak = centers[i - idx[0]]
             duration = hours / 24
@@ -175,9 +190,9 @@ def matched(events, peak, duration):
                for e in events)
 
 
-def scan_one(curve, tic, sector, seed, trials):
+def scan_one(curve, tic, sector, seed, trials, require_shoulders=False):
     bins = Binning(curve)
-    baseline = detect(bins.bin_flux(bins.flux), bins.centers)
+    baseline = detect(bins.bin_flux(bins.flux), bins.centers, require_shoulders)
     for ev in baseline:
         ev['diagnostics'] = diagnostics(curve, ev)
         ev.update(tic=tic, sector=sector, **curve.meta)
@@ -195,7 +210,7 @@ def scan_one(curve, tic, sector, seed, trials):
                 recovered = False
                 if not nearby and np.any(model > 0) and bins.valid.any():
                     y = bins.bin_flux(bins.flux * (1 - depth * model))
-                    recovered = matched(detect(y, bins.centers), peak, duration)
+                    recovered = matched(detect(y, bins.centers, require_shoulders), peak, duration)
                 injections.append(dict(tic=tic, sector=sector, depth=depth, duration_h=hours,
                                        peak_btjd=peak, ingress_fraction=fraction,
                                        baseline_coincidence=int(nearby), recovered=int(recovered)))
