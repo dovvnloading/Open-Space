@@ -80,11 +80,11 @@ python results/spherex-waste-heat/wise/measure.py --archive D:/Open-Space/campai
 
 The NEOWISE single-exposure request is restricted to MJD 60291–60524; it is not a full 2010–2024 motion baseline.
 
-For the deposited historical `wise/archive_inputs.zip`, extract it to a new directory and explicitly permit receipts without a recorded HTTP status:
+The deposited `wise/archive_inputs.zip` now contains **40 HTTP 200 receipts**, with recorded URLs, queries, row counts, byte sizes and SHA-256 digests. They were independently checked against the response bytes. For an offline replay no legacy-status override is needed:
 
 ```powershell
-Expand-Archive results/spherex-waste-heat/wise/archive_inputs.zip D:/Open-Space/campaigns/spherex-wise-legacy/archive
-python results/spherex-waste-heat/wise/measure.py --archive D:/Open-Space/campaigns/spherex-wise-legacy/archive --output D:/Open-Space/campaigns/spherex-wise-legacy/derived --allow-legacy-status
+Expand-Archive results/spherex-waste-heat/wise/archive_inputs.zip D:/Open-Space/campaigns/spherex-wise-verified/archive
+python results/spherex-waste-heat/wise/measure.py --archive D:/Open-Space/campaigns/spherex-wise-verified/archive --output D:/Open-Space/campaigns/spherex-wise-verified/derived
 ```
 
-`replay-provenance.json` lists the receipts with unknown HTTP status; it does not modify them. A zero-row historical response describes the preserved bytes and does not by itself establish a successful empty query or completeness. New retrievals and fetch-cache reuse require recorded HTTP 200.
+A zero-row response is only accepted as an empty result if its request and recorded HTTP 200 status match. If another dataset lacks a status, the explicit legacy flag can make a historical comparison but cannot establish successful query completion.

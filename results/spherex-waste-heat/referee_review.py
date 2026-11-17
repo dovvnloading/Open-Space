@@ -163,7 +163,9 @@ def offline():
       "literature/fgk_neo_coverage.csv","literature/fgk_statistics.json",
       "fgk_spectra/all_53.csv","fgk_spectra/counts.json",
       "wise/catalog_photometry.csv","wise/visits.csv","wise/variability.csv",
-      "warm_fgk/color_grid.csv","warm_fgk/color_input_hashes.json"
+      "warm_fgk/color_grid.csv","warm_fgk/color_input_hashes.json",
+      "optical/nightly.csv","optical/nightly_summary.csv",
+      "optical/d_aperture_summary.csv","optical/d_aperture_controls.csv"
     ]
     original=snapshot(["results/spherex-waste-heat/"+p for p in paths])
     with tempfile.TemporaryDirectory() as tmp:
@@ -171,17 +173,23 @@ def offline():
         archive.mkdir()
         with zipfile.ZipFile(STUDY/"wise/archive_inputs.zip") as z: z.extractall(archive)
         output=Path(tmp)/"wise_derived"
-        cmd(sys.executable,STUDY/"wise/measure.py","--archive",archive,"--output",output,"--allow-legacy-status")
+        cmd(sys.executable,STUDY/"wise/measure.py","--archive",archive,"--output",output)
         for name in ("catalog_photometry.csv","visits.csv","variability.csv"):
             old=(STUDY/"wise"/name).read_bytes()
             new=(output/name).read_bytes()
             assert old==new,f"WISE replay differs: {name}"
+        within=Path(tmp)/"within_visit.csv"
+        cmd(sys.executable,STUDY/"wise/within_visit.py",archive,within)
+        assert within.read_bytes()==(STUDY/"wise/within_visit.csv").read_bytes(),"Within-visit test mismatch"
         receipt=json.loads((output/"replay-provenance.json").read_text())
-        SUMMARY["wise_archive"]={"responses":40,"unknown_status":len(receipt["unknown_status_receipts"])}
+        assert len(receipt["unknown_status_receipts"])==0, "Archive still has missing HTTP statuses"
+        SUMMARY["wise_archive"]={"responses":40,"verified_http200":40,"unknown_status":0}
     cmd(sys.executable,STUDY/"blind/screen.py")
     cmd(sys.executable,STUDY/"blind/dr1_screen.py")
     cmd(sys.executable,STUDY/"literature/fgk_measure.py")
     cmd(sys.executable,STUDY/"fgk_spectra/run.py","summarize","--prior-controls",STUDY/"spectra/comparison_wise.csv")
+    cmd(sys.executable,STUDY/"optical/nightly.py")
+    cmd(sys.executable,STUDY/"optical/d_science.py")
     cmd("node",STUDY/"warm_fgk/color_check.mjs")
     SUMMARY["replayed_derived_tables"]=compare(original)
     claim_audit()
@@ -264,7 +272,34 @@ def fresh():
     (STUDY/"referee_fresh.json").write_text(json.dumps(SUMMARY,indent=2,sort_keys=True)+"\n")
     print(json.dumps(SUMMARY,indent=2),flush=True)
 
+def full_fgk():
+    """Reread ALL 48 additional published-field FITS tiles and rerun the spectra."""
+    fgk=STUDY/"fgk_spectra"
+    originals=snapshot(["results/spherex-waste-heat/fgk_spectra/"+name
+                        for name in ("channel_spectra.csv","feature_tests.csv",
+                                     "continuum.csv","coverage.csv","all_53.csv","counts.json")])
+    saved={p.stem:json.loads(p.read_text()) for p in (fgk/"cube_receipts").glob("*.json")}
+    assert len(saved)==48,f"Expected 48 unique additional FITS tiles, got {len(saved)}"
+    for r in saved.values():
+        assert len(r["sha256"])==64 and int(r["size"])>300_000_000 and r["url"].startswith("https://")
+    with tempfile.TemporaryDirectory() as tmp:
+        cmd(sys.executable,fgk/"run.py","extract","--cache",Path(tmp)/"cube_stamps")
+        for tile,before in saved.items():
+            now=json.loads((fgk/"cube_receipts"/(tile+".json")).read_text())
+            for key in ("tile","url","etag","size","sha256","start","end","pipeline"):
+                assert now[key]==before[key],f"FGK tile {tile}: {key} changed"
+        cmd(sys.executable,fgk/"run.py","summarize","--prior-controls",
+            STUDY/"spectra/comparison_wise.csv")
+        SUMMARY["full_fgk_derived_tables"]=compare(originals)
+        assert len(rows(fgk/"channel_spectra.csv"))==48*3*102
+        SUMMARY["full_fgk_fresh_tiles"]=len(saved)
+        SUMMARY["full_fgk_fresh_positions"]=48*3
+        SUMMARY["full_fgk_fresh_channels"]=48*3*102
+    SUMMARY["status"]="passed"
+    (STUDY/"referee_full_fgk.json").write_text(json.dumps(SUMMARY,indent=2,sort_keys=True)+"\n")
+    print(json.dumps(SUMMARY,indent=2),flush=True)
+
 if __name__=="__main__":
-    if len(sys.argv)!=2 or sys.argv[1] not in ("offline","fresh"):
+    if len(sys.argv)!=2 or sys.argv[1] not in ("offline","fresh","full_fgk"):
         raise SystemExit("usage: python referee_review.py [offline|fresh]")
-    {"offline":offline,"fresh":fresh}[sys.argv[1]]()
+    {"offline":offline,"fresh":fresh,"full_fgk":full_fgk}[sys.argv[1]]()

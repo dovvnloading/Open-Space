@@ -4,11 +4,11 @@ Candidate C varied more from exposure to exposure in W1 than predicted by the qu
 
 Four of C's eight same-scan W1 exposure pairs separated by approximately 11 s differ by 0.30–0.31 mag. In the W1 constant fit, raising the illustrative single-exposure floor from 0.02 to 0.06 mag reduces χ² to 53.04. The tests use pipeline errors and assume independent exposures. Blending, centroid shifts, short-exposure calibration and underestimated measurement errors remain plausible. Ren et al. identified a near-infrared neighbor 3.75 arcsec away. This is excess **photometric scatter** in an unresolved field. Independent epochs and frame-level differential photometry would be needed to test intrinsic variability. [Archival imaging](https://arxiv.org/abs/2607.03619) · [NEOWISE single-exposure caveats](https://irsa.ipac.caltech.edu/data/WISE/docs/release/NEOWISE/expsup/sec2_2.html)
 
-These calculations use the accepted exposures from `measure.py`, group visits at gaps longer than 20 days and require at least three points. From the repository root, extract the historical ZIP and explicitly permit its unknown HTTP statuses (SciPy required):
+These calculations use the accepted exposures from `measure.py`, group visits at gaps longer than 20 days and require at least three points. The current archived ZIP contains 40 individually validated HTTP 200 query receipts, so it can be replayed **without** accepting unverified legacy statuses (SciPy required):
 
 ```powershell
-Expand-Archive results/spherex-waste-heat/wise/archive_inputs.zip D:/Open-Space/campaigns/spherex-wise-legacy/archive
-python results/spherex-waste-heat/wise/within_visit.py D:/Open-Space/campaigns/spherex-wise-legacy/archive D:/Open-Space/campaigns/spherex-wise-legacy/within_visit.csv --allow-legacy-status
+Expand-Archive results/spherex-waste-heat/wise/archive_inputs.zip D:/Open-Space/campaigns/spherex-wise-verified/archive
+python results/spherex-waste-heat/wise/within_visit.py D:/Open-Space/campaigns/spherex-wise-verified/archive D:/Open-Space/campaigns/spherex-wise-verified/within_visit.csv
 ```
 
-The command writes a separate `.provenance.json` alongside the new CSV, listing unknown-status receipts. It leaves original receipts unchanged; zero rows do not establish query success or completeness. Cross-visit medians and calibration floors are in [visits.csv](visits.csv) and [variability.csv](variability.csv). [All 22 within-visit tests](within_visit.csv)
+The command writes a separate `.provenance.json`, now expected to list zero unknown-status receipts. A result with zero returned rows is supported by the preserved successful response, not by an assumed empty query. Cross-visit medians and calibration floors are in [visits.csv](visits.csv) and [variability.csv](variability.csv). [All 22 within-visit tests](within_visit.csv)
