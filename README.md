@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 187 entries: 87 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 15 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 188 entries: 87 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 16 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -292,6 +292,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 ### Galaxies and the distant universe
 
 - **A seven-month echo from the gravitational lens J0826+7002.** *Measured* · [Details](results/j0826-lens-delay/README.md)
+- **No invisible lensing galaxy confirmed in a Euclid Q1 search.** All 312 published strong-lens candidates with usable fitted radii retain central visible light after subtracting the modelled lensed source. A separate search of 0.083374 square degrees found no confirmed dark lens; injection tests show limited sensitivity to open arcs. One unusually high mass-to-light candidate depends on uncertain redshifts and competing image interpretations. *Null result* · [Details](results/euclid_q1_dark_lenses/README.md)
 - **Three quasars behind the same foreground gas.** Strong magnesium absorption at nearly the same distance appears across 2.5 million parsecs. *Candidate* · [Details](results/mgii-j0108-environment/README.md)
 - **A compact trio of quasars, J1013−0148.** *Candidate* · [Details](results/independent-archive-coronal-transients/SEARCH.md)
 - **Four quasars within one million parsecs in the XMM-LSS field.** *Candidate* · [Details](results/xmm-lss-quasar-quartet/README.md)
