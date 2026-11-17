@@ -74,7 +74,7 @@ def main():
     followup(rows)
     # Replay the frozen coordinates and IDs used for ancillary checks.
     requests = [("gaia_3arcsec", GAIA), ("dr2", GAIA), ("simbad_5arcsec", SIMBAD),
-                ("ap", GAIA), ("negative_count", GAIA), ("templates", GAIA)]
+                ("ap", GAIA), ("negative_count", GAIA), ("templates", GAIA), ("eligible_count", GAIA)]
     with ThreadPoolExecutor(max_workers=3) as pool:
         pending = [pool.submit(fetch, name, endpoint, (ROOT / (name + ".adql")).read_text())
                    for name, endpoint in requests]
