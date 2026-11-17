@@ -1,0 +1,17 @@
+{
+  "schema": "open-space/claims/1",
+  "let": {
+    "a": "json('result.json', '/counts/0/0')",
+    "b": "json('result.json', '/counts/0/1')",
+    "c": "json('result.json', '/counts/1/0')",
+    "d": "json('result.json', '/counts/1/1')"
+  },
+  "claims": [
+    {
+      "id": "split-ratio",
+      "printed": "1.055",
+      "statement": "Ratio of second to first half observed line-to-sideband counts.",
+      "compute": "(c / d) / (a / b)"
+    }
+  ]
+}
