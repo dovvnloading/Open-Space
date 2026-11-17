@@ -1,0 +1,64 @@
+name: TESS Sector 105 independent referee
+on:
+  push:
+    branches: ["research/tess-asymmetric-dips"]
+    paths:
+      - "results/tess-asymmetric-dips/referee.py"
+      - "results/tess-asymmetric-dips/README.md"
+      - ".github/workflows/tess-asymmetric-dips-referee.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  deposited:
+    name: Independent audit and 75 archived visit hashes
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: results/tess-asymmetric-dips
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy scipy
+      - name: Independently rebuild injected rates, samples, receipts and eclipse clock
+        run: OPENBLAS_NUM_THREADS=1 python referee.py --out /tmp/referee.json
+      - name: Fetch and verify original FITS for 75 historical visits
+        run: OPENBLAS_NUM_THREADS=1 python check_earlier.py confirmation/earlier-visit-receipts.json.gz
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tess-sector105-independent-audit
+          path: /tmp/referee.json
+  fresh-scans:
+    name: Full 384-star FITS hash and injection replay
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: results/tess-asymmetric-dips
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy scipy astropy
+      - name: Refetch and check all 128 original pilot FITS hashes
+        run: OPENBLAS_NUM_THREADS=1 python acquire.py /tmp/pilot --sample sample.json --products products.csv
+      - name: Recompute pilot search and 9,216 injections
+        run: OPENBLAS_NUM_THREADS=1 python scan.py --manifest /tmp/pilot/scan_manifest.csv --out /tmp/pilot-scan
+      - name: Recompute held-out sample from original FITS and 18,432 injections
+        run: OPENBLAS_NUM_THREADS=1 python confirm.py --pilot-sample sample.json --out /tmp/confirmation --workers 6
+      - name: Independent comparison to all saved trigger epochs and recovery tables
+        run: OPENBLAS_NUM_THREADS=1 python referee.py --pilot-replay /tmp/pilot-scan --confirmation-replay /tmp/confirmation --out /tmp/referee-replay.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tess-sector105-384star-replay
+          path: |
+            /tmp/referee-replay.json
+            /tmp/pilot/replay.json
+            /tmp/pilot-scan/report.json
+            /tmp/confirmation/report.json

@@ -1,0 +1,106 @@
+name: Sector 105 archive replay
+on:
+  push:
+    branches: ["research/tess-asymmetric-dips"]
+    paths:
+      - 'results/tess-asymmetric-dips/scan.py'
+      - 'results/tess-asymmetric-dips/pixels.py'
+      - 'results/tess-asymmetric-dips/neighbors.py'
+      - 'results/tess-asymmetric-dips/lead_history.py'
+      - 'results/tess-asymmetric-dips/plot.py'
+      - 'results/tess-asymmetric-dips/catalog_vetting.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  field:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: results/tess-asymmetric-dips
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy scipy
+      - name: Remeasure every held-out trigger on the full-frame pixels
+        run: OPENBLAS_NUM_THREADS=1 python pixels.py confirmation/triggers.csv /tmp/replay-pixels.json
+      - name: Remeasure simultaneous flux in the six local comparison stars
+        run: OPENBLAS_NUM_THREADS=1 python neighbors.py confirmation/triggers.csv sample.json /tmp/replay-neighbors.json
+      - name: Verify count, sign and amplitude of independent re-extractions
+        run: |
+          python - <<'PY'
+          import hashlib, json, pathlib
+          p=json.loads(pathlib.Path('/tmp/replay-pixels.json').read_bytes())
+          n=json.loads(pathlib.Path('/tmp/replay-neighbors.json').read_bytes())
+          assert len(p)==39 and sum(len(x['events']) for x in p)==65
+          assert len(n)==234 and all(x['status']=='ok' for x in p+n)
+          lead=next(e for s in p if str(s['tic'])=='316937197' for e in s['events'] if e['peak_btjd']>4217)
+          assert abs(lead['aperture_fractional_depth']-.007055)<.001
+          for name in ('pixels','neighbors'):
+              data=pathlib.Path('/tmp/replay-'+name+'.json').read_bytes()
+              print(name, 'SHA-256', hashlib.sha256(data).hexdigest())
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sector105-field-replay
+          path: /tmp/replay-*.json
+  history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: results/tess-asymmetric-dips
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy scipy matplotlib
+      - name: Reproduce the multi-sector eclipse and survey figure
+        run: |
+          python lead_history.py --out /tmp/lead-history.json
+          python plot.py /tmp/sector105.svg
+          python - <<'PY'
+          import json, pathlib
+          r=json.loads(pathlib.Path('/tmp/lead-history.json').read_bytes())
+          clock=r['refined_clock']
+          print(clock)
+          assert abs(clock['period_d']-18.7668)<.01 and clock['n_timings']>=4
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sector105-eclipse-history
+          path: |
+            /tmp/lead-history.json
+            /tmp/sector105.svg
+  catalogs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    defaults:
+      run:
+        working-directory: results/tess-asymmetric-dips
+    steps:
+      - uses: actions/checkout@v4
+      - name: Repeat the pilot catalog queries and retain every response
+        run: python3 catalog_vetting.py products.csv triggers.csv /tmp/pilot-catalogs
+      - name: Verify the catalog census
+        run: |
+          python3 - <<'PY'
+          import csv, gzip, json, pathlib
+          p=pathlib.Path('/tmp/pilot-catalogs')
+          rows=list(csv.DictReader((p/'catalog-summary.csv').open()))
+          assert len(rows)==14
+          receipts=list(map(json.loads,gzip.open(p/'catalog-receipts.jsonl.gz','rt')))
+          assert len(receipts)==56
+          print(f'{len(rows)} stars, {len(receipts)} recorded responses')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pilot-catalog-replay
+          path: /tmp/pilot-catalogs
