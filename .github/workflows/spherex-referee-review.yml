@@ -1,0 +1,68 @@
+name: Independent SPHEREx waste-heat referee replay
+on:
+  push:
+    branches: [research/spherex-waste-heat]
+    paths:
+      - .github/workflows/spherex-referee-review.yml
+      - results/spherex-waste-heat/referee_review.py
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy>=2' scipy astropy astropy-healpix matplotlib
+      - name: Independently replay the deposited catalog, injection and WISE results
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+        run: python results/spherex-waste-heat/referee_review.py offline
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: spherex-referee-offline
+          path: results/spherex-waste-heat/referee_offline.json
+          if-no-files-found: warn
+  fresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy>=2' scipy astropy astropy-healpix matplotlib
+      - name: Refetch the 16 targeted cubes, 2 warm fields, and 58-star blind tile
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+        run: python results/spherex-waste-heat/referee_review.py fresh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: spherex-referee-fresh
+          path: results/spherex-waste-heat/referee_fresh.json
+          if-no-files-found: warn
+  full_fgk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy>=2' scipy astropy astropy-healpix matplotlib
+      - name: Independently fetch and remeasure all 48 additional FGK tiles (14,688 channels)
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+        run: python results/spherex-waste-heat/referee_review.py full_fgk
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: spherex-referee-full-fgk
+          path: results/spherex-waste-heat/referee_full_fgk.json
+          if-no-files-found: warn

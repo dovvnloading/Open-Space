@@ -21,6 +21,11 @@ For the four latest public coronagraphic targets, [SIMBAD's target bibliography]
 
 The [NASA Exoplanet Archive host search](archive/go8826-confirmed-planets.csv) identifies two previously reported RV planets around L 788-34, also known as GJ 4274. Their published semimajor axes are 0.0153 and 0.186 au (0.002 and 0.026 arcsec at the Gaia distance). The other three hosts returned no rows in the confirmed-planet table. This table does not cover all stellar or substellar companions. SIMBAD name/coordinate results, the explicit Gaia-ID lookup (important for fast-moving Ross 619) and exact queries are included. [Charpentier et al.](https://doi.org/10.1051/0004-6361/202557666)
 
+
+### Referee's publication-screen correction (2026-11-17)
+
+The program–paper crosswalk and host-title screen are **selection tools, not a list of unsearched targets**. An independent check found studies relevant to objects that otherwise looked under-covered in the frozen title screen: the [Bendahan-West et al. JWST MIRI debris-disk search](https://doi.org/10.1093/mnras/staf2255) includes HD 107146 and HD 92945; [Godoy et al. on HR 2562](https://doi.org/10.1051/0004-6361/202449951) reports a JWST companion observation. HD 107146 also has a subsequent JWST NIRCam study in 2026. Exclude these from the priority list for supposedly unpublished companions. A host with zero selected titles is **not confirmed to be previously unsearched**, while an object-linked paper may not analyse its JWST field. The five pending targets and their different evidence levels are listed in the [result-level referee audit](../README.md#highest-value-unreduced-targets--pending-not-null-results).
+
 ## Reproduce
 
 Run these commands from the directory containing the scripts (Python 3 with NumPy, SciPy and pandas 2.x). The GCNS TAP download is ~27 MB. Each query receipt records exact predicates, request time and response hashes. MAST's live outputs may change after reprocessing. The compressed CSVs serve as the fixed inputs to the visit and host tables. Table generation independently reconciles page counts and removes associations before summing exposure times.
