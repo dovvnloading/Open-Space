@@ -1,6 +1,7 @@
 name: Inbound orbit refits
 on:
-  pull_request:
+  push:
+    branches: [research/inbound-hyperbolic-search]
     paths:
       - 'results/inbound-hyperbolic-search/orbits/*.py'
       - '.github/workflows/inbound-orbits.yml'
@@ -8,7 +9,6 @@ permissions:
   contents: read
 jobs:
   refit:
-    if: github.head_ref == 'research/inbound-hyperbolic-search'
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -18,32 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 2
           persist-credentials: false
           sparse-checkout: |
             results/inbound-hyperbolic-search/orbits
             results/borisov-704021/propagate.py
           sparse-checkout-cone-mode: false
-      - id: changed
-        run: |
-          if git diff-tree --name-only --no-commit-id -r HEAD | grep -Eq '^(.github/workflows/inbound-orbits.yml|results/inbound-hyperbolic-search/orbits/[^/]+\.py) numpy scipy pyerfa jplephem
-      - if: steps.changed.outputs.needs_run == 'true'
-        run: python "$ORBITS/acquire.py"
-      - name: Fit measured sky positions and propagate inbound
-        if: steps.changed.outputs.needs_run == 'true' && hashFiles('results/inbound-hyperbolic-search/orbits/refit.py') != ''
-        run: python "$ORBITS/refit.py"
-      - uses: actions/upload-artifact@v4
-        if: always() && steps.changed.outputs.needs_run == 'true'
-        with:
-          name: orbit-fits
-          path: results/inbound-hyperbolic-search/orbits/data/
-          retention-days: 30
-; then
-            echo 'needs_run=true' >> "$GITHUB_OUTPUT"
-          fi
-      - if: steps.changed.outputs.needs_run == 'true'
-        run: python -m pip install numpy scipy pyerfa jplephem
+      - run: python -m pip install numpy scipy pyerfa jplephem
       - run: python "$ORBITS/acquire.py"
       - name: Fit measured sky positions and propagate inbound
         if: hashFiles('results/inbound-hyperbolic-search/orbits/refit.py') != ''
