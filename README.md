@@ -332,6 +332,8 @@ Some multi-part investigations also keep index pages and search logs: [15 Nov ar
 
 ## For researchers and developers
 
+The [cold-neighbour search methods and reproduction evidence](results/cold-neighbours-motion-selected/README.md) document bounded catalogue and image tests.
+
 - [Euclid DR1 repeat-visit development screen and failure-mode evidence](results/euclid-foundation-eligibility/README.md)
 
 ### Run the survey workers
