@@ -2,13 +2,18 @@ name: Sector 105 archive replay
 on:
   push:
     branches: ["research/tess-asymmetric-dips"]
-    paths: [".github/workflows/tess-asymmetric-dips-replay.yml", "results/tess-asymmetric-dips/lead_history.py", "results/tess-asymmetric-dips/plot.py"]
+    paths:
+      - 'results/tess-asymmetric-dips/scan.py'
+      - 'results/tess-asymmetric-dips/pixels.py'
+      - 'results/tess-asymmetric-dips/neighbors.py'
+      - 'results/tess-asymmetric-dips/lead_history.py'
+      - 'results/tess-asymmetric-dips/plot.py'
+      - 'results/tess-asymmetric-dips/catalog_vetting.py'
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   field:
-    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 35
     defaults:
@@ -27,7 +32,7 @@ jobs:
       - name: Verify count, sign and amplitude of independent re-extractions
         run: |
           python - <<'PY'
-          import base64, gzip, hashlib, json, pathlib, textwrap
+          import hashlib, json, pathlib
           p=json.loads(pathlib.Path('/tmp/replay-pixels.json').read_bytes())
           n=json.loads(pathlib.Path('/tmp/replay-neighbors.json').read_bytes())
           assert len(p)==39 and sum(len(x['events']) for x in p)==65
@@ -44,7 +49,6 @@ jobs:
           name: sector105-field-replay
           path: /tmp/replay-*.json
   history:
-    if: github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, 'pilot catalog receipts')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
@@ -67,17 +71,6 @@ jobs:
           print(clock)
           assert abs(clock['period_d']-18.7668)<.01 and clock['n_timings']>=4
           PY
-      - name: Preserve verified numerical and figure outputs
-        run: |
-          python - <<'PY'
-          import base64,gzip,hashlib,pathlib,textwrap
-          for name in ('lead-history.json','sector105.svg'):
-              data=pathlib.Path('/tmp',name).read_bytes()
-              print(name,'SHA-256',hashlib.sha256(data).hexdigest())
-              payload=base64.b64encode(gzip.compress(data,mtime=0)).decode()
-              for i,part in enumerate(textwrap.wrap(payload,2000)):
-                  print('REC',name,i,part)
-          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -98,17 +91,13 @@ jobs:
       - name: Verify the catalog census
         run: |
           python3 - <<'PY'
-          import base64, csv, gzip, json, pathlib, textwrap
+          import csv, gzip, json, pathlib
           p=pathlib.Path('/tmp/pilot-catalogs')
           rows=list(csv.DictReader((p/'catalog-summary.csv').open()))
           assert len(rows)==14
           receipts=list(map(json.loads,gzip.open(p/'catalog-receipts.jsonl.gz','rt')))
           assert len(receipts)==56
-          for name in ('catalog-summary.csv','catalog-receipts.jsonl.gz'):
-              data=(p/name).read_bytes()
-              payload=base64.b64encode(gzip.compress(data,mtime=0)).decode()
-              for i,part in enumerate(textwrap.wrap(payload,2000)):
-                  print('REC',name,i,part)
+          print(f'{len(rows)} stars, {len(receipts)} recorded responses')
           PY
       - uses: actions/upload-artifact@v4
         if: always()
