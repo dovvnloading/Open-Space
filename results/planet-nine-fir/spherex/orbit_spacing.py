@@ -21,12 +21,14 @@ def main():
     reference=orbit.family(inputs)
     sample=qmc.Sobol(7,scramble=True,seed=19832006).random_base2(15)
     pa=np.deg2rad(79.)
-    major,minor=ndtri(sample[:,3:5]).T
-    iras=np.stack([18*major*np.sin(pa)+7*minor*np.cos(pa),
-                   18*major*np.cos(pa)-7*minor*np.sin(pa)],axis=1)
-    rr=40*np.sqrt(sample[:,5])
-    aa=2*np.pi*sample[:,6]
-    akari=np.stack([rr*np.cos(aa),rr*np.sin(aa)],axis=1)
+    def stress_offsets(sample):
+        major,minor=ndtri(sample[:,3:5]).T
+        iras=np.stack([18*major*np.sin(pa)+7*minor*np.cos(pa),
+                       18*major*np.cos(pa)-7*minor*np.sin(pa)],axis=1)
+        rr=40*np.sqrt(sample[:,5])
+        aa=2*np.pi*sample[:,6]
+        akari=np.stack([rr*np.cos(aa),rr*np.sin(aa)],axis=1)
+        return [iras,akari]
     epochs=['2025-06-01','2025-06-20','2025-07-15','2025-11-25','2025-12-10','2025-12-24',
             '2026-06-01','2026-06-20','2026-07-15']
     def coordinates(states):
@@ -38,8 +40,16 @@ def main():
     bank=coordinates(reference)
     tree=cKDTree(bank)
     out={'epochs_utc':epochs,'grid':len(bank),'cases':{}}
-    for name,offsets in [('nominal_offgrid',None),('historical_centroid_stress',[iras,akari])]:
-        states=orbit.family(inputs,parameters=sample[:,:3],angular_offsets=offsets)
+    other=qmc.Sobol(7,scramble=True,seed=19832007).random_base2(15)
+    stress=orbit.family(inputs,parameters=sample[:,:3],angular_offsets=stress_offsets(sample))
+    cases=[
+        ("nominal_offgrid", orbit.family(inputs,parameters=sample[:,:3]), bank, tree),
+        ("historical_centroid_stress", stress, bank, tree),
+    ]
+    stress_bank=coordinates(stress)
+    independent_stress=orbit.family(inputs,parameters=other[:,:3],angular_offsets=stress_offsets(other))
+    cases.append(("independent_stress_to_searched_stress_bank",independent_stress,stress_bank,cKDTree(stress_bank)))
+    for name,states,bank,tree in cases:
         projected=coordinates(states)
         rms,indices=tree.query(projected)
         delta=(projected-bank[indices]).reshape(len(projected),-1,2)
