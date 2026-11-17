@@ -1,0 +1,27 @@
+[
+  {
+    "name": "ids",
+    "url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+id+FROM+ident+JOIN+basic+ON+ident.oidref%3Dbasic.oid+WHERE+main_id%3D%27CD-54++9621%27",
+    "sha256": "9b5da1363c44656777be36ab4c5250a13a0f84f3841b1e30a7581dc257c9d772",
+    "body": "id\n\"TIC 316937197\"\n\"Gaia DR3 6497415156611654400\"\n\"CD-54  9621\"\n\"CPD-54 10353\"\n\"PPM 351371\"\n\"2MASS J23460103-5357158\"\n\"TYC 8833-733-1\"\n\"Gaia DR1 6497415152315893632\"\n\"Gaia DR2 6497415156611654400\"\n"
+  },
+  {
+    "name": "toi",
+    "url": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+tid%2Ctoi%2Ctfopwg_disp+from+toi+where+tid%3D316937197",
+    "sha256": "da903689cf386c04b47398f1c3b060c3a4f949411e714ccfc5820a9cc7e5d973",
+    "body": "tid,toi,tfopwg_disp\n"
+  },
+  {
+    "name": "ages",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+source_id%2Cteff_gspphot%2Clogg_gspphot%2Cmh_gspphot%2Cage_flame%2Cage_flame_lower%2Cage_flame_upper%2Cflags_flame+from+gaiadr3.astrophysical_parameters+where+source_id+IN+%286497415156611654400%2C6497415156611654272%29",
+    "sha256": "03342194afb372d27ab39e89203409e5dc6087c2e9288f1f99b8bf7dd542a383",
+    "body": "source_id,teff_gspphot,logg_gspphot,mh_gspphot,age_flame,age_flame_lower,age_flame_upper,flags_flame\n6497415156611654400,5673.6978,4.3028,-0.3292,11.811863,10.6082,13.011023,00\n"
+  },
+  {
+    "url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+DISTINCT+ref.bibcode%2Cref.title+FROM+basic+AS+b+JOIN+has_ref+AS+h+ON+b.oid%3Dh.oidref+JOIN+ref+ON+h.oidbibref%3Dref.oidbib+WHERE+b.main_id%3D%27CD-54++9621%27",
+    "http": 200,
+    "utc": "2026-11-17T05:30:06.993529+00:00",
+    "sha256": "5efb7541be4fcfe91a73ae271c3e96f8b22d15f9f55c87239106c1d27cdc5a91",
+    "response": "bibcode,title\n\"2018A&A...609A.116R\",\"Empirical photometric calibration of the Gaia red clump: Colours, effective temperature, and absolute magnitude.\"\n"
+  }
+]

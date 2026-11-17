@@ -1,0 +1,140 @@
+name: SPHEREx archive validation
+on:
+  push:
+    branches: [research/spherex-waste-heat]
+    paths: [.github/workflows/spherex-archive-validation.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    if: github.ref == 'refs/heads/research/spherex-waste-heat'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        study: ${{ fromJSON(contains(github.event.head_commit.message, '[imaging replay]') && '["imaging"]' || '["blind","spectra","literature","imaging","optical"]') }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy>=2' scipy astropy matplotlib pillow requests
+      - name: Reacquire public measurements
+        working-directory: results/spherex-waste-heat
+        env:
+          ARM: ${{ matrix.study }}
+          OPENBLAS_NUM_THREADS: '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/products/$ARM"
+          product="$RUNNER_TEMP/products/$ARM"
+          case "$ARM" in
+            blind)
+              cd blind
+              python catalogs.py
+              python screen.py
+              python dr1_positions.py
+              python dr1_acquire.py
+              python dr1_screen.py
+              cp *.csv *.txt *.json *.npz "$product/"
+              ;;
+            spectra)
+              cd spectra
+              for positions in positions.csv positions_fgk.csv positions_pilot.csv; do
+                python read_cubes.py "$RUNNER_TEMP/dr1-stamps" --positions "$positions" --workers 2
+              done
+              python photometry.py "$RUNNER_TEMP/dr1-stamps"
+              python - <<'PY'
+          import csv
+          from pathlib import Path
+          table=list(csv.DictReader(Path('channel_spectra.csv').open()))
+          assert len(table)==47*102
+          assert len({r['label'] for r in table})==47
+          PY
+              cp -R cube_receipts "$product/"
+              cp channel_spectra.csv feature_tests.csv continuum.csv coverage.csv "$product/"
+              python check_controls.py
+              cp comparison_wise.csv comparison_queries.json "$product/"
+              python select_fields.py --fgk
+              cp gaia_queries_fgk.json "$product/"
+              ;;
+            literature)
+              cd literature
+              python fgk_baseline.py
+              python fgk_fetch.py --kind catwise --cache "$RUNNER_TEMP/fgk-replay"
+              python fgk_fetch.py --kind neo --cache "$RUNNER_TEMP/fgk-replay"
+              python fgk_measure.py
+              python centroid_check.py
+              cp fgk*.csv fgk*.json fgk*.gz ren_offsets_recomputed.csv "$product/"
+              ;;
+            imaging)
+              mkdir -p wise/archive
+              unzip -oq wise/archive_inputs.zip -d wise/archive
+              if [ ! -f imaging/viewer_queries.json ]; then python imaging/neighborhoods.py; fi
+              cp imaging/*neighborhood*.csv imaging/*queries.json imaging/optical_unwise.jpg "$product/"
+              python -m pip -q install pyflakes
+              python -m pyflakes imaging/atlas.py
+              python imaging/atlas.py
+              cp imaging/atlas.png imaging/centroids.csv imaging/queries.json "$product/"
+              (cd imaging && zip -q -r "$product/atlas_inputs.zip" stamp_cache)
+              ;;
+            optical)
+              python optical/ztf.py
+              (cd optical && zip -q -r "$product/lightcurve_inputs.zip" cache)
+              cp optical/*.csv optical/*.json "$product/"
+              ;;
+          esac
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: archive-${{ matrix.study }}
+          path: ${{ runner.temp }}/products
+          if-no-files-found: warn
+
+  record:
+    if: always() && github.ref == 'refs/heads/research/spherex-waste-heat'
+    needs: replay
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/spherex-waste-heat
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: archive-*
+          merge-multiple: true
+          path: results/spherex-waste-heat
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record delivered replay products
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+        run: |
+          cd results/spherex-waste-heat
+          python -m pip install 'numpy>=2' matplotlib
+          if [ -f wise/catalog_photometry.csv ] && [ -f blind/injections.csv ]; then python figures.py; fi
+          if [ -f wise/archive_inputs.zip ]; then
+            mkdir -p wise/archive
+            unzip -oq wise/archive_inputs.zip -d wise/archive
+            python spectra/w1_validation.py
+            rm -r wise/archive
+          fi
+          git add -f -- blind spectra literature imaging optical
+          if [ -f target_spectra.png ]; then git add -f target_spectra.png wise_recovery.png; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --cached --quiet; then
+            git commit -m 'Save archival replay inputs, cutouts, photometry and completeness curves'
+            git fetch origin research/spherex-waste-heat
+            git rebase FETCH_HEAD
+            git push origin HEAD:research/spherex-waste-heat
+          fi

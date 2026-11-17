@@ -1,0 +1,36 @@
+name: Warm FGK optical and catalog follow-up
+on:
+  push:
+    branches: [research/spherex-waste-heat]
+    paths: [.github/workflows/spherex-warm-fgk.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  acquire:
+    if: github.ref == 'refs/heads/research/spherex-waste-heat'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/spherex-waste-heat
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Acquire class and optical data
+        working-directory: results/spherex-waste-heat/warm_fgk
+        run: |
+          python -m pip install numpy
+          python followup.py
+          git add -f -- *.json *.csv inputs.zip
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --cached --quiet; then
+            git commit -m 'Save published warm FGK optical and SIMBAD follow-up'
+            git fetch origin research/spherex-waste-heat
+            git rebase FETCH_HEAD
+            git push origin HEAD:research/spherex-waste-heat
+          fi
