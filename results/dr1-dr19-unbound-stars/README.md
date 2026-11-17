@@ -1,5 +1,5 @@
-# DESI DR1 and SDSS-V DR19 search for unbound stars
+# A 659 km/s Galactic-rest-frame sightline in DESI DR1
 
-**Status at opening.** No candidate has been validated. The observational unit is a unique Gaia DR3 source with stellar spectroscopy. This draft will record the exact search footprint, velocities, and surviving or rejected candidates as evidence is acquired.
+**Gaia DR3 1717410430709663616 is a candidate unbound star.** One DESI exposure contains five independently measurable absorption lines at a heliocentric velocity near +500 km/s. Two full-spectrum fits agree. Under the assumption that this epoch measures the systemic velocity, every one of 4,096 draws in each of two Galactic mass models exceeds escape speed. A second spectroscopic epoch is required to distinguish a fast star from a fast binary component. The current evidence supports neither a black-hole ejection nor a black-hole mass measurement.
 
-The search tests whether a high Galactic-rest-frame velocity survives independent radial velocities, Gaia distance and astrometric uncertainties, and two Galactic potentials. Any origin and novelty assessment requires additional evidence. The scope is stellar kinematics.
+This draft also measures the rate of discordant extreme catalogue velocities, and follows stars whose speed is dominated by their proper motion. It covers all 4,140,838 entries of DESI DR1 SpecDis v2.1, a separate search of the DESI MWS radial-velocity products, and the SDSS-V DR19 Milky Way Mapper BOSS and APOGEE selections. Source-level results, origin tests and selection limits are being added here.
