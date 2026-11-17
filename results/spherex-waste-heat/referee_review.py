@@ -138,7 +138,7 @@ def claim_audit():
     skymapper=json.loads((STUDY/"warm_fgk/skymapper/summary.json").read_text())
     assert skymapper["complete"] and all(x["nights_at_least_0p2mag_and_3sigma"]==0 for x in skymapper["series"])
     report=(STUDY/"README.md").read_text()
-    for quote in ["0.665", "708 pc", "529 pc", "0/404", "0/55", "0/397", "0/54"]:
+    for quote in ["0.665", "708 pc", "529 pc", "0/404", "0/55", "0/397", "0/54", "25/43 (58%)", "0/43 (0%)"]:
         assert quote in report,quote
     assert ("[REMARKABLE]" not in report)
     root=(REPO/"README.md").read_text()
