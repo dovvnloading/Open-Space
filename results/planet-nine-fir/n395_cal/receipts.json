@@ -1,0 +1,64 @@
+[
+  {
+    "product": "gaia_field.csv.gz",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cpmra%2Cpmdec%2Cphot_g_mean_mag%2Cbp_rp%2Cruwe%2Cphot_variable_flag%2Chas_xp_sampled%2Chas_xp_continuous+FROM+gaiadr3.gaia_source+WHERE+ra+BETWEEN+35.05+AND+35.52+AND+dec+BETWEEN+-49.81+AND+-49.48+AND+phot_g_mean_mag+BETWEEN+11+AND+17.5+AND+has_xp_continuous%3D%27true%27",
+    "utc": "2026-11-17T08:30:29.391277+00:00",
+    "status": 200,
+    "length": 9555,
+    "sha256": "4ecf21957017437bf593c582fb1df12f603c6fd9a724d9447ae5d0d92eb5917b"
+  },
+  {
+    "product": "xp_spectra.vot.gz",
+    "url": "https://gaia.aip.de/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&QUERY=SELECT+spec.source_id%2Cspec.flux%2Cspec.flux_error+FROM+gaiadr3.xp_sampled_mean_spectrum+AS+spec+WHERE+spec.source_id+IN+%284938433974823938176%2C4938427618272322560%2C4938429404978717184%2C4938440193936596352%2C4938440297015796864%2C4938418336846341248%2C4938430195252686464%2C4938430195252686336%2C4938434971256352128%2C4938621819513400192%2C4938431947599354496%2C4938438269791248512%2C4938422464311587840%2C4938428614704754944%2C4938429714216381696%2C4938432978391526272%2C4938428545985278080%2C4938430745008513280%2C4938428369889942784%2C4938428958302138112%2C4938436105127731968%29",
+    "utc": "2026-11-17T08:31:22.579876+00:00",
+    "status": 200,
+    "length": 213898,
+    "sha256": "ee8fb9b8bd8e88c1fc46c20f8d72d554b8158991aaecbfb8e2641f15556f615b"
+  },
+  {
+    "product": "arXiv source, f4_filter.pdf",
+    "url": "https://arxiv.org/src/2605.26581",
+    "utc": "2026-11-17T08:31:22.579022+00:00",
+    "status": 200,
+    "length": 2500865,
+    "sha256": "d82eef2e3739d6a1901487bd77ca0a395e42c229cde3fece46be84389c472f6f"
+  },
+  {
+    "label": "recent_n395",
+    "url": "https://astroarchive.noirlab.edu/api/retrieve/ef6b68756d5766bcaca05edd7d12b55a/",
+    "utc": "2026-11-17T07:51:20.864403+00:00",
+    "status": 200,
+    "size": 318493440,
+    "sha256": "9fd97f0675bd5e0710130457de9540f07da14ec88acadece65b560b710a7bdc9"
+  },
+  {
+    "label": "recent_n395_mask",
+    "url": "https://astroarchive.noirlab.edu/api/retrieve/ca4114c11c5e95a7b2ca0292b5c0829b/",
+    "utc": "2026-11-17T07:54:25.731780+00:00",
+    "status": 200,
+    "size": 10048320,
+    "sha256": "7c9fd88524b3d445ba13129662c90d221d7634f65f729587524a316a4a54aeb8"
+  },
+  {
+    "label": "dr11_n395ref_15",
+    "url": "https://www.legacysurvey.org/viewer/fits-cutout?ra=35.219372&dec=-49.604775&layer=ls-dr11&bands=g&pixscale=0.262&size=2048",
+    "utc": "2026-11-17T08:00:25.542132+00:00",
+    "status": 200,
+    "size": 16781760,
+    "sha256": "b743c3e9453a69be32cefe3988f3f1607506e3804c5b9df0f1ebc942cb1a6165"
+  },
+  {
+    "label": "dr11_n395ref_21",
+    "url": "https://www.legacysurvey.org/viewer/fits-cutout?ra=35.181166&dec=-49.661598&layer=ls-dr11&bands=g&pixscale=0.262&size=2048",
+    "utc": "2026-11-17T08:00:25.542773+00:00",
+    "status": 200,
+    "size": 16781760,
+    "sha256": "e43c76f79cc0792e528d55a03af40365ab4cfeb4d06e0947b21249ed17669990"
+  },
+  {
+    "product": "sun_reference_stis_002.fits",
+    "url": "https://ssb.stsci.edu/trds/calspec/sun_reference_stis_002.fits",
+    "bytes": 37440,
+    "sha256": "a50b70a5c6515322cee14a3fe8060d9e4d7260912ae8d3e85b7fa88302130ab3"
+  }
+]

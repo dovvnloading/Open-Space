@@ -1,0 +1,88 @@
+{
+  "papers": [
+    {
+      "input": "2016_discovery_preprint",
+      "url": "https://arxiv.org/pdf/1608.02384",
+      "sha256": "5ad6971b2fa5388670ee431708aa67d009eccfe755a3c4709587b48878ebe500",
+      "bytes": 675725
+    },
+    {
+      "input": "2019_followup",
+      "url": "https://arxiv.org/pdf/1904.03043",
+      "sha256": "ab069aab2fe554fa031d2e9a0e57fed5ed56c7d3d56818369e00cee49a69ad19",
+      "bytes": 2350801
+    },
+    {
+      "input": "Gna_v1",
+      "url": "https://arxiv.org/pdf/1512.02650v1",
+      "sha256": "0d8d696f015778e44a73e3118781599055087fb43b1a8d3896d38502a0a9b1d4",
+      "bytes": 197466
+    },
+    {
+      "input": "Gna_v2_withdrawal",
+      "url": "https://arxiv.org/abs/1512.02650v2",
+      "sha256": "70e8dd9524892feb3bd54ee96b51f32dbcf965d79393f0f020deb543b079e416",
+      "bytes": 43671
+    }
+  ],
+  "queries": [
+    {
+      "url": "https://almascience.nrao.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+distinct+access_url+from+ivoa.obscore+where+proposal_id%3D%272013.1.00170.S%27+and+band_list%3D%278%27",
+      "bytes": 72,
+      "sha256": "9a1c1cbfea0b1c9e39aa512239d2cbbaa362880c9acba50e3fa7ec5fd2487ae5",
+      "use": "archive inventory only; pinned IDs below"
+    },
+    {
+      "url": "https://almascience.nrao.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+top+90+obs_publisher_did%2Caccess_url%2Ct_min%2Cband_list+from+ivoa.obscore+where+proposal_id%3D%272016.1.00441.S%27",
+      "bytes": 9399,
+      "sha256": "dc89502d87c1e440e7979bd5aa881520bad3813f1570767d1abc9d63ee99dcdc",
+      "use": "archive inventory only; pinned IDs below"
+    }
+  ],
+  "products": [
+    {
+      "short_id": "X38",
+      "uid": "uid://A001/X11e/X38",
+      "url": "https://almascience.eso.org/dataPortal/2013.1.00170.S_uid___A001_X11e_X38_001_of_001.tar",
+      "datalink_url": "https://almascience.org/datalink/sync?ID=uid://A001/X11e/X38",
+      "datalink_sha256": "34cb719660998fa888c197e0346017f8d7d523280c37c6c93c36b06f0273ae77",
+      "member": "2013.1.00170.S/science_goal.uid___A001_X11e_X36/group.uid___A001_X11e_X37/member.uid___A001_X11e_X38/product/member.uid___A001_X11e_X38.alphaCen_b8.cont1.image.pbcor.fits",
+      "bytes": 413696,
+      "sha256": "6673cd4d5c145f3b17143856d23498d8f5425b61bbb381279187498452ed244a",
+      "member_sha256": "7a89fe87e02aa19d4ca5eebded727adc2bf39cafb502ef06807826e3aa8de87c"
+    },
+    {
+      "short_id": "X97",
+      "uid": "uid://A001/X87d/X97",
+      "url": "https://almascience.eso.org/dataPortal/2016.1.00441.S_uid___A001_X87d_X97_001_of_001.tar",
+      "datalink_url": "https://almascience.org/datalink/sync?ID=uid://A001/X87d/X97",
+      "datalink_sha256": "20f2a9075abee6496a208d91d3a1acf1a61f7e95a9dd5bbff41639b7e7a02c0b",
+      "member": "2016.1.00441.S/science_goal.uid___A001_X87d_X95/group.uid___A001_X87d_X96/member.uid___A001_X87d_X97/product/member.uid___A001_X87d_X97.alfa_cen_CM_sci.spw17_19_21_23.cont.I.pbcor.fits",
+      "bytes": 4635648,
+      "sha256": "fec23b9e889d79ddb3d5cb1a2d3b97131ce4e4c2f55fb4d5e0ec125bb6a3bb4b",
+      "member_sha256": "1b9a08ac74b1bb5138396afc08f026e91aff644933c21d4d381ced13f04182eb"
+    },
+    {
+      "short_id": "X9b",
+      "uid": "uid://A001/X87d/X9b",
+      "url": "https://almascience.eso.org/dataPortal/2016.1.00441.S_uid___A001_X87d_X9b_001_of_001.tar",
+      "datalink_url": "https://almascience.org/datalink/sync?ID=uid://A001/X87d/X9b",
+      "datalink_sha256": "6567959d8e06c9be0ae11172c1be45c32651b620e3462bfcae396af38eaf9dd9",
+      "member": "2016.1.00441.S/science_goal.uid___A001_X87d_X99/group.uid___A001_X87d_X9a/member.uid___A001_X87d_X9b/product/member.uid___A001_X87d_X9b.alfa_cen_CM_sci.spw17_19_21_23.cont.I.pbcor.fits",
+      "bytes": 26088448,
+      "sha256": "69751255dea4af9dff078c5d763fb04a76815c5e24a3ab1ba72a58123ab3c9cb",
+      "member_sha256": "4b6095c79b235155cd342517a977469561e6a8c32c9741c9b19cd9fcc93cad27"
+    },
+    {
+      "short_id": "X9f",
+      "uid": "uid://A001/X87d/X9f",
+      "url": "https://almascience.eso.org/dataPortal/2016.1.00441.S_uid___A001_X87d_X9f_001_of_001.tar",
+      "datalink_url": "https://almascience.org/datalink/sync?ID=uid://A001/X87d/X9f",
+      "datalink_sha256": "e8ae67863deaf9acb962950648653a34d88520ce732c98b42ccbed5f54c48e0e",
+      "member": "2016.1.00441.S/science_goal.uid___A001_X87d_X9d/group.uid___A001_X87d_X9e/member.uid___A001_X87d_X9f/product/member.uid___A001_X87d_X9f.alfa_cen_a_08_TM1-all-spws-combined.image.pbcor.fits",
+      "bytes": 6589440,
+      "sha256": "9a38ea35af11576ef72b6a0932e66ebe9efb0af53a69265d045d6b461fc4b0db",
+      "member_sha256": "4df35dfb3ab5adddebdd81186820078ca695fc77d16f16090f4bbd5018b6b78b"
+    }
+  ]
+}

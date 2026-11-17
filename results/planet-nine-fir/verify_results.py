@@ -46,6 +46,16 @@ def main():
     bands = read('spherex/combined.json')
     assert bands['exposures'] == sum(row['exposures'] for row in bands['detectors'])
     assert len(bands['detectors']) == 6 and bands['grid_passes'] == bands['control_passes'] == 0
+    stress = read('spherex/centroid_stress/combined.json')
+    assert stress['exposures'] == bands['exposures'] == 572
+    assert stress['grid_size'] == 15833 and stress['grid_valid'] == 10464
+    assert stress['grid_passes'] == stress['control_passes'] == 0
+    for target, eligible in [('Chen1', 679), ('Chen2', 622)]:
+        result = read(f'other_optical/{target}_result.json')
+        assert result['circular_tracks'] == 792 and result['at_least_two_eligible'] == eligible
+    bounds = read('extra_candidates/result.json')['necessary_bound_tests']
+    assert all(v['required_displacement_lower_bound_au'] > v['bound_displacement_upper_bound_au']
+               for v in bounds.values())
     with gzip.open(ROOT/'wise/compact/field_results.jsonl.gz','rt') as f:
         fields = {r['target']:r for r in map(json.loads, f)}
     assert len(fields) == 46
