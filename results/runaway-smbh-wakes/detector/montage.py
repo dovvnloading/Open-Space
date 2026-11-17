@@ -91,7 +91,7 @@ def main():
                 t=(2*int(row["axis_host_end"])-1)*(length/2+float(row["axis_gap_arcsec"]))
                 hostsky=center+(direction*t+sidevec*float(row["axis_offset_arcsec"]))/scale
                 host=wcs.world_to_pixel_values(*hostsky)
-                host_label=f'axis gap {float(row["axis_gap_arcsec"]):.2f}"' 
+                host_label=f'axis gap {float(row["axis_gap_arcsec"]):.2f}"'
             if vis[0].header["CD1_1"]>=0 or vis[0].header["CD2_2"]<=0:
                 raise ValueError("unexpected native orientation")
             e0=np.array([float(row["x0"]),float(row["y0"])])
