@@ -1,0 +1,38 @@
+{
+  "cutoff_utc": "2026-11-17T11:00:00Z",
+  "host_csv_sha256": "be3ac577ac17bc25d1db46581e3e55becc3e694f8f143d570319bfde496009e8",
+  "inputs": {
+    "schedule": {
+      "url": "https://casda.csiro.au/casda_vo_tools/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=70000&QUERY=SELECT+sbid%2C+obs_start_mjd%2C+obs_end_mjd+FROM+casda.observation+ORDER+BY+sbid",
+      "bytes": 1253572,
+      "sha256": "4cf53ecb72c92e1700495c9d49fb27f01860e9f84d3ae6c844937becf5da1a24",
+      "rows": 28991
+    },
+    "racs": {
+      "url": "https://casda.csiro.au/casda_vo_tools/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=70000&QUERY=SELECT+obs_id%2Cobs_publisher_did%2Cfilename%2Cs_ra%2Cs_dec%2Cs_region%2Ct_min%2Ct_max%2Cem_min%2Cem_max%2Cs_resolution%2Cquality_level%2Cobs_release_date+FROM+ivoa.obscore+WHERE+obs_collection%3D%27The+Rapid+ASKAP+Continuum+Survey%27+AND+pol_states%3D%27%2FV%2F%27+AND+filename+LIKE+%27image.v.%25taylor.0.restored%25.fits%27+AND+obs_release_date+%3C+%272026-11-17T11%3A00%3A00%27+ORDER+BY+obs_publisher_did",
+      "bytes": 3034231,
+      "sha256": "32e29825da2a0f17cb501e1f5bd4fd82da75017565b41222a68d38444171a3a2",
+      "rows": 7616
+    },
+    "vast": {
+      "url": "https://casda.csiro.au/casda_vo_tools/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=70000&QUERY=SELECT+obs_id%2Cobs_publisher_did%2Cfilename%2Cs_ra%2Cs_dec%2Cs_region%2Ct_min%2Ct_max%2Cem_min%2Cem_max%2Cs_resolution%2Cquality_level%2Cobs_release_date+FROM+ivoa.obscore+WHERE+obs_collection+IN+%28%27ASKAP+Pilot+Survey+for+VAST%27%2C%27VAST%27%29+AND+pol_states%3D%27%2FV%2F%27+AND+filename+LIKE+%27image.v.%25taylor.0.restored%25.fits%27+AND+obs_release_date+%3C+%272026-11-17T11%3A00%3A00%27+ORDER+BY+obs_publisher_did",
+      "bytes": 3474233,
+      "sha256": "cf65b88da5e2dcdf0c9d12e5d21f12eb8d9c48f1ecda39de337fa1e9e432de41",
+      "rows": 8887
+    }
+  },
+  "outputs": {
+    "fields": {
+      "rows": 16503,
+      "csv_sha256": "fb1431959f7b759545639b15c886ba4b98f7a9969e10a3a5c0ae138fb12cad4c"
+    },
+    "visits": {
+      "rows": 136617,
+      "csv_sha256": "2e810351f9b9895f7d3a945492fba798f4e98b4a57df622576088bde6726f3eb"
+    },
+    "hosts": {
+      "rows": 4862,
+      "csv_sha256": "b1788572cda16d611b861221088ca6c540db69a601f9b589c27ba3afe732af21"
+    }
+  }
+}
