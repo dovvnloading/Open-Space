@@ -57,7 +57,7 @@ def main():
         subprocess.run([sys.executable, str(Path(__file__).with_name('search.py')),
                         str(path/'cube.npz'), str(path/'tracks.npz'), str(path/'out'),
                         '--plants', str(path/'plants.npz'), '--flux', '0.001', '100',
-                        '--n-plants', '2'], check=True)
+                        '--n-plants', '2', '--cache-templates'], check=True)
         report = json.loads((path/'out/report.json').read_text())
         with open(path/'out/passing_templates.csv') as f:
             hits = list(csv.DictReader(f))

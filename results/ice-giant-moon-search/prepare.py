@@ -13,7 +13,7 @@ from ephemeris import interpolate
 
 def inverse_sky(ra, dec, e, n):
     los, east, north = tangent_basis(ra,dec)
-    vec = los + e[...,None]*east + n[...,None]*north
+    vec = los + np.asarray(e)[...,None]*east + np.asarray(n)[...,None]*north
     return np.rad2deg(np.arctan2(vec[...,1],vec[...,0]))%360, np.rad2deg(
         np.arctan2(vec[...,2],np.hypot(vec[...,0],vec[...,1])))
 

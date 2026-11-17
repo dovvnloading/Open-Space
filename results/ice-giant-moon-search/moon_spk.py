@@ -1,6 +1,7 @@
 """Extract dated S/2025 U1 and Uranus states from the JPL URA184 SPK."""
 import argparse
 import hashlib
+import re
 from pathlib import Path
 from urllib.request import Request, urlopen
 import numpy as np
@@ -26,16 +27,18 @@ class RangeReader:
 
     def read(self, amount):
         lo = self.pos//65536*65536
-        hi = min(4442362880, ((self.pos+amount+65535)//65536)*65536) - 1
+        hi = ((self.pos+amount+65535)//65536)*65536 - 1
         name = self.cache / f"ura184-{lo}-{hi}.bin"
         if not name.exists():
             url = URL + f"?bytes={lo}-{hi}"
             with urlopen(Request(url, headers={"Range": f"bytes={lo}-{hi}"}), timeout=90) as f:
                 hdr = f.headers.get("Content-Range", "")
-                if not hdr.startswith(f"bytes {lo}-{hi}/") or f.status != 206:
+                match = re.fullmatch(r"bytes (\d+)-(\d+)/(\d+)", hdr)
+                if (not match or f.status != 206 or int(match[1]) != lo
+                        or int(match[2]) != min(hi, int(match[3])-1)) :
                     raise IOError(f"invalid kernel range {hdr}")
                 data = f.read(hi-lo+2)
-                if len(data)!=hi-lo+1:
+                if len(data)!=int(match[2])-lo+1:
                     raise IOError("short kernel range")
             tmp = name.with_suffix(".tmp")
             tmp.write_bytes(data)
