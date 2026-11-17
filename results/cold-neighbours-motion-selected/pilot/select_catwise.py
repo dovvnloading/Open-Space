@@ -16,6 +16,7 @@ def number(row, key):
 def load_corrections():
     path = ROOT/"inputs"/"catwise_tile_offsets.tbl"
     if not path.exists():
+        path.parent.mkdir(parents=True,exist_ok=True)
         with urlopen(OFFSETS_URL,timeout=90) as f:
             path.write_bytes(f.read())
     offsets = {}

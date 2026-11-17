@@ -4,6 +4,9 @@ These are association diagnostics, not fits to an independent blind detection
 sample. Flux/uncertainty and morphology cuts are made before comparing tracks.
 """
 import csv
+import gzip
+import hashlib
+import io
 import math
 import json
 import statistics
@@ -17,7 +20,16 @@ def load(path):
 
 def main():
     cats=load(ROOT/"shortlist.csv")
-    detections=load(ROOT/"untimely"/"detections.csv")
+    combined=ROOT/"untimely"/"detections.csv"
+    if combined.exists():
+        detections=load(combined)
+    else:
+        packets=ROOT/"untimely"/"neighbourhoods"
+        detections=[]
+        for packet in json.loads((packets/"manifest.json").read_text()):
+            compressed=(packets/(packet["tile"]+".csv.gz")).read_bytes()
+            if hashlib.sha256(compressed).hexdigest()!=packet["gzip_sha256"]:raise ValueError(packet["tile"])
+            detections.extend(csv.DictReader(io.StringIO(gzip.decompress(compressed).decode())))
     by_source=defaultdict(list)
     for d in detections:
         by_source[d["source"]].append(d)
