@@ -6,6 +6,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from scipy.spatial import cKDTree
+from fetch_catalogs import prepare
 
 HERE = Path(__file__).resolve().parent
 RADIUS = 0.09  # arcsec, used for epoch matching and cross-filter confirmation
@@ -76,6 +77,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('cache', type=Path)
     args=parser.parse_args()
+    prepare(args.cache)  # Verify frozen raw bytes before any comparison output is written.
     summary, triggers, chosen, curves = [],[],[],[]
     for name, pairs in pd.read_csv(HERE/'pairs.csv').groupby('pair'):
         bands={}

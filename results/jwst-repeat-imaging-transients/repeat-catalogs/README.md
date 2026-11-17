@@ -12,3 +12,5 @@ python compare.py /path/to/catalog-cache
 ```
 
 [catalog_inputs.csv](catalog_inputs.csv) identifies each input by SHA-256. [screen_counts.csv](screen_counts.csv) gives match counts by filter. [coincidences.csv](coincidences.csv) gives trigger positions and [matched_photometry.csv](matched_photometry.csv) records all matched-band fluxes at them. Product start MJDs represent the start of a mosaic's observation interval, which can span several days.
+
+Both commands verify the frozen product set, canonical URLs, source counts, byte lengths and SHA-256 values in `catalog_inputs.csv`. The first keeps verified raw catalog bytes in the cache and creates compact arrays; the second repeats verification and regenerates the arrays before writing comparison outputs. A cached raw byte mismatch fails without overwriting the receipt or derived products. New or updated catalog inputs require a separate campaign with its own frozen pair list, receipt and output directory.
