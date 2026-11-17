@@ -50,11 +50,13 @@ def get_array(raw):
         return np.asarray(hdu.data,dtype=float),header
 
 
-def prepare(row, receipts):
+def prepare(row, receipts, science=False):
     approx=(float(row["pred_ra_deg"]),float(row["pred_dec_deg"]))
     params=urlencode({"center":"%.7f,%.7f"%approx,"size":"800arcsec","gzip":"false"})
-    uri=image_url(row,"scimrefdiffimg.fits.fz")
-    for idx,url in enumerate([uri+"?"+params,uri]):
+    uri=image_url(row,"sciimg.fits" if science else "scimrefdiffimg.fits.fz")
+    for idx,url in enumerate([uri+"?"+params,uri,uri+"?"+params,uri]):
+        if idx>=2:
+            time.sleep(2**idx)
         try:
             raw,req=request(url)
             data,hdr=get_array(raw)
@@ -64,7 +66,7 @@ def prepare(row, receipts):
             break
         except Exception as exc:
             receipts.append({"url":url,"error":str(exc)})
-            if idx==1:
+            if idx==3:
                 raise
     wcs=WCS(hdr).celestial
     x,y=map(float,wcs.all_world2pix(*approx,0))
@@ -142,7 +144,7 @@ def sample(f, east, north, sky=None):
     return map_coordinates(f["map"],[y-f["y0"],x-f["x0"]],order=1,mode="constant",cval=np.nan)
 
 
-def scan(frames):
+def scan(frames, science=False):
     frames=sorted(frames,key=lambda f:f["jd"])
     mid=frames[len(frames)//2]
     # All frames in a night span minutes; add one arcsec for WCS/systematics
@@ -170,6 +172,17 @@ def scan(frames):
         scales=np.ones(len(frames))
         unit="native per-frame DN"
     samples*=scales[:,None,None]
+    if science:
+        # The source moves farther than the aperture between visits. At every
+        # moving position measure the same sky in all other visits and subtract
+        # their median after per-frame zeropoint scaling. This preserves compact
+        # moving flux and removes a common static source without a deep template.
+        if unit=="native per-frame DN":
+            raise ValueError("Paired science subtraction requires a photometric zeropoint")
+        for i,f in enumerate(frames):
+            others=[sample(other,east,north,(f["ra"],f["dec"]))*scales[j]
+                    for j,other in enumerate(frames) if j!=i]
+            samples[i]-=np.median(others,axis=0)
     center=int(np.argmin(E**2+N**2))
     median=np.nanmedian(samples[:,1:,center],axis=1)
     sig=1.4826*np.nanmedian(abs(samples[:,1:,center]-median[:,None]),axis=1)
@@ -196,6 +209,9 @@ def scan(frames):
     ecs=np.array([[E[peak]]]);ncs=np.array([[N[peak]]])
     sky=(frames[0]["ra"],frames[0]["dec"])
     stationary=[float(sample(f,ecs,ncs,sky=sky)[0,0])*s for f,s in zip(frames,scales)]
+    if science:
+        fixed=stationary.copy()
+        stationary=[v-float(np.median(fixed[:i]+fixed[i+1:])) for i,v in enumerate(fixed)]
     sn=(samples[:,0,peak]-median)/sig
     return {"frames":[f["file"] for f in frames],"track_extent_arcsec":[float(a),float(b)],
             "grid_step_arcsec":GRID,"grid_points":len(E),"valid_offset_tracks":len(off),
@@ -209,17 +225,19 @@ def scan(frames):
             "frame_flux_sigmas":sig.tolist(),"nominal_frame_snr":((samples[:,0,center]-median)/sig).tolist()}
 
 
-def main(folder):
+def main(folder,science=False):
     dataset=json.loads((folder/"archive-results.json").read_text())
     rows=dataset["ztf"]["ztf_nominal_footprints"]
     # The first catalogued night serves as a blind pipeline positive control.
     rows=[r for r in rows if r["filefracday"][:8]<="20251029"]
-    out=folder/"stack"
+    if science:
+        rows=[r for r in rows if r["filefracday"][:8] in ("20251018","20251025","20251029")]
+    out=folder/("science-pairs" if science else "stack")
     out.mkdir(exist_ok=True)
     receipts,errors,frames=[],[],[]
     for r in rows:
         try:
-            f=prepare(r,receipts)
+            f=prepare(r,receipts,science)
             frames.append(f)
             print("IMAGE OK",f["file"],f["zpkey"],f["zp"],f["clock"],flush=True)
         except Exception as exc:
@@ -235,7 +253,7 @@ def main(folder):
         try:
             if len(group)<2:
                 raise ValueError("Insufficient images to check motion")
-            result[date]=scan(group)
+            result[date]=scan(group,science)
         except Exception as exc:
             result[date]={"error":str(exc)}
         print("STACK",date,json.dumps(result[date]),flush=True)
@@ -248,4 +266,6 @@ def main(folder):
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("folder",type=Path)
-    main(p.parse_args().folder)
+    p.add_argument("--science-pairs",action="store_true",help="Subtract local sky measured in the other science exposures")
+    args=p.parse_args()
+    main(args.folder,args.science_pairs)

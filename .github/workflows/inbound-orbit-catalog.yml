@@ -1,8 +1,8 @@
-name: Check Oct 25 archival stationary sources
+name: Paired science-frame search on Oct 18 and 25
 on:
   push:
     branches: ['research/inbound-hyperbolic-search']
-    paths: ['results/inbound-hyperbolic-search/catalog/static_sources.py','.github/workflows/inbound-orbit-catalog.yml']
+    paths: ['results/inbound-hyperbolic-search/catalog/image-search/stack/stack.py','.github/workflows/inbound-orbit-catalog.yml']
 permissions:
   contents: read
 jobs:
@@ -21,15 +21,15 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install numpy==2.2.6 scipy==1.15.3 astropy==7.1.0
-      - run: python static_sources.py
+      - run: python image-search/stack/stack.py image-search --science-pairs
       - name: Report stack results
         if: always()
         run: |
           python - <<'PY'
           from pathlib import Path
           import base64,gzip
-          for path in Path('image-search/oct25').glob('*'):
+          for path in Path('image-search/science-pairs').glob('*.json'):
               body = base64.b64encode(gzip.compress(path.read_bytes(), mtime=0)).decode()
               for i in range(0,len(body),4000):
-                  print('STATICFILE',path.name,i,body[i:i+4000])
+                  print('PAIRSFILE',path.name,i,body[i:i+4000])
           PY
