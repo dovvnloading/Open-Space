@@ -1,4 +1,4 @@
-"""Test a bound-energy boundary model against the spacecraft astrometry of two Kreutz objects."""
+"""Test a bound-energy boundary model against the spacecraft astrometry of short-arc Kreutz objects."""
 import argparse
 from datetime import date
 import gzip
@@ -136,7 +136,7 @@ def analyze(target):
             "fit_message":fit.message,"all_east_north_residual_arcsec":res(fit.x).reshape(-1,2).tolist(),
             "obs_sha256":hashlib.sha256((OUT/(tag+".mpc")).read_bytes()).hexdigest()}
 p=argparse.ArgumentParser()
-p.add_argument("targets",nargs="*",default=["C/2005 D3","C/2006 S8"])
+p.add_argument("targets",nargs="*",default=["C/2004 D4","C/2005 D3","C/2006 S8","C/2006 S9"])
 answers=[]
 for target in p.parse_args().targets:
     try: result=analyze(target)
