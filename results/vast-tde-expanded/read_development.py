@@ -18,6 +18,7 @@ def digest(path):
 
 def read_development(source_id,parquet_path,image_csv):
  packet=guard();source_id=int(source_id);p=Path(parquet_path)
+ if digest(Path(image_csv))!='70ce692b3c8d067d53e248b6265420a26880147bd7bc15327930880bd8395195':raise ValueError('image metadata digest mismatch')
  if digest(p)!=packet['measurement_parquet_sha256']:raise ValueError('parquet digest mismatch')
  item=packet['sources'][str(source_id)];images={i for group in item['development'] for i in group}
  hold={i for group in item['holdout'] for i in group}

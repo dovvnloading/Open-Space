@@ -13,3 +13,21 @@ The prospective 3-source question produces three conditional flags; no highest-f
 Run `python results/vast-tde-expanded/test_conditional.py` for synthetic invalid-row, forced signed-flux, duplicate/phase, same-session and null/injection checks; `packet_guard.py` verifies metadata identities. The independent Gaussian test is not a real-background injection test. After explicit development authorization, evaluate controls, coverage, forced-row schema and repeatability; recheck results against real-background perturbations before holdout review. Holdout access needs an independently hashed frozen development output and separate explicit authorization, and is not implemented by the reader here. The code has not been applied to actual data.
 
 Metadata-only feasibility check found at least 67 preselected controls sharing every relevant image for AT2020nov, at least 169 for AT2018hyz, and 200 for ASASSN-15oi, before any development quality or stability cuts. This does not guarantee 20 controls will pass. The frozen development record API writes exclusively and binds reviewed packet and code SHA-256 values; its digest must be independently reviewed and supplied for any later holdout orchestration. Shared calibration between different sessions and uncertainty from data-dependent stability selection are not calibrated by the variance formula. No general holdout archive reader is supplied.
+
+## Development CLI and input gates
+
+The 1.82 mJy/beam upper bound on local RMS is the published 99.7-percentile quality cut ([de Ruiter et al., section 4.3.2](https://arxiv.org/abs/2602.22739)); positive finite image beam axes check validity only and do not establish PSF matching. Gain median standard error uses `1.2533 × 1.4826 × MAD / sqrt(n)` before the provisional 3% floor. Cross-session calibration covariance, control-selection uncertainty, image blending and the 3% floor are not empirically calibrated; resulting z values are conditional model diagnostics, not calibrated significance.
+
+Use Python 3.14.0 with NumPy 2.5.5, SciPy 1.17.1, PyArrow 24.0.0 and Astropy 8.0.2. The reviewed Windows environment is `C:/Python314/python.exe` with `PYTHONPATH=D:/Open-Space/next-dataset-scout-20261116/deps` (all campaign files and output remain on D:). Generate a new external manifest only after the tracked packet is committed and clean:
+
+```powershell
+python results/vast-tde-expanded/development_cli.py --make-manifest D:/Open-Space/campaigns/vast-tde-expanded-20261117/review-manifest.json
+```
+
+The command prints its SHA-256. Root must review the exact manifest, Git HEAD and code before allowing a later development command. The development CLI requires `--authorize-development`, the exact manifest SHA, `--phase development`, frozen parquet and image CSV, and a new D: output path. This option is an execution gate, not independent proof of approval. The manifest checks Git HEAD, clean packet, tracked Git blobs, worktree SHA-256, dependency versions and the sealed phase. The reader verifies the image CSV SHA before any parquet decoding. It processes the fixed three source IDs only, recording source failures as inconclusive and preserving row-drop reasons. The CLI has not been run with actual flux. Example syntax, to be used only after explicit authorization:
+
+```powershell
+python results/vast-tde-expanded/development_cli.py --manifest D:/Open-Space/campaigns/vast-tde-expanded-20261117/review-manifest.json --manifest-sha256 REVIEWED_SHA256 --phase development --authorize-development --parquet D:/Open-Space/campaigns/vast-tde-metadata-20261117/VAST_Extragal_DR1_measurement_df.parquet --images D:/Open-Space/campaigns/vast-tde-expanded-20261117/image_df.csv --output D:/Open-Space/campaigns/vast-tde-expanded-20261117/NEW_DEVELOPMENT_OUTPUT
+```
+
+The physical Parquet-decoding limitation stated above remains; predicates prevent heldout rows from being returned or analyzed but cannot guarantee that compressed chunks containing them are not read. Freeze and review the development outputs before any separate heldout processing.

@@ -18,6 +18,7 @@ def valid(r):
     try:
         x,s,rms,b1,b2=(float(r[k]) for k in ('flux_peak','flux_peak_err','local_rms','beam_bmaj','beam_bmin'))
         if not np.isfinite([x,s,rms,b1,b2]).all() or min(s,rms,b1,b2)<=0:return False,'invalid flux/error/rms/beam'
+        if rms>1.82:return False,'local RMS exceeds 1.82 mJy/beam'
         if r['forced'] not in (True,False):return False,'missing forced flag'
         if r['flag_c4'] is True or r['has_siblings'] is True:return False,'fit flag'
         if not r['forced'] and (r['flag_c4'] is not False or r['has_siblings'] is not False):return False,'missing detection flags'
@@ -56,7 +57,7 @@ def image_gains(rows,controls,image_ids):
         if len(ratios)<MIN_CONTROLS:raise ValueError('insufficient frozen controls for image')
         g=float(np.median(ratios));mad=1.4826*float(np.median(np.abs(np.array(ratios)-g)))
         if not np.isfinite(g) or g<=0:raise ValueError('invalid gain')
-        gains[image]={'gain':g,'fractional_sigma':max(GAIN_FLOOR,mad/(g*np.sqrt(len(ratios)))),'n':len(ratios)}
+        gains[image]={'gain':g,'fractional_sigma':max(GAIN_FLOOR,1.2533*mad/(g*np.sqrt(len(ratios)))),'n':len(ratios)}
     return gains
 
 def session_measurements(rows,source,sessions,gains):

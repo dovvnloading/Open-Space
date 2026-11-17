@@ -1,4 +1,5 @@
 import unittest,tempfile,pathlib,numpy as np
+from unittest.mock import patch
 from conditional_pipeline import *
 
 def row(source,image,value=10.,error=.1,forced=False):
@@ -21,6 +22,35 @@ class TestConditional(unittest.TestCase):
   with self.assertRaises(ValueError):image_gains([row(100,1)],{100:11},[1])
  def test_correlated_pairs_not_independent(self):
   g={1:dict(gain=1.,fractional_sigma=.03),2:dict(gain=1.,fractional_sigma=.03)};v=session_measurements([row(1,1,1,.2),row(1,2,1,.2)],1,[[1,2]],g)[0];self.assertGreaterEqual(v[1],.2**2)
+ def test_full_develop_freeze_evaluate(self):
+  packet={'sources':{'1':{'development':self.groups[:4],'holdout':self.groups[4:]}}}
+  dev=[r for r in self.rows if r['image_id']<=8];hold=[r for r in self.rows if r['image_id']>8]
+  result=develop(1,packet,dev,self.controls)
+  with tempfile.TemporaryDirectory() as d:
+   f=pathlib.Path(d)/'dev.json';digest=freeze_development(f,result,'packet','code');frozen=load_reviewed_development(f,digest,'packet','code')
+   self.assertFalse(evaluate_holdout(frozen,hold)['result']['both_at_least_3'])
+   injected=[dict(r,flux_peak=3.) if r['source']==1 else r for r in hold]
+   self.assertTrue(evaluate_holdout(frozen,injected)['result']['both_at_least_3'])
+ def test_rms_and_median_standard_error(self):
+  self.assertFalse(valid(dict(row(1,1),local_rms=1.821))[0])
+  values=[row(s,1,10*(1+(s-112)*.04)) for s in range(100,125)]
+  gains=image_gains(values,{s:10 for s in range(100,125)},[1]);x=np.array([v['flux_peak']/10 for v in values]);expected=max(.03,1.2533*1.4826*np.median(abs(x-np.median(x)))/(np.median(x)*np.sqrt(len(x))))
+  self.assertAlmostEqual(gains[1]['fractional_sigma'],expected)
+ def test_wrong_phase_prevents_reader(self):
+  import development_cli as cli
+  with patch.object(cli,'snapshot',side_effect=AssertionError('must not inspect environment')):
+   with self.assertRaises(ValueError):cli.verify_manifest('none','none','holdout')
+ def test_wrong_image_hash_precedes_parquet_decode(self):
+  import read_development as reader
+  with patch.object(reader,'guard',return_value={}),patch.object(reader,'digest',return_value='wrong'),patch.object(reader.pq,'read_table',side_effect=AssertionError('decoded')):
+   with self.assertRaisesRegex(ValueError,'image metadata'):reader.read_development(1,'fake.parquet','wrong.csv')
+ def test_manifest_code_mismatch_prevents_execution(self):
+  import development_cli as cli,hashlib,json
+  with tempfile.TemporaryDirectory() as d:
+   p=pathlib.Path(d)/'m.json';p.write_text(json.dumps({'git_head':'old'}));digest=hashlib.sha256(p.read_bytes()).hexdigest()
+   with patch.object(cli,'snapshot',return_value={'git_head':'different'}):
+    with self.assertRaisesRegex(ValueError,'code, packet'):cli.verify_manifest(p,digest,'development')
+   with self.assertRaisesRegex(ValueError,'manifest SHA'):cli.verify_manifest(p,'0'*64,'development')
  def test_frozen_development_identity(self):
   with tempfile.TemporaryDirectory() as d:
    p=pathlib.Path(d)/'baseline.json';digest=freeze_development(p,{'source':1},'packet','code')
