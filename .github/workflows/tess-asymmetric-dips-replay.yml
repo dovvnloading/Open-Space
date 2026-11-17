@@ -1,13 +1,14 @@
-name: Sector 105 eclipse and field replay
+name: Sector 105 archive replay
 on:
   push:
     branches: ["research/tess-asymmetric-dips"]
-    paths: [".github/workflows/tess-asymmetric-dips-replay.yml"]
+    paths: [".github/workflows/tess-asymmetric-dips-replay.yml", "results/tess-asymmetric-dips/lead_history.py", "results/tess-asymmetric-dips/plot.py"]
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   field:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 35
     defaults:
@@ -36,12 +37,50 @@ jobs:
           for name in ('pixels','neighbors'):
               data=pathlib.Path('/tmp/replay-'+name+'.json').read_bytes()
               print(name, 'SHA-256', hashlib.sha256(data).hexdigest())
-              payload=base64.b64encode(gzip.compress(data,mtime=0)).decode('ascii')
-              for i,part in enumerate(textwrap.wrap(payload,2000)):
-                  print('REC',name,i,part)
           PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: sector105-field-replay
           path: /tmp/replay-*.json
+  history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: results/tess-asymmetric-dips
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy scipy matplotlib
+      - name: Reproduce the multi-sector eclipse and survey figure
+        run: |
+          python lead_history.py --out /tmp/lead-history.json
+          python plot.py /tmp/sector105.svg
+          python - <<'PY'
+          import json, pathlib
+          r=json.loads(pathlib.Path('/tmp/lead-history.json').read_bytes())
+          clock=r['refined_clock']
+          print(clock)
+          assert abs(clock['period_d']-18.7668)<.01 and clock['n_timings']>=4
+          PY
+      - name: Preserve verified numerical and figure outputs
+        run: |
+          python - <<'PY'
+          import base64,gzip,hashlib,pathlib,textwrap
+          for name in ('lead-history.json','sector105.svg'):
+              data=pathlib.Path('/tmp',name).read_bytes()
+              print(name,'SHA-256',hashlib.sha256(data).hexdigest())
+              payload=base64.b64encode(gzip.compress(data,mtime=0)).decode()
+              for i,part in enumerate(textwrap.wrap(payload,2000)):
+                  print('REC',name,i,part)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sector105-eclipse-history
+          path: |
+            /tmp/lead-history.json
+            /tmp/sector105.svg
