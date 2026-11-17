@@ -2,7 +2,7 @@
 
 ## November 2026 continuation
 
-Two previously unmatched **nuclear brightenings** pass individual-exposure checks. The existing catalog identifications refer to their host galaxies. The cause of each flux increase remains unclassified.
+Two **unclassified nuclear brightenings** pass individual-exposure checks. The existing catalog identifications refer to their host galaxies, not to a classified flare. Weak AGN variability versus a nuclear supernova/TDE-like transient remains open for each. Both require a classification-quality spectrum during activity and a later, matched-filter JWST epoch to establish fading or continued nuclear variability.
 
 | Position (J2000, degrees) | Change in aperture flux | Host distance and interpretation |
 |---|---|---|
