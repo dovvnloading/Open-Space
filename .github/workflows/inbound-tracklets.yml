@@ -26,11 +26,12 @@ jobs:
       - name: Inspect the latest public Rubin MPC ingestion partition
         run: python results/inbound-hyperbolic-search/tracklets/rubin_feed.py run
       - name: Link observations and measure forced-track recovery
-        if: hashFiles('results/inbound-hyperbolic-search/tracklets/link.py') != ''
+        if: ${{ !cancelled() && hashFiles('results/inbound-hyperbolic-search/tracklets/link.py') != '' }}
         run: |
           python -m pip install numpy==2.2.6 scipy==1.15.3 pyerfa==2.0.1.5
           python results/inbound-hyperbolic-search/tracklets/link.py --data run --trials 100
           python results/inbound-hyperbolic-search/tracklets/link.py --data run --survey F51 --trials 100
+          python results/inbound-hyperbolic-search/tracklets/link.py --data run --survey F51-all --trials 100
       - name: Export the small reproducibility bundle
         if: always()
         run: |
