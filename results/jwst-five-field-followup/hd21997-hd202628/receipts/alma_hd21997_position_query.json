@@ -1,0 +1,4 @@
+{
+  "url": "https://almascience.eso.org/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=select+top+200+obs_id%2Cobs_publisher_did%2Cproposal_id%2Ct_min%2Ct_max%2Caccess_url%2Cdataproduct_type%2Ctarget_name+from+ivoa.obscore+where+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cs_ra%2Cs_dec%29%2CCIRCLE%28%27ICRS%27%2C52.9739%2C-25.61425%2C0.01%29%29",
+  "query": "select top 200 obs_id,obs_publisher_did,proposal_id,t_min,t_max,access_url,dataproduct_type,target_name from ivoa.obscore where 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',52.9739,-25.61425,0.01))"
+}
