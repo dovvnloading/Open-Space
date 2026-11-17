@@ -16,6 +16,7 @@ from astropy.wcs import WCS
 
 ROOT = 'https://ariel.astro.illinois.edu/nexus/qdr/'
 EPOCHS = tuple(range(1, 9))
+HERE = Path(__file__).resolve().parent
 R = 32
 SEED = 510509
 DATES = ['2025-06-01','2025-07-30','2025-09-28','2025-11-28','2026-01-28','2026-03-28','2026-05-28','2026-08-07']
@@ -36,6 +37,7 @@ class HashReader:
 
 def make_targets(out):
     manifests, tables = [], []
+    frozen = pd.read_csv(HERE/'input_tables.csv').set_index('epoch')
     for ep in EPOCHS:
         name = f'nexus_msa_deep_ep{ep:02d}_targets.fits'
         url = ROOT+'nirspec/'+name
@@ -43,7 +45,10 @@ def make_targets(out):
         if not file.exists():
             with urlopen(url, timeout=60) as inp, file.open('wb') as dest:
                 shutil.copyfileobj(inp, dest)
-        manifests.append(dict(epoch=ep,url=url,sha256=hashlib.sha256(file.read_bytes()).hexdigest()))
+        digest=hashlib.sha256(file.read_bytes()).hexdigest()
+        if ep not in frozen.index or frozen.loc[ep,'url'] != url or frozen.loc[ep,'sha256'] != digest:
+            raise ValueError(f'Frozen target input mismatch: {file}')
+        manifests.append(dict(epoch=ep,url=url,sha256=digest))
         with fits.open(file) as hd:
             a=hd[1].data
             for i in range(len(a)):
@@ -51,7 +56,7 @@ def make_targets(out):
                     z=a['z_VI'][i],conf=int(a['z_VI_conf'][i]),priority=a['Priority Class'][i],
                     f444=a['F444W'][i],epoch=ep, f200=a['F200W'][i],
                     e444=a['F444W_e'][i], e200=a['F200W_e'][i]))
-    pd.DataFrame(manifests).to_csv(out/'input_tables.csv',index=False)
+    # The deposited receipt is immutable; do not rewrite it from cache contents.
     rows=pd.DataFrame(tables)
     good=rows[rows.conf==2].groupby('id')
     objs=good[['ra','dec','z','priority','f444']].median()
@@ -64,8 +69,10 @@ def make_targets(out):
     con=pd.concat([g.sample(min(55,len(g)),random_state=SEED+i) for i,g in con.groupby('bin')])
     con['sample']='control'
     targets=pd.concat([targets,con[targets.columns]]).sort_index().reset_index()
-    targets.to_csv(out/'targets.csv',index=False)
-    rows[rows.id.isin(targets.loc[targets['sample']=='high_z','id'])].to_csv(out/'host_catalog_photometry.csv',index=False)
+    for name, frame in [('targets.csv',targets),('host_catalog_photometry.csv',rows[rows.id.isin(targets.loc[targets['sample']=='high_z','id'])])]:
+        content=frame.to_csv(index=False).encode(); dest=out/name
+        if dest.exists() and dest.read_bytes()!=content: raise ValueError(f'Cached target output mismatch: {dest}')
+        if not dest.exists(): dest.write_bytes(content)
     return targets
 
 
@@ -76,9 +83,14 @@ def extract(arg):
     name=f'nexus_central_deep_ep{ep:02d}_{token}_i2d_{ptype}.fits.gz'
     url=ROOT+'nircam/'+name
     stem=out/f'ep{ep:02d}_{ptype}'
-    if stem.with_suffix('.npz').exists() and stem.with_suffix('.json').exists():
+    frozen = next(x for x in json.loads((HERE/band/'mosaic_inputs.json').read_text()) if x['epoch']==ep and x['kind']==ptype)
+    identity=hashlib.sha256(targets.to_csv(index=False).encode()).hexdigest()
+    config=dict(targets_sha256=identity, radius=R, seed=SEED, binning=2 if short else 1, source_sha256=frozen['sha256'], source_bytes=frozen['bytes'])
+    npz=stem.with_suffix('.npz'); meta_path=stem.with_suffix('.json')
+    if npz.exists() != meta_path.exists(): raise ValueError(f'Partial stamp cache: {stem}')
+    if npz.exists() and meta_path.exists():
         stored=json.loads(stem.with_suffix('.json').read_text())
-        if stored.get('url')!=url:
+        if stored.get('url')!=url or stored.get('cache_identity')!=config or stored.get('stamp_sha256')!=hashlib.sha256(npz.read_bytes()).hexdigest():
             raise ValueError('Use a separate cache directory for each filter')
         return
     for trial in range(3):
@@ -114,10 +126,12 @@ def extract(arg):
                             stamps[j,lo-cy[j]+R:hi-cy[j]+R]=patch
                     stream.read()  # Validate gzip CRC and consume the FITS pad.
                 assert reader.nbytes==int(response.headers['Content-Length'])
+            if reader.nbytes!=frozen['bytes'] or reader.digest.hexdigest()!=frozen['sha256'] or url!=frozen['url']:
+                raise ValueError('Mosaic differs from frozen receipt')
             np.savez_compressed(stem.with_suffix('.npz'),stamps=stamps,px=px,py=py)
             fields=['NAXIS1','NAXIS2','CDELT1','CDELT2','CRPIX1','CRPIX2','CRVAL1','CRVAL2','PIXAR_SR','MAG_ZP','BUNIT']
             meta=dict(epoch=ep,kind=ptype,filter=band,binning=fac,url=url,bytes=reader.nbytes,sha256=reader.digest.hexdigest(),
-                      header={k:header.get(k) for k in fields})
+                      header={k:header.get(k) for k in fields}, cache_identity=config, stamp_sha256=hashlib.sha256(npz.read_bytes()).hexdigest())
             stem.with_suffix('.json').write_text(json.dumps(meta,indent=2)+'\n')
             print(ep,ptype,reader.nbytes,flush=True)
             return

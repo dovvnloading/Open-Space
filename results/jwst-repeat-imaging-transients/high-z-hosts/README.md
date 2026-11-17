@@ -62,7 +62,7 @@ python screen_hosts.py --cache cache-f444w --out f444w --comparisons ../catalogs
 python acquire_nexus.py --band f200w --cache cache-f200w
 python screen_hosts.py --cache cache-f200w --out f200w --comparisons ../catalogs/field_comparisons.csv
 python join_bands.py .
-python september_catalog.py cache-f200w/targets.csv cache-september september
+python september_catalog.py cache-f200w/targets.csv cache-september NEW_EMPTY_OUTPUT_DIRECTORY
 python inspect_trigger.py cache-f200w/targets.csv msaid25213
 python check_morphology.py cache-f200w cache-f444w msaid25213
 python radial_test.py cache-f200w msaid25213
@@ -71,3 +71,5 @@ python radial_test.py cache-f200w msaid25213
 The per-band result tables provide every targeted galaxy and best contrast (`host_screen.csv`), per-visit aperture photometry including missing coverage (`host_lightcurves.csv`), all tested contrasts for hosts and controls (`contrasts.csv.gz`), actual injections and binned recoveries, epoch astrometry and scaling, and the mosaic checksums. The reference epoch mask is a bit mask with bit 0 for epoch 1. The contrast field `start` is zero-based, while `epoch` and `start_epoch` are one-based. The tabulated host coordinates and redshifts in the per-band results apply throughout. `host_catalog_photometry.csv` contains sparse survey-published F200W and F444W photometry in µJy at epochs with a corresponding MSA target entry, including its original missing-value sentinels. These catalogue fluxes and the smaller-aperture forced fluxes have different units and aperture corrections.
 
 Data and attribution: [NEXUS QDR](https://ariel.astro.illinois.edu/nexus/qdr/), [survey overview](https://arxiv.org/abs/2408.12713), [quick-release notes and coverage caveats](https://arxiv.org/html/2603.04586v3), [Year-1 transients](https://arxiv.org/abs/2609.06985), [reported z=5.017 AT 2026abck](https://arxiv.org/abs/2609.38373). AT 2026abck was reported in F200W with a nondetection in F444W, illustrating the band dependence of this sensitivity.
+
+Acquisition verifies the deposited target-table and mosaic byte hashes before accepting data. Stamp caches bind the complete ordered target table, extraction configuration, upstream mosaic digest and compressed stamp digest; old caches without this identity, partial caches, and changed inputs are rejected. Use fresh separate per-band cache directories. The September replay verifies its six frozen catalogue inputs, regenerates and checks the target selection from the frozen target tables, and requires a new empty output directory; deposited receipts are not rewritten. Changed releases require a separately frozen campaign and updated code/receipts.

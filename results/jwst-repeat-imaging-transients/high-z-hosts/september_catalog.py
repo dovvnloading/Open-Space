@@ -14,6 +14,11 @@ ROOT='https://stpubdata.s3.amazonaws.com/jwst/public/jw09263/L3/t/'
 
 
 def run(targetfile,cache,out):
+    frozen=pd.read_csv(Path(__file__).resolve().parent/'september/catalog_inputs.csv')
+    if out.exists() and any(out.iterdir()): raise ValueError('Output directory must be empty')
+    from acquire_nexus import make_targets
+    if targetfile.name!='targets.csv': raise ValueError('Use targets.csv produced by frozen acquire_nexus inputs')
+    make_targets(targetfile.parent)  # validates source hashes and byte-identical target order
     t=pd.read_csv(targetfile).drop_duplicates(['ra','dec']).reset_index(drop=True)
     target=SkyCoord(t.ra,t.dec,unit='deg')
     obslist=[2,4,6]; all_rows=[];summary=[]; inputs=[]; tests=[]
@@ -24,6 +29,9 @@ def run(targetfile,cache,out):
             url=f'{ROOT}o{obs:03}/{name}';p=cache/name
             if not p.exists():
                 with urlopen(url,timeout=120) as response:p.write_bytes(response.read())
+            receipt=frozen[(frozen.epoch==k+7)&(frozen.band==band)]
+            if len(receipt)!=1 or receipt.iloc[0]['url']!=url or p.stat().st_size!=int(receipt.iloc[0]['bytes']) or hashlib.sha256(p.read_bytes()).hexdigest()!=receipt.iloc[0]['sha256']:
+                raise ValueError(f'Frozen catalogue mismatch: {p}')
             cols=['label','sky_centroid.ra','sky_centroid.dec','aper_total_flux','aper_total_flux_err']
             a=pd.read_csv(p,sep=r'\s+',comment='#',usecols=cols).dropna()
             ref=SkyCoord(a['sky_centroid.ra'],a['sky_centroid.dec'],unit='deg')
