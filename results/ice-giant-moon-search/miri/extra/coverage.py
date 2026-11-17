@@ -48,6 +48,7 @@ def pixels(g,radii,phase,origin):
 
 
 def run(cache):
+    cache.mkdir(parents=True,exist_ok=True)
     products_ = products(); states=get_states();bygroup={};records=[];r_rows=[];visits=[]
     obs={r['obsid']:r for r in csv.DictReader((ROOT/'manifests/observations.csv').open())}
     for planet,outer in [('Uranus',650000),('Neptune',300000)]:
@@ -61,7 +62,8 @@ def run(cache):
             if k not in checks:checks[k]=np.zeros(len(rr),int)
             checks[k][idx]+=1
             records.append(dict(file=g['f']['file'],group=g['group'],planet=planet,visit=vis,filter=g['f']['filter'],planet_on_chip=g['f']['planet_on_chip'],
-                                planet_to_chip_arcsec=g['f']['planet_to_chip_arcsec'],sampled_cells=len(rr),geometric_cells=len(idx),
+                                planet_to_chip_arcsec=g['f']['planet_to_chip_arcsec'],
+                                sphere_radius_lower_bound_km=g['dist']*np.sin(max(0,float(g['f']['planet_to_chip_arcsec'])-.001)/ARCSEC),sampled_cells=len(rr),geometric_cells=len(idx),
                                 minimum_sampled_km=np.min(rr[idx]) if len(idx) else '',maximum_sampled_km=np.max(rr[idx]) if len(idx) else ''))
         for (v,group),counts in checks.items():
             use=[g for g in frames if g['group']==group]
