@@ -10,6 +10,10 @@ We extracted DR1 aperture spectra for the ten Hephaistos positions, five Contard
 
 The reported central temperatures for the original seven are 100–275 K. A 275 K blackbody emits 0.678% of its bolometric luminosity between 0.75 and 5 µm. For A's published 138 K model, the fraction is 0.000142%. These are model leverage calculations. They explain why even a well-measured photosphere at 3–5 µm is compatible with a large W3/W4 excess from another source. [Temperature inputs and integral](wise/thermal_leverage.py) · [Results including temperature uncertainties](wise/thermal_leverage.csv)
 
+![Measured SPHEREx and AllWISE flux densities for Hephaistos A through J](target_spectra.png)
+
+The Legacy Survey DR10 and unWISE images show how differently the same stars appear at optical and infrared resolution. C lies in a crowded optical field. Gaia lists three additional sources within 15 arcsec of C (7.37, 11.65 and 12.07 arcsec) and one 11.55 arcsec from I. At the remaining eight positions Gaia lists just the target within this radius. The galaxies at D and E illustrate what this neighbor test misses. [Twenty optical and unWISE cutouts](imaging/optical_unwise.jpg) · [Gaia neighborhood table](imaging/gaia_neighborhood.csv) · [Image receipts](imaging/viewer_queries.json)
+
 ## WISE photometry and final-year variability
 
 For A–J the median absolute difference between CatWISE and corrected unWISE magnitudes was 0.015 mag in W1 and 0.014 mag in W2. These are separate reductions of overlapping exposures. CatWISE resolves a second catalog source 4.33 arcsec from B's propagated stellar position. Even a close W1/W2 match cannot localize the emission in W3/W4. [Catalog photometry and neighborhood counts](wise/catalog_photometry.csv) · [Raw inputs](wise/archive_inputs.zip) · [40 query receipts](wise/queries.json)
@@ -17,6 +21,8 @@ For A–J the median absolute difference between CatWISE and corrected unWISE ma
 The final NEOWISE release supplied 173 single-exposure rows inside the ten 12 arcsec neighborhoods. Only A had two visits with at least three accepted detections per band. Its changes over 161 days were **+0.007 ± 0.025 mag in W1** and **+0.006 ± 0.072 mag in W2**, including visit-difference calibration floors of 0.02 and 0.06 mag. The other nine had one qualifying visit each. W1/W2 monitoring does not measure variability of the longer-wavelength component. [Per-visit medians](wise/visits.csv) · [Variability tests](wise/variability.csv) · [NEOWISE calibration](https://irsa.ipac.caltech.edu/data/WISE/docs/release/NEOWISE/expsup/sec2_2.html)
 
 A constant-flux test within each visit found excess W1 scatter at C (χ² = 77.25 for 37 degrees of freedom, corrected p = 0.00257 across 22 tests). Four pairs of exposures taken about 11 seconds apart each differ by 0.30–0.31 mag. W2 is consistent with constant flux. The 3.75 arcsec neighbor and the behavior of those paired exposures prevent assigning this variability to the star. In an independent archive replay three NEOWISE responses arrived in a different row order. All ten returned the same exposure rows. [Intravisit tests, calibration sensitivity and source-confusion caveats](wise/README.md)
+
+ZTF DR24 returned qualifying r-band light curves for eight targets. Seven had no sampled night at least 0.2 mag fainter than the object's median. D had one faint night (MJD 58745), but two exposures 39 seconds apart differed by 0.235 mag. Source-intrinsic fading is unconfirmed. B and C have no returned r-band rows. [Per-object cadence and nightly excursions](optical/r_lightcurves.csv) · [Raw light curves](optical/lightcurve_inputs.zip)
 
 ## Blind controls and measured sensitivity
 
@@ -30,7 +36,9 @@ The preselected field is a 2° circular cap centered on ICRS (180°, +30°). The
 
 These injections add one physically normalized blackbody to each real control's measured fluxes. The star's W1 flux fixes the common normalization across bands. A preliminary calculation normalized W3 and W4 separately to their empirical peer medians. The common-W1 calculation above supersedes it. Catalog inclusion, image blending, noise realizations and quality flags are held fixed. The experiment measures recovery after those cuts. The field and the injection sample cannot support a Galaxy-wide occurrence constraint. [All temperatures and luminosities](blind/injections.csv) · [Control identities](blind/injection_controls.csv)
 
-The fixed central-tile cohort included 58 field stars with W1 <12. Fifty-six yielded sufficient photometry and local sky. Fifty-five had at least four comparison stars. Zero passed the 25% and 5σ red-continuum excess thresholds, either with the strict mask or when including pipeline outliers. The observable compares 4.42–4.90 µm against 1.51–1.72 µm, so it is sensitive to warmer excesses and to stellar molecular structure. [Blind spectral protocol and limitations](blind/README.md)
+The fixed central-tile cohort included 58 field stars with W1 <12. Fifty-six yielded sufficient photometry and local sky. Fifty-five had at least four comparison stars. Zero passed the 25% and 5σ red-continuum excess thresholds, either with the strict mask or when including pipeline outliers. The observable compares 4.42–4.90 µm against 1.51–1.72 µm, so it is sensitive to warmer excesses and to stellar molecular structure. At 1% of stellar luminosity the strict DR1 screen recovered 0/43, 0/43 and 25/43 additions at 100, 300 and 600 K. At 10% the corresponding recoveries were 0/43, 22/43 and 43/43. These controls are a separate subset, and their recoveries cannot be added to WISE's. [Blind spectral protocol and limitations](blind/README.md) · [DR1 injection grid](blind/dr1_injections.csv)
+
+![WISE excess recovery across injected temperatures and luminosities](wise_recovery.png)
 
 ## Independent published list
 
