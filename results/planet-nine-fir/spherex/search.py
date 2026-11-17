@@ -1,6 +1,8 @@
 """Moving-track and source-injection tests on native SPHEREx DR1 and QR3 cutouts."""
 import argparse
 import csv
+import gzip
+import io
 import hashlib
 import importlib.util
 import json
@@ -13,6 +15,8 @@ from astropy.io import fits
 from astropy.time import Time
 from astropy.wcs import WCS
 from astropy.wcs.utils import proj_plane_pixel_area
+from scipy.special import ndtri
+from scipy.stats import qmc
 from scipy.ndimage import gaussian_filter, map_coordinates
 from scipy.constants import c, h, k as boltzmann, astronomical_unit
 
@@ -126,13 +130,26 @@ def main():
     parser.add_argument("--cache",type=Path,required=True)
     parser.add_argument("--out",type=Path,default=ROOT)
     parser.add_argument("--manifest",type=Path,default=ROOT/"images.json")
+    parser.add_argument("--family",choices=("nominal","centroid-stress"),default="nominal")
     args=parser.parse_args()
     args.cache.mkdir(exist_ok=True,parents=True)
     args.out.mkdir(exist_ok=True,parents=True)
     spec=importlib.util.spec_from_file_location("orbit",args.orbit_dir/'propagate.py')
     orbit=importlib.util.module_from_spec(spec)
     spec.loader.exec_module(orbit)
-    state=orbit.family(json.loads((args.orbit_dir/'orbit_input.json').read_text()))
+    inputs=json.loads((args.orbit_dir/'orbit_input.json').read_text())
+    if args.family=="centroid-stress":
+        params=qmc.Sobol(7,scramble=True,seed=19832006).random_base2(15)
+        major,minor=ndtri(params[:,3:5]).T
+        pa=np.deg2rad(79.)
+        iras=np.stack([18*major*np.sin(pa)+7*minor*np.cos(pa),
+                       18*major*np.cos(pa)-7*minor*np.sin(pa)],axis=1)
+        radius=40*np.sqrt(params[:,5])
+        angle=2*np.pi*params[:,6]
+        akari=np.stack([radius*np.cos(angle),radius*np.sin(angle)],axis=1)
+        state=orbit.family(inputs,parameters=params[:,:3],angular_offsets=[iras,akari])
+    else:
+        state=orbit.family(inputs)
     frames=[Frame(r,args.cache) for r in json.loads(args.manifest.read_text()) if r.get("sha256")]
     fm=len(frames)
     coords=np.array([orbit.sky(state,Time(f.t,format="mjd",scale="utc").tt.jd-2451545) for f in frames])
@@ -214,7 +231,7 @@ def main():
     eligible_idx=np.flatnonzero(valid[:ngrid])
     (args.out/'eligible_grid_indices.json').write_text(json.dumps(eligible_idx.tolist())+'\n')
     best=int(np.nanargmax(np.where(valid[:ngrid],low[:ngrid],np.nan)))
-    metrics={"grid_size":ngrid,"grid_valid":int(valid[:ngrid].sum()),"valid_controls":int(ctrl.shape[1]),
+    metrics={"family":args.family,"grid_size":ngrid,"grid_valid":int(valid[:ngrid].sum()),"valid_controls":int(ctrl.shape[1]),
             "controls":N_CONTROL,"control_passes":int(flags[ngrid:].sum()),"grid_passes":int(flags[:ngrid].sum()),
             "exposures":fm,"season_exposures":[int((groups==g).sum()) for g in range(3)],
             "season_mjd_ranges":[[float(min(f.t for f in frames if f.group==g)),float(max(f.t for f in frames if f.group==g))] for g in range(3)],
@@ -222,12 +239,17 @@ def main():
             "best_min_season_track":best,"best_min_season_z":float(low[best]),"best_same_track_mean_z":float(mean[best]),
             "seed":SEED,"injected_tracks":len(inject),"eligible_injected_tracks":int(valid[inject].sum()),
             "per_season_track_min_median_max_usable_exposures":[[float(x) for x in np.percentile(c[:ngrid],[0,50,100])] for c in count]}
+    reports={"grid_index":inject, "eligible":valid[inject].astype(int)}
+    control_indices=np.flatnonzero(valid[ngrid:])
+    (args.out/'eligible_control_indices.json').write_text(json.dumps(control_indices.tolist())+'\n')
+    (args.out/'triggered_control_indices.json').write_text(json.dumps(np.flatnonzero(flags[ngrid:]).tolist())+'\n')
     rows=[]
     for mag in FLUX_LEVELS_AB:
         flux=3631e6*10**(-.4*mag)
         injected_raw=raw[:,:,inject]+response*(flux/100)
         ss,_=summarize(injected_raw,groups)
         wins=passes(ss)&valid[inject]
+        reports[f"AB{mag:.1f}"]=wins.astype(int)
         rows.append(dict(magnitude_AB=mag,flux_microJy=round(flux,5),tested=len(inject),
                          eligible=int(valid[inject].sum()),recovered=int(wins.sum())))
     write_rows(args.out/'injections.csv',rows)
@@ -239,10 +261,16 @@ def main():
         ss,_=summarize(raw[:,:,inject]+response*flux[refs]/100,groups)
         wins=passes(ss)&valid[inject]
         mags=-2.5*np.log10(np.median(flux,axis=0)/3631e6)
+        reports[f"M{mass:g}_R{radius:g}_T{teff:g}_A{albedo:g}"]=wins.astype(int)
         model_rows.append(dict(mass_Mearth=mass,radius_Rearth=radius,teff_K=teff,
             geometric_albedo_grey=albedo,trackmedian_AB_min=float(min(mags)),trackmedian_AB_max=float(max(mags)),
             injected=len(inject),eligible=int(valid[inject].sum()),recovered=int(wins.sum())))
     write_rows(args.out/'grey_model_injections.csv',model_rows)
+    stream=io.StringIO(newline="")
+    writer=csv.writer(stream)
+    writer.writerow(reports)
+    writer.writerows(zip(*reports.values()))
+    (args.out/"injection_trials.csv.gz").write_bytes(gzip.compress(stream.getvalue().encode(),mtime=0))
     (args.out/'summary.json').write_text(json.dumps(metrics,indent=2)+'\n')
     print(json.dumps(metrics))
 if __name__=="__main__":main()

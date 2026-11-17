@@ -1,6 +1,21 @@
-# SPHEREx D1 moving-source search
+# SPHEREx moving-source search
 
-No moving source passed the three-season test in the 1,249 eligible trajectories out of 3,617 nominal bound orbits (34.53%). Native image injections recovered 124 of 124 eligible flat-spectrum objects at AB 19.0. Recovery declined to 105 of 124 at AB 19.5 and 4 of 124 at AB 20.0. The denominator refers to the fixed grid fitted to the two published positions. It carries no posterior probability and excludes astrometric perturbations and alternative coadd weighting.
+None of the 2,551 eligible nominal trajectories (70.53% of 3,617) passed the three-season test in any of the six SPHEREx detectors. We measured 572 DR1 and QR3 images with observation epochs from June 2025 through July 2026. The union of 901 eligible translated controls also had zero triggers. A flat-spectrum injected source was recovered at AB 18.0 on 234/234 eligible tracks, at 19.0 on 194/234, at 19.5 on 158/234 and at 20.0 on 13/234. At 20.5 none passed. For the brightest tested reflected-light model (10 Earth masses, 5.09 Earth radii, geometric albedo 0.75), detections on 151 of 320 injected trajectories imply estimated nominal-grid sensitivity of 45.5% after applying the exact measured coverage. No albedo-0.1 model was recovered.
+
+| Detector | Wavelength range (µm, approximate) | Native exposures | Eligible grid states | Faintest tested AB magnitude with ≥90% recovery among eligible injections |
+|---|---:|---:|---:|---:|
+| D1 | 0.75–1.12 | 114 | 1,249 | 19.0 |
+| D2 | 1.10–1.65 | 82 | 730 | 19.0 |
+| D3 | 1.62–2.43 | 93 | 570 | 19.5 |
+| D4 | 2.42–3.82 | 107 | 272 | 19.5 |
+| D5 | 3.81–4.42 | 89 | 591 | 18.5 |
+| D6 | 4.41–5.00 | 87 | 1,093 | 18.0 |
+
+The query returned 671 exposures across six detectors (421 DR1, 250 QR3). Time, sky coverage, flag requirements and available reference images differ by band. Ninety-nine listed observations did not supply a usable cutout in these requests. Each band's `images.json` records its acquisition status. Positions and controls use common IDs. `combine.py` tests whether any same-detector three-season search passed, counting a shared trajectory only once. `combined_injections.csv` gives measured rates at 14 constant magnitudes and for all 30 planet radius/albedo cases. The near-IR physical test approximates the planet as a grey reflector. Cold planets with strong molecular absorption or thermal atmospheric windows can have different spectra.
+
+### D1 measurement detail
+
+D1 had 1,249 eligible trajectories (34.53%). Native image injections recovered 124 of 124 eligible flat-spectrum objects at AB 19.0. Recovery declined to 105 of 124 at AB 19.5 and 4 of 124 at AB 20.0. The denominator refers to the fixed grid fitted to the two published positions. It carries no posterior probability and excludes astrometric perturbations and alternative coadd weighting.
 
 ## Completed image measurements
 
@@ -31,4 +46,6 @@ Across all 320 injected tracks the compact 5 Earth-mass, 2.71 Earth-radius model
 
 Run `python search.py --orbit-dir /path/to/orbits --cache /path/to/cache` with NumPy, SciPy, Astropy and PyERFA installed. The orbit directory must contain `propagate.py`, `orbit_input.json` and `brightness.csv`. The script fetches successful entries from `images.json` and checks each SHA-256 before measurement. The two compressed CSV files contain the raw SIA responses. `query_receipts.json` identifies the exact requests, acquisition time and SHA-256 of the decompressed response. `eligible_grid_indices.json` supplies the zero-based indices into the nominal orbit grid. The SPHEREx spacecraft's displacement from the geocenter is much smaller than one survey pixel at 500–700 au. The narrowband ePSF central wavelength approximates the local spectral response. A detailed planet atmosphere and per-channel passband integral would be needed for spectrally structured predictions.
 
-D2 through D6 and alternative orbit fits have no measured completeness in this search. The detection criteria deliberately lose trajectories that encounter masks or have poor reference coverage. The D1 recovery result cannot be extrapolated to the instrument's complete 0.75–5 µm range, to unevaluated states, or to an archive-wide upper limit for every 5–10 Earth-mass model.
+For D2–D6, add `--manifest D2/images.json --out D2`, replacing D2 with the detector. Run `python combine.py` once all detector products are present. For each detector `injection_trials.csv.gz` records the zero-based orbit ID and every pass/fail result. `all_query_receipts.json` contains the all-wavelength search requests and the SHA-256 of the adjacent compressed CSV files' decompressed responses.
+
+The measured nominal-grid fractions refer to exactly those trial trajectories. In a separate spacing check, 15,841 bound continuously drawn nominal orbits had median 5.72″ maximum seasonal displacement from the closest nominal grid track and a 95th percentile of 11.95″. Only 55.2% lay within one 6.15″ native pixel at all nine representative epochs. With a sampled 18″ × 7″ IRAS centroid ellipse and a 40″ AKARI disk, the corresponding fraction dropped to 16.1%. `orbit_spacing.py` and `orbit_spacing.json` document the offsets. Model colors, grid spacing, flagged pixels and reference coverage all affect the completeness of a blind continuous-orbit search.
