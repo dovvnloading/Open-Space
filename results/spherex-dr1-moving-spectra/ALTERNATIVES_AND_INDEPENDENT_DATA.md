@@ -38,7 +38,7 @@ for m in co h2o; do
  --data-urlencode file@psg/${m}_alternative_100K.cfg \
  https://psg.gsfc.nasa.gov/api.php -o psg/${m}_alternative_100K_response.txt
 done
-python fit_psg_alternatives.py --input psg_fit_input_snapshot.json \
+python ../../examples/fit_psg_alternatives.py --input psg_fit_input_snapshot.json \
  --output psg_alternatives_fit.json --calibration-root calibration --model-root psg
 ```
 Requests should be sequential. The saved spectra and hashes permit reproduction without regenerating live PSG outputs.

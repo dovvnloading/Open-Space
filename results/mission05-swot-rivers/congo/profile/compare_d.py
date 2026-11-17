@@ -127,6 +127,9 @@ def summarize():
     ).drop(columns=["release_d", "release_v2"])
     common["d_minus_v2_high_m"] = common.high_wse_d - common.high_wse_v2
     common["d_minus_v2_low_m"] = common.low_wse_d - common.low_wse_v2
+    # The revision sort above leaves tied rows in a library-dependent order; fix the row order here.
+    common = common.sort_values(["pair", "v16_reach_id", "first_node", "v16_node_id"],
+                                ascending=[False, True, True, True], kind="stable")
     common.to_csv(BASE / "d-node-common.csv", index=False, float_format="%.5f")
 
 
