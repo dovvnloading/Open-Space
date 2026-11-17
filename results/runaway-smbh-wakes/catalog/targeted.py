@@ -29,7 +29,7 @@ def fetch(key,r,size):
             break
         except OSError:
             if i==2:raise
-            time.sleep(2**i)
+            time.sleep(5*2**i)
     with fits.open(io.BytesIO(b)) as h:
         image=h[0].data.astype('f4'); w=WCS(h[0].header)
         x,y=w.world_to_pixel_values(float(r['ra']),float(r['dec']))
@@ -93,13 +93,20 @@ def target(args):
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--cache',type=Path,required=True)
     p.add_argument('--products',type=Path,default=HERE.parent/'euclid/q1_products.csv');p.add_argument('--tiles',type=Path,default=HERE.parent/'euclid/q1_tiles.csv')
-    p.add_argument('--selected',type=Path,default=HERE/'hats_selected.csv');p.add_argument('--workers',type=int,default=8)
+    p.add_argument('--selected',type=Path,default=HERE/'hats_selected.csv')
+    p.add_argument('--residual',action='store_true',help='also screen flagged deep-field rows whose axes miss the bright-star test')
+    p.add_argument('--workers',type=int,default=8)
     a=p.parse_args();a.cache.mkdir(exist_ok=True,parents=True)
     tiles={r['tile'] for r in csv.DictReader(a.tiles.open()) if r['field']!='LDN1641'}
     keys={(r['tile'],r['band_or_product']):r['relative_to_mer'] for r in csv.DictReader(a.products.open())}
-    rows=[r for r in csv.DictReader(a.selected.open()) if int(r['mer_det_quality_flag'] or -1)==0 and str(r['tileid']) in tiles]
+    align={}
+    if a.residual:
+        align={r['object_id']:r['aligned']=='True' for r in csv.DictReader((HERE/'gaia_alignment.csv').open())}
+    rows=[r for r in csv.DictReader(a.selected.open()) if str(r['tileid']) in tiles and (
+        int(r['mer_det_quality_flag'] or -1)==0 or (a.residual and not align[r['object_id']]))]
     with ThreadPoolExecutor(a.workers) as pool:list(pool.map(target,[(r,keys,a.cache) for r in rows]))
-    print('clean extragalactic objects',len(rows),flush=True)
+    print('targeted extragalactic objects',len(rows),flush=True)
     out=[json.loads((a.cache/(str(r['object_id'])+'.json')).read_text()) for r in rows]
-    (HERE/'targeted_measurements.jsonl').write_text(''.join(json.dumps(v,separators=(',',':'))+'\n' for v in out))
+    outname='targeted_with_residuals.jsonl' if a.residual else 'targeted_measurements.jsonl'
+    (HERE/outname).write_text(''.join(json.dumps(v,separators=(',',':'))+'\n' for v in out))
 if __name__=='__main__':main()

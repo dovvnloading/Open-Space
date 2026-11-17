@@ -21,11 +21,10 @@ if __name__=='__main__':
     dl='https://datalab.noirlab.edu/tap/sync'
     sql=f"SELECT targetid,target_ra,target_dec,z,zwarn,spectype FROM desi_dr1.zpix WHERE 1=CONTAINS(POINT('ICRS',target_ra,target_dec),CIRCLE('ICRS',{pos},0.003))"
     casda='https://casda.csiro.au/casda_vo_tools/tap/sync'
-    casql="SELECT TOP 50 table_name FROM TAP_SCHEMA.tables WHERE table_name LIKE '%racs%island%'"
+    racsql=f"SELECT TOP 50 source_name,ra,dec,peak_flux FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v02 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',{pos},0.0041666667))"
     viz='https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?'+parse.urlencode({'-source':'J/ApJS/255/30','-c':'53.18577725 -27.78513879','-c.rs':15,'-out.max':30})
-    tests=[('desi_dr1',tap(dl,sql)),('vlass_epoch1',viz),('RACS-table-discovery',tap(casda,casql))]
-    if len(sys.argv)>2:
-        racql=f"SELECT TOP 50 ra_deg_cont,dec_deg_cont FROM {sys.argv[2]} WHERE 1=CONTAINS(POINT('ICRS',ra_deg_cont,dec_deg_cont),CIRCLE('ICRS',{pos},0.004167))"
-        tests.append(('RACS',tap(casda,racql)))
+    muse=f"SELECT ID,RAF_ID,RAJ2000,DEJ2000,z,zconf,LineSNRMax FROM AMUSED_MAIN_SOURCE_CAT_V1 WHERE 1=CONTAINS(POINT('ICRS',RAJ2000,DEJ2000),CIRCLE('ICRS',{pos},0.003))"
+    tests=[('desi_dr1',tap(dl,sql)),('vlass_epoch1',viz),('RACS_low_15arcsec',tap(casda,racsql)),
+           ('muse_hudf_dr2',tap('https://archive.eso.org/tap_cat/sync',muse).replace('FORMAT=csv','FORMAT=json'))]
     with ThreadPoolExecutor(max_workers=4) as ex:data=list(ex.map(fetch,tests))
     Path(sys.argv[1]).write_text(json.dumps(data,indent=2)+'\n')

@@ -41,3 +41,5 @@ The rows in the shortlist are photometric segments for further inspection. The d
 python morphology.py --runs "$RUNS" --images "$INPUTS" --out tables/shapes.csv
 python montage.py --hosts ../euclid/endpoint_candidates.csv --photometry ../euclid/filament_photometry.csv --images "$INPUTS" --out review
 ```
+
+The 68 VIS-positive segments meeting the catalogued host and five-bin filament criteria were visually inspected in the context and local panels. `review_rows.csv` identifies the page and panel (row-major order starting at one) and records a description per segment. A low-contrast image can yield a positive aperture statistic. The weak/confused label preserves cases for which morphology alone is inconclusive. Crossing streaks lacking a secure bright parent are descriptive classifications pending independent exposure tests.
