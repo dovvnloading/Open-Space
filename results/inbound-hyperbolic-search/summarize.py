@@ -69,9 +69,9 @@ def main(out):
     with (ROOT/"catalog/code-original.csv").open() as f:
         published = {r["spkid"]:r for r in csv.DictReader(f)}
     focused = json.loads((ROOT/"orbits/data/refits.json").read_text())
-    extra=ROOT/"orbits/slow/data/refits.json"
+    extra=ROOT/"orbits/slow/evidence/results.json"
     if extra.exists():
-        focused.update(json.loads(extra.read_text()))
+        focused.update(json.loads(extra.read_text())["objects"])
     # Only the following two identifications include a checked pre-encounter bound state.
     ejections={"1980 E1":"Jupiter","2024 L5":"Saturn"}
     model_checks={"2025 V1","1997 P2","2008 J4","1877 G2"}
@@ -88,11 +88,17 @@ def main(out):
         best = new_orig or alternate or old_orig or {}
         code=published.get(key,{})
         pdes=row["pdes"]
+        focused_id=row["known_iso"] or pdes.replace(" ","-")
+        focus=focused.get(focused_id,{}).get("models",{})
+        g250=(focus.get("gravity",{}).get("boundaries",{}).get("250au") or {})
+        ng250=(focus.get("marsden_outward",{}).get("boundaries",{}).get("250au") or {})
         disposition="no accepted original-energy determination"
         if row["known_iso"]:
             disposition="known interstellar control"
         elif pdes in ejections:
             disposition="known planetary ejection; checked pre-encounter"
+        elif pdes=="2024 U2":
+            disposition="independent bound incoming state at 250 au"
         elif pdes in model_checks:
             disposition="see individual astrometric models and uncertainty"
         elif pdes in {"1995 Y1","2007 W1"}:
@@ -125,7 +131,11 @@ def main(out):
                       "inbound_gravity_source":"live MPC" if new_orig else "bulk unpenalized" if alternate else "bulk default" if old_orig else "",
                       **{k:best.get(k) for k in ("inbound_radius_au","inv_a_au_inv","z_e_one_model","v_kms","n_used","n_total","rms_arcsec","used_arc_days")},
                       "CODE_model":code.get("model"),"CODE_original_micro_au_inv":code.get("published_original_1_over_a_micro_au_inv"),
-                      "CODE_sigma_micro_au_inv":code.get("sigma"),"focused_models":bool(row["known_iso"] or pdes.replace(" ","-") in focused)})
+                      "CODE_sigma_micro_au_inv":code.get("sigma"),"focused_models":bool(focus),
+                      "independent_gravity_inv_a_250au":g250.get("inverse_a_au_inv"),
+                      "independent_gravity_sigma_250au":g250.get("formal_sigma_inverse_a"),
+                      "independent_marsden_outward_inv_a_250au":ng250.get("inverse_a_au_inv"),
+                      "independent_marsden_outward_sigma_250au":ng250.get("formal_sigma_inverse_a")})
     assert len(items) == len(batch) == len({r["spkid"] for r in items})
     metrics = {
         "catalogue_rows":len(items),
