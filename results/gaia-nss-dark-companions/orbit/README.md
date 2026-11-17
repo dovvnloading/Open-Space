@@ -26,11 +26,12 @@ The Monte Carlo uses 5,000 draws from the local normal proposal, weighted by the
 Run in this directory with Python 3, numpy, scipy, matplotlib and Poppler's pdftotext installed.
 
 ```bash
-python fetch_controls.py /tmp/gaia-control-inputs
-OPENBLAS_NUM_THREADS=1 python fit_controls.py /tmp/gaia-control-inputs
-python plot_controls.py
+python fetch_controls.py /data/gaia-control-inputs --out /data/gaia-control-tables
+OPENBLAS_NUM_THREADS=1 python fit_controls.py /data/gaia-control-inputs --tables /data/gaia-control-tables --out /data/gaia-control-fits
 ```
 
-[Exact input URLs and raw SHA-256](sources.json) · [DR3 Gaussian likelihood input](nss_controls.csv) · [Parsed discovery-paper RVs](published_rv.csv)
+The fetch command requires all six frozen source names and URLs and verifies byte lengths and SHA-256 hashes before parsing or writing tables. It never rewrites the frozen receipt or tables in this directory. A changed Gaia TAP response fails closed; use the originally hashed bytes or start a separately documented campaign for new inputs. `plot_controls.py` plots the committed result tables; it does not plot the separate replay output.
+
+[Exact input URLs, lengths and raw SHA-256](sources.json) · [DR3 Gaussian likelihood input](nss_controls.csv) · [Parsed discovery-paper RVs](published_rv.csv)
 
 The RV tables are from El-Badry et al. [BH1 Table D1](https://arxiv.org/abs/2209.06833v3), [BH2 Table 1](https://arxiv.org/abs/2302.07880v2), and [NS1 Table 1](https://arxiv.org/abs/2402.06722v2). The BH3 observations are from [Gaia Collaboration, Panuzzo et al.](https://doi.org/10.1051/0004-6361/202449763) and the [associated ESA repository](https://doi.org/10.5281/zenodo.10977502). The ordering of covariance entries follows the [Gaia DR3 NSS archive model](https://gea.esac.esa.int/archive/documentation/GDR3/Gaia_archive/chap_datamodel/sec_dm_non--single_stars_tables/ssec_dm_nss_two_body_orbit.html).
