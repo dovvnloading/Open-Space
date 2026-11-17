@@ -68,6 +68,8 @@ def one(item):
             jobs=[("gravity",0,None),("radial_r2",1,None),("marsden_outward",2,None)]
             if (t<el["tp"]).sum()>=12 and np.ptp(t[t<el["tp"]])>=30 and (t>=el["tp"]).sum()>=3:
                 jobs.append(("preperihelion_gravity",0,t<el["tp"]))
+            if spk=="1000500" and screen.get("normal_force_sensitivity"):
+                jobs=[("marsden_outward_3d",3,None)]
             if t.max()<2436934.5:
                 jobs.append(("historical_10arcsec",0,None))
             for kind,ng,under in jobs:
@@ -77,7 +79,7 @@ def one(item):
                 try:
                     weight=sigma[part]*(2 if kind=="historical_10arcsec" else 1)
                     x,cov,keep,res,chi,pred=fit.fit(np.r_[seed,np.zeros(ng)],epoch,t[part],observer[part],east[part],north[part],
-                                            weight,positions,outward=ng==2,return_predictor=True,
+                                            weight,positions,outward=ng>=2,return_predictor=True,
                                             minimum_positions=6 if ng==0 else None)
                     if kind=="gravity": seed=x.copy()
                     rs.update(used=int(keep.sum()),rms_coordinate_arcsec=float(np.sqrt(np.mean(res[keep]**2))),
@@ -87,8 +89,8 @@ def one(item):
                     q=rs["boundaries"].get("250au") or {}
                     if kind=="gravity":
                         rs["holdouts"]=fit.check_holdouts(key,x,epoch,eph,t,observer,east,north,sigma,groups,positions)
-                    if q and q["inverse_a_au_inv"]< -2.5*q["formal_sigma_inverse_a"] and kind=="marsden_outward":
-                        try: rs["parabolic_profile"]=fit.parabolic_profile(epoch,eph,x,kind,keep,sigma,pred)
+                    if q and q["inverse_a_au_inv"]< -2.5*q["formal_sigma_inverse_a"] and kind.startswith("marsden_outward"):
+                        try: rs["parabolic_profile"]=fit.parabolic_profile(epoch,eph,x,"marsden_outward",keep,sigma,pred)
                         except Exception as exc: rs["profile_failed"]=str(exc)
                 except TimeoutError: raise
                 except Exception as exc: rs["failed"]=str(exc)

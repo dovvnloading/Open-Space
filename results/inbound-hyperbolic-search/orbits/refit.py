@@ -145,7 +145,7 @@ def derivative(t,y,positions,npar):
     partial=grad@vmat[:3]
     if npar==7:
         partial[:,-1]-=1e-8*inv[0]*d[0]
-    if npar==8:
+    if npar in (8,9):
         # Marsden, Sekanina & Yeomans 1973, symmetric water-ice law normalized at 1 au.
         r=np.sqrt(r2[0])
         er=-d[0]/r
@@ -168,6 +168,15 @@ def derivative(t,y,positions,npar):
         pv=g*a2*(det@per)
         partial+=px@vmat[:3]+pv@vmat[3:]
         partial[:,6:8]+=1e-8*g*np.column_stack([er,et])
+        if npar==9:
+            en=np.cross(er,et)
+            a3=y[8]*1e-8
+            accel+=g*a3*en
+            # For each Cartesian component differentiate eN = eR cross eT.
+            den_dx=np.cross(der.T,et).T+np.cross(er,det_dx.T).T
+            den_dv=np.cross(er,(det@per).T).T
+            partial+=a3*(g*den_dx+np.outer(en,dg_dr*er))@vmat[:3]+a3*g*den_dv@vmat[3:]
+            partial[:,8]+=1e-8*g*en
     base=np.r_[y[3:6],accel,np.zeros(npar-6)]
     return np.r_[base,vmat[3:].ravel(),partial.ravel()]
 
