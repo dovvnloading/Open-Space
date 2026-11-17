@@ -304,5 +304,114 @@
     "size": 1505,
     "mime": "text/csv",
     "sha256": "a3d201bc20d33d3e2e8115e6e22c089e65c8bcd65d91e19048cb67e0663d5791"
+  },
+  {
+    "id": "all_decam_files",
+    "request": "https://astroarchive.noirlab.edu/api/adv_search/find/?rectype=file&limit=30000",
+    "method": "POST",
+    "utc": "2026-11-17T08:01:39.726773+00:00",
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "content-length": "391619"
+    },
+    "sha256": "50345aca7e1384f043cddfb400daaa739b7121ff501ce34fe4b0b343e5d4acd7",
+    "bytes_read": 391619,
+    "query": {
+      "outfields": [
+        "archive_filename",
+        "md5sum",
+        "dateobs_center",
+        "caldat",
+        "ra_center",
+        "dec_center",
+        "ifilter",
+        "exposure",
+        "proposal",
+        "proc_type",
+        "prod_type",
+        "release_date",
+        "OBJECT"
+      ],
+      "search": [
+        [
+          "ra_center",
+          32.6,
+          37.3
+        ],
+        [
+          "dec_center",
+          -51.2,
+          -47.8
+        ],
+        [
+          "caldat",
+          "2000-01-01",
+          "2026-11-17"
+        ],
+        [
+          "instrument",
+          "decam"
+        ],
+        [
+          "proc_type",
+          "instcal"
+        ],
+        [
+          "prod_type",
+          "image"
+        ]
+      ]
+    }
+  },
+  {
+    "id": "modern_dq_list",
+    "request": "https://astroarchive.noirlab.edu/api/adv_search/find/?rectype=file&limit=2000",
+    "method": "POST",
+    "utc": "2026-11-17T07:54:11.658402+00:00",
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "content-length": "3384"
+    },
+    "sha256": "8cc50a628e482d96b3c0d9041999c78b739fec1930e5d438a083d5afbe408943",
+    "bytes_read": 3384,
+    "query": {
+      "outfields": [
+        "md5sum",
+        "archive_filename",
+        "dateobs_center",
+        "prod_type"
+      ],
+      "search": [
+        [
+          "caldat",
+          "2024-11-11",
+          "2025-07-22"
+        ],
+        [
+          "ra_center",
+          32.6,
+          37.3
+        ],
+        [
+          "dec_center",
+          -51.2,
+          -47.8
+        ],
+        [
+          "instrument",
+          "decam"
+        ],
+        [
+          "proc_type",
+          "instcal"
+        ],
+        [
+          "prod_type",
+          "dqmask"
+        ]
+      ]
+    }
   }
 ]

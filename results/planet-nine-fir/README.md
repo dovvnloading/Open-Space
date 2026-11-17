@@ -12,7 +12,7 @@ The nominal positions imply retrograde ecliptic inclinations of 115.03–117.33�
 
 | Data | Independent measurement |
 |---|---|
-| DES, 2016-12-30/31 | No detection above the moving-source threshold. Real-image injections measure a steep loss of completeness between r = 23 and 24 AB. [Search results](archives/difference_result.json) |
+| DES, 2016-12-30/31 | The dense two-night search found no vetted mover. For a dark 5 Earth-mass planet with 2.71 Earth radii and r-band geometric albedo 0.1, it recovered 379/400 trials at the published centroids and 371/400 under the centroid stress test. [DES results and calibrated selection](archives/OPTICAL.md) |
 | NEOWISE W2, 2023–2024 | No repeated signal among 24,118 eligible templates of 24,132. Out of 256 separate test tracks, 240 were recovered at W2 = 14 Vega and 35 at W2 = 15. [Images, masks and calibration](wise/README.md) |
 | Rubin | Zero associated public ALeRCE alerts in the query rectangle; no image-level magnitude or exclusion fraction. [Receipts](rubin/README.md) |
 | DECam follow-up, 2026 | Twelve 900 s r exposures labeled for the candidate are in the archive, with science access scheduled for 2028. [Archive dates and identifiers](archives/dedicated_2026.csv) |
@@ -23,4 +23,4 @@ We propagated both Chen AKARI candidates, the Rowan-Robinson IRAS proposal and t
 
 ## Pending or uncalibrated at this checkpoint
 
-Final Euclid, SPHEREx, historical scan timing, optical sensitivity to uncertain centroids and whole-family exclusions. No posterior measure is supplied by two historical positions. Nominal survey depth, alert absence and footprint overlap do not furnish injection limits.
+Euclid, SPHEREx and scan-profile results are in final validation. No posterior measure is supplied by two historical positions. Nominal survey depth, alert absence and footprint overlap do not furnish injection limits.
