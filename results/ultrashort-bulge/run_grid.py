@@ -2,6 +2,9 @@
 import argparse
 import csv
 import json
+import gzip
+import platform
+import sys
 import multiprocessing as mp
 import tarfile
 from pathlib import Path
@@ -9,6 +12,7 @@ from pathlib import Path
 import numpy as np
 import fit
 from kmt.flux import baseline_caps
+from replay_guard import external, fresh, verified, sha, identity,verify_receipt,frozen_parameters,parameters_digest,validate_job_membership,engine_assets,source_assets,CAMPAIGN_SCHEMA,validate_campaign
 
 HERE = Path(__file__).resolve().parent
 
@@ -99,22 +103,63 @@ def main():
     parser.add_argument('--checkpoint',type=Path,required=True)
     parser.add_argument('--kmt-bound',action='store_true',help='KMT-only sensitivity with a cap of 1.15 times the reference baseline')
     parser.add_argument('--workers',type=int,default=4)
+    parser.add_argument('--grid-library',type=Path,required=True)
     parser.add_argument('--export',type=Path)
     args=parser.parse_args()
-    args.checkpoint.mkdir(parents=True,exist_ok=True)
+    args.cache=external(args.cache)
     if args.export:
-        rows=[json.loads(p.read_text()) for p in sorted(args.checkpoint.glob('*.json'))]
-        cols=list(dict.fromkeys(k for row in rows for k in row))
-        with args.export.open('w') as f:
-            w=csv.DictWriter(f,cols);w.writeheader();w.writerows(rows)
-        return
-    jobs=[(j,args.kmt_bound) for j in inputs(args.cache) if (not args.kmt_bound or j[0].startswith('KMT')) and not (args.checkpoint/(j[0]+'.json')).is_file()]
+        raise ValueError('legacy in-place checkpoint export disabled; use a verified new output')
+    for name in ('ogle/catalog.csv','kmt/catalog-2024.tsv','kmt/catalog-2025.tsv'):verify_receipt(name)
+    jobs=[(j,args.kmt_bound) for j in inputs(args.cache) if (not args.kmt_bound or j[0].startswith('KMT'))]
+    verify_receipt('tables/grid-fits.csv.gz')
+    with gzip.open(HERE/'tables/grid-fits.csv.gz','rt',newline='') as f:
+        frozen={r['event']:r['input_sha256'] for r in csv.DictReader(f)}
+    expected={name for name in frozen if not args.kmt_bound or name.startswith('KMT-')}
+    validate_job_membership(jobs,expected)
+    target=external(args.checkpoint)
+    if target==args.cache or args.cache in target.parents or target in args.cache.parents:raise ValueError('input/output overlap')
+    kmt_catalog={}
+    for year in (2024,2025):
+        with (HERE/'kmt'/f'catalog-{year}.tsv').open(newline='',encoding='utf-8-sig') as f:
+            for row in csv.DictReader(f,delimiter='\t'):
+                kmt_catalog[row['Event']]=row
+    def normalized(v):
+        try:
+            x=float(v);return x if x>0 else np.nan
+        except (TypeError,ValueError):return np.nan
+    for job,_ in jobs:
+        name,path,t0,te=job
+        if name.startswith('KMT-'):
+            row=kmt_catalog[name];expected_t0=2400000+normalized(row['t_0']);expected_te=normalized(row['t_E'])
+            if not (np.isclose(t0,expected_t0,rtol=0,atol=1e-8,equal_nan=True) and np.isclose(te,expected_te,rtol=0,atol=1e-12,equal_nan=True)):raise ValueError('catalog timing differs from frozen metadata: '+name)
+        if not (name.startswith('OGLE-') or name.startswith('KMT-')):
+            raise ValueError('derived survey NPZ cannot be bound to frozen raw bytes: '+name)
+        if name not in frozen:raise ValueError('event absent from frozen receipt: '+name)
+        verified(path,frozen[name])
+    args.grid_library=external(args.grid_library)
+    frozen_timing=frozen_parameters(args.kmt_bound)
+    for job,_ in jobs:
+        name,_,t0,te=job
+        actual={'t0':float(t0) if np.isfinite(t0) else None,'te':float(te) if np.isfinite(te) else None}
+        if name not in frozen_timing or actual!=frozen_timing[name]:raise ValueError('frozen timing identity mismatch: '+name)
+    package,native,espl=engine_assets(fit.vbm)
+    asset_roles={k:str(p.resolve()) for k,p in source_assets().items()}
+    asset_roles.update(vbm_package=str(package),vbm_native=str(native),espl_table=str(espl),grid_library=str(args.grid_library))
+    code_hashes={path:sha(path) for path in asset_roles.values()}
+    runtime={'python':sys.version,'platform':platform.platform(),'numpy':np.__version__,'vbm':getattr(fit.vbm,'__version__','unknown')}
+    campaign={'schema':CAMPAIGN_SCHEMA,'model':'frozen grid','cap':args.kmt_bound,'asset_roles':asset_roles,'code_sha256':code_hashes,'runtime':runtime,'parameters_sha256':parameters_digest(frozen_timing)}
+    validate_campaign(campaign)
+    if 'fork' not in mp.get_all_start_methods():raise RuntimeError('full grid requires Linux/WSL fork')
+    args.checkpoint=fresh(args.checkpoint)
+    (args.checkpoint/'campaign.json').write_text(json.dumps(campaign,indent=2)+'\n')
+    identities={j[0]:identity(j[1],j[0],bound,code_hashes,runtime,{'t0':float(j[2]) if np.isfinite(j[2]) else None,'te':float(j[3]) if np.isfinite(j[3]) else None}) for j,bound in jobs}
     print('Queued',len(jobs),flush=True)
-    fit.setup()
+    fit.setup(args.grid_library)
     with mp.get_context('fork').Pool(args.workers) as pool:
         for res in pool.imap_unordered(work,jobs,chunksize=1):
             path=args.checkpoint/(res['event']+'.json')
             tmp=path.with_suffix('.tmp')
+            res['_identity']=identities[res['event']]
             tmp.write_text(json.dumps(res,default=lambda v:v.item())+'\n')
             tmp.replace(path)
 

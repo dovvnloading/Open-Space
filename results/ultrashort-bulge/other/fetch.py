@@ -11,6 +11,7 @@ import io
 import json
 import os
 import re
+import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
@@ -22,7 +23,10 @@ import numpy as np
 from lxml import html
 
 BASE = 'https://moaprime.massey.ac.nz/'
-OUT = Path(__file__).resolve().parent
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0,str(HERE.parent))
+from replay_guard import external,fresh,verify_receipt
+OUT=HERE
 INDEX = {f'{s}{y}': f'alerts/index/{s}/{y}' for s in ['moa', 'prime'] for y in [2025, 2026]}
 INDEX.update(moa2024='moaarchive/list/2024', prime2024idx='prime2024/idxmap')
 SHA = lambda x: hashlib.sha256(x).hexdigest()
@@ -48,6 +52,8 @@ def freeze(cache):
         if not dest.exists():
             dest.write_bytes(get(url))
         data = dest.read_bytes()
+        expected=FROZEN_INDEX[key]
+        if SHA(data)!=expected['input_sha256'] or len(data)!=int(expected['input_bytes']):raise ValueError('index bytes differ from frozen receipt: '+key)
         receipts.append({'name': key, 'url': url, 'input_bytes': len(data), 'input_sha256': SHA(data),
                          'frozen_utc': datetime.fromtimestamp(dest.stat().st_mtime, timezone.utc).isoformat()})
         if key == 'moa2024':
@@ -96,14 +102,16 @@ def process(row, cache):
     event = row['event']
     rec = cache/'records'/f'{event}.json'
     array = cache/'curves'/f'{event}.npz'
-    if rec.exists() and array.exists():
-        return json.loads(rec.read_text())
+    if rec.exists() or array.exists():
+        raise FileExistsError('existing cache entry: '+event)
     r = {'event': event, 'event_url': row['page']}
     try:
         page = cache/'pages'/f'{event}.html'
         if not page.exists():
             page.write_bytes(get(row['page']))
         body = page.read_bytes()
+        expected=FROZEN_CURVES[event]
+        if SHA(body)!=expected['page_sha256'] or len(body)!=int(expected['page_bytes']):raise ValueError('page differs from frozen receipt')
         parsed = html.fromstring(body)
         r.update(page_sha256=SHA(body), page_bytes=len(body))
         meta = {c[0].text_content().strip(': '): c[1].text_content().strip() for c in parsed.xpath('//*[@id="metadata"]//tr') if len(c)>=2}
@@ -118,7 +126,10 @@ def process(row, cache):
         if not href:
             raise ValueError('page missing photometry link')
         r['phot_url'] = urljoin(row['page'],href[0])
+        if r['phot_url']!=expected['phot_url']:raise ValueError('photometry URL differs from frozen receipt')
         data = get(r['phot_url'])
+        if SHA(data)!=expected['input_sha256'] or len(data)!=int(expected['input_bytes']):raise ValueError('photometry differs from frozen receipt')
+        (cache/'raw'/(event+'.response')).write_bytes(data)
         r.update(input_sha256=SHA(data), input_bytes=len(data))
         raw = gzip.decompress(data) if data[:2] == b'\x1f\x8b' else data
         if raw.lstrip().startswith(b'<'):
@@ -141,6 +152,7 @@ def process(row, cache):
         tmp = array.with_suffix('.part')
         with tmp.open('wb') as f: np.savez_compressed(f, data=a)
         os.replace(tmp,array)
+        r['array_sha256']=hashlib.sha256(array.read_bytes()).hexdigest()
     except Exception as e:
         r.update(status='error',error=f'{type(e).__name__}: {e}')
     rec.write_text(json.dumps(r,sort_keys=True)+'\n')
@@ -149,12 +161,20 @@ def process(row, cache):
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--cache',type=Path,default=Path('.survey-cache'))
+    p.add_argument('--cache',type=Path,required=True)
+    p.add_argument('--out',type=Path,required=True)
     p.add_argument('--workers',type=int,default=8)
     p.add_argument('--inventory-only',action='store_true')
     args=p.parse_args()
-    for d in ['curves','records','pages']:
-        (args.cache/d).mkdir(parents=True,exist_ok=True)
+    cache=external(args.cache);out=external(args.out)
+    if cache==out or cache in out.parents or out in cache.parents:raise ValueError('cache/output overlap')
+    if cache.exists() or out.exists():raise FileExistsError('new exclusive campaign paths required')
+    verify_receipt('other/index_receipts.csv');verify_receipt('other/photometry.csv')
+    with (HERE/'index_receipts.csv').open(newline='',encoding='utf-8-sig') as f:FROZEN_INDEX={r['name']:r for r in csv.DictReader(f)}
+    with (HERE/'photometry.csv').open(newline='',encoding='utf-8-sig') as f:FROZEN_CURVES={r['event']:r for r in csv.DictReader(f)}
+    args.cache=fresh(cache);OUT=fresh(out)
+    for d in ['curves','records','pages','raw']:
+        (args.cache/d).mkdir(parents=True,exist_ok=False)
     rows=freeze(args.cache)
     if not args.inventory_only:
         rows.sort(key=lambda r:(num(r.get('index_te_d'))>=0.65, num(r.get('index_te_d'))))

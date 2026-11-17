@@ -1,6 +1,6 @@
 # Reproduction and definitions
 
-Start at the repository root. The scripts import [lens.py](../ogle-dark-lenses/lens.py) for OGLE cleaning, magnitude conversion and point-lens magnification, and [galaxy.py](../ogle-dark-lenses/galaxy.py) for Galactic density, velocity and quantiles. Python, NumPy, SciPy, pandas, Astropy, pyerfa, lxml, Matplotlib, Poppler, VBMicrolensing 5.6.1 and a C++17 compiler were used. Preserve independent caches for different dates. Live alert files can change. The survey manifests give the upstream SHA-256 hashes for comparison.
+Start at the repository root. Frozen byte checks preserve the Git blobs. Screening uses Linux/WSL with `fork`, a C++17 compiler, and external storage on Windows D: or its `/mnt/d` mount. Windows supports the compact verifier and the separate control-only continuous fit below; the full native survey grid has not been replayed on Windows. The scripts import [lens.py](../ogle-dark-lenses/lens.py) for OGLE cleaning, magnitude conversion and point-lens magnification, and [galaxy.py](../ogle-dark-lenses/galaxy.py) for Galactic density, velocity and quantiles. Python, NumPy, SciPy, pandas, Astropy, pyerfa, lxml, Matplotlib, Poppler, VBMicrolensing 5.6.1 and a C++17 compiler were used. Preserve independent caches for different dates. Live alert files can change. The survey manifests give the upstream SHA-256 hashes for comparison.
 
 ## Independent referee replay (small, self-contained subset)
 
@@ -26,23 +26,18 @@ The [GitHub Actions referee replay](../../.github/workflows/ultrashort-bulge-ref
 From the repository root, the commands below rebuild the common screen. The directories under `staging` hold per-event checkpoints. On a clean machine the downloads and computations can take hours. KMT's release status can be checked in the annual [2026 event index](https://kmtnet.kasi.re.kr/ulens/event/2026/). This snapshot's KMT numerical inputs cover 2024 and 2025.
 
 ```sh
-export OPENBLAS_NUM_THREADS=1
-r=results/ultrashort-bulge
-mkdir -p staging
-g++ -O3 -std=c++17 -fPIC -shared "$r/grid.cpp" -o "$r/grid.so"
-python "$r/ogle/freeze.py" .ogle-cache/raw --jobs 6
-python "$r/kmt/freeze.py" --cache staging/kmt --download --jobs 4
-python "$r/kmt/fallback.py" --cache staging/kmt
-python "$r/kmt/manifest.py" --cache staging/kmt
-python "$r/other/fetch.py" --cache .survey-cache --workers 4
-python "$r/other/gaia.py"
-python "$r/run_grid.py" --checkpoint staging/screen --workers 3
-python "$r/run_grid.py" --kmt-bound --checkpoint staging/bound --workers 3
-python "$r/cadence.py" --out staging/all-cadence.csv --workers 3
-python "$r/consolidate.py"
-python "$r/associations.py"
-python "$r/kmt/field_coverage.py"
+# Paths are external D: locations (or /mnt/d/... in WSL). Each output is new.
+g++ -O3 -std=c++17 -fPIC -shared results/ultrashort-bulge/grid.cpp -o /mnt/d/campaign/grid.so
+python results/ultrashort-bulge/ogle/freeze.py /mnt/d/frozen-ogle-raw --out /mnt/d/new-ogle-derived
+python results/ultrashort-bulge/kmt/freeze.py --cache /mnt/d/new-kmt-cache --out /mnt/d/new-kmt-receipts
+python results/ultrashort-bulge/other/fetch.py --cache /mnt/d/new-survey-cache --out /mnt/d/new-survey-receipts
+python results/ultrashort-bulge/other/gaia.py --cache /mnt/d/new-gaia-cache --out /mnt/d/new-gaia-receipts
+python results/ultrashort-bulge/run_grid.py --cache /mnt/d/frozen-input-root --checkpoint /mnt/d/new-screen --grid-library /mnt/d/campaign/grid.so
+python results/ultrashort-bulge/run_grid.py --cache /mnt/d/frozen-input-root --checkpoint /mnt/d/new-bound --grid-library /mnt/d/campaign/grid.so --kmt-bound
 ```
+
+Existing checkpoints are never resumed. The grid checks frozen raw hashes, event membership, cap, code, runtime and input parameters. Legacy MOA/PRIME/Gaia NPZ files did not retain enough raw-to-array provenance: the full screen fails closed on them until that lineage is independently established. The newly isolated acquisitions retain raw responses and derived hashes but do not silently rebaseline changed upstream bytes. These commands can perform substantial network requests; they were not run for this guard change. Other historical reductions require separate verified input/output work before reuse.
+
 
 Each event ID is the unit of processing. Official cross-identifications are preserved separately from positional neighbors. The model uses all valid epochs for each stream. OGLE uses HJD and magnitudes, KMT uses its HJD and differential flux, MOA/PRIME use the native JD convention and difference flux, and Gaia uses JD(TCB) and G magnitudes. The merged `first_hjd` and `last_hjd` columns are native time values. See `time_system` before comparing epochs between surveys. Gaia supplies no per-transit photometric uncertainty, so the analysis estimates each source's uncertainty from its baseline. Some archives span years before the discovery season.
 
@@ -55,20 +50,12 @@ The common bank uses four point-source impact parameters, ten extended-source pr
 The KMT audit refits each flagged capped geometry by detector field and site. It measures rise/decay sampling, seeing dependence, off-peak excursions and V-band support. Qualifying short fits or excess finite-source gains trigger continuous per-stream fits. A second selection revisits free fits near the half-day boundary when the flux cap would remove them. This recovers a 0.451 d fit for published KMT-2024-BLG-0816, whose capped grid time is exactly 0.50 d. The public per-alert rows retain cases below the follow-up thresholds.
 
 ```sh
-python "$r/kmt/audit.py" --cache staging/kmt --grid staging/bound
-python "$r/queue_refits.py" | xargs -r python "$r/refine.py" --bound --grid staging/bound --out staging/continuous
-python "$r/queue_refits.py" --crossings | xargs -r python "$r/refine.py" --bound --grid staging/screen --out staging/crossings
-python "$r/compare_leads.py" --workers 3
-python "$r/alternative_checks.py" --workers 3
-python "$r/inject.py" --per-survey 24 --seasons 12 --out staging/injections-final.csv
-python "$r/summarize_leads.py" --injections staging/injections-final.csv
-python "$r/replay_peaks.py"
-python "$r/control_recovery.py"
-python "$r/earth_control.py" "$r/controls/earth-figure1.tsv.gz"
-python "$r/mass_controls.py"
-python "$r/conditional_geometry.py"
-python "$r/validate.py" --models
+python results/ultrashort-bulge/validate.py
+python results/ultrashort-bulge/controls/replay_continuous.py --input D:/campaign/earth-control.tsv.gz --out D:/new-control-output
 ```
+
+The second command runs the deposited control's continuous point/finite-source fits on Windows or Linux and explicitly bypasses the C++ survey grid. It requires NumPy, SciPy and VBMicrolensing 5.6.1. Copy the deposited compressed control input to the external input path first. The full grid and native candidate curves were not rerun in this review. `replay_peaks.py` requires an exact raw-backed cache and exclusive `--out`; it rejects legacy unverified NPZ inputs. Consolidation requires exact identity-bound screen and capped checkpoints, the frozen cadence bytes and an exclusive external `--out`; unsupported derived-array provenance fails closed.
+
 
 For manually explored peak fits, use the same `window_halfwidth_d`, `bin_width_d`, reference epoch and source cap as the appropriate [stored record](tables/peak-comparisons.json.gz). Earlier individual files without those window fields use ±4 d and native epochs. The full-curve and peak-window fits use different baseline summaries and error inflations. Compare chi-square only across models evaluated in the same experiment. `peak_models.py` uses separate per-stream baselines and compares point lens, finite-source point lens, an asymmetric exponential with free amplitude, and multiple binary-lens starts. The binary search samples a limited range of mass ratios, separations, orientations and starting geometries. It can reject a proposed isolated interpretation when another model predicts the data comparably well. The finite grids and local optima cannot exclude arbitrary hosts.
 
@@ -92,8 +79,4 @@ The Galactic calculation assumes bar sources at 5–12 kpc and disk/bar lenses f
 
 To replay the large-source footprints and image limits after the survey-specific image steps in the linked reports, run the following commands.
 
-```sh
-python "$r/archives.py" KMT-2024-BLG-0824 KMT-2024-BLG-3278 OGLE-2026-BLG-0670 --out "$r/large-source-archive-queries.json"
-python "$r/large_source_images.py"
-python "$r/image_contrast.py"
-```
+The earlier image scripts and their deposited outputs are historical records; they are not part of this guarded replay and were not rerun in this review.

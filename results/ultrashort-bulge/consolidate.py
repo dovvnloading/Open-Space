@@ -7,6 +7,7 @@ import json
 import hashlib
 from datetime import date
 from pathlib import Path
+from replay_guard import external,fresh_for_inputs,sha,verify_receipt,frozen_parameters,parameters_digest,validate_campaign
 
 HERE=Path(__file__).resolve().parent
 
@@ -49,25 +50,34 @@ def write_gz(path,table):
         w=csv.DictWriter(f,cols,lineterminator='\n');w.writeheader();w.writerows(table)
 
 
-def read_results(folder):
-    return {p.stem:json.loads(p.read_text()) for p in folder.glob('*.json')}
+def read_results(folder,spec,cap):
+    folder=external(folder);meta=json.loads((folder/'campaign.json').read_bytes())
+    validate_campaign(meta)
+    if meta['cap']!=cap:raise ValueError('wrong checkpoint cap')
+    timing=frozen_parameters(cap)
+    if meta.get('parameters_sha256')!=parameters_digest(timing):raise ValueError('campaign timing map mismatch')
+    result={}
+    for path in folder.glob('*.json'):
+        if path.name=='campaign.json':continue
+        row=json.loads(path.read_bytes());ident=row.pop('_identity',None);name=path.stem
+        if not ident or ident['event']!=name or ident['cap']!=cap or ident['code_sha256']!=meta['code_sha256'] or ident['runtime']!=meta['runtime'] or name not in spec or ident['input_sha256']!=spec[name]['input_sha256'] or ident.get('parameters')!=timing.get(name):raise ValueError('checkpoint identity mismatch: '+name)
+        result[name]=row
+    expected={n for n in spec if not cap or n.startswith('KMT-')}
+    if set(result)!=expected:raise ValueError('incomplete checkpoint membership')
+    return result
 
 
-def run(cache):
+def run(cache,screen,bound,cadence,out):
+    cache=external(cache);screen=external(screen);bound=external(bound);cadence=external(cadence)
+    verify_receipt('tables/grid-fits.csv.gz')
+    for name in ('ogle/catalog.csv','ogle/photometry.csv','kmt/catalog-2024.tsv','kmt/catalog-2025.tsv','kmt/pySIS-2024.tsv','kmt/pySIS-2025.tsv','other/photometry.csv','other/gaia.csv'):verify_receipt(name)
     spec=inputs()
-    for p in (cache/'staging/kmt').glob('*.receipt.json'):
-        v=json.loads(p.read_text());n=p.name.split('.')[0]
-        if n in spec:spec[n].update(input_sha256=v['sha256'],url=v['url'])
-    for p in (cache/'staging/kmt/fallback').glob('*.json'):
-        v=json.loads(p.read_text()).get('curve',{});n=p.stem
-        if n in spec and v.get('sha256') and not spec[n]['input_sha256']:
-            spec[n].update(input_sha256=v['sha256'],url=v['url'])
-    broad=read_results(cache/'staging/screen');bound=read_results(cache/'staging/bound')
-    cc=list(rows(cache/'staging/all-cadence.csv'))
+    broad=read_results(screen,spec,False);bound=read_results(bound,spec,True)
+    verify_receipt('tables/cadence.csv.gz')
+    frozen_cadence=gzip.decompress((HERE/'tables/cadence.csv.gz').read_bytes())
+    if cadence.read_bytes()!=frozen_cadence:raise ValueError('cadence bytes differ from frozen table')
+    cc=list(rows(cadence))
     cad={r['event']:r for r in cc}
-    replacements=cache/'staging/all-cadence-retrial.csv'
-    if replacements.is_file():
-        for r in rows(replacements):cad[r['event']]=r
     # Two Gaia CSVs have only two numeric transits and never enter the flux
     # reducer. Their two-exposures-per-wing exposure is nonetheless exactly zero.
     for n,meta in spec.items():
@@ -110,7 +120,7 @@ def run(cache):
         gg.append(entry)
         if n in bound:kk.append(bound[n])
         if n in cad and not cad[n].get('error'):cnt['cadence_rows']+=1
-    out=HERE/'tables';out.mkdir(exist_ok=True)
+    out=fresh_for_inputs(out,cache,screen,bound,cadence)
     write_gz(out/'grid-fits.csv.gz',gg)
     write_gz(out/'kmt-reference-flux-grid.csv.gz',kk)
     write_gz(out/'all-screening-flags.csv.gz',flags)
@@ -121,5 +131,5 @@ def run(cache):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--cache',type=Path,default=Path.cwd())
-    args=p.parse_args();print(json.dumps(run(args.cache)))
+    p=argparse.ArgumentParser();p.add_argument('--cache',type=Path,required=True);p.add_argument('--screen',type=Path,required=True);p.add_argument('--bound',type=Path,required=True);p.add_argument('--cadence',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
+    args=p.parse_args();print(json.dumps(run(args.cache,args.screen,args.bound,args.cadence,args.out)))

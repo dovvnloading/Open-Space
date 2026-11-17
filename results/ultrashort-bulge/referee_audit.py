@@ -25,7 +25,7 @@ def rows(rel, delimiter=","):
 
 
 def obj(rel):
-    return json.loads((ROOT / rel).read_text())
+    return json.loads((ROOT / rel).read_text(encoding="utf-8"))
 
 
 def near(actual, expected, tol=0.01):
@@ -121,7 +121,7 @@ def run():
     prior_replay = rows("tables/peak-replay.csv")
     assert prior_replay and all(r["status"]=="ok" and float(r["max_abs_chi2"])<=.05 for r in prior_replay)
 
-    assert "[REMARKABLE]" not in (ROOT/"README.md").read_text()
+    assert "[REMARKABLE]" not in (ROOT/"README.md").read_text(encoding="utf-8")
     result = dict(status="passed",alerts=len(fits),fitted=len(successful),
                   points=sum(int(r["n"]) for r in successful),receipt_hashes=len(fits),
                   distinct_groups=9035,kmt_2026_public_pages=2248,

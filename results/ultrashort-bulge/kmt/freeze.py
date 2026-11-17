@@ -3,6 +3,7 @@ import argparse
 import concurrent.futures
 import csv
 import shutil
+import sys
 import hashlib
 import gzip
 import io
@@ -22,6 +23,8 @@ from lxml import html
 BASE = 'https://kmtnet.kasi.re.kr/ulens/event/'
 CONTROLS = {'KMT-2024-BLG-0816', 'KMT-2024-BLG-0792', 'KMT-2024-BLG-3237'}
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0,str(HERE.parent))
+from replay_guard import external,fresh,verify_receipt
 _RATE_GATE=threading.Lock()
 _RESUME_AT=0.0
 
@@ -106,14 +109,14 @@ def index(cache):
                             fields=dict(sorted(counts.items()))))
         receipts.append(rec)
         if not public:
-            with (HERE/f'event-pages-{year}.tsv').open('w') as h:
+            with (OUT/f'event-pages-{year}.tsv').open('w') as h:
                 w=csv.writer(h,delimiter='\t',lineterminator='\n')
                 w.writerow(('event','event_page'))
                 for r in rows:
                     w.writerow((r['Event'],f"{url}view.php?event={r['Event']}"))
         if public:
-            if not frozen.exists():frozen.write_bytes(gzip.compress(raw,compresslevel=9,mtime=0))
-            dest = HERE / f'catalog-{year}.tsv'
+            if not frozen.exists():raise ValueError('missing frozen index; new science campaign required')
+            dest = OUT / f'catalog-{year}.tsv'
             with dest.open('w') as out:
                 w = csv.DictWriter(out, fieldnames=columns, delimiter='\t',lineterminator='\n')
                 w.writeheader()
@@ -126,7 +129,7 @@ def index(cache):
                                   related=r['Related event'],t0=forkey('t_0'), te=forkey('t_E'),
                                   u0=forkey('u_0'), url=f'{url}data/{code}/pysis/pysis.tar.gz',
                                   page=f'{url}view.php?event={name}'))
-    (HERE/'index-receipts.json').write_text(json.dumps(dict(queries=receipts,seasons=summary), indent=2)+'\n')
+    (OUT/'index-receipts.json').write_text(json.dumps(dict(queries=receipts,seasons=summary), indent=2)+'\n')
     with (cache/'index.jsonl').open('w') as out:
         for r in seeds:
             out.write(json.dumps(r)+'\n')
@@ -138,8 +141,8 @@ def fetch(row, cache):
     url = row['url']
     path = cache / f'{event}.tar.gz'
     receipt = cache / f'{event}.receipt.json'
-    if receipt.is_file() and (path.is_file() or (cache / f'{event}.evicted').is_file()):
-        return
+    if receipt.exists() or path.exists() or (cache/f'{event}.evicted').exists():
+        raise FileExistsError('existing event cache: '+event)
     while shutil.disk_usage(cache).free < 120*1024**2:
         time.sleep(10)
     for attempt in range(3):
@@ -154,6 +157,8 @@ def fetch(row, cache):
                 curves = [m.name for m in f if m.isfile() and m.name.endswith('.pysis')]
                 if not curves:
                     raise ValueError('no pySIS light curves')
+            if event not in FROZEN or digest(data)!=FROZEN[event]:
+                raise ValueError('response differs from frozen event bytes: '+event)
             rec.update(event=event,curves=curves)
             temp = path.with_suffix('.part')
             temp.write_bytes(data)
@@ -173,12 +178,21 @@ def fetch(row, cache):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--cache',type=Path,required=True)
+    p.add_argument('--out',type=Path,required=True)
     p.add_argument('--download',action='store_true')
     p.add_argument('--jobs',type=int,default=4)
     p.add_argument('--limit',type=int)
     a=p.parse_args()
-    a.cache.mkdir(exist_ok=True,parents=True)
+    global OUT,FROZEN
+    a.cache=external(a.cache);out=external(a.out)
+    if a.cache==out or a.cache in out.parents or out in a.cache.parents:raise ValueError('cache/output overlap')
+    if a.cache.exists() or out.exists():raise FileExistsError('new exclusive campaign paths required')
+    verify_receipt('tables/grid-fits.csv.gz');verify_receipt('kmt/index-receipts.json')
+    with gzip.open(HERE.parent/'tables/grid-fits.csv.gz','rt',newline='') as f:
+        FROZEN={r['event']:r['input_sha256'] for r in csv.DictReader(f) if r['event'].startswith('KMT-')}
+    a.cache=fresh(a.cache);OUT=fresh(out)
     rows=index(a.cache)
+    if len({r['event'] for r in rows})!=len(rows) or {r['event'] for r in rows}!=set(FROZEN):raise ValueError('frozen KMT membership differs')
     if a.download:
         ordered=sorted(rows,key=lambda r:(r['event'] not in CONTROLS,
                        r['te'] if r['te'] and r['te']>0 else float('inf'),r['event']))[:a.limit]

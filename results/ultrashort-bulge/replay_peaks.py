@@ -7,11 +7,23 @@ from pathlib import Path
 
 from peak_models import solve
 from run_grid import HERE, inputs
+from replay_guard import external,fresh_for_inputs,verified,verify_receipt
 
 
-def run(cache):
+def run(cache,out):
+    cache=external(cache)
     jobs={j[0]:j for j in inputs(cache)}
+    verify_receipt('tables/peak-comparisons.json.gz')
     models=json.loads(gzip.decompress((HERE/'tables/peak-comparisons.json.gz').read_bytes()))
+    verify_receipt('tables/grid-fits.csv.gz')
+    with gzip.open(HERE/'tables/grid-fits.csv.gz','rt',newline='') as f:
+        frozen={r['event']:r['input_sha256'] for r in csv.DictReader(f)}
+    for event in models:
+        if event not in jobs:raise ValueError('missing frozen event: '+event)
+        if not (event.startswith('OGLE-') or event.startswith('KMT-')):
+            raise ValueError('derived NPZ has no frozen byte lineage: '+event)
+        verified(jobs[event][1],frozen[event])
+    out=fresh_for_inputs(out,cache)
     results=[]
     for event,experiments in sorted(models.items()):
         for name,run in experiments.items():
@@ -31,14 +43,14 @@ def run(cache):
                 receipt.update(status='error',detail=str(err))
             results.append(receipt)
     cols=list(dict.fromkeys(k for r in results for k in r))
-    with (HERE/'tables/peak-replay.csv').open('w',newline='') as f:
+    with (out/'peak-replay.csv').open('x',newline='') as f:
         w=csv.DictWriter(f,cols,lineterminator='\n');w.writeheader();w.writerows(results)
     return results
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--cache',type=Path,default=Path.cwd());args=p.parse_args()
-    rows=run(args.cache);print('Replayed',len(rows),'experiments')
+    p.add_argument('--cache',type=Path,required=True);p.add_argument('--out',type=Path,required=True);args=p.parse_args()
+    rows=run(args.cache,args.out);print('Replayed',len(rows),'experiments')
     for r in rows:
         if r['status']!='ok':print(r)

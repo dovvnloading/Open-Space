@@ -5,7 +5,9 @@ Gaia light curves contain TCB JD and G mag with no epoch uncertainty. The flux e
 proxy is a robust off-alert per-source magnitude scatter, floored at 0.02 mag. It
 supports screening only. Independent ground-based confirmation is essential.
 """
+import argparse
 import csv
+import sys
 import io
 import json
 from concurrent.futures import ThreadPoolExecutor
@@ -14,7 +16,10 @@ from pathlib import Path
 
 import numpy as np
 
-from fetch import get, write_csv, SHA, OUT
+from fetch import get, write_csv, SHA
+HERE=Path(__file__).resolve().parent
+sys.path.insert(0,str(HERE.parent))
+from replay_guard import external,fresh,verify_receipt
 
 CACHE = Path('.survey-cache')
 URL = 'https://gsaweb.ast.cam.ac.uk/alerts/alerts.csv'
@@ -28,6 +33,7 @@ def screen_index():
     if not idx.exists():
         idx.write_bytes(get(URL))
     raw=idx.read_bytes()
+    if SHA(raw)!=FROZEN_INDEX['sha256'] or len(raw)!=FROZEN_INDEX['bytes']:raise ValueError('Gaia index differs from frozen receipt')
     rows=list(csv.DictReader(io.StringIO(raw.decode('utf-8-sig')), skipinitialspace=True))
     selected=[]
     for r in rows:
@@ -57,6 +63,8 @@ def curve(r):
         if not path.exists():
             path.write_bytes(get(url))
         raw=path.read_bytes()
+        expected=FROZEN_CURVES[event]
+        if SHA(raw)!=expected['sha256'] or len(raw)!=int(expected['input_bytes']):raise ValueError('Gaia curve differs from frozen receipt')
         r.update(sha256=SHA(raw),input_bytes=len(raw))
         lines=raw.decode().splitlines()
         if lines[0].strip()!=event:
@@ -75,7 +83,7 @@ def curve(r):
         flux=10**(-.4*(mag-np.median(bg)))
         arr=np.column_stack([t,flux,flux*(np.log(10)/2.5)*noise])
         np.savez_compressed(CACHE/'curves'/f'{event}.npz',data=arr)
-        record=dict(event=event,page_t0_jd=trigger,page_te_d=None,status='ok',time_scale='JD(TCB)',difference=False)
+        record=dict(event=event,page_t0_jd=trigger,page_te_d=None,status='ok',time_scale='JD(TCB)',difference=False,raw_sha256=SHA(raw),array_sha256=SHA((CACHE/'curves'/f'{event}.npz').read_bytes()))
         (CACHE/'records'/f'{event}.json').write_text(json.dumps(record)+'\n')
         absdt=abs(t-trigger)
         r.update(rows=len(rows),usable=len(t),sha256=SHA(raw),input_bytes=len(raw),
@@ -87,8 +95,14 @@ def curve(r):
 
 
 if __name__=='__main__':
-    for sub in ['gaiaraw','curves','records']:
-        (CACHE/sub).mkdir(parents=True,exist_ok=True)
-    with ThreadPoolExecutor(8) as pool:
-        items=list(pool.map(curve,screen_index()))
-    write_csv(OUT/'gaia.csv', items)
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--cache',type=Path,required=True);parser.add_argument('--out',type=Path,required=True);a=parser.parse_args()
+    cache=external(a.cache);out=external(a.out)
+    if cache==out or cache in out.parents or out in cache.parents:raise ValueError('cache/output overlap')
+    if cache.exists() or out.exists():raise FileExistsError('new exclusive campaign paths required')
+    verify_receipt('other/gaia.csv');verify_receipt('other/gaia_index_receipt.json')
+    FROZEN_INDEX=json.loads((HERE/'gaia_index_receipt.json').read_bytes())
+    with (HERE/'gaia.csv').open(newline='',encoding='utf-8-sig') as f:FROZEN_CURVES={r['event']:r for r in csv.DictReader(f)}
+    CACHE=fresh(cache);OUT=fresh(out)
+    for sub in ['gaiaraw','curves','records']:(CACHE/sub).mkdir(parents=True,exist_ok=False)
+    with ThreadPoolExecutor(8) as pool:items=list(pool.map(curve,screen_index()))
+    write_csv(OUT/'gaia.csv',items)
