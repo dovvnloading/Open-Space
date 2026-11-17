@@ -104,7 +104,7 @@ class IndependentReferee(unittest.TestCase):
         # Different native references disagree at a flux smaller than both limits.
         rows = read(D/"MIRI_roll_tests.csv")
         self.assertTrue(any(r["method"] == "pipeline" and abs(float(r["fixed_snr"])-6.1202848455)<.001 for r in rows))
-        self.assertTrue(any(r["method"].startswith("native") and abs(float(r["fixed_snr"])+.77)<.10 for r in rows))
+        self.assertTrue(any(r["method"].startswith("RDI_") and abs(float(r["fixed_snr"])+.77)<.10 for r in rows))
 
     def test_all_57_empirical_contrast_points_against_individual_trials(self):
         summary=read(HERE/"contrast_summary.csv")
