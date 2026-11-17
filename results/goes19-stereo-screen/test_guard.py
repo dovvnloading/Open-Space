@@ -5,7 +5,7 @@ class Tests(unittest.TestCase):
   for sat in (18,19):
    with self.assertRaises(ValueError): gate('development',sat,[0],[0])
  def test_time_quality(self):
-  self.assertEqual(gate('synthetic',19,[0,10,119.9],[0,1,0]),[0,119.9])
+  self.assertEqual(gate('synthetic',19,[0,10,20,30,119.9],[0,1,3,5,0]),[0,119.9])
   for t,q in [([120],[0]),([2,1],[0,0]),([1],[2])]:
    with self.assertRaises(ValueError): gate('synthetic',19,t,q)
  def test_shell_geometry(self):

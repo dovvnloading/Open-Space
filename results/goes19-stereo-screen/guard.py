@@ -7,7 +7,7 @@ def gate(phase, satellite, timestamps, qualities):
     if len(timestamps)!=len(qualities) or not timestamps: raise ValueError('invalid cohort')
     if any(not isinstance(t,(int,float)) or not 0<=t<120 for t in timestamps): raise ValueError('outside frozen interval')
     if any(b<a for a,b in zip(timestamps,timestamps[1:])): raise ValueError('time order')
-    if any(q not in (0,1) for q in qualities): raise ValueError('unknown quality encoding')
+    if any(q not in (0,1,3,5) for q in qualities): raise ValueError('unknown quality encoding')
     return [t for t,q in zip(timestamps,qualities) if q==0]
 
 def predict_ray(observer,point,height):
