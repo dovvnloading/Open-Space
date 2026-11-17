@@ -34,18 +34,18 @@ def targets():
         return list(csv.DictReader(f))
 
 def fetch(kind,target):
-    dest = ROOT/'raw'; dest.mkdir(exist_ok=True)
+    dest = ROOT/'archive'; dest.mkdir(exist_ok=True)
     key = target['label']+'_'+kind
     out, receipt = dest/(key+'.csv.gz'), dest/(key+'.json')
-    if receipt.exists() and out.exists():
-        if hashlib.sha256(gzip.decompress(out.read_bytes())).hexdigest() == json.loads(receipt.read_text())['sha256']:
-            return
     table, columns, epoch = TABLES[kind]
     ra,dec=position(target,epoch)
     q = f"SELECT {columns} FROM {table} WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',{ra:.8f},{dec:.8f},0.0033333333))=1"
     if kind=='neo':
         q+=' AND mjd>=60291 AND mjd<60524'
     url=TAP+'?'+urlencode(dict(REQUEST='doQuery',LANG='ADQL',FORMAT='csv',MAXREC=20000,QUERY=q))
+    if receipt.exists() and out.exists():
+        if json.loads(receipt.read_text())['url']==url and hashlib.sha256(gzip.decompress(out.read_bytes())).hexdigest() == json.loads(receipt.read_text())['sha256']:
+            return
     for attempt in range(4):
         try:
             with urlopen(Request(url,headers={'User-Agent':'Open-Space research, SPHEREx candidate follow-up'}), timeout=120) as resp:
