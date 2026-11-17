@@ -1,0 +1,57 @@
+\                                                                               
+\fixlen = T
+\RowsRetrieved =                11
+\ORIGIN  = 'IPAC Infrared Science Archive (IRSA), Caltech/JPL'
+\SIMULATED_TABLE  = 'n'
+\DATETIME= '2026-11-17 00:21:39'
+\DATABASE= 'NEOWISE-R Single Exposure (L1b) Source Table (neowiser_p1bs_psd)'
+\EQUINOX = 'J2000'
+\SKYAREA = 'within 25.992462612246737 arcsec of  ra=311.03994 dec=+60.56274 Eq J2000 '
+\StatusFile = '/workspace/TMP_DsqnuX_3113864/Gator/irsa/3113864/log.3113864.html'
+\SQL     = 'WHERE  (mjd BETWEEN 60116.5666105 AND 60117.7364265) '
+\SQL     = 'SELECT (12 column names follow in next row.)'
+\ 
+\ ra (deg) 
+\ ___ right ascension (J2000)
+\ dec (deg) 
+\ ___ declination (J2000)
+\ clon 
+\ ___ Right ascention in Sexagesimal format.
+\ clat 
+\ ___ Declination in Sexagesimal format.
+\ mjd (d) 
+\ ___ modified Julian date of the mid-point of the observation of the frame
+\ scan_id 
+\ ___ scan ID
+\ frame_num 
+\ ___ frame number
+\ w2mpro (mag) 
+\ ___ instrumental profile-fit photometry magnitude, band 2
+\ w2sigmpro (mag) 
+\ ___ instrumental profile-fit photometry flux uncertainty in mag units, band 2
+\ w2snr 
+\ ___ instrumental profile-fit photometry S/N ratio, band 2
+\ w2rchi2 
+\ ___ instrumental profile-fit photometry reduced chi^2, band 2
+\ cc_flags 
+\ ___ prioritized artifacts affecting the source in each band
+\ dist (arcsec) 
+\ ___ Distance between the target position and each source in arcsec.
+\ angle (deg) 
+\ ___ Position Angle in degree.
+\ 
+|          ra|         dec|          clon|          clat|            mjd| scan_id| frame_num|  w2mpro| w2sigmpro|   w2snr|    w2rchi2| cc_flags|           dist|       angle|
+|      double|      double|          char|          char|         double|    char|       int|  double|    double|  double|     double|     char|         double|      double|
+|         deg|         deg|              |              |              d|        |          |     mag|       mag|        |           |         |         arcsec|         deg|
+|        null|        null|          null|          null|           null|    null|      null|    null|      null|    null|       null|     null|           null|        null|
+  311.0433605   60.5613122   20h44m10.41s   60d33m40.72s  60117.21639748   51670r         24   14.962      0.430      2.5   5.147e-01      0000        7.940222   130.340398 
+  311.0439935   60.5614811   20h44m10.56s   60d33m41.33s  60117.60566986   51682r         24   14.899      0.358      3.0   7.318e-01      0000        8.483897   122.287447 
+  311.0350343   60.5630483   20h44m08.41s   60d33m46.97s  60117.34615525   51674r         24   11.955      0.038     28.2   1.389e+01      0000        8.750252   277.289149 
+  311.0439425   60.5613110   20h44m10.55s   60d33m40.72s  60117.08664027   51666r         24   14.567       null      1.9   7.944e-01      0000        8.753059   125.994057 
+  311.0348720   60.5634747   20h44m08.37s   60d33m48.51s  60117.47591260   51678r         24   11.937      0.036     29.8   6.356e+00      0000        9.348628   286.436804 
+  311.0348173   60.5634333   20h44m08.36s   60d33m48.36s  60117.73542712   51686r         24   11.673      0.036     30.5   3.242e+00      0000        9.400835   285.398632 
+  311.0348145   60.5634599   20h44m08.36s   60d33m48.46s  60117.21639748   51670r         24   11.528      0.029     37.9   1.256e+00      0000        9.431471   285.951518 
+  311.0347820   60.5634344   20h44m08.35s   60d33m48.36s  60117.08664027   51666r         24   11.530      0.027     39.9   8.658e-01      0000        9.462109   285.321359 
+  311.0347096   60.5634352   20h44m08.33s   60d33m48.37s  60117.60566986   51682r         24   11.544      0.029     37.8   1.115e+00      0000        9.586464   285.135726 
+  311.0446789   60.5613610   20h44m10.72s   60d33m40.90s  60117.73542712   51686r         24   15.293       null      0.2   3.525e-01      0000        9.744133   120.626856 
+  311.0463690   60.5617232   20h44m11.13s   60d33m42.20s  60117.34615525   51674r         24   14.909       null      1.2   8.421e-01      0000       11.949430   107.835455 

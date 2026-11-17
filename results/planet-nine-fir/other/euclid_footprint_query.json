@@ -1,0 +1,10 @@
+{
+  "url": "https://eas.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+obs_id%2Ct_min%2Ct_max%2Cs_region%2Cs_ra%2Cs_dec+FROM+ivoa.obscore+WHERE+obs_collection%3D%27dr1%27+AND+dataproduct_type%3D%27image%27+AND+t_exptime%3E560+AND+t_exptime%3C561&MAXREC=150000",
+  "query": "SELECT obs_id,t_min,t_max,s_region,s_ra,s_dec FROM ivoa.obscore WHERE obs_collection='dr1' AND dataproduct_type='image' AND t_exptime>560 AND t_exptime<561",
+  "archive_rows": 26724,
+  "sha256": "e215e41c46a7f063aa4954f0cb39cc6d387c29d86c840cbeede0d1b236598985",
+  "bytes": 26134492,
+  "min_mjd_utc": 60218.01831472222,
+  "max_mjd_utc": 60816.2023484375,
+  "tangent_point_approximation": "geocentre; exact Euclid parallax and detector gaps not applied"
+}
