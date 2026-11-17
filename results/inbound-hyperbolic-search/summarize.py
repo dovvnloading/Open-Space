@@ -28,7 +28,11 @@ def original_fields(fit):
         return None
     if float(fit["r_au"]) < 100 or abs(float(fit["epoch"])-float(fit["requested_epoch"])) > .01:
         return None
+    if int(fit["used"])<3:
+        return None
     inv = float(fit["inv_a_au"])
+    if not math.isfinite(inv):
+        return None
     sigma = fit.get("sigma_e")
     z = (float(fit["e"])-1)/float(sigma) if sigma and float(sigma)>0 else None
     return {"inbound_radius_au":round(float(fit["r_au"]),5), "inv_a_au_inv":inv,
@@ -73,6 +77,8 @@ def main(out):
         if second.get("status")!="fit returned" and first.get("status")=="fit returned" and first.get("astrometry_sha256")==second.get("astrometry_sha256"):
             r["fit"]=first
     recent = {str(r["spkid"]):r for r in recent_rows if r["selection"]=="catalogue refresh"}
+    sampled_path=ROOT/"batch/evidence/recent_stratified.json.gz"
+    sampled={str(r["spkid"]):r for r in json.loads(gzip.decompress(sampled_path.read_bytes()))} if sampled_path.exists() else {}
     with (ROOT/"catalog/code-original.csv").open() as f:
         published = {r["spkid"]:r for r in csv.DictReader(f)}
     focused = json.loads((ROOT/"orbits/data/refits.json").read_text())
@@ -92,7 +98,9 @@ def main(out):
         old_orig=original_fields(old)
         new_orig=original_fields(new)
         alternate=original_fields(free)
-        best = new_orig or alternate or old_orig or {}
+        sample=sampled.get(key,{}).get("fit",{})
+        sampled_orig=original_fields(sample)
+        best = new_orig or sampled_orig or alternate or old_orig or {}
         code=published.get(key,{})
         pdes=row["pdes"]
         focused_id=row["known_iso"] or pdes.replace(" ","-")
@@ -132,10 +140,12 @@ def main(out):
                       "default_inverse_a":(old_orig or {}).get("inv_a_au_inv"),
                       "unpenalized_inverse_a":(alternate or {}).get("inv_a_au_inv"),
                       "live_inverse_a":(new_orig or {}).get("inv_a_au_inv"),
+                      "station_night_sample_fit":sample.get("status"),
+                      "station_night_sample_inverse_a":(sampled_orig or {}).get("inv_a_au_inv"),
                       "default_z":(old_orig or {}).get("z_e_one_model"),
                       "unpenalized_z":(alternate or {}).get("z_e_one_model"),
                       "batch_sign_disagreement":bool(alternate and old_orig and alternate["inv_a_au_inv"]*old_orig["inv_a_au_inv"]<0),
-                      "inbound_gravity_source":"live MPC" if new_orig else "bulk unpenalized" if alternate else "bulk default" if old_orig else "",
+                      "inbound_gravity_source":"live MPC" if new_orig else "live MPC station/night sample" if sampled_orig else "bulk unpenalized" if alternate else "bulk default" if old_orig else "",
                       **{k:best.get(k) for k in ("inbound_radius_au","inv_a_au_inv","z_e_one_model","v_kms","n_used","n_total","rms_arcsec","used_arc_days")},
                       "CODE_model":code.get("model"),"CODE_original_micro_au_inv":code.get("published_original_1_over_a_micro_au_inv"),
                       "CODE_sigma_micro_au_inv":code.get("sigma"),"focused_models":bool(focus),
