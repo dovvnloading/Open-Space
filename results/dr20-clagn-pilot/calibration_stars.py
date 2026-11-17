@@ -1,7 +1,7 @@
 from astropy.io import fits
 from pathlib import Path
-import json,urllib.request,hashlib,numpy as np,csv
-p=Path(r'D:\Open-Space\campaigns\dr20-clagn-e657b57-terra61\inputs');out=p.parent/'stars';out.mkdir(exist_ok=True);tables={}
+import json,urllib.request,hashlib,numpy as np,csv,sys
+p=Path(sys.argv[1]);out=Path(sys.argv[2]);out.mkdir(exist_ok=True);tables={}
 for m in (59648,60322):
  with fits.open(p/f'zbest-{m}.prefix',ignore_missing_end=True,memmap=False) as h:
   tables[m]={int(r['SDSS_ID']):int(r['CATALOGID']) for r in h[1].data if int(r['SDSS_ID'])>0 and str(r['OBJTYPE']).strip()=='SPECTROPHOTO_STD'}
