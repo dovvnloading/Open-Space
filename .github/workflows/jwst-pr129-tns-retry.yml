@@ -1,0 +1,35 @@
+name: JWST PR 129 public TNS guest retry
+on:
+  push:
+    branches: [research/jwst-repeat-imaging-transients]
+  pull_request:
+    paths:
+      - 'results/jwst-repeat-imaging-transients/**'
+      - 'tests/test_jwst_pr129_referee.py'
+permissions:
+  contents: read
+jobs:
+  tns-guest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Attempt public TNS HTML and CSV cone searches, retaining access codes
+        run: python results/jwst-repeat-imaging-transients/tns_guest_retry.py > tns-guest-retry.json
+      - name: Show compact status and share receipt
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('tns-guest-retry.json'))
+          print(d['retrieved_utc'])
+          for x in d['results']: print(x['candidate'], x['view'], x.get('status'), x['outcome'])
+          PY
+          echo 'TNS guest query receipts' >> "$GITHUB_STEP_SUMMARY"
+          echo 'See the attached tns-guest-retry.json; non-200 responses are NOT negative-cone results.' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: jwst-tns-guest-retry
+          path: tns-guest-retry.json

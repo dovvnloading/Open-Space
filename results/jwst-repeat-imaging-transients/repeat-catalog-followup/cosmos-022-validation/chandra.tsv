@@ -1,0 +1,92 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-17T04:37:20 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-17T04:37:20	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FApJ%2F817%2F34&-c=150.122033+%2B2.323386208&-c.rs=100&-out.add=_r&-sort=_r&-out.max=8	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=150.122033+02.323386,rs=100.	
+#Constraint -out.max=8
+
+#RESOURCE=yCat_18170034
+#Name: J/ApJ/817/34
+#Title: C-COSMOS Legacy sources multiwavelength catalog (Marchesi+, 2016)
+#INFO	ivoid=ivo://cds.vizier/j/apj/817/34	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/apj/817/34	    IVOID of underlying data collection
+#INFO	creator=Marchesi S.	    First author or institution
+#INFO	cites=bibcode:2016ApJ...817...34M	    Article or Data origin sources
+#INFO	journal=ApJ	    Journal name
+#INFO	original_date=2016	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJ/817/34	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.18170034	    Dataset identifier that can be used for citation
+#INFO	publication_date=2022-10-25	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Table	J_ApJ_817_34_catalog:
+#Name: J/ApJ/817/34/catalog
+#Title: Chandra COSMOS Legacy optical-NIR counterparts
+#Column	_r	(F7.3)	Distance from center (150.122033+02.323386)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	ID	(A9)	CID or LID NNNNNN (id_x) (1)	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(F10.6)	X-ray right ascension (J2000) (RA_x) (2)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F10.6)	X-ray declination (J2000) (DEC_x) (2)	[ucd=pos.eq.dec;meta.main]
+#Column	F0.5-10keV	(E9.2)	X-ray flux in full band (0.5-10keV) (flux_F)(2)	[ucd=phot.flux;em.X-ray]
+#Column	F0.5-2keV	(E9.2)	X-ray flux in soft band (0.5-2keV) (flux_S)(2)	[ucd=phot.flux;em.X-ray]
+#Column	F2-10keV	(E9.2)	X-ray flux in hard band (2-10keV) (flux_H) (2)	[ucd=phot.flux;em.X-ray]
+#Column	[ICS2009]	(I8)	[10466/2031046]? Optical counterpart ID from Ilbert+ (2009, J/ApJ/690/1236) (id_i)	[ucd=meta.id.cross]
+#Column	imag	(F6.2)	[12.4/30.7]? i-band magnitude in 3" aperture from Ilbert+ (2009) (i_mag)	[ucd=phot.mag;em.opt.I]
+#Column	COSMOS2015	(I8)	? K-band counterpart identifier from Laigle+ (2016, J/ApJS/224/24) (id_k_uv)	[ucd=meta.id]
+#Column	Kmag	(F6.2)	[12/29.6]? UltraVISTA K-band magnitude in 3" aperture from Laigle+ (k_uv_mag)	[ucd=phot.mag;em.IR.K]
+#Column	cfht	(I8)	[0/1733715]? K-band counterpart ID from the Ilbert+ (2009) CFHT catalog (id_k_cfht)	[ucd=meta.id]
+#Column	F3.6um	(F6.2)	[13.5/24.2]? IRAC 3.6um flux in 1.9" aperture from the Sanders catalog (2007ApJS..172...86S) (irac_mag)	[ucd=phot.mag;em.IR.3-4um]
+#Column	F3.6um2	(F6.2)	[13.7/26.6]? 3.6um flux in 1.9" aperture from the SPLASH catalog (splash_mag)	[ucd=phot.mag;em.IR.3-4um]
+#Column	Flag	(I3)	Final identification flag (final_id_flag) (G1)	[ucd=meta.code.error]
+#Column	zbest	(F8.4)	[0/6.9]? Best redshift available (z_best)	[ucd=src.redshift;pos.heliocentric]
+#Column	Clsp	(I3)	[-9/2]? Spectroscopic identification (1=BLAGN, 2=non-BLAGN, 0=star) (spec_type)	[ucd=meta.code.class]
+#Column	Clph	(I3)	[1/5]? Photometric identification from SED fitting (1=unobscured, 2=obscured, 3=galaxy, 5=star) (phot_type)	[ucd=meta.code.class]
+#Column	XMMC	(I7)	? Identifier number of the XMM-COSMOS counterpart from Cappelluti+ (2009, J/A+A/497/635) (id_xmm)	[ucd=meta.id.cross]
+_r	ID	RAJ2000	DEJ2000	F0.5-10keV	F0.5-2keV	F2-10keV	[ICS2009]	imag	COSMOS2015	Kmag	cfht	F3.6um	F3.6um2	Flag	zbest	Clsp	Clph	XMMC
+arcsec	 	deg	deg	mW/m2	mW/m2	mW/m2	 	mag	 	mag	 	uJy	uJy	 	 	 	 	
+-------	---------	----------	----------	---------	---------	---------	--------	------	--------	------	--------	------	------	---	--------	---	---	-------
+ 41.254	cid_655  	150.125590	+02.312492	 2.07e-15	 7.54e-16	-9.94e-15	        	      	        	      	        	      	      	-99	        	 -9	   	
+ 44.714	cid_1463 	150.111230	+02.329531	 1.25e-15	-3.10e-16	-1.11e-14	 1240622	 24.23	  678855	 21.28	 1240622	 21.12	 20.81	  1	  1.2540	  2	  3	
+ 82.502	cid_87   	150.133030	+02.303275	 1.03e-13	 2.60e-14	 7.72e-14	 1244269	 23.34	  663103	 20.26	 1244269	 19.64	 19.28	  1	  1.5980	  1	  3	     18
+ 94.146	cid_2444 	150.139330	+02.343013	 1.38e-15	-5.57e-16	-9.52e-15	 1238427	 25.48	        	      	 1238427	 21.25	      	  1	  1.8780	  2	  3	
+ 99.536	cid_86   	150.119450	+02.295858	 2.39e-14	 6.26e-15	 1.59e-14	 1221784	 23.40	  656926	 20.39	 1221784	 20.10	 19.79	  1	  1.8310	  2	  3	     78
+
+#Table	J_ApJ_817_34_ccosmos:
+#Name: J/ApJ/817/34/ccosmos
+#Title: Chandra COSMOS (C-COSMOS) identification catalog
+#Column	_r	(F7.3)	Distance from center (150.122033+02.323386)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	CXOC	(A16)	IAU identificator (HHMMSS.s+DDMMSS; J2000)	[ucd=meta.id;meta.main]
+#Column	[ECV2009]	(I5)	[1/22962] Chandra identifier (1)	[ucd=meta.id]
+#Column	RAJ2000	(F10.6)	[149.5/150.7] X-ray RA (J2000) (1)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(F10.6)	[1.6/2.8] X-ray declination (J2000) (1)	[ucd=pos.eq.dec;meta.main]
+#Column	F0.5-2keV	(E9.2)	[-2.1e-15/1.5e-13] 0.5-2keV X-ray flux (in erg/cm^2^/s units)	[ucd=phot.flux;em.X-ray]
+#Column	F2-10keV	(E9.2)	[-1.7e-14/7e-13] 2-10keV X-ray flux (in erg/cm^2^/s units)	[ucd=phot.flux;em.X-ray]
+#Column	F0.5-10keV	(E9.2)	[-1.5e-14/7.5e-13] 0.5-10keV X-ray flux (in erg/cm^2^/s units)	[ucd=phot.flux;em.X-ray]
+#Column	COSMOS	(I7)	[136961/2791454]? Optical identifier from Capak+ 2007, II/284	[ucd=meta.id.cross]
+#Column	[ICS2009]	(I7)	[89570/1733715]? Optical identifier from Ilbert+ 2009, J/ApJ/690/1236	[ucd=meta.id.cross]
+#Column	imag	(F6.2)	[12.4/28.1]? i-band (AB) magnitude	[ucd=phot.mag;em.opt.I]
+#Column	Kmag	(F6.2)	[13.1/26.6]? K-band (AB) magnitude	[ucd=phot.mag;em.IR.K]
+#Column	F3.6um	(F8.2)	[0.7/13524]? Spitzer/IRAC 3.6um flux	[ucd=phot.mag;em.IR.3-4um]
+#Column	Flag	(I3)	[-99/100] Identification flag (G1)	[ucd=meta.code.error]
+#Column	zspec	(F7.3)	[0/5.3]? Spectroscopic redshift	[ucd=src.redshift]
+#Column	Clsp	(I3)	[0/2]? Spectroscopic classification (1=BLAGN, 2=not-BLAGN, 0=star)	[ucd=meta.code.class]
+#Column	q_zspec	(I3)	[3/9]? Spectroscopic redshift quality	[ucd=meta.code.qual]
+#Column	r_zspec	(I3)	[1/8]? Spectroscopic redshift origin	[ucd=meta.ref;pos.frame]
+#Column	Clph	(I3)	[1/3]? Photometric redshift classification	[ucd=meta.code.class]
+#Column	XMMC	(I5)	[1/70250]? XMM identifier from Brusa+ 2010, J/ApJ/716/348	[ucd=meta.id.cross]
+_r	CXOC	[ECV2009]	RAJ2000	DEJ2000	F0.5-2keV	F2-10keV	F0.5-10keV	COSMOS	[ICS2009]	imag	Kmag	F3.6um	Flag	zspec	Clsp	q_zspec	r_zspec	Clph	XMMC
+arcsec	 	 	deg	deg	mW/m2	mW/m2	mW/m2	 	 	mag	mag	uJy	 	 	 	 	 	 	
+-------	----------------	-----	----------	----------	---------	---------	---------	-------	-------	------	------	--------	---	-------	---	---	---	---	-----
+ 41.254	100030.1+021845 	  655	150.125590	+02.312492	 6.50e-16	-8.59e-15	 1.78e-15	       	       	      	      	        	-99	       	   	   	   	   	
+ 44.714	100026.7+021946 	 1463	150.111230	+02.329531	-2.66e-16	-9.57e-15	 1.07e-15	1992026	1240622	 24.23	 21.35	   12.97	  1	  1.257	  2	  4	  7	  3	
+ 82.502	100031.9+021812 	   87	150.133030	+02.303275	 2.23e-14	 6.66e-14	 8.87e-14	1997845	1244269	 23.34	 20.56	   50.63	  1	  1.598	  1	  4	  6	  3	   18
+ 94.146	100033.4+022035 	 2444	150.139330	+02.343013	-4.79e-16	-8.21e-15	 1.18e-15	1988490	1238427	 25.48	 22.03	   11.48	  1	       	   	   	   	  3	
+ 99.536	100028.7+021745 	   86	150.119450	+02.295858	 5.39e-15	 1.37e-14	 2.04e-14	1961169	1221784	 23.40	 20.60	   33.02	  1	       	   	   	   	  3	   78
+
