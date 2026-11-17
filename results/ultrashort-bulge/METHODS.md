@@ -2,6 +2,25 @@
 
 Start at the repository root. The scripts import [lens.py](../ogle-dark-lenses/lens.py) for OGLE cleaning, magnitude conversion and point-lens magnification, and [galaxy.py](../ogle-dark-lenses/galaxy.py) for Galactic density, velocity and quantiles. Python, NumPy, SciPy, pandas, Astropy, pyerfa, lxml, Matplotlib, Poppler, VBMicrolensing 5.6.1 and a C++17 compiler were used. Preserve independent caches for different dates. Live alert files can change. The survey manifests give the upstream SHA-256 hashes for comparison.
 
+## Independent referee replay (small, self-contained subset)
+
+For the November 2026 [review](REFEREE_REPORT.md), the source-receipt and deposited numerical consistency pass uses *only* the frozen tables and is independent of the original external processing cache:
+
+```sh
+python results/ultrashort-bulge/referee_audit.py
+```
+
+The stronger native-input replay below downloads **only four** public event light curves (the three 2024 KMT pySIS tar files and OGLE-2026-BLG-0670's public `phot.dat`), checks each raw download's SHA-256 and byte length against the source manifest, recomputes every stored comparison χ², repeats nonlinear optimization for KMT-3326 and OGLE-0670 using *the same frozen time-window origin*, and separately refits the known OGLE-2016-BLG-1928 control from the deposited VizieR data. The whole 10,971-object raw collection is **not** deposited in Git; only its source URLs, hashes, metadata, and model outputs are. Retrieval of a changed later upstream file must fail rather than silently replace the 17 November 2026 freeze.
+
+```sh
+python -m pip install 'numpy<3' 'scipy>=1.14' pyerfa 'VBMicrolensing==5.6.1'
+g++ -O3 -std=c++17 -fPIC -shared results/ultrashort-bulge/grid.cpp -o results/ultrashort-bulge/grid.so
+python results/ultrashort-bulge/validate.py --models
+python results/ultrashort-bulge/referee_replay.py --refit
+```
+
+The [GitHub Actions referee replay](../../.github/workflows/ultrashort-bulge-referee.yml) performs these steps on the branch and retains raw numerical logs in a downloadable artifact. The `--refit` fits can end in a *different* local binary optimum; only scores calculated at identical epochs, source-cap rules, and fixed comparison windows are directly comparable. A nonconverged fit is not evidence of a uniquely identified lens. The [literature review](REFEREE_REPORT.md) explains the follow-up required for the unresolved sources.
+
 ## Main survey census
 
 From the repository root, the commands below rebuild the common screen. The directories under `staging` hold per-event checkpoints. On a clean machine the downloads and computations can take hours. KMT's release status can be checked in the annual [2026 event index](https://kmtnet.kasi.re.kr/ulens/event/2026/). This snapshot's KMT numerical inputs cover 2024 and 2025.
