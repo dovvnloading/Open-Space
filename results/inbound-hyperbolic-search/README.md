@@ -41,7 +41,7 @@ All ten ZTF exposures with footprints predating the published arc were tested us
 
 ### Pan-STARRS and Rubin tracklets
 
-The full MPC Isolated Tracklet File contained 7,170 F51 Pan-STARRS 1 observations in the 29-day window, October 19–November 16, 2026 UTC. Quality cuts retained 2,130 tracklet-days on 17 dates. Eight real triples survived the broad angular prefilter. Zero produced a common trial orbit passing the linkage gate. The final orbit screen used a nominal excess speed above 10 km/s. Five independently rotated skies gave zero accepted links. [Selection, trial-state search, orbit fit and frozen observations](tracklets/README.md)
+The full MPC Isolated Tracklet File contained 7,170 F51 Pan-STARRS 1 observations in the 29-day window, October 19–November 16, 2026 UTC. Quality cuts retained 2,130 tracklet-days on 17 dates. The frozen full trial-state prefilter proposed zero real three-night orbit triples (`real_3night_proposals: 0`); no candidate reached the final six-coordinate orbit fit. The final orbit screen used a nominal excess speed above 10 km/s. Five independently rotated skies gave zero accepted links. [Selection, trial-state search, orbit fit and frozen observations](tracklets/README.md)
 
 | Simulation in the real background | Result |
 | --- | --- |
