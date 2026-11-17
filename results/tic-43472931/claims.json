@@ -1,0 +1,11 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [],
+  "acknowledged": [
+    {
+      "rule": "replay/drift",
+      "key": "python timing.py",
+      "reason": "Values in changes.csv move by at most 3 units in the seventh decimal, because the least-squares solver stops at a point that depends on rounding in the installed NumPy and SciPy. The largest relative change is in an interval bound near zero (-0.0004496 to -0.0004497). No quoted number changes. See the Reproduce section of the README."
+    }
+  ]
+}

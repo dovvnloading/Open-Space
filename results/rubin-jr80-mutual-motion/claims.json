@@ -1,0 +1,11 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [],
+  "acknowledged": [
+    {
+      "rule": "replay/drift",
+      "key": "python sensitivity.py",
+      "reason": "Eight of 271 numbers in sensitivity.csv move by at most 1.9 parts in a million, because the least-squares solver stops at a point that depends on rounding in the installed NumPy and SciPy. No quoted number changes. See the Reproduce section of orbit/README.md."
+    }
+  ]
+}

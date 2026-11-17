@@ -5,7 +5,7 @@ Independent code, same observations. This is not independent observational confi
 ## Reproduce
 
 ```bash
-python swan_broadening_review.py --manifest /tmp/swan-pilot-retry.json --cache /tmp/spherex-cache --output swan_broadening_review.json
+python ../../examples/spherex_swan_broadening.py --manifest /tmp/swan-pilot-retry.json --cache /tmp/spherex-cache --output swan_broadening_review.json
 ```
 
 CLI requires numpy, scipy, astropy. Input manifest holds exact URLs; cache names are SHA256(URL). Output includes FITS hashes. No network needed after caching.
