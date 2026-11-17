@@ -58,6 +58,13 @@ def main(out):
     relaxed=read_softened_shards()
     assert set(batch)==set(relaxed)
     recent_rows = json.loads(gzip.decompress((ROOT/"batch/evidence/latest_mpc_refits.json.gz").read_bytes()))
+    initial_rows=json.loads(gzip.decompress((ROOT/"batch/evidence/initial_mpc_queries.json.gz").read_bytes()))
+    first_by_id={str(r["spkid"]):r.get("fit",{}) for r in initial_rows}
+    for r in recent_rows:
+        first=first_by_id.get(str(r["spkid"]),{})
+        second=r.get("fit",{})
+        if second.get("status")!="fit returned" and first.get("status")=="fit returned" and first.get("astrometry_sha256")==second.get("astrometry_sha256"):
+            r["fit"]=first
     recent = {str(r["spkid"]):r for r in recent_rows if r["selection"]=="catalogue refresh"}
     with (ROOT/"catalog/code-original.csv").open() as f:
         published = {r["spkid"]:r for r in csv.DictReader(f)}
