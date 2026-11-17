@@ -106,7 +106,7 @@ def axes(t, f, e, g, t0, te, season):
     return np.unique(centers), np.unique(scales)
 
 
-def screen(t, f, e, g, t0=np.nan, te=np.nan, year=2025, difference=False):
+def screen(t, f, e, g, t0=np.nan, te=np.nan, year=2025, difference=False, caps=None):
     t,f,e,g = clean(t,f,e,g)
     if difference:
         e=reported_error_floor(e,g)
@@ -116,6 +116,9 @@ def screen(t, f, e, g, t0=np.nan, te=np.nan, year=2025, difference=False):
     centers,scales = axes(t,f,e,g,t0,te,(t>=season_start)&(t<season_start+366))
     ng = max(g)+1
     cap = np.array([1e30 if difference else max(1e-12,1.15*np.median(f[g==s])) for s in range(ng)])
+    if caps is not None:
+        cap=np.ascontiguousarray(caps,dtype="d")
+        if len(cap)!=ng: raise ValueError("baseline cap alignment")
     output=np.empty((len(centers),len(scales),len(labels)))
     native(len(t),np.ascontiguousarray(t,dtype='d'),np.ascontiguousarray(f,dtype='d'),
            np.ascontiguousarray(1/e**2,dtype='d'),g.astype('i'),ng,cap,

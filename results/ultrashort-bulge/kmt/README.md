@@ -1,0 +1,46 @@
+# KMTNet released event photometry
+
+The 2024 and 2025 catalogs contain 6,789 event IDs. No positive catalog timescale falls below 0.50 d, and 16 are reported at exactly 0.50 d. This makes a cut on the catalog column alone unreliable: the published FFP candidates KB240792 and KB243237 appear at 1.25 and 1.01 d in the catalog. A strong sub-day feature in KMT-2024-BLG-0456 is present in both CTIO and SAAO photometry. The unconstrained 2.55-hour, large-source solution requires tens of times more source flux than the recorded total light. See the parent results for the constrained alternatives.
+
+## Frozen inputs and coverage
+
+| Season | Event IDs | Positive catalog timescales | At 0.50 d | Fields | Release label on November 17, 2026 |
+|---|---:|---:|---:|---:|---|
+| 2024 | 3,441 | 3,436 | 5 | 27 | Public |
+| 2025 | 3,348 | 3,347 | 11 | 27 | Public |
+| 2026 | 2,248 | 2,248 | 5 | 27 | Proprietary |
+
+[2024](https://kmtnet.kasi.re.kr/ulens/event/2024/), [2025](https://kmtnet.kasi.re.kr/ulens/event/2025/) and [2026](https://kmtnet.kasi.re.kr/ulens/event/2026/) index responses were hashed before processing. The two released catalogs are reproduced in normalized TSV form. The 2026 page is an alert service. The survey permits work on future papers using posted curves but specifies the following July 1 as the end of the proprietary period. Its 2026 event points are outside this release-based search. The KMTNet team's 2026 discovery of [two bound giant planets around an M dwarf](https://arxiv.org/abs/2609.12451) does not establish a release of the 2026 sample.
+
+See `index-receipts.json` for per-field counts, index-body hashes, byte lengths and returned HTTP dates. The site encodes telescope/chip/subfield in its Field identifier. The 27 distinct two-digit field numbers are counted separately within each season. Nominal field visits vary with observing year and site. The [KMTNet team observing plan](https://kmtnet.kasi.re.kr/document-file/2025-11-18/11_BLG202511.pdf) shows the cadence range and field map. Overlapping fields can sample the same star. `shortlist-cadence.tsv` gives the exact fraction of candidate peak times with at least three distinct I-band timestamps in centered 3, 6, 12 and 24 hour windows, assuming uniform event centers between the first and last visits of the season. This measures timing alone and cannot substitute for a detection-efficiency calculation.
+
+Each manifest entry records the pySIS bundle URL, state, hash and the member filenames for successfully acquired archives. Each KMT I stream is a separate field/site reduction. In pySIS the input flux for a brightening is minus column 2, with uncertainty from column 3 and full HJD from column 1 (one-based). The same source brightens in the opposite sign in the alternative DIAPL products. Their epochs match pySIS after adding 2,400,000, typically within several seconds. DIAPL and pySIS use many of the same exposures. Their agreement tests reduction dependence, not statistical independence.
+
+## Completed candidate checks
+
+- **KMT-2024-BLG-0456.** The alternate DIAPL reductions give a strong peak at both CTIO and SAAO. The unconstrained FS template gives an improvement over constant of 981 and 804 in chi-square respectively, independently fitted in a 40 d window using per-season, per-stream baseline error scaling. The large-source template requires 54,248 differential-flux units in KMTC02 versus a total baseline of 1,595, and 69,489 in KMTS42 versus 1,596. `flux.py` recovers baseline flux on the DI scale from each I-band light curve's own reported corrected magnitudes. The three V streams actually sampling the source transit (six epochs in total) give no usable magnified source color. The only VIRAC2 neighbor inside 1.5 arcsec lies 0.59 arcsec away at catalog epoch 2014, with 159 Ks measurements and a median absolute deviation of 0.123 mag. Its association with the lensed star is unverified. No Gaia DR3 source lies inside 1.5 arcsec. SIMBAD and VSX give no match inside 2 arcsec. A SkyBoT 5-arcmin geocentric cone at the catalog peak yields one listed asteroid, 276.5 arcsec away. Centroid motion was not measured. The 2018–2024 DIAPL baseline has zero flagged off-peak nights in Chile and South Africa under the defined recurrence test and one in Australia. Chilean pySIS streams also show off-peak outliers on other dates. No calibrated angular radius or free-floating interpretation follows from these checks.
+- **KMT-2025-BLG-0300.** Near reduced HJD 60951, the KMTS42 daily median exceeds its season median by 139 native quoted errors. The other sites' daily medians are near baseline. KMTS42 exceeds 142 on 60930. CTIO and SAAO instead both show a clear multi-night brightening around 60762–64. The long-baseline DIAPL flux at the putative second peak has the wrong sign at the principal site for this template.
+- **KMT-2025-BLG-2510.** At reduced HJD 60849, the apparent short pulse is concentrated in KMTC42. Similar excursions occur elsewhere in that stream. A separate peak around 60939–40 appears in the 02 field across the network, including DIAPL.
+- **KMT-2025-BLG-3173.** The sharp peak at 60951 shares its night and site (SAAO) with the spurious signal in 0300. Other nights show repeated, large brightenings in the same reductions.
+- **KMT-2025-BLG-1446.** CTIO and SAAO see magnification on multiple nights spanning at least 60843–50. A sub-day fit follows the narrow peak but leaves a broad brightening requiring a different explanation.
+- **KMT-2025-BLG-1507 and 1213.** Both show a peak in multiple sites. 1213 is also OGLE-2025-BLG-0867. Identification of a short pulse at multiple sites does not resolve whether it comes from a binary lens, a flare, or a finite-source single lens. See the main results for model comparisons and limits. KMT-2024-BLG-1157 has OGLE-2024-BLG-0944 and MOA-2024-BLG-149 aliases. KMT-2025-BLG-1760 is OGLE-2025-BLG-1245.
+
+The 14 targets in `controls.py` have no other KMT event within 2 arcsec in the successfully parsed 2016–2025 annual tables. These catalogs contain alerts, not continuous light curves for every source. The published KMT planet catalog (updated November 5, 2026) has 11 FFP candidates. It includes KB240816, KB240792 and KB243237, but omits [KMT-2025-BLG-2093](https://arxiv.org/abs/2606.27725), a published candidate with a 1.36 d timescale and a measured Einstein radius of 13.1 ± 2.8 microarcseconds. Archive membership alone cannot establish novelty. `control-checks.json` and `control-receipts.json` record the objects, exact queries and hashes.
+
+The Gaia/VIRAC2 proximity screen targets all 124 positive catalog entries at or below 2 d plus four additional OGLE cross-identifications above the cut (one of the five named OGLE additions already satisfied it). Both catalogs use their own reference epochs. `Gaia-neighbours.tsv` and `VIRAC2-neighbours.tsv` retain all neighbors inside 1.5 arcsec and their separations on the unpropagated J2000 coordinates. A missing Gaia variability classification is not evidence for constancy. VIRAC2 Ks-band statistics provide pre-event photometry; crowding and proper motion can affect positional association. Successful empty cone queries and service failures are separate in `neighbour-receipts.tsv`.
+
+## Reproduction
+
+From the repository root with the parent fitting dependencies and lxml installed:
+
+```bash
+python results/ultrashort-bulge/kmt/freeze.py --cache staging/kmt --download --jobs 4
+python results/ultrashort-bulge/kmt/manifest.py --cache staging/kmt
+python results/ultrashort-bulge/kmt/neighbours.py --cache staging/kmt
+python results/ultrashort-bulge/kmt/controls.py --cache staging/kmt
+python results/ultrashort-bulge/kmt/vet_streams.py --cache staging/kmt --refined staging/refined
+```
+
+`vet_streams.py` uses the fitted FS geometry in the supplied refinement directory as a fixed shape. It fits a nonnegative amplitude and a constant offset in each stream over ±20 days of peak, with full-season baseline scatter used to inflate errors. It counts off-peak nights only when at least three observations exceed five recalibrated standard errors in the bright direction and make up at least half of the measurements in that one-day bin. Season-specific offsets are estimated outside a ±12 d (or longer for slow templates) window. The output flags can identify contamination and recurring structure, but do not form a comprehensive periodic-variable or flare search. Further checks include source centroid motion, image-level deblending, source color and size, high-resolution host constraints, a complete binary-lens degeneracy search and injection/recovery selection efficiency.
+
+This research has made use of publicly available data (https://kmtnet.kasi.re.kr/ulens/) from the KMTNet system operated by the Korea Astronomy and Space Science Institute (KASI) at three host sites of CTIO in Chile, SAAO in South Africa, and SSO in Australia. Data transfer from the host site to KASI was supported by the Korea Research Environment Open NETwork (KREONET). Survey reference: [Kim et al. 2016, JKAS 49, 37](https://doi.org/10.5303/JKAS.2016.49.1.37).
