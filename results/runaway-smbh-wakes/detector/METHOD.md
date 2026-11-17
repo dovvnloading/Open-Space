@@ -4,7 +4,7 @@ Run with Python, NumPy, SciPy and the system CFITSIO shared library. The summary
 
 ## Search
 
-Run from the directory containing this file. `INPUTS` is the cutout cache from the Q1 acquisition script, `TILES` is its frozen tile CSV, and `RUNS` is an empty or matching per-stamp checkpoint directory.
+Run from the directory containing this file. `INPUTS` is the verified cutout cache and `TILES` is the frozen tile CSV. `SCREEN`, `CALIBRATION`, `COMBINED` and `SUMMARY` are separate, initially absent external D: directories; interrupted stages are not resumed in place.
 
 ```bash
 # All input and output paths are absolute D: paths. Each output must be new.
