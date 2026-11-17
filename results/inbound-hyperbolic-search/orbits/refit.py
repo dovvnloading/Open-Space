@@ -38,7 +38,6 @@ MUS = np.r_[prior.GM, prior.PLANET_GM]
 GM_TOTAL = MUS.sum()
 ARCSEC = 180 * 3600 / np.pi
 C = 173.144632674240
-DE_START = 2396754.5  # DE440s begins 1849-12-26; retain interpolation margin
 OBS_TIME_LIMIT = 7  # Light-time interpolation pad before first reception in days.
 
 def stations():
@@ -61,7 +60,7 @@ def observations(obj, eph):
     lines = (DATA/(obj+".obs")).read_text().splitlines()
     for row in lines:
         mode, site = row[14], row[77:80]
-        if mode not in " CBAOPTc" or site not in sites:
+        if mode not in " CBAOPTMc" or site not in sites:
             rejected["unsupported mode or station"] += 1
             continue
         try:
@@ -121,14 +120,13 @@ def ephemeris(eph, first,last,step):
     xyz=np.stack([eph[0,j].compute(days).T/AU for j in [10,1,2,3,4,5,6,7,8]],axis=1)
     return CubicSpline(days,xyz,axis=0,extrapolate=False)
 
-def derivative(t,y,positions,ng):
-    npar=6+int(ng)
+def derivative(t,y,positions,npar):
     x=y[:3]
     d=positions(t)-x
     r2=np.einsum("ij,ij->i",d,d)
     inv=r2**-1.5
     mus=MUS.copy()
-    if ng:
+    if npar==7:
         # A1 in units 10^-8 au/day^2, positive outward, inverse square.
         mus[0]-=y[6]*1e-8
     coeff=mus*inv
@@ -136,25 +134,48 @@ def derivative(t,y,positions,ng):
     vmat=y[npar:].reshape(6,npar)
     grad=3*np.einsum("i,ij,ik->jk",coeff/r2,d,d)-coeff.sum()*np.eye(3)
     partial=grad@vmat[:3]
-    if ng:
+    if npar==7:
         partial[:,-1]-=1e-8*inv[0]*d[0]
-    base=np.r_[y[3:6],accel]
-    if ng:
-        base=np.r_[base,0.]
+    if npar==8:
+        # Marsden, Sekanina & Yeomans 1973, symmetric water-ice law normalized at 1 au.
+        r=np.sqrt(r2[0])
+        er=-d[0]/r
+        vhel=y[3:6]-positions(t,1)[0]
+        vr=er@vhel
+        vt=vhel-vr*er
+        speed=np.linalg.norm(vt)
+        et=vt/speed
+        z=(r/2.808)**5.093
+        g=.111262*(r/2.808)**(-2.15)*(1+z)**(-4.6142)
+        dg_dr=g*(-2.15-4.6142*5.093*z/(1+z))/r
+        per=np.eye(3)-np.outer(er,er)
+        det=(np.eye(3)-np.outer(et,et))/speed
+        der=per/r
+        det_dx=det@(-np.outer(er,vhel@der)-vr*der)
+        a1,a2=y[6:8]*1e-8
+        direction=a1*er+a2*et
+        accel+=g*direction
+        px=g*(a1*der+a2*det_dx)+np.outer(direction,dg_dr*er)
+        pv=g*a2*(det@per)
+        partial+=px@vmat[:3]+pv@vmat[3:]
+        partial[:,6:8]+=1e-8*g*np.column_stack([er,et])
+    base=np.r_[y[3:6],accel,np.zeros(npar-6)]
     return np.r_[base,vmat[3:].ravel(),partial.ravel()]
 
 def integrate(params,start,stop,positions,events=None,dense=True):
     n=len(params)
     aug=np.r_[params,np.eye(6,n).ravel()]
     solution=solve_ivp(derivative,(start,stop),aug,method="DOP853",rtol=1e-11,atol=2e-13,
-                       args=(positions,n==7),dense_output=dense,events=events)
+                       args=(positions,n),dense_output=dense,events=events)
     if not solution.success:
         raise RuntimeError(solution.message)
     return solution
 
-def fit(seed_state,epoch,t,observers,east,north,sig,positions):
+def fit(seed_state,epoch,t,observers,east,north,sig,positions,outward=False):
     npar=len(seed_state)
     memo={}
+    if len(t)<max(7,npar+1):
+        raise ValueError("Too few positions for independent refit")
     def calc(state):
         key=tuple(state)
         if key not in memo:
@@ -185,9 +206,12 @@ def fit(seed_state,epoch,t,observers,east,north,sig,positions):
         return (calc(x)[0][mask]/sig[mask,None]).ravel()
     def j(x):
         return (calc(x)[1][mask]/sig[mask,None,None]).reshape(-1,npar)
+    lower=np.full(npar,-np.inf)
+    if outward:
+        lower[6]=0
     x0=seed_state
     for passno in range(3):
-        result=least_squares(f,x0,jac=j,x_scale="jac",loss="soft_l1" if passno==0 else "linear",
+        result=least_squares(f,x0,jac=j,x_scale="jac",bounds=(lower,np.inf),loss="soft_l1" if passno==0 else "linear",
                              ftol=1e-8,xtol=1e-10,gtol=1e-6,max_nfev=70)
         if not result.success: raise ValueError(result.message)
         x0=result.x
@@ -206,7 +230,7 @@ def fit(seed_state,epoch,t,observers,east,north,sig,positions):
 def inbound(obj,params,cov,epoch,eph):
     # The outer-boundary state is measured with respect to SSB, using total
     # system GM. C/2024 L5 uses a deliberate 2020 pre-Saturn encounter epoch.
-    stop = 2458849.5 if obj=="2024-L5" else max(DE_START+10,epoch-140*365.25)
+    stop = 2458849.5 if obj=="2024-L5" else max(max(seg.start_jd for seg in eph.segments if seg.center==0)+12,epoch-450*365.25)
     positions=ephemeris(eph,stop-2,epoch+1,1.)
     def crossing(radius,terminal):
         def event(t,y,*args):
@@ -229,7 +253,7 @@ def inbound(obj,params,cov,epoch,eph):
         if label.endswith("au"):
             # Different solutions reach this sphere at different times.
             tgrad=-(pos/radius)@stm[:3]/vr
-            stm=stm+np.outer(derivative(when,state,positions,n==7)[:6],tgrad)
+            stm=stm+np.outer(derivative(when,state,positions,n)[:6],tgrad)
         sig=np.sqrt(max(0,(g@stm)@cov@(g@stm)))
         summaries[label]={"jd_tdb":when,"radius_au":radius,"inbound_radial_au_d":vr,
                           "inverse_a_au_inv":ir,"formal_sigma_inverse_a":sig,
@@ -244,6 +268,8 @@ def check_holdouts(obj,initial,epoch,eph,t,observers,east,north,sig,groups,posit
     top=Counter(station).most_common(1)[0][0]
     cuts={"first_utc_night":nights==nights.min(),"last_utc_night":nights==nights.max(),
           "largest_station_"+str(top):station==top}
+    if np.any(station=="I41"):
+        cuts["ZTF_I41"]=station=="I41"
     tests={}
     for name,drop in cuts.items():
         try:
@@ -274,7 +300,8 @@ def run():
         for i in range(0,len(encoded),6000):
             print("OBS_CHUNK",src.name,i,encoded[i:i+6000],flush=True)
     output=DATA/"refits.json"
-    with SPK.open(str(CACHE/"de440s.bsp")) as eph:
+    kernel=CACHE/"de440.bsp"
+    with SPK.open(str(kernel if kernel.exists() else CACHE/"de440s.bsp")) as eph:
         for obj in NAMES:
             entry={"models":{}}
             report[obj]=entry
@@ -285,17 +312,26 @@ def run():
                 pos=ephemeris(eph,t.min()-OBS_TIME_LIMIT-2,epoch+1,.25)
                 entry.update(n_ground_optical=len(t),n_station_nights=len(set(groups)),
                              observed_jd_tdb=[float(t.min()),float(t.max())],excluded_rows=dropped)
-                for kind in (["gravity","radial_r2"] if obj in {"2025-V1","1I","1997-P2","2008-J4"} else ["gravity"]):
+                models=["gravity"]
+                if obj in {"2025-V1","1I","1997-P2","2008-J4"}:
+                    models.append("radial_r2")
+                if obj=="2025-V1":
+                    models.extend(["marsden_signed","marsden_outward"])
+                gravity_seed=initial
+                for kind in models:
                     try:
-                        state=initial if kind=="gravity" else np.r_[initial,0.]
-                        x,cov,mask,res,redchi=fit(state,epoch,t,stations_,east,north,sig,pos)
-                        initial=x[:6].copy()
+                        nng=2 if kind.startswith("marsden") else int(kind=="radial_r2")
+                        state=np.r_[gravity_seed,np.zeros(nng)]
+                        x,cov,mask,res,redchi=fit(state,epoch,t,stations_,east,north,sig,pos,
+                                                  outward=kind=="marsden_outward")
+                        if kind=="gravity":
+                            gravity_seed=x.copy()
                         summary={"epoch_jd_tdb":epoch,"state_ssb_icrf":x.tolist(),"covariance":cov.tolist(),
                                  "used":int(mask.sum()),"omitted_by_clipping":int((~mask).sum()),
                                  "rms_per_coordinate_as":float(np.sqrt(np.mean(res[mask]**2))),
                                  "weighted_reduced_chi2":float(redchi),
                                  "boundaries":inbound(obj,x,cov,epoch,eph)}
-                        if obj=="2025-V1" and kind=="gravity":
+                        if obj=="2025-V1" and kind in {"gravity","marsden_signed"}:
                             summary["holdouts"]=check_holdouts(obj,x,epoch,eph,t,stations_,east,north,sig,groups,pos)
                         entry["models"][kind]=summary
                         print("FIT",obj,kind,summary["used"],summary["rms_per_coordinate_as"],
@@ -309,6 +345,7 @@ def run():
             output.write_text(json.dumps(report,indent=2,allow_nan=False)+"\n")
             print("OBJECT_OUT",obj,json.dumps(entry),flush=True)
             (DATA/"initialization_queries.json").write_text(json.dumps(receipts,indent=2)+"\n")
+    print("SEED_QUERIES",json.dumps(receipts),flush=True)
     if not any("boundaries" in m for entry in report.values() for m in entry["models"].values()):
         raise RuntimeError("No independent orbit propagated")
 

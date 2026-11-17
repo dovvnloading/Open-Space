@@ -113,13 +113,17 @@ def acquire():
     for file,urls in {
         "stations.txt":["https://minorplanetcenter.net/iau/lists/ObsCodes.html",
                         "https://www.projectpluto.com/obscodes.htm"],
+        "de440.bsp":["https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de440.bsp",
+                     "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440.bsp"],
         "de440s.bsp":["https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de440s.bsp",
                       "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp"],
     }.items():
         for k,url in enumerate(urls):
             try:
                 b=retrieve(url,f"{k}-{file}",receipts)
-                if file.endswith("bsp") and digest(b)!="c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2":
+                if file=="de440.bsp" and (not b.startswith(b"DAF/SPK") or len(b)<100_000_000):
+                    raise ValueError("Incomplete long DE440 kernel")
+                if file=="de440s.bsp" and digest(b)!="c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2":
                     raise ValueError("DE440s checksum differs from prior repository verification")
                 if file=="stations.txt" and b"Greenwich" not in b:
                     raise ValueError("missing observatory table")
