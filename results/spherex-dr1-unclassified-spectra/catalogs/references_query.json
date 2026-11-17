@@ -1,0 +1,9 @@
+{
+  "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&QUERY=SELECT+h.oidref%2Cr.bibcode%2Cr.title%2Cr.doi+FROM+has_ref+AS+h%0AJOIN+ref+AS+r+ON+h.oidbibref%3Dr.oidbib+WHERE+h.oidref+IN+%28312450%2C6992189%2C29427522%29%0AORDER+BY+oidref%2Cbibcode&FORMAT=csv&MAXREC=50000",
+  "query": "SELECT h.oidref,r.bibcode,r.title,r.doi FROM has_ref AS h\nJOIN ref AS r ON h.oidbibref=r.oidbib WHERE h.oidref IN (312450,6992189,29427522)\nORDER BY oidref,bibcode",
+  "status": 200,
+  "utc": "2026-11-17T09:32:37.115225+00:00",
+  "rows": 9,
+  "sha256": "e5f8176b99b6d6716913108ef5629d87665c513e6368baa04018607c681090ed",
+  "bytes": 1328
+}

@@ -1,0 +1,9 @@
+{
+  "utc": "2026-11-17T09:27:45.150367+00:00",
+  "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+b.oid%2Cb.main_id%2Cb.ra%2Cb.dec%2Cb.otype%2Cb.sp_type%2Cb.rvz_redshift%2C%0Ab.rvz_type%2Cb.rvz_bibcode%2Cb.nbref%0AFROM+basic+AS+b%0AWHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C270%2C66.56%2C0.52%29%29%0AORDER+BY+oid",
+  "query": "SELECT b.oid,b.main_id,b.ra,b.dec,b.otype,b.sp_type,b.rvz_redshift,\nb.rvz_type,b.rvz_bibcode,b.nbref\nFROM basic AS b\nWHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',270,66.56,0.52))\nORDER BY oid",
+  "status": 200,
+  "rows": 732,
+  "bytes": 67840,
+  "sha256": "80e7b56c75a49a26145eba5d021cae96d66a1b40ffdbacb3054d9d7c62e9a4d8"
+}
