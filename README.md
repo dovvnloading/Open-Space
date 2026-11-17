@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 185 entries: 86 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 14 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 187 entries: 87 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 15 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -132,6 +132,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **A 9.5-hour eclipse of Jupiter's moon Sinope (17–18 Oct 2037).** The moon will sit far enough from Jupiter in our sky to be observed during the eclipse. *Prediction* · [Details](results/sinope-2037-jupiter-eclipse/README.md)
 - **Saturn's rings will shade its moon Phoebe (1–3 Mar 2032).** The B ring should twice remove about 98% of Phoebe's sunlight. *Prediction* · [Details](results/phoebe-ring-shadow-2032/README.md)
 - **Saturn's A ring will pass in front of a radio source (28 Nov 2030).** Some radio observatories will see it, even though the view from Earth's centre misses the ring. *Prediction* · [Details](results/saturn-rfc-j0413/README.md)
+- **Perdita appeared away from its predicted position in two JWST visits.** The known moon lay a median 0.50 and 1.17 arcseconds from the nominal JPL ephemeris. The observing team had previously reported a qualitative discrepancy; the two-visit circular fit has alternative orbit aliases. *Measured* · [Details](results/ice-giant-moon-search/README.md)
 - **Saturn's moon S/2023 S 38 probably has a gentler orbit than listed.** The discovery measurements favour the moderately stretched orbit its discoverers proposed over the extreme public solution. *Measured* · [Details](results/saturn-s38-orbit-solutions/README.md)
 - **Did Neptune's moon Nereid pass through Triton's shadow (31 Jan 2026)?** Current JPL orbits say yes, while an older independent orbit says no. Archive images taken at that time could settle it. *Prediction* · [Details](results/triton-nereid-eclipses/README.md)
 - **Uranus's moons Umbriel and Ariel will eclipse three times in 22 hours (12–13 Mar 2050).** *Prediction* · [Details](results/umbriel-ariel-2050/README.md)
@@ -160,6 +161,8 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 ### Stars, binaries and multiple-star systems
 
 - **A high-speed star may escape the Milky Way.** DESI DR1 and Gaia DR3 give source 1717410430709663616 a Galactocentric speed of 697 km/s. All 4,096 draws escape in two reference Galactic potentials but remain bound in a heavier halo. The DESI velocity has only one epoch (binary motion untested), the modeled trajectory crosses the disk, but its origin remains open, and discovery priority remains open. *Candidate* · [Details](results/dr1-dr19-unbound-stars/README.md)
+
+- **No verified laser-like emission in a targeted DESI DR1 stellar search.** All 10 persistent narrow residuals in 190 audited repeat-observed stars match the stellar Li I doublet; five independent-field stars reproduced a template false positive on separate nights. Per-star conditional laser-power limits are provided. This does not constrain unsearched fields or intermittent emitters. *Null result* · [Details](results/desi_dr1_optical_seti/README.md)
 
 **Eclipsing binaries and star systems**
 

@@ -1,0 +1,148 @@
+{
+  "start_utc": "2022-01-01",
+  "end_exclusive_utc": "2026-11-17",
+  "retrieved_utc": "2026-11-17T02:27:50.343448+00:00",
+  "endpoint": "https://mast.stsci.edu/api/v0/invoke",
+  "service": "Mast.Caom.Filtered",
+  "columns": [
+    "obsid",
+    "obs_id",
+    "obs_collection",
+    "instrument_name",
+    "target_name",
+    "t_min",
+    "t_max",
+    "t_exptime",
+    "proposal_id",
+    "calib_level",
+    "filters",
+    "dataRights",
+    "dataproduct_type",
+    "s_ra",
+    "s_dec",
+    "mtFlag",
+    "intentType"
+  ],
+  "filters": [
+    {
+      "paramName": "obs_collection",
+      "values": [
+        "HST",
+        "JWST"
+      ]
+    },
+    {
+      "paramName": "dataRights",
+      "values": [
+        "PUBLIC"
+      ]
+    },
+    {
+      "paramName": "t_min",
+      "values": [
+        {
+          "min": 59580.0,
+          "max": 61361.0
+        }
+      ]
+    }
+  ],
+  "query_union": [
+    [
+      "Uranus",
+      "name",
+      [
+        {
+          "paramName": "target_name",
+          "values": [],
+          "freeText": "%URAN%"
+        }
+      ]
+    ],
+    [
+      "Uranus",
+      "sky",
+      [
+        {
+          "paramName": "s_ra",
+          "values": [
+            {
+              "min": 37.876125295865414,
+              "max": 63.77591511377772
+            }
+          ]
+        },
+        {
+          "paramName": "s_dec",
+          "values": [
+            {
+              "min": 14.246278407356863,
+              "max": 21.38387543189678
+            }
+          ]
+        }
+      ]
+    ],
+    [
+      "Neptune",
+      "name",
+      [
+        {
+          "paramName": "target_name",
+          "values": [],
+          "freeText": "%NEPTUN%"
+        }
+      ]
+    ],
+    [
+      "Neptune",
+      "sky",
+      [
+        {
+          "paramName": "s_ra",
+          "values": [
+            {
+              "min": 0.0,
+              "max": 4.6083245726002815
+            }
+          ]
+        },
+        {
+          "paramName": "s_dec",
+          "values": [
+            {
+              "min": -5.2096108534263035,
+              "max": 0.7000937999757014
+            }
+          ]
+        }
+      ]
+    ],
+    [
+      "Neptune",
+      "sky",
+      [
+        {
+          "paramName": "s_ra",
+          "values": [
+            {
+              "min": 351.2457944093387,
+              "max": 360.0
+            }
+          ]
+        },
+        {
+          "paramName": "s_dec",
+          "values": [
+            {
+              "min": -5.2096108534263035,
+              "max": 0.7000937999757014
+            }
+          ]
+        }
+      ]
+    ]
+  ],
+  "sky_radius_arcmin": 10,
+  "unique_observations": 1492
+}

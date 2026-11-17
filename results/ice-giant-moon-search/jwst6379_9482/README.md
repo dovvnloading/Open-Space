@@ -1,0 +1,68 @@
+# Two deep JWST visits to Uranus, February and October 2025
+
+**No new moon passed the two-visit search.** In the 79,500–80,500 km interval between Perdita and Puck, 21 of 21 artificial moons at **0.10 μJy in F150W2 (AB 26.40)** survived blind discovery, linkage across 247 days and confirmation in both sets of native integrations. This result applies to observable, circular equatorial orbits that stayed clear of known moons. Including observable orbits removed by the known-moon veto gives **21/36** at the same flux; the 15 vetoed draws did not undergo native confirmation. The exact 95% lower bound for the 21 clear observable draws is 83.9%. A real compact source in both visits follows **Perdita**, offset by 16.2 and 37.7 sky pixels from its nominal position. [Native recovery record](native_plants/report.json) · [Measured astrometry](psf_astrometry/astrometry.csv) · [Independent identification against the NASA discovery image](identity/IDENTIFICATION.md)
+
+## Search and candidate dispositions
+
+The search uses ten February 2 exposures from program 6379 and six October 7 exposures from program 9482, all on NIRCam NRCB1 in F150W2. Each exposure contains ten integrations. Limb fits register each exposure to a 0.031″-pixel planet-centered tangent plane. The search masks the disk, projected bright rings and exposure-length trails of 29 known moons. It uses Horizons and the URA184 kernel for S/2025 U1. A median constructed from other exposures removes stationary rings and planet glare. The trailed point-spread function is integrated at 129 time samples per exposure. [Image inputs and fitted centers for February](inputs6379.json) · [October inputs](../jwst9482/inputs.json) · [Astrometric conventions](../GEOMETRY.md)
+
+| Stage | February 6379 | October 9482 |
+|---|---:|---:|
+| Trial circular equatorial orbits, 54,500–86,000 km | 60,960 | 60,960 |
+| With adequate image coverage | 34,482 | 33,397 |
+| Passing preliminary positive / inverted score cuts | 1,546 / 1,382 | 1,107 / 968 |
+| Retained positive / inverted local maxima | 23 / 12 | 16 / 10 |
+
+Trials have 250 km radius spacing and 0.75° initial phase spacing. Eligibility requires usable data in three or more exposures, with coverage in both chronological halves. Each retained maximum scores at least 7 across the visit, at least 3 with any one contributing exposure removed, and at least 2 in each half. The 5 × 5 grid window used for local maxima allows several trial peaks per physical source. Removing stationary structure and using an empirical radial noise model cannot give a calibrated global false-alarm probability in the residual glare. [February results](peaks6379/parameters.json) · [October results](peaks9482/parameters.json)
+
+The two visits were 247.19704 days apart. For nearby radial maxima, we varied both phases by up to 0.375°, solved for every integer revolution count consistent with both radii within 375 km, and scored each continuous orbit in both real visits. This produced 628 positive/positive linked templates in 30 distinct pairs of grid maxima. Reversing the sign in October, February or both produced 738, 123 and 246 passing links, respectively. These correlated counts describe the structured background. [Linkage parameters](links/parameters.json) · [All linked orbits and flux estimates](links/passing_pairs.csv)
+
+The known-moon veto compares every point on a trial trail against every point on a known-moon trail **during the same exposure**, since the exposure image sums the arrival times. Any separation within 10 sky pixels in any of the 16 exposures excludes the complete candidate orbit. The veto also covers Perdita’s measured trajectory. It removed 419 of the 628 positive links, including 21 whose trails came within 0.82–1.62 pixels of the measured Perdita trail, a group of nine within 5.7 pixels of Belinda and a group of 27 within 6.9 pixels of Puck. A search that compared only simultaneous positions missed these encounters. [Every link and separation](known_veto/link_distances.csv) · [Exclusion counts](known_veto/summary.json)
+
+All 209 remaining aliases were followed through the original **100 + 60 approximately 204 s integrations**, using the actual integration times, different telescope orientations and dithers. We removed a detector-fixed median per exposure, high-pass filtered the native images, then stacked along the predicted motion. The central peak within three pixels had to exceed 5 times the local scaled median absolute deviation (MAD) in each visit. The same pixel also had to exceed 2 local scaled MADs in each chronological half of that visit. **Zero passed.** The highest weaker-visit contrast was 2.41. A separate sky-resampled reduction also found zero with peak contrast 3 in both visits. No surviving source reached the stage of individual sidereal/detector trajectory or ghost discrimination. [Every native confirmation score](known_veto/confirmation.csv) · [Independent reduced-image check](known_veto/survivor_native.csv)
+
+## Measured sensitivity
+
+We drew 120 circular equatorial test orbits uniformly in radius (79,500–80,500 km) and phase before looking at their scores. Of those, 116 had adequate coverage in both visits. Independently, 57 of the original 120 cleared the supplemental 11.5-pixel separation criterion for injected trajectories. This reserves 1.5 pixels for association error around the 10-pixel veto. At each flux we selected 36 of the 116 observable orbits without replacement. The different flux bins draw different phases; some individual orbits appear at multiple fluxes.
+
+| F150W2 flux | AB | Exposure-stack discovery and linkage before extra veto | Discovery, veto and native confirmation on the 36 drawn orbits | Same full search on the clear subset | 95% exact interval on clear subset |
+|---:|---:|---:|---:|---:|---:|
+| 0.05 μJy | 27.15 | 17/36 | 7/36 | 7/12 | 27.7–84.8% |
+| 0.10 μJy | 26.40 | 33/36 | 21/36 | 21/21 | 83.9–100% |
+| 0.30 μJy | 25.21 | 34/36 | 20/36 | 20/20 | 83.2–100% |
+
+Each artificial source was injected separately, before subtracting planet-fixed structure. Each visit was searched blind across all phases on five radius rows. A successful recovered alias had to remain within 1.5 sky pixels of the true path at every exposure midpoint in both visits. We repeated confirmation in detector space by converting the modeled flux to original RATEINTS count rates with the actual CRDS flat and CAL flux scale, integrating the moving, subpixel-sampled PSF over each integration, inserting it before temporal subtraction, and stacking at the recovered alias. Padded known-moon regions count as misses in the population-wide column. The two-sided binomial intervals reflect finite trials only. The injections share an adopted NIRCam encircled-energy profile, preserve the original noise/DQ, and exclude source photon noise, eccentricity, inclination and phase-dependent brightness. The local injection bank ends at 79,500 and 80,500 km, so its edge behavior can differ from the full blind bank. [Calibrated-stack plants](injections/report.json) · [Replay at recovered positions](clear_replay/plants.csv) · [Every native plant outcome](native_plants/native_dispositions.csv)
+
+At 0.10 μJy the illustrative diameters are **12.8, 9.0 and 6.4 km** for band geometric albedos **0.04, 0.08 and 0.16**. At 0.30 μJy they are 22.1, 15.7 and 11.1 km. These use the CALSPEC solar spectrum, SVO F150W2 throughput, mean February heliocentric and observer distances of 19.548 and 19.351 AU, and a phase factor of one. Diameter scales as the square root of flux and the inverse square root of albedo and phase factor. No completeness estimate from this pair covers the full 54,500–86,000 km search or arbitrary orbital planes. [Size inputs and calculation at 0.30 μJy](f150w2_size.json)
+
+## Astrometry of Perdita
+
+A nearby compact source remained bright in the native integrations when the nominal exposure-stack track failed. Trailed PSF plus local sky-plane fits yielded 100 accepted February positions and 53 October positions. Independent visit-only circular fits gave 76,498 and 76,336 km. A joint equatorial circular fit gives **76,418.12 km** and mean longitude **254.74675°** at emission JD TDB 2460955.765061979, on the +387-cycle solution. Its RMS residual is 0.37 sky pixel in February and 0.41 in October. The next solution has +386 cycles and 76,549.85 km, with respective RMS values of 0.30 and 0.69 pixel. Deleting complete exposures on the preferred alias gives conditional standard errors of 0.015 km and 0.023° with the pole, J2/J4, registration, cycle count and circular orbit fixed. The independent single-visit fits show how strongly these assumptions affect the inferred radius. [Fits to the integration data](psf_astrometry/native_fits.csv) · [Both visits and alternative cycle counts](psf_astrometry/summary.json) · [All enumerated orbital fits](psf_astrometry/circular_aliases.csv)
+
+Relative to nominal Perdita, the median equatorial longitudes differ by −5.596° in February and −12.528° in October in the adopted orbital basis. The within-visit dispersions are 0.162° and 0.107°. A separate NAIF SPK calculation reproduces the Horizons tangent-plane positions to within 0.0017 sky pixel. The February source registers to the compact object labelled Perdita in NASA’s published image. In October the phase-adjusted known orbit predicts the withheld half of the visit to 0.57 native pixel RMS. These checks establish the basis for the empirical veto of this known moon. The early threshold-centroid diagnostic in `identity/february_astrometry.csv` was used for registration of the publication graphic. The quantitative orbit uses the PSF fits in `psf_astrometry`. [Independent SPK comparison and block errors](psf_astrometry/ephemeris_checks.json) · [Image identification](identity/IDENTIFICATION.md) · [October native photometry](../jwst9482/integration_check/photometry.json)
+
+### F150W2 photometry of Perdita
+
+The throughput-corrected, seven-pixel-radius aperture measurement gives **0.389 μJy (AB 24.92)** across six October exposures, with a between-exposure scaled MAD of **0.052 μJy**. This measurement admits corrected jumps. With stricter jump rejection, no aperture passed the acceptance cuts. An independent fit of the radial trailed PSF to that stricter data subset gives **0.645 μJy** across 15 integrations in four October exposures (between-exposure scaled MAD 0.111 μJy). Only a median 27% of the modeled total PSF flux had valid pixels in those fits. The corresponding February result is 0.668 μJy, from 26 integrations in eight exposures (scaled MAD 0.067 μJy, median PSF support 27%). The October method difference of 0.256 μJy exceeds the exposure-to-exposure scatter. We use the aperture value for the October magnitude and treat the sparse-coverage PSF estimates as diagnostics. [October aperture measurement and flux calibration](../jwst9482/integration_check/photometry.json) · [Per-integration strict-DQ PSF fits](psf_astrometry/native_photometry.csv) · [PSF estimator](source_photometry.py)
+
+## Reproduction
+
+Run from the parent result directory with NumPy, SciPy, Astropy and jplephem. The archives list the exact exposure filenames and hashes. The range ledger records the original FITS filenames, byte offsets, byte counts and SHA-256 values for native integrations. The native reader downloads missing public FITS ranges on demand. Keep the generated cube and its same-name `.inputs.json` sidecar together. Use fresh output directories for reruns. [February calibrated exposures](inputs6379.json) · [October calibrated exposures](../jwst9482/inputs.json) · [Native FITS range hashes](vetting/range_hashes.csv) · [Official source and geometry commands](../GEOMETRY.md)
+
+For each epoch, build its ephemeris over the shutter-open interval and prepare the named CAL files with 421 pixels per side, 129 trail samples, 0.031″ pixels, five-pixel exclusion padding and corrected-jump CAL pixels allowed. Use `centers_6379.csv` and `../jwst9482/centers.csv` for the two programs. The per-epoch search replaces the initial Gaussian with the tabulated STScI radial PSF. Let `E` and `L` be the resulting early and late cube paths; `EE` the STScI Encircled_Energy_SW_ETCv2.txt; `F` the CAL file directory. Use writable directories `H1`, `P1`, `H2`, `P2` for the two native header/pixel pairs, and `M1`, `M2` as the output native map paths. The following uses the released fitted ephemeris check for the empirical Perdita veto.
+
+```sh
+D=jwst6379_9482
+python "$D/deep_bank.py" "$E" "$EE" out_first
+python "$D/deep_bank.py" "$L" "$EE" out_late
+python "$D/link_aliases.py" "$E" "$L" out_first out_late "$EE" out_links
+python "$D/alias_plants.py" "$E" "$L" "$EE" out_plants
+python "$D/empirical_veto.py" "$E" "$L" out_links out_plants "$D/psf_astrometry/ephemeris_checks.json" out_veto
+python "$D/native_orbits.py" "$E" "$H1" "$P1" "$M1" native_first --grid 74500 77500 100 .5
+python "$D/native_orbits.py" "$L" "$H2" "$P2" "$M2" native_late --grid 74500 77500 100 .5
+python "$D/confirm_survivors.py" "$E" "$L" "$M1" "$M2" "$H1" "$P1" "$H2" "$P2" out_links out_veto out_veto/confirmation.csv
+python "$D/alias_plants.py" "$E" "$L" "$EE" out_replay --clear-dispositions out_veto/plant_dispositions.csv
+python "$D/native_confirmation_plants.py" "$E" "$L" "$M1" "$M2" "$H1" "$P1" "$H2" "$P2" "$F" "$EE" jwst_nircam_flat_0736.fits out_replay out_native
+```
+
+The seed is 16027. The scripts fetch the named CRDS flat when missing and record its checksum. The provisional two-epoch exposure-stack links have per-visit flux estimates for diagnostics. No new source passed the native measurement stage for a discovery magnitude or orbit.
