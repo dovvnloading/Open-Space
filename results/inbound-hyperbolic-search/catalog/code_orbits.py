@@ -53,7 +53,9 @@ def download(url):
         raw = response.read()
         stamp = response.headers.get("Date")
     doc = Tables()
-    doc.feed(raw.decode("utf-8"))
+    decoded = raw.decode("utf-8")
+    doc.feed(decoded)
+    doc.barycentric = "barycentric ecliptic" in decoded.lower()
     return doc, {"url":url,"bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest(),"http_date":stamp}
 
 
@@ -83,12 +85,12 @@ def main(out):
     outputs = []
     receipts = [index_receipt]
     for i, (ident, model) in enumerate(sorted(models.items())):
-        url = urljoin(BASE,"orbit.php?") + "?" + urlencode({"int":model,"orb":"original"})
+        url = urljoin(BASE,"orbit.php") + "?" + urlencode({"int":model,"orb":"original"})
         try:
             doc, rec = download(url)
             receipts.append(rec)
             flat = [x for row in doc.rows for x in row]
-            if not any("barycentric" in x.lower() for x in flat):
+            if not doc.barycentric and not any("barycentric" in x.lower() for x in flat):
                 raise ValueError(f"Original barycentric header missing: {doc.rows[-10:]}")
             energy = next(row for row in doc.rows if row and "reciprocal semi-major axis" in row[0].lower())
             def value(s):
@@ -118,6 +120,8 @@ def main(out):
     summary={"matched":len(models),"fetched_with_uncertainty":len(outputs),
              "negative_1_over_a":sum(r["published_original_1_over_a_micro_au_inv"]<0 for r in outputs),
              "negative_beyond_five_sigma":[r for r in outputs if r["published_original_1_over_a_micro_au_inv"]+5*r["sigma"]<0]}
+    if models and not outputs:
+        raise ValueError("No usable original orbit rows")
     (out/"code-summary.json").write_text(json.dumps(summary,indent=2)+"\n")
     print("CODE summary",json.dumps(summary),flush=True)
 
