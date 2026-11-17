@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 197 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 23 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 198 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 24 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -282,6 +282,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 **Black holes, outbursts and supernovae**
 
+- **No fast cosmic explosion confirmed in Rubin and ZTF public alerts.** A screen of observations from 1–16 November 2026 found 32 rapidly changing objects, but no validated explosion outside our Galaxy. Most coincide with older point sources, stars or flagged image residuals; two remain unresolved. Two of the alerts were the same asteroid. *Null result* · [Details](results/fast-extragalactic-alerts-2026/README.md)
 - **A candidate lone black hole bending a star's light.** Since 2025 an unseen object has magnified a star near the centre of our Galaxy (OGLE-2026-BLG-0058). Its slow, steady passage points to a dark object of about 11 solar masses, most likely a black hole, though a slow-moving ordinary star or white dwarf is not ruled out. Only one lone black hole has been confirmed so far. *Candidate* · [Details](results/ogle-dark-lenses/README.md)
 - **Infrared light from a black-hole candidate 3.3 days before its X-ray outburst was detected.** Swift J1745−26. *Measured* · [Details](results/swift-j1745-infrared/README.md)
 - **AT 2021aeuk entered a second bright-ultraviolet, faint-X-ray state.** *Measured* · [Details](results/at-2021aeuk/README.md)
