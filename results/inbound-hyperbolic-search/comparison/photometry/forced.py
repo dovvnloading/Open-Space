@@ -8,11 +8,15 @@ import json
 import math
 from pathlib import Path
 import sys
+from time import sleep
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 import numpy as np
 from astropy.io import fits
+from astropy.coordinates import SkyCoord
+from astropy.nddata import Cutout2D
+from astropy import units as u
 from astropy.wcs import WCS
 
 BASE=Path(sys.argv[1])
@@ -22,10 +26,10 @@ METADATA=BASE/"archive-results.json"
 HEADERS={"User-Agent":"Open-Space-archive/1.0 (+https://github.com/dovvnloading/Open-Space)"}
 
 
-def fetch(url):
+def fetch(url, limit=8_000_000):
     with urlopen(Request(url,headers=HEADERS),timeout=50) as response:
-        value=response.read(8_000_001)
-        if len(value)>8_000_000:
+        value=response.read(limit+1)
+        if len(value)>limit:
             raise ValueError("Response exceeds requested cutout size")
         return value,{"url":response.url,"bytes":len(value),"sha256":hashlib.sha256(value).hexdigest(),
                       "http_date":response.headers.get("Date")}
@@ -70,10 +74,27 @@ def image_url(row,suffix):
 
 def read_stamp(row,suffix):
     uri=image_url(row,suffix)
-    raw,receipt=fetch(uri)
-    with fits.open(io.BytesIO(raw)) as hdus:
-        h=next(p for p in hdus if p.data is not None and p.data.ndim==2)
-        return h.data.astype(float),h.header.copy(),receipt
+    attempts=[]
+    for attempt,address in enumerate([uri,uri.split("?")[0],uri]):
+        if attempt:
+            sleep(1.5**attempt)
+        try:
+            full="?" not in address
+            raw,receipt=fetch(address,48_000_000 if full else 8_000_000)
+            with fits.open(io.BytesIO(raw)) as hdus:
+                h=next(p for p in hdus if p.data is not None and p.data.ndim==2)
+                hdr=h.header.copy()
+                data=h.data
+                if full:
+                    pos=SkyCoord(row["pred_ra_deg"],row["pred_dec_deg"],unit="deg")
+                    cut=Cutout2D(data,pos,160*u.arcsec,wcs=WCS(hdr).celestial)
+                    data=cut.data
+                    hdr.update(cut.wcs.to_header(relax=True))
+                receipt["earlier_attempts"]=attempts
+                return data.astype(float),hdr,receipt
+        except Exception as exc:
+            attempts.append({"url":address,"error":str(exc)})
+    raise OSError(json.dumps(attempts))
 
 
 def aperture(data,x,y):

@@ -1,0 +1,15 @@
+# C/2025 V1 (Borisov) archival image search
+
+We found ten public ZTF science quadrants containing the comet’s predicted position before the first published astrometry on 2025 October 29 UTC. The observations are on October 18 (two exposures), 25 (three), 26 (two), and 27 (three), all in ZTF r. Seven additional exposure footprints coincide with the seven previously measured I41 positions on October 29, 30, 31 and November 1. The [discovery circular](https://minorplanetcenter.net/mpec/K25/K25V40.html) credits earlier observations on this comet.
+
+## Exposure-footprint checks
+
+| Archive | Query and coverage | Result |
+| --- | --- | --- |
+| ZTF / IRSA | All 18 consecutive windows from July 1 inclusive to November 2 exclusive, 2025 UTC. Each weekly query encloses the sampled comet path plus a 0.5° margin on every side. We interpolated the 497 six-hourly Palomar topocentric Horizons positions to each exposure time and tested those positions against the four retrieved quadrant corners. | 17 distinct nominal footprint matches, including ten exposures before the published arc. The count identifies candidate images. The original-epoch pixel and difference-image measurements have separate results below. |
+| DECam / NOIRLab | Archive raw science-object file records from four date-range queries; 19,899 exposures with valid center and time in the same UTC interval. We compared center directions with the interpolated Palomar ephemeris using a 1.5° radial prefilter. | Zero centers within 1.5°. Nearest center 3.9033°. The largest quadrature sum of the two projected Horizons three-sigma coordinate uncertainties over the grid is 139.3 arcsec. The check uses a padded field radius and supplies no DECam photometry. |
+| Pan-STARRS / MAST | The public DR1/DR2 survey archive covers the 2010–2015 period. | These products cannot supply a 2025 exposure. Later Pan-STARRS near-Earth-object survey imaging has separate access and coverage. [MAST image products](https://outerspace.stsci.edu/spaces/PANSTARRS/pages/298812333/PS1%2BImage%2BData%2BProducts) |
+
+The frozen [archive results](archive-results.json) carry ZTF image identifiers, timestamps and the four corners returned by IRSA. The [query receipts](archive-receipts.json) hash the original Horizons and weekly CSV responses, including windows with only a header. Gzip files contain the responses themselves. The [DECam results and query receipts](decam.json) include exact search parameters, archive-returned counts, and raw-response hashes. The CADC name-based response is kept for provenance. CADC’s local name resolver did not resolve this comet. [ZTF metadata documentation](https://irsa.ipac.caltech.edu/docs/program_interface/ztf_metadata.html) · [NOIRLab Astro Data Archive](https://astroarchive.noirlab.edu/)
+
+A position on a quadrant establishes a chance to observe the source. Earlier precovery requires a repeatable moving signal with a measured position, exposure midpoint, calibrated astrometry, and a check for stationary sources and chance background alignments. The known and prospective ZTF frames are distinguishable by date in the saved rows.

@@ -1,0 +1,11 @@
+# Forced photometry of C/2025 V1
+
+This aperture measurement checks the nominal JPL topocentric ephemeris independently of the [moving-source stacks and positional-uncertainty search](../../catalog/image-search/stack/). A single elevated aperture does not supply a new astrometric position.
+
+[Evidence](evidence/ztf_forced.json) includes exposure and midpoint coordinates, positional uncertainty, product URLs, data hashes, retries, mask diagnostics and shifted-aperture statistics. [The seven published ZTF observations](evidence/mpc_ztf_matches.json) were matched independently by their measured position, station and time. Their published positions were already present in the orbit fit.
+
+The aperture radius is six pixels. The local sky is the median in an annulus of radii 11–15 pixels. Bad science-image mask pixels are excluded when a matched mask is available. The empirical score compares the aperture flux above the offset-aperture median with 1.4826 times their median absolute deviation. These scores can have non-Gaussian tails. Fixed-offset controls share pixels and the instrument point-spread function. Science apertures can contain stars or diffuse emission from a static source. Aperture magnitudes have no correction for coma, trailing or lost light.
+
+In the second run the prominent nominal pre-arc science apertures were 4.50 of these scales on October 25 (20251025541736) and 4.17 on October 27 (20251027547164). The latter had a difference-image score of 4.38. On previously reported exposures the difference scores were 7.24 and 1.90 on October 29 and 23.08 on November 1. The measured center uses the `OBSJD` plus half the exposure from the FITS science header; the resulting time can vary slightly from the original MPC value. [ZTF product definitions](https://irsa.ipac.caltech.edu/docs/program_interface/ztf_metadata.html)
+
+Run `python comparison/photometry/forced.py catalog/image-search /path/to/output` from the result root with NumPy and Astropy. The archive search and its footprint list must be present. The [archive investigation](../../catalog/image-search/) uses multiple exposures, shifted controls and stationary-source checks to interpret these individual apertures.

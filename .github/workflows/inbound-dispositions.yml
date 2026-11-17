@@ -1,0 +1,31 @@
+name: Verify the joined inbound catalogue
+on:
+  push:
+    branches: ['research/inbound-hyperbolic-search']
+    paths:
+      - 'results/inbound-hyperbolic-search/batch/evidence/unpenalized/complete.json'
+      - 'results/inbound-hyperbolic-search/summarize.py'
+      - '.github/workflows/inbound-dispositions.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/inbound-hyperbolic-search
+          persist-credentials: false
+      - name: Join and serialize per-object dispositions
+        working-directory: results/inbound-hyperbolic-search
+        run: |
+          python summarize.py batch/evidence
+          python - <<'PY'
+          from pathlib import Path
+          import base64
+          for n in ("dispositions.csv.gz","counts.json"):
+              s=base64.b64encode((Path("batch/evidence")/n).read_bytes()).decode()
+              for i in range(0,len(s),4000):
+                  print("ARCHPART",n,i,s[i:i+4000])
+          PY

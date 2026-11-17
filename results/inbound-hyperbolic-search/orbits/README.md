@@ -18,6 +18,17 @@ Negative 1/a denotes positive orbital energy. The two Marsden runs converge to t
 | Largest station by number of observations, S89 | 16 | 0.86 | −0.01609 ± 0.00317 |
 | All ZTF observations, I41, Oct 29 to Nov 1 | 7 | 1.59 | −0.02197 ± 0.01286 |
 
+A second fit forced 1/a to zero on the incoming 50-au sphere and reoptimized every allowed orbital and acceleration parameter. All 117 positions were retained. The table gives the increase in weighted sky-position χ² relative to the corresponding unconstrained optimum. The numerical constraint penalty is excluded from each reported difference.
+
+| Force law | Δχ² for a parabolic inbound fit | Achieved 1/a at 50 au (au⁻¹) |
+|---|---:|---:|
+| Gravity | 25.37 | −6.3 × 10⁻⁷ |
+| Radial 1/r² | 10.19 | −3.0 × 10⁻⁷ |
+| Marsden, signed A1 and A2 | 1.06 | −1.6 × 10⁻⁸ |
+| Marsden, outward A1 and signed A2 | 3.39 | −1.1 × 10⁻⁷ |
+
+The signed parabolic profile uses inward A1. Requiring outward A1 places the parabolic solution on the A1 = 0 boundary, with A2 = +25.0 × 10⁻⁸ au/day². These differences quantify the measured sky-fit cost under the stated weights and force laws. The November 17 live MPC ADES query independently returned 117 dated records over the same arc, ending November 8, 2025 at 04:04:07 UTC.
+
 The free Marsden fit omitting the last night failed in backward propagation. The remaining complete Marsden holdouts and their residuals are recorded in the results file.
 
 ## Independent checks on catalogue examples
@@ -31,9 +42,13 @@ The free Marsden fit omitting the last night failed in backward propagation. The
 | C/1980 E1 | 180 | Bound on entry at 250 au before its Jupiter encounter, 1/a = (+26.02 ± 1.20) × 10⁻⁶ au⁻¹. |
 | C/1997 P2 | 95 | Gravity gives 1/a = (−38.0 ± 23.1) × 10⁻⁶ au⁻¹ at 250 au. An unconstrained inverse-square fit returns a large inward radial acceleration and never reaches the outer boundary. |
 | C/2008 J4 | 18 of 25 | Gravity gives −0.01932 ± 0.00367 au⁻¹ at 250 au after seven rejections. With free radial acceleration the fit keeps 21 observations and never reaches 50 au within the integration interval. The inferred energy depends on force law and data selection. |
-| C/1877 G2 | 11 | With a 5″ coordinate error floor the eleven micrometer positions give an excess below two formal standard deviations. |
+| C/1877 G2 | 11 at 5″ | All eleven micrometer positions yield −0.00514 ± 0.00362 au⁻¹ at 250 au. Tightening the error floor to 2″ rejects two dates and changes the apparent significance to 5.09σ. |
 
 These classifications are consistent with the published planetary-ejection mechanisms for C/1980 E1 and C/2024 L5. C/1997 P2 also has an independent CODE original-orbit solution of (−13.94 ± 13.77) × 10⁻⁶ au⁻¹. C/1997 P2 and C/2008 J4 were both discussed as possible interstellar objects in 2018. [de la Fuente Marcos et al., 2024](https://doi.org/10.1051/0004-6361/202451920) · [CODE C/1997 P2 original solution](https://pad2.astro.amu.edu.pl/CODE/orbit.php?int=1997p2a5&orb=original) · [2018 MNRAS Letters study](https://academic.oup.com/mnrasl/article/476/1/L1/4840245)
+
+## Historical error sensitivity
+
+For C/1877 G2 the 2″ fit rejects the 1877 April 16 and 20 measurements from station 520, leaving nine positions and giving 1/a = −0.00842 ± 0.00165 au⁻¹ at 250 au. Both the 5″ and the 10″ fits retain all eleven. At 10″, 1/a = −0.00514 ± 0.00724 au⁻¹. The fitted arc alone does not establish which uncertainty to assign to these measurements. We interpret the MPC M records as micrometer J2000 positions, use their tabulated times as UT1 and use the historical ΔT approximation for terrestrial time. Assessment of the original nineteenth-century reductions remains open. [MPC format](https://docs.minorplanetcenter.net/mpc-ops-docs/observations/mpc1992-format/) · [Historical ΔT](https://eclipse.gsfc.nasa.gov/LEcat5/deltatpoly.html)
 
 ## Data and reproduction
 
