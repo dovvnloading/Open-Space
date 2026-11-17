@@ -10,13 +10,14 @@ HERE=Path(__file__).resolve().parent
 def query(job):
     label,u=job
     receipt=dict(url=u,utc=datetime.now(timezone.utc).isoformat())
-    try:
-        with urlopen(u,timeout=150 if 'jpl' in label else 60) as r:
-            z=r.read();receipt.update(status=r.status,bytes=len(z),sha256=hashlib.sha256(z).hexdigest())
-            (HERE/(label+'.response')).write_bytes(z)
-    except Exception as exc:receipt['error']=str(exc)
+    # Fetch completely before changing the checked-in response or its receipt.
+    # A network failure must not replace a valid 200-status source receipt
+    # with an error report during offline replication.
+    with urlopen(u,timeout=150 if 'jpl' in label else 60) as r:
+        z=r.read();receipt.update(status=r.status,bytes=len(z),sha256=hashlib.sha256(z).hexdigest())
+    (HERE/(label+'.response')).write_bytes(z)
     (HERE/(label+'_receipt.json')).write_text(json.dumps(receipt,indent=2)+'\n')
-    print(label,receipt.get('status'),receipt.get('error'),flush=True)
+    print(label,receipt.get('status'),flush=True)
 
 def main():
     trials=json.loads((HERE/'positions.json').read_text()); jobs=[]
