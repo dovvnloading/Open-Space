@@ -35,6 +35,29 @@ jobs:
               actual=h.hexdigest()
               print('UPSTREAM_SHA256',name,'sha256',actual,'bytes',n,'expected',expected,'equal',actual==expected,'Last-Modified',r.headers.get('Last-Modified'),flush=True)
           PY
+  refreshed_itf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Re-extract exact F51 and X05 observations from today's newer ITF release
+        shell: bash
+        run: |
+          set -euo pipefail
+          python results/inbound-hyperbolic-search/tracklets/extract.py --output "$RUNNER_TEMP/newer-itf"
+          python - <<'PY'
+          from pathlib import Path
+          import json,os,hashlib
+          root=Path('results/inbound-hyperbolic-search/tracklets/run')
+          newer=Path(os.environ['RUNNER_TEMP'])/'newer-itf'
+          old=json.loads((root/'input.json').read_text())
+          fresh=json.loads((newer/'input.json').read_text())
+          for key in ('ps1_all_sha256','ps1_sha256','selected_sha256','ps1_date_window_all_sky_rows','ps1_patch_rows','primary_29day_rows','source_lines','selected_bytes'):
+            assert old[key]==fresh[key],(key,old[key],fresh[key])
+          for f in ('f51-all.mpc','f51.mpc','x05.mpc'):
+            assert (root/f).read_bytes()==(newer/f).read_bytes(),f
+          print('REFEREE_ITF_REFRESH',{'original_compressed_sha256':old['source_sha256'],'new_compressed_sha256':fresh['source_sha256'],'original_last_modified':old['response_headers']['Last-Modified'],'new_last_modified':fresh['response_headers']['Last-Modified'],'same_selected_bytes':True,'F51_rows':fresh['ps1_date_window_all_sky_rows'],'Rubin_current_window':fresh['primary_29day_rows'],'source_lines':fresh['source_lines']})
+          PY
   rubin:
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -96,5 +119,6 @@ jobs:
           for rec in now['receipts']:
             if rec['sha256']==original[rec['input']]['sha256'] and rec['bytes']==original[rec['input']]['bytes']:
               same+=1
+          print('REFEREE_SWAN_CHANGED_INPUTS',[rec['input'] for rec in now['receipts'] if rec['sha256']!=original[rec['input']]['sha256'] or rec['bytes']!=original[rec['input']]['bytes']])
           print('REFEREE_SWAN',{'dates':[x['day'] for x in now['positions']],'discovery_directions_offset_deg':[round(x['SWAN_minus_Horizons_00UT_separation_deg'],6) for x in now['positions']],'orbital_model_sep_arcsec':[round(x['two_body_L42_vs_N33_00TDB_separation_arcsec'],6) for x in now['positions']],'source_receipt_matching':same,'all_source_receipts':len(now['receipts'])})
           PY
