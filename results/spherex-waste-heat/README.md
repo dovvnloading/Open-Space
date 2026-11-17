@@ -52,3 +52,12 @@ python results/spherex-waste-heat/wise/measure.py --archive D:/Open-Space/campai
 ```
 
 The NEOWISE single-exposure request is restricted to MJD 60291–60524; it is not a full 2010–2024 motion baseline.
+
+For the deposited historical `wise/archive_inputs.zip`, extract it to a new directory and explicitly permit receipts without a recorded HTTP status:
+
+```powershell
+Expand-Archive results/spherex-waste-heat/wise/archive_inputs.zip D:/Open-Space/campaigns/spherex-wise-legacy/archive
+python results/spherex-waste-heat/wise/measure.py --archive D:/Open-Space/campaigns/spherex-wise-legacy/archive --output D:/Open-Space/campaigns/spherex-wise-legacy/derived --allow-legacy-status
+```
+
+`replay-provenance.json` lists the receipts with unknown HTTP status; it does not modify them. A zero-row historical response describes the preserved bytes and does not by itself establish a successful empty query or completeness. New retrievals and fetch-cache reuse require recorded HTTP 200.

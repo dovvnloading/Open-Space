@@ -59,7 +59,7 @@ def fetch(kind,target,dest):
         try:
             r=json.loads(receipt.read_text(encoding='utf-8'))
             data=gzip.decompress(out.read_bytes())
-            valid=(r['url']==url and r['query']==q and r['bytes']==len(data)
+            valid=(r.get('status')==200 and 'error' not in r and r['url']==url and r['query']==q and r['bytes']==len(data)
                    and r['sha256']==hashlib.sha256(data).hexdigest())
         except (OSError,ValueError,KeyError,EOFError) as exc:
             raise ValueError(f'Invalid frozen pair for {key}') from exc

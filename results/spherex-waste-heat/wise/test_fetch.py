@@ -60,7 +60,7 @@ class CacheTest(unittest.TestCase):
         with patch.object(measure,'targets',return_value=[dict(T,source_id='123')]):
             measure.main(archive,out)
         self.assertEqual(before,{x.name:x.read_bytes() for x in archive.iterdir()})
-        self.assertEqual({x.name for x in out.iterdir()},{'catalog_photometry.csv','visits.csv','variability.csv','queries.json'})
+        self.assertEqual({x.name for x in out.iterdir()},{'catalog_photometry.csv','visits.csv','variability.csv','queries.json','replay-provenance.json'})
         with self.assertRaises(FileExistsError):measure.main(archive,out)
         derived_before={x.name:x.read_bytes() for x in out.iterdir()}
         rejected=self.p/'changed-derived'
@@ -69,4 +69,17 @@ class CacheTest(unittest.TestCase):
         self.assertFalse(rejected.exists())
         self.assertEqual(before,{x.name:x.read_bytes() for x in archive.iterdir()})
         self.assertEqual(derived_before,{x.name:x.read_bytes() for x in out.iterdir()})
+        legacy=archive/'A_neo.json';record=json.loads(legacy.read_text());del record['status'];legacy.write_text(json.dumps(record));legacy_bytes={x.name:x.read_bytes() for x in archive.iterdir()}
+        with patch.object(measure,'targets',return_value=[dict(T,source_id='123')]):
+            with self.assertRaises(ValueError):measure.main(archive,self.p/'default')
+            measure.main(archive,self.p/'legacy',allow_legacy_status=True)
+        provenance=json.loads((self.p/'legacy'/'replay-provenance.json').read_text())
+        self.assertEqual(provenance['unknown_status_receipts'],['A_neo'])
+        self.assertNotIn('status',json.loads(legacy.read_text()))
+        self.assertEqual(legacy_bytes,{x.name:x.read_bytes() for x in archive.iterdir()})
+        record['status']=503;legacy.write_text(json.dumps(record))
+        with patch.object(measure,'targets',return_value=[dict(T,source_id='123')]):
+            with self.assertRaises(ValueError):measure.main(archive,self.p/'bad',allow_legacy_status=True)
+        self.assertFalse((self.p/'bad').exists())
+        with self.assertRaises(ValueError):m.fetch('neo',T,archive)
 if __name__=='__main__':unittest.main()
