@@ -94,15 +94,22 @@ def parse(path):
         dec = np.deg2rad((1 if l[44] == "+" else -1)*(d+m/60+s/3600))
         u = [np.cos(ra)*np.cos(dec), np.sin(ra)*np.cos(dec), np.sin(dec)]
         raw[name+"@"+str(day)].append((t, u))
-    tracks = []
+    tracks, exposures = [], []
     for name, lines in raw.items():
         t, u = zip(*lines)
-        track = attributable(name, np.array(t), u)
+        t, indices = np.unique(t,return_index=True)
+        u = np.asarray(u)[indices]
+        if len(t)>=2 and 5/1440 <= np.ptp(t) <= .25:
+            mid = np.mean(t)
+            exposures.append(Track(name,t,u,mid,unit(u.mean(axis=0)),np.zeros(3),
+                                   int(np.floor(mid+.5)),observer(mid)))
+        track = attributable(name,t,u)
         if track is not None:
             tracks.append(track)
     qc["submitted_name_utc_days"] = len(raw)
     qc["eligible_tracks"] = len(tracks)
-    return sorted(tracks, key=lambda a: a.mid), dict(qc)
+    qc["cadence_templates_before_rate_and_linearity_cuts"] = len(exposures)
+    return sorted(tracks, key=lambda a: a.mid), exposures, dict(qc)
 
 
 def motion(state, times):
@@ -289,11 +296,12 @@ def main():
     args=parser.parse_args()
     SURVEY=args.survey
     path=args.data/f"{SURVEY.lower()}.mpc"
-    real,qc=parse(path)
+    real,exposures,qc=parse(path)
     before,accepted,pairs=scan(real)
     print("REAL_SCREEN="+json.dumps(dict(survey=SURVEY,proposals=before,passing=accepted)),flush=True)
     rng=np.random.default_rng(RNG_SEED)
-    by_day,options=cadence_templates(real)
+    by_day,options=cadence_templates(exposures)
+    real_counts=collections.Counter(a.night for a in real)
     # Remove infeasible time gaps at the epoch level before drawing an object.
     templates=[]
     if options:
@@ -302,7 +310,7 @@ def main():
             if all(.7<=y.mid-x.mid<=3.25 for x,y in zip(trio,trio[1:])):
                 templates.append(trio)
     result=dict(survey=SURVEY,input_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),qc=qc,
-                real_eligible_per_utc_night={str(J2000+dt.timedelta(days=int(k))):len(v) for k,v in sorted(by_day.items())},
+                real_eligible_per_utc_night={str(J2000+dt.timedelta(days=int(k))):v for k,v in sorted(real_counts.items())},
                 real_3night_proposals=before,real_passing=accepted,seed=RNG_SEED)
     recovery=[]
     for idx in range(args.trials if templates else 0):
