@@ -12,6 +12,7 @@ from pathlib import Path
 import time
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError
 
 ROOT = Path(__file__).resolve().parent
 TAP = 'https://irsa.ipac.caltech.edu/TAP/sync'
@@ -33,8 +34,8 @@ def targets():
     with (ROOT.parent/'literature'/'candidates.csv').open() as f:
         return list(csv.DictReader(f))
 
-def fetch(kind,target):
-    dest = ROOT/'archive'; dest.mkdir(exist_ok=True)
+def fetch(kind,target,dest):
+    dest = Path(dest); dest.mkdir(parents=True,exist_ok=True)
     key = target['label']+'_'+kind
     out, receipt = dest/(key+'.csv.gz'), dest/(key+'.json')
     table, columns, epoch = TABLES[kind]
@@ -43,33 +44,49 @@ def fetch(kind,target):
     if kind=='neo':
         q+=' AND mjd>=60291 AND mjd<60524'
     url=TAP+'?'+urlencode(dict(REQUEST='doQuery',LANG='ADQL',FORMAT='csv',MAXREC=20000,QUERY=q))
-    if receipt.exists() and out.exists():
-        if json.loads(receipt.read_text())['url']==url and hashlib.sha256(gzip.decompress(out.read_bytes())).hexdigest() == json.loads(receipt.read_text())['sha256']:
-            return
-    for attempt in range(4):
+    error = dest/(key+'.error.json')
+    error_body = dest/(key+'.error.gz')
+    if error.exists() or error_body.exists():
+        raise ValueError(f'Previous error receipt exists for {key}; use a new campaign')
+    if out.exists() != receipt.exists():
+        raise ValueError(f'Incomplete frozen pair for {key}; use a new campaign')
+    if out.exists():
         try:
-            with urlopen(Request(url,headers={'User-Agent':'Open-Space research, SPHEREx candidate follow-up'}), timeout=120) as resp:
-                payload=resp.read()
-            reader=csv.DictReader(io.StringIO(payload.decode('utf-8-sig')))
-            if reader.fieldnames!=columns.split(','):
-                raise ValueError(payload[:800])
-            n=sum(1 for _ in reader)
-            if n>=20000:
-                raise ValueError('Reached MAXREC')
-            out.write_bytes(gzip.compress(payload,mtime=0))
-            receipt.write_text(json.dumps(dict(url=url,query=q,utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),bytes=len(payload),rows=n,sha256=hashlib.sha256(payload).hexdigest()),sort_keys=True,indent=2)+'\n')
-            print(key,n,flush=True)
-            return
-        except Exception:
-            if attempt==3:
-                raise
-            time.sleep(2**attempt)
+            r=json.loads(receipt.read_text(encoding='utf-8'))
+            data=gzip.decompress(out.read_bytes())
+            valid=(r['url']==url and r['query']==q and r['bytes']==len(data)
+                   and r['sha256']==hashlib.sha256(data).hexdigest())
+        except (OSError,ValueError,KeyError,EOFError) as exc:
+            raise ValueError(f'Invalid frozen pair for {key}') from exc
+        if not valid: raise ValueError(f'Frozen pair mismatch for {key}; use a new campaign')
+        return
+    payload=None; status=None
+    try:
+        with urlopen(Request(url,headers={'User-Agent':'Open-Space research, SPHEREx candidate follow-up'}), timeout=120) as resp:
+            status=resp.status; payload=resp.read()
+        reader=csv.DictReader(io.StringIO(payload.decode('utf-8-sig')))
+        if reader.fieldnames!=columns.split(','): raise ValueError('Unexpected response columns')
+        n=sum(1 for _ in reader)
+        if n>=20000: raise ValueError('Reached MAXREC')
+        record=dict(url=url,query=q,utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),status=status,bytes=len(payload),rows=n,sha256=hashlib.sha256(payload).hexdigest())
+        with out.open('xb') as f:f.write(gzip.compress(payload,mtime=0))
+        with receipt.open('x',encoding='utf-8') as f:json.dump(record,f,sort_keys=True,indent=2);f.write('\n')
+        print(key,n,flush=True)
+    except Exception as exc:
+        if isinstance(exc,HTTPError): status=exc.code;payload=exc.read()
+        record=dict(url=url,query=q,utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),status=status,error=repr(exc))
+        if payload is not None:
+            record.update(bytes=len(payload),sha256=hashlib.sha256(payload).hexdigest())
+            with error_body.open('xb') as f:f.write(gzip.compress(payload,mtime=0))
+        with error.open('x',encoding='utf-8') as f:json.dump(record,f,sort_keys=True,indent=2);f.write('\n')
+        raise
 
 if __name__=='__main__':
     ap=argparse.ArgumentParser()
     ap.add_argument('--workers',type=int,default=4)
+    ap.add_argument('--output',type=Path,required=True,help='Campaign directory for immutable request pairs')
     args=ap.parse_args()
     with concurrent.futures.ThreadPoolExecutor(args.workers) as pool:
-        jobs=[pool.submit(fetch,k,t) for t in targets() for k in TABLES]
+        jobs=[pool.submit(fetch,k,t,args.output) for t in targets() for k in TABLES]
         for job in concurrent.futures.as_completed(jobs):
             job.result()
