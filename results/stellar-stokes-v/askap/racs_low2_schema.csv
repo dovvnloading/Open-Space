@@ -1,0 +1,62 @@
+column_name,description,unit
+catalogue_id,Catalogue identifier,
+dc_maj_axis,Deconvolved source major axis.,arcsec
+dc_min_axis,Deconvolved source minor axis.,arcsec
+dc_pa,Deconvolved source PA.,deg
+dec,J2000 declination of the source.,deg
+dec_corr,J2000 declination after declination-dependent correction.,deg
+e_dc_maj_axis,Uncertainty in the deconvolved source major axis.,arcsec
+e_dc_min_axis,Uncertainty in the deconvolved source minor axis.,arcsec
+e_dc_pa,Uncertainty in the deconvolved source PA.,deg
+e_dec,Uncertainty on declination from fitting the source position.,deg
+e_dec_corr,Uncertainty on corrected declination from fitting.,deg
+e_maj_axis,Uncertainty in the source major axis.,arcsec
+e_min_axis,Uncertainty in the source minor axis.,arcsec
+e_pa,Uncertainty in the source PA.,deg
+e_peak_flux,"Quadrature sum of the brightness scale and PyBDSF uncertainties
+for peak flux density.",mJy.beam-1
+e_peak_flux_pybdsf,Uncertainty in the peak flux density from PyBDSF fitting.,mJy.beam-1
+e_peak_vi,Uncertainty in the fractional circular polarization.,
+e_peak_vi_lower,"Lower uncertainty in the absolute fractional circular
+polarization.",
+e_peak_vi_upper,"Upper uncertainty in the absolute fractional circular
+polarization.",
+e_ra,Uncertainty on right ascension from fitting the source position.,deg
+e_total_flux,"Quadrature sum of the brightness scale and PyBDSF uncertainties
+for total flux density.",mJy
+e_total_flux_pybdsf,Uncertainty in the total flux density from PyBDSF fitting.,mJy
+field_id,Field name: RACS_HHMM+/-DD.,
+flag,"Source type flag. 0 == unresolved, 1 == resolved, 2 == spurious.",
+gal_lat,Galactic latitude of the source.,deg
+gal_lon,Galactic longitude of the source.,deg
+id,Primary key,
+leakage,Estimate of the absolute Stokes I leakage into V.,
+maj_axis,Size of the major axis of the source.,arcsec
+min_axis,Size of the minor axis of the source.,arcsec
+name,Source name:  RACS-LOW2 JHHMMSS+/-DDMMSS.,
+n_gaussians,Number of Gaussian components comprising the source.,
+noise,Local estimate of the root-mean-square noise.,mJy.beam-1
+noise_v,Stokes V local rms noise estimate.,mJy.beam-1
+pa,"Position angle of the source, east of north.",deg
+peak_flux,Peak flux density of the source.,mJy.beam-1
+peak_flux_v,Stokes V peak flux density of the source.,mJy.beam-1
+peak_vi,Fractional circular polarization based on peak flux densities.,
+psf_maj,Major axis FWHM of the PSF for the image.,arcsec
+psf_min,Minor axis FWHM of the PSF for the image.,arcsec
+psf_pa,PA of the PSF for the image.,deg
+ra,J2000 right ascension of the source.,deg
+sbid,Scheduling block ID .,
+scan_length,Observation length.,s
+scan_start_mjd,Observation start time in MJD.,yr
+s_code,Source structure classification by PyBDSF.,
+search_radius,Initial database search radius.,arcsec
+source_association,Astrophysical source associated with the Stokes V source.,
+source_id,Unique source identifier.,
+source_separation,Angular separation from astrophysical source.,arcsec
+source_type,Basic source type - &apos;?&apos; indicates a probable type.,
+tile_l,"Direction cosine l of the source with respect to the image
+centre.",deg
+tile_m,"Direction cosine m of the source with respect to the image
+centre.",deg
+tile_sep,Angular separation from the image centre.,deg
+total_flux,Total flux density of the source.,mJy
