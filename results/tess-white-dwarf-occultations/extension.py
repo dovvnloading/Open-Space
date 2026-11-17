@@ -2,6 +2,7 @@
 import argparse
 import csv
 import hashlib
+import gzip
 import json
 import math
 from collections import Counter
@@ -86,7 +87,7 @@ def obtain(row, cache, curves, px):
     result=dict(source_id=source,wd=row['WDJname'],status='no available 200-second visit',attempts=trials)
     for hit in sorted(hits,key=lambda h:-int(h['sector'])):
         sector=int(hit['sector'])
-        if not 55<=sector<=108:
+        if not 56<=sector<=108:
             continue
         epoch=float(Time(Pointings.midtimes[Pointings.sectors==sector][0],format='jd').jyear)
         ra,dec=propagated(row,epoch)
@@ -144,6 +145,17 @@ def acquire(args):
     receipts=[dict(file=p.name,**json.loads(p.read_text())) for p in sorted(args.cache.glob('*'))
               if p.name.endswith(('.fits.json','.tsv.json','.json.json'))]
     (args.record/'extension_receipts.json').write_text(json.dumps(receipts,indent=1)+'\n')
+    # Freeze dynamic catalogue and coverage responses including their timestamps.
+    # FITS URLs have independent hashes of the measured arrays in the visit records.
+    text_inputs={}
+    for rec in receipts:
+        original=args.cache/rec['file'][:-5]
+        if original.is_file() and original.suffix in {'.tsv','.json'} and rec.get('status')=='ok':
+            if sha(original)!=rec['sha256']:
+                raise ValueError('Catalogue or sector receipt mismatch: '+original.name)
+            text_inputs[original.name]=original.read_bytes().decode('utf-8')
+    (args.record/'extension_catalogue_responses.json.gz').write_bytes(
+        gzip.compress(json.dumps(text_inputs,ensure_ascii=False).encode(),mtime=0))
     print(Counter(r['status'] for r in results),flush=True)
 
 
