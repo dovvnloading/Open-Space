@@ -1,0 +1,3 @@
+# Remarkable findings
+
+**DESI DR1, Gaia DR3 1717410430709663616 — evidence level: spectroscopically supported candidate, single epoch.** Five absorption lines support a heliocentric radial velocity of +502 km/s. The inferred Galactic speed is 697 km/s on the reference distance scale, above escape speed in all 4,096 draws in both the McMillan 2017 and Gala 2022 Milky Way potentials. A published high-mass halo binds the same draws. The traceback crosses the disk about 7.4 kpc from its centre. A second radial-velocity epoch is needed to test binary motion, and discovery priority remains open after a 21-source literature comparison. [Measurements, controls and origin tests](../results/dr1-dr19-unbound-stars/README.md)
