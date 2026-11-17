@@ -23,6 +23,8 @@ jobs:
           python-version: "3.12"
       - name: Select Rubin observations from the current ITF
         run: python results/inbound-hyperbolic-search/tracklets/extract.py --output run
+      - name: Inspect the latest public Rubin MPC ingestion partition
+        run: python results/inbound-hyperbolic-search/tracklets/rubin_feed.py run
       - name: Link observations and measure forced-track recovery
         if: hashFiles('results/inbound-hyperbolic-search/tracklets/link.py') != ''
         run: |
