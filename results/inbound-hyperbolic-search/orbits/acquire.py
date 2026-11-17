@@ -20,6 +20,8 @@ DATA.mkdir(exist_ok=True)
 CACHE.mkdir(exist_ok=True)
 RECEIPTS = DATA / "acquisition.json"
 NAMES = {
+    "2025-V1": (["CK25V010"], "2025-V40"),
+    "1877-G2": (["CI77G020"], None),
     "1I": (["0001I", "K17U010", "K17UI1I"], "2017-U181"),
     "2I": (["0002I", "K19Q040"], "2019-R106"),
     "3I": (["0003I", "K25N010"], "2025-N12"),
