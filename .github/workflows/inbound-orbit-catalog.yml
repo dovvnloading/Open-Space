@@ -3,16 +3,16 @@ on:
   push:
     branches: ['research/inbound-hyperbolic-search']
     paths:
-      - 'results/inbound-hyperbolic-search/catalog/*.py'
+      - 'results/inbound-hyperbolic-search/catalog/archives.py'
+      - 'results/inbound-hyperbolic-search/catalog/decam.py'
       - '.github/workflows/inbound-orbit-catalog.yml'
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   catalog:
-    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 45
     defaults:
       run:
         working-directory: results/inbound-hyperbolic-search
@@ -22,8 +22,13 @@ jobs:
           persist-credentials: false
           sparse-checkout: results/inbound-hyperbolic-search
       - run: python catalog/audit.py catalog
-      - run: python catalog/archives.py catalog/image-search
-      - run: |
+      - name: Search candidate exposures
+        run: python catalog/archives.py catalog/image-search --recent
+      - name: Search NOIRLab
+        run: python catalog/decam.py catalog/image-search
+      - name: Preserve footprint evidence
+        if: always()
+        run: |
           python - <<'PY'
           from pathlib import Path
           import base64,gzip
@@ -36,25 +41,3 @@ jobs:
         with:
           name: catalog-audit
           path: results/inbound-hyperbolic-search/catalog
-
-  published-original-orbits:
-    runs-on: ubuntu-latest
-    timeout-minutes: 35
-    defaults:
-      run:
-        working-directory: results/inbound-hyperbolic-search
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-          sparse-checkout: results/inbound-hyperbolic-search/catalog
-      - run: python catalog/code_orbits.py catalog
-      - run: |
-          python - <<'PY'
-          from pathlib import Path
-          import base64,gzip
-          for path in sorted(Path('catalog').glob('code-*')):
-              body=base64.b64encode(gzip.compress(path.read_bytes(),mtime=0)).decode()
-              for i in range(0,len(body),4000):
-                  print('CODEFILE',path.name,i,body[i:i+4000])
-          PY

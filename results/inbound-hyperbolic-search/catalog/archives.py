@@ -34,7 +34,7 @@ def fetch(name, url, params):
         (OUT / "archive-receipts.json").write_text(json.dumps(receipts, indent=2) + "\n")
 
 
-def ztf():
+def ztf(weeks=None):
     # Six-hourly topocentric astrometric ICRF coordinates at Palomar.
     params = dict(format="json", COMMAND="'DES=C/2025 V1;'", EPHEM_TYPE="'OBSERVER'",
                   CENTER="'I41'", START_TIME="'2025-07-01'", STOP_TIME="'2025-11-02'",
@@ -54,8 +54,12 @@ def ztf():
     if len(pts) < 490:
         raise ValueError("Incomplete ephemeris")
     dates = [p[0] for p in pts]
-    candidates, used_ids = [], set()
-    for start in range(0, len(pts)-1, 28):
+    candidates, used_ids, gaps = [], set(), []
+    completed = 0
+    starts = list(range(0, len(pts)-1, 28))
+    if weeks is not None:
+        starts = starts[-weeks:]
+    for start in reversed(starts):
         group = pts[start:start+29]
         mid = group[len(group)//2]
         # Deliberately generous axis-aligned envelope for each week's track.
@@ -66,10 +70,17 @@ def ztf():
                   "INTERSECT": "OVERLAPS", "WHERE": f"obsjd>={group[0][0]} AND obsjd<{group[-1][0]}",
                   "COLUMNS": "filefracday,field,ccdid,qid,filtercode,obsjd,ra,dec,ra1,dec1,ra2,dec2,ra3,dec3,ra4,dec4",
                   "ct":"csv"}
-        raw = fetch(f"ztf-{start:03d}.csv","https://irsa.ipac.caltech.edu/ibe/search/ztf/products/sci",params)
+        try:
+            raw = fetch(f"ztf-{start:03d}.csv","https://irsa.ipac.caltech.edu/ibe/search/ztf/products/sci",params)
+        except Exception as exc:
+            gaps.append([start,str(exc)])
+            continue
         table = csv.DictReader(io.StringIO(raw))
         if "ra1" not in (table.fieldnames or []):
-            raise ValueError("Malformed ZTF response: " + raw[:250])
+            gaps.append([start,"Malformed ZTF response: " + raw[:250]])
+            continue
+        completed += 1
+        print("ZTF window",start,group[0][0],group[-1][0],flush=True)
         for row in table:
             jd = float(row["obsjd"])
             i = min(max(0,bisect_right(dates,jd)-1),len(pts)-2)
@@ -89,7 +100,7 @@ def ztf():
                 continue
             used_ids.add(keys)
             candidates.append({**row,"pred_ra_deg":ra,"pred_dec_deg":dec})
-    return {"weekly_windows": (len(pts)-2)//28+1, "grid_points":len(pts),
+    return {"completed_weekly_windows": completed, "windows_requested":len(starts), "errors":gaps, "grid_points":len(pts),
             "ephemeris_columns":header,"ztf_nominal_footprints":candidates}
 
 
@@ -102,7 +113,9 @@ def cadc():
 
 if __name__ == "__main__":
     results={}
-    for name,job in (("ztf",ztf),("cadc",cadc)):
+    # --recent covers the final two weekly windows, including published precoveries.
+    recent = "--recent" in sys.argv[2:]
+    for name,job in (("ztf",lambda: ztf(2 if recent else None)),("cadc",cadc)):
         try:
             results[name]=job()
         except Exception as exc:
