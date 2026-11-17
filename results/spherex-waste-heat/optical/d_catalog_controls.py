@@ -48,8 +48,8 @@ def cloud(center, exposures):
               ("_healpix_29","<",(p+1)*width)] for p in cells]
     result, parts = [], []
     hmjd={k:float(v["hjd"])-2400000.5 for k,v in exposures.items()}
-    for level,cell in keys:
-        path = f"{hats.CAT}/dataset/Norder={level}/Dir={cell//10000*10000}/Npix={cell}.parquet"
+    paths = [path for level,cell in keys for path in hats.leaf_paths(remote, level, cell)]
+    for path in paths:
         parts.append(dict(path="s3://"+path, bytes=remote.get_file_info(path).size))
         table = pq.read_table(path,filesystem=remote,filters=filters,columns=hats.COLUMNS)
         for obj in table.to_pylist():
