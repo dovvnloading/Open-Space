@@ -1,0 +1,32 @@
+{
+  "authorized": true,
+  "authorized_utc": "2026-11-17T06:59:45.570004+00:00",
+  "authorized_by": "root orchestrator under active user research goal",
+  "phase": "development only",
+  "git_head": "f323ab5e2b4c0b9d0227c581884c353e6948e39a",
+  "manifest_path": "D:\\Open-Space\\campaigns\\vast-tde-expanded-20261117\\review-manifest-byteguard-20261117.json",
+  "manifest_sha256": "21ccdd9daeff9cb52c03eb0c2a469b005b1a63eb4c65c9a8e6a727d4a0cd8a5d",
+  "root_review_sha256": "d1c8476c7cc57b8ecfc9f9630adcc5872be3976687093143cef85d9121f1739e",
+  "fixed_sources": [
+    14043503,
+    13894502,
+    14481388
+  ],
+  "allowed_rows": "fixed metadata-only target/control pools AND development image IDs in reviewed packet",
+  "holdout_rows_authorized": false,
+  "parquet_io_rule": "Whole compressed chunks may physically decode; predicates and checked metadata sets must exclude holdout rows from returned data, diagnostics, training and human view. No V/eta/maxflux columns.",
+  "operating_mode": "conditional standard-release peak-flux repeatability screen; no new radio association, TDE-origin, intrinsic-variability or global-significance assertion",
+  "limitations": [
+    "all three positions have prior radio detections; AT2020nov prior interpreted as host star formation",
+    "only103 date-eligible objects in heterogeneous134-row compilation;100 catalog nonmatches are not nondetections",
+    "three percent gain floor, selection and cross-session correlations provisional",
+    "no PSF-matched image or source-origin validation yet; native pixels and independent radio epochs require separate review",
+    "twelve synthetic tests are implementation checks, not real-background tail calibration"
+  ],
+  "required_after_development": [
+    "preserve all selected/excluded controls, input rows/drops, inconclusive source failures and exact software/command receipts",
+    "freeze actual baselines, model variances, stable control IDs and result hashes before any holdout row access",
+    "return full development results for independent root review; no threshold/backfill rescue or holdout processing under this record"
+  ],
+  "output_root": "D:\\Open-Space\\campaigns\\vast-tde-dev-f323ab5-21ccdd9-20261117\\run"
+}
