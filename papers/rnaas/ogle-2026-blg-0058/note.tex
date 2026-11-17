@@ -1,0 +1,73 @@
+% Research Note of the AAS -- DRAFT for the author's review.
+% AAS rules (journals.aas.org/research-note-preparation-guidelines, checked 2026-11-15):
+%   <= 1,500 words including title, headers, caption and references; abstract <= 150 words;
+%   one figure OR one table; single author writes in first person singular; no line numbers.
+% AAS LLM policy (journals.aas.org/author-llm-guidelines, posted 2026-09-09): the author must check
+%   every sentence and every reference before submission, and disclose AI use (statement below).
+% Fill in: ORCID, affiliation, email, Zenodo DOI. Check every reference in ADS.
+\documentclass{aastex7}
+
+\begin{document}
+
+\title{A Candidate Isolated Stellar-mass Black Hole in the Long Microlensing Event OGLE-2026-BLG-0058}
+
+\author[0000-0000-0000-0000]{Matthew Wesney} % ORCID: replace the placeholder
+\affiliation{AFFILIATION} % e.g. "Independent researcher, City, Country"
+\email{EMAIL}
+
+\begin{abstract}
+OGLE-2026-BLG-0058 is a long microlensing event toward the Galactic bulge. A point-lens model with annual parallax fitted to 1,900 public OGLE $I$-band points gives an Einstein crossing time $t_{\rm E}=277^{+35}_{-31}$\,d and parallax $\pi_{\rm E}=0.038\pm0.006$ for $u_0>0$, or $273^{+33}_{-30}$\,d and $0.057\pm0.009$ for $u_0<0$. These imply 2.5 or 1.6\,$M_\odot$ per mas\,yr$^{-1}$ of relative proper motion, and the unmagnified light leaves no room for a luminous lens of that mass. With a Galactic model that includes stellar remnants, the lens is a black hole of about $11\,M_\odot$ with probability 0.83--0.93. The parallax detection rests partly on seven late-season points, but the upper limit, which drives the mass, does not. I give a frozen forecast for the 2027 season. Astrometric microlensing in mid-2027 can measure the mass.
+\end{abstract}
+
+\keywords{\uat{Gravitational microlensing}{672} --- \uat{Stellar mass black holes}{1611} --- \uat{Astrometric microlensing effect}{2140}}
+
+Only one isolated stellar-mass black hole has been confirmed: the lens of OGLE-2011-BLG-0462 \citep{2022ApJ...933...83S,2022ApJ...933L..23L}. Such lenses produce long events with small microlens parallax. The lens mass is $M=\theta_{\rm E}/(\kappa\pi_{\rm E})$, with $\theta_{\rm E}=\mu_{\rm rel}t_{\rm E}$ and $\kappa=8.144$\,mas\,$M_\odot^{-1}$. I fitted parallax models to the public photometry of the 5,641 OGLE-IV Early Warning System events of 2022--2026 \citep{2015AcA....65....1U}. I then ranked them by the mass implied at 4\,mas\,yr$^{-1}$. OGLE-2026-BLG-0058 ($\alpha=17^{\rm h}52^{\rm m}38\fs09$, $\delta=-31\arcdeg47\arcmin36\farcs1$; $l=358\fdg3$, $b=-2\fdg8$) ranked first.
+
+The event has 1,900 points from 2017 to 2026 (Figure~\ref{fig:lc}), and its 2017--2024 season medians stay within $I=18.115$--18.129. I modeled a point source and point lens with geocentric annual parallax \citep{2004ApJ...606..319G}, solved the source and blend fluxes linearly, and rescaled the uncertainties to $\chi^2/{\rm dof}=1$. I also required the blend flux to exceed that of a negative $I=20$ star. Ensemble MCMC sampling \citep{2013PASP..125..306F} gives two solutions of equal $\chi^2$, listed in the abstract, with 95\% upper limits on $\pi_{\rm E}$ of 0.048 and 0.072. The unmagnified share of the baseline flux is $0.29^{+0.13}_{-0.17}$ and $0.21^{+0.13}_{-0.17}$, so the blend is brighter than $I=18.9$ in fewer than 5\% of samples. A separately written analysis, with its own ephemeris code and chains, reproduces these values. Its magnification agrees with MulensModel \citep{2019A&C....26...35P} to $10^{-4}$.
+
+Parallax improves $\chi^2$ by 24.7, and 15.2 of that comes from seven points taken at airmass 1.3--1.9 after a 71-day gap in 2026. Two tests support the signal. Fits made without those points predict them with $\chi^2=10.5$ and 8.8 for the two parallax solutions, against 27.6 without parallax. Adding an airmass- or seeing-dependent photometric term to the no-parallax model absorbs at most 13.8 of the improvement, leaving $\Delta\chi^2=21$--25. The upper limits are firmer. Fixing $|\pi_{\rm E}|$ and refitting everything else gives $\Delta\chi^2=19$ at 0.10, 68 at 0.15 and 134 at 0.20. These limits depend on excluding strongly negative blend fluxes. Without that floor, unphysical fits with $u_0=4$--9 come within $\Delta\chi^2=42$ at every $|\pi_{\rm E}|\geq0.15$.
+
+The proper motion is not measured, so I weighted the posterior samples by the Galactic event rate \citep{2011A&A...529A.102B}. The rate model has a double-exponential disk and the bar of \citet{1995ApJ...445..716D} as used by \citet{2003ApJ...592..172H}. It also has a present-day mass function for an old population:
+\begin{itemize}
+\item a \citet{2001MNRAS.322..231K} initial mass function with a $1\,M_\odot$ main-sequence turn-off;
+\item white dwarfs from the initial--final relation of \citet{2008ApJ...676..594K};
+\item neutron stars of $1.35\,M_\odot$ with 265\,km\,s$^{-1}$ kicks \citep{2005MNRAS.360..974H};
+\item black holes log-normal about $9\,M_\odot$ with 0--100\,km\,s$^{-1}$ kicks.
+\end{itemize}
+Main-sequence lenses brighter than each sample's blend are rejected. For $u_0>0$ the lens is then a black hole with probability 0.93--0.98, with mass $11.4^{+4.2}_{-3.2}\,M_\odot$ at about 3.9\,kpc. For $u_0<0$ the probability is 0.19--0.42, and a slow star of about $1\,M_\odot$ or a white dwarf is comparably likely. The model favors $u_0>0$ by 4--15 to 1, because its parallax vector lies within about $5\arcdeg$ of the direction of Galactic rotation. The combined black-hole probability is therefore 0.83--0.93. Dropping the seven late points and inflating all uncertainties by 1.6 raises it to 0.96. The case rests on the long $t_{\rm E}$ and the upper limit on $\pi_{\rm E}$, not on the parallax detection.
+
+Without parallax, the source would be at $I=17.885$ on 2027 February 15. The parallax solutions predict 17.934 and 17.945, and still differ from the no-parallax model by 0.02--0.03\,mag in May--June. The 2027 OGLE season therefore tests the parallax. KMTNet photometry of the same event (KMT-2026-BLG-0521) becomes public in July 2027. The mass itself requires astrometric microlensing. For $\theta_{\rm E}\approx3.5$\,mas the source centroid should shift by up to about 1\,mas, largest around mid-2027. That shift is within reach of HST, JWST or ground-based adaptive optics.
+
+Photometry, code, posteriors and the independent check are archived at \url{https://github.com/dovvnloading/Open-Space} (results/ogle-dark-lenses; Zenodo DOI: XXXX).
+
+\begin{figure}[ht!]
+\plotone{figure1.pdf}
+\caption{OGLE $I$-band photometry of OGLE-2026-BLG-0058 with the no-parallax fit and the two parallax solutions, extended into 2027 as frozen forecasts. The lower panels show binned residuals of the 2025--2026 data. Plotted with Matplotlib from the deposited data by code written with AI assistance (see AI disclosure).\label{fig:lc}}
+\end{figure}
+
+\begin{acknowledgments}
+I thank the OGLE team for the public Early Warning System photometry.
+\end{acknowledgments}
+
+\section*{AI disclosure}
+% Confirm this statement is accurate before submitting.
+The event screen, the modeling and population code, the independent re-analysis and a first draft of this Note were produced with Anthropic's Claude models working under my direction. I checked every result, sentence and reference and take responsibility for the content.
+
+\software{emcee \citep{2013PASP..125..306F}, MulensModel \citep{2019A&C....26...35P}, Astropy, NumPy, SciPy, Matplotlib}
+
+\begin{thebibliography}{}
+\bibitem[Batista et al.(2011)]{2011A&A...529A.102B} Batista, V., Gould, A., Dieters, S., et al.\ 2011, A\&A, 529, A102
+\bibitem[Dwek et al.(1995)]{1995ApJ...445..716D} Dwek, E., Arendt, R.~G., Hauser, M.~G., et al.\ 1995, ApJ, 445, 716
+\bibitem[Foreman-Mackey et al.(2013)]{2013PASP..125..306F} Foreman-Mackey, D., Hogg, D.~W., Lang, D., \& Goodman, J.\ 2013, PASP, 125, 306
+\bibitem[Gould(2004)]{2004ApJ...606..319G} Gould, A.\ 2004, ApJ, 606, 319
+\bibitem[Han \& Gould(2003)]{2003ApJ...592..172H} Han, C., \& Gould, A.\ 2003, ApJ, 592, 172
+\bibitem[Hobbs et al.(2005)]{2005MNRAS.360..974H} Hobbs, G., Lorimer, D.~R., Lyne, A.~G., \& Kramer, M.\ 2005, MNRAS, 360, 974
+\bibitem[Kalirai et al.(2008)]{2008ApJ...676..594K} Kalirai, J.~S., Hansen, B.~M.~S., Kelson, D.~D., et al.\ 2008, ApJ, 676, 594
+\bibitem[Kroupa(2001)]{2001MNRAS.322..231K} Kroupa, P.\ 2001, MNRAS, 322, 231
+\bibitem[Lam et al.(2022)]{2022ApJ...933L..23L} Lam, C.~Y., Lu, J.~R., Udalski, A., et al.\ 2022, ApJL, 933, L23
+\bibitem[Poleski \& Yee(2019)]{2019A&C....26...35P} Poleski, R., \& Yee, J.~C.\ 2019, A\&C, 26, 35
+\bibitem[Sahu et al.(2022)]{2022ApJ...933...83S} Sahu, K.~C., Anderson, J., Casertano, S., et al.\ 2022, ApJ, 933, 83
+\bibitem[Udalski et al.(2015)]{2015AcA....65....1U} Udalski, A., Szyma{\'n}ski, M.~K., \& Szyma{\'n}ski, G.\ 2015, AcA, 65, 1
+\end{thebibliography}
+
+\end{document}
