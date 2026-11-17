@@ -10,6 +10,8 @@
 
 The 24 wide caps are disjoint from the pilot cones and from the W2-only fields. The wide and pilot footprints together span 4,319.90 deg² at different selection depths. The 43 motion-first circles lie on tiles that contributed a CatWISE selection to the first search. The W2 linker searched all qualifying epoch detections inside each circle. The WISE 0855 control circle was deliberately centred near its trajectory and contributes no blind sky area.
 
+Of the 988 wide entries without a literature alert, **zero** met the independent 2019–2024 NEOWISE single-exposure motion criterion. There were 363 with no W2 S/N ≥3 detection within 5″ of the predicted track, 620 with sparse or inconclusive evidence, and five borderline associations with pre-existing stationary sources. Those five were selected by the single-exposure test and differ from the five selected by the six-epoch coadd test. The T8 control in the same wide sample passed. [Per-source decade-baseline receipts](widebatch/README.md) · [Stationary counterparts](wideborder/README.md)
+
 ## What the bright Euclid-field screen recovered
 
 Positions are the corrected CatWISE motion-fit coordinates at epoch 2015.405 (ICRS). Motions in the table are CatWISE µα cos δ and µδ in arcsec/yr. The distances and temperatures in the first two rows come from the published 20 pc census. [Census Table 4](https://exoplanetarchive.ipac.caltech.edu/docs/20pcCensus.html)

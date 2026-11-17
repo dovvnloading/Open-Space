@@ -60,5 +60,15 @@ def main():
     check(counts["passing_with_literature_alert"]==24 and len(counts["unmatched_passes"])==5,"wide literature comparison")
     for name in counts["unmatched_passes"]:
         check((BASE/"wide_deep"/name/"inputs.csv").is_file(),"wide image follow-up "+name)
+    receipt=info("widebatch/coverage.json")
+    check(receipt["completed"]==receipt["requested"]==989 and not receipt["missing"],"wide held-out coverage")
+    wide_single=rows("widebatch/summary.csv")
+    unmatched={r["source_name"] for r in wide}-literature
+    check({r["source"] for r in wide_single}==unmatched|{"J085715.68+560405.8"},"wide held-out cohort")
+    check(not any(r["triage"].startswith("track-supported") for r in wide_single if r["source"] in unmatched),"standalone motion criterion")
+    for group in receipt["parts"].values():
+        for part in group:
+            path=BASE/"widebatch"/part["file"]
+            check(digest(path.read_bytes())==part["sha256"],str(path))
     print("Verified 3,601,560 pilot catalogue entries, 24 wide caps, 41 control objects, 138 W2 links, and 1,113 distinct spectral measurements.")
 if __name__=="__main__":main()

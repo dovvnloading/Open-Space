@@ -1,5 +1,6 @@
 """Test freely located stationary counterparts for two dense NEP W2 tracks."""
 import gzip
+import hashlib
 import json
 import argparse
 from pathlib import Path
@@ -29,6 +30,9 @@ def main():
             z.update(ra=track.ra2015_deg,dec=track.dec2015_deg,pmra=track.pmra,pmdec=track.pmdec)
         path=a.l1b/"cache"/(name+".tbl.gz")
         raw=gzip.decompress(path.read_bytes()) if path.exists() else urlopen(z["archive_url"],timeout=240).read()
+        science=b"\n".join(line for line in raw.splitlines() if not line.startswith(b"\\"))
+        if hashlib.sha256(science).hexdigest()!=z["raw_science_rows_sha256"]:
+            raise ValueError(f"Archive science rows changed for {name}")
         df=Table.read(raw.decode().splitlines(),format="ascii.ipac").to_pandas()
         good=(df.w2snr>=5)&(df.w2rchi2<3)&(df.sso_flg==0)&(df.qual_frame>=5)&df.cc_flags.astype(str).str.zfill(4).str[1].eq("0")
         t=df[good].copy()
