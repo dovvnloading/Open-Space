@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 185 entries: 86 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 14 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 186 entries: 87 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 14 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -128,6 +128,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Planets, moons and rings in our Solar System
 
+- **Uranus’s moon Perdita was about 1.9 arcseconds from its predicted position in October 2026.** Four JWST exposures in three visits measured the displacement. The same search set detection limits for additional moons around Uranus and Neptune. *Measured* · [Details](results/ice-giant-moon-search/README.md)
 - **Io's record 2024 eruption brightened Jupiter's sulfur glow but barely its sodium cloud.** *Measured* · [Details](results/io-2024-eruption-sodium/README.md)
 - **A 9.5-hour eclipse of Jupiter's moon Sinope (17–18 Oct 2037).** The moon will sit far enough from Jupiter in our sky to be observed during the eclipse. *Prediction* · [Details](results/sinope-2037-jupiter-eclipse/README.md)
 - **Saturn's rings will shade its moon Phoebe (1–3 Mar 2032).** The B ring should twice remove about 98% of Phoebe's sunlight. *Prediction* · [Details](results/phoebe-ring-shadow-2032/README.md)

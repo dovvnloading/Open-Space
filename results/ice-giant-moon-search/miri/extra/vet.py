@@ -3,7 +3,7 @@ import argparse,csv,json
 import numpy as np
 from scipy import ndimage as ndi
 from pathlib import Path
-from search import SIGMA,maps
+from native_search import SIGMA,maps
 from coverage import OUT,get_states,pixels,frame
 from fetch import products,read_product
 from miri_audit import write_csv
@@ -42,7 +42,7 @@ def main(cache,head):
         if f['planet']!='Uranus':continue
         g=frame(f,p,head,states[f['file']],{});idx,x,y=pixels(g,rr,ph,origin);v=f['visit'];sigma=SIGMA[f['filter']]
         data,_=read_product(p,cache,True);scores,good=maps(g,p,cache);g.update(score=scores,good=good)
-        factor=1.e9*float(g['w'].proj_plane_pixel_area().value)*(np.pi/180.)**2 # MJy/sr * pixel solid angle -> mJy
+        factor=1.e9*g['pixar_sr'] # MJy/sr * pixel solid angle -> mJy
         xy={int(i):np.array([xx,yy]) for i,xx,yy in zip(idx,x,y)};maps_by.append((g,xy))
         for i,pos in xy.items():
             measured=photometry(data,*pos,sigma);flux,e,dx,dy,pk,frac,mad=measured
