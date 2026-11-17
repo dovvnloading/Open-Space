@@ -1,0 +1,92 @@
+name: Independent SPHEREx DR1 unclassified-spectrum referee
+on:
+  push:
+    branches: [research/spherex-dr1-unclassified-spectra]
+    paths:
+      - .github/workflows/spherex-dr1-unclassified-referee.yml
+      - results/spherex-dr1-unclassified-spectra/**
+      - README.md
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    name: Independently recompute 113/107, 57/29, 11152 injections and 923 receipts
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pin research analysis environment
+        run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3 astropy==8.0.2
+      - name: Recalculate and regenerate all principal analysis products
+        working-directory: results/spherex-dr1-unclassified-spectra
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+        run: python referee_review.py offline
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: spherex-dr1-referee-offline
+          path: results/spherex-dr1-unclassified-spectra/referee_report.json
+          if-no-files-found: warn
+
+  fresh-cubes:
+    name: Independently hash both 321MB FITS cubes from fresh byte-range downloads
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.3.5 astropy==8.0.2 astropy-healpix
+      - name: Download the two exact-version archived DR1 tiles and verify full file hashes
+        working-directory: results/spherex-dr1-unclassified-spectra
+        run: |
+          set -euo pipefail
+          mkdir -p localcache wide/localcache
+          python acquire.py cube
+          SPHEREX_FIELD=wide python acquire.py cube
+          python verify_inputs.py --require-cubes
+
+  cutouts-dr1:
+    name: Re-download and SHA-check every deposited DR1 native cutout
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fresh native-image hash comparison, DR1
+        working-directory: results/spherex-dr1-unclassified-spectra
+        run: python referee_review.py fresh-cutouts dr1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: spherex-dr1-referee-cutouts-dr1
+          path: results/spherex-dr1-unclassified-spectra/referee_cutouts_dr1.json
+          if-no-files-found: warn
+
+  cutouts-qr3:
+    name: Re-download and SHA-check every deposited QR3 native cutout
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fresh native-image hash comparison, QR3
+        working-directory: results/spherex-dr1-unclassified-spectra
+        run: python referee_review.py fresh-cutouts qr3
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: spherex-dr1-referee-cutouts-qr3
+          path: results/spherex-dr1-unclassified-spectra/referee_cutouts_qr3.json
+          if-no-files-found: warn
