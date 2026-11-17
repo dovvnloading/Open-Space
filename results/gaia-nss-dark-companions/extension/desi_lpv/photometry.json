@@ -1,0 +1,79 @@
+{
+  "inputs": [
+    {
+      "file": "epoch_photometry.xml",
+      "url": "https://gaia.aip.de/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiadr3.epoch_photometry+WHERE+source_id%3D2951241529971223808",
+      "sha256": "b9b12ddcb421a4dbeb474db3acffa71f94aa1fa193af406d6c339467a685289c"
+    },
+    {
+      "file": "dr3_lpv.csv",
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiadr3.vari_long_period_variable+WHERE+source_id%3D2951241529971223808",
+      "sha256": "5119ee6ba816f69a57cbd1d895f946e552dcb0499cc7fe06f588ebb1efedfe61"
+    },
+    {
+      "file": "fpr_lpv.csv",
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiafpr.vari_long_period_variable+WHERE+source_id%3D2951241529971223808",
+      "sha256": "905cca5f8141889df9e3c3e55bd41436aebe561786597a3e6b5cb5e2668936cb"
+    },
+    {
+      "file": "fpr_rv.csv",
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiafpr.vari_epoch_radial_velocity+WHERE+source_id%3D2951241529971223808",
+      "sha256": "241958c383eaf5918427859639cf22fc6407bd13f866c9519c48a39730e3fd56"
+    },
+    {
+      "file": "vari_summary.csv",
+      "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+gaiadr3.vari_summary+WHERE+source_id%3D2951241529971223808",
+      "sha256": "0d4f5455e63f341cd8f9a52ff84c0e8810440ac5067882f3ce93d9c6ef330416"
+    }
+  ],
+  "orbital_period": 276.4694701770533,
+  "lpv_period": 138.18505172967534,
+  "twice_photometric_over_orbital": 0.9996405870144034,
+  "bands": {
+    "g": {
+      "retained_transits": 30,
+      "nights": 19,
+      "span_d": 958.180822489963,
+      "model": {
+        "orbital": {
+          "semi_amplitude_mag": 0.032053611933319334,
+          "rms_mag": 0.06972813768774477
+        },
+        "half_orbital": {
+          "semi_amplitude_mag": 0.08380716974754421,
+          "rms_mag": 0.03981065616971786
+        }
+      }
+    },
+    "bp": {
+      "retained_transits": 30,
+      "nights": 20,
+      "span_d": 958.1807759164396,
+      "model": {
+        "orbital": {
+          "semi_amplitude_mag": 0.03290222081780075,
+          "rms_mag": 0.0883800725147957
+        },
+        "half_orbital": {
+          "semi_amplitude_mag": 0.10832700354006981,
+          "rms_mag": 0.044673751028217364
+        }
+      }
+    },
+    "rp": {
+      "retained_transits": 31,
+      "nights": 20,
+      "span_d": 958.1807736712904,
+      "model": {
+        "orbital": {
+          "semi_amplitude_mag": 0.03655623441656954,
+          "rms_mag": 0.057277654607402306
+        },
+        "half_orbital": {
+          "semi_amplitude_mag": 0.07102060828234454,
+          "rms_mag": 0.03565967368847971
+        }
+      }
+    }
+  }
+}

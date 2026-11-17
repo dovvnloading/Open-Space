@@ -18,9 +18,9 @@ FRACTIONS=[0,.01,.02,.026,.036,.05,.1]
 OFFSETS=np.r_[np.arange(-1800,-199,60),0,np.arange(240,1801,60)]
 
 
-def load_template(cache,vsini,arm):
+def load_template(cache,vsini,arm,model_files=None):
     arrays=[]; meta={}
-    for name,suffix in FILES.items():
+    for name,suffix in (model_files or FILES).items():
         dest=cache/(name+'.fits')
         if not dest.exists():dest.write_bytes(urllib.request.urlopen(BASE+suffix,timeout=120).read())
         with dest.open('rb') as f:
@@ -44,7 +44,9 @@ def residualize(v,basis):
     return v-basis@(basis.T@v)
 
 
-def run(cache,pair=IDS,vel_grid=OFFSETS,arm="B",weak_only=False):
+def run(cache,pair=IDS,vel_grid=OFFSETS,arm="B",weak_only=False,*,source="3378588057203660160",
+        catalog=None,gamma=32.564,mass_ratio=1.95/1.77,model_files=None,rotations=(6.,40.),
+        splits=((0,0),(40,40),(0,80),(80,120)),fractions=FRACTIONS,write_scores=True):
     from scipy.optimize import minimize_scalar
     from spectra import URL
     products=[]
@@ -89,16 +91,15 @@ def run(cache,pair=IDS,vel_grid=OFFSETS,arm="B",weak_only=False):
         for ix,q in blocks:out[ix]=residualize(y[ix],q)
         return out
     base=remove_nuisance(high-low)
-    source='3378588057203660160'
-    rows=[r for r in csv.DictReader((HERE.parent/'lamost/exposures.csv').open()) if r['source_id']==source]
+    catalog=catalog or HERE.parent/'lamost/exposures.csv'
+    rows=[r for r in csv.DictReader(catalog.open()) if r['source_id']==source]
     prim=[np.median([float(r['rv_kms']) for r in rows if r['obsid']==o]) for o in pair]
     # Systemic velocity and representative masses from the joint orbit.
-    gamma=32.564
-    sec=[gamma-(1.95/1.77)*(v-gamma) for v in prim]
+    sec=[gamma-mass_ratio*(v-gamma) for v in prim]
     scenarios=[]; nullrows=[]
-    for rot in [6.,40.]:
-        grid,model,meta=load_template(cache,rot,arm)
-        for v0,v1 in [(0,0),(40,40),(0,80),(80,120)]:
+    for rot in rotations:
+        grid,model,meta=load_template(cache,rot,arm,model_files)
+        for v0,v1 in splits:
             def twins(wave,velocity,split):
                 return (np.interp(wave/(1+(velocity-split)/C),grid,model)+
                         np.interp(wave/(1+(velocity+split)/C),grid,model))/2
@@ -115,7 +116,7 @@ def run(cache,pair=IDS,vel_grid=OFFSETS,arm="B",weak_only=False):
             # In flux units, mixing a secondary at fraction f in both actual spectra yields
             # (1-f)*base + f*shape after differencing and nuisance projection.
             powers={}
-            for frac in FRACTIONS:
+            for frac in fractions:
                 injected=(1-frac)*base+frac*sh
                 measured=np.sum(injected*sh,axis=1)/np.sum(sh*sh,axis=1)
                 controls=measured[np.abs(vel_grid)>=200]
@@ -129,7 +130,7 @@ def run(cache,pair=IDS,vel_grid=OFFSETS,arm="B",weak_only=False):
                  target_exceeds_control_p95=bool(fn[i0]>q95),injected_fraction_recovery=powers))
             for off,f in zip(vel_grid,fn):
                 nullrows.append(dict(vsini=rot,v_low=v0,v_high=v1,offset_kms=int(off),fitted_fraction=f))
-    if not weak_only:
+    if not weak_only and write_scores:
         with (HERE/(('red_' if arm=='R' else '')+('injection_control_scores.csv' if pair==IDS else 'control_scores_'+pair[0]+'.csv'))).open('w',newline='') as file:
             w=csv.DictWriter(file,list(nullrows[0]),lineterminator='\n');w.writeheader();w.writerows(nullrows)
     return dict(source_id=source,coadds=products,measured_shift_kms=dv,model_files=meta,resolving_power=7500,arm=arm,wavelength_A=[lo,hi],
