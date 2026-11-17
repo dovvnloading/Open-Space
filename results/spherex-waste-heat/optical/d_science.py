@@ -132,7 +132,11 @@ def main():
     frames = cutouts(exposures, center)
     missing = [r["expid"] for r in exposures if (r["expid"], "sciimg") not in frames or (r["expid"], "mskimg") not in frames]
     if missing:
-        raise RuntimeError(f"Archive products unavailable for {missing}; see d_science_receipts.json")
+        print(f"Skipping missing image/mask pairs {missing}; see d_science_receipts.json", flush=True)
+    exposures = [r for r in exposures if r["expid"] not in missing]
+    event = [r for r in exposures if int(float(r["mjd"])) == 58745]
+    if len(event)!=2 or len(exposures)-len(event)<2:
+        raise RuntimeError("Both event pairs and two comparison pairs are necessary")
     img, header = frames[exposures[0]["expid"], "sciimg"]
     sky = np.vstack([center, controls(img, WCS(header), center)])
     base = np.array([int(float(r["mjd"])) != 58745 for r in exposures])
