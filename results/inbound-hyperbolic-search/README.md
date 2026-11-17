@@ -7,13 +7,14 @@
 - The [JPL extraction and row-level audit](catalog/) include 527 strictly hyperbolic solutions and 1,763 set exactly to a parabola. The latter supply no positive nominal excess speed. The newest observation represented in this selected JPL snapshot is November 9, 2026.
 - In the [bound-orbit comparison](comparison/evidence/screen_summary.json), 91 of the 902 entries with `0.95 ≤ e < 1` have an MPC single-opposition source or a measured arc of at most 30 days. Forty-two of the 76 with usable eccentricity errors reach the parabolic boundary within three formal standard deviations. Two of those 42 have observations in 2025 or later. This comparison includes comets and asteroids. The other 15 of 91 lack a usable error.
 - The [Get-CP rolling NEOCP/PCCP orbit file](comparison/evidence/neocp_rolling.orb.gz) contained 275 distinct temporary IDs and zero nominal eccentricities of one or greater. The provider retains current objects plus the last nominal orbit of recent removals. These short-arc nominal solutions have no demonstrated completeness for interstellar visitors.
+- A three-night Pan-STARRS F51 search returned zero proposals from 2,130 eligible tracklets on 17 UTC dates. The first injection run recovered 97/100 synthetic hyperbolic objects inserted as three groups of observations at real times (95% exact binomial interval 91.48–99.38%). The later positions are forced into the input regardless of telescope pointing or flux. See [tracklet search](tracklets/).
 - The full November 17 isolated-tracklet file contained no Rubin X05 rows from October 19 through November 16 UTC. The latest available 29-day X05 slice ended July 14, 2026 and contained 36 observation lines. [Extract and query receipts](tracklets/)
 
 The speed used for triage is `sqrt(GM_sun (e−1)/q)`. It describes a heliocentric two-body orbit at the catalogue epoch. An incoming speed needs a fit to astrometry and propagation backwards past the planets. The single-element significance omits systematic errors and sensitivity to non-gravitational acceleration.
 
 ## Pending at this checkpoint
 
-Independent gravitational and activity-sensitive fits, a bulk refit against the MPC observation file, tracklet linking and recovery tests, and archival follow-up of any surviving lead. No population bound has been derived. C/2025 V1 (Borisov), a previously designated comet distinct from 2I, has a nominal 3.85 km/s excess on a ten-day JPL arc and is under review.
+The three known interstellar controls were recovered at 250 au. Independent fits of C/2025 V1 to 117 retained positions gave an inbound excess near 3.77 km/s under gravity. Dropping two observations from its final night reduced the formal significance from 5.05 to 2.53 standard deviations. Wider force-law checks, a bulk refit against the MPC observation file, tracklet linking and recovery tests, and archival follow-up of any surviving lead. No population bound has been derived. C/2025 V1 (Borisov), a previously designated comet distinct from 2I, has a nominal 3.85 km/s excess on a ten-day JPL arc and is under review.
 
 ## Prior work and reproduction
 
