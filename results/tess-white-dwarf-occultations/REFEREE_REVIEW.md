@@ -1,0 +1,36 @@
+# Referee replay — bounded TESS white-dwarf null
+
+**Decision:** retain the null result, with its selection and geometry qualifiers. No discovery-level event has passed spatial and independent-timing checks. This is **not** a count of all planets around white dwarfs and is **not** a measured debris occurrence rate. The original unmodified survey triggers, including doubtful ones, are retained where the upper-bound numerator requires them.
+
+## Frozen-input reproductions
+
+The dedicated [referee workflow](../../.github/workflows/tess-wd-referee.yml) runs five jobs without internet access to astronomy archives: `referee_verify.py`, `audit_recovery.py`, `audit_extension.py`, `audit_population.py`, and `archive_followup.py`. It reconstructs all finite-trial confidence limits and every injected period, phase, impact parameter and event duration using the deposited products. The independent check uses a direct three-term Poisson-binomial recurrence for the two-candidate experiment rather than the original odds polynomial. The original scripts' raw-data pixel reproducibility checks are separately recorded in `extension/pixel_replay.json`. The key results are:
+
+| Experiment | Independent, crowding-qualified WDs | Trial recoveries | 95% upper bound for companions **conditional on transit** |
+| --- | ---: | ---: | ---: |
+| Fixed period 1.40794 d, radius 11.2 Earth radii | 39 | 1,896/1,950 | **11.130736%** |
+| Secondary log-uniform period 0.25–3 d, radius 11.2 Earth radii | 42 | 2,035/2,100 | **20.125635%**, counting both compatible stars |
+
+The fixed-period figure is **one pointwise cell**, not a limit across a continuous period or radius range. Other pointwise fixed cells are (0.25 d, 1 Earth radius), (0.25 d, 11.2 Earth radii), and (1.40794 d, 1 Earth radius). Recovery is measured on actual, locally normalised 200-second light curves with nominal Gaia dilution, the stipulated stellar mass/radius models, and random phase and inclination **given that a transit occurs**. Only the selected bright objects passing the Gaia neighbour crowding cut enter these bounds. The isotropic-all-inclination host fraction is not bounded below 100%; the secondary survey's geometry-weighted sensitivity is only 1.678 effective stars. No irregular-debris duty-cycle or occurrence model was calibrated.
+
+Sample trace: 157 bright parent white dwarfs; 140 requested for extension visits after controls, geometric Sector 109 stars and catalogue failures were excluded; 39 selected (89 failed the **minimum Gaia target-light fraction of 0.80** crowding cut, four nonpositive aperture baselines, eight no usable released 200-second visit). The 39 contributed 417,350 finite quality-zero 200-second exposures, 417,173 entering the search, 19 periodic triggers and 85 isolated ones. No periodic trigger matched the fixed WD 1856 period. Three independent Sector 109 stars bring the secondary sample to 42.
+
+## Positive controls and a false positive
+
+WD 1856+534 b is recovered as the **rank-one** periodic signal in independently chosen, pixel-uncertainty-optimised Sector 86 apertures at **20 s** (1.40794276 d, 11 supported events) and **120 s** (1.40793894 d, 10 supported events). Fixed 1.5-pixel apertures miss it because of substantial blending. The binary controls RR Cae and TIC 60040774 also recover; the positive controls do **not** enter the occurrence denominator.
+
+Sector 110 TIC 55997020: the search's 4-minute isolated template reports **15.6466%** depth. A separate fixed 1.5-pixel-radius aperture reports **20.6597%**, declining to **0.1455%** with a 3.5-pixel aperture. A field comparison source shows the concurrent centroid and pointing shift. These two small-aperture depth values come from different normalisations, not different events. The larger aperture recaptures the displaced flux; no astrophysical eclipse is established. The Sector 110 visit does not expand the 42-star denominator.
+
+The complete 20/120-s screen contains 1,693 products, 1,106 usable light curves on 86 catalogue counterparts, zero deep periodic triggers and 142 isolated boxes. All 142 received follow-up pixels. The optical ledger matches **272** trigger records on **37** hosts, including the extension, older FFIs and the Sector 110 event. Its epoch extractions include **32,719** quality-selected ZTF points; independent ATLAS image photometry supplied 392 usable epochs on the two period-compatible extension stars. **None of the 252 isolated TESS boxes overlaps an actual ATLAS shutter interval** in the four-site query. This is absence of simultaneous ground coverage, not ground confirmation of a null.
+
+## Remaining unresolved observations and decisive checks
+
+1. **TIC 220578510**, Gaia EDR3 4672306015773211008, Sector 97: a shallow **0.966602-day** period (aperture depth about **0.223%**) falls inside the secondary 0.25–3-day interval. It did not retain the periodic detection threshold in simultaneous fast photometry. Obtain multiple predicted cycles in new, quality-zero **20/120-second** TESS pixels or high-speed multi-band ground photometry, with **WD-localised difference images** and field-neighbour light curves. A repeatable, WD-centred deficit at the predicted phase would change its status; no such independent repeat has been established.
+2. **TIC 91529455**, Gaia EDR3 5063539946887524864, Sector 107: competing **2.364306- and 2.069015-day** aliases (original aperture depths approximately **0.81% and 0.61%**) lie in the same secondary model. Simultaneous short-cadence and external sparse epochs do not resolve them. Reobserve at high cadence across **times when the aliases predict different eclipse phases**, with a WD-centred centroid/difference image and colour/field-star veto. This star remains counted once as a possible host, not twice.
+3. **Quality-excluded single-epoch FFI dips:** 83 of 85 extension isolated boxes lacked clean simultaneous fast samples at their centres; the other two did not retain a significant WD-centred deficit in independent pixel fits. The historical Sector 98 isolated boxes coincide with scattered-light quality flags. New uncontaminated high-cadence data and a repeatable WD-localised occultation would be needed to establish a debris system. Nonrecurrence cannot disprove a one-off body. The 4-minute, 10%-deep Sector 110 injection recovery of 8% is not a debris occurrence limit.
+
+## Receipt and scope qualifications
+
+The replay verifies the extension parent CSV SHA-256, archive-query response hashes, included FITS receipt digests against selected input records, all original trigger and trial ledgers, optical event keys, and ATLAS compressed response and window hashes. Input-file URLs, byte counts, retrieved timestamps and digests are kept in the corresponding receipts. This offline review does **not** independently reacquire every multi-megabyte external FITS: the separately documented three-cube full pixel replay is a sampled raw-data check, not all-star remote-data validation.
+
+The first [dedicated CI replay](https://github.com/dovvnloading/Open-Space/actions/runs/44065723046) passed the mathematical and ledger audits; the strengthened hash checks are run by later workflow executions. No `[REMARKABLE]` title or `docs/REMARKABLE_FINDINGS.md` entry is warranted.
