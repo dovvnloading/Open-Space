@@ -1,6 +1,6 @@
 # Fast extragalactic optical transients in the November 2026 public alerts
 
-**No new extragalactic transient is validated in the primary search.** The strongest unresolved Rubin source is 171198361324486700. Its difference flux faded from 5,900 ± 372 to 4,358 ± 307 nJy in the i band in 67.5 minutes on November 12 UTC. The 0.329 ± 0.103 mag change also appears in fixed-aperture photometry. Legacy Surveys resolves no host at the position and places a pre-existing point source 0.11 arcsec away. No distance, rise time or total duration has been measured. Lasair/Sherlock predicts a variable star on the basis of that same point source. [Lasair record](https://lasair.lsst.ac.uk/object/171198361324486700/)
+**No new extragalactic transient is validated in the primary search.** The strongest unresolved Rubin source is 171198361324486700. Its difference flux faded from 5,900 ± 372 to 4,358 ± 307 nJy in the i band in 67.5 minutes on November 12 UTC. The PSF-fit change was 0.329 ± 0.103 mag in the difference images and 0.251 ± 0.065 mag in the direct images. Fixed-aperture difference photometry gave 0.152 ± 0.225 mag on the same exposures. Legacy Surveys resolves no host at the position and places a pre-existing point source 0.11 arcsec away. No distance, rise time or total duration has been measured. Lasair/Sherlock predicts a variable star on the basis of that same point source. [Lasair record](https://lasair.lsst.ac.uk/object/171198361324486700/)
 
 | Primary search, November 1–16 UTC | Rubin | ZTF |
 |---|---:|---:|
@@ -19,4 +19,6 @@ Archived the photometry, screened all eligible pairs, checked the public ZTF exp
 
 ## Pending at this checkpoint
 
-The final object-by-object audit, supplementary older-object tests, and linked cross-survey evidence are being assembled. No photometric class or discovery priority has been established for the compact Rubin source.
+No primary candidate showed a significant rise followed by a significant fade in the same band within one day. Only 244 Rubin objects and nine ZTF objects had the three appropriately spaced same-band visits needed for that test. [Timing and injection audit](recovery/design.md)
+
+The object-by-object audit, supplementary older-object tests, and independent cross-survey comparisons are in progress. No photometric class or discovery priority has been established for the compact Rubin source.
