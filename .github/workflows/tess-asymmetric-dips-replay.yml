@@ -44,6 +44,7 @@ jobs:
           name: sector105-field-replay
           path: /tmp/replay-*.json
   history:
+    if: github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, 'pilot catalog receipts')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
@@ -84,3 +85,33 @@ jobs:
           path: |
             /tmp/lead-history.json
             /tmp/sector105.svg
+  catalogs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    defaults:
+      run:
+        working-directory: results/tess-asymmetric-dips
+    steps:
+      - uses: actions/checkout@v4
+      - name: Repeat the pilot catalog queries and retain every response
+        run: python3 catalog_vetting.py products.csv triggers.csv /tmp/pilot-catalogs
+      - name: Verify the catalog census
+        run: |
+          python3 - <<'PY'
+          import base64, csv, gzip, json, pathlib, textwrap
+          p=pathlib.Path('/tmp/pilot-catalogs')
+          rows=list(csv.DictReader((p/'catalog-summary.csv').open()))
+          assert len(rows)==14
+          receipts=list(map(json.loads,gzip.open(p/'catalog-receipts.jsonl.gz','rt')))
+          assert len(receipts)==56
+          for name in ('catalog-summary.csv','catalog-receipts.jsonl.gz'):
+              data=(p/name).read_bytes()
+              payload=base64.b64encode(gzip.compress(data,mtime=0)).decode()
+              for i,part in enumerate(textwrap.wrap(payload,2000)):
+                  print('REC',name,i,part)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pilot-catalog-replay
+          path: /tmp/pilot-catalogs
