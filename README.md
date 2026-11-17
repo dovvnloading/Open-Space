@@ -342,6 +342,7 @@ The [DR20 AGN pilot methods and calibration checks](results/dr20-clagn-pilot/REA
 
 The [cold-neighbour search methods and reproduction evidence](results/cold-neighbours-motion-selected/README.md) document bounded catalogue and image tests.
 
+- [SPHEREx stellar infrared screen and reproduction evidence](results/spherex-waste-heat/README.md)
 - [Euclid DR1 repeat-visit development screen and failure-mode evidence](results/euclid-foundation-eligibility/README.md)
 - [XRISM count-comparison methods and offline replay](results/xrism-ngc7172/README.md), documenting the calibration limits of the observed-count test.
 
