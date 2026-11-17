@@ -1,0 +1,19 @@
+{
+  "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+  "method": "GET",
+  "query": "SELECT source_id,random_index,phot_g_mean_mag,bp_rp,parallax_error,pmra_error,pmdec_error,\nparallax_pmra_corr,parallax_pmdec_corr,pmra_pmdec_corr,ruwe,visibility_periods_used,\nipd_frac_multi_peak,ipd_gof_harmonic_amplitude,duplicated_source,astrometric_params_solved,\nnu_eff_used_in_astrometry,pseudocolour,ecl_lat\nFROM gaiadr3.gaia_source\nWHERE random_index BETWEEN 0 AND 4999 AND phot_g_mean_mag >= 16 AND phot_g_mean_mag < 20.5 AND bp_rp < 1.2",
+  "params": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "csv",
+    "QUERY": "SELECT source_id,random_index,phot_g_mean_mag,bp_rp,parallax_error,pmra_error,pmdec_error,\nparallax_pmra_corr,parallax_pmdec_corr,pmra_pmdec_corr,ruwe,visibility_periods_used,\nipd_frac_multi_peak,ipd_gof_harmonic_amplitude,duplicated_source,astrometric_params_solved,\nnu_eff_used_in_astrometry,pseudocolour,ecl_lat\nFROM gaiadr3.gaia_source\nWHERE random_index BETWEEN 0 AND 4999 AND phot_g_mean_mag >= 16 AND phot_g_mean_mag < 20.5 AND bp_rp < 1.2"
+  },
+  "status": 200,
+  "server_date": "Tue, 17 Nov 2026 08:13:21 GMT",
+  "content_type": "text/csv",
+  "started_utc": "2026-11-17T08:13:18.014788+00:00",
+  "finished_utc": "2026-11-17T08:13:23.749699+00:00",
+  "rows": 744,
+  "nbytes": 131336,
+  "sha256": "b4e4e777c83892d3b2a5f649f1004b96ac5cc4c3e2c93e998f3b9b8bf7080fae"
+}

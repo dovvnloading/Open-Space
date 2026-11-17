@@ -1,0 +1,6 @@
+SELECT source_id, ra, dec, parallax, parallax_error, parallax_over_error, pm,
+pmra, pmra_error, pmdec, pmdec_error, parallax_pmra_corr, parallax_pmdec_corr,
+pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, duplicated_source,
+visibility_periods_used, ipd_frac_multi_peak, ipd_gof_harmonic_amplitude,
+astrometric_params_solved, nu_eff_used_in_astrometry, pseudocolour, ecl_lat,
+astrometric_excess_noise_sig, phot_bp_rp_excess_factor, has_xp_continuous, radial_velocity FROM gaiadr3.gaia_source WHERE source_id IN (6094201393481158656,5805243926609660032,2156908318076164224,2588254701112130048,6633599563021390080,5781439744686701824,1798008584396457088,297028668197924352,2574148589698264448,6742327725271367808,6724844047285780224,2332854092898442112)

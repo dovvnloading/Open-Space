@@ -1,0 +1,64 @@
+{
+  "sources": {
+    "DR19": {
+      "url": "https://dr19.sdss.org/sas/dr19/spectro/astra/0.6.0/summary/astraAllStarSnowWhite-0.6.0.fits.gz",
+      "sha256": "a7489a2f7a0a155fe127badc7c21a5b21eea5791d097300e2f683e0ad6a923a9",
+      "bytes": 3965159,
+      "rows": 10364,
+      "classified_rows": 10364,
+      "identified_rows": 10364,
+      "unique_ids": 10364
+    },
+    "DR20": {
+      "url": "https://dr20.sdss.org/sas/dr20/spectro/astra/0.8.1/summary/astraAllStarSnowWhite-0.8.1.fits.gz",
+      "sha256": "a19c7aa645459d83aabe58915693fa95312bd59b9c9559bd4f0459a57b819099",
+      "bytes": 808290792,
+      "rows": 1803883,
+      "classified_rows": 50960,
+      "identified_rows": 50924,
+      "unique_ids": 50862
+    }
+  },
+  "dr19_dr20_shared_ids": 9847,
+  "distinct_ids": 51379,
+  "matched_from_desi": 11196,
+  "additional_queried": 40183,
+  "gates": [
+    {
+      "release": "DR19",
+      "snr_min": 3,
+      "eligible": 8541,
+      "over_600": 0,
+      "over_1000": 0,
+      "max_vt": 486.9,
+      "max_id": "855361055035055104"
+    },
+    {
+      "release": "DR19",
+      "snr_min": 5,
+      "eligible": 7843,
+      "over_600": 0,
+      "over_1000": 0,
+      "max_vt": 486.9,
+      "max_id": "855361055035055104"
+    },
+    {
+      "release": "DR20",
+      "snr_min": 3,
+      "eligible": 40073,
+      "over_600": 2,
+      "over_1000": 0,
+      "max_vt": 681.18,
+      "max_id": "1542290255978428800"
+    },
+    {
+      "release": "DR20",
+      "snr_min": 5,
+      "eligible": 36400,
+      "over_600": 1,
+      "over_1000": 0,
+      "max_vt": 601.97,
+      "max_id": "6504108468006561408"
+    }
+  ]
+}

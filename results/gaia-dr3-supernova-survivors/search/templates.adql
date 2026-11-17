@@ -1,0 +1,6 @@
+SELECT source_id,random_index,phot_g_mean_mag,bp_rp,parallax_error,pmra_error,pmdec_error,
+parallax_pmra_corr,parallax_pmdec_corr,pmra_pmdec_corr,ruwe,visibility_periods_used,
+ipd_frac_multi_peak,ipd_gof_harmonic_amplitude,duplicated_source,astrometric_params_solved,
+nu_eff_used_in_astrometry,pseudocolour,ecl_lat
+FROM gaiadr3.gaia_source
+WHERE random_index BETWEEN 0 AND 4999 AND phot_g_mean_mag >= 16 AND phot_g_mean_mag < 20.5 AND bp_rp < 1.2
