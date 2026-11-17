@@ -212,6 +212,85 @@ for oid,item in sorted(items.items(),key=lambda kv: (kv[1]["survey"],kv[0])):
        gcn="No supported match in 234 scoped GCN comparisons (coincidences/sky_time_matches.csv)")
     out.append(row)
 
+# Secondary TNS-alias check for the two still-unresolved Rubin coordinates.
+# This is a broker alias check, not a substitute for a successful TNS full-catalogue cone search.
+secondary = {}
+for row in out:
+    row["secondary_tns_alias_check"] = "not_required"
+    row["secondary_tns_alias"] = ""
+    if row["disposition"] != "unresolved":
+        continue
+    url = "https://transients.fyi/api/objects/lsst/" + row["oid"]
+    blob = query("secondary_tns_"+row["oid"], url)
+    if blob is None:
+        row["secondary_tns_alias_check"] = "unavailable"
+        secondary[row["oid"]] = {"status":"unavailable"}
+        continue
+    try:
+        response = json.loads(blob)
+        source = response.get("object",response) if isinstance(response,dict) else {}
+        tags = {str(k):v for k,v in source.items() if "tns" in str(k).lower()} if isinstance(source,dict) else {}
+        row["secondary_tns_alias_check"] = "returned_broker_record"
+        row["secondary_tns_alias"] = json.dumps(tags,sort_keys=True,ensure_ascii=False)[:500]
+        secondary[row["oid"]] = {"status":"record", "tns_fields":tags,
+                                  "data_through_limit":"2026-11-15 per service public documentation"}
+    except Exception as err:
+        row["secondary_tns_alias_check"] = "unparseable"
+        secondary[row["oid"]] = {"status":"unparseable","error":str(err)[:200]}
+(OUT/"secondary_lookup.json").write_text(json.dumps(secondary,indent=2,sort_keys=True)+"\n")
+
+# Referee replay: independent arithmetic, scoped coincidence count, and on-disk checksums.
+import tarfile
+rubin_pairs = rows("rubin/pairs.csv")
+ztf_pairs = rows("ztf/derived/ztf_pairs.csv")
+funnel = json.loads((ROOT/"rubin/funnel.json").read_text())
+ztf_counts = json.loads((ROOT/"ztf/derived/ztf_counts.json").read_text())
+gcn = rows("coincidences/sky_time_matches.csv")
+recovery = json.loads((ROOT/"recovery/turnover_audit.json").read_text())
+pass_r = all(.02<=float(x["dt_d"])<=1 and abs(float(x["dm_mag"]))>=.3 and
+             abs(float(x["rate_mag_d"]))>1 and abs(float(x["dm_mag"]))/float(x["sigma_mag"])>=3
+             and float(x["snr1"])>=5 and float(x["snr2"])>=5 for x in rubin_pairs)
+pass_z = all(.02<=float(x["dt"])<=1 and abs(float(x["dm"]))>=.3 and
+             abs(float(x["mag_per_day"]))>1 and
+             abs(float(x["dm"]))/math.hypot(float(x["err1"]),float(x["err2"]))>=3 for x in ztf_pairs)
+hash_mismatches=[]
+for key,expected in recovery["sha256_input_files"].items():
+    path=ROOT/key
+    if not path.exists() or sha(path.read_bytes())!=expected:
+        hash_mismatches.append(key)
+raw_mismatches=[]
+for path in sorted((ROOT/"rubin/data").glob("*.json")):
+    if not (path.with_suffix(".csv.gz")).exists():
+        continue
+    r=json.loads(path.read_text())
+    if r.get("sha256") and sha(gzip.decompress(path.with_suffix(".csv.gz").read_bytes()))!=r["sha256"]:
+        raw_mismatches.append(str(path.relative_to(ROOT)))
+tar = ROOT/"ztf/ztf_evidence_supplement.tar.gz"
+tar_members=[]
+if tar.is_file():
+    with tarfile.open(tar,"r:gz") as arch:
+        tar_members=arch.getnames()
+checks = {
+    "frozen_cohort": "2026-11-01 through 2026-11-16 UTC, new broker IDs",
+    "rubin_pair_rows":len(rubin_pairs), "rubin_pair_objects":len({x["oid"] for x in rubin_pairs}),
+    "rubin_pairs_all_pass":pass_r, "rubin_funnel_matches":funnel["rapid_pairs"]==len(rubin_pairs) and funnel["rapid_pair_objects"]==23,
+    "ztf_pair_rows":len(ztf_pairs), "ztf_pair_objects":len({x["oid"] for x in ztf_pairs}),
+    "ztf_pairs_all_pass":pass_z, "ztf_counts_match":ztf_counts["selected_pairs"]==len(ztf_pairs) and ztf_counts["selected_objects"]==9,
+    "gcn_compared_combinations":len(gcn), "coarse_regions":sum(x["inside_region"]=="1" for x in gcn),
+    "rubin_ztf_recovery_input_hashes_checked":len(recovery["sha256_input_files"]),
+    "recovery_input_hash_mismatches":hash_mismatches,
+    "rubin_raw_reply_checksum_failures":raw_mismatches,
+    "ztf_evidence_tar_sha256":sha(tar.read_bytes()) if tar.is_file() else None,
+    "ztf_tar_members":len(tar_members),
+    "ztf_tar_receipt_member_examples":[n for n in tar_members if "receipt" in n.lower()][:8],
+    "original_ztf_receipts_directory_present":(ROOT/"ztf/receipts").exists(),
+    "remarkable_event_validated":False,
+    "effective_area_time_measured":False,
+}
+assert pass_r and pass_z and checks["rubin_funnel_matches"] and checks["ztf_counts_match"]
+assert len(gcn)==234 and len(hash_mismatches)==0 and len(raw_mismatches)==0
+(OUT/"referee_checks.json").write_text(json.dumps(checks,indent=2,sort_keys=True)+"\n")
+
 with (OUT/"dispositions.csv").open("w",newline="") as fh:
     writer=csv.DictWriter(fh,fieldnames=list(out[0]))
     writer.writeheader()
