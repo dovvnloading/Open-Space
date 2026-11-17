@@ -58,20 +58,21 @@ For the development-only constrained fits and residual perturbations, also insta
 
 ### Offline replay commands
 
+Run `python results/dr20-clagn-pilot/replay.py` from the repository root for an offline end-to-end replay and comparison. It uses the system temporary directory and removes its derived files; set TEMP and TMP to a D: directory where required. It compares row structure and classifications exactly and numerical values with relative tolerance 1e-6, absolute tolerance 1e-8, and equal NaNs. It does not regenerate plots or synthetic outputs.
+
 From the repository root, install NumPy 2.5.5, SciPy 1.17.1, Astropy and Matplotlib. Choose an empty working directory on D:; these PowerShell commands use `D:/Open-Space/dr20-replay` and write regenerated files there. The rebuild checks the NPZ size and SHA-256 before writing, retains each archive hash as `source_sha256`, and writes a separate derived manifest. It never reads held-out arrays.
 
 ```powershell
 $replay = 'D:/Open-Space/dr20-replay'
-$pilot = 'results/dr20-clagn-pilot'
-python "$pilot/rebuild_development.py" $replay
-python "$pilot/qa_dev.py" $replay "$replay/derived-manifest.json" "$replay/development-qa.csv"
-python "$pilot/wing_proxy.py" $replay "$replay/derived-manifest.json" "$replay/development-qa.csv" "$replay/wing-proxy.csv"
-python "$pilot/joint_dev.py" $replay "$replay/derived-manifest.json" "$replay/development-qa.csv" "$replay/joint-fits.csv" "$replay/real-injections.csv"
-python "$pilot/joint_profile.py" $replay "$replay/derived-manifest.json" "$replay/development-qa.csv" "$replay/profile-fits.csv"
-python "$pilot/residual_blocks.py" $replay "$replay/derived-manifest.json" "$replay/residual-blocks.json"
-python "$pilot/rm17_spectral_controls.py" $replay "$replay/derived-manifest.json" "$replay/rm17-spectral-controls.json"
-python "$pilot/ztf_check.py"
-python "$pilot/ztf_dr24_check.py"
+python results/dr20-clagn-pilot/rebuild_development.py $replay
+python results/dr20-clagn-pilot/qa_dev.py $replay "$replay/derived-manifest.json" "$replay/development-qa.csv"
+python results/dr20-clagn-pilot/wing_proxy.py $replay "$replay/derived-manifest.json" "$replay/development-qa.csv" "$replay/wing-proxy.csv"
+python results/dr20-clagn-pilot/joint_dev.py $replay "$replay/derived-manifest.json" "$replay/development-qa.csv" "$replay/joint-fits.csv" "$replay/real-injections.csv"
+python results/dr20-clagn-pilot/joint_profile.py $replay "$replay/derived-manifest.json" "$replay/development-qa.csv" "$replay/profile-fits.csv"
+python results/dr20-clagn-pilot/residual_blocks.py $replay "$replay/derived-manifest.json" "$replay/residual-blocks.json"
+python results/dr20-clagn-pilot/rm17_spectral_controls.py $replay "$replay/derived-manifest.json" "$replay/rm17-spectral-controls.json"
+python results/dr20-clagn-pilot/ztf_check.py
+python results/dr20-clagn-pilot/ztf_dr24_check.py
 ```
 
-The plot script writes to the result folder: run `python "$pilot/plot_development.py" $replay "$replay/derived-manifest.json" 62239511`, and repeat with IDs `62237784` and `62238906` for the other inspected outliers. `python "$pilot/synthetic.py"` similarly writes its separate toy result to the result folder. These two commands modify the checkout. Rebuilt QA and spectral controls reproduced exactly in independent replay; profile-fit numerical values differed by at most 2.3×10⁻¹³ in that environment. Floating-point optimization can vary across dependency versions and platforms; compare numerical results with an appropriate tolerance rather than requiring byte identity.
+The plot script writes to the result folder: run `python results/dr20-clagn-pilot/plot_development.py $replay "$replay/derived-manifest.json" 62239511`, and repeat with IDs `62237784` and `62238906` for the other inspected outliers. `python results/dr20-clagn-pilot/synthetic.py` similarly writes its separate toy result to the result folder. These two commands modify the checkout. Rebuilt QA and spectral controls reproduced exactly in independent replay; profile-fit numerical values differed by at most 2.3×10⁻¹³ in that environment. Floating-point optimization can vary across dependency versions and platforms; compare numerical results with an appropriate tolerance rather than requiring byte identity.
