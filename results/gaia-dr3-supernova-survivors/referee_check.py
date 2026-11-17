@@ -178,7 +178,7 @@ def controls_check():
     summary=getjson("control/recovery_summary.json")
     for clas,n in [("D6",3),("LP40",0),("He",0)]:
         eq(summary["control_recovery"][clas]["pass_fast_quality"],n,clas+" quality recovery")
-    eq(sum(1 for r in control if r["class"]=="D6" and float(gaia[r["source_id"]]["phot_g_mean_mag"])>18),8,"faint D6 controls (G>18)")
+    eq(sum(1 for r in control if r["class"]=="D6" and float(gaia[r["source_id"]]["phot_g_mean_mag"])>18),9,"faint D6 controls (G>18)")
 
 def injection_check():
     rows=table("search/injection.csv")
