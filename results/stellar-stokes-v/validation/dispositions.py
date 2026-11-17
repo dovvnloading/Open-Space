@@ -4,7 +4,9 @@ The status is assigned to the *radio catalogue source*, not automatically to
 every Gaia component in its search circle. Undetected/uncalibrated positions
 do not become limits. Does not download new archive data.
 """
+import argparse
 import csv
+import sys
 import gzip
 import hashlib
 import json
@@ -36,7 +38,43 @@ def save(path, records, fields):
     return sha(path.read_bytes())
 
 
-def main():
+def main(output):
+    source_code = Path(__file__).resolve()
+    source_root = source_code.parent.parent
+    if not output.is_absolute() or output.drive.casefold() != 'd:':
+        raise ValueError('Output must be an absolute D: path')
+    output = output.resolve()
+    if output.drive.casefold() != 'd:':
+        raise ValueError('Resolved output must remain on D:')
+    if output.is_relative_to(source_root.parents[1]):
+        raise ValueError('Output must be outside the repository')
+    output.mkdir(parents=True, exist_ok=False)
+    files = [
+        'samples/receipt.json', 'samples/hosts.csv.gz', 'samples/dwarfs.csv.gz',
+        'askap/footprint_receipt.json', 'askap/host_coverage.csv.gz',
+        'lofar/data/vlotss_matches.csv', 'validation/lofar_known.csv',
+        'askap/racs_matches.csv', 'validation/racs_known.csv',
+        'askap/racs_offset_matches.csv', 'lofar/data/vlotss_receipt.json',
+        'askap/racs_control_counts.json', 'vlass/measurements.csv',
+        'vlass/offsets.csv', 'vlass/summary.json',
+    ]
+    captured = {}
+    snapshot = output / 'inputs'
+    for name in files:
+        raw = (source_root / name).read_bytes()
+        dest = snapshot / name
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(raw)
+        captured[name] = dict(bytes=len(raw), sha256=sha(raw))
+    code = source_code.read_bytes()
+    (output / 'dispositions.py').write_bytes(code)
+    runtime = Path(sys.executable).read_bytes()
+    manifest = dict(inputs=captured, code_sha256=sha(code),
+                    python_version=sys.version, python_executable_sha256=sha(runtime))
+    with (output / 'input_manifest.json').open('x', encoding='utf-8', newline='\n') as f:
+        f.write(json.dumps(manifest, indent=2) + '\n')
+    ROOT = snapshot
+    HERE = snapshot / 'validation'
     sample_receipt = json.loads((ROOT / 'samples/receipt.json').read_text())
     for label in ('hosts', 'dwarfs'):
         payload = gzip.decompress((ROOT / f'samples/{label}.csv.gz').read_bytes())
@@ -92,11 +130,11 @@ def main():
             v_catalogue_error_mjy='', local_v_rms_mjy_beam=r['v_rms_mjy_beam'],
             five_rms_mjy_beam=f"{5 * float(r['v_rms_mjy_beam']):.6f}",
             disposition='published', caveat=note))
-    match_path = HERE / 'match_dispositions.csv'
+    match_path = output / 'match_dispositions.csv'
     match_sha = save(match_path, out, FIELDS)
     host = [r for r in out if r['sample'] == 'hosts']
     assert {r['target'] for r in host} == {'GJ 1151', 'COCONUTS-2 A'}
-    host_path = HERE / 'host_v_measurements.csv'
+    host_path = output / 'host_v_measurements.csv'
     host_sha = save(host_path, host, FIELDS)
 
     covered = read(ROOT / 'askap/host_coverage.csv.gz')
@@ -130,9 +168,12 @@ def main():
        vlass_distinct_nonhost_forced_positions=11, vlass_offset_positions=88,
        vlass_five_sigma_detections=0, files_sha256=dict(
             match_dispositions_csv=match_sha, host_v_measurements_csv=host_sha))
-    (HERE / 'disposition_receipt.json').write_text(json.dumps(receipt, indent=2, sort_keys=True) + '\n')
+    with (output / 'disposition_receipt.json').open('w', encoding='utf-8', newline='\n') as f:
+        f.write(json.dumps(receipt, indent=2) + '\n')
     print(json.dumps(receipt, indent=2))
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--out', type=Path, required=True, help='new directory outside repository')
+    main(parser.parse_args().out)
