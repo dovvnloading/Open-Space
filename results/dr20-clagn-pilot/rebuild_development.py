@@ -7,7 +7,11 @@ import hashlib,json,sys
 from pathlib import Path
 import numpy as np
 from astropy.io import fits
-root=Path(__file__).resolve().parent;out=Path(sys.argv[1]);out.mkdir(parents=True,exist_ok=True);source=json.loads((root/'manifest.json').read_text());arrays=np.load(root/'development-coadds.npz',allow_pickle=False);derived=[]
+root=Path(__file__).resolve().parent
+archive=root/'development-coadds.npz'; data=archive.read_bytes()
+if len(data)!=3133051 or hashlib.sha256(data).hexdigest()!='8fb4d1f8c9eef159aede7ce6901391c18f0b3373612d79ec64d450db16f0c78c':
+ raise SystemExit('Frozen development archive size or SHA-256 mismatch; no output written')
+out=Path(sys.argv[1]);out.mkdir(parents=True,exist_ok=True);source=json.loads((root/'manifest.json').read_text());arrays=np.load(archive,allow_pickle=False);derived=[]
 for row in source:
  if row['kind']=='hold':continue
  key=f"s{row['sdss_id']}_{row['kind']}";cols=[]

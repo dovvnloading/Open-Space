@@ -55,3 +55,23 @@ python results/dr20-clagn-pilot/synthetic.py
 ```
 
 For the development-only constrained fits and residual perturbations, also install SciPy. `check_manifest.py` verifies source hashes and SPALL identity without reading coadd flux. The raw inputs must first be acquired from the URLs in the manifest. The `joint_dev.py`, `joint_profile.py`, `wing_proxy.py`, `qa_dev.py`, `plot_development.py` and `residual_blocks.py` scripts explicitly omit `hold` records. Run them with the input and output paths shown in their argument lists. Real-background injections, toy simulations and the observational measurements are kept in separate files. This analysis uses SDSS-V data, obtained through the SDSS Science Archive Server; SDSS is supported by the institutions listed in its public citation guidance.
+
+### Offline replay commands
+
+From the repository root, install NumPy 2.5.5, SciPy 1.17.1, Astropy and Matplotlib. Choose an empty working directory on D:; these PowerShell commands use `D:/Open-Space/dr20-replay` and write regenerated files there. The rebuild checks the NPZ size and SHA-256 before writing, retains each archive hash as `source_sha256`, and writes a separate derived manifest. It never reads held-out arrays.
+
+```powershell
+$replay = 'D:/Open-Space/dr20-replay'
+$pilot = 'results/dr20-clagn-pilot'
+python "$pilot/rebuild_development.py" $replay
+python "$pilot/qa_dev.py" $replay "$replay/derived-manifest.json" "$replay/development-qa.csv"
+python "$pilot/wing_proxy.py" $replay "$replay/derived-manifest.json" "$replay/development-qa.csv" "$replay/wing-proxy.csv"
+python "$pilot/joint_dev.py" $replay "$replay/derived-manifest.json" "$replay/development-qa.csv" "$replay/joint-fits.csv" "$replay/real-injections.csv"
+python "$pilot/joint_profile.py" $replay "$replay/derived-manifest.json" "$replay/development-qa.csv" "$replay/profile-fits.csv"
+python "$pilot/residual_blocks.py" $replay "$replay/derived-manifest.json" "$replay/residual-blocks.json"
+python "$pilot/rm17_spectral_controls.py" $replay "$replay/derived-manifest.json" "$replay/rm17-spectral-controls.json"
+python "$pilot/ztf_check.py"
+python "$pilot/ztf_dr24_check.py"
+```
+
+The plot script writes to the result folder: run `python "$pilot/plot_development.py" $replay "$replay/derived-manifest.json" 62239511`, and repeat with IDs `62237784` and `62238906` for the other inspected outliers. `python "$pilot/synthetic.py"` similarly writes its separate toy result to the result folder. These two commands modify the checkout. Rebuilt QA and spectral controls reproduced exactly in independent replay; profile-fit numerical values differed by at most 2.3×10⁻¹³ in that environment. Floating-point optimization can vary across dependency versions and platforms; compare numerical results with an appropriate tolerance rather than requiring byte identity.
