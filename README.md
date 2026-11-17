@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 197 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 23 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 198 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 24 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -172,6 +172,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 - **No verified laser-like emission in a targeted DESI DR1 stellar search.** All 10 persistent narrow residuals in 190 audited repeat-observed stars match the stellar Li I doublet; five independent-field stars reproduced a template false positive on separate nights. Per-star conditional laser-power limits are provided. This does not constrain unsearched fields or intermittent emitters. *Null result* · [Details](results/desi_dr1_optical_seti/README.md)
 - **No verified stellar waste heat in a small infrared sky survey.** SPHEREx and WISE found no qualifying excess around 404 nearby stars across 12.6 square degrees; published candidates remain affected by dusty galaxies, blends or unresolved mid-infrared emission. SPHEREx recovered none of the injected 100 K or 300 K excesses at 1% of stellar luminosity in its controls, so this is a limited null, not a Galaxy-wide constraint. *Null result* · [Details](results/spherex-waste-heat/README.md)
+- **No new kind of infrared spectrum confirmed in two SPHEREx sky patches.** A search ranked 107 sources and flagged 57 for closer checks. Later observations could test 29 of those, and none retained an unexplained fitted feature; the other 28 lack complete comparisons. One bright spike did not repeat, and a real galaxy emission band matches a known type. These two patches cannot set an all-sky limit. *Null result* · [Details](results/spherex-dr1-unclassified-spectra/README.md)
 
 **Eclipsing binaries and star systems**
 

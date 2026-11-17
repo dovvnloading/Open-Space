@@ -1,0 +1,12 @@
+{
+  "service": "https://irsa.ipac.caltech.edu/TAP/sync",
+  "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+designation%2Cra%2Cdec%2Cw1mpro%2Cw2mpro%2Cw1sigmpro%2Ccc_flags%2Cext_flg%2Cnb%0AFROM+allwise_p3as_psd%0AWHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C270.0%2C+66.56%2C0.5%29%29%0AAND+w1mpro+%3E%3D+7+AND+w1mpro+%3C+12+ORDER+BY+designation&MAXREC=50000",
+  "query": "SELECT designation,ra,dec,w1mpro,w2mpro,w1sigmpro,cc_flags,ext_flg,nb\nFROM allwise_p3as_psd\nWHERE 1=CONTAINS(POINT('ICRS',ra,dec), CIRCLE('ICRS',270.0, 66.56,0.5))\nAND w1mpro >= 7 AND w1mpro < 12 ORDER BY designation",
+  "retrieved_utc": "2026-11-17T09:25:30.630485+00:00",
+  "rows": 148,
+  "maxrec": 50000,
+  "http_status": 200,
+  "content_type": "text/csv",
+  "size": 10668,
+  "sha256": "b58e1f115736c0090cdecb0b26c79aa9470d2a32ca67cc1491fc75b9bb724a49"
+}

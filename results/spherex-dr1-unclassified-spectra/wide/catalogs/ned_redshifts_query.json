@@ -1,0 +1,9 @@
+{
+  "url": "https://ned.ipac.caltech.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&QUERY=SELECT+objid%2Cprefname%2Cra%2Cdec%2Cprefphytype%2Cz%2Czflag%2Cz_bibcode+FROM+NEDTAP.objdir%0AWHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C209.53125%2C30%2C0.52%29%29%0AAND+z+IS+NOT+NULL+ORDER+BY+objid&FORMAT=csv&MAXREC=50000",
+  "query": "SELECT objid,prefname,ra,dec,prefphytype,z,zflag,z_bibcode FROM NEDTAP.objdir\nWHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',209.53125,30,0.52))\nAND z IS NOT NULL ORDER BY objid",
+  "status": 200,
+  "utc": "2026-11-17T09:32:42.321369+00:00",
+  "rows": 424,
+  "sha256": "a0cdb5fa8928fd6272800aa8c0fc26d528a6a7874b6044be1540c37faf340968",
+  "bytes": 43158
+}

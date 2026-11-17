@@ -1,0 +1,12 @@
+{
+  "service": "https://gea.esac.esa.int/tap-server/tap/sync",
+  "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cpmra%2Cpmdec%2Cphot_g_mean_mag%2Cteff_gspphot%2Cparallax%2Cruwe%0AFROM+gaiadr3.gaia_source%0AWHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C270.0%2C+66.56%2C0.51%29%29%0AAND+phot_g_mean_mag+%3C+19+ORDER+BY+source_id&MAXREC=50000",
+  "query": "SELECT source_id,ra,dec,pmra,pmdec,phot_g_mean_mag,teff_gspphot,parallax,ruwe\nFROM gaiadr3.gaia_source\nWHERE 1=CONTAINS(POINT('ICRS',ra,dec), CIRCLE('ICRS',270.0, 66.56,0.51))\nAND phot_g_mean_mag < 19 ORDER BY source_id",
+  "retrieved_utc": "2026-11-17T09:25:30.631562+00:00",
+  "rows": 2844,
+  "maxrec": 50000,
+  "http_status": 200,
+  "content_type": "text/csv",
+  "size": 401456,
+  "sha256": "a1a44606e1404190dc8ac992aa229b0ba824f42781c9b701366567e348886c54"
+}
