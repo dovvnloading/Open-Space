@@ -9,10 +9,16 @@ VERSIONS={'numpy':'2.5.5','scipy':'1.17.1','pyarrow':'24.0.0','astropy':'8.0.2'}
 
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 def git(*args):return subprocess.check_output(['git','-C',str(REPO),*args],text=True).strip()
+def verify_blob_bytes(files,head):
+ for name in files:
+  blob=subprocess.check_output(['git','-C',str(REPO),'show',f'{head}:{name}'])
+  if (REPO/name).read_bytes()!=blob:raise ValueError('worktree/Git blob bytes differ: '+name)
+
 def snapshot():
  if git('status','--porcelain','--','results/vast-tde-expanded'):raise ValueError('packet worktree is not clean')
  head=git('rev-parse','HEAD');files=git('ls-files','results/vast-tde-expanded').splitlines()
  if not files:raise ValueError('packet not tracked')
+ verify_blob_bytes(files,head)
  blobs={n:git('rev-parse',f'{head}:{n}') for n in files}
  contents={n:sha(REPO/n) for n in files}
  actual={n:version(n) for n in VERSIONS}

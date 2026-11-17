@@ -44,6 +44,15 @@ class TestConditional(unittest.TestCase):
   import read_development as reader
   with patch.object(reader,'guard',return_value={}),patch.object(reader,'digest',return_value='wrong'),patch.object(reader.pq,'read_table',side_effect=AssertionError('decoded')):
    with self.assertRaisesRegex(ValueError,'image metadata'):reader.read_development(1,'fake.parquet','wrong.csv')
+ def test_worktree_blob_mismatch_rejected(self):
+  import development_cli as cli
+  with tempfile.TemporaryDirectory() as d:
+   repo=pathlib.Path(d);(repo/'file').write_bytes(b'wrong\r\n')
+   with patch.object(cli,'REPO',repo),patch.object(cli.subprocess,'check_output',return_value=b'wrong\n'):
+    with self.assertRaisesRegex(ValueError,'worktree/Git blob bytes differ'):cli.verify_blob_bytes(['file'],'abc')
+   (repo/'file').write_bytes(b'wrong\n')
+   with patch.object(cli,'REPO',repo),patch.object(cli.subprocess,'check_output',return_value=b'wrong\n'):
+    cli.verify_blob_bytes(['file'],'abc')
  def test_manifest_code_mismatch_prevents_execution(self):
   import development_cli as cli,hashlib,json
   with tempfile.TemporaryDirectory() as d:
