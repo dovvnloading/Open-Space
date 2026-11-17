@@ -62,6 +62,9 @@ def ledger():
                     name=row.get('filename',row.get('exposure_id',''))
                     if name.endswith('_cal'):name+='.fits'
                     if name.endswith('_cal.fits'):add(name,'science_pixels',str(p.relative_to(ROOT)))
+    for p in (ROOT/'miri/extra').glob('*_images.csv'):
+        for row in read(p):
+            if int(row['usable_pixels'])>0:add(row['file'],'orbit_screen',str(p.relative_to(ROOT)))
     result=[]
     for r in obs:
         files=parent[r['obsid']]

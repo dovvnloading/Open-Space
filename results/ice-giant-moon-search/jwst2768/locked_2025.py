@@ -1,4 +1,4 @@
-"""Predict Jan 2024 with each pre-existing 2025 circular alias, without refitting it."""
+"""Predict February 2024 with each pre-existing 2025 circular alias, without refitting it."""
 import argparse,csv,json
 from pathlib import Path
 import sys

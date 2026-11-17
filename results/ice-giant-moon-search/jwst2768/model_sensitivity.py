@@ -42,8 +42,8 @@ def model(par,d,epoch):
     return np.stack((-(pos*east).sum(-1)/denom,(pos*north).sum(-1)/denom),axis=1)*ARCSEC/.031
 
 
-def run(feb,october,jan,eph1,eph2,eph3,aliases,out):
-    early=data([feb],eph1);late=data([october],eph2);hold=data(jan,eph3)
+def run(feb,october,holdout,eph1,eph2,eph3,aliases,out):
+    early=data([feb],eph1);late=data([october],eph2);hold=data(holdout,eph3)
     with open(Path(aliases)/'circular_aliases.csv') as f:trained=list(csv.DictReader(f))
     epoch=json.loads((Path(aliases)/'summary.json').read_text())['epoch2']
     rec=[]
@@ -62,15 +62,15 @@ def run(feb,october,jan,eph1,eph2,eph3,aliases,out):
             phase_epoch_deg=np.rad2deg(fit.x[1])%360,e=np.hypot(*fit.x[2:4]),i_deg=np.rad2deg(np.hypot(*fit.x[4:])),
             k=fit.x[2],h=fit.x[3],i_cos_node=fit.x[4],i_sin_node=fit.x[5],
             feb_rms_px=rms(fit.x,early),oct_rms_px=rms(fit.x,late),training_cost=fit.cost,
-            heldout_jan_rms_px=rms(fit.x,hold),circular_same_alias_jan_rms_px=rms(start,hold)))
+            heldout_2024_rms_px=rms(fit.x,hold),circular_same_alias_2024_rms_px=rms(start,hold)))
     with open(out,'w',newline='') as f:
         w=csv.DictWriter(f,fieldnames=rec[0]);w.writeheader();w.writerows(rec)
     print('best 2025 loss',min(rec,key=lambda r:r['training_cost']))
-    print('min held-out residual',min(rec,key=lambda r:r['heldout_jan_rms_px']))
+    print('min held-out residual',min(rec,key=lambda r:r['heldout_2024_rms_px']))
 
 
 if __name__=='__main__':
     a=argparse.ArgumentParser(description=__doc__)
-    for k in ['feb','oct','feb_ephem','oct_ephem','jan_ephem','aliases','out']:a.add_argument(k)
-    a.add_argument('--jan',nargs='+',required=True)
-    p=a.parse_args();run(p.feb,p.oct,p.jan,p.feb_ephem,p.oct_ephem,p.jan_ephem,p.aliases,p.out)
+    for k in ['feb','oct','feb_ephem','oct_ephem','holdout_ephem','aliases','out']:a.add_argument(k)
+    a.add_argument('--holdout',nargs='+',required=True)
+    p=a.parse_args();run(p.feb,p.oct,p.holdout,p.feb_ephem,p.oct_ephem,p.holdout_ephem,p.aliases,p.out)
