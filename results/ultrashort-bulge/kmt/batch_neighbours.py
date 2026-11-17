@@ -28,6 +28,9 @@ def query(job):
     rawfile=cache/(name+'.raw'); receipt=cache/(name+'.json')
     if rawfile.exists() and receipt.exists():
         raw=rawfile.read_bytes(); rec=json.loads(receipt.read_text())
+        if rec.get('request_sha256')!=digest(payload) or rec.get('sha256')!=digest(raw):
+            raise ValueError(f'Cached VizieR request or response mismatch in {name}')
+        if rec.get('status')==200:rec.pop('error',None)
     else:
         rec=dict(batch=name,source=cat,url=ENDPOINT,method='POST',request_sha256=digest(payload),
                  first_event=rows[0]['event'],last_event=rows[-1]['event'],targets=len(rows))
@@ -44,6 +47,7 @@ def query(job):
                                                   bytes=len(raw),sha256=digest(raw))
                 if b'#Column\t_q' not in raw and b'No object found' not in raw:
                     raise ValueError('no VizieR result table or empty indicator')
+                rec.pop('error',None)
                 rawfile.write_bytes(raw);break
             except (OSError,ValueError) as exc:
                 rec.update(status='failed',error=str(exc));raw=b''

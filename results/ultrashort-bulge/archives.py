@@ -21,6 +21,9 @@ def main():
         with cat.open() as f:
             for row in csv.DictReader(f,delimiter='\t'):
                 targets[row['Event']]=coords(row['RA'],row['Dec'])
+    with (HERE/'ogle/catalog.csv').open() as f:
+        for row in csv.DictReader(f):
+            targets['OGLE-'+row['event']]=coords(row['ra_hms'],row['dec_dms'])
     (CACHE/'imaging').mkdir(parents=True,exist_ok=True)
     jobs=[(name,*targets[name],svc) for name in a.events for svc in ('MAST','IRSA')]
     with ThreadPoolExecutor(4) as pool: results=list(pool.map(search,jobs))

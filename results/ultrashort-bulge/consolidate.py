@@ -4,6 +4,8 @@ import collections
 import csv
 import gzip
 import json
+import hashlib
+from datetime import date
 from pathlib import Path
 
 HERE=Path(__file__).resolve().parent
@@ -20,7 +22,7 @@ def inputs():
     for r in rows(HERE/'ogle/photometry.csv'):
         n=r['event'];c=ogle[n]
         items['OGLE-'+n]=dict(survey='OGLE',year=n[:4],field=c['field'],input_sha256=r['sha256'],
-                url=r['url'],catalog_te_d=c['tau_days'],time_system='HJD')
+                url=r['url'],catalog_te_d=c['tau_days'],time_system='HJD',native_usable=r['n'])
     for p in (HERE/'kmt').glob('catalog-*.tsv'):
         for r in rows(p,'\t'):
             n=r['Event'];items[n]=dict(survey='KMT',year=n[4:8],field=r['Field'],input_sha256='',
@@ -33,10 +35,10 @@ def inputs():
     for r in rows(HERE/'other/photometry.csv'):
         n=r['event'];ss,y=n.split('-')[:2]
         items[n]=dict(survey=ss,year=y,field=r['field'],input_sha256=r['input_sha256'],
-                url=r['phot_url'],catalog_te_d=r['page_te_d'],time_system='survey JD')
+                url=r['phot_url'],catalog_te_d=r['page_te_d'],time_system='survey JD',native_usable=r['usable'])
     for r in rows(HERE/'other/gaia.csv'):
         n=r['event'];items[n]=dict(survey='Gaia',year='20'+n[4:6],field='bulge rectangle',
-                input_sha256=r['sha256'],url=r['url'],catalog_te_d='',time_system='JD TCB')
+                input_sha256=r['sha256'],url=r['url'],catalog_te_d='',time_system='JD TCB',native_usable=r['usable'])
     return items
 
 
@@ -66,12 +68,26 @@ def run(cache):
     replacements=cache/'staging/all-cadence-retrial.csv'
     if replacements.is_file():
         for r in rows(replacements):cad[r['event']]=r
+    # Two Gaia CSVs have only two numeric transits and never enter the flux
+    # reducer. Their two-exposures-per-wing exposure is nonetheless exactly zero.
+    for n,meta in spec.items():
+        if meta['survey']!='Gaia' or int(meta['native_usable'])>=3 or n in cad:continue
+        raw=(cache/'.survey-cache/gaiaraw'/(n+'.csv')).read_bytes()
+        assert hashlib.sha256(raw).hexdigest()==meta['input_sha256']
+        times=[]
+        for record in csv.reader(raw.decode().splitlines()[2:]):
+            if record and record[2].strip().replace('.','',1).isdigit():times.append(float(record[1]))
+        assert len(times)==int(meta['native_usable'])
+        s=2451544.5+(date(int(meta['year']),3,1)-date(2000,1,1)).days
+        cad[n]=dict(event=n,season_d=245.,distinct_epochs_in_season=len({t for t in times if s<=t<s+245}),
+                    **{'days_'+w:0. for w in ('0.03','0.1','0.25','0.5','1.5')},error='')
     gg=[];kk=[];flags=[]
     totals=collections.defaultdict(collections.Counter)
     for n,meta in sorted(spec.items()):
         g=broad.get(n)
-        status=('ok' if g and g.get('status')=='ok' else 'fit failed' if g else
-                'insufficient epochs' if meta['survey']=='Gaia' else 'pending')
+        status=('ok' if g and g.get('status')=='ok' else
+                'insufficient epochs' if meta['survey']=='Gaia' and int(meta['native_usable'])<6 else
+                'fit failed' if g else 'pending')
         entry={'event':n,**meta,'fit_status':status}
         cnt=totals[(meta['survey'],meta['year'])]
         cnt['inventoried']+=1;cnt['hashed']+=bool(meta['input_sha256']);cnt['fitted']+=(status=='ok')

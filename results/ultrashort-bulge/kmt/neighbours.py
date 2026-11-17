@@ -13,7 +13,7 @@ from freeze import HERE, get
 GAIA = 'https://gea.esac.esa.int/tap-server/tap/sync'
 VIRAC = 'https://vizier.cfa.harvard.edu/viz-bin/asu-tsv'
 RADIUS = 1.5
-EXTRAS = {f'KMT-2025-BLG-{i}' for i in ('1213','1495','1587','2047','2874')} | {'KMT-2024-BLG-'+s for s in ('0909','3326','3429')}
+EXTRAS = {f'KMT-2025-BLG-{i}' for i in ('0220','1213','1495','1587','2047','2688','2874')} | {'KMT-2024-BLG-'+s for s in ('0251','0909','3326','3418','3429')}
 
 
 def angle(s, ra=False):

@@ -28,7 +28,10 @@ def main():
             try:
                 ra,dec=angle(row['RA'],True),angle(row['Dec'])
             except (KeyError,ValueError):continue
-            try:t=float(row.get('t_0',''))
+            try:
+                t=float(row.get('t_0',''))
+                if t<=0:t=None
+                elif year<=2022:t+=50000.  # KMT 2016–22 report HJD−2450000; later years use HJD−2400000.
             except (TypeError,ValueError):t=None
             rows.append((row['Event'],ra,dec,t))
     with (HERE.parent/'ogle/catalog.csv').open() as h:

@@ -15,7 +15,7 @@ from neighbours import angle
 
 PORTAL='https://kmtnet.kasi.re.kr/search/?'
 TARGETS={'KMT-2024-BLG-3326':60570.59,'KMT-2024-BLG-0456':60404.63,
-         'KMT-2025-BLG-0300':60951.28,'KMT-2025-BLG-2510':60849.48}
+         'KMT-2025-BLG-0220':60884.503,'KMT-2025-BLG-0300':60951.28,'KMT-2025-BLG-2510':60849.48}
 
 
 def summarize(raw,center):

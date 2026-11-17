@@ -141,9 +141,9 @@ def measure(job):
     return summary,detections,[dict(event=event,**r) for r in rec]
 
 
-def clusters(detections):
+def clusters(detections, names=None):
     out=[]
-    for event in NAMES:
+    for event in (NAMES if names is None else names):
         groups=[]
         for row in sorted((r for r in detections if r['event']==event),key=lambda r:(r['mjd'],r['radius_arcsec'])):
             point=np.array([row['east_arcsec'],row['north_arcsec']])
@@ -159,9 +159,9 @@ def clusters(detections):
     return sorted(out,key=lambda r:(r['event'],r['radius_arcsec']))
 
 
-def repeated_pairs(detections,sources):
+def repeated_pairs(detections,sources,names=None):
     rows=[]
-    for event in NAMES:
+    for event in (NAMES if names is None else names):
         repeats=[s for s in sources if s['event']==event and s['independent_dithers']>=3][:2]
         data=[]
         dates=sorted({r['mjd'] for r in detections if r['event']==event})

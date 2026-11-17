@@ -10,7 +10,6 @@ from pathlib import Path
 import numpy as np
 import fit
 from run_grid import inputs,read_curve
-from cadence import covered_days
 
 
 def key(name):
@@ -46,7 +45,9 @@ def run(job,number):
         for te in (.03,.1,.3):
             for rho in (0.,2.):
                 w=te*max(1.,rho)
-                both=min(np.sum((t<center)&(t>=center-w)),np.sum((t>center)&(t<=center+w)))>=2
+                before=np.unique(t[(t<center)&(t>=center-w)])
+                after=np.unique(t[(t>center)&(t<=center+w)])
+                both=min(len(before),len(after))>=2
                 r=dict(event=name,t0=round(center,6),te_d=te,rho=rho,peak_snr=12,two_each_side=int(both),
                        paired_pass=0,control_pass=0)
                 if not both:

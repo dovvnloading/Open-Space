@@ -16,7 +16,7 @@ from kmt.flux import baseline_caps
 
 
 def solve(job, seed, factor, binary_trials=12, profiles=False, window=4., bin_width=0.,
-          previous=None):
+          previous=None, evaluate=None):
     name,path,t0,te=job
     vb=fit.engine(); vb.Tol=.001
     t,y,err,g,diff=read_curve(job)
@@ -79,6 +79,15 @@ def solve(job, seed, factor, binary_trials=12, profiles=False, window=4., bin_wi
         chi=np.sum(wt*(fy-fs[g]*ax)**2)
         if ret:return fs.tolist()
         return chi
+    if evaluate is not None:
+        scores={}
+        for kind,record in evaluate.items():
+            if kind.startswith('profile_'):
+                v=[record['t0']-ref,np.log(record['te_d']),np.log(record['u0']),np.log(record['rho'])]
+                scores[kind]=score(v,'fs')
+            else:
+                scores[kind]=score(record['vector'],kind)
+        return scores
     rng=np.random.default_rng(623)
     base=[(-window/2,window/2),(np.log(.01),np.log(150)),(np.log(.002),np.log(12))]
     results={}
