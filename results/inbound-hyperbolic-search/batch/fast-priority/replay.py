@@ -72,7 +72,7 @@ def api_if_missing(row, allowed):
     return [],attempts
 
 
-def run_one(row, raw):
+def run_one(row, raw, join_controls=False):
     allowed=aliases(row)
     sk=str(row["spkid"])
     out={"spkid":sk,"pdes":row["pdes"],"name":row["full_name"].strip(),
@@ -108,7 +108,17 @@ def run_one(row, raw):
     with tempfile.TemporaryDirectory() as tmp:
         stage=Path(tmp)
         inp=stage/"observations.mpc"
-        staged=b"#interstellar\n"+content
+        header=b"#interstellar\n"
+        if join_controls:
+            assert sk in KNOWN
+            packed_inputs=sorted({line[:12].decode("ascii") for line in raw})
+            for packed in packed_inputs:
+                number,prov=packed[:5].strip(),packed[5:].strip()
+                assert (number in allowed or prov in allowed) and (not prov or prov in allowed)
+                assert len(number)<=1 or number in allowed
+            out["merged_input_identifiers"]=packed_inputs
+            header+=b"#Combine all\n"
+        staged=header+content
         inp.write_bytes(staged)
         out.update(cpu_seconds=cpu,wall_limit_s=300,unpenalized=True,
                    staged_sha256=hashbytes(staged),requested_epoch=target)
@@ -172,6 +182,7 @@ def main():
     parser.add_argument("shard",type=int,choices=range(6))
     parser.add_argument("out",type=Path)
     parser.add_argument("--targets",type=Path,help="One JPL primary designation per line for a separately scoped replay")
+    parser.add_argument("--join-controls",action="store_true",help="Merge validated provisional/permanent ISO aliases using native Find_Orb directive")
     parser.add_argument("--parts",type=int,default=6)
     args=parser.parse_args()
     if not 0<=args.shard<args.parts<=6:
@@ -186,7 +197,9 @@ def main():
         targets=args.targets.read_text().splitlines()
         selected=[r for r in rows if r["pdes"] in targets]
         assert len(selected)==len(set(targets))==len(targets)
-        prefix="supplement-"
+        prefix="control-" if args.join_controls else "supplement-"
+        if args.join_controls:
+            assert {str(r["spkid"]) for r in selected}==set(KNOWN)
     else:
         selected=sorted((r for r in rows if vinf(r["e"],r["q"])>=1),key=lambda r:(-vinf(r["e"],r["q"]),str(r["spkid"])))
         assert len(selected)==67
@@ -213,11 +226,11 @@ def main():
                    target_file_sha256=hashbytes(args.targets.read_bytes()) if args.targets else None,
                    fitter_sha256=hashbytes(FITTER.read_bytes()),kernel_sha256=hashbytes(KERNEL.read_bytes()),
                    flags=["-i","-h-1","-tEjd<target>","-r120,122","PERTURBERS=7fe","LINUX_JPL_FILENAME=<DE430t>"],
-                   input_header="#interstellar",uses_catalogue_seed=False)
+                   input_header="#interstellar\\n#Combine all" if args.join_controls else "#interstellar",uses_catalogue_seed=False)
     records=[]
     observation_map={}
     with ThreadPoolExecutor(max_workers=2) as pool:
-        fs=[pool.submit(run_one,r,collected[str(r["spkid"])]) for r in subset]
+        fs=[pool.submit(run_one,r,collected[str(r["spkid"])],args.join_controls) for r in subset]
         for f in fs:
             result,raw=f.result()
             records.append(result)
