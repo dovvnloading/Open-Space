@@ -1,0 +1,34 @@
+name: Euclid Q1 referee replay
+
+on:
+  pull_request:
+    paths:
+      - "results/euclid_q1_dark_lenses/**"
+      - "tests/test_euclid_q1_referee.py"
+      - ".github/workflows/euclid-q1-referee.yml"
+      - "README.md"
+  push:
+    branches:
+      - "research/euclid-q1-dark-lenses"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  referee:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile deposited research scripts
+        run: python -m compileall -q results/euclid_q1_dark_lenses
+      - name: Recompute claims independently from deposited CSV/JSON
+        run: python -m unittest discover -s tests -p 'test_euclid_q1_referee.py' -v
+      - name: Replay published SHA-256s and frozen strip receipts
+        run: python results/euclid_q1_dark_lenses/verify.py
+      - name: Check repository catalog, links and number claims
+        run: python -m open_space.verify --worktree

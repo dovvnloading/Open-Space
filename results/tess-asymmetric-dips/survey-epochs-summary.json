@@ -1,0 +1,68 @@
+{
+  "observation_window_mjd": [
+    61204,
+    61234
+  ],
+  "checked_utc_date": "2026-11-17",
+  "method": "Public ASAS-SN Sky Patrol v2 exact TIC, then unique 8-arcsec cone if necessary. Public IRSA ZTF LC CSV via 6-arcsec cone with full-sector MJD filter. Valid empty response distinguished from unavailability.",
+  "pilot": {
+    "trigger_stars": 14,
+    "ztf_empty_csv": 14,
+    "asas_no_sector_epochs": 13,
+    "asas_service_error": [
+      200248461
+    ]
+  },
+  "holdout": {
+    "trigger_stars": 39,
+    "ztf_empty_csv": 39,
+    "asas_no_sector_epochs": 32,
+    "asas_service_error": [
+      441246218,
+      220486482,
+      355052529,
+      201687472
+    ],
+    "asas_no_match_in_8arcsec": [
+      355132452,
+      219309071
+    ],
+    "asas_two_unresolved_matches": [
+      2027133756
+    ]
+  },
+  "ztf_empty_csv_sha256": "d35b7925f47f608072ad81c389b36e208216ae1a595ed8ba811c945cf77d7a34",
+  "ztf_empty_csv_bytes": 162,
+  "pilot_257556370_image_query": {
+    "obsjd_bounds": [
+      2461208,
+      2461211
+    ],
+    "n_images": 0,
+    "utc": "2026-11-17T05:24:53.637055+00:00",
+    "bytes": 33,
+    "sha256": "17bcbceabac7d985ae1593a97bd9d63aa8f2ea4046c37b9b8708a10f001d85e6"
+  },
+  "asas_ambiguous_neighbors": [
+    {
+      "asas_sn_id": 498216869112,
+      "n": 1299,
+      "last_jd": 2460652.6098939,
+      "sha256": "7697b40e945c49daff8a8a8591ce4d9e3116a47c1251b9842a9c3fd517901fa0"
+    },
+    {
+      "asas_sn_id": 661431573599,
+      "n": 1288,
+      "last_jd": 2460652.6098939,
+      "sha256": "8e5ee113206be798ec3adc2ec0c787ffdddf2eee7f23e5a7bb0c4a3d9cacf6f4"
+    }
+  ],
+  "atlas_queue": {
+    "utc": "2026-11-17T05:30:40.318776+00:00",
+    "url": "https://fallingstar-data.com/forcedphot/queue/",
+    "anonymous_http": 403,
+    "body_sha256": "9cd1a74094aa824be194aab50f0b8114351284e76fa15f73b3ec84a233204796"
+  },
+  "gaia": "Science operations ended 2025-01-15.",
+  "scope": "No matched measurement at an event epoch. This compact record summarizes completed requests; absence of contemporaneous public data cannot corroborate or rule out a dip."
+}

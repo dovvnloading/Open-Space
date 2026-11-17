@@ -51,3 +51,5 @@ python figure_cosmos022.py /path/to/stamp-cache
 ```
 
 The sky-position and literature checks use dated external snapshots. Their receipt tables identify the exact bytes for this run. The per-band search does not assign a blind limiting magnitude or transient rate to this catalog-selected population. The independently injected GOODS-S, NEXUS and MACS0416 experiments supply the measured depths for their own selection functions.
+
+An [independent native-aperture review](cosmos-022-independent-review/README.md) preserves a second implementation, 680 post-inspection diagnostic rows and all 204 input byte-range hashes. The positive COSMOS-022 change survives four aperture radii and small common coordinate shifts. This supports a noteworthy follow-up lead while leaving differential registration, PSF/calibration effects, classification and novelty unresolved; it uses the same photons.
