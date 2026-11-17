@@ -50,6 +50,8 @@ These classifications are consistent with the published planetary-ejection mecha
 
 For C/1877 G2 the 2″ fit rejects the 1877 April 16 and 20 measurements from station 520, leaving nine positions and giving 1/a = −0.00842 ± 0.00165 au⁻¹ at 250 au. Both the 5″ and the 10″ fits retain all eleven. At 10″, 1/a = −0.00514 ± 0.00724 au⁻¹. The fitted arc alone does not establish which uncertainty to assign to these measurements. We interpret the MPC M records as micrometer J2000 positions, use their tabulated times as UT1 and use the historical ΔT approximation for terrestrial time. Assessment of the original nineteenth-century reductions remains open. [MPC format](https://docs.minorplanetcenter.net/mpc-ops-docs/observations/mpc1992-format/) · [Historical ΔT](https://eclipse.gsfc.nasa.gov/LEcat5/deltatpoly.html)
 
+The [additional three-object refit](slow/) finds A/2024 U2 bound on entry at 250 au despite its strongly significant heliocentric eccentricity excess. C/2011 M1 changes energy sign when its last night is withheld, and C/2020 W5 remains compatible with a parabolic incoming orbit.
+
 ## Data and reproduction
 
 The nine compressed `.obs.gz` files in [data](data) contain the exact MPC 80-column records selected by permanent or provisional designation. [The acquisition receipt](data/acquisition.json) gives the source URLs, retrieval times, HTTP status and SHA-256 digests of the source files and the uncompressed object arcs. The HTML observatory table and JPL planetary kernels are external inputs. The short DE440s kernel is identical to the copy verified in the [earlier Borisov–704021 integration](../../borisov-704021/propagate.py). This analysis reuses that script's planetary and solar gravitational constants.

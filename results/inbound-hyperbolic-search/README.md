@@ -14,7 +14,9 @@
 
 ### C/2025 V1 (Borisov)
 
-This previously identified active comet is distinct from 2I/Borisov. Its catalogue orbit has a nominal osculating excess speed of 3.85 km/s. The current MPC record contains 117 observations on ten days. A gravity-only fit gave an incoming `1/a = −0.01598 ± 0.00316 au⁻¹` at 250 au (5.05 formal standard deviations). Allowing radial and transverse water-ice outgassing gave `−0.02682 ± 0.02618 au⁻¹` (1.02). Dropping all seven ZTF observations reduced the gravity-only result to 1.71. The known ZTF measurements include reported r magnitudes of 17.49 and 17.70 on October 29, 2025, and 15.41 on November 1. [Fits and holdouts](orbits/README.md) · [ZTF observation matches](comparison/photometry/evidence/mpc_ztf_matches.json)
+This previously identified active comet is distinct from 2I/Borisov. Its catalogue orbit has a nominal osculating excess speed of 3.85 km/s. The current MPC record contains 117 observations on ten days. A gravity-only fit gave an incoming `1/a = −0.01598 ± 0.00316 au⁻¹` at 250 au (5.05 formal standard deviations). Allowing radial and transverse water-ice outgassing gave `−0.02682 ± 0.02618 au⁻¹` (1.02). Dropping all seven ZTF observations reduced the gravity-only result to 1.71. Public images and the ephemeris gave ten ZTF opportunities before the published arc. All ten were checked with difference images or same-night subtraction. The October 25 science-frame excess did not repeat as a moving source. Removing a poor-quality frame on October 27 produced a difference-image peak with empirical off-track probability 0.047. The separate reduction of the two science frames peaked 6.4″ away, with off-track probability 0.243. No new position has been validated. [Paired science images and controls](catalog/image-search/science-pairs/README.md) · [Stack and positional uncertainty](catalog/image-search/stack/README.md)
+
+The known ZTF measurements include reported r magnitudes of 17.49 and 17.70 on October 29, 2025, and 15.41 on November 1. [Fits and holdouts](orbits/README.md) · [ZTF observation matches](comparison/photometry/evidence/mpc_ztf_matches.json)
 
 In a direct fit constrained to zero incoming energy at 50 au, the cost was Δχ² = 25.37 under gravity. It fell to 1.06 with freely signed radial and transverse Marsden accelerations and 3.39 when enforcing outward radial acceleration. These are differences in fit quality. They do not quantify the probability of an interstellar origin. [Independent model definitions and evidence](orbits/)
 
@@ -24,16 +26,20 @@ The 29-day window ran from October 19 through November 16, 2026 UTC. The full MP
 
 | Injection experiment | Result | Interpretation |
 | --- | --- | --- |
-| Supply three detections groups at real observing times | 99/100 recovered, exact 95% binomial interval 94.55–99.97% | Measures linkage given the three tracklets. The later visits were chosen without a sky-coverage requirement. |
+| Supply three detection groups at real observing times | 99/100 recovered, exact 95% binomial interval 94.55–99.97% | Measures linkage given the three tracklets. The later visits were chosen without a sky-coverage requirement. |
 | Require nearby real astrometry at each exposure on three nights | 37/20,000 synthetic paths qualified within 1.5°. Of those, 35/37 were recovered, 94.6% (exact 95% interval 81.8–99.3%). Fourteen of 15 inbound examples were recovered. | The proxy uses detections near each predicted direction. Thirty-five of the 37 supported paths relied on November 1–3. Within 0.5° only one path qualified, and within 0.1° none did. |
 
 The simulated geocentric distances span 0.45–2.8 au and the injected heliocentric excess speeds span 15–60 km/s. Real-pointing proximity does not establish exposure on a working detector, flux sensitivity, trailing loss or survey completeness. No bound on interstellar space density follows. The latest 29-day ITF window had zero Rubin X05 rows. The last populated X05 window ended July 14, 2026, with only two nights of eligible observations. The [Rubin submission-feed audit](tracklets/) separately checks observation dates against ingestion dates.
+
+## Further completed orbital checks
+
+Direct queries to the MPC returned astrometry for 43 of 44 selected objects, in some cases through November 16. All six non-control asteroid-class objects in the hyperbolic census had nominally bound incoming solutions. The independent 250 au fit to A/2024 U2 used all 159 positions and gave `1/a = +0.00002521 ± 0.00000395 au⁻¹`. Two previously published slow candidates also weaken on refitting. C/2011 M1 switches to a bound solution when the final night is omitted. C/2020 W5 is only 1.32 formal standard deviations on the unbound side under gravity. [Slow-object fits](orbits/slow/README.md) · [Refreshed MPC results, including 2026 UX3](batch/evidence/recent-arcs.md)
 
 ## Checks in progress at this checkpoint
 
 The bulk independent Find_Orb fit to the published MPC observation file is in progress. Its row-level output will distinguish far-inbound solutions from insufficient observations, failed fits and model-dependent solutions. Direct MPC queries supplement the dated bulk file with recent arcs. Archived observations of recently unconfirmed NEOCP objects are also being checked.
 
-A public ZTF footprint search for C/2025 V1 identified ten exposures before the known October 29 arc. A difference-image stack searches the nominal ephemeris and its uncertainty region; it yielded no validated precovery. The search did not apply image mask products, and one frame had a problematic-quadrant quality flag. Its empirical ranks and approximate aperture depths are exploratory, not validated sensitivity limits. [Footprints, epochs and archive receipts](catalog/image-search/)
+A public ZTF footprint search for C/2025 V1 identified ten exposures before the known October 29 arc. The difference-image stack yielded no validated precovery. It did not apply image mask products, and one frame had a problematic-quadrant quality flag; its empirical ranks and approximate aperture depths are exploratory, not validated sensitivity limits. The independent centroid test on the two highest-quality October 27 exposures is still running. Public DECam and Rubin DP2 pointing searches returned no candidate exposure. [Footprints, epochs and archive receipts](catalog/image-search/)
 
 ## Prior work and reproduction
 

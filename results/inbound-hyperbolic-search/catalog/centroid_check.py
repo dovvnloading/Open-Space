@@ -73,7 +73,7 @@ def centroid(data,x0,y0,sigma,trail,bound=4.0):
     return {"x":float(x0+dx),"y":float(y0+dy),"dx":float(dx),"dy":float(dy),
             "formal_xy_sigmas":np.sqrt(np.maximum(0,np.diag(cov)[:2])).tolist(),
             "flux":float(flux),"formal_flux_snr":float(flux/max(1e-12,np.sqrt(cov[2,2]))),
-            "noise_scaled_rms":rms,"boundary":max(abs(dx),abs(dy))>bound-.1,
+            "noise_scaled_rms":rms,"boundary":bool(max(abs(dx),abs(dy))>bound-.1),
             "stamp_peak":float(sub.max()),"sky_sigma":noise}
 
 def gaia(date,ra,dec):
@@ -164,5 +164,8 @@ for date in ("20251027","20251029"):
                     "seeing":f["seeing"],"trail_xy_pixels":f["trail"],"scale_arcsec_pix":f["scale"],
                     "PSF_fit":fit,"local_gaia":observed})
     results[date]={"joint_trailed_PSF_filter":joint,"per_exposure_diagnostics":per,"gaia_stars_queried":len(stars)}
-    print("CENTROIDS",date,json.dumps(results[date]),flush=True)
-(OUT/"measurements.json").write_text(json.dumps({"dates":results,"receipts":receipts},indent=2,allow_nan=False)+"\n")
+    def native(value):
+        if isinstance(value,np.generic): return value.item()
+        raise TypeError(type(value).__name__)
+    (OUT/"measurements.json").write_text(json.dumps({"dates":results,"receipts":receipts},indent=2,allow_nan=False,default=native)+"\n")
+    print("CENTROIDS",date,json.dumps(results[date],default=native),flush=True)

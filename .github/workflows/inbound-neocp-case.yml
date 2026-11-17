@@ -1,0 +1,40 @@
+name: CEXJ3W2 short-arc ranging
+on:
+  push:
+    branches: [research/inbound-hyperbolic-search]
+    paths:
+      - ".github/workflows/inbound-neocp-case.yml"
+      - "results/inbound-hyperbolic-search/batch/neocp-case/profile.py"
+permissions:
+  contents: read
+jobs:
+  ranging:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/inbound-hyperbolic-search/batch
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fit an independent distance profile with parallax and light time
+        working-directory: results/inbound-hyperbolic-search/batch/neocp-case
+        run: |
+          python -m pip install numpy==2.2.6 scipy==1.15.3 pyerfa==2.0.1.5
+          python profile.py
+          python - <<'PY'
+          import base64, gzip
+          from pathlib import Path
+          for f in sorted(Path("evidence").glob("*")):
+              data=base64.b64encode(gzip.compress(f.read_bytes(),mtime=0)).decode()
+              for i in range(0,len(data),3000):
+                  print(f"PUBLIC_DATA {f.name} {i//3000} {data[i:i+3000]}")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cexj3w2-orbit-profile
+          path: results/inbound-hyperbolic-search/batch/neocp-case/evidence
