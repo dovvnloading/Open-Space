@@ -3,6 +3,8 @@
 import contextlib
 import io
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -179,7 +181,7 @@ class WhyACommandStoppedTest(unittest.TestCase):
         "results/demo/native.py": "import ctypes, ctypes.util\n"
                                   "LIB = ctypes.CDLL(ctypes.util.find_library('no_such_library_xyz'))\n",
         "results/demo/wrapper.py": "import native\n",
-        "results/demo/required.py": "raise OSError('libmissing_example.so: cannot open shared object file: No such file or directory')\n",
+        "results/demo/required.py": "import ctypes\nctypes.CDLL('libmissing_example_xyz_123.so')\n",
         "results/demo/optional.py": "import ctypes.util\nif False: ctypes.util.find_library('no_such_library_xyz')\nprint('ok')\n",
         "results/demo/netdrift.py": "import urllib.request\nfrom pathlib import Path\ntry: urllib.request.urlopen('http://example.org')\nexcept Exception: pass\nPath('other.csv').write_text('n\\n4\\n')\n",
         "results/demo/inputs/sources.json": "{}\n",
@@ -253,12 +255,29 @@ class WhyACommandStoppedTest(unittest.TestCase):
     def test_loader_error_identifies_required_library(self):
         status, message = self.outcome("required.py")
         self.assertEqual(status, "needs-dependency")
-        self.assertIn("libmissing_example.so", message)
+        self.assertIn("libmissing_example_xyz_123.so", message)
 
     def test_a_crash_on_deposited_data_stays_a_failure(self):
         status, message = self.outcome("bug.py")
         self.assertEqual(status, "failed")
         self.assertEqual(self.by_script["bug.py"].severity, WARN)
+
+
+class Mission03CacheTest(unittest.TestCase):
+    def test_empty_cache_does_not_overwrite_results(self):
+        script = Path(__file__).resolve().parents[1] / "results/mission03-dr15-thermal-ins/analysis/ledger.py"
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            results, cache = root / "results", root / "cache"
+            results.mkdir()
+            cache.mkdir()
+            target = results / "counterparts.csv"
+            target.write_bytes(b"preserve this evidence\n")
+            done = subprocess.run([sys.executable, str(script), str(results), str(root / "overlap"), str(cache)],
+                                  capture_output=True, text=True)
+            self.assertNotEqual(done.returncode, 0)
+            self.assertIn("required counterpart cache is missing or empty", done.stderr)
+            self.assertEqual(target.read_bytes(), b"preserve this evidence\n")
 
 
 class LedgerAndCommandLineTest(unittest.TestCase):

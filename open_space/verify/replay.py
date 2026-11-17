@@ -568,7 +568,8 @@ def _classify(tree: RepoTree, command: Command, code: int | None, out: bytes, er
         last = _last_line(stderr) or _last_line(stdout)
         # Only an actual loader error identifies a missing shared library. A static
         # find_library call may be optional or unreachable.
-        native = re.search(r"OSError: ([^\s:]+): cannot open shared object file: No such file or directory", both)
+        native = (re.search(r"OSError: ([^\s:]+): cannot open shared object file: No such file or directory", both)
+                  or re.search(r"(?:FileNotFoundError|OSError): Could not find module '([^']+)'", both))
         if native:
             library = native.group(1)
             return Outcome(command, "needs-dependency", f"could not load system library {library}",

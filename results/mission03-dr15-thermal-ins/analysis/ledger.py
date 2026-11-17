@@ -20,6 +20,10 @@ def write(path, rows):
 
 
 def run(results, overlap, cache):
+    # The per-survey receipts are required inputs; an empty cache would turn
+    # every counterpart into "not_queried" and overwrite the deposited tables.
+    if not cache.is_dir() or not any(path.is_file() and path.stat().st_size for path in cache.glob("*-*.json")):
+        raise FileNotFoundError(f"required counterpart cache is missing or empty: {cache}")
     catalog = {}
     queues = {}
     prior = {}
