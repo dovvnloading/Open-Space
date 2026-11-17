@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 202 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 28 carefully recorded null or inconclusive checks.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 203 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 29 carefully recorded null or inconclusive checks.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -364,6 +364,7 @@ The [cold-neighbour search methods and reproduction evidence](results/cold-neigh
 - [XRISM count-comparison methods and offline replay](results/xrism-ngc7172/README.md), documenting the calibration limits of the observed-count test.
 - [IXPE Mrk 501 conditional repeatability methods and evidence](results/ixpe-mrk501-repeat/README.md).
 - [MMS four-spacecraft planar-screen methods and bounded negative result](results/mms-planar-screen/README.md).
+- [PUNCH two-image angular comparison methods and development evidence](results/punch-front-feasibility/README.md).
 - [IMAP magnetic-depletion screen and proton-test protocol](results/imap-mag-swapi-screen/README.md).
 - [SO/PHI-FDT magnetic-proxy persistence screen and evidence](results/solar-phi-fdt-pilot/README.md).
 - [VAST TDE-candidate conditional repeatability and offline replay](results/vast-tde-repeatability/README.md). Its frozen stages document the [initial metadata pilot](results/vast-tde-metadata/README.md), [expanded cohort and development](results/vast-tde-expanded/README.md), and [holdout protocol](results/vast-tde-holdout/README.md).
