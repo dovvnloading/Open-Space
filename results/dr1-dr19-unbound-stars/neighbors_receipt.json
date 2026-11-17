@@ -1,0 +1,18 @@
+[
+  {
+    "query": "SELECT source_id,ra,dec,phot_g_mean_mag,phot_bp_rp_excess_factor,DISTANCE(POINT('ICRS',ra,dec),POINT('ICRS',3.4892301538669273,9.089309203383843))*3600 AS sep_as FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',3.4892301538669273,9.089309203383843,0.002778)) ORDER BY source_id",
+    "sha256": "5d3241fa5016d5f5ff462aada98007ff9f6e44fe7b391267333238df8f1a5f7b"
+  },
+  {
+    "query": "SELECT source_id,ra,dec,phot_g_mean_mag,phot_bp_rp_excess_factor,DISTANCE(POINT('ICRS',ra,dec),POINT('ICRS',224.1098245662587,-0.7730005422891532))*3600 AS sep_as FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',224.1098245662587,-0.7730005422891532,0.002778)) ORDER BY source_id",
+    "sha256": "e18f9318c7fae7e18ae3569280d495e22e4ed86b80079720cbeb9c16373c21d0"
+  },
+  {
+    "query": "SELECT source_id,ra,dec,phot_g_mean_mag,phot_bp_rp_excess_factor,DISTANCE(POINT('ICRS',ra,dec),POINT('ICRS',255.20915552579123,9.39812596706576))*3600 AS sep_as FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',255.20915552579123,9.39812596706576,0.002778)) ORDER BY source_id",
+    "sha256": "03135324e0d3c8feda0cde689917faba185b8a344cbc69a99ccfdb4b57066a26"
+  },
+  {
+    "query": "SELECT source_id,ra,dec,phot_g_mean_mag,phot_bp_rp_excess_factor,DISTANCE(POINT('ICRS',ra,dec),POINT('ICRS',180.19617815422723,78.79471224336304))*3600 AS sep_as FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',180.19617815422723,78.79471224336304,0.002778)) ORDER BY source_id",
+    "sha256": "563f5b70cb2212b7bf7f1e468c7b2d0d61eecfff993d8c16789700b07de0ce95"
+  }
+]

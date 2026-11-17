@@ -3,6 +3,8 @@
 import contextlib
 import io
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -169,7 +171,19 @@ class WhyACommandStoppedTest(unittest.TestCase):
     FILES = {
         "results/demo/README.md": "```sh\npython swallow.py\npython stamps.py\npython listing.py\n"
                                   "python thesis.py thesis.pdf out.json\npython prepare.py /tmp/wide\n"
-                                  "python scratch.py /tmp/wide\npython bug.py\n```\n",
+                                  "python scratch.py /tmp/wide\npython bug.py\npython carryon.py\n"
+                                  "python honest.py\npython native.py\npython wrapper.py\npython optional.py\npython netdrift.py\npython required.py\n```\n",
+        "results/demo/table.csv": "n\n3\n",
+        "results/demo/other.csv": "n\n3\n",
+        "results/demo/carryon.py": "from pathlib import Path\nrows = sorted(Path('cache').glob('*.json'))\n"
+                                   "Path('table.csv').write_text('n\\n%d\\n' % len(rows))\n",
+        "results/demo/honest.py": "from pathlib import Path\nPath('other.csv').write_text('n\\n4\\n')\n",
+        "results/demo/native.py": "import ctypes, ctypes.util\n"
+                                  "LIB = ctypes.CDLL(ctypes.util.find_library('no_such_library_xyz'))\n",
+        "results/demo/wrapper.py": "import native\n",
+        "results/demo/required.py": "import ctypes\nctypes.CDLL('libmissing_example_xyz_123.so')\n",
+        "results/demo/optional.py": "import ctypes.util\nif False: ctypes.util.find_library('no_such_library_xyz')\nprint('ok')\n",
+        "results/demo/netdrift.py": "import urllib.request\nfrom pathlib import Path\ntry: urllib.request.urlopen('http://example.org')\nexcept Exception: pass\nPath('other.csv').write_text('n\\n4\\n')\n",
         "results/demo/inputs/sources.json": "{}\n",
         "results/demo/swallow.py": "import urllib.request\ntry:\n    urllib.request.urlopen('http://example.org/x', timeout=5)\n"
                                    "except Exception:\n    rows = []\nprint(rows[0])\n",
@@ -218,10 +232,52 @@ class WhyACommandStoppedTest(unittest.TestCase):
         self.assertEqual(status, "needs-input")
         self.assertIn("/tmp/wide", message)
 
+    def test_missing_probe_does_not_hide_drift(self):
+        status, message = self.outcome("carryon.py")
+        self.assertEqual(status, "drift")
+        self.assertEqual(self.by_script["carryon.py"].severity, WARN)
+        self.assertIn("results/demo/cache", message)
+        self.assertIn("effect on output is unknown", message)
+
+    def test_network_probe_does_not_hide_drift(self):
+        status, message = self.outcome("netdrift.py")
+        self.assertEqual(status, "drift")
+        self.assertEqual(self.by_script["netdrift.py"].severity, WARN)
+        self.assertIn("network attempt", message)
+
+    def test_a_difference_with_every_input_present_stays_a_difference(self):
+        self.assertEqual(self.outcome("honest.py")[0], "drift")
+        self.assertEqual(self.by_script["honest.py"].severity, WARN)
+
+    def test_unexecuted_library_lookup_does_not_block_replay(self):
+        self.assertEqual(self.outcome("optional.py")[0], "ran")
+
+    def test_loader_error_identifies_required_library(self):
+        status, message = self.outcome("required.py")
+        self.assertEqual(status, "needs-dependency")
+        self.assertIn("libmissing_example_xyz_123.so", message)
+
     def test_a_crash_on_deposited_data_stays_a_failure(self):
         status, message = self.outcome("bug.py")
         self.assertEqual(status, "failed")
         self.assertEqual(self.by_script["bug.py"].severity, WARN)
+
+
+class Mission03CacheTest(unittest.TestCase):
+    def test_empty_cache_does_not_overwrite_results(self):
+        script = Path(__file__).resolve().parents[1] / "results/mission03-dr15-thermal-ins/analysis/ledger.py"
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            results, cache = root / "results", root / "cache"
+            results.mkdir()
+            cache.mkdir()
+            target = results / "counterparts.csv"
+            target.write_bytes(b"preserve this evidence\n")
+            done = subprocess.run([sys.executable, str(script), str(results), str(root / "overlap"), str(cache)],
+                                  capture_output=True, text=True)
+            self.assertNotEqual(done.returncode, 0)
+            self.assertIn("required counterpart cache is missing or empty", done.stderr)
+            self.assertEqual(target.read_bytes(), b"preserve this evidence\n")
 
 
 class LedgerAndCommandLineTest(unittest.TestCase):

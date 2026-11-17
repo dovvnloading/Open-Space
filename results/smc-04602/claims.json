@@ -1,0 +1,11 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [],
+  "acknowledged": [
+    {
+      "rule": "replay/drift",
+      "key": "python delve04602.py",
+      "reason": "Fitted values in delve-analysis.json and delve-analyzed.csv move by at most 8.6 parts in a million, because the least-squares solver stops at a point that depends on rounding in the installed NumPy and SciPy. No quoted number changes. See delve/README.md."
+    }
+  ]
+}

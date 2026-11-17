@@ -1,0 +1,218 @@
+[
+  {
+    "cap": 1,
+    "ra": 137.50776405003785,
+    "dec": 61.04497562814016,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',137.5077641,61.0449756,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 14,
+    "sha256": "c2546a223a62759d4c13df4cd3f8b49c85bc1a7e2da16fb4cb78fa4516a34bb4"
+  },
+  {
+    "cap": 2,
+    "ra": 275.0155281000757,
+    "dec": 52.34153799379215,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',275.0155281,52.3415380,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 4,
+    "sha256": "360809894001ea7d75b241284bb8c84f19841d7481b0a97b7ccdc125148bcd27"
+  },
+  {
+    "cap": 3,
+    "ra": 52.52329215011355,
+    "dec": 45.09947203931102,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',52.5232922,45.0994720,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 14,
+    "sha256": "94baebd42eb077c24ad3b58a39a9c9070752ac910e115c58bef53582fdc2d641"
+  },
+  {
+    "cap": 4,
+    "ra": 190.0310562001514,
+    "dec": 38.68218745348944,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',190.0310562,38.6821875,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 3,
+    "sha256": "3675aff69b3bd15606a72c2b2c0579459e7b91aa617a368f6f53ae2a3ba7489e"
+  },
+  {
+    "cap": 5,
+    "ra": 327.53882025018925,
+    "dec": 32.79716829582365,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',327.5388203,32.7971683,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 57,
+    "sha256": "c912be718cfec826c7bac498655bd92747df94910d81572cb62cc0172abb0b76"
+  },
+  {
+    "cap": 6,
+    "ra": 105.0465843002271,
+    "dec": 27.279612735978098,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',105.0465843,27.2796127,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 15,
+    "sha256": "0823a47e8e01b8556f5477cdd1237f5fb77edf2f691d729e444d7c36cc8e3807"
+  },
+  {
+    "cap": 7,
+    "ra": 242.55434835026495,
+    "dec": 22.024312837042164,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',242.5543484,22.0243128,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 4,
+    "sha256": "4fdd0a0ee7efa475904784e472727e2c304b9deb64f009502aaad8ea984af03b"
+  },
+  {
+    "cap": 8,
+    "ra": 20.062112400302794,
+    "dec": 16.957763300004142,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',20.0621124,16.9577633,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 149,
+    "sha256": "0082faddb12b9d6792b2d58dd760af8445fea5368d8d41c149e9cc9f142f681e"
+  },
+  {
+    "cap": 9,
+    "ra": 157.56987645034064,
+    "dec": 12.024699180565825,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',157.5698765,12.0246992,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 7,
+    "sha256": "35af198e2c5e6e179095df8524c32043aba366c54442bc5a0a3f48672e5db06c"
+  },
+  {
+    "cap": 10,
+    "ra": 295.0776405003785,
+    "dec": 7.180755781458282,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',295.0776405,7.1807558,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 270,
+    "sha256": "abfaf48d0004697f23235544d2bf1fb86703e4ec713a10ff471359376061af54"
+  },
+  {
+    "cap": 11,
+    "ra": 72.58540455041634,
+    "dec": 2.3880154632687747,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',72.5854046,2.3880155,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 4,
+    "sha256": "2a3ff54f1b1100f1bfd6759208d194473b0bdc15a738175ec01f12b1b7dc76f2"
+  },
+  {
+    "cap": 12,
+    "ra": 210.0931686004542,
+    "dec": -2.3880154632687813,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',210.0931686,-2.3880155,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 8,
+    "sha256": "31fe536c29c03df02228e82822d7a7f69138d093f0eca7f9b6eb72b638bcacb9"
+  },
+  {
+    "cap": 13,
+    "ra": 347.60093265049204,
+    "dec": -7.180755781458282,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',347.6009327,-7.1807558,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 11,
+    "sha256": "fb3c60886174c1ec3e1a0a3ac601b730078973525ec65f899b13be58a46c536e"
+  },
+  {
+    "cap": 14,
+    "ra": 125.10869670052989,
+    "dec": -12.02469918056582,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',125.1086967,-12.0246992,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 43,
+    "sha256": "5b51ece09930f83d102727339e010cea870a71b16c543174796d41bb03dcaf36"
+  },
+  {
+    "cap": 15,
+    "ra": 262.61646075056797,
+    "dec": -16.957763300004153,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',262.6164608,-16.9577633,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 648,
+    "sha256": "029235d05f332f1c085729739b2fd3833e65d45988764cf0363fa0e0e1ba491b"
+  },
+  {
+    "cap": 16,
+    "ra": 40.12422480060559,
+    "dec": -22.024312837042164,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',40.1242248,-22.0243128,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 67,
+    "sha256": "0d27f2e0a81c3225a98e77686e8e1b2f6e35610c74dfed1a5a2b52be36876576"
+  },
+  {
+    "cap": 17,
+    "ra": 177.6319888506432,
+    "dec": -27.27961273597809,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',177.6319889,-27.2796127,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 772,
+    "sha256": "15ec3286b6b201854867a7c4ede8c3cb87dda7fb93bf535b3209ff845cf32543"
+  },
+  {
+    "cap": 18,
+    "ra": 315.1397529006813,
+    "dec": -32.79716829582365,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',315.1397529,-32.7971683,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 3,
+    "sha256": "5f33aff6d9bc6f90c2d13d726a2d1f1e929e57d51e8d761c058a036c82245103"
+  },
+  {
+    "cap": 19,
+    "ra": 92.64751695071936,
+    "dec": -38.68218745348944,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',92.6475170,-38.6821875,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 3,
+    "sha256": "b90c03523b0f10c3aae6faeee792bd5946e2083d1e07b9366b9e4b6f9e62c8ca"
+  },
+  {
+    "cap": 20,
+    "ra": 230.155281000757,
+    "dec": -45.09947203931102,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',230.1552810,-45.0994720,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 162,
+    "sha256": "5b60508058ead0f90d851e81a9e58d20f0433b61a3b508f9125863428705535e"
+  },
+  {
+    "cap": 21,
+    "ra": 7.663045050794608,
+    "dec": -52.34153799379216,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',7.6630451,-52.3415380,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 4,
+    "sha256": "3c6c6257aa96cebd263d7c74a7a685f498f224ac77704253daab05ec89ae28c2"
+  },
+  {
+    "cap": 22,
+    "ra": 145.17080910083268,
+    "dec": -61.04497562814016,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',145.1708091,-61.0449756,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 480,
+    "sha256": "1a71680a5665a11b62be22088f3d7434d01667c330081f29ab3a6164c0a662c1"
+  },
+  {
+    "cap": 23,
+    "ra": 282.67857315087076,
+    "dec": -73.40215786413343,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',282.6785732,-73.4021579,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 54,
+    "sha256": "029ca68cf7f9222b0a82efffaabae4d17531b9f365a2cbba8b86647d89cfdf58"
+  },
+  {
+    "cap": 0,
+    "ra": 0.0,
+    "dec": 73.40215786413346,
+    "radius_deg": 7.5,
+    "query": "SELECT source_name,source_id,ra,dec,ra_pm,dec_pm,meanobsmjd,pmra,pmdec,sigpmra,sigpmdec,w1snr_pm,w2snr_pm,w1mpro_pm,w2mpro_pm,w1sigmpro_pm,w2sigmpro_pm,w1flux_pm,w1sigflux_pm,w2flux_pm,w2sigflux_pm,w1rchi2_pm,w2rchi2_pm,w1cov,w2cov,pmcode,w2ab_map,cc_flags,nb,na,par_pm,par_pmsig FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',0.0000000,73.4021579,7.5)) AND w2snr_pm >= 8 AND pmra*pmra + pmdec*pmdec >= 0.04 AND (w1snr_pm < 3 OR w1snr_pm IS NULL OR w1mpro_pm - w2mpro_pm >= 1.5) AND w2mpro_pm <= 15.5 AND w2rchi2_pm <= 3 AND w2ab_map = 0 ORDER BY source_id",
+    "rows": 33,
+    "sha256": "fc387d2cdc7e2f7d93ccd31e4406c72052810aa17444772e08f24ae8de6faa14"
+  }
+]

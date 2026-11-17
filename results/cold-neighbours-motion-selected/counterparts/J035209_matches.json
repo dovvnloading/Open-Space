@@ -1,0 +1,42 @@
+[
+  {
+    "source_name": "J035209.10-495925.4",
+    "table": "gaia_dr3_source",
+    "epoch": 2016.0,
+    "ra_deg": 58.037972275736735,
+    "dec_deg": -49.990368843199995,
+    "radius_arcsec": 8,
+    "sha256": "a17d8b2086b92dcaf64fe5425a226d81a6f56567f3f7f27b0ac8719b2e85ce0b",
+    "n": 0,
+    "closest": null,
+    "query": "SELECT source_id,ra,dec,pmra,pmdec,pmra_error,pmdec_error,parallax,parallax_error,phot_g_mean_mag FROM gaia_dr3_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',58.0379723,-49.9903688,0.002222222))"
+  },
+  {
+    "source_name": "J035209.10-495925.4",
+    "table": "euclid_q1_mer_catalogue",
+    "epoch": 2024.25,
+    "ra_deg": 58.038081477128465,
+    "dec_deg": -49.9916769632,
+    "radius_arcsec": 12,
+    "sha256": "282c2f19042c53f7e3e66489a73afd8a7b41031103e39c7e3a55f389fece84fa",
+    "n": 18,
+    "closest": {
+      "object_id": "-580394282499914966",
+      "ra": "58.03942822",
+      "dec": "-49.99149668",
+      "point_like_prob": "1.6426100046e-05",
+      "extended_prob": "",
+      "spurious_prob": "1.6313524684e-03",
+      "flux_vis_2fwhm_aper": "9.2922784388e-02",
+      "fluxerr_vis_2fwhm_aper": "4.8133000731e-02",
+      "flux_y_2fwhm_aper": "3.6963894963e-01",
+      "fluxerr_y_2fwhm_aper": "2.0881581306e-01",
+      "flux_j_2fwhm_aper": "4.9542593956e-01",
+      "fluxerr_j_2fwhm_aper": "1.8843911588e-01",
+      "flux_h_2fwhm_aper": "5.8229470253e-01",
+      "fluxerr_h_2fwhm_aper": "1.9116523862e-01",
+      "separation": 3.183803476840618
+    },
+    "query": "SELECT object_id,ra,dec,point_like_prob,extended_prob,spurious_prob,flux_vis_2fwhm_aper,fluxerr_vis_2fwhm_aper,flux_y_2fwhm_aper,fluxerr_y_2fwhm_aper,flux_j_2fwhm_aper,fluxerr_j_2fwhm_aper,flux_h_2fwhm_aper,fluxerr_h_2fwhm_aper FROM euclid_q1_mer_catalogue WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',58.0380815,-49.9916770,0.003333333))"
+  }
+]

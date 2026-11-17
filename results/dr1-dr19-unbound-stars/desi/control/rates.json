@@ -1,0 +1,43 @@
+{
+  "definition": "abs(vrad - c * rr_z) > 60 km/s; RVS and Redrock use same spectrum",
+  "quality_coadd_rows": 4640216,
+  "tail_abs_los_gt580": {
+    "rows": 57,
+    "disagreements": 50,
+    "rate": 0.8771929824561403,
+    "binomial_95pct": [
+      0.7632050006375726,
+      0.9491710598414328
+    ]
+  },
+  "tail_abs_los_gt1000": {
+    "rows": 20,
+    "disagreements": 20,
+    "rate": 1.0,
+    "binomial_95pct": [
+      0.8315665290169146,
+      1
+    ]
+  },
+  "random_control": {
+    "rows": 4641,
+    "disagreements": 1,
+    "rate": 0.00021547080370609782,
+    "binomial_95pct": [
+      5.455233554610917e-06,
+      0.0011999353536090941
+    ]
+  },
+  "matched_moderate_los_control": {
+    "rows": 57,
+    "disagreements": 0,
+    "rate": 0.0,
+    "binomial_95pct": [
+      0,
+      0.06266748091448493
+    ]
+  },
+  "coadds_in_tail": 57,
+  "unique_tail_targetid": 57,
+  "unique_random_targetid": 4640
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "source_name": "J192049.57+111222.6",
+    "table": "gaia_dr3_source",
+    "epoch": 2016.0,
+    "ra_deg": 290.2065823015728,
+    "dec_deg": 11.206275558368056,
+    "radius_arcsec": 8,
+    "sha256": "a17d8b2086b92dcaf64fe5425a226d81a6f56567f3f7f27b0ac8719b2e85ce0b",
+    "n": 0,
+    "closest": null,
+    "query": "SELECT source_id,ra,dec,pmra,pmdec,pmra_error,pmdec_error,parallax,parallax_error,phot_g_mean_mag FROM gaia_dr3_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',290.2065823,11.2062756,0.002222222))"
+  }
+]

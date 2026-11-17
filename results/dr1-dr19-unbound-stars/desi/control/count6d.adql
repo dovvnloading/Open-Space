@@ -1,0 +1,1 @@
+SELECT count(*) AS n FROM desi_dr1.mws AS d JOIN gaia_dr3.gaia_source AS g ON d.source_id=g.source_id WHERE d.rvs_warn=0 AND d.vrad_err>0 AND d.vrad_err<20 AND d.rr_spectype='STAR' AND g.ruwe<1.4 AND g.parallax>5*g.parallax_error AND g.parallax>0 AND g.visibility_periods_used>=9 AND (d.sn_r>=5 OR d.sn_b>=5 OR d.sn_z>=5)

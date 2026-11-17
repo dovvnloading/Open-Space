@@ -1,0 +1,9 @@
+{
+  "survey": "LAMOST DR12 v2.0 LRS",
+  "endpoint": "https://lamost.org/dr12/v2.0/sql/q",
+  "sql": "SELECT c.obsid,c.ra,c.dec FROM catalogue c WHERE spos(c.ra,c.dec) @ scircle '<(255.2091559821614d,9.39812587166772d),0.001388889d>' OR spos(c.ra,c.dec) @ scircle '<(199.1223320432072d,42.0524599063431d),0.001388889d>' OR spos(c.ra,c.dec) @ scircle '<(184.6479269983602d,47.4145908482436d),0.001388889d>' OR spos(c.ra,c.dec) @ scircle '<(180.1961810433711d,78.79471169764065d),0.001388889d>' LIMIT 100",
+  "result": {
+    "rows": [],
+    "total": 0
+  }
+}

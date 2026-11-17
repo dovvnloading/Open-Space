@@ -1,0 +1,54 @@
+column_name,datatype,description
+obsid,char,foreign key: caom.observation.obsid
+planeid,char,unique plane identifier: 32-bit UUID
+productid,char,name of this product
+creatorid,char,unique creator identifier for this product
+metarelease,char,date the metadata for a plane is public (UTC)
+datarelease,char,public release date
+calibrationlevel,short,"IVOA ObsCore calibration level   (-1,0,1,2,3,4)"
+dataproducttype,char,IVOA ObsCore data product type + extensions
+quality_flag,char,flag describing the data quality
+metrics_sourcenumberdensity,double,number density of sources
+metrics_background,double,background intensity
+metrics_backgroundstddev,double,standard deviation in background
+metrics_fluxdensitylimit,double,flux density limit where S:N=5 for point source
+metrics_maglimit,double,AB magnitude limit where S:N=5 for point source
+position_dimension_naxis1,long,dimensions (number of pixels) along one spatial axis
+position_dimension_naxis2,long,dimensions (number of pixels) along other spatial axis
+position_resolution,double,median spatial resolution (FWHM)
+position_samplesize,double,median sample (pixel) size on spatial axes
+position_timedependent,boolean,"flag indicating that the position is time-dependent (0=false, 1=true)"
+energy_bounds_lower,double,lower bound on energy axis (barycentric wavelength)
+energy_bounds_upper,double,upper bound on energy axis (barycentric wavelength)
+energy_bounds_samples,double,detailed energy coverage (barycentric wavelength)
+energy_emband,char,"comma-separated energy band names (e.g. Infrared, Optical)"
+energy_dimension,long,dimension (number of pixels) along energy axis
+energy_resolvingpower,double,median spectral resolving power (R)
+energy_samplesize,double,median sample (pixel) size on energy axis
+energy_bandpassname,char,collection-specific name for energy band (e.g. filter name)
+energy_transition_species,char,atom or molecule
+energy_transition_transition,char,specific energy transition of species
+energy_restwav,double,rest wavelength of target spectral feature (barycentric)
+time_bounds_lower,double,lower bound on time axis (Modified Julian Day)
+time_bounds_upper,double,upper bound on time axis (Modified Julian Day)
+time_bounds_samples,double,detailed time coverage (Modified Julian Day)
+time_dimension,long,dimension (number of pixels) along time axis
+time_resolution,double,median resolution on the time axis
+time_samplesize,double,median sample (pixel) size on time axis
+time_exposure,double,median exposure time per pixel
+polarization_states,char,polarization letter codes - not populated at IRSA
+polarization_dimension,long,number of samples (pixels) along polarization axis
+provenance_name,char,name of the process that created this plane
+provenance_reference,char,external reference (URL)
+provenance_version,char,version of the process/software
+provenance_project,char,responsible entity (e.g. person)
+provenance_producer,char,responsible entity (e.g. person)
+provenance_runid,char,responsible entity (e.g. person)
+provenance_lastexecuted,char,date this process was last executed
+provenance_keywords,char,provenance keywords (JSON of key/value pairs)
+ipac_gid,int,IRSA access control identifier: group ID
+mission_id,int,IRSA access control identifier: mission ID
+poly,char,IRSA internal spatial index descriptor
+pt,char,IRSA internal spatial index descriptor
+ipac_pub_date,char,public release date (UTC)
+lastmodified,char,timestamp of last modification of this row
