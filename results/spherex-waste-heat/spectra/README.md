@@ -2,6 +2,8 @@
 
 None of the observed features identifies the excess as intrinsic to a star. The seven original Hephaistos fields have 99–100 populated channels each when propagated OUTLIER bits are allowed. The stricter aperture mask retains 27–96 channels per field (492 total). The DR1 cube pixel area is equivalent to a 12.88 arcsec square, much larger than the angular separations of several known contaminants. The 19 arcsec radius spectra measure the combined light inside the aperture. [IRSA DR1 cube, DOI 10.26131/IRSA679](https://doi.org/10.26131/IRSA679) · [SPHEREx Explanatory Supplement, sections 2.5 and 3.4](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/SPHEREx_Expsupp.pdf)
 
+The independent full-catalog extension covers the other 48 FGK stars and their matched controls. Its [53-star comparison and spectral dispositions](../fgk_spectra/README.md) include the original five measured here.
+
 ## Measurements
 
 The 47 extracted positions comprise Hephaistos A–J, five Contardo & Hogg FGK stars, two Gaia-matched comparisons for each of these 15 published targets, and one independently chosen blind-field pair. FGK1–3 are the first three published table entries. FGK4–5 are the only two additional entries with Gaia parallax above 1000/300 mas. The ecliptic scans are coadded in the cube and individual observing dates vary by tile. See `positions*.csv` for exact IDs and motion-propagated ICRS positions, and `cube_receipts/` for the complete FITS object URLs, byte counts, timestamps, ETags, SHA-256 hashes and pixel coordinates. [Suazo et al. Table 5](https://arxiv.org/html/2405.02927v1) · [Contardo & Hogg](https://arxiv.org/abs/2403.18941)
