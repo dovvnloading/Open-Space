@@ -6,7 +6,9 @@ def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def path(p):
  p=Path(p)
  if not p.is_absolute() or p.drive.upper()!='D:': raise ValueError('absolute D: path required')
- return str(p.resolve())
+ r=p.resolve()
+ if r.drive.upper()!='D:': raise ValueError('resolved path must remain on D:')
+ return str(r)
 def authorize(manifest,auth,manifest_hash,auth_hash,paths,output):
  if sha(manifest)!=manifest_hash or sha(auth)!=auth_hash: raise ValueError('digest mismatch')
  m=json.loads(Path(manifest).read_text());a=json.loads(Path(auth).read_text()); out=path(output)
@@ -33,7 +35,10 @@ def decode_file(f,index,file_sha):
  if any(k not in f for k in required): raise ValueError('missing required field')
  d=f['group_time_offset']; raw,valid_time=unpack_unsigned(d,16)
  unit=d.attrs.get('units',b'');unit=unit.decode() if isinstance(unit,bytes) else unit
- origin=dt.datetime.fromisoformat(unit.removeprefix('seconds since ')).replace(tzinfo=dt.timezone.utc) if unit.startswith('seconds since ') else None
+ origin=dt.datetime.fromisoformat(unit.removeprefix('seconds since ')) if unit.startswith('seconds since ') else None
+ if origin is not None:
+  if origin.tzinfo is not None and origin.utcoffset()!=dt.timedelta(0): raise ValueError('non-UTC origin')
+  origin=origin.replace(tzinfo=dt.timezone.utc)
  base=dt.datetime(2026,11,16,tzinfo=dt.timezone.utc)
  if origin is None or (origin-base).total_seconds()!=index*20: raise ValueError('time origin mismatch')
  scale=float(np.asarray(d.attrs['scale_factor']).item());off=float(np.asarray(d.attrs['add_offset']).item())

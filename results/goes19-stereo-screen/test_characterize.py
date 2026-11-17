@@ -18,6 +18,18 @@ class Tests(unittest.TestCase):
   with h5py.File(self.f,'r+') as h:h['group_time_offset'].attrs['units']='seconds since 2026-11-16 00:00:20.000'
   with h5py.File(self.f) as h:
    with self.assertRaises(ValueError):c.decode_file(h,0,'x')
+ def test_non_utc_origin_rejected(self):
+  with h5py.File(self.f,'r+') as h:h['group_time_offset'].attrs['units']='seconds since 2026-11-16 00:00:00-05:00'
+  with h5py.File(self.f) as h:
+   with self.assertRaises(ValueError):c.decode_file(h,0,'x')
+ def test_resolved_drive_guard(self):
+  from unittest.mock import patch
+  class Fake:
+   def is_absolute(self): return True
+   drive='D:'
+   def resolve(self): return pathlib.Path('C:/outside')
+  with patch.object(c,'Path',return_value=Fake()):
+   with self.assertRaises(ValueError):c.path('D:/link')
  def test_packing_and_time_fill(self):
   with h5py.File(self.f,'r+') as h:h['group_time_offset'].attrs['_FillValue']=np.int16(10)
   with h5py.File(self.f) as h:rows,n=c.decode_file(h,0,'x')
