@@ -37,9 +37,27 @@ def main():
     rows = collections.defaultdict(list)
     monthly = collections.Counter()
     total = 0
+    ps1 = []
+    ps1_total = 0
+    first_day = CUTOFF - dt.timedelta(days=WINDOW)
     with gzip.open(source, "rb") as f:
         for line in f:
             total += 1
+            if line[77:80] == b"F51" and line[15:22] in {b"2026 10", b"2026 11"}:
+                y, m, d = line[15:32].split()
+                day = dt.date(int(y), int(m), int(float(d)))
+                if first_day <= day < CUTOFF:
+                    ps1_total += 1
+                    try:
+                        h, mi, sec = map(float, line[32:44].split())
+                        de, am, asec = map(float, line[45:56].split())
+                        ra = 15*(h + mi/60 + sec/3600)
+                        dec = (1 if line[44:45] == b"+" else -1)*(de + am/60 + asec/3600)
+                        if 40 <= ra < 50 and 10 <= dec < 20:
+                            ps1.append(line)
+                    except ValueError:
+                        # Non-position second lines of MPC1992 records.
+                        pass
             if line[77:80] != b"X05" or not b"2025" <= line[15:19] <= b"2026":
                 continue
             fields = line[15:32].split()
@@ -60,7 +78,10 @@ def main():
             if first <= day < end:
                 for line in rows[day]:
                     f.write(line)
-    receipt = dict(url=URL, retrieved_utc=retrieved, used_local_copy=bool(args.file),
+    ps1_file = args.output / "f51.mpc"
+    ps1_file.write_bytes(b"".join(ps1))
+    receipt = dict(ps1_date_window_all_sky_rows=ps1_total, ps1_patch_rows=len(ps1),
+                   ps1_ra_deg=[40,50], ps1_dec_deg=[10,20], ps1_sha256=digest(ps1_file),url=URL, retrieved_utc=retrieved, used_local_copy=bool(args.file),
                    response_headers=headers, source_sha256=digest(source), compressed_bytes=source.stat().st_size,
                    source_lines=total, cutoff_exclusive=str(CUTOFF), primary_29day_rows=primary,
                    x05_calendar_months=dict(sorted(monthly.items())), start=str(first), end_exclusive=str(end),
