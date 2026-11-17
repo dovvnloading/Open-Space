@@ -27,6 +27,23 @@ class GuardTests(unittest.TestCase):
     with self.assertRaises(ValueError):consolidate.read_results(stage,spec,True)
     ident['input_sha256']='rawhash';item.write_text(json.dumps({'status':'ok','_identity':ident}));code.write_bytes(b'changed')
     with self.assertRaises(ValueError):consolidate.read_results(stage,spec,True)
+ def test_real_entrypoints_reject_cached_or_corrupt_data(self):
+  import importlib.util
+  from unittest.mock import patch
+  root=Path(__file__).resolve().parent
+  def module(name,path):
+   spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+  kmt=module('guarded_kmt',root/'kmt'/'freeze.py');other=module('guarded_other',root/'other'/'fetch.py');ogle=module('guarded_ogle',root/'ogle'/'freeze.py')
+  with tempfile.TemporaryDirectory() as tmp:
+   d=Path(tmp);(d/'KMT-2024-BLG-0001.tar.gz').write_bytes(b'stale')
+   with self.assertRaises(FileExistsError):kmt.fetch({'event':'KMT-2024-BLG-0001','url':'unused'},d)
+   (d/'records').mkdir();(d/'curves').mkdir();(d/'records'/'MOA-2024-BLG-001.json').write_text('{}')
+   with self.assertRaises(FileExistsError):other.process({'event':'MOA-2024-BLG-001','page':'unused'},d)
+   (d/'2025').mkdir();(d/'2025'/'blg-0001.dat').write_bytes(b'bad')
+   ogle.FROZEN_CURVES={'2025-BLG-0001':{'sha256':'0'*64,'bytes':'3'}}
+   with patch.object(ogle,'get',side_effect=AssertionError('network requested')):
+    result=ogle.fetch_curve(d,{'event':'2025-BLG-0001','t0_hjd':'2450000'})
+   self.assertIn('frozen input mismatch',result['status'])
  @unittest.skipUnless(os.name=="nt", "requires external Windows D: temporary root")
  def test_exclusive_normalized_paths(self):
   with tempfile.TemporaryDirectory() as tmp:
