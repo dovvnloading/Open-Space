@@ -83,3 +83,7 @@ python "$field_dir/counts_catalogs_colors.py" "$merged" "$cache_dir" "$out_dir"
 python "$field_dir/ground_continuum.py" "$merged" "$cache_dir" "$out_dir"
 python "$field_dir/alma_s1.py" "$cache_dir" "$out_dir"
 ```
+
+## Unresolved HD 202628 F1140C peak: decisive test
+
+This approximately **3.28″** signal is **unclassified**, not a validated planet or brown dwarf. A later **MIRI/F1140C** two-roll coronagraphic observation, for example **2028-06-02**, should cover the **co-moving prediction E +1.178″, N +3.065″ relative to the Gaia-propagated HD 202628 centroid** and the competing **fixed-sky** June 2023 position. The date is a suggested new observation, not a scheduled JWST program. Repeat native-exposure and alternative-reference reductions, astrometric calibration, and **real-image paired-roll injection recovery at ≤2 µJy with ≥95% completeness**. At the current 15–20 µJy completeness thresholds, a shallow future nondetection would *not* settle the 2–3 µJy feature. The offsets assume negligible orbital curvature. [Independent referee review](../REFEREE_REVIEW.md).
