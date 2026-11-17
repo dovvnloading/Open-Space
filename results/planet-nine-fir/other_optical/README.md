@@ -34,7 +34,7 @@ The 11 Rowan-Robinson directions are a small part of the annulus in a single ZTF
 
 ## Reproduction
 
-The `other/` and `orbits/` siblings provide the literature inputs and ephemeris routines. Python 3.12 with NumPy, SciPy, Astropy, PyERFA and Matplotlib is sufficient. The frozen receipts include the archive parameters, returned files, timestamps and SHA-256 hashes. The downloader fetches only the data used in these reductions. A live TAP query can return rows in a different order or reflect a later database revision. [Input receipts](inputs.json)
+The `other/` and `orbits/` siblings provide the literature inputs and ephemeris routines. Python 3.12 with NumPy, SciPy, Astropy, PyERFA and Matplotlib is sufficient. The frozen receipts include the archive parameters, returned files, timestamps and SHA-256 hashes. The downloader fetches only the data used in these reductions. **The large ZTF difference-image, mask and PSF FITS triplets are not deposited.** An offline invocation of `ztf_tracks.py` without SHA-verified triplets now raises an error *before* replacing `ztf_results.json`; the archived counts cannot be independently reproduced until those original images are obtained. A live TAP query can return rows in a different order or reflect a later database revision. [Input receipts](inputs.json)
 
 ```bash
 python download.py
