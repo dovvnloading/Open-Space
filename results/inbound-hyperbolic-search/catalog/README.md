@@ -43,3 +43,5 @@ CODE listed a preferred osculating model for 301 of the 2,290 JPL entries. For e
 | C/2012 C2 (Bruenjes) | −2,592.99 ± 883.18 | 2.94σ | Its 264 pre-perihelion positions span 16 days. CODE assigns quality class 3b and reports that nongravitational forces are unmeasurable. [CODE solution description](https://apollo.astro.amu.edu.pl/CODE/orbit.php?int=2012c2a5&orb=osculating) |
 
 The remaining 10 negative nominal values are all within 2.2σ of zero. The matched set has incomplete coverage of the JPL list. A catalogue cross-match cannot establish how many distinct incoming bodies populate the rest of that list.
+
+The four largest formal high-speed SOHO alternatives in the blind batch have prior independently fitted paths and documented LASCO observations. [Spacecraft astrometry, photometry and historical orbit fits](soho/README.md).
