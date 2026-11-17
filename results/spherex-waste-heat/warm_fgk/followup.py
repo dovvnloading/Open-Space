@@ -28,46 +28,42 @@ def output(name, keys, rows):
         writer.writeheader()
         writer.writerows(rows)
 
-def catalog(targets):
-    cache = ROOT/'cache'
-    near = []
-    for t in targets:
-        ra, dec = position(t, 2000)
-        near.append(f"1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',{ra:.8f},{dec:.8f},0.00416667))")
-    query = 'SELECT main_id,otype,ra,dec FROM basic WHERE ' + ' OR '.join(near)
+def catalog_one(t):
+    ra, dec = position(t,2000)
+    query = ("SELECT main_id,otype,ra,dec FROM basic WHERE "
+             f"1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',{ra:.8f},{dec:.8f},0.00416667))")
     failures = []
-    for endpoint in ('https://simbad.cds.unistra.fr/simbad/sim-tap/sync',
-                     'https://simbad.cfa.harvard.edu/simbad/sim-tap/sync'):
-        url = endpoint + '?' + urlencode(dict(REQUEST='doQuery',LANG='ADQL', FORMAT='csv', MAXREC=1000,QUERY=query))
+    for host in ('simbad.idia.ac.za','simbad.cfa.harvard.edu','simbad.cds.unistra.fr'):
+        url = f'https://{host}/simbad/sim-tap/sync?' + urlencode(dict(REQUEST='doQuery',LANG='ADQL',FORMAT='csv',MAXREC=1000,QUERY=query))
         try:
-            with urlopen(url,timeout=80) as response:
+            with urlopen(url,timeout=35) as response:
                 data = response.read()
-            lines = csv.DictReader(io.StringIO(data.decode('utf-8-sig')))
-            if not {'ra','dec','otype'}.issubset(lines.fieldnames or []):
+            reader = csv.DictReader(io.StringIO(data.decode('utf-8-sig')))
+            if not {'ra','dec','otype'}.issubset(reader.fieldnames or []):
                 raise ValueError(data[:180])
-            rows = list(lines)
+            rows = list(reader)
             if len(rows) >= 1000:
                 raise ValueError('Result truncated')
-            (cache/'simbad.csv.gz').write_bytes(gzip.compress(data,mtime=0))
-            receipt = dict(url=url, query=query, rows=len(rows),sha256=hashlib.sha256(data).hexdigest(),
-                           utc=dt.datetime.now(dt.timezone.utc).isoformat(),earlier_errors=failures)
-            break
+            sid=t['source_id']
+            (ROOT/'cache'/f'simbad-{sid}.csv.gz').write_bytes(gzip.compress(data,mtime=0))
+            receipt = dict(source_id=sid,label=t['label'], url=url,query=query,rows=len(rows),bytes=len(data),
+                           sha256=hashlib.sha256(data).hexdigest(),utc=dt.datetime.now(dt.timezone.utc).isoformat(),earlier_errors=failures)
+            matches = [dict(source_id=sid,label=t['label'],main_id=s['main_id'],otype=s['otype'],
+                            separation_arcsec=round(separation(float(s['ra']),float(s['dec']),ra,dec),3),
+                            ra=s['ra'],dec=s['dec']) for s in rows]
+            return receipt, matches
         except Exception as exc:
             failures.append(dict(url=url,error=str(exc)))
-    else:
-        receipt = dict(query=query,errors=failures)
-        rows = []
-    (ROOT/'simbad_receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
-    matches = []
-    for t in targets:
-        ra, dec = position(t,2000)
-        for s in rows:
-            dist = separation(float(s['ra']),float(s['dec']),ra,dec)
-            if dist <= 15:
-                matches.append(dict(source_id=t['source_id'],main_id=s['main_id'],otype=s['otype'],
-                                    separation_arcsec=round(dist,3),ra=s['ra'],dec=s['dec']))
-    output('simbad_neighbors.csv',['source_id','main_id','otype','separation_arcsec','ra','dec'],matches)
-    return receipt, matches
+    return dict(source_id=t['source_id'], label=t['label'],query=query,errors=failures), []
+
+def catalog(targets):
+    with ThreadPoolExecutor(4) as pool:
+        results = list(pool.map(catalog_one,targets))
+    receipts = {row['source_id']:row for row,_ in results}
+    matches = [m for _,values in results for m in values]
+    (ROOT/'simbad_receipts.json').write_text(json.dumps(receipts,indent=2)+'\n')
+    output('simbad_neighbors.csv',['source_id','label','main_id','otype','separation_arcsec','ra','dec'],matches)
+    return receipts, matches
 
 def main():
     fits = {r['source_id']:r for r in read(BASE/'literature'/'contardo_hogg.csv') if 100<=float(r['bb_temperature_k'])<=600}
@@ -76,9 +72,9 @@ def main():
     (ROOT/'cache').mkdir(exist_ok=True)
     ztf.ROOT = ROOT
     with ThreadPoolExecutor(5) as pool:
-        cat = pool.submit(catalog,targets)
+        cat = pool.submit(catalog,targets+read(BASE/'literature'/'candidates.csv'))
         optics = list(pool.map(ztf.inspect,targets))
-        receipt, matches = cat.result()
+        receipts, matches = cat.result()
     (ROOT/'ztf_receipts.json').write_text(json.dumps([r for r,_ in optics],indent=2)+'\n')
     keys='label oid points nights mjd_min mjd_max median_r p95_minus_median faintest_minus_median nights_fainter_by_0p2'.split()
     all_curves = [v for _,curves in optics for v in curves]
@@ -86,6 +82,7 @@ def main():
     summaries = []
     for t,(q,curves) in zip(targets,optics):
         sid = t['source_id']
+        receipt = receipts[sid]
         identified = [m for m in matches if m['source_id']==sid]
         status = 'error' if 'error' in q else ('retained' if curves else 'no qualifying curve')
         summaries.append(dict(source_id=sid,T_published_K=fits[sid]['bb_temperature_k'], Lir_over_Lstar=fits[sid]['lir_over_lstar'],
