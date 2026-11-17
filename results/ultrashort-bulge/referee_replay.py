@@ -86,7 +86,7 @@ def run(refit=False):
                 comparison=dict(experiment=exp,models=len(diffs),
                                 max_abs_chi2=max(diffs.values()),chi2_by_model=scores,
                                 deposited_binary_converged=rec["models"].get("bin",{}).get("converged"))
-                if refit and (event in (TARGETS[0], OGLE)) and {"ps","fs","bin"}.issubset(rec["models"]):
+                if refit and exp in ("initial", "referee-ogle-binned") and {"ps","fs","bin"}.issubset(rec["models"]):
                     # Preserve the exact original comparison window: solve() takes
                     # the epoch origin from fs_t0 in its seed. Moving this origin
                     # changes which epochs enter the objective and makes the
@@ -122,6 +122,6 @@ def run(refit=False):
 
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--refit",action="store_true",help="also repeat nonlinear PSPL/FSPL/binary optimization for KMT-3326 and OGLE-0670")
+    p.add_argument("--refit",action="store_true",help="also repeat nonlinear PSPL/FSPL/binary optimization for all four priority events")
     args=p.parse_args()
     run(refit=args.refit)
