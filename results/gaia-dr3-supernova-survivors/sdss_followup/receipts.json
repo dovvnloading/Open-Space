@@ -1,0 +1,131 @@
+{
+  "gaia": {
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.l%2Cg.b%2Cg.has_xp_continuous%2Ca.teff_gspphot%2Ca.logg_gspphot%2Ca.ag_gspphot%2Ca.mh_gspphot%2Ca.classprob_dsc_combmod_star%2Ca.classprob_dsc_combmod_whitedwarf+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.astrophysical_parameters+AS+a+ON+g.source_id%3Da.source_id+WHERE+g.source_id+IN+%281542290255978428800%2C6504108468006561408%2C6706016839105528064%2C6060880483145981568%2C4106812887663593088%29",
+    "sha256": "d7240efd5f61e20624199a9fc8867d931de355bae0b4ee6be8471485552a66f7",
+    "bytes": 1052
+  },
+  "simbad_exact": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+i.id%2Cb.main_id%2Cb.ra%2Cb.dec%2Cb.otype%2Cb.sp_type%2Cb.rvz_radvel%2Cb.nbref+FROM+ident+AS+i+JOIN+basic+AS+b+ON+i.oidref%3Db.oid+WHERE+i.id+IN+%28%27Gaia+DR3+1542290255978428800%27%2C%27Gaia+DR3+6504108468006561408%27%2C%27Gaia+DR3+6706016839105528064%27%2C%27Gaia+DR3+6060880483145981568%27%2C%27Gaia+DR3+4106812887663593088%27%29",
+    "sha256": "31431be16d4db184d5f52e1fd8e39c6525c37bdd83cda5cd8c509655bfd2de38",
+    "bytes": 285
+  },
+  "simbad_cones": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.ra%2Cb.dec%2Cb.otype%2Cb.sp_type%2Cb.rvz_radvel%2Cb.nbref+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C186.50444722207405%2C46.46674713688011%2C0.00277778%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C280.67008080952024%2C-11.436907441132217%2C0.00277778%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C190.82695370109778%2C-57.77653373083424%2C0.00277778%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C272.4518818322738%2C-49.996380357650004%2C0.00277778%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C340.86363693047787%2C-57.26097047464657%2C0.00277778%29%29",
+    "sha256": "819ff9b0a41c1a983429eda94f796c91bcdc80975d866ffd33e8821b74d6f490",
+    "bytes": 220
+  },
+  "1542290255978428800": {
+    "boss_net": {
+      "url": "https://api.sdss.org/valis/target/astra/boss_net/61886197?release=DR20",
+      "sha256": "ae92a8ba597aa3ac0d9df014a93c86b084055739a9580f4c6d6e009dd0c12411",
+      "bytes": 392
+    },
+    "pipelines": {
+      "url": "https://api.sdss.org/valis/target/pipelines/61886197?release=DR20",
+      "sha256": "f0188d2dd649b7bf51dbb0b1983c9022292cd8a3bd98036be6aba9c9ba08f216",
+      "bytes": 2422
+    },
+    "boss": {
+      "url": "https://api.sdss.org/valis/target/pipe/boss/61886197?release=DR20",
+      "sha256": "e2b444c81370cc779fded7d77a76ca54a830752aa12dc1260f022cb08c7cc8c9",
+      "bytes": 424
+    },
+    "dr20/spectro/boss/redux/v6_2_1/spectra/daily/lite/100XXX/100382/60423/spec-100382-60423-63050394850827155.fits": {
+      "url": "https://dr20.sdss.org/sas/dr20/spectro/boss/redux/v6_2_1/spectra/daily/lite/100XXX/100382/60423/spec-100382-60423-63050394850827155.fits",
+      "sha256": "070f433a43c8e403999e47e3678cb3c6315b718ea338acedc6432dec20385a3f",
+      "bytes": 383040
+    }
+  },
+  "6504108468006561408": {
+    "boss_net": {
+      "url": "https://api.sdss.org/valis/target/astra/boss_net/110905677?release=DR20",
+      "sha256": "634e48dfbac6a7cc5c4e9ad0778ffe1e3621eaa4299dac1886e671650c9837e8",
+      "bytes": 386
+    },
+    "pipelines": {
+      "url": "https://api.sdss.org/valis/target/pipelines/110905677?release=DR20",
+      "sha256": "f7b55ecfab0d165a15eccf54fc3f5dc71a6a948815b4127fb5536723fa89d7fa",
+      "bytes": 3228
+    },
+    "boss": {
+      "url": "https://api.sdss.org/valis/target/pipe/boss/110905677?release=DR20",
+      "error": "HTTP Error 400: Bad Request"
+    },
+    "dr20/spectro/boss/redux/v6_2_1/spectra/daily/lite/106XXX/106169/60554/spec-106169-60554-63050396477080217.fits": {
+      "url": "https://dr20.sdss.org/sas/dr20/spectro/boss/redux/v6_2_1/spectra/daily/lite/106XXX/106169/60554/spec-106169-60554-63050396477080217.fits",
+      "sha256": "33bdfd95451b6338eb58cce281944c1e9e026b65e78091354f16ddb921bf263c",
+      "bytes": 383040
+    },
+    "dr20/spectro/boss/redux/v6_2_1/spectra/daily/lite/106XXX/106169/60555/spec-106169-60555-63050396477080217.fits": {
+      "url": "https://dr20.sdss.org/sas/dr20/spectro/boss/redux/v6_2_1/spectra/daily/lite/106XXX/106169/60555/spec-106169-60555-63050396477080217.fits",
+      "sha256": "ebf5b0c239834358579605df58f6958b767aeface61534f474d4938ff66989f0",
+      "bytes": 383040
+    }
+  },
+  "6706016839105528064": {
+    "boss_net": {
+      "url": "https://api.sdss.org/valis/target/astra/boss_net/112478426?release=DR20",
+      "sha256": "6d54cad6aa80efb5ca1b9674070c916c8b97b9d886a94f5e7737887531c86ca7",
+      "bytes": 387
+    },
+    "pipelines": {
+      "url": "https://api.sdss.org/valis/target/pipelines/112478426?release=DR20",
+      "sha256": "73b3f2230bfa36ea3f0eef5c789626b4786b1248aae8fe9c2d3f31c24210d684",
+      "bytes": 2431
+    },
+    "boss": {
+      "url": "https://api.sdss.org/valis/target/pipe/boss/112478426?release=DR20",
+      "sha256": "f0516588737779bce2570d06803ef718ef6e356359e9329d50ed2e5966b2b348",
+      "bytes": 428
+    },
+    "dr20/spectro/boss/redux/v6_2_1/spectra/daily/lite/106XXX/106564/60468/spec-106564-60468-63050396495890010.fits": {
+      "url": "https://dr20.sdss.org/sas/dr20/spectro/boss/redux/v6_2_1/spectra/daily/lite/106XXX/106564/60468/spec-106564-60468-63050396495890010.fits",
+      "sha256": "fae83ba183a132649bf095996b4bfe5d6d08b95209bc14cbbcf0bb62fb313702",
+      "bytes": 383040
+    }
+  },
+  "6060880483145981568": {
+    "boss_net": {
+      "url": "https://api.sdss.org/valis/target/astra/boss_net/107280290?release=DR20",
+      "sha256": "aa64e9ada56b2280957ad12dfd6d9de141d70a3ec1d87e7b0ea74ea0135029ff",
+      "bytes": 388
+    },
+    "pipelines": {
+      "url": "https://api.sdss.org/valis/target/pipelines/107280290?release=DR20",
+      "sha256": "7e7e068efd5b4c4d45835b57d7e5fdca94bc06b7cb7c72e41ac133733794da87",
+      "bytes": 2477
+    },
+    "boss": {
+      "url": "https://api.sdss.org/valis/target/pipe/boss/107280290?release=DR20",
+      "sha256": "efd5de5c23c7b83290ddcdd3a59abb3d3e2abfa6c2b67ab94b9570994e0687d6",
+      "bytes": 430
+    },
+    "dr20/spectro/boss/redux/v6_2_1/spectra/daily/lite/108XXX/108726/60658/spec-108726-60658-63050396410506090.fits": {
+      "url": "https://dr20.sdss.org/sas/dr20/spectro/boss/redux/v6_2_1/spectra/daily/lite/108XXX/108726/60658/spec-108726-60658-63050396410506090.fits",
+      "sha256": "f858bff129026ff0cb6d46b59ad5072bc631a6635dd65e680f3c039097358b06",
+      "bytes": 383040
+    }
+  },
+  "4106812887663593088": {
+    "boss_net": {
+      "url": "https://api.sdss.org/valis/target/astra/boss_net/84534748?release=DR20",
+      "sha256": "084d5da2e5147b51aecae183d41cdfe224db6f0b5803500a76993660ea801420",
+      "bytes": 390
+    },
+    "pipelines": {
+      "url": "https://api.sdss.org/valis/target/pipelines/84534748?release=DR20",
+      "sha256": "660651f1f5365dbe5efdb45a30de47e512b31668ace58150a7f048dc4b083f8e",
+      "bytes": 2468
+    },
+    "boss": {
+      "url": "https://api.sdss.org/valis/target/pipe/boss/84534748?release=DR20",
+      "sha256": "892e835493a3d7d09d942a6031fda5c7a233f8ab859ea30b1eb0a21f64d8acbb",
+      "bytes": 430
+    },
+    "dr20/spectro/boss/redux/v6_2_1/spectra/daily/lite/100XXX/100572/60480/spec-100572-60480-63050395430967230.fits": {
+      "url": "https://dr20.sdss.org/sas/dr20/spectro/boss/redux/v6_2_1/spectra/daily/lite/100XXX/100572/60480/spec-100572-60480-63050395430967230.fits",
+      "sha256": "b58a82f323e55f49befd828dda2e8129df081f4e5a6cd364957cac5500d487ce",
+      "bytes": 383040
+    }
+  }
+}

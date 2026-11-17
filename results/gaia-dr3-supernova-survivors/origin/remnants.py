@@ -45,13 +45,13 @@ def main():
     bj=keyed(HERE.parent/"control"/"bj.csv")
     kin=keyed(HERE.parent/"control"/"published_kinematics.csv")
     stars=keyed(HERE.parent/"control"/"controls.csv")
-    g=keyed(HERE/"rows_000.csv")
+    g={sid:row for path in sorted(HERE.glob("rows_*.csv")) for sid,row in keyed(path).items()}
     t=np.arange(0.,200001.,250.)
     unit=np.array([e[1] for e in entries])
     radii=np.array([e[2] for e in entries]);out=[]
     for sid,row in g.items():
         n,e,north=axes(float(row["ra"]),float(row["dec"]))
-        d=float(bj[sid]["r_med_geo"])
+        d=8500.0 if stars[sid]["name"]=="US 708" else float(bj[sid]["r_med_geo"])
         v=float(kin[sid]["rv_kms"])*KMS_PC_PER_YEAR*n + d*MAS_RAD*(float(row["pmra"])*e+float(row["pmdec"])*north)
         track=d*n-t[:,None]*v
         track/=np.linalg.norm(track,axis=1)[:,None]

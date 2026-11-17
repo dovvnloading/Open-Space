@@ -1,4 +1,4 @@
-"""Escape speeds and Milky Way disk crossings for four spectroscopic controls."""
+"""Escape speeds and Milky Way disk crossings for spectroscopic controls."""
 import csv
 import json
 import sys
@@ -15,7 +15,7 @@ from infer import draws, escape
 from make_queue import rows, save
 from orbits import integrate
 
-FOCUS = ["D6-1", "D6-2", "D6-3", "J1109+0001"]
+FOCUS = [["D6-1", "D6-2", "D6-3", "J1109+0001"], ["LP 40-365", "J1240+6710", "US 708"]]
 
 
 def indexed(path):
@@ -23,10 +23,18 @@ def indexed(path):
 
 
 def main():
-    controls = [r for r in rows(CONTROL/"controls.csv") if r["name"] in FOCUS]
-    receipt = fetch((0, sorted([r["source_id"] for r in controls], key=int), HERE))
-    (HERE/"gaia_receipt.json").write_text(json.dumps(receipt, indent=2)+"\n")
-    gaia = indexed(HERE/"rows_000.csv")
+    controls, gaia, receipts = [], {}, []
+    for batch, names in enumerate(FOCUS):
+        group = [r for r in rows(CONTROL/"controls.csv") if r["name"] in names]
+        ids = sorted([r["source_id"] for r in group], key=int)
+        receipt = fetch((batch, ids, HERE))
+        data = indexed(HERE/receipt["file"])
+        if set(data) != set(ids):
+            raise ValueError("Gaia orbit input is incomplete")
+        controls.extend(group)
+        gaia.update(data)
+        receipts.append(receipt)
+    (HERE/"gaia_receipt.json").write_text(json.dumps(receipts, indent=2)+"\n")
     kin = indexed(CONTROL/"published_kinematics.csv")
     bj = indexed(CONTROL/"bj.csv")
     calibration = indexed(CONTROL/"recovery.csv")
@@ -36,7 +44,12 @@ def main():
         radial = kin[sid]
         s = dict(bj[sid], rv=radial["rv_kms"], e_rv=radial["rv_err_kms"],
                  rv_floor=1.0, zp=calibration[sid]["zp_mas"])
-        for model in ("bj_geo", "bj_photogeo", "edsd_plx"):
+        models = ["bj_geo", "bj_photogeo", "edsd_plx"]
+        if star["name"] == "US 708":
+            # Geier et al. spectroscopic distance used in El-Badry et al. 2026.
+            s.update(spec_d=8.5, spec_e=1.0)
+            models.append("spec_plx")
+        for model in models:
             sample = draws(gaia[sid], s, model)
             if sample is None:
                 continue
