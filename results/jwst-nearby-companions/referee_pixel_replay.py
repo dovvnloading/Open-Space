@@ -130,8 +130,9 @@ def nircam(tmp):
         print("PASS", name, "detector-level RDI and injection curves", flush=True)
     # Companion-vs-RDI-reference diagnostics on both fields.
     archived = readcsv(folder / "nircam_trigger_checks.csv")
-    process(folder, "nircam_check_sources.py", "--inputs", cache1, "--archival", cache2)
-    now = readcsv(folder / "nircam_trigger_checks.csv")
+    process(folder, "nircam_check_sources.py", "--inputs", cache1, "--archival", cache2,
+            "--out", out)
+    now = readcsv(out / "nircam_trigger_checks.csv")
     assert len(archived) == len(now)
     old_ross = [r for r in archived if r["field"] == "ross619"]
     new_ross = [r for r in now if r["field"] == "ross619"]
