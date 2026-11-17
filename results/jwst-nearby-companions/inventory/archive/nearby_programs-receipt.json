@@ -1,0 +1,114 @@
+{
+  "endpoint": "https://mast.stsci.edu/search/jwst/api/v0.1/search",
+  "meaning": "MAST JWST mission filesets; not detector-level FITS products",
+  "returned": 1008,
+  "public_at_cutoff": 1008,
+  "cutoff_utc": "2026-11-17 06:51:31",
+  "pages": [
+    {
+      "retrieved_utc": "2026-11-17T07:00:13.367282+00:00",
+      "request": {
+        "conditions": [
+          {
+            "exp_type": "MIR_IMAGE,NRC_IMAGE"
+          },
+          {
+            "program": "1184,1911,3964,4403,4857,6122,7564,7833,8142,8581,9079"
+          },
+          {
+            "publicReleaseDate": "<=2026-11-17 06:51:31"
+          }
+        ],
+        "limit": 1000,
+        "offset": 0,
+        "select_cols": [
+          "fileSetName",
+          "program",
+          "title",
+          "observtn",
+          "visit",
+          "targprop",
+          "targname",
+          "targ_ra",
+          "targ_dec",
+          "proposal_type",
+          "exp_type",
+          "opticalElements",
+          "date_obs",
+          "effexptm",
+          "publicReleaseDate",
+          "access",
+          "is_psf",
+          "bkgdtarg",
+          "targcat",
+          "targdesc",
+          "obslabel"
+        ],
+        "sort_by": [
+          "fileSetName",
+          "ArchiveFileID"
+        ],
+        "sort_desc": [
+          false,
+          false
+        ]
+      },
+      "sha256_response": "ae81a494629e065b24a50fc09e1065e3150bcfdd9bc607e47aec24448eaa0904",
+      "total_results": 1008,
+      "returned": 1000
+    },
+    {
+      "retrieved_utc": "2026-11-17T07:00:20.216053+00:00",
+      "request": {
+        "conditions": [
+          {
+            "exp_type": "MIR_IMAGE,NRC_IMAGE"
+          },
+          {
+            "program": "1184,1911,3964,4403,4857,6122,7564,7833,8142,8581,9079"
+          },
+          {
+            "publicReleaseDate": "<=2026-11-17 06:51:31"
+          }
+        ],
+        "limit": 1000,
+        "offset": 1000,
+        "select_cols": [
+          "fileSetName",
+          "program",
+          "title",
+          "observtn",
+          "visit",
+          "targprop",
+          "targname",
+          "targ_ra",
+          "targ_dec",
+          "proposal_type",
+          "exp_type",
+          "opticalElements",
+          "date_obs",
+          "effexptm",
+          "publicReleaseDate",
+          "access",
+          "is_psf",
+          "bkgdtarg",
+          "targcat",
+          "targdesc",
+          "obslabel"
+        ],
+        "sort_by": [
+          "fileSetName",
+          "ArchiveFileID"
+        ],
+        "sort_desc": [
+          false,
+          false
+        ]
+      },
+      "sha256_response": "6db5a8bc1994da90aaf308fcdf5515a7825cff0ae0731c9fd869857174d30ed0",
+      "total_results": 1008,
+      "returned": 8
+    }
+  ],
+  "sha256_csv": "4aa3de84200069b32a3a6616bbf5824fbead4a724b2734c79e75aa68d45bce88"
+}

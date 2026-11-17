@@ -1,0 +1,357 @@
+[
+  {
+    "request": {
+      "service": "Mast.Caom.Filtered",
+      "format": "json",
+      "params": {
+        "columns": "obsid,obs_id,proposal_id,target_name,t_min,t_max,filters,dataRights,dataURL,instrument_name,calib_level,t_obs_release",
+        "filters": [
+          {
+            "paramName": "obs_collection",
+            "values": [
+              "JWST"
+            ]
+          },
+          {
+            "paramName": "obs_id",
+            "values": [
+              "jw05835015001_03106_00001_nrcalong",
+              "jw05835021001_03106_00001_nrcalong",
+              "jw05835031001_03103_00001_nrcalong",
+              "jw05835032001_04103_00001_nrcalong",
+              "jw05835042001_03106_00001_nrcalong",
+              "jw05835043001_03106_00001_nrcalong",
+              "jw05835045001_03103_00001_nrcalong",
+              "jw05835058001_04106_00001_nrcalong",
+              "jw05835059001_03103_00001_nrcalong",
+              "jw01537028001_0310l_00001_nrcalong",
+              "jw01537028001_0310l_00002_nrcalong",
+              "jw01537028001_0310l_00003_nrcalong",
+              "jw01537028001_0310l_00004_nrcalong",
+              "jw01537028001_0310l_00005_nrcalong"
+            ]
+          }
+        ]
+      },
+      "pagesize": 500,
+      "page": 1
+    },
+    "url": "https://mast.stsci.edu/api/v0/invoke?request=%7B%22service%22%3A%22Mast.Caom.Filtered%22%2C%22format%22%3A%22json%22%2C%22params%22%3A%7B%22columns%22%3A%22obsid%2Cobs_id%2Cproposal_id%2Ctarget_name%2Ct_min%2Ct_max%2Cfilters%2CdataRights%2CdataURL%2Cinstrument_name%2Ccalib_level%2Ct_obs_release%22%2C%22filters%22%3A%5B%7B%22paramName%22%3A%22obs_collection%22%2C%22values%22%3A%5B%22JWST%22%5D%7D%2C%7B%22paramName%22%3A%22obs_id%22%2C%22values%22%3A%5B%22jw05835015001_03106_00001_nrcalong%22%2C%22jw05835021001_03106_00001_nrcalong%22%2C%22jw05835031001_03103_00001_nrcalong%22%2C%22jw05835032001_04103_00001_nrcalong%22%2C%22jw05835042001_03106_00001_nrcalong%22%2C%22jw05835043001_03106_00001_nrcalong%22%2C%22jw05835045001_03103_00001_nrcalong%22%2C%22jw05835058001_04106_00001_nrcalong%22%2C%22jw05835059001_03103_00001_nrcalong%22%2C%22jw01537028001_0310l_00001_nrcalong%22%2C%22jw01537028001_0310l_00002_nrcalong%22%2C%22jw01537028001_0310l_00003_nrcalong%22%2C%22jw01537028001_0310l_00004_nrcalong%22%2C%22jw01537028001_0310l_00005_nrcalong%22%5D%7D%5D%7D%2C%22pagesize%22%3A500%2C%22page%22%3A1%7D",
+    "queried_utc": "2026-11-17T06:58:38.486313+00:00",
+    "sha256_raw": "dc70186f2a25ca798bf65048149df9e0295b9f73467f9e46613cb31224c0aaf1",
+    "paging": {
+      "page": 1,
+      "pageSize": 500,
+      "pagesFiltered": 1,
+      "rows": 14,
+      "rowsFiltered": 14,
+      "rowsTotal": 14
+    },
+    "rows": [
+      {
+        "obsid": 91760628,
+        "proposal_id": "1537",
+        "t_min": 59831.50234665509,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 59831.50296554398,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "G191-B2B-OFFSET",
+        "dataURL": "mast:JWST/product/jw01537028001_0310l_00001_nrcalong_rateints.fits",
+        "obs_id": "jw01537028001_0310l_00001_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 59831.53896981
+      },
+      {
+        "obsid": 91760590,
+        "proposal_id": "1537",
+        "t_min": 59831.50338146991,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 59831.50400035879,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "G191-B2B-OFFSET",
+        "dataURL": "mast:JWST/product/jw01537028001_0310l_00002_nrcalong_rateints.fits",
+        "obs_id": "jw01537028001_0310l_00002_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 59831.53670137
+      },
+      {
+        "obsid": 91760757,
+        "proposal_id": "1537",
+        "t_min": 59831.50434072917,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 59831.50495961805,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "G191-B2B-OFFSET",
+        "dataURL": "mast:JWST/product/jw01537028001_0310l_00003_nrcalong_rateints.fits",
+        "obs_id": "jw01537028001_0310l_00003_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 59831.5409027
+      },
+      {
+        "obsid": 91760708,
+        "proposal_id": "1537",
+        "t_min": 59831.50529997685,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 59831.50591886574,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "G191-B2B-OFFSET",
+        "dataURL": "mast:JWST/product/jw01537028001_0310l_00004_nrcalong_rateints.fits",
+        "obs_id": "jw01537028001_0310l_00004_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 59831.53886569
+      },
+      {
+        "obsid": 91763439,
+        "proposal_id": "1537",
+        "t_min": 59831.50624664352,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 59831.50686553241,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "G191-B2B-OFFSET",
+        "dataURL": "mast:JWST/product/jw01537028001_0310l_00005_nrcalong_rateints.fits",
+        "obs_id": "jw01537028001_0310l_00005_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 59831.53968746
+      },
+      {
+        "obsid": 264986084,
+        "proposal_id": "5835",
+        "t_min": 60809.9008916551,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 60809.9268024537,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "1SWASP-J203337.61-255651.7",
+        "dataURL": "mast:JWST/product/jw05835015001_03106_00001_nrcalong_rateints.fits",
+        "obs_id": "jw05835015001_03106_00001_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 60810.58006933
+      },
+      {
+        "obsid": 264986106,
+        "proposal_id": "5835",
+        "t_min": 60809.95946270834,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 60809.98537350694,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "GSC-06354-00357",
+        "dataURL": "mast:JWST/product/jw05835021001_03106_00001_nrcalong_rateints.fits",
+        "obs_id": "jw05835021001_03106_00001_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 60810.58409714
+      },
+      {
+        "obsid": 264986059,
+        "proposal_id": "5835",
+        "t_min": 60809.83876652778,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 60809.86467732639,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "1SWASP-J192434.97-344239.3",
+        "dataURL": "mast:JWST/product/jw05835031001_03103_00001_nrcalong_rateints.fits",
+        "obs_id": "jw05835031001_03103_00001_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 60810.57726838
+      },
+      {
+        "obsid": 264986175,
+        "proposal_id": "5835",
+        "t_min": 60810.02344709491,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 60810.04935789352,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "2MASS-J19260075-5331269",
+        "dataURL": "mast:JWST/product/jw05835032001_04103_00001_nrcalong_rateints.fits",
+        "obs_id": "jw05835032001_04103_00001_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 60810.58961802
+      },
+      {
+        "obsid": 264986174,
+        "proposal_id": "5835",
+        "t_min": 60810.09255961805,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 60810.11847041667,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "2MASS-J21100461-1920302",
+        "dataURL": "mast:JWST/product/jw05835042001_03106_00001_nrcalong_rateints.fits",
+        "obs_id": "jw05835042001_03106_00001_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 60810.59171289
+      },
+      {
+        "obsid": 264986318,
+        "proposal_id": "5835",
+        "t_min": 60810.15603585648,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 60810.1819466551,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "2MASS-J21374019+0137137",
+        "dataURL": "mast:JWST/product/jw05835043001_03106_00001_nrcalong_rateints.fits",
+        "obs_id": "jw05835043001_03106_00001_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 60810.62225682
+      },
+      {
+        "obsid": 264986159,
+        "proposal_id": "5835",
+        "t_min": 60810.23675873843,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 60810.26266953704,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "2MASS-J09462782-4457408",
+        "dataURL": "mast:JWST/product/jw05835045001_03103_00001_nrcalong_rateints.fits",
+        "obs_id": "jw05835045001_03103_00001_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 60810.59601848
+      },
+      {
+        "obsid": 264986216,
+        "proposal_id": "5835",
+        "t_min": 60810.39909641204,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 60810.4293256713,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "2MASS-J22445794-3315015",
+        "dataURL": "mast:JWST/product/jw05835058001_04106_00001_nrcalong_rateints.fits",
+        "obs_id": "jw05835058001_04106_00001_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 60810.59912025
+      },
+      {
+        "obsid": 264986219,
+        "proposal_id": "5835",
+        "t_min": 60810.30489650463,
+        "instrument_name": "NIRCAM/CORON",
+        "t_max": 60810.33512576389,
+        "filters": "F444W;MASKRND",
+        "dataRights": "PUBLIC",
+        "target_name": "MCC-124",
+        "dataURL": "mast:JWST/product/jw05835059001_03103_00001_nrcalong_rateints.fits",
+        "obs_id": "jw05835059001_03103_00001_nrcalong",
+        "calib_level": 2,
+        "t_obs_release": 60810.59673603
+      }
+    ]
+  },
+  {
+    "request": {
+      "service": "Mast.Caom.Products",
+      "format": "json",
+      "params": {
+        "obsid": "91760628,91760590,91760757,91760708,91763439,264986084,264986106,264986059,264986175,264986174,264986318,264986159,264986216,264986219"
+      },
+      "pagesize": 2000,
+      "page": 1
+    },
+    "url": "https://mast.stsci.edu/api/v0/invoke?request=%7B%22service%22%3A%22Mast.Caom.Products%22%2C%22format%22%3A%22json%22%2C%22params%22%3A%7B%22obsid%22%3A%2291760628%2C91760590%2C91760757%2C91760708%2C91763439%2C264986084%2C264986106%2C264986059%2C264986175%2C264986174%2C264986318%2C264986159%2C264986216%2C264986219%22%7D%2C%22pagesize%22%3A2000%2C%22page%22%3A1%7D",
+    "queried_utc": "2026-11-17T06:58:46.732527+00:00",
+    "sha256_raw": "18925223899b648af4be958398cc3fcfd2d14024cab3dc7163a6081d1ba85d6b",
+    "paging": {
+      "page": 1,
+      "pageSize": 2000,
+      "pagesFiltered": 1,
+      "rows": 140,
+      "rowsFiltered": 140,
+      "rowsTotal": 140
+    },
+    "selected_products": [
+      {
+        "productFilename": "jw05835015001_03106_00001_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw05835015001_03106_00001_nrcalong_calints.fits",
+        "size": 15295680,
+        "parent_obsid": 264986084
+      },
+      {
+        "productFilename": "jw05835021001_03106_00001_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw05835021001_03106_00001_nrcalong_calints.fits",
+        "size": 15295680,
+        "parent_obsid": 264986106
+      },
+      {
+        "productFilename": "jw05835031001_03103_00001_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw05835031001_03103_00001_nrcalong_calints.fits",
+        "size": 15295680,
+        "parent_obsid": 264986059
+      },
+      {
+        "productFilename": "jw05835032001_04103_00001_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw05835032001_04103_00001_nrcalong_calints.fits",
+        "size": 15295680,
+        "parent_obsid": 264986175
+      },
+      {
+        "productFilename": "jw05835042001_03106_00001_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw05835042001_03106_00001_nrcalong_calints.fits",
+        "size": 15295680,
+        "parent_obsid": 264986174
+      },
+      {
+        "productFilename": "jw05835043001_03106_00001_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw05835043001_03106_00001_nrcalong_calints.fits",
+        "size": 15295680,
+        "parent_obsid": 264986318
+      },
+      {
+        "productFilename": "jw05835045001_03103_00001_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw05835045001_03103_00001_nrcalong_calints.fits",
+        "size": 15295680,
+        "parent_obsid": 264986159
+      },
+      {
+        "productFilename": "jw05835058001_04106_00001_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw05835058001_04106_00001_nrcalong_calints.fits",
+        "size": 17749440,
+        "parent_obsid": 264986216
+      },
+      {
+        "productFilename": "jw05835059001_03103_00001_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw05835059001_03103_00001_nrcalong_calints.fits",
+        "size": 17749440,
+        "parent_obsid": 264986219
+      },
+      {
+        "productFilename": "jw01537028001_0310l_00001_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw01537028001_0310l_00001_nrcalong_calints.fits",
+        "size": 3009600,
+        "parent_obsid": 91760628
+      },
+      {
+        "productFilename": "jw01537028001_0310l_00002_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw01537028001_0310l_00002_nrcalong_calints.fits",
+        "size": 3009600,
+        "parent_obsid": 91760590
+      },
+      {
+        "productFilename": "jw01537028001_0310l_00003_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw01537028001_0310l_00003_nrcalong_calints.fits",
+        "size": 3009600,
+        "parent_obsid": 91760757
+      },
+      {
+        "productFilename": "jw01537028001_0310l_00004_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw01537028001_0310l_00004_nrcalong_calints.fits",
+        "size": 3009600,
+        "parent_obsid": 91760708
+      },
+      {
+        "productFilename": "jw01537028001_0310l_00005_nrcalong_calints.fits",
+        "dataURI": "mast:JWST/product/jw01537028001_0310l_00005_nrcalong_calints.fits",
+        "size": 3009600,
+        "parent_obsid": 91763439
+      }
+    ]
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "name": "simbad",
+    "file": "simbad.csv",
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cra%2Cdec%2Cpmra%2Cpmdec%2Cplx_value%2Csp_type%2Cotype+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C82.869603%2C-3.692178%2C0.02222%29%29",
+    "query": "SELECT main_id,ra,dec,pmra,pmdec,plx_value,sp_type,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',82.869603,-3.692178,0.02222))",
+    "sha256": "215ec51a1d5cbc59a1e97b6aeb313528c03346b7a1e5ea9b9ec6ef3afb4af400"
+  },
+  {
+    "name": "allwise",
+    "file": "allwise.csv",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1sat%2Cw2mpro%2Cw2sigmpro%2Cw2sat%2Cw3mpro%2Cw3sigmpro%2Cw3sat%2Cw4mpro%2Cw4sigmpro%2Cph_qual%2Ccc_flags+FROM+allwise_p3as_psd+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C82.869603%2C-3.692178%2C0.02222%29%29",
+    "query": "SELECT designation,ra,dec,w1mpro,w1sigmpro,w1sat,w2mpro,w2sigmpro,w2sat,w3mpro,w3sigmpro,w3sat,w4mpro,w4sigmpro,ph_qual,cc_flags FROM allwise_p3as_psd WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',82.869603,-3.692178,0.02222))",
+    "sha256": "2b709f5eb88e142ded269468dd8c0e7ffdcbc74427c089b56bf31c2aa003d3b9"
+  },
+  {
+    "name": "gaia",
+    "file": "gaia.csv",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cpmra%2Cpmdec%2Cparallax%2Cphot_g_mean_mag+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C82.869603%2C-3.692178%2C0.02222%29%29",
+    "query": "SELECT source_id,ra,dec,pmra,pmdec,parallax,phot_g_mean_mag FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',82.869603,-3.692178,0.02222))",
+    "sha256": "3ad567d028a88dd52fd3b0ad39c9a61919456189fe7186b35884b5bfae0fa15a"
+  },
+  {
+    "name": "twomass",
+    "file": "twomass.csv",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+designation%2Cra%2Cdec%2Ck_m%2Ck_cmsig%2Cph_qual+FROM+fp_psc+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C82.869603%2C-3.692178%2C0.02222%29%29",
+    "query": "SELECT designation,ra,dec,k_m,k_cmsig,ph_qual FROM fp_psc WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',82.869603,-3.692178,0.02222))",
+    "sha256": "1625c12c325a856b067b3c97dd88583763be391e1587c14e3a361180e688a94b"
+  },
+  {
+    "name": "exoplanet_archive",
+    "file": "exoplanet_archive.csv",
+    "url": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+DISTINCT+pl_name%2Chostname+FROM+ps+WHERE+hip_name%3D%27HIP+25878%27+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C82.869603%2C-3.692178%2C0.02222%29%29",
+    "query": "SELECT DISTINCT pl_name,hostname FROM ps WHERE hip_name='HIP 25878' OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',82.869603,-3.692178,0.02222))",
+    "sha256": "06cd80b0a1cd61b38bb489229bdf4cb9d6bb85b7bd9c8d50aa597afcd1395820"
+  }
+]

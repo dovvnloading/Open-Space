@@ -1,0 +1,18 @@
+[
+  {
+    "query": "SELECT COUNT(*) AS n FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec), CIRCLE('ICRS',335.78238,-17.61240,0.083333333)) AND phot_g_mean_mag<18",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+COUNT%28%2A%29+AS+n+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C335.78238%2C-17.61240%2C0.083333333%29%29+AND+phot_g_mean_mag%3C18",
+    "utc": "2026-11-17T07:09:20.705502+00:00",
+    "response": "n\n29\n",
+    "sha256": "21982ac69155d9d6724e088b428f1b11214568a54ef35897752a4e93888663e9",
+    "count_excluding_host": 28
+  },
+  {
+    "query": "SELECT COUNT(*) AS n FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec), CIRCLE('ICRS',335.78238,-17.61240,0.083333333)) AND phot_g_mean_mag<20",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+COUNT%28%2A%29+AS+n+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C335.78238%2C-17.61240%2C0.083333333%29%29+AND+phot_g_mean_mag%3C20",
+    "utc": "2026-11-17T07:09:20.318976+00:00",
+    "response": "n\n68\n",
+    "sha256": "6bf11d0a8ef18d3d3e9c13b4f8e63b5f8569a9fa6985d2559f3a0bcd655facd2",
+    "count_excluding_host": 67
+  }
+]

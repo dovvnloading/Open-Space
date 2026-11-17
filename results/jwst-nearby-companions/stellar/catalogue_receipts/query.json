@@ -1,0 +1,47 @@
+{
+  "allwise": {
+    "query": "SELECT designation, ra, dec, w1mpro, w1sigmpro, w1sat, w2mpro, w2sigmpro, w2sat, w3mpro, w3sigmpro, w4mpro, w4sigmpro, ph_qual, cc_flags, ext_flg\nFROM allwise_p3as_psd\nWHERE 1=CONTAINS(POINT('ICRS',ra,dec), CIRCLE('ICRS',153.57985,21.07495,0.0030))",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+designation%2C+ra%2C+dec%2C+w1mpro%2C+w1sigmpro%2C+w1sat%2C+w2mpro%2C+w2sigmpro%2C+w2sat%2C+w3mpro%2C+w3sigmpro%2C+w4mpro%2C+w4sigmpro%2C+ph_qual%2C+cc_flags%2C+ext_flg%0AFROM+allwise_p3as_psd%0AWHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C153.57985%2C21.07495%2C0.0030%29%29",
+    "started_utc": "2026-11-17T06:56:18.722219+00:00",
+    "http_status": 200,
+    "content_type": "text/csv",
+    "bytes": 239,
+    "sha256": "9ec547214874a33d8210795e2fd6b16625b54648704ec9e0f6354158cf2ed0a8"
+  },
+  "twomass": {
+    "query": "SELECT designation,ra,dec,j_m,j_msigcom,h_m,h_msigcom,k_m,k_msigcom,ph_qual,cc_flg FROM fp_psc WHERE designation='10141918+2104297'",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+designation%2Cra%2Cdec%2Cj_m%2Cj_msigcom%2Ch_m%2Ch_msigcom%2Ck_m%2Ck_msigcom%2Cph_qual%2Ccc_flg+FROM+fp_psc+WHERE+designation%3D%2710141918%2B2104297%27",
+    "started_utc": "2026-11-17T06:56:18.723189+00:00",
+    "http_status": 200,
+    "content_type": "text/csv",
+    "bytes": 158,
+    "sha256": "b3e1386a0c526118e1e595932acf3867c460ae149224d301acc5019cc4e544c8"
+  },
+  "gaia_dr2": {
+    "query": "SELECT source_id,ra,dec,parallax,parallax_error,pmra,pmra_error,pmdec,pmdec_error,astrometric_excess_noise FROM gaiadr2.gaia_source WHERE source_id=628827128175694976",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cparallax%2Cparallax_error%2Cpmra%2Cpmra_error%2Cpmdec%2Cpmdec_error%2Castrometric_excess_noise+FROM+gaiadr2.gaia_source+WHERE+source_id%3D628827128175694976",
+    "started_utc": "2026-11-17T06:56:18.724095+00:00",
+    "http_status": 200,
+    "content_type": "text/csv",
+    "bytes": 293,
+    "sha256": "d7c40b0fe7e639c810626c4e7b7213870f61841e30398f884d90292f1cb6ac26"
+  },
+  "gaia_dr3": {
+    "query": "SELECT source_id,ra,dec,parallax,parallax_error,pmra,pmra_error,pmdec,pmdec_error,phot_g_mean_mag,astrometric_params_solved,ruwe\nFROM gaiadr3.gaia_source\nWHERE 1=CONTAINS(POINT('ICRS',ra,dec), CIRCLE('ICRS',153.57985,21.07495,0.00834))",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cparallax%2Cparallax_error%2Cpmra%2Cpmra_error%2Cpmdec%2Cpmdec_error%2Cphot_g_mean_mag%2Castrometric_params_solved%2Cruwe%0AFROM+gaiadr3.gaia_source%0AWHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2C+CIRCLE%28%27ICRS%27%2C153.57985%2C21.07495%2C0.00834%29%29",
+    "started_utc": "2026-11-17T06:56:22.827536+00:00",
+    "http_status": 200,
+    "content_type": "text/csv",
+    "bytes": 272,
+    "sha256": "35ea39e499be8fb6b9d6d9a2e03af30ad4f9988610bde68cacce50317f0c0d1e"
+  },
+  "confirmed_planets": {
+    "query": "SELECT DISTINCT hostname,pl_name,gaia_dr3_id,hip_name,tic_id FROM ps WHERE hip_name='HIP 50156' OR gaia_dr3_id='Gaia DR3 628827128175694976' OR tic_id='TIC 95339414' OR hostname IN ('MCC 124','HIP 50156','DK Leo','GJ 2079')",
+    "url": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+DISTINCT+hostname%2Cpl_name%2Cgaia_dr3_id%2Chip_name%2Ctic_id+FROM+ps+WHERE+hip_name%3D%27HIP+50156%27+OR+gaia_dr3_id%3D%27Gaia+DR3+628827128175694976%27+OR+tic_id%3D%27TIC+95339414%27+OR+hostname+IN+%28%27MCC+124%27%2C%27HIP+50156%27%2C%27DK+Leo%27%2C%27GJ+2079%27%29",
+    "started_utc": "2026-11-17T06:56:26.222496+00:00",
+    "http_status": 200,
+    "content_type": "text/plain",
+    "bytes": 45,
+    "sha256": "5a7d92e7eca19bf0d2441214657525427ba7bd690a6fb396b61b9b7770e664ab"
+  }
+}
