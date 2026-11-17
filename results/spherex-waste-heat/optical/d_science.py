@@ -114,7 +114,7 @@ def main():
             mask, _ = frames[r["expid"], "mskimg"]
             for j, (x,y) in enumerate(WCS(header).all_world2pix(sky, 0)):
                 flux[i,j], flags[i,j] = aperture(data, mask, x, y, radius)
-        use = np.all(np.isfinite(flux) & (flux>0) & (flags==0), axis=0)
+        use = np.all(np.isfinite(flux) & (flux>0) & ((flags & 6141)==0), axis=0)
         use[0] = False
         if use.sum() < 3:
             raise ValueError(f"Only {use.sum()} control stars")
