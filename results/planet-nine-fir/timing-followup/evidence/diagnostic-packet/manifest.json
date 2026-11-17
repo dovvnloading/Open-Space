@@ -1,0 +1,62 @@
+{
+  "phase": "fixed_peak_diagnostic",
+  "git_head": "ca3d18bff073623ee3eba1ce26a3b3297b02aff2",
+  "code_sha256": {
+    "archives/decam_difference.py": "78cea31942653bc46e91b3dca98aeb925fcb49bfcf10452ed55832a9f7518221",
+    "archives/decam_inputs.json": "e343fc6cbf3dfaf3d0c495e8544fd95e42e865d2249fbb08912677562af7e6c9",
+    "orbits/propagate.py": "1bb607ce33543539db1c1627faf9a31d8b1356bbc48b0b13b598e58d4d831e2b",
+    "orbits/orbit_input.json": "ca93ddcc13e69273198d441194194ca3f54346c65cd4494fd066d2de9cd33334",
+    "orbits/timing_scenarios.py": "261c58bd070cd82a6006355e82a5662e19f7c368ff326336cb7aef8f8e1d6ef5",
+    "timing_replay/feature_diagnostic.py": "de3175ab0a0f449772f73f103a6790780f420f5c1dd9348aeea9b772685a048a",
+    "timing_replay/feature_packet.py": "bca8838250d428baaf6ab5e961e950bd33869f0ec3e251703e7744ca0ce205a7"
+  },
+  "inputs": {
+    "DECam_605285": {
+      "sha256": "6e4b52d1c80faa6664ae6f8eca400d2dcb6ce1cfe9cb00873e96dabe6bad2ac5",
+      "bytes": 33534720
+    },
+    "DECam_605571": {
+      "sha256": "3f6871787c7fd87ab10f22694a2a0ec9d34b0ea93817edbec41d28b31f801c89",
+      "bytes": 33534720
+    },
+    "mask_605285": {
+      "sha256": "8c63790c98feaca6996261c8b9941a609fa2a8f7a7915665cebf25be14ed5deb",
+      "bytes": 33534720
+    },
+    "mask_605571": {
+      "sha256": "51c7419dcbbc9152d265dd9a0c02fc295832f948e1d2b252b9e1ee5d56aec644",
+      "bytes": 33534720
+    },
+    "template_605571": {
+      "sha256": "fb546bceabd979af841311890a2adce27f7645c46f2198bbddb35964a7883231",
+      "bytes": 10529280
+    }
+  },
+  "prior_sha256": {
+    "dec1": {
+      "difference_result.json": "a660428b770840bbfc9f8e6a2f190006bb86e283429e3ad606a141d815a0a551",
+      "dense_peaks.json": "c1b021db96e4a588e1ec150d577127f982194cc038ad1dfe46e9fff4345c9026",
+      "difference_tracks.csv.gz": "ad866697939c5a9429dda7ac50026f63071b7caffcd347759437d02e44462a1d",
+      "run_manifest.json": "77f9b392a8bfd12644bd4645267fa5677d5af4cd4bc9d841eefb29081aa21b8e",
+      "run_status.json": "970587076af8c4ebf6e94dc3999b017a4c3792faf7660c408eb91572fd86128b"
+    },
+    "dec2": {
+      "difference_result.json": "a7b3823c113e4e8189bac410ad375f5043f742f5e9a6725b48ad245c0d085d2f",
+      "dense_peaks.json": "9c9886c0b4402bbc8e881b10f61434ffa3a02aa8fe8a262fd28f39a29434c96b",
+      "difference_tracks.csv.gz": "fb4c3dd71312f10204077efe4692e5ecdd9f0802071cf719173908e0c3b41797",
+      "run_manifest.json": "7bdfc47764f1c678511d50b623d5a003102f052a3d0c98c8144d5eab8e8a18ae",
+      "run_status.json": "970587076af8c4ebf6e94dc3999b017a4c3792faf7660c408eb91572fd86128b"
+    }
+  },
+  "cache": "D:\\Open-Space\\campaigns\\pr143-des-inputs-581c9c4-20261117",
+  "prior_root": "D:\\Open-Space\\campaigns",
+  "out": "D:\\Open-Space\\campaigns\\pr143-des-fixed-feature-ca3d18bf-20261117\\run",
+  "runtime": {
+    "python": "3.14.0 (tags/v3.14.0:ebf955d, Oct  7 2025, 10:15:03) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "numpy": "2.5.5",
+    "scipy": "1.17.1",
+    "astropy": "8.0.2",
+    "erfa": "2.0.1.5"
+  }
+}
