@@ -1,0 +1,15 @@
+# Same-night image subtraction and the October 25 aperture excess
+
+No pre-arc night met a repeatable moving-source criterion. Both October 18 and all three October 25 science exposures were accessible. We subtracted the static sky at each hypothesized comet position using the other science exposures that night. Each image is independently scaled to zero point 25 before subtraction. For two images this measures the two positive-minus-negative lobe pairs at the moving object's expected positions. The operation introduces intra-night covariance. Empirical control tracks undergo the identical subtraction and stacking procedure.
+
+| UT date in 2025 | Frames | Signal at nominal position / noise | Best signal / noise | Best (east, north) offset | Rank p of best trial | 5σ aperture flux at zero point 25 | 5σ r aperture magnitude |
+| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: |
+| Oct 18 | 2 | 0.005 | 3.29 | (+14, −3) arcsec | 0.0579 (120 controls) | 404.3 DN | 18.48 |
+| Oct 25 | 3 | 0.73 | 3.00 | (+3, −4) arcsec | 0.1399 (142 controls) | 369.6 DN | 18.58 |
+| Oct 29, published control | 2 | 3.70 | 4.05 | (−1, 0) arcsec | 0.0237 (168 controls) | 567.1 DN | 18.12 |
+
+A six-pixel (~6.1 arcsec) ordinary science aperture on the **first** October 25 frame fell on positive flux at the nominal ephemeris. With 48 nearby control apertures we measured +5.00 robust standard deviations. At the subsequent moving positions the next two exposures gave +1.72 and −0.16. At the original position they gave +0.16 and −0.10. Those later exposures were much noisier. At the nominal motion the three background-subtracted 3.5-pixel apertures were +1.51, −0.34, and −0.22. Thus the high single-frame value did not yield an independently supported tracklet.
+
+Six Pan-STARRS DR2 mean-catalogue coordinates fall inside the original 6.1 arcsec aperture. Their r PSF magnitudes range from 21.43 to 22.07. Five entries have a single detection, one has four. If each entry contributes its full mean flux as a distinct source and the r bandpasses are taken as identical, their combined flux is about 300 DN at the ZTF zero point, versus the measured 1,138 DN. Blending, an extended source, differing passbands and spurious single detections limit this comparison. The ZTF r reference quadrant and all three pipeline difference frames were missing at the requested URLs (HTTP 404). The October 25 VizieR request timed out, so that Gaia query provides no source constraint. [Stationary-source query and per-image photometry](../oct25/summary.json) · [PS1 catalogue response](../oct25/panstarrs.csv.gz)
+
+The reported flux scales describe a 3.5-pixel local-background-subtracted aperture. A formal significance at a target cannot be converted directly into the probability of a correct asteroid identification. Trial ellipses, spatial controls and the moving-source check are described in the [pipeline-difference README](../stack/README.md). [All paired-frame measurements](stack-results.json) · [Query receipts](stack-receipts.json) · [Code](../stack/stack.py)
