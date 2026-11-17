@@ -15,19 +15,20 @@ from run_grid import inputs,read_curve
 from kmt.flux import baseline_caps
 
 
-def solve(job, seed, factor, binary_trials=12):
+def solve(job, seed, factor, binary_trials=12, profiles=False, window=4., bin_width=0.,
+          previous=None):
     name,path,t0,te=job
     vb=fit.engine(); vb.Tol=.001
     t,y,err,g,diff=read_curve(job)
+    valid=np.isfinite(t)&(t>2450000)&(t<2470000)&np.isfinite(y)&np.isfinite(err)&(err>0)
+    original_groups=np.unique(g[valid])
     t,y,err,g=fit.clean(t,y,err,g)
     ref=seed['fs_t0']
     t=t-ref
     if diff: err=fit.reported_error_floor(err,g)
     caps=np.full(max(g)+1,np.inf)
-    if name.startswith('KMT') and np.isfinite(factor):
-        raw=np.asarray(list(baseline_caps(path).values()))
-        if len(raw)!=len(caps):
-            raise ValueError('stream alignment failed')
+    if name.startswith('KMT') and path.parent.name!='fallback' and np.isfinite(factor):
+        raw=np.asarray(list(baseline_caps(path).values()))[original_groups]
         caps=np.where(np.isfinite(raw),factor*raw,np.inf)
     if not diff:
         caps=np.array([factor*np.median(y[g==i]) for i in range(len(caps))])
@@ -36,16 +37,22 @@ def solve(job, seed, factor, binary_trials=12):
     tt=[]; yy=[]; ee=[]; gg=[]
     for i in range(len(caps)):
         m=g==i
-        out=m&(abs(t)>12)
-        if out.sum()<4: out=m&(abs(t)>4)
+        out=m&(abs(t)>3*window)
+        if out.sum()<4: out=m&(abs(t)>window)
         if out.sum()==0: continue
         z=(y[out]-np.median(y[out]))/err[out]
         scale=max(1.,np.median(abs(z))/.67448975)
         ok=abs(z)<6*scale
         wo=1/(scale*err[out][ok])**2
         if not len(wo): continue
-        near=m&(abs(t)<=4)
-        tt.extend(t[near]);yy.extend(y[near]);ee.extend(err[near]*scale);gg.extend([i]*near.sum())
+        near=m&(abs(t)<=window)
+        tn,yn,en=t[near],y[near],err[near]*scale
+        if bin_width>0 and len(tn):
+            _,bins=np.unique(np.floor(tn/bin_width).astype(int),return_inverse=True)
+            weights=1/en**2;tot=np.bincount(bins,weights=weights)
+            tn=np.bincount(bins,weights=weights*tn)/tot
+            yn=np.bincount(bins,weights=weights*yn)/tot;en=1/np.sqrt(tot)
+        tt.extend(tn);yy.extend(yn);ee.extend(en);gg.extend([i]*len(tn))
         tt.append(1e6);yy.append(np.average(y[out][ok],weights=wo));ee.append(1/np.sqrt(wo.sum()));gg.append(i)
     t,y,e,g=map(np.asarray,(tt,yy,ee,gg))
     peak=t<1e5
@@ -73,10 +80,11 @@ def solve(job, seed, factor, binary_trials=12):
         if ret:return fs.tolist()
         return chi
     rng=np.random.default_rng(623)
-    base=[(-2,2),(np.log(.01),np.log(150)),(np.log(.002),np.log(12))]
+    base=[(-window/2,window/2),(np.log(.01),np.log(150)),(np.log(.002),np.log(12))]
     results={}
-    for kind in ['ps','fs','exp','bin']:
+    for kind in (['exp','bin'] if previous else ['ps','fs','exp','bin']):
         bounds=base[:]
+        if previous and kind=='exp': bounds[2]=(np.log(.002),np.log(150))
         if kind in ('fs','bin'): bounds+=[(np.log(.008),np.log(15))]
         if kind=='bin':bounds += [(np.log(.3),np.log(3.5)),(np.log(.0003),0),(-7,7)]
         initial=[]
@@ -93,6 +101,16 @@ def solve(job, seed, factor, binary_trials=12):
                 s,q,ang=(seed['bin_s'],seed['bin_q'],seed['bin_angle']) if trial==0 else (np.exp(rng.uniform(-.65,.65)),np.exp(rng.uniform(-5,0)),rng.uniform(-np.pi,np.pi))
                 initial.append([rng.normal(0,.15), np.log(max(.3,min(seed['bin_te'],8.)))+rng.normal(0,.7),
                                 np.log(rng.uniform(.07,.8)),np.log(.035),np.log(s),np.log(q),ang])
+        if previous:
+            initial.append(previous[kind]['vector'])
+            if kind=='bin':
+                single=previous['fs']
+                geom=single['vector']
+                # Start at the measured source size and timescale, including
+                # wide/close and weak companions, as well as caustic solutions.
+                for s,q,angle in [(2.8,.001,.7),(.35,.001,.7),(1.4,.02,2.1),
+                                  (.75,.02,-1.9),(1.3,.12,-.9),(.7,.12,1.6)]:
+                    initial.append([*geom,np.log(s),np.log(q),angle])
         best=None
         for v in initial:
             v=np.clip(v,*np.array(bounds).T)
@@ -108,15 +126,34 @@ def solve(job, seed, factor, binary_trials=12):
                        'fs':score(best.x,kind,True),'converged':bool(best.success)}
         if kind in ('fs','bin'):results[kind]['rho']=np.exp(best.x[3])
         if kind=='bin':results[kind].update(s=np.exp(best.x[4]),q=np.exp(best.x[5]),alpha=best.x[6])
+    if profiles:
+        for label,bound in [('long',(.5,150.,.008,15.)),('small',(.01,150.,.008,1.)),
+                             ('short',(.01,.5,.008,15.)),('large',(.01,150.,1.,15.))]:
+            limits=[base[0],tuple(np.log(bound[:2])),base[2],tuple(np.log(bound[2:]))]
+            starts=[results['fs']['vector'],[0.,np.log(max(.5,seed['fs_te'])),np.log(.35),np.log(.75)],
+                    [0.,np.log(.2),np.log(.8),np.log(2.)],[0.,np.log(2.),np.log(.03),np.log(.1)]]
+            fits=[]
+            for x in starts:
+                x=np.clip(x,*np.array(limits).T)
+                simp=np.tile(x,(len(x)+1,1))
+                for j in range(len(x)):
+                    step=.03 if j==0 else .15
+                    simp[j+1,j]+=step if x[j]+step<limits[j][1] else -step
+                fits.append(minimize(score,x,args=('fs',),method='Nelder-Mead',bounds=limits,
+                                     options={'maxiter':700,'initial_simplex':simp,'fatol':.003,'xatol':.00013}))
+            sol=min(fits,key=lambda b:b.fun)
+            results['profile_'+label]={'chi2':round(sol.fun,3),'te_d':np.exp(sol.x[1]),'rho':np.exp(sol.x[3]),
+                                       't0':ref+sol.x[0],'u0':np.exp(sol.x[2]),'converged':bool(sol.success)}
     return {'event':name,'n_peak_window':int(peak.sum()),'baseline_pseudopoints':int((~peak).sum()),
             'cap_factor':factor if np.isfinite(factor) else None,'caps':[d if np.isfinite(d) else None for d in caps],
-            'reference_jd':ref,'models':results}
+            'reference_jd':ref,'window_halfwidth_d':window,'bin_width_d':bin_width,'models':results}
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('event');p.add_argument('--cache',type=Path,default=Path.cwd())
     p.add_argument('--grid',type=Path,default=Path('staging/screen'));p.add_argument('--factor',type=float,default=1.15)
-    p.add_argument('--trials',type=int,default=12);p.add_argument('--out',type=Path,required=True)
+    p.add_argument('--window',type=float,default=4.);p.add_argument('--bin-width',type=float,default=0.);
+    p.add_argument('--profiles',action='store_true');p.add_argument('--trials',type=int,default=12);p.add_argument('--out',type=Path,required=True)
     a=p.parse_args();j=next(j for j in inputs(a.cache) if j[0]==a.event)
     seed=json.loads((a.grid/(a.event+'.json')).read_text())
-    res=solve(j,seed,a.factor,a.trials);a.out.write_text(json.dumps(res,indent=2,allow_nan=False)+'\n')
+    res=solve(j,seed,a.factor,a.trials,a.profiles,a.window,a.bin_width);a.out.write_text(json.dumps(res,indent=2,allow_nan=False)+'\n')

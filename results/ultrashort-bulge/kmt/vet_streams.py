@@ -34,7 +34,7 @@ def geometric_coverage(t, hours):
     return round(float(np.maximum(b-np.maximum(a,end),0.).sum()/(t[-1]-t[0])),5)
 
 
-def measure(data, center, year, kind, engine, model):
+def measure(data, center, year, engine, model):
     t,flux,e=data.T
     good=np.isfinite(data).all(axis=1)&(e>0)&(t>50000)&(t<70000)
     t,flux,e=t[good],flux[good],e[good]
@@ -128,7 +128,7 @@ def main():
                     if m.name.endswith('.pysis'):
                         a[:,0]-=2400000;a[:,1]*=-1
                         if '_I.' in m.name: streams.extend(a[(a[:,2]>0)&np.isfinite(a).all(axis=1),0])
-                    row=measure(a,center,year,m.name,engine,model)
+                    row=measure(a,center,year,engine,model)
                     if row:
                         results.append(dict(event=name,stream=m.name,calibrated_I_baseline=caps.get(m.name),**row))
         t=np.sort(streams)

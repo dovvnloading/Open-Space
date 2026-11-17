@@ -17,13 +17,19 @@ def main():
     rows=[]
     for year in range(2016,2027):
         path=args.cache/'controls'/f'kmt-{year}.raw' if year<2024 else args.cache/f'{year}.html'
+        if year==2026 and not path.exists():
+            # The 2026 release is metadata-only here. Preserve its already frozen
+            # position associations when replaying without that mutable index.
+            continue
         doc=html.fromstring(path.read_bytes());trs=doc.xpath('//tr')
         hdr=[c.text_content().strip() for c in trs[0].xpath('./td')]
         for tr in trs[1:]:
             row=dict(zip(hdr,[c.text_content().strip() for c in tr.xpath('./td')]))
             try:
-                ra,dec=angle(row['RA'],True),angle(row['Dec']);t=float(row['t_0'])
+                ra,dec=angle(row['RA'],True),angle(row['Dec'])
             except (KeyError,ValueError):continue
+            try:t=float(row.get('t_0',''))
+            except (TypeError,ValueError):t=None
             rows.append((row['Event'],ra,dec,t))
     with (HERE.parent/'ogle/catalog.csv').open() as h:
         for r in csv.DictReader(h):
@@ -38,7 +44,7 @@ def main():
             if rows[k][0] in targets:
                 dist=np.rad2deg(2*np.arcsin(np.linalg.norm(unit[k]-unit[l])/2))*3600.
                 # Do not reproduce current-season proprietary fit values in the match file.
-                delta=None if 'KMT-2026' in rows[l][0] else round(rows[l][3]-rows[k][3],4)
+                delta=None if 'KMT-2026' in rows[l][0] or rows[k][3] is None or rows[l][3] is None else round(rows[l][3]-rows[k][3],4)
                 records.append(dict(event=rows[k][0],neighbor=rows[l][0],sep_arcsec=round(dist,4),delta_peak_days=delta))
     # Dedicated KMT planet list includes KMT and OGLE object names; use both exact
     # designation and 2-arcsec position to catch aliases. Published follow-up can precede a list update.
@@ -60,9 +66,12 @@ def main():
     with (HERE/'planet-archive-matches.tsv').open('w') as h:
         w=csv.DictWriter(h,['event','archive_name','is_ffp','paper','year','ads_link'],delimiter='\t',lineterminator='\n')
         w.writeheader();w.writerows(pub)
+    if not (args.cache/'2026.html').exists() and (HERE/'historical-alert-neighbours.tsv').exists():
+        with (HERE/'historical-alert-neighbours.tsv').open() as h:
+            records.extend(r for r in csv.DictReader(h,delimiter='\t') if r['neighbor'].startswith('KMT-2026-'))
     with (HERE/'historical-alert-neighbours.tsv').open('w') as h:
         w=csv.DictWriter(h,['event','neighbor','sep_arcsec','delta_peak_days'],delimiter='\t',lineterminator='\n')
-        w.writeheader();w.writerows(sorted(records,key=lambda r:(r['event'],r['sep_arcsec'])))
+        w.writeheader();w.writerows(sorted(records,key=lambda r:(r['event'],float(r['sep_arcsec']))))
 
 
 if __name__=='__main__':main()

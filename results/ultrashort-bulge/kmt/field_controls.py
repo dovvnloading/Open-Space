@@ -4,6 +4,7 @@ import csv
 import io
 import json
 import re
+import hashlib
 from pathlib import Path
 from urllib.parse import urlencode
 from concurrent.futures import ThreadPoolExecutor
@@ -53,10 +54,17 @@ def main():
     args=p.parse_args();out=args.cache/'field-vet';out.mkdir(exist_ok=True)
     ix={r['event']:r for r in map(json.loads,(args.cache/'index.jsonl').read_text().splitlines())}
     records=[];rows=[]
+    def search(url):
+        key=hashlib.sha256(url.encode()).hexdigest()
+        local=out/(key+'.html');rec=out/(key+'.receipt')
+        if local.exists() and rec.exists():return local.read_bytes(),json.loads(rec.read_text())
+        raw,r=get(url);local.write_bytes(raw);rec.write_text(json.dumps(r))
+        return raw,r
+
     for event,center in TARGETS.items():
         r=ix[event];ra,dec=angle(r['ra'],True),angle(r['dec'])
         query=PORTAL+urlencode(dict(search_type='radec',ra=f'{ra:.9f}',dec=f'{dec:.9f}',ra_type='decimal_degree',arcsec=14))
-        raw,rec=get(query);records.append(dict(event=event,kind='cone',**rec))
+        raw,rec=search(query);records.append(dict(event=event,kind='cone',**rec))
         m=re.search(rb'const kmtnetSearchMarkers = (\[.*?\]);',raw)
         if not m:continue
         markers=sorted(json.loads(m.group(1)),key=lambda x:x['dist'])
@@ -75,7 +83,7 @@ def main():
             for offset in (-7.,7.):
                 ura=ra+offset/(3600*np.cos(np.deg2rad(dec)))
                 uq=PORTAL+urlencode(dict(search_type='radec',ra=f'{ura:.9f}',dec=f'{dec:.9f}',ra_type='decimal_degree',arcsec=2.))
-                control_raw,control_rec=get(uq);records.append(dict(event=event,kind='displaced_cone',**control_rec))
+                control_raw,control_rec=search(uq);records.append(dict(event=event,kind='displaced_cone',**control_rec))
                 cm=re.search(rb'const kmtnetSearchMarkers = (\[.*?\]);',control_raw)
                 if not cm:continue
                 nearby=sorted([c for c in json.loads(cm.group(1)) if c['lcid'].startswith(field+'.')],key=lambda c:c['dist'])
@@ -88,7 +96,11 @@ def main():
         def download(v):
             lcid=v['lcid'];cached=out/(lcid+'.json')
             if cached.exists():return json.loads(cached.read_text())
-            data,receipt=get(PORTAL+urlencode(dict(action='download_lc',lcid=lcid)))
+            url=PORTAL+urlencode(dict(action='download_lc',lcid=lcid))
+            try:
+                data,receipt=get(url)
+            except OSError as exc:
+                return dict(receipt=dict(url=url,status=getattr(exc,'code',None),error=str(exc)),data=[])
             value=dict(receipt=receipt,data=summarize(data,center))
             cached.write_text(json.dumps(value)+'\n')
             return value

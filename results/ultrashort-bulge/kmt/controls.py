@@ -5,7 +5,6 @@ import csv
 import json
 import math
 import re
-from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urlencode
 from lxml import html

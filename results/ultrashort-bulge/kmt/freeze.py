@@ -4,11 +4,14 @@ import concurrent.futures
 import csv
 import shutil
 import hashlib
+import gzip
 import io
 import json
 import re
 import tarfile
 import time
+import threading
+from email.utils import parsedate_to_datetime
 import urllib.error
 import urllib.request
 from collections import Counter
@@ -19,6 +22,8 @@ from lxml import html
 BASE = 'https://kmtnet.kasi.re.kr/ulens/event/'
 CONTROLS = {'KMT-2024-BLG-0816', 'KMT-2024-BLG-0792', 'KMT-2024-BLG-3237'}
 HERE = Path(__file__).resolve().parent
+_RATE_GATE=threading.Lock()
+_RESUME_AT=0.0
 
 
 def digest(data):
@@ -26,18 +31,51 @@ def digest(data):
 
 
 def get(url):
+    global _RESUME_AT
+    while True:
+        with _RATE_GATE:
+            wait=_RESUME_AT-time.monotonic()
+        if wait<=0: break
+        time.sleep(min(60,wait))
     request = urllib.request.Request(url, headers={'User-Agent': 'Open-Space-research/1.0 (public microlensing inventory)'})
-    with urllib.request.urlopen(request, timeout=65) as response:
+    try:
+        opened=urllib.request.urlopen(request,timeout=65)
+    except urllib.error.HTTPError as exc:
+        if exc.code==429:
+            header=exc.headers.get('Retry-After','60')
+            try:
+                pause=float(header)
+            except ValueError:
+                try:pause=(parsedate_to_datetime(header)-datetime.now(timezone.utc)).total_seconds()
+                except (ValueError,TypeError):pause=60.
+            with _RATE_GATE:
+                _RESUME_AT=max(_RESUME_AT,time.monotonic()+max(30.,pause))
+        raise
+    with opened as response:
         raw = response.read()
         return raw, dict(url=url, final_url=response.geturl(), status=response.status,
                          utc=response.headers.get('Date'), size=len(raw), sha256=digest(raw))
 
 
 def index(cache):
-    outputs, receipts, summary, seeds = [], [], [], []
+    receipts, summary, seeds = [], [], []
     for year in (2024, 2025, 2026):
         url = f'{BASE}{year}/'
         path = cache / f'{year}.html'
+        frozen=HERE/f'index-{year}.html.gz'
+        # Reproduction can use the frozen public 2026 roster and aggregate receipt
+        # without re-reading an alert service that continues to change.
+        if year==2026 and not path.exists() and (HERE/'event-pages-2026.tsv').exists() and (HERE/'index-receipts.json').exists():
+            prior=json.loads((HERE/'index-receipts.json').read_text())
+            receipts.append(next(r for r in prior['queries'] if r['url']==url))
+            summary.append(next(r for r in prior['seasons'] if r['year']==year))
+            continue
+        if not path.exists() and frozen.exists() and (HERE/'index-receipts.json').exists():
+            original=next(v for v in json.loads((HERE/'index-receipts.json').read_text())['queries'] if v['url']==url)
+            raw=gzip.decompress(frozen.read_bytes())
+            if digest(raw)!=original['sha256']:raise ValueError(f'Frozen index mismatch: {year}')
+            path.write_bytes(raw)
+            (cache/f'{year}.headers').write_text('date: '+original['utc']+'\n')
         if path.exists():
             raw = path.read_bytes()
             header = (cache / f'{year}.headers').read_text()
@@ -74,12 +112,12 @@ def index(cache):
                 for r in rows:
                     w.writerow((r['Event'],f"{url}view.php?event={r['Event']}"))
         if public:
+            if not frozen.exists():frozen.write_bytes(gzip.compress(raw,compresslevel=9,mtime=0))
             dest = HERE / f'catalog-{year}.tsv'
             with dest.open('w') as out:
                 w = csv.DictWriter(out, fieldnames=columns, delimiter='\t',lineterminator='\n')
                 w.writeheader()
                 w.writerows(rows)
-            outputs.append(dest)
             for r in rows:
                 name = r['Event']
                 code = f'KB{year%100:02d}{name[-4:]}'
@@ -121,6 +159,7 @@ def fetch(row, cache):
             temp.write_bytes(data)
             temp.replace(path)
             receipt.write_text(json.dumps(rec)+'\n')
+            (cache/f'{event}.error.json').unlink(missing_ok=True)
             break
         except (OSError,tarfile.TarError,ValueError) as exc:
             if attempt == 2 or (isinstance(exc,urllib.error.HTTPError) and exc.code == 404):

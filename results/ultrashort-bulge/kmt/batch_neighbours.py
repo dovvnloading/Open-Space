@@ -2,11 +2,9 @@
 import argparse
 import concurrent.futures
 import csv
-import hashlib
 import json
 import re
 import time
-import urllib.error
 import urllib.request
 from pathlib import Path
 from freeze import HERE,digest
@@ -20,7 +18,7 @@ BATCH=80
 
 
 def query(job):
-    db,rows,year,i,cache=job
+    db,rows,year,i,cache,cached_only=job
     name=f'{db}-{year}-{i:04d}'
     cat,cols=CATALOGS[db]
     coords=[f"{angle(r['ra'],True):.9f} {angle(r['dec']):+.9f}" for r in rows]
@@ -33,6 +31,10 @@ def query(job):
     else:
         rec=dict(batch=name,source=cat,url=ENDPOINT,method='POST',request_sha256=digest(payload),
                  first_event=rows[0]['event'],last_event=rows[-1]['event'],targets=len(rows))
+        if cached_only:
+            if receipt.exists():rec=json.loads(receipt.read_text())
+            else:rec['status']='pending'
+            return db,year,[],rec
         request=urllib.request.Request(ENDPOINT,data=payload,headers={'Content-Type':'application/x-www-form-urlencoded',
                                                                      'User-Agent':'Open-Space-research/1.0'})
         for attempt in range(3):
@@ -67,6 +69,7 @@ def query(job):
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--cache',type=Path,required=True)
     p.add_argument('--workers',type=int,default=3)
+    p.add_argument('--cached-only',action='store_true',help='Export verified results acquired so far without network access')
     args=p.parse_args()
     data=[json.loads(x) for x in (args.cache/'index.jsonl').read_text().splitlines()]
     out=args.cache/'batch';out.mkdir(exist_ok=True)
@@ -74,12 +77,13 @@ def main():
     for year in (2024,2025):
         rows=sorted([r for r in data if str(year) in r['event']],key=lambda r:r['event'])
         for i in range(0,len(rows),BATCH):
-            for db in CATALOGS:jobs.append((db,rows[i:i+BATCH],year,i,out))
+            for db in CATALOGS:jobs.append((db,rows[i:i+BATCH],year,i,out,args.cached_only))
     allrows={};receipts=[]
     with concurrent.futures.ThreadPoolExecutor(args.workers) as pool:
         for db,year,rows,rec in pool.map(query,jobs):
             receipts.append(rec);allrows.setdefault((db,year),[]).extend(rows)
     for (db,year),rows in allrows.items():
+        if not rows:continue
         cols=list(dict.fromkeys(k for r in rows for k in r))
         with (HERE/f'{db}-{year}.tsv').open('w') as h:
             w=csv.DictWriter(h,cols,delimiter='\t',lineterminator='\n');w.writeheader();w.writerows(rows)

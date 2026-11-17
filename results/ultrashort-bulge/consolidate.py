@@ -57,11 +57,15 @@ def run(cache):
         v=json.loads(p.read_text());n=p.name.split('.')[0]
         if n in spec:spec[n].update(input_sha256=v['sha256'],url=v['url'])
     for p in (cache/'staging/kmt/fallback').glob('*.json'):
-        v=json.loads(p.read_text());n=p.stem
-        if n in spec and v.get('sha256'):spec[n].update(input_sha256=v['sha256'],url=v['url'])
+        v=json.loads(p.read_text()).get('curve',{});n=p.stem
+        if n in spec and v.get('sha256') and not spec[n]['input_sha256']:
+            spec[n].update(input_sha256=v['sha256'],url=v['url'])
     broad=read_results(cache/'staging/screen');bound=read_results(cache/'staging/bound')
     cc=list(rows(cache/'staging/all-cadence.csv'))
     cad={r['event']:r for r in cc}
+    replacements=cache/'staging/all-cadence-retrial.csv'
+    if replacements.is_file():
+        for r in rows(replacements):cad[r['event']]=r
     gg=[];kk=[];flags=[]
     totals=collections.defaultdict(collections.Counter)
     for n,meta in sorted(spec.items()):

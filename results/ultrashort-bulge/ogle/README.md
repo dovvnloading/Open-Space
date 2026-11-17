@@ -61,6 +61,28 @@ The frozen archive comprises 4,339,671 measurements and 165,027,725 input bytes 
 
 The denominator is peak time at already-alerted stars. No surveyed-star denominator, full detection pipeline, model-classification recovery, or correction for unalerted stars enters this table. [Results by field](window_by_field.csv)
 
+## Source colors for two large-ρ models
+
+Neither KMT-2024-BLG-1516/OGLE-2024-BLG-0859 nor KMT-2025-BLG-2688 yields an independently calibrated angular source radius. The 1516 source position coincides with a Gaia DR3 long-period variable, and the KMT event shapes admit a much better binary-lens fit. For 2688, models with ρ ≤ 1 remain competitive. These conditions prevent an angular Einstein radius or a lens-mass posterior from being inferred for either event.
+
+We measured the local red clump in 2-arcmin VVV DR2 fields. A Gaussian clump plus an exponential background was fitted to the Ks luminosity function for 0.8 < J−Ks < 1.8; the clump color is the median within 0.22 mag of the fitted peak. For 1516 the result is Ks = 13.20, J−Ks = 1.181 (248 stars); for 2688 it is Ks = 13.20, J−Ks = 1.014 (323 stars). Repeating with 60″ and 90″ radii changes the median color by at most 0.026 and 0.007 mag, respectively. A clump intrinsic J−Ks = 0.68 gives nominal color excesses of 0.501 and 0.334 mag. A source in front of the clump can suffer less extinction. [Gonzalez et al. 2012](https://www.aanda.org/articles/aa/pdf/2012/07/aa19222-12.pdf)
+
+The closest VVV DR2 detections are 0.104″ (1516; J = 13.012, Ks = 11.583) and 0.814″ (2688; J = 13.400, Ks = 12.382). VIRAC2 reports one source within 1.5″ of 1516 (0.055″, Ks = 11.666); at 2688 it resolves three (0.075″, Ks = 14.886; 0.862″, Ks = 12.554; 0.942″, Ks = 13.996). The brightest infrared object near 2688 is offset from the alert coordinates. An image-subtraction centroid registration would be needed to establish which star brightened. [VIRAC2 release](https://www.eso.org/sci/publications/announcements/sciann17684.html)
+
+OGLE's baseline map for 1516 gives V = 19.189, I = 15.428 and V−I = 3.761 for star 214764. A variable neighboring source, source variability, or blended light can change either mean color or the fraction of flux in a band. The KMT Chilean V difference-flux amplitudes are formally detected relative to the tested FSPL shape (two fields: 18.8σ and 23.1σ for 1516, 5.6σ and 7.9σ for 2688). Photometry in these V files has relative counts but no calibrated V magnitude or matched reference-star V zero point. The flux-ratio tests condition on a shared event shape and independent noise; intrinsic variability, nightly correlations and a different lens model can alter them.
+
+The table gives an illustrative angular **source radius** interval for a giant only, given three assumed fractions of the catalog Ks light. We used the Adams et al. giant-star calibration in its published color range 2.049 ≤ (V−K)₀ ≤ 3.839. Its relation is log₁₀(θ_diameter/mas) = 0.562 + 0.051(V−K)₀ − 0.2K₀. The envelope spans the observed aperture-to-aperture clump-color variation, an extra ±0.05 mag in E(J−Ks), extinction coefficients A_Ks/E(J−Ks) of 0.428–0.528, ±0.05 mag in the K magnitude and ±0.019 dex calibration scatter. The radius scales as the square root of the source fraction at fixed color. The catalog offset for 2688 and possible contamination or intrinsic variability for 1516 leave the actual fractions open, including values below 0.1. The table contains conditional sensitivities, with no probability assignment. It does not establish a physical size for a variable star outside the color or luminosity range of the calibration. [Adams et al. 2018, Table 3](https://chara.gsu.edu/files/papers/2018_Adams_MNRAS_473_3608.pdf) · [Alonso-García et al. 2017](https://arxiv.org/abs/1710.04854)
+
+| Source hypothesis | All Ks light (μas) | Half the Ks light (μas) | One tenth of the Ks light (μas) |
+|---|---:|---:|---:|
+| 1516, VVV DR2 catalog flux | 11.38–16.88 | 8.05–11.94 | 3.60–5.34 |
+| 2688, VVV DR2 catalog flux, 0.814″ offset | 7.66–11.23 | 5.42–7.94 | 2.42–3.55 |
+| 2688, closest VIRAC2 source, 0.075″ offset | 2.42–3.54 | 1.71–2.51 | 0.76–1.12 |
+
+The individual VIRAC2 all-light hypotheses for the other two stars near 2688 give 7.08–10.38 and 3.64–5.34 μas. The 1516 VIRAC2 all-light hypothesis gives 10.95–16.24 μas. Registration and band-dependent blending thus dominate the size uncertainty for 2688. For 1516 the intrinsic luminosity variation and lens-model ambiguity limit the interpretation despite better association.
+
+[Source photometry, red-clump fits and conditional angular radii](source-size-cases.json) · [Reproduction script](source_size.py)
+
 ## Reproduce
 
 From the repo root with Python, NumPy, SciPy, pyerfa, Matplotlib and VBMicrolensing 5.6.1 installed:
@@ -78,6 +100,7 @@ python results/ultrashort-bulge/ogle/moving_objects.py /path/to/ogle-cache
 python results/ultrashort-bulge/ogle/verify_inputs.py /path/to/ogle-cache
 python results/ultrashort-bulge/ogle/screen_audit.py /path/to/ogle-cache results/ultrashort-bulge/tables/grid-fits.csv.gz
 python results/ultrashort-bulge/ogle/aliases.py /path/to/ogle-cache
+python results/ultrashort-bulge/ogle/source_size.py --cache /path/to/color-cache --archives /path/to/released-kmt-archives
 python results/ultrashort-bulge/ogle/window.py /path/to/ogle-cache
 python results/ultrashort-bulge/ogle/plot_short.py /path/to/ogle-cache
 ```

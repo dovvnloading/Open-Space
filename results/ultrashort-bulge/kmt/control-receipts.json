@@ -88,9 +88,12 @@
     "sha256": "9e3962139368bbe8ff62fc04cbc7feb81889bcbf53c78367676b9c86551012d8"
   },
   "KMT-2024-BLG-0456-skybot": {
-    "url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?-ra=267.611583333&-dec=-28.741061111&-rd=0.083333&-epoch=2460404.6244&-loc=500&-mime=text&-output=object",
-    "status": 400,
-    "error": "HTTP Error 400: Bad Request"
+    "url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?RA=267.611583333&DEC=-28.741061111&SR=0.083333&TIME=2460404.6244&-loc=500&-mime=text&-output=object",
+    "final_url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?RA=267.611583333&DEC=-28.741061111&SR=0.083333&TIME=2460404.6244&-loc=500&-mime=text&-output=object",
+    "status": 200,
+    "utc": "Tue, 17 Nov 2026 10:43:06 GMT",
+    "size": 199,
+    "sha256": "17092ce1043f384fcfc3ab006fb48093e76ee8cba195552f64af7aa515967a36"
   },
   "KMT-2024-BLG-0792-simbad": {
     "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cotype%2Cra%2Cdec+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C268.399208333%2C-29.865311111%2C0.0005555556%29%29",
@@ -124,6 +127,22 @@
     "size": 2011,
     "sha256": "1b079da782f9e88fa56c8ad1e706b627fb47a15921fe5347d50fab4424a12d8e"
   },
+  "KMT-2024-BLG-0909-simbad": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cotype%2Cra%2Cdec+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C269.326041667%2C-27.318619444%2C0.0005555556%29%29",
+    "final_url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cotype%2Cra%2Cdec+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C269.326041667%2C-27.318619444%2C0.0005555556%29%29",
+    "status": 200,
+    "utc": "Tue, 17 Nov 2026 10:45:03 GMT",
+    "size": 21,
+    "sha256": "df0c9928244da22a13a5d5ead832cf20f2b0d654e485a4fbbc0e4de1cd10a5bd"
+  },
+  "KMT-2024-BLG-0909-vsx": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=269.326041667+-27.318619444&-c.rs=2&-out.max=100&-out=Name%2CType%2CRAJ2000%2CDEJ2000",
+    "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=269.326041667+-27.318619444&-c.rs=2&-out.max=100&-out=Name%2CType%2CRAJ2000%2CDEJ2000",
+    "status": 200,
+    "utc": "Tue, 17 Nov 2026 10:45:04 GMT",
+    "size": 2011,
+    "sha256": "bd1c08014d2c5f9e7c6cdafc7fe0523b17187ea0d0cbf8d13caf7c7121822d97"
+  },
   "KMT-2024-BLG-1157-simbad": {
     "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cotype%2Cra%2Cdec+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C263.409166667%2C-27.278488889%2C0.0005555556%29%29",
     "final_url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cotype%2Cra%2Cdec+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C263.409166667%2C-27.278488889%2C0.0005555556%29%29",
@@ -155,6 +174,54 @@
     "utc": "Tue, 17 Nov 2026 10:40:22 GMT",
     "size": 2011,
     "sha256": "c91218594e815540724679f76901061d4340ae60e1ec24c2c3b6ea78d2015742"
+  },
+  "KMT-2024-BLG-3326-simbad": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cotype%2Cra%2Cdec+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C268.108125000%2C-30.725969444%2C0.0005555556%29%29",
+    "final_url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cotype%2Cra%2Cdec+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C268.108125000%2C-30.725969444%2C0.0005555556%29%29",
+    "status": 200,
+    "utc": "Tue, 17 Nov 2026 10:45:03 GMT",
+    "size": 21,
+    "sha256": "df0c9928244da22a13a5d5ead832cf20f2b0d654e485a4fbbc0e4de1cd10a5bd"
+  },
+  "KMT-2024-BLG-3326-vsx": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=268.108125000+-30.725969444&-c.rs=2&-out.max=100&-out=Name%2CType%2CRAJ2000%2CDEJ2000",
+    "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=268.108125000+-30.725969444&-c.rs=2&-out.max=100&-out=Name%2CType%2CRAJ2000%2CDEJ2000",
+    "status": 200,
+    "utc": "Tue, 17 Nov 2026 10:45:03 GMT",
+    "size": 2011,
+    "sha256": "91ba4d294aafcadc96468768d846e8dbfddbfb57666e6da2908ea1a53d9f7424"
+  },
+  "KMT-2024-BLG-3326-skybot": {
+    "url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?RA=268.108125000&DEC=-30.725969444&SR=0.083333&TIME=2460570.59133&-loc=500&-mime=text&-output=object",
+    "final_url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?RA=268.108125000&DEC=-30.725969444&SR=0.083333&TIME=2460570.59133&-loc=500&-mime=text&-output=object",
+    "status": 200,
+    "utc": "Tue, 17 Nov 2026 10:58:14 GMT",
+    "size": 363,
+    "sha256": "15e171da8f1da7bc36349cd93b273cc16f35aae7859ddd09a3c1bd89efe7b946"
+  },
+  "KMT-2024-BLG-3429-simbad": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cotype%2Cra%2Cdec+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C268.000125000%2C-29.931280556%2C0.0005555556%29%29",
+    "final_url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cotype%2Cra%2Cdec+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C268.000125000%2C-29.931280556%2C0.0005555556%29%29",
+    "status": 200,
+    "utc": "Tue, 17 Nov 2026 10:45:03 GMT",
+    "size": 21,
+    "sha256": "df0c9928244da22a13a5d5ead832cf20f2b0d654e485a4fbbc0e4de1cd10a5bd"
+  },
+  "KMT-2024-BLG-3429-vsx": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=268.000125000+-29.931280556&-c.rs=2&-out.max=100&-out=Name%2CType%2CRAJ2000%2CDEJ2000",
+    "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=268.000125000+-29.931280556&-c.rs=2&-out.max=100&-out=Name%2CType%2CRAJ2000%2CDEJ2000",
+    "status": 200,
+    "utc": "Tue, 17 Nov 2026 10:45:04 GMT",
+    "size": 2011,
+    "sha256": "cf91af2524f04266fdd98ad03aa1efa62bdf8ad670e45c02e046c24d0d8b0907"
+  },
+  "KMT-2024-BLG-3429-skybot": {
+    "url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?RA=268.000125000&DEC=-29.931280556&SR=0.083333&TIME=2460476.16591&-loc=500&-mime=text&-output=object",
+    "final_url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?RA=268.000125000&DEC=-29.931280556&SR=0.083333&TIME=2460476.16591&-loc=500&-mime=text&-output=object",
+    "status": 200,
+    "utc": "Tue, 17 Nov 2026 10:58:09 GMT",
+    "size": 193,
+    "sha256": "f6dcfa24feb9dd03197a94e6acfe56a14c711f066198d3032b0ac335df6b234b"
   },
   "KMT-2025-BLG-0300-simbad": {
     "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cotype%2Cra%2Cdec+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C268.668041667%2C-30.211130556%2C0.0005555556%29%29",
@@ -189,9 +256,12 @@
     "sha256": "92818ba2bd6d1426c41c48b1bfbef58ad495c5d991c7ca44c1095817d4e8c574"
   },
   "KMT-2025-BLG-1213-skybot": {
-    "url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?-ra=269.818416667&-dec=-28.649750000&-rd=0.083333&-epoch=2460827.55552&-loc=500&-mime=text&-output=object",
-    "status": 400,
-    "error": "HTTP Error 400: Bad Request"
+    "url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?RA=269.818416667&DEC=-28.649750000&SR=0.083333&TIME=2460827.55552&-loc=500&-mime=text&-output=object",
+    "final_url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?RA=269.818416667&DEC=-28.649750000&SR=0.083333&TIME=2460827.55552&-loc=500&-mime=text&-output=object",
+    "status": 200,
+    "utc": "Tue, 17 Nov 2026 10:43:04 GMT",
+    "size": 453,
+    "sha256": "b0c4ae74cef30b2740aeeae05ca9cc15b2e211f654047f6769d247b054e38d27"
   },
   "KMT-2025-BLG-1446-simbad": {
     "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cotype%2Cra%2Cdec+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C263.478500000%2C-29.477038889%2C0.0005555556%29%29",
@@ -226,9 +296,12 @@
     "sha256": "cd129f76de4560aa069fee913efaa759b67668d7b59d01990c411cda7b247af4"
   },
   "KMT-2025-BLG-1507-skybot": {
-    "url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?-ra=266.300625000&-dec=-32.652638889&-rd=0.083333&-epoch=2460850.58238&-loc=500&-mime=text&-output=object",
-    "status": 400,
-    "error": "HTTP Error 400: Bad Request"
+    "url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?RA=266.300625000&DEC=-32.652638889&SR=0.083333&TIME=2460850.58238&-loc=500&-mime=text&-output=object",
+    "final_url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?RA=266.300625000&DEC=-32.652638889&SR=0.083333&TIME=2460850.58238&-loc=500&-mime=text&-output=object",
+    "status": 200,
+    "utc": "Tue, 17 Nov 2026 10:43:04 GMT",
+    "size": 463,
+    "sha256": "24770aadd4250260c6f84ef9bbc5849a010125dab5f1080932b6780445561237"
   },
   "KMT-2025-BLG-1760-simbad": {
     "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+main_id%2Cotype%2Cra%2Cdec+FROM+basic+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C267.653875000%2C-23.410519444%2C0.0005555556%29%29",

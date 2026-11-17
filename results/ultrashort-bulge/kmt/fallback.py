@@ -43,7 +43,7 @@ def main():
     a=p.parse_args()
     target=a.cache/'fallback';target.mkdir(exist_ok=True)
     rows={r['event']:r for r in map(json.loads,(a.cache/'index.jsonl').read_text().splitlines())}
-    missing=[p.name.split('.')[0] for p in a.cache.glob('*.error.json') if not (a.cache/(p.name.split('.')[0]+'.tar.gz')).exists()]
+    missing=[p.name.split('.')[0] for p in a.cache.glob('*.error.json') if json.loads(p.read_text()).get('status')==404 and not (a.cache/(p.name.split('.')[0]+'.tar.gz')).exists()]
     with concurrent.futures.ThreadPoolExecutor(3) as ex:
         list(ex.map(lambda n:acquire(rows[n],target),missing))
     entries=[json.loads(p.read_text()) for p in sorted(target.glob('*.json'))]

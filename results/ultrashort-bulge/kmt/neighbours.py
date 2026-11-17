@@ -6,10 +6,9 @@ import io
 import json
 import math
 import urllib.parse
-import urllib.request
 from pathlib import Path
 
-from freeze import HERE, digest, get
+from freeze import HERE, get
 
 GAIA = 'https://gea.esac.esa.int/tap-server/tap/sync'
 VIRAC = 'https://vizier.cfa.harvard.edu/viz-bin/asu-tsv'
