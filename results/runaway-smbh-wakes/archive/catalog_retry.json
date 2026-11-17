@@ -1,0 +1,15 @@
+[
+  {
+    "name": "racs_discovery",
+    "url": "https://casda.csiro.au/casda_vo_tools/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+100+table_name+FROM+TAP_SCHEMA.tables+WHERE+LOWER%28table_name%29+LIKE+%27%25racs%25%27",
+    "status": 200,
+    "sha256": "32a5f929280e4225182537fd761f2aa5f24618afaacae0773ec62b37ed0d9677",
+    "response": "table_name\r\nAS110.racs_dr1_gaussians_galacticcut_v2021_08_v01\r\nAS110.racs_dr1_gaussians_galacticcut_v2021_08_v02\r\nAS110.racs_dr1_gaussians_galacticregion_v2021_08_v01\r\nAS110.racs_dr1_gaussians_galacticregion_v2021_08_v02\r\nAS110.racs_dr1_sources_galacticcut_v2021_08_v01\r\nAS110.racs_dr1_sources_galacticcut_v2021_08_v02\r\nAS110.racs_dr1_sources_galacticregion_v2021_08_v01\r\nAS110.racs_dr1_sources_galacticregion_v2021_08_v02\r\nAS110.racs_dr1_sources_spice_racs_dr1_corrected_cut_v01\r\nAS110.racs_high_components_v01\r\nAS110.racs_high_sources_v01\r\nAS110.racs_low2_v01\r\nAS110.racs_low2_v02\r\nAS110.racs_low2_v_v01\r\nAS110.racs_mid_25arcsec_components_v01\r\nAS110.racs_mid_25arcsec_sources_v01\r\nAS110.racs_mid_components_v01\r\nAS110.racs_mid_sources_v01\r\nAS110.spice_racs_dr1_corrected_cut_v01\r\nAS110.spice_racs_dr1_corrected_cut_v02\r\n",
+    "bytes": 823
+  },
+  {
+    "name": "desi_bbox",
+    "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+50+targetid%2Ctarget_ra%2Ctarget_dec%2Cz%2Czwarn+FROM+desi_dr1.zpix+WHERE+target_ra+BETWEEN+53.18237+AND+53.18919+AND+target_dec+BETWEEN+-27.78814+AND+-27.78213",
+    "error": "The read operation timed out"
+  }
+]
