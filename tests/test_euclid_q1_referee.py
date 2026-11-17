@@ -152,7 +152,7 @@ class EuclidReferee(unittest.TestCase):
                              source["response_sha256"], file)
         for rec in json.loads((R / "inference/cone_responses.json").read_text()):
             self.assertEqual(hashlib.sha256(rec["raw_csv"].encode()).hexdigest(),
-                             rec["sha256"], rec["id"])
+                             rec["sha256"], rec.get("id", rec.get("survey", "cone")))
 
     def test_competing_models_and_source_receipt_schema(self):
         rows = table("arc_search/model/cross_validation.csv")
