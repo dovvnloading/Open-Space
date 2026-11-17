@@ -2,7 +2,7 @@
 
 **No new free-floating planet, Earth-mass lens or measured angular Einstein radius emerged from this search.** KMT-2024-BLG-3326 has a real, localized brightening with an approximately two-hour single-lens solution. The light curve also admits a longer lens and a binary. Two other brightenings, KMT-2024-BLG-0824 and KMT-2024-BLG-3278, appear at three observatories and warrant follow-up as possible finite-source events. They last about eight days, and crowded-field source identification and binary alternatives remain unresolved.
 
-**Public-data freeze: 17 November 2026.** Survey IDs can refer to the same physical event. [Per-alert fits and input hashes](tables/grid-fits.csv.gz) · [All flags from both calibration passes](tables/all-screening-flags.csv.gz) · [Profiled alternatives](tables/peak-comparisons.csv) · [Methods and replay commands](METHODS.md)
+**Public-data freeze: 17 November 2026.** Survey IDs can refer to the same physical event. [Per-alert fits and input hashes](tables/grid-fits.csv.gz) · [Candidate dispositions](tables/candidate-dispositions.csv) · [All flags from both calibration passes](tables/all-screening-flags.csv.gz) · [Profiled alternatives](tables/peak-comparisons.csv) · [Methods and replay commands](METHODS.md)
 
 ## Survey inventory
 

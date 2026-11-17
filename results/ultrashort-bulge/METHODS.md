@@ -43,6 +43,8 @@ python "$r/compare_leads.py" --workers 3
 python "$r/alternative_checks.py" --workers 3
 python "$r/inject.py" --per-survey 24 --seasons 12 --out staging/injections-final.csv
 python "$r/summarize_leads.py" --injections staging/injections-final.csv
+python "$r/replay_peaks.py"
+python "$r/control_recovery.py"
 python "$r/earth_control.py" "$r/controls/earth-figure1.tsv.gz"
 python "$r/mass_controls.py"
 python "$r/conditional_geometry.py"
@@ -57,7 +59,7 @@ In [peak-comparisons.csv](tables/peak-comparisons.csv), the reference single len
 
 The [exact window table](tables/cadence.csv.gz) integrates the portion of 1 March through 1 November that has two distinct observations on each side of a trial peak within a specified half-width. Records before or after these dates can support a peak close to a season boundary. Each field has its actual interruptions and nightly cadence. [OGLE's separate five-exposure calculation](ogle/window_by_field.csv) uses 1 February to 1 November and includes source brightness, baseline scatter and blending.
 
-The [injection experiment](tables/injection-summary.csv) uses the lowest 24 deterministically hashed, available numerical arrays per survey, including both released KMT years. Each curve has 12 off-event trial times uniform in the March–November window after removing a neighborhood of the catalog peak. The simulations use u₀ = 0.35, tE = 0.03, 0.10 or 0.30 d, and ρ = 0 or 2. An injection peaks at 12 times the median off-event *reported* error in each stream. Its paired control is the same real photometry without injected flux. Recovery requires two distinct exposures on each side inside tE × max(1,ρ), a localized short or large-ρ single-lens peak competitive with the trial binary shapes, and at least 80 units of gain above the control's best single lens. Off-peak baseline information is included per stream. The search is supplied the trial peak, which makes it easier than a blind alert search. Trials at different geometries share the same observing windows. The trial fractions characterize this experiment on previously alerted sightlines and have no monitored-star-time denominator.
+The [injection experiment](tables/injection-summary.csv) uses the lowest 24 deterministically hashed, available numerical arrays per survey, including both released KMT years. Each curve has 12 off-event trial times uniform in the March–November window after removing a neighborhood of the catalog peak. The simulations use u₀ = 0.35, tE = 0.03, 0.10 or 0.30 d, and ρ = 0 or 2. An injection peaks at 12 times the median off-event *reported* error in each stream. Its paired control is the same real photometry without injected flux. Recovery requires two distinct exposures on each side inside tE × max(1,ρ), a localized short or large-ρ single-lens peak competitive with the trial binary shapes, and at least 80 units of gain above the control's best single lens. Off-peak baseline information is included per stream. The search is supplied the trial peak, which makes it easier than a blind alert search. Trials at different geometries share the same observing windows. The injection summary includes 95% percentile intervals from 5,000 resamples of the 24 sightlines, treating the 12 trial times on each as a block. All-zero cells give counts only. The trial fractions characterize this experiment on previously alerted sightlines and have no monitored-star-time denominator.
 
 ## Physical interpretation
 

@@ -16,7 +16,7 @@ def main():
             writer=csv.DictWriter(h,fields,delimiter='\t',lineterminator='\n');writer.writeheader()
             for r in rows:
                 event=r['event']
-                if str(year) not in event:continue
+                if event[4:8]!=str(year):continue
                 receipt=args.cache/(event+'.receipt.json');err=args.cache/(event+'.error.json')
                 out=dict(event=event,url=r['url'],status='pending')
                 if receipt.exists():

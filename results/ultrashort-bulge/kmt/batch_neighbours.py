@@ -15,6 +15,10 @@ CATALOGS={
  'VIRAC2':('II/387/virac2','srcid,RAJ2000,DEJ2000,pmRA,pmDE,Jmag,Hmag,Ksmag,e_Ksmag,o_Ksmag,MedKsmag,etaKs,KsEp1,KsEpl'),
  'GaiaDR3':('I/355/gaiadr3','Source,RA_ICRS,DE_ICRS,pmRA,pmDE,Gmag,BP-RP,VarFlag,RUWE')}
 BATCH=80
+# The frozen request batches each included one source from the other year.
+# Replay its actual coordinates for hash reproducibility and omit the duplicate
+# from the year-specific scientific match table.
+REPEATED_TARGET={2024:'KMT-2025-BLG-2024',2025:'KMT-2024-BLG-2025'}
 
 
 def query(job):
@@ -79,13 +83,15 @@ def main():
     out=args.cache/'batch';out.mkdir(exist_ok=True)
     jobs=[]
     for year in (2024,2025):
-        rows=sorted([r for r in data if str(year) in r['event']],key=lambda r:r['event'])
+        rows=sorted([r for r in data if r['event'][4:8]==str(year) or r['event']==REPEATED_TARGET[year]],
+                    key=lambda r:r['event'])
         for i in range(0,len(rows),BATCH):
             for db in CATALOGS:jobs.append((db,rows[i:i+BATCH],year,i,out,args.cached_only))
     allrows={};receipts=[]
     with concurrent.futures.ThreadPoolExecutor(args.workers) as pool:
         for db,year,rows,rec in pool.map(query,jobs):
-            receipts.append(rec);allrows.setdefault((db,year),[]).extend(rows)
+            receipts.append(rec)
+            allrows.setdefault((db,year),[]).extend(r for r in rows if r['event'][4:8]==str(year))
     for (db,year),rows in allrows.items():
         if not rows:continue
         cols=list(dict.fromkeys(k for r in rows for k in r))

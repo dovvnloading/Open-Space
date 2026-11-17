@@ -5,6 +5,7 @@ import csv
 import gzip
 import json
 from pathlib import Path
+import numpy as np
 
 from consolidate import HERE, read_results, write_gz
 
@@ -80,10 +81,21 @@ def summaries(stage, injections=None):
         for (s,t,r),data in sorted(groups.items()):
             total=len(data); sampled=sum(int(x['two_each_side']) for x in data)
             recovered=sum(int(x['paired_pass']) for x in data)
+            per_alert=collections.defaultdict(list)
+            for trial in data:per_alert[trial['event']].append(int(trial['paired_pass']))
+            rates=np.array([np.mean(per_alert[n]) for n in sorted(per_alert)])
+            assert len({len(v) for v in per_alert.values()})==1
+            # Preserve the 12 windows as a single block for each resampled
+            # sightline; shared windows in different geometry rows stay paired.
+            rng=np.random.default_rng(64823)
+            draws=rates[rng.integers(0,len(rates),size=(5000,len(rates)))].mean(axis=1)
+            lo,hi=np.quantile(draws,[.025,.975])
             stats.append(dict(survey=s,te_d=t,rho=r,alerts=len({x['event'] for x in data}),
                               trials=total,two_each_side=sampled,recovered=recovered,
                               controls_passing=sum(int(x['control_pass']) for x in data),
                               fraction_all=round(recovered/total,5),
+                              sightline_bootstrap_low=round(lo,5) if rates.max()>0 else '',
+                              sightline_bootstrap_high=round(hi,5) if rates.max()>0 else '',
                               fraction_when_sampled=round(recovered/sampled,5) if sampled else ''))
         write_gz(TABLES/'injections.csv.gz',trials)
         write_csv(TABLES/'injection-summary.csv',stats)

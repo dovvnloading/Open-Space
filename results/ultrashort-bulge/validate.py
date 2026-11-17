@@ -33,6 +33,11 @@ def run(partial=False,models=False):
         assert int(r['n'])>=6 and float(r['ps_te'])>0 and float(r['fs_te'])>0 and float(r['fs_rho'])>0,r['event']
         assert all(float(r[k])>=0 for k in ['ps_gain','fs_gain','bin_gain']),r['event']
     assert all(r['survey']=='Gaia' or partial for r in result if r['fit_status']!='ok')
+    if not partial:
+        assert len(fs)==10971
+        assert all(re.fullmatch('[0-9a-f]{64}',r['input_sha256']) for r in result)
+        assert all(r['fit_status']=='insufficient epochs' and int(r['native_usable'])<6
+                   for r in result if r['fit_status']!='ok')
     bounds=table(HERE/'tables/kmt-reference-flux-grid.csv.gz')
     assert len(bounds)==len({r['event'] for r in bounds})
     for r in bounds:
@@ -45,12 +50,30 @@ def run(partial=False,models=False):
             if float(r[k])>float(baseline[k])+max(.05,abs(float(baseline[k]))*1e-8):
                 raise AssertionError((r['event'],k,r[k],baseline[k]))
     if not partial:assert len(bounds)==6789
+    expected={(r['event'],label) for rows,label in [(fs,'primary'),(bounds,'baseline-capped')]
+              for r in rows if min(float(r['ps_te']),float(r['fs_te']))<.5 or float(r['fs_rho'])>1}
+    flags=table(HERE/'tables/all-screening-flags.csv.gz')
+    assert len(flags)==len(expected)
+    assert {(r['event'],r['pass_name']) for r in flags}==expected
     cad=table(HERE/'tables/cadence.csv.gz')
     assert len(cad)==len({r['event'] for r in cad})
     for r in cad:
         if r.get('error'):continue
         d=[float(r[k]) for k in ('days_0.03','days_0.1','days_0.25','days_0.5','days_1.5')]
         assert 0<=min(d) and d==sorted(d) and max(d)<=float(r['season_d'])+.00002,r['event']
+    if not partial:
+        assert {r['event'] for r in cad if not r['error']}==set(by_id)
+        trials=table(HERE/'tables/injections.csv.gz')
+        assert len(trials)==8640 and len({r['event'] for r in trials})==120
+        assert len({(r['event'],r['t0'],r['te_d'],r['rho']) for r in trials})==len(trials)
+        assert all(int(r['paired_pass'])<=int(r['two_each_side']) for r in trials)
+        inj=table(HERE/'tables/injection-summary.csv')
+        assert len(inj)==30 and sum(int(r['trials']) for r in inj)==len(trials)
+        assert sum(int(r['recovered']) for r in inj)==sum(int(r['paired_pass']) for r in trials)
+        packaged=json.loads(gzip.decompress((HERE/'tables/peak-comparisons.json.gz').read_bytes()))
+        replay=table(HERE/'tables/peak-replay.csv')
+        pairs={(n,k) for n,sets in packaged.items() for k,v in sets.items() if v}
+        assert {(r['event'],r['experiment']) for r in replay if r['status']=='ok'}==pairs
     data=gzip.decompress((HERE/'controls/earth-figure1.tsv.gz').read_bytes())
     ctrl=json.loads((HERE/'controls/earth-recovery.json').read_text())
     assert hashlib.sha256(data).hexdigest()==ctrl['response_sha256']

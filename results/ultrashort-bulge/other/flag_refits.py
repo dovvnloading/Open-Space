@@ -26,7 +26,7 @@ SEED=Path('staging/screen')
 OUT=HERE/'all-flag-refits.csv.gz'
 
 
-def window(job,s):
+def window(job,s,calibration=None,cap_factor=1.15):
     event,path,cat_t,cat_te=job
     t,y,e,g,diff=read_curve(job)
     t,y,e,g=fit.clean(t,y,e,g)
@@ -76,13 +76,18 @@ def window(job,s):
     peak=np.ones(len(tb),bool)
     if err_base is not None:
         tb=np.r_[tb,1e6];yb=np.r_[yb,base];eb=np.r_[eb,err_base];peak=np.r_[peak,False]
-    cap=np.inf if diff else max(1e-9,1.15*np.median(y))
-    return (tb,yb,eb,peak,cap),(origin,half,bin_d,int(n.sum()),int(far.sum()),e_scale),(t,y,e,base)
+    cap=np.inf if diff else max(1e-9,cap_factor*np.median(y))
+    quiet_median=float(np.median(y[far])) if far.any() else float(np.median(y))
+    if calibration is not None:
+        fbase=float(calibration['additive_reference_counts'])+quiet_median
+        if fbase>0:cap=cap_factor*fbase
+    
+    return (tb,yb,eb,peak,cap),(origin,half,bin_d,int(n.sum()),int(far.sum()),e_scale,quiet_median),(t,y,e,base)
 
 
-def fit_models(job,seed):
-    (t,y,e,pk,cap),meta,raw=window(job,seed)
-    origin,hw,bins,n,off,escale=meta
+def fit_models(job,seed,calibration=None,cap_factor=1.15):
+    (t,y,e,pk,cap),meta,raw=window(job,seed,calibration,cap_factor)
+    origin,hw,bins,n,off,escale,quiet_median=meta
     event=job[0];tn=t[pk]
     vb=fit.engine();vb.Tol=.0003
     wt=1/e**2;w=wt/wt.sum();ym=np.dot(w,y);std=y-ym
@@ -131,6 +136,12 @@ def fit_models(job,seed):
                            bounds[:2]+[(np.log(.012),np.log(350))],110)
     out=dict(event=event,peak_window_halfwidth_d=round(hw,4),bin_d=round(bins,5),peak_epochs=n,peak_bins=int(pk.sum()),
              baseline_epochs=off,scatter_inflation=round(escale,3),constant_chi2=round(null,3),status='ok')
+    if calibration is not None:
+        fr=float(calibration['additive_reference_counts'])
+        out.update(additive_reference_counts=fr,quiet_median_difference_counts=round(quiet_median,3),
+                   baseline_counts=round(fr+quiet_median,3),cap_factor=cap_factor,
+                   catalog_band=calibration['band'],zero_point=calibration['zero_point'],
+                   implied_baseline_mag=round(float(calibration['zero_point'])-2.5*np.log10(fr+quiet_median),4) if fr+quiet_median>0 else '')
     for kind,sol in models.items():
         x=sol.x
         rr,flux,base=score(x,kind,True)
@@ -139,7 +150,7 @@ def fit_models(job,seed):
                     kind+'_te_or_rise':round(float(np.exp(x[1])),6),kind+'_u0_or_fall':round(float(np.exp(x[2])),6),
                     kind+'_converged':bool(sol.success)})
         if kind=='fs':
-            out['rho']=round(float(np.exp(x[3])),5);out['source_fraction']=round(float(1.15*flux/cap),5) if np.isfinite(cap) else ''
+            out['rho']=round(float(np.exp(x[3])),5);out['source_fraction']=round(float(cap_factor*flux/cap),5) if np.isfinite(cap) else ''
             tr,yr,er,baseline=raw
             r_out=(abs(tr-x[0])>max(10.,hw*1.25))
             # For isolated-peak ranking use a robust global noise floor and

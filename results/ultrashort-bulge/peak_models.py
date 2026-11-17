@@ -16,7 +16,7 @@ from kmt.flux import baseline_caps
 
 
 def solve(job, seed, factor, binary_trials=12, profiles=False, window=4., bin_width=0.,
-          previous=None, evaluate=None):
+          previous=None, evaluate=None, source_flux_caps=None):
     name,path,t0,te=job
     vb=fit.engine(); vb.Tol=.001
     t,y,err,g,diff=read_curve(job)
@@ -32,6 +32,10 @@ def solve(job, seed, factor, binary_trials=12, profiles=False, window=4., bin_wi
         caps=np.where(np.isfinite(raw),factor*raw,np.inf)
     if not diff:
         caps=np.array([factor*np.median(y[g==i]) for i in range(len(caps))])
+    if source_flux_caps is not None:
+        caps=np.asarray(source_flux_caps,dtype=float)
+        if len(caps)!=max(g)+1 or np.any(caps<=0):
+            raise ValueError('invalid per-stream calibrated source-flux ceilings')
     # A finite comparison window, with the out-of-window mean per site as a
     # single baseline measurement at A=1. Freeze clipping outside peak only.
     tt=[]; yy=[]; ee=[]; gg=[]
