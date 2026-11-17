@@ -14,7 +14,7 @@ import math
 import re
 
 ROOT = Path(__file__).resolve().parent
-SHA = re.compile(r"[0-9a-f]{64}\\Z")
+SHA = re.compile("[0-9a-f]{64}")
 
 
 def rows(rel, delimiter=","):
@@ -55,7 +55,7 @@ def run():
     # source receipt, including KMT's pySIS 404 -> DIAPL fallback cases.
     receipts = {}
     for year in (2024, 2025):
-        for r in rows(f"kmt/pySIS-{year}.tsv", "\\t"):
+        for r in rows(f"kmt/pySIS-{year}.tsv", "\t"):
             if r["sha256"]:
                 receipts[r["event"]] = r["sha256"]
     for rec in obj("kmt/fallback-receipts.json"):
