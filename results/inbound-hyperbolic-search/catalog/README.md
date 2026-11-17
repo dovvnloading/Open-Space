@@ -29,3 +29,17 @@ C/2025 V1 (Borisov) reached 3.850 km/s with z_e = 5.27 on a ten-day arc of 116 J
 The JPL subset contains seven asteroid-class rows, including 1I. The newest two, A/2026 T2 and A/2026 T3, have 25- and 35-day arcs respectively with formal osculating eccentricity excesses under 0.4σ. A/2024 U2 has a 721-day arc and e = 1.00266633 ± 0.00001138 at q = 8.1791 au. Its 0.538 km/s osculating speed illustrates why a precise heliocentric eccentricity can still require a barycentric reconstruction.
 
 The C/2019 Y4 and C/2025 K1 components appear as separate JPL records. In particular, the fits to C/2025 K1-B and C/2025 K1-D begin in November after the parent's October 8 perihelion and during or after its observed breakup. These are documented comet fragments. Their measured trajectories do not independently count incoming bodies. [Hubble observations of C/2025 K1](https://science.nasa.gov/asset/hubble/fragmenting-comet-c-2025-k1/)
+
+## Published incoming orbits
+
+CODE listed a preferred osculating model for 301 of the 2,290 JPL entries. For each matched designation we retrieved the corresponding *original barycentric* page and uncertainty. Of those preferred models, 286 have positive reciprocal semimajor axis and 15 have negative values. This comparison uses published orbits. Independent fits to the astrometry are reported separately. Every row and source URL appears in [code-original.csv](code-original.csv). The [retrieval receipts](code-receipts.json) identify each downloaded page by SHA-256 and UTC response date.
+
+| Comet | Preferred original 1/a ± σ (10⁻⁶ au⁻¹) | Formal excess | Checks on the interpretation |
+| --- | ---: | ---: | --- |
+| C/1995 Y1 (Hyakutake) | −48.77 ± 9.04 | 5.39σ | CODE model n5 gives the negative value. Alternative model m5 gives +55.50 ± 7.44 from the same astrometry. [n5](https://apollo.astro.amu.edu.pl/CODE/orbit.php?int=1995y1n5&orb=original) · [m5](https://apollo.astro.amu.edu.pl/CODE/orbit.php?int=1995y1m5&orb=original) |
+| C/2007 W1 (Boattini) | −29.84 ± 1.29 | 23.13σ | Catalogue link bt is strongly negative. The authors favor a distant-data solution d5, which gives −0.09 ± 1.22. [bt](https://apollo.astro.amu.edu.pl/CODE/orbit.php?int=2007w1bt&orb=original) · [d5](https://apollo.astro.amu.edu.pl/CODE/orbit.php?int=2007w1d5&orb=original) |
+| C/2020 W5 (Lemmon) | −202.96 ± 59.39 | 3.42σ | CODE’s 56 observations cover a heliocentric distance range of only 3.36–3.38 au. The authors use a gravity-only model of quality class 2b and identify planetary perturbations during passage. [CODE solution description](https://apollo.astro.amu.edu.pl/CODE/orbit.php?int=2020w5a2&orb=osculating) |
+| C/2011 M1 (LINEAR) | −1,546.55 ± 506.15 | 3.06σ | CODE used 122 pre-perihelion observations over 41 days. Its authors could not determine nongravitational effects, assign orbit-quality class 3a, and discuss compatibility with an Oort-cloud origin at about three sigma. [CODE solution description](https://apollo.astro.amu.edu.pl/CODE/orbit.php?int=2011m1a5&orb=osculating) |
+| C/2012 C2 (Bruenjes) | −2,592.99 ± 883.18 | 2.94σ | Its 264 pre-perihelion positions span 16 days. CODE assigns quality class 3b and reports that nongravitational forces are unmeasurable. [CODE solution description](https://apollo.astro.amu.edu.pl/CODE/orbit.php?int=2012c2a5&orb=osculating) |
+
+The remaining 10 negative nominal values are all within 2.2σ of zero. The matched set has incomplete coverage of the JPL list. A catalogue cross-match cannot establish how many distinct incoming bodies populate the rest of that list.
