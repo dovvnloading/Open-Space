@@ -2,7 +2,7 @@
   "inputs": [
     {
       "requested_url": "https://www.minorplanetcenter.net/iau/ECS/MPCAT-OBS/CmtObs.txt.gz",
-      "utc": "2026-11-17T05:53:10.325340+00:00",
+      "utc": "2026-11-17T06:00:24.831960+00:00",
       "status": 200,
       "final_url": "https://www.minorplanetcenter.net/iau/ECS/MPCAT-OBS/CmtObs.txt.gz",
       "bytes": 25344602,
@@ -10,8 +10,25 @@
       "last_modified": "Fri, 11 Sep 2026 20:30:58 GMT"
     },
     {
+      "requested_url": "https://data.minorplanetcenter.net/api/get-obs",
+      "utc": "2026-11-17T06:00:32.016567+00:00",
+      "get_json_body": {
+        "desigs": [
+          "C/2025 V1"
+        ],
+        "output_format": [
+          "ADES_DF"
+        ]
+      },
+      "status": 200,
+      "final_url": "https://data.minorplanetcenter.net/api/get-obs",
+      "bytes": 225568,
+      "sha256": "143458860539590ae66410f6002c0bbc5ae3fcce90b20c5b5b02228f83f8a824",
+      "last_modified": null
+    },
+    {
       "requested_url": "https://minorplanetcenter.net/iau/lists/ObsCodes.html",
-      "utc": "2026-11-17T05:53:16.926793+00:00",
+      "utc": "2026-11-17T06:00:32.795745+00:00",
       "status": 200,
       "final_url": "https://minorplanetcenter.net/iau/lists/ObsCodes.html",
       "bytes": 149743,
@@ -20,7 +37,7 @@
     },
     {
       "requested_url": "https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de440.bsp",
-      "utc": "2026-11-17T05:53:17.509318+00:00",
+      "utc": "2026-11-17T06:00:32.990163+00:00",
       "status": 200,
       "final_url": "https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de440.bsp",
       "bytes": 119799808,
@@ -29,7 +46,7 @@
     },
     {
       "requested_url": "https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de440s.bsp",
-      "utc": "2026-11-17T05:53:19.166433+00:00",
+      "utc": "2026-11-17T06:00:36.152403+00:00",
       "status": 200,
       "final_url": "https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de440s.bsp",
       "bytes": 32726016,
@@ -43,7 +60,12 @@
       "records": 117,
       "sha256": "be0d01c85ffeba880af6910396dbaf549c5550b0aca6ee1b4f21967759d4bf57",
       "first_date": "2025 10 29.546339",
-      "last_date": "2025 11 08.16953"
+      "last_date": "2025 11 08.16953",
+      "live_ades_date_check": {
+        "rows_with_dates": 117,
+        "first": "2025-10-29T13:06:43.659Z",
+        "last": "2025-11-08T04:04:07.392Z"
+      }
     },
     "1877-G2": {
       "source": "MPC bulk CmtObs",

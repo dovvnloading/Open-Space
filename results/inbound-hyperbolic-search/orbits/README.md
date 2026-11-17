@@ -18,6 +18,17 @@ Negative 1/a denotes positive orbital energy. The two Marsden runs converge to t
 | Largest station by number of observations, S89 | 16 | 0.86 | −0.01609 ± 0.00317 |
 | All ZTF observations, I41, Oct 29 to Nov 1 | 7 | 1.59 | −0.02197 ± 0.01286 |
 
+A second fit forced 1/a to zero on the incoming 50-au sphere and reoptimized every allowed orbital and acceleration parameter. All 117 positions were retained. The table gives the increase in weighted sky-position χ² relative to the corresponding unconstrained optimum. The numerical constraint penalty is excluded from each reported difference.
+
+| Force law | Δχ² for a parabolic inbound fit | Achieved 1/a at 50 au (au⁻¹) |
+|---|---:|---:|
+| Gravity | 25.37 | −6.3 × 10⁻⁷ |
+| Radial 1/r² | 10.19 | −3.0 × 10⁻⁷ |
+| Marsden, signed A1 and A2 | 1.06 | −1.6 × 10⁻⁸ |
+| Marsden, outward A1 and signed A2 | 3.39 | −1.1 × 10⁻⁷ |
+
+The signed parabolic profile uses inward A1. Requiring outward A1 places the parabolic solution on the A1 = 0 boundary, with A2 = +25.0 × 10⁻⁸ au/day². These differences quantify the measured sky-fit cost under the stated weights and force laws. The November 17 live MPC ADES query independently returned 117 dated records over the same arc, ending November 8, 2025 at 04:04:07 UTC.
+
 The free Marsden fit omitting the last night failed in backward propagation. The remaining complete Marsden holdouts and their residuals are recorded in the results file.
 
 ## Independent checks on catalogue examples
