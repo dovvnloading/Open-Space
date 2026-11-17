@@ -26,7 +26,8 @@ def main():
         des=row["pdes"]
         name=row["full_name"].strip()
         prefix=re.search(r"([CAPDX]/\d{4} [A-Z][A-Z]?\d*(?:-[A-Z])?)", name)
-        candidates=list(dict.fromkeys(([prefix.group(1)] if prefix else []) + [des] + sorted(aliases(row))))
+        permanent={"50788063":"1I","1003639":"2I","1004083":"3I"}.get(str(row["spkid"]))
+        candidates=list(dict.fromkeys(([permanent] if permanent else [])+([prefix.group(1)] if prefix else [])+[des]+sorted(aliases(row))))
         record={"name":name,"spkid":row["spkid"],"url":ENDPOINT,"attempts":[],
                 "selection":"recent near-bound comparison" if row in comparison else "catalogue refresh"}
         try:

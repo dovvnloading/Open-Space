@@ -57,9 +57,9 @@ def aliases(row):
             if n // 10 < len(ALPHABET):
                 out.add(ALPHABET[int(yr)//100] + yr[2:] + half + ALPHABET[n//10]
                         + str(n%10) + (second or (fragment or "0").lower()))
-    for iso, alias in {"1I":"K17U010", "2I":"K19Q040", "3I":"K25N010"}.items():
-        if raw == iso or row["full_name"].strip().startswith(iso+"/"):
-            out.update([alias, f"{int(iso[:-1]):04}I"])
+    known={"50788063":("0001I","K17U010"),"1003639":("0002I","K19Q040"),
+           "1004083":("0003I","K25N010")}
+    out.update(known.get(str(row["spkid"]),()))
     return out
 
 
@@ -122,6 +122,8 @@ def fit(part):
                 return {**meta, "status":"fit timeout" if run.returncode in (-9, -15, -24) else "fitter did not return elements",
                         "diagnostic":run.stdout[-350:].decode(errors="replace")}
             answer = json.loads(dest.read_text())
+            if len(answer["objects"])!=1:
+                return {**meta,"status":"ambiguous multiple fitter objects","diagnostic":str(list(answer["objects"]))}
             obj = next(iter(answer["objects"].values()))
             el, obs = obj["elements"], obj["observations"]
             r, inbound = distance_and_direction(el)
