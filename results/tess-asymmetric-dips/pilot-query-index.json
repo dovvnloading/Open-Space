@@ -1,0 +1,398 @@
+{
+  "date_queried_utc": "2026-11-17",
+  "description": "Replay index reconstructed from the same four catalog requests and the original pilot target positions. The initial run returned 56 valid responses. Per-response timestamps, raw bytes and individual response hashes for these pilot requests were not recovered from scratch. The measurements CSV preserves the subset of values transcribed from the successful run. Reruns query live mutable catalogs.",
+  "requests": [
+    {
+      "tic": 219307633,
+      "ra": 316.727399395,
+      "dec": -55.7649131174,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C316.727399395%2C-55.7649131174%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 219307633,
+      "ra": 316.727399395,
+      "dec": -55.7649131174,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C316.727399395%2C-55.7649131174%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 219307633,
+      "ra": 316.727399395,
+      "dec": -55.7649131174,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=316.727399395+-55.7649131174&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 219307633,
+      "ra": 316.727399395,
+      "dec": -55.7649131174,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=316.727399395+-55.7649131174&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    },
+    {
+      "tic": 140459849,
+      "ra": 20.3542029485,
+      "dec": -35.8951275022,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C20.3542029485%2C-35.8951275022%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 140459849,
+      "ra": 20.3542029485,
+      "dec": -35.8951275022,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C20.3542029485%2C-35.8951275022%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 140459849,
+      "ra": 20.3542029485,
+      "dec": -35.8951275022,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=20.3542029485+-35.8951275022&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 140459849,
+      "ra": 20.3542029485,
+      "dec": -35.8951275022,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=20.3542029485+-35.8951275022&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    },
+    {
+      "tic": 60970186,
+      "ra": 286.319808228,
+      "dec": -47.472960538,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C286.319808228%2C-47.472960538%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 60970186,
+      "ra": 286.319808228,
+      "dec": -47.472960538,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C286.319808228%2C-47.472960538%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 60970186,
+      "ra": 286.319808228,
+      "dec": -47.472960538,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=286.319808228+-47.472960538&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 60970186,
+      "ra": 286.319808228,
+      "dec": -47.472960538,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=286.319808228+-47.472960538&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    },
+    {
+      "tic": 200248461,
+      "ra": 294.371200202,
+      "dec": -50.1996880475,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C294.371200202%2C-50.1996880475%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 200248461,
+      "ra": 294.371200202,
+      "dec": -50.1996880475,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C294.371200202%2C-50.1996880475%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 200248461,
+      "ra": 294.371200202,
+      "dec": -50.1996880475,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=294.371200202+-50.1996880475&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 200248461,
+      "ra": 294.371200202,
+      "dec": -50.1996880475,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=294.371200202+-50.1996880475&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    },
+    {
+      "tic": 394558249,
+      "ra": 335.047381988,
+      "dec": -60.3017260281,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C335.047381988%2C-60.3017260281%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 394558249,
+      "ra": 335.047381988,
+      "dec": -60.3017260281,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C335.047381988%2C-60.3017260281%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 394558249,
+      "ra": 335.047381988,
+      "dec": -60.3017260281,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=335.047381988+-60.3017260281&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 394558249,
+      "ra": 335.047381988,
+      "dec": -60.3017260281,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=335.047381988+-60.3017260281&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    },
+    {
+      "tic": 367023860,
+      "ra": 302.335289703,
+      "dec": -56.6089876312,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C302.335289703%2C-56.6089876312%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 367023860,
+      "ra": 302.335289703,
+      "dec": -56.6089876312,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C302.335289703%2C-56.6089876312%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 367023860,
+      "ra": 302.335289703,
+      "dec": -56.6089876312,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=302.335289703+-56.6089876312&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 367023860,
+      "ra": 302.335289703,
+      "dec": -56.6089876312,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=302.335289703+-56.6089876312&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    },
+    {
+      "tic": 412049646,
+      "ra": 337.18276325,
+      "dec": -60.2199510718,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C337.18276325%2C-60.2199510718%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 412049646,
+      "ra": 337.18276325,
+      "dec": -60.2199510718,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C337.18276325%2C-60.2199510718%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 412049646,
+      "ra": 337.18276325,
+      "dec": -60.2199510718,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=337.18276325+-60.2199510718&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 412049646,
+      "ra": 337.18276325,
+      "dec": -60.2199510718,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=337.18276325+-60.2199510718&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    },
+    {
+      "tic": 234281127,
+      "ra": 334.016805311,
+      "dec": -62.3576376543,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C334.016805311%2C-62.3576376543%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 234281127,
+      "ra": 334.016805311,
+      "dec": -62.3576376543,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C334.016805311%2C-62.3576376543%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 234281127,
+      "ra": 334.016805311,
+      "dec": -62.3576376543,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=334.016805311+-62.3576376543&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 234281127,
+      "ra": 334.016805311,
+      "dec": -62.3576376543,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=334.016805311+-62.3576376543&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    },
+    {
+      "tic": 200248307,
+      "ra": 294.368621574,
+      "dec": -50.4118288956,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C294.368621574%2C-50.4118288956%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 200248307,
+      "ra": 294.368621574,
+      "dec": -50.4118288956,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C294.368621574%2C-50.4118288956%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 200248307,
+      "ra": 294.368621574,
+      "dec": -50.4118288956,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=294.368621574+-50.4118288956&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 200248307,
+      "ra": 294.368621574,
+      "dec": -50.4118288956,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=294.368621574+-50.4118288956&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    },
+    {
+      "tic": 235039972,
+      "ra": 354.261138898,
+      "dec": -61.4424054669,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C354.261138898%2C-61.4424054669%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 235039972,
+      "ra": 354.261138898,
+      "dec": -61.4424054669,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C354.261138898%2C-61.4424054669%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 235039972,
+      "ra": 354.261138898,
+      "dec": -61.4424054669,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=354.261138898+-61.4424054669&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 235039972,
+      "ra": 354.261138898,
+      "dec": -61.4424054669,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=354.261138898+-61.4424054669&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    },
+    {
+      "tic": 389238886,
+      "ra": 302.944747214,
+      "dec": -37.0827708854,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C302.944747214%2C-37.0827708854%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 389238886,
+      "ra": 302.944747214,
+      "dec": -37.0827708854,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C302.944747214%2C-37.0827708854%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 389238886,
+      "ra": 302.944747214,
+      "dec": -37.0827708854,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=302.944747214+-37.0827708854&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 389238886,
+      "ra": 302.944747214,
+      "dec": -37.0827708854,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=302.944747214+-37.0827708854&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    },
+    {
+      "tic": 355271571,
+      "ra": 296.900941565,
+      "dec": -49.6945633728,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C296.900941565%2C-49.6945633728%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 355271571,
+      "ra": 296.900941565,
+      "dec": -49.6945633728,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C296.900941565%2C-49.6945633728%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 355271571,
+      "ra": 296.900941565,
+      "dec": -49.6945633728,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=296.900941565+-49.6945633728&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 355271571,
+      "ra": 296.900941565,
+      "dec": -49.6945633728,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=296.900941565+-49.6945633728&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    },
+    {
+      "tic": 257556370,
+      "ra": 46.539400910527,
+      "dec": -23.4172225205937,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C46.539400910527%2C-23.4172225205937%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 257556370,
+      "ra": 46.539400910527,
+      "dec": -23.4172225205937,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C46.539400910527%2C-23.4172225205937%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 257556370,
+      "ra": 46.539400910527,
+      "dec": -23.4172225205937,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=46.539400910527+-23.4172225205937&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 257556370,
+      "ra": 46.539400910527,
+      "dec": -23.4172225205937,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=46.539400910527+-23.4172225205937&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    },
+    {
+      "tic": 316788283,
+      "ra": 323.713163506,
+      "dec": -55.5705708964,
+      "catalog": "gaia",
+      "public_query_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+g.source_id%2Cg.ra%2Cg.dec%2Cg.ref_epoch%2Cg.pmra%2Cg.pmdec%2Cg.parallax%2Cg.parallax_error%2Cg.phot_g_mean_mag%2Cg.bp_rp%2Cg.ruwe%2Cg.phot_variable_flag%2Cg.non_single_star%2Cg.has_epoch_photometry%2Cv.best_class_name%2Cv.best_class_score+FROM+gaiadr3.gaia_source+AS+g+LEFT+OUTER+JOIN+gaiadr3.vari_classifier_result+AS+v+ON+g.source_id%3Dv.source_id+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2CCIRCLE%28%27ICRS%27%2C323.713163506%2C-55.5705708964%2C0.017500000000%29%29"
+    },
+    {
+      "tic": 316788283,
+      "ra": 323.713163506,
+      "dec": -55.5705708964,
+      "catalog": "simbad",
+      "public_query_url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+b.main_id%2Cb.otype%2Cb.ra%2Cb.dec%2Cb.sp_type+FROM+basic+AS+b+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C323.713163506%2C-55.5705708964%2C0.008333333333%29%29"
+    },
+    {
+      "tic": 316788283,
+      "ra": 323.713163506,
+      "dec": -55.5705708964,
+      "catalog": "vsx",
+      "public_query_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=323.713163506+-55.5705708964&-c.rs=63&-out=OID%2CName%2CType%2CPeriod%2CRAJ2000%2CDEJ2000&-out.add=_r&-out.max=1000"
+    },
+    {
+      "tic": 316788283,
+      "ra": 323.713163506,
+      "dec": -55.5705708964,
+      "catalog": "wise",
+      "public_query_url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?catalog=allwise_p3as_psd&spatial=Cone&objstr=323.713163506+-55.5705708964&radius=12&radunits=arcsec&selcols=designation%2Cra%2Cdec%2Cw1mpro%2Cw1sigmpro%2Cw1snr%2Cw2mpro%2Cw2sigmpro%2Cw2snr%2Cw3mpro%2Cw3sigmpro%2Cw3snr%2Cw4mpro%2Cw4sigmpro%2Cw4snr%2Ccc_flags%2Cph_qual%2Cext_flg%2Cj_m_2mass%2Ch_m_2mass%2Ck_m_2mass&outfmt=3"
+    }
+  ]
+}
