@@ -1,0 +1,36 @@
+name: Rubin ITF search
+on:
+  push:
+    branches: [research/inbound-hyperbolic-search]
+    paths:
+      - ".github/workflows/inbound-tracklets.yml"
+      - "results/inbound-hyperbolic-search/tracklets/*.py"
+permissions:
+  contents: read
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/inbound-hyperbolic-search/tracklets
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Select Rubin observations from the current ITF
+        run: python results/inbound-hyperbolic-search/tracklets/extract.py --output run
+      - name: Link observations and measure forced-track recovery
+        if: hashFiles('results/inbound-hyperbolic-search/tracklets/link.py') != ''
+        run: |
+          python -m pip install numpy==2.2.6 scipy==1.15.3 pyerfa==2.0.1.5
+          python results/inbound-hyperbolic-search/tracklets/link.py --data run --trials 100
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rubin-itf
+          path: run/
+          retention-days: 14
