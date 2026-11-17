@@ -30,7 +30,7 @@ def byte_range(url,start,end):
             if attempt==2: raise
             time.sleep(attempt+1)
 
-def one(name,star):
+def one(name,star,keep_pixels=False):
     cam,ccd=star["camera"],star["ccd"]
     url=f"{BASE}/s0110/{name[4:8]}/{name[8:11]}/{cam}-{ccd}/{name}"
     rec=dict(filename=name)
@@ -46,7 +46,13 @@ def one(name,star):
         x,y=map(float,w.all_world2pix(float(star["ra_obs"]),float(star["dec_obs"]),0))
         cx,cy=round(x),round(y)
         nx,ny=im["NAXIS1"],im["NAXIS2"]
-        if not (4<=cx<nx-4 and 4<=cy<ny-4):raise ValueError("edge of image")
+        if not (4<=cx<nx-4 and 4<=cy<ny-4):
+            if keep_pixels:
+                return dict(rec, status="target off stampable image", x=x, y=y,
+                            header_sha256=hashlib.sha256(header).hexdigest(),
+                            quality=im["DQUALITY"], utc=im["DATE-OBS"],
+                            time=(im["TSTART"]+im["TSTOP"])/2, flux=None)
+            raise ValueError("edge of image")
         start=offset+4*((cy-4)*nx+cx-4)
         end=start+4*(8*nx+9)-1
         strip=byte_range(url,start,end)
@@ -60,6 +66,9 @@ def one(name,star):
         rec.update(start=start,end=end,header_sha256=hashlib.sha256(header).hexdigest(),strip_sha256=hashlib.sha256(strip).hexdigest(),
                    time=(im["TSTART"]+im["TSTOP"])/2,utc=im["DATE-OBS"],quality=im["DQUALITY"],x=x,y=y,
                    sky=sky,flux=flux if np.isfinite(flux) else None,aperture_pixels=int(ap.sum()))
+        if keep_pixels:
+            rec.update(stamp_origin=[cx-4,cy-4], stamp=cube.tolist(),
+                       wcs=w.to_header(relax=True).tostring(sep="\n", endcard=False, padding=False))
     except Exception as exc:rec.update(error=str(exc))
     return rec
 
