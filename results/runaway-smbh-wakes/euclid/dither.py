@@ -9,6 +9,7 @@ import csv
 import hashlib
 import json
 import math
+import time
 import warnings
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -33,10 +34,19 @@ def get_range(url, start, end, logs, cache):
         raw=dest.read_bytes()
     else:
         full=url+f'?range_start={start}&range_end={end}'
-        with urlopen(Request(full,headers={'Range':f'bytes={start}-{end}','Accept-Encoding':'identity'}),timeout=45) as f:
-            if f.status!=206 or f.headers['Content-Range'].split('/')[0]!=f'bytes {start}-{end}':
-                raise ValueError('unexpected byte range')
-            raw=f.read()
+        for attempt in range(3):
+            try:
+                with urlopen(Request(full,headers={'Range':f'bytes={start}-{end}','Accept-Encoding':'identity'}),timeout=45) as f:
+                    if f.status!=206 or f.headers['Content-Range'].split('/')[0]!=f'bytes {start}-{end}':
+                        raise ValueError('unexpected byte range')
+                    raw=f.read()
+                break
+            except OSError as exc:
+                if attempt==2: raise
+                delay=2**attempt
+                if getattr(exc,'code',None)==429:
+                    t=exc.headers.get('Retry-After','30');delay=int(t) if t.isdigit() else 30
+                time.sleep(delay)
         if len(raw)!=end-start+1:raise ValueError('incomplete range')
         dest.write_bytes(raw)
     logs.append(dict(start=start,end=end,sha256=sha(raw)))
@@ -73,6 +83,8 @@ def measure_frame(key,ends,cache):
     try:
         raw=get_range(url,0,57599,logs,cache)
         primary,primary_size=header(raw);first,first_size=header(raw[primary_size:])
+        rec.update(obs_id=primary.get('OBS_ID'),dither_index=primary.get('DITHOBS'),
+                   utc_start=primary.get('DATE-OBS'),exposure_seconds=primary.get('EXPTIME'))
         nx,ny=first['NAXIS1'],first['NAXIS2'];stride=first_size+math.ceil(nx*ny*4/BLOCK)*BLOCK
         if first['EXTNAME']!='1-1.E.SCI' or first['BITPIX']!=-32 or (nx,ny)!=(2048,2066):
             raise ValueError('nonstandard first quadrant')
