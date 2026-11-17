@@ -118,8 +118,20 @@ def main():
     if {j[0] for j,_ in jobs}!=expected:raise ValueError('incomplete or changed frozen event membership')
     target=external(args.checkpoint)
     if target==args.cache or args.cache in target.parents or target in args.cache.parents:raise ValueError('input/output overlap')
+    kmt_catalog={}
+    for year in (2024,2025):
+        with (HERE/'kmt'/f'catalog-{year}.tsv').open(newline='',encoding='utf-8-sig') as f:
+            for row in csv.DictReader(f,delimiter='\t'):
+                kmt_catalog[row['Event']]=row
+    def normalized(v):
+        try:
+            x=float(v);return x if x>0 else np.nan
+        except (TypeError,ValueError):return np.nan
     for job,_ in jobs:
-        name,path,_,_=job
+        name,path,t0,te=job
+        if name.startswith('KMT-'):
+            row=kmt_catalog[name];expected_t0=2400000+normalized(row['t_0']);expected_te=normalized(row['t_E'])
+            if not (np.isclose(t0,expected_t0,rtol=0,atol=1e-8,equal_nan=True) and np.isclose(te,expected_te,rtol=0,atol=1e-12,equal_nan=True)):raise ValueError('catalog timing differs from frozen metadata: '+name)
         if not (name.startswith('OGLE-') or name.startswith('KMT-')):
             raise ValueError('derived survey NPZ cannot be bound to frozen raw bytes: '+name)
         if name not in frozen:raise ValueError('event absent from frozen receipt: '+name)

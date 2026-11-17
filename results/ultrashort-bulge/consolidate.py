@@ -69,6 +69,7 @@ def read_results(folder,spec,cap):
 def run(cache,screen,bound,cadence,out):
     cache=external(cache);screen=external(screen);bound=external(bound);cadence=external(cadence)
     verify_receipt('tables/grid-fits.csv.gz')
+    for name in ('ogle/catalog.csv','ogle/photometry.csv','kmt/catalog-2024.tsv','kmt/catalog-2025.tsv','kmt/pySIS-2024.tsv','kmt/pySIS-2025.tsv','other/photometry.csv','other/gaia.csv'):verify_receipt(name)
     spec=inputs()
     broad=read_results(screen,spec,False);bound=read_results(bound,spec,True)
     verify_receipt('tables/cadence.csv.gz')
