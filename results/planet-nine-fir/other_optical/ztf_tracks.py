@@ -125,6 +125,11 @@ def run(name):
                 controls=len(noise),
             )
         )
+    if not visits:
+        raise RuntimeError(
+            f"No SHA-verified ZTF difference-image/mask/PSF triples for {name}; "
+            "run download.py before replaying. Preserving ztf_results.json."
+        )
     eligible = 0
     flags = []
     recovered = np.zeros(len(mags), int)
