@@ -37,8 +37,28 @@
     "bytes": 13201920,
     "date_beg": "2026-08-13T10:25:09.521",
     "date_end": "2026-08-13T10:29:32.411",
-    "sha256": null,
-    "status": "metadata only; fetch/hash before freeze of actual inputs"
+    "sha256": "9bada5a8e35cbc2fc995afd23c169d9633efb8c50befb10393fa99e58e53eb63",
+    "status": "downloaded and hashed; primary science array sealed",
+    "url": "https://soar.esac.esa.int/soar-sl-tap/data?retrieval_type=LAST_PRODUCT&product_type=SCIENCE&data_item_id=solo_L2_phi-fdt-blos_20260813T102509",
+    "hgln_obs_deg": -90.903386
   },
-  "metadata_limit": "ACCRAWIT absent; each selected map has one acquisition setting with PHI_ACCU_accumulations=4 and 360 per-image timing records. Separate scans, not 360 independent magnetograms; raw-parent mapping still being verified."
+  "metadata_limit": "ACCRAWIT absent; each selected map has PHI_ACCU_accumulations=4 and 360 distinct per-image timestamps. All six timestamp-set intersections and all six nonzero processing-operand-set intersections are empty; shared instrument and calibration remain. Exposure integration convention needs confirmation.",
+  "nonzero_processing_operand_ids": [
+    [
+      608130004,
+      648130504
+    ],
+    [
+      608130006,
+      648130506
+    ],
+    [
+      608150006,
+      648150506
+    ],
+    [
+      608150007,
+      648150507
+    ]
+  ]
 }

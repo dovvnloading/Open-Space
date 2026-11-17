@@ -34,7 +34,8 @@ def to_surface(h,x,y):
 def mu(h,coordinate):
     """Local surface-normal cosine toward actual spacecraft, not B_r."""
     hgs=coordinate.transform_to(HeliographicStonyhurst(obstime=h['DATE-AVG']));point=hgs.cartesian.xyz.to_value(u.m)
-    vec=observer(h).cartesian.xyz.to_value(u.m)-point
+    obs=observer(h).cartesian.xyz.to_value(u.m)
+    vec=obs.reshape((3,)+(1,)*(point.ndim-1))-point
     return np.sum(point*vec,axis=0)/(np.linalg.norm(point,axis=0)*np.linalg.norm(vec,axis=0))
 
 def transport(h1,h2,x,y,rotation_model='howard'):
