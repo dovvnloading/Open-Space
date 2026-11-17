@@ -8,7 +8,7 @@ import development as d
 def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def fixture(p,value,unit='nT'):
  h=fits.Header()
- for k,v in {'CTYPE1':'HPLN-TAN','CTYPE2':'HPLT-TAN','CUNIT1':'deg','CUNIT2':'deg','CRPIX1':1.,'CRPIX2':1.,'CRVAL1':0.,'CRVAL2':0.,'CDELT1':1.,'CDELT2':1.,'PC1_1':1.,'PC1_2':0.,'PC2_1':0.,'PC2_2':1.,'BUNIT':unit}.items(): h[k]=v
+ for k,v in {'CTYPE1':'HPLN-ARC','CTYPE2':'HPLT-ARC','CUNIT1':'deg','CUNIT2':'deg','CRPIX1':1.,'CRPIX2':1.,'CRVAL1':0.,'CRVAL2':0.,'CDELT1':1.,'CDELT2':1.,'PC1_1':1.,'PC1_2':0.,'PC2_1':0.,'PC2_2':1.,'BUNIT':unit,'HGLN_OBS':0.,'HGLT_OBS':4.,'DSUN_OBS':1.5e11,'RSUN_REF':695700000.}.items(): h[k]=v
  i=fits.ImageHDU(np.full((3,3),value,dtype=float),header=h,name='PRIMARY DATA ARRAY')
  u=fits.ImageHDU(np.ones((3,3)),header=h,name='UNCERTAINTY ARRAY')
  fits.HDUList([fits.PrimaryHDU(),i,u]).writeto(p)
@@ -20,7 +20,7 @@ class Tests(unittest.TestCase):
  def tearDown(self): self.tmp.cleanup()
  def call(self): return d.authorize(self.m,self.a,sha(self.m),sha(self.a),[self.x,self.y],self.out)
  def test_actual_fits_difference(self):
-  self.call(); result=d.characterize([self.x,self.y]); self.assertEqual(result['difference_median'],2); self.assertEqual(result['eligible_pixels'],9)
+  self.call(); result=d.characterize([self.x,self.y]); self.assertEqual(result['difference_median'],2); self.assertEqual(result['eligible_pixels'],4)
  def test_input_mutation_fails_before_decode(self):
   self.x.write_bytes(self.x.read_bytes()+b'x')
   with patch.object(d,'characterize',side_effect=AssertionError('decode')):
@@ -42,7 +42,7 @@ class Tests(unittest.TestCase):
   with self.assertRaises(ValueError): d.authorize(self.m,self.a,sha(self.m),sha(self.a),[self.x,self.y],self.r/'other.json')
  def test_zero_uncertainty_excluded(self):
   with fits.open(self.x,mode='update') as h: h['UNCERTAINTY ARRAY'].data[0,0]=0
-  result=d.characterize([self.x,self.y]); self.assertEqual(result['common_finite_pixels'],9); self.assertEqual(result['positive_uncertainty_pixels'],8); self.assertEqual(result['eligible_pixels'],8)
+  result=d.characterize([self.x,self.y]); self.assertEqual(result['native_valid_pixels'][0],8); self.assertEqual(result['eligible_pixels'],3)
  def test_headers_checked_before_any_data(self):
   class NoData:
    def __init__(self,name,header): self.name=name; self.header=header
@@ -51,4 +51,17 @@ class Tests(unittest.TestCase):
   with fits.open(self.x) as h: a=NoData('PRIMARY DATA ARRAY',h['PRIMARY DATA ARRAY'].header.copy()); u=NoData('UNCERTAINTY ARRAY',h['UNCERTAINTY ARRAY'].header.copy())
   wrong=u.header.copy(); wrong['BUNIT']='wrong'
   with self.assertRaises(ValueError): d.inspect_headers([{'PRIMARY DATA ARRAY':a,'UNCERTAINTY ARRAY':u},{'PRIMARY DATA ARRAY':a,'UNCERTAINTY ARRAY':NoData('UNCERTAINTY ARRAY',wrong)}])
+ def test_stationary_shift_scale_and_hole(self):
+  from astropy.wcs import WCS
+  h=fits.Header()
+  for k,v in {'NAXIS':2,'NAXIS1':12,'NAXIS2':12,'CTYPE1':'HPLN-ARC','CTYPE2':'HPLT-ARC','CUNIT1':'deg','CUNIT2':'deg','CRPIX1':6.,'CRPIX2':6.,'CRVAL1':0.,'CRVAL2':0.,'CDELT1':0.01,'CDELT2':0.01}.items(): h[k]=v
+  h1=h.copy(); h1['CRPIX1']=6.4; h1['CDELT1']=0.008
+  w0,w1=WCS(h),WCS(h1); yy,xx=np.mgrid[:12,:12]; lon,lat=w1.all_pix2world(xx,yy,0)
+  image=100+((lon+180)%360-180)+2*lat; valid=np.ones((12,12),bool); valid[5,5]=False
+  out=d.project(image,valid,w0,w1,(12,12)); l0,b0=w0.all_pix2world(xx,yy,0); good=np.isfinite(out)
+  self.assertGreater(good.sum(),20); self.assertLess(good.sum(),144); np.testing.assert_allclose(out[good],(100+((l0+180)%360-180)+2*b0)[good],atol=1e-8)
+  moved=d.project(image+3,valid,w0,w1,(12,12)); np.testing.assert_allclose((moved-out)[good],3,atol=1e-8)
+ def test_observer_mismatch(self):
+  with fits.open(self.y,mode='update') as h: h['PRIMARY DATA ARRAY'].header['HGLT_OBS']=9.
+  with self.assertRaises(ValueError): d.characterize([self.x,self.y])
 if __name__=='__main__': unittest.main()

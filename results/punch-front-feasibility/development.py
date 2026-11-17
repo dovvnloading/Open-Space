@@ -1,5 +1,5 @@
 """Guarded, descriptive two-CTM development; no prospective image access."""
-import argparse, hashlib, json, sys
+import argparse, hashlib, json, math, sys
 from contextlib import ExitStack
 from pathlib import Path
 
@@ -24,7 +24,7 @@ def authorize(manifest,authorization,expected_manifest,expected_auth,inputs,outp
 
 def inspect_headers(hdus):
     from astropy.wcs import WCS
-    images=[]; signatures=[]
+    images=[]; signatures=[]; wcs=[]
     for h in hdus:
         x=h['PRIMARY DATA ARRAY']; u=h['UNCERTAINTY ARRAY']; hx=x.header; hu=u.header
         shape=tuple(hx.get('NAXIS'+str(i)) for i in (1,2))
@@ -34,31 +34,62 @@ def inspect_headers(hdus):
         if x.name!='PRIMARY DATA ARRAY' or u.name!='UNCERTAINTY ARRAY': raise ValueError('extension meaning')
         w=WCS(hx,naxis=2).to_header(relax=True)
         if not all(k in w for k in ('CTYPE1','CTYPE2','CRPIX1','CRPIX2','CRVAL1','CRVAL2','CDELT1','CDELT2')): raise ValueError('incomplete WCS')
+        if WCS(hx,naxis=2).has_distortion: raise ValueError('unsupported distortion')
+        if (hx.get('CTYPE1'),hx.get('CTYPE2')) != ('HPLN-ARC','HPLT-ARC'): raise ValueError('unsupported coordinate frame')
         observer=tuple((k,hx.get(k)) for k in ('HGLN_OBS','HGLT_OBS','DSUN_OBS','RSUN_REF','DATE-OBS'))
         # Compare celestial WCS, not timestamp; observer data are retained for review.
-        signatures.append((shape,hx['BUNIT'],w.tostring(sep='\n',endcard=False,padding=False)))
+        signatures.append((shape,hx['BUNIT'],hx))
+        wcs.append(WCS(hx,naxis=2))
         images.append((x,u,observer))
-    if signatures[0]!=signatures[1]: raise ValueError('matching WCS/units not established')
-    return images
+    if signatures[0][:2]!=signatures[1][:2]: raise ValueError('shape or units mismatch')
+    h0,h1=signatures[0][2],signatures[1][2]
+    for key,tol in (('HGLN_OBS',0.001),('HGLT_OBS',0.001),('DSUN_OBS',1e6),('RSUN_REF',0.0)):
+        a,b=h0.get(key),h1.get(key)
+        if a is None or b is None or not math.isfinite(float(a)) or not math.isfinite(float(b)) or abs(float(a)-float(b))>tol: raise ValueError('observer mismatch: '+key)
+    return images,wcs
+
+def project(source, valid, w0, w1, shape):
+    """Map target centers to input centers; require all four stencil pixels valid."""
+    import numpy as np
+    out=np.full(shape,np.nan); height,width=source.shape
+    for start in range(0,shape[0],128):
+        yy,xx=np.mgrid[start:min(start+128,shape[0]),0:shape[1]]
+        lon,lat=w0.all_pix2world(xx,yy,0); xp,yp=w1.all_world2pix(lon,lat,0)
+        good=np.isfinite(xp)&np.isfinite(yp)&(xp>=0)&(yp>=0)&(xp<width-1)&(yp<height-1)
+        ix=np.floor(np.where(good,xp,0)).astype(int); iy=np.floor(np.where(good,yp,0)).astype(int)
+        good &= valid[iy,ix]&valid[iy,ix+1]&valid[iy+1,ix]&valid[iy+1,ix+1]
+        dx=xp-ix; dy=yp-iy
+        values=(1-dx)*(1-dy)*source[iy,ix]+dx*(1-dy)*source[iy,ix+1]+(1-dx)*dy*source[iy+1,ix]+dx*dy*source[iy+1,ix+1]
+        out[start:start+len(yy)]=np.where(good,values,np.nan)
+    return out
 
 def characterize(paths):
     import numpy as np
     from astropy.io import fits
     with ExitStack() as stack:
         hdus=[stack.enter_context(fits.open(p,memmap=False,lazy_load_hdus=False)) for p in paths]
-        pairs=inspect_headers(hdus) # all headers checked before either .data access
+        pairs,wcs=inspect_headers(hdus)
         arrays=[]
         for x,u,_ in pairs:
-            a=np.asarray(x.data,dtype=float); b=np.asarray(u.data,dtype=float)
-            if a.ndim!=2 or a.shape!=b.shape: raise ValueError('decoded shape mismatch')
-            arrays.append((a,b))
-        (a,ua),(b,ub)=arrays
-        finite=np.isfinite(a)&np.isfinite(b)&np.isfinite(ua)&np.isfinite(ub)
-        positive=np.isfinite(ua)&np.isfinite(ub)&(ua>0)&(ub>0)
-        valid=finite&positive
-        if not valid.any(): raise ValueError('no finite pixels with positive uncertainties')
-        diff=b[valid]-a[valid]
-        return {'mode':'descriptive','units':str(pairs[0][0].header['BUNIT']),'shape':list(a.shape),'total_pixels':int(a.size),'common_finite_pixels':int(finite.sum()),'positive_uncertainty_pixels':int(positive.sum()),'eligible_pixels':int(valid.sum()),'difference_median':float(np.median(diff)),'difference_p05_p95':[float(v) for v in np.percentile(diff,[5,95])], 'observer_headers':[list(pair[2]) for pair in pairs], 'limits':'Finite positive-uncertainty filter is not a validated quality mask. Shared background, calibration and registration remain unqualified; no significance.'}
+            a=np.asarray(x.data,dtype=float); packed=np.asarray(u.data,dtype=float)
+            if a.ndim!=2 or a.shape!=packed.shape: raise ValueError('decoded shape mismatch')
+            with np.errstate(divide='ignore',invalid='ignore'): sigma=a/packed
+            mask=np.isfinite(a)&np.isfinite(packed)&(packed!=0)&np.isfinite(sigma)&(sigma>0)
+            arrays.append((a,mask))
+        (a,ma),(b,mb)=arrays
+        projected=project(b,mb,wcs[0],wcs[1],a.shape)
+        valid=ma&np.isfinite(projected)
+        if not valid.any(): raise ValueError('no valid common pixels')
+        diff=projected[valid]-a[valid]
+        # Fixed 64x64 block grid; entries without valid samples are null.
+        grid=[]
+        for ys in np.array_split(np.arange(a.shape[0]),64):
+            row=[]
+            for xs in np.array_split(np.arange(a.shape[1]),64):
+                block=np.ix_(ys,xs); mask=valid[block]; values=(projected[block]-a[block])[mask]
+                row.append(float(np.mean(values)) if values.size else None)
+            grid.append(row)
+        return {'mode':'descriptive','units':str(pairs[0][0].header['BUNIT']),'shape':list(a.shape),'total_pixels':int(a.size),'native_valid_pixels':[int(ma.sum()),int(mb.sum())],'eligible_pixels':int(valid.sum()),'difference_grid_64':grid,'difference_median':float(np.median(diff)),'difference_p05_p95':[float(v) for v in np.percentile(diff,[5,95])], 'observer_headers':[list(pair[2]) for pair in pairs], 'limits':'Packed reciprocal fractional uncertainty decoded as data/packed. Four-pixel valid stencil, not validated quality mask. Angular registration only; shared background, observer parallax and correlated errors unqualified; no significance.'}
 
 def main():
     p=argparse.ArgumentParser(); p.add_argument('--manifest',required=True); p.add_argument('--manifest-sha256',required=True); p.add_argument('--authorization',required=True); p.add_argument('--authorization-sha256',required=True); p.add_argument('--input',nargs=2,required=True); p.add_argument('--output',required=True); args=p.parse_args()
