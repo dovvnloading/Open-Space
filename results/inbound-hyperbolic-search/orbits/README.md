@@ -82,3 +82,5 @@ Running `acquire.py` on its own queries public archives anew. Restoring the comp
 - **Active comets.** The inverse-square model fits one signed radial acceleration at 1 au. The Marsden variants fit a radial and a transverse coefficient with the symmetric standard water-ice sublimation law. The outward variant constrains the radial coefficient to be nonnegative. These simple laws do not capture arbitrary outbursts, fragmentation or photocentre drift. A formally preferred unconstrained acceleration may be physically implausible. A covariance normal approximation is particularly weak at a parameter bound.
 
 The fits test the designated objects and published arcs. No occurrence rate or survey detection probability follows from this set.
+
+The [fourteen recent station/night refits](recent/README.md) give actual inbound 250 au energies for thirteen nominally bound objects and the 3I/ATLAS positive control.
