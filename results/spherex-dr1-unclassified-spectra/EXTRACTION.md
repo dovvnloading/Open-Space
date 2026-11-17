@@ -35,7 +35,7 @@ Strict pixels have positive NHITS, finite intensity, and no bits other than SOUR
 
 ## Replay
 
-With the repository checked out, use Python with NumPy, SciPy and Astropy. From this result directory run:
+With the repository checked out, use Python with NumPy, SciPy and Astropy. From this result directory run the following commands.
 
 ```bash
 python verify_inputs.py
@@ -50,3 +50,18 @@ SPHEREX_FIELD=wide python scene.py wide/full/ranks.csv
 ```
 
 Omit the `cube` argument to requery the catalogs as well. Frozen hashes guard against silently using changed archive bytes. Each cube needs about 321 MB of temporary storage. The full FITS and blank-aperture cache can be regenerated. Classification, independent visits, and injection/recovery have their own outputs.
+
+## Spatial localization and data-quality review
+
+`localize.py` computes a per-pixel linear continuum from the same sideband windows and subtracts it from the feature image for the five highest template ranks and the highest peer rank in each field. It requires both supported sidebands at each spatial pixel. Within 32 arcsec it measures the centroid and brightest-pixel fraction of light with the same sign as the 19 arcsec aperture contrast. A shift grid holds subpixel phase fixed and places up to 24 control apertures 5 or 10 pixels away along each axis, re-estimating sky in each aperture's own annulus. Only apertures meeting the 97% spatial support and sky requirements count. The output includes the finite support fraction of the 32 arcsec centroid aperture. Blank counts change with the flag policy. The controls sample spatial backgrounds in this cube and do not provide independent visits or a false-positive probability. Run `python localize.py nep_two_band/ranks.csv` and `SPHEREX_FIELD=wide python localize.py wide/full/ranks.csv`.
+
+For supplemental rank one, J135745.42+295804.4, at 4.600 µm the strict residual totals +10.03 mJy. Its residual centroid is 9.56 arcsec from the continuum centroid. One 12.9 arcsec pixel, 10.90 arcsec from the catalog position, contains 87.2% of the positive residual light. Its contributing-pixel count is 14 and its sole propagated flag is SOURCE. The strict core has 90.3% finite support and two qualifying shifted apertures. Permitting OUTLIER restores complete spatial support, gives +10.11 mJy and a 9.38 arcsec separation, with 86.2% in that same pixel. All 24 shifted apertures then qualify and the largest absolute shifted flux is 0.49 mJy. These checks establish a local feature in the coadd and raise a spatial attribution problem. Undersampling, a flux outlier, a blend or a separate source can produce an offset. Supplemental rank five has an even larger 18.7 arcsec feature-to-continuum displacement under the strict mask.
+
+The leading northern source has a source-centered deficit (0.24 arcsec residual-to-continuum centroid displacement) alongside a severe flux-scale inconsistency. It retains only 9.1% of the 2MASS J proxy and its feature-channel central NHITS is 8 against 46 in the annulus. The second supplemental source retains 7.2% of 2MASS J, while the third retains 19.5% with three other W1 < 16 sources inside 19 arcsec. The fourth supplemental source's 4.808 µm deficit is centered (0.48 arcsec shift), with only one valid strict shifted aperture. A stationary centroid cannot validate a spectrum.
+
+* Across all extraction positions, eight northern and fourteen supplemental apertures have at least one other W1 < 16 source within 19 arcsec. Seventeen northern and fifteen supplemental apertures contain multiple Gaia G < 19 entries. Fainter companions remain possible.
+* In the northern field 48 of 54 sources yield a two-band ranking. All 59 supplemental spectra yield a broad-coverage ranking. Positive NHITS at the center only establishes that some pixels contributed. No pixel variances or time-sorted visits enter these measured coadd fluxes.
+* The 2MASS comparison is finite for 46/48 and 52/59 ranked objects. One northern and five supplemental ratios fall below 0.30. Two supplemental ratios exceed 2. Some sources are extended or variable. Each catalog comparison requires interpretation at its own epochs and resolution.
+* The full strict measurement count is 6,830 of 11,526 requested source-channel rows. Permitting OUTLIER returns 7,118 finite fluxes. Both mask tracks preserve the same two intentionally blank channels. Noise estimates and feature recovery are conditional on the covered windows and the selected catalog population.
+
+The SPHEREx data products are credited to NASA and the SPHEREx team and served by the NASA/IPAC Infrared Science Archive. This work also uses AllWISE, 2MASS and ESA Gaia DR3.
