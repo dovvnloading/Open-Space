@@ -93,6 +93,62 @@ jobs:
           assert not any('2026-10-19'<=d<'2026-11-17' and n>0 for d,n in obsdate.items())
           print('REFEREE_RUBIN',{'input_parts':len(archive['retrieved']),'unique_rows':len(seen),'status_counts':dict(status),'observation_dates':[min(obsdate),max(obsdate)],'no_primary_window_observation':True})
           PY
+  h6_energy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install "numpy==2.5.5" "scipy==1.18.1" "pyerfa==2.0.1.5" "jplephem==2.24"
+      - name: Refit C/2004 H6 gravity, water-ice recoil, and normal acceleration using frozen 307 MPC positions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import sys,json,gzip,hashlib,urllib.request
+          from pathlib import Path
+          root=Path('results/inbound-hyperbolic-search')
+          path=root/'orbits/robust'
+          sys.path.insert(0,str(path))
+          import replay
+          src=root/'catalog/sbdb.json.gz'
+          cat=json.loads(gzip.decompress(src.read_bytes()))
+          row=next(dict(zip(cat['fields'],r)) for r in cat['data'] if str(r[0])=='1000500')
+          for file,url,sha in [
+            ('de440.bsp','https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de440.bsp','a4ce9bf9b3282becc9f4b2ac3cebe03a2ae7599981aabd7265fd8482fff7c4b5'),
+            ('stations.txt','https://minorplanetcenter.net/iau/lists/ObsCodes.html','fc7a5c9e7259ef93a5b93eb4c69984980ba775803cfb93e6f8376fee81c0d45f')
+          ]:
+            with urllib.request.urlopen(url,timeout=120) as resp:b=resp.read()
+            assert hashlib.sha256(b).hexdigest()==sha,file
+            (replay.CACHE/file).write_bytes(b)
+          matched=[]
+          for p in sorted((path/'evidence').glob('*part-*.json.gz')):
+            dataset=json.loads(gzip.decompress(p.read_bytes()))
+            for record in dataset['objects']:
+              if str(record['spkid'])!='1000500':continue
+              matched.append((p.name,record))
+          assert len(matched)==2,[(name,len(obj['selected_mpc80'])) for name,obj in matched]
+          for name,original in matched:
+            raw=original['selected_mpc80']
+            assert len(raw)==307
+            assert hashlib.sha256(('\n'.join(raw)+'\n').encode('ascii')).hexdigest()==original['selected_sha256']
+            result=replay.one((original['screen'],row,raw))
+            assert 'error' not in result,(name,result)
+            assert result['selected_sha256']==original['selected_sha256']
+            for kind,prev in original['models'].items():
+              if 'boundaries' not in prev:continue
+              got=result['models'].get(kind,{})
+              assert 'boundaries' in got,(name,kind,got)
+              p=prev['boundaries']['250au'];q=got['boundaries']['250au']
+              assert abs(p['inverse_a_au_inv']-q['inverse_a_au_inv'])<0.00002,(name,kind,p,q)
+              assert abs(p['formal_sigma_inverse_a']-q['formal_sigma_inverse_a'])<0.00005,(name,kind,p,q)
+              z=-q['inverse_a_au_inv']/q['formal_sigma_inverse_a']
+              if kind=='marsden_outward':assert abs(z-3.61)<.12,z
+              if kind=='marsden_outward_3d':assert abs(z-2.69)<.12,z
+              print('REFEREE_H6_ENERGY',name,kind,'used',got['used'],'inverse_a',q['inverse_a_au_inv'],'sigma',q['formal_sigma_inverse_a'],'z',z)
+          PY
   swan:
     runs-on: ubuntu-latest
     timeout-minutes: 20
