@@ -54,7 +54,7 @@ A linear interpolation between measured bins gives 90% and 50% recovery at AB 26
 
 ## Reproduction and files
 
-Run from this directory with Python, NumPy, pandas, SciPy and Astropy. Allow network access to the NEXUS release, sufficient runtime to decompress the mosaics, and space for compressed postage stamps. The cache contains the dated original target tables, compressed stamps and SHA-256 digests of every full input mosaic. The reproduction commands use separate caches for the two bands.
+Run from this directory with Python, NumPy, pandas, SciPy, Astropy and Matplotlib. Allow network access to the NEXUS release, sufficient runtime to decompress the mosaics, and space for compressed postage stamps. The cache contains the dated original target tables, compressed stamps and SHA-256 digests of every full input mosaic. The reproduction commands use separate caches for the two bands.
 
 ```sh
 python acquire_nexus.py --band f444w --cache cache-f444w

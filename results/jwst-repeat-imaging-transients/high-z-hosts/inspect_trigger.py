@@ -9,6 +9,7 @@ from urllib.request import urlopen
 
 import numpy as np
 import pandas as pd
+from astropy.coordinates import SkyCoord
 from astropy.io import fits
 from astropy.wcs import WCS
 
@@ -64,7 +65,7 @@ def one(args):
         return row
 
 
-def main(targetfile,out):
+def main(targetfile,out,comparisons):
     targets=pd.read_csv(targetfile);o=targets[targets.id==HOST].iloc[0]
     q=f"SELECT TOP 2000 obs_id,t_min,t_max,calib_level,access_url,em_min,em_max,instrument_name FROM ivoa.ObsCore WHERE calib_level=2 AND instrument_name='NIRCAM/IMAGE' AND dataproduct_type='image' AND t_min>60700 AND 1=CONTAINS(POINT('ICRS',{o.ra},{o.dec}),s_region) ORDER BY t_max DESC"
     raw=urlopen(TAP+urlencode(dict(REQUEST='doQuery',LANG='ADQL',FORMAT='csv',QUERY=q)),timeout=90).read()
@@ -74,8 +75,15 @@ def main(targetfile,out):
     out.mkdir(exist_ok=True,parents=True)
     pd.DataFrame(rows).sort_values('mjd').to_csv(out/'detector_photometry.csv',index=False,float_format='%.10g')
     (out/'archive_inventory.csv').write_bytes(raw)
+    cat=pd.read_csv(comparisons)
+    host=SkyCoord(o.ra,o.dec,unit='deg')
+    cat['separation_arcsec']=host.separation(SkyCoord(cat.ra_deg,cat.dec_deg,unit='deg')).arcsec
+    by_catalog=cat.sort_values('separation_arcsec').groupby('catalog',sort=False).head(1)
+    by_catalog.to_csv(out/'nearest_reports.csv',index=False)
+    cat[cat.designation.str.contains('2026abck')].to_csv(out/'at2026abck.csv',index=False)
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('targets',type=Path);p.add_argument('out',type=Path)
-    args=p.parse_args();main(args.targets,args.out)
+    p.add_argument('--comparisons',type=Path,default=Path('../catalogs/field_comparisons.csv'))
+    args=p.parse_args();main(args.targets,args.out,args.comparisons)
