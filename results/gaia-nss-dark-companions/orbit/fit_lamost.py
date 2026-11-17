@@ -2,6 +2,8 @@
 import csv
 import hashlib
 import json
+import argparse
+from pathlib import Path
 
 import numpy as np
 
@@ -13,7 +15,9 @@ RV = HERE.parent/"lamost"/"exposures.csv"
 MASS = HERE.parent/"gaia"/"mass_screen.csv"
 
 
-def main():
+def main(out=None):
+    out=Path(out) if out is not None else HERE
+    out.mkdir(parents=True,exist_ok=True)
     with NSS.open() as f:
         row = next(csv.DictReader(f))
         assert row["source_id"]==SID and row["nss_solution_type"]=="Orbital"
@@ -33,7 +37,7 @@ def main():
     t,y,s=np.array(nights).T
     all_fits={}
     rng=np.random.default_rng(374452)
-    with (HERE/"lamost_candidate_residuals.csv").open("w") as f:
+    with (out/"lamost_candidate_residuals.csv").open("w") as f:
         writer=csv.writer(f)
         writer.writerow(["fit","jd_rel_reference","instrument","rv_kms","err_kms","model_kms",
                          "observed_minus_model_kms"])
@@ -49,7 +53,7 @@ def main():
     astro,start=nss_constraint(row,1.)
     start[8]=np.median(y[keep])
     err=np.hypot(s,1.)
-    with (HERE/"lamost_training_residuals.csv").open("w") as f:
+    with (out/"lamost_training_residuals.csv").open("w") as f:
         writer=csv.writer(f)
         writer.writerow(["fit","jd_rel_reference","instrument","rv_kms","err_kms","model_kms",
                          "observed_minus_model_kms"])
@@ -59,6 +63,9 @@ def main():
     details=dict(holdout_fit=split,source_id=SID,exposures=len(exposures),baseline_d=np.ptp(t),
                  sha256={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [NSS,RV,MASS]},
                  models=all_fits)
-    (HERE/"lamost_candidate_fits.json").write_text(json.dumps(details,indent=2)+"\n")
+    (out/"lamost_candidate_fits.json").write_text(json.dumps(details,indent=2)+"\n")
 if __name__=="__main__":
-    main()
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--out",type=Path,help="Separate output directory for independent replay")
+    args=p.parse_args()
+    main(args.out)
