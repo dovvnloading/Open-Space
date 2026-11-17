@@ -1,0 +1,6 @@
+{
+  "url": "https://datalab.noirlab.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=100000&QUERY=SELECT+coadd_numexp%2Ccoadd_numnight%2Ccount%28%2A%29+AS+n_stars+FROM+desi_dr1.zpix+WHERE+spectype%3D%27STAR%27+AND+zwarn%3D0+AND+zcat_primary%3D%27t%27+GROUP+BY+coadd_numexp%2Ccoadd_numnight+ORDER+BY+coadd_numexp%2Ccoadd_numnight",
+  "adql": "SELECT coadd_numexp,coadd_numnight,count(*) AS n_stars FROM desi_dr1.zpix WHERE spectype='STAR' AND zwarn=0 AND zcat_primary='t' GROUP BY coadd_numexp,coadd_numnight ORDER BY coadd_numexp,coadd_numnight",
+  "rows": 210,
+  "sha256": "117fecf2387b8f91347b5226bf03e7d2b531bf813c4805ab413eca25d3a03c57"
+}
