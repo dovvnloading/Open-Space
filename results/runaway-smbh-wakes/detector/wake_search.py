@@ -11,6 +11,7 @@ import numpy as np
 
 from wake_filter import FWHM_SIGMA, axes, compatible, detect
 from wake_image import ImagePlane
+from wake_quality import extended_profile
 
 
 def digest(path):
@@ -120,7 +121,9 @@ def main():
             with args.hosts.open() as stream:
                 hosts = list(csv.DictReader(stream))
         detections = screen(-image if args.invert else image, good)
+        raw = -image if args.invert else image
         for row in detections:
+            row.update(extended_profile(raw,good,row))
             offset(row, x0, y0)
             if args.hosts:
                 row["endpoint_galaxies"] = []
@@ -157,13 +160,16 @@ def main():
                         else:
                             zp = 2.5*np.log10(3631e9) if args.njy else args.zeropoint
                             intensity = args.scale**2 * 10**(-.4*(mu-zp))
-                        output = screen(add_wake(src,truth,intensity),valid)
+                        injected = add_wake(src,truth,intensity)
+                        output = screen(injected,valid)
                         match = [d for d in output if compatible(truth,d)]
+                        gated = [d for d in match if extended_profile(injected,valid,d)["profile_gate"]]
                         trials.append(dict(index=index, x=x0+px+truth["x"], y=y0+py+truth["y"],
                             patch_xy=[x0+px,y0+py], angle_deg=truth["pa_image_deg"],
                             length_arcsec=float(length*args.scale), fwhm_arcsec=float(width*args.scale),
                             mu_ab_arcsec2=mu, mean_native_per_pixel=float(intensity),
                             preexisting_match=pre, detected=bool(match), new_match=bool(match) and not pre,
+                            new_profile_match=bool(gated) and not pre,
                             matched_score=max((d["score"] for d in match),default=None)))
         result["trials"] = trials
     args.out.parent.mkdir(parents=True, exist_ok=True)

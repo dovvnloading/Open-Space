@@ -125,7 +125,7 @@ def get_center(tile, bands, cache):
     url = S3 + 'q1/MER/' + bands['VIS'][0] + '?range_start=0&range_end=5759'
     raw = fetch(url, cache / (tile+'.head'), header=True)
     h = parse_primary(raw, False)
-    if (h.get('FILTER'), h.get('NAXIS1'), h.get('NAXIS2')) != ('VIS', '19200', '19200'):
+    if h.get('FILTER') != 'VIS' or min(int(h['NAXIS1']), int(h['NAXIS2'])) < 1025:
         raise ValueError('unexpected VIS tile header')
     ra, dec = float(h['CRVAL1']), float(h['CRVAL2'])
     # The four disconnected target groups are widely separated in declination.

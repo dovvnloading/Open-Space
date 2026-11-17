@@ -58,6 +58,12 @@ class ImagePlane:
                    pair(1, 1), ct.byref(null), ct.c_void_p(dest.ctypes.data), ct.byref(anynull))
         return dest
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_):
+        self.close()
+
     def close(self):
         if self.handle:
             self._call(self.lib.ffclos, self.handle)
