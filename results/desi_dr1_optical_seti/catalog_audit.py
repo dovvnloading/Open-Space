@@ -46,6 +46,12 @@ def freeze(out, name, endpoint, query, columns):
             sleep(2 ** attempt)
 
 
+def has_gaia(row):
+    # DR1 mws uses 999999 as a fill value for missing Gaia matches.
+    value = row["source_id"]
+    return bool(value) and int(value) > 0 and int(value) != 999999
+
+
 def chunks(ids, size=55):
     ids = sorted(set(int(key) for key in ids))
     return [",".join(str(x) for x in ids[i:i+size]) for i in range(0, len(ids), size)]
@@ -72,7 +78,7 @@ def audit(target_file, out):
     out.mkdir(parents=True, exist_ok=True)
     cols = "targetid,source_id,survey,program,rr_spectype"
     mws = gather(out, "mws", DESI, ids, cols, f"SELECT {cols} FROM desi_dr1.mws WHERE targetid IN ({{ids}})")
-    source_ids = [r["source_id"] for r in mws if r["source_id"] and int(r["source_id"]) > 0]
+    source_ids = [r["source_id"] for r in mws if has_gaia(r)]
     # A single star may have several targeting identifiers or survey groups.
     aliases = gather(out, "aliases", DESI, source_ids, cols,
                      f"SELECT {cols} FROM desi_dr1.mws WHERE source_id IN ({{ids}})")
@@ -89,7 +95,7 @@ def audit(target_file, out):
     summary = []
     for t in targets:
         target = t["targetid"]
-        gaia = {r["source_id"] for r in mws if r["targetid"] == target and r["source_id"] and int(r["source_id"]) > 0}
+        gaia = {r["source_id"] for r in mws if r["targetid"] == target and has_gaia(r)}
         same = {target} | {r["targetid"] for r in aliases if r["source_id"] in gaia}
         gids = sorted(gaia)
         src = gids[0] if len(gids) == 1 else ""
