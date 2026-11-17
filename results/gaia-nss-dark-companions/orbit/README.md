@@ -35,3 +35,16 @@ The fetch command requires all six frozen source names and URLs and verifies byt
 [Exact input URLs, lengths and raw SHA-256](sources.json) · [DR3 Gaussian likelihood input](nss_controls.csv) · [Parsed discovery-paper RVs](published_rv.csv)
 
 The RV tables are from El-Badry et al. [BH1 Table D1](https://arxiv.org/abs/2209.06833v3), [BH2 Table 1](https://arxiv.org/abs/2302.07880v2), and [NS1 Table 1](https://arxiv.org/abs/2402.06722v2). The BH3 observations are from [Gaia Collaboration, Panuzzo et al.](https://doi.org/10.1051/0004-6361/202449763) and the [associated ESA repository](https://doi.org/10.5281/zenodo.10977502). The ordering of covariance entries follows the [Gaia DR3 NSS archive model](https://gea.esac.esa.int/archive/documentation/GDR3/Gaia_archive/chap_datamodel/sec_dm_non--single_stars_tables/ssec_dm_nss_two_body_orbit.html).
+
+## Measurable velocity-variability search depth
+
+Using the four best-fit control RV amplitudes, eccentricities, orientations and periods, we measured whether each real clean target cadence would detect RV variability. Of the initial 983 mass-screened targets, 59 have a clean LAMOST, SDSS or DESI observation and 28 have at least one within-instrument repeat after nightly binning. The table gives the number of target cadences reaching each phase-averaged probability of rejecting a constant RV at single-target p < 0.001.
+
+| Detection probability | BH1-like | BH2-like | NS1-like | BH3-like |
+|---|---:|---:|---:|---:|
+| At least 50% | 23 | 18 | 16 | 18 |
+| At least 90% | 12 | 13 | 13 | 17 |
+
+We integrate over 1,024 evenly spaced periastron phases. For each phase the weighted within-instrument variance of the noiseless model gives the noncentrality of a chi-squared test for constant RV. Its upper tail at the null threshold integrates over Gaussian measurement noise. Each instrument has a free zero point. Repeated exposures within a night share the adopted calibration floor of 1 km/s for LAMOST and APOGEE, 5 km/s for BOSS, and the published analysis-specific floor in the DESI epoch file. Orbital orientation and amplitude equal those of each measured control. This sensitivity covers an RV variability flag. Compact-object mass, light exclusion, Gaia selection completeness, and population occurrence need separate information. The calculations depend on the chosen error floors and intrinsic stellar jitter.
+
+Run `python cadence_depth.py` to reproduce the initial screen. [Per-source detection probabilities](cadence_initial.csv) · [Input hashes and aggregate depth](cadence_initial.json)

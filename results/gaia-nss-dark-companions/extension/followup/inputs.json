@@ -1,0 +1,32 @@
+[
+  {
+    "file": "2mass.csv",
+    "url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+designation%2Cj_m%2Cj_cmsig%2Ch_m%2Ch_cmsig%2Ck_m%2Ck_cmsig%2Cph_qual%2Ccc_flg+FROM+fp_psc+WHERE+designation%3D%2704164135%2B5351288%27",
+    "sha256": "fa13ec5cf8d58cb75b9b45477dce316e26223640b7a5048363f9c3e3832c9591"
+  },
+  {
+    "file": "gsp_quality.csv",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+flags_gspspec%2Cteff_gspspec_lower%2Cteff_gspspec_upper%2Clogg_gspspec_lower%2Clogg_gspspec_upper%2Cmh_gspspec_lower%2Cmh_gspspec_upper+FROM+gaiadr3.astrophysical_parameters+WHERE+source_id%3D275582835635329024",
+    "sha256": "556d00602fd81df87ec2ac95a0798f0294220da4bb0e7bb5f01b8a7c850fc38d"
+  },
+  {
+    "file": "source.csv",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cparallax%2Cparallax_error%2Cruwe%2Cipd_frac_multi_peak%2Cduplicated_source%2Cphot_g_mean_mag%2Cphot_bp_mean_mag%2Cphot_rp_mean_mag%2Crv_amplitude_robust%2Cradial_velocity%2Crv_nb_transits%2Chas_xp_sampled+FROM+gaiadr3.gaia_source+WHERE+source_id%3D275582835635329024",
+    "sha256": "2cacaf73bd7190e16f77c8e7e10c385e46b40c219a5ad32dfe1e057506809080"
+  },
+  {
+    "file": "star.csv",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+teff_gspphot%2Clogg_gspphot%2Cmh_gspphot%2Cag_gspphot%2Cebpminrp_gspphot%2Clogg_gspspec%2Cteff_gspspec%2Cmh_gspspec%2Cradius_flame%2Clum_flame%2Cmass_flame%2Cflags_flame%2Cevolstage_flame+FROM+gaiadr3.astrophysical_parameters+WHERE+source_id%3D275582835635329024",
+    "sha256": "2c385fea8e908a0bf1cf7ca47328d2453ac83b5590f7ad2f7c11216992adec8d"
+  },
+  {
+    "file": "names.csv",
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+basic.main_id%2Cbasic.otype%2Cbasic.sp_type%2Cids.ids+FROM+basic+JOIN+ident+ON+ident.oidref%3Dbasic.oid+JOIN+ids+ON+ids.oidref%3Dbasic.oid+WHERE+ident.id%3D%27Gaia+DR3+275582835635329024%27",
+    "sha256": "17d11400a64b08deb3ec8cc891671a148742b2c4049dc3e8827bf75dfc97996b"
+  },
+  {
+    "file": "refs.csv",
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+ref.bibcode%2Cref.title+FROM+ref+JOIN+has_ref+ON+has_ref.oidbibref%3Dref.oidbib+JOIN+ident+ON+ident.oidref%3Dhas_ref.oidref+WHERE+ident.id%3D%27Gaia+DR3+275582835635329024%27",
+    "sha256": "aeda218a5527de866c12ccec96e963c3f6d9f5ff176459610f8f2f07ada33e77"
+  }
+]
