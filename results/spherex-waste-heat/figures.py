@@ -45,7 +45,8 @@ def plot_spectra():
         ax.yaxis.set_major_formatter(FuncFormatter(lambda x,_: f'{x:g}'))
         ax.set_xticks([1,2,3,5,12,22],labels=['1','2','3','5','12','22'])
         ax.grid(axis='x',lw=.5,alpha=.2)
-        ax.text(.98,.94,'Hephaistos '+label,transform=ax.transAxes,ha='right',va='top',fontweight='bold',fontsize=9)
+        ax.margins(y=.12)
+        ax.text(.035,.06,'Hephaistos '+label,transform=ax.transAxes,ha='left',va='bottom',fontweight='bold',fontsize=9)
         ax.tick_params(labelsize=8)
     fig.suptitle('Infrared light at the ten Hephaistos positions',fontsize=17,y=.995)
     handles=[Line2D([],[],marker='.',color='#295e79',ls='none',label='SPHEREx DR1, strict mask'),
