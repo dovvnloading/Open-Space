@@ -29,7 +29,7 @@ def process(i,archives,where,stamps):
     ny,nx=a.shape[0]//2,a.shape[1]//2
     a=a[:2*ny,:2*nx].astype('f4')
     rms=rms[:2*ny,:2*nx]
-    mask=np.isfinite(a)&(a!=0)&np.isfinite(rms)&(rms>0)
+    mask=np.isfinite(a)&(a!=0)&np.isfinite(rms)&(rms>0)&(rms<1e8)
     a[~mask]=0
     a=a.reshape(ny,2,nx,2).mean(axis=(1,3))
     mask=mask.reshape(ny,2,nx,2).all(axis=(1,3))
@@ -55,7 +55,6 @@ def main():
     args=p.parse_args()
     rows=list(csv.DictReader((HERE.parent/'catalog/slde_screen.csv').open()))
     targets=[r['id_str'] for r in rows if r['model_state']!='positive_radius']
-    # Three serendipitous catalogue entries lack the same id_str join as the main sample.
     archives={key:CutoutArchive(key,args.cache) for key in ARCHIVES}
     where={}
     for name,arc in archives.items():
