@@ -73,21 +73,13 @@ jobs:
               cp fgk*.csv fgk*.json fgk*.gz ren_offsets_recomputed.csv "$product/"
               ;;
             imaging)
-              python - <<'PY'
-          import sys
-          from concurrent.futures import ThreadPoolExecutor
-          sys.path.insert(0,'wise')
-          from pathlib import Path
-          from fetch import fetch,targets
-          dest=Path('wise/archive')
-          dest.mkdir(parents=True,exist_ok=True)
-          with ThreadPoolExecutor(4) as ex:
-              list(ex.map(lambda s:fetch('catwise',s,dest),targets()))
-          PY
-              python imaging/neighborhoods.py
+              mkdir -p wise/archive
+              unzip -oq wise/archive_inputs.zip -d wise/archive
+              if [ ! -f imaging/viewer_queries.json ]; then python imaging/neighborhoods.py; fi
               cp imaging/*neighborhood*.csv imaging/*queries.json imaging/optical_unwise.jpg "$product/"
               python imaging/atlas.py
               cp imaging/atlas.png imaging/centroids.csv imaging/queries.json "$product/"
+              (cd imaging && zip -q -r "$product/atlas_inputs.zip" stamp_cache)
               ;;
             optical)
               python optical/ztf.py
@@ -127,7 +119,7 @@ jobs:
         run: |
           cd results/spherex-waste-heat
           python -m pip install 'numpy>=2' matplotlib
-          if [ -f wise/catalog_photometry.csv ]; then python figures.py; fi
+          if [ -f wise/catalog_photometry.csv ] && [ -f blind/injections.csv ]; then python figures.py; fi
           if [ -f wise/archive_inputs.zip ]; then
             mkdir -p wise/archive
             unzip -oq wise/archive_inputs.zip -d wise/archive

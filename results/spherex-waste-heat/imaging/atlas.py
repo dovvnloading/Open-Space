@@ -20,6 +20,26 @@ from fetch import position, targets
 from measure import arc
 BANDS={1:6.1,3:6.5,4:12.0}
 
+def cloud_cutout(url, ra, dec):
+    from astropy.io import fits
+    from astropy.wcs import WCS
+    with urlopen(url, timeout=110) as response:
+        native = response.read()
+    with fits.open(io.BytesIO(native), do_not_scale_image_data=True) as hdus:
+        hdu = hdus[0]
+        x, y = WCS(hdu.header).celestial.world_to_pixel_values(ra, dec)
+        x0, y0 = int(round(float(x))) - 67, int(round(float(y))) - 67
+        data = np.array(hdu.data[y0:y0+135, x0:x0+135])
+        if data.shape != (135,135):
+            raise ValueError('Requested cutout crosses atlas edge')
+        header = hdu.header.copy()
+        header['CRPIX1'] -= x0
+        header['CRPIX2'] -= y0
+        out = io.BytesIO()
+        fits.PrimaryHDU(data, header).writeto(out)
+    return out.getvalue(), hashlib.sha256(native).hexdigest()
+
+
 def image(t,band):
     archive=ROOT.parent/'wise'/'archive'
     name=t['label']+'_catwise.csv.gz'
@@ -31,18 +51,30 @@ def image(t,band):
          +urlencode(dict(center=f'{r:.7f},{d:.7f}',size='135pix')))
     cache=ROOT/'stamp_cache';cache.mkdir(exist_ok=True)
     file=cache/f'{t["label"]}_W{band}.fits'
-    for attempt in range(3):
+    provenance = cache/f'{t["label"]}_W{band}.json'
+    if file.exists() and provenance.exists():
+        data_source = json.loads(provenance.read_text())
+        b = file.read_bytes()
+        if data_source['sha256_fits'] != hashlib.sha256(b).hexdigest():
+            raise ValueError(f'Cached FITS digest mismatch: {file}')
+    else:
+        cloud = ('https://nasa-irsa-wise.s3.us-west-2.amazonaws.com/wise/allwise/images/p3am_cdd/'
+                 + f'{coadd[:2]}/{coadd[:4]}/{coadd}/{coadd}-w{band}-int-3.fits')
+        data_source = dict(url=url)
         try:
-            if file.exists():b=file.read_bytes()
-            else:
-                with urlopen(url,timeout=100) as response: b=response.read()
-                if b[:2]==b'\x1f\x8b':b=gzip.decompress(b)
-                if not b.startswith(b'SIMPLE  ='):raise ValueError(b[:200])
-                file.write_bytes(b)
-            break
-        except Exception:
-            if attempt==2:raise
-            time.sleep(2**attempt)
+            with urlopen(url,timeout=65) as response:
+                b = response.read()
+            if b.startswith(b'\x1f\x8b'):
+                b = gzip.decompress(b)
+            if not b.startswith(b'SIMPLE  ='):
+                raise ValueError('IBE response was not FITS')
+        except Exception as exc:
+            b, native_hash = cloud_cutout(cloud, r, d)
+            data_source = dict(url=cloud, native_sha256=native_hash, cutout_url=url, cutout_error=str(exc))
+        data_source['sha256_fits'] = hashlib.sha256(b).hexdigest()
+        data_source['utc'] = dt.datetime.now(dt.timezone.utc).isoformat()
+        file.write_bytes(b)
+        provenance.write_text(json.dumps(data_source,indent=2)+'\n')
     h={}
     for i in range(0,len(b),80):
         card=b[i:i+80].decode('ascii')
@@ -58,7 +90,7 @@ def image(t,band):
     y=np.degrees(eta)/float(h['CDELT2'])+float(h['CRPIX2'])-1
     scale=float(h['CDELT2'])*3600
     assert 18<x<a.shape[1]-18 and 18<y<a.shape[0]-18
-    meta=dict(label=t['label'],band=band,gaia_epoch=2010.5,url=url,sha256_fits=hashlib.sha256(b).hexdigest(),bytes=len(b),utc=datetime.datetime.now(datetime.timezone.utc).isoformat())
+    meta=dict(label=t['label'],band=band,gaia_epoch=2010.5,bytes=len(b),**data_source)
     return a,x,y,scale,meta
 
 def fit(a,x,y,scale,fwhm):
@@ -101,19 +133,34 @@ def analyze(args):
     row['placement_p90_as']=round(np.percentile(recovered,90),3) if recovered else ''
     return row,receipt,(a,x,y,s,cx,cy)
 
+def attempt(args):
+    try:
+        return analyze(args)
+    except Exception as error:
+        t, band = args
+        return None, dict(label=t['label'], band=band, error=repr(error)), None
+
 def run():
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     cases=[(t,b) for t in targets() for b in BANDS]
-    with ThreadPoolExecutor(4) as pool: out=list(pool.map(analyze,cases))
+    with ThreadPoolExecutor(4) as pool: out=list(pool.map(attempt,cases))
+    measured=[r for r,_,_ in out if r is not None]
+    if not measured:
+        raise ValueError(str([q for _,q,_ in out]))
     with (ROOT/'centroids.csv').open('w') as f:
-        w=csv.DictWriter(f,out[0][0].keys(),lineterminator='\n');w.writeheader();w.writerows([r for r,_,_ in out])
+        w=csv.DictWriter(f,measured[0].keys(),lineterminator='\n');w.writeheader();w.writerows(measured)
     (ROOT/'queries.json').write_text(json.dumps([q for _,q,_ in out],indent=2)+'\n')
     fig,axes=plt.subplots(5,6,figsize=(10,9.7))
-    for i,(r,_,values) in enumerate(out):
-        a,x,y,s,cx,cy=values
+    for i,(r,q,values) in enumerate(out):
         ax=axes[(i//3)%5,(i//15)*3+i%3]
+        if values is None:
+            ax.set_title(f"{q['label']}   W{q['band']}",fontsize=9)
+            ax.text(.5,.5,'Unavailable',ha='center',va='center',transform=ax.transAxes)
+            ax.set(xticks=[],yticks=[])
+            continue
+        a,x,y,s,cx,cy=values
         q1,q2=np.nanpercentile(a,[15,99.2]);n=max(q2-q1,1e-6)
         ax.imshow(np.arcsinh((a-q1)/n*4),origin='lower',cmap='gray',vmin=-0.1,vmax=2.6,interpolation='nearest')
         ax.plot(x,y,marker='+',ms=10,color='#37e2ee',mew=1.4)
