@@ -1,0 +1,87 @@
+{
+  "v_products": {
+    "url": "https://ws-cadc.canfar.net/luskan/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=1000000&QUERY=SELECT+uri%2CcontentLength%2CcontentChecksum+FROM+inventory.Artifact%0AWHERE+uri+LIKE+%27nrao%3AVLASS%2F%25V_mean_minmaxrej%25.fits%27%0A+++OR+uri+LIKE+%27nrao%3AVLASS%2F%25.V.%25.fits%27%0AORDER+BY+uri",
+    "utc": "2026-11-17T11:14:49.284592+00:00",
+    "status": 200,
+    "n_bytes": 1570,
+    "sha256": "c1a5efcb68a1b31dfbab0feb530ef3fa00bd381c5f530b0cddf6a5d51e98a800",
+    "query": "SELECT uri,contentLength,contentChecksum FROM inventory.Artifact\nWHERE uri LIKE 'nrao:VLASS/%V_mean_minmaxrej%.fits'\n   OR uri LIKE 'nrao:VLASS/%.V.%.fits'\nORDER BY uri",
+    "rows": 12
+  },
+  "cadc_polarization": {
+    "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=1000000&QUERY=SELECT+pol_states%2CCOUNT%28%2A%29+AS+n+FROM+ivoa.ObsCore+WHERE+obs_collection%3D%27VLASS%27+GROUP+BY+pol_states",
+    "utc": "2026-11-17T11:14:49.060465+00:00",
+    "status": 200,
+    "n_bytes": 39,
+    "sha256": "6fe133836558872c80966c14f8cf3e4b689b7af040c5293e64539e78da385d5d",
+    "query": "SELECT pol_states,COUNT(*) AS n FROM ivoa.ObsCore WHERE obs_collection='VLASS' GROUP BY pol_states",
+    "rows": 3,
+    "result": [
+      {
+        "pol_states": "/I/",
+        "n": "156189"
+      },
+      {
+        "pol_states": "/I/Q/U/",
+        "n": "1"
+      },
+      {
+        "pol_states": "",
+        "n": "9"
+      }
+    ]
+  },
+  "nrao_polarization": {
+    "url": "https://data-query.nrao.edu/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=1000000&QUERY=SELECT+pol_states%2CCOUNT%28%2A%29+AS+n+FROM+tap_schema.obscore+WHERE+dataproduct_type%3D%27image%27+AND+project_code+LIKE+%27VLASS%25%27+GROUP+BY+pol_states",
+    "utc": "2026-11-17T11:15:04.627842+00:00",
+    "status": 200,
+    "n_bytes": 22,
+    "sha256": "a06fdced3ed918c7f7c341ef555c96f026ef1a37d615b4a689de19f54dd6aaee",
+    "query": "SELECT pol_states,COUNT(*) AS n FROM tap_schema.obscore WHERE dataproduct_type='image' AND project_code LIKE 'VLASS%' GROUP BY pol_states",
+    "rows": 1,
+    "result": [
+      {
+        "pol_states": "I",
+        "n": "159126"
+      }
+    ]
+  },
+  "cadc_caom_vmean": {
+    "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=1000000&QUERY=SELECT+COUNT%28%2A%29+AS+n+FROM+caom2.Artifact+WHERE+uri+LIKE+%27nrao%3AVLASS%2F%25V_mean_minmaxrej%25.fits%27",
+    "utc": "2026-11-17T11:14:47.800347+00:00",
+    "status": 200,
+    "n_bytes": 4,
+    "sha256": "4faf10a245e3e66fcd73082bd500d87983f8ee368448e7de0b5a82c7b423fa41",
+    "query": "SELECT COUNT(*) AS n FROM caom2.Artifact WHERE uri LIKE 'nrao:VLASS/%V_mean_minmaxrej%.fits'",
+    "rows": 1,
+    "result": [
+      {
+        "n": "0"
+      }
+    ]
+  },
+  "cube_guide": {
+    "url": "https://science.nrao.edu/vlass/vlass-data/single-epoch-cube-users-guide",
+    "utc": "2026-11-17T11:14:48.632724+00:00",
+    "status": 200,
+    "n_bytes": 37617,
+    "sha256": "6f2f91dafb6257e29027d4db63af08574d0205ce803e1d9cedac0902a94e7cf8",
+    "contains_offline_notice": false
+  },
+  "cache_notice": {
+    "url": "https://vlass-dl.nrao.edu/vlass/se_cube_demo_release/",
+    "utc": "2026-11-17T11:14:47.617160+00:00",
+    "status": 200,
+    "n_bytes": 308,
+    "sha256": "f29dcccb2ca44313ff80f1dbdf22f60034bd51afa0da0cccd46591f0e159bcd0",
+    "contains_offline_notice": true
+  },
+  "cube_guide_cache_link": {
+    "url": "https://archive-new.nrao.edu/vlass/se_cube_demo_release/",
+    "utc": "2026-11-17T11:14:48.314045+00:00",
+    "status": 404,
+    "n_bytes": 315,
+    "sha256": "d5a89e26beae0bc03ad18a0b0d1d3d75f87c32047879d25da11970cb5c4662a3",
+    "contains_offline_notice": false
+  }
+}
