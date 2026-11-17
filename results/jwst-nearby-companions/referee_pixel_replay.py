@@ -43,6 +43,27 @@ def same_rows(original, fresh, keyfields, fields, relative=.05):
     print("MATCHED", original, "rows", len(a), "fields", fields, flush=True)
 
 
+def same_grid_levels(original, fresh, group_fields, order_field, fields, relative=.05):
+    """Compare binned curves by grid rank, not floating-point key text."""
+    a, b = readcsv(original), readcsv(fresh)
+    assert len(a) == len(b), (original, len(a), len(b))
+    def grouped(rows):
+        groups = {}
+        for r in rows:
+            groups.setdefault(tuple(r[k] for k in group_fields), []).append(r)
+        return {k: sorted(v, key=lambda x: float(x[order_field])) for k, v in groups.items()}
+    x, y = grouped(a), grouped(b)
+    assert x.keys() == y.keys()
+    for k in x:
+        assert len(x[k]) == len(y[k])
+        for p, q in zip(x[k], y[k]):
+            for field in (order_field, *fields):
+                av, bv = float(p[field]), float(q[field])
+                assert math.isclose(av, bv, rel_tol=relative, abs_tol=1e-8), (
+                    original, k, field, av, bv)
+    print("MATCHED binned grid", original, len(a), flush=True)
+
+
 def spitzer(tmp):
     folder = ROOT / "g29" / "spitzer"
     frozen = {r["filename"]: r for r in json.loads(
@@ -81,9 +102,10 @@ def g29(tmp):
     cache, out = tmp / "g29-cache", tmp / "g29-out"
     process(folder, "fetch.py", cache)
     process(folder, "reduce.py", cache, out)
-    same_rows(folder / "out" / "contrast_recovery.csv", out / "contrast_recovery.csv",
-              ["filter", "radius_arcsec", "contrast"],
-              ["coverage_fraction", "threshold_contrast"], relative=.05)
+    same_grid_levels(folder / "out" / "contrast_recovery.csv",
+                     out / "contrast_recovery.csv", ["filter", "radius_arcsec"],
+                     "contrast", ["coverage_fraction", "threshold_contrast"],
+                     relative=.05)
     orig, new = readcsv(folder / "out" / "peaks.csv"), readcsv(out / "peaks.csv")
     assert len(orig) == len(new), (len(orig), len(new))
     print("PASS original G29-38 MIRI image search with six hashed FITS inputs", flush=True)
