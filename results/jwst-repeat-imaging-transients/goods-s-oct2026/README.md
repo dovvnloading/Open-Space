@@ -45,7 +45,7 @@ Of 31 same-sign coincidences within 0.12″, 28 have one fixed flagged native de
 
 ## Audit and reproduction
 
-Use Python with NumPy, pandas, SciPy, Astropy, sep, lxml and Matplotlib. Run from this directory with writable scratch space. The two `acquire.py` calls download approximately 105 MB of public catalog inputs. The image steps use verified HTTP byte ranges from the STScI public AWS mirror. Their SCI and ERR files are large in full and need not be downloaded in full. `blind.py` requires the parent directory's existing `screen.py`. Public snapshot updates can change input hashes.
+Use Python with NumPy, pandas, SciPy, Astropy, sep, lxml and Matplotlib. Run from this directory with writable scratch space. The two `acquire.py` calls verify the frozen index and manifest before using cached bytes or downloading approximately 105 MB of public catalog inputs. Run from a D: campaign directory and invoke this script by path so its PID directories remain available to downstream scripts. A changed snapshot requires a separate campaign and receipts; this replay never regenerates frozen receipts. The image steps use verified HTTP byte ranges from the STScI public AWS mirror. Their SCI and ERR files are large in full and need not be downloaded in full. `blind.py` requires the parent directory's existing `screen.py`. Public snapshot updates can change input hashes.
 
 ```sh
 python acquire.py 8060
