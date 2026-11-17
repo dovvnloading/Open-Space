@@ -1,0 +1,39 @@
+name: Inspect ZTF precovery pixels
+on:
+  push:
+    branches: ['research/inbound-hyperbolic-search']
+    paths:
+      - 'results/inbound-hyperbolic-search/comparison/photometry/*.py'
+      - '.github/workflows/inbound-ztf-pixels.yml'
+      - 'results/inbound-hyperbolic-search/catalog/image-search/archive-results.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pixels:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    defaults:
+      run:
+        working-directory: results/inbound-hyperbolic-search
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/inbound-hyperbolic-search
+      - run: python -m pip install astropy numpy
+      - name: Measure reported ZTF pre-discovery exposures
+        if: hashFiles('results/inbound-hyperbolic-search/catalog/image-search/archive-results.json') == ''
+        run: |
+          python comparison/photometry/lookup.py comparison/photometry/controls
+          python comparison/photometry/forced.py comparison/photometry/controls comparison/photometry/controls
+      - name: Measure additional archived sky coverage
+        if: hashFiles('results/inbound-hyperbolic-search/catalog/image-search/archive-results.json') != ''
+        run: python comparison/photometry/forced.py catalog/image-search comparison/photometry/footprints
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ztf-pixels
+          path: |
+            results/inbound-hyperbolic-search/comparison/photometry/controls/*.json
+            results/inbound-hyperbolic-search/comparison/photometry/footprints/*.json

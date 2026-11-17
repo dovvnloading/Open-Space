@@ -1,0 +1,37 @@
+{
+  "spkid": "1004083",
+  "name": "C/2025 N1 (ATLAS)",
+  "shard": 1,
+  "strict_status": "output identity or astrometry mismatch",
+  "reviewed_status": "returned packed ID and all station/epoch pairs verified after rover-code expansion",
+  "input_sha256": "a896fd2cbe22c80bd94f0214a02d6ae0a21810b47503f1127c2ea1a33f134c57",
+  "source": "https://github.com/Bill-Gray/find_orb/blob/1de55cca12e7a585c9c7384acbb80538ea2afc3c/mpc_obs.cpp#L648-L654",
+  "reviewed_far_inbound_100au": true,
+  "reviewed_far_inbound_250au": true,
+  "returned_r_au": 3670.4745677490446,
+  "position_pairs": [
+    {
+      "returned_station": "24a",
+      "returned_utc_jd": 2460942.15785,
+      "input_station": "247",
+      "position": "0003I         V2025 09 23.65785 14 39 55.514-11 47 32.71         13.9 VZ#0K4j247",
+      "site_coordinates": "0003I         v2025 09 23.65785 1 046.0506   -15.8339     133           #0K4j247"
+    },
+    {
+      "returned_station": "24a",
+      "returned_utc_jd": 2460942.15978,
+      "input_station": "247",
+      "position": "0003I         V2025 09 23.65978 14 39 55.253-11 47 31.81         14.0 VZ#0K4j247",
+      "site_coordinates": "0003I         v2025 09 23.65978 1 046.0506   -15.8339     133           #0K4j247"
+    },
+    {
+      "returned_station": "24a",
+      "returned_utc_jd": 2460942.16269,
+      "input_station": "247",
+      "position": "0003I         V2025 09 23.66269 14 39 54.922-11 47 30.48         14.0 VZ#0K4j247",
+      "site_coordinates": "0003I         v2025 09 23.66269 1 046.0506   -15.8339     133           #0K4j247"
+    }
+  ],
+  "first_rover_site": "0003I         v2025 09 15.23990 1 204.1907   +20.0225                   #0K4i247",
+  "reason": "The three September 23 epochs match paired V/v entries for the second distinct rover in this control's raw file. Its 24a mapping is documented by Find_Orb. All other station/time pairs passed the strict guard."
+}

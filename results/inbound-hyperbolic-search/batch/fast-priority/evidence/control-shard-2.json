@@ -1,0 +1,99 @@
+{
+  "receipt": {
+    "mpc_url": "https://www.minorplanetcenter.net/iau/ECS/MPCAT-OBS/CmtObs.txt.gz",
+    "http_date": "Tue, 17 Nov 2026 06:23:21 GMT",
+    "last_modified": "Fri, 11 Sep 2026 20:30:58 GMT",
+    "bytes": 25344602,
+    "sha256_compressed": "680c9ee88ef6f615c30ca4faa347a77d5bed5787c8bbc74d8c7257c62a2aa54f",
+    "snapshot_run_id": 44029645452,
+    "snapshot_artifact_id": 14304767729,
+    "catalog_url": "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=spkid%2Cpdes%2Cfull_name%2Ckind%2Cclass%2Corbit_id%2Cepoch%2Ce%2Cq%2Ci%2Com%2Cw%2Ctp%2Csigma_e%2Csigma_q%2Csource%2Csoln_date%2Cdata_arc%2Cfirst_obs%2Clast_obs%2Cn_obs_used%2Ctwo_body%2CA1%2CA2%2CA3%2CDT%2CS0&full-prec=true&sb-cdata=%7B%22AND%22%3A%5B%22e%7CGE%7C1%22%5D%7D&sort=spkid",
+    "catalog_sha256": "90e391ede544a92c4648436656f38a42cc81f7d2ef7fea3b70dd832c24a26022",
+    "selection_count": 3,
+    "shard": 2,
+    "parts": 3,
+    "target_file_sha256": "81d385c927ecbc50b38000c8c82d2d9fa31e91a9d1a22d0cca42bde0cb80abb5",
+    "fitter_sha256": "7c126536dafd0c8f42008ba26a6d143624f6626993e0bd523c67603b592699ba",
+    "kernel_sha256": "dc8fa8136e71df25c1e4183cd777e6ae536eac099dc6225ad77192cf2192221d",
+    "flags": [
+      "-i",
+      "-h-1",
+      "-tEjd<target>",
+      "-r120,122",
+      "PERTURBERS=7fe",
+      "LINUX_JPL_FILENAME=<DE430t>"
+    ],
+    "input_header": "#interstellar\\n#Combine all",
+    "uses_catalogue_seed": false
+  },
+  "status_counts": {
+    "identity and observation epochs verified": 1
+  },
+  "records": [
+    {
+      "spkid": "50788063",
+      "pdes": "2017 U1",
+      "name": "'Oumuamua (A/2017 U1)",
+      "catalogue_vinf_kms": 26.405273249181437,
+      "catalogue_e": 1.201133796102373,
+      "catalogue_first": "2017-10-14",
+      "catalogue_last": "2018-01-02",
+      "catalogue_n": 207,
+      "catalogue_non_grav": {
+        "A1": "2.790193364334668E-7",
+        "A2": "1.441264159911234E-8",
+        "A3": "1.57392261588653E-8"
+      },
+      "aliases": [
+        "0001I",
+        "K17U010"
+      ],
+      "bulk_input_lines": 250,
+      "source": "frozen CmtObs",
+      "input_lines": 250,
+      "raw_sha256": "9cc8f41150ed48c3f9d26ae947a02bc5f19c6b6530d2a176d887e301e39cdb75",
+      "input_stations": 28,
+      "input_first_jd": 2458040.93936,
+      "input_last_jd": 2458120.978108,
+      "merged_input_identifiers": [
+        "0001I       ",
+        "0001IK17U010"
+      ],
+      "cpu_seconds": 120,
+      "wall_limit_s": 300,
+      "unpenalized": true,
+      "staged_sha256": "9938ce43c9adacba77475221b2b84441771b78442e7b90ab97c9477d610feb38",
+      "requested_epoch": 2348431.0073213754,
+      "returncode": 0,
+      "status": "identity and observation epochs verified",
+      "returned_name": "1I/`Oumuamua = A/2017 U1",
+      "returned_packed": "0001I",
+      "packed_residual_mismatches": [],
+      "station_time_mismatches": 0,
+      "mismatch_examples": [],
+      "returned_epoch": 2348431.00732138,
+      "center": "Object_-1",
+      "r_au": 1676.9157677971662,
+      "inbound": true,
+      "e": 1.1975014201771,
+      "q_au": 0.2524385861665,
+      "sigma_e": 0.000109,
+      "inv_a": -0.7823741337500386,
+      "vinf_bary_kms": 26.36279995441731,
+      "formal_e_excess_sigma": 1811.9396346522929,
+      "rms_per_coordinate_arcsec": 0.32602,
+      "weighted_rms": 0.6547,
+      "used": 167,
+      "total": 220,
+      "used_fraction": 0.759090909090909,
+      "first_used_jd": 2458046.36072,
+      "last_used_jd": 2458080.873957,
+      "used_days": 34.51323699997738,
+      "input_days": 80.03874799981713,
+      "used_span_fraction": 0.43120660758032137,
+      "solution_sha256": "47426799ed70f992b0e821d380d861e38455fb5bf7d3e82755ca0d8a4b226102",
+      "far_inbound_100au": true,
+      "far_inbound_250au": true
+    }
+  ]
+}
