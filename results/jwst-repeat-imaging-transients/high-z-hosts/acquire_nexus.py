@@ -90,7 +90,8 @@ def extract(arg):
     if npz.exists() != meta_path.exists(): raise ValueError(f'Partial stamp cache: {stem}')
     if npz.exists() and meta_path.exists():
         stored=json.loads(stem.with_suffix('.json').read_text())
-        if stored.get('url')!=url or stored.get('cache_identity')!=config or stored.get('stamp_sha256')!=hashlib.sha256(npz.read_bytes()).hexdigest():
+        frozen_fields=('epoch','kind','filter','binning','url','bytes','sha256','header')
+        if any(stored.get(k)!=frozen.get(k) for k in frozen_fields) or stored.get('cache_identity')!=config or stored.get('stamp_sha256')!=hashlib.sha256(npz.read_bytes()).hexdigest():
             raise ValueError('Use a separate cache directory for each filter')
         return
     for trial in range(3):
