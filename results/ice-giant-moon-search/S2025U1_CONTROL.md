@@ -23,4 +23,6 @@ python moon_spk.py 2460708.35 2460708.86 /data/ura184-feb.bsp /data/ura184-range
 python positive_control.py /data/headers /data/pixels /data/ura184-feb.bsp /data/horizons /data/control
 ```
 
-[Native-pixel predictions and measurements](manifests/control_ephemeris.csv) · [Stack measurements](manifests/control_summary.csv) · [FITS byte-range SHA-256 receipts](manifests/control_byte_ranges.csv) · [Ephemeris SHA-256 receipts](manifests/control_ephemeris_receipts.csv) · [NASA discovery notice and observation details](https://science.nasa.gov/blogs/webb/2025/08/19/new-moon-discovered-orbiting-uranus-using-nasas-webb-telescope/) · [JPL satellite ephemerides](https://ssd.jpl.nasa.gov/ftp/eph/satellites/bsp/)
+The saved predictions below preserve the positions used in this control, but the byte-level receipts for the original Horizons responses and SPK excerpt are not deposited. Those positions do not substitute for input hashes, so exact byte-level ephemeris reproduction remains pending.
+
+[Native-pixel predictions and measurements](manifests/control_ephemeris.csv) · [Stack measurements](manifests/control_summary.csv) · [FITS byte-range SHA-256 receipts](manifests/control_byte_ranges.csv) · [NASA discovery notice and observation details](https://science.nasa.gov/blogs/webb/2025/08/19/new-moon-discovered-orbiting-uranus-using-nasas-webb-telescope/) · [JPL satellite ephemerides](https://ssd.jpl.nasa.gov/ftp/eph/satellites/bsp/)
