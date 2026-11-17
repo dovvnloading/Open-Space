@@ -22,7 +22,7 @@ C = 299792.458 * KMS
 ARC = np.pi / (180 * 3600)
 RNG_SEED = 702613
 SURVEY = "X05"
-SITES = {"X05": (289.25058, .864981, -.500958), "F51": (203.74409, .936241, .351543)}
+SITES = {"X05": (289.25058, .864981, -.500958), "F51": (203.74409, .936241, .351543), "F51-all": (203.74409, .936241, .351543)}
 J2000 = dt.date(2000, 1, 1)
 RANGES, RADIAL = [a.ravel() for a in np.meshgrid(np.geomspace(.4, 3, 13), np.arange(-90, 91, 15) * KMS)]
 
@@ -139,7 +139,7 @@ def initial(seed):
     return pos, vel
 
 
-def proposals(seed, later):
+def pair_matches(seed, later):
     pos, vel = initial(seed)
     links = []
     for other in later:
@@ -153,7 +153,14 @@ def proposals(seed, later):
         error = np.linalg.norm(pred - other.sky,axis=1)/ARC
         if np.min(error) < 600:
             links.append((other, error))
-    for (b, e1), (c, e2) in combinations(links, 2):
+    return links
+
+
+def triples(seed, links, required=None):
+    pos, vel = initial(seed)
+    for (b, e1), (c, e2) in combinations(sorted(links,key=lambda q:q[0].mid), 2):
+        if required is not None and b.name not in required and c.name not in required:
+            continue
         if not .7 <= c.mid-b.mid <= 3.25 or b.mid-seed.mid > 3.25 or b.night == c.night:
             continue
         i = np.argmin(e1**2+e2**2)
@@ -195,16 +202,18 @@ def correct(tracks, guess):
 
 
 def scan(tracks):
-    result, n = [], 0
+    result, n, cache = [], 0, {}
     tracks = sorted(tracks, key=lambda a:a.mid)
     tt = np.array([a.mid for a in tracks])
     for i,a in enumerate(tracks):
-        for triple,guess in proposals(a, tracks[i+1:np.searchsorted(tt,a.mid+6.5,side="right")]):
+        links = pair_matches(a, tracks[i+1:np.searchsorted(tt,a.mid+6.5,side="right")])
+        cache[a.name]=links
+        for triple,guess in triples(a,links):
             n += 1
             found = correct(triple,guess)
             if found is not None:
                 result.append(found)
-    return n,result
+    return n,result,cache
 
 
 
@@ -239,7 +248,7 @@ def make_injection(rng, tracks, idx, epoch_triples):
             parts.append(attributable(f"inj-{idx}-{j}",tr.t[keep],noisy[keep]))
         else:
             parts.append(attributable(f"inj-{idx}-{j}",tr.t,noisy))
-    return parts,dict(rho_au=float(rho), true_vinf_kms=float(vinf), times_utc_days=[float(t.mid) for t in [a,b,c]])
+    return parts,dict(rho_au=float(rho), true_vinf_kms=float(vinf), radial_helio_kms=float(position@velocity/np.linalg.norm(position)/KMS), times_utc_days=[float(t.mid) for t in [a,b,c]])
 
 
 def cadence_templates(tracks):
@@ -281,7 +290,8 @@ def main():
     SURVEY=args.survey
     path=args.data/f"{SURVEY.lower()}.mpc"
     real,qc=parse(path)
-    before,accepted=scan(real)
+    before,accepted,pairs=scan(real)
+    print("REAL_SCREEN="+json.dumps(dict(survey=SURVEY,proposals=before,passing=accepted)),flush=True)
     rng=np.random.default_rng(RNG_SEED)
     by_day,options=cadence_templates(real)
     # Remove infeasible time gaps at the epoch level before drawing an object.
@@ -308,13 +318,23 @@ def main():
             for i,a in enumerate(pool):
                 if a.name not in inject_ids and not any(.7<=z.mid-a.mid<=6.5 for z in injected):
                     continue
-                for triple,guess in proposals(a,pool[i+1:]):
+                if a.name in inject_ids:
+                    links=pair_matches(a,pool[i+1:])
+                    required=None
+                else:
+                    added=pair_matches(a,injected)
+                    if not added:
+                        continue
+                    links=pairs[a.name]+added
+                    required=inject_ids
+                for triple,guess in triples(a,links,required):
                     ids={x.name for x in triple}
                     if ids.isdisjoint(inject_ids):
                         continue
                     found=correct(triple,guess)
                     if found and ids == inject_ids:
                         row["recovered"]=True
+                        row["fit_vinf_kms"]=found["v_inf_helio_kms"]
                     elif found:
                         row["mixed_accepts"]+=1
         recovery.append(row)
@@ -326,7 +346,7 @@ def main():
                                                   1. if k==n else float(beta.ppf(.975,k+1,n-k))] if n else None))
     scramble=[]
     for _ in range(5):
-        nprop,hits=scan(rotate_sky(real,rng))
+        nprop,hits,_=scan(rotate_sky(real,rng))
         scramble.append([nprop,len(hits)])
     result["night_rotation_controls_proposed_passing"]=scramble
     (args.data/f"{SURVEY.lower()}-injections.json").write_text(json.dumps(recovery,indent=2)+"\n")
