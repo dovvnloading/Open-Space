@@ -19,6 +19,19 @@ All 53 candidate apertures yielded 99 or 100 populated channels out of 102 with 
 
 Both fields have one CatWISE source within 12 arcsec, low Gaia RUWE (1.084 and 1.072), and high-significance AllWISE W3 photometry. AllWISE W4 is lower quality, particularly for FGK18 (quality C, signal-to-noise 2–3) versus FGK31 (quality B, 3–10). An infrared source below catalog resolution or circumstellar dust could still produce the measured colors. The spectra measure the sum of light within a 19 arcsec radius. [Channel spectra](channel_spectra.csv) · [Feature windows and blank statistics](feature_tests.csv) · [Catalog photometry](../literature/fgk_baseline.csv) · [CatWISE neighborhoods](../literature/fgk_catwise_comparison.csv) · [Final-year NEOWISE coverage](../literature/fgk_neo_coverage.csv)
 
+## Image checks of the two warm fields
+
+| Field | W3 offset from Gaia | W3 offset from W1 | W4 offset from Gaia | W4 injected-source 90th percentile |
+|---|---:|---:|---:|---:|
+| FGK18 | 0.132″ | 0.241″ | 1.534″ | 1.929″ |
+| FGK31 | 0.665″ | 0.594″ | 0.864″ | 1.940″ |
+
+FGK18 has no second Gaia DR3 source within 20″. The Legacy Surveys DR10 cutout returned a blank image and the DSS2 fallback timed out, leaving optical morphology untested. FGK31 has a structured optical field. Two fainter Gaia sources lie inside the 19″ SPHEREx aperture, at 7.781″ and 13.980″, with G = 20.16 and 19.74 versus 14.64 for the target. Its W3 peak lies 0.371″ east and 0.552″ south of the propagated target position. This subarcsecond shift warrants retaining confusion as an explanation. Neither imaged neighbor can be assigned the infrared excess from these data. [Gaia neighborhood](scenes/gaia_neighbors.csv) · [Optical and unWISE cutout receipts](scenes/viewer_queries.json)
+
+The W3 offsets from Gaia exceed the 90th percentile of 24 same-brightness test-source placements (0.080″ and 0.079″). Those placements measure local background effects only. Absolute astrometric registration, the approximate PSF and unresolved blends limit interpretation. W4 has larger placement scatter than its observed offsets in both fields. The fitted centroids alone do not establish which object emits at 12 or 22 µm. [Native WISE fits](scenes/centroids.csv) · [Image hashes and archive locations](scenes/wise_queries.json)
+
+![Optical, unWISE and AllWISE fields of FGK18 and FGK31. Cyan marks the Gaia position and orange the fitted AllWISE centroid.](scenes/fields.png)
+
 ## Reproduction and limits
 
 The additional reduction covers the 48 published Gaia IDs outside the five already measured in `../spectra/`. The first five and their control stars keep their original labels. FGK6 through FGK53 follow the publication order after removing those five. The stars were selected in the literature on W1/W2 excess and span distances beyond the blind 300 pc volume. [Contardo & Hogg 2024](https://arxiv.org/abs/2403.18941)
