@@ -197,7 +197,11 @@ class Referee(unittest.TestCase):
                             r["dataRights"] == "PUBLIC" for r in inputs))
         for p in rows("nircam/go8826_inputs.csv"):
             self.assertTrue(SHA.fullmatch(p["sha256"]))
-            self.assertEqual(p["rights"], "PUBLIC")
+            if "mast.stsci.edu" in p["url"]:
+                self.assertEqual(p["rights"], "PUBLIC")
+            else:
+                self.assertEqual(p["rights"], "")
+                self.assertTrue(p["url"].startswith(("https://raw.githubusercontent.com/spacetelescope/spaceKLIP/", "https://ssb.stsci.edu/trds/calspec/", "https://svo2.cab.inta-csic.es/theory/fps/")))
 
 
 if __name__ == "__main__":
