@@ -121,6 +121,10 @@ def replay_check(path, cohort):
     new = json.loads((path/"report.json").read_text())
     assert int(new["all_trigger_count"]) == int(old["all_trigger_count"])
     assert new["seed"] == old["seed"] and new["trials_per_cell"] == old["trials_per_cell"]
+    if (path/"products.csv").exists():
+        expected={r["tic"]:(r["sha256"],int(r["bytes"])) for r in table(before/"products.csv")}
+        obtained={r["tic"]:(r["sha256"],int(r["bytes"])) for r in table(path/"products.csv")}
+        assert obtained==expected, "Replayed FITS bytes differ from the original SHA-256 receipts"
     events_match(table(before/"triggers.csv"), table(path/"triggers.csv"))
     new_limits = {(float(x["depth"]),int(x["duration_h"])):x for x in new["limits"]}
     for original in old["limits"]:
