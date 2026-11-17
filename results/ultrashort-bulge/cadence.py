@@ -43,10 +43,15 @@ def one(job):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--cache',type=Path,default=Path.cwd())
-    p.add_argument('--out',type=Path,required=True);p.add_argument('--workers',type=int,default=3)
+    p.add_argument('--out',type=Path,required=True);p.add_argument('--resume',action='store_true');p.add_argument('--workers',type=int,default=3)
     a=p.parse_args()
-    with mp.Pool(a.workers) as pool, a.out.open('w') as out:
+    done=set()
+    if a.resume and a.out.is_file():
+        with a.out.open() as old:
+            done={r['event'] for r in csv.DictReader(old) if 'error' in r and r['error'] is not None}
+    with mp.Pool(a.workers) as pool, a.out.open('a' if done else 'w') as out:
         cols=['event','season_d','distinct_epochs_in_season']+[f'days_{w:g}' for w in WIDTHS]+['error']
-        writer=csv.DictWriter(out,cols);writer.writeheader()
-        for row in pool.imap(one,inputs(a.cache),chunksize=5):
+        writer=csv.DictWriter(out,cols)
+        if not done: writer.writeheader()
+        for row in pool.imap(one,(j for j in inputs(a.cache) if j[0] not in done),chunksize=5):
             writer.writerow(row)

@@ -1,0 +1,158 @@
+[
+  {
+    "event": "KMT-2024-BLG-0456",
+    "service": "MAST",
+    "queried_utc": "2026-11-17T10:44:51.899109+00:00",
+    "url": "https://mast.stsci.edu/vo-tap/api/v0.1/caom/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+obs_collection%2Cobs_id%2Cfilters%2Ct_min%2Ct_max%2Ccalib_level+FROM+dbo.ObsPointing+WHERE+obs_collection+IN+%28%27HST%27%2C%27HLA%27%2C%27JWST%27%29+AND+1%3DCONTAINS%28POINT%28%27ICRS%27%2C267.61158333333333%2C-28.74106111111111%29%2Cs_region%29",
+    "error": "HTTP Error 400: Bad Request"
+  },
+  {
+    "event": "KMT-2024-BLG-0456",
+    "service": "Euclid",
+    "queried_utc": "2026-11-17T10:44:51.900136+00:00",
+    "url": "https://eas.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+120+obs_collection%2Cobs_id%2Cinstrument_name%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C267.611583333%2C-28.741061111%29%2Cs_region%29+AND+dataproduct_type%3D%27image%27",
+    "status": 200,
+    "bytes": 50,
+    "sha256": "1d9a36a41f5f2f956f7b5d19986377770f6b198adb3bf62ee0d7236cf3ced300",
+    "rows": [],
+    "header": "obs_collection,obs_id,instrument_name,t_min,t_max\n"
+  },
+  {
+    "event": "KMT-2024-BLG-0456",
+    "service": "CADC",
+    "queried_utc": "2026-11-17T10:44:51.900706+00:00",
+    "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+120+obs_collection%2Cobs_id%2Cinstrument_name%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C267.611583333%2C-28.741061111%29%2Cs_region%29+AND+dataproduct_type%3D%27image%27+AND+%28facility_name+IN+%28%27HST%27%2C%27JWST%27%29+OR+obs_collection+IN+%28%27HST%27%2C%27JWST%27%2C%27HSTHLA%27%29%29",
+    "status": 200,
+    "bytes": 50,
+    "sha256": "1d9a36a41f5f2f956f7b5d19986377770f6b198adb3bf62ee0d7236cf3ced300",
+    "rows": [],
+    "header": "obs_collection,obs_id,instrument_name,t_min,t_max\n"
+  },
+  {
+    "event": "KMT-2024-BLG-0456",
+    "service": "SkyBoT",
+    "queried_utc": "2026-11-17T10:44:54.934625+00:00",
+    "url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?-ep=2460404.62440&-ra=267.6115833&-dec=-28.7410611&-rd=0.01&-mime=text&-loc=500&-output=basic",
+    "status": 204,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "response": ""
+  },
+  {
+    "event": "KMT-2025-BLG-1507",
+    "service": "MAST",
+    "queried_utc": "2026-11-17T10:44:55.889694+00:00",
+    "url": "https://mast.stsci.edu/vo-tap/api/v0.1/caom/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+obs_collection%2Cobs_id%2Cfilters%2Ct_min%2Ct_max%2Ccalib_level+FROM+dbo.ObsPointing+WHERE+obs_collection+IN+%28%27HST%27%2C%27HLA%27%2C%27JWST%27%29+AND+1%3DCONTAINS%28POINT%28%27ICRS%27%2C266.30062499999997%2C-32.65263888888889%29%2Cs_region%29",
+    "error": "HTTP Error 400: Bad Request"
+  },
+  {
+    "event": "KMT-2025-BLG-1507",
+    "service": "Euclid",
+    "queried_utc": "2026-11-17T10:44:57.246056+00:00",
+    "url": "https://eas.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+120+obs_collection%2Cobs_id%2Cinstrument_name%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C266.300625000%2C-32.652638889%29%2Cs_region%29+AND+dataproduct_type%3D%27image%27",
+    "status": 200,
+    "bytes": 50,
+    "sha256": "1d9a36a41f5f2f956f7b5d19986377770f6b198adb3bf62ee0d7236cf3ced300",
+    "rows": [],
+    "header": "obs_collection,obs_id,instrument_name,t_min,t_max\n"
+  },
+  {
+    "event": "KMT-2025-BLG-1507",
+    "service": "CADC",
+    "queried_utc": "2026-11-17T10:44:58.279866+00:00",
+    "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+120+obs_collection%2Cobs_id%2Cinstrument_name%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C266.300625000%2C-32.652638889%29%2Cs_region%29+AND+dataproduct_type%3D%27image%27+AND+%28facility_name+IN+%28%27HST%27%2C%27JWST%27%29+OR+obs_collection+IN+%28%27HST%27%2C%27JWST%27%2C%27HSTHLA%27%29%29",
+    "status": 200,
+    "bytes": 50,
+    "sha256": "1d9a36a41f5f2f956f7b5d19986377770f6b198adb3bf62ee0d7236cf3ced300",
+    "rows": [],
+    "header": "obs_collection,obs_id,instrument_name,t_min,t_max\n"
+  },
+  {
+    "event": "KMT-2025-BLG-1507",
+    "service": "SkyBoT",
+    "queried_utc": "2026-11-17T10:45:00.597354+00:00",
+    "url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?-ep=2460850.58238&-ra=266.3006250&-dec=-32.6526389&-rd=0.01&-mime=text&-loc=500&-output=basic",
+    "status": 204,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "response": ""
+  },
+  {
+    "event": "KMT-2024-BLG-3429",
+    "service": "MAST",
+    "queried_utc": "2026-11-17T10:45:04.545551+00:00",
+    "url": "https://mast.stsci.edu/vo-tap/api/v0.1/caom/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+obs_collection%2Cobs_id%2Cfilters%2Ct_min%2Ct_max%2Ccalib_level+FROM+dbo.ObsPointing+WHERE+obs_collection+IN+%28%27HST%27%2C%27HLA%27%2C%27JWST%27%29+AND+1%3DCONTAINS%28POINT%28%27ICRS%27%2C268.000125%2C-29.931280555555556%29%2Cs_region%29",
+    "error": "HTTP Error 400: Bad Request"
+  },
+  {
+    "event": "KMT-2024-BLG-3429",
+    "service": "Euclid",
+    "queried_utc": "2026-11-17T10:45:07.250146+00:00",
+    "url": "https://eas.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+120+obs_collection%2Cobs_id%2Cinstrument_name%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C268.000125000%2C-29.931280556%29%2Cs_region%29+AND+dataproduct_type%3D%27image%27",
+    "status": 200,
+    "bytes": 50,
+    "sha256": "1d9a36a41f5f2f956f7b5d19986377770f6b198adb3bf62ee0d7236cf3ced300",
+    "rows": [],
+    "header": "obs_collection,obs_id,instrument_name,t_min,t_max\n"
+  },
+  {
+    "event": "KMT-2024-BLG-3429",
+    "service": "CADC",
+    "queried_utc": "2026-11-17T10:45:07.546600+00:00",
+    "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+120+obs_collection%2Cobs_id%2Cinstrument_name%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C268.000125000%2C-29.931280556%29%2Cs_region%29+AND+dataproduct_type%3D%27image%27+AND+%28facility_name+IN+%28%27HST%27%2C%27JWST%27%29+OR+obs_collection+IN+%28%27HST%27%2C%27JWST%27%2C%27HSTHLA%27%29%29",
+    "status": 200,
+    "bytes": 50,
+    "sha256": "1d9a36a41f5f2f956f7b5d19986377770f6b198adb3bf62ee0d7236cf3ced300",
+    "rows": [],
+    "header": "obs_collection,obs_id,instrument_name,t_min,t_max\n"
+  },
+  {
+    "event": "KMT-2024-BLG-3429",
+    "service": "SkyBoT",
+    "queried_utc": "2026-11-17T10:45:10.535897+00:00",
+    "url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?-ep=2460476.16591&-ra=268.0001250&-dec=-29.9312806&-rd=0.01&-mime=text&-loc=500&-output=basic",
+    "status": 204,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "response": ""
+  },
+  {
+    "event": "KMT-2024-BLG-0909",
+    "service": "MAST",
+    "queried_utc": "2026-11-17T10:45:15.234031+00:00",
+    "url": "https://mast.stsci.edu/vo-tap/api/v0.1/caom/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+obs_collection%2Cobs_id%2Cfilters%2Ct_min%2Ct_max%2Ccalib_level+FROM+dbo.ObsPointing+WHERE+obs_collection+IN+%28%27HST%27%2C%27HLA%27%2C%27JWST%27%29+AND+1%3DCONTAINS%28POINT%28%27ICRS%27%2C269.32604166666664%2C-27.318619444444444%29%2Cs_region%29",
+    "error": "HTTP Error 400: Bad Request"
+  },
+  {
+    "event": "KMT-2024-BLG-0909",
+    "service": "Euclid",
+    "queried_utc": "2026-11-17T10:45:16.366908+00:00",
+    "url": "https://eas.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+120+obs_collection%2Cobs_id%2Cinstrument_name%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C269.326041667%2C-27.318619444%29%2Cs_region%29+AND+dataproduct_type%3D%27image%27",
+    "status": 200,
+    "bytes": 50,
+    "sha256": "1d9a36a41f5f2f956f7b5d19986377770f6b198adb3bf62ee0d7236cf3ced300",
+    "rows": [],
+    "header": "obs_collection,obs_id,instrument_name,t_min,t_max\n"
+  },
+  {
+    "event": "KMT-2024-BLG-0909",
+    "service": "CADC",
+    "queried_utc": "2026-11-17T10:45:18.135778+00:00",
+    "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+120+obs_collection%2Cobs_id%2Cinstrument_name%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C269.326041667%2C-27.318619444%29%2Cs_region%29+AND+dataproduct_type%3D%27image%27+AND+%28facility_name+IN+%28%27HST%27%2C%27JWST%27%29+OR+obs_collection+IN+%28%27HST%27%2C%27JWST%27%2C%27HSTHLA%27%29%29",
+    "status": 200,
+    "bytes": 50,
+    "sha256": "1d9a36a41f5f2f956f7b5d19986377770f6b198adb3bf62ee0d7236cf3ced300",
+    "rows": [],
+    "header": "obs_collection,obs_id,instrument_name,t_min,t_max\n"
+  },
+  {
+    "event": "KMT-2024-BLG-0909",
+    "service": "SkyBoT",
+    "queried_utc": "2026-11-17T10:45:20.139945+00:00",
+    "url": "https://ssp.imcce.fr/webservices/skybot/api/conesearch.php?-ep=2460435.84736&-ra=269.3260417&-dec=-27.3186194&-rd=0.01&-mime=text&-loc=500&-output=basic",
+    "status": 200,
+    "bytes": 294,
+    "sha256": "ea4bc8fe127bed912d121e96a7db7fbd1ccad2f6314082d471e6f343382a71e2",
+    "response": "# Flag: 1\n# Ticket: 188210198358367002\n# Num | Name | RA(h) | DE(deg) | Class | Mv | Err(arcsec) | d(arcsec) | dRA(arcsec/h) | dDEC(arcsec/h) | Dg(ua) | Dh(ua) \n - | 2017 SK65 | 17 57 17.3086 | -27 18 38.208 | MB>Inner | 23.4 | 1.490 | 31.434 | -2.7873 | -4.344 | 1.46135534101 | 2.29225086178\n"
+  }
+]
