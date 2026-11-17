@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 198 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 24 carefully recorded searches that found nothing.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 199 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 25 carefully recorded searches that found nothing.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -234,6 +234,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### White dwarfs
 
+- **No new planet or debris transit confirmed around 42 bright white dwarfs.** In 39 uncrowded TESS targets, injections place a 95% upper limit of 11.13% on the fraction with a transiting companion 11.2 Earth radii in size on a 1.40794-day orbit. The fraction with planets at other orbital tilts, and the occurrence of irregular debris, remain unmeasured. *Null result* · [Details](results/tess-white-dwarf-occultations/README.md)
 - **No faster supernova survivor found in the surveyed star catalogues.** None of 67,433 Gaia stars with well-measured parallaxes in four white-dwarf-oriented spectral catalogues had a measured sideways speed above 1,000 km/s. The all-sky speed cut missed 8 of 11 already known D⁶ white dwarfs, so this is a weak limit; one blended-looking fast star still needs follow-up. *Null result* · [Details](results/gaia-dr3-supernova-survivors/README.md)
 - **Two white dwarfs with speed swings of about 250 km/s.** WD J0238+2733 and WD J0421−1325 are strong candidates for hidden companions. *Candidate* · [Details](results/desi-white-dwarf-velocity-variables/README.md)
 - **Revised gravitational-wave clocks for eclipsing white-dwarf pairs.** Using the published parameters, ZTF J0720+6439's eclipses should drift about 13 seconds in 10 years rather than the 0.6 seconds stated in a preprint. Older survey data extend the eclipse record of seven pairs. *Prediction* · [Details](results/eclipsing-dwd-gr-chirps/README.md)

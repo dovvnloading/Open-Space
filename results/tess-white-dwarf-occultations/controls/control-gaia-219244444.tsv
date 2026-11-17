@@ -1,0 +1,61 @@
+#
+#   VizieR Astronomical Server vizier.cfa.harvard.edu
+#    Date: 2026-11-17T09:15:34 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-17T09:15:34	  Query execution date
+#INFO	request=https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=I%2F355%2Fgaiadr3&-out=Source%2CRA_ICRS%2CDE_ICRS%2CpmRA%2CpmDE%2CGmag%2CBPmag%2CRPmag&-out.max=unlimited&-c=65.27318+-48.65196&-c.rs=130	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=065.273180-48.651960,rs=130.	
+#Constraint -c.rs=130
+
+#RESOURCE=yCat_1355
+#Name: I/355
+#Title: Gaia DR3 Part 1. Main source (Gaia Collaboration, 2022)
+#INFO	ivoid=ivo://cds.vizier/i/355	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/i/355	    IVOID of underlying data collection
+#INFO	creator=Gaia collaboration	    First author or institution
+#INFO	cites=bibcode:2022yCat.1355....0G	    Bibcode of the dataset
+#INFO	journal=yCat	    Journal name
+#INFO	original_date=2022	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/I/355	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.1355	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-12-12	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	H_2016.000:	ICRS
+#Table	I_355_gaiadr3:
+#Name: I/355/gaiadr3
+#Title: Gaia DR3 source catalog (1811709771 sources)
+#Column	Source	(I19)	Unique source identifier (unique within a particular Data Release) (source_id)	[ucd=meta.id;meta.main]
+#Column	RA_ICRS	(F15.11)	Right ascension (ICRS) at Ep=2016.0 (ra)	[ucd=pos.eq.ra;meta.main]
+#Column	DE_ICRS	(F15.11)	Declination (ICRS) at Ep=2016.0 (dec)	[ucd=pos.eq.dec;meta.main]
+#Column	pmRA	(F9.3)	? Proper motion in right ascension direction, pmRA*cosDE (pmra)	[ucd=pos.pm;pos.eq.ra]
+#Column	pmDE	(F9.3)	? Proper motion in declination direction (pmdec)	[ucd=pos.pm;pos.eq.dec]
+#Column	Gmag	(F9.6)	? G-band mean magnitude (phot_g_mean_mag)	[ucd=phot.mag;em.opt]
+#Column	BPmag	(F9.6)	? Integrated BP mean magnitude (phot_bp_mean_mag)	[ucd=phot.mag;em.opt.B]
+#Column	RPmag	(F9.6)	? Integrated RP mean magnitude (phot_rp_mean_mag)	[ucd=phot.mag;em.opt.R]
+Source	RA_ICRS	DE_ICRS	pmRA	pmDE	Gmag	BPmag	RPmag
+ 	deg	deg	mas/yr	mas/yr	mag	mag	mag
+-------------------	---------------	---------------	---------	---------	---------	---------	---------
+4788739241976923392	065.28768797264	-48.68433820211	    8.602	    9.813	18.441292	18.951962	17.813559
+4788740036547604480	065.23896874133	-48.67629508014	   -0.832	   -2.338	20.535524	20.873446	19.561344
+4788740036547973760	065.24487880544	-48.67023658604	         	         	20.647030	18.065813	16.675695
+4788740238409336576	065.23973225020	-48.67265376103	    1.872	  -12.916	19.790530	20.422083	19.186766
+4788740242705311104	065.24191445841	-48.66809183199	    6.305	    8.613	20.863113	21.141272	20.058346
+4788740891244672128	065.31653254075	-48.64140609403	    3.721	    1.905	20.570023	20.729942	19.650854
+4788741548375134336	065.27338195415	-48.65433424724	   30.030	 -533.886	13.643824	14.490911	12.625301
+4788741548375327360	065.26014694102	-48.64635298795	    9.186	  -46.326	20.898310	21.254873	19.965273
+4788741548376090496	065.27173807855	-48.66130706236	   25.928	    3.306	17.680223	19.135504	16.498592
+4788741582735113472	065.27540220825	-48.63853531633	         	         	20.965368	20.882020	21.059730
+4788741651454494848	065.30349750260	-48.63655578436	    3.281	    7.933	20.681156	21.205318	19.641317
+4788741651455303936	065.29425540719	-48.62371530159	   17.905	    2.729	17.036076	17.401750	16.475376
+4788741720173820416	065.29347301463	-48.62373320657	    3.257	   -1.224	20.071692	         	
+4788741750237827968	065.23640294794	-48.64007767903	    7.867	    1.017	19.455069	20.395811	18.574015
+4788741891973473536	065.25107325833	-48.61913720931	    6.547	    4.607	19.284641	19.778488	18.300026
+4788741891973473664	065.25110651229	-48.62020712479	    0.474	   -5.424	18.468920	19.247026	17.653791
+
