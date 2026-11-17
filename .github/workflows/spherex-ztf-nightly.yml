@@ -48,6 +48,12 @@ jobs:
         continue-on-error: true
         working-directory: results/spherex-waste-heat/optical
         run: python d_science.py
+      - name: Compare D with its neighbors on the same exposures
+        if: ${{ !contains(github.event.head_commit.message, '[warm FGK]') }}
+        id: neighbors
+        continue-on-error: true
+        working-directory: results/spherex-waste-heat/optical
+        run: python d_catalog_controls.py
       - name: Recover the three warm FGK DR24 queries
         if: ${{ contains(github.event.head_commit.message, '[warm FGK]') }}
         id: warm
@@ -59,6 +65,7 @@ jobs:
         env:
           RECOVERY_STATUS: ${{ steps.recover.outcome }}
           PIXEL_STATUS: ${{ steps.pixel.outcome }}
+          CONTROL_STATUS: ${{ steps.neighbors.outcome }}
           WARM_STATUS: ${{ steps.warm.outcome }}
         run: |
           set -euo pipefail
@@ -70,16 +77,22 @@ jobs:
             if (("${#extras[@]}")); then git add -f "${extras[@]}"; fi
           fi
           if [[ -f d_science_cutouts.zip ]]; then git add -f d_science_cutouts.zip d_science_receipts.json; fi
+          if [[ -f d_catalog_control_receipt.json ]]; then git add -f d_catalog_control_receipt.json; fi
+          if [[ -f d_catalog_control_input.csv.gz ]]; then git add -f d_catalog_control_input.csv.gz; fi
+          if [[ -f d_catalog_controls.csv ]]; then git add -f d_catalog_controls.csv; fi
           if [[ -f d_aperture_summary.csv ]]; then git add -f d_aperture_controls.csv d_aperture_summary.csv; fi
           if [[ -f hats_receipts.json ]]; then git add -f hats_receipts.json hats_*.csv.gz; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           if ! git diff --cached --quiet; then
             git commit -m 'Record unique-night optical coverage and DR24 fallback inputs'
-            git fetch origin research/spherex-waste-heat
-            git rebase --autostash FETCH_HEAD
-            git push origin HEAD:research/spherex-waste-heat
+            for attempt in 1 2 3; do
+              git fetch origin research/spherex-waste-heat
+              git rebase --autostash FETCH_HEAD
+              if git push origin HEAD:research/spherex-waste-heat; then break; fi
+              if [[ "$attempt" == 3 ]]; then exit 1; fi
+            done
           fi
           test "$RECOVERY_STATUS" = success
-          test "$PIXEL_STATUS" != failure
+          test "$PIXEL_STATUS" != failure || test "$CONTROL_STATUS" = success
           test "$WARM_STATUS" != failure
