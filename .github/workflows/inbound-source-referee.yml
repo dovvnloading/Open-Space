@@ -111,8 +111,11 @@ jobs:
           from pathlib import Path
           root=Path('results/inbound-hyperbolic-search')
           path=root/'orbits/robust'
-          sys.path.insert(0,str(path))
-          import replay
+          import importlib.util
+          spec=importlib.util.spec_from_file_location('referee_robust',path/'replay.py')
+          replay=importlib.util.module_from_spec(spec)
+          sys.modules[spec.name]=replay
+          spec.loader.exec_module(replay)
           src=root/'catalog/sbdb.json.gz'
           cat=json.loads(gzip.decompress(src.read_bytes()))
           row=next(dict(zip(cat['fields'],r)) for r in cat['data'] if str(r[0])=='1000500')
