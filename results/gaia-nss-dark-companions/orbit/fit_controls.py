@@ -209,14 +209,17 @@ def fit(name, start, astro, t, y, error, instrument, rng, output, primary_mass=N
     return fit_info
 
 
-def main(cache):
+def main(cache, tables, out):
+    if out.resolve() == HERE.resolve() or HERE.resolve() in out.resolve().parents:
+        raise ValueError('fit output must be separate from the frozen source directory')
+    out.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(110572)
-    with (HERE/"nss_controls.csv").open() as f:
+    with (tables/"nss_controls.csv").open() as f:
         gaia = {IDS[r["source_id"]]:r for r in csv.DictReader(f)}
-    with (HERE/"published_rv.csv").open() as f:
+    with (tables/"published_rv.csv").open() as f:
         epochs = list(csv.DictReader(f))
     info = {}
-    with (HERE/"control_residuals.csv").open("w") as f:
+    with (out/"control_residuals.csv").open("w") as f:
         writer = csv.writer(f)
         writer.writerow(["control","jd_rel_reference","instrument","rv_kms","err_kms",
                          "model_kms","observed_minus_model_kms"])
@@ -235,10 +238,13 @@ def main(cache):
                     start[8] = np.median(y)
             info[name] = fit(name,start,astro,t,y,s,inst,rng,writer)
             print(name,info[name]["m2_msun"],info[name]["proposal_ess"], flush=True)
-    (HERE/"control_fits.json").write_text(json.dumps(info,indent=2)+"\n")
+    (out/"control_fits.json").write_text(json.dumps(info,indent=2)+"\n")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("cache",type=Path,help="Directory with ESA BH3 timeseries")
-    main(parser.parse_args().cache)
+    parser.add_argument("--tables", type=Path, required=True, help="Verified table directory")
+    parser.add_argument("--out", type=Path, required=True, help="Separate fit output directory")
+    args=parser.parse_args()
+    main(args.cache,args.tables,args.out)
