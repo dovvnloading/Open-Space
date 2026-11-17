@@ -1,0 +1,12 @@
+{
+  "key": "older_day_61356",
+  "adql": "SELECT d.oid,d.measurement_id,d.mjd,d.band,p.visit,d.ra,d.dec,p.psfflux,p.psffluxerr,p.ssobjectid,p.diaobjectid,p.isdipole,p.glint_trail,p.psfflux_flag,p.pixelflags_edge,p.pixelflags_crcenter,p.pixelflags_saturatedcenter,p.pixelflags_streakcenter,p.pixelflags_injectedcenter,p.pixelflags_injected_templatecenter FROM alerce_tap.detection AS d JOIN alerce_tap.lsst_detection AS p ON d.measurement_id=p.measurement_id AND p.oid=d.oid AND p.sid=d.sid JOIN alerce_tap.object AS o ON o.oid=d.oid AND o.sid=d.sid WHERE d.sid=1 AND d.mjd>=61356.000428240739 AND d.mjd<61357.000428240739 AND o.firstmjd<61345.000428240739 AND o.n_det>=3 AND p.psffluxerr>0 AND p.psfflux>=5*p.psffluxerr AND p.isnegative='False'",
+  "url": "https://tap.alerce.online/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=100000&QUERY=SELECT+d.oid%2Cd.measurement_id%2Cd.mjd%2Cd.band%2Cp.visit%2Cd.ra%2Cd.dec%2Cp.psfflux%2Cp.psffluxerr%2Cp.ssobjectid%2Cp.diaobjectid%2Cp.isdipole%2Cp.glint_trail%2Cp.psfflux_flag%2Cp.pixelflags_edge%2Cp.pixelflags_crcenter%2Cp.pixelflags_saturatedcenter%2Cp.pixelflags_streakcenter%2Cp.pixelflags_injectedcenter%2Cp.pixelflags_injected_templatecenter+FROM+alerce_tap.detection+AS+d+JOIN+alerce_tap.lsst_detection+AS+p+ON+d.measurement_id%3Dp.measurement_id+AND+p.oid%3Dd.oid+AND+p.sid%3Dd.sid+JOIN+alerce_tap.object+AS+o+ON+o.oid%3Dd.oid+AND+o.sid%3Dd.sid+WHERE+d.sid%3D1+AND+d.mjd%3E%3D61356.000428240739+AND+d.mjd%3C61357.000428240739+AND+o.firstmjd%3C61345.000428240739+AND+o.n_det%3E%3D3+AND+p.psffluxerr%3E0+AND+p.psfflux%3E%3D5%2Ap.psffluxerr+AND+p.isnegative%3D%27False%27",
+  "utc_start": "2026-11-17T09:56:44.800153+00:00",
+  "status": 200,
+  "http_date": "Tue, 17 Nov 2026 09:57:01 GMT",
+  "rows": 47763,
+  "bytes": 9803580,
+  "sha256": "f014324c34adf435cc301edfc2ff936e3f6721bbd994652483b52641746f4ecd",
+  "utc_end": "2026-11-17T09:57:02.462166+00:00"
+}
