@@ -1,0 +1,54 @@
+{
+  "astrometry_sha256": "1cac48597c36469605fe6853c7df7ccac585dfba0dfec321a152ce322227ee35",
+  "requests": {
+    "FGK18_master": {
+      "url": "https://api.skymapper.nci.org.au/public/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+object_id%2Craj2000%2Cdej2000%2Cmean_epoch%2Cg_psf%2Ce_g_psf%2Cr_psf%2Ce_r_psf%2Cclass_star%2Cflags_psf%2Cgaia_dr3_id1%2Cgaia_dr3_dist1%2Cgaia_dr3_dist2%2Cself_dist1+FROM+dr4.master+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Craj2000%2Cdej2000%29%2CCIRCLE%28%27ICRS%27%2C89.860370897%2C-9.365070191%2C0.00166667%29%29",
+      "query": "SELECT object_id,raj2000,dej2000,mean_epoch,g_psf,e_g_psf,r_psf,e_r_psf,class_star,flags_psf,gaia_dr3_id1,gaia_dr3_dist1,gaia_dr3_dist2,self_dist1 FROM dr4.master WHERE 1=CONTAINS(POINT('ICRS',raj2000,dej2000),CIRCLE('ICRS',89.860370897,-9.365070191,0.00166667))",
+      "utc": "2026-11-17T06:43:42.732327+00:00",
+      "http": 200,
+      "bytes": 249,
+      "sha256": "9a6a77ac5d3d2a48bc501d43791073ff50e2d865e2d08b76fe762b89a17b02a8"
+    },
+    "FGK18_peers": {
+      "url": "https://api.skymapper.nci.org.au/public/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+object_id%2Craj2000%2Cdej2000%2Cmean_epoch%2Cg_psf%2Ce_g_psf%2Cr_psf%2Ce_r_psf%2Cclass_star%2Cflags_psf%2Cgaia_dr3_id1%2Cgaia_dr3_dist1%2Cgaia_dr3_dist2%2Cself_dist1+FROM+dr4.master+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Craj2000%2Cdej2000%29%2CCIRCLE%28%27ICRS%27%2C89.860370897%2C-9.365070191%2C0.12000000%29%29+AND+r_psf+BETWEEN+12.7018+AND+15.7018",
+      "query": "SELECT object_id,raj2000,dej2000,mean_epoch,g_psf,e_g_psf,r_psf,e_r_psf,class_star,flags_psf,gaia_dr3_id1,gaia_dr3_dist1,gaia_dr3_dist2,self_dist1 FROM dr4.master WHERE 1=CONTAINS(POINT('ICRS',raj2000,dej2000),CIRCLE('ICRS',89.860370897,-9.365070191,0.12000000)) AND r_psf BETWEEN 12.7018 AND 15.7018",
+      "utc": "2026-11-17T06:43:56.775207+00:00",
+      "http": 200,
+      "bytes": 3583,
+      "sha256": "ab897e230a6f2efdff2009a6179032ad20eaf047c277cb0f73386feefb22a59a"
+    },
+    "FGK18_exposures": {
+      "url": "https://api.skymapper.nci.org.au/public/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+p.object_id%2Cp.image_id%2Cp.ccd%2Cp.filter%2Cp.ra_img%2Cp.decl_img%2Cp.flags%2Cp.nimaflags%2Cp.img_qual%2Cp.mag_psf%2Cp.e_mag_psf%2Cp.use_in_clipped%2Ci.night_mjd%2Ci.date+AS+exposure_mjd+FROM+dr4.photometry+AS+p+JOIN+dr4.images+AS+i+ON+i.image_id%3Dp.image_id+WHERE+p.object_id+IN+%2826467667%2C26471060%2C26467611%2C26467691%2C26471027%2C26471089%2C26471066%2C26467694%2C26467295%2C26471083%2C26471047%2C26471036%2C26471212%2C26471180%2C26467380%2C26470567%2C26471049%29+AND+p.filter+IN+%28%27g%27%2C%27r%27%29+ORDER+BY+p.image_id%2Cp.object_id",
+      "query": "SELECT p.object_id,p.image_id,p.ccd,p.filter,p.ra_img,p.decl_img,p.flags,p.nimaflags,p.img_qual,p.mag_psf,p.e_mag_psf,p.use_in_clipped,i.night_mjd,i.date AS exposure_mjd FROM dr4.photometry AS p JOIN dr4.images AS i ON i.image_id=p.image_id WHERE p.object_id IN (26467667,26471060,26467611,26467691,26471027,26471089,26471066,26467694,26467295,26471083,26471047,26471036,26471212,26471180,26467380,26470567,26471049) AND p.filter IN ('g','r') ORDER BY p.image_id,p.object_id",
+      "utc": "2026-11-17T06:44:00.949045+00:00",
+      "http": 200,
+      "bytes": 27059,
+      "sha256": "736d220f5674451dcee257fad7037cca811dbf2983db3f7a52851dbd8ee5db52"
+    },
+    "FGK31_master": {
+      "url": "https://api.skymapper.nci.org.au/public/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+object_id%2Craj2000%2Cdej2000%2Cmean_epoch%2Cg_psf%2Ce_g_psf%2Cr_psf%2Ce_r_psf%2Cclass_star%2Cflags_psf%2Cgaia_dr3_id1%2Cgaia_dr3_dist1%2Cgaia_dr3_dist2%2Cself_dist1+FROM+dr4.master+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Craj2000%2Cdej2000%29%2CCIRCLE%28%27ICRS%27%2C279.288258305%2C-82.414220261%2C0.00166667%29%29",
+      "query": "SELECT object_id,raj2000,dej2000,mean_epoch,g_psf,e_g_psf,r_psf,e_r_psf,class_star,flags_psf,gaia_dr3_id1,gaia_dr3_dist1,gaia_dr3_dist2,self_dist1 FROM dr4.master WHERE 1=CONTAINS(POINT('ICRS',raj2000,dej2000),CIRCLE('ICRS',279.288258305,-82.414220261,0.00166667))",
+      "utc": "2026-11-17T06:44:02.035101+00:00",
+      "http": 200,
+      "bytes": 258,
+      "sha256": "8cbe0b7c0f0a058aad5789a5fea49739a1bfa545c95177c702e4ddd7a28f1520"
+    },
+    "FGK31_peers": {
+      "url": "https://api.skymapper.nci.org.au/public/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+object_id%2Craj2000%2Cdej2000%2Cmean_epoch%2Cg_psf%2Ce_g_psf%2Cr_psf%2Ce_r_psf%2Cclass_star%2Cflags_psf%2Cgaia_dr3_id1%2Cgaia_dr3_dist1%2Cgaia_dr3_dist2%2Cself_dist1+FROM+dr4.master+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Craj2000%2Cdej2000%29%2CCIRCLE%28%27ICRS%27%2C279.288258305%2C-82.414220261%2C0.12000000%29%29+AND+r_psf+BETWEEN+13.1441+AND+16.1441",
+      "query": "SELECT object_id,raj2000,dej2000,mean_epoch,g_psf,e_g_psf,r_psf,e_r_psf,class_star,flags_psf,gaia_dr3_id1,gaia_dr3_dist1,gaia_dr3_dist2,self_dist1 FROM dr4.master WHERE 1=CONTAINS(POINT('ICRS',raj2000,dej2000),CIRCLE('ICRS',279.288258305,-82.414220261,0.12000000)) AND r_psf BETWEEN 13.1441 AND 16.1441",
+      "utc": "2026-11-17T06:44:18.940959+00:00",
+      "http": 200,
+      "bytes": 6534,
+      "sha256": "2549ae69d38dde49731d65b6833ec1a0347edf2bdc308c638267079196e31c43"
+    },
+    "FGK31_exposures": {
+      "url": "https://api.skymapper.nci.org.au/public/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=10000&QUERY=SELECT+p.object_id%2Cp.image_id%2Cp.ccd%2Cp.filter%2Cp.ra_img%2Cp.decl_img%2Cp.flags%2Cp.nimaflags%2Cp.img_qual%2Cp.mag_psf%2Cp.e_mag_psf%2Cp.use_in_clipped%2Ci.night_mjd%2Ci.date+AS+exposure_mjd+FROM+dr4.photometry+AS+p+JOIN+dr4.images+AS+i+ON+i.image_id%3Dp.image_id+WHERE+p.object_id+IN+%28484628481%2C484628224%2C484628226%2C484628506%2C484628610%2C484628705%2C484628439%2C484628190%2C484628541%2C484628476%2C484628193%2C484628714%2C484628156%2C484628352%2C484628652%2C484628378%2C484628270%29+AND+p.filter+IN+%28%27g%27%2C%27r%27%29+ORDER+BY+p.image_id%2Cp.object_id",
+      "query": "SELECT p.object_id,p.image_id,p.ccd,p.filter,p.ra_img,p.decl_img,p.flags,p.nimaflags,p.img_qual,p.mag_psf,p.e_mag_psf,p.use_in_clipped,i.night_mjd,i.date AS exposure_mjd FROM dr4.photometry AS p JOIN dr4.images AS i ON i.image_id=p.image_id WHERE p.object_id IN (484628481,484628224,484628226,484628506,484628610,484628705,484628439,484628190,484628541,484628476,484628193,484628714,484628156,484628352,484628652,484628378,484628270) AND p.filter IN ('g','r') ORDER BY p.image_id,p.object_id",
+      "utc": "2026-11-17T06:44:23.753807+00:00",
+      "http": 200,
+      "bytes": 45203,
+      "sha256": "b72930b9e217fff9559161fe975f7fa476f57054f2a620c8b67fb4f4f09ecf8b"
+    }
+  },
+  "errors": {}
+}

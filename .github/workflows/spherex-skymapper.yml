@@ -1,0 +1,41 @@
+name: SPHEREx warm-star optical cross-check
+on:
+  push:
+    branches: [research/spherex-waste-heat]
+    paths:
+      - .github/workflows/spherex-skymapper.yml
+      - results/spherex-waste-heat/warm_fgk/skymapper/measure.py
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  photometry:
+    if: github.ref == 'refs/heads/research/spherex-waste-heat'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy requests
+      - name: Retrieve SkyMapper individual photometry
+        run: python results/spherex-waste-heat/warm_fgk/skymapper/measure.py
+      - name: Record optical measurements
+        run: |
+          set -euo pipefail
+          study=results/spherex-waste-heat/warm_fgk/skymapper
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- "$study"
+          if ! git diff --cached --quiet; then
+            git commit -m 'Save SkyMapper g and r exposure photometry and sampled-night tests'
+            for attempt in 1 2 3; do
+              git fetch origin research/spherex-waste-heat
+              git rebase FETCH_HEAD
+              if git push origin HEAD:research/spherex-waste-heat; then break; fi
+              if [ "$attempt" = '3' ]; then exit 1; fi
+              sleep 3
+            done
+          fi
+          python -c "import json; assert json.load(open('$study/summary.json'))['complete']"
