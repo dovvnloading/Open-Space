@@ -1,0 +1,27 @@
+{
+  "query": "SELECT DISTINCT n.source_id, a.mass_flame, a.mass_flame_lower, a.mass_flame_upper, a.flags_flame FROM gaiadr3.nss_two_body_orbit AS n JOIN gaiadr3.astrophysical_parameters AS a ON n.source_id=a.source_id WHERE a.mass_flame IS NOT NULL",
+  "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=500000&QUERY=SELECT+DISTINCT+n.source_id%2C+a.mass_flame%2C+a.mass_flame_lower%2C+a.mass_flame_upper%2C+a.flags_flame+FROM+gaiadr3.nss_two_body_orbit+AS+n+JOIN+gaiadr3.astrophysical_parameters+AS+a+ON+n.source_id%3Da.source_id+WHERE+a.mass_flame+IS+NOT+NULL",
+  "bytes": 12517722,
+  "sha256": "b7184e60f49ed05e988beb727cba5aa3381f60962584aa8be001dc397948bd0b",
+  "downloaded_unique_ids": 237769,
+  "flags_accepted": [
+    "00",
+    "10"
+  ],
+  "newly_modelled_stars": 77295,
+  "threshold_unique": 6797,
+  "new_to_1p4_screen": 6750,
+  "above_3": 291,
+  "new_to_3_stratum": 271,
+  "thresholds_union": [
+    7733,
+    383
+  ],
+  "rows_by_solution": {
+    "Orbital": 894,
+    "AstroSpectroSB1": 863,
+    "SB1": 5089,
+    "OrbitalAlternative": 32,
+    "OrbitalAlternativeValidated": 2
+  }
+}

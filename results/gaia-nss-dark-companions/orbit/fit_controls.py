@@ -116,7 +116,7 @@ def companion(f,m1):
     return m
 
 
-def fit(name, start, astro, t, y, error, instrument, rng, output):
+def fit(name, start, astro, t, y, error, instrument, rng, output, primary_mass=None, include_mass_density=False):
     # Parameters use AU, mas, days, radians and km/s. Free nuisance
     # astrometric offsets and proper motions appear only in BH3.
     npar = len(start)
@@ -160,7 +160,7 @@ def fit(name, start, astro, t, y, error, instrument, rng, output):
     ess = 1/(w@w)
     # Report weighted quantiles. Each Gaussian prior on the luminous mass
     # is independent of the conditional orbital solution.
-    m1 = rng.normal(*MASSES[name], len(w))
+    m1 = rng.normal(*(primary_mass if primary_mass is not None else MASSES[name]), len(w))
     valid = (w>0)&(m1>0)
     w, d, m1 = w[valid], draws[valid], m1[valid]
     w /= w.sum()
@@ -181,6 +181,10 @@ def fit(name, start, astro, t, y, error, instrument, rng, output):
                     inclination_deg=quant(np.rad2deg(np.arccos(d[:,4]))),
                     f_rv_msun=quant(f*sin_i**3),m2_min_msun=quant(companion(f*sin_i**3,m1)),
                     m2_msun=quant(companion(f,m1)))
+    if include_mass_density:
+        masses = companion(f,m1)
+        counts, edges = np.histogram(masses,bins=60,weights=w,density=True)
+        fit_info["mass_posterior_density"] = dict(edges=edges.tolist(),pdf=counts.tolist())
     for time, inst, v, s, dev in zip(t,instrument,y,error,residual):
         output.writerow([name,f"{time:.6f}",inst,v,s,f"{v-dev:.6f}",f"{dev:.6f}"])
     return fit_info
