@@ -23,4 +23,4 @@ The primary cohort is strictly first-broker-detection objects in the **2026-11-0
 
 **Recovery and pending rate denominator.** At AB 18 and a 2-mag/day rise/fade, the two-point injection recovery was 4.27% (Rubin) and 0.436% (ZTF) *conditional on the recorded alert epochs*. For a measured rise **and** fade within a day, only 244 Rubin and nine ZTF cohort objects have the needed temporal visits; no observed triple passed. These fractions are **not survey exposure efficiencies**. No independent footprint, area-time/volume-time, trigger-generation or host-vetting completeness is measured, so **no numerical effective exposure or transient rate limit can responsibly be computed**. Those calibrations, longer-baseline photometry and classification of the two unresolved Rubin objects remain pending. [Recovery design](../recovery/design.md).
 
-**Referee verdict:** reproducible, scoped null finding within the frozen broker-new window; no [REMARKABLE] label and no discovery claim.
+**Referee verdict:** reproducible, scoped null finding within the frozen broker-new window; no discovery-level designation or claim.
