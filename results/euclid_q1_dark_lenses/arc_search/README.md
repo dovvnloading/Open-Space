@@ -1,0 +1,5 @@
+# Independent VIS ring search
+
+This pilot selects sky positions without a catalogue target or central-galaxy requirement. The frozen fields use zero-based entries 45, 120, 190 and 300 from the lexically sorted public Q1 MER tile directory, spanning EDF-S, EDF-F and EDF-N. Each tile contributes eight 384-row strips at the positions in fields.json. Partial and uncovered regions count only when the detector can use them. No tile was chosen using a candidate location. The scope is bright, nearly closed rings. Open arcs, doubles and sub-resolution rings have little or no sensitivity here.
+
+Pre-run detection design: 2×2 binning of the 0.1 arcsec VIS mosaic; radii 0.8, 1.2, 1.8 and 2.4 arcsec; coherent azimuthal emission in at least six of eight sectors; a faint central aperture; local background and noise calibration. Visually inspect any passing configurations and use independent NISP photometry before assigning an evidence level. Artificial rings on real backgrounds test the response of this geometry only.
