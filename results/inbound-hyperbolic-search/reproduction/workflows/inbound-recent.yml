@@ -1,0 +1,33 @@
+name: Refit fourteen recent MPC arcs
+on:
+  push:
+    branches: [research/inbound-hyperbolic-search]
+    paths:
+      - 'results/inbound-hyperbolic-search/orbits/recent/*.py'
+      - '.github/workflows/inbound-recent.yml'
+permissions:
+  contents: read
+jobs:
+  refit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      OPENBLAS_NUM_THREADS: 1
+      PYTHONUNBUFFERED: 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            results/inbound-hyperbolic-search/orbits
+            results/borisov-704021/propagate.py
+            results/inbound-hyperbolic-search/batch/evidence/recent_stratified.json.gz
+          sparse-checkout-cone-mode: false
+      - run: python -m pip install numpy scipy pyerfa jplephem
+      - run: python results/inbound-hyperbolic-search/orbits/recent/replay.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: recent-orbit-fits
+          path: results/inbound-hyperbolic-search/orbits/recent/evidence/
+          retention-days: 30

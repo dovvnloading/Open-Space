@@ -1,0 +1,113 @@
+{
+  "receipt": {
+    "mpc_url": "https://www.minorplanetcenter.net/iau/ECS/MPCAT-OBS/CmtObs.txt.gz",
+    "http_date": "Tue, 17 Nov 2026 06:23:21 GMT",
+    "last_modified": "Fri, 11 Sep 2026 20:30:58 GMT",
+    "bytes": 25344602,
+    "sha256_compressed": "680c9ee88ef6f615c30ca4faa347a77d5bed5787c8bbc74d8c7257c62a2aa54f",
+    "snapshot_run_id": 44029645452,
+    "snapshot_artifact_id": 14304767729,
+    "catalog_url": "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=spkid%2Cpdes%2Cfull_name%2Ckind%2Cclass%2Corbit_id%2Cepoch%2Ce%2Cq%2Ci%2Com%2Cw%2Ctp%2Csigma_e%2Csigma_q%2Csource%2Csoln_date%2Cdata_arc%2Cfirst_obs%2Clast_obs%2Cn_obs_used%2Ctwo_body%2CA1%2CA2%2CA3%2CDT%2CS0&full-prec=true&sb-cdata=%7B%22AND%22%3A%5B%22e%7CGE%7C1%22%5D%7D&sort=spkid",
+    "catalog_sha256": "90e391ede544a92c4648436656f38a42cc81f7d2ef7fea3b70dd832c24a26022",
+    "selection_count": 3,
+    "shard": 1,
+    "parts": 3,
+    "target_file_sha256": "81d385c927ecbc50b38000c8c82d2d9fa31e91a9d1a22d0cca42bde0cb80abb5",
+    "fitter_sha256": "7c126536dafd0c8f42008ba26a6d143624f6626993e0bd523c67603b592699ba",
+    "kernel_sha256": "dc8fa8136e71df25c1e4183cd777e6ae536eac099dc6225ad77192cf2192221d",
+    "flags": [
+      "-i",
+      "-h-1",
+      "-tEjd<target>",
+      "-r120,122",
+      "PERTURBERS=7fe",
+      "LINUX_JPL_FILENAME=<DE430t>"
+    ],
+    "input_header": "#interstellar\\n#Combine all",
+    "uses_catalogue_seed": false
+  },
+  "status_counts": {
+    "output identity or astrometry mismatch": 1
+  },
+  "records": [
+    {
+      "spkid": "1004083",
+      "pdes": "2025 N1",
+      "name": "C/2025 N1 (ATLAS)",
+      "catalogue_vinf_kms": 57.981170084725626,
+      "catalogue_e": 6.123467394525528,
+      "catalogue_first": "2025-10-03",
+      "catalogue_last": "2026-10-16",
+      "catalogue_n": 117,
+      "catalogue_non_grav": {
+        "A1": "4.618075728659534E-8",
+        "A2": "-9.559184898971008E-9",
+        "A3": "-8.294590264785863E-9",
+        "DT": "28.46530795960495"
+      },
+      "aliases": [
+        "0003I",
+        "K25N010"
+      ],
+      "bulk_input_lines": 8183,
+      "source": "frozen CmtObs",
+      "input_lines": 8183,
+      "raw_sha256": "a896fd2cbe22c80bd94f0214a02d6ae0a21810b47503f1127c2ea1a33f134c57",
+      "input_stations": 339,
+      "input_first_jd": 2460804.017659,
+      "input_last_jd": 2461137.460536,
+      "merged_input_identifiers": [
+        "0003I       ",
+        "0003IK25N010"
+      ],
+      "cpu_seconds": 120,
+      "wall_limit_s": 300,
+      "unpenalized": true,
+      "staged_sha256": "b9194984578211ffba882ce9765f8db496de9c28692672b127719b63ff2c1ea1",
+      "requested_epoch": 2351402.941795881,
+      "returncode": 0,
+      "status": "output identity or astrometry mismatch",
+      "returned_name": "3I = C/2025 N1 (ATLAS)",
+      "returned_packed": "0003I",
+      "packed_residual_mismatches": [],
+      "station_time_mismatches": 3,
+      "mismatch_examples": [
+        [
+          "24a",
+          2460942.15785
+        ],
+        [
+          "24a",
+          2460942.15978
+        ],
+        [
+          "24a",
+          2460942.16269
+        ]
+      ],
+      "returned_epoch": 2351402.94179588,
+      "center": "Object_-1",
+      "r_au": 3670.4745677490446,
+      "inbound": true,
+      "e": 6.1509566253392,
+      "q_au": 1.3616866322201,
+      "sigma_e": 5.26e-06,
+      "inv_a": -3.7827768177036862,
+      "vinf_bary_kms": 57.96817819562278,
+      "formal_e_excess_sigma": 979269.3204066921,
+      "rms_per_coordinate_arcsec": 0.59863,
+      "weighted_rms": 0.7711,
+      "used": 4100,
+      "total": 8151,
+      "used_fraction": 0.5030057661636609,
+      "first_used_jd": 2460804.017659,
+      "last_used_jd": 2461132.384603,
+      "used_days": 328.36694399965927,
+      "input_days": 333.4428769997321,
+      "used_span_fraction": 0.9847772036825458,
+      "solution_sha256": "57f211e99f05435b97cd9965db3b8693dd57792a0e82cc354dd1b41a89ce432c",
+      "far_inbound_100au": false,
+      "far_inbound_250au": false
+    }
+  ]
+}

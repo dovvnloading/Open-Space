@@ -1,0 +1,49 @@
+name: Recheck formal negative energies under activity and arc tests
+on:
+  push:
+    branches: [research/inbound-hyperbolic-search]
+    paths:
+      - 'results/inbound-hyperbolic-search/orbits/robust/current.txt'
+      - 'results/inbound-hyperbolic-search/orbits/robust/targets-*.json'
+      - '.github/workflows/inbound-force-checks.yml'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  refit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        shard: [0,1,2]
+    env:
+      OPENBLAS_NUM_THREADS: 1
+      PYTHONUNBUFFERED: 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            results/inbound-hyperbolic-search/orbits
+            results/inbound-hyperbolic-search/batch/refit.py
+            results/inbound-hyperbolic-search/batch/evidence/latest_mpc_refits.json.gz
+            results/inbound-hyperbolic-search/catalog/audit.py
+            results/inbound-hyperbolic-search/catalog/sbdb.json.gz
+            results/borisov-704021/propagate.py
+          sparse-checkout-cone-mode: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: mpc-observation-snapshot
+          run-id: 44029645452
+          github-token: ${{ github.token }}
+          path: mpc-snapshot
+      - run: python -m pip install numpy scipy pyerfa jplephem
+      - run: python results/inbound-hyperbolic-search/orbits/robust/replay.py mpc-snapshot ${{ matrix.shard }} 3
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: negative-energy-followup-${{ matrix.shard }}
+          path: results/inbound-hyperbolic-search/orbits/robust/evidence/
+          retention-days: 30

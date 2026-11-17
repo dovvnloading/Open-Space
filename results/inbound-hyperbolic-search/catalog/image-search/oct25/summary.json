@@ -1,0 +1,312 @@
+{
+  "initial_aperture": {
+    "ra": 167.839372253,
+    "dec": -11.366983117,
+    "mid_jd": 2460974.041956011,
+    "radius_pixels": 6
+  },
+  "coords_jd": [
+    2460974.041956011,
+    2460974.0469907112,
+    2460974.052025511
+  ],
+  "coords": [
+    [
+      167.839372251,
+      -11.366983118
+    ],
+    [
+      167.846237713,
+      -11.36399842
+    ],
+    [
+      167.85310398,
+      -11.361012459
+    ]
+  ],
+  "Gaia_sources_within_90arcsec": [],
+  "frames": {
+    "20251025541736_sciimg.fits": {
+      "coords": [
+        {
+          "flux_DN": 1138.11083984375,
+          "background_control_median": 21.266845703125,
+          "sigma_DN": 223.39987646484374,
+          "control_n": 48,
+          "SNR": 4.999304439259087,
+          "controls_geq": 1
+        },
+        {
+          "flux_DN": 635.1602783203125,
+          "background_control_median": -122.08062744140625,
+          "sigma_DN": 309.79743226318357,
+          "control_n": 48,
+          "SNR": 2.4443098195804818,
+          "controls_geq": 2
+        },
+        {
+          "flux_DN": -297.561767578125,
+          "background_control_median": 36.7698974609375,
+          "sigma_DN": 381.52535603027343,
+          "control_n": 48,
+          "SNR": -0.8763026093933683,
+          "controls_geq": 37
+        }
+      ],
+      "magzp": 26.048378,
+      "seeing": 2.13,
+      "shape": [
+        277,
+        277
+      ]
+    },
+    "20251025546782_sciimg.fits": {
+      "coords": [
+        {
+          "flux_DN": 209.19482421875,
+          "background_control_median": 106.70849609375,
+          "sigma_DN": 639.8678630859374,
+          "control_n": 48,
+          "SNR": 0.1601679566008077,
+          "controls_geq": 18
+        },
+        {
+          "flux_DN": 675.50537109375,
+          "background_control_median": -159.877197265625,
+          "sigma_DN": 485.8512052734375,
+          "control_n": 48,
+          "SNR": 1.7194205948078711,
+          "controls_geq": 6
+        },
+        {
+          "flux_DN": 479.08544921875,
+          "background_control_median": -21.958251953125,
+          "sigma_DN": 574.5893036132812,
+          "control_n": 48,
+          "SNR": 0.8720031821356268,
+          "controls_geq": 13
+        }
+      ],
+      "magzp": 26.054789,
+      "seeing": 2.339,
+      "shape": [
+        278,
+        277
+      ]
+    },
+    "20251025551817_sciimg.fits": {
+      "coords": [
+        {
+          "flux_DN": 124.638671875,
+          "background_control_median": 211.1513671875,
+          "sigma_DN": 862.0551638671875,
+          "control_n": 48,
+          "SNR": -0.1003563332587711,
+          "controls_geq": 25
+        },
+        {
+          "flux_DN": 2204.3642578125,
+          "background_control_median": -2.14453125,
+          "sigma_DN": 1143.1026981445311,
+          "control_n": 48,
+          "SNR": 1.9302804486806613,
+          "controls_geq": 2
+        },
+        {
+          "flux_DN": -79.203125,
+          "background_control_median": 107.09765625,
+          "sigma_DN": 1155.7084177734375,
+          "control_n": 48,
+          "SNR": -0.16120050558160942,
+          "controls_geq": 27
+        }
+      ],
+      "magzp": 26.047817,
+      "seeing": 2.214,
+      "shape": [
+        278,
+        277
+      ]
+    }
+  },
+  "receipts": [
+    {
+      "file": "panstarrs.csv",
+      "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/mean.csv?ra=167.839372253&dec=-11.366983117&radius=0.025&columns=%5BobjID%2CraMean%2CdecMean%2CnDetections%2CrMeanPSFMag%2CrMeanKronMag%2CiMeanPSFMag%2CgMeanPSFMag%5D",
+      "status": 200,
+      "http_date": "Tue, 17 Nov 2026 06:19:59 GMT",
+      "bytes": 51289,
+      "sha256": "e8941273b7977615a0325997ca93feede9114708c62c8cd0c25a2b14bfe4d486"
+    },
+    {
+      "file": "gaia.tsv",
+      "url": "https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source=I%2F355%2Fgaiadr3&-c=167.839372253+-11.366983117&-c.rs=90&-out=Source%2CRA_ICRS%2CDE_ICRS%2CGmag%2CpmRA%2CpmDE&-out.max=5000",
+      "error": "<urlopen error timed out>"
+    },
+    {
+      "file": "horizons.json",
+      "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27DES%3DC%2F2025+V1%3B%27&CENTER=%27I41%27&EPHEM_TYPE=%27OBSERVER%27&TLIST=%272460974.04195601%2C2460974.04699071%2C2460974.05202551%27&QUANTITIES=%271%27&CSV_FORMAT=%27YES%27&CAL_FORMAT=%27JD%27&ANG_FORMAT=%27DEG%27&EXTRA_PREC=%27YES%27",
+      "status": 200,
+      "http_date": "Tue, 17 Nov 2026 06:21:00 GMT",
+      "bytes": 8234,
+      "sha256": "dbba71d5b8644ab916f665e852a93c52cd24e0f28b7d58112e64e038804b12e0"
+    },
+    {
+      "file": "reference.fits",
+      "url": "https://irsa.ipac.caltech.edu/ibe/data/ztf/products/ref/001/field001360/zr/ccd13/q4/ztf_001360_zr_c13_q4_refimg.fits?center=167.839372253%2C-11.366983117&size=280arcsec&gzip=false",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "file": "reference.fits",
+      "url": "https://irsa.ipac.caltech.edu/ibe/data/ztf/products/ref/001/field001360/zr/ccd13/q4/ztf_001360_zr_c13_q4_refimg.fits",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "file": "20251025541736_sciimg.fits.fits",
+      "url": "https://irsa.ipac.caltech.edu/ibe/data/ztf/products/sci/2025/1025/541736/ztf_20251025541736_001360_zr_c13_o_q4_sciimg.fits?center=167.839372253%2C-11.366983117&size=280arcsec&gzip=false",
+      "status": 200,
+      "http_date": "Tue, 17 Nov 2026 06:21:01 GMT",
+      "bytes": 331200,
+      "sha256": "9ff7f8d89606a44af07ba54292a7335e821b244a502c61df27c5d0c2a12ba4c9"
+    },
+    {
+      "file": "20251025541736_scimrefdiffimg.fits.fz.fits",
+      "url": "https://irsa.ipac.caltech.edu/ibe/data/ztf/products/sci/2025/1025/541736/ztf_20251025541736_001360_zr_c13_o_q4_scimrefdiffimg.fits.fz?center=167.839372253%2C-11.366983117&size=280arcsec&gzip=false",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "file": "20251025541736_scimrefdiffimg.fits.fz.fits",
+      "url": "https://irsa.ipac.caltech.edu/ibe/data/ztf/products/sci/2025/1025/541736/ztf_20251025541736_001360_zr_c13_o_q4_scimrefdiffimg.fits.fz",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "file": "20251025546782_sciimg.fits.fits",
+      "url": "https://irsa.ipac.caltech.edu/ibe/data/ztf/products/sci/2025/1025/546782/ztf_20251025546782_001360_zr_c13_o_q4_sciimg.fits?center=167.839372253%2C-11.366983117&size=280arcsec&gzip=false",
+      "status": 200,
+      "http_date": "Tue, 17 Nov 2026 06:21:02 GMT",
+      "bytes": 331200,
+      "sha256": "1757f6ee8a0e4c5cf7747250d2fd0c9f3f538e891f696c73a5321bafb63974ea"
+    },
+    {
+      "file": "20251025546782_scimrefdiffimg.fits.fz.fits",
+      "url": "https://irsa.ipac.caltech.edu/ibe/data/ztf/products/sci/2025/1025/546782/ztf_20251025546782_001360_zr_c13_o_q4_scimrefdiffimg.fits.fz?center=167.839372253%2C-11.366983117&size=280arcsec&gzip=false",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "file": "20251025546782_scimrefdiffimg.fits.fz.fits",
+      "url": "https://irsa.ipac.caltech.edu/ibe/data/ztf/products/sci/2025/1025/546782/ztf_20251025546782_001360_zr_c13_o_q4_scimrefdiffimg.fits.fz",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "file": "20251025551817_sciimg.fits.fits",
+      "url": "https://irsa.ipac.caltech.edu/ibe/data/ztf/products/sci/2025/1025/551817/ztf_20251025551817_001360_zr_c13_o_q4_sciimg.fits?center=167.839372253%2C-11.366983117&size=280arcsec&gzip=false",
+      "status": 200,
+      "http_date": "Tue, 17 Nov 2026 06:21:03 GMT",
+      "bytes": 331200,
+      "sha256": "64212965284d914a80b32001dcede9890bd27b46c8e5e102f5bec9dab0e9d308"
+    },
+    {
+      "file": "20251025551817_scimrefdiffimg.fits.fz.fits",
+      "url": "https://irsa.ipac.caltech.edu/ibe/data/ztf/products/sci/2025/1025/551817/ztf_20251025551817_001360_zr_c13_o_q4_scimrefdiffimg.fits.fz?center=167.839372253%2C-11.366983117&size=280arcsec&gzip=false",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "file": "20251025551817_scimrefdiffimg.fits.fz.fits",
+      "url": "https://irsa.ipac.caltech.edu/ibe/data/ztf/products/sci/2025/1025/551817/ztf_20251025551817_001360_zr_c13_o_q4_scimrefdiffimg.fits.fz",
+      "error": "HTTP Error 404: Not Found"
+    }
+  ],
+  "ps1_all_rows_count": 608,
+  "ps1_sources_within_6_1arcsec": [
+    {
+      "objID": "94361678398170043",
+      "raMean": "167.83981015",
+      "decMean": "-11.3669261",
+      "nDetections": "1",
+      "rMeanPSFMag": "21.425899505615234",
+      "rMeanKronMag": "21.475299835205078",
+      "iMeanPSFMag": "-999.0",
+      "gMeanPSFMag": "-999.0",
+      "offset_ENR_arcsec": [
+        1.5455074034332295,
+        0.20526119999857428,
+        1.5590783477079584
+      ]
+    },
+    {
+      "objID": "94351678398719711",
+      "raMean": "167.8399116499325",
+      "decMean": "-11.367388100150512",
+      "nDetections": "4",
+      "rMeanPSFMag": "22.07110023498535",
+      "rMeanKronMag": "22.02739906311035",
+      "iMeanPSFMag": "21.69499969482422",
+      "gMeanPSFMag": "21.997100830078125",
+      "offset_ENR_arcsec": [
+        1.9037398122402018,
+        -1.4579393418422626,
+        2.3978766434493264
+      ]
+    },
+    {
+      "objID": "94351678382249712",
+      "raMean": "167.83822524",
+      "decMean": "-11.36721927",
+      "nDetections": "1",
+      "rMeanPSFMag": "21.970500946044922",
+      "rMeanKronMag": "-999.0",
+      "iMeanPSFMag": "-999.0",
+      "gMeanPSFMag": "-999.0",
+      "offset_ENR_arcsec": [
+        -4.048251262863769,
+        -0.8501507999980618,
+        4.136555894704609
+      ]
+    },
+    {
+      "objID": "94351678402068942",
+      "raMean": "167.84020705",
+      "decMean": "-11.36786062",
+      "nDetections": "1",
+      "rMeanPSFMag": "21.653600692749023",
+      "rMeanKronMag": "-999.0",
+      "iMeanPSFMag": "-999.0",
+      "gMeanPSFMag": "-999.0",
+      "offset_ENR_arcsec": [
+        2.9463205818828078,
+        -3.1590107999996064,
+        4.319740062288517
+      ]
+    },
+    {
+      "objID": "94351678405118652",
+      "raMean": "167.84051345",
+      "decMean": "-11.36810228",
+      "nDetections": "1",
+      "rMeanPSFMag": "21.88960075378418",
+      "rMeanKronMag": "-999.0",
+      "iMeanPSFMag": "-999.0",
+      "gMeanPSFMag": "-999.0",
+      "offset_ENR_arcsec": [
+        4.027724355825851,
+        -4.028986800000922,
+        5.696955162285765
+      ]
+    },
+    {
+      "objID": "94361678396301896",
+      "raMean": "167.83962327",
+      "decMean": "-11.36538203",
+      "nDetections": "1",
+      "rMeanPSFMag": "21.943300247192383",
+      "rMeanKronMag": "-999.0",
+      "iMeanPSFMag": "-999.0",
+      "gMeanPSFMag": "-999.0",
+      "offset_ENR_arcsec": [
+        0.8859358065793889,
+        5.763913200003401,
+        5.831601635104452
+      ]
+    }
+  ]
+}
