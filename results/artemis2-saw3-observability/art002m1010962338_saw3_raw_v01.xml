@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<?xml-model href="https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1Q00.sch" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="https://pds.nasa.gov/pds4/img/v1/PDS4_IMG_1Q00_1950.sch" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="https://pds.nasa.gov/pds4/geom/v1/PDS4_GEOM_1Q00_19B0.sch" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="https://pds.nasa.gov/pds4/proc/v1/PDS4_PROC_1Q00_1400.sch" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="https://pds.nasa.gov/pds4/msn/v1/PDS4_MSN_1Q00_1330.sch" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="https://pds.nasa.gov/pds4/msn_surface/v1/PDS4_MSN_SURFACE_1Q00_1310.sch" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="https://pds.nasa.gov/pds4/av/v1/PDS4_AV_1Q00_1010.sch" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<Product_Observational xmlns="http://pds.nasa.gov/pds4/pds/v1" 
+    xmlns:av="http://pds.nasa.gov/pds4/av/v1" 
+    xmlns:geom="http://pds.nasa.gov/pds4/geom/v1" 
+    xmlns:img="http://pds.nasa.gov/pds4/img/v1" 
+    xmlns:msn="http://pds.nasa.gov/pds4/msn/v1" 
+    xmlns:msn_surface="http://pds.nasa.gov/pds4/msn_surface/v1" 
+    xmlns:pds="http://pds.nasa.gov/pds4/pds/v1" 
+    xmlns:proc="http://pds.nasa.gov/pds4/proc/v1" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="   http://pds.nasa.gov/pds4/pds/v1 https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1Q00.xsd   http://pds.nasa.gov/pds4/img/v1 https://pds.nasa.gov/pds4/img/v1/PDS4_IMG_1Q00_1950.xsd      http://pds.nasa.gov/pds4/proc/v1 https://pds.nasa.gov/pds4/proc/v1/PDS4_PROC_1Q00_1400.xsd      http://pds.nasa.gov/pds4/msn/v1 https://pds.nasa.gov/pds4/msn/v1/PDS4_MSN_1Q00_1330.xsd   http://pds.nasa.gov/pds4/msn_surface/v1 https://pds.nasa.gov/pds4/msn_surface/v1/PDS4_MSN_SURFACE_1Q00_1310.xsd   http://pds.nasa.gov/pds4/geom/v1 https://pds.nasa.gov/pds4/geom/v1/PDS4_GEOM_1Q00_19B0.xsd   http://pds.nasa.gov/pds4/av/v1 https://pds.nasa.gov/pds4/av/v1/PDS4_AV_1Q00_1010.xsd   ">
+  <Identification_Area>
+    <logical_identifier>urn:nasa:pds:artemis2_orion_camera:data_video:art002m1010962338_saw3_raw.mp4</logical_identifier>
+    <version_id>1.0</version_id>
+    <title>Artemis 2 Mission SAW Observational Product - art002m1010962338_saw3_raw.mp4</title>
+    <information_model_version>1.26.0.0</information_model_version>
+    <product_class>Product_Observational</product_class>
+  </Identification_Area>
+  <Observation_Area>
+    <comment>Observational Intent</comment>
+    <Time_Coordinates>
+      <start_date_time>2026-04-06T23:38:11Z</start_date_time>
+      <stop_date_time>2026-04-07T01:37:57Z</stop_date_time>
+    </Time_Coordinates>
+    <Primary_Result_Summary>
+      <purpose>Science</purpose>
+      <processing_level>Raw</processing_level>
+      <Science_Facets>
+        <domain>Surface</domain>
+        <discipline_name>Imaging</discipline_name>
+      </Science_Facets>
+    </Primary_Result_Summary>
+    <Investigation_Area>
+      <name>Artemis 2 Mission</name>
+      <type>Mission</type>
+      <Internal_Reference>
+        <lid_reference>urn:nasa:pds:context:investigation:mission.artemis2</lid_reference>
+        <reference_type>data_to_investigation</reference_type>
+        <comment>This is the PDS4 logical identifier for the Artemis 2 Mission.</comment>
+      </Internal_Reference>
+    </Investigation_Area>
+    <Observing_System>
+      <Observing_System_Component>
+        <name>Artemis 2 Orion</name>
+        <type>Host</type>
+        <Internal_Reference>
+          <lid_reference>urn:nasa:pds:context:instrument_host:spacecraft.artemis2_orion</lid_reference>
+          <reference_type>is_instrument_host</reference_type>
+          <comment>This is the PDS4 logical identifier for the Artemis 2 Orion spacecraft.</comment>
+        </Internal_Reference>
+      </Observing_System_Component>
+      <Observing_System_Component>
+        <name>Artemis 2 Orion Solar Array Wing (SAW) Cameras</name>
+        <type>Instrument</type>
+        <Internal_Reference>
+          <lid_reference>urn:nasa:pds:context:instrument:artemis2_orion.saw</lid_reference>
+          <reference_type>is_instrument</reference_type>
+          <comment>This is the PDS4 logical identifier for the Artemis 2 Orion Solar Array Wing (SAW) Cameras onboard the Artemis 2 Orion spacecraft.</comment>
+        </Internal_Reference>
+      </Observing_System_Component>
+    </Observing_System>
+    <Target_Identification>
+      <name>Moon</name>
+      <type>Satellite</type>
+      <Internal_Reference>
+        <lid_reference>urn:nasa:pds:context:target:satellite.earth.moon</lid_reference>
+        <reference_type>data_to_target</reference_type>
+        <comment>This is the PDS4 logical identifier for the satellite - Moon.</comment>
+      </Internal_Reference>
+    </Target_Identification>
+    <Discipline_Area>
+      <av:Audio_Video>
+        <av:AV_Container>
+          <Local_Internal_Reference>
+            <local_identifier_reference>art002m1010962338_saw3_raw.mp4</local_identifier_reference>
+            <local_reference_type>av_container_parameters_to_data_object</local_reference_type>
+          </Local_Internal_Reference>
+          <av:container_type>MP4</av:container_type>
+          <av:avg_bitrate unit="kilobits/s">3260</av:avg_bitrate>
+          <av:duration>1:59:46</av:duration>
+          <av:duration_seconds unit="s">7186</av:duration_seconds>
+          <av:major_brand>MP4 Base Media v1 [IS0 14496-12:2003]</av:major_brand>
+          <av:megapixels>0.922</av:megapixels>
+          <av:preferred_rate>1</av:preferred_rate>
+          <av:preferred_volume>1</av:preferred_volume>
+          <av:time_scale>1000</av:time_scale>
+          <av:Track>
+            <av:handler_description>VideoHandler</av:handler_description>
+            <av:handler_type>Video Track</av:handler_type>
+            <av:track_id>1</av:track_id>
+            <av:track_duration>1:59:46</av:track_duration>
+            <av:track_duration_seconds unit="s">7186</av:track_duration_seconds>
+            <av:track_layer>0</av:track_layer>
+            <av:track_volume>0</av:track_volume>
+            <av:Video_Track>
+              <av:video_codec>H.264</av:video_codec>
+              <av:bit_depth>24</av:bit_depth>
+              <av:compressor_id>avc1</av:compressor_id>
+              <av:compressor_name>Lavc62.19.100 libx264</av:compressor_name>
+              <av:image_height>720</av:image_height>
+              <av:image_width>1280</av:image_width>
+              <av:source_image_height>720</av:source_image_height>
+              <av:source_image_width>1280</av:source_image_width>
+              <av:acquisition_frame_rate unit="frames/s">30</av:acquisition_frame_rate>
+              <av:intermediate_frame_rate unit="frames/s">30</av:intermediate_frame_rate>
+              <av:video_frame_rate unit="frames/s">59.94</av:video_frame_rate>
+            </av:Video_Track>
+          </av:Track>
+          <av:Track>
+            <av:handler_description>SoundHandler</av:handler_description>
+            <av:handler_type>Audio Track</av:handler_type>
+            <av:track_id>2</av:track_id>
+            <av:track_duration>1:59:46</av:track_duration>
+            <av:track_duration_seconds unit="s">7186</av:track_duration_seconds>
+            <av:track_layer>0</av:track_layer>
+            <av:track_volume>1</av:track_volume>
+            <av:Audio_Track>
+              <av:audio_codec>AAC</av:audio_codec>
+              <av:audio_format>mp4a</av:audio_format>
+              <av:audio_bits_per_sample>16</av:audio_bits_per_sample>
+              <av:audio_channels>1</av:audio_channels>
+              <av:audio_sample_rate unit="Hz">48000</av:audio_sample_rate>
+              <av:balance>0</av:balance>
+              <av:media_language_code>und</av:media_language_code>
+            </av:Audio_Track>
+          </av:Track>
+          <av:Track>
+            <av:handler_description>SoundHandler</av:handler_description>
+            <av:handler_type>Audio Track</av:handler_type>
+            <av:track_id>3</av:track_id>
+            <av:track_duration>1:59:46</av:track_duration>
+            <av:track_duration_seconds unit="s">7186</av:track_duration_seconds>
+            <av:track_layer>0</av:track_layer>
+            <av:track_volume>1</av:track_volume>
+            <av:Audio_Track>
+              <av:audio_codec>AAC</av:audio_codec>
+              <av:audio_format>mp4a</av:audio_format>
+              <av:audio_bits_per_sample>16</av:audio_bits_per_sample>
+              <av:audio_channels>1</av:audio_channels>
+              <av:audio_sample_rate unit="Hz">48000</av:audio_sample_rate>
+              <av:balance>0</av:balance>
+              <av:media_language_code>und</av:media_language_code>
+            </av:Audio_Track>
+          </av:Track>
+          <av:Track>
+            <av:handler_description>SoundHandler</av:handler_description>
+            <av:handler_type>Audio Track</av:handler_type>
+            <av:track_id>4</av:track_id>
+            <av:track_duration>1:59:46</av:track_duration>
+            <av:track_duration_seconds unit="s">7186</av:track_duration_seconds>
+            <av:track_layer>0</av:track_layer>
+            <av:track_volume>1</av:track_volume>
+            <av:Audio_Track>
+              <av:audio_codec>AAC</av:audio_codec>
+              <av:audio_format>mp4a</av:audio_format>
+              <av:audio_bits_per_sample>16</av:audio_bits_per_sample>
+              <av:audio_channels>1</av:audio_channels>
+              <av:audio_sample_rate unit="Hz">48000</av:audio_sample_rate>
+              <av:balance>0</av:balance>
+              <av:media_language_code>und</av:media_language_code>
+            </av:Audio_Track>
+          </av:Track>
+          <av:Track>
+            <av:handler_description>SoundHandler</av:handler_description>
+            <av:handler_type>Audio Track</av:handler_type>
+            <av:track_id>5</av:track_id>
+            <av:track_duration>1:59:46</av:track_duration>
+            <av:track_duration_seconds unit="s">7186</av:track_duration_seconds>
+            <av:track_layer>0</av:track_layer>
+            <av:track_volume>1</av:track_volume>
+            <av:Audio_Track>
+              <av:audio_codec>AAC</av:audio_codec>
+              <av:audio_format>mp4a</av:audio_format>
+              <av:audio_bits_per_sample>16</av:audio_bits_per_sample>
+              <av:audio_channels>1</av:audio_channels>
+              <av:audio_sample_rate unit="Hz">48000</av:audio_sample_rate>
+              <av:balance>0</av:balance>
+              <av:media_language_code>und</av:media_language_code>
+            </av:Audio_Track>
+          </av:Track>
+          <av:Track>
+            <av:handler_description>SoundHandler</av:handler_description>
+            <av:handler_type>Audio Track</av:handler_type>
+            <av:track_id>6</av:track_id>
+            <av:track_duration>1:59:46</av:track_duration>
+            <av:track_duration_seconds unit="s">7186</av:track_duration_seconds>
+            <av:track_layer>0</av:track_layer>
+            <av:track_volume>1</av:track_volume>
+            <av:Audio_Track>
+              <av:audio_codec>AAC</av:audio_codec>
+              <av:audio_format>mp4a</av:audio_format>
+              <av:audio_bits_per_sample>16</av:audio_bits_per_sample>
+              <av:audio_channels>1</av:audio_channels>
+              <av:audio_sample_rate unit="Hz">48000</av:audio_sample_rate>
+              <av:balance>0</av:balance>
+              <av:media_language_code>und</av:media_language_code>
+            </av:Audio_Track>
+          </av:Track>
+          <av:Track>
+            <av:handler_description>SoundHandler</av:handler_description>
+            <av:handler_type>Audio Track</av:handler_type>
+            <av:track_id>7</av:track_id>
+            <av:track_duration>1:59:46</av:track_duration>
+            <av:track_duration_seconds unit="s">7186</av:track_duration_seconds>
+            <av:track_layer>0</av:track_layer>
+            <av:track_volume>1</av:track_volume>
+            <av:Audio_Track>
+              <av:audio_codec>AAC</av:audio_codec>
+              <av:audio_format>mp4a</av:audio_format>
+              <av:audio_bits_per_sample>16</av:audio_bits_per_sample>
+              <av:audio_channels>1</av:audio_channels>
+              <av:audio_sample_rate unit="Hz">48000</av:audio_sample_rate>
+              <av:balance>0</av:balance>
+              <av:media_language_code>und</av:media_language_code>
+            </av:Audio_Track>
+          </av:Track>
+          <av:Track>
+            <av:handler_description>SoundHandler</av:handler_description>
+            <av:handler_type>Audio Track</av:handler_type>
+            <av:track_id>8</av:track_id>
+            <av:track_duration>1:59:46</av:track_duration>
+            <av:track_duration_seconds unit="s">7186</av:track_duration_seconds>
+            <av:track_layer>0</av:track_layer>
+            <av:track_volume>1</av:track_volume>
+            <av:Audio_Track>
+              <av:audio_codec>AAC</av:audio_codec>
+              <av:audio_format>mp4a</av:audio_format>
+              <av:audio_bits_per_sample>16</av:audio_bits_per_sample>
+              <av:audio_channels>1</av:audio_channels>
+              <av:audio_sample_rate unit="Hz">48000</av:audio_sample_rate>
+              <av:balance>0</av:balance>
+              <av:media_language_code>und</av:media_language_code>
+            </av:Audio_Track>
+          </av:Track>
+          <av:Track>
+            <av:handler_description>SoundHandler</av:handler_description>
+            <av:handler_type>Audio Track</av:handler_type>
+            <av:track_id>9</av:track_id>
+            <av:track_duration>1:59:46</av:track_duration>
+            <av:track_duration_seconds unit="s">7186</av:track_duration_seconds>
+            <av:track_layer>0</av:track_layer>
+            <av:track_volume>1</av:track_volume>
+            <av:Audio_Track>
+              <av:audio_codec>AAC</av:audio_codec>
+              <av:audio_format>mp4a</av:audio_format>
+              <av:audio_bits_per_sample>16</av:audio_bits_per_sample>
+              <av:audio_channels>1</av:audio_channels>
+              <av:audio_sample_rate unit="Hz">48000</av:audio_sample_rate>
+              <av:balance>0</av:balance>
+              <av:media_language_code>und</av:media_language_code>
+            </av:Audio_Track>
+          </av:Track>
+        </av:AV_Container>
+      </av:Audio_Video>
+      <img:Imaging>
+        <Local_Internal_Reference>
+          <local_identifier_reference>art002m1010962338_saw3_raw.mp4</local_identifier_reference>
+          <local_reference_type>imaging_parameters_to_image_object</local_reference_type>
+        </Local_Internal_Reference>
+        <img:Onboard_Compression>
+          <img:onboard_compression_type>None</img:onboard_compression_type>
+          <img:onboard_compression_quality>1.0</img:onboard_compression_quality>
+        </img:Onboard_Compression>
+      </img:Imaging>
+      <msn:Mission_Information>
+        <msn:mission_phase_name>Operations</msn:mission_phase_name>
+        <msn:product_type_name>Raw</msn:product_type_name>
+        <msn:flight_day_number>6</msn:flight_day_number>
+        <msn:internal_id>art002m1010962338</msn:internal_id>
+      </msn:Mission_Information>
+      <msn_surface:Surface_Mission_Information>
+        <msn_surface:Observational_Intent>
+          <msn_surface:activity_id>Other</msn_surface:activity_id>
+        </msn_surface:Observational_Intent>
+      </msn_surface:Surface_Mission_Information>
+      <proc:Processing_Information>
+        <Local_Internal_Reference>
+          <local_identifier_reference>art002m1010962338_saw3_raw.mp4</local_identifier_reference>
+          <local_reference_type>processing_information_to_data_object</local_reference_type>
+        </Local_Internal_Reference>
+        <proc:Process>
+          <proc:Software>
+            <proc:Software_Program>
+              <proc:name>ExifTool</proc:name>
+              <proc:program_version>13.58</proc:program_version>
+              <proc:description>Metadata extraction tool</proc:description>
+            </proc:Software_Program>
+          </proc:Software>
+        </proc:Process>
+      </proc:Processing_Information>
+    </Discipline_Area>
+  </Observation_Area>
+  <File_Area_Observational>
+    <File>
+      <file_name>art002m1010962338_saw3_raw_v01.mp4</file_name>
+      <creation_date_time>2026-07-22T20:08:32Z</creation_date_time>
+      <file_size unit="byte">2960238197</file_size>
+    </File>
+    <Encoded_Video>
+      <local_identifier>art002m1010962338_saw3_raw.mp4</local_identifier>
+      <offset unit="byte">0</offset>
+      <object_length unit="byte">2960238197</object_length>
+      <encoding_standard_id>MP4/H.264/AAC</encoding_standard_id>
+      <description>Video file</description>
+    </Encoded_Video>
+  </File_Area_Observational>
+</Product_Observational>
