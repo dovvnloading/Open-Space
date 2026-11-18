@@ -171,7 +171,16 @@ def check_mobile(page, url):
     page.locator("#query").fill("MAVEN")
     expect(page.locator("#result-list .result-row").first).to_be_visible()
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
-    print("Mobile: navigation, archive search, reduced motion and layout passed.")
+    page.goto(url + "#target/quasar")
+    page.locator(".table-reader summary").click()
+    cells = page.locator(".table-reader tbody tr:visible td")
+    assert cells.evaluate_all("""cells => cells.every(cell => {
+        const range = document.createRange();
+        range.selectNodeContents(cell);
+        return range.getClientRects().length === 1;
+    })"""), "Mobile observation values wrap across lines"
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    print("Mobile: navigation, archive search, observation table, reduced motion and layout passed.")
 
 
 def run(url, channel):

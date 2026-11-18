@@ -333,7 +333,11 @@
   padding: 7px 9px;
   border-bottom: 1px solid #30353c;
 }
+.table-scroll td {
+  white-space: nowrap;
+}
 .table-scroll th {
+  overflow-wrap: normal;
   color: #f0d4c2;
   background: #222329;
 }
@@ -662,5 +666,12 @@
   .btn.primary,
   .btn.secondary {
     white-space: normal;
+  }
+}
+
+@media (max-width: 500px) {
+  .table-scroll th,
+  .table-scroll td {
+    padding: 7px 4px;
   }
 }
