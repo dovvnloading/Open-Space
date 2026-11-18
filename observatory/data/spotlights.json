@@ -3,108 +3,224 @@
     "id": "mars",
     "target": "Mars",
     "title": "A week in a Martian particle storm",
-    "subtitle": "A radiation storm in Martian orbit",
+    "subtitle": "A particle surge in Martian orbit",
     "summary": "MAVEN recorded a surge of energetic particles over 46 orbits around Mars.",
     "instrument": "MAVEN / SEP",
     "epoch": "22–29 August 2025",
-    "body": "For a week in August, energetic ions and electrons flooded the space around Mars. At the peak on 24 August, MAVEN measured an hourly median electron flux about 24,450 times its survey reference. The particle enhancement met the search criteria in 125 sampled hours across 46 spacecraft orbits.",
+    "body": "MAVEN measured unusually high fluxes of energetic ions and electrons from 22 to 29 August 2025. Across that window, 125 hours met the survey’s joint particle criteria. The peak hourly medians came on 24 August.",
     "measurements": [
-      {"label": "Peak ion flux / reference", "value": "5,140×"},
-      {"label": "Peak electron flux / reference", "value": "24,450×"},
-      {"label": "Orbits with selected samples", "value": "46"}
+      {
+        "label": "Peak ion flux / reference",
+        "value": "≈5,140×",
+        "key": "ion"
+      },
+      {
+        "label": "Peak electron flux / reference",
+        "value": "≈24,450×",
+        "key": "electron"
+      },
+      {
+        "label": "Orbits with selected samples",
+        "value": "46",
+        "key": "orbits"
+      }
     ],
-    "limitation": "Two solar eruptions had forecasts compatible with the timing. Establishing which one drove the storm requires calibrated particle spectra and measurements of the shock. MAVEN sampled particles in orbit, so the surface dose remains unknown.",
+    "limitation": "Forecasts for eruptions on both 20 and 21 August fit the timing. The source eruption remains uncertain. MAVEN measured particles in orbit, and the surface radiation dose remains unknown.",
     "path": "results/maven-2025-sep-events/README.md",
     "evidence": [
-      ["Daily particle measurements", "results/maven-2025-sep-events/daily.csv"],
-      ["Primary archive cross-check", "results/maven-2025-sep-events/primary_pds_audit.json"]
+      [
+        "Daily particle measurements",
+        "results/maven-2025-sep-events/daily.csv"
+      ],
+      [
+        "Primary archive cross-check",
+        "results/maven-2025-sep-events/primary_pds_audit.json"
+      ],
+      [
+        "Survey measurements and reference flux",
+        "results/maven-2025-sep-events/summary.json"
+      ],
+      [
+        "Competing eruption forecasts",
+        "results/maven-2025-sep-events/forecast_alignment.json"
+      ],
+      [
+        "Source replay and limits",
+        "observatory/data/spotlight-replay.md#mars"
+      ]
     ],
     "figure": {
       "path": "results/maven-2025-sep-events/daily.csv",
       "src": "data/figures/mars.svg",
       "caption": "Each point is one August day's highest hourly median flux measured by MAVEN. Both species peaked on 24 August. The vertical scale is logarithmic.",
       "alt": "MAVEN's daily peak electron and ion fluxes rise sharply on 23–24 August 2025 and decline through the following week."
-    }
+    },
+    "observingUnit": "One UTC hour of MAVEN orbiter measurements. The survey reference uses 2,376 hours with at least 100 samples each.",
+    "checked": "Replaying all four survey files recovered the 46 orbits and both flux ratios. In the peak hour, all 450 timestamps matched the original NASA PDS Key Parameter table.",
+    "nextTest": "Compare calibrated particle energy spectra and shock timing against both candidate solar eruptions."
   },
   {
     "id": "sun",
     "target": "The Sun",
     "title": "Tracing a far-side eruption",
     "subtitle": "A flare behind the solar limb",
-    "summary": "A Solar Orbiter X-ray flare points back to a candidate active region on the far side of the Sun.",
+    "summary": "Solar Orbiter’s X-ray image points toward two possible regions on the far side of the Sun. One lies closer to the measured direction.",
     "instrument": "Solar Orbiter / STIX",
     "epoch": "13 July 2021",
-    "body": "Solar Orbiter caught a flare while an eruption raced away from the Sun's far side. The X-ray source lay just beyond the Sun's apparent edge. Of the numbered regions tested, NOAA 12849 came closest to its measured direction. Another region and an unnumbered source remain possible.",
+    "body": "Solar Orbiter measured a hard X-ray flare just outside its view of the solar disk on 13 July 2021. Of the regions in a later NOAA solar map, region 12849 comes closest to the flare’s direction when projected back to the time of the eruption.",
     "measurements": [
-      {"label": "Measured position angle", "value": "104.99°"},
-      {"label": "Region 12849 angle offset", "value": "2.92°"},
-      {"label": "Region 12847 angle offset", "value": "14.00°"}
+      {
+        "label": "Measured position angle",
+        "value": "104.99°",
+        "key": "angle"
+      },
+      {
+        "label": "Region 12849 angle offset",
+        "value": "2.92°",
+        "key": "2849"
+      },
+      {
+        "label": "Region 12847 angle offset",
+        "value": "14.00°",
+        "key": "2847"
+      }
     ],
-    "limitation": "Height above the visible limb makes the flare's longitude uncertain. A separate reconstruction of the X-ray image and an identification on the solar surface would test the proposed source.",
+    "limitation": "The centroid is above the apparent limb. Its direction constrains the source more tightly than its longitude. Region 12847, or a source absent from the NOAA list, remains possible.",
     "path": "results/2021-july-13-farside-eruption/README.md",
     "evidence": [
-      ["X-ray count rates", "results/2021-july-13-farside-eruption/inputs/stix_rates.csv"],
-      ["Source geometry and controls", "results/2021-july-13-farside-eruption/measurements.json"]
+      [
+        "X-ray count rates",
+        "results/2021-july-13-farside-eruption/inputs/stix_rates.csv"
+      ],
+      [
+        "Source geometry and controls",
+        "results/2021-july-13-farside-eruption/measurements.json"
+      ],
+      [
+        "Source replay and limits",
+        "observatory/data/spotlight-replay.md#sun"
+      ]
     ],
     "figure": {
       "path": "results/2021-july-13-farside-eruption/inputs/stix_rates.csv",
       "src": "data/figures/sun.svg",
       "caption": "Solar Orbiter's science-pixel product shows a 15–25 keV hard X-ray pulse on 13 July 2021. Times are UTC at the spacecraft.",
-      "alt": "STIX hard X-ray counts rise from the background to a peak of about 286 counts per second around 18:28 spacecraft time."
-    }
+      "alt": "The 15–25 keV science count rate peaks near 286 counts per second at 18:27:38 spacecraft UTC."
+    },
+    "observingUnit": "One published STIX flare centroid and a spacecraft-time X-ray light curve, compared with seven region centers in NOAA’s 22 July summary.",
+    "checked": "The two original STIX telemetry files reproduce the count-rate table. Projecting the NOAA centers gives the smallest angular offset for region 12849, followed by region 12847.",
+    "nextTest": "Reconstruct the X-ray image independently and identify the flare’s footpoint on the solar surface."
   },
   {
     "id": "quasar",
     "target": "J0826+7002",
-    "title": "One quasar, a seven-month echo",
-    "subtitle": "Light taking two paths through space",
-    "summary": "Two images of the same distant quasar flicker roughly seven months apart.",
+    "title": "A possible echo in a lensed quasar",
+    "subtitle": "Searching for a delay between images",
+    "summary": "Independent ZTF and Gaia light curves favor a delay of several months between two images of one quasar.",
     "instrument": "ZTF + Gaia",
     "epoch": "2014–2025",
-    "body": "Gravity bends the light of a distant quasar along two paths to Earth. Changes in the fainter northern image arrive first. ZTF measured a lag of about 210 days. In earlier, independent observations, Gaia recorded a broad flare in both images with its sampled peaks 203 days apart.",
+    "body": "Foreground gravity bends the quasar’s light along two paths. A detrended correlation scan places changes in the fainter northern image roughly seven months ahead of those in the brighter image. The numbers below are the best points on that scan’s five-day grid.",
     "measurements": [
-      {"label": "ZTF peak delay", "value": "210 days"},
-      {"label": "Gaia peak delay", "value": "205 days"},
-      {"label": "Image separation", "value": "5.83″"}
+      {
+        "label": "ZTF g-band scan peak",
+        "value": "210 days",
+        "key": "ztf"
+      },
+      {
+        "label": "Gaia G-band scan peak",
+        "value": "205 days",
+        "key": "gaia"
+      },
+      {
+        "label": "Image separation",
+        "value": "5.83″",
+        "key": "separation"
+      }
     ],
-    "limitation": "The flare is broad and both surveys have gaps. Removing stretches of Gaia observations changes the fitted delay. A calibrated uncertainty interval still requires a joint light-curve model.",
+    "limitation": "The latest held-out ZTF interval gave a slightly better predictive score at zero delay than at exactly 210 days. Uneven sampling and changes in each image’s brightness from microlensing leave the exact lag and its uncertainty open.",
     "path": "results/j0826-lens-delay/README.md",
     "evidence": [
-      ["Gaia nightly photometry", "results/j0826-lens-delay/gaia-nights.csv"],
-      ["ZTF nightly photometry", "results/j0826-lens-delay/ztf-nights.csv"]
+      [
+        "Gaia nightly photometry",
+        "results/j0826-lens-delay/gaia-nights.csv"
+      ],
+      [
+        "ZTF nightly photometry",
+        "results/j0826-lens-delay/ztf-nights.csv"
+      ],
+      [
+        "Model comparisons and future-epoch holdouts",
+        "results/j0826-lens-delay/followup/README.md"
+      ],
+      [
+        "Source replay and limits",
+        "observatory/data/spotlight-replay.md#quasar"
+      ]
     ],
     "figure": {
       "path": "results/j0826-lens-delay/echo.svg",
       "src": "data/figures/quasar.svg",
       "caption": "The published plot aligns Gaia's two views of the flare using the delay measured independently by ZTF. The lower panel shows longer-term changes in the two ZTF images.",
       "alt": "Gaia light curves for the two lensed images line up after shifting by the ZTF delay. A second panel shows the long-term ZTF measurements."
-    }
+    },
+    "observingUnit": "A night of brightness measurements in each quasar image. ZTF observed both images in g band and Gaia sampled an earlier interval in G band.",
+    "checked": "The published lag scan reproduces from the nightly tables. Gaia’s sampled brightness peaks fall 202.90 days apart. Fits using different models can favor lags of roughly 200–300 days.",
+    "nextTest": "Measure fresh, separately resolved flares in both images and test their predicted arrival times with a model fixed before the observations."
   },
   {
     "id": "dwarf",
     "target": "WISE J0458+6434",
-    "title": "A radio signal on the move",
+    "title": "Does this radio source move with two dwarfs?",
     "subtitle": "Following a pair of cold brown dwarfs",
-    "summary": "Three radio images trace the path of a brown-dwarf pair. A fourth visit found no signal.",
+    "summary": "Radio peaks lie near the pair’s predicted positions in three visits. The second visit yielded a nondetection.",
     "instrument": "VLA / VLASS",
     "epoch": "2017–2025",
-    "body": "A compact radio source appeared near the predicted infrared position of the brown-dwarf pair in 2017, 2023 and 2025. The radio centroid shifted northeast by 3.28 arcseconds over eight years, close to the 2.93 arcseconds expected from the pair's motion. The 2020 radio image gave a nondetection.",
+    "body": "Between 2017 and 2025 the fitted radio peak shifted northeast across the sky, close to the predicted motion of the brown-dwarf pair. In the 2020 image a beam fitted at the predicted position gave a flux consistent with local noise.",
     "measurements": [
-      {"label": "Radio centroid shift", "value": "3.28″"},
-      {"label": "Expected infrared shift", "value": "2.93″"},
-      {"label": "Radio observing band", "value": "2–4 GHz"}
+      {
+        "label": "Radio centroid shift",
+        "value": "3.28″",
+        "key": "radio"
+      },
+      {
+        "label": "Expected infrared shift",
+        "value": "2.93″",
+        "key": "infrared"
+      },
+      {
+        "label": "2020 fitted flux density",
+        "value": "−0.15 mJy/beam",
+        "key": "nondetection"
+      }
     ],
-    "limitation": "The two dwarfs share a radio beam. Two stationary background sources that vary independently can also fit these images. A later visit after the dwarfs move farther across the sky could distinguish those explanations.",
+    "limitation": "Two stationary sources whose brightness changes can also fit the images. The 2023 beam does little to separate them, and the 2017 quick-look image has known imaging caveats. The emitting object remains unidentified.",
     "path": "results/wise-j0458-radio/README.md",
     "evidence": [
-      ["Fluxes from all four visits", "results/wise-j0458-radio/epochs.csv"],
-      ["Stationary-source tests", "results/wise-j0458-heldout/README.md"]
+      [
+        "Fluxes from all four visits",
+        "results/wise-j0458-radio/epochs.csv"
+      ],
+      [
+        "Stationary-source tests",
+        "results/wise-j0458-heldout/README.md"
+      ],
+      [
+        "Four FITS cutout receipts",
+        "results/wise-j0458-radio/sources.json"
+      ],
+      [
+        "Source replay and limits",
+        "observatory/data/spotlight-replay.md#dwarf"
+      ]
     ],
     "figure": {
       "path": "results/wise-j0458-radio/four-epochs.png",
       "src": "data/figures/dwarf.png",
-      "caption": "Four Very Large Array images share a sky grid and intensity scale. Cyan circles mark the moving infrared prediction. The white cross marks the 2017 position.",
-      "alt": "Four radio images show a compact peak near the moving infrared position in 2017, 2023 and 2025, with a nondetection in 2020."
-    }
+      "caption": "Four Very Large Array images share a sky grid and intensity scale. Cyan circles mark the predicted positions from infrared astrometry. The white cross marks the 2017 infrared prediction.",
+      "alt": "Radio peaks lie near the cyan circles in 2017, 2023 and 2025. The 2020 fit at the predicted position is consistent with noise."
+    },
+    "observingUnit": "Four 2–4 GHz VLASS image cutouts. The motion compares the first and last visits. A pair of brown dwarfs fits inside one radio beam.",
+    "checked": "All four deposited FITS cutouts reproduce the fitted fluxes. Moving templates fit the two endpoint visits better than a source fixed at the low-frequency catalog position.",
+    "nextTest": "Observe the pair again when its predicted position is farther from both stationary alternatives. An image with a finer beam could separate the sources."
   }
 ]

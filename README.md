@@ -100,7 +100,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### The Moon and Mars
 
-- **No extra moonquakes during eclipses.** Apollo seismometer records show no rise in moonquakes during eclipses and no unusual pairing of deep moonquake sources. *Null result* · [Details](results/apollo-lunar-seismicity/README.md)
+- **Two Apollo 17 eclipse windows showed no compelling moonquake excess.** The event counts were compared with uneclipsed full Moons and adjacent windows. A separate test of deep moonquake sources found no unusual pairing. Recording coverage and detection efficiency limit both tests. *Null result* · [Details](results/apollo-lunar-seismicity/README.md)
 - **One lunar crater counted twice.** Two catalogue entries describe the same 9-metre impact crater. Additional orbiter images halve the window in which it formed, to 177 days. *Correction* · [Details](results/lunar-impact-flash-associations/README.md)
 - **Martian "repeat impacts" checked against spacecraft images.** One apparent repeat is a duplicated catalogue entry. Another is two real craters 2.26 km apart that formed at least 115 days apart. *Correction* · [Details](results/mars-impact-brackets/README.md)
 - **Neighbouring Martian craters come in similar sizes.** Across 259 fresh impact fields, nearby craters are more alike in size than chance predicts. A model of meteors breaking up in the atmosphere explains only part of the pattern. *Measured* · [Details](results/mars-crater-size-correlation/README.md)
@@ -161,7 +161,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **Kepler-359's apparent three-planet rhythm is not locked.** Most orbit solutions drift through all angles instead of staying locked in resonance. *Measured* · [Details](results/kepler-three-planet-frequency-locks/README.md)
 - **Two Doppler signals at the nearby star HD 32564.** Signals at 2.56 and 11.06 days, fitted to older HARPS data, were recovered in new ESPRESSO velocities, making the star a low-mass companion candidate. *Candidate* · [Details](results/hd-32564/README.md)
 - **A "new" JWST source near ε Eridani was already in 2001 Keck images.** The positions match. The brightness comparison is in tension. *Measured* · [Details](results/epsilon-eridani-keck-jwst/README.md)
-- **No additional transiting planets around 90 TESS candidate hosts.** *Null result* · [Details](results/tess-additional-transits/README.md)
+- **No additional transit candidate passed follow-up around 90 TESS hosts.** Three peaks survived the initial screen of 393 sector light curves. Stellar variability explained two, and the third reversed sign in a second photometric extraction. *Null result* · [Details](results/tess-additional-transits/README.md)
 - **Six planets listed more than four times too far from their stars.** The Open Exoplanet Catalogue's orbit sizes for the Kepler-445 and Kepler-446 planets were computed with the Sun's radius instead of each small star's own. Three more entries carry misplaced or mis-copied values, and the published orbit sizes of the four K2-285 planets do not fit a single star's mass. *Correction* · [Details](results/oec-orbital-scale-audit/README.md)
 - **A transit-like dip that flips sign.** On the flaring red dwarf TIC 257433294, a reported dip reappears in new TESS data but changes sign between two TESS data products, so its origin is uncertain. *Measured* · [Details](results/tess-sector108/README.md)
 
@@ -288,7 +288,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **No detached pulse passed a Fermi screen of GRB 261115A.** The known prompt gamma-ray burst was recovered. No excess met the two-detector threshold in 2,381 tested windows between 32 and 3 seconds before or 8 and 40 seconds after the trigger. *Null result* · [Details](results/gbm-grb261115a-separated-emission/README.md)
 - **An expanding X-ray ring around GRB 180728A.** The ring is likely an echo from a dust layer about 158 parsecs away. *Candidate* · [Details](results/swift-grb-dust-echoes/README.md)
 - **An X-ray transient reconnected with its gamma-ray counterpart.** FXT 981217. *Correction* · [Details](results/fxt-981217-batse/README.md)
-- **No black hole in the latest gravitational-wave catalog merged twice.** *Null result* · [Details](results/gwtc-successive-mergers/README.md)
+- **A search for repeat black-hole mergers found no unusual pair in GWTC-5.0.** Across 5,356 eligible pairs, randomly rotating the sky maps produced a match at least as strong as the leading pair in 11,181 of 20,000 trials. *Null result* · [Details](results/gwtc-successive-mergers/README.md)
 - **No short 150 Hz gravitational-wave bursts in a sample of public LIGO data.** A search of 539,386 seconds of Hanford and Livingston data from the O4b run found nothing above its fixed threshold. For one specified kind of burst this limits the rate to 0.601 per day at the 90% level. *Null result* · [Details](results/mission04-o4b-bursts/README.md)
 
 **Black holes, outbursts and supernovae**
@@ -310,7 +310,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **A faint X-ray source at SN 2009ib about seven years after the explosion.** *Candidate* · [Details](results/sn-2009ib-chandra/README.md)
 - **A "second explosion" of SN 2019bns is a different supernova 3.6 arcseconds away.** *Correction* · [Details](results/ztf-supernova-projection/README.md)
 - **Radio emission that moves with a pair of cold brown dwarfs.** WISE J0458+6434 follows the radio source across three survey visits. A blend of fixed background sources is not yet excluded. *Candidate* · [Radio detection](results/wise-j0458-radio/README.md) · [Follow-up tests](results/wise-j0458-heldout/README.md) · [Survey](results/vlass4-ultracool-dwarfs/README.md)
-- **No massive star vanished without a supernova.** None of 9,551 red supergiants in nearby galaxies faded for good in NEOWISE data, as a star collapsing straight into a black hole would. *Null result* · [Details](results/neowise-nuclear-flares/README.md#no-vanishing-supergiant)
+- **No lasting infrared fade passed the screen for 9,551 red supergiant candidates.** These candidates had enough NEOWISE visits to test a sustained drop in brightness. A previously reported M31 candidate fell outside the input catalog. *Null result* · [Details](results/neowise-nuclear-flares/README.md#no-vanishing-supergiant)
 
 ### Galaxies and the distant universe
 

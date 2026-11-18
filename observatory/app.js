@@ -1,25 +1,10 @@
 import { hydrateIcons, icon } from "./icons.js";
+import { esc, badge, renderAudit, renderCredits, renderTarget, renderRecord } from "./evidence-view.js";
 
 const $ = (selector) => document.querySelector(selector);
 const repoURL = "https://github.com/dovvnloading/Open-Space";
-const plates = {
-  mars: { name: "Mars", image: "mars", tag: "MARS / SOL IV", field: "Planetary science", color: "#ff955b" },
-  sun: { name: "The Sun", image: "solar", tag: "SOL", field: "Heliophysics", color: "#ffa35e" },
-  quasar: {
-    name: "J0826+7002",
-    image: "galaxy",
-    tag: "J0826+7002",
-    field: "Extragalactic",
-    color: "#c6a0f7",
-  },
-  dwarf: {
-    name: "WISE J0458",
-    image: "dwarf",
-    tag: "J0458+6434",
-    field: "Stellar astronomy",
-    color: "#91bdfc",
-  },
-};
+let plates = {};
+let plateView = "context";
 const pageSize = 15;
 const searchIndex = new Map();
 let renderedArchiveHash;
@@ -36,27 +21,8 @@ let disposeUniverse,
   modalKey;
 const filters = { q: "", status: "", topic: "", sort: "recent", page: 1 };
 
-function esc(value) {
-  return String(value ?? "").replace(
-    /[&<>"']/g,
-    (character) =>
-      ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;",
-      })[character],
-  );
-}
 function text(id, value) {
   document.getElementById(id).textContent = value;
-}
-function badge(status) {
-  return `<span class="status" data-status="${esc(status)}">${esc(status)}</span>`;
-}
-function sourceLink(link) {
-  return `<a href="${esc(link.url)}" target="_blank" rel="noopener">${esc(link.label)}${icon("external")}</a>`;
 }
 function dateLabel(iso) {
   if (!iso) return "";
@@ -66,21 +32,6 @@ function dateLabel(iso) {
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(iso));
-}
-function updateClock() {
-  const now = new Date();
-  text("utc", now.toISOString().slice(11, 19));
-  $("#utc").dateTime = now.toISOString();
-  text(
-    "utc-date",
-    now.toLocaleDateString("en-GB", {
-      weekday: "short",
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      timeZone: "UTC",
-    }),
-  );
 }
 function starPlate() {
   const canvas = $(".star-plate");
@@ -140,8 +91,9 @@ function showPlate(index) {
   const target = targets[slide],
     plate = plates[target.id];
   $(".hero").dataset.target = target.id;
-  $("#hero-art").src = "./assets/" + plate.image + ".webp";
+  $("#hero-art").src = "./assets/" + plate.file;
   text("target-tag", plate.tag);
+  updatePlateView(target, plate);
   text("hero-name", plate.name);
   text("hero-sub", target.subtitle);
   text("hero-summary", target.summary);
@@ -152,11 +104,34 @@ function showPlate(index) {
   $("#slide-count").innerHTML =
     String(slide + 1).padStart(2, "0") + " <em>/ " + String(targets.length).padStart(2, "0") + "</em>";
 }
+function updatePlateView(target, plate) {
+  const figureMode = plateView === "figure";
+  $(".hero").dataset.view = plateView;
+  $(".art-stage").hidden = figureMode;
+  $("#plate-figure").hidden = !figureMode;
+  for (const button of document.querySelectorAll("[data-plate-view]")) {
+    button.setAttribute("aria-pressed", String(button.dataset.plateView === plateView));
+  }
+  const credit = $("#plate-credit");
+  if (figureMode) {
+    const fig = target.figure;
+    const figureImage = $("#plate-figure-image");
+    figureImage.src = "./" + fig.src;
+    figureImage.alt = fig.alt;
+    $("#plate-figure-link").href = "#target/" + target.id;
+    credit.href = "#target/" + target.id;
+    credit.textContent = "Inspect figure and method";
+  } else {
+    credit.href = "#credits";
+    credit.textContent = plate.kind + " · " + plate.credit;
+  }
+}
+
 function renderCard(target) {
   const p = plates[target.id];
   return `<a class="field-card" href="#target/${esc(target.id)}">
-    <div class="card-art"><img src="./assets/${p.image}.webp" alt="" width="1280" height="533"><span class="card-type" style="--ch:${p.color}">${esc(p.field.toUpperCase())}</span></div>
-    <div class="card-copy"><div class="card-meta">${icon("antenna")}${esc(target.instrument)}</div><h3>${esc(target.title)}</h3><p>${esc(target.summary)}</p><div class="card-tail">${badge(target.status)}${icon("external")}</div></div></a>`;
+    <div class="card-art" data-plate="${esc(target.id)}"><img src="./assets/${esc(p.file)}" alt="" width="1280" height="533"><span class="card-origin">${esc(p.kind)}</span><span class="card-type" style="--ch:${p.color}">${esc(p.field.toUpperCase())}</span></div>
+    <div class="card-copy"><div class="card-meta">${icon("antenna")}${esc(target.instrument)}</div><h3>${esc(target.title)}</h3><p>${esc(target.summary)}</p><div class="card-tail">${badge(target.status)}${icon("arrow")}</div></div></a>`;
 }
 function newest(a, b) {
   return (Date.parse(b.updatedAt) || 0) - (Date.parse(a.updatedAt) || 0) || a.title.localeCompare(b.title);
@@ -214,6 +189,7 @@ function prepareCatalog() {
     "archive-intro",
     `Explore ${records.length} public research records, from measured signals and candidate discoveries to forecasts, corrections, and null results.`,
   );
+  text("snapshot-date", dateLabel(catalog.revisionDate));
   const revision = catalog.revision;
   $("#revision").innerHTML =
     `<a href="${esc(catalog.repository)}/commit/${esc(revision)}" rel="noopener" target="_blank">Revision ${esc(revision.slice(0, 7))}</a>`;
@@ -303,27 +279,28 @@ function renderDossier(key, target, record) {
   const body = $("#dossier-body");
   if (panel.open && modalKey === key) return;
   modalKey = key;
-  if (key === "credits") {
-    body.innerHTML = `<div class="dialog-padding no-image"><div class="eyebrow">OPEN SPACE OBSERVATORY</div><h2 id="dossier-title">Credits</h2><h3>Research</h3><p>Each record links to an Open-Space report at the displayed Git revision. Those reports credit the archives, observing teams and instruments behind the measurements.</p><h3>Images and simulation</h3><p>The four cover illustrations were created with OpenAI ImageGen. Evidence figures in the investigations use the archived measurements. The universe simulator generates its own stars, planetary systems and orbital motions from a repeatable seed.</p><h3>Type and source</h3><p>DM Sans and IBM Plex Mono are distributed with their SIL Open Font Licenses. The observatory source is available under the repository’s MIT license.</p><div class="source-links">${sourceLink({ label: "Open-Space on GitHub", url: repoURL })}</div></div>`;
-  } else if (!target && !record) {
+  text(
+    "reader-label",
+    key === "credits"
+      ? "Observatory credits"
+      : key === "audit"
+        ? "Archive checks"
+        : target
+          ? "Featured investigation"
+          : "Archive record",
+  );
+  if (key === "credits") body.innerHTML = renderCredits(plates, catalog);
+  else if (key === "audit") body.innerHTML = renderAudit(catalog);
+  else if (target)
+    body.innerHTML = renderTarget(
+      target,
+      records.find((r) => r.id === target.recordId),
+      catalog,
+    );
+  else if (record) body.innerHTML = renderRecord(record, catalog);
+  else
     body.innerHTML =
-      '<div class="dialog-padding no-image"><h2 id="dossier-title">Record unavailable</h2><p>This identifier does not appear in this catalog revision.</p><a class="plain-link" href="#archive">Browse the research archive</a></div>';
-  } else {
-    const item = target || record;
-    const image = target
-      ? `<div class="dialog-image" data-id="${esc(target.id)}"><img src="./assets/${plates[target.id].image}.webp" alt=""><span class="art-legend">ARTIST’S VIEW</span></div>`
-      : "";
-    const measurements = target?.measurements
-      .map((m) => `<div class="measure"><span>${esc(m.label)}</span><strong>${esc(m.value)}</strong></div>`)
-      .join("");
-    const fig = target?.figure;
-    const figure = fig
-      ? `<figure><img src="./${esc(fig.src)}" alt="${esc(fig.alt)}" loading="lazy"><figcaption>${esc(fig.caption)} <a class="plain-link" href="${esc(fig.url)}" target="_blank" rel="noopener">Figure source</a></figcaption></figure>`
-      : "";
-    body.innerHTML =
-      image +
-      `<article class="dialog-padding ${image ? "" : "no-image"}"><div class="eyebrow"><span class="small-line"></span>${esc(target ? target.instrument : record.topic)}</div><h2 id="dossier-title">${esc(item.title)}</h2>${badge(item.status)}<p>${esc(target ? target.body : record.summary)}</p>${measurements ? '<div class="measures">' + measurements + "</div>" : ""}${figure}${target ? "<h3>What remains open</h3><p>" + esc(target.limitation) + "</p>" : ""}<h3>Source evidence</h3><div class="source-links">${item.links.map(sourceLink).join("")}</div></article>`;
-  }
+      '<div class="dialog-padding"><h2 id="dossier-title">Record unavailable</h2><p>This identifier does not appear in this catalog revision.</p><a class="plain-link" href="#archive">Browse the research archive</a></div>';
   if (!panel.open) {
     dialogTrigger = document.activeElement;
     panel.showModal();
@@ -341,8 +318,13 @@ async function route() {
     disposeUniverse = null;
   }
   const [kind, key] = path.split("/");
-  if (!catalog && !catalogFailed && ["universe","archive","target","record"].includes(kind)) return;
-  if (kind !== "target" && kind !== "record" && kind !== "credits" && $("#dossier").open) {
+  if (
+    !catalog &&
+    !catalogFailed &&
+    ["universe", "archive", "target", "record", "audit", "credits"].includes(kind)
+  )
+    return;
+  if (!["target", "record", "credits", "audit"].includes(kind) && $("#dossier").open) {
     $("#dossier").close();
     modalKey = null;
     restoreFocus = dialogTrigger;
@@ -367,11 +349,12 @@ async function route() {
     }
     return;
   }
-  if (["target", "record", "credits"].includes(kind)) {
+  if (["target", "record", "credits", "audit"].includes(kind)) {
     if (kind !== "credits" && !catalog) return;
     const target = kind === "target" ? targets.find((t) => t.id === key) : undefined;
-    const record = kind === "record" ? records.find((r) => r.id === key) : undefined;
-    renderDossier(kind === "credits" ? "credits" : path, target, record);
+    const record =
+      kind === "record" ? records.find((r) => r.id === key || r.aliases?.includes(key)) : undefined;
+    renderDossier(path, target, record);
     return;
   }
   const view = kind === "archive" ? "archive" : "deck";
@@ -398,8 +381,12 @@ function showNotice(message, error) {
 hydrateIcons();
 showView("deck");
 starPlate();
-updateClock();
-setInterval(updateClock, 1000);
+$(".plate-controls").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-plate-view]");
+  if (!button || !targets.length) return;
+  plateView = button.dataset.plateView;
+  updatePlateView(targets[slide], plates[targets[slide].id]);
+});
 $("#previous").onclick = () => showPlate(slide - 1);
 $("#next").onclick = () => showPlate(slide + 1);
 $("#filters").onsubmit = (e) => {
@@ -453,9 +440,15 @@ document.addEventListener("click", (e) => {
 window.addEventListener("hashchange", route);
 async function start() {
   try {
-    const response = await fetch("./data/catalog.json");
-    if (!response.ok) throw Error("Catalog HTTP " + response.status);
-    catalog = await response.json();
+    const loadJSON = async (path) => {
+      const response = await fetch(path);
+      if (!response.ok) throw Error(path + " HTTP " + response.status);
+      return response.json();
+    };
+    [catalog, plates] = await Promise.all([
+      loadJSON("./data/catalog.json"),
+      loadJSON("./assets/plates.json"),
+    ]);
     prepareCatalog();
     await route();
   } catch (error) {

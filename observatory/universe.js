@@ -5,6 +5,9 @@ const GALAXIES = 128;
 const SYSTEMS = 32768;
 export const universeSize = Object.freeze({ galaxies: GALAXIES, systemsPerGalaxy: SYSTEMS });
 const MAP_EXTENT = 1.29;
+const SECTOR_MLY_PER_UNIT = 22;
+const DAYS_PER_SECOND = 12;
+const OUTER_ORBIT_RADIUS = 0.98;
 const GALAXY_WORDS = [
   "Vesper",
   "Lyric",
@@ -43,7 +46,15 @@ const limit = (n, min, max) => Math.max(min, Math.min(max, n));
 const pad = (n, size) => String(n + 1).padStart(size, "0");
 const galaxyName = (id) => GALAXY_WORDS[id % 16] + " " + GALAXY_TYPES[Math.floor(id / 16)];
 const starName = (id) => "System " + pad(id, 5);
-const address = (g, s) => "G" + pad(g, 3) + (s === undefined ? "" : "–S" + pad(s, 5));
+export const address = (g, s) => "G" + pad(g, 3) + (s === undefined ? "" : "–S" + pad(s, 5));
+
+export function parseSystemAddress(input) {
+  const match = /^g(\d{1,3})[\s–-]+s(\d{1,5})$/i.exec(input.trim());
+  if (!match) return null;
+  const g = Number(match[1]) - 1,
+    s = Number(match[2]) - 1;
+  return g >= 0 && g < GALAXIES && s >= 0 && s < SYSTEMS ? { g, s } : null;
+}
 
 function seedNumber(a, b = 0) {
   let h = Math.imul(a + 29, 0x85ebca6b) ^ Math.imul(b + 317, 0xc2b2ae35);
@@ -267,8 +278,14 @@ function makeGalaxy(id, paint = true) {
   return result;
 }
 
-function makeSystem(g, s) {
-  const rng = random(seedNumber(g + 742, s));
+export function systemSeed(g, s) {
+  // Flatten the two coordinates before applying the invertible 32-bit mix.
+  // This retains the original G001 sequence and gives every address its own seed.
+  return seedNumber(742, g * SYSTEMS + s);
+}
+
+export function makeSystem(g, s) {
+  const rng = random(systemSeed(g, s));
   const star = STAR_TYPES[Math.floor(rng() * STAR_TYPES.length)];
   const count = 2 + Math.floor(rng() * 7);
   let distance = 0.12 + rng() * 0.22;
@@ -294,7 +311,7 @@ function makeWorld(g, s, index, planet) {
   const image = canvasSurface(600),
     ctx = image.getContext("2d");
   const pixels = ctx.createImageData(image.width, image.height);
-  const rng = random(seedNumber(seedNumber(g, s), index));
+  const rng = random(seedNumber(936, (g * SYSTEMS + s) * ROMAN.length + index));
   const table = Float32Array.from({ length: 32768 }, () => rng());
   const offset = 20 * rng(),
     yaw = rng() * TAU,
@@ -493,6 +510,21 @@ function icon(which) {
 }
 
 const format = new Intl.NumberFormat("en-US");
+const rulerFormat = new Intl.NumberFormat("en-US", { maximumSignificantDigits: 3 });
+
+export function orbitRadius(planets, index, proportional) {
+  if (proportional) return (OUTER_ORBIT_RADIUS * planets[index].au) / planets.at(-1).au;
+  return 0.18 + ((index + 1) / planets.length) * 0.8;
+}
+
+// The ruler shows a round 1, 2 or 5 in the same projected plane as the map.
+export function scaleBar(unitsPerPixel) {
+  const maximum = unitsPerPixel * 72;
+  const decade = 10 ** Math.floor(Math.log10(maximum));
+  const mantissa = maximum / decade;
+  const units = (mantissa >= 5 ? 5 : mantissa >= 2 ? 2 : 1) * decade;
+  return { units, pixels: units / unitsPerPixel };
+}
 
 /** Mount the modal simulator and return an idempotent teardown function. */
 export function mountUniverse(container, { onClose, onEvidence, targets = [] } = {}) {
@@ -517,10 +549,16 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       </header>
       <div class="osu-stage">
         <canvas tabindex="0" aria-label="Interactive simulated galaxy. Arrow keys pan, plus and minus zoom. Use navigation buttons below to select and explore destinations."></canvas>
-        <div class="osu-heading"><span class="osu-eyebrow" data-ref="eyebrow"></span><h2 data-ref="name"></h2><p data-ref="description"></p></div>
+        <div class="osu-heading"><span class="osu-eyebrow" data-ref="eyebrow"></span><h2 data-ref="name"></h2><p data-ref="description"></p>
+          <div class="osu-spacing" role="group" aria-label="Orbit spacing" hidden>
+            <button type="button" data-spacing="schematic" aria-pressed="true">Even spacing</button>
+            <button type="button" data-spacing="au" aria-pressed="false">AU scale</button>
+          </div>
+        </div>
         <div class="osu-readout" aria-hidden="true"><span class="osu-signal"></span> PROCEDURAL SKY</div>
         <div class="osu-camera" aria-label="Camera controls">
           <button class="osu-icon" data-act="motion" type="button" aria-label="Pause orbits" title="Pause orbits" hidden></button>
+          <button class="osu-step" data-act="step" type="button" aria-label="Advance one quarter of the selected orbit" title="Advance one quarter of the selected orbit" hidden>¼ orbit</button>
           <button class="osu-icon" data-act="zoomIn" type="button" aria-label="Zoom in" title="Zoom in (+)">${icon("zoomIn")}</button>
           <button class="osu-icon" data-act="zoomOut" type="button" aria-label="Zoom out" title="Zoom out (−)">${icon("zoomOut")}</button>
           <button class="osu-icon" data-act="reset" type="button" aria-label="Reset camera" title="Reset camera (Home)">${icon("center")}</button>
@@ -529,11 +567,16 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
           <strong>Navigate the simulation</strong>
           <p>Drag to pan. Scroll or pinch to zoom. Select a point to inspect it.</p>
           <p>Focus the map to pan with the arrow keys. Use [ and ] to select a destination, Enter to explore, and Home to center.</p>
+          <p>Each address generates a fictional system. Its planets follow circular orbits around one star. AU scale preserves their relative orbital radii. Body sizes are enlarged for visibility.</p>
+          <details class="osu-model"><summary>How the model works</summary>
+            <p>Orbital periods follow P² = a³/M, with P in years, orbital radius a in astronomical units and stellar mass M in solar masses. The simulation uses 365.25 days per year and treats planets as test particles.</p>
+            <p>The galaxy ruler measures projected distances in the plane of the screen. Star colors, climates and cloud patterns are illustrative.</p>
+          </details>
           <form class="osu-jump"><label>Go to a system address<input name="address" placeholder="G001–S00001" maxlength="14" required autocomplete="off" spellcheck="false"></label><button type="submit">Go</button></form>
           <small data-ref="jumpError" role="status"></small>
           <div class="osu-research" hidden><label>Open a research dossier<select data-ref="research"></select></label></div>
         </aside>
-        <div class="osu-scale" aria-hidden="true"><i></i><span data-ref="scale"></span></div>
+        <div class="osu-scale"><i aria-hidden="true"></i><span data-ref="scale"></span></div>
         <div class="osu-nocanvas" hidden>Use the destination controls to explore this simulated sky.</div>
       </div>
       <div class="osu-dock">
@@ -546,7 +589,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
           <button class="osu-primary" data-act="enter" type="button"></button>
         </div>
       </div>
-      <div class="osu-note"><span>Simulated locations and orbits</span><span data-ref="hint">Drag to pan · Scroll to zoom</span></div>
+      <div class="osu-note"><span data-ref="modelNote">Generated sky</span><div class="osu-time"><span data-ref="elapsed" hidden></span><span data-ref="hint">Drag to pan · Scroll to zoom</span></div></div>
       <span class="osu-sr" data-ref="announce" aria-live="polite"></span>
     </div>`;
   container.append(modal);
@@ -559,6 +602,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
   const ctx = canvas.getContext("2d", { alpha: false });
   const help = $(".osu-help");
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const touch = window.matchMedia("(pointer: coarse)");
   const abort = new AbortController();
   const listen = (node, event, fn, options = {}) =>
     node.addEventListener(event, fn, { ...options, signal: abort.signal });
@@ -578,6 +622,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     dirty = true;
   let playing = !motion.matches,
     disposed = false;
+  let proportional = false;
   let zoom = 1,
     panX = 0,
     panY = 0;
@@ -637,7 +682,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       isWorld = level === "world";
     const body = system.planets[planetId];
     const title = isSector
-      ? "The local volume"
+      ? "Simulated sector"
       : isWorld
         ? "Planet " + ROMAN[planetId]
         : isSystem
@@ -650,16 +695,29 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
         ? address(galaxyId, systemId)
         : address(galaxyId) + " / Spiral galaxy";
     ref("description").textContent = isSector
-      ? "128 galaxies · 4,194,304 simulated star systems"
+      ? format.format(GALAXIES) +
+        " galaxies · " +
+        format.format(GALAXIES * SYSTEMS) +
+        " simulated star systems"
       : isWorld
         ? body.type.name + " · " + starName(systemId)
         : isSystem
-          ? system.star.name + " · " + system.planets.length + " orbiting worlds"
-          : "32,768 star systems · " + format.format(galaxy.config.diameter) + " light-years across";
+          ? system.star.name +
+            " · " +
+            system.star.mass +
+            " solar masses · " +
+            system.planets.length +
+            " orbiting worlds"
+          : format.format(SYSTEMS) +
+            " systems · " +
+            format.format(galaxy.config.diameter) +
+            " ly reference disk";
     ref("objectKind").textContent = isSector
       ? "Selected galaxy"
       : isWorld
-        ? "Planetary surface"
+        ? body.type === PLANET_TYPES[2]
+          ? "Illustrated cloud tops"
+          : "Illustrated surface"
         : isSystem
           ? "Selected world"
           : "Selected star system";
@@ -689,13 +747,31 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       ? icon("back") + "Return to system"
       : (isSector ? "Enter galaxy" : isSystem ? "Inspect world" : "Enter system") + icon("forward");
     act("motion").hidden = !isSystem;
+    act("step").hidden = !isSystem;
+    ref("elapsed").hidden = !isSystem || !ctx;
+    act("step").title =
+      "Advance by " + format.format(Math.round(body.period * 0.25 * 10) / 10) + " model days";
     act("motion").innerHTML = icon(playing ? "pause" : "play");
     act("motion").setAttribute("aria-label", playing ? "Pause orbital motion" : "Play orbital motion");
     act("motion").title = playing ? "Pause orbits" : "Play orbits";
     act("motion").setAttribute("aria-pressed", String(playing));
+    $(".osu-spacing").hidden = !isSystem || !ctx;
+    for (const button of modal.querySelectorAll("[data-spacing]")) {
+      button.setAttribute("aria-pressed", String((button.dataset.spacing === "au") === proportional));
+    }
+    ref("modelNote").textContent = isSystem
+      ? "Generated orbits · body sizes enlarged"
+      : isWorld
+        ? "Generated globe · illustrative lighting"
+        : "Generated sky · projected distances";
     ref("hint").textContent = isSystem
-      ? "Orbital distances compressed · 12 days / second"
-      : "Drag to pan · Scroll to zoom";
+      ? playing
+        ? DAYS_PER_SECOND + " model days / second"
+        : "Orbital motion paused"
+      : touch.matches
+        ? "Drag to pan · Pinch to zoom"
+        : "Drag to pan · Scroll to zoom";
+    if (!ctx) ref("hint").textContent = "Use the destination controls";
     for (const button of modal.querySelectorAll("[data-level]")) {
       if (button.dataset.level === level) button.setAttribute("aria-current", "step");
       else button.removeAttribute("aria-current");
@@ -718,6 +794,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
         galaxy = { config: spiralSettings(id) };
         system = makeSystem(galaxyId, systemId);
         planetId = 0;
+        days = 0;
       }
     } else if (level === "galaxy") {
       systemId = id;
@@ -775,14 +852,13 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
   }
   listen($(".osu-jump"), "submit", (event) => {
     event.preventDefault();
-    const input = $(".osu-jump input").value.trim();
-    const parsed = /^g(\d{1,3})[\s–-]+s(\d{1,5})$/i.exec(input);
-    if (!parsed || +parsed[1] < 1 || +parsed[1] > GALAXIES || +parsed[2] < 1 || +parsed[2] > SYSTEMS) {
+    const parsed = parseSystemAddress($(".osu-jump input").value);
+    if (!parsed) {
       ref("jumpError").textContent = "Use G001–G128 and S00001–S32768, for example G013–S02189.";
       return;
     }
-    galaxyId = +parsed[1] - 1;
-    systemId = +parsed[2] - 1;
+    galaxyId = parsed.g;
+    systemId = parsed.s;
     planetId = 0;
     days = 0;
     galaxy = { config: spiralSettings(galaxyId) };
@@ -795,6 +871,12 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
   listen(modal, "click", (event) => {
     const button = event.target.closest("button");
     if (!button) return;
+    if (button.dataset.spacing) {
+      proportional = button.dataset.spacing === "au";
+      reset();
+      update(true);
+      return;
+    }
     if (button.dataset.level) {
       go(button.dataset.level);
       return;
@@ -819,6 +901,13 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
         playing = !playing;
         lastTime = 0;
         update(true);
+        break;
+      case "step":
+        days += system.planets[planetId].period / 4;
+        lastTime = 0;
+        update();
+        ref("announce").textContent =
+          "Advanced one quarter orbit to model day " + format.format(Math.round(days * 10) / 10) + ".";
         break;
       case "zoomIn":
         zoomAt(1.55);
@@ -900,7 +989,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     { passive: false },
   );
   listen(canvas, "pointerdown", (event) => {
-    if (event.button !== 0) return;
+    if (event.button !== 0 || pointers.size >= 2) return;
     canvas.focus({ preventScroll: true });
     canvas.setPointerCapture(event.pointerId);
     const pos = localPoint(event);
@@ -941,6 +1030,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       pick(pos.x, pos.y);
     }
     pointers.delete(event.pointerId);
+    if (pointers.size === 1 && pinch) drag = { ...pointers.values().next().value, moved: true };
     if (pointers.size < 2) pinch = null;
     if (!pointers.size) drag = null;
   }
@@ -1019,6 +1109,17 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     }
     ctx.globalAlpha = 1;
   }
+  function showRuler(unitsPerPixel, unit) {
+    const bar = scaleBar(unitsPerPixel);
+    const line = $(".osu-scale i");
+    line.hidden = false;
+    line.style.width = bar.pixels + "px";
+    ref("scale").textContent = rulerFormat.format(bar.units) + " " + unit;
+  }
+  function showScaleNote(note) {
+    $(".osu-scale i").hidden = true;
+    ref("scale").textContent = note;
+  }
   function drawGalaxy() {
     const [cx, cy] = center(),
       k = baseScale() * zoom;
@@ -1049,7 +1150,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       cy + galaxy.position[systemId * 2 + 1] * k,
       "S" + pad(systemId, 5),
     );
-    ref("scale").textContent = format.format(Math.round((galaxy.config.diameter * 60) / (2 * k))) + " ly";
+    showRuler(galaxy.config.diameter / (2 * k), "ly");
   }
   function drawSector() {
     hits = [];
@@ -1072,23 +1173,23 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     });
     const g = sector[galaxyId];
     marker(...project(g.x, g.y), address(galaxyId), 12);
-    ref("scale").textContent = ((60 * 22) / baseScale() / zoom).toFixed(1) + " Mly";
-  }
-  function orbitRadii() {
-    return system.planets.map((_, i) => 0.18 + ((i + 1) / system.planets.length) * 0.8);
+    showRuler(SECTOR_MLY_PER_UNIT / (baseScale() * zoom), "Mly");
   }
   function drawSystem() {
+    const clockLabel = "Model day " + format.format(Math.floor(days));
+    if (ref("elapsed").textContent !== clockLabel) ref("elapsed").textContent = clockLabel;
     const [cx, cy] = center(),
       k = baseScale() * zoom;
     const tilt = 0.51,
       turn = -0.22;
-    const radii = orbitRadii();
+    const radii = system.planets.map((_, i) => orbitRadius(system.planets, i, proportional));
     const bodies = system.planets.map((planet, i) => {
       const phase = planet.phase + (days / planet.period) * TAU;
       const dx = radii[i] * Math.cos(phase),
         dy = radii[i] * Math.sin(phase) * tilt;
       return {
         id: i,
+        phase,
         x: cx + k * (dx * Math.cos(turn) - dy * Math.sin(turn)),
         y: cy + k * (dx * Math.sin(turn) + dy * Math.cos(turn)),
         depth: dy,
@@ -1105,6 +1206,17 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       ctx.lineWidth = i === planetId ? 1.1 : 0.75;
       ctx.stroke();
     });
+    // Mark the selected planet's approach along the same projected orbit.
+    const selectedPhase = bodies[planetId].phase;
+    const orbitPixels = k * radii[planetId];
+    ctx.lineWidth = 2;
+    for (let j = 0; j < 12; j++) {
+      const start = selectedPhase - (12 - j) * 0.045;
+      ctx.strokeStyle = "rgba(255,174,115," + (j + 1) / 18 + ")";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, orbitPixels, orbitPixels * tilt, 0, start, start + 0.046);
+      ctx.stroke();
+    }
     ctx.restore();
     const starRadius = Math.max(5.5, Math.min(35, k * 0.039));
     const starRGB = parseInt(system.star.color.slice(1), 16);
@@ -1138,17 +1250,19 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       grad.addColorStop(0.48, p.type.colors[0]);
       grad.addColorStop(0.69, p.type.colors[2]);
       grad.addColorStop(1, "#080d17");
+      function drawRing(front) {
+        ctx.strokeStyle = "rgba(230,203,167,.74)";
+        ctx.lineWidth = Math.max(1, r * 0.19);
+        ctx.beginPath();
+        ctx.ellipse(x, y, r * 1.75, r * 0.38, -0.38, front ? 0 : Math.PI, front ? Math.PI : TAU);
+        ctx.stroke();
+      }
+      if (p.ring) drawRing(false);
       ctx.fillStyle = grad;
       ctx.beginPath();
       ctx.arc(x, y, r, 0, TAU);
       ctx.fill();
-      if (p.ring) {
-        ctx.strokeStyle = "rgba(230,203,167,.74)";
-        ctx.lineWidth = Math.max(1, r * 0.19);
-        ctx.beginPath();
-        ctx.ellipse(x, y, r * 1.75, r * 0.38, -0.38, 0, TAU);
-        ctx.stroke();
-      }
+      if (p.ring) drawRing(true);
     }
     bodies.sort((a, b) => a.depth - b.depth);
     bodies.filter((b) => b.depth < 0).forEach(drawBody);
@@ -1159,10 +1273,11 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     marker(
       selected.x,
       selected.y,
-      "PLANET " + ROMAN[planetId],
+      "PLANET " + ROMAN[planetId] + (proportional ? " · " + selected.planet.au.toFixed(2) + " AU" : ""),
       Math.max(12, Math.min(45, selected.planet.size * k) + 5),
     );
-    ref("scale").textContent = "SCHEMATIC";
+    if (proportional) showRuler(system.planets.at(-1).au / (OUTER_ORBIT_RADIUS * k), "AU");
+    else showScaleNote("SCHEMATIC");
   }
   function drawWorld() {
     const planet = system.planets[planetId],
@@ -1190,14 +1305,14 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     if (planet.ring) rings(false);
     ctx.drawImage(globe, cx - radius, cy - radius, radius * 2, radius * 2);
     if (planet.ring) rings(true);
-    ref("scale").textContent = "SURFACE VIEW";
+    showScaleNote(planet.type === PLANET_TYPES[2] ? "CLOUD TOPS" : "SURFACE VIEW");
   }
   function render(now) {
     frame = 0;
     if (disposed || !ctx || document.hidden) return;
     const active = level === "system" && playing;
     if (dirty || (active && now - lastTime >= 32)) {
-      if (active && lastTime) days += Math.min((now - lastTime) / 1000, 0.16) * 12;
+      if (active && lastTime) days += ((now - lastTime) / 1000) * DAYS_PER_SECOND;
       lastTime = now;
       dirty = false;
       drawSky();
