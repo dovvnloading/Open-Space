@@ -1,3 +1,5 @@
+import { openImageDesk } from "./image-desk.js";
+import { archiveEntry, prepareArchiveIndex } from "./archive-view.js";
 import { hydrateIcons, icon } from "./icons.js";
 import {
   esc,
@@ -16,6 +18,7 @@ let plateView = "context";
 const pageSize = 15;
 const searchIndex = new Map();
 let renderedArchiveHash;
+let reflectArchiveFilters;
 let catalogFailed = false;
 let catalog,
   records = [],
@@ -100,9 +103,13 @@ function showPlate(index) {
     plate = plates[target.id];
   $(".hero").dataset.target = target.id;
   $("#hero-art").src = "./assets/" + plate.file;
-  text("target-tag", plate.tag);
+  text("hero-metric-label", target.measurements[0].label);
+  text("hero-metric", target.measurements[0].value);
   updatePlateView(target, plate);
   text("hero-name", plate.name);
+  text("hero-field", plate.field);
+  $("#inspect-plate").href = "#plate/" + target.id;
+  $("#inspect-plate span").textContent = target.id === "sun" ? "View image sequence" : "Inspect image";
   text("hero-sub", target.subtitle);
   text("hero-summary", target.summary);
   text("instrument", target.instrument);
@@ -117,6 +124,7 @@ function updatePlateView(target, plate) {
   $(".hero").dataset.view = plateView;
   $(".art-stage").hidden = figureMode;
   $("#plate-figure").hidden = !figureMode;
+  $("#inspect-plate").hidden = figureMode;
   for (const button of document.querySelectorAll("[data-plate-view]")) {
     button.setAttribute("aria-pressed", String(button.dataset.plateView === plateView));
   }
@@ -147,7 +155,8 @@ function newest(a, b) {
 function resultRow(record, detail) {
   const spotlight = targets.find((target) => target.recordId === record.id);
   const url = spotlight ? "#target/" + spotlight.id : "#record/" + encodeURIComponent(record.id);
-  return `<a class="result-row" href="${esc(url)}"><span class="row-icon">${icon("book")}</span><div class="row-content"><small>${esc(record.topic)}</small><h3>${esc(record.title)}</h3>${detail ? "<p>" + esc(record.summary) + "</p>" : ""}</div>${badge(record.status)}<span class="row-date">${esc(dateLabel(record.updatedAt))}</span>${icon("right")}</a>`;
+  if (detail) return archiveEntry(record, url, dateLabel(record.updatedAt));
+  return `<a class="result-row" href="${esc(url)}"><span class="row-icon">${icon("book")}</span><div class="row-content"><small>${esc(record.topic)}</small><h3>${esc(record.title)}</h3></div>${badge(record.status)}<span class="row-date">${esc(dateLabel(record.updatedAt))}</span>${icon("right")}</a>`;
 }
 function fillFilters(element, values) {
   for (const value of Array.from(new Set(values)).sort()) element.add(new Option(value, value));
@@ -193,10 +202,10 @@ function prepareCatalog() {
     $("#topic-filter"),
     records.map((r) => r.topic),
   );
-  text(
-    "archive-intro",
-    `Explore ${records.length} public research records, from measured signals and candidate discoveries to forecasts, corrections, and null results.`,
-  );
+  reflectArchiveFilters = prepareArchiveIndex(records, (key, value) => {
+    document.getElementById(key + "-filter").value = value;
+    updateFilter();
+  });
   text("snapshot-date", dateLabel(catalog.revisionDate) + " UTC");
   const revision = catalog.revision;
   $("#revision").innerHTML =
@@ -229,14 +238,14 @@ function readFilters(search) {
 }
 function renderArchive() {
   const words = filters.q.toLowerCase().trim().split(/\s+/).filter(Boolean);
-  const found = records
-    .filter((r) => {
-      if ((filters.status && r.status !== filters.status) || (filters.topic && r.topic !== filters.topic))
-        return false;
-      const content = searchIndex.get(r.id);
-      return words.every((word) => content.includes(word));
-    })
+  const matchingText = words.length
+    ? records.filter(record => words.every(word => searchIndex.get(record.id).includes(word)))
+    : records;
+  const found = matchingText
+    .filter(record => (!filters.status || record.status === filters.status) && (!filters.topic || record.topic === filters.topic))
     .sort(filters.sort === "title" ? (a, b) => a.title.localeCompare(b.title) : newest);
+  reflectArchiveFilters?.(matchingText, found, filters);
+  $("#clear-archive").hidden = !(filters.q || filters.status || filters.topic);
   const pages = Math.max(1, Math.ceil(found.length / pageSize));
   filters.page = Math.min(filters.page, pages);
   renderedArchiveHash = archiveHash();
@@ -287,9 +296,12 @@ function renderDossier(key, target, record) {
   const body = $("#dossier-body");
   if (panel.open && modalKey === key) return;
   modalKey = key;
+  const imageId = key.startsWith("plate/") ? key.slice(6) : "";
+  const isImage = Object.hasOwn(plates, imageId);
+  panel.classList.toggle("image-reader", isImage);
   text(
     "reader-label",
-    key === "credits"
+    isImage ? "Image collection" : key === "credits"
       ? "Observatory credits"
       : key === "audit"
         ? "Archive checks"
@@ -297,7 +309,8 @@ function renderDossier(key, target, record) {
           ? "Featured investigation"
           : "Archive record",
   );
-  if (key === "credits") body.innerHTML = renderCredits(plates, catalog);
+  if (isImage) body.replaceChildren(openImageDesk(imageId, plates));
+  else if (key === "credits") body.innerHTML = renderCredits(plates, catalog);
   else if (key === "audit") body.innerHTML = renderAudit(catalog);
   else if (target)
     body.innerHTML = renderTarget(
@@ -312,6 +325,10 @@ function renderDossier(key, target, record) {
   if (!panel.open) {
     dialogTrigger = document.activeElement;
     panel.showModal();
+  } else {
+    const heading = $("#dossier-title");
+    heading.tabIndex = -1;
+    heading.focus({preventScroll:true});
   }
   panel.scrollTop = 0;
   document.title = $("#dossier-title").textContent + " · Open Space Observatory";
@@ -329,23 +346,28 @@ async function route() {
   if (
     !catalog &&
     !catalogFailed &&
-    ["universe", "archive", "target", "record", "audit", "credits"].includes(kind)
+    ["universe", "archive", "target", "record", "plate", "audit", "credits"].includes(kind)
   )
     return;
-  if (!["target", "record", "credits", "audit"].includes(kind) && $("#dossier").open) {
+  if (!["target", "record", "plate", "credits", "audit"].includes(kind) && $("#dossier").open) {
     $("#dossier").close();
+    $("#dossier-body").replaceChildren();
     modalKey = null;
     restoreFocus = dialogTrigger;
     dialogTrigger = null;
   }
   if (kind === "universe") {
-    if (disposeUniverse) return;
+    if (disposeUniverse) {
+      disposeUniverse();
+      disposeUniverse = null;
+    }
     try {
       const { mountUniverse } = await import("./universe.js");
       if (generation !== routeCounter) return;
       document.title = "Universe simulator · Open Space Observatory";
       disposeUniverse = mountUniverse($("#universe-host"), {
         targets,
+        locationSearch: search,
         onClose: closeOverlay,
         onEvidence: (t) => {
           history.replaceState(history.state, "", "#target/" + encodeURIComponent(t.id));
@@ -357,7 +379,7 @@ async function route() {
     }
     return;
   }
-  if (["target", "record", "credits", "audit"].includes(kind)) {
+  if (["target", "record", "plate", "credits", "audit"].includes(kind)) {
     if (kind !== "credits" && !catalog) return;
     const target = kind === "target" ? targets.find((t) => t.id === key) : undefined;
     const record =
@@ -397,6 +419,13 @@ $(".plate-controls").addEventListener("click", (event) => {
 });
 $("#previous").onclick = () => showPlate(slide - 1);
 $("#next").onclick = () => showPlate(slide + 1);
+$("#clear-archive").onclick = () => {
+  $("#query").value = "";
+  $("#status-filter").value = "";
+  $("#topic-filter").value = "";
+  updateFilter();
+  $("#query").focus();
+};
 $("#filters").onsubmit = (e) => {
   e.preventDefault();
   updateFilter();
@@ -444,7 +473,14 @@ document.addEventListener("click", (e) => {
   }
   e.preventDefault();
   if (location.hash === hash) return;
-  if (/^#(?:target\/|record\/|audit$|credits$|universe$)/.test(hash)) a.focus({ preventScroll: true });
+  if (/^#(?:target\/|record\/|plate\/|audit$|credits$|universe$)/.test(hash)) a.focus({ preventScroll: true });
+  if (hash.startsWith("#plate/") && location.hash.startsWith("#plate/")) {
+    history.replaceState(history.state, "", hash);
+    route();
+    const current = document.querySelector(".desk-plates [aria-current]");
+    if (current) current.focus({preventScroll:true});
+    return;
+  }
   history.pushState({ fromDeckSite: true }, "", hash);
   route();
 });
@@ -465,7 +501,7 @@ async function start() {
   } catch (error) {
     catalogFailed = true;
     showNotice("The research catalog could not load.", error);
-    if (location.hash === "#universe") await route();
+    if (/^#universe(?:\?|$)/.test(location.hash)) await route();
   }
 }
 start();

@@ -2,9 +2,13 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   address,
+  atlasDestinations,
+  galaxyProfile,
   makeSystem,
   orbitRadius,
   parseSystemAddress,
+  parseUniverseLocation,
+  universeLocationHash,
   scaleBar,
   systemSeed,
   universeSize,
@@ -82,4 +86,57 @@ test("AU spacing is linear in orbital radius and the ruler spans its labeled dis
     assert.ok(ruler.pixels >= 28 && ruler.pixels <= 72);
     assert.ok(Math.abs(ruler.pixels * unitsPerPixel - ruler.units) <= ruler.units * 1e-12);
   }
+});
+
+test("atlas destinations correspond to the rendered galaxy families and a ringed model world", () => {
+  const families = new Set();
+  for (let id = 0; id < galaxies; id++) {
+    const p = galaxyProfile(id);
+    families.add(p.family);
+    assert.deepEqual(p, galaxyProfile(id));
+    assert.ok(p.tilt > 0 && p.tilt <= 1);
+    assert.ok(p.diameter > 0);
+    assert.equal(p.arms > 0, ["spiral", "barred", "edge"].includes(p.family));
+  }
+  assert.deepEqual([...families].sort(), ["barred", "edge", "elliptical", "ring", "spiral"]);
+  const views = [];
+  for (const spot of atlasDestinations) {
+    assert.deepEqual(parseSystemAddress(address(spot.g, spot.s)), { g: spot.g, s: spot.s });
+    if (spot.level === "world") {
+      const world = makeSystem(spot.g, spot.s).planets[spot.planet];
+      assert.equal(world.ring, true);
+      assert.equal(world.type.name, "Gas giant");
+      views.push("world");
+    } else {
+      views.push(galaxyProfile(spot.g).family);
+    }
+  }
+  assert.deepEqual(views, ["spiral", "ring", "elliptical", "world"]);
+});
+
+test("shareable locations resolve within the generated model and preserve selections", () => {
+  const initial = { level: "galaxy", g: 0, s: 228, p: 0 };
+  assert.deepEqual(parseUniverseLocation(), initial);
+  for (const dest of atlasDestinations) {
+    const location = { level: dest.level, g: dest.g, s: dest.s, p: dest.planet ?? 0 };
+    const hash = universeLocationHash(location);
+    assert.deepEqual(parseUniverseLocation(hash.split("?")[1]), location);
+  }
+  for (const level of ["sector", "galaxy", "system", "world"]) {
+    const location = { level, g: 127, s: 32767, p: ["system", "world"].includes(level) ? 1 : 0 };
+    assert.deepEqual(parseUniverseLocation(universeLocationHash(location).split("?")[1]), location);
+  }
+  for (const query of [
+    "view=system&at=G129-S00001",
+    "view=world&at=G128-S32768&planet=3",
+    "view=world&at=G001-S00229&planet=0",
+    "view=world&at=G001-S00229&planet=4.5",
+    "view=world&at=G001-S00229",
+    "view=sky&at=G001-S00229",
+    "view=galaxy&at=G001-S00229&planet=3",
+    "view=sector&at=G001-S00229&at=G002-S00229",
+    "view=sector&at=G001-S00229&extra=1",
+    "view=world&at=G001-S32769&planet=1",
+  ])
+    assert.equal(parseUniverseLocation(query), null, query);
 });

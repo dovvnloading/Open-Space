@@ -2,9 +2,9 @@ name: Observatory
 on:
   push:
     branches: [main]
-    paths: ['observatory/**', 'README.md', 'results/**', 'docs/**', 'open_space/verify/**', 'tests/test_observatory_*.py', 'tests/observatory-simulation.test.mjs', '.github/workflows/observatory.yml']
+    paths: ['observatory/**', 'README.md', 'results/**', 'docs/**', 'open_space/verify/**', 'tests/test_observatory_*.py', 'tests/observatory-*.test.mjs', '.github/workflows/observatory.yml']
   pull_request:
-    paths: ['observatory/**', 'README.md', 'results/**', 'docs/**', 'open_space/verify/**', 'tests/test_observatory_*.py', 'tests/observatory-simulation.test.mjs', '.github/workflows/observatory.yml']
+    paths: ['observatory/**', 'README.md', 'results/**', 'docs/**', 'open_space/verify/**', 'tests/test_observatory_*.py', 'tests/observatory-*.test.mjs', '.github/workflows/observatory.yml']
   workflow_dispatch:
 
 permissions:
@@ -38,7 +38,7 @@ jobs:
           python observatory/build_catalog.py --repository "$REPOSITORY" --verification-ledger "$RUNNER_TEMP/observatory-ledger.json" --output dist/data/catalog.json
           python observatory/check_media.py --directory dist/assets
           python -m unittest discover -s tests -p 'test_observatory_*.py' -v
-          node --test tests/observatory-simulation.test.mjs
+          node --test tests/observatory-*.test.mjs
       - name: Exercise the published files in Chromium, Firefox and WebKit
         run: |
           docker run --rm --init --ipc=host --volume "$PWD:/work:ro" --workdir /work \

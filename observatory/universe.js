@@ -41,6 +41,12 @@ const PLANET_TYPES = [
   { name: "Gas giant", colors: ["#cf9868", "#f2d9a9", "#664b5d"] },
   { name: "Ocean world", colors: ["#5386ae", "#a0d9dc", "#29375d"] },
 ];
+export const atlasDestinations = [
+  { g: 0, s: 228, level: "galaxy" },
+  { g: 22, s: 1912, level: "galaxy" },
+  { g: 34, s: 416, level: "galaxy" },
+  { g: 0, s: 228, planet: 4, level: "world" },
+];
 const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"];
 const limit = (n, min, max) => Math.max(min, Math.min(max, n));
 const pad = (n, size) => String(n + 1).padStart(size, "0");
@@ -54,6 +60,34 @@ export function parseSystemAddress(input) {
   const g = Number(match[1]) - 1,
     s = Number(match[2]) - 1;
   return g >= 0 && g < GALAXIES && s >= 0 && s < SYSTEMS ? { g, s } : null;
+}
+
+const openingLocation = Object.freeze({ level: "galaxy", g: 0, s: 228, p: 0 });
+const levels = new Set(["sector", "galaxy", "system", "world"]);
+
+export function universeLocationHash({ level, g, s, p }) {
+  const at = address(g, s).replace("–", "-");
+  const params = new URLSearchParams({ view: level, at });
+  if (level === "system" || level === "world") params.set("planet", String(p + 1));
+  return "#universe?" + params.toString();
+}
+
+export function parseUniverseLocation(search = "") {
+  if (!search) return { ...openingLocation };
+  const params = new URLSearchParams(search);
+  const allowed = new Set(["view", "at", "planet"]);
+  for (const name of params.keys()) {
+    if (!allowed.delete(name)) return null; // Reject repeated and unknown fields.
+  }
+  const level = params.get("view");
+  const point = parseSystemAddress(params.get("at") ?? "");
+  if (!levels.has(level) || !point) return null;
+  const ordinal = params.get("planet");
+  if (ordinal !== null && (level === "sector" || level === "galaxy" || !/^[1-8]$/.test(ordinal))) return null;
+  if (level === "world" && ordinal === null) return null;
+  const p = ordinal === null ? 0 : Number(ordinal) - 1;
+  if (p >= makeSystem(point.g, point.s).planets.length) return null;
+  return { level, ...point, p };
 }
 
 function seedNumber(a, b = 0) {
@@ -87,9 +121,16 @@ function glow(ctx, x, y, radius, rgb, strength = 1) {
   ctx.fillRect(x - radius, y - radius, 2 * radius, 2 * radius);
 }
 
-function spiralSettings(id) {
+const families = {
+  spiral: "Spiral galaxy",
+  barred: "Barred spiral",
+  edge: "Edge-on spiral",
+  ring: "Ring galaxy",
+  elliptical: "Elliptical galaxy",
+};
+export function galaxyProfile(id) {
   const rng = random(seedNumber(id));
-  return {
+  const profile = {
     arms: 2 + Math.floor(rng() * 3),
     winding: 3.7 + rng() * 2.7,
     tilt: 0.49 + 0.27 * rng(),
@@ -98,6 +139,22 @@ function spiralSettings(id) {
     hue: rng(),
     phase: rng() * TAU,
   };
+  // The first group has traditional spiral names. Other groups also contain
+  // ring and elliptical galaxies. Shape and selectable star density agree.
+  const family =
+    id < 16
+      ? ["spiral", "barred", "edge"][id % 3]
+      : ["spiral", "barred", "ring", "edge", "elliptical"][id % 5];
+  if (family === "edge") {
+    profile.tilt = 0.19 + rng() * 0.08;
+    profile.angle = -0.27 + rng() * 0.5;
+  }
+  if (family === "barred") profile.arms = 2;
+  if (family === "ring" || family === "elliptical") {
+    profile.arms = 0;
+    profile.tilt = 0.6 + rng() * 0.24;
+  }
+  return { ...profile, family, label: families[family] };
 }
 
 function pointAt(radius, angle, thickness, config) {
@@ -121,8 +178,8 @@ function armAngle(r, arm, config) {
 
 // Sample a shared density field in the plane of the disk. Broad tidal spurs,
 // dusty inner edges and small emission knots break up the logarithmic arms.
-function makeDisk(id, config) {
-  const tile = canvasSurface(680);
+function makeDisk(id, config, size = 680) {
+  const tile = canvasSurface(size);
   const ctx = tile.getContext("2d");
   const pixels = ctx.createImageData(tile.width, tile.height);
   const rng = random(seedNumber(id, 9650));
@@ -146,6 +203,9 @@ function makeDisk(id, config) {
   const c = Math.cos(config.angle),
     s = Math.sin(config.angle);
   const unit = tile.width / (2 * MAP_EXTENT);
+  const barAxis = config.family === "barred" ? armAngle(0.32, 0, config) : 0;
+  const barCos = Math.cos(barAxis),
+    barSin = Math.sin(barAxis);
   const warm = config.hue > 0.63 ? 1.17 : 1;
   for (let j = 0; j < tile.height; j++) {
     const py = (j - tile.height / 2) / unit;
@@ -160,6 +220,22 @@ function makeDisk(id, config) {
         0.57 * sample(x * 20 + broad * 4, y * 20 + broad * 3) +
         0.27 * sample(x * 57, y * 57) +
         0.16 * sample(x * 140, y * 140);
+      const o = 4 * (j * tile.width + i);
+      const fadeEdge = Math.min(1, Math.max(0, (1.17 - r) * 8));
+      if (!config.arms) {
+        const asymmetry = 0.028 * Math.sin(3 * Math.atan2(y, x) + config.phase) + (broad - 0.5) * 0.055;
+        const ring = Math.exp(-(((r - 0.73 + asymmetry) / 0.098) ** 2));
+        const nucleus = Math.exp(-r * (config.family === "ring" ? 12 : 5.2));
+        const envelope = 52 * Math.exp(-2.5 * r) * (0.87 + 0.23 * cloud);
+        const clumps = ring * (38 + 250 * Math.max(0, cloud - 0.21) ** 1.6);
+        const emission = config.family === "ring" ? clumps : 0;
+        const red = config.family === "ring" ? 0.48 : 1.18;
+        pixels.data[o] = red * envelope + nucleus * 255 + emission * 0.68;
+        pixels.data[o + 1] = envelope + nucleus * 177 + emission * 1.27;
+        pixels.data[o + 2] = envelope * 1.13 + nucleus * 104 + emission * 1.63;
+        pixels.data[o + 3] = 255 * fadeEdge;
+        continue;
+      }
       const phase = Math.atan2(y, x) - config.phase - config.winding * Math.pow(r + 0.015, 0.73);
       const angle = phase * config.arms + (broad - 0.5) * 1.31 + (cloud - 0.5) * 0.7;
       const arm = 0.5 + 0.5 * Math.cos(angle);
@@ -172,10 +248,13 @@ function makeDisk(id, config) {
       const gas = (20 + 162 * light * light) * ridge * fade * lane;
       const core = Math.exp(-r * 8) * 91 * (0.65 + cloud);
       const knot = Math.max(0, (cloud - 0.62) * 6) * ridge * fade * 47;
-      const o = 4 * (j * tile.width + i);
-      pixels.data[o] = (disk * 1.14 + gas * 0.76 + core * 1.6 + knot * 2.25) * warm;
-      pixels.data[o + 1] = disk * 1.03 + gas * 0.89 + core * 1.1 + knot * 0.53;
-      pixels.data[o + 2] = disk * 1.37 + gas * 1.2 + core * 0.6 + knot * 1.28;
+      const along = x * barCos + y * barSin;
+      const across = y * barCos - x * barSin;
+      const bar =
+        config.family === "barred" ? 106 * Math.exp(-((along / 0.31) ** 4 + (across / 0.055) ** 2)) : 0;
+      pixels.data[o] = (bar * 1.15 + disk * 1.07 + gas * 0.72 + core * 1.6 + knot * 2.25) * warm;
+      pixels.data[o + 1] = bar * 0.89 + disk * 1.05 + gas * 1.02 + core * 1.1 + knot * 0.53;
+      pixels.data[o + 2] = bar * 0.62 + disk * 1.46 + gas * 1.48 + core * 0.6 + knot * 1.28;
       pixels.data[o + 3] = Math.min(255, 255 * (1.17 - r) * 12);
     }
   }
@@ -187,11 +266,11 @@ let firstGalaxy;
 function makeGalaxy(id, paint = true) {
   if (paint && id === 0 && firstGalaxy) return firstGalaxy;
   const rng = random(seedNumber(id, 270));
-  const config = spiralSettings(id);
+  const config = galaxyProfile(id);
   const position = new Float32Array(SYSTEMS * 2);
   const magnitude = new Float32Array(SYSTEMS);
   const tint = new Uint8Array(SYSTEMS);
-  const inks = ["#fff6d8", "#f6ce9c", "#acbbdf", "#b7d5f3", "#d3d5ff", "#e5edff", "#eaa78c"];
+  const inks = ["#fff6d8", "#f6ce9c", "#94aee1", "#b0e5ff", "#d0d2ff", "#e5edff", "#f0a59f"];
   const texture = paint ? canvasSurface(1440) : null;
   const ctx = texture?.getContext("2d");
   const half = 720,
@@ -207,6 +286,8 @@ function makeGalaxy(id, paint = true) {
     glow(ctx, 0, 0, scale * 0.53, "146,108,99", 0.7);
     glow(ctx, 0, 0, scale * 0.3, "241,168,98", 0.84);
     ctx.restore();
+  }
+  if (ctx && config.arms) {
     const cloudRng = random(seedNumber(id, 880));
     const cloudColors = ["139,150,199", "79,123,174", "180,133,129", "132,113,169"];
     const cloudSprites = cloudColors.map((rgb) => {
@@ -244,16 +325,26 @@ function makeGalaxy(id, paint = true) {
   if (haze) haze.getContext("2d").drawImage(texture, 0, 0, haze.width, haze.height);
   for (let i = 0; i < SYSTEMS; i++) {
     const bulge = rng() < 0.23;
-    const r = bulge ? 0.42 * Math.pow(rng(), 1.77) : 0.022 + Math.pow(rng(), 1.12) * 1.065;
-    const a =
-      bulge || rng() < 0.2
+    let r = bulge ? 0.42 * Math.pow(rng(), 1.77) : 0.022 + Math.pow(rng(), 1.12) * 1.065;
+    let a =
+      bulge || !config.arms || rng() < 0.2
         ? rng() * TAU
         : armAngle(r, i % config.arms, config) + (rng() + rng() + rng() - 1.5) * (0.25 + r * 0.24);
+    if (config.family === "ring" && !bulge && rng() < 0.82) {
+      r = 0.73 - 0.028 * Math.sin(3 * a + config.phase) + (rng() + rng() + rng() - 1.5) * 0.105;
+    } else if (config.family === "elliptical") {
+      r = 1.05 * rng() ** 1.85;
+    } else if (config.family === "barred" && r < 0.34 && rng() < 0.76) {
+      a = armAngle(0.32, 0, config) + (i % 2) * Math.PI + (rng() + rng() - 1) * 0.28;
+    }
     const [x, y] = pointAt(r, a, (rng() + rng() - 1) * (bulge ? 0.082 : 0.024), config);
     position[i * 2] = x;
     position[i * 2 + 1] = y;
     magnitude[i] = 0.22 + Math.pow(rng(), 6) * 1.55;
-    tint[i] = r < 0.24 && rng() < 0.72 ? Math.floor(rng() * 2) : Math.floor(rng() * inks.length);
+    tint[i] =
+      (r < 0.24 || config.family === "elliptical") && rng() < 0.72
+        ? Math.floor(rng() * 2)
+        : Math.floor(rng() * inks.length);
     if (ctx) {
       ctx.fillStyle = inks[tint[i]];
       ctx.globalAlpha = (0.18 + magnitude[i] * 0.34) * Math.min(1, (1.14 - r) * 3.9);
@@ -305,10 +396,107 @@ export function makeSystem(g, s) {
   return { star, planets };
 }
 
+const ringTilt = -0.29;
+const ringAspect = 0.29;
+const ringDepth = Math.sqrt(1 - ringAspect ** 2);
+const ringCos = Math.cos(ringTilt),
+  ringSin = Math.sin(ringTilt);
+const light = [-0.82, -0.33, Math.sqrt(1 - 0.82 ** 2 - 0.33 ** 2)];
+const lightAcross = -light[0] * ringSin + light[1] * ringCos;
+const lightNormal = light[2] * ringAspect - lightAcross * ringDepth;
+const ringInner = 1.18,
+  ringOuter = 1.79;
+
+function ringDensity(radius) {
+  if (radius < ringInner || radius > ringOuter || (radius > 1.565 && radius < 1.594)) return 0;
+  const edge = Math.min(1, (radius - ringInner) * 9, (ringOuter - radius) * 16);
+  const band = radius < 1.32 ? 0.44 : radius < 1.565 ? 0.92 : 0.69;
+  return band * edge * (0.87 + 0.13 * Math.cos(radius * 268));
+}
+
+function paintRings(ctx, cx, cy, scale, front) {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(ringTilt);
+  const steps = 72;
+  for (let j = 0; j < steps; j++) {
+    const radius = ringInner + ((j + 0.5) * (ringOuter - ringInner)) / steps;
+    const density = ringDensity(radius);
+    if (!density) continue;
+    const shade = Math.round(158 + density * 76);
+    const ringColor = "rgba(" + shade + "," + (shade - 10) + "," + (shade - 28) + "," + density + ")";
+    const shadowColor = "rgba(50,52,67," + density + ")";
+    // Segment only where a ray from the ring to the illuminating star meets the globe.
+    const first = front ? 0 : Math.PI;
+    let start = first,
+      previous;
+    for (let k = 0; k <= 96; k++) {
+      const angle = first + (k * Math.PI) / 96;
+      const x = radius * Math.cos(angle),
+        y = radius * Math.sin(angle) * ringAspect;
+      const z = radius * Math.sin(angle) * ringDepth;
+      const dot =
+        (x * ringCos - y * ringSin) * light[0] + (y * ringCos + x * ringSin) * light[1] + z * light[2];
+      const shadow = dot < 0 && radius * radius - dot * dot < 1;
+      if (k && (previous !== shadow || k === 96)) {
+        ctx.strokeStyle = previous ? shadowColor : ringColor;
+        ctx.lineWidth = (scale * (ringOuter - ringInner)) / steps + 0.24;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, radius * scale, radius * scale * ringAspect, 0, start, angle);
+        ctx.stroke();
+        start = angle;
+      }
+      previous = shadow;
+    }
+  }
+  ctx.restore();
+}
+
+function drawWorldPortrait(ctx, cx, cy, radius, planet, globe) {
+  if (planet.ring) paintRings(ctx, cx, cy, radius, false);
+  ctx.drawImage(globe, cx - radius, cy - radius, radius * 2, radius * 2);
+  if (planet.ring) paintRings(ctx, cx, cy, radius, true);
+}
+
+// Bucket projected crater centers so each sample touches only nearby impacts.
+// Distances and incidence are evaluated in 3D on the unit sphere.
+function craterField(rng) {
+  const count = 24;
+  const bins = Array.from({ length: count * count }, () => []);
+  const bin = (x) => limit(Math.floor(((x + 1) * count) / 2), 0, count - 1);
+  for (let i = 0; i < 440; i++) {
+    const z = rng(),
+      angle = rng() * TAU,
+      radial = Math.sqrt(1 - z * z);
+    const x = radial * Math.cos(angle),
+      y = radial * Math.sin(angle);
+    const r = 0.007 + 0.118 * rng() ** 5;
+    const crater = { x, y, z, r, age: 0.55 + 0.45 * rng() };
+    for (let iy = bin(y - r * 1.3); iy <= bin(y + r * 1.3); iy++) {
+      for (let ix = bin(x - r * 1.3); ix <= bin(x + r * 1.3); ix++) bins[iy * count + ix].push(crater);
+    }
+  }
+  return (x, y, z) => {
+    let relief = 0;
+    for (const crater of bins[bin(y) * count + bin(x)]) {
+      const dx = x - crater.x,
+        dy = y - crater.y,
+        dz = z - crater.z;
+      const d = Math.sqrt(dx * dx + dy * dy + dz * dz) / crater.r;
+      if (d > 1.3) continue;
+      const sunward = (dx * light[0] + dy * light[1] + dz * light[2]) / crater.r;
+      const rim = Math.exp(-(((d - 0.88) * 9) ** 2));
+      const slope = Math.exp(-(((d - 0.66) * 3.7) ** 2));
+      relief += crater.age * (rim * 34 + sunward * slope * 83 - 15 * Math.max(0, 1 - d * d));
+    }
+    return relief;
+  };
+}
+
 // Evaluate the surface on a sphere so details follow the limb. Each world has
 // a fixed terrain field independent of the screen resolution and viewpoint.
-function makeWorld(g, s, index, planet) {
-  const image = canvasSurface(600),
+function makeWorld(g, s, index, planet, size = 640) {
+  const image = canvasSurface(size),
     ctx = image.getContext("2d");
   const pixels = ctx.createImageData(image.width, image.height);
   const rng = random(seedNumber(936, (g * SYSTEMS + s) * ROMAN.length + index));
@@ -349,7 +537,7 @@ function makeWorld(g, s, index, planet) {
   }
   const type = PLANET_TYPES.indexOf(planet.type);
   const half = image.width / 2;
-  const light = [-0.82, -0.33, 0.46];
+  const craters = type === 0 ? craterField(rng) : null;
   for (let j = 0; j < image.height; j++) {
     const y = (j + 0.5 - half) / (half - 1);
     for (let i = 0; i < image.width; i++) {
@@ -389,14 +577,23 @@ function makeWorld(g, s, index, planet) {
       } else {
         const ridges = (1 - Math.abs(fine - 0.5) * 2) ** 6;
         const strata = Math.max(0, Math.sin(rock * 33 + hue * 5)) * 17;
-        const elevation = (rock - 0.45) * 155 * contrast + fine * 25 + grain * 12;
+        const relief = craters(x, y, z);
+        const elevation = relief + (rock - 0.45) * 155 * contrast + fine * 25 + grain * 12;
         r = 142 + elevation + ridges * 20 + strata;
         green = 94 + elevation * 0.87 + ridges * 13 + strata;
         b = 74 + elevation * 0.7 + hue * 18 + ridges * 7 + strata;
       }
       const incidence = x * light[0] + y * light[1] + z * light[2];
       const scatter = type === 3 ? 0.15 : 0.08;
-      const brightness = 0.028 + 1.12 * Math.max(0, incidence) ** 0.64 + scatter * Math.max(0, z) ** 2;
+      let brightness = 0.028 + 1.12 * Math.max(0, incidence) ** 0.64 + scatter * Math.max(0, z) ** 2;
+      if (planet.ring && incidence > 0) {
+        const across = -x * ringSin + y * ringCos;
+        const t = (across * ringDepth - z * ringAspect) / lightNormal;
+        if (t > 0) {
+          const ringRadius = Math.hypot(x + t * light[0], y + t * light[1], z + t * light[2]);
+          brightness *= 1 - 0.67 * ringDensity(ringRadius);
+        }
+      }
       const limb = Math.pow(1 - z, 5) * Math.max(0, incidence + 0.44) * (type === 0 ? 0.3 : 0.86);
       const k = 4 * (j * image.width + i);
       pixels.data[k] = r * brightness + limb * 114;
@@ -423,6 +620,51 @@ const sector = (() => {
     };
   });
 })();
+
+// A distant, illustrated dust field gives each address a quiet depth cue.
+function makeBackdrop(id) {
+  const image = canvasSurface(420);
+  image.height = 246;
+  const ctx = image.getContext("2d");
+  const pixels = ctx.createImageData(image.width, image.height);
+  const rng = random(seedNumber(id, 914));
+  const grid = Float32Array.from({ length: 4096 }, () => rng());
+  function noise(x, y) {
+    const ix = Math.floor(x),
+      iy = Math.floor(y);
+    const tx = x - ix,
+      ty = y - iy;
+    const u = tx * tx * (3 - 2 * tx),
+      v = ty * ty * (3 - 2 * ty);
+    const a = (iy & 63) << 6,
+      b = ((iy + 1) & 63) << 6;
+    const left = ix & 63,
+      right = (ix + 1) & 63;
+    return (
+      (grid[a + left] * (1 - u) + grid[a + right] * u) * (1 - v) +
+      (grid[b + left] * (1 - u) + grid[b + right] * u) * v
+    );
+  }
+  for (let y = 0; y < image.height; y++) {
+    const v = y / image.height;
+    for (let x = 0; x < image.width; x++) {
+      const u = x / image.width;
+      const broad = noise(u * 4.6 + 5, v * 3 + 16);
+      const detail =
+        noise(u * 24 + broad * 4, v * 15 + broad * 5) * 0.65 + noise(u * 58 + broad * 4, v * 38) * 0.35;
+      const band = Math.exp(-(((v - 0.78 + u * 0.59 + (broad - 0.5) * 0.32) / 0.12) ** 2));
+      const filament = band * Math.max(0, 0.65 * broad + 0.7 * detail - 0.46) ** 1.2;
+      const edge = Math.max(0, u - 0.35);
+      const o = (y * image.width + x) * 4;
+      pixels.data[o] = 4 + broad * 3 + filament * (19 + edge * 25);
+      pixels.data[o + 1] = 7 + broad * 4 + filament * (31 - edge * 13);
+      pixels.data[o + 2] = 13 + broad * 6 + filament * 45;
+      pixels.data[o + 3] = 255;
+    }
+  }
+  ctx.putImageData(pixels, 0, 0);
+  return image;
+}
 
 const sky = (() => {
   const rng = random(43153);
@@ -497,6 +739,7 @@ const icons = {
   center: '<circle cx="12" cy="12" r="5"/><path d="M12 2v5m0 10v5M2 12h5m10 0h5"/>',
   help: '<circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 1 1 4.2 1.7c-1.1.8-2 1.4-2 3M12 16.5h.01"/>',
   explore: '<path d="m3 12 17-8-8 17-1.5-7.5L3 12Z"/>',
+  link: '<path d="M10 13a4 4 0 0 0 5.6 0l3.5-3.5a4 4 0 0 0-5.7-5.6l-2 2M14 11a4 4 0 0 0-5.6 0l-3.5 3.5a4 4 0 0 0 5.7 5.6l2-2"/>',
   layers: '<path d="m3 9 9-5 9 5-9 5-9-5Zm0 5 9 5 9-5"/>',
   play: '<path d="m8 5 11 7-11 7z"/>',
   pause: '<path d="M8 5v14M16 5v14"/>',
@@ -527,7 +770,7 @@ export function scaleBar(unitsPerPixel) {
 }
 
 /** Mount the modal simulator and return an idempotent teardown function. */
-export function mountUniverse(container, { onClose, onEvidence, targets = [] } = {}) {
+export function mountUniverse(container, { onClose, onEvidence, targets = [], locationSearch = "" } = {}) {
   const previousFocus = document.activeElement;
   const modal = document.createElement("dialog");
   modal.className = "os-universe";
@@ -543,13 +786,14 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
           <button type="button" data-level="world">World</button>
         </nav>
         <div class="osu-baractions">
+          <button class="osu-atlas-toggle" data-act="atlas" type="button" aria-expanded="false" aria-controls="osu-destination-atlas">${icon("layers")}<span>Atlas</span></button>
           <button class="osu-icon" data-act="help" type="button" aria-expanded="false" aria-label="Navigation help" title="Navigation help">${icon("help")}</button>
           <button class="osu-icon" data-act="exit" type="button" aria-label="Close universe simulator" title="Back to observatory">${icon("close")}</button>
         </div>
       </header>
       <div class="osu-stage">
         <canvas tabindex="0" aria-label="Interactive simulated galaxy. Arrow keys pan, plus and minus zoom. Use navigation buttons below to select and explore destinations."></canvas>
-        <div class="osu-heading"><span class="osu-eyebrow" data-ref="eyebrow"></span><h2 data-ref="name"></h2><p data-ref="description"></p>
+        <div class="osu-heading"><span class="osu-eyebrow" data-ref="eyebrow"></span><h2 data-ref="name"></h2><p data-ref="description"></p><p class="osu-location-error" data-ref="locationError" role="status" hidden>This location is unavailable. Showing the opening galaxy.</p>
           <div class="osu-spacing" role="group" aria-label="Orbit spacing" hidden>
             <button type="button" data-spacing="schematic" aria-pressed="true">Even spacing</button>
             <button type="button" data-spacing="au" aria-pressed="false">AU scale</button>
@@ -563,6 +807,22 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
           <button class="osu-icon" data-act="zoomOut" type="button" aria-label="Zoom out" title="Zoom out (−)">${icon("zoomOut")}</button>
           <button class="osu-icon" data-act="reset" type="button" aria-label="Reset camera" title="Reset camera (Home)">${icon("center")}</button>
         </div>
+        <aside class="osu-atlas" id="osu-destination-atlas" hidden aria-label="Destination atlas">
+          <div class="osu-atlas-head"><strong>Destination atlas</strong><button class="osu-icon" data-act="closeAtlas" type="button" aria-label="Close destination atlas">${icon("close")}</button></div>
+          <div class="osu-atlas-places">${atlasDestinations
+            .map((d, i) => {
+              const world = d.level === "world";
+              const title = world ? "Planet " + ROMAN[d.planet] : galaxyName(d.g);
+              const type = world ? "Ringed gas giant" : galaxyProfile(d.g).label;
+              return `<button type="button" class="osu-place" data-atlas-index="${i}"><canvas aria-hidden="true"></canvas><span><strong>${title}</strong><small>${type} · ${address(d.g, world ? d.s : undefined)}</small></span>${icon("forward")}</button>`;
+            })
+            .join("")}</div>
+          <div class="osu-share">
+            <button type="button" class="osu-copy" data-act="copyLocation">${icon("link")}Copy location link</button>
+            <span data-ref="shareStatus" role="status"></span>
+            <input data-ref="shareUrl" aria-label="Location link to copy" readonly hidden>
+          </div>
+        </aside>
         <aside class="osu-help" hidden aria-label="Navigation help">
           <strong>Navigate the simulation</strong>
           <p>Drag to pan. Scroll or pinch to zoom. Select a point to inspect it.</p>
@@ -581,6 +841,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       </div>
       <div class="osu-dock">
         <div class="osu-object"><span class="osu-eyebrow" data-ref="objectKind"></span><h3 data-ref="objectName"></h3><p data-ref="objectDetail"></p></div>
+        <div class="osu-worlds" role="group" aria-label="Worlds in orbital order" hidden></div>
         <div class="osu-dockactions">
           <div class="osu-cycle" role="group" aria-label="Choose a destination">
             <button class="osu-icon" data-act="prev" type="button" aria-label="Previous destination" title="Previous destination">${icon("back")}</button>
@@ -598,22 +859,28 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
   const $ = (selector) => modal.querySelector(selector);
   const ref = (name) => $('[data-ref="' + name + '"]');
   const act = (name) => $('[data-act="' + name + '"]');
-  const canvas = $("canvas");
+  const canvas = $(".osu-stage > canvas");
   const ctx = canvas.getContext("2d", { alpha: false });
   const help = $(".osu-help");
+  const atlas = $(".osu-atlas");
+  let paintedAtlas = false;
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const touch = window.matchMedia("(pointer: coarse)");
   const abort = new AbortController();
   const listen = (node, event, fn, options = {}) =>
     node.addEventListener(event, fn, { ...options, signal: abort.signal });
-  let level = "galaxy",
-    galaxyId = 0,
-    systemId = 228,
-    planetId = 0;
-  let galaxy = makeGalaxy(galaxyId, !!ctx),
+  const initial = parseUniverseLocation(locationSearch);
+  let { level, g: galaxyId, s: systemId, p: planetId } = initial ?? openingLocation;
+  ref("locationError").hidden = !!initial;
+  let galaxy = level === "galaxy" ? makeGalaxy(galaxyId, !!ctx) : { config: galaxyProfile(galaxyId) },
     system = makeSystem(galaxyId, systemId);
+  let backdrop = null,
+    backdropId = -1;
+  let photosphere = null,
+    photosphereSeed = -1;
   let globe = null,
     globeKey = "";
+  let pixelRatio = 1;
   let width = 1,
     height = 1,
     frame = 0,
@@ -622,6 +889,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     dirty = true;
   let playing = !motion.matches,
     disposed = false;
+  let lineupAddress = "";
   let proportional = false;
   let zoom = 1,
     panX = 0,
@@ -693,7 +961,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       ? "Sector overview"
       : isSystem || isWorld
         ? address(galaxyId, systemId)
-        : address(galaxyId) + " / Spiral galaxy";
+        : address(galaxyId) + " / " + galaxy.config.label;
     ref("description").textContent = isSector
       ? format.format(GALAXIES) +
         " galaxies · " +
@@ -711,7 +979,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
           : format.format(SYSTEMS) +
             " systems · " +
             format.format(galaxy.config.diameter) +
-            " ly reference disk";
+            " ly reference diameter";
     ref("objectKind").textContent = isSector
       ? "Selected galaxy"
       : isWorld
@@ -729,7 +997,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
           ? "Planet " + ROMAN[planetId]
           : starName(systemId);
     ref("objectDetail").textContent = isSector
-      ? address(galaxyId) + " · " + galaxy.config.arms + " spiral arms"
+      ? address(galaxyId) + " · " + galaxy.config.label
       : isWorld
         ? body.au.toFixed(2) +
           " AU from its host star · " +
@@ -759,11 +1027,38 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     for (const button of modal.querySelectorAll("[data-spacing]")) {
       button.setAttribute("aria-pressed", String((button.dataset.spacing === "au") === proportional));
     }
+    const lineup = $(".osu-worlds");
+    lineup.hidden = !(isSystem || isWorld);
+    if (!lineup.hidden) {
+      const key = address(galaxyId, systemId);
+      if (key !== lineupAddress) {
+        lineupAddress = key;
+        lineup.replaceChildren(
+          ...system.planets.map((planet, i) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.dataset.world = i;
+            button.dataset.type = PLANET_TYPES.indexOf(planet.type);
+            if (planet.ring) button.dataset.ring = "";
+            button.setAttribute("aria-label", "Select planet " + ROMAN[i] + ", " + planet.type.name);
+            button.title = "Planet " + ROMAN[i] + " · " + planet.type.name;
+            const swatch = document.createElement("i");
+            swatch.setAttribute("aria-hidden", "true");
+            button.append(swatch, ROMAN[i]);
+            return button;
+          }),
+        );
+      }
+      for (const button of lineup.children)
+        button.setAttribute("aria-pressed", String(Number(button.dataset.world) === planetId));
+    }
     ref("modelNote").textContent = isSystem
       ? "Generated orbits · body sizes enlarged"
       : isWorld
         ? "Generated globe · illustrative lighting"
-        : "Generated sky · projected distances";
+        : isSector
+          ? "Galaxy markers enlarged"
+          : "Generated sky · projected distances";
     ref("hint").textContent = isSystem
       ? playing
         ? DAYS_PER_SECOND + " model days / second"
@@ -786,12 +1081,40 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
         title + ". " + ref("objectName").textContent + ". " + ref("objectDetail").textContent;
     redraw();
   }
+  function currentHash() {
+    return universeLocationHash({ level, g: galaxyId, s: systemId, p: planetId });
+  }
+  function reflectLocation() {
+    ref("locationError").hidden = true;
+    // Navigating inside a visit keeps Back pointed at the preceding page.
+    if (location.hash !== currentHash()) history.replaceState(history.state, "", currentHash());
+    ref("shareStatus").textContent = "";
+    ref("shareUrl").hidden = true;
+  }
+  async function copyLocation() {
+    const url = new URL(location.href);
+    url.hash = currentHash();
+    const field = ref("shareUrl");
+    try {
+      await navigator.clipboard.writeText(url.href);
+      if (disposed) return;
+      field.hidden = true;
+      ref("shareStatus").textContent = "Location link copied.";
+    } catch {
+      if (disposed) return;
+      field.value = url.href;
+      field.hidden = false;
+      field.focus();
+      field.select();
+      ref("shareStatus").textContent = "Copy the selected link.";
+    }
+  }
   function select(id) {
     if (level === "sector") {
       if (id !== galaxyId) {
         galaxyId = id;
         // Delay making a galaxy image until the visitor enters it.
-        galaxy = { config: spiralSettings(id) };
+        galaxy = { config: galaxyProfile(id) };
         system = makeSystem(galaxyId, systemId);
         planetId = 0;
         days = 0;
@@ -802,6 +1125,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       planetId = 0;
       days = 0;
     } else planetId = id;
+    reflectLocation();
     update(true);
   }
   function cycle(delta) {
@@ -820,8 +1144,11 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     }
   }
   function go(next) {
+    if (!atlas.hidden) toggleAtlas();
+    if (!help.hidden) toggleHelp();
     if (next === "galaxy" && !galaxy.position) galaxy = makeGalaxy(galaxyId, !!ctx);
     level = next;
+    reflectLocation();
     reset();
     lastTime = 0;
     update(true);
@@ -829,7 +1156,51 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
   function enter() {
     go(level === "galaxy" || level === "world" ? "system" : level === "system" ? "world" : "galaxy");
   }
+  function toggleAtlas() {
+    atlas.hidden = !atlas.hidden;
+    act("atlas").setAttribute("aria-expanded", String(!atlas.hidden));
+    if (atlas.hidden) {
+      act("atlas").focus();
+      return;
+    }
+    help.hidden = true;
+    act("help").setAttribute("aria-expanded", "false");
+    if (!paintedAtlas && ctx) {
+      for (const [i, thumb] of Array.from(atlas.querySelectorAll("canvas")).entries()) {
+        const d = atlasDestinations[i];
+        thumb.width = 156;
+        thumb.height = 88;
+        const brush = thumb.getContext("2d");
+        if (!brush) continue;
+        if (d.level === "world") {
+          const planet = makeSystem(d.g, d.s).planets[d.planet];
+          drawWorldPortrait(brush, 78, 44, 34, planet, makeWorld(d.g, d.s, d.planet, planet, 112));
+        } else {
+          const config = galaxyProfile(d.g);
+          const sprite = makeDisk(d.g, config, 152);
+          brush.drawImage(sprite, -6, -39, 168, 168);
+        }
+      }
+      paintedAtlas = true;
+    }
+    atlas.querySelector(".osu-place").focus();
+  }
+  function visitDestination(index) {
+    const d = atlasDestinations[index];
+    if (!d) return;
+    if (d.g !== galaxyId) galaxy = { config: galaxyProfile(d.g) };
+    galaxyId = d.g;
+    systemId = d.s;
+    planetId = d.planet ?? 0;
+    days = 0;
+    system = makeSystem(galaxyId, systemId);
+    toggleAtlas();
+    go(d.level);
+    canvas.focus();
+  }
   function toggleHelp() {
+    atlas.hidden = true;
+    act("atlas").setAttribute("aria-expanded", "false");
     help.hidden = !help.hidden;
     act("help").setAttribute("aria-expanded", String(!help.hidden));
     if (!help.hidden) $(".osu-jump input").focus();
@@ -861,7 +1232,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     systemId = parsed.s;
     planetId = 0;
     days = 0;
-    galaxy = { config: spiralSettings(galaxyId) };
+    galaxy = { config: galaxyProfile(galaxyId) };
     system = makeSystem(galaxyId, systemId);
     ref("jumpError").textContent = "";
     toggleHelp();
@@ -871,6 +1242,14 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
   listen(modal, "click", (event) => {
     const button = event.target.closest("button");
     if (!button) return;
+    if (button.dataset.world !== undefined) {
+      select(Number(button.dataset.world));
+      return;
+    }
+    if (button.dataset.atlasIndex !== undefined) {
+      visitDestination(Number(button.dataset.atlasIndex));
+      return;
+    }
     if (button.dataset.spacing) {
       proportional = button.dataset.spacing === "au";
       reset();
@@ -884,6 +1263,13 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     switch (button.dataset.act) {
       case "exit":
         close();
+        break;
+      case "copyLocation":
+        void copyLocation();
+        break;
+      case "atlas":
+      case "closeAtlas":
+        toggleAtlas();
         break;
       case "help":
         toggleHelp();
@@ -922,7 +1308,8 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
   });
   listen(modal, "cancel", (event) => {
     event.preventDefault();
-    if (!help.hidden) toggleHelp();
+    if (!atlas.hidden) toggleAtlas();
+    else if (!help.hidden) toggleHelp();
     else close();
   });
   listen(canvas, "keydown", (event) => {
@@ -1092,17 +1479,22 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     ctx.restore();
   }
   function drawSky() {
-    ctx.fillStyle = "#05080d";
-    ctx.fillRect(0, 0, width, height);
+    if (backdropId !== galaxyId) {
+      backdrop = makeBackdrop(galaxyId);
+      backdropId = galaxyId;
+    }
+    const bx = -28 + limit(panX * 0.025, -26, 26);
+    const by = -28 + limit(panY * 0.025, -26, 26);
+    ctx.drawImage(backdrop, bx, by, width + 56, height + 56);
     for (const [u, v, b, z] of sky) {
       const x = (((u * width + panX * z * 0.025) % width) + width) % width;
       const y = (((v * height + panY * z * 0.025) % height) + height) % height;
-      const size = b > 0.982 ? 1.55 : 0.5 + b * 0.53;
-      ctx.globalAlpha = 0.14 + b * 0.5;
+      const size = b > 0.982 ? 1.8 : 0.45 + b * 0.8;
+      ctx.globalAlpha = 0.17 + b * 0.57;
       ctx.fillStyle = z > 0.67 ? "#f6ddc8" : "#c1d5ea";
       ctx.fillRect(x, y, size, size);
       if (b > 0.982) {
-        ctx.globalAlpha = 0.14;
+        ctx.globalAlpha = 0.22;
         ctx.fillRect(x - 2.3, y + 0.5, 6, 0.55);
         ctx.fillRect(x + 0.5, y - 2.3, 0.55, 6);
       }
@@ -1154,26 +1546,82 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
   }
   function drawSector() {
     hits = [];
-    const tints = ["235,195,143", "170,188,232", "210,178,192", "160,203,199"];
+    const tints = {
+      elliptical: "250,194,137",
+      ring: "118,209,235",
+      edge: "211,191,177",
+      barred: "221,177,146",
+      spiral: "182,193,239",
+    };
     sector.forEach((g, id) => {
       const [x, y] = project(g.x, g.y);
       if (x < -20 || x > width + 20 || y < -20 || y > height + 20) return;
-      const radius = g.size * (1.0 + Math.sqrt(zoom) * 0.56);
+      const config = galaxyProfile(id);
+      const radius = g.size * ((width < 600 ? 1.15 : 1.68) + Math.sqrt(zoom) * 0.8);
       hits.push([x, y, id]);
       ctx.save();
       ctx.translate(x, y);
-      ctx.rotate(g.tilt);
-      ctx.scale(1, 0.43);
-      glow(ctx, 0, 0, radius, tints[g.color], 0.93);
-      ctx.fillStyle = "#fff3d9";
+      ctx.rotate(config.angle);
+      ctx.scale(1, config.tilt);
+      glow(ctx, 0, 0, radius, tints[config.family], 0.64);
+      if (config.family === "ring") {
+        ctx.strokeStyle = "rgba(153,215,245,.73)";
+        ctx.lineWidth = 0.95;
+        ctx.beginPath();
+        ctx.arc(0, 0, radius * 0.55, 0, TAU);
+        ctx.stroke();
+      } else if (config.arms) {
+        ctx.strokeStyle = "rgba(" + tints[config.family] + ",.70)";
+        ctx.lineWidth = Math.max(0.65, radius * 0.065);
+        for (let arm = 0; arm < config.arms; arm++) {
+          ctx.beginPath();
+          for (let j = 0; j < 13; j++) {
+            const r = 0.06 + j * 0.062;
+            const a = armAngle(r, arm, config);
+            const px = radius * r * Math.cos(a),
+              py = radius * r * Math.sin(a);
+            if (!j) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+          ctx.stroke();
+        }
+      }
+      glow(ctx, 0, 0, radius * 0.35, "255,224,181", 0.85);
+      ctx.fillStyle = "#fff1d4";
       ctx.beginPath();
-      ctx.ellipse(0, 0, radius * 0.16, radius * 0.23, 0, 0, TAU);
+      ctx.arc(0, 0, Math.max(0.75, radius * 0.085), 0, TAU);
       ctx.fill();
       ctx.restore();
     });
     const g = sector[galaxyId];
     marker(...project(g.x, g.y), address(galaxyId), 12);
     showRuler(SECTOR_MLY_PER_UNIT / (baseScale() * zoom), "Mly");
+  }
+  function stellarSurface() {
+    const seed = systemSeed(galaxyId, systemId);
+    if (photosphereSeed === seed) return photosphere;
+    photosphereSeed = seed;
+    const tile = canvasSurface(128),
+      brush = tile.getContext("2d");
+    const pixels = brush.createImageData(128, 128),
+      rng = random(seed);
+    const color = Number.parseInt(system.star.color.slice(1), 16);
+    const rgb = [color >> 16, (color >> 8) & 255, color & 255];
+    for (let y = 0; y < 128; y++) {
+      for (let x = 0; x < 128; x++) {
+        const r = Math.hypot((x - 63.5) / 63, (y - 63.5) / 63);
+        if (r > 1) continue;
+        const z = Math.sqrt(1 - r * r);
+        const granulation = (rng() - 0.5) * (0.1 + 0.12 * z);
+        const intensity = 0.63 + 0.45 * z + granulation;
+        const o = 4 * (y * 128 + x);
+        for (let c = 0; c < 3; c++) pixels.data[o + c] = rgb[c] * intensity + 14 * z;
+        pixels.data[o + 3] = 255 * Math.min(1, (1 - r) * 64);
+      }
+    }
+    brush.putImageData(pixels, 0, 0);
+    photosphere = tile;
+    return tile;
   }
   function drawSystem() {
     const clockLabel = "Model day " + format.format(Math.floor(days));
@@ -1224,21 +1672,13 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     function drawStar() {
       glow(ctx, cx, cy, starRadius * 10.4, rgb, 0.46);
       glow(ctx, cx, cy, starRadius * 4.1, rgb, 0.88);
-      const surface = ctx.createRadialGradient(
-        cx - starRadius * 0.18,
-        cy - starRadius * 0.14,
-        0,
-        cx,
-        cy,
-        starRadius,
-      );
-      surface.addColorStop(0, "#fffaed");
-      surface.addColorStop(0.64, system.star.color);
-      surface.addColorStop(1, "rgb(" + rgb + ")");
-      ctx.fillStyle = surface;
-      ctx.beginPath();
-      ctx.arc(cx, cy, starRadius, 0, TAU);
-      ctx.fill();
+      const corona = ctx.createRadialGradient(cx, cy, starRadius * 0.98, cx, cy, starRadius * 1.78);
+      corona.addColorStop(0, "rgba(" + rgb + ",.89)");
+      corona.addColorStop(0.13, "rgba(" + rgb + ",.15)");
+      corona.addColorStop(1, "rgba(" + rgb + ",0)");
+      ctx.fillStyle = corona;
+      ctx.fillRect(cx - starRadius * 2, cy - starRadius * 2, starRadius * 4, starRadius * 4);
+      ctx.drawImage(stellarSurface(), cx - starRadius, cy - starRadius, starRadius * 2, starRadius * 2);
     }
     function drawBody({ x, y, planet: p }) {
       const r = Math.max(3.7, Math.min(45, p.size * k));
@@ -1287,24 +1727,8 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       globeKey = key;
     }
     const [cx, cy] = center(),
-      radius = Math.min(width * 0.295, height * 0.34) * zoom;
-    function rings(front) {
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(-0.29);
-      for (let i = 0; i < 29; i++) {
-        const r = radius * (1.19 + i * 0.017);
-        ctx.lineWidth = radius * 0.013;
-        ctx.strokeStyle = "rgba(219,190,148," + (0.19 + 0.23 * (1 + Math.sin(i * 1.42))) + ")";
-        ctx.beginPath();
-        ctx.ellipse(0, 0, r, r * 0.29, 0, front ? 0 : Math.PI, front ? Math.PI : TAU);
-        ctx.stroke();
-      }
-      ctx.restore();
-    }
-    if (planet.ring) rings(false);
-    ctx.drawImage(globe, cx - radius, cy - radius, radius * 2, radius * 2);
-    if (planet.ring) rings(true);
+      radius = Math.min(width * (planet.ring ? 0.27 : 0.36), height * 0.38) * zoom;
+    drawWorldPortrait(ctx, cx, cy, radius, planet, globe);
     showScaleNote(planet.type === PLANET_TYPES[2] ? "CLOUD TOPS" : "SURFACE VIEW");
   }
   function render(now) {
@@ -1315,6 +1739,15 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       if (active && lastTime) days += ((now - lastTime) / 1000) * DAYS_PER_SECOND;
       lastTime = now;
       dirty = false;
+      // Resizing clears the backing store. Resize and paint in the same frame,
+      // especially when the planet chooser changes the stage height on phones.
+      const nextWidth = Math.max(1, Math.round(width * pixelRatio));
+      const nextHeight = Math.max(1, Math.round(height * pixelRatio));
+      if (canvas.width !== nextWidth || canvas.height !== nextHeight) {
+        canvas.width = nextWidth;
+        canvas.height = nextHeight;
+      }
+      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
       drawSky();
       if (level === "sector") drawSector();
       else if (level === "galaxy") drawGalaxy();
@@ -1325,12 +1758,9 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
   }
   function sizeCanvas() {
     const rect = stage.getBoundingClientRect();
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
     width = Math.max(1, rect.width);
     height = Math.max(1, rect.height);
-    canvas.width = Math.max(1, Math.round(width * ratio));
-    canvas.height = Math.max(1, Math.round(height * ratio));
-    ctx?.setTransform(ratio, 0, 0, ratio, 0, 0);
     redraw();
   }
   const observer = typeof ResizeObserver === "function" ? new ResizeObserver(sizeCanvas) : null;

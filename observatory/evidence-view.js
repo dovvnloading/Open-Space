@@ -1,18 +1,8 @@
 import { icon } from "./icons.js";
 
-export function esc(value) {
-  return String(value ?? "").replace(
-    /[&<>"']/g,
-    (ch) =>
-      ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;",
-      })[ch],
-  );
-}
+import "./observation-viewer.js";
+import { esc } from "./html.js";
+export { esc };
 
 export function badge(status) {
   return `<span class="status" data-status="${esc(status)}">${esc(status)}</span>`;
@@ -141,16 +131,22 @@ export function renderTarget(target, record, catalog) {
     <div class="reader-intro"><div class="eyebrow"><span class="small-line"></span>${esc(target.instrument)}<span class="reader-epoch">${esc(target.epoch)}</span></div>
     <h2 id="dossier-title">${esc(target.title)}</h2>${statusLine(record)}
     <p class="reader-lede">${esc(target.body)}</p></div>
-    ${target.observingUnit ? `<dl class="observation-unit"><dt>Observing unit</dt><dd>${esc(target.observingUnit)}</dd></dl>` : ""}
-    <div class="measures">${summary}</div>
-    ${methods ? `<details class="methods"><summary>How these values were checked</summary><ol>${methods}</ol></details>` : ""}
+    <observation-viewer data-target="${esc(target.id)}">
     <figure class="science-plate">
       <div class="figure-head"><span>${icon("pulse")} Observation figure</span>
       <a href="./${esc(figure.src)}" target="_blank" rel="noopener">Full size ${icon("external")}</a></div>
       <img src="./${esc(figure.src)}" alt="${esc(figure.alt)}" loading="lazy">
       <figcaption>${esc(figure.caption)} ${sourceLink({ url: figure.url, label: "Figure source" })}</figcaption>
     </figure>
+    </observation-viewer>
     ${observationTable(target.table)}
+    <a class="image-study-link" href="#plate/${esc(target.id)}">${icon("focus")}${esc({
+      mars: "Inspect the Viking mosaic", sun: "Watch the coronagraph image sequence",
+      quasar: "Locate images A and B on the survey plate", dwarf: "View the credited illustration"
+    }[target.id])}${icon("arrow")}</a>
+    ${target.observingUnit ? `<dl class="observation-unit"><dt>Observing unit</dt><dd>${esc(target.observingUnit)}</dd></dl>` : ""}
+    <div class="measures">${summary}</div>
+    ${methods ? `<details class="methods"><summary>How these values were checked</summary><ol>${methods}</ol></details>` : ""}
     <div class="interpretation">${interpretation}</div>
     <h3>Source evidence</h3>${sourceList(sources)}${archiveOrigin(record, catalog)}
     </article>`;
@@ -203,7 +199,7 @@ export function renderCredits(plates, catalog) {
   return `<article class="dialog-padding credits-reader"><div class="eyebrow"><span class="small-line"></span>IMAGE PROVENANCE</div>
     <h2 id="dossier-title">Image &amp; data credits</h2><p>The deck’s context images introduce the targets. Choose <b>Measured data</b> on a target to inspect its observation figure.</p>
     <ul class="credit-list">${images}</ul><h3>Simulation and type</h3>
-    <p>The simulator generates its sky and planetary systems from integer addresses. DM Sans and IBM Plex Mono are distributed under the SIL Open Font License.</p>
+    <p>The simulator generates its sky and planetary systems from integer addresses. Instrument Serif, DM Sans and IBM Plex Mono are distributed under the SIL Open Font License.</p>
     ${
       catalog
         ? sourceList([
