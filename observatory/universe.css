@@ -1,0 +1,482 @@
+.os-universe {
+  --osu-ink: #f6f2eb;
+  --osu-dim: #a6a5a6;
+  --osu-line: #ffffff24;
+  --osu-hot: #ff9357;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: #070a0e;
+  color: var(--osu-ink);
+  color-scheme: dark;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+  line-height: 1.45;
+  text-align: left;
+}
+.os-universe::backdrop {
+  background: #06080c;
+}
+.os-universe *,
+.os-universe *::before,
+.os-universe *::after {
+  box-sizing: border-box;
+}
+.os-universe [hidden] {
+  display: none !important;
+}
+.os-universe button,
+.os-universe input,
+.os-universe select {
+  font: inherit;
+  color: inherit;
+  letter-spacing: normal;
+}
+.os-universe button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.os-universe button:focus-visible,
+.os-universe input:focus-visible,
+.os-universe select:focus-visible,
+.os-universe canvas:focus-visible {
+  outline: 2px solid var(--osu-hot);
+  outline-offset: -3px;
+}
+.os-universe button:hover {
+  color: #ffc19b;
+}
+.os-universe h2,
+.os-universe h3,
+.os-universe p {
+  margin: 0;
+}
+.os-universe svg {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+}
+.osu-shell {
+  display: grid;
+  grid-template-rows: auto minmax(150px, 1fr) auto auto;
+  height: 100%;
+  min-height: 355px;
+  isolation: isolate;
+}
+.osu-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 68px;
+  padding: 10px clamp(15px, 3.5vw, 54px);
+  border-bottom: 1px solid var(--osu-line);
+  background: #0a0d11;
+}
+.osu-brand,
+.osu-baractions,
+.osu-levels,
+.osu-dockactions,
+.osu-cycle {
+  display: flex;
+  align-items: center;
+}
+.osu-brand {
+  gap: 11px;
+  font-size: 16px;
+  font-weight: 560;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+}
+.osu-logo {
+  display: grid;
+  place-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--osu-hot);
+  border: 1px solid #ff93574d;
+  border-radius: 50%;
+}
+.osu-levels {
+  gap: 5px;
+}
+.osu-levels span {
+  color: #686a6e;
+  font:
+    11px ui-monospace,
+    "Consolas",
+    monospace;
+}
+.osu-levels button {
+  color: #a6a5a6;
+  font-size: 12px;
+  padding: 8px 10px;
+}
+.osu-levels button[aria-current] {
+  color: var(--osu-hot);
+}
+.osu-baractions,
+.osu-cycle {
+  gap: 4px;
+}
+.os-universe .osu-icon {
+  display: grid;
+  place-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 3px;
+  color: #e2dedb;
+}
+.os-universe .osu-icon:hover {
+  background: #ffffff0d;
+  color: var(--osu-hot);
+}
+.osu-stage {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #05080d;
+}
+.osu-stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+}
+.osu-stage canvas:active {
+  cursor: grabbing;
+}
+.osu-stage::before {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #05070b52, transparent 30%, transparent 87%, #05070b22);
+}
+.osu-heading {
+  pointer-events: none;
+  position: absolute;
+  top: clamp(20px, 5vh, 58px);
+  left: clamp(17px, 4.5vw, 80px);
+  max-width: min(76%, 560px);
+  text-shadow:
+    0 1px 12px #08090c,
+    0 1px 5px #08090c;
+}
+.osu-eyebrow,
+.osu-readout,
+.osu-scale,
+.osu-note {
+  font-family: "IBM Plex Mono", "Consolas", ui-monospace, monospace;
+}
+.osu-eyebrow {
+  display: block;
+  color: var(--osu-hot);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.osu-heading h2 {
+  padding: 8px 0 5px;
+  color: #f8f4ee;
+  font-size: clamp(33px, 4.1vw, 64px);
+  font-weight: 470;
+  line-height: 1.04;
+  letter-spacing: -0.065em;
+}
+.osu-heading p {
+  color: #bdbdc1;
+  font-size: clamp(11px, 0.95vw, 14px);
+}
+.osu-readout {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  position: absolute;
+  top: clamp(22px, 5.3vh, 61px);
+  right: clamp(17px, 4.5vw, 80px);
+  color: #b8b9bd;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  pointer-events: none;
+}
+.osu-signal {
+  display: block;
+  height: 5px;
+  width: 5px;
+  background: var(--osu-hot);
+  border-radius: 50%;
+}
+.osu-camera {
+  position: absolute;
+  right: clamp(14px, 3.5vw, 54px);
+  bottom: clamp(16px, 3.2vh, 44px);
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border: 1px solid var(--osu-line);
+  border-radius: 5px;
+  background: #101319e8;
+}
+.osu-scale {
+  position: absolute;
+  left: clamp(17px, 4.5vw, 80px);
+  bottom: clamp(19px, 3.8vh, 48px);
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  color: #c2c1c5;
+  font-size: 10px;
+  pointer-events: none;
+  text-shadow: 0 0 6px #000;
+}
+.osu-scale i {
+  width: 60px;
+  height: 5px;
+  border: 1px solid #aaa9ad;
+  border-top: 0;
+}
+.osu-dock {
+  min-height: 103px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 18px clamp(17px, 4.5vw, 80px);
+  border-top: 1px solid var(--osu-line);
+  background: linear-gradient(100deg, #111318, #0b0e12);
+}
+.osu-object h3 {
+  padding: 4px 0 0;
+  color: #f2ece4;
+  font-size: clamp(21px, 2vw, 31px);
+  font-weight: 480;
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+}
+.osu-object p {
+  padding-top: 5px;
+  color: #b1b0b1;
+  font-size: 12px;
+}
+.osu-dockactions {
+  gap: 12px;
+}
+.osu-cycle {
+  border: 1px solid var(--osu-line);
+  border-radius: 4px;
+  padding: 1px;
+}
+.os-universe .osu-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 11px 17px;
+  min-height: 44px;
+  border: 1px solid #ffb283;
+  border-radius: 4px;
+  color: #19110c;
+  background: #ff9357;
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.os-universe .osu-primary:hover {
+  color: #100b07;
+  background: #ffac7c;
+}
+.os-universe .osu-primary:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+.osu-primary svg {
+  width: 16px;
+  height: 16px;
+}
+.osu-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px clamp(17px, 4.5vw, 80px) max(8px, env(safe-area-inset-bottom));
+  border-top: 1px solid #ffffff0d;
+  background: #0b0e12;
+  color: #a2a2a5;
+  font-size: 10px;
+}
+.osu-help {
+  z-index: 2;
+  position: absolute;
+  top: 12px;
+  right: clamp(12px, 3.5vw, 54px);
+  width: min(336px, calc(100% - 24px));
+  max-height: calc(100% - 24px);
+  overflow-y: auto;
+  padding: 20px;
+  border: 1px solid #ffffff36;
+  border-radius: 6px;
+  background: #14171df7;
+  box-shadow: 0 8px 50px #0008;
+}
+.osu-help strong {
+  color: var(--osu-ink);
+  font-size: 15px;
+  font-weight: 580;
+}
+.osu-help p,
+.osu-help label,
+.osu-help small {
+  display: block;
+  padding-top: 8px;
+  color: #c9c8c8;
+  font-size: 12px;
+}
+.osu-help small {
+  color: #ffc39d;
+}
+.osu-help small:empty {
+  display: none;
+}
+.osu-jump {
+  display: flex;
+  align-items: end;
+  gap: 6px;
+}
+.osu-jump label {
+  flex: 1;
+  min-width: 0;
+}
+.osu-help input,
+.osu-help select {
+  display: block;
+  width: 100%;
+  min-height: 38px;
+  margin-top: 5px;
+  padding: 8px 9px;
+  border: 1px solid #ffffff38;
+  border-radius: 3px;
+  background: #0a0d12;
+  color: var(--osu-ink);
+}
+.os-universe .osu-jump button {
+  min-height: 38px;
+  padding: 5px 11px;
+  border: 1px solid #ffffff38;
+  border-radius: 3px;
+}
+.osu-nocanvas {
+  position: absolute;
+  top: 55%;
+  left: 7%;
+  right: 7%;
+  text-align: center;
+  color: #c5c3c5;
+  font-size: 13px;
+}
+.osu-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+@media (max-width: 650px) {
+  .osu-bar {
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 5px 12px 0;
+  }
+  .osu-brand {
+    gap: 8px;
+    font-size: 14px;
+  }
+  .osu-logo {
+    width: 27px;
+    height: 27px;
+  }
+  .osu-logo svg {
+    width: 16px;
+    height: 16px;
+  }
+  .osu-levels {
+    justify-content: center;
+    order: 3;
+    width: 100%;
+    border-top: 1px solid #ffffff0c;
+  }
+  .osu-baractions {
+    margin-left: auto;
+  }
+  .osu-levels button {
+    padding: 6px 12px;
+  }
+  .osu-heading {
+    max-width: 92%;
+  }
+  .osu-readout {
+    display: none;
+  }
+  .osu-dock {
+    flex-wrap: wrap;
+    gap: 11px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+  }
+  .osu-object {
+    width: 100%;
+  }
+  .osu-dockactions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .osu-scale {
+    font-size: 9px;
+    gap: 6px;
+  }
+  .osu-note {
+    font-size: 9px;
+  }
+  .osu-note span:last-child {
+    max-width: 49%;
+    text-align: right;
+  }
+}
+@media (max-height: 540px) and (min-width: 651px) {
+  .osu-bar {
+    min-height: 44px;
+    padding-block: 1px;
+  }
+  .osu-dock {
+    min-height: 75px;
+    padding-block: 8px;
+  }
+  .osu-heading {
+    top: 12px;
+  }
+  .osu-heading h2 {
+    font-size: 30px;
+    padding: 3px 0;
+  }
+  .osu-help {
+    max-height: calc(100% - 8px);
+    top: 4px;
+  }
+}

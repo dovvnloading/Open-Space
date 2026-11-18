@@ -1,0 +1,1242 @@
+/* A deterministic, illustrative sky. The input seed and integer address define
+   every galaxy, star and planet independently of the camera or frame rate. */
+const TAU = Math.PI * 2;
+const GALAXIES = 128;
+const SYSTEMS = 32768;
+export const universeSize = Object.freeze({ galaxies: GALAXIES, systemsPerGalaxy: SYSTEMS });
+const MAP_EXTENT = 1.29;
+const GALAXY_WORDS = [
+  "Vesper",
+  "Lyric",
+  "Aster",
+  "Sable",
+  "Halcyon",
+  "Lumen",
+  "Ember",
+  "Aurelia",
+  "Cinder",
+  "Noctis",
+  "Velum",
+  "Opal",
+  "Argent",
+  "Saffron",
+  "Cerulean",
+  "Serein",
+];
+const GALAXY_TYPES = ["Spiral", "Reach", "Crown", "Arc", "Drift", "Veil", "Helix", "Sea"];
+const STAR_TYPES = [
+  { name: "M dwarf", color: "#ff9b73", mass: 0.45 },
+  { name: "K dwarf", color: "#ffbc80", mass: 0.76 },
+  { name: "G dwarf", color: "#ffe3a3", mass: 0.99 },
+  { name: "F dwarf", color: "#fcf0d6", mass: 1.27 },
+  { name: "A star", color: "#d6ecff", mass: 1.94 },
+  { name: "B star", color: "#a4cbff", mass: 4.38 },
+];
+const PLANET_TYPES = [
+  { name: "Rocky planet", colors: ["#b68767", "#ead0a0", "#424a52"] },
+  { name: "Ice world", colors: ["#7fb7c6", "#d7eff4", "#405776"] },
+  { name: "Gas giant", colors: ["#cf9868", "#f2d9a9", "#664b5d"] },
+  { name: "Ocean world", colors: ["#5386ae", "#a0d9dc", "#29375d"] },
+];
+const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"];
+const limit = (n, min, max) => Math.max(min, Math.min(max, n));
+const pad = (n, size) => String(n + 1).padStart(size, "0");
+const galaxyName = (id) => GALAXY_WORDS[id % 16] + " " + GALAXY_TYPES[Math.floor(id / 16)];
+const starName = (id) => "System " + pad(id, 5);
+const address = (g, s) => "G" + pad(g, 3) + (s === undefined ? "" : "–S" + pad(s, 5));
+
+function seedNumber(a, b = 0) {
+  let h = Math.imul(a + 29, 0x85ebca6b) ^ Math.imul(b + 317, 0xc2b2ae35);
+  h = Math.imul(h ^ (h >>> 16), 0x27d4eb2d);
+  return (h ^ (h >>> 15)) >>> 0;
+}
+
+function random(seed) {
+  return () => {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let h = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    h ^= h + Math.imul(h ^ (h >>> 7), 61 | h);
+    return ((h ^ (h >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function canvasSurface(size) {
+  const surface = document.createElement("canvas");
+  surface.width = surface.height = size;
+  return surface;
+}
+
+function glow(ctx, x, y, radius, rgb, strength = 1) {
+  const grad = ctx.createRadialGradient(x, y, 0, x, y, radius);
+  grad.addColorStop(0, "rgba(" + rgb + "," + strength + ")");
+  grad.addColorStop(0.16, "rgba(" + rgb + "," + strength * 0.62 + ")");
+  grad.addColorStop(0.55, "rgba(" + rgb + "," + strength * 0.15 + ")");
+  grad.addColorStop(1, "rgba(" + rgb + ",0)");
+  ctx.fillStyle = grad;
+  ctx.fillRect(x - radius, y - radius, 2 * radius, 2 * radius);
+}
+
+function spiralSettings(id) {
+  const rng = random(seedNumber(id));
+  return {
+    arms: 2 + Math.floor(rng() * 3),
+    winding: 3.7 + rng() * 2.7,
+    tilt: 0.49 + 0.27 * rng(),
+    angle: -0.4 + rng() * 0.8,
+    diameter: (81 + Math.floor(rng() * 56)) * 1000,
+    hue: rng(),
+    phase: rng() * TAU,
+  };
+}
+
+function pointAt(radius, angle, thickness, config) {
+  const x = radius * Math.cos(angle);
+  const y = radius * Math.sin(angle) * config.tilt + thickness;
+  return [
+    x * Math.cos(config.angle) - y * Math.sin(config.angle),
+    x * Math.sin(config.angle) + y * Math.cos(config.angle),
+  ];
+}
+
+function armAngle(r, arm, config) {
+  return (
+    (arm * TAU) / config.arms +
+    config.phase +
+    config.winding * Math.pow(r + 0.015, 0.73) +
+    0.12 * Math.sin(r * 11 + arm * 8) +
+    0.046 * Math.cos(r * 28 + arm * 2)
+  );
+}
+
+// Sample a shared density field in the plane of the disk. Broad tidal spurs,
+// dusty inner edges and small emission knots break up the logarithmic arms.
+function makeDisk(id, config) {
+  const tile = canvasSurface(680);
+  const ctx = tile.getContext("2d");
+  const pixels = ctx.createImageData(tile.width, tile.height);
+  const rng = random(seedNumber(id, 9650));
+  const noise = Float32Array.from({ length: 65536 }, () => rng());
+  function sample(x, y) {
+    const ix = Math.floor(x),
+      iy = Math.floor(y);
+    let fx = x - ix,
+      fy = y - iy;
+    fx = fx * fx * (3 - 2 * fx);
+    fy = fy * fy * (3 - 2 * fy);
+    const row = (iy & 255) << 8,
+      next = ((iy + 1) & 255) << 8;
+    const a = ix & 255,
+      b = (ix + 1) & 255;
+    return (
+      (noise[row + a] * (1 - fx) + noise[row + b] * fx) * (1 - fy) +
+      (noise[next + a] * (1 - fx) + noise[next + b] * fx) * fy
+    );
+  }
+  const c = Math.cos(config.angle),
+    s = Math.sin(config.angle);
+  const unit = tile.width / (2 * MAP_EXTENT);
+  const warm = config.hue > 0.63 ? 1.17 : 1;
+  for (let j = 0; j < tile.height; j++) {
+    const py = (j - tile.height / 2) / unit;
+    for (let i = 0; i < tile.width; i++) {
+      const px = (i - tile.width / 2) / unit;
+      const x = px * c + py * s,
+        y = (py * c - px * s) / config.tilt;
+      const r = Math.hypot(x, y);
+      if (r > 1.17) continue;
+      const broad = sample(x * 7 + 36, y * 7 + 78);
+      const cloud =
+        0.57 * sample(x * 20 + broad * 4, y * 20 + broad * 3) +
+        0.27 * sample(x * 57, y * 57) +
+        0.16 * sample(x * 140, y * 140);
+      const phase = Math.atan2(y, x) - config.phase - config.winding * Math.pow(r + 0.015, 0.73);
+      const angle = phase * config.arms + (broad - 0.5) * 1.31 + (cloud - 0.5) * 0.7;
+      const arm = 0.5 + 0.5 * Math.cos(angle);
+      const ridge = arm ** 5.5,
+        spur = (0.5 + 0.5 * Math.cos(angle * 1.99 + 2.3 + broad * 4)) ** 6;
+      const fade = Math.max(0, 1 - (r / 1.15) ** 3) * Math.exp(-r * 1.18);
+      const light = Math.max(0.04, (cloud - 0.23) * 2.3);
+      const lane = 1 - 0.83 * (0.5 + 0.5 * Math.cos(angle + 0.48)) ** 26 * Math.min(1, r * 8);
+      const disk = (18 + cloud * 16 + 26 * spur * light) * fade * lane;
+      const gas = (20 + 162 * light * light) * ridge * fade * lane;
+      const core = Math.exp(-r * 8) * 91 * (0.65 + cloud);
+      const knot = Math.max(0, (cloud - 0.62) * 6) * ridge * fade * 47;
+      const o = 4 * (j * tile.width + i);
+      pixels.data[o] = (disk * 1.14 + gas * 0.76 + core * 1.6 + knot * 2.25) * warm;
+      pixels.data[o + 1] = disk * 1.03 + gas * 0.89 + core * 1.1 + knot * 0.53;
+      pixels.data[o + 2] = disk * 1.37 + gas * 1.2 + core * 0.6 + knot * 1.28;
+      pixels.data[o + 3] = Math.min(255, 255 * (1.17 - r) * 12);
+    }
+  }
+  ctx.putImageData(pixels, 0, 0);
+  return tile;
+}
+
+let firstGalaxy;
+function makeGalaxy(id, paint = true) {
+  if (paint && id === 0 && firstGalaxy) return firstGalaxy;
+  const rng = random(seedNumber(id, 270));
+  const config = spiralSettings(id);
+  const position = new Float32Array(SYSTEMS * 2);
+  const magnitude = new Float32Array(SYSTEMS);
+  const tint = new Uint8Array(SYSTEMS);
+  const inks = ["#fff6d8", "#f6ce9c", "#acbbdf", "#b7d5f3", "#d3d5ff", "#e5edff", "#eaa78c"];
+  const texture = paint ? canvasSurface(1440) : null;
+  const ctx = texture?.getContext("2d");
+  const half = 720,
+    scale = half / MAP_EXTENT;
+  if (ctx) {
+    ctx.drawImage(makeDisk(id, config), 0, 0, texture.width, texture.height);
+    ctx.globalCompositeOperation = "screen";
+    ctx.save();
+    ctx.translate(half, half);
+    ctx.rotate(config.angle);
+    ctx.scale(1, config.tilt);
+    glow(ctx, 0, 0, scale * 1.12, "67,76,120", 0.38);
+    glow(ctx, 0, 0, scale * 0.53, "146,108,99", 0.7);
+    glow(ctx, 0, 0, scale * 0.3, "241,168,98", 0.84);
+    ctx.restore();
+    const cloudRng = random(seedNumber(id, 880));
+    const cloudColors = ["139,150,199", "79,123,174", "180,133,129", "132,113,169"];
+    const cloudSprites = cloudColors.map((rgb) => {
+      const tile = canvasSurface(96);
+      const brush = tile.getContext("2d");
+      glow(brush, 48, 48, 48, rgb);
+      return tile;
+    });
+    for (let i = 0; i < 4700; i++) {
+      const r = 0.017 + cloudRng() * 1.07;
+      const arm = i % config.arms;
+      const blur = cloudRng() + cloudRng() + cloudRng() - 1.5;
+      const a = armAngle(r, arm, config) + blur * (0.11 + 0.11 * r);
+      const [x, y] = pointAt(r, a, (cloudRng() - 0.5) * 0.024, config);
+      const size = scale * (0.016 + cloudRng() * 0.087) * (1.35 - r * 0.48);
+      const tone = r < 0.28 && cloudRng() > 0.4 ? 2 : Math.floor(cloudRng() * 4);
+      ctx.globalAlpha = (0.025 + cloudRng() * 0.1) * Math.max(0, 1.12 - r) ** 0.61;
+      ctx.drawImage(cloudSprites[tone], half + x * scale - size, half + y * scale - size, size * 2, size * 2);
+    }
+    const dust = canvasSurface(96);
+    ctx.globalCompositeOperation = "source-over";
+    glow(dust.getContext("2d"), 48, 48, 48, "8,10,17");
+    for (let i = 0; i < 2500; i++) {
+      const r = 0.026 + cloudRng() * 0.94;
+      const arm = i % config.arms;
+      const a = armAngle(r, arm, config) - 0.12 + (cloudRng() - 0.5) * 0.12;
+      const [x, y] = pointAt(r, a, (cloudRng() - 0.5) * 0.008, config);
+      const w = scale * (0.002 + cloudRng() * 0.031);
+      ctx.globalAlpha = 0.035 + cloudRng() * 0.16;
+      ctx.drawImage(dust, half + x * scale - w, half + y * scale - w, w * 2, w * 2);
+    }
+    ctx.globalAlpha = 1;
+  }
+  const haze = ctx ? canvasSurface(740) : null;
+  if (haze) haze.getContext("2d").drawImage(texture, 0, 0, haze.width, haze.height);
+  for (let i = 0; i < SYSTEMS; i++) {
+    const bulge = rng() < 0.23;
+    const r = bulge ? 0.42 * Math.pow(rng(), 1.77) : 0.022 + Math.pow(rng(), 1.12) * 1.065;
+    const a =
+      bulge || rng() < 0.2
+        ? rng() * TAU
+        : armAngle(r, i % config.arms, config) + (rng() + rng() + rng() - 1.5) * (0.25 + r * 0.24);
+    const [x, y] = pointAt(r, a, (rng() + rng() - 1) * (bulge ? 0.082 : 0.024), config);
+    position[i * 2] = x;
+    position[i * 2 + 1] = y;
+    magnitude[i] = 0.22 + Math.pow(rng(), 6) * 1.55;
+    tint[i] = r < 0.24 && rng() < 0.72 ? Math.floor(rng() * 2) : Math.floor(rng() * inks.length);
+    if (ctx) {
+      ctx.fillStyle = inks[tint[i]];
+      ctx.globalAlpha = (0.18 + magnitude[i] * 0.34) * Math.min(1, (1.14 - r) * 3.9);
+      const w = 0.42 + magnitude[i];
+      ctx.fillRect(half + x * scale, half + y * scale, w, w);
+    }
+  }
+  if (ctx) {
+    ctx.globalAlpha = 1;
+    ctx.save();
+    ctx.translate(half, half);
+    ctx.rotate(config.angle);
+    ctx.scale(1, config.tilt + 0.09);
+    ctx.globalCompositeOperation = "screen";
+    glow(ctx, 0, 0, scale * 0.26, "242,190,127", 0.88);
+    glow(ctx, 0, 0, scale * 0.102, "255,222,167", 0.98);
+    glow(ctx, 0, 0, scale * 0.044, "255,246,212", 0.97);
+    ctx.restore();
+  }
+  const result = { config, position, magnitude, tint, texture, haze, inks };
+  if (paint && id === 0) firstGalaxy = result;
+  return result;
+}
+
+function makeSystem(g, s) {
+  const rng = random(seedNumber(g + 742, s));
+  const star = STAR_TYPES[Math.floor(rng() * STAR_TYPES.length)];
+  const count = 2 + Math.floor(rng() * 7);
+  let distance = 0.12 + rng() * 0.22;
+  const planets = Array.from({ length: count }, (_, i) => {
+    distance *= 1.4 + rng() * 0.65;
+    let type = Math.floor(rng() * 4);
+    if (!i) type = 0;
+    return {
+      type: PLANET_TYPES[type],
+      au: distance,
+      phase: rng() * TAU,
+      period: 365.25 * Math.sqrt(distance ** 3 / star.mass),
+      ring: type === 2 && rng() > 0.42,
+      size: (type === 2 ? 0.025 : 0.011) + rng() * 0.008,
+    };
+  });
+  return { star, planets };
+}
+
+// Evaluate the surface on a sphere so details follow the limb. Each world has
+// a fixed terrain field independent of the screen resolution and viewpoint.
+function makeWorld(g, s, index, planet) {
+  const image = canvasSurface(600),
+    ctx = image.getContext("2d");
+  const pixels = ctx.createImageData(image.width, image.height);
+  const rng = random(seedNumber(seedNumber(g, s), index));
+  const table = Float32Array.from({ length: 32768 }, () => rng());
+  const offset = 20 * rng(),
+    yaw = rng() * TAU,
+    axis = 0.23 + rng() * 0.52;
+  const cy = Math.cos(yaw),
+    sy = Math.sin(yaw),
+    ca = Math.cos(axis),
+    sa = Math.sin(axis);
+  const contrast = 0.8 + 0.35 * rng(),
+    hue = rng();
+  function noise(x, y, z) {
+    const i = Math.floor(x),
+      j = Math.floor(y),
+      k = Math.floor(z);
+    let a = x - i,
+      b = y - j,
+      c = z - k;
+    a = a * a * (3 - 2 * a);
+    b = b * b * (3 - 2 * b);
+    c = c * c * (3 - 2 * c);
+    const ix = i & 31,
+      ix1 = (i + 1) & 31,
+      row = (j & 31) << 5,
+      row1 = ((j + 1) & 31) << 5;
+    const z0 = (k & 31) << 10,
+      z1 = ((k + 1) & 31) << 10;
+    return (
+      (1 - c) *
+        ((1 - b) * (table[z0 + row + ix] * (1 - a) + table[z0 + row + ix1] * a) +
+          b * (table[z0 + row1 + ix] * (1 - a) + table[z0 + row1 + ix1] * a)) +
+      c *
+        ((1 - b) * (table[z1 + row + ix] * (1 - a) + table[z1 + row + ix1] * a) +
+          b * (table[z1 + row1 + ix] * (1 - a) + table[z1 + row1 + ix1] * a))
+    );
+  }
+  const type = PLANET_TYPES.indexOf(planet.type);
+  const half = image.width / 2;
+  const light = [-0.82, -0.33, 0.46];
+  for (let j = 0; j < image.height; j++) {
+    const y = (j + 0.5 - half) / (half - 1);
+    for (let i = 0; i < image.width; i++) {
+      const x = (i + 0.5 - half) / (half - 1);
+      const rr = x * x + y * y;
+      if (rr >= 1) continue;
+      const z = Math.sqrt(1 - rr);
+      const ux = x * cy + z * sy,
+        uz = z * cy - x * sy;
+      const v = y * ca - ux * sa,
+        u = ux * ca + y * sa;
+      const low = noise(u * 2.7 + offset, v * 2.7, uz * 2.7);
+      const mid = noise(u * 7 + 2 * low + offset, v * 7 + low, uz * 7);
+      const fine = noise(u * 21 + mid * 3, v * 21 + mid, uz * 21);
+      const grain = noise(u * 67, v * 67 + fine, uz * 67);
+      const rock = 0.49 * low + 0.26 * mid + 0.17 * fine + 0.08 * grain;
+      let r, b, green;
+      if (type === 2) {
+        const latitude = Math.asin(limit(v, -1, 1));
+        const wave = Math.sin(latitude * 24 + (mid - 0.5) * 1.6 + 0.37 * Math.sin(latitude * 91 + fine * 3));
+        const swirl = 0.5 + 0.5 * Math.sin(latitude * 71 + (low - 0.5) * 7 + (mid - 0.5) * 8 + fine * 2);
+        const belt = 0.49 + wave * 0.23 + swirl * 0.12 + rock * 0.25;
+        r = 132 + 111 * belt;
+        green = 74 + 130 * belt;
+        b = 49 + (103 + hue * 27) * belt;
+      } else if (type === 3) {
+        const land = limit((rock - 0.54) * 42, 0, 1);
+        const cloud = limit((0.55 * mid + 0.3 * fine + grain * 0.15 - 0.58) * 4.5, 0, 0.9);
+        r = (26 + 104 * land) * (1 - cloud) + 222 * cloud;
+        green = (66 + 69 * land) * (1 - cloud) + 235 * cloud;
+        b = (109 + 39 * low - 63 * land) * (1 - cloud) + 244 * cloud;
+      } else if (type === 1) {
+        const cracks = Math.max(0, 1 - Math.abs(fine * 0.22 + mid * 0.35 + low * 0.43 - 0.5) * 44);
+        r = 106 + rock * 123 - cracks * 47;
+        green = 150 + rock * 95 - cracks * 32;
+        b = 176 + rock * 71 - cracks * 13;
+      } else {
+        const ridges = (1 - Math.abs(fine - 0.5) * 2) ** 6;
+        const strata = Math.max(0, Math.sin(rock * 33 + hue * 5)) * 17;
+        const elevation = (rock - 0.45) * 155 * contrast + fine * 25 + grain * 12;
+        r = 142 + elevation + ridges * 20 + strata;
+        green = 94 + elevation * 0.87 + ridges * 13 + strata;
+        b = 74 + elevation * 0.7 + hue * 18 + ridges * 7 + strata;
+      }
+      const incidence = x * light[0] + y * light[1] + z * light[2];
+      const scatter = type === 3 ? 0.15 : 0.08;
+      const brightness = 0.028 + 1.12 * Math.max(0, incidence) ** 0.64 + scatter * Math.max(0, z) ** 2;
+      const limb = Math.pow(1 - z, 5) * Math.max(0, incidence + 0.44) * (type === 0 ? 0.3 : 0.86);
+      const k = 4 * (j * image.width + i);
+      pixels.data[k] = r * brightness + limb * 114;
+      pixels.data[k + 1] = green * brightness + limb * 151;
+      pixels.data[k + 2] = b * brightness + limb * 223;
+      pixels.data[k + 3] = Math.min(255, (1 - Math.sqrt(rr)) * half * 255);
+    }
+  }
+  ctx.putImageData(pixels, 0, 0);
+  return image;
+}
+
+const sector = (() => {
+  const rng = random(759831);
+  return Array.from({ length: GALAXIES }, (_, i) => {
+    const angle = rng() * TAU,
+      r = Math.sqrt(rng()) * 1.08;
+    return {
+      x: Math.cos(angle) * r,
+      y: Math.sin(angle) * r * 0.78,
+      tilt: rng() * Math.PI,
+      color: i % 4,
+      size: 2.8 + rng() * 3.9,
+    };
+  });
+})();
+
+const sky = (() => {
+  const rng = random(43153);
+  return Array.from({ length: 510 }, () => [rng(), rng(), rng(), rng()]);
+})();
+
+/** Draw the opening galaxy in a dashboard canvas with an explicit CSS size. */
+export function drawUniversePreview(canvas) {
+  const ctx = canvas.getContext("2d", { alpha: false });
+  if (!ctx) return () => {};
+  let frame = 0,
+    visible = true;
+  function paint() {
+    frame = 0;
+    if (!visible || !canvas.isConnected) return;
+    const { width, height } = canvas.getBoundingClientRect();
+    if (!width || !height) return;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = "#05080d";
+    ctx.fillRect(0, 0, width, height);
+    for (const [x, y, magnitude] of sky) {
+      ctx.globalAlpha = 0.14 + magnitude * 0.57;
+      ctx.fillStyle = magnitude > 0.82 ? "#f1ddc7" : "#bfd4f1";
+      const size = 0.4 + magnitude * 0.78;
+      ctx.fillRect(x * width, y * height, size, size);
+    }
+    ctx.globalAlpha = 1;
+    const galaxy = makeGalaxy(0);
+    const extent = MAP_EXTENT * Math.min(width * 0.48, height * 0.63);
+    ctx.globalCompositeOperation = "screen";
+    ctx.drawImage(galaxy.texture, width * 0.5 - extent, height * 0.51 - extent, extent * 2, extent * 2);
+    ctx.globalCompositeOperation = "source-over";
+  }
+  function schedule() {
+    if (!frame && visible) frame = requestAnimationFrame(paint);
+  }
+  const resize = typeof ResizeObserver === "function" ? new ResizeObserver(schedule) : null;
+  const intersection =
+    typeof IntersectionObserver === "function"
+      ? new IntersectionObserver(
+          (entries) => {
+            visible = entries[0].isIntersecting;
+            if (visible) schedule();
+          },
+          { rootMargin: "200px" },
+        )
+      : null;
+  resize?.observe(canvas);
+  if (intersection) {
+    visible = false;
+    intersection.observe(canvas);
+  } else schedule();
+  if (!resize) window.addEventListener("resize", schedule);
+  return () => {
+    visible = false;
+    resize?.disconnect();
+    intersection?.disconnect();
+    cancelAnimationFrame(frame);
+    if (!resize) window.removeEventListener("resize", schedule);
+  };
+}
+
+const icons = {
+  close: '<path d="m6 6 12 12M18 6 6 18"/>',
+  back: '<path d="m14 6-6 6 6 6"/>',
+  forward: '<path d="m10 6 6 6-6 6"/>',
+  zoomIn: '<path d="M12 5v14M5 12h14"/>',
+  zoomOut: '<path d="M5 12h14"/>',
+  center: '<circle cx="12" cy="12" r="5"/><path d="M12 2v5m0 10v5M2 12h5m10 0h5"/>',
+  help: '<circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 1 1 4.2 1.7c-1.1.8-2 1.4-2 3M12 16.5h.01"/>',
+  explore: '<path d="m3 12 17-8-8 17-1.5-7.5L3 12Z"/>',
+  layers: '<path d="m3 9 9-5 9 5-9 5-9-5Zm0 5 9 5 9-5"/>',
+  play: '<path d="m8 5 11 7-11 7z"/>',
+  pause: '<path d="M8 5v14M16 5v14"/>',
+};
+function icon(which) {
+  return (
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    icons[which] +
+    "</svg>"
+  );
+}
+
+const format = new Intl.NumberFormat("en-US");
+
+/** Mount the modal simulator and return an idempotent teardown function. */
+export function mountUniverse(container, { onClose, onEvidence, targets = [] } = {}) {
+  const previousFocus = document.activeElement;
+  const modal = document.createElement("dialog");
+  modal.className = "os-universe";
+  modal.setAttribute("aria-label", "Universe simulator");
+  modal.innerHTML = `
+    <div class="osu-shell">
+      <header class="osu-bar">
+        <div class="osu-brand"><span class="osu-logo">${icon("explore")}</span><span>Universe simulator</span></div>
+        <nav class="osu-levels" aria-label="Simulation scale">
+          <button type="button" data-level="sector">Sector</button><span>/</span>
+          <button type="button" data-level="galaxy">Galaxy</button><span>/</span>
+          <button type="button" data-level="system">System</button><span>/</span>
+          <button type="button" data-level="world">World</button>
+        </nav>
+        <div class="osu-baractions">
+          <button class="osu-icon" data-act="help" type="button" aria-expanded="false" aria-label="Navigation help" title="Navigation help">${icon("help")}</button>
+          <button class="osu-icon" data-act="exit" type="button" aria-label="Close universe simulator" title="Back to observatory">${icon("close")}</button>
+        </div>
+      </header>
+      <div class="osu-stage">
+        <canvas tabindex="0" aria-label="Interactive simulated galaxy. Arrow keys pan, plus and minus zoom. Use navigation buttons below to select and explore destinations."></canvas>
+        <div class="osu-heading"><span class="osu-eyebrow" data-ref="eyebrow"></span><h2 data-ref="name"></h2><p data-ref="description"></p></div>
+        <div class="osu-readout" aria-hidden="true"><span class="osu-signal"></span> PROCEDURAL SKY</div>
+        <div class="osu-camera" aria-label="Camera controls">
+          <button class="osu-icon" data-act="motion" type="button" aria-label="Pause orbits" title="Pause orbits" hidden></button>
+          <button class="osu-icon" data-act="zoomIn" type="button" aria-label="Zoom in" title="Zoom in (+)">${icon("zoomIn")}</button>
+          <button class="osu-icon" data-act="zoomOut" type="button" aria-label="Zoom out" title="Zoom out (−)">${icon("zoomOut")}</button>
+          <button class="osu-icon" data-act="reset" type="button" aria-label="Reset camera" title="Reset camera (Home)">${icon("center")}</button>
+        </div>
+        <aside class="osu-help" hidden aria-label="Navigation help">
+          <strong>Navigate the simulation</strong>
+          <p>Drag to pan. Scroll or pinch to zoom. Select a point to inspect it.</p>
+          <p>Focus the map to pan with the arrow keys. Use [ and ] to select a destination, Enter to explore, and Home to center.</p>
+          <form class="osu-jump"><label>Go to a system address<input name="address" placeholder="G001–S00001" maxlength="14" required autocomplete="off" spellcheck="false"></label><button type="submit">Go</button></form>
+          <small data-ref="jumpError" role="status"></small>
+          <div class="osu-research" hidden><label>Open a research dossier<select data-ref="research"></select></label></div>
+        </aside>
+        <div class="osu-scale" aria-hidden="true"><i></i><span data-ref="scale"></span></div>
+        <div class="osu-nocanvas" hidden>Use the destination controls to explore this simulated sky.</div>
+      </div>
+      <div class="osu-dock">
+        <div class="osu-object"><span class="osu-eyebrow" data-ref="objectKind"></span><h3 data-ref="objectName"></h3><p data-ref="objectDetail"></p></div>
+        <div class="osu-dockactions">
+          <div class="osu-cycle" role="group" aria-label="Choose a destination">
+            <button class="osu-icon" data-act="prev" type="button" aria-label="Previous destination" title="Previous destination">${icon("back")}</button>
+            <button class="osu-icon" data-act="next" type="button" aria-label="Next destination" title="Next destination">${icon("forward")}</button>
+          </div>
+          <button class="osu-primary" data-act="enter" type="button"></button>
+        </div>
+      </div>
+      <div class="osu-note"><span>Simulated locations and orbits</span><span data-ref="hint">Drag to pan · Scroll to zoom</span></div>
+      <span class="osu-sr" data-ref="announce" aria-live="polite"></span>
+    </div>`;
+  container.append(modal);
+  if (modal.showModal) modal.showModal();
+  else modal.setAttribute("open", "");
+  const $ = (selector) => modal.querySelector(selector);
+  const ref = (name) => $('[data-ref="' + name + '"]');
+  const act = (name) => $('[data-act="' + name + '"]');
+  const canvas = $("canvas");
+  const ctx = canvas.getContext("2d", { alpha: false });
+  const help = $(".osu-help");
+  const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const abort = new AbortController();
+  const listen = (node, event, fn, options = {}) =>
+    node.addEventListener(event, fn, { ...options, signal: abort.signal });
+  let level = "galaxy",
+    galaxyId = 0,
+    systemId = 228,
+    planetId = 0;
+  let galaxy = makeGalaxy(galaxyId, !!ctx),
+    system = makeSystem(galaxyId, systemId);
+  let globe = null,
+    globeKey = "";
+  let width = 1,
+    height = 1,
+    frame = 0,
+    lastTime = 0,
+    days = 0,
+    dirty = true;
+  let playing = !motion.matches,
+    disposed = false;
+  let zoom = 1,
+    panX = 0,
+    panY = 0;
+  const pointers = new Map();
+  let drag = null,
+    pinch = null;
+  let hits = [];
+  const stage = $(".osu-stage");
+
+  function cleanup() {
+    if (disposed) return;
+    disposed = true;
+    abort.abort();
+    observer?.disconnect();
+    cancelAnimationFrame(frame);
+    if (modal.open && modal.close) modal.close();
+    modal.remove();
+    if (previousFocus?.isConnected) previousFocus.focus({ preventScroll: true });
+  }
+  function close() {
+    cleanup();
+    onClose?.();
+  }
+  function redraw() {
+    dirty = true;
+    if (!frame && !disposed) frame = requestAnimationFrame(render);
+  }
+  function reset() {
+    zoom = 1;
+    panX = 0;
+    panY = 0;
+    redraw();
+  }
+  function baseScale() {
+    if (level === "system") return Math.min(width * 0.44, height * 0.55);
+    return Math.min(width * 0.46, height * (level === "galaxy" ? 0.57 : 0.49));
+  }
+  function center() {
+    return [width / 2 + panX, height * 0.55 + panY];
+  }
+  function project(x, y) {
+    const [cx, cy] = center(),
+      k = baseScale() * zoom;
+    return [cx + x * k, cy + y * k];
+  }
+  function zoomAt(factor, x = width / 2, y = height * 0.55) {
+    const next = limit(zoom * factor, 0.55, level === "galaxy" ? 28 : 6);
+    const [cx, cy] = center();
+    panX += (x - cx) * (1 - next / zoom);
+    panY += (y - cy) * (1 - next / zoom);
+    zoom = next;
+    redraw();
+  }
+  function update(announce = false) {
+    const isSector = level === "sector",
+      isSystem = level === "system",
+      isWorld = level === "world";
+    const body = system.planets[planetId];
+    const title = isSector
+      ? "The local volume"
+      : isWorld
+        ? "Planet " + ROMAN[planetId]
+        : isSystem
+          ? starName(systemId)
+          : galaxyName(galaxyId);
+    ref("name").textContent = title;
+    ref("eyebrow").textContent = isSector
+      ? "Sector overview"
+      : isSystem || isWorld
+        ? address(galaxyId, systemId)
+        : address(galaxyId) + " / Spiral galaxy";
+    ref("description").textContent = isSector
+      ? "128 galaxies · 4,194,304 simulated star systems"
+      : isWorld
+        ? body.type.name + " · " + starName(systemId)
+        : isSystem
+          ? system.star.name + " · " + system.planets.length + " orbiting worlds"
+          : "32,768 star systems · " + format.format(galaxy.config.diameter) + " light-years across";
+    ref("objectKind").textContent = isSector
+      ? "Selected galaxy"
+      : isWorld
+        ? "Planetary surface"
+        : isSystem
+          ? "Selected world"
+          : "Selected star system";
+    ref("objectName").textContent = isSector
+      ? galaxyName(galaxyId)
+      : isWorld
+        ? body.type.name
+        : isSystem
+          ? "Planet " + ROMAN[planetId]
+          : starName(systemId);
+    ref("objectDetail").textContent = isSector
+      ? address(galaxyId) + " · " + galaxy.config.arms + " spiral arms"
+      : isWorld
+        ? body.au.toFixed(2) +
+          " AU from its host star · " +
+          format.format(Math.round(body.period)) +
+          "-day orbit"
+        : isSystem
+          ? body.type.name +
+            " · " +
+            body.au.toFixed(2) +
+            " AU · " +
+            format.format(Math.round(body.period)) +
+            "-day orbit"
+          : system.star.name + " · " + system.planets.length + " planets · " + address(galaxyId, systemId);
+    act("enter").innerHTML = isWorld
+      ? icon("back") + "Return to system"
+      : (isSector ? "Enter galaxy" : isSystem ? "Inspect world" : "Enter system") + icon("forward");
+    act("motion").hidden = !isSystem;
+    act("motion").innerHTML = icon(playing ? "pause" : "play");
+    act("motion").setAttribute("aria-label", playing ? "Pause orbital motion" : "Play orbital motion");
+    act("motion").title = playing ? "Pause orbits" : "Play orbits";
+    act("motion").setAttribute("aria-pressed", String(playing));
+    ref("hint").textContent = isSystem
+      ? "Orbital distances compressed · 12 days / second"
+      : "Drag to pan · Scroll to zoom";
+    for (const button of modal.querySelectorAll("[data-level]")) {
+      if (button.dataset.level === level) button.setAttribute("aria-current", "step");
+      else button.removeAttribute("aria-current");
+    }
+    canvas.setAttribute(
+      "aria-label",
+      title +
+        ", interactive simulated map. Arrow keys pan, plus and minus zoom. Destination controls are below the map.",
+    );
+    if (announce)
+      ref("announce").textContent =
+        title + ". " + ref("objectName").textContent + ". " + ref("objectDetail").textContent;
+    redraw();
+  }
+  function select(id) {
+    if (level === "sector") {
+      if (id !== galaxyId) {
+        galaxyId = id;
+        // Delay making a galaxy image until the visitor enters it.
+        galaxy = { config: spiralSettings(id) };
+        system = makeSystem(galaxyId, systemId);
+        planetId = 0;
+      }
+    } else if (level === "galaxy") {
+      systemId = id;
+      system = makeSystem(galaxyId, systemId);
+      planetId = 0;
+      days = 0;
+    } else planetId = id;
+    update(true);
+  }
+  function cycle(delta) {
+    const count = level === "sector" ? GALAXIES : level === "galaxy" ? SYSTEMS : system.planets.length;
+    const current = level === "sector" ? galaxyId : level === "galaxy" ? systemId : planetId;
+    select((current + delta + count) % count);
+    // Keep a keyboard-selected point in view, including at high magnification.
+    if (level === "sector" || level === "galaxy") {
+      const x = level === "sector" ? sector[galaxyId].x : galaxy.position[systemId * 2];
+      const y = level === "sector" ? sector[galaxyId].y : galaxy.position[systemId * 2 + 1];
+      const [sx, sy] = project(x, y);
+      if (sx < 36 || sx > width - 36 || sy < 42 || sy > height - 42) {
+        panX -= sx - width * 0.5;
+        panY -= sy - height * 0.55;
+      }
+    }
+  }
+  function go(next) {
+    if (next === "galaxy" && !galaxy.position) galaxy = makeGalaxy(galaxyId, !!ctx);
+    level = next;
+    reset();
+    lastTime = 0;
+    update(true);
+  }
+  function enter() {
+    go(level === "galaxy" || level === "world" ? "system" : level === "system" ? "world" : "galaxy");
+  }
+  function toggleHelp() {
+    help.hidden = !help.hidden;
+    act("help").setAttribute("aria-expanded", String(!help.hidden));
+    if (!help.hidden) $(".osu-jump input").focus();
+    else act("help").focus();
+  }
+  const selectResearch = ref("research");
+  if (targets.length && onEvidence) {
+    $(".osu-research").hidden = false;
+    const placeholder = new Option("Choose an investigation…", "");
+    selectResearch.add(placeholder);
+    targets.forEach((target, i) =>
+      selectResearch.add(new Option(target.target || target.title || target.name, String(i))),
+    );
+    listen(selectResearch, "change", () => {
+      if (selectResearch.value === "") return;
+      const target = targets[Number(selectResearch.value)];
+      cleanup();
+      onEvidence(target);
+    });
+  }
+  listen($(".osu-jump"), "submit", (event) => {
+    event.preventDefault();
+    const input = $(".osu-jump input").value.trim();
+    const parsed = /^g(\d{1,3})[\s–-]+s(\d{1,5})$/i.exec(input);
+    if (!parsed || +parsed[1] < 1 || +parsed[1] > GALAXIES || +parsed[2] < 1 || +parsed[2] > SYSTEMS) {
+      ref("jumpError").textContent = "Use G001–G128 and S00001–S32768, for example G013–S02189.";
+      return;
+    }
+    galaxyId = +parsed[1] - 1;
+    systemId = +parsed[2] - 1;
+    planetId = 0;
+    days = 0;
+    galaxy = { config: spiralSettings(galaxyId) };
+    system = makeSystem(galaxyId, systemId);
+    ref("jumpError").textContent = "";
+    toggleHelp();
+    go("system");
+    canvas.focus();
+  });
+  listen(modal, "click", (event) => {
+    const button = event.target.closest("button");
+    if (!button) return;
+    if (button.dataset.level) {
+      go(button.dataset.level);
+      return;
+    }
+    switch (button.dataset.act) {
+      case "exit":
+        close();
+        break;
+      case "help":
+        toggleHelp();
+        break;
+      case "prev":
+        cycle(-1);
+        break;
+      case "next":
+        cycle(1);
+        break;
+      case "enter":
+        enter();
+        break;
+      case "motion":
+        playing = !playing;
+        lastTime = 0;
+        update(true);
+        break;
+      case "zoomIn":
+        zoomAt(1.55);
+        break;
+      case "zoomOut":
+        zoomAt(1 / 1.55);
+        break;
+      case "reset":
+        reset();
+        break;
+    }
+  });
+  listen(modal, "cancel", (event) => {
+    event.preventDefault();
+    if (!help.hidden) toggleHelp();
+    else close();
+  });
+  listen(canvas, "keydown", (event) => {
+    const step = event.shiftKey ? 100 : 40;
+    switch (event.key) {
+      case "ArrowLeft":
+        panX += step;
+        break;
+      case "ArrowRight":
+        panX -= step;
+        break;
+      case "ArrowUp":
+        panY += step;
+        break;
+      case "ArrowDown":
+        panY -= step;
+        break;
+      case "+":
+      case "=":
+        zoomAt(1.35);
+        break;
+      case "-":
+        zoomAt(1 / 1.35);
+        break;
+      case "Home":
+        reset();
+        break;
+      case "[":
+        cycle(-1);
+        break;
+      case "]":
+        cycle(1);
+        break;
+      case "Enter":
+        enter();
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    redraw();
+  });
+  function localPoint(event) {
+    const rect = canvas.getBoundingClientRect();
+    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+  }
+  function twoPointers() {
+    const [a, b] = [...pointers.values()];
+    return {
+      x: (a.x + b.x) / 2,
+      y: (a.y + b.y) / 2,
+      distance: Math.max(1, Math.hypot(a.x - b.x, a.y - b.y)),
+    };
+  }
+  listen(
+    canvas,
+    "wheel",
+    (event) => {
+      event.preventDefault();
+      const { x, y } = localPoint(event);
+      const units = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? height : 1;
+      zoomAt(Math.exp(-limit(event.deltaY * units, -220, 220) * 0.0023), x, y);
+    },
+    { passive: false },
+  );
+  listen(canvas, "pointerdown", (event) => {
+    if (event.button !== 0) return;
+    canvas.focus({ preventScroll: true });
+    canvas.setPointerCapture(event.pointerId);
+    const pos = localPoint(event);
+    pointers.set(event.pointerId, pos);
+    drag = { ...pos, moved: false };
+    if (pointers.size === 2) {
+      pinch = twoPointers();
+      drag.moved = true;
+    }
+  });
+  listen(canvas, "pointermove", (event) => {
+    if (!pointers.has(event.pointerId)) return;
+    const previous = pointers.get(event.pointerId);
+    const pos = localPoint(event);
+    pointers.set(event.pointerId, pos);
+    if (pointers.size >= 2) {
+      const next = twoPointers();
+      if (pinch) {
+        panX += next.x - pinch.x;
+        panY += next.y - pinch.y;
+        zoomAt(next.distance / pinch.distance, next.x, next.y);
+      }
+      pinch = next;
+      drag.moved = true;
+    } else {
+      if (Math.hypot(pos.x - drag.x, pos.y - drag.y) > 4) drag.moved = true;
+      if (drag.moved) {
+        panX += pos.x - previous.x;
+        panY += pos.y - previous.y;
+        redraw();
+      }
+    }
+  });
+  function finishPointer(event) {
+    if (!pointers.has(event.pointerId)) return;
+    if (event.type === "pointerup" && !drag.moved && pointers.size === 1) {
+      const pos = localPoint(event);
+      pick(pos.x, pos.y);
+    }
+    pointers.delete(event.pointerId);
+    if (pointers.size < 2) pinch = null;
+    if (!pointers.size) drag = null;
+  }
+  listen(canvas, "pointerup", finishPointer);
+  listen(canvas, "pointercancel", finishPointer);
+  listen(canvas, "lostpointercapture", finishPointer);
+
+  function pick(x, y) {
+    if (level === "world") return;
+    let nearest = -1,
+      best = level === "system" ? 34 : 18;
+    if (level === "galaxy") {
+      const [cx, cy] = center(),
+        k = baseScale() * zoom;
+      const mx = (x - cx) / k,
+        my = (y - cy) / k;
+      let distance = (best / k) ** 2;
+      for (let i = 0; i < SYSTEMS; i++) {
+        const dx = galaxy.position[i * 2] - mx,
+          dy = galaxy.position[i * 2 + 1] - my;
+        const d = dx * dx + dy * dy;
+        if (d < distance) {
+          nearest = i;
+          distance = d;
+        }
+      }
+    } else {
+      for (const [sx, sy, id] of hits) {
+        const d = Math.hypot(sx - x, sy - y);
+        if (d < best) {
+          best = d;
+          nearest = id;
+        }
+      }
+    }
+    if (nearest >= 0) select(nearest);
+  }
+  function marker(x, y, label, radius = 10) {
+    if (x < 0 || x > width || y < 0 || y > height) return;
+    ctx.save();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#ffac76";
+    ctx.fillStyle = "#fbeaDC";
+    ctx.beginPath();
+    for (let j = 0; j < 4; j++) {
+      const a = ((j + 0.12) * Math.PI) / 2;
+      ctx.moveTo(x + Math.cos(a) * radius, y + Math.sin(a) * radius);
+      ctx.arc(x, y, radius, a, a + Math.PI * 0.32);
+    }
+    ctx.stroke();
+    ctx.font = "10px ui-monospace, monospace";
+    const measured = ctx.measureText(label).width;
+    const left = x + radius + 9 + measured > width - 6;
+    const tx = left ? x - radius - measured - 8 : x + radius + 8;
+    ctx.fillStyle = "rgba(5,8,13,.83)";
+    ctx.fillRect(tx - 4, y - 10, measured + 8, 19);
+    ctx.fillStyle = "#ffe5d2";
+    ctx.fillText(label, tx, y + 3.2);
+    ctx.restore();
+  }
+  function drawSky() {
+    ctx.fillStyle = "#05080d";
+    ctx.fillRect(0, 0, width, height);
+    for (const [u, v, b, z] of sky) {
+      const x = (((u * width + panX * z * 0.025) % width) + width) % width;
+      const y = (((v * height + panY * z * 0.025) % height) + height) % height;
+      const size = b > 0.982 ? 1.55 : 0.5 + b * 0.53;
+      ctx.globalAlpha = 0.14 + b * 0.5;
+      ctx.fillStyle = z > 0.67 ? "#f6ddc8" : "#c1d5ea";
+      ctx.fillRect(x, y, size, size);
+      if (b > 0.982) {
+        ctx.globalAlpha = 0.14;
+        ctx.fillRect(x - 2.3, y + 0.5, 6, 0.55);
+        ctx.fillRect(x + 0.5, y - 2.3, 0.55, 6);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+  function drawGalaxy() {
+    const [cx, cy] = center(),
+      k = baseScale() * zoom;
+    const extent = k * MAP_EXTENT;
+    ctx.globalCompositeOperation = "screen";
+    ctx.drawImage(
+      zoom <= 2.6 ? galaxy.texture : galaxy.haze,
+      cx - extent,
+      cy - extent,
+      extent * 2,
+      extent * 2,
+    );
+    ctx.globalCompositeOperation = "source-over";
+    if (zoom > 1.65) {
+      ctx.globalAlpha = Math.min(0.87, (zoom - 1.65) * 0.35);
+      for (let i = 0; i < SYSTEMS; i++) {
+        const x = cx + galaxy.position[i * 2] * k,
+          y = cy + galaxy.position[i * 2 + 1] * k;
+        if (x < -2 || x > width || y < -2 || y > height) continue;
+        ctx.fillStyle = galaxy.inks[galaxy.tint[i]];
+        const w = 0.45 + galaxy.magnitude[i] * Math.min(1.4, zoom * 0.38);
+        ctx.fillRect(x, y, w, w);
+      }
+      ctx.globalAlpha = 1;
+    }
+    marker(
+      cx + galaxy.position[systemId * 2] * k,
+      cy + galaxy.position[systemId * 2 + 1] * k,
+      "S" + pad(systemId, 5),
+    );
+    ref("scale").textContent = format.format(Math.round((galaxy.config.diameter * 60) / (2 * k))) + " ly";
+  }
+  function drawSector() {
+    hits = [];
+    const tints = ["235,195,143", "170,188,232", "210,178,192", "160,203,199"];
+    sector.forEach((g, id) => {
+      const [x, y] = project(g.x, g.y);
+      if (x < -20 || x > width + 20 || y < -20 || y > height + 20) return;
+      const radius = g.size * (1.0 + Math.sqrt(zoom) * 0.56);
+      hits.push([x, y, id]);
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(g.tilt);
+      ctx.scale(1, 0.43);
+      glow(ctx, 0, 0, radius, tints[g.color], 0.93);
+      ctx.fillStyle = "#fff3d9";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, radius * 0.16, radius * 0.23, 0, 0, TAU);
+      ctx.fill();
+      ctx.restore();
+    });
+    const g = sector[galaxyId];
+    marker(...project(g.x, g.y), address(galaxyId), 12);
+    ref("scale").textContent = ((60 * 22) / baseScale() / zoom).toFixed(1) + " Mly";
+  }
+  function orbitRadii() {
+    return system.planets.map((_, i) => 0.18 + ((i + 1) / system.planets.length) * 0.8);
+  }
+  function drawSystem() {
+    const [cx, cy] = center(),
+      k = baseScale() * zoom;
+    const tilt = 0.51,
+      turn = -0.22;
+    const radii = orbitRadii();
+    const bodies = system.planets.map((planet, i) => {
+      const phase = planet.phase + (days / planet.period) * TAU;
+      const dx = radii[i] * Math.cos(phase),
+        dy = radii[i] * Math.sin(phase) * tilt;
+      return {
+        id: i,
+        x: cx + k * (dx * Math.cos(turn) - dy * Math.sin(turn)),
+        y: cy + k * (dx * Math.sin(turn) + dy * Math.cos(turn)),
+        depth: dy,
+        planet,
+      };
+    });
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(turn);
+    radii.forEach((r, i) => {
+      ctx.beginPath();
+      ctx.ellipse(0, 0, k * r, k * r * tilt, 0, 0, TAU);
+      ctx.strokeStyle = i === planetId ? "rgba(239,159,104,.58)" : "rgba(189,203,224,.22)";
+      ctx.lineWidth = i === planetId ? 1.1 : 0.75;
+      ctx.stroke();
+    });
+    ctx.restore();
+    const starRadius = Math.max(5.5, Math.min(35, k * 0.039));
+    const starRGB = parseInt(system.star.color.slice(1), 16);
+    const rgb = [(starRGB >> 16) & 255, (starRGB >> 8) & 255, starRGB & 255].join(",");
+    function drawStar() {
+      glow(ctx, cx, cy, starRadius * 10.4, rgb, 0.46);
+      glow(ctx, cx, cy, starRadius * 4.1, rgb, 0.88);
+      const surface = ctx.createRadialGradient(
+        cx - starRadius * 0.18,
+        cy - starRadius * 0.14,
+        0,
+        cx,
+        cy,
+        starRadius,
+      );
+      surface.addColorStop(0, "#fffaed");
+      surface.addColorStop(0.64, system.star.color);
+      surface.addColorStop(1, "rgb(" + rgb + ")");
+      ctx.fillStyle = surface;
+      ctx.beginPath();
+      ctx.arc(cx, cy, starRadius, 0, TAU);
+      ctx.fill();
+    }
+    function drawBody({ x, y, planet: p }) {
+      const r = Math.max(3.7, Math.min(45, p.size * k));
+      const direction = Math.atan2(cy - y, cx - x);
+      const sx = x + Math.cos(direction) * r * 0.76,
+        sy = y + Math.sin(direction) * r * 0.76;
+      const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, r * 1.88);
+      grad.addColorStop(0, p.type.colors[1]);
+      grad.addColorStop(0.48, p.type.colors[0]);
+      grad.addColorStop(0.69, p.type.colors[2]);
+      grad.addColorStop(1, "#080d17");
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, TAU);
+      ctx.fill();
+      if (p.ring) {
+        ctx.strokeStyle = "rgba(230,203,167,.74)";
+        ctx.lineWidth = Math.max(1, r * 0.19);
+        ctx.beginPath();
+        ctx.ellipse(x, y, r * 1.75, r * 0.38, -0.38, 0, TAU);
+        ctx.stroke();
+      }
+    }
+    bodies.sort((a, b) => a.depth - b.depth);
+    bodies.filter((b) => b.depth < 0).forEach(drawBody);
+    drawStar();
+    bodies.filter((b) => b.depth >= 0).forEach(drawBody);
+    hits = bodies.map((b) => [b.x, b.y, b.id]);
+    const selected = bodies.find((b) => b.id === planetId);
+    marker(
+      selected.x,
+      selected.y,
+      "PLANET " + ROMAN[planetId],
+      Math.max(12, Math.min(45, selected.planet.size * k) + 5),
+    );
+    ref("scale").textContent = "SCHEMATIC";
+  }
+  function drawWorld() {
+    const planet = system.planets[planetId],
+      key = [galaxyId, systemId, planetId].join(".");
+    if (globeKey !== key) {
+      globe = makeWorld(galaxyId, systemId, planetId, planet);
+      globeKey = key;
+    }
+    const [cx, cy] = center(),
+      radius = Math.min(width * 0.295, height * 0.34) * zoom;
+    function rings(front) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(-0.29);
+      for (let i = 0; i < 29; i++) {
+        const r = radius * (1.19 + i * 0.017);
+        ctx.lineWidth = radius * 0.013;
+        ctx.strokeStyle = "rgba(219,190,148," + (0.19 + 0.23 * (1 + Math.sin(i * 1.42))) + ")";
+        ctx.beginPath();
+        ctx.ellipse(0, 0, r, r * 0.29, 0, front ? 0 : Math.PI, front ? Math.PI : TAU);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+    if (planet.ring) rings(false);
+    ctx.drawImage(globe, cx - radius, cy - radius, radius * 2, radius * 2);
+    if (planet.ring) rings(true);
+    ref("scale").textContent = "SURFACE VIEW";
+  }
+  function render(now) {
+    frame = 0;
+    if (disposed || !ctx || document.hidden) return;
+    const active = level === "system" && playing;
+    if (dirty || (active && now - lastTime >= 32)) {
+      if (active && lastTime) days += Math.min((now - lastTime) / 1000, 0.16) * 12;
+      lastTime = now;
+      dirty = false;
+      drawSky();
+      if (level === "sector") drawSector();
+      else if (level === "galaxy") drawGalaxy();
+      else if (level === "world") drawWorld();
+      else drawSystem();
+    }
+    if (active) frame = requestAnimationFrame(render);
+  }
+  function sizeCanvas() {
+    const rect = stage.getBoundingClientRect();
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    width = Math.max(1, rect.width);
+    height = Math.max(1, rect.height);
+    canvas.width = Math.max(1, Math.round(width * ratio));
+    canvas.height = Math.max(1, Math.round(height * ratio));
+    ctx?.setTransform(ratio, 0, 0, ratio, 0, 0);
+    redraw();
+  }
+  const observer = typeof ResizeObserver === "function" ? new ResizeObserver(sizeCanvas) : null;
+  observer?.observe(stage);
+  if (!observer) listen(window, "resize", sizeCanvas);
+  if (!ctx) {
+    $(".osu-nocanvas").hidden = false;
+    $(".osu-camera").hidden = true;
+    $(".osu-scale").hidden = true;
+  }
+  listen(document, "visibilitychange", () => {
+    lastTime = 0;
+    redraw();
+  });
+  listen(motion, "change", () => {
+    playing = !motion.matches;
+    lastTime = 0;
+    update();
+  });
+  sizeCanvas();
+  update();
+  act("exit").focus({ preventScroll: true });
+  return cleanup;
+}
