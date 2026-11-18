@@ -30,7 +30,9 @@ class ImageDesk extends HTMLElement {
     const id = this.targetId;
     const plate = this.plates[id];
     this.frames = plate.sequence || [plate];
-    this.index = 0;
+    this.index = null;
+    this.requestId ??= 0;
+    this.playing = false;
     this.level = 0;
     this.offset = { x: 0, y: 0 };
     const sequence = this.frames.length > 1;
@@ -38,19 +40,20 @@ class ImageDesk extends HTMLElement {
       <header class="desk-head"><div><p class="desk-kicker">${esc(plate.kind)} · ${esc(plate.name)}</p>
       <h2 id="dossier-title">${esc(titles[id])}</h2></div></header>
       <div class="desk-window" role="group" tabindex="0" aria-label="Image inspection area. At higher magnification use the arrow keys to pan.">
-        <div class="desk-sheet"><img draggable="false" alt="${esc(plate.kind + " of " + plate.name)}"/>
+        <div class="desk-sheet" hidden><img draggable="false" alt="${esc(plate.kind + " of " + plate.name)}"/>
         ${(plate.markers || []).map((m) => `<span class="desk-pin" style="left:${100 * m.x}%;top:${100 * m.y}%"><b>${esc(m.label)}</b></span>`).join("")}</div>
         <span class="desk-scale" hidden>5″</span>
+        <div class="desk-load-state" hidden><span role="status"></span><button type="button" hidden>Retry image</button></div>
       </div>
       <div class="desk-tools"><div class="desk-zoom" role="group" aria-label="Image magnification">
         ${levels.map((n, i) => `<button type="button" data-zoom="${i}" aria-pressed="${i === 0}" aria-label="Magnify ${n} times">${n}×</button>`).join("")}
       </div><small data-hint>Fit to window</small>
-      <a class="desk-original" target="_blank" rel="noopener">Original image ${icon("external")}</a></div>
+      <a class="desk-original" hidden target="_blank" rel="noopener">Original image ${icon("external")}</a></div>
       ${
         sequence
-          ? `<div class="desk-film"><button type="button" data-play>Play sequence</button>
+          ? `<div class="desk-film"><button type="button" data-play disabled>Play sequence</button>
         <label><span>13 JUL 2021</span><output data-clock></output>
-        <input type="range" min="0" max="${this.frames.length - 1}" step="1" value="${this.index}" aria-label="Solar frame time"></label></div>`
+        <input type="range" min="0" max="${this.frames.length - 1}" step="1" value="0" aria-label="Solar frame time"></label></div>`
           : ""
       }
       <div class="desk-caption"><p>${esc(explanations[id] || plate.description)}</p>
@@ -72,7 +75,14 @@ class ImageDesk extends HTMLElement {
     this.playButton = find("[data-play]");
     this.observer = new ResizeObserver(() => this.layout());
     this.observer.observe(this.stage);
-    this.photo.onload = () => this.layout();
+    this.notice = find(".desk-load-state");
+    this.message = find(".desk-load-state span");
+    this.retry = find(".desk-load-state button");
+    this.original = find(".desk-original");
+    this.retry.onclick = () => {
+      this.stage.focus();
+      this.showFrame(this.requestedIndex);
+    };
     this.querySelectorAll("[data-zoom]").forEach(
       (button) =>
         (button.onclick = () => {
@@ -94,7 +104,7 @@ class ImageDesk extends HTMLElement {
       this.pan(...delta);
     };
     this.stage.onpointerdown = (e) => {
-      if (!this.level || !e.isPrimary || e.button !== 0) return;
+      if (!this.level || !e.isPrimary || e.button !== 0 || e.target.closest("button")) return;
       this.drag = { x: e.clientX, y: e.clientY };
       this.stage.setPointerCapture(e.pointerId);
     };
@@ -110,43 +120,104 @@ class ImageDesk extends HTMLElement {
         this.showFrame(Number(this.range.value));
       };
       this.playButton.onclick = () => {
-        if (this.timer) {
+        if (this.playing) {
           this.stop();
+          if (this.pendingImage) this.showFrame(this.index);
           return;
         }
-        if (this.index === this.frames.length - 1) this.showFrame(0);
+        this.playing = true;
         this.playButton.textContent = "Pause sequence";
-        this.timer = setInterval(() => {
-          if (this.index === this.frames.length - 1) this.stop();
-          else this.showFrame(this.index + 1);
-        }, 760);
+        if (this.index === this.frames.length - 1) this.showFrame(0);
+        else if (!this.pendingImage) this.scheduleNext();
       };
       this.visibility = () => {
         if (document.hidden) this.stop();
       };
       document.addEventListener("visibilitychange", this.visibility);
     }
-    this.showFrame(this.index);
+    this.showFrame(0);
   }
 
-  showFrame(index) {
-    this.index = index;
+  cancelPending() {
+    this.requestId++;
+    clearTimeout(this.loadingTimer);
+    if (this.pendingImage) this.pendingImage.removeAttribute("src");
+    this.pendingImage = null;
+  }
+
+  scheduleNext() {
+    clearTimeout(this.timer);
+    if (!this.playing) return;
+    if (this.index === this.frames.length - 1) this.stop();
+    else this.timer = setTimeout(() => this.showFrame(this.index + 1), 760);
+  }
+
+  async showFrame(index) {
+    this.cancelPending();
+    this.requestedIndex = index;
+    const request = this.requestId;
     const frame = this.frames[index];
-    this.photo.src = "./assets/" + frame.file;
-    this.querySelector(".desk-original").href = frame.archiveUrl || "./assets/" + frame.file;
+    const time = this.range ? utc(frame.observedAt) : "";
+    this.retry.hidden = true;
     if (this.range) {
-      const time = utc(frame.observedAt);
       this.range.value = String(index);
       this.range.setAttribute("aria-valuetext", time);
+    }
+    if (index === this.index) {
+      this.sheet.removeAttribute("aria-busy");
+      this.notice.hidden = true;
+      this.scheduleNext();
+      return;
+    }
+    this.sheet.setAttribute("aria-busy", "true");
+    const pending = this.preload?.index === index ? this.preload.image : new Image();
+    this.preload = null;
+    this.pendingImage = pending;
+    const file = "./assets/" + frame.file;
+    if (!pending.hasAttribute("src")) pending.src = file;
+    this.notice.hidden = true;
+    this.loadingTimer = setTimeout(() => {
+      this.message.textContent = time ? `Loading ${time}…` : "Loading image…";
+      this.notice.hidden = false;
+    }, 150);
+    try {
+      await pending.decode();
+    } catch {
+      if (request !== this.requestId) return;
+      clearTimeout(this.loadingTimer);
+      this.pendingImage = null;
+      this.sheet.removeAttribute("aria-busy");
+      this.stop();
+      this.message.textContent = time ? `Could not load ${time}.` : "Could not load this image.";
+      this.notice.hidden = false;
+      this.retry.hidden = false;
+      return;
+    }
+    if (request !== this.requestId || !this.isConnected) return;
+    clearTimeout(this.loadingTimer);
+    this.pendingImage = null;
+    this.index = index;
+    this.notice.hidden = true;
+    pending.draggable = false;
+    pending.alt = time ? `STEREO-A COR2 at ${time} on 13 July 2021` : this.photo.alt;
+    this.photo.replaceWith(pending);
+    this.photo = pending;
+    this.sheet.hidden = false;
+    this.sheet.removeAttribute("aria-busy");
+    this.original.href = frame.archiveUrl || file;
+    this.original.hidden = false;
+    if (time) {
       this.clock.textContent = time;
-      this.photo.alt = "STEREO-A COR2 at " + time + " on 13 July 2021";
+      this.playButton.disabled = false;
       const next = this.frames[index + 1];
       if (next) {
-        const preload = new Image();
-        preload.src = "./assets/" + next.file;
+        const image = new Image();
+        image.src = "./assets/" + next.file;
+        this.preload = { index: index + 1, image };
       }
     }
     this.layout();
+    this.scheduleNext();
   }
 
   pan(dx, dy) {
@@ -181,12 +252,16 @@ class ImageDesk extends HTMLElement {
   }
 
   stop() {
-    clearInterval(this.timer);
+    clearTimeout(this.timer);
+    this.playing = false;
     this.timer = null;
     if (this.playButton) this.playButton.textContent = "Play sequence";
   }
 
   disconnectedCallback() {
+    this.cancelPending();
+    this.preload?.image.removeAttribute("src");
+    this.preload = null;
     this.stop();
     this.observer?.disconnect();
     if (this.visibility) document.removeEventListener("visibilitychange", this.visibility);

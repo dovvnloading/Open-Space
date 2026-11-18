@@ -62,6 +62,34 @@ export function parseSystemAddress(input) {
   return g >= 0 && g < GALAXIES && s >= 0 && s < SYSTEMS ? { g, s } : null;
 }
 
+const openingLocation = Object.freeze({ level: "galaxy", g: 0, s: 228, p: 0 });
+const levels = new Set(["sector", "galaxy", "system", "world"]);
+
+export function universeLocationHash({ level, g, s, p }) {
+  const at = address(g, s).replace("–", "-");
+  const params = new URLSearchParams({ view: level, at });
+  if (level === "system" || level === "world") params.set("planet", String(p + 1));
+  return "#universe?" + params.toString();
+}
+
+export function parseUniverseLocation(search = "") {
+  if (!search) return { ...openingLocation };
+  const params = new URLSearchParams(search);
+  const allowed = new Set(["view", "at", "planet"]);
+  for (const name of params.keys()) {
+    if (!allowed.delete(name)) return null; // Reject repeated and unknown fields.
+  }
+  const level = params.get("view");
+  const point = parseSystemAddress(params.get("at") ?? "");
+  if (!levels.has(level) || !point) return null;
+  const ordinal = params.get("planet");
+  if (ordinal !== null && (level === "sector" || level === "galaxy" || !/^[1-8]$/.test(ordinal))) return null;
+  if (level === "world" && ordinal === null) return null;
+  const p = ordinal === null ? 0 : Number(ordinal) - 1;
+  if (p >= makeSystem(point.g, point.s).planets.length) return null;
+  return { level, ...point, p };
+}
+
 function seedNumber(a, b = 0) {
   let h = Math.imul(a + 29, 0x85ebca6b) ^ Math.imul(b + 317, 0xc2b2ae35);
   h = Math.imul(h ^ (h >>> 16), 0x27d4eb2d);
@@ -711,6 +739,7 @@ const icons = {
   center: '<circle cx="12" cy="12" r="5"/><path d="M12 2v5m0 10v5M2 12h5m10 0h5"/>',
   help: '<circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 1 1 4.2 1.7c-1.1.8-2 1.4-2 3M12 16.5h.01"/>',
   explore: '<path d="m3 12 17-8-8 17-1.5-7.5L3 12Z"/>',
+  link: '<path d="M10 13a4 4 0 0 0 5.6 0l3.5-3.5a4 4 0 0 0-5.7-5.6l-2 2M14 11a4 4 0 0 0-5.6 0l-3.5 3.5a4 4 0 0 0 5.7 5.6l2-2"/>',
   layers: '<path d="m3 9 9-5 9 5-9 5-9-5Zm0 5 9 5 9-5"/>',
   play: '<path d="m8 5 11 7-11 7z"/>',
   pause: '<path d="M8 5v14M16 5v14"/>',
@@ -741,7 +770,7 @@ export function scaleBar(unitsPerPixel) {
 }
 
 /** Mount the modal simulator and return an idempotent teardown function. */
-export function mountUniverse(container, { onClose, onEvidence, targets = [] } = {}) {
+export function mountUniverse(container, { onClose, onEvidence, targets = [], locationSearch = "" } = {}) {
   const previousFocus = document.activeElement;
   const modal = document.createElement("dialog");
   modal.className = "os-universe";
@@ -764,7 +793,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       </header>
       <div class="osu-stage">
         <canvas tabindex="0" aria-label="Interactive simulated galaxy. Arrow keys pan, plus and minus zoom. Use navigation buttons below to select and explore destinations."></canvas>
-        <div class="osu-heading"><span class="osu-eyebrow" data-ref="eyebrow"></span><h2 data-ref="name"></h2><p data-ref="description"></p>
+        <div class="osu-heading"><span class="osu-eyebrow" data-ref="eyebrow"></span><h2 data-ref="name"></h2><p data-ref="description"></p><p class="osu-location-error" data-ref="locationError" role="status" hidden>This location is unavailable. Showing the opening galaxy.</p>
           <div class="osu-spacing" role="group" aria-label="Orbit spacing" hidden>
             <button type="button" data-spacing="schematic" aria-pressed="true">Even spacing</button>
             <button type="button" data-spacing="au" aria-pressed="false">AU scale</button>
@@ -788,6 +817,11 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
               return `<button type="button" class="osu-place" data-atlas-index="${i}"><canvas aria-hidden="true"></canvas><span><strong>${title}</strong><small>${type} · ${address(d.g, world ? d.s : undefined)}</small></span>${icon("forward")}</button>`;
             })
             .join("")}</div>
+          <div class="osu-share">
+            <button type="button" class="osu-copy" data-act="copyLocation">${icon("link")}Copy location link</button>
+            <span data-ref="shareStatus" role="status"></span>
+            <input data-ref="shareUrl" aria-label="Location link to copy" readonly hidden>
+          </div>
         </aside>
         <aside class="osu-help" hidden aria-label="Navigation help">
           <strong>Navigate the simulation</strong>
@@ -835,11 +869,10 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
   const abort = new AbortController();
   const listen = (node, event, fn, options = {}) =>
     node.addEventListener(event, fn, { ...options, signal: abort.signal });
-  let level = "galaxy",
-    galaxyId = 0,
-    systemId = 228,
-    planetId = 0;
-  let galaxy = makeGalaxy(galaxyId, !!ctx),
+  const initial = parseUniverseLocation(locationSearch);
+  let { level, g: galaxyId, s: systemId, p: planetId } = initial ?? openingLocation;
+  ref("locationError").hidden = !!initial;
+  let galaxy = level === "galaxy" ? makeGalaxy(galaxyId, !!ctx) : { config: galaxyProfile(galaxyId) },
     system = makeSystem(galaxyId, systemId);
   let backdrop = null,
     backdropId = -1;
@@ -1048,6 +1081,34 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
         title + ". " + ref("objectName").textContent + ". " + ref("objectDetail").textContent;
     redraw();
   }
+  function currentHash() {
+    return universeLocationHash({ level, g: galaxyId, s: systemId, p: planetId });
+  }
+  function reflectLocation() {
+    ref("locationError").hidden = true;
+    // Navigating inside a visit keeps Back pointed at the preceding page.
+    if (location.hash !== currentHash()) history.replaceState(history.state, "", currentHash());
+    ref("shareStatus").textContent = "";
+    ref("shareUrl").hidden = true;
+  }
+  async function copyLocation() {
+    const url = new URL(location.href);
+    url.hash = currentHash();
+    const field = ref("shareUrl");
+    try {
+      await navigator.clipboard.writeText(url.href);
+      if (disposed) return;
+      field.hidden = true;
+      ref("shareStatus").textContent = "Location link copied.";
+    } catch {
+      if (disposed) return;
+      field.value = url.href;
+      field.hidden = false;
+      field.focus();
+      field.select();
+      ref("shareStatus").textContent = "Copy the selected link.";
+    }
+  }
   function select(id) {
     if (level === "sector") {
       if (id !== galaxyId) {
@@ -1064,6 +1125,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
       planetId = 0;
       days = 0;
     } else planetId = id;
+    reflectLocation();
     update(true);
   }
   function cycle(delta) {
@@ -1086,6 +1148,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     if (!help.hidden) toggleHelp();
     if (next === "galaxy" && !galaxy.position) galaxy = makeGalaxy(galaxyId, !!ctx);
     level = next;
+    reflectLocation();
     reset();
     lastTime = 0;
     update(true);
@@ -1200,6 +1263,9 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [] } =
     switch (button.dataset.act) {
       case "exit":
         close();
+        break;
+      case "copyLocation":
+        void copyLocation();
         break;
       case "atlas":
       case "closeAtlas":

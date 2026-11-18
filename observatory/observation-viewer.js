@@ -96,8 +96,12 @@ class ObservationViewer extends HTMLElement {
         <div class="obs-x-label"></div></div>
         ${id === "dwarf" && rows.every(r => r.cutout !== undefined) ? `<aside class="obs-sky-panel">
           <div class="obs-epoch-caption"></div>
-          <svg class="obs-cutout" role="img" aria-label="Selected VLASS survey cutout, north up">
-            <image width="1782" height="561" href="${esc(this.querySelector(".science-plate img").getAttribute("src"))}"/></svg>
+          <div class="obs-cutout-box" data-state="loading" aria-busy="true">
+            <svg class="obs-cutout" role="img" aria-label="Selected VLASS survey cutout, north up">
+              <image width="1782" height="561"/></svg>
+            <div class="obs-cutout-status" role="status"><span>Loading cutout…</span>
+              <a hidden href="${esc(this.querySelector(".science-plate figcaption a").href)}" target="_blank" rel="noopener">Source figure</a>
+            </div></div>
           <span class="obs-cutout-key"><i aria-hidden="true"></i> Predicted position</span>
           <small>16″ field · north up</small></aside>` : ""}
         </div>
@@ -114,6 +118,7 @@ class ObservationViewer extends HTMLElement {
     this.slider = this.querySelector('input[type="range"]');
     this.plate = this.querySelector(".science-plate");
     this.plate.hidden = true;
+    this.loadCutout();
     this.classList.add("obs-ready");
     this.addEventListener("click", event => {
       const view = event.target.closest("[data-view]")?.dataset.view;
@@ -137,6 +142,31 @@ class ObservationViewer extends HTMLElement {
       this.pendingDraw = requestAnimationFrame(() => this.draw());
     });
     this.draw();
+  }
+  loadCutout() {
+    const box = this.querySelector(".obs-cutout-box");
+    if (!box) return;
+    const raster = box.querySelector("image");
+    const status = box.querySelector(".obs-cutout-status");
+    const fail = () => {
+      box.dataset.state = "error";
+      box.setAttribute("aria-busy", "false");
+      status.querySelector("span").textContent = "Cutout unavailable";
+      status.querySelector("a").hidden = false;
+    };
+    raster.addEventListener("error", fail, {once: true});
+    raster.addEventListener("load", async () => {
+      try {
+        if (raster.decode) await raster.decode();
+        box.dataset.state = "ready";
+        box.setAttribute("aria-busy", "false");
+        status.hidden = true;
+      } catch {
+        fail();
+      }
+    }, {once: true});
+    // Register listeners first so cached images follow the same ready state.
+    raster.setAttribute("href", this.plate.querySelector("img").src);
   }
   switchView(view) {
     this.querySelector(".obs-lab").hidden = view !== "interactive";

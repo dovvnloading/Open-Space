@@ -52,6 +52,19 @@ def check_desktop(page, url):
     page.get_by_role("button", name="Play sequence").click()
     expect(clock).not_to_have_value("1")
     page.get_by_role("button", name="Pause sequence").click()
+    # An unreadable frame must never put its UTC stamp on the previous exposure.
+    blocked_frame = "**/cor2/20210713_220845_n4c2A.jpg"
+    previous_time = page.locator("[data-clock]").inner_text()
+    page.route(blocked_frame, lambda route: route.abort())
+    clock.focus()
+    clock.press("End")
+    retry = page.get_by_role("button", name="Retry image")
+    expect(retry).to_be_visible()
+    expect(page.locator("[data-clock]")).to_have_text(previous_time)
+    page.unroute(blocked_frame)
+    retry.click()
+    expect(page.locator("[data-clock]")).to_have_text("22:08:45 UTC")
+    assert "220845" in page.locator(".desk-sheet img").get_attribute("src")
     page.locator('.desk-plates a[href="#plate/quasar"]').click()
     expect(page.locator(".desk-pin")).to_have_count(2)
     zoom = page.get_by_role("button",name="Magnify 4 times")
@@ -200,6 +213,59 @@ def check_published_records(page):
     print(f"Compared all {counts[0]} rendered records, {counts[1]} featured dossiers and {counts[2]} observation rows with the snapshot.")
 
 
+def check_universe_links(page, url, engine):
+    ring = url + "#universe?view=world&at=G001-S00229&planet=5"
+    archive = url + "#archive?q=MAVEN"
+    name = page.locator('.os-universe [data-ref="name"]')
+    atlas = page.get_by_role("button", name="Atlas", exact=True)
+    page.goto(archive)
+    page.get_by_role("link", name="Universe simulator", exact=True).click()
+    atlas.click()
+    page.locator('[data-atlas-index="3"]').click()
+    expect(name).to_have_text("Planet V")
+    expect(page).to_have_url(ring)
+    atlas.click()
+    if engine == "chromium":
+        page.context.grant_permissions(["clipboard-read", "clipboard-write"])
+        page.get_by_role("button", name="Copy location link").click()
+        expect(page.locator('[data-ref="shareStatus"]')).to_have_text("Location link copied.")
+        assert page.evaluate("navigator.clipboard.readText()") == ring
+    # Exercise the manual fallback in browsers which block clipboard access.
+    page.evaluate("Object.defineProperty(navigator, 'clipboard', {configurable: true, value: undefined})")
+    page.get_by_role("button", name="Copy location link").click()
+    field = page.get_by_role("textbox", name="Location link to copy")
+    expect(field).to_have_value(ring)
+    expect(field).to_be_focused()
+    assert field.evaluate("e => e.selectionStart === 0 && e.selectionEnd === e.value.length")
+    page.go_back()
+    expect(page).to_have_url(archive)
+    expect(page.locator(".os-universe")).not_to_be_visible()
+    page.go_forward()
+    expect(page).to_have_url(ring)
+    expect(name).to_have_text("Planet V")
+    page.get_by_role("button", name="Close universe simulator").click()
+    expect(page).to_have_url(archive)
+
+    page.goto(url + "#target/quasar")
+    expect(page.locator("#dossier")).to_be_visible()
+    page.goto(ring)
+    expect(name).to_have_text("Planet V")
+    expect(page.locator('.osu-worlds [data-world="4"]')).to_have_attribute("aria-pressed", "true")
+    page.locator('.osu-worlds [data-world="0"]').click()
+    expect(name).to_have_text("Planet I")
+    page.go_back()
+    expect(page.locator("#dossier")).to_be_visible()
+    expect(page).to_have_url(url + "#target/quasar")
+    page.goto(ring)
+    expect(name).to_have_text("Planet V")
+    page.reload()
+    expect(name).to_have_text("Planet V")
+    page.goto(url + "#universe?view=world&at=G128-S32768&planet=8")
+    expect(page.locator('[data-ref="locationError"]')).to_be_visible()
+    expect(name).to_have_text("Vesper Spiral")
+    print(f"{engine}: simulated destinations, link copy, direct/reload and history passed.")
+
+
 def check_mobile(page, url):
     page.goto(url)
     expect(page.locator("#cards a")).to_have_count(3)
@@ -240,6 +306,7 @@ def run(url, engine, channel):
             check(page, url)
             if check == check_desktop:
                 check_published_records(page)
+                check_universe_links(page, url, engine)
             page.close()
         browser.close()
     if failures:

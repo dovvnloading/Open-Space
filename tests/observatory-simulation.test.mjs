@@ -7,6 +7,8 @@ import {
   makeSystem,
   orbitRadius,
   parseSystemAddress,
+  parseUniverseLocation,
+  universeLocationHash,
   scaleBar,
   systemSeed,
   universeSize,
@@ -110,4 +112,31 @@ test("atlas destinations correspond to the rendered galaxy families and a ringed
     }
   }
   assert.deepEqual(views, ["spiral", "ring", "elliptical", "world"]);
+});
+
+test("shareable locations resolve within the generated model and preserve selections", () => {
+  const initial = { level: "galaxy", g: 0, s: 228, p: 0 };
+  assert.deepEqual(parseUniverseLocation(), initial);
+  for (const dest of atlasDestinations) {
+    const location = { level: dest.level, g: dest.g, s: dest.s, p: dest.planet ?? 0 };
+    const hash = universeLocationHash(location);
+    assert.deepEqual(parseUniverseLocation(hash.split("?")[1]), location);
+  }
+  for (const level of ["sector", "galaxy", "system", "world"]) {
+    const location = { level, g: 127, s: 32767, p: ["system", "world"].includes(level) ? 1 : 0 };
+    assert.deepEqual(parseUniverseLocation(universeLocationHash(location).split("?")[1]), location);
+  }
+  for (const query of [
+    "view=system&at=G129-S00001",
+    "view=world&at=G128-S32768&planet=3",
+    "view=world&at=G001-S00229&planet=0",
+    "view=world&at=G001-S00229&planet=4.5",
+    "view=world&at=G001-S00229",
+    "view=sky&at=G001-S00229",
+    "view=galaxy&at=G001-S00229&planet=3",
+    "view=sector&at=G001-S00229&at=G002-S00229",
+    "view=sector&at=G001-S00229&extra=1",
+    "view=world&at=G001-S32769&planet=1",
+  ])
+    assert.equal(parseUniverseLocation(query), null, query);
 });

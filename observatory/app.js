@@ -357,13 +357,17 @@ async function route() {
     dialogTrigger = null;
   }
   if (kind === "universe") {
-    if (disposeUniverse) return;
+    if (disposeUniverse) {
+      disposeUniverse();
+      disposeUniverse = null;
+    }
     try {
       const { mountUniverse } = await import("./universe.js");
       if (generation !== routeCounter) return;
       document.title = "Universe simulator · Open Space Observatory";
       disposeUniverse = mountUniverse($("#universe-host"), {
         targets,
+        locationSearch: search,
         onClose: closeOverlay,
         onEvidence: (t) => {
           history.replaceState(history.state, "", "#target/" + encodeURIComponent(t.id));
@@ -497,7 +501,7 @@ async function start() {
   } catch (error) {
     catalogFailed = true;
     showNotice("The research catalog could not load.", error);
-    if (location.hash === "#universe") await route();
+    if (/^#universe(?:\?|$)/.test(location.hash)) await route();
   }
 }
 start();

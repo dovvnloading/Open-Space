@@ -275,12 +275,13 @@
 }
 #deck .card-copy p {
   color: #48463e;
+  margin-bottom: 15px;
   font-size: 14px;
   line-height: 1.48;
 }
 #deck .card-tail {
   border-top: 1px solid #c5bfb1;
-  margin-top: 15px;
+  margin-top: auto;
   padding-top: 10px;
 }
 #deck .card-tail .status {
@@ -730,4 +731,35 @@ image-desk {
 }
 .image-study-link:hover {
   text-decoration: underline;
+}
+
+.desk-load-state {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  max-width: calc(100% - 24px);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  padding: 6px 9px;
+  border: 1px solid #4f4540;
+  border-radius: 3px;
+  background: #151315f2;
+  color: #ffdcc2;
+  font: 11px/1.5 var(--mono);
+}
+.desk-load-state button {
+  border: 1px solid #8c6750;
+  border-radius: 2px;
+  background: #332820;
+  color: #fff1dc;
+  font: inherit;
+  min-height: 28px;
+}
+@media (min-width:701px) and (max-width:850px) {
+  #deck .hero[data-target="mars"] .art-stage::after {
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(90deg,#151316e0 0%,#151316a8 44%,transparent 74%);
+  }
 }

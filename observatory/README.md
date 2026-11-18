@@ -25,7 +25,7 @@ The curated target descriptions and figure sources live in [spotlights.json](dat
 
 ## Universe simulator
 
-[![The Vesper Spiral in the running universe simulator](../docs/figures/observatory-universe.jpg)](https://dovvnloading.github.io/Open-Space/#universe)
+[![Planet V and its rings in the running universe simulator](../docs/figures/observatory-universe.jpg)](https://dovvnloading.github.io/Open-Space/#universe?view=world&at=G001-S00229&planet=5)
 
 The simulator generates 128 galaxies, each with 32,768 addressable systems. The destination atlas links directly to selected galaxies and worlds, and the sector map distinguishes five generated galaxy forms. Enter a galaxy, system or world using the scale controls, or travel to a system by address. Drag or use the arrow keys to pan and use the zoom controls, wheel or pinch to change scale. Schematic spacing is the default. **AU scale** shows relative orbital radii with a calibrated ruler. Advance a quarter of the selected orbit to inspect motion. The model uses circular orbits around one star. Body sizes, lighting and cloud patterns are illustrative.
 

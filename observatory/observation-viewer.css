@@ -322,6 +322,46 @@ observation-viewer.obs-ready {
   gap: 5px;
 }
 .obs-epoch-caption { font: 500 13px/1.3 var(--sans); color: #e7eaf0; }
+.obs-cutout-box {
+  position: relative;
+  min-width: 0;
+  background: #141d28;
+  border-radius: 3px;
+}
+.obs-cutout-status {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 5px;
+  padding: 3px;
+  text-align: center;
+  color: #cfdae7;
+  background: #141d28;
+  border: 1px solid #465666;
+  border-radius: inherit;
+  font: 11px/1.3 var(--sans);
+}
+.obs-cutout-box[data-state="loading"] .obs-cutout-status::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border: 1px solid #5b7a90;
+  border-top: 2px solid var(--signal-a);
+  border-radius: 50%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .obs-cutout-box[data-state="loading"] .obs-cutout-status::before {
+    animation: obs-cutout-load 1.1s linear infinite;
+  }
+  @keyframes obs-cutout-load { to { transform: rotate(1turn); } }
+}
+.obs-cutout-status a {
+  color: var(--signal-a);
+  text-decoration: underline;
+  text-underline-offset: .16em;
+}
 .obs-cutout {
   display: block;
   width: 100%;
@@ -344,7 +384,7 @@ observation-viewer.obs-ready {
     align-items: center;
     margin: 0 0 10px;
   }
-  .obs-cutout { grid-area: 1 / 1 / 4 / 2; }
+  .obs-cutout-box { grid-area: 1 / 1 / 4 / 2; }
   .obs-epoch-caption { grid-column: 2; align-self: end; }
   .obs-sky-panel small { align-self: start; }
 }
