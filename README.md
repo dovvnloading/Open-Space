@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 220 entries: 95 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 36 carefully recorded null or inconclusive checks.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 221 entries: 96 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 36 carefully recorded null or inconclusive checks.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -79,6 +79,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### The Sun, space weather and Earth's sky
 
+- **Two satellites mapped a persistent deep Antarctic ozone core.** Below 180 Dobson units, 4.48 million km² of the early-November footprint still qualified on November 11–15, 2026. A separate daily check found 3.78 million km² below the threshold on all fifteen dates. *Measured* · [Details](results/antarctic-ozone-2026/README.md)
 - **Public PDS ranges clip Voyager plasma observations.** The displayed coverage can omit the last Voyager 2 observation in the bundle and the last Voyager 1 observation in the collection. The two native product tables agree with their own labels. *Correction* · [Details](results/voyager-vlism-release/README.md)
 - **A single magnetic timing shift did not transfer between SOLAR-1 and Wind.** On 7 November 2026, a phase-front direction fitted to earlier data gave weaker agreement than the best time-shift control. The two spacecraft were widely separated across the solar wind. *Null result* · [Details](results/solar1-wind-l1/README.md)
 - **Continuum timing in Proba-3 solar images.** In one September orbit, all 63 flagged Fe XIV products used a different-cycle continuum exposure with a smaller representative-time lag than either same-cycle donor, despite similar exposure-start lags. A ten-image sensitivity test found small sign changes under a bracketing continuum substitution. *Measured* · [Details](results/proba3-aspiics-continuum-timing/README.md)
