@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 215 entries: 94 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 22 corrections to published catalogs and papers, and 34 carefully recorded null or inconclusive checks.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 216 entries: 94 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 22 corrections to published catalogs and papers, and 35 carefully recorded null or inconclusive checks.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -138,6 +138,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Planets, moons and rings in our Solar System
 
+- **A short radiation dip did not appear at Juno’s closest approach to Thebe.** New archive data put one camera exposure 19 seconds before closest approach. The independent particle detector and the neighboring camera samples failed the fixed two-detector deficit test. *Null result* · [Details](results/juno-thebe-radiation/README.md)
 - **Mixing two Cassini archive versions shifts the clocks for an Enceladus occultation.** The 2026 FUV labels and legacy HSP labels shorten the relative time by one second. Using a shared spacecraft clock changes the HSP count assigned to one exposure by about 658. *Correction* · [Details](results/cassini-uvis-enceladus-clock/README.md)
 - **An infrared Planet Nine candidate did not reappear in public follow-up images.** A 2025 paper linked two far-infrared sources seen by IRAS in 1983 and AKARI in 2006. The old IRAS detector scans instead favour fixed sky emission, possibly from a nearby galaxy. DES and Euclid recovered 397/400 simulated dark planets (388/400 with perturbed historical positions), but uncertain AKARI timing and unmeasured regions prevent exclusion of the entire proposed orbit family. *Null result* · [Details](results/planet-nine-fir/README.md)
 - **Io's record 2024 eruption brightened Jupiter's sulfur glow but barely its sodium cloud.** *Measured* · [Details](results/io-2024-eruption-sodium/README.md)
