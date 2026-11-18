@@ -62,7 +62,7 @@ def screened_map(filtered, raw, flags, uncertainty):
     valid = ((flags == 0) | (flags == 2)) & np.isfinite(effective)
     valid &= np.isfinite(filtered) & (filtered >= 0) & (filtered <= 100)
     coast = (flags >= 0) & ((flags & COAST_BITS) != 0)
-    offshore = ndimage.distance_transform_edt(~coast) >= 5 if coast.any() else np.ones_like(coast)
+    offshore = ndimage.distance_transform_edt(~coast) > 5 if coast.any() else np.ones_like(coast)
     return Map(effective, valid, offshore, uncertainty)
 
 
@@ -221,10 +221,10 @@ def historical_controls(entries, root, download):
             if concentration.shape != (1328, 1264):
                 raise ValueError("Unexpected historical ASI grid shape")
             x, y = dataset["x"][:], dataset["y"][:]
-            if not (np.all(np.diff(x) == 6250) and np.all(np.diff(y) == -6250)):
+            if not (np.all(np.diff(x) == 6250) and np.all(np.diff(y) == 6250)):
                 raise ValueError("Unexpected historical ASI grid spacing")
             # Treat every masked or otherwise invalid historical cell as a potential coast.
-            offshore = ndimage.distance_transform_edt(valid) >= 8
+            offshore = ndimage.distance_transform_edt(valid) > 8
             frame = Map(concentration, valid, offshore, np.full_like(concentration, np.nan))
             openings, _ = detect(frame, minimum=13)
             near_maud = []
@@ -273,20 +273,22 @@ def analyze(entries, root, download):
                 details = record(opening, grid, primary, comparisons)
                 matched = [item for item in previous[key] if overlaps(opening.core, item[1])]
                 length = max((item[2] for item in matched), default=0) + 1
-                supported = any(item["status"] == "supporting" for item in details["cross_sensor"].values())
-                histories = [(name,)] 
+                support = [sensor for sensor, item in details["cross_sensor"].items() if item["status"] == "supporting"]
+                histories = [(name,)]
                 for other, _, _, paths in matched:
                     all_links[key].append([other, name])
                     histories.extend((*path, name) for path in paths if len(path) < 3)
                 current.append((name, opening.core, length, histories))
                 for path in histories:
                     if key == "primary" and len(path) == 3:
-                        earlier = {item["id"]: item["sensor_support"] for date_row in daily[-2:]
+                        earlier = {item["id"]: item["supporting_sensors"] for date_row in daily[-2:]
                                    for item in date_row["variants"]["primary"]["openings"]}
-                        if sum([earlier[path[0]], earlier[path[1]], supported]) >= 2:
-                            chain_support.append(list(path))
+                        triplet = [earlier[path[0]], earlier[path[1]], support]
+                        sensors = [sensor for sensor in comparisons if sum(sensor in tags for tags in triplet) >= 2]
+                        if sensors:
+                            chain_support.append({"path": list(path), "supporting_sensors": sensors})
                 best_length[key] = max(best_length[key], length)
-                observation_records.append(dict(details, id=name, consecutive_days=length, sensor_support=supported))
+                observation_records.append(dict(details, id=name, consecutive_days=length, supporting_sensors=support))
             previous[key] = current
             row["variants"][key] = {"rejected": rejected, "openings": observation_records}
         daily.append(row)
