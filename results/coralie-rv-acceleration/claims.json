@@ -3,7 +3,7 @@
   "claims": [
     {
       "id": "selected-nights",
-      "printed": "2908",
+      "printed": "2,908",
       "statement": "Selected night-level spectra.",
       "compute": "json('screen-results.json', '/summary/selected_spectra')"
     },
@@ -27,32 +27,32 @@
     },
     {
       "id": "training-hd25673",
-      "printed": "-24.16",
+      "printed": "−24.16",
       "statement": "HD 25673 training slope in m/s/yr.",
       "compute": "json('screen-results.json', '/targets/57/fits/training/slope_mps_per_year')"
     },
     {
       "id": "holdout-hd25673",
-      "printed": "-25.88",
+      "printed": "−25.88",
       "statement": "HD 25673 holdout slope in m/s/yr.",
       "compute": "json('screen-results.json', '/targets/57/fits/holdout/slope_mps_per_year')"
     },
     {
       "id": "harps-hd25673",
-      "printed": "-17.28",
+      "printed": "−17.28",
       "statement": "HD 25673 HARPS annual-median slope in m/s/yr.",
       "compute": "json('hd25673-results.json', '/harps/fits/RV_mlc_nzp/yearly_fit/slope_mps_per_year')"
     },
     {
       "id": "modern-hd25673-change",
-      "printed": "-216.1",
-      "statement": "First-to-last annual-median difference for modern Fabry\u2013Perot exposures in m/s.",
-      "compute": "json('hd25673-results.json', '/combined_modern_fp/first_to_last_year_median_change_mps')"
+      "printed": "216.1",
+      "statement": "Magnitude of the decline between the first and last annual Fabry–Perot medians, in m/s.",
+      "compute": "abs(json('hd25673-results.json', '/combined_modern_fp/first_to_last_year_median_change_mps'))"
     },
     {
       "id": "modern-hd25673-fp-slope",
-      "printed": "-27.01",
-      "statement": "Slope over the ten modern Fabry\u2013Perot annual medians in m/s/yr.",
+      "printed": "−27.01",
+      "statement": "Slope over the ten modern Fabry–Perot annual medians in m/s/yr.",
       "compute": "json('hd25673-results.json', '/combined_modern_fp/slope_mps_per_year')"
     }
   ]
