@@ -14,6 +14,8 @@
     <link rel="preload" href="./assets/mars-viking.jpg" as="image" />
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./evidence.css" />
+    <link rel="stylesheet" href="./deck.css" />
+    <link rel="stylesheet" href="./archive-view.css" />
     <link rel="stylesheet" href="./universe.css" />
   </head>
   <body>
@@ -46,7 +48,6 @@
       <section id="deck" aria-label="Observation deck">
         <div class="page-head">
           <div>
-            <div class="eyebrow"><span class="small-line"></span>MISSION CONTROL</div>
             <h1>Observation deck</h1>
           </div>
           <a class="snapshot-link" href="#audit"
@@ -65,7 +66,7 @@
             <canvas class="star-plate" aria-hidden="true"></canvas>
             <div class="art-stage" aria-hidden="true">
               <div class="halo"></div>
-              <div class="orbit-lines"><b></b><b></b><b></b></div>
+
               <img
                 id="hero-art"
                 src="./assets/mars-viking.jpg"
@@ -74,9 +75,6 @@
                 width="1024"
                 height="1024"
               />
-              <div class="planet-callout">
-                <span class="callout-line"></span><span id="target-tag">MARS / SOL IV</span>
-              </div>
             </div>
             <div class="plate-controls" role="group" aria-label="Featured image view">
               <button type="button" data-plate-view="context" aria-pressed="true">Context image</button>
@@ -93,7 +91,10 @@
               /></a>
             </div>
             <div class="hero-content">
-              <div class="plate-label"><i data-icon="focus"></i> FEATURED TARGET</div>
+              <div class="plate-label">
+                <span class="small-line"></span><span id="hero-field">Planetary science</span
+                ><span class="plate-disposition" id="disposition">Measured</span>
+              </div>
               <h2 id="hero-name">Mars</h2>
               <p class="hero-sub" id="hero-sub">Energetic particles in Martian orbit</p>
               <p class="hero-summary" id="hero-summary">
@@ -105,6 +106,9 @@
                 ><a class="btn secondary" href="#universe"><i data-icon="orbit"></i>Launch simulator</a>
               </div>
             </div>
+            <a class="inspect-plate" id="inspect-plate" href="#plate/mars"
+              ><i data-icon="focus"></i><span>Inspect image</span></a
+            >
             <a class="plate-credit" id="plate-credit" href="#credits">Viking mosaic · NASA/JPL-Caltech</a>
           </div>
           <div class="hero-strip">
@@ -118,7 +122,10 @@
             </div>
             <div class="readout status-readout">
               <i data-icon="pulse"></i
-              ><span><small>DISPOSITION</small><strong id="disposition">Measured</strong></span>
+              ><span
+                ><small id="hero-metric-label">Peak ion flux / reference</small
+                ><strong id="hero-metric">≈5,140×</strong></span
+              >
             </div>
             <div class="slide-nav">
               <span id="slide-count" aria-live="polite">01 <em>/ 04</em></span
@@ -140,77 +147,100 @@
           </div>
           <div class="card-grid" id="cards"></div>
         </section>
-        <section class="sim-launch" aria-labelledby="sim-title">
-          <canvas id="universe-preview" aria-hidden="true"></canvas>
-          <div class="sim-description">
-            <div class="eyebrow"><span class="small-line"></span>PROCEDURAL UNIVERSE</div>
-            <h2 id="sim-title">Universe simulator</h2>
-            <p id="sim-scale">
-              Travel from a spiral galaxy into a star system, then down to the surface of an individual world.
-            </p>
-            <a class="btn secondary" href="#universe"
-              ><i data-icon="orbit"></i>Enter universe simulator<i data-icon="arrow"></i
-            ></a>
-          </div>
-        </section>
-        <section class="recent" aria-labelledby="recent-heading">
-          <div class="section-head">
-            <div>
-              <div class="eyebrow"><span class="small-line"></span>REPOSITORY ACTIVITY</div>
-              <h2 id="recent-heading">Recently updated</h2>
+        <div class="journal-spread">
+          <section class="sim-launch" aria-labelledby="sim-title">
+            <canvas id="universe-preview" aria-hidden="true"></canvas>
+            <div class="sim-description">
+              <div class="eyebrow"><span class="small-line"></span>PROCEDURAL UNIVERSE</div>
+              <h2 id="sim-title">Universe simulator</h2>
+              <p id="sim-scale">
+                Travel from a spiral galaxy into a star system, then down to the surface of an individual
+                world.
+              </p>
+              <a class="btn secondary" href="#universe"
+                ><i data-icon="orbit"></i>Enter universe simulator<i data-icon="arrow"></i
+              ></a>
             </div>
-          </div>
-          <div class="recent-list" id="recent-list"></div>
-        </section>
+          </section>
+          <section class="recent" aria-labelledby="recent-heading">
+            <div class="section-head">
+              <div>
+                <div class="eyebrow"><span class="small-line"></span>REPOSITORY ACTIVITY</div>
+                <h2 id="recent-heading">Recently updated</h2>
+              </div>
+            </div>
+            <div class="recent-list" id="recent-list"></div>
+            <a href="#archive" class="text-link journal-link">Browse all records<i data-icon="arrow"></i></a>
+          </section>
+        </div>
       </section>
       <section id="archive" hidden aria-labelledby="archive-title">
-        <div class="page-head">
-          <div>
-            <div class="eyebrow"><span class="small-line"></span>OPEN RESEARCH</div>
+        <header class="archive-front">
+          <div class="archive-heading">
             <h1 id="archive-title">Research archive</h1>
+            <p class="archive-intro" id="archive-intro">
+              Explore the public record by topic, instrument or scientific disposition.
+            </p>
+            <a href="#audit" class="audit-entry"
+              ><i data-icon="focus"></i><span>How the archive was checked</span><i data-icon="arrow"></i
+            ></a>
           </div>
-          <i class="archive-head-icon" data-icon="archive"></i>
+          <section id="archive-census" aria-labelledby="census-title">
+            <div class="census-map" aria-hidden="true">
+              <div class="census-total"><strong></strong><small>records</small></div>
+            </div>
+            <div class="census-caption">
+              <h2 id="census-title">Catalog composition</h2>
+              <p>One dot per record. Select a group to filter.</p>
+              <div class="census-key" role="group" aria-label="Filter records by disposition"></div>
+            </div>
+          </section>
+        </header>
+        <div class="archive-layout">
+          <section class="topic-index" aria-labelledby="topic-index-title">
+            <h2 id="topic-index-title">Topic index</h2>
+            <div id="archive-topics" role="group" aria-labelledby="topic-index-title"></div>
+          </section>
+          <div class="archive-results">
+            <form class="archive-controls" id="filters" role="search">
+              <label class="search-box"
+                ><i data-icon="search"></i
+                ><input
+                  type="search"
+                  id="query"
+                  aria-label="Search investigations"
+                  placeholder="Search targets or instruments"
+                  autocomplete="off"
+              /></label>
+              <label class="select-field"
+                ><span>Disposition</span
+                ><select id="status-filter">
+                  <option value="">All statuses</option>
+                </select></label
+              >
+              <label class="select-field archive-topic-select"
+                ><span>Topic</span
+                ><select id="topic-filter">
+                  <option value="">All topics</option>
+                </select></label
+              >
+            </form>
+            <div class="archive-toolbar">
+              <p id="results-count" role="status"></p>
+              <button id="clear-archive" type="button" hidden>Reset filters</button>
+              <label
+                >Sort by
+                <select id="sort">
+                  <option value="recent">Last updated</option>
+                  <option value="title">Title (A–Z)</option>
+                </select></label
+              >
+            </div>
+            <h2 class="visually-hidden">Search results</h2>
+            <div id="result-list" class="archive-list"></div>
+            <div id="pagination" class="pagination"></div>
+          </div>
         </div>
-        <div class="archive-intro" id="archive-intro"></div>
-        <a href="#audit" class="audit-entry"
-          ><i data-icon="focus"></i><span>How the archive was checked</span><i data-icon="arrow"></i
-        ></a>
-        <form class="archive-controls" id="filters" role="search">
-          <label class="search-box"
-            ><i data-icon="search"></i
-            ><input
-              type="search"
-              id="query"
-              aria-label="Search investigations"
-              placeholder="Search investigations, targets, or instruments…"
-              autocomplete="off"
-          /></label>
-          <label class="select-field"
-            ><span>Disposition</span
-            ><select id="status-filter">
-              <option value="">All dispositions</option>
-            </select></label
-          >
-          <label class="select-field"
-            ><span>Topic</span
-            ><select id="topic-filter">
-              <option value="">All topics</option>
-            </select></label
-          >
-        </form>
-        <div class="archive-toolbar">
-          <p id="results-count" role="status"></p>
-          <label
-            >Sort by
-            <select id="sort">
-              <option value="recent">Recently updated</option>
-              <option value="title">Title (A–Z)</option>
-            </select></label
-          >
-        </div>
-        <h2 class="visually-hidden">Search results</h2>
-        <div id="result-list" class="archive-list"></div>
-        <div id="pagination" class="pagination"></div>
       </section>
       <noscript
         ><p>
