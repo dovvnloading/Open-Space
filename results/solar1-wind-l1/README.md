@@ -30,7 +30,7 @@ SOLAR-1 MAG and Wind MFI measure the magnetic field independently. The Wind SWE 
 
 ## Reproduce
 
-Run the offline analysis from this result folder with Python and NumPy. The compressed bundle stores quality-filtered one-minute magnetic vectors, flow medians, counts and predicted positions. The native-data replay reproduced both its bytes and the summary independently on Windows.
+Run the offline analysis from this result folder with Python and NumPy. The compressed bundle stores quality-filtered one-minute magnetic vectors, flow medians, counts and predicted positions. An independent Windows replay from the native products reproduced the field vectors and coverage exactly, with sub-micrometre numerical differences in projected SOLAR-1 positions. All reported statistics agreed at their printed precision. The offline replay from the deposited minute bundle reproduced the summary and coverage files byte for byte in the same environment.
 
 ```sh
 python analyze.py --output summary.json
