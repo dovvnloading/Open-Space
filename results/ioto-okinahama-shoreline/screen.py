@@ -18,6 +18,7 @@ SCENES = (
     "l8-20261103", "s2b-20261106", "l9-20261111", "s2c-20261111", "s2b-20261116",
 )
 BASES = SCENES[:2]
+ALT_BASES = ("s2b-20261017", "l8-20261018")
 PAIR = ("l9-20261111", "s2c-20261111")
 VENT = (533869.3452570109, 2738783.8378536175)
 BOUNDS = (532440, 2737320, 535320, 2740200)
@@ -206,7 +207,7 @@ def controls(frame, base_classes, grid):
             "false_dry_on_open_water": int((away_water & dry).sum())}
 
 
-def measure(frame, bases, grid, thresholds, coast_buffer, expand):
+def measure(frame, bases, grid, thresholds, coast_buffer, expand, vent_radius):
     base_a = classes(bases[0], thresholds)
     base_b = classes(bases[1], thresholds)
     old_land = base_a[1] & base_b[1]
@@ -216,14 +217,17 @@ def measure(frame, bases, grid, thresholds, coast_buffer, expand):
     separation = ndimage.distance_transform_edt(~old_land) * grid.resolution
     delta = frame.values["swir1"] - np.maximum(bases[0].values["swir1"], bases[1].values["swir1"])
     gain = old_water & dry & grid.region & (separation > coast_buffer) & (delta >= 0.02)
-    new, extra = components(gain, grid.r <= 450, int(np.ceil(6000 / grid.resolution ** 2)))
+    new, extra = components(gain, grid.r <= vent_radius, int(np.ceil(6000 / grid.resolution ** 2)))
+    close = grid.r <= 450
     nominal_contact = connected(dry, new, inland, 0)
     robust_contact = connected(dry, new, inland, 1)
     outside = controls((valid, dry, water), (old_land, old_water), grid)
     return {
         "new_cells": int(new.sum()), "optical_area_km2": round(float(new.sum() * grid.resolution ** 2 / 1e6), 6),
         "region_cells": int(grid.region.sum()), "region_valid": int((grid.region & valid).sum()),
-        "vent_cells": int((grid.r <= 450).sum()), "vent_valid": int(((grid.r <= 450) & valid).sum()),
+        "vent_cells": int(close.sum()), "vent_valid": int((close & valid).sum()),
+        "vent_water_cells": int((close & water).sum()), "vent_dry_cells": int((close & dry).sum()),
+        "nearest_dry_m": round(float(grid.r[dry].min()), 3) if dry.any() else None,
         "baseline_water_cells": int((old_water & grid.region).sum()),
         "nominal_contact": nominal_contact, "eroded_contact": robust_contact,
         "controls": outside, **extra,
@@ -247,16 +251,16 @@ def compare_pair(pairs, common):
             "jaccard": round(overlap / union, 6) if union else None}
 
 
-def run(root, sentinel_offset="provider"):
+def run(root, sentinel_offset="provider", baseline_names=BASES, vent_radius=450):
     checks = synthetic()
     grids = {res: Grid(res) for res in (20, 30, 60)}
-    bases = {res: [load(root, name, grids[res], sentinel_offset) for name in BASES] for res in (20, 30)}
-    baseline_checks = {str(res): {name: deep_water(frame, grids[res]) for name, frame in zip(BASES, inputs)}
+    bases = {res: [load(root, name, grids[res], sentinel_offset) for name in baseline_names] for res in (20, 30)}
+    baseline_checks = {str(res): {name: deep_water(frame, grids[res]) for name, frame in zip(baseline_names, inputs)}
                        for res, inputs in bases.items()}
     comparisons = {}
     rows = []
     plot_data = {}
-    for name in SCENES:
+    for name in dict.fromkeys((*baseline_names, *SCENES)):
         res = 20 if name.startswith("s2") else 30
         grid = grids[res]
         if not (root / name / "receipt.json").exists():
@@ -264,9 +268,9 @@ def run(root, sentinel_offset="provider"):
             continue
         frame = load(root, name, grid, sentinel_offset)
         spl = deep_water(frame, grid)
-        values, masks = measure(frame, bases[res], grid, THRESHOLDS["nominal"], 40, False)
+        values, masks = measure(frame, bases[res], grid, THRESHOLDS["nominal"], 40, False, vent_radius)
         sensitivity = {
-            case: measure(frame, bases[res], grid, thresh, buffer, expand)[0]
+            case: measure(frame, bases[res], grid, thresh, buffer, expand, vent_radius)[0]
             for case, thresh, buffer, expand in (
                 ("relaxed", THRESHOLDS["relaxed"], 40, False),
                 ("strict", THRESHOLDS["strict"], 40, False),
@@ -284,7 +288,8 @@ def run(root, sentinel_offset="provider"):
         if name in PAIR and evidence == "usable":
             comparisons[name] = masks, grid
     pair = compare_pair(comparisons, grids[60]) if all(name in comparisons for name in PAIR) else None
-    return {"sentinel_offset": sentinel_offset, "controls": checks, "baselines": baseline_checks, "scenes": rows, "nov11_60m_comparison": pair}, plot_data
+    return {"sentinel_offset": sentinel_offset, "vent_radius": vent_radius, "baseline_names": list(baseline_names),
+            "controls": checks, "baselines": baseline_checks, "scenes": rows, "nov11_60m_comparison": pair}, plot_data
 
 
 def main():
@@ -292,8 +297,11 @@ def main():
     parser.add_argument("data", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument("--sentinel-offset", choices=("provider", "zero"), default="provider")
+    parser.add_argument("--alternate-baselines", action="store_true")
+    parser.add_argument("--vent-radius", type=int, choices=(450, 800), default=450)
     args = parser.parse_args()
-    findings, _ = run(args.data, args.sentinel_offset)
+    base = ALT_BASES if args.alternate_baselines else BASES
+    findings, _ = run(args.data, args.sentinel_offset, base, args.vent_radius)
     args.output.write_text(json.dumps(findings, indent=2, allow_nan=False) + "\n", encoding="utf-8", newline="\n")
     for row in findings["scenes"]:
         print(row["id"], row["status"], row.get("optical_area_km2"), row.get("eroded_contact"))
