@@ -1,0 +1,40 @@
+{
+  "schema": "open-space/claims/1",
+  "let": {
+    "lineage": "table('lineage.csv')",
+    "flagged": "lineage[(lineage['orbit'] == 795) & (lineage['quality'] == 2)]",
+    "clean_795": "lineage[(lineage['orbit'] == 795) & (lineage['quality'] == 0)]"
+  },
+  "claims": [
+    {
+      "id": "total-released-header-matches",
+      "printed": "130",
+      "statement": "Complete matched Fe XIV FITS headers in the two released orbit queries.",
+      "compute": "len(lineage)"
+    },
+    {
+      "id": "september-cross-cycle-flagged",
+      "printed": "63",
+      "statement": "Flagged September products with a verified different-cycle donor.",
+      "compute": "count(flagged['different_cycle'] == 1)"
+    },
+    {
+      "id": "shorter-lags-september",
+      "expect": true,
+      "statement": "All flagged September donor lags have smaller absolute value than both unflagged lags from that orbit.",
+      "compute": "min(flagged['lag_seconds']) > max(clean_795['lag_seconds'])"
+    },
+    {
+      "id": "largest-annular-robust-as-evaluated",
+      "printed": "0.0367%",
+      "statement": "Percentage of initially positive line pixels still flipped under all four perturbations in the September 08:50 outer annulus.",
+      "compute": "100 * json('measurements.json', '/3/annuli/1/robust_flips') / json('measurements.json', '/3/annuli/1/line_positive_pixels')"
+    },
+    {
+      "id": "september-0850-robust-outer-count",
+      "printed": "95",
+      "statement": "Count of continuing flips in the September 08:50 outer annulus.",
+      "compute": "json('measurements.json', '/3/annuli/1/robust_flips')"
+    }
+  ]
+}
