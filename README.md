@@ -369,6 +369,7 @@ The [cold-neighbour search methods and reproduction evidence](results/cold-neigh
 - [IXPE Mrk 501 conditional repeatability methods and evidence](results/ixpe-mrk501-repeat/README.md).
 - [MMS four-spacecraft planar-screen methods and bounded negative result](results/mms-planar-screen/README.md).
 - [PUNCH two-image angular comparison methods and development evidence](results/punch-front-feasibility/README.md).
+- [NuSTAR clock-version calibration comparison](results/nustar-clock-version-comparison/README.md), using independent sampled and continuous-extrema calculations.
 - [Legacy Surveys DR11 resolved-satellite control recovery and injection tests](results/halo-satellite-dr11/README.md).
 - [GOES-19 group decoding and stereo direction calibration](results/goes19-stereo-screen/README.md).
 - [IMAP magnetic-depletion screen and proton-test protocol](results/imap-mag-swapi-screen/README.md).
