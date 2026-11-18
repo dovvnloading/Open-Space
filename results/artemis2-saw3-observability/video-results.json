@@ -1,0 +1,152 @@
+{
+  "decoder": {
+    "pyav": "18.1.0",
+    "libraries": {
+      "libavutil": [
+        60,
+        26,
+        102
+      ],
+      "libavcodec": [
+        62,
+        28,
+        102
+      ],
+      "libavformat": [
+        62,
+        12,
+        102
+      ],
+      "libavdevice": [
+        62,
+        3,
+        102
+      ],
+      "libavfilter": [
+        11,
+        14,
+        102
+      ],
+      "libswscale": [
+        9,
+        5,
+        102
+      ],
+      "libswresample": [
+        6,
+        3,
+        102
+      ]
+    }
+  },
+  "downlink": {
+    "pds_start_utc": "2026-04-06T23:38:11+00:00",
+    "pds_stop_utc": "2026-04-07T01:37:57+00:00",
+    "pds_span_seconds": 7186.0,
+    "decoder": {
+      "frame_rate": "60000/1001",
+      "time_base": "1/60000",
+      "start_pts": 0,
+      "duration": 7185.795283333333,
+      "width": 1280,
+      "height": 720,
+      "codec": "h264",
+      "container_duration": 7185.795283
+    },
+    "windows": {
+      "first-cue": {
+        "requested_elapsed": [
+          3755.0,
+          3785.0
+        ],
+        "first_elapsed": 3755.00125,
+        "last_elapsed": 3784.997883333,
+        "frames": 1799,
+        "repeats": 328,
+        "low_change_pairs": 1682,
+        "interior_updates": 116,
+        "median_update_interval_seconds": 0.20020000000022264,
+        "median_interior_luma": 2.0,
+        "max_interior_p99": 44,
+        "median_fraction_luma_at_most_16": 0.9759114583333334,
+        "largest_pts_gap_seconds": 0.01668333400039046
+      },
+      "second-cue": {
+        "requested_elapsed": [
+          4369.0,
+          4399.0
+        ],
+        "first_elapsed": 4369.01465,
+        "last_elapsed": 4398.9946,
+        "frames": 1798,
+        "repeats": 30,
+        "low_change_pairs": 1647,
+        "interior_updates": 150,
+        "median_update_interval_seconds": 0.20020000000022264,
+        "median_interior_luma": 1.0,
+        "max_interior_p99": 8,
+        "median_fraction_luma_at_most_16": 0.9998643663194444,
+        "largest_pts_gap_seconds": 0.016683334000845207
+      },
+      "same-time-downlink": {
+        "requested_elapsed": [
+          6062.0,
+          6092.0
+        ],
+        "first_elapsed": 6062.00595,
+        "last_elapsed": 6091.9859,
+        "frames": 1798,
+        "repeats": 82,
+        "low_change_pairs": 1652,
+        "interior_updates": 145,
+        "median_update_interval_seconds": 0.20020000000022264,
+        "median_interior_luma": 5.0,
+        "max_interior_p99": 140,
+        "median_fraction_luma_at_most_16": 0.9748450385199653,
+        "largest_pts_gap_seconds": 0.016683334000845207
+      }
+    },
+    "cue_to_start_seconds": [
+      3770.0,
+      4384.0
+    ]
+  },
+  "onboard": {
+    "pds_start_utc": "2026-04-07T01:19:13+00:00",
+    "pds_stop_utc": "2026-04-07T01:21:23+00:00",
+    "pds_span_seconds": 130.0,
+    "decoder": {
+      "frame_rate": "30000/1001",
+      "time_base": "1/90000",
+      "start_pts": 0,
+      "duration": 130.06326666666666,
+      "width": 1920,
+      "height": 1080,
+      "codec": "h264",
+      "container_duration": 130.069333
+    },
+    "windows": {
+      "onboard": {
+        "requested_elapsed": [
+          0,
+          130.0
+        ],
+        "first_elapsed": 0.0,
+        "last_elapsed": 129.996533333,
+        "frames": 3897,
+        "repeats": 0,
+        "low_change_pairs": 0,
+        "interior_updates": 3896,
+        "median_update_interval_seconds": 0.03336666699999569,
+        "median_interior_luma": 5.0,
+        "max_interior_p99": 32,
+        "median_fraction_luma_at_most_16": 0.9706865475501543,
+        "largest_pts_gap_seconds": 0.03336666700002411
+      }
+    },
+    "cue_to_start_seconds": [
+      -2292.0,
+      -1678.0
+    ]
+  }
+}
