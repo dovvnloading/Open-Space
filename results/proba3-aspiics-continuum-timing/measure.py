@@ -38,6 +38,8 @@ def load(raw, product, manifest, unit):
         if any(header.get(name) != value for name, value in WCS.items()):
             raise ValueError(f"Unexpected delivered WCS in {path.name}")
         array = hdu.data.astype(np.float64)
+        # The v03 product documents infinite saturation markers.
+        array[~np.isfinite(array)] = np.nan
     if array.shape != (2048, 2048):
         raise ValueError(f"Unexpected array shape in {path.name}")
     return header, array
