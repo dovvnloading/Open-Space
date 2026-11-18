@@ -1,0 +1,172 @@
+{
+  "source": "https://raw.githubusercontent.com/t-brandt/orvara/37df2f9bd57f64078e63634feade0533dbaaab86/HGCA_vEDR3.fits",
+  "source_moving_alias": "https://raw.githubusercontent.com/t-brandt/orvara/master/HGCA_vEDR3.fits",
+  "author_repo_commit": "37df2f9bd57f64078e63634feade0533dbaaab86",
+  "cds_original": "https://cdsarc.cds.unistra.fr/ftp/J/ApJS/254/42/HGCA_vEDR3.fits",
+  "cds_status": "connect timeout, byte identity not verified",
+  "bytes": 19851840,
+  "sha256": "23684d583baaa236775108b360c650e79770a695e16914b1201f290c1826065c",
+  "hdu1": "BINTABLE",
+  "rows": 115346,
+  "row_bytes": 172,
+  "column_count": 35,
+  "columns": [
+    {
+      "name": "hip_id",
+      "format": "J"
+    },
+    {
+      "name": "gaia_source_id",
+      "format": "K"
+    },
+    {
+      "name": "gaia_ra",
+      "format": "D"
+    },
+    {
+      "name": "gaia_dec",
+      "format": "D"
+    },
+    {
+      "name": "radial_velocity",
+      "format": "E"
+    },
+    {
+      "name": "radial_velocity_error",
+      "format": "E"
+    },
+    {
+      "name": "radial_velocity_source",
+      "format": "8A"
+    },
+    {
+      "name": "parallax_gaia",
+      "format": "E"
+    },
+    {
+      "name": "parallax_gaia_error",
+      "format": "E"
+    },
+    {
+      "name": "pmra_gaia",
+      "format": "E"
+    },
+    {
+      "name": "pmdec_gaia",
+      "format": "E"
+    },
+    {
+      "name": "pmra_gaia_error",
+      "format": "E"
+    },
+    {
+      "name": "pmdec_gaia_error",
+      "format": "E"
+    },
+    {
+      "name": "pmra_pmdec_gaia",
+      "format": "E"
+    },
+    {
+      "name": "pmra_hg",
+      "format": "E"
+    },
+    {
+      "name": "pmdec_hg",
+      "format": "E"
+    },
+    {
+      "name": "pmra_hg_error",
+      "format": "E"
+    },
+    {
+      "name": "pmdec_hg_error",
+      "format": "E"
+    },
+    {
+      "name": "pmra_pmdec_hg",
+      "format": "E"
+    },
+    {
+      "name": "pmra_hip",
+      "format": "E"
+    },
+    {
+      "name": "pmdec_hip",
+      "format": "E"
+    },
+    {
+      "name": "pmra_hip_error",
+      "format": "E"
+    },
+    {
+      "name": "pmdec_hip_error",
+      "format": "E"
+    },
+    {
+      "name": "pmra_pmdec_hip",
+      "format": "E"
+    },
+    {
+      "name": "epoch_ra_gaia",
+      "format": "D"
+    },
+    {
+      "name": "epoch_dec_gaia",
+      "format": "D"
+    },
+    {
+      "name": "epoch_ra_hip",
+      "format": "D"
+    },
+    {
+      "name": "epoch_dec_hip",
+      "format": "D"
+    },
+    {
+      "name": "crosscal_pmra_hip",
+      "format": "E"
+    },
+    {
+      "name": "crosscal_pmdec_hip",
+      "format": "E"
+    },
+    {
+      "name": "crosscal_pmra_hg",
+      "format": "E"
+    },
+    {
+      "name": "crosscal_pmdec_hg",
+      "format": "E"
+    },
+    {
+      "name": "nonlinear_dpmra",
+      "format": "E"
+    },
+    {
+      "name": "nonlinear_dpmdec",
+      "format": "E"
+    },
+    {
+      "name": "chisq",
+      "format": "E"
+    }
+  ],
+  "parsed_header_only": true,
+  "created_utc": "2026-11-18T05:12:08.270986+00:00",
+  "publisher_archive": {
+    "url": "https://content.cld.iop.org/journals/0067-0049/254/2/42/1/apjsabf93c_table4.tar.gz",
+    "bytes": 16969441,
+    "sha256": "9c8e7eda0f8fc9d575a1482368ff83d64fe64d1fcd85c7a53308184e6a11ea85",
+    "member": "HGCA_vEDR3.fits",
+    "member_sha256": "23684d583baaa236775108b360c650e79770a695e16914b1201f290c1826065c",
+    "member_byte_identical_to_author_copy": true
+  },
+  "aggregate_source_category_counts": {
+    "Gaia_DR2": 92516,
+    "None": 22830
+  },
+  "aggregate_nonfinite_rv": 22830,
+  "aggregate_nonfinite_chisq": 0,
+  "caveat": "Paper describes XHIP fallback, but published FITS source category contains Gaia_DR2 and None only; treat missing RV as unmeasured, do not infer individually verified XHIP usage."
+}

@@ -1,0 +1,1 @@
+SELECT TOP 100 source_id,ra,dec,parallax,pmra,pmdec,phot_g_mean_mag,ruwe FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',61.0848883,-4.65431323,0.0277778))
