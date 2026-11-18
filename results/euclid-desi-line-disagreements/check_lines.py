@@ -67,7 +67,7 @@ def decode(path, instrument):
         with path.open(encoding="utf-8", newline="") as stream:
             rows = list(csv.DictReader(stream))
         wave, flux, inverse = (np.array([float(row[key]) for row in rows])
-                               for key in ("wavelength", "flux", "ivar"))
+                               for key in ("wavelength_A", "flux", "ivar"))
         var = np.divide(1, inverse, out=np.full_like(inverse, np.nan), where=inverse > 0)
         mask = np.array([int(row["mask"]) for row in rows])
         allowed = mask == 0
