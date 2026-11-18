@@ -1,0 +1,71 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "primary-cells",
+      "printed": "3,890",
+      "statement": "Jointly available cells in the primary 720 m grid.",
+      "compute": "json('summary.json','/pairs/primary/maps/main_720m_linear/paired_cells')"
+    },
+    {
+      "id": "search-cells",
+      "printed": "2,069",
+      "statement": "Jointly available primary grid cells in the search interval.",
+      "compute": "json('summary.json','/pairs/primary/maps/main_720m_linear/cells_in_intervals/search')"
+    },
+    {
+      "id": "blue-corrected",
+      "printed": "5.87",
+      "statement": "Median corrected blue-band change in percent.",
+      "compute": "100 * json('summary.json','/pairs/primary/maps/main_720m_linear/corrected_search_median_change/0')"
+    },
+    {
+      "id": "red-corrected",
+      "printed": "10.53",
+      "statement": "Median corrected near-infrared-band change in percent.",
+      "compute": "100 * json('summary.json','/pairs/primary/maps/main_720m_linear/corrected_search_median_change/1')"
+    },
+    {
+      "id": "blue-uncorrected",
+      "printed": "69.33",
+      "statement": "Median uncorrected blue-band change in percent.",
+      "compute": "100 * json('summary.json','/pairs/primary/maps/main_720m_linear/raw_search_median_change/0')"
+    },
+    {
+      "id": "red-uncorrected",
+      "printed": "55.57",
+      "statement": "Median uncorrected near-infrared-band change in percent.",
+      "compute": "100 * json('summary.json','/pairs/primary/maps/main_720m_linear/raw_search_median_change/1')"
+    },
+    {
+      "id": "blue-native",
+      "printed": "64.34",
+      "statement": "Central native blue detector-plane median radiance change in percent.",
+      "compute": "100 * (json('native-rdr-summary.json','/ratio_all_and_central/1/0') - 1)"
+    },
+    {
+      "id": "red-native",
+      "printed": "49.74",
+      "statement": "Central native near-infrared detector-plane median radiance change in percent.",
+      "compute": "100 * (json('native-rdr-summary.json','/ratio_all_and_central/1/1') - 1)"
+    },
+    {
+      "id": "center-lambert",
+      "printed": "32.10",
+      "statement": "Illustrative center illumination-geometric brightness change in percent.",
+      "compute": "100 * (json('native-rdr-summary.json','/center_geometry_factor') - 1)"
+    },
+    {
+      "id": "terrain-south-corr",
+      "printed": "0.6082",
+      "statement": "Mean two-band terrain correlation at archived alignment on the 720 m south shoulder.",
+      "compute": "json('registration.json','/scales/720/south/zero_shift_score')"
+    },
+    {
+      "id": "terrain-north-corr",
+      "printed": "0.8079",
+      "statement": "Mean two-band terrain correlation at archived alignment on the 720 m north shoulder.",
+      "compute": "json('registration.json','/scales/720/north/zero_shift_score')"
+    }
+  ]
+}
