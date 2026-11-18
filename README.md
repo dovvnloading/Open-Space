@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 214 entries: 94 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 22 corrections to published catalogs and papers, and 33 carefully recorded null or inconclusive checks.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 215 entries: 94 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 22 corrections to published catalogs and papers, and 34 carefully recorded null or inconclusive checks.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -79,6 +79,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### The Sun, space weather and Earth's sky
 
+- **A single magnetic timing shift did not transfer between SOLAR-1 and Wind.** On 7 November 2026, a phase-front direction fitted to earlier data gave weaker agreement than the best time-shift control. The two spacecraft were widely separated across the solar wind. *Null result* · [Details](results/solar1-wind-l1/README.md)
 - **Continuum timing in Proba-3 solar images.** In one September orbit, all 63 flagged Fe XIV products used a different-cycle continuum exposure with a smaller representative-time lag than either same-cycle donor, despite similar exposure-start lags. A ten-image sensitivity test found small sign changes under a bracketing continuum substitution. *Measured* · [Details](results/proba3-aspiics-continuum-timing/README.md)
 - **Two New Horizons calibration pointings share one label.** The listed short LYACAL exposure points 45.32° from the ten long integrations used to estimate scattered ultraviolet light. Matching the long exposures to the older template recovers the intended field, and the reported 1,135 Å contrast persists under alternate background reductions. *Measured* · [Details](results/new-horizons-alice-1135/README.md)
 
