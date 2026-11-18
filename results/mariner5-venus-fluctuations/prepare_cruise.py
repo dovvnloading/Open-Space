@@ -45,7 +45,7 @@ def run(path, receipt, output, stats_path):
         writer = csv.DictWriter(out, fieldnames=columns, lineterminator="\n")
         writer.writeheader()
         for row in reader:
-            row = {key.strip(): value.strip() for key, value in row.items()}
+            row = {key.removeprefix("#").strip(): value.strip() for key, value in row.items()}
             instant = datetime.fromisoformat(row["UTC"].replace("Z", "+00:00"))
             if instant.utcoffset() is None:
                 raise ValueError("Source UTC lacks timezone")

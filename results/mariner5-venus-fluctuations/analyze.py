@@ -46,7 +46,9 @@ def encounter():
     if sha256(body).hexdigest() != receipt["raw_sha256"] or len(body) != size:
         raise ValueError("Encounter CSV does not match the receipt and label")
     with path.open(newline="", encoding="ascii") as stream:
-        rows = list(csv.DictReader(stream))
+        reader = csv.DictReader(stream)
+        reader.fieldnames = [name.removeprefix("#").strip() for name in reader.fieldnames]
+        rows = list(reader)
     if len(rows) != declared:
         raise ValueError("Unexpected encounter record count")
     frames = []
@@ -54,7 +56,7 @@ def encounter():
     excluded = 0
     for row in rows:
         second = float(row["HOUR"]) * 3600
-        values = tuple(float(row[name]) for name in ("B", "SxASE", "SyASE", "SzASE", "SB"))
+        values = tuple(float(row[name]) for name in ("B", "SXASE", "SYASEe", "SZASE", "SB"))
         if not isfinite(second) or any(not isfinite(n) or n < 0 for n in values) or values[0] <= 0:
             excluded += 1
             continue
