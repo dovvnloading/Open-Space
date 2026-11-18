@@ -35,6 +35,24 @@ class SpotlightReadoutsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "each audited target"):
             verify_spotlights(items[:-1] + [items[0]], read_blob)
 
+    def test_visible_tables_preserve_observing_units_and_nondetections(self):
+        items = json.loads(SPOTLIGHTS.read_bytes())
+        verify_spotlights(items, read_blob)
+        tables = {item["id"]: item["table"] for item in items}
+        self.assertEqual({key: len(value["rows"]) for key, value in tables.items()},
+                         {"mars": 31, "sun": 30, "quasar": 76, "dwarf": 4})
+        for table in tables.values():
+            self.assertTrue((ROOT / table["sourcePath"]).is_file())
+            self.assertTrue(all(len(row) == len(table["columns"]) for row in table["rows"]))
+        peak_day = next(row for row in tables["mars"]["rows"] if row[0] == "2025-08-24")
+        self.assertEqual([float(v) for v in peak_day[-2:]], [157000, 616500])
+        self.assertEqual(max(tables["sun"]["rows"], key=lambda r: float(r[1])), ["18:27:38.220", "286.350"])
+        gaia = tables["quasar"]["rows"]
+        peaks = [min((row for row in gaia if row[0] == image), key=lambda row: float(row[2]))
+                 for image in ("A", "B")]
+        self.assertAlmostEqual(float(peaks[0][1]) - float(peaks[1][1]), 202.90, places=2)
+        self.assertEqual(tables["dwarf"]["rows"][1], ["2020-08-25", "-0.150", "0.148", "No centroid recovered"])
+
     def test_mars_peak_must_match_in_both_deposits(self):
         def altered(path):
             if path.endswith("/maven-2025-sep-events/summary.json"):

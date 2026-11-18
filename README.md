@@ -28,7 +28,7 @@ Between 13 and 15 November 2026 the project merged 95 contributions. The catalog
 
 **Two white dwarfs racing back and forth.** Two dead stars change speed by about 250 km/s between observations, a sign that each may have an unseen companion. [Details](results/desi-white-dwarf-velocity-variables/README.md)
 
-**A seven-month echo from a gravitational lens.** A galaxy bends the light of the quasar J0826+7002 into two images. One image flickers about 210 days before the other, measured independently with ZTF and Gaia. [Details](results/j0826-lens-delay/README.md)
+**A possible seven-month echo in a lensed quasar.** A correlation scan of J0826+7002 peaks at a delay of 210 days in ZTF data and 205 days in earlier Gaia data. The latest held-out ZTF interval slightly favors zero delay over exactly 210 days. [Details and model checks](results/j0826-lens-delay/README.md)
 
 **"Planets" that are really eclipsing stars.** The planet candidates TOI-3143.01, KOI-7865.01, KOI-7866.01 and KOI-5275.01 trace to neighbouring stars that eclipse each other. [TOI-3143.01](results/tess-off-target-eclipse-sources/README.md) · [KOI-7865.01 and KOI-7866.01](results/koi-7865-eclipse-source/README.md) · [KOI-5275.01](results/koi-5275-eclipse-contamination/README.md)
 
@@ -47,7 +47,7 @@ These forecasts give a date and a geometry that anyone can test. Times and condi
 | Feb–Jun 2027 | The star magnified by the black-hole candidate OGLE-2026-BLG-0058 should be 2–5% fainter than a simple lensing curve predicts, if its measured parallax is real | [Link](results/ogle-dark-lenses/README.md) |
 | 8, 9 and 11 Oct 2027 | Phobos casts its partial shadow on Mars's other moon, Deimos | [Link](results/deimos-penumbra-2027/README.md) |
 | 25 Nov 2027 | ESA's JUICE spacecraft passes 49,751 km from asteroid (41013) 1999 UH22 | [Link](results/juice-41013/README.md) |
-| About Sep 2028 | A radio observation can decide whether the brown-dwarf pair WISE J0458+6434 is a radio source | [Link](results/wise-j0458-heldout/README.md) |
+| About Sep 2028 | A new radio image could distinguish motion with WISE J0458+6434 from a source fixed at the low-frequency catalog position | [Link](results/wise-j0458-heldout/README.md) |
 | 4 Jul 2029 | The planet Kepler-47 d crosses both of its suns during their eclipse | [Link](results/kepler-47-triple-eclipse/README.md) |
 | 28 Nov 2030 | Saturn's A ring passes in front of the radio source RFC J0413+1903 for some radio observatories | [Link](results/saturn-rfc-j0413/README.md) |
 | 1–3 Mar 2032 | Saturn's rings twice darken its moon Phoebe, around an 18-hour eclipse | [Link](results/phoebe-ring-shadow-2032/README.md) |
@@ -83,7 +83,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **A solar magnetic structure reached the inner spacecraft last (28–29 Sep 2023).** A structure seen by Wind has a candidate counterpart at STEREO-A that arrived hours later, even though STEREO-A was closer to the Sun. *Candidate* · [Details](results/stereo-20230929/README.md)
 - **Opposite magnetic directions in the solar wind at the same time (31 Jan 2019).** ACE and DSCOVR measured a northward field for a full hour while Wind measured southward. Two probes near the Moon then sided with ACE and DSCOVR. *Measured* · [Details](results/l1-lunar-polarity-split/README.md)
 - **Two solar eruptions short of carbon (June 2003).** Near Jupiter's distance from the Sun, Ulysses found two catalogued eruptions strongly depleted in fully ionized carbon and rich in helium. *Measured* · [Details](results/ulysses-carbon-depletion-200306/README.md)
-- **The likely source of an eruption on the Sun's far side (13 Jul 2021).** A provisional identification of the active region responsible. *Candidate* · [Details](results/2021-july-13-farside-eruption/README.md)
+- **A candidate source for the far-side solar eruption of 13 July 2021.** Of the numbered regions tested, NOAA 12849 lies closest to the observed X-ray direction. The above-limb centroid leaves the source longitude uncertain. *Candidate* · [Details](results/2021-july-13-farside-eruption/README.md)
 - **The strongest oxygen-ion signal of 2011 in the solar wind.** Wind's measurement on 29 September 2011 stands. A link to debris from comet Elenin was tested and remains uncertain. *Measured* · [Details](results/comet-ion-tail-spacecraft-crossings/README.md)
 - **Parker Solar Probe's radio data depend on an instrument setting.** Inside Venus's shadow, the probe's radio power rose with its antenna bias current, an effect users of these data need to correct for. *Measured* · [Details](results/parker-venus-radio-power/README.md)
 - **Faster solar eruptions bring a storm's peak sooner.** Across 113 severe magnetic storms from 1996 to 2025, the storm peaked about 11 hours after the shock wave reached Earth when the eruption was fast, and about 23 hours after when it was slow. This is a pattern in past storms, not a forecasting tool. *Measured* · [Details](results/cme-speed-storm-latency/README.md)
@@ -108,7 +108,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **Perseverance sensed Phobos passing beside the Sun.** Sky sensors on the rover dimmed by up to about 2% when the moon passed close to, but not across, the Sun. *Candidate* · [Details](results/jezero-transit-radiometry/README.md)
 - **A candidate Mars Trojan and a possible temporary companion of Earth.** Asteroid 2026 RF64 appears to trail Mars along its orbit. A second object may briefly accompany Earth. *Candidate* · [Details](results/terrestrial-coorbitals/README.md)
 - **Phobos's shadow will touch Deimos three times (8, 9 and 11 Oct 2027).** *Prediction* · [Details](results/deimos-penumbra-2027/README.md)
-- **A week-long radiation storm at Mars (22–29 Aug 2025).** NASA's MAVEN orbiter recorded energetic ions and electrons far above their usual level for a week, peaking on 24 August at about 5,140 times (ions) and 24,450 times (electrons) the season's typical hourly value. A NASA forecast issued before the event predicted a solar eruption's arrival at Mars. Whether that eruption caused the storm is not established. *Measured* · [Details](results/maven-2025-sep-events/README.md)
+- **Energetic particles surged in Mars orbit (22–29 Aug 2025).** NASA's MAVEN orbiter recorded peak hourly median fluxes on 24 August, about 5,140 times the survey reference for ions and 24,450 times for electrons. Forecasts for two solar eruptions fit the timing. *Measured* · [Details](results/maven-2025-sep-events/README.md)
 - **Phobos will hide Earth and the Moon together (5 Feb 2035).** Seen from a point on Curiosity's route, for about 9.4 seconds. *Prediction* · [Details](results/phobos-earth-moon/README.md)
 
 ### Asteroids and comets
@@ -309,13 +309,13 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **SN 2023alo brightened again about two years after its peak.** *Measured* · [Details](results/sn-2023alo-late-brightening/README.md)
 - **A faint X-ray source at SN 2009ib about seven years after the explosion.** *Candidate* · [Details](results/sn-2009ib-chandra/README.md)
 - **A "second explosion" of SN 2019bns is a different supernova 3.6 arcseconds away.** *Correction* · [Details](results/ztf-supernova-projection/README.md)
-- **Radio emission that moves with a pair of cold brown dwarfs.** WISE J0458+6434 follows the radio source across three survey visits. A blend of fixed background sources is not yet excluded. *Candidate* · [Radio detection](results/wise-j0458-radio/README.md) · [Follow-up tests](results/wise-j0458-heldout/README.md) · [Survey](results/vlass4-ultracool-dwarfs/README.md)
+- **Radio peaks near the predicted path of a pair of cold brown dwarfs.** Three VLASS images show a peak near WISE J0458+6434. A fourth visit gave a nondetection. Two stationary sources with changing brightness could also produce the pattern. *Candidate* · [Radio detection](results/wise-j0458-radio/README.md) · [Follow-up tests](results/wise-j0458-heldout/README.md) · [Survey](results/vlass4-ultracool-dwarfs/README.md)
 - **No lasting infrared fade passed the screen for 9,551 red supergiant candidates.** These candidates had enough NEOWISE visits to test a sustained drop in brightness. A previously reported M31 candidate fell outside the input catalog. *Null result* · [Details](results/neowise-nuclear-flares/README.md#no-vanishing-supergiant)
 
 ### Galaxies and the distant universe
 
 - **Two galaxies brightened at their centers in JWST images (2026).** One in COSMOS brightened in eight infrared filters; another in GOODS-S brightened in five. Independent exposures confirm the changes, but neither is a classified supernova or black-hole flare. A spectrum during activity and another JWST visit are needed to determine what happened. A separate search found no confirmed event at the tested positions of galaxies beyond redshift five. *Measured* · [Details](results/jwst-repeat-imaging-transients/README.md)
-- **A seven-month echo from the gravitational lens J0826+7002.** *Measured* · [Details](results/j0826-lens-delay/README.md)
+- **Correlation peaks near seven months between the two images of J0826+7002.** ZTF and Gaia light curves yield similar peaks on a five-day grid. A later ZTF holdout favors zero delay slightly over 210 days, leaving the physical delay uncertain. *Measured* · [Details](results/j0826-lens-delay/README.md)
 - **No invisible lensing galaxy confirmed in a Euclid Q1 search.** All 312 published strong-lens candidates with usable fitted radii retain central visible light after subtracting the modelled lensed source. A separate search of 0.083374 square degrees found no confirmed dark lens; injection tests show limited sensitivity to open arcs. One unusually high mass-to-light candidate depends on uncertain redshifts and competing image interpretations. *Null result* · [Details](results/euclid_q1_dark_lenses/README.md)
 - **Three quasars behind the same foreground gas.** Strong magnesium absorption at nearly the same distance appears across 2.5 million parsecs. *Candidate* · [Details](results/mgii-j0108-environment/README.md)
 - **A compact trio of quasars, J1013−0148.** *Candidate* · [Details](results/independent-archive-coronal-transients/SEARCH.md)

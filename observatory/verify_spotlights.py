@@ -43,7 +43,15 @@ def mars(read_blob):
     result["orbits"] = (str(event["distinct_joint_orbits"]),
                         "Distinct spacecraft orbits with joint ion and electron samples in the selected hours.",
                         [survey])
-    return result
+    table_view = {
+        "caption": "Every observed UTC date in August 2025. Ions and electrons are the highest hourly "
+                   "median fluxes for each date, in (cm² s sr)⁻¹. Values retain the daily table’s precision.",
+        "columns": ["UTC date", "Observed hours", "Selected hours", "Ions", "Electrons"],
+        "rows": [[r[k] for k in ("date", "observed_hours", "event_hours",
+                                 "max_hourly_median_ion", "max_hourly_median_electron")] for r in days],
+        "sourcePath": table,
+    }
+    return result, table_view
 
 
 def sun(read_blob):
@@ -73,7 +81,19 @@ def sun(read_blob):
         result[region] = (f"{residual:.2f}°", f"Project NOAA region 1{region} from the 22 July summary "
                           "into Solar Orbiter’s 13 July view and compare its direction with the X-ray centroid.",
                           [positions, summary])
-    return result
+    rates_path = folder + "stix_rates.csv"
+    rates = [r for r in rows(read_blob, rates_path) if r["product"] == "SCI" and r["band_keV"] == "15-25"
+             and "2021-07-13T18:15" <= r["spacecraft_utc"] < "2021-07-13T18:45"]
+    if not rates:
+        raise ValueError("No STIX science accumulations in the displayed hard X-ray interval")
+    table_view = {
+        "caption": "All 15–25 keV science-product accumulations from 18:15 up to 18:45 on 13 July 2021. "
+                   "The times are measured at the spacecraft. Count rates are rounded to three decimals.",
+        "columns": ["Spacecraft UTC", "Count rate (counts/s)"],
+        "rows": [[r["spacecraft_utc"].split("T")[1], f"{float(r['count_rate_s']):.3f}"] for r in rates],
+        "sourcePath": rates_path,
+    }
+    return result, table_view
 
 
 def smooth(samples, grid, width):
@@ -124,7 +144,7 @@ def quasar(read_blob):
     gaia = rows(read_blob, gaia_path)
     pos = {r["image"]: r for r in rows(read_blob, pos_path) if r["system"] == "J0826+7002"}
     arcsec = separation(*(float(pos[image][key]) for image in ("A", "B") for key in ("ra_deg", "dec_deg")))
-    return {
+    measured = {
         "ztf": (f"{peak_delay(ztf, 'mjd', 'zg')} days", "Peak of the detrended ZTF g-band correlation "
                 "on a five-day grid, with image B leading A.", [ztf_path]),
         "gaia": (f"{peak_delay(gaia, 'bjd_tcb_minus_2400000p5', 'g')} days",
@@ -132,16 +152,31 @@ def quasar(read_blob):
         "separation": (f"{arcsec:.2f}″", "Great-circle distance between the listed A and B image coordinates.",
                        [pos_path]),
     }
+    time = "bjd_tcb_minus_2400000p5"
+    g_nights = sorted((r for r in gaia if r["band"] == "g"), key=lambda r: (float(r[time]), r["image"]))
+    table_view = {
+        "caption": "All accepted Gaia G-band nights for images A and B. Each row retains its native epoch "
+                   "and measured magnitude before the horizontal and vertical offsets used in the figure.",
+        "columns": ["Image", "BJD TCB − 2,400,000.5", "G (mag)", "Median catalog error (mag)"],
+        "rows": [[r["image"], r[time], r["magnitude"], r["median_catalog_error"]] for r in g_nights],
+        "sourcePath": gaia_path,
+    }
+    return measured, table_view
 
 
 def dwarf(read_blob):
     path = "results/wise-j0458-radio/epochs.csv"
-    epochs = {int(r["epoch"]): r for r in rows(read_blob, path)}
+    source_rows = rows(read_blob, path)
+    epochs = {int(r["epoch"]): r for r in source_rows}
+    if len(source_rows) != 4 or set(epochs) != {1, 2, 3, 4}:
+        raise ValueError("Expected one row per VLASS visit in the four-epoch study")
+
     def displacement(prefix):
         return separation(*(float(epochs[i][prefix + key]) for i in (1, 4) for key in ("ra", "dec")))
+
     flux = float(epochs[2]["forced_mjy"])
     noise = float(epochs[2]["control_mad_mjy"])
-    return {
+    measured = {
         "radio": (f"{displacement('centroid_'):.2f}″", "Great-circle distance between the freely fitted radio "
                   "centroids in October 2017 and September 2025.", [path]),
         "infrared": (f"{displacement(''):.2f}″", "Displacement of the catalog proper-motion prediction "
@@ -150,6 +185,21 @@ def dwarf(read_blob):
                          f"Beam fit at the predicted position in August 2020. Nearby control fits "
                          f"give a scatter of {noise:.2f} mJy/beam.", [path]),
     }
+    table_rows = []
+    for _, visit in sorted(epochs.items()):
+        centroid = "No centroid recovered"
+        if visit["centroid_ra"] and visit["centroid_dec"]:
+            centroid = f"{float(visit['centroid_ra']):.6f}, {float(visit['centroid_dec']):+.6f}"
+        table_rows.append([visit["date"].split("T")[0], f"{float(visit['forced_mjy']):+.3f}",
+                           f"{float(visit['control_mad_mjy']):.3f}", centroid])
+    table_view = {
+        "caption": "All four VLASS visits. Flux is fitted at the predicted infrared position. Scatter comes "
+                   "from fits in nearby sky. The independent centroid fit is printed to six decimal places.",
+        "columns": ["UTC date", "Flux (mJy/beam)", "Scatter (mJy/beam)", "Centroid RA, Dec (°)"],
+        "rows": table_rows,
+        "sourcePath": path,
+    }
+    return measured, table_view
 
 
 def verify_spotlights(items, read_blob):
@@ -159,7 +209,7 @@ def verify_spotlights(items, read_blob):
     if len(ids) != len(set(ids)) or set(ids) != set(methods):
         raise ValueError("Expected one dossier for each audited target")
     for item in items:
-        expected = methods[item["id"]](read_blob)
+        expected, item["table"] = methods[item["id"]](read_blob)
         metrics = item["measurements"]
         if len(metrics) != len(expected) or {m.get("key") for m in metrics} != set(expected):
             raise ValueError(f"Measurement keys differ from the audit for {item['id']}")

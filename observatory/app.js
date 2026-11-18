@@ -1,5 +1,13 @@
 import { hydrateIcons, icon } from "./icons.js";
-import { esc, badge, renderAudit, renderCredits, renderTarget, renderRecord } from "./evidence-view.js";
+import {
+  esc,
+  badge,
+  renderAudit,
+  renderCredits,
+  renderTarget,
+  renderRecord,
+  moveObservationPage,
+} from "./evidence-view.js";
 
 const $ = (selector) => document.querySelector(selector);
 const repoURL = "https://github.com/dovvnloading/Open-Space";
@@ -189,7 +197,7 @@ function prepareCatalog() {
     "archive-intro",
     `Explore ${records.length} public research records, from measured signals and candidate discoveries to forecasts, corrections, and null results.`,
   );
-  text("snapshot-date", dateLabel(catalog.revisionDate));
+  text("snapshot-date", dateLabel(catalog.revisionDate) + " UTC");
   const revision = catalog.revision;
   $("#revision").innerHTML =
     `<a href="${esc(catalog.repository)}/commit/${esc(revision)}" rel="noopener" target="_blank">Revision ${esc(revision.slice(0, 7))}</a>`;
@@ -420,6 +428,8 @@ $("#dossier").addEventListener("cancel", (e) => {
   closeOverlay();
 });
 $("#dossier").addEventListener("click", (e) => {
+  const pageButton = e.target.closest(".table-reader [data-step]");
+  if (pageButton) moveObservationPage(pageButton);
   if (e.target === $("#dossier")) closeOverlay();
 });
 document.addEventListener("click", (e) => {

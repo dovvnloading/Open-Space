@@ -47,6 +47,20 @@ def check_desktop(page, url):
     expect(page.locator("#dossier .methods[open] ol li")).to_have_count(3)
     for row in page.locator("#dossier .methods li").all():
         assert "/blob/" in row.locator("a").first.get_attribute("href")
+    page.get_by_text("Inspect observation rows", exact=False).click()
+    table = page.locator(".table-reader")
+    expect(table.locator("tbody tr:visible")).to_have_count(8)
+    previous = table.get_by_role("button", name="Previous observation rows")
+    following = table.get_by_role("button", name="Next observation rows")
+    expect(previous).to_be_disabled()
+    following.click()
+    expect(table.get_by_role("status")).to_have_text("Rows 9–16 of 31")
+    following.click()
+    following.click()
+    expect(table.locator("tbody tr:visible")).to_have_count(7)
+    expect(following).to_be_disabled()
+    previous.click()
+    expect(table.get_by_role("status")).to_have_text("Rows 17–24 of 31")
     page.locator("figure img").scroll_into_view_if_needed()
     page.wait_for_function("document.querySelector('figure img')?.naturalWidth > 0")
     assert "/blob/" in page.get_by_role("link", name="Investigation report").get_attribute("href")
@@ -108,6 +122,7 @@ def check_published_records(page):
             await changed;
           }
           const targets = new Map(catalog.spotlights.map(t => [t.recordId,t]));
+          let observationRows = 0;
           for (const row of catalog.records) {
             const target = targets.get(row.id);
             await navigate(target ? '#target/' + target.id : '#record/' + row.id);
@@ -122,11 +137,22 @@ def check_published_records(page):
             }
             if (target && dialog.querySelectorAll('.methods ol li a').length < target.measurements.length)
               throw Error('Missing readout methods: ' + target.id);
+            if (target) {
+              const table = dialog.querySelector('.table-reader table');
+              const values = [...table.tBodies[0].rows].map(tr => [...tr.cells].map(cell => cell.textContent));
+              const headers = [...table.tHead.rows[0].cells].map(cell => cell.textContent);
+              if (table.caption.textContent !== target.table.caption ||
+                  JSON.stringify(headers) !== JSON.stringify(target.table.columns) ||
+                  JSON.stringify(values) !== JSON.stringify(target.table.rows.map(row => row.map(String))) ||
+                  !links.has(target.table.source.url) || !target.table.source.url.includes('/' + catalog.revision + '/'))
+                throw Error('Displayed observation table differs from its source: ' + target.id);
+              observationRows += values.length;
+            }
           }
-          return [catalog.records.length, catalog.spotlights.length];
+          return [catalog.records.length, catalog.spotlights.length, observationRows];
         }
     """)
-    print(f"Compared all {counts[0]} rendered records and {counts[1]} featured dossiers with the snapshot.")
+    print(f"Compared all {counts[0]} rendered records, {counts[1]} featured dossiers and {counts[2]} observation rows with the snapshot.")
 
 
 def check_mobile(page, url):

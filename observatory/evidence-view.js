@@ -79,6 +79,42 @@ export function renderRecord(record, catalog) {
     ${folderCoverage(record)}${archiveOrigin(record, catalog)}</article>`;
 }
 
+const tablePageSize = 8;
+
+function observationTable(table) {
+  if (!table?.rows.length) return "";
+  const headings = table.columns.map((column) => `<th scope="col">${esc(column)}</th>`).join("");
+  const body = table.rows
+    .map(
+      (row, i) =>
+        `<tr ${i >= tablePageSize ? "hidden" : ""}>${row.map((value) => `<td>${esc(value)}</td>`).join("")}</tr>`,
+    )
+    .join("");
+  return `<details class="methods table-reader" data-first-row="0"><summary>Inspect observation rows (${count(table.rows.length)})</summary>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Observation data">
+      <table><caption>${esc(table.caption)}</caption><thead><tr>${headings}</tr></thead><tbody>${body}</tbody></table>
+    </div>
+    <div class="table-nav">${sourceLink(table.source)}
+      <span role="status">Rows 1–${Math.min(tablePageSize, table.rows.length)} of ${table.rows.length}</span>
+      ${table.rows.length > tablePageSize ? `<button type="button" data-step="-1" aria-disabled="true" aria-label="Previous observation rows">${icon("left")}</button><button type="button" data-step="1" aria-label="Next observation rows">${icon("right")}</button>` : ""}
+    </div></details>`;
+}
+
+export function moveObservationPage(button) {
+  if (button.getAttribute("aria-disabled") === "true") return;
+  const reader = button.closest(".table-reader");
+  const rows = Array.from(reader.querySelectorAll("tbody tr"));
+  const start = Number(reader.dataset.firstRow) + Number(button.dataset.step) * tablePageSize;
+  const end = Math.min(start + tablePageSize, rows.length);
+  reader.dataset.firstRow = String(start);
+  rows.forEach((row, i) => {
+    row.hidden = i < start || i >= end;
+  });
+  reader.querySelector('[role="status"]').textContent = `Rows ${start + 1}–${end} of ${rows.length}`;
+  reader.querySelector('[data-step="-1"]').setAttribute("aria-disabled", String(start === 0));
+  reader.querySelector('[data-step="1"]').setAttribute("aria-disabled", String(end === rows.length));
+}
+
 export function renderTarget(target, record, catalog) {
   const linked = new Set(target.links.map((link) => link.url));
   const sources = [...target.links, ...record.links.filter((link) => !linked.has(link.url))];
@@ -114,6 +150,7 @@ export function renderTarget(target, record, catalog) {
       <img src="./${esc(figure.src)}" alt="${esc(figure.alt)}" loading="lazy">
       <figcaption>${esc(figure.caption)} ${sourceLink({ url: figure.url, label: "Figure source" })}</figcaption>
     </figure>
+    ${observationTable(target.table)}
     <div class="interpretation">${interpretation}</div>
     <h3>Source evidence</h3>${sourceList(sources)}${archiveOrigin(record, catalog)}
     </article>`;
@@ -137,7 +174,7 @@ export function renderAudit(catalog) {
   const checksBody = checks
     ? `<dl class="audit-ledger">
     <div><dt>File integrity</dt><dd><b>${count(checks.matchedDigests)}</b> digest assertions matched files. The ledger separately records ${count(checks.externalReceipts)} upstream receipts.</dd></div>
-    <div><dt>Catalog number tracing</dt><dd><b>${count(checks.tracedCatalogNumbers)} of ${count(checks.preciseCatalogNumbers)}</b> precise catalog numbers occurred in a linked machine-readable result.</dd></div>
+    <div><dt>Catalog number tracing</dt><dd><b>${count(checks.tracedCatalogNumbers)} of ${count(checks.preciseCatalogNumbers)}</b> precise catalog numbers occurred in a linked machine-readable result. The trace covered ${count(checks.catalogTraceEntries)} catalog entries.</dd></div>
     <div><dt>Declared calculations</dt><dd><b>${count(checks.reproducedClaims)} of ${count(checks.declaredClaims)}</b> arithmetic checks reproduced their expected values across ${count(checks.claimFiles)} claim files.</dd></div>
     <div><dt>Report text</dt><dd><b>${count(checks.untracedReportNumbers)} of ${count(checks.reportNumbers)}</b> precise report numbers lacked a machine-readable match under the verifier’s rules. Some quantities require a manual reading of their source.</dd></div>
     </dl><p>A checksum establishes file identity. Text tracing locates a value. Confirming a physical interpretation requires appropriate controls or another observation.</p>
@@ -148,6 +185,9 @@ export function renderAudit(catalog) {
     <p class="reader-lede">The archive preserves the catalog’s scientific dispositions. New research folders can appear before anyone has assigned a finding a disposition.</p>
     <div class="measures">${stats}</div>
     <p>The build resolves ${count(audit.uniqueEvidencePaths)} distinct evidence paths at one Git revision and checks linked Markdown sections. Each classified record links to the catalog line that supplied its disposition.</p>
+    <h3>Replaying the featured observations</h3>
+    <p>Each featured readout is recalculated from its source table. The replay notes document which original instrument files were recovered, which inputs came from the repository and which interpretations remain open.</p>
+    ${sourceList([{ url: `${catalog.repository}/blob/${catalog.revision}/observatory/data/spotlight-replay.md`, label: "Source replay and limitations" }])}
     <h3>Repository checks</h3>${checksBody}
     <div class="origin-strip">${stamp(catalog)}<a href="./data/catalog.json" download="open-space-catalog.json">Download catalog JSON ${icon("arrow")}</a></div></article>`;
 }

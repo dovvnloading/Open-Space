@@ -1,6 +1,6 @@
 # Open Space Observatory
 
-The [public observatory](https://dovvnloading.github.io/Open-Space/) pairs an evidence archive with a procedural universe. On the observation deck, switch between a target's context image and its measured data. The four investigation files show the observing unit, readout methods, source figures, limitations and next test. [Archive checks](https://dovvnloading.github.io/Open-Space/#audit) describe which checks cover the whole repository.
+The [public observatory](https://dovvnloading.github.io/Open-Space/) pairs an evidence archive with a procedural universe. On the observation deck, switch between a target's context image and its measured data. The four investigation files show the observing unit, readout methods, source figures, browsable observation rows, limitations and next test. [Archive checks](https://dovvnloading.github.io/Open-Space/#audit) describe which checks cover the whole repository.
 
 ## Run locally
 
@@ -19,7 +19,7 @@ python observatory/build_catalog.py --verification-ledger runs/observatory-ledge
 
 ## Evidence and publication
 
-The [Pages workflow](../.github/workflows/observatory.yml) builds a snapshot on relevant pushes to main. It verifies the committed bytes, checks the featured readouts against their source tables, validates the context images, and exercises every record’s displayed title, disposition and evidence links in Chromium. Each classified record points to the exact README line that supplied its disposition. Additional research directories retain an unclassified research-record label. Folder checks cover the whole linked folder, which can contain several findings. The site keeps unresolved physical interpretations visible.
+The [Pages workflow](../.github/workflows/observatory.yml) builds a snapshot on relevant pushes to main. It verifies the committed bytes, checks the featured readouts against their source tables, validates the context images, and exercises every record’s displayed title, disposition and evidence links in Chromium. It also compares the rendered observation tables against all their published rows. Each classified record points to the exact README line that supplied its disposition. Additional research directories retain an unclassified research-record label. Folder checks cover the whole linked folder, which can contain several findings. The site keeps unresolved physical interpretations visible.
 
 The curated target descriptions and figure sources live in [spotlights.json](data/spotlights.json). The MAVEN and STIX plots embed their source CSV digests. If the underlying tables change, inspect the new measurements, regenerate the plots using [render_figures.py](data/render_figures.py) with Matplotlib installed, and review the dossier text before publishing.
 

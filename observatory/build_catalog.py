@@ -264,6 +264,8 @@ def build_spotlights(tree: RepoTree, repository: str, records: list[dict], outpu
             for measurement in item["measurements"]:
                 measurement["sources"] = [source_link(tree, repository, p, PurePosixPath(p).name)
                                           for p in measurement.pop("sourcePaths")]
+            table_path = item["table"].pop("sourcePath")
+            item["table"]["source"] = source_link(tree, repository, table_path, PurePosixPath(table_path).name)
         figure = item["figure"]
         figure["url"] = source_link(tree, repository, figure["path"], "Figure source")["url"]
         name = PurePosixPath(figure["src"]).name
