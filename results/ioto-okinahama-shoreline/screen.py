@@ -58,7 +58,7 @@ class Frame:
     scene_id: str
 
 
-def load(root, scene, grid):
+def load(root, scene, grid, sentinel_offset):
     directory = root / scene
     receipt = json.loads((directory / "receipt.json").read_text(encoding="utf-8-sig"))
     assets = {item["band"]: item for item in receipt["assets"]}
@@ -85,7 +85,8 @@ def load(root, scene, grid):
             else:
                 nodata = dataset.nodata if dataset.nodata is not None else 0
                 native_valid = (raw != nodata) & (raw != 0)
-                reflectance = raw.astype(np.float32) * float(asset["scale"]) + float(asset["offset"])
+                offset = 0 if sentinel and sentinel_offset == "zero" else float(asset["offset"])
+                reflectance = raw.astype(np.float32) * float(asset["scale"]) + offset
                 reflectance[~native_valid] = np.nan
                 values[key] = grid.project(reflectance, dataset.transform, np.nan, np.nan)
                 if key in ("green", "nir", "swir1", "swir2"):
@@ -246,10 +247,10 @@ def compare_pair(pairs, common):
             "jaccard": round(overlap / union, 6) if union else None}
 
 
-def run(root):
+def run(root, sentinel_offset="provider"):
     checks = synthetic()
     grids = {res: Grid(res) for res in (20, 30, 60)}
-    bases = {res: [load(root, name, grids[res]) for name in BASES] for res in (20, 30)}
+    bases = {res: [load(root, name, grids[res], sentinel_offset) for name in BASES] for res in (20, 30)}
     baseline_checks = {str(res): {name: deep_water(frame, grids[res]) for name, frame in zip(BASES, inputs)}
                        for res, inputs in bases.items()}
     comparisons = {}
@@ -261,7 +262,7 @@ def run(root):
         if not (root / name / "receipt.json").exists():
             rows.append({"id": name, "status": "source unavailable"})
             continue
-        frame = load(root, name, grid)
+        frame = load(root, name, grid, sentinel_offset)
         spl = deep_water(frame, grid)
         values, masks = measure(frame, bases[res], grid, THRESHOLDS["nominal"], 40, False)
         sensitivity = {
@@ -283,15 +284,16 @@ def run(root):
         if name in PAIR and evidence == "usable":
             comparisons[name] = masks, grid
     pair = compare_pair(comparisons, grids[60]) if all(name in comparisons for name in PAIR) else None
-    return {"controls": checks, "baselines": baseline_checks, "scenes": rows, "nov11_60m_comparison": pair}, plot_data
+    return {"sentinel_offset": sentinel_offset, "controls": checks, "baselines": baseline_checks, "scenes": rows, "nov11_60m_comparison": pair}, plot_data
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("data", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--sentinel-offset", choices=("provider", "zero"), default="provider")
     args = parser.parse_args()
-    findings, _ = run(args.data)
+    findings, _ = run(args.data, args.sentinel_offset)
     args.output.write_text(json.dumps(findings, indent=2, allow_nan=False) + "\n", encoding="utf-8", newline="\n")
     for row in findings["scenes"]:
         print(row["id"], row["status"], row.get("optical_area_km2"), row.get("eroded_contact"))
