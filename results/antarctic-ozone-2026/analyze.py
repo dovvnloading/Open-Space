@@ -133,7 +133,8 @@ def thresholds(windows, footprint, relaxed=False):
         late_low = np.all((late > 0) & (late < threshold), axis=1).sum(axis=0)
         enough = late_valid.sum(axis=0) if relaxed else 5
         final = footprint & (late_low == enough)
-        initial_area, same_area = area(initial), area(initial & final)
+        retained = initial & final
+        initial_area, same_area = area(initial), area(retained)
         summary[str(threshold)] = {
             "early_area_mkm2": initial_area,
             "late_area_mkm2": area(final),
@@ -142,6 +143,8 @@ def thresholds(windows, footprint, relaxed=False):
             "late_only_mkm2": area(final & ~initial),
             "fraction_of_early_area_retained": same_area / initial_area if initial_area else None,
         }
+        if threshold == 180:
+            summary[str(threshold)]["retained_geography"] = coverage(retained)
     return summary
 
 

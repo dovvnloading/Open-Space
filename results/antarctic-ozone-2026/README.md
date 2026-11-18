@@ -6,7 +6,7 @@ NASA and NOAA already reported the unusually large 2026 ozone hole, and the Brit
 
 ## One footprint for the three seasons
 
-We selected the same grid cells visited by both instruments on all ten primary dates of all three years. That intersection covers **30.075 million km²** or **88.02%** of the cap south of 60°S. We weighted each cell by its spherical area. A cell counts as early deep depletion when both instruments give less than 180 DU on at least four of November 1–5. It counts as retained if both also give less than 180 DU on each of November 11–15. The thresholds, footprint and date windows were fixed before scoring. [Frozen protocol](PROTOCOL.md) · [Coverage by latitude and longitude](summary.json)
+We selected the same grid cells visited by both instruments on all ten primary dates of all three years. That intersection covers **30.075 million km²** or **88.02%** of the cap south of 60°S. We weighted each cell by its spherical area. A cell counts as early deep depletion when both instruments give less than 180 DU on at least four of November 1–5. It counts as retained if both also give less than 180 DU on each of November 11–15. The thresholds, footprint and date windows were fixed before scoring. The summary splits the retained area into 5° latitude bands, starting at the pole, and 60° longitude sectors, starting at 180°W. [Frozen protocol](PROTOCOL.md) · [Coverage by latitude and longitude](summary.json)
 
 | Year | Deep early area (million km²) | Deep area on all later dates (million km²) | Early area retained (million km²) | Early area retained (%) |
 | --- | ---: | ---: | ---: | ---: |
