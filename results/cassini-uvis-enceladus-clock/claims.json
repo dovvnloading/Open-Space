@@ -1,0 +1,59 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "pair-frames",
+      "printed": "47",
+      "statement": "Exposure count inside the fixed encounter window.",
+      "compute": "json('science-results.json', '/encounter/frames')"
+    },
+    {
+      "id": "frame-max",
+      "printed": "658",
+      "statement": "Largest absolute HSP count reassignment in the encounter window.",
+      "compute": "json('science-results.json', '/encounter/max_abs_HSP_count_change')"
+    },
+    {
+      "id": "frame-median",
+      "printed": "167",
+      "statement": "Median absolute HSP count reassignment in the encounter window.",
+      "compute": "json('science-results.json', '/encounter/median_abs_HSP_count_change')"
+    },
+    {
+      "id": "native-difference",
+      "printed": "2.124986",
+      "statement": "Final-kernel difference between first integration endpoints in seconds.",
+      "compute": "json('clock-results.json', '/event/cas00172.tsc/recomputed_fuv_minus_hsp_s')"
+    },
+    {
+      "id": "mix-difference",
+      "printed": "1.125",
+      "statement": "Mixed-archive difference between the first integration endpoints in seconds.",
+      "compute": "json('clock-results.json', '/event/mixed_fuv_minus_hsp_labels_s')"
+    },
+    {
+      "id": "ray-alt",
+      "printed": "57.72",
+      "statement": "Minimum spherical stellar-ray altitude sampled at one second spacing, in km.",
+      "compute": "json('star-ray-geometry.json', '/minimum_sample/spherical_altitude_km')"
+    },
+    {
+      "id": "shift-alt",
+      "printed": "5.64",
+      "statement": "Maximum magnitude of a one-second altitude shift within the encounter window, in km.",
+      "compute": "json('star-ray-geometry.json', '/encounter_max_one_second_altitude_change_km')"
+    },
+    {
+      "id": "poisson-holdout",
+      "printed": "25.10",
+      "statement": "Held-out deviance improvement with water under a fixed reference.",
+      "compute": "json('science-results.json', '/spectral_encounter/heldout_improvement_with_water')"
+    },
+    {
+      "id": "finite-ref-holdout",
+      "printed": "10.60",
+      "statement": "Held-out deviance improvement with water including finite reference count noise.",
+      "compute": "json('spectral-sensitivity.json', '/encounter/heldout_improvement_with_water')"
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1P00.sch"
+    schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<Product_Ancillary
+  xmlns="http://pds.nasa.gov/pds4/pds/v1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1 https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1P00.xsd">
+    <Identification_Area>
+        <logical_identifier>urn:nasa:pds:cassini_uvis_euvfuv_saturn:calibration:fuv-wavelength-bin-centers</logical_identifier>
+        <version_id>1.0</version_id>
+        <title>Cassini UVIS FUV Wavelength Bin Centers Information</title>
+        <information_model_version>1.25.0.0</information_model_version>
+        <product_class>Product_Ancillary</product_class>
+        <Citation_Information>
+            <publication_year>2026</publication_year>
+            <keyword>Cassini</keyword>
+            <keyword>UVIS FUV</keyword>
+            <keyword>bin center wavelength</keyword>
+            <description>
+               Single record table of values (comma-separated) for the center wavelength (in angstroms)
+             of UVIS FUV data array bins over the entire mission. The values were obtained from 
+             BAND_BIN_CENTER in the PDS3 calibration labels and have not been altered.
+            </description>
+            <List_Author>
+                <Organization>
+                    <organization_name>Cassini UVIS Science Team</organization_name>
+                </Organization>
+                <Person>
+                    <display_full_name>Larry W. Esposito</display_full_name>
+                    <given_name>Larry</given_name>
+                    <family_name>Esposito</family_name>
+                    <person_orcid>https://orcid.org/0000-0003-3381-2016</person_orcid>
+                    <Affiliation>
+                        <organization_name>University of Colorado Boulder</organization_name>
+                        <organization_rorid>https://ror.org/02ttsq026</organization_rorid>
+                    </Affiliation> 
+                </Person>
+            </List_Author>
+            <List_Contributor>
+                <Organization>
+                    <organization_name>NASA Planetary Data System (Ring-Moon Systems Node)</organization_name>
+                    <organization_rorid>https://ror.org/006ndaj41</organization_rorid>
+                </Organization>
+            </List_Contributor>
+        </Citation_Information>
+        <Modification_History>
+            <Modification_Detail>
+                <modification_date>2026-05-19</modification_date>
+                <version_id>1.0</version_id>
+                <description>Initial version under PDS4.</description>
+            </Modification_Detail>
+        </Modification_History>
+    </Identification_Area>
+    <Context_Area>
+        <Time_Coordinates>
+       	    <start_date_time>1999-01-07T16:57:21.952Z</start_date_time> <!-- earliest start date time of calib PDS3 covering FUV observations -->
+	    <stop_date_time>2017-09-15T10:31:51.692Z</stop_date_time> <!-- latest stop date time of calib PDS3 covering FUV observations -->
+        </Time_Coordinates>
+        <Investigation_Area>
+            <name>Cassini-Huygens</name>
+            <type>Mission</type>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:investigation:mission.cassini-huygens</lid_reference>
+                <reference_type>ancillary_to_investigation</reference_type>
+            </Internal_Reference>
+        </Investigation_Area>
+        <Observing_System>
+            <name>Cassini Orbiter Ultraviolet Imaging Spectrograph</name>
+            <Observing_System_Component>
+                <name>Cassini Orbiter</name>
+                <type>Host</type>
+                <Internal_Reference>
+                    <lid_reference>urn:nasa:pds:context:instrument_host:spacecraft.co</lid_reference>
+                    <reference_type>is_instrument_host</reference_type>
+                </Internal_Reference>
+            </Observing_System_Component>
+            <Observing_System_Component>
+                <name>Ultraviolet Imaging Spectrograph</name>
+                <type>Instrument</type>
+                <description>UVIS Extreme Ultraviolet and Far Ultraviolet (EUV/FUV) channels</description>
+                <Internal_Reference>
+                    <lid_reference>urn:nasa:pds:context:instrument:uvis.co</lid_reference>
+                    <reference_type>is_instrument</reference_type>
+                </Internal_Reference>
+            </Observing_System_Component>
+        </Observing_System>
+        <Target_Identification>
+            <name>Saturn</name>
+            <alternate_designation>NAIF ID 699</alternate_designation>
+            <type>Planet</type>
+            <description>
+                NAIF ID: 699;
+                Center of motion: Sun;
+                LID of central body: urn:nasa:pds:context:target:star.sun;
+                NAIF ID of central body: 10.
+            </description>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:target:planet.saturn</lid_reference>
+                <reference_type>ancillary_to_target</reference_type>
+            </Internal_Reference>
+        </Target_Identification>
+    </Context_Area>
+    <File_Area_Ancillary>
+        <File>
+          <file_name>fuv-wavelength-bin-centers.csv</file_name>
+          <creation_date_time>2024-10-03T18:07:08Z</creation_date_time>
+          <md5_checksum>899c516663be17461a0a81f7ad4dbb40</md5_checksum>
+          <comment>
+           This file provides comma-separated values for the center wavelength
+	   (in angstroms) of UVIS FUV data array bins over the entire mission
+	   date range. The values were obtained from BAND_BIN_CENTER in the
+	   PDS3 calibration labels and have not been altered.
+          </comment>
+        </File>
+	<Stream_Text>
+	    <local_identifier>fuv-wavelength-bin-centers</local_identifier>
+	    <offset unit="byte">0</offset>
+	    <object_length unit="byte">9216</object_length>
+	    <parsing_standard_id>7-Bit ASCII Text</parsing_standard_id>
+	    <description>
+	    This file consisting of a single record provides comma-separated values for the center wavelength
+	    (in angstroms) of UVIS FUV data array bins over the entire mission date range.
+            The values were obtained from BAND_BIN_CENTER in the PDS3 calibration labels and have not been altered.
+	    </description>
+	    <record_delimiter>Carriage-Return Line-Feed</record_delimiter>
+        </Stream_Text>
+    </File_Area_Ancillary>
+</Product_Ancillary>
