@@ -1,0 +1,38 @@
+# Single-bin sensitivity in Euclid DR1 redshift disagreements
+
+**Noteworthy data-quality finding.** For source `2720393417678497186`, a fixed fit at the published Euclid redshift gives an apparent [O II] line with a formal signal-to-noise of +72.47. Omit the bin at 16,201.4 Å and the same fit gives −2.03. An agreement control retains a positive Paβ fit of +13.47 after its brightest eligible bin is removed. A separately observed DESI spectrum gives strong optical lines at a much lower redshift for the close counterpart. The measurement identifies leverage in the released one-dimensional spectrum. The cause of the influential bin and the behavior of the Euclid pipeline under its removal remain untested. [Peak perturbations](peak-leverage.json) · [Fixed spectral fits](line-results.json)
+
+## Catalog screen
+
+The observing unit is a Euclid MER object and a separately observed DESI galaxy spectrum. Euclid released DR1-Foundation on November 12, 2026. The Euclid team already compared DR1 redshifts with DESI and documented incorrect fits in the presence of noise. The present screen retains low-reliability fits and tests individual wavelengths in the delivered spectra. [Euclid Foundation release](https://euclid.esac.esa.int/dr/dr1/expsup/) · [Published Euclid–DESI comparison](https://arxiv.org/html/2611.17960v1#S4.SS1)
+
+The development box contained 1,895 DESI galaxy anchors from the Data Lab query. Within native MER and SPE tile `101838039`, 24 of those anchors have a Euclid neighbor within 3 arcseconds. Twenty-two pass the positional and DESI quality gates and have one Euclid rank-zero galaxy fit each. Eleven meet the screen's Euclid probability and reliability cuts. Nine of these exceed the fixed absolute normalized redshift difference of 0.01. These denominators apply to the chosen tile, box, and quality gates. Both catalog positions were clipped to the specified box, and associations across box boundaries are outside the screen. [Protocol](PROTOCOL.md) · [Native tile receipt](development-native.json) · [Screen output](development-screen.json)
+
+The same frozen screen on the eastern held-out tile `101839130` found 13 DESI anchors with a Euclid neighbor among 309 queried. Eleven were quality-gated positional matches with a unique rank-zero fit. Six pass the Euclid cuts and four are discrepant. With reliability at or below 0.05, the counts are six discrepancies among seven selected in development and three among five held out. A second implementation reproduced both tile counts from the native tables. The held-out analysis ends at the catalog comparison. [Held-out native receipt](heldout-native.json) · [Held-out screen](heldout-screen.json) · [Held-out archive](heldout-inputs.zip)
+
+## Three spectral checks
+
+The two disagreements and the agreement control were chosen after the development screen. The Euclid template fits use a fixed Gaussian line and linear local continuum at each redshift. They use finite positive variances and the IRSA mask convention of nonnegative even values below 64, with positive dither counts. DESI fits use zero-mask bins with positive inverse variance. Formal signal-to-noise values describe these fits with the archive's per-bin uncertainties. Covariance, selection effects and the number of lines examined are absent from these values. The bin omissions are exploratory checks selected from the observed profiles. [Line-fitting code](check_lines.py) · [Bin omission code](peak_leverage.py) · [IRSA spectrum mask example](https://caltech-ipac.github.io/irsa-tutorials/euclid-cloud-access/)
+
+| Euclid object | DESI target | Separation | Euclid / DESI redshift | Result |
+| --- | --- | ---: | ---: | --- |
+| `2720393417678497186` | `39633470531569843` | 0.093″ | 3.34337 / 0.02518 | DESI Hα, Hβ and [O III] support the low redshift. The Euclid [O II] fit changes from +72.47 to −2.03 after omitting one bin with `MASK=14`. Three of four core bins remain and pass the standard support cut. |
+| `2720534960677393578` | `39633470531569939` | 0.167″ | 2.58569 / 0.40208 | DESI Hα, Hβ and [N II] support the foreground redshift. Euclid shows a peak on both wavelength grids near 13,367 Å. Predicted foreground [S III] and high-redshift [O II] differ by 2.8 Å at this location, below the native sampling. |
+| `2716462137676529071` | `39633470531567720` | 0.154″ | 0.11667 / 0.11708 | Agreement control. Both [S III] lines and Paβ have positive Euclid fits at the DESI redshift. Removing the brightest Paβ bin changes its formal value from +16.80 to +13.47. |
+
+For the second case, the apparent higher-redshift Hβ near 17,436 Å falls from +24.24 to +3.98 when its brightest bin is removed. Removing the second bright bin leaves two usable core bins, so the standard fit is unavailable. A fit with relaxed core support gives −2.18. The higher-redshift [O III] 5007 prediction lies 19 Å from foreground Paβ at the two fitted redshifts, compared with a 33.5 Å template width. The expected [O III] 4959 companion has a negative fitted amplitude under both widths. The uncertainty includes projected sources, overlapping slitless traces and unresolved blends. Spatially resolved spectra or separate Euclid orientations would help distinguish them. [Individual line fits](line-results.json) · [Peak perturbations](peak-leverage.json)
+
+## Evidence and replay
+
+The catalog archives contain original ground catalog replies, query receipts and association graphs. The spectral archive contains the exact Euclid SpectrumDM VOTables, original DESI SPARCL JSON replies, numeric CSV exports, object associations and digests. It also preserves an earlier exploratory Euclid-only case with no DESI counterpart in the development query. That case has competing line assignments and remains inconclusive. Attempts to query a wider catalog match at IRSA and to get Euclid image cutouts failed, so the present coverage comes from these two native tiles and the available one-dimensional spectra. The larger Euclid MER and SPE FITS tables can be fetched from the URLs in the native tile receipts. The screen checks their SHA-256 values before reading tables. [Development archive](development-inputs.zip) · [Held-out archive](heldout-inputs.zip) · [Spectral archive](spectral-inputs.zip)
+
+From this directory, extract the archives into separate empty directories on a data volume. The following examples use Python with NumPy, SciPy and Astropy. Substitute paths to the extracted directories. For each geometry and catalog run, place the corresponding native manifest and downloaded FITS files in the same directory. For the held-out run use the held-out manifest and `zpix-heldout.csv`.
+
+```sh
+python associate.py <catalog-dir>/zpix-development.csv <catalog-dir>/development-native.json <catalog-dir>/associations-replayed.json
+python screen.py <catalog-dir>/associations-replayed.json <catalog-dir>/development-native.json <catalog-dir>/screen-replayed.json
+python check_lines.py <spectra-dir>/inputs.json <spectra-dir>/line-results-replayed.json
+python peak_leverage.py <spectra-dir>/inputs.json <spectra-dir>/peak-leverage-replayed.json
+```
+
+Euclid data come from the ESA Euclid mission and were processed by the Euclid Consortium and delivered through NASA/IPAC IRSA. DESI DR1 data were obtained through NSF NOIRLab Astro Data Lab and SPARCL. The SPARCL response files retain their received bytes. The numeric CSV exports select and flatten spectrum arrays. [Euclid acknowledgments](https://euclid.esac.esa.int/dr/dr1/expsup/Ax1.Sx1.html) · [DESI DR1 publication](https://data.desi.lbl.gov/doc/releases/dr1/) · [DESI data license and acknowledgments](https://data.desi.lbl.gov/doc/acknowledgments/)

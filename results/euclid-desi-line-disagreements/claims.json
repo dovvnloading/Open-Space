@@ -1,0 +1,53 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "development-quality-pairs",
+      "printed": "22",
+      "statement": "Quality-gated positional matches on the development tile.",
+      "compute": "json('development-screen.json', '/desi_quality_pairs')"
+    },
+    {
+      "id": "development-selected",
+      "printed": "11",
+      "statement": "Development pairs passing the Euclid probability and reliability cuts.",
+      "compute": "json('development-screen.json', '/selected')"
+    },
+    {
+      "id": "development-discrepancies",
+      "printed": "9",
+      "statement": "Discrepant redshifts among the selected development pairs.",
+      "compute": "json('development-screen.json', '/discordant')"
+    },
+    {
+      "id": "heldout-selected",
+      "printed": "6",
+      "statement": "Held-out pairs passing the same Euclid probability and reliability cuts.",
+      "compute": "json('heldout-screen.json', '/selected')"
+    },
+    {
+      "id": "heldout-discrepancies",
+      "printed": "4",
+      "statement": "Discrepant redshifts among the selected held-out pairs.",
+      "compute": "json('heldout-screen.json', '/discordant')"
+    },
+    {
+      "id": "oii-initial",
+      "printed": "72.47",
+      "statement": "Formal signal-to-noise at the original Euclid [O II] hypothesis.",
+      "compute": "json('peak-leverage.json', '/0/original/formal_sigma')"
+    },
+    {
+      "id": "oii-after-one-bin",
+      "printed": "-2.03",
+      "statement": "Formal signal-to-noise at the same hypothesis after removing one bin.",
+      "compute": "json('peak-leverage.json', '/0/cumulative_omissions/0/standard_fit/formal_sigma')"
+    },
+    {
+      "id": "control-after-one-bin",
+      "printed": "13.47",
+      "statement": "Formal signal-to-noise retained by the agreement control Pa beta fit after removing its brightest eligible bin.",
+      "compute": "json('peak-leverage.json', '/2/cumulative_omissions/0/standard_fit/formal_sigma')"
+    }
+  ]
+}

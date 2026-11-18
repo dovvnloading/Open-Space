@@ -23,7 +23,7 @@ LINES = {
 }
 
 
-def fixed_fit(wave, flux, var, valid, centers, line, fwhm):
+def fixed_fit(wave, flux, var, valid, centers, line, fwhm, *, stress_core_support=False):
     target = centers[line]
     relative = (wave - target) / fwhm
     core = np.abs(relative) <= 0.8
@@ -40,7 +40,8 @@ def fixed_fit(wave, flux, var, valid, centers, line, fwhm):
               "peak": None, "peak_error": None, "formal_sigma": None}
     if target < wave[0] or target > wave[-1]:
         return dict(record, status="outside")
-    if sizes[0] < 3 or sizes[0] < 0.75 * core.sum() or min(sizes[1:]) < 4:
+    core_required = 1 if stress_core_support else max(3, 0.75 * core.sum())
+    if sizes[0] < core_required or min(sizes[1:]) < 4:
         return dict(record, status="inadequate-native-pixels")
 
     select = (core | before | after) & clean
