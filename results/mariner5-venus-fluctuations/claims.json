@@ -45,9 +45,9 @@
     },
     {
       "id": "outbound-magnitude-time",
-      "printed": "-5.16",
-      "statement": "Offset of outbound magnitude peak from the historical marker in minutes.",
-      "compute": "json('summary.json','/events/outbound/primary/maxima/magnitude/offset_minutes')"
+      "printed": "5.16",
+      "statement": "Minutes by which the strongest outbound magnitude split precedes the historical marker.",
+      "compute": "-1 * json('summary.json','/events/outbound/primary/maxima/magnitude/offset_minutes')"
     },
     {
       "id": "outbound-magnitude-narrow",
