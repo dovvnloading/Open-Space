@@ -1,0 +1,59 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "lyacal-separation",
+      "printed": "45.32",
+      "statement": "Angular separation in degrees between the short survey row exposure and the long calibration mean.",
+      "compute": "json('template-results.json', '/pointings/short_new_sep_deg')"
+    },
+    {
+      "id": "short-match",
+      "printed": "0.93",
+      "statement": "Difference in arcseconds from the published survey row J2000 coordinates.",
+      "compute": "json('template-results.json', '/pointings/short_table2_error_arcsec')"
+    },
+    {
+      "id": "old-new-separation",
+      "printed": "0.10",
+      "statement": "Angular separation in degrees between the long 2023 and 2007 mean template boresights.",
+      "compute": "json('template-results.json', '/pointings/old_new_sep_deg')"
+    },
+    {
+      "id": "all-open",
+      "printed": "164",
+      "statement": "Number of open science histograms.",
+      "compute": "json('contrast-results.json', '/sky_products')"
+    },
+    {
+      "id": "matched-open",
+      "printed": "144",
+      "statement": "Open science histograms with compatible darks on both sides.",
+      "compute": "json('contrast-results.json', '/bracketed_sky_products')"
+    },
+    {
+      "id": "dark-count",
+      "printed": "168",
+      "statement": "Closed science-field histograms.",
+      "compute": "json('contrast-results.json', '/dark_products')"
+    },
+    {
+      "id": "bracketed-1135",
+      "printed": "0.561",
+      "statement": "Scaled 1135 Angstrom bracket-subtracted amplitude in count space.",
+      "compute": "1000 * json('contrast-results.json', '/contrasts/stem/1135/all/local/rate')"
+    },
+    {
+      "id": "shared-template-1135",
+      "printed": "0.507",
+      "statement": "Scaled 1135 Angstrom amplitude after subtraction of the full template.",
+      "compute": "1000 * json('template-results.json', '/contrasts/1135/all_shared_dark/rate')"
+    },
+    {
+      "id": "early-template-1135",
+      "printed": "0.473",
+      "statement": "Scaled 1135 Angstrom amplitude for the early-half template.",
+      "compute": "1000 * json('template-results.json', '/contrasts/1135/early_halves/rate')"
+    }
+  ]
+}

@@ -99,6 +99,11 @@ def mean_boresight(entries):
     return SkyCoord(*xyz, representation_type="cartesian", frame="icrs")
 
 
+def pointing_members(entries, mean):
+    return [dict(row, separation_from_epoch_mean_deg=float(mean.separation(
+        SkyCoord(row["ra"] * u.deg, row["dec"] * u.deg)).deg)) for row, *_ in entries]
+
+
 def rate(entries):
     counts = np.sum([data for _, data, _ in entries], axis=0, dtype=np.float64)
     duration = sum(row["duration"] for row, *_ in entries)
@@ -165,6 +170,8 @@ def main():
         counts, wave, cols = study["counts"], study["wave"], study["columns"]
     modern = current_frames(args.archive_dir, json.loads(args.sources.read_bytes()), cols)
     legacy = legacy_frames(args.legacy_dir, json.loads(args.legacy_sources.read_bytes()), cols)
+    if {record["met"] for record in obs} & (modern.keys() | legacy.keys()):
+        raise ValueError("The science and calibration exposures must be disjoint")
     old, latest = matching(legacy, 2, 6), matching(modern, 2, 10)
     old_dark, latest_dark = matching(legacy, 1, 3), matching(modern, 1, 11)
     modern_wave = np.median([w for _, _, w in latest], axis=0)
@@ -191,8 +198,11 @@ def main():
         "line_window_old_minus_new_angstrom": float(np.median((legacy_wave-modern_wave)[
             (modern_wave > 1120) & (modern_wave < 1150) & np.isin(np.arange(32)[:, None], ROWS["stem"])])),
         "lya_window_old_minus_new_angstrom": float(np.median((legacy_wave-modern_wave)[mask])),
-        "observations": {name: [row for row, *_ in group] for name, group in
-                         (("old_sky", old), ("new_sky", latest), ("old_dark", old_dark), ("new_dark", latest_dark))},
+        "observations": {"old_sky": pointing_members(old, old_direction),
+                         "new_sky": pointing_members(latest, latest_direction),
+                         "old_dark": [row for row, *_ in old_dark],
+                         "new_dark": [row for row, *_ in latest_dark]},
+        "science_template_overlap_count": 0,
         "lya_normalization_rate": {name: value[1] for name, value in trials.items()},
         "contrasts": sensitivity(obs, counts, wave, mask, trials),
     }
