@@ -104,12 +104,16 @@ def stream_windows(source, windows, output_dir):
             times = np.array([row["elapsed_seconds"] for row in rows])
             if np.any(np.diff(times) <= 0):
                 raise ValueError(f"Presentation times are not increasing in {name}")
+            changes = np.array([row["fraction_interior_changed_gt2"] is not None
+                                and row["fraction_interior_changed_gt2"] > 0.001 for row in rows])
+            update_intervals = np.diff(times[changes])
             result[name] = {
                 "requested_elapsed": [left, right], "first_elapsed": float(times[0]),
                 "last_elapsed": float(times[-1]), "frames": len(rows),
                 "repeats": sum(row["exact_repeat"] is True for row in rows),
-                "low_change_pairs": sum(row["fraction_interior_changed_gt2"] is not None
-                                        and row["fraction_interior_changed_gt2"] <= 0.001 for row in rows),
+                "low_change_pairs": len(rows) - 1 - int(changes.sum()),
+                "interior_updates": int(changes.sum()),
+                "median_update_interval_seconds": float(np.median(update_intervals)) if len(update_intervals) else None,
                 "median_interior_luma": float(np.median([r["luma_p50"] for r in rows])),
                 "max_interior_p99": max(r["luma_p99"] for r in rows),
                 "median_fraction_luma_at_most_16": float(np.median([r["fraction_luma_at_most_16"] for r in rows])),

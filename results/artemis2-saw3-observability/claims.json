@@ -1,0 +1,53 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "second-updates",
+      "printed": "150",
+      "statement": "Image-change steps in the second nominal cue interval.",
+      "compute": "json('video-results.json', '/downlink/windows/second-cue/interior_updates')"
+    },
+    {
+      "id": "second-spacing",
+      "printed": "0.2002",
+      "statement": "Median seconds between image-change steps in the second cue window.",
+      "compute": "json('video-results.json', '/downlink/windows/second-cue/median_update_interval_seconds')"
+    },
+    {
+      "id": "second-luma",
+      "printed": "8",
+      "statement": "Maximum of the per-frame 99th percentiles during the second cue.",
+      "compute": "json('video-results.json', '/downlink/windows/second-cue/max_interior_p99')"
+    },
+    {
+      "id": "first-updates",
+      "printed": "116",
+      "statement": "Image-change steps in the first nominal cue interval.",
+      "compute": "json('video-results.json', '/downlink/windows/first-cue/interior_updates')"
+    },
+    {
+      "id": "first-utc-offset",
+      "printed": "2.786",
+      "statement": "Absolute difference of the transcript's two time representations at the first cue.",
+      "compute": "abs(json('transcript-timing.json', '/cue_rows/0/assigned_minus_relative_seconds'))"
+    },
+    {
+      "id": "second-utc-offset",
+      "printed": "0.519",
+      "statement": "Absolute difference of the transcript's two time representations at the second cue.",
+      "compute": "abs(json('transcript-timing.json', '/cue_rows/1/assigned_minus_relative_seconds'))"
+    },
+    {
+      "id": "outside-one",
+      "printed": "7",
+      "statement": "Transcript rows with absolute discrepancy above a second.",
+      "compute": "json('transcript-timing.json', '/outside_one_second')"
+    },
+    {
+      "id": "still-missing-duration",
+      "printed": "653",
+      "statement": "Entries of the raw still index without a usable exposure duration.",
+      "compute": "json('still-coverage-timeline.json', '/missing_exposure_duration_count')"
+    }
+  ]
+}
