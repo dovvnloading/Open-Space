@@ -1,0 +1,125 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "files-a",
+      "printed": "67",
+      "statement": "Sentinel-6A daily files included.",
+      "compute": "json('summary.json','/native_audit/6a/files')"
+    },
+    {
+      "id": "b-explicit-filter",
+      "printed": "67",
+      "statement": "Sentinel-6B daily files with the explicit SLA latency filter.",
+      "compute": "json('summary.json','/native_audit/6b/explicit_sla_latency_limit_files')"
+    },
+    {
+      "id": "a-explicit-filter",
+      "printed": "0",
+      "statement": "Sentinel-6A daily files with the explicit SLA latency filter.",
+      "compute": "json('summary.json','/native_audit/6a/explicit_sla_latency_limit_files')"
+    },
+    {
+      "id": "native-a-rows",
+      "printed": "3,256,880",
+      "statement": "Native Sentinel-6A daily records.",
+      "compute": "json('summary.json','/native_audit/6a/rows')"
+    },
+    {
+      "id": "native-b-rows",
+      "printed": "3,310,061",
+      "statement": "Native Sentinel-6B daily records.",
+      "compute": "json('summary.json','/native_audit/6b/rows')"
+    },
+    {
+      "id": "primary-pairs",
+      "printed": "13,802",
+      "statement": "Regional pairs admitted by primary matching.",
+      "compute": "json('summary.json','/primary/paired_coordinates')"
+    },
+    {
+      "id": "lag",
+      "printed": "30",
+      "statement": "Median primary lag in seconds.",
+      "compute": "json('summary.json','/primary/lag_s/median')"
+    },
+    {
+      "id": "distance",
+      "printed": "1.94",
+      "statement": "Median primary separation in kilometres.",
+      "compute": "json('summary.json','/primary/separation_km/median')"
+    },
+    {
+      "id": "shifted-pairs",
+      "printed": "0",
+      "statement": "Pairs admitted after a one-day time offset.",
+      "compute": "json('summary.json','/one_day_shifted_coordinate_pairs')"
+    },
+    {
+      "id": "reference-visits",
+      "printed": "40",
+      "statement": "Reference visits covering both primary distance bands.",
+      "compute": "json('summary.json','/primary/by_period/reference/visit_near_minus_offshore_m/n')"
+    },
+    {
+      "id": "holdout-visits",
+      "printed": "12",
+      "statement": "Holdout visits covering both primary distance bands.",
+      "compute": "json('summary.json','/primary/by_period/holdout/visit_near_minus_offshore_m/n')"
+    },
+    {
+      "id": "holdout-median-absolute",
+      "printed": "2.90",
+      "statement": "Size of the negative median near-shore excess in holdout, in millimetres.",
+      "compute": "-1000 * json('summary.json','/primary/by_period/holdout/visit_near_minus_offshore_m/median')"
+    },
+    {
+      "id": "tight-reference-pairs",
+      "printed": "4,036",
+      "statement": "Reference pairs after tightening matching to 2 km.",
+      "compute": "json('summary.json','/two_km_sensitivity/by_period/reference/coordinates')"
+    },
+    {
+      "id": "tight-holdout-pairs",
+      "printed": "3,049",
+      "statement": "Holdout pairs after tightening matching to 2 km.",
+      "compute": "json('summary.json','/two_km_sensitivity/by_period/holdout/coordinates')"
+    },
+    {
+      "id": "buoy-station-visits",
+      "printed": "38",
+      "statement": "Supported buoy station-visits within 50 km.",
+      "compute": "json('summary.json','/buoys/50km/overall_summary/station_visits')"
+    },
+    {
+      "id": "buoy-sites",
+      "printed": "8",
+      "statement": "Buoy sites with supported visits within 50 km.",
+      "compute": "json('summary.json','/buoys/50km/overall_summary/stations')"
+    },
+    {
+      "id": "buoy-absolute-a",
+      "printed": "0.254",
+      "statement": "Median absolute Sentinel-6A wave-height error against buoys in metres.",
+      "compute": "json('summary.json','/buoys/50km/overall_summary/a_absolute_error_m_median')"
+    },
+    {
+      "id": "buoy-absolute-b",
+      "printed": "0.2585",
+      "statement": "Median absolute Sentinel-6B wave-height error against buoys in metres.",
+      "compute": "json('summary.json','/buoys/50km/overall_summary/b_absolute_error_m_median')"
+    },
+    {
+      "id": "buoy-holdout-visits",
+      "printed": "14",
+      "statement": "Supported November buoy station-visits within 50 km.",
+      "compute": "json('summary.json','/buoys/50km/summary/holdout/station_visits')"
+    },
+    {
+      "id": "buoy-tight-visits",
+      "printed": "16",
+      "statement": "Supported buoy station-visits within 25 km.",
+      "compute": "json('summary.json','/buoys/25km/overall_summary/station_visits')"
+    }
+  ]
+}
