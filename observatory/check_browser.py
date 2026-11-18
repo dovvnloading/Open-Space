@@ -117,6 +117,8 @@ def check_published_records(page):
         async () => {
           const catalog = await (await fetch('./data/catalog.json')).json();
           async function navigate(hash) {
+            // Browsers rate-limit rapid navigations within the same document.
+            await new Promise(resolve => setTimeout(resolve, 150));
             const changed = new Promise(resolve => addEventListener('hashchange', resolve, {once:true}));
             location.hash = hash;
             await changed;
@@ -183,10 +185,10 @@ def check_mobile(page, url):
     print("Mobile: navigation, archive search, observation table, reduced motion and layout passed.")
 
 
-def run(url, channel):
+def run(url, engine, channel):
     failures = []
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(channel=channel)
+        browser = getattr(playwright, engine).launch(channel=channel)
         for width, height, check in [(1440, 1000, check_desktop), (390, 844, check_mobile)]:
             page = browser.new_page(viewport={"width": width, "height": height}, reduced_motion="reduce")
             page.on("pageerror", lambda error: failures.append(str(error)))
@@ -206,10 +208,13 @@ if __name__ == "__main__":
     source = parser.add_mutually_exclusive_group(required=True)
     source.add_argument("--directory", type=Path)
     source.add_argument("--url")
+    parser.add_argument("--engine", choices=("chromium", "firefox", "webkit"), default="chromium")
     parser.add_argument("--channel", help="Optional installed Chromium channel, e.g. chrome")
     args = parser.parse_args()
+    if args.channel and args.engine != "chromium":
+        parser.error("--channel is supported for Chromium only")
     if args.url:
-        run(args.url.rstrip("/") + "/", args.channel)
+        run(args.url.rstrip("/") + "/", args.engine, args.channel)
     else:
         with serve(args.directory) as local_url:
-            run(local_url, args.channel)
+            run(local_url, args.engine, args.channel)
