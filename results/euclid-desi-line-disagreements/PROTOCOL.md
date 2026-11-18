@@ -1,0 +1,17 @@
+# Euclid DR1 and DESI DR1 redshift disagreement screen
+
+The observing unit is a Euclid MER object paired with a separately observed DESI galaxy spectrum. This study asks whether a high-probability Euclid redshift with low reliability can disagree with a well-associated DESI redshift and whether the Euclid spectrum identifies a specific alternative. Euclid's release team has already compared these archives and described noise interlopers. A catalog discrepancy is triage. A source-specific measurement requires a convincing association, line coverage and direct inspection of both spectra.
+
+## Development and held-out regions
+
+The development box is ICRS RA 270.5 to below 273.0°, Dec 67.0–68.5°. Earlier tests used a smaller development cone at (271.5°, 67.7°) and the IRSA tutorial object's published control spectrum. Exclude the tutorial Euclid ID 2730189294682318706 from new candidates. Reserve RA 273.0 to below 275.5° with the same declination limits until the development queries and line analysis are frozen. Treat any upload and archive truncation as a coverage loss. The ground anchor population is itself selected by DESI and cannot determine a Euclid-wide rate.
+
+For each publicly available DESI DR1 primary galaxy with `ZWARN=0`, preserve its mean fiber center and redshift information. Retain query rows failing later gates. The working quality gate is `DELTACHI2 >= 40`, finite positive uncertainty and zero coadd fiber status. Seek all Euclid MER neighbors within 3 arcseconds. A provisional counterpart must lie within 0.5 arcseconds and be unique within 1 arcsecond in both directions. Preserve neighboring MER sources and reassess blending on a case-by-case basis. Several slitless traces can overlap even for well-separated centroids.
+
+Fetch all Euclid rank-zero galaxy redshift candidates for the resulting source IDs, preserving missing spectra and duplicate rows. For redshift triage require `spe_z_prob >= 0.99` and `spe_z_rel < 0.2`; retain the separate `spe_z_rel <= 0.05` group because IRSA's example treats this as a reliability threshold. Flag `abs(z_euclid - z_desi)/(1 + z_desi) > 0.01`. This is a declared discrepancy threshold, not a significance. Preserve Euclid alternatives, any available spectrum quality, coordinates and source IDs.
+
+## Spectrum-by-spectrum decision
+
+A disproportionate redshift difference alone cannot distinguish a wrong association, a ground-based fit failure, a noise peak, line confusion, or blended slitless signals. For a convincing source-specific alternative, require secure DESI spectral features, a uniquely associated Euclid counterpart, and Euclid features at the independently fixed DESI wavelengths that are observed and pass native masks. Evaluate the competing Euclid redshift at its own expected wavelengths. Compare actual observed peaks and named transitions. If the expected wavelength range is uncovered, or the features are too weak, record the reason. Do not classify a line alias using a ratio of catalog redshifts alone. Agreement controls and a held-out region are separate from the development cases. Record failed data requests and the exact scope of any final search.
+
+[Euclid release and spectroscopy](https://euclid.esac.esa.int/dr/dr1/expsup/) · [Published redshift comparison](https://arxiv.org/html/2611.17960v1#S4.SS1) · [IRSA SPE working examples](https://caltech-ipac.github.io/irsa-tutorials/euclid-intro-spe-catalog/) · [DESI DR1 Data Lab](https://datalab.noirlab.edu/data/desi)
