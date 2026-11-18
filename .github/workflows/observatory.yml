@@ -1,0 +1,59 @@
+name: Observatory
+on:
+  push:
+    branches: [main]
+    paths: ['observatory/**', 'README.md', 'results/**', 'docs/**', 'open_space/verify/**', '.github/workflows/observatory.yml']
+  pull_request:
+    paths: ['observatory/**', 'README.md', 'results/**', 'docs/**', 'open_space/verify/**', 'tests/test_observatory_catalog.py', '.github/workflows/observatory.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: observatory-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    name: Build and exercise the observatory
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Assemble static site and index this Git revision
+        env:
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          mkdir -p dist
+          cp observatory/*.html observatory/*.css observatory/*.js dist/
+          cp -R observatory/assets dist/
+          cp LICENSE dist/LICENSE
+          python observatory/build_catalog.py --repository "$REPOSITORY" --output dist/data/catalog.json
+          python -m unittest discover -s tests -p 'test_observatory_catalog.py' -v
+      - name: Exercise the published files in Chromium
+        run: |
+          python -m pip install playwright==1.58.0
+          python observatory/check_browser.py --directory dist --channel chrome
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.publish.outputs.page_url }}
+    steps:
+      - name: Publish the verified site
+        id: publish
+        uses: actions/deploy-pages@v5

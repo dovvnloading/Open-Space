@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#090b0e" />
+    <meta
+      name="description"
+      content="Explore Open Space's public astronomy investigations, inspect the measurements, and travel through a procedural universe."
+    />
+    <title>Observation deck · Open Space Observatory</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/mark.svg" />
+    <link rel="preload" href="./assets/fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./assets/mars.webp" as="image" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./universe.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="masthead">
+      <div class="shell mast-inner">
+        <a class="brand" href="#deck" aria-label="Open Space Observatory home"
+          ><img src="./assets/mark.svg" width="39" height="39" alt="" /><span
+            >Open Space<span class="brand-sub">OBSERVATORY</span></span
+          ></a
+        >
+        <nav aria-label="Main navigation">
+          <a href="#deck" data-nav="deck" aria-label="Observation deck"
+            ><i data-icon="deck"></i><span>Observation deck</span><b aria-hidden="true">Deck</b></a
+          >
+          <a href="#universe" data-nav="universe" aria-label="Universe simulator"
+            ><i data-icon="orbit"></i><span>Universe simulator</span><b aria-hidden="true">Universe</b></a
+          >
+          <a href="#archive" data-nav="archive" aria-label="Research archive"
+            ><i data-icon="archive"></i><span>Research archive</span><b aria-hidden="true">Archive</b></a
+          >
+        </nav>
+        <a class="github" href="https://github.com/dovvnloading/Open-Space" target="_blank" rel="noopener"
+          ><i data-icon="github"></i><span>GitHub</span><i data-icon="external"></i
+        ></a>
+      </div>
+    </header>
+    <main class="shell" id="main" tabindex="-1">
+      <div id="notice" role="status" hidden></div>
+      <section id="deck" aria-label="Observation deck">
+        <div class="page-head">
+          <div>
+            <div class="eyebrow"><span class="small-line"></span>MISSION CONTROL</div>
+            <h1>Observation deck</h1>
+          </div>
+          <div class="clock-wrap">
+            <div class="clock"><i data-icon="clock"></i><time id="utc">--:--:--</time><span>UTC</span></div>
+            <span id="utc-date" class="date"></span>
+          </div>
+        </div>
+        <section
+          class="hero"
+          aria-label="Featured investigations"
+          aria-roledescription="carousel"
+          data-target="mars"
+        >
+          <div class="viewport">
+            <canvas class="star-plate" aria-hidden="true"></canvas>
+            <div class="art-stage" aria-hidden="true">
+              <div class="halo"></div>
+              <div class="orbit-lines"><b></b><b></b><b></b></div>
+              <img
+                id="hero-art"
+                src="./assets/mars.webp"
+                alt=""
+                fetchpriority="high"
+                width="1254"
+                height="1254"
+              />
+              <div class="planet-callout">
+                <span class="callout-line"></span><span id="target-tag">MARS / SOL IV</span>
+              </div>
+            </div>
+            <div class="hero-content">
+              <div class="plate-label"><i data-icon="focus"></i> FEATURED TARGET</div>
+              <h2 id="hero-name">Mars</h2>
+              <p class="hero-sub" id="hero-sub">A particle storm at Mars</p>
+              <p class="hero-summary" id="hero-summary">
+                MAVEN recorded a sustained surge of energetic ions and electrons across 46 orbits in August
+                2025.
+              </p>
+              <div class="hero-actions">
+                <a id="hero-detail" class="btn primary" href="#target/mars"
+                  ><i data-icon="book"></i>View investigation</a
+                ><a class="btn secondary" href="#universe"><i data-icon="orbit"></i>Launch simulator</a>
+              </div>
+            </div>
+            <div class="art-legend"><span></span>ARTIST’S VIEW</div>
+          </div>
+          <div class="hero-strip">
+            <div class="readout">
+              <i data-icon="antenna"></i
+              ><span><small>INSTRUMENT</small><strong id="instrument">MAVEN / SEP</strong></span>
+            </div>
+            <div class="readout">
+              <i data-icon="calendar"></i
+              ><span><small>OBSERVATION</small><strong id="epoch">August 2025</strong></span>
+            </div>
+            <div class="readout status-readout">
+              <i data-icon="pulse"></i
+              ><span><small>DISPOSITION</small><strong id="disposition">Measured</strong></span>
+            </div>
+            <div class="slide-nav">
+              <span id="slide-count" aria-live="polite">01 <em>/ 04</em></span
+              ><button type="button" id="previous" aria-label="Previous featured target">
+                <i data-icon="left"></i></button
+              ><button type="button" id="next" aria-label="Next featured target">
+                <i data-icon="right"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+        <section class="feed" aria-labelledby="feed-title">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow"><span class="small-line"></span>FIELD NOTES</div>
+              <h2 id="feed-title">Discovery feed</h2>
+            </div>
+            <a class="text-link" href="#archive">Explore archive<i data-icon="arrow"></i></a>
+          </div>
+          <div class="card-grid" id="cards"></div>
+        </section>
+        <section class="sim-launch" aria-labelledby="sim-title">
+          <canvas id="universe-preview" aria-hidden="true"></canvas>
+          <div class="sim-description">
+            <div class="eyebrow"><span class="small-line"></span>PROCEDURAL UNIVERSE</div>
+            <h2 id="sim-title">Fly beyond the archive.</h2>
+            <p id="sim-scale">
+              Travel from a spiral galaxy into a star system, then down to the surface of an individual world.
+            </p>
+            <a class="btn secondary" href="#universe"
+              ><i data-icon="orbit"></i>Enter universe simulator<i data-icon="arrow"></i
+            ></a>
+          </div>
+        </section>
+        <section class="recent" aria-labelledby="recent-heading">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow"><span class="small-line"></span>REPOSITORY ACTIVITY</div>
+              <h2 id="recent-heading">Recently updated</h2>
+            </div>
+          </div>
+          <div class="recent-list" id="recent-list"></div>
+        </section>
+      </section>
+      <section id="archive" hidden aria-labelledby="archive-title">
+        <div class="page-head">
+          <div>
+            <div class="eyebrow"><span class="small-line"></span>OPEN RESEARCH</div>
+            <h1 id="archive-title">Research archive</h1>
+          </div>
+          <i class="archive-head-icon" data-icon="archive"></i>
+        </div>
+        <div class="archive-intro" id="archive-intro"></div>
+        <form class="archive-controls" id="filters" role="search">
+          <label class="search-box"
+            ><i data-icon="search"></i
+            ><input
+              type="search"
+              id="query"
+              aria-label="Search investigations"
+              placeholder="Search investigations, targets, or instruments…"
+              autocomplete="off"
+          /></label>
+          <label class="select-field"
+            ><span>Disposition</span
+            ><select id="status-filter">
+              <option value="">All dispositions</option>
+            </select></label
+          >
+          <label class="select-field"
+            ><span>Topic</span
+            ><select id="topic-filter">
+              <option value="">All topics</option>
+            </select></label
+          >
+        </form>
+        <div class="archive-toolbar">
+          <p id="results-count" role="status"></p>
+          <label
+            >Sort by
+            <select id="sort">
+              <option value="recent">Recently updated</option>
+              <option value="title">Title (A–Z)</option>
+            </select></label
+          >
+        </div>
+        <div id="result-list" class="archive-list"></div>
+        <div id="pagination" class="pagination"></div>
+      </section>
+      <noscript
+        ><p>
+          Enable JavaScript to explore the simulator and archive, or
+          <a href="https://github.com/dovvnloading/Open-Space#all-results-by-topic"
+            >browse all research on GitHub</a
+          >.
+        </p></noscript
+      >
+    </main>
+    <footer class="shell footer">
+      <span class="footer-brand"
+        ><img src="./assets/mark.svg" alt="" width="21" height="21" />Open Space Observatory</span
+      >
+      <div>
+        <span id="revision"></span><a href="#credits">Credits</a
+        ><a href="https://github.com/dovvnloading/Open-Space" target="_blank" rel="noopener"
+          >Source<i data-icon="external"></i
+        ></a>
+      </div>
+    </footer>
+    <dialog id="dossier" aria-labelledby="dossier-title">
+      <div class="dialog-frame">
+        <button class="icon-button close-dialog" type="button" aria-label="Close detail">
+          <i data-icon="x"></i>
+        </button>
+        <div id="dossier-body"></div>
+      </div>
+    </dialog>
+    <div id="universe-host"></div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
