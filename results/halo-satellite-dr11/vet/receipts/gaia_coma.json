@@ -1,0 +1,11 @@
+{
+  "url": "https://gaia.ari.uni-heidelberg.de/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=150000&QUERY=SELECT+g.source_id%2C+g.ra%2C+g.dec%2C+g.pmra%2C+g.pmdec%2C+g.pmra_error%2C+g.pmdec_error%2C+g.pmra_pmdec_corr%2C+g.parallax%2C+g.parallax_error%2C+g.ruwe%2C+g.phot_g_mean_mag%2C+g.bp_rp+FROM+gaiadr3.gaia_source+AS+g++WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2C+CIRCLE%28%27ICRS%27%2C187.25%2C23.9%2C2.5%29%29+AND+g.ra+BETWEEN+185.45+AND+189.05+AND+g.dec+BETWEEN+22.599999999999998+AND+25.2",
+  "checked_utc": "2026-11-17T12:17:12.336674+00:00",
+  "response_date": "Tue, 17 Nov 2026 12:17:09 GMT",
+  "response_bytes": 3841820,
+  "response_sha256": "af040014c92d08ea74eb01a40d85783964e040be6668b64558d7555e24ddf9d6",
+  "response_rows": 22927,
+  "retained_rows": 22927,
+  "output_sha256": "041bece196322fb6810d1596883367f337b402a2b7527dff1df917acc24d1ad5",
+  "output": "gaia_coma.csv.gz"
+}
