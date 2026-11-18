@@ -28,8 +28,7 @@
       "id": "largest-annular-robust-as-evaluated",
       "printed": "0.0367%",
       "statement": "Percentage of initially positive line pixels still flipped under all four perturbations in the September 08:50 outer annulus.",
-      "compute": "json('measurements.json', '/3/annuli/1/robust_flips') / json('measurements.json', '/3/annuli/1/line_positive_pixels')",
-      "tolerance": {"ulps": 1}
+      "compute": "100 * json('measurements.json', '/3/annuli/1/robust_flips') / json('measurements.json', '/3/annuli/1/line_positive_pixels')"
     },
     {
       "id": "september-0850-robust-outer-count",
