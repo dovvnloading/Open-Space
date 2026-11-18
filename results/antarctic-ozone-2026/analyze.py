@@ -158,6 +158,32 @@ def coverage(mask):
     }
 
 
+def daily_deep_masks(data):
+    days = {
+        year: np.stack([data[f"{year}-11-{day:02d}"] for day in range(1, 16)])
+        for year in YEARS
+    }
+    complete = CAP_60 & np.all([np.all(sample > 0, axis=(0, 1)) for sample in days.values()], axis=0)
+    return days, complete
+
+
+def daily_deep_persistence(data):
+    """Exploratory all-15-days requirement, on a stricter common footprint."""
+    days, complete = daily_deep_masks(data)
+    return {
+        "common_support": coverage(complete),
+        "all_fifteen_daily_maps": {
+            str(year): {
+                str(threshold): area(complete & np.all(
+                    (sample > 0) & (sample < threshold), axis=(0, 1)
+                ))
+                for threshold in (170, 180, 190, 220)
+            }
+            for year, sample in days.items()
+        },
+    }
+
+
 def run(data):
     windows = {year: [
         np.stack([data[f"{year}-11-{day:02d}"] for day in range(first, first + 5)])
@@ -184,6 +210,7 @@ def run(data):
     return {
         "across_years_footprint": coverage(across),
         "seasons": study,
+        "exploratory_fifteen_daily_maps": daily_deep_persistence(data),
         "daily": per_day,
         "november_2026_split_screen": splits,
         "consecutive_robust_split_pairs": [[a, b] for a, b in zip(qualified, qualified[1:])

@@ -1,0 +1,119 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "study-area",
+      "printed": "30.075",
+      "statement": "Common ten-date footprint for all three years, million square kilometres.",
+      "compute": "json('summary.json','/across_years_footprint/retained_mkm2')"
+    },
+    {
+      "id": "study-coverage",
+      "printed": "88.02",
+      "statement": "Common ten-date footprint, percent of the cap south of 60 S.",
+      "compute": "100 * json('summary.json','/across_years_footprint/fraction_of_60s_cap')"
+    },
+    {
+      "id": "2026-retained-area",
+      "printed": "4.48",
+      "statement": "November 2026 early deep area retained on the common footprint, million square kilometres.",
+      "compute": "json('summary.json','/seasons/2026/fixed_across_years/180/retained_area_mkm2')"
+    },
+    {
+      "id": "2026-retained-percent",
+      "printed": "62.27",
+      "statement": "Percentage of the early 2026 area retained on the common footprint.",
+      "compute": "100 * json('summary.json','/seasons/2026/fixed_across_years/180/fraction_of_early_area_retained')"
+    },
+    {
+      "id": "2024-retained-percent",
+      "printed": "6.26",
+      "statement": "Percentage of the early 2024 area retained on the common footprint.",
+      "compute": "100 * json('summary.json','/seasons/2024/fixed_across_years/180/fraction_of_early_area_retained')"
+    },
+    {
+      "id": "2025-early-area",
+      "printed": "0.000",
+      "statement": "Early deep area in 2025 on the common footprint, million square kilometres.",
+      "compute": "json('summary.json','/seasons/2025/fixed_across_years/180/early_area_mkm2')"
+    },
+    {
+      "id": "2026-within-year",
+      "printed": "4.59",
+      "statement": "Deep area retained in 2026 on the 2026-only complete footprint, million square kilometres.",
+      "compute": "json('summary.json','/seasons/2026/fixed_within_year/180/retained_area_mkm2')"
+    },
+    {
+      "id": "2026-south-of-70",
+      "printed": "4.43",
+      "statement": "Deep area retained in 2026 on the 2026-only polar footprint south of 70 S, million square kilometres.",
+      "compute": "json('summary.json','/seasons/2026/fixed_70s_within_year/180/retained_area_mkm2')"
+    },
+    {
+      "id": "2026-170-retained",
+      "printed": "2.43",
+      "statement": "Early 2026 area retained below 170 DU on the common footprint, million square kilometres.",
+      "compute": "json('summary.json','/seasons/2026/fixed_across_years/170/retained_area_mkm2')"
+    },
+    {
+      "id": "2026-190-retained",
+      "printed": "6.25",
+      "statement": "Early 2026 area retained below 190 DU on the common footprint, million square kilometres.",
+      "compute": "json('summary.json','/seasons/2026/fixed_across_years/190/retained_area_mkm2')"
+    },
+    {
+      "id": "all-days-coverage",
+      "printed": "76.69",
+      "statement": "Percent of the cap with both measurements on all fifteen days in all three years.",
+      "compute": "100 * json('summary.json','/exploratory_fifteen_daily_maps/common_support/fraction_of_60s_cap')"
+    },
+    {
+      "id": "2026-all-days",
+      "printed": "3.78",
+      "statement": "Area below 180 DU on every November 1–15 daily map, million square kilometres.",
+      "compute": "json('summary.json','/exploratory_fifteen_daily_maps/all_fifteen_daily_maps/2026/180')"
+    },
+    {
+      "id": "2026-all-days-170",
+      "printed": "2.17",
+      "statement": "Area below 170 DU on every November 1–15 daily map, million square kilometres.",
+      "compute": "json('summary.json','/exploratory_fifteen_daily_maps/all_fifteen_daily_maps/2026/170')"
+    },
+    {
+      "id": "nov15-omi",
+      "printed": "17.94",
+      "statement": "Observed OMI area below 220 DU on 15 November 2026, million square kilometres.",
+      "compute": "json('summary.json','/daily/2026-11-15/south_40/thresholds/220/omi_observed_low_mkm2')"
+    },
+    {
+      "id": "nov15-omps",
+      "printed": "17.99",
+      "statement": "Observed OMPS area below 220 DU on 15 November 2026, million square kilometres.",
+      "compute": "json('summary.json','/daily/2026-11-15/south_40/thresholds/220/omps_observed_low_mkm2')"
+    },
+    {
+      "id": "nov15-consensus-lower",
+      "printed": "17.54",
+      "statement": "Area observed below 220 DU in both products on 15 November 2026, million square kilometres.",
+      "compute": "json('summary.json','/daily/2026-11-15/south_40/thresholds/220/consensus_lower_mkm2')"
+    },
+    {
+      "id": "nov15-consensus-upper",
+      "printed": "17.74",
+      "statement": "Maximum area compatible with both grids being below 220 DU given gaps on 15 November 2026, million square kilometres.",
+      "compute": "json('summary.json','/daily/2026-11-15/south_40/thresholds/220/consensus_upper_mkm2')"
+    },
+    {
+      "id": "sep18-omi",
+      "printed": "23.26",
+      "statement": "Observed OMI area below 220 DU on 18 September 2026, million square kilometres.",
+      "compute": "json('summary.json','/daily/2026-09-18/south_40/thresholds/220/omi_observed_low_mkm2')"
+    },
+    {
+      "id": "sep18-omps",
+      "printed": "25.04",
+      "statement": "Observed OMPS area below 220 DU on 18 September 2026, million square kilometres.",
+      "compute": "json('summary.json','/daily/2026-09-18/south_40/thresholds/220/omps_observed_low_mkm2')"
+    }
+  ]
+}
