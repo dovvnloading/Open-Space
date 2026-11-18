@@ -275,6 +275,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 **Gamma-ray bursts and gravitational waves**
 
+- **No new neutrino source in a frozen transient crossmatch.** Thirteen archival infrared flare pairs span ten IceCube alerts and are consistent with the registered chance models; incomplete coverage and weak time shuffles limit the inference. *Null result* · [Details](results/neutrino-transient-crossmatch/README.md)
 - **A proposed gamma-ray oscillation screen failed its synthetic calibration.** The two-burst pilot provides descriptive data, but does not support a physical oscillation test. *Null result* · [Details](results/gbm-conditional-screen/README.md)
 
 - **A gamma-ray burst listed as a solar flare.** GRB 211211A in Solar Orbiter's flare catalog. *Correction* · [Details](results/grb-211211a-solar-orbiter/README.md)

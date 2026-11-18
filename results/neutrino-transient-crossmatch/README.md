@@ -45,14 +45,10 @@ The original optical procedure reproduces exactly three matches over 43 alerts Ã
 
 Completed work includes freezing the inputs, deduplicating alerts and named episodes, native-region membership, the independent bounds audit, both nulls, historical controls, and source-by-source follow-up. The source populations and finite interval are defined in this directory. Fractional source attribution, detector livetime modelling, a new reconstruction of the 46 older GCN contours and completeness for unpublished or unclassified transients remain open. NEOWISE's observing mission ended in 2024. [Final NEOWISE data release](https://irsa.ipac.caltech.edu/data/WISE/docs/release/NEOWISE/)
 
-Run from this directory with Python 3.12, NumPy, Astropy, astropy-healpix and Matplotlib. The primary crossmatch is offline. The snapshot-specific READMEs document how to regenerate each survey projection. `SHA256SUMS` fingerprints the committed evidence and scripts.
+Run from this directory with Python 3.12, NumPy, Astropy, astropy-healpix and Matplotlib. The primary crossmatch is offline. The replay copies the frozen tree to a new disposable directory, runs the core analyses there and checks the frozen hashes in both trees. It verifies deterministic reproduction with the same code and inputs, not independent survey selection, native-map reconstruction or physical validation. The snapshot-specific READMEs document how to regenerate each survey projection. `SHA256SUMS` fingerprints the committed evidence and scripts.
 
 ```sh
 sha256sum -c SHA256SUMS
-python analysis/check.py
-python analysis/run.py
-python analysis/run.py --archival
-python analysis/exposure.py
-python analysis/supplement.py
+python analysis/replay_copy.py /path/to/new/disposable-replay
 python controls/historical.py controls/inputs
 ```
