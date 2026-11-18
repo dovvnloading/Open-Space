@@ -37,7 +37,9 @@ def quality_record(row):
 
 def screen(associations, spectra):
     fits_by_id, quality_by_id = {}, {}
-    targets = {row["euclid_match"] for row in associations["matches"] if row["euclid_match"] is not None}
+    tutorial_id = 2730189294682318706
+    targets = {row["euclid_match"] for row in associations["matches"]
+               if row["euclid_match"] is not None and row["euclid_match"] != tutorial_id}
     candidate_records = spectra["SPE_GALAXY_CANDIDATES"].data
     candidate_records = candidate_records[np.isin(candidate_records["OBJECT_ID"], list(targets))]
     for row in candidate_records:
@@ -50,7 +52,7 @@ def screen(associations, spectra):
     ranked = []
     for row in associations["matches"]:
         ident = row["euclid_match"]
-        if ident is None or not row["desi_quality_gate"]:
+        if ident not in targets or not row["desi_quality_gate"]:
             continue
         fits_for_object = sorted(fits_by_id.get(ident, []), key=lambda item: item["rank"])
         best = [solution for solution in fits_for_object if solution["rank"] == 0]
