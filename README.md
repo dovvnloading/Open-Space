@@ -79,7 +79,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### The Sun, space weather and Earth's sky
 
-- **Continuum timing in Proba-3 solar images.** In one September orbit, all 63 flagged Fe XIV products used a different-cycle continuum exposure that was closer in time than either same-cycle exposure. A ten-image sensitivity test found small sign changes under a bracketing continuum substitution. *Measured* · [Details](results/proba3-aspiics-continuum-timing/README.md)
+- **Continuum timing in Proba-3 solar images.** In one September orbit, all 63 flagged Fe XIV products used a different-cycle continuum exposure with a smaller representative-time lag than either same-cycle donor, despite similar exposure-start lags. A ten-image sensitivity test found small sign changes under a bracketing continuum substitution. *Measured* · [Details](results/proba3-aspiics-continuum-timing/README.md)
 
 - **A magnetic "hole" in the solar wind reached Earth (6 Oct 2023).** Three spacecraft saw the magnetic field drop for about half an hour inside a known solar eruption, and the matching pressure pulse arrived at Earth on schedule. *Measured* · [Details](results/solar-wind-cavity-20231006/README.md)
 - **A solar magnetic structure reached the inner spacecraft last (28–29 Sep 2023).** A structure seen by Wind has a candidate counterpart at STEREO-A that arrived hours later, even though STEREO-A was closer to the Sun. *Candidate* · [Details](results/stereo-20230929/README.md)

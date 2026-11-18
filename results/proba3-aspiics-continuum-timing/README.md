@@ -1,18 +1,18 @@
 # Continuum timing in Proba-3/ASPIICS Fe XIV images
 
-**Noteworthy calibration result.** The 63 flagged Fe XIV images in the September 17 orbit used wideband continuum donors from a different acquisition cycle. All 63 donors were closer in representative time than the same-cycle donors in the orbit's two unflagged images. The quality bit and the actual time difference carry distinct information. Across ten frozen image comparisons, the tested interpolation changed the sign of at most **0.0367%** of originally positive retained line pixels in any one annulus after the alignment stress test. This measures sensitivity to one alternative continuum, with no new coronal feature established.
+**Noteworthy calibration result.** The 63 flagged Fe XIV images in the September 17 orbit used wideband continuum donors from a different acquisition cycle. All 63 had smaller DATE-AVG lags than the orbit's two unflagged images, while their exposure starts were about as far apart. The quality bit and the time convention carry distinct information. Across ten frozen image comparisons, the tested interpolation changed the sign of at most **0.0367%** of originally positive retained line pixels in any one annulus after the alignment stress test. This measures sensitivity to one alternative continuum, with no new coronal feature established.
 
 ## What the released files link
 
 We matched the complete three-file wideband parent set in each Fe XIV FITS header to a single released total-brightness product. The values below use the donor's DATE-AVG minus the line's DATE-AVG. Negative lags mean the donor is earlier. DATE-AVG is the representative exposure epoch chosen by the pipeline. It need not equal the mean exposure time at each pixel. The data release notes define QUALITY bit 2 by sequence iteration and warn that non-contemporaneous continuum subtraction can leave artifacts. [ASPIICS v03 notes](https://www.sidc.be/proba-3/version-03-release-notes)
 
-| Orbit | Date in 2026 | Fe XIV QUALITY | Header matches | Different-cycle donors | Lag range (s) |
-| --- | --- | ---: | ---: | ---: | --- |
-| 795 | September 17 | 2 | 63 | 63 | −35.137 to −34.136 |
-| 795 | September 17 | 0 | 2 | 0 | −50.768 to −49.768 |
-| 772 | August 29 | 0 | 65 | 0 | −50.772 to −26.968 |
+| Orbit | Date in 2026 | Fe XIV QUALITY | Header matches | Different-cycle donors | DATE-AVG lag (s) | Start-time lag (s) |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| 795 | September 17 | 2 | 63 | 63 | −35.137 to −34.136 | −40.001 to −39.000 |
+| 795 | September 17 | 0 | 2 | 0 | −50.768 to −49.768 | −39.001 to −38.001 |
+| 772 | August 29 | 0 | 65 | 0 | −50.772 to −26.968 | −39.003 to −18.000 |
 
-All **130** Fe XIV headers in the two frozen queries matched exactly one total-brightness parent set. The September flag primarily distinguishes the two acquisition schedules in that orbit. It cannot be translated to a fixed lower bound on elapsed time across the observed sequences. The two clear September line products are too few for the primary five-epoch control, so the pixel comparison uses the August orbit. Within the held archive snapshots, the measured delays depend on how exposures were scheduled. [Header audit table](lineage.csv) · [Exact header blocks](fe-headers.zip) · [Byte-range receipts](header-receipts.json.gz)
+All **130** Fe XIV headers in the two frozen queries matched exactly one total-brightness parent set. A follow-up comparison of DATE-OBS shows why the representative-time result needs its time convention. The September flagged Fe exposures span about 3 s, while the two unflagged merged Fe products span 33.132 s. Their donor-to-line start offsets are much closer than their DATE-AVG offsets, with the flagged starts generally farther apart. The quality bit distinguishes different-cycle lineage in this orbit. It provides no numerical limit on the effective lag of an individual pixel. The two clear September line products are too few for the primary five-epoch control, so the pixel comparison uses the August orbit. Within the held archive snapshots, the measured delays depend on how exposures were scheduled. [Header audit table](lineage.csv) · [Exact header blocks](fe-headers.zip) · [Byte-range receipts](header-receipts.json.gz)
 
 ## What the continuum substitution changed
 

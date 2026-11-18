@@ -52,8 +52,14 @@ def main():
                     raise ValueError(f"Header and archive disagree for {name}")
                 parents = [header[f"PARENT{i}"] for i in range(1, header["N_PARENT"] + 1)]
                 donor = donors[frozenset(p for p in parents if p.startswith("aspiics_wb_l2_"))]
-                lag = (datetime.fromisoformat(donor["DATE-AVG"])
-                       - datetime.fromisoformat(header["DATE-AVG"])).total_seconds()
+                offsets = {
+                    key: (datetime.fromisoformat(donor[key])
+                          - datetime.fromisoformat(header[key])).total_seconds()
+                    for key in ("DATE-OBS", "DATE-AVG", "DATE-END")
+                }
+                line_span = (datetime.fromisoformat(header["DATE-END"])
+                             - datetime.fromisoformat(header["DATE-OBS"])).total_seconds()
+                lag = offsets["DATE-AVG"]
                 different_cycle = header["CYCLE_ID"] != donor["CYCLE_ID"]
                 if [(donor["name"], lag, not different_cycle)] != [
                     (match["bt"], match["lag_s_bt_minus_fe"], match["same_cycle"])
@@ -64,6 +70,8 @@ def main():
                     "orbit": orbit, "line": name, "quality": header["QUALITY"],
                     "n_parent": header["N_PARENT"], "donor": donor["name"],
                     "different_cycle": int(different_cycle), "lag_seconds": lag,
+                    "start_lag_seconds": offsets["DATE-OBS"], "end_lag_seconds": offsets["DATE-END"],
+                    "line_span_seconds": line_span,
                 })
     if receipt_by_line:
         raise ValueError("Some line headers were not checked")
