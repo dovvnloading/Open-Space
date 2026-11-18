@@ -53,7 +53,7 @@ def read_detector(path, detector):
         start = rows["TIME"] - TRIGGER
         stop = rows["ENDTIME"] - TRIGGER
         width = stop - start
-        if np.any(width <= 0) or np.any(start[1:] < stop[:-1] - TIME_TOLERANCE):
+        if np.any(width < 0) or np.any(start[1:] < stop[:-1] - TIME_TOLERANCE):
             raise ValueError(f"Invalid time grid in {path.name}")
 
         exposure = rows["EXPOSURE"].astype(float)
@@ -63,7 +63,7 @@ def read_detector(path, detector):
                 stop <= gti["STOP"] - TRIGGER + TIME_TOLERANCE
             )
         raw = rows["COUNTS"][:, 2:5]
-        valid = (mask & (rows["QUALITY"] == 0) & (exposure >= 0.90 * width)
+        valid = (mask & (width > 0) & (rows["QUALITY"] == 0) & (exposure >= 0.90 * width)
                  & (exposure <= width + TIME_TOLERANCE) & np.all(raw >= 0, axis=1))
         edges = hdus["EBOUNDS"].data
         if edges["CHANNEL"].tolist() != list(range(8)):
@@ -219,6 +219,9 @@ def main():
         "family_trials": trials,
         "family_alpha": ALPHA,
         "unadjusted_joint_threshold": ALPHA / trials,
+        "excluded_zero_duration_rows": {
+            name: int((detector.stop == detector.start).sum()) for name, detector in data.items()
+        },
         "energy_bounds_kev": {name: detector.band_kev for name, detector in data.items()},
         "backgrounds": backgrounds,
         "background_subintervals": subintervals,
