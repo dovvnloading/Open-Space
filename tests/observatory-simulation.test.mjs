@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   address,
+  atlasDestinations,
+  galaxyProfile,
   makeSystem,
   orbitRadius,
   parseSystemAddress,
@@ -82,4 +84,30 @@ test("AU spacing is linear in orbital radius and the ruler spans its labeled dis
     assert.ok(ruler.pixels >= 28 && ruler.pixels <= 72);
     assert.ok(Math.abs(ruler.pixels * unitsPerPixel - ruler.units) <= ruler.units * 1e-12);
   }
+});
+
+test("atlas destinations correspond to the rendered galaxy families and a ringed model world", () => {
+  const families = new Set();
+  for (let id = 0; id < galaxies; id++) {
+    const p = galaxyProfile(id);
+    families.add(p.family);
+    assert.deepEqual(p, galaxyProfile(id));
+    assert.ok(p.tilt > 0 && p.tilt <= 1);
+    assert.ok(p.diameter > 0);
+    assert.equal(p.arms > 0, ["spiral", "barred", "edge"].includes(p.family));
+  }
+  assert.deepEqual([...families].sort(), ["barred", "edge", "elliptical", "ring", "spiral"]);
+  const views = [];
+  for (const spot of atlasDestinations) {
+    assert.deepEqual(parseSystemAddress(address(spot.g, spot.s)), { g: spot.g, s: spot.s });
+    if (spot.level === "world") {
+      const world = makeSystem(spot.g, spot.s).planets[spot.planet];
+      assert.equal(world.ring, true);
+      assert.equal(world.type.name, "Gas giant");
+      views.push("world");
+    } else {
+      views.push(galaxyProfile(spot.g).family);
+    }
+  }
+  assert.deepEqual(views, ["spiral", "ring", "elliptical", "world"]);
 });

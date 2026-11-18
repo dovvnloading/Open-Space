@@ -151,14 +151,14 @@
   overflow: hidden;
   background: #05080d;
 }
-.osu-stage canvas {
+.osu-stage > canvas {
   display: block;
   width: 100%;
   height: 100%;
   touch-action: none;
   cursor: grab;
 }
-.osu-stage canvas:active {
+.osu-stage > canvas:active {
   cursor: grabbing;
 }
 .osu-stage::before {
@@ -530,5 +530,201 @@
   .osu-help {
     max-height: calc(100% - 8px);
     top: 4px;
+  }
+}
+
+.os-universe .osu-atlas-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 11px;
+  border: 1px solid #69554a;
+  border-radius: 4px;
+  background: #1d1b1b;
+  color: #ffe1ca;
+  font-size: 12px;
+}
+.osu-atlas-toggle svg {
+  width: 16px;
+}
+.os-universe .osu-atlas-toggle[aria-expanded="true"] {
+  background: #38291f;
+  border-color: #ca8b65;
+}
+.osu-atlas {
+  position: absolute;
+  z-index: 3;
+  right: clamp(12px, 3.5vw, 54px);
+  top: 12px;
+  width: min(364px, calc(100% - 24px));
+  max-height: calc(100% - 24px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 8px 10px 10px;
+  border: 1px solid #53565c;
+  border-radius: 7px;
+  background: #10151dfc;
+  box-shadow: 0 12px 55px #0009;
+}
+.osu-atlas-head,
+.osu-atlas-places .osu-place {
+  display: flex;
+  align-items: center;
+}
+.osu-atlas-head {
+  justify-content: space-between;
+  padding-left: 5px;
+}
+.osu-atlas-head strong {
+  font-size: 16px;
+  font-weight: 580;
+  letter-spacing: -0.03em;
+}
+.osu-atlas-places {
+  display: grid;
+  gap: 5px;
+}
+.osu-atlas-places .osu-place {
+  gap: 12px;
+  width: 100%;
+  min-height: 62px;
+  text-align: left;
+  border: 1px solid #343943;
+  border-radius: 4px;
+  padding: 5px 10px 5px 5px;
+  background: linear-gradient(110deg, #191e28, #12161d);
+}
+.osu-atlas-places .osu-place:hover,
+.osu-atlas-places .osu-place:focus-visible {
+  border-color: #bd8c6d;
+}
+.osu-place canvas {
+  width: 77px;
+  height: 45px;
+  background: #080a0f;
+  border-radius: 2px;
+  flex: 0 0 auto;
+}
+.osu-place span {
+  flex: 1 1 auto;
+}
+.osu-place strong {
+  display: block;
+  color: #f2ede8;
+  font-size: 14px;
+  font-weight: 580;
+}
+.osu-place small {
+  display: block;
+  margin-top: 3px;
+  color: #c3bab3;
+  font:
+    10px/1.35 "IBM Plex Mono",
+    monospace;
+}
+.osu-place svg {
+  width: 14px;
+  color: #d79a78;
+}
+@media (max-width: 650px) {
+  .os-universe .osu-atlas-toggle {
+    min-height: 36px;
+    padding-inline: 8px;
+  }
+  .osu-atlas {
+    top: 6px;
+    right: 8px;
+    max-height: calc(100% - 12px);
+    width: min(364px, calc(100% - 16px));
+  }
+}
+
+.osu-worlds {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  max-width: 100%;
+}
+.osu-worlds button {
+  --lit: #e4b38e;
+  --rock: #a67560;
+  --shadow: #352f35;
+  display: inline-grid;
+  min-width: 36px;
+  min-height: 47px;
+  align-content: center;
+  justify-items: center;
+  gap: 5px;
+  padding: 3px 4px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #b7bbc3;
+  font:
+    9px/1.1 "IBM Plex Mono",
+    monospace;
+}
+.osu-worlds button[data-type="1"] {
+  --lit: #e4f4fc;
+  --rock: #9bbfcf;
+  --shadow: #273e54;
+}
+.osu-worlds button[data-type="2"] {
+  --lit: #ffe2b0;
+  --rock: #cc9669;
+  --shadow: #6a5356;
+}
+.osu-worlds button[data-type="3"] {
+  --lit: #aee4ee;
+  --rock: #578aaf;
+  --shadow: #263e62;
+}
+.osu-worlds button[aria-pressed="true"] {
+  border-color: #725846;
+  color: #ffccad;
+  background: #221e1d;
+}
+.osu-worlds i {
+  display: block;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 29% 28%, var(--lit), var(--rock) 34%, var(--shadow) 70%, #131824 96%);
+}
+.osu-worlds [data-type="2"] i {
+  width: 19px;
+  height: 19px;
+}
+.osu-worlds [data-ring] i::after {
+  content: "";
+  position: absolute;
+  inset: 36% -24%;
+  border: 1px solid #dcbd94;
+  border-radius: 50%;
+  transform: rotate(-24deg);
+}
+@media (max-width: 760px) {
+  .osu-dock:has(.osu-worlds:not([hidden])) {
+    flex-wrap: wrap;
+  }
+  .osu-worlds {
+    order: 3;
+    width: 100%;
+    margin-top: -2px;
+    justify-content: flex-start;
+  }
+  .osu-worlds button {
+    min-width: 32px;
+    min-height: 39px;
+  }
+}
+@media (max-width: 650px) {
+  .osu-dock:has(.osu-worlds:not([hidden])) {
+    gap: 6px;
+  }
+  .osu-worlds {
+    order: initial;
   }
 }
