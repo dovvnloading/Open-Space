@@ -1,0 +1,658 @@
+Cassini UVIS EUV/FUV Cruise PDS3-PDS4 Update Summary
+====================================================
+
+This bundle was migrated by the PDS Ring-Moon Systems Node from PDS3 to PDS4. 
+Users can find the original EUV/FUV PDS3 labels in the Cassini UVIS volset at 
+https://pds-rings.seti.org/viewmaster/volumes/COUVIS_0xxx.
+Data files were not affected, and metadata available in the PDS3 volumes have 
+been captured in the PDS4 bundle. Note, however, that during the migration:
+
+    - Several errors in the PDS3 metadata were corrected (section 1), 
+    - Products that were not relevant to PDS4 were omitted (section 2),
+
+For those corrected products, we have included additional comments in their PDS4 labels. 
+
+In addition, miscellaneous notes are included in section 3.
+
+
+1. Corrections Implemented in the Migration to PDS4 
+---------------------------------------------------
+
+1a. **Timing Corrections**
+
+The PDS3 labels do not report SPACECRAFT_CLOCK_STOP_COUNT (always "UNK",
+meaning unknown). We calculated <cassini:spacecraft_clock_stop_count> in the 
+PDS4 labels as a service to users, but we encourage users to check these calculations 
+and contact us if there are any differences. Furthermore, we have found some 
+discrepancies between the SPACECRAFT_CLOCK_START_COUNT and START_TIME values recorded 
+in the PDS3 labels (details below).
+
+The UVIS User's Guide, provided in the document collection, states:
+
+  "the clock start is the Cassini clock time at the end of the first sample, the 
+  start time is a text string corresponding to the spacecraft clock start time, the
+  stop time is a derived value produced by multiplying the INTEGRATION_DURATION by
+  the number of samples ..."
+
+So we calculate the SCLK stop count using the PDS3 SCLK start count and the 
+duration values:
+
+  SPACECRAFT_CLOCK_STOP_COUNT = SPACECRAFT_CLOCK_START_COUNT + observation duration
+
+where for a 1D spectrum, the observation duration is equal to the INTEGRATION_DURATION; 
+for a 3D qube, the observation duration is equal to the INTEGRATION_DURATION*SAMPLE 
+(where SAMPLE is given in the CORE_ITEMS entry of the PDS3 label).
+
+The following steps were taken to calculate time values:
+
+  - Using `cspyce` (https://github.com/SETI/rms-cspyce), import and furnsh two SPICE
+    kernels: naif0012.tls and cas00171.tsc. Note that kernel 171 was chosen (rather 
+    than the latest, 172) in order to test the internal consistency of timing in the
+    data delivered in PDS3.
+  
+  - Calculate the SPACECRAFT_CLOCK_STOP_COUNT from the SPACECRAFT_CLOCK_START_COUNT and duration:
+  
+    def calculate_spacecraft_clock_stop_count(spacecraft_clock_start_count, duration):
+          parts = spacecraft_clock_start_count.split('.')
+          start_x256 = 256 * int(parts[0][2:]) + int(parts[1])
+          stop_x256 = start_x256 + duration * 256  
+          seconds = int(stop_x256 // 256)
+          frac = int(stop_x256 - seconds * 256)
+          spacecraft_clock_stop_count = f'{seconds}.{frac:03d}'
+          return spacecraft_clock_stop_count  
+    
+    Each integer "tick" of the Cassini clock is one second, and the number after 
+    the period is in units of 1/256 seconds.
+    This value is provided in the PDS4 labels as <cassini:spacecraft_clock_stop_count>
+  
+  - Take the calculated <cassini:spacecraft_clock_stop_count> and convert the value 
+    to ephemeris time (ET), then to UTC (using cspyce). This value is recorded in PDS4
+    <stop_date_time> (equivalent to PDS3 STOP_TIME).
+  
+  - Take the PDS3 value for SPACECRAFT_CLOCK_START_COUNT and convert the value to 
+    ephemeris time (ET), then to UTC. This value is recorded in PDS4 <start_date_time>
+    (equivalent to PDS3 START_TIME).
+  
+  - Reformat the new value for <start_date_time> from yyyy-mm-ddTHH:MM:SS.SSSZ to 
+    yyyy-dddTHH:MM:SS.SSSZ. This reformatted value is recorded in PDS4 <cassini:start_time_doy>.
+    Likewise, reformat <stop_date_time>.
+
+Some discrepancies were found between the calculated time values and those reported
+in the PDS3 labels. That is, when comparing:
+  - PDS3 START_TIME and PDS4 <start_date_time> 
+  - PDS3 STOP_TIME and PDS4 <stop_date_time> 
+
+To illustrate, consider the example of euv2000_364_09_23.lblx (note that the same 
+method was used for both Saturn and Cruise bundles). The PDS3 label states:
+  START_TIME                      = 2000-364T09:23:35.337
+  STOP_TIME                       = 2000-364T11:38:55.337
+
+However, we calculate the times (based on SCLK start count and observation duration
+described above) to be:
+  <start_date_time>2000-12-29T09:23:32.712Z</start_date_time>
+  <stop_date_time>2000-12-29T11:38:52.656Z</stop_date_time>
+
+Our calculated start time is 2.625 s earlier than the START_TIME delivered by the 
+team to PDS3. Our calculated stop time is 2.681 s earlier than the STOP_TIME 
+delivered by the team to PDS3. Therefore, our observation duration is 0.056 s shorter. 
+
+As part of the PDS4 migration, analysis of the differences between the calculated 
+<start_date_time> and PDS3 START_TIME, and the calculated <stop_date_time> and 
+PDS3 STOP_TIME was performed over the entire time period covered by EUV/FUV 
+observations. Across the dataset, the stop times have greater disagreement than 
+start times. The majority of timing differences are under 1 second. 
+
+However, there is a cluster of observations (for the Cruise bundle) with start 
+times from mid-2000 to early-2002 that show 1 s < stop time differences < 2.7 s, 
+for example:
+  - EUV2000_364_09_23.LBL reports stop and start time differences >2.5 seconds.
+    (FUV2000_364_09_23, reports a smaller time difference (<60 ms)).
+  - EUV2000_258_20_48.LBL and FUV2000_258_20_48.LBL report stop time 
+    differences >1.8 s, but no start time differences.
+
+In this Saturn bundle, there is a larger cluster of observations with start times 
+from early-2009 to late-2010, that have between 1 to 4 second start and stop time 
+differences. There are two further clusters of observations with start times from 
+mid-2012 to early-2015, and from early-2017 to EOM, that show start/stop time 
+differences of about 1 second.
+
+1b. **Other Timing Errors**
+
+In addition to the timing discrepancies described in 1a, there also appear to be
+some other timing errors in the PDS3 labels:
+
+  - FUV2004_167_10_44.LBL states:
+    START_TIME                      = 2005-091T04:26:07.654
+    STOP_TIME                       = 2005-091T04:26:30.154
+
+    PDS3 label filename and START_TIME/STOP_TIME values are in disagreement.
+    Converting SCLK counts to UTC (using cspyce with cas00171.tsc and naif0012.tls kernels):
+    SPACECRAFT_CLOCK_START_COUNT in UTC: 2004-06-15T10:44:33.534
+    SPACECRAFT_CLOCK_STOP_COUNT in UTC: 2004-06-15T10:44:56.034
+    which is in agreement with the label's filename's yyyy_ddd_HH_MM (2004_167_10_44).
+    The corresponding EUV observation, EUV2004_167_10_44.LBL, reports the same SCLK 
+    start count but different START_TIME and STOP_TIME values to those in the PDS3 FUV label:
+    START_TIME                      = 2004-167T10:44:33.534
+    STOP_TIME                       = 2004-167T10:44:56.034
+    The PDS3 label filename and START_TIME/STOP_TIME values are in agreement with
+    each other, and the re-calculated PDS4 values.    
+
+  - FUV2006_341_18_59.LBL states:
+    FILE_RECORDS                    = 2
+    START_TIME                      = 2006-341T18:59:57.698
+    STOP_TIME                       = 2006-341T19:05:07.698
+    INTEGRATION_DURATION            = 155.000 <SECOND>
+    AXIS_NAME                       = (BAND, LINE, SAMPLE)
+    CORE_ITEMS                      = (1024, 64, 1)
+
+    There is an observation duration discrepancy.
+    The difference between START_TIME and STOP_TIME is 310 seconds. But calculating 
+    SPACECRAFT_CLOCK_STOP_COUNT as SPACECRAFT_CLOCK_START_COUNT + INTEGRATION_DURATION*SAMPLE 
+    gives a time difference of 155 s. The INTEGRATION_DURATION is 155.0 s, and the number 
+    of SAMPLEs = 1. Unlike most other labels, FILE_RECORDS != SAMPLE. In this case, FILE_RECORDS = 2, 
+    which could explain 310 s (= 2*155). The data file has a length of 65536 (= 1024*64*1).
+
+  - FUV2007_111_08_33.LBL
+    FILE_RECORDS                    = 42
+    START_TIME                      = 2007-111T08:33:52.283
+    STOP_TIME                       = 2007-111T12:03:52.283
+    INTEGRATION_DURATION            = 300.000 <SECOND>
+    AXIS_NAME                       = (BAND, LINE, SAMPLE)
+    CORE_ITEMS                      = (1024, 64, 41)
+    
+    There is an observation duration discrepancy.
+    The difference between START_TIME and STOP_TIME is 12,600 seconds. But calculating 
+    SPACECRAFT_CLOCK_STOP_COUNT as the SPACECRAFT_CLOCK_START_COUNT + INTEGRATION_DURATION*SAMPLE 
+    gives a time difference of 12,300 s. The INTEGRATION_DURATION is 300.0 s, and the number 
+    of SAMPLEs = 41. Unlike most other labels, FILE_RECORDS != SAMPLE. In this case, FILE_RECORDS = 42, 
+    which could explain 12,600 s (= 42*300). The data file has a length of  2686976 (= 1024*64*41).
+
+
+In the PDS4 labels, the original PDS3 times are preserved via <Legacy_Metadata>.
+
+1c. **Target Identification**
+
+1c.i. *Target Information Improvement*
+
+In many cases, the PDS3 TARGET_NAME was incomplete. In some cases, the PDS3 
+TARGET_NAME was abbreviated; these were replaced in the PDS4 labels with the 
+corresponding full name. For the Cruise bundle, this was quite minimal: the 
+PDS3 TARGET_NAME = "S RINGS" becomes "Saturn Rings" in the PDS4 label. In the 
+Saturn bundle there were more instances of this, for example PDS3 TARGET_NAME = "DA" 
+is identified as "Daphnis" in PDS4; TARGET_NAME = "ME" is identified as "Methone"; 
+TARGET_NAME = "PO" is identified as "Polydeuces". In some PDS3 labels, Saturn's 
+rings were not identified under TARGET_NAME but were described in the purpose of 
+the OBJECT.DESCRIPTION; in those cases, the PDS4 Target_Identification includes 
+"Saturn Rings".
+
+1c.ii. *Using Timing Information to Identify Targets*
+
+In some cases, target identification in PDS3 was incorrect and has been corrected 
+during the migration to PDS4. This only affects this Saturn bundle (not the Cruise 
+bundle), as the correction method relies on using the Cassini Time-Ordered Listing 
+(TOL, a schedule of observations by all instruments), which only dates back to 2004, 
+together with the CIMS (Cassini Information Management System) request IDs. 
+The TOL is available at https://pds-rings.seti.org/cassini/Final-Cassini-TOL.txt. 
+An explanation of CIMS requests, from https://pds-rings.seti.org/cassini/cirs/reform_about.html, 
+is given below:
+
+  "A CIMS request corresponds to a particular block of time in which one or more 
+   instruments observe (usually) a single target. In the Cassini timeline, one 
+   instrument is always "prime" and defines the details of the observation, such 
+   as where the instrument points and how long it dwells at each location. Often, 
+   additional instruments are 'riders' and will obtain simultaneous data from the 
+   same target.
+
+   CIMS requests have identifiers such as this:
+
+   CIRS_016RE_E60PHASE001_VIMS
+
+   It is constructed as follows:
+
+   CIRS: Indicates the instrument doing the observation, regardless of whether it is prime or a rider.
+   016: Indicates Cassini's orbit number
+   RE: Abbreviation for the nominal target, in this case Ring E.
+   E60PHASE: A brief mnemonic indicating the purpose of the observation, in this case to gather the phase curve information around 60 degrees.
+   001: For the first activity of this type in the given orbit of Cassini.
+   VIMS: Finally, this indicates that the VIMS (Visual and Infrared Mapping Spectrometer) instrument is prime for the observation. If CIRS had been prime, the identifier would have ended with PRIME instead.
+
+  The CIMS request ID associated with a given file can be found in the PDS[3] label 
+  as the value for the keyword OBSERVATION_ID."
+  
+The CIMS ID was key in helping identify targets that were "unknown" in PDS3. The 
+PDS3 labels have 956 unknown stars (where TARGET_NAME = "STAR")
+
+The following method was used to identify most of those unknown stars:
+
+    1) A dictionary of star abbreviations was created to extract the star name 
+       from the encoding used in the CIMS ID: 
+       STAR_ABBREVS = {
+                      '126TAU'   : ('126 Tauri'           , ['126 Tau'],                      '126_tau'),
+                      ...
+                      'IOTORI'   : ('Iota Orionis'        , ['Iota Ori'],                     'iot_ori' ), 
+                      ...
+                      'ZETPUP'   : ('Zeta Puppis'         , ['Zeta Pup'],                     'zet_pup'),
+                      }
+
+    2) The datetime of the observation was matched with the CIMS ID, e.g. for FUV2012_004_15_30.LBL: 
+       "2012_004_15_30,UVIS_159ST_URIOTORI001_PIE"
+       that is, obtained by using information from the TOL:
+
+       "UVIS_159ST_URIOTORI001_PIE	UVIS_32096		2012-004T14:06:00		000T02:34:00	2012-004T16:40:00	7221.6	66.728	Prime	UVIS_HSP to 83.858/-5.91	NEG_X to NSP"	
+       (that is, by checking where the observation in question, 2012_004_15_30, fell with respect to the time ranges described in the TOL).
+
+    3) If the STAR_ABBREV was found in the CIMS ID (e.g. "IOTORI" in this example), then the name of that star is inserted into the PDS4 label, for example: 
+        <Target_Identification>
+            <name>Iota Orionis</name>
+            <alternate_designation>Iota Ori</alternate_designation>
+            <type>Star</type>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:target:star.iot_ori</lid_reference>
+                <reference_type>data_to_target</reference_type>
+            </Internal_Reference>
+        </Target_Identification>
+
+    4) The original PDS3 TARGET_NAME was preserved in the PDS4 label via 
+       <cassini:pds3_target_name>STAR</cassini:pds3_target_name>.
+
+The majority of unknown stars were identified in the method outlined above, but 
+there remained sixteen that were unable to be identified (because unlike the other 
+UVIS occultations, the star names were not encoded in the CIMS ID):
+  - euv2004_348_11_40    
+  - euv2004_348_11_59
+  - fuv2004_348_11_40
+  - fuv2004_348_11_59
+  - euv2007_202_05_54
+  - euv2007_202_06_18
+  - euv2007_202_06_37
+  - fuv2007_202_05_54
+  - fuv2007_202_06_17
+  - fuv2007_202_06_37
+  - fuv2007_243_05_55
+  - euv2008_053_18_55
+  - fuv2008_053_18_55
+  - euv2008_340_14_48
+  - fuv2008_340_14_48
+  - euv2010_172_02_34
+
+For those sixteen unknown stars, further analysis was carried out to identify the 
+targets. For example, for the PDS3 2004_348_11_40 and 2004_348_11_59 labels, their 
+datetimes were found to lie within the duration of the following observation 
+described in the TOL:
+
+"UVIS_00BST_TWOSTOCCS001_PRIME, UVIS_32096, , 2004-348T11:29:13, GMB_E00B_TitanB-000T00:09:00	, 000T00:36:00, 	2004-348T12:05:13, 	22033.9	47.593, 	Prime	, UVIS_FUV to 201.298/-11.161 (0.187,30.0,0.0 deg. offset), POS_X to NTP, Start NAC to  Alpha VIR and end with NAC to Lambda Sco"
+
+Suggesting that Alpha Vir and Lambda Sco were targets. To check this, the RA and 
+DEC as listed in the PDS3 label was used with SIMBAD (https://simbad.u-strasbg.fr/simbad/sim-fcoo) 
+to find the stars. It turned out that, in both cases, there was a familiar very 
+bright (first-magnitude) star very close to the sky coordinates:
+ - 2004_348_11_40:  The RA and Dec are 201.24 and -11.12, and the star is Alpha Vir (aka Spica).
+ - 2004_348_11_59:  The RA and Dec are 263.38 and -37.2, and the star is Lambda Sco.
+Also, in addition to the star targets, the PDS3 OBJECT.DESCRIPTION indicated that 
+the science target was Titan:
+"... The purpose of this observation is to probe hydrocarbon and aerosol
+  vertical profiles in Titan's upper atmosphere."
+
+Therefore the PDS4 label euv2004_348_11_40.lblx states:
+        <Target_Identification>
+            <name>Titan</name>
+            <alternate_designation>Saturn VI (Titan)</alternate_designation>
+            <alternate_designation>NAIF ID 606</alternate_designation>
+            <type>Satellite</type>
+            <description>
+                NAIF ID: 606;
+                Center of motion: Saturn;
+                LID of central body: urn:nasa:pds:context:target:planet.saturn;
+                NAIF ID of central body: 699.
+            </description>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:target:satellite.saturn.titan</lid_reference>
+                <reference_type>data_to_target</reference_type>
+            </Internal_Reference>
+        </Target_Identification>
+        <Target_Identification>
+            <name>Spica</name>
+            <alternate_designation>Alpha Virginis</alternate_designation>
+            <alternate_designation>Alpha Vir</alternate_designation>
+            <type>Star</type>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:target:star.alf_vir</lid_reference>
+                <reference_type>data_to_target</reference_type>
+            </Internal_Reference>
+        </Target_Identification>
+
+And the PDS4 label euv2004_348_11_59.lblx states:
+        <Target_Identification>
+            <name>Titan</name>
+            <alternate_designation>Saturn VI (Titan)</alternate_designation>
+            <alternate_designation>NAIF ID 606</alternate_designation>
+            <type>Satellite</type>
+            <description>
+                NAIF ID: 606;
+                Center of motion: Saturn;
+                LID of central body: urn:nasa:pds:context:target:planet.saturn;
+                NAIF ID of central body: 699.
+            </description>
+            <Internal_Reference>
+               <lid_reference>urn:nasa:pds:context:target:satellite.saturn.titan</lid_reference>
+               <reference_type>data_to_target</reference_type>
+            </Internal_Reference>
+        </Target_Identification>
+        <Target_Identification>
+            <name>Lambda Scorpii</name>
+            <alternate_designation>Lambda Sco</alternate_designation>
+            <type>Star</type>
+            <Internal_Reference>
+               <lid_reference>urn:nasa:pds:context:target:star.lam_sco</lid_reference>
+               <reference_type>data_to_target</reference_type>
+            </Internal_Reference>
+        </Target_Identification>
+
+To illustrate another of the 16 unknown star examples, consider EUV2007_202_05_54. 
+That observation falls during this entry in the TOL:
+
+"UVIS_048ST_THREESTAR001_PRIME	UVIS_32096		2007-202T05:54:00		000T01:26:00	2007-202T07:20:00	29856.8	154.061	Prime	UVIS_FUV to Star	POS_Z to North_Pole_Dir"	
+
+But that information is not particularly helpful in identifying any stars. However, 
+the Atmospheres Node provides further documentation: 
+https://atmos.nmsu.edu/data_and_services/atmospheres_data/Cassini/saturn/
+Looking at Saturn_Segments_magnetosphere_ionosphere.csv, it lists on line 635 
+an observation with start time of 2007-202T05:54:00 (SCET):
+
+ "635 UVIS_048ST_THREESTAR001_PRIME,UVIS,Star,"Delta Orionis, Epsilon Orionis, Zeta Orionis",THREESTAR,2007-202T05:54:00,,000T01:26:00,2007-202T07:20:00,YES     ,"ATPROP, MG/ION",SATURN_48,29856.8,154.06,144.96,Prime,UVIS_32096,UVIS_FUV to Star,POS_Z to North_Pole_Dir,"
+
+So it appears the three star targets were Orion's Belt – Delta Orionis, Epsilon 
+Orionis, and Zeta Orionis. Moreover, the PDS3 OBJECT.DESCRIPTION STATES: 
+"The purpose of this observation is to observe a stellar
+ occultation of the star Delta, Epsilon and Zeta Orionis to measure
+ temperature and hydrocarbon vertical profiles in Saturn's high
+ atmosphere."
+
+Accordingly, the PDS4 label, euv2007_202_05_54.lblx, lists:
+       <Target_Identification>
+            <name>Saturn</name>
+            <alternate_designation>NAIF ID 699</alternate_designation>
+            <type>Planet</type>
+            <description>
+                NAIF ID: 699;
+                Center of motion: Sun;
+                LID of central body: urn:nasa:pds:context:target:star.sun;
+                NAIF ID of central body: 10.
+            </description>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:target:planet.saturn</lid_reference>
+                <reference_type>data_to_target</reference_type>
+            </Internal_Reference>
+        </Target_Identification>
+        <Target_Identification>
+            <name>Delta Orionis</name>
+            <alternate_designation>Delta Ori</alternate_designation>
+            <type>Star</type>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:target:star.del_ori</lid_reference>
+                <reference_type>data_to_target</reference_type>
+            </Internal_Reference>
+        </Target_Identification>
+        <Target_Identification>
+            <name>Epsilon Orionis</name>
+            <alternate_designation>Epsilon Ori</alternate_designation>
+            <type>Star</type>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:target:star.eps_ori</lid_reference>
+                <reference_type>data_to_target</reference_type>
+            </Internal_Reference>
+        </Target_Identification>
+        <Target_Identification>
+            <name>Zeta Orionis</name>
+            <alternate_designation>Zeta Ori</alternate_designation>
+            <type>Star</type>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:target:star.zet_ori</lid_reference>
+                <reference_type>data_to_target</reference_type>
+            </Internal_Reference>
+        </Target_Identification>
+
+In addition to the unknown star targets described above, there were several other 
+unknown targets. An OPUS search of the PDS3 volumes shows that there were 276 
+EUV/FUV rider observations with target = Unknown or None and ISS prime: 
+
+https://opus.pds-rings.seti.org/opus/#/CASSINIisprime=No&CASSINIprimeinst=ISS&COUVISchannel=EUV,FUV&instrument=Cassini+UVIS&target=None,Unknown&cols=CASSINIobsname,opusid,planet,target,time1&widgets=COUVISchannel,CASSINIprimeinst,target,CASSINIisprime,instrument&order=CASSINIobsname,opusid&view=browse&browse=data&cart_browse=gallery&startobs=1&cart_startobs=1&detail=
+
+These 276 observations all have one of 54 CIMS IDs:
+  - UVIS_046OT_OUTERSATS001_ISS
+  - UVIS_047OT_OUTERSATS001_ISS
+  - UVIS_047OT_OUTERSATS002_ISS
+  - UVIS_048OT_OUTERSATS003_ISS
+  - UVIS_054OT_OUTERSATS001_ISS
+  - UVIS_055OT_OUTERSATS001_ISS
+  - UVIS_057OT_SATSEARCH001_ISS
+  - UVIS_088OT_OUTERSATS001_ISS
+  - UVIS_118OT_OUTERSATS001_ISS
+  - UVIS_119OT_OUTERSATS001_ISS
+  - UVIS_120OT_OUTERSATS001_ISS
+  - UVIS_120OT_OUTERSATS002_ISS
+  - UVIS_121OT_OUTERSATS001_ISS
+  - UVIS_123OT_OUTERSATS001_ISS
+  - UVIS_124OT_OUTERSATS001_ISS
+  - UVIS_125OT_OUTERSATS002_ISS
+  - UVIS_126OT_OUTERSATS001_ISS
+  - UVIS_127OT_OUTERSATS001_ISS
+  - UVIS_127OT_OUTERSATS002_ISS
+  - UVIS_127OT_OUTERSATS003_ISS
+  - UVIS_128OT_OUTERSATS002_ISS
+  - UVIS_130OT_OUTERSATS002_ISS
+  - UVIS_135OT_OUTERSATS001_ISS
+  - UVIS_136OT_OUTERSATS001_ISS
+  - UVIS_137OT_OUTERSATS001_ISS
+  - UVIS_137OT_OUTERSATS002_ISS
+  - UVIS_137OT_OUTERSATS003_ISS
+  - UVIS_138OT_OUTERSATS001_ISS
+  - UVIS_138OT_OUTERSATS002_ISS
+  - UVIS_138OT_OUTERSATS003_ISS
+  - UVIS_139OT_OUTERSATS001_ISS
+  - UVIS_140OT_OUTERSATS001_ISS
+  - UVIS_140OT_OUTERSATS002_ISS
+  - UVIS_142OT_OUTERSATS001_ISS
+  - UVIS_148OT_OUTERSATS001_ISS
+  - UVIS_148OT_OUTERSATS002_ISS
+  - UVIS_153OT_OUTERSATS001_ISS
+  - UVIS_154OT_OUTERSATS001_ISS
+  - UVIS_159OT_OUTERSATS001_ISS
+  - UVIS_160OT_OUTERSATS001_ISS
+  - UVIS_168OT_OUTERSATS001_ISS
+  - UVIS_169OT_OUTERSATS001_ISS
+  - UVIS_171OT_OUTERSATS001_ISS
+  - UVIS_171OT_OUTERSATS002_ISS
+  - UVIS_176OT_OUTERSATS001_ISS
+  - UVIS_182OT_OUTERSATS001_ISS
+  - UVIS_183OT_OUTERSAT004_ISS
+  - UVIS_183OT_OUTERSATS003_ISS
+  - UVIS_195OT_OUTERSATS001_ISS
+  - UVIS_197OT_OUTERSATS001_ISS
+  - UVIS_197OT_OUTERSATS002_ISS
+  - UVIS_197OT_OUTERSATS003_ISS
+  - UVIS_218OT_ICYLON001_ISS
+  - UVIS_222OT_ICYLON001_ISS
+
+The CIMS ID indicates that ISS was the primary instrument, while UVIS was "riding along" 
+as a secondary instrument. These were mostly the same type of "OUTERSAT" observations 
+that were focused on the irregular satellites (for studies of these, refer to 
+T. Denk and S. Mottola (2019), "Studies of irregular satellites: I. Lightcurves and 
+rotation periods of 25 Saturnian moons from Cassini observations", Icarus, 322, p.80-102, 
+https://doi.org/10.1016/j.icarus.2018.12.040). 
+
+UVIS riders on ISS primes were identified using a regular expression '^UVIS_+\d{3}OT_\w+_ISS$' 
+to search the TOL, then the start and stop times of matches were used to find ISS 
+primes in the COISS_2999 cumulative index table (available at 
+https://pds-rings.seti.org/holdings/metadata/COISS_2xxx/COISS_2999) that fell 
+within the observing times of UVIS riders. Then, since the rider can be assumed 
+to be collecting simultaneous data from the target, the target identified in the 
+ISS cumulative index was used in the EUV/FUV PDS4 labels. 
+
+For example, for UVIS_046OT_OUTERSATS001_ISS, the TOL states:
+
+"UVIS_046OT_OUTERSATS001_ISS	UVIS_5032		2007-165T21:17:00		000T01:00:00	2007-165T22:17:00	5032.0	18.115	SPASS Rider"
+
+Searching for observations in COISS_2999_index.tab that most closely align with 
+the TOL start and stop times indicates that Mundilfari was the ISS target. Then, 
+since UVIS was riding along with ISS, the PDS4 label (fuv2007_165_21_39.lblx) states:
+        
+        <Target_Identification>
+            <name>Mundilfari</name>
+            <alternate_designation>Saturn XXV (Mundilfari)</alternate_designation>
+            <alternate_designation>S/2000 S 9</alternate_designation>
+            <alternate_designation>NAIF ID 625</alternate_designation>
+            <type>Satellite</type>
+            <description>
+                NAIF ID: 625;
+                Center of motion: Saturn;
+                LID of central body: urn:nasa:pds:context:target:planet.saturn;
+                NAIF ID of central body: 699.
+            </description>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:target:satellite.saturn.mundilfari</lid_reference>
+                <reference_type>data_to_target</reference_type>
+            </Internal_Reference>
+        </Target_Identification>
+
+If it was not possible to glean information from the PDS3 TARGET_NAME, OBJECT.DESCRIPTION, 
+or CIMS ID, then 'urn:nasa:pds:context:target:calibrator.unk' was used for the unknown target.
+
+For many stellar occultations, only the occulted star is reported in the Target_Identification 
+area of the label – the science target (e.g. Saturn, Titan) is missing. Check the 
+Array_3D_Spectrum.description for details about targets. 
+
+Users are encouraged to check the <description> of <File_Area_Observational> 
+(OBJECT.DESCRIPTION in PDS3) for further details about the intended targets, as
+well as the CIMS ID and timing information present in the Time-Ordered Listing 
+and ISS cumulative index (available at https://pds-rings.seti.org/cassini/Final-Cassini-TOL.txt 
+and https://pds-rings.seti.org/holdings/metadata/COISS_2xxx/COISS_2999/COISS_2999_index.tab, 
+respectively). 
+
+A comment has been placed in the affected PDS4 LBLX raw data labels in the 
+<Observation_Area> class noting that a target correction was made. The original 
+PDS3 TARGET_NAMEs are preserved via <Legacy_Metadata>.
+
+
+1d. **Mission Phase Names Standardized** 
+
+Values of `cassini:mission_phase_name` have been updated for consistency across 
+instrument data sets. This is because different instruments specify the mission
+phases in ways that diverge from each other and often are inconsistent with the 
+official definition. Moreover, the official definition is multi-valued for many
+dates. In the PDS4 labels, the Cassini Mission phase names were edited for greater 
+consistency and clarity. First, short encounters that interrupt longer periods
+are defined:
+
+Venus 1 Encounter          1998-116T00:00:00.000         1998-117T00:00:00.000
+Venus 2 Encounter          1999-175T00:00:00.000         1999-176T00:00:00.000
+Earth Encounter            1999-230T00:00:00.000         1999-231T00:00:00.000
+Jupiter Encounter          2000-365T00:00:00.000         2000-366T00:00:00.000
+Phoebe Encounter           2004-163T00:00:00.000         2004-164T00:00:00.000
+Saturn Orbit Insertion     2004-183T00:00:00.000         2004-184T00:00:00.000
+Titan A Encounter          2004-300T00:00:00.000         2004-301T00:00:00.000
+Titan B Encounter          2004-348T00:00:00.000         2004-349T00:00:00.000
+
+Then, full-length periods that completely cover the mission timeline are defined:
+
+Interplanetary Cruise      1997-001T00:00:00.000         1999-312T00:00:00.000
+Outer Cruise               1999-312T00:00:00.000         2002-189T00:00:00.000
+Science Cruise             2002-189T00:00:00.000         2004-012T00:00:00.000
+Approach Science           2004-012T00:00:00.000         2004-163T00:00:00.000
+Tour Pre-Huygens           2004-163T00:00:00.000         2004-359T00:00:00.000
+Huygens Probe Separation   2004-359T00:00:00.000         2004-360T00:00:00.000
+Huygens Descent            2004-360T00:00:00.000         2005-014T00:00:00.000
+Titan C Huygens            2005-014T00:00:00.000         2005-015T00:00:00.000
+Tour                       2005-015T00:00:00.000         2008-183T00:00:00.000
+Equinox Mission            2008-183T00:00:00.000         2010-273T00:00:00.000
+Solstice Mission           2010-273T00:00:00.000         2020-001T00:00:00.000
+
+This list is single-valued for every observation date but fully consistent with
+the official definition found in the (PDS3) MISSION.CAT file.
+
+1e. **Other Corrections**
+
+There was one file for which the PDS3 label appeared to give incorrect
+dimensions for the binary data and which was corrected in the PDS4 label
+(<Axis_Array>): 
+    - fuv2006_341_19_02: PDS3 CORE_ITEMS = (1024, 64, 3), corrected in PDS4
+      to Line = 64, Sample = 1, Band = 1024
+This label has a comment noting this.
+
+A stray comma was removed from line 33 of the PDS3 fuv2013_069_22_35.lbl in order
+for the migration pipeline to parse it correctly:
+"RIGHT_ASCENSION           = 182.089,"  
+
+
+2. PDS3 Products Omitted from PDS4 Bundles
+------------------------------------------
+
+2a. **PDS3 Software** 
+
+In the original PDS3 delivery, each volume contained a CALIB/ directory, which
+contained the calibration files that are now included in the PDS4 calibration
+collection. Another subfolder SOFTWARE/CALIB/ contained the software and associated 
+input files that were used to generate the calibration data. PDS will not support 
+or maintain software in the archive, and so those files are not included in this PDS4 
+bundle; instead, they are available via the linked Source_Product_External reference 
+for the calibration software in bundle.lblx.
+
+Similarly, the geometry values included in the data object labels were computed
+using the software contained in the GEOMETRY_ENGINE.PRO file located under the PDS3 
+SOFTWARE/GEOM directory (and using the NAIF SPICE software library, 
+https://naif.jpl.nasa.gov/naif/toolkit.html), which are available via the linked 
+Source_Product_External reference for the geometry software in bundle.lblx. 
+
+Likewise, the IDL routines to load UVIS PDS3 data and label files into an IDL 
+session are provided under the PDS3 SOFTWARE/READERS directory, which are available 
+via the linked Source_Product_External reference for the readers software in bundle.lblx.
+
+Note there is a Python package named `pyuvis` that provides tools to work with 
+Cassini UVIS data (https://github.com/Cassini-UVIS/pyuvis).
+
+2b. **PDS3 CATALOG Documentation**
+
+This PDS4 bundle references the Cassini-Huygens Mission description 
+(cassini-huygens-mission-description.txt, named MISSION.CAT in PDS3) and the Cassini
+Orbiter instrument host description (cassini-orbiter-instrument-host-description.txt, 
+named INSTHOST.CAT in PDS3). Both these documents were largely extracted from the
+Cassini Mission Plan Document (D. Seal, 2003) [JPL D-5564]. This bundle also references
+the UVIS instrument description (uvis-instrument-description.txt, named UVISINST.CAT). 
+
+Some CATALOG files (like PERS.CAT, PROJREF.CAT, UVISREF.CAT) contain outdated 
+details and so have not been migrated to PDS4.
+
+The remaining UVIS CATALOG files: SCALDS.CAT, SCUBEDS.CAT, SSPECDS.CAT, SSSBDS.CAT,
+and SWAVDS.CAT have not been included in the PDS4 bundle because their information 
+is presented in Section 2 of the Software Interface Specifications (uvis-sis.pdf),
+which is archived in the document collection.
+
+
+3. Miscellaneous
+----------------
+
+The 'occultation_port_state' attribute (from the Cassini mission dictionary) is omitted 
+in all FUV PDS4 labels (all FUV PDS3 labels stated OCCULTATION_PORT_STATE = "N/A"). 
+EUV PDS4 labels include the occultation_port_state attribute, as either OPEN or CLOSED.
+
+
+Provenance Note:
+----------------
+
+All changes reflect updates made during label correction and validation 
+as part of the Cassini UVIS EUV/FUV bundles migration project, carried out by the 
+Ring-Moon Systems Node of the NASA Planetary Data System (PDS). These revisions 
+ensure metadata accuracy and schema compliance with the latest PDS4 standards.
+Validation was performed using the PDS Validate Tool (version 4.0.8).
+
+=======================================================
+
+For questions concerning this data set, please contact:
+
+Mia Mace / Matthew Tiscareno
+Ring-Moon Systems Node, NASA PDS
+SETI Institute
+339 Bernardo Ave.
+Mountain View, CA 94043
+Email: mmace@seti.org
+Email: mtiscareno@seti.org

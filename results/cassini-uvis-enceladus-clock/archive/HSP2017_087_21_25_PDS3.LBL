@@ -1,0 +1,77 @@
+PDS_VERSION_ID                  = PDS3
+RECORD_TYPE                     = FIXED_LENGTH
+RECORD_BYTES                    = 2
+FILE_RECORDS                    = 1501605
+PRODUCT_ID                      = "HSP2017_087_21_25"
+SPACECRAFT_CLOCK_START_COUNT    = "1/1869431642.32"
+SPACECRAFT_CLOCK_STOP_COUNT     = "UNK"
+START_TIME                      = 2017-087T21:25:50.191
+STOP_TIME                       = 2017-087T21:50:51.796
+DATA_SET_ID                     = "CO-S-UVIS-2-SSB-V1.4"
+TARGET_NAME                     = "STAR"
+INSTRUMENT_HOST_NAME            = "CASSINI_ORBITER"
+INSTRUMENT_NAME                 = "ULTRAVIOLET IMAGING SPECTROGRAPH"
+INSTRUMENT_ID                   = "UVIS"
+OBSERVATION_ID                  = 213570
+MISSION_PHASE_NAME              = XXM
+PRODUCT_CREATION_TIME           = 2017-355
+INTEGRATION_DURATION            = 1 <MILLISECOND>
+COMPRESSION_TYPE                = "SQRT_9"
+HI_VOLTAGE_POWER_SUPPLY_STATE   = ON
+ODC_ID                          = 1120 /* INDEX INTO PLANNING PRODUCTS */
+DESCRIPTION                     = "
+  This file was produced by the Cassini UVIS team at the Laboratory
+  for Atmospheric and Space Physics (LASP) at the University of Colorado
+  at Boulder.  For a description of hardware and scientific objectives,
+  refer to the Cassini UVIS instrument paper The Cassini Ultraviolet
+  Imaging Spectrograph Investigation, Space Science Reviews, 115, 299-361,
+  by L. W. Esposito et. al."
+ 
+^TIME_SERIES                  = "HSP2017_087_21_25.DAT"
+RIGHT_ASCENSION           = 191.93
+DECLINATION               = -59.678
+SUB_SOLAR_LATITUDE        = "UNK"  /* insufficient ephemeris data. */
+SUB_SOLAR_LONGITUDE       = "UNK"  /* insufficient ephemeris data. */
+SUB_SPACECRAFT_LATITUDE   = "UNK"  /* insufficient ephemeris data. */
+SUB_SPACECRAFT_LONGITUDE  = "UNK"  /* insufficient ephemeris data. */
+PHASE_ANGLE               = "UNK"  /* insufficient ephemeris data. */
+EMISSION_ANGLE            = "UNK"  /* insufficient ephemeris data. */
+INCIDENCE_ANGLE           = "UNK"  /* insufficient ephemeris data. */
+CENTRAL_BODY_DISTANCE     = "UNK"  /* insufficient ephemeris data. */
+SC_PLANET_POSITION_VECTOR =   
+"UNK"  /* insufficient ephemeris data. */
+SC_PLANET_VELOCITY_VECTOR =   
+"UNK"  /* insufficient ephemeris data. */
+SC_SUN_POSITION_VECTOR    =   
+(-2.1172628e+08<KM>, -1.3795354e+09<KM>, -5.6030563e+08<KM>)
+SC_SUN_VELOCITY_VECTOR    =   
+(4.6752198<KM/S>, 7.4994768<KM/S>, -5.8822876<KM/S>)
+SC_TARGET_POSITION_VECTOR =   
+"UNK"  /* insufficient ephemeris data. */
+SC_TARGET_VELOCITY_VECTOR =   
+"UNK"  /* insufficient ephemeris data. */
+PLANET_CENTER_POSITION_VECTOR =   
+"UNK"  /* insufficient ephemeris data. */
+PLANET_CENTER_VELOCITY_VECTOR =   
+"UNK"  /* insufficient ephemeris data. */
+/* UVIS HSP Channel Time Series Object Definition */
+OBJECT                          = TIME_SERIES
+  INTERCHANGE_FORMAT            = BINARY
+  ROWS                          = 1501605
+  COLUMNS                       = 1
+  ROW_BYTES                     = 2
+  SAMPLING_PARAMETER_NAME       = TIME
+  SAMPLING_PARAMETER_UNIT       = MILLISECONDS
+  SAMPLING_PARAMETER_INTERVAL   = 1.000
+  DESCRIPTION                   = "Sequence of counts from UVIS HSP.
+      The purpose of this observation is to observe a stellar occultation
+  of the star Bet Cru  to measure temperature and hydrocarbon vertical
+  profiles in Saturn's high atmosphere."
+  OBJECT                        = COLUMN
+    NAME                        = PHOTOMETER_COUNTS
+    DATA_TYPE                   = MSB_UNSIGNED_INTEGER
+    START_BYTE                  = 1
+    BYTES                       = 2
+  END_OBJECT                    = COLUMN
+END_OBJECT                      = TIME_SERIES
+END
