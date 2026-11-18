@@ -1,0 +1,37 @@
+name: Referee replay of public ultrashort bulge data
+on:
+  push:
+    branches:
+      - research/ultrashort-bulge
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  referee:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install numerical reproduction dependencies
+        run: python -m pip install --disable-pip-version-check 'numpy<3' 'scipy>=1.14' pyerfa 'VBMicrolensing==5.6.1'
+      - name: Build identical finite-source template library
+        run: g++ -O3 -std=c++17 -fPIC -shared results/ultrashort-bulge/grid.cpp -o results/ultrashort-bulge/grid.so
+      - name: Check every frozen curve receipt and numerical census
+        run: python results/ultrashort-bulge/referee_audit.py | tee referee-audit.log
+      - name: Independently re-evaluate light-curve fits and refit controls
+        run: python results/ultrashort-bulge/referee_replay.py --refit | tee referee-replay.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ultrashort-bulge-referee-receipts
+          path: |
+            referee-audit.log
+            referee-replay.json
+          retention-days: 90
