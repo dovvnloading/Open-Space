@@ -34,7 +34,7 @@ def main():
         checks.append(dict(sample=label, alerts=len(ra), circle_max_three_harmonics=observed, uniform_ra_diagnostic_p=(exceed+1)/10000,
                       ra_quadrants=np.histogram(ra, bins=[0, 90, 180, 270, 360])[0].tolist(), calendar_months=dict(sorted(Counter(t.month for t in d).items()))))
     output = Path(__file__).with_name('exposure.json')
-    output.write_text(json.dumps(checks, indent=2)+'\n')
+    output.write_text(json.dumps(checks, indent=2)+'\n', newline='\n')
 
 
 if __name__ == '__main__':

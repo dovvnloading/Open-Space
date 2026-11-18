@@ -239,7 +239,7 @@ def main(archival=False):
     write_table('null_histograms.csv', hist, ['family', 'statistic', 'null', 'value', 'frequency'])
     meta = dict(cutoff=STOP, native_maps=n, scanned_registry=len(registry), unusable_legacy_ids=registry_exclusions, movable_alerts=sum(len(
         g) for g in groups.values() if len(g) > 1), strata={'/'.join(map(str, key)): len(g) for key, g in groups.items()}, source_selection=counts, tests=summary)
-    (OUT/'statistics.json').write_text(json.dumps(meta, indent=2, sort_keys=True)+'\n')
+    (OUT/'statistics.json').write_text(json.dumps(meta, indent=2, sort_keys=True)+'\n', newline='\n')
     print(f'{n} maps, {len(pairs)} native pairs, {len(bounds)} unresolved bounding-box pairs')
 
 
