@@ -1,6 +1,6 @@
 # Arsia Mons dawn-strip test is sensitive to image alignment
 
-**Null result.** The 18 January 2026 Mars Odyssey strip was brighter than a visit to the same terrain on 6 November 2025. After estimating the broad change from adjacent terrain, median increases across the search strip were **5.87%** at 0.42 µm and **10.53%** at 0.75 µm. Both bands crossed the threshold together over **four** consecutive latitude blocks. The frozen test required six. An eastward or southward shift of the January image by one 720 m cell extended the run to **seven** blocks, so the threshold crossing depends on alignment. The comparison supplies no reliable onset date for the morning cloud. [Protocol](PROTOCOL.md) · [Numerical results](summary.json) · [October 2026 release](https://pds-geosciences.wustl.edu/missions/odyssey/themis.html)
+**Null result.** The 18 January 2026 Mars Odyssey strip was brighter than a visit to the same terrain on 6 November 2025. After estimating the broad change from adjacent terrain, median increases across the search strip were **5.87%** at 0.42 µm and **10.53%** at 0.75 µm. Both bands crossed the threshold together over **four** consecutive latitude blocks. The frozen test required six. An eastward or southward shift of the January image by one 720 m cell extended the run to **seven** blocks, so the threshold crossing depends on alignment. Separate terrain checks north and south of the search interval favored the original alignment. The comparison supplies no reliable onset date for the morning cloud. [Protocol](PROTOCOL.md) · [Numerical results](summary.json) · [October 2026 release](https://pds-geosciences.wustl.edu/missions/odyssey/themis.html)
 
 ## What the images cover
 
@@ -11,6 +11,8 @@ The two archived single-band albedo products select 0.749 µm and 0.654 µm, res
 ## Two-band comparison
 
 The primary grid contains **3,890** valid common cells, **2,069** in the search interval. The median increases in that interval were **69.33%** and **55.57%** before estimating the relative background from the two neighboring latitude intervals. The shorter above-threshold run persists across the unshifted linear and constant backgrounds and the alternate grid scales. One-cell shifts also change the common footprint. They test sensitivity to alignment and have no assigned probability. [Primary results and shift controls](summary.json)
+
+We checked registration independently of the brightness criterion by correlating high-pass terrain texture on the two shoulders. The original alignment had the highest score in both shoulders at both grid scales. On the 720 m grid, the mean band correlations were **0.6144** in the south and **0.7954** in the north. This supports retaining the archived alignment at the tested offsets. It does not measure sub-grid pointing or absolute ground position. [Terrain check design](REGISTRATION_CHECK.md) · [All terrain correlation scores](registration.json)
 
 ![The two shoulder-adjusted THEMIS brightness profiles and the number of consecutive two-band blocks for the original registration and four one-cell shifts.](arsia-profile.png)
 
@@ -26,9 +28,10 @@ Prior work has established the seasonal cloud and proposed a microphysical expla
 
 The native EQR decoder uses NumPy. Put the four cubes and their XML labels from [sources.json](sources.json) in one directory, then run [decode.py](decode.py) with the data directory and output paths for the compact maps and geometry. It checks the exact size and SHA-256 of each input. The [native detector-plane diagnostic](native_rdr.py) can be run separately with the two RDRs and their labels from [native-rdr-sources.json](native-rdr-sources.json). Larger source files were kept on D. The independent native replay reproduced the EQR maps, geometry and results byte for byte.
 
-Run the offline analysis from this directory with NumPy and Matplotlib.
+Run the offline analysis from this directory with NumPy, SciPy and Matplotlib.
 
 ```sh
 python analyze.py --output summary.json
+python registration.py --output registration.json
 python plot.py --output arsia-profile.png
 ```

@@ -54,6 +54,18 @@
       "printed": "32.10",
       "statement": "Illustrative center illumination-geometric brightness change in percent.",
       "compute": "100 * (json('native-rdr-summary.json','/center_geometry_factor') - 1)"
+    },
+    {
+      "id": "terrain-south-corr",
+      "printed": "0.6144",
+      "statement": "Mean two-band terrain correlation at archived alignment on the 720 m south shoulder.",
+      "compute": "json('registration.json','/scales/720/south/zero_shift_score')"
+    },
+    {
+      "id": "terrain-north-corr",
+      "printed": "0.7954",
+      "statement": "Mean two-band terrain correlation at archived alignment on the 720 m north shoulder.",
+      "compute": "json('registration.json','/scales/720/north/zero_shift_score')"
     }
   ]
 }
