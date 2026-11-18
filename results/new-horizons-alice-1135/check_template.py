@@ -26,7 +26,7 @@ def frame(hdus, content, path, calibrated, cols):
         "duration": float(header["EXPTIME"]), "door": int(header["APRDRPOS"]),
         "ra": float(header["SPCBRRA"]), "dec": float(header["SPCBRDEC"]),
     }
-    record["slit_label"] = header["SAPDESC"]
+    record["observation_description"] = header.get("SAPDESC")
     data = hdus["WAVELENGTH_IMAGE"].data if calibrated else hdus[0].data
     if data.shape != (32, 1024):
         raise ValueError(f"Unexpected Alice shape: {path}")
@@ -88,7 +88,7 @@ def matching(pairs, door, n):
 
 
 def direction(coordinate):
-    return {"ra": float(coordinate.icrs.ra.deg), "dec": float(coordinate.icrs.dec.deg),
+    return {"ra": float(coordinate.icrs.spherical.lon.deg), "dec": float(coordinate.icrs.spherical.lat.deg),
             "l": float(coordinate.galactic.l.deg), "b": float(coordinate.galactic.b.deg)}
 
 
