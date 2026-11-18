@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1O00.sch"
+    schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<Product_Observational xmlns="http://pds.nasa.gov/pds4/pds/v1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1 https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1O00.xsd">
+    <Identification_Area>
+        <logical_identifier>urn:nasa:pds:mr5-mag:data_cruise:mag_cruise_data</logical_identifier>
+        <version_id>1.0</version_id>
+        <title>Mariner 5 Magnetometer Cruise Data</title>
+        <information_model_version>1.24.0.0</information_model_version>
+        <product_class>Product_Observational</product_class>
+    </Identification_Area>
+    <Observation_Area>
+        <Time_Coordinates>
+            <start_date_time>1967-06-14Z</start_date_time>
+            <stop_date_time>1967-11-21Z</stop_date_time>
+        </Time_Coordinates>
+        <Primary_Result_Summary>
+            <purpose>Science</purpose>
+            <processing_level>Calibrated</processing_level>
+            <Science_Facets>
+                <discipline_name>Fields</discipline_name>
+                <facet1>Magnetic</facet1>
+                <facet2>Background</facet2>
+            </Science_Facets>
+        </Primary_Result_Summary>
+        <Investigation_Area>
+            <name>Mariner 67</name>
+            <type>Mission</type>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:investigation:mission.mariner67</lid_reference>
+                <reference_type>data_to_investigation</reference_type>
+            </Internal_Reference>
+        </Investigation_Area>
+        <Observing_System>
+            <Observing_System_Component>
+                <name>Mariner 5</name>
+                <type>Host</type>
+                <Internal_Reference>
+                    <lid_reference>urn:nasa:pds:context:instrument_host:spacecraft.mr5</lid_reference>
+                    <reference_type>is_instrument_host</reference_type>
+                </Internal_Reference>
+            </Observing_System_Component>
+            <Observing_System_Component>
+                <name>Mariner 5 Magnetometer (MAG)</name>
+                <type>Instrument</type>
+                <Internal_Reference>
+                    <lid_reference>urn:nasa:pds:context:instrument:mr5.mag</lid_reference>
+                    <reference_type>is_instrument</reference_type>
+                </Internal_Reference>
+            </Observing_System_Component>
+        </Observing_System>
+        <Target_Identification>
+            <name>Solar Wind</name>
+            <type>Plasma Stream</type>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:target:plasma_stream.solar_wind</lid_reference>
+                <reference_type>data_to_target</reference_type>
+            </Internal_Reference>
+        </Target_Identification>
+    </Observation_Area>
+    <Reference_List>
+        <External_Reference>
+            <reference_text>NSSDCA Dataset PSFP-00087</reference_text>
+            <description>
+                The source for this data product is Mariner 5 fine-time scale Interplanetary
+                magnetic fields data supplied by the experimenter on a binary IBM
+                7094 magnetic tape and held at the NASA Space Science Data Coordinated Archive
+                (NSSDCA) as data set PSFP-00087.
+            </description>
+        </External_Reference>
+    </Reference_List>
+    <File_Area_Observational>
+        <File>
+            <file_name>mag_cruise_data.csv</file_name>
+            <file_size unit="byte">57231132</file_size>
+            <records>400258</records>
+        </File>
+        <Header>
+            <name>header</name>
+            <local_identifier>HEADER</local_identifier>
+            <offset unit="byte">0</offset>
+            <object_length unit="byte">210</object_length>
+            <parsing_standard_id>PDS DSV 1</parsing_standard_id>
+            <description>
+                A single-record, ASCII comma-separated table that provides the name of 42 parameters.
+            </description>
+        </Header>
+        <Table_Delimited>
+            <name>Data_Table</name>
+            <local_identifier>DATA_TABLE</local_identifier>
+            <offset unit="byte">210</offset>
+            <object_length unit="byte">57230922</object_length>
+            <parsing_standard_id>PDS DSV 1</parsing_standard_id>
+            <description>
+                An ASCII comma-separated values table containing the time and vector components, and occasional
+                ephemeris information in time order. The time covered by each frame is 12.6 s for the high 
+                satellite bit rate and 50.4 s for the low rate.
+            </description>
+            <records>400257</records>
+            <record_delimiter>Carriage-Return Line-Feed</record_delimiter>
+            <field_delimiter>Comma</field_delimiter>
+            <Record_Delimited>
+                <fields>44</fields>
+                <groups>0</groups>
+                <Field_Delimited>
+                    <name>RECORD_N</name>
+                    <field_number>1</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                        Record number (added)
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>RATE</name>
+                    <field_number>2</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                        Date rate flag (added)
+                        0 for low bit rate data, (50.4 sec)
+                        1 for high bit rate data (12.6 sec)
+                    </description>
+                </Field_Delimited>                
+                <Field_Delimited>
+                    <name>NTYPE</name>
+                    <field_number>3</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                        Type of record (see the document)
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>day</name>
+                    <field_number>4</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                        Day from beginning of year (Jan. 1 is Day 1).
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>hour</name>
+                    <field_number>5</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <unit>hour</unit>
+                    <description>
+                        Hour of the day.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>minute</name>
+                    <field_number>6</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <unit>minute</unit>
+                    <description>
+                        Minute.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>second</name>
+                    <field_number>7</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <unit>second</unit>
+                    <description>
+                        Integral part of second.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>fraction_second</name>
+                    <field_number>8</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <unit>bar</unit>
+                    <description>
+                        Fractions of second, in 32nd of a second.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>UTC</name>
+                    <field_number>9</field_number>
+                    <data_type>ASCII_Date_Time_YMD_UTC</data_type>
+                    <description>
+                        Converted UTC time.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IJ1</name>
+                    <field_number>10</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       Spike tag for the 1st vector reading.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IR1</name>
+                    <field_number>11</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       Range tag for the 1st vector reading.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IPM11</name>
+                    <field_number>12</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <unit>gamma</unit>
+                    <description>
+                       R component of magnetic field for the 1st vector reading.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IPM21</name>
+                    <field_number>13</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <unit>gamma</unit>
+                    <description>
+                       T component of magnetic field for the 1st vector reading.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IPM31</name>
+                    <field_number>14</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <unit>gamma</unit>
+                    <description>
+                       N component of the magnetic field for the 1st vector reading.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IJ2</name>
+                    <field_number>15</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       Spike tag for the 2nd vector reading.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IR2</name>
+                    <field_number>16</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       Range tag for the 2nd vector reading.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IPM12</name>
+                    <field_number>17</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <unit>gamma</unit>
+                    <description>
+                       R component of magnetic field for the 2nd vector reading.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IPM22</name>
+                    <field_number>18</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <unit>gamma</unit>
+                    <description>
+                       T component of the magnetic field for the 2nd vector reading.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IPM32</name>
+                    <field_number>19</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <unit>gamma</unit>
+                    <description>
+                       N component of the magnetic field for the 2nd vector reading.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IJ3</name>
+                    <field_number>20</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       Spike tag for the 3rd vector reading.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IR3</name>
+                    <field_number>21</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       Range tag for the 3rd vector reading.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IPM13</name>
+                    <field_number>22</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <unit>gamma</unit>
+                    <description>
+                       R component of magnetic field for the 3rd vector reading.
+                    </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IPM23</name>
+                    <field_number>23</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <unit>gamma</unit>
+                    <description>
+                       T component of the magnetic field for the 3rd vector reading.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>IPM33</name>
+                    <field_number>24</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <unit>gamma</unit>
+                    <description>
+                       N component of the magnetic field for the 3rd vector reading.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>MF1</name>
+                    <field_number>25</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       DAS bit number 25 (JPL1), 1 or 0 changing every 128 frames.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>MF2</name>
+                    <field_number>26</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       DAS bit 211 (JPL1); 0 or 1 changing every frame.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>MF3</name>
+                    <field_number>27</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       Frame count. An integer assigned to each frame by the spacecraft clock.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>MF4</name>
+                    <field_number>28</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       Quality control prefix from the quality word for this frame (JPL2).
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>MF5</name>
+                    <field_number>29</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       Frame count (modulo 2048) for 32 frames from the beginning of the sequence, and
+                       increases by 1 every 64 frames after that until the next sequence.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>MF6</name>
+                    <field_number>30</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       NDCI from the quality word
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>MF7</name>
+                    <field_number>31</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       Tag used to locate time jumps and frame count anomalies on the MDL tapes, and
+                       have no significance on BAMFAT tapes.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>MF8</name>
+                    <field_number>32</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       Tag used to locate time jumps and frame count anomalies on the MDL tapes, and
+                       have no significance on BAMFAT tapes.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>MF9</name>
+                    <field_number>33</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       Tag used to locate time jumps and frame count anomalies on the MDL tapes, and
+                       have no significance on BAMFAT tapes.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>MF10</name>
+                    <field_number>34</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       1 if dummy data has been inserted, 2 if frame count has been corrected, 
+                       3 during roll periods, and 0 otherwise.
+                   </description>
+                </Field_Delimited>                   
+                <Field_Delimited>
+                    <name>MF11</name>
+                    <field_number>35</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       During the magnetometer calibration sequences , this is
+                       1 for frames 1-4 of the sequence
+                       2 for frames 5-8
+                       6 for frame 9
+                       3 for frames 17-20
+                       4 for frames 21-24
+                       5 for frames 25
+                       0 otherwise
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>MF12</name>
+                    <field_number>36</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <description>
+                       2 for frames 1-4 of the sequence
+                       1 for frames 17-20
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>CR1</name>
+                    <field_number>37</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <unit>km</unit>
+                    <description>
+                       Distance of Mariner from sun (km).
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>CR2</name>
+                    <field_number>38</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <unit>degree</unit>
+                    <description>
+                       Latitude of Mariner in solar equatorial coordinates (degree).
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>CR3</name>
+                    <field_number>39</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <unit>degree</unit>
+                    <description>
+                       Longitude of Mariner in solar equatorial coordinates (degree).
+                   </description>
+                </Field_Delimited> 
+                <Field_Delimited>
+                    <name>CR4</name>
+                    <field_number>40</field_number>
+                    <data_type>ASCII_Integer</data_type>
+                    <unit>km</unit>
+                    <description>
+                       Distance of Earth from sun (km).
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>CR5</name>
+                    <field_number>41</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <unit>degree</unit>
+                    <description>
+                       Latitude of Earth in solar equatorial coordinates (degree).
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>CR6</name>
+                    <field_number>42</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <unit>degree</unit>
+                    <description>
+                       Longitude of Earth in solar equatorial coordinates (degree).
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>CPHI</name>
+                    <field_number>43</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <description>
+                       Cosine of the angle used to rotate from the XYZ spacecraft system to solar equatorial coordinates.
+                   </description>
+                </Field_Delimited>
+                <Field_Delimited>
+                    <name>SPHI</name>
+                    <field_number>44</field_number>
+                    <data_type>ASCII_Real</data_type>
+                    <description>
+                       Sine of the angle used to rotate from the XYZ spacecraft system to solar equatorial coordinates.
+                   </description>
+                </Field_Delimited> 
+            </Record_Delimited>
+        </Table_Delimited>
+    </File_Area_Observational>
+</Product_Observational>
