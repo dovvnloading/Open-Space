@@ -1,0 +1,47 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "daily-products",
+      "printed": "50",
+      "statement": "Daily Level 3 current products across all three sensors.",
+      "compute": "json('screen-results.json', '/summary/daily_products')"
+    },
+    {
+      "id": "primary-dates",
+      "printed": "17",
+      "statement": "AMSR3 daily maps in the frozen interval.",
+      "compute": "json('screen-results.json', '/summary/primary_dates')"
+    },
+    {
+      "id": "primary-footprints",
+      "printed": "4",
+      "statement": "Daily qualifying footprints in the main five-cell screen.",
+      "compute": "json('screen-results.json', '/summary/detections/primary')"
+    },
+    {
+      "id": "primary-days",
+      "printed": "2",
+      "statement": "Longest consecutive chain in the main screen.",
+      "compute": "json('screen-results.json', '/summary/longest_chain_days/primary')"
+    },
+    {
+      "id": "smaller-days",
+      "printed": "3",
+      "statement": "Longest consecutive chain in the three-cell sensitivity.",
+      "compute": "json('screen-results.json', '/summary/longest_chain_days/core3')"
+    },
+    {
+      "id": "cross-sensor-chains",
+      "printed": "0",
+      "statement": "Three-day chains supported by a comparison sensor in the primary screen.",
+      "compute": "json('screen-results.json', '/summary/cross_sensor_three_day_chains')"
+    },
+    {
+      "id": "maud-rise-core",
+      "printed": "892",
+      "statement": "Low-concentration cells on the historical Maud Rise control date.",
+      "compute": "json('screen-results.json', '/controls/historical_maud_rise/1/cutoff_70/0/core_cells')"
+    }
+  ]
+}
