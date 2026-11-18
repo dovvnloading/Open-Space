@@ -1,0 +1,794 @@
+{
+  "observing_unit": "UTC day, with separate PWS rows retained in field-inputs.json",
+  "block_anchor_utc": "2023-01-01",
+  "coverage": {
+    "2023": {
+      "qtn": {
+        "rows": 47,
+        "matched_rows_w12": 24
+      },
+      "epo": {
+        "rows": 0,
+        "matched_rows_w12": 0
+      }
+    },
+    "2024": {
+      "qtn": {
+        "rows": 10,
+        "matched_rows_w12": 8
+      },
+      "epo": {
+        "rows": 0,
+        "matched_rows_w12": 0
+      }
+    },
+    "2025": {
+      "qtn": {
+        "rows": 6,
+        "matched_rows_w12": 4
+      },
+      "epo": {
+        "rows": 0,
+        "matched_rows_w12": 0
+      }
+    }
+  },
+  "w12": {
+    "training_density_per_nt": 0.2908332363945769,
+    "training_stationary_density_cm3": 0.14740999999999999,
+    "yearly": {
+      "2023": {
+        "field_fit": {
+          "days": 21,
+          "blocks": 13,
+          "median_absolute_log_error": 0.015812974448035564,
+          "predictions_in_reported_bounds": 6,
+          "prediction_cm3_by_day": {
+            "2023-01-03": 0.14637928340447778,
+            "2023-01-09": 0.14386066221315472,
+            "2023-01-16": 0.14553731321655727,
+            "2023-01-23": 0.14387520628800807,
+            "2023-01-30": 0.14675736001061826,
+            "2023-02-06": 0.14771420065386154,
+            "2023-02-20": 0.14569,
+            "2023-02-27": 0.1480399255245346,
+            "2023-03-06": 0.15054110769404305,
+            "2023-04-17": 0.1418742692199072,
+            "2023-05-01": 0.14678934310728628,
+            "2023-05-08": 0.1453875387150876,
+            "2023-05-15": 0.14738556350121546,
+            "2023-05-29": 0.14031104119834678,
+            "2023-06-19": 0.14625712357671658,
+            "2023-06-26": 0.14754842593655199,
+            "2023-07-31": 0.15248386846273046,
+            "2023-08-07": 0.15014557473107618,
+            "2023-08-14": 0.15183094524538607,
+            "2023-09-12": 0.1513757885095251,
+            "2023-09-19": 0.1502124532063852
+          }
+        },
+        "stationary_baseline": {
+          "days": 21,
+          "blocks": 13,
+          "median_absolute_log_error": 0.007831960216381498,
+          "predictions_in_reported_bounds": 16,
+          "prediction_cm3_by_day": {
+            "2023-01-03": 0.14740999999999999,
+            "2023-01-09": 0.14740999999999999,
+            "2023-01-16": 0.14740999999999999,
+            "2023-01-23": 0.14740999999999999,
+            "2023-01-30": 0.14740999999999999,
+            "2023-02-06": 0.14740999999999999,
+            "2023-02-20": 0.14740999999999999,
+            "2023-02-27": 0.14740999999999999,
+            "2023-03-06": 0.14740999999999999,
+            "2023-04-17": 0.14740999999999999,
+            "2023-05-01": 0.14740999999999999,
+            "2023-05-08": 0.14740999999999999,
+            "2023-05-15": 0.14740999999999999,
+            "2023-05-29": 0.14740999999999999,
+            "2023-06-19": 0.14740999999999999,
+            "2023-06-26": 0.14740999999999999,
+            "2023-07-31": 0.14740999999999999,
+            "2023-08-07": 0.14740999999999999,
+            "2023-08-14": 0.14740999999999999,
+            "2023-09-12": 0.14740999999999999,
+            "2023-09-19": 0.14740999999999999
+          }
+        },
+        "simultaneous_by_day": {
+          "2023-01-03": {
+            "density_cm3": 0.14683,
+            "low_cm3": 0.1453,
+            "high_cm3": 0.14837,
+            "field_nt": 0.5033100247383118
+          },
+          "2023-01-09": {
+            "density_cm3": 0.14569,
+            "low_cm3": 0.14416,
+            "high_cm3": 0.14722,
+            "field_nt": 0.4946500062942505
+          },
+          "2023-01-16": {
+            "density_cm3": 0.14740999999999999,
+            "low_cm3": 0.14587499999999998,
+            "high_cm3": 0.14895,
+            "field_nt": 0.5004149973392487
+          },
+          "2023-01-23": {
+            "density_cm3": 0.14664,
+            "low_cm3": 0.14511,
+            "high_cm3": 0.14818,
+            "field_nt": 0.49470001459121704
+          },
+          "2023-01-30": {
+            "density_cm3": 0.14626,
+            "low_cm3": 0.14473,
+            "high_cm3": 0.1478,
+            "field_nt": 0.504610002040863
+          },
+          "2023-02-06": {
+            "density_cm3": 0.14664,
+            "low_cm3": 0.14511,
+            "high_cm3": 0.14818,
+            "field_nt": 0.5078999996185303
+          },
+          "2023-02-20": {
+            "density_cm3": 0.14569,
+            "low_cm3": 0.14416,
+            "high_cm3": 0.14722,
+            "field_nt": 0.5009399950504303
+          },
+          "2023-02-27": {
+            "density_cm3": 0.14645,
+            "low_cm3": 0.14492,
+            "high_cm3": 0.14799,
+            "field_nt": 0.5090199708938599
+          },
+          "2023-03-06": {
+            "density_cm3": 0.14588,
+            "low_cm3": 0.14435,
+            "high_cm3": 0.14742,
+            "field_nt": 0.5176200270652771
+          },
+          "2023-04-17": {
+            "density_cm3": 0.14626,
+            "low_cm3": 0.14473,
+            "high_cm3": 0.1478,
+            "field_nt": 0.48781999945640564
+          },
+          "2023-05-01": {
+            "density_cm3": 0.14626,
+            "low_cm3": 0.14473,
+            "high_cm3": 0.1478,
+            "field_nt": 0.5047199726104736
+          },
+          "2023-05-08": {
+            "density_cm3": 0.14894,
+            "low_cm3": 0.1474,
+            "high_cm3": 0.15049,
+            "field_nt": 0.4999000132083893
+          },
+          "2023-05-15": {
+            "density_cm3": 0.1476,
+            "low_cm3": 0.14606,
+            "high_cm3": 0.14914,
+            "field_nt": 0.5067700147628784
+          },
+          "2023-05-29": {
+            "density_cm3": 0.14894,
+            "low_cm3": 0.1474,
+            "high_cm3": 0.15049,
+            "field_nt": 0.48244500160217285
+          },
+          "2023-06-19": {
+            "density_cm3": 0.1501,
+            "low_cm3": 0.14855,
+            "high_cm3": 0.15166,
+            "field_nt": 0.5028899908065796
+          },
+          "2023-06-26": {
+            "density_cm3": 0.15049,
+            "low_cm3": 0.14894,
+            "high_cm3": 0.15205,
+            "field_nt": 0.5073300004005432
+          },
+          "2023-07-31": {
+            "density_cm3": 0.14952,
+            "low_cm3": 0.14797,
+            "high_cm3": 0.15107,
+            "field_nt": 0.5243000090122223
+          },
+          "2023-08-07": {
+            "density_cm3": 0.14779,
+            "low_cm3": 0.14625,
+            "high_cm3": 0.14934,
+            "field_nt": 0.516260027885437
+          },
+          "2023-08-14": {
+            "density_cm3": 0.14798,
+            "low_cm3": 0.14644,
+            "high_cm3": 0.14953,
+            "field_nt": 0.5220550000667572
+          },
+          "2023-09-12": {
+            "density_cm3": 0.14798,
+            "low_cm3": 0.14644,
+            "high_cm3": 0.14953,
+            "field_nt": 0.5204899907112122
+          },
+          "2023-09-19": {
+            "density_cm3": 0.14798,
+            "low_cm3": 0.14644,
+            "high_cm3": 0.14953,
+            "field_nt": 0.5164899826049805
+          }
+        }
+      },
+      "2024": {
+        "field_fit": {
+          "days": 7,
+          "blocks": 5,
+          "median_absolute_log_error": 0.03308964207601206,
+          "predictions_in_reported_bounds": 0,
+          "prediction_cm3_by_day": {
+            "2024-06-22": 0.14603318122749945,
+            "2024-06-25": 0.14696384600300902,
+            "2024-07-13": 0.14412822811942608,
+            "2024-07-29": 0.14334733784538617,
+            "2024-08-05": 0.14310013191040835,
+            "2024-08-12": 0.14459647278915388,
+            "2024-10-15": 0.13599071422889866
+          }
+        },
+        "stationary_baseline": {
+          "days": 7,
+          "blocks": 5,
+          "median_absolute_log_error": 0.01808391858022966,
+          "predictions_in_reported_bounds": 2,
+          "prediction_cm3_by_day": {
+            "2024-06-22": 0.14740999999999999,
+            "2024-06-25": 0.14740999999999999,
+            "2024-07-13": 0.14740999999999999,
+            "2024-07-29": 0.14740999999999999,
+            "2024-08-05": 0.14740999999999999,
+            "2024-08-12": 0.14740999999999999,
+            "2024-10-15": 0.14740999999999999
+          }
+        },
+        "simultaneous_by_day": {
+          "2024-06-22": {
+            "density_cm3": 0.142375,
+            "low_cm3": 0.14086500000000002,
+            "high_cm3": 0.143895,
+            "field_nt": 0.5021199882030487
+          },
+          "2024-06-25": {
+            "density_cm3": 0.1421,
+            "low_cm3": 0.14059,
+            "high_cm3": 0.14362,
+            "field_nt": 0.5053199827671051
+          },
+          "2024-07-13": {
+            "density_cm3": 0.14228,
+            "low_cm3": 0.14077,
+            "high_cm3": 0.1438,
+            "field_nt": 0.49557000398635864
+          },
+          "2024-07-29": {
+            "density_cm3": 0.14817,
+            "low_cm3": 0.14663,
+            "high_cm3": 0.14972,
+            "field_nt": 0.4928849935531616
+          },
+          "2024-08-05": {
+            "density_cm3": 0.14817,
+            "low_cm3": 0.14663,
+            "high_cm3": 0.14972,
+            "field_nt": 0.49203500151634216
+          },
+          "2024-08-12": {
+            "density_cm3": 0.14914,
+            "low_cm3": 0.1476,
+            "high_cm3": 0.15069,
+            "field_nt": 0.4971800148487091
+          },
+          "2024-10-15": {
+            "density_cm3": 0.1501,
+            "low_cm3": 0.14855,
+            "high_cm3": 0.15166,
+            "field_nt": 0.46759000420570374
+          }
+        }
+      },
+      "2025": {
+        "field_fit": {
+          "days": 4,
+          "blocks": 3,
+          "median_absolute_log_error": 0.021639745315560663,
+          "predictions_in_reported_bounds": 2,
+          "prediction_cm3_by_day": {
+            "2025-03-03": 0.14370360700675247,
+            "2025-03-17": 0.14968604957225567,
+            "2025-04-07": 0.14142056862503277,
+            "2025-04-14": 0.14840347539083346
+          }
+        },
+        "stationary_baseline": {
+          "days": 4,
+          "blocks": 3,
+          "median_absolute_log_error": 0.008410160675907984,
+          "predictions_in_reported_bounds": 3,
+          "prediction_cm3_by_day": {
+            "2025-03-03": 0.14740999999999999,
+            "2025-03-17": 0.14740999999999999,
+            "2025-04-07": 0.14740999999999999,
+            "2025-04-14": 0.14740999999999999
+          }
+        },
+        "simultaneous_by_day": {
+          "2025-03-03": {
+            "density_cm3": 0.14875,
+            "low_cm3": 0.14721,
+            "high_cm3": 0.1503,
+            "field_nt": 0.49410998821258545
+          },
+          "2025-03-17": {
+            "density_cm3": 0.14856,
+            "low_cm3": 0.14702,
+            "high_cm3": 0.15011,
+            "field_nt": 0.5146799981594086
+          },
+          "2025-04-07": {
+            "density_cm3": 0.14837,
+            "low_cm3": 0.14683,
+            "high_cm3": 0.14992,
+            "field_nt": 0.48625999689102173
+          },
+          "2025-04-14": {
+            "density_cm3": 0.14971,
+            "low_cm3": 0.14816,
+            "high_cm3": 0.15127,
+            "field_nt": 0.5102699995040894
+          }
+        }
+      }
+    },
+    "held_out_shifted_controls_days": {
+      "-14": {
+        "simultaneous": {
+          "days": 2,
+          "blocks": 2,
+          "median_absolute_log_error": 0.021032665756394113,
+          "predictions_in_reported_bounds": 1,
+          "prediction_cm3_by_day": {
+            "2025-03-03": 0.14370360700675247,
+            "2025-03-17": 0.14968604957225567
+          }
+        },
+        "shifted": {
+          "days": 2,
+          "blocks": 2,
+          "median_absolute_log_error": 0.020978554712770336,
+          "predictions_in_reported_bounds": 1,
+          "prediction_cm3_by_day": {
+            "2025-03-03": 0.14751061827593795,
+            "2025-03-17": 0.1436527157460245
+          }
+        }
+      },
+      "-7": {
+        "simultaneous": {
+          "days": 2,
+          "blocks": 2,
+          "median_absolute_log_error": 0.021639745315560663,
+          "predictions_in_reported_bounds": 1,
+          "prediction_cm3_by_day": {
+            "2025-03-03": 0.14370360700675247,
+            "2025-04-14": 0.14840347539083346
+          }
+        },
+        "shifted": {
+          "days": 2,
+          "blocks": 2,
+          "median_absolute_log_error": 0.028663290367880238,
+          "predictions_in_reported_bounds": 1,
+          "prediction_cm3_by_day": {
+            "2025-03-03": 0.148695761023852,
+            "2025-04-14": 0.14142056862503277
+          }
+        }
+      },
+      "7": {
+        "simultaneous": {
+          "days": 1,
+          "blocks": 1,
+          "median_absolute_log_error": 0.047970946969964845,
+          "predictions_in_reported_bounds": 0,
+          "prediction_cm3_by_day": {
+            "2025-04-07": 0.14142056862503277
+          }
+        },
+        "shifted": {
+          "days": 1,
+          "blocks": 1,
+          "median_absolute_log_error": 0.00042152517175830784,
+          "predictions_in_reported_bounds": 1,
+          "prediction_cm3_by_day": {
+            "2025-04-07": 0.14843255487303433
+          }
+        }
+      },
+      "14": {
+        "simultaneous": {
+          "days": 1,
+          "blocks": 1,
+          "median_absolute_log_error": 0.03451415070413096,
+          "predictions_in_reported_bounds": 0,
+          "prediction_cm3_by_day": {
+            "2025-03-03": 0.14370360700675247
+          }
+        },
+        "shifted": {
+          "days": 1,
+          "blocks": 1,
+          "median_absolute_log_error": 0.0064187886023800165,
+          "predictions_in_reported_bounds": 1,
+          "prediction_cm3_by_day": {
+            "2025-03-03": 0.14970786568453573
+          }
+        }
+      }
+    },
+    "simultaneous_holdout_informative": true,
+    "beats_stationary_baseline_by_at_least_20_percent": false,
+    "beats_all_informative_shared_coverage_offsets": false,
+    "supports_frozen_model_rule": false
+  },
+  "w6": {
+    "training_density_per_nt": 0.28848714971474204,
+    "training_stationary_density_cm3": 0.14798,
+    "yearly": {
+      "2023": {
+        "field_fit": {
+          "days": 15,
+          "blocks": 12,
+          "median_absolute_log_error": 0.013942520841947189,
+          "predictions_in_reported_bounds": 4,
+          "prediction_cm3_by_day": {
+            "2023-01-03": 0.14584467769916334,
+            "2023-01-16": 0.14446570211614954,
+            "2023-01-30": 0.14527347980895325,
+            "2023-05-01": 0.14423491708722122,
+            "2023-06-05": 0.1433175287572381,
+            "2023-06-26": 0.14533982738814483,
+            "2023-07-17": 0.14843961861490296,
+            "2023-07-24": 0.14952,
+            "2023-07-31": 0.15110236010204403,
+            "2023-08-14": 0.15095089641115142,
+            "2023-08-28": 0.15244814899908146,
+            "2023-09-04": 0.15127112213806213,
+            "2023-09-12": 0.150275839669492,
+            "2023-09-19": 0.14928922356865873,
+            "2023-09-26": 0.14828095014607043
+          }
+        },
+        "stationary_baseline": {
+          "days": 15,
+          "blocks": 12,
+          "median_absolute_log_error": 0.009096525965955414,
+          "predictions_in_reported_bounds": 11,
+          "prediction_cm3_by_day": {
+            "2023-01-03": 0.14798,
+            "2023-01-16": 0.14798,
+            "2023-01-30": 0.14798,
+            "2023-05-01": 0.14798,
+            "2023-06-05": 0.14798,
+            "2023-06-26": 0.14798,
+            "2023-07-17": 0.14798,
+            "2023-07-24": 0.14798,
+            "2023-07-31": 0.14798,
+            "2023-08-14": 0.14798,
+            "2023-08-28": 0.14798,
+            "2023-09-04": 0.14798,
+            "2023-09-12": 0.14798,
+            "2023-09-19": 0.14798,
+            "2023-09-26": 0.14798
+          }
+        },
+        "simultaneous_by_day": {
+          "2023-01-03": {
+            "density_cm3": 0.14683,
+            "low_cm3": 0.1453,
+            "high_cm3": 0.14837,
+            "field_nt": 0.5055499970912933
+          },
+          "2023-01-16": {
+            "density_cm3": 0.14740999999999999,
+            "low_cm3": 0.14587499999999998,
+            "high_cm3": 0.14895,
+            "field_nt": 0.5007699728012085
+          },
+          "2023-01-30": {
+            "density_cm3": 0.14626,
+            "low_cm3": 0.14473,
+            "high_cm3": 0.1478,
+            "field_nt": 0.503570020198822
+          },
+          "2023-05-01": {
+            "density_cm3": 0.14626,
+            "low_cm3": 0.14473,
+            "high_cm3": 0.1478,
+            "field_nt": 0.4999699890613556
+          },
+          "2023-06-05": {
+            "density_cm3": 0.14933,
+            "low_cm3": 0.14778,
+            "high_cm3": 0.15088,
+            "field_nt": 0.49678999185562134
+          },
+          "2023-06-26": {
+            "density_cm3": 0.15049,
+            "low_cm3": 0.14894,
+            "high_cm3": 0.15205,
+            "field_nt": 0.5038000047206879
+          },
+          "2023-07-17": {
+            "density_cm3": 0.1501,
+            "low_cm3": 0.14855,
+            "high_cm3": 0.15166,
+            "field_nt": 0.5145449936389923
+          },
+          "2023-07-24": {
+            "density_cm3": 0.14952,
+            "low_cm3": 0.14797,
+            "high_cm3": 0.15107,
+            "field_nt": 0.5182899832725525
+          },
+          "2023-07-31": {
+            "density_cm3": 0.14952,
+            "low_cm3": 0.14797,
+            "high_cm3": 0.15107,
+            "field_nt": 0.5237750113010406
+          },
+          "2023-08-14": {
+            "density_cm3": 0.14798,
+            "low_cm3": 0.14644,
+            "high_cm3": 0.14953,
+            "field_nt": 0.5232499837875366
+          },
+          "2023-08-28": {
+            "density_cm3": 0.14664,
+            "low_cm3": 0.14511,
+            "high_cm3": 0.14818,
+            "field_nt": 0.528439998626709
+          },
+          "2023-09-04": {
+            "density_cm3": 0.14779,
+            "low_cm3": 0.14625,
+            "high_cm3": 0.14934,
+            "field_nt": 0.5243600010871887
+          },
+          "2023-09-12": {
+            "density_cm3": 0.14798,
+            "low_cm3": 0.14644,
+            "high_cm3": 0.14953,
+            "field_nt": 0.520909994840622
+          },
+          "2023-09-19": {
+            "density_cm3": 0.14798,
+            "low_cm3": 0.14644,
+            "high_cm3": 0.14953,
+            "field_nt": 0.517490029335022
+          },
+          "2023-09-26": {
+            "density_cm3": 0.14645,
+            "low_cm3": 0.14492,
+            "high_cm3": 0.14799,
+            "field_nt": 0.5139949917793274
+          }
+        }
+      },
+      "2024": {
+        "field_fit": {
+          "days": 4,
+          "blocks": 3,
+          "median_absolute_log_error": 0.011051306042390376,
+          "predictions_in_reported_bounds": 2,
+          "prediction_cm3_by_day": {
+            "2024-06-22": 0.1448393016634077,
+            "2024-06-25": 0.1460062349572415,
+            "2024-07-13": 0.14253573297247082,
+            "2024-07-20": 0.14280402067606981
+          }
+        },
+        "stationary_baseline": {
+          "days": 4,
+          "blocks": 3,
+          "median_absolute_log_error": 0.039913138405750295,
+          "predictions_in_reported_bounds": 0,
+          "prediction_cm3_by_day": {
+            "2024-06-22": 0.14798,
+            "2024-06-25": 0.14798,
+            "2024-07-13": 0.14798,
+            "2024-07-20": 0.14798
+          }
+        },
+        "simultaneous_by_day": {
+          "2024-06-22": {
+            "density_cm3": 0.142375,
+            "low_cm3": 0.14086500000000002,
+            "high_cm3": 0.143895,
+            "field_nt": 0.5020650029182434
+          },
+          "2024-06-25": {
+            "density_cm3": 0.1421,
+            "low_cm3": 0.14059,
+            "high_cm3": 0.14362,
+            "field_nt": 0.5061100125312805
+          },
+          "2024-07-13": {
+            "density_cm3": 0.14228,
+            "low_cm3": 0.14077,
+            "high_cm3": 0.1438,
+            "field_nt": 0.4940800070762634
+          },
+          "2024-07-20": {
+            "density_cm3": 0.1421,
+            "low_cm3": 0.14059,
+            "high_cm3": 0.14362,
+            "field_nt": 0.49500998854637146
+          }
+        }
+      },
+      "2025": {
+        "field_fit": {
+          "days": 3,
+          "blocks": 2,
+          "median_absolute_log_error": 0.016002908833167764,
+          "predictions_in_reported_bounds": 1,
+          "prediction_cm3_by_day": {
+            "2025-03-17": 0.14759868002888402,
+            "2025-04-07": 0.140415353068606,
+            "2025-04-14": 0.14733327251694361
+          }
+        },
+        "stationary_baseline": {
+          "days": 3,
+          "blocks": 2,
+          "median_absolute_log_error": 0.003911787547045443,
+          "predictions_in_reported_bounds": 2,
+          "prediction_cm3_by_day": {
+            "2025-03-17": 0.14798,
+            "2025-04-07": 0.14798,
+            "2025-04-14": 0.14798
+          }
+        },
+        "simultaneous_by_day": {
+          "2025-03-17": {
+            "density_cm3": 0.14856,
+            "low_cm3": 0.14702,
+            "high_cm3": 0.15011,
+            "field_nt": 0.5116299986839294
+          },
+          "2025-04-07": {
+            "density_cm3": 0.14837,
+            "low_cm3": 0.14683,
+            "high_cm3": 0.14992,
+            "field_nt": 0.48673000931739807
+          },
+          "2025-04-14": {
+            "density_cm3": 0.14971,
+            "low_cm3": 0.14816,
+            "high_cm3": 0.15127,
+            "field_nt": 0.5107100009918213
+          }
+        }
+      }
+    },
+    "held_out_shifted_controls_days": {
+      "-14": {
+        "simultaneous": {
+          "days": 0,
+          "blocks": 0,
+          "median_absolute_log_error": null,
+          "predictions_in_reported_bounds": 0,
+          "prediction_cm3_by_day": {}
+        },
+        "shifted": {
+          "days": 0,
+          "blocks": 0,
+          "median_absolute_log_error": null,
+          "predictions_in_reported_bounds": 0,
+          "prediction_cm3_by_day": {}
+        }
+      },
+      "-7": {
+        "simultaneous": {
+          "days": 1,
+          "blocks": 1,
+          "median_absolute_log_error": 0.016002908833167764,
+          "predictions_in_reported_bounds": 0,
+          "prediction_cm3_by_day": {
+            "2025-04-14": 0.14733327251694361
+          }
+        },
+        "shifted": {
+          "days": 1,
+          "blocks": 1,
+          "median_absolute_log_error": 0.06467073113163108,
+          "predictions_in_reported_bounds": 0,
+          "prediction_cm3_by_day": {
+            "2025-04-14": 0.1403345701407734
+          }
+        }
+      },
+      "7": {
+        "simultaneous": {
+          "days": 1,
+          "blocks": 1,
+          "median_absolute_log_error": 0.05510431600902432,
+          "predictions_in_reported_bounds": 0,
+          "prediction_cm3_by_day": {
+            "2025-04-07": 0.140415353068606
+          }
+        },
+        "shifted": {
+          "days": 1,
+          "blocks": 1,
+          "median_absolute_log_error": 0.007011973334124712,
+          "predictions_in_reported_bounds": 1,
+          "prediction_cm3_by_day": {
+            "2025-04-07": 0.14733327251694361
+          }
+        }
+      },
+      "14": {
+        "simultaneous": {
+          "days": 1,
+          "blocks": 1,
+          "median_absolute_log_error": 0.016002908833167764,
+          "predictions_in_reported_bounds": 0,
+          "prediction_cm3_by_day": {
+            "2025-04-14": 0.14733327251694361
+          }
+        },
+        "shifted": {
+          "days": 1,
+          "blocks": 1,
+          "median_absolute_log_error": 0.08029213869992174,
+          "predictions_in_reported_bounds": 0,
+          "prediction_cm3_by_day": {
+            "2025-04-14": 0.13815938061952537
+          }
+        }
+      }
+    },
+    "simultaneous_holdout_informative": false,
+    "beats_stationary_baseline_by_at_least_20_percent": false,
+    "beats_all_informative_shared_coverage_offsets": false,
+    "supports_frozen_model_rule": false
+  },
+  "embedded_field_control": {
+    "all": {
+      "embedded_field_rows": 55,
+      "shared_rows": 17,
+      "shared_utc_days": 14,
+      "shared_median_absolute_difference_nt": {
+        "-0.5": 0.0045500089836120194,
+        "0": 0.0033299827671050553,
+        "0.5": 0.0032650016212463218
+      }
+    },
+    "2025": {
+      "embedded_field_rows": 0,
+      "shared_rows": 0,
+      "shared_utc_days": 0,
+      "shared_median_absolute_difference_nt": {
+        "-0.5": null,
+        "0": null,
+        "0.5": null
+      }
+    }
+  }
+}
