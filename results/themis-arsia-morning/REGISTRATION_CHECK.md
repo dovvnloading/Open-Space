@@ -1,0 +1,7 @@
+# Terrain registration diagnostic outside the cloud search
+
+This follow-up was frozen after the published-grid screen and before computing image texture correlations. It asks whether a pointing adjustment favored by terrain outside the search interval is reproducible. It cannot turn a shift selected using the brightening into independent evidence.
+
+Use the two published neighboring latitude intervals and the existing matched images on the 360 m and 720 m grids. Subtract a coverage-normalized 1.44 km Gaussian smooth of each log-radiance plane. A high-pass sample needs at least 80% smoothing support. Compare the two wavelength planes by their mean Pearson correlation. Search translations up to 720 m in each map axis, on the native grid step at each scale. Compare every translation on the same common eligible cells and require at least 250 cells per shoulder. Break exact score ties by shorter displacement, then easting and northing.
+
+Call a nonzero translation supported only if both shoulders and both grid scales independently select the same translation, its mean correlation is at least 0.30 in all four comparisons, its separation from the second-ranked score is at least 0.015, and its gain over zero translation is at least 0.06. Each analysis sees different spatial coverage, but both scales use the same original photography. Report all correlations and unmatched support. The experiment provides a detector-geometry diagnostic. It does not measure absolute pointing against a ground-control network.
