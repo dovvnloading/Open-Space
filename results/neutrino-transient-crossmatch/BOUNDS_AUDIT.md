@@ -1,0 +1,3 @@
+# Supplemental coverage audit
+
+Before inspecting any alert–transient pair in the 2024–26 samples, add a descriptive audit for alerts whose latest circular supplies only asymmetric RA and Dec extrema of its 90% region. A point outside those extrema cannot belong to that region. A point inside those extrema is unresolved. For each EM family retain all pairs passing both the registered time window and these necessary coordinate bounds. Use RA wrapping. Use only complete extrema from a revised circular with a clear identification and exclude retractions. Archive these records separately. They never enter a match count, chance probability, or novelty claim. For events with exact regions, use the original preregistration. Summarize families with zero exposure separately.
