@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 205 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 31 carefully recorded null or inconclusive checks.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 206 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 32 carefully recorded null or inconclusive checks.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -285,6 +285,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **Gamma-ray bursts and a solar flare hidden in a neutron-star burst catalog.** *Correction* · [Details](results/minbar-external-bursts/README.md)
 - **Timing from Mars Odyssey places GRB 250902A on a sky ring.** The ring passes 3.9° from the reported position, if the same pulse was identified at Mars and at Fermi. *Candidate* · [Details](results/mars-odyssey-grb-timing/README.md)
 - **GRB 260127A kept glowing in soft X-rays.** Hours after the burst, its soft X-ray output added up to about two-thirds of the energy in the original gamma-ray burst. *Measured* · [Details](results/grb-260127a-late-fluence/README.md)
+- **No detached pulse passed a Fermi screen of GRB 261115A.** The known prompt gamma-ray burst was recovered. No excess met the two-detector threshold in 2,381 tested windows between 32 and 3 seconds before or 8 and 40 seconds after the trigger. *Null result* · [Details](results/gbm-grb261115a-separated-emission/README.md)
 - **An expanding X-ray ring around GRB 180728A.** The ring is likely an echo from a dust layer about 158 parsecs away. *Candidate* · [Details](results/swift-grb-dust-echoes/README.md)
 - **An X-ray transient reconnected with its gamma-ray counterpart.** FXT 981217. *Correction* · [Details](results/fxt-981217-batse/README.md)
 - **No black hole in the latest gravitational-wave catalog merged twice.** *Null result* · [Details](results/gwtc-successive-mergers/README.md)
