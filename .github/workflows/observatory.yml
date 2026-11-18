@@ -39,10 +39,13 @@ jobs:
           python observatory/check_media.py --directory dist/assets
           python -m unittest discover -s tests -p 'test_observatory_*.py' -v
           node --test tests/observatory-simulation.test.mjs
-      - name: Exercise the published files in Chromium
+      - name: Exercise the published files in Chromium, Firefox and WebKit
         run: |
           python -m pip install playwright==1.58.0
+          python -m playwright install --with-deps firefox webkit
           python observatory/check_browser.py --directory dist --channel chrome
+          python observatory/check_browser.py --directory dist --engine firefox
+          python observatory/check_browser.py --directory dist --engine webkit
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
