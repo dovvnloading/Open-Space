@@ -1,0 +1,46 @@
+{
+  "schema": "open-space/claims/1",
+  "let": {
+    "windows": "table('windows.csv.gz')",
+    "pre": "windows[windows['region'] == 'pre']",
+    "late": "windows[windows['region'] == 'late']"
+  },
+  "claims": [
+    {
+      "id": "primary-windows",
+      "printed": "2,381",
+      "statement": "Total complete windows in the primary pre-burst and late family.",
+      "compute": "len(pre) + len(late)"
+    },
+    {
+      "id": "no-primary-joint-crossings",
+      "expect": 0,
+      "statement": "No pre-burst or late window meets the adjusted joint threshold.",
+      "compute": "count(pre['primary_scaled_p'] <= 0.01) + count(late['primary_scaled_p'] <= 0.01)"
+    },
+    {
+      "id": "minimum-pre-joint-probability",
+      "printed": "0.06246",
+      "statement": "Minimum conservative unadjusted joint probability in the pre-burst search.",
+      "compute": "min(pre['joint_p'])"
+    },
+    {
+      "id": "minimum-late-joint-probability",
+      "printed": "0.04045",
+      "statement": "Minimum conservative unadjusted joint probability in the late search.",
+      "compute": "min(late['joint_p'])"
+    },
+    {
+      "id": "prompt-n9-counts",
+      "printed": "5,274",
+      "statement": "Total channel 2 through 4 counts in complete prompt bins of n9.",
+      "compute": "json('screen.json', '/prompt_control/n9/counts')"
+    },
+    {
+      "id": "prompt-n6-counts",
+      "printed": "4,758",
+      "statement": "Total channel 2 through 4 counts in complete prompt bins of n6.",
+      "compute": "json('screen.json', '/prompt_control/n6/counts')"
+    }
+  ]
+}
