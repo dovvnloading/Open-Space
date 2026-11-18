@@ -188,7 +188,12 @@ def build_spotlights(tree: RepoTree, repository: str, records: list[dict], outpu
             digest = hashlib.sha256(git("show", f"{tree.commit}:{figure['path']}")).hexdigest()
             if digest.encode() not in image:
                 raise ValueError(f"Regenerate {name} from {figure['path']} with render_figures.py")
-            destination.write_bytes(image)
+            source = HERE / "data/figures" / name
+            if destination.resolve() == source.resolve() and source.exists():
+                if source.read_bytes() != image:
+                    raise ValueError(f"Use --output outside the source directory to preserve {name}")
+            else:
+                destination.write_bytes(image)
     return curated
 
 
