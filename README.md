@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 221 entries: 96 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 36 carefully recorded null or inconclusive checks.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 222 entries: 97 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 36 carefully recorded null or inconclusive checks.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -101,6 +101,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Earth’s rivers, wetlands, sea ice and coastlines
 
+- **Sentinel-6B CoastWatch exports apply an explicit latency edit.** All 67 checked 6B histories limit the processing latency used for sea-level anomaly. The 6A histories show no explicit latency limit. A Pacific coast comparison found no repeatable 1 cm near-shore excess on paired tracks. *Measured* · [Details](results/sentinel6-tandem-coastwatch/README.md)
 - **A second reflectance offset darkened recent Sentinel-2 scenes at Ioto.** An original-pixel comparison confirmed the 0.1 reflectance error in six Earth Search scenes. The corrected optical shoreline test left the timing of attachment unresolved. *Correction* · [Details](results/ioto-okinahama-shoreline/README.md)
 - **No Antarctic offshore opening passed the three-day AMSR3 screen.** A smaller patch persisted for three days in the sensitivity check. AMSR2 saw the low concentrations on both available days, while SSMIS estimated much more ice over the same cells. A smoothing test narrowed the gap. *Null result* · [Details](results/amsr3-antarctic-openings/README.md)
 - **Mali’s Inner Niger Delta shows a delayed seasonal flood wave (2024–26).** On two same-track SWOT RiverSP D July–January comparisons, Diré stood 4.64 m and 3.55 m higher while Mopti changed by no more than 0.18 m. Independent gauges and a second altimeter corroborate the stage contrasts; a persistent change in discharge was not established. *Measured* · [Details](results/mission05-swot-rivers/inner-niger/README.md)
