@@ -18,10 +18,11 @@ function utc(iso) {
   return iso.slice(11, 19) + " UTC";
 }
 
-export function openImageDesk(id, plates) {
+export function openImageDesk(id, plates, { embedded = false } = {}) {
   const desk = document.createElement("image-desk");
   desk.targetId = id;
   desk.plates = plates;
+  desk.embedded = embedded;
   return desk;
 }
 
@@ -35,13 +36,14 @@ class ImageDesk extends HTMLElement {
     this.playing = false;
     this.level = 0;
     this.offset = { x: 0, y: 0 };
+    this.centerMarker = null;
     const sequence = this.frames.length > 1;
     this.innerHTML = `<article class="desk-layout">
       <header class="desk-head"><div><p class="desk-kicker">${esc(plate.kind)} · ${esc(plate.name)}</p>
-      <h2 id="dossier-title">${esc(titles[id])}</h2></div></header>
+      ${this.embedded ? `<h3>${esc(titles[id])}</h3>` : `<h2 id="dossier-title">${esc(titles[id])}</h2>`}</div></header>
       <div class="desk-window" role="group" tabindex="0" aria-label="Image inspection area. At higher magnification use the arrow keys to pan.">
         <div class="desk-sheet" hidden><img draggable="false" alt="${esc(plate.kind + " of " + plate.name)}"/>
-        ${(plate.markers || []).map((m) => `<span class="desk-pin" style="left:${100 * m.x}%;top:${100 * m.y}%"><b>${esc(m.label)}</b></span>`).join("")}</div>
+        ${(plate.markers || []).map((m) => `<span class="desk-pin" data-pin="${esc(m.label)}" style="left:${100 * m.x}%;top:${100 * m.y}%"><b>${esc(m.label)}</b></span>`).join("")}</div>
         <span class="desk-scale" hidden>5″</span>
         <div class="desk-load-state" hidden><span role="status"></span><button type="button" hidden>Retry image</button></div>
       </div>
@@ -49,6 +51,9 @@ class ImageDesk extends HTMLElement {
         ${levels.map((n, i) => `<button type="button" data-zoom="${i}" aria-pressed="${i === 0}" aria-label="Magnify ${n} times">${n}×</button>`).join("")}
       </div><small data-hint>Fit to window</small>
       <a class="desk-original" hidden target="_blank" rel="noopener">Original image ${icon("external")}</a></div>
+      ${this.embedded && plate.markers?.length ? `<div class="desk-marker-tools" role="group" aria-label="Catalog image positions">
+        ${plate.markers.map(marker => `<button type="button" data-marker="${esc(marker.label)}" aria-pressed="false">Image ${esc(marker.label)}</button>`).join("")}
+        <span role="status" data-marker-status></span></div>` : ""}
       ${
         sequence
           ? `<div class="desk-film"><button type="button" data-play disabled>Play sequence</button>
@@ -58,13 +63,13 @@ class ImageDesk extends HTMLElement {
       }
       <div class="desk-caption"><p>${esc(explanations[id] || plate.description)}</p>
         <a href="${esc(plate.source)}" target="_blank" rel="noopener">${esc(plate.credit)} ${icon("external")}</a>
-        <a href="#target/${esc(id)}">Read investigation ${icon("arrow")}</a></div>
-      <nav class="desk-plates" aria-label="Image collection">${Object.entries(this.plates)
+        ${this.embedded ? "" : `<a href="#target/${esc(id)}">Read investigation ${icon("arrow")}</a>`}</div>
+      ${this.embedded ? "" : `<nav class="desk-plates" aria-label="Image collection">${Object.entries(this.plates)
         .map(
           ([key, p]) =>
             `<a href="#plate/${esc(key)}" ${key === id ? 'aria-current="page"' : ""}><img src="./assets/${esc(p.file)}" alt=""/><span>${esc(p.name)}</span></a>`,
         )
-        .join("")}</nav>
+        .join("")}</nav>`}
       </article>`;
     const find = (selector) => this.querySelector(selector);
     this.stage = find(".desk-window");
@@ -83,18 +88,12 @@ class ImageDesk extends HTMLElement {
       this.stage.focus();
       this.showFrame(this.requestedIndex);
     };
-    this.querySelectorAll("[data-zoom]").forEach(
-      (button) =>
-        (button.onclick = () => {
-          this.level = Number(button.dataset.zoom);
-          this.querySelectorAll("[data-zoom]").forEach((b) =>
-            b.setAttribute("aria-pressed", String(b === button)),
-          );
-          if (!this.level) this.offset = { x: 0, y: 0 };
-          find("[data-hint]").textContent = this.level ? "Drag or use arrow keys to pan" : "Fit to window";
-          this.layout();
-        }),
-    );
+    this.querySelectorAll("[data-zoom]").forEach(button => {
+      button.onclick = () => this.zoom(Number(button.dataset.zoom));
+    });
+    this.querySelectorAll("[data-marker]").forEach(button => {
+      button.onclick = () => this.focusMarker(button.dataset.marker);
+    });
     this.stage.onkeydown = (e) => {
       const delta = { ArrowLeft: [40, 0], ArrowRight: [-40, 0], ArrowUp: [0, 40], ArrowDown: [0, -40] }[
         e.key
@@ -220,7 +219,29 @@ class ImageDesk extends HTMLElement {
     this.scheduleNext();
   }
 
+  zoom(level) {
+    this.level = level;
+    if (!level) this.offset = { x: 0, y: 0 };
+    this.querySelectorAll("[data-zoom]").forEach(button =>
+      button.setAttribute("aria-pressed", String(Number(button.dataset.zoom) === level))
+    );
+    this.querySelector("[data-hint]").textContent = level ? "Drag or use arrow keys to pan" : "Fit to window";
+    this.layout();
+  }
+
+  focusMarker(label) {
+    const marker = this.plates[this.targetId]?.markers?.find(item => item.label === label);
+    if (!marker) return;
+    this.centerMarker = marker;
+    this.querySelectorAll("[data-pin]").forEach(pin => pin.classList.toggle("desk-pin-selected", pin.dataset.pin === label));
+    this.querySelectorAll("[data-marker]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.marker === label)));
+    const status = this.querySelector("[data-marker-status]");
+    if (status) status.textContent = `Image ${label} selected`;
+    this.zoom(levels.length - 1);
+  }
+
   pan(dx, dy) {
+    this.centerMarker = null;
     this.offset.x += dx;
     this.offset.y += dy;
     this.layout();
@@ -235,6 +256,10 @@ class ImageDesk extends HTMLElement {
     const fit = Math.min(w / iw, h / ih) * levels[this.level];
     const width = iw * fit,
       height = ih * fit;
+    if (this.centerMarker) {
+      this.offset.x = (.5 - this.centerMarker.x) * width;
+      this.offset.y = (.5 - this.centerMarker.y) * height;
+    }
     const clamp = (v, bound) => Math.min(bound, Math.max(-bound, v));
     this.offset.x = clamp(this.offset.x, Math.max(0, (width - w) / 2));
     this.offset.y = clamp(this.offset.y, Math.max(0, (height - h) / 2));

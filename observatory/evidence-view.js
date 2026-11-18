@@ -65,28 +65,33 @@ export function renderRecord(record, catalog) {
     <h2 id="dossier-title">${esc(record.title)}</h2>
     ${statusLine(record)}
     <p class="reader-lede">${esc(record.summary)}</p>
+    <a class="image-study-link" href="#universe?target=${encodeURIComponent(catalog.destinations?.find(d => d.recordId === record.id)?.id || record.id)}">${icon("orbit")}Fly to investigation${icon("arrow")}</a>
     <h3>Source evidence</h3>${sourceList(record.links)}
     ${folderCoverage(record)}${archiveOrigin(record, catalog)}</article>`;
 }
 
 const tablePageSize = 8;
 
-function observationTable(table) {
+export function observationTable(table, {open = false, sourceRows = false} = {}) {
   if (!table?.rows.length) return "";
   const headings = table.columns.map((column) => `<th scope="col">${esc(column)}</th>`).join("");
   const body = table.rows
     .map(
       (row, i) =>
-        `<tr ${i >= tablePageSize ? "hidden" : ""}>${row.map((value) => `<td>${esc(value)}</td>`).join("")}</tr>`,
+        `<tr ${i >= tablePageSize ? "hidden" : ""}>${row.map((value, column) => {
+          const wrap = sourceRows && String(value).length > (column === 0 ? 18 : 32) && /\s/.test(value);
+          return wrap ? `<td><span class="source-cell-text">${esc(value)}</span></td>` : `<td>${esc(value)}</td>`;
+        }).join("")}</tr>`,
     )
     .join("");
-  return `<details class="methods table-reader" data-first-row="0"><summary>Inspect observation rows (${count(table.rows.length)})</summary>
-    <div class="table-scroll" tabindex="0" role="region" aria-label="Observation data">
+  const rowKind = sourceRows ? "source" : "observation";
+  return `<details class="methods table-reader" data-first-row="0" ${sourceRows ? "data-source-rows" : ""} ${open ? "open" : ""}><summary>${sourceRows ? "Source rows" : "Inspect observation rows"} (${count(table.rows.length)})</summary>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="${sourceRows ? "Source data" : "Observation data"}">
       <table><caption>${esc(table.caption)}</caption><thead><tr>${headings}</tr></thead><tbody>${body}</tbody></table>
     </div>
     <div class="table-nav">${sourceLink(table.source)}
       <span role="status">Rows 1–${Math.min(tablePageSize, table.rows.length)} of ${table.rows.length}</span>
-      ${table.rows.length > tablePageSize ? `<button type="button" data-step="-1" aria-disabled="true" aria-label="Previous observation rows">${icon("left")}</button><button type="button" data-step="1" aria-label="Next observation rows">${icon("right")}</button>` : ""}
+      ${table.rows.length > tablePageSize ? `<button type="button" data-step="-1" aria-disabled="true" aria-label="Previous ${rowKind} rows">${icon("left")}</button><button type="button" data-step="1" aria-label="Next ${rowKind} rows">${icon("right")}</button>` : ""}
     </div></details>`;
 }
 
@@ -103,6 +108,16 @@ export function moveObservationPage(button) {
   reader.querySelector('[role="status"]').textContent = `Rows ${start + 1}–${end} of ${rows.length}`;
   reader.querySelector('[data-step="-1"]').setAttribute("aria-disabled", String(start === 0));
   reader.querySelector('[data-step="1"]').setAttribute("aria-disabled", String(end === rows.length));
+}
+
+export function scienceFigure(figure, { inspect = false, label = "Observation figure" } = {}) {
+  return `<figure class="science-plate">
+      <div class="figure-head"><span>${icon("pulse")} ${esc(label)}</span>
+      ${inspect ? `<button type="button" data-rfi-enlarge>Enlarge ${icon("focus")}</button>`
+        : `<a href="./${esc(figure.src)}" target="_blank" rel="noopener">Full size ${icon("external")}</a>`}</div>
+      <img src="./${esc(figure.src)}" alt="${esc(figure.alt)}" loading="lazy">
+      <figcaption>${esc(figure.caption)} ${figure.credit ? esc(figure.credit) + ". " : ""}${sourceLink({ url: figure.url, label: "Figure source" })}</figcaption>
+    </figure>`;
 }
 
 export function renderTarget(target, record, catalog) {
@@ -131,13 +146,9 @@ export function renderTarget(target, record, catalog) {
     <div class="reader-intro"><div class="eyebrow"><span class="small-line"></span>${esc(target.instrument)}<span class="reader-epoch">${esc(target.epoch)}</span></div>
     <h2 id="dossier-title">${esc(target.title)}</h2>${statusLine(record)}
     <p class="reader-lede">${esc(target.body)}</p></div>
+    <a class="image-study-link" href="#universe?target=${encodeURIComponent(target.id)}">${icon("orbit")}Fly to investigation${icon("arrow")}</a>
     <observation-viewer data-target="${esc(target.id)}">
-    <figure class="science-plate">
-      <div class="figure-head"><span>${icon("pulse")} Observation figure</span>
-      <a href="./${esc(figure.src)}" target="_blank" rel="noopener">Full size ${icon("external")}</a></div>
-      <img src="./${esc(figure.src)}" alt="${esc(figure.alt)}" loading="lazy">
-      <figcaption>${esc(figure.caption)} ${sourceLink({ url: figure.url, label: "Figure source" })}</figcaption>
-    </figure>
+    ${scienceFigure(figure)}
     </observation-viewer>
     ${observationTable(target.table)}
     <a class="image-study-link" href="#plate/${esc(target.id)}">${icon("focus")}${esc({

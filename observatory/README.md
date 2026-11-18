@@ -1,6 +1,6 @@
 # Open Space Observatory
 
-The [public observatory](https://dovvnloading.github.io/Open-Space/) pairs an evidence archive with a procedural universe. On the observation deck, switch between a target's context image and its measured data. Use **Inspect image** to pan through the original plate, play eight hourly coronagraph frames, or locate the two quasar images. The featured plots have an observation cursor and a switch to the original published figure. The four investigation files show the observing unit, readout methods, source figures, browsable observation rows, limitations and next test. [Archive checks](https://dovvnloading.github.io/Open-Space/#audit) describe which checks cover the whole repository.
+The [public observatory](https://dovvnloading.github.io/Open-Space/) pairs an evidence archive with a research flight simulator and a procedural universe. On the observation deck, switch between a target's context image and its measured data. Use **Inspect image** to pan through the original plate, play eight hourly coronagraph frames, or locate the two quasar images. The featured plots have an observation cursor and a switch to the original published figure. The four investigation files show the observing unit, readout methods, source figures, browsable observation rows, limitations and next test. [Archive checks](https://dovvnloading.github.io/Open-Space/#audit) describe which checks cover the whole repository.
 
 ## Run locally
 
@@ -24,6 +24,13 @@ The [Pages workflow](../.github/workflows/observatory.yml) builds a snapshot on 
 The curated target descriptions and figure sources live in [spotlights.json](data/spotlights.json). The MAVEN and STIX plots embed their source CSV digests. If the underlying tables change, inspect the new measurements, regenerate the plots using [render_figures.py](data/render_figures.py) with Matplotlib installed, and review the dossier text before publishing.
 
 ## Universe simulator
+
+[![Mars flight with the Viking mosaic and MAVEN particle measurements](../docs/figures/observatory-research-flight.jpg)](https://dovvnloading.github.io/Open-Space/#universe?target=mars)
+
+[Fly to the lensed quasar](https://dovvnloading.github.io/Open-Space/#universe?target=quasar) to inspect the Pan-STARRS1 images A and B alongside the ZTF and Gaia timing measurements. On the Sun flight, **Imagery** opens eight time-stamped STEREO-A exposures. On a phone, **Field** and **Instruments** switch between the flight and the evidence.
+
+**Destinations** searches every record in the bundled revision, including null results and candidates. The sky chart places only pointings with a recorded position and coordinate frame. Select a point to fly there. Each destination’s **Report** links to its revision-pinned sources. The flight animation illustrates travel. Actual imagery, published figures and the artist’s impression carry their own labels and credits. Selected FITS exposures have native-resolution grayscale displays with the input digest and display stretch recorded in the catalog.
+
 
 [![Planet V and its rings in the running universe simulator](../docs/figures/observatory-universe.jpg)](https://dovvnloading.github.io/Open-Space/#universe?view=world&at=G001-S00229&planet=5)
 
