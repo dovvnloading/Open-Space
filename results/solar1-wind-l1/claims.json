@@ -1,0 +1,59 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "train-n",
+      "printed": "134",
+      "statement": "Eligible training pairs on 6 November.",
+      "compute": "json('summary.json', '/daily/1/n')"
+    },
+    {
+      "id": "holdout-n",
+      "printed": "870",
+      "statement": "Eligible held-out minute pairs on 7 November.",
+      "compute": "json('summary.json', '/daily/2/n')"
+    },
+    {
+      "id": "holdout-score",
+      "printed": "0.06335",
+      "statement": "Held-out correlation for the fitted slope.",
+      "compute": "json('summary.json', '/daily/2/score/2')"
+    },
+    {
+      "id": "top-control",
+      "printed": "0.10442",
+      "statement": "Highest held-out circular control score.",
+      "compute": "json('summary.json', '/heldout_peak_control_score')"
+    },
+    {
+      "id": "transverse",
+      "printed": "894,433",
+      "statement": "Median transverse separation in km over held-out minutes.",
+      "compute": "json('summary.json', '/heldout_transverse_separation_median_km')"
+    },
+    {
+      "id": "radial-offset",
+      "printed": "2.84",
+      "statement": "Median held-out radial offset in seconds.",
+      "compute": "json('summary.json', '/heldout_delay_median_sec/1')"
+    },
+    {
+      "id": "fit-offset",
+      "printed": "−1817.47",
+      "statement": "Median held-out fitted offset in seconds.",
+      "compute": "json('summary.json', '/heldout_delay_median_sec/2')"
+    },
+    {
+      "id": "max-rotation",
+      "printed": "130.16",
+      "statement": "Largest selected SOLAR-1 rotation in degrees.",
+      "compute": "json('summary.json', '/heldout_rotations/0/solar/rotation_deg')"
+    },
+    {
+      "id": "matched-rotation",
+      "printed": "6.23",
+      "statement": "Wind rotation in degrees at the fitted time of the largest SOLAR-1 rotation.",
+      "compute": "json('summary.json', '/heldout_rotations/0/wind/2/direct/rotation_deg')"
+    }
+  ]
+}
