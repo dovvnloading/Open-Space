@@ -1,0 +1,53 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "crops",
+      "printed": "15",
+      "statement": "Compared scene-band crops.",
+      "compute": "json('offset-results.json', '/summary/scene_band_crops')"
+    },
+    {
+      "id": "pixels",
+      "printed": "708,720",
+      "statement": "Paired pixels with an original-minus-COG difference of 1,000 DN.",
+      "compute": "json('offset-results.json', '/summary/pixels_with_unique_difference/1000')"
+    },
+    {
+      "id": "offset",
+      "printed": "0.1",
+      "statement": "Extraneous reflectance subtraction if the STAC offset is used on the COG.",
+      "compute": "json('offset-results.json', '/summary/extra_STAC_reflectance_subtraction')"
+    },
+    {
+      "id": "landsat-water",
+      "printed": "707",
+      "statement": "Water-class Landsat cells within the 450 m area on 11 November.",
+      "compute": "json('primary-results.json', '/scenes/6/vent_water_cells')"
+    },
+    {
+      "id": "sentinel-water",
+      "printed": "1,562",
+      "statement": "Water-class Sentinel cells within the 450 m area on 11 November.",
+      "compute": "json('primary-results.json', '/scenes/7/vent_water_cells')"
+    },
+    {
+      "id": "nov16-area",
+      "printed": "0.2176",
+      "statement": "Nominal land-like change in the 16 November 20 m grid, km².",
+      "compute": "json('primary-results.json', '/scenes/8/optical_area_km2')"
+    },
+    {
+      "id": "nov16-relaxed",
+      "printed": "0.2964",
+      "statement": "Relaxed-threshold land-like change in the 16 November scene, km².",
+      "compute": "json('primary-results.json', '/scenes/8/sensitivity/relaxed/optical_area_km2')"
+    },
+    {
+      "id": "wide-landsat-area",
+      "printed": "0.0261",
+      "statement": "Land-like area in 11 November Landsat with the wider vent assignment, km².",
+      "compute": "json('vent800-results.json', '/scenes/6/optical_area_km2')"
+    }
+  ]
+}

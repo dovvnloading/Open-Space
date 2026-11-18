@@ -1,0 +1,1683 @@
+{
+  "sentinel_offset": "zero",
+  "vent_radius": 800,
+  "baseline_names": [
+    "s2c-20261022",
+    "l9-20261026"
+  ],
+  "controls": {
+    "robust_neck": true,
+    "one_pixel_path": true,
+    "eroded_one_pixel_path": false,
+    "one_pixel_gap": false
+  },
+  "baselines": {
+    "20": {
+      "s2c-20261022": {
+        "valid_cells": 700,
+        "expected_cells": 700,
+        "green": {
+          "median": 0.019837498664855957,
+          "p10": 0.012074999511241913,
+          "p90": 0.027732498943805695
+        },
+        "nir": {
+          "median": 0.013699999079108238,
+          "p10": 0.009632499888539314,
+          "p90": 0.021777499467134476
+        },
+        "swir1": {
+          "median": 0.016200000420212746,
+          "p10": 0.012199999764561653,
+          "p90": 0.022929999977350235
+        },
+        "swir2": {
+          "median": 0.014499999582767487,
+          "p10": 0.010889999568462372,
+          "p90": 0.020229998975992203
+        },
+        "passes_plausibility": true
+      },
+      "l9-20261026": {
+        "valid_cells": 700,
+        "expected_cells": 700,
+        "green": {
+          "median": 0.007019996643066406,
+          "p10": 0.0055200387723743916,
+          "p90": 0.007640122901648283
+        },
+        "nir": {
+          "median": 0.00011749565601348877,
+          "p10": -0.0008113125222735107,
+          "p90": 0.0007224984583444893
+        },
+        "swir1": {
+          "median": 0.004352495074272156,
+          "p10": 0.003891698783263564,
+          "p90": 0.004839076194912195
+        },
+        "swir2": {
+          "median": 0.0041677323170006275,
+          "p10": 0.003766228910535574,
+          "p90": 0.004565797746181488
+        },
+        "passes_plausibility": true
+      }
+    },
+    "30": {
+      "s2c-20261022": {
+        "valid_cells": 297,
+        "expected_cells": 297,
+        "green": {
+          "median": 0.01966666616499424,
+          "p10": 0.012306666933000088,
+          "p90": 0.02660222165286541
+        },
+        "nir": {
+          "median": 0.014022221788764,
+          "p10": 0.009755555540323257,
+          "p90": 0.021204443648457527
+        },
+        "swir1": {
+          "median": 0.01626666635274887,
+          "p10": 0.012404443696141243,
+          "p90": 0.02213333360850811
+        },
+        "swir2": {
+          "median": 0.014544444158673286,
+          "p10": 0.01119999960064888,
+          "p90": 0.019671110436320305
+        },
+        "passes_plausibility": true
+      },
+      "l9-20261026": {
+        "valid_cells": 297,
+        "expected_cells": 297,
+        "green": {
+          "median": 0.007040627300739288,
+          "p10": 0.005906249396502972,
+          "p90": 0.007528752088546753
+        },
+        "nir": {
+          "median": 0.0001381225883960724,
+          "p10": -0.0006511256215162575,
+          "p90": 0.0006661266088485718
+        },
+        "swir1": {
+          "median": 0.004324998706579208,
+          "p10": 0.003985373768955469,
+          "p90": 0.004737500101327896
+        },
+        "swir2": {
+          "median": 0.004153124988079071,
+          "p10": 0.003891870379447937,
+          "p90": 0.00448587303981185
+        },
+        "passes_plausibility": true
+      }
+    }
+  },
+  "scenes": [
+    {
+      "new_cells": 0,
+      "optical_area_km2": 0.0,
+      "region_cells": 9502,
+      "region_valid": 5928,
+      "vent_cells": 1592,
+      "vent_valid": 1369,
+      "vent_water_cells": 510,
+      "vent_dry_cells": 23,
+      "nearest_dry_m": 334.476,
+      "baseline_water_cells": 2467,
+      "nominal_contact": false,
+      "eroded_contact": false,
+      "controls": {
+        "stable_land_eligible": 114,
+        "stable_land_retained": 114,
+        "open_water_eligible": 88,
+        "false_dry_on_open_water": 0
+      },
+      "components_near_vent": 0,
+      "distant_component_cells": 0,
+      "small_component_cells": 0,
+      "id": "s2c-20261022",
+      "source": "S2C_54RWN_20261022_0_L2A",
+      "utc": "2026-10-22T01:20:16.986000Z",
+      "analysis_pixel_m": 20,
+      "status": "usable",
+      "deep_water": {
+        "valid_cells": 700,
+        "expected_cells": 700,
+        "green": {
+          "median": 0.019837498664855957,
+          "p10": 0.012074999511241913,
+          "p90": 0.027732498943805695
+        },
+        "nir": {
+          "median": 0.013699999079108238,
+          "p10": 0.009632499888539314,
+          "p90": 0.021777499467134476
+        },
+        "swir1": {
+          "median": 0.016200000420212746,
+          "p10": 0.012199999764561653,
+          "p90": 0.022929999977350235
+        },
+        "swir2": {
+          "median": 0.014499999582767487,
+          "p10": 0.010889999568462372,
+          "p90": 0.020229998975992203
+        },
+        "passes_plausibility": true
+      },
+      "registration": {
+        "available": true,
+        "best_shift_row_col": [
+          0,
+          0
+        ],
+        "fit_corr": 1.0,
+        "heldout_corr": 1.0,
+        "normal_shift_heldout_corr": 1.0
+      },
+      "sensitivity": {
+        "relaxed": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 5928,
+          "vent_cells": 1592,
+          "vent_valid": 1369,
+          "vent_water_cells": 510,
+          "vent_dry_cells": 35,
+          "nearest_dry_m": 316.46,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 132,
+            "stable_land_retained": 132,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "strict": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 5928,
+          "vent_cells": 1592,
+          "vent_valid": 1369,
+          "vent_water_cells": 510,
+          "vent_dry_cells": 9,
+          "nearest_dry_m": 394.379,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 114,
+            "stable_land_retained": 114,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "coast20": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 5928,
+          "vent_cells": 1592,
+          "vent_valid": 1369,
+          "vent_water_cells": 510,
+          "vent_dry_cells": 23,
+          "nearest_dry_m": 334.476,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 114,
+            "stable_land_retained": 114,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "coast60": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 5928,
+          "vent_cells": 1592,
+          "vent_valid": 1369,
+          "vent_water_cells": 510,
+          "vent_dry_cells": 23,
+          "nearest_dry_m": 334.476,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 114,
+            "stable_land_retained": 114,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "cloud_buffer": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 5057,
+          "vent_cells": 1592,
+          "vent_valid": 1094,
+          "vent_water_cells": 507,
+          "vent_dry_cells": 10,
+          "nearest_dry_m": 336.304,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 114,
+            "stable_land_retained": 114,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        }
+      }
+    },
+    {
+      "new_cells": 0,
+      "optical_area_km2": 0.0,
+      "region_cells": 4220,
+      "region_valid": 3267,
+      "vent_cells": 708,
+      "vent_valid": 366,
+      "vent_water_cells": 355,
+      "vent_dry_cells": 0,
+      "nearest_dry_m": 584.669,
+      "baseline_water_cells": 1060,
+      "nominal_contact": false,
+      "eroded_contact": false,
+      "controls": {
+        "stable_land_eligible": 57,
+        "stable_land_retained": 57,
+        "open_water_eligible": 204,
+        "false_dry_on_open_water": 0
+      },
+      "components_near_vent": 0,
+      "distant_component_cells": 0,
+      "small_component_cells": 0,
+      "id": "l9-20261026",
+      "source": "LC09_L2SR_104043_20261026_02_T1",
+      "utc": "2026-10-26T01:00:33.390869Z",
+      "analysis_pixel_m": 30,
+      "status": "usable",
+      "deep_water": {
+        "valid_cells": 297,
+        "expected_cells": 297,
+        "green": {
+          "median": 0.007040627300739288,
+          "p10": 0.005906249396502972,
+          "p90": 0.007528752088546753
+        },
+        "nir": {
+          "median": 0.0001381225883960724,
+          "p10": -0.0006511256215162575,
+          "p90": 0.0006661266088485718
+        },
+        "swir1": {
+          "median": 0.004324998706579208,
+          "p10": 0.003985373768955469,
+          "p90": 0.004737500101327896
+        },
+        "swir2": {
+          "median": 0.004153124988079071,
+          "p10": 0.003891870379447937,
+          "p90": 0.00448587303981185
+        },
+        "passes_plausibility": true
+      },
+      "registration": {
+        "available": true,
+        "best_shift_row_col": [
+          0,
+          0
+        ],
+        "fit_corr": 1.0,
+        "heldout_corr": 1.0,
+        "normal_shift_heldout_corr": 1.0
+      },
+      "sensitivity": {
+        "relaxed": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 4220,
+          "region_valid": 3267,
+          "vent_cells": 708,
+          "vent_valid": 366,
+          "vent_water_cells": 355,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 545.076,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 69,
+            "stable_land_retained": 69,
+            "open_water_eligible": 204,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "strict": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 4220,
+          "region_valid": 3267,
+          "vent_cells": 708,
+          "vent_valid": 366,
+          "vent_water_cells": 355,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 619.605,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 56,
+            "stable_land_retained": 56,
+            "open_water_eligible": 204,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "coast20": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 4220,
+          "region_valid": 3267,
+          "vent_cells": 708,
+          "vent_valid": 366,
+          "vent_water_cells": 355,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 584.669,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 57,
+            "stable_land_retained": 57,
+            "open_water_eligible": 204,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "coast60": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 4220,
+          "region_valid": 3267,
+          "vent_cells": 708,
+          "vent_valid": 366,
+          "vent_water_cells": 355,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 584.669,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 57,
+            "stable_land_retained": 57,
+            "open_water_eligible": 204,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "cloud_buffer": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 4220,
+          "region_valid": 3138,
+          "vent_cells": 708,
+          "vent_valid": 325,
+          "vent_water_cells": 318,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 584.669,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 57,
+            "stable_land_retained": 57,
+            "open_water_eligible": 204,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        }
+      }
+    },
+    {
+      "new_cells": 0,
+      "optical_area_km2": 0.0,
+      "region_cells": 9502,
+      "region_valid": 7770,
+      "vent_cells": 1592,
+      "vent_valid": 1589,
+      "vent_water_cells": 1572,
+      "vent_dry_cells": 0,
+      "nearest_dry_m": 613.827,
+      "baseline_water_cells": 2467,
+      "nominal_contact": false,
+      "eroded_contact": false,
+      "controls": {
+        "stable_land_eligible": 114,
+        "stable_land_retained": 114,
+        "open_water_eligible": 25,
+        "false_dry_on_open_water": 0
+      },
+      "components_near_vent": 0,
+      "distant_component_cells": 0,
+      "small_component_cells": 0,
+      "id": "s2b-20261027",
+      "source": "S2B_54RWN_20261027_0_L2A",
+      "utc": "2026-10-27T01:20:17.631000Z",
+      "analysis_pixel_m": 20,
+      "status": "usable",
+      "deep_water": {
+        "valid_cells": 260,
+        "expected_cells": 700,
+        "green": {
+          "median": 0.01249999925494194,
+          "p10": 0.011297499760985374,
+          "p90": 0.013949999585747719
+        },
+        "nir": {
+          "median": 0.006787499878555536,
+          "p10": 0.005799999926239252,
+          "p90": 0.008249999955296516
+        },
+        "swir1": {
+          "median": 0.0072999997064471245,
+          "p10": 0.0064999996684491634,
+          "p90": 0.00839999970048666
+        },
+        "swir2": {
+          "median": 0.007199999876320362,
+          "p10": 0.006199999712407589,
+          "p90": 0.00839999970048666
+        },
+        "passes_plausibility": true
+      },
+      "registration": {
+        "available": true,
+        "best_shift_row_col": [
+          0,
+          0
+        ],
+        "fit_corr": 0.933455,
+        "heldout_corr": 0.953963,
+        "normal_shift_heldout_corr": 0.953963
+      },
+      "sensitivity": {
+        "relaxed": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 7770,
+          "vent_cells": 1592,
+          "vent_valid": 1589,
+          "vent_water_cells": 1572,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 613.827,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 132,
+            "stable_land_retained": 132,
+            "open_water_eligible": 25,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "strict": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 7770,
+          "vent_cells": 1592,
+          "vent_valid": 1589,
+          "vent_water_cells": 1572,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 613.827,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 114,
+            "stable_land_retained": 114,
+            "open_water_eligible": 25,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "coast20": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 7770,
+          "vent_cells": 1592,
+          "vent_valid": 1589,
+          "vent_water_cells": 1572,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 613.827,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 114,
+            "stable_land_retained": 114,
+            "open_water_eligible": 25,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "coast60": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 7770,
+          "vent_cells": 1592,
+          "vent_valid": 1589,
+          "vent_water_cells": 1572,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 613.827,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 114,
+            "stable_land_retained": 114,
+            "open_water_eligible": 25,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "cloud_buffer": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 7126,
+          "vent_cells": 1592,
+          "vent_valid": 1571,
+          "vent_water_cells": 1566,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 619.132,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 114,
+            "stable_land_retained": 114,
+            "open_water_eligible": 25,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        }
+      }
+    },
+    {
+      "new_cells": 0,
+      "optical_area_km2": 0.0,
+      "region_cells": 9502,
+      "region_valid": 0,
+      "vent_cells": 1592,
+      "vent_valid": 0,
+      "vent_water_cells": 0,
+      "vent_dry_cells": 0,
+      "nearest_dry_m": null,
+      "baseline_water_cells": 2467,
+      "nominal_contact": false,
+      "eroded_contact": false,
+      "controls": {
+        "stable_land_eligible": 0,
+        "stable_land_retained": 0,
+        "open_water_eligible": 0,
+        "false_dry_on_open_water": 0
+      },
+      "components_near_vent": 0,
+      "distant_component_cells": 0,
+      "small_component_cells": 0,
+      "id": "s2c-20261101",
+      "source": "S2C_54RWN_20261101_0_L2A",
+      "utc": "2026-11-01T01:20:13.986000Z",
+      "analysis_pixel_m": 20,
+      "status": "limited by deep-water control",
+      "deep_water": {
+        "valid_cells": 0,
+        "expected_cells": 700,
+        "green": null,
+        "nir": null,
+        "swir1": null,
+        "swir2": null,
+        "passes_plausibility": false
+      },
+      "registration": {
+        "available": false
+      },
+      "sensitivity": {
+        "relaxed": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 0,
+          "vent_cells": 1592,
+          "vent_valid": 0,
+          "vent_water_cells": 0,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": null,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 0,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "strict": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 0,
+          "vent_cells": 1592,
+          "vent_valid": 0,
+          "vent_water_cells": 0,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": null,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 0,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "coast20": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 0,
+          "vent_cells": 1592,
+          "vent_valid": 0,
+          "vent_water_cells": 0,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": null,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 0,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "coast60": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 0,
+          "vent_cells": 1592,
+          "vent_valid": 0,
+          "vent_water_cells": 0,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": null,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 0,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "cloud_buffer": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 0,
+          "vent_cells": 1592,
+          "vent_valid": 0,
+          "vent_water_cells": 0,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": null,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 0,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        }
+      }
+    },
+    {
+      "new_cells": 0,
+      "optical_area_km2": 0.0,
+      "region_cells": 4220,
+      "region_valid": 0,
+      "vent_cells": 708,
+      "vent_valid": 0,
+      "vent_water_cells": 0,
+      "vent_dry_cells": 0,
+      "nearest_dry_m": null,
+      "baseline_water_cells": 1060,
+      "nominal_contact": false,
+      "eroded_contact": false,
+      "controls": {
+        "stable_land_eligible": 0,
+        "stable_land_retained": 0,
+        "open_water_eligible": 0,
+        "false_dry_on_open_water": 0
+      },
+      "components_near_vent": 0,
+      "distant_component_cells": 0,
+      "small_component_cells": 0,
+      "id": "l8-20261103",
+      "source": "LC08_L2SR_104043_20261103_02_T2",
+      "utc": "2026-11-03T01:00:36.839584Z",
+      "analysis_pixel_m": 30,
+      "status": "limited by deep-water control",
+      "deep_water": {
+        "valid_cells": 0,
+        "expected_cells": 297,
+        "green": null,
+        "nir": null,
+        "swir1": null,
+        "swir2": null,
+        "passes_plausibility": false
+      },
+      "registration": {
+        "available": false
+      },
+      "sensitivity": {
+        "relaxed": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 4220,
+          "region_valid": 0,
+          "vent_cells": 708,
+          "vent_valid": 0,
+          "vent_water_cells": 0,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": null,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 0,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "strict": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 4220,
+          "region_valid": 0,
+          "vent_cells": 708,
+          "vent_valid": 0,
+          "vent_water_cells": 0,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": null,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 0,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "coast20": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 4220,
+          "region_valid": 0,
+          "vent_cells": 708,
+          "vent_valid": 0,
+          "vent_water_cells": 0,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": null,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 0,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "coast60": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 4220,
+          "region_valid": 0,
+          "vent_cells": 708,
+          "vent_valid": 0,
+          "vent_water_cells": 0,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": null,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 0,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "cloud_buffer": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 4220,
+          "region_valid": 0,
+          "vent_cells": 708,
+          "vent_valid": 0,
+          "vent_water_cells": 0,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": null,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 0,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        }
+      }
+    },
+    {
+      "new_cells": 66,
+      "optical_area_km2": 0.0264,
+      "region_cells": 9502,
+      "region_valid": 1676,
+      "vent_cells": 1592,
+      "vent_valid": 381,
+      "vent_water_cells": 56,
+      "vent_dry_cells": 116,
+      "nearest_dry_m": 57.208,
+      "baseline_water_cells": 2467,
+      "nominal_contact": false,
+      "eroded_contact": false,
+      "controls": {
+        "stable_land_eligible": 0,
+        "stable_land_retained": 0,
+        "open_water_eligible": 63,
+        "false_dry_on_open_water": 5
+      },
+      "components_near_vent": 2,
+      "distant_component_cells": 25,
+      "small_component_cells": 14,
+      "id": "s2b-20261106",
+      "source": "S2B_54RWN_20261106_0_L2A",
+      "utc": "2026-11-06T01:20:17.861000Z",
+      "analysis_pixel_m": 20,
+      "status": "usable",
+      "deep_water": {
+        "valid_cells": 415,
+        "expected_cells": 700,
+        "green": {
+          "median": 0.060350000858306885,
+          "p10": 0.05167999863624573,
+          "p90": 0.07995499670505524
+        },
+        "nir": {
+          "median": 0.013199999928474426,
+          "p10": 0.00839999970048666,
+          "p90": 0.026099998503923416
+        },
+        "swir1": {
+          "median": 0.011899999342858791,
+          "p10": 0.006899999920278788,
+          "p90": 0.023799998685717583
+        },
+        "swir2": {
+          "median": 0.010300000198185444,
+          "p10": 0.005979999899864197,
+          "p90": 0.021059999242424965
+        },
+        "passes_plausibility": true
+      },
+      "registration": {
+        "available": false
+      },
+      "sensitivity": {
+        "relaxed": {
+          "new_cells": 86,
+          "optical_area_km2": 0.0344,
+          "region_cells": 9502,
+          "region_valid": 1676,
+          "vent_cells": 1592,
+          "vent_valid": 381,
+          "vent_water_cells": 56,
+          "vent_dry_cells": 178,
+          "nearest_dry_m": 23.785,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 18,
+            "stable_land_retained": 14,
+            "open_water_eligible": 63,
+            "false_dry_on_open_water": 19
+          },
+          "components_near_vent": 2,
+          "distant_component_cells": 54,
+          "small_component_cells": 27
+        },
+        "strict": {
+          "new_cells": 16,
+          "optical_area_km2": 0.0064,
+          "region_cells": 9502,
+          "region_valid": 1676,
+          "vent_cells": 1592,
+          "vent_valid": 381,
+          "vent_water_cells": 56,
+          "vent_dry_cells": 16,
+          "nearest_dry_m": 79.584,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 63,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 1,
+          "distant_component_cells": 0,
+          "small_component_cells": 21
+        },
+        "coast20": {
+          "new_cells": 66,
+          "optical_area_km2": 0.0264,
+          "region_cells": 9502,
+          "region_valid": 1676,
+          "vent_cells": 1592,
+          "vent_valid": 381,
+          "vent_water_cells": 56,
+          "vent_dry_cells": 116,
+          "nearest_dry_m": 57.208,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 63,
+            "false_dry_on_open_water": 5
+          },
+          "components_near_vent": 2,
+          "distant_component_cells": 25,
+          "small_component_cells": 14
+        },
+        "coast60": {
+          "new_cells": 66,
+          "optical_area_km2": 0.0264,
+          "region_cells": 9502,
+          "region_valid": 1676,
+          "vent_cells": 1592,
+          "vent_valid": 381,
+          "vent_water_cells": 56,
+          "vent_dry_cells": 116,
+          "nearest_dry_m": 57.208,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 63,
+            "false_dry_on_open_water": 5
+          },
+          "components_near_vent": 2,
+          "distant_component_cells": 25,
+          "small_component_cells": 14
+        },
+        "cloud_buffer": {
+          "new_cells": 49,
+          "optical_area_km2": 0.0196,
+          "region_cells": 9502,
+          "region_valid": 1254,
+          "vent_cells": 1592,
+          "vent_valid": 275,
+          "vent_water_cells": 32,
+          "vent_dry_cells": 72,
+          "nearest_dry_m": 57.208,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 63,
+            "false_dry_on_open_water": 5
+          },
+          "components_near_vent": 2,
+          "distant_component_cells": 0,
+          "small_component_cells": 22
+        }
+      }
+    },
+    {
+      "new_cells": 29,
+      "optical_area_km2": 0.0261,
+      "region_cells": 4220,
+      "region_valid": 4206,
+      "vent_cells": 708,
+      "vent_valid": 708,
+      "vent_water_cells": 707,
+      "vent_dry_cells": 0,
+      "nearest_dry_m": 560.91,
+      "baseline_water_cells": 1060,
+      "nominal_contact": false,
+      "eroded_contact": false,
+      "controls": {
+        "stable_land_eligible": 57,
+        "stable_land_retained": 57,
+        "open_water_eligible": 204,
+        "false_dry_on_open_water": 17
+      },
+      "components_near_vent": 1,
+      "distant_component_cells": 0,
+      "small_component_cells": 1,
+      "id": "l9-20261111",
+      "source": "LC09_L2SR_104043_20261111_02_T1",
+      "utc": "2026-11-11T01:00:37.231406Z",
+      "analysis_pixel_m": 30,
+      "status": "usable",
+      "deep_water": {
+        "valid_cells": 297,
+        "expected_cells": 297,
+        "green": {
+          "median": 0.03872062265872955,
+          "p10": 0.00813787430524826,
+          "p90": 0.052828121930360794
+        },
+        "nir": {
+          "median": -0.0018006302416324615,
+          "p10": -0.003535877913236618,
+          "p90": 0.0018527492647990584
+        },
+        "swir1": {
+          "median": 0.0058787502348423,
+          "p10": 0.0019641220569610596,
+          "p90": 0.010738000273704529
+        },
+        "swir2": {
+          "median": 0.00638749822974205,
+          "p10": 0.002350498689338565,
+          "p90": 0.010042250156402588
+        },
+        "passes_plausibility": true
+      },
+      "registration": {
+        "available": true,
+        "best_shift_row_col": [
+          0,
+          2
+        ],
+        "fit_corr": 0.272726,
+        "heldout_corr": 0.473053,
+        "normal_shift_heldout_corr": 0.56795
+      },
+      "sensitivity": {
+        "relaxed": {
+          "new_cells": 30,
+          "optical_area_km2": 0.027,
+          "region_cells": 4220,
+          "region_valid": 4206,
+          "vent_cells": 708,
+          "vent_valid": 708,
+          "vent_water_cells": 707,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 541.309,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 69,
+            "stable_land_retained": 57,
+            "open_water_eligible": 204,
+            "false_dry_on_open_water": 31
+          },
+          "components_near_vent": 1,
+          "distant_component_cells": 0,
+          "small_component_cells": 6
+        },
+        "strict": {
+          "new_cells": 29,
+          "optical_area_km2": 0.0261,
+          "region_cells": 4220,
+          "region_valid": 4206,
+          "vent_cells": 708,
+          "vent_valid": 708,
+          "vent_water_cells": 707,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 560.91,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 56,
+            "stable_land_retained": 56,
+            "open_water_eligible": 204,
+            "false_dry_on_open_water": 1
+          },
+          "components_near_vent": 1,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "coast20": {
+          "new_cells": 29,
+          "optical_area_km2": 0.0261,
+          "region_cells": 4220,
+          "region_valid": 4206,
+          "vent_cells": 708,
+          "vent_valid": 708,
+          "vent_water_cells": 707,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 560.91,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 57,
+            "stable_land_retained": 57,
+            "open_water_eligible": 204,
+            "false_dry_on_open_water": 17
+          },
+          "components_near_vent": 1,
+          "distant_component_cells": 0,
+          "small_component_cells": 1
+        },
+        "coast60": {
+          "new_cells": 29,
+          "optical_area_km2": 0.0261,
+          "region_cells": 4220,
+          "region_valid": 4206,
+          "vent_cells": 708,
+          "vent_valid": 708,
+          "vent_water_cells": 707,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 560.91,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 57,
+            "stable_land_retained": 57,
+            "open_water_eligible": 204,
+            "false_dry_on_open_water": 17
+          },
+          "components_near_vent": 1,
+          "distant_component_cells": 0,
+          "small_component_cells": 1
+        },
+        "cloud_buffer": {
+          "new_cells": 21,
+          "optical_area_km2": 0.0189,
+          "region_cells": 4220,
+          "region_valid": 4182,
+          "vent_cells": 708,
+          "vent_valid": 708,
+          "vent_water_cells": 707,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 560.91,
+          "baseline_water_cells": 1060,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 57,
+            "stable_land_retained": 57,
+            "open_water_eligible": 204,
+            "false_dry_on_open_water": 17
+          },
+          "components_near_vent": 1,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        }
+      }
+    },
+    {
+      "new_cells": 0,
+      "optical_area_km2": 0.0,
+      "region_cells": 9502,
+      "region_valid": 8859,
+      "vent_cells": 1592,
+      "vent_valid": 1590,
+      "vent_water_cells": 1562,
+      "vent_dry_cells": 0,
+      "nearest_dry_m": 544.765,
+      "baseline_water_cells": 2467,
+      "nominal_contact": false,
+      "eroded_contact": false,
+      "controls": {
+        "stable_land_eligible": 0,
+        "stable_land_retained": 0,
+        "open_water_eligible": 88,
+        "false_dry_on_open_water": 15
+      },
+      "components_near_vent": 0,
+      "distant_component_cells": 0,
+      "small_component_cells": 29,
+      "id": "s2c-20261111",
+      "source": "S2C_54RWN_20261111_0_L2A",
+      "utc": "2026-11-11T01:20:14.125000Z",
+      "analysis_pixel_m": 20,
+      "status": "usable",
+      "deep_water": {
+        "valid_cells": 700,
+        "expected_cells": 700,
+        "green": {
+          "median": 0.05014999955892563,
+          "p10": 0.022987497970461845,
+          "p90": 0.07210250198841095
+        },
+        "nir": {
+          "median": 0.011862499639391899,
+          "p10": 0.005200000014156103,
+          "p90": 0.02535249851644039
+        },
+        "swir1": {
+          "median": 0.013849999755620956,
+          "p10": 0.0073899999260902405,
+          "p90": 0.02792999893426895
+        },
+        "swir2": {
+          "median": 0.012399999424815178,
+          "p10": 0.007799999788403511,
+          "p90": 0.02524000033736229
+        },
+        "passes_plausibility": true
+      },
+      "registration": {
+        "available": false
+      },
+      "sensitivity": {
+        "relaxed": {
+          "new_cells": 105,
+          "optical_area_km2": 0.042,
+          "region_cells": 9502,
+          "region_valid": 8859,
+          "vent_cells": 1592,
+          "vent_valid": 1590,
+          "vent_water_cells": 1562,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 544.765,
+          "baseline_water_cells": 2467,
+          "nominal_contact": true,
+          "eroded_contact": true,
+          "controls": {
+            "stable_land_eligible": 18,
+            "stable_land_retained": 7,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 20
+          },
+          "components_near_vent": 2,
+          "distant_component_cells": 0,
+          "small_component_cells": 14
+        },
+        "strict": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 8859,
+          "vent_cells": 1592,
+          "vent_valid": 1590,
+          "vent_water_cells": 1562,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 548.673,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 8
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 0
+        },
+        "coast20": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 8859,
+          "vent_cells": 1592,
+          "vent_valid": 1590,
+          "vent_water_cells": 1562,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 544.765,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 15
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 29
+        },
+        "coast60": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 8859,
+          "vent_cells": 1592,
+          "vent_valid": 1590,
+          "vent_water_cells": 1562,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 544.765,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 15
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 27
+        },
+        "cloud_buffer": {
+          "new_cells": 0,
+          "optical_area_km2": 0.0,
+          "region_cells": 9502,
+          "region_valid": 8593,
+          "vent_cells": 1592,
+          "vent_valid": 1580,
+          "vent_water_cells": 1562,
+          "vent_dry_cells": 0,
+          "nearest_dry_m": 544.765,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 15
+          },
+          "components_near_vent": 0,
+          "distant_component_cells": 0,
+          "small_component_cells": 27
+        }
+      }
+    },
+    {
+      "new_cells": 621,
+      "optical_area_km2": 0.2484,
+      "region_cells": 9502,
+      "region_valid": 4938,
+      "vent_cells": 1592,
+      "vent_valid": 1064,
+      "vent_water_cells": 2,
+      "vent_dry_cells": 598,
+      "nearest_dry_m": 6.197,
+      "baseline_water_cells": 2467,
+      "nominal_contact": false,
+      "eroded_contact": false,
+      "controls": {
+        "stable_land_eligible": 0,
+        "stable_land_retained": 0,
+        "open_water_eligible": 88,
+        "false_dry_on_open_water": 0
+      },
+      "components_near_vent": 6,
+      "distant_component_cells": 16,
+      "small_component_cells": 99,
+      "id": "s2b-20261116",
+      "source": "S2B_54RWN_20261116_0_L2A",
+      "utc": "2026-11-16T01:20:18.030000Z",
+      "analysis_pixel_m": 20,
+      "status": "usable",
+      "deep_water": {
+        "valid_cells": 700,
+        "expected_cells": 700,
+        "green": {
+          "median": 0.021274998784065247,
+          "p10": 0.016325000673532486,
+          "p90": 0.038077499717473984
+        },
+        "nir": {
+          "median": 0.011737499386072159,
+          "p10": 0.006172499619424343,
+          "p90": 0.031257499009370804
+        },
+        "swir1": {
+          "median": 0.016099998727440834,
+          "p10": 0.007689999882131815,
+          "p90": 0.04041999951004982
+        },
+        "swir2": {
+          "median": 0.018699999898672104,
+          "p10": 0.007799999788403511,
+          "p90": 0.04886999726295471
+        },
+        "passes_plausibility": true
+      },
+      "registration": {
+        "available": false
+      },
+      "sensitivity": {
+        "relaxed": {
+          "new_cells": 854,
+          "optical_area_km2": 0.3416,
+          "region_cells": 9502,
+          "region_valid": 4938,
+          "vent_cells": 1592,
+          "vent_valid": 1064,
+          "vent_water_cells": 2,
+          "vent_dry_cells": 786,
+          "nearest_dry_m": 6.197,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 3
+          },
+          "components_near_vent": 8,
+          "distant_component_cells": 60,
+          "small_component_cells": 120
+        },
+        "strict": {
+          "new_cells": 282,
+          "optical_area_km2": 0.1128,
+          "region_cells": 9502,
+          "region_valid": 4938,
+          "vent_cells": 1592,
+          "vent_valid": 1064,
+          "vent_water_cells": 2,
+          "vent_dry_cells": 399,
+          "nearest_dry_m": 6.197,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 2,
+          "distant_component_cells": 79,
+          "small_component_cells": 85
+        },
+        "coast20": {
+          "new_cells": 621,
+          "optical_area_km2": 0.2484,
+          "region_cells": 9502,
+          "region_valid": 4938,
+          "vent_cells": 1592,
+          "vent_valid": 1064,
+          "vent_water_cells": 2,
+          "vent_dry_cells": 598,
+          "nearest_dry_m": 6.197,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 6,
+          "distant_component_cells": 16,
+          "small_component_cells": 99
+        },
+        "coast60": {
+          "new_cells": 621,
+          "optical_area_km2": 0.2484,
+          "region_cells": 9502,
+          "region_valid": 4938,
+          "vent_cells": 1592,
+          "vent_valid": 1064,
+          "vent_water_cells": 2,
+          "vent_dry_cells": 598,
+          "nearest_dry_m": 6.197,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 6,
+          "distant_component_cells": 16,
+          "small_component_cells": 99
+        },
+        "cloud_buffer": {
+          "new_cells": 612,
+          "optical_area_km2": 0.2448,
+          "region_cells": 9502,
+          "region_valid": 4685,
+          "vent_cells": 1592,
+          "vent_valid": 965,
+          "vent_water_cells": 2,
+          "vent_dry_cells": 515,
+          "nearest_dry_m": 13.853,
+          "baseline_water_cells": 2467,
+          "nominal_contact": false,
+          "eroded_contact": false,
+          "controls": {
+            "stable_land_eligible": 0,
+            "stable_land_retained": 0,
+            "open_water_eligible": 88,
+            "false_dry_on_open_water": 0
+          },
+          "components_near_vent": 6,
+          "distant_component_cells": 16,
+          "small_component_cells": 95
+        }
+      }
+    }
+  ],
+  "nov11_60m_comparison": {
+    "both_valid_comparison_cells": 983,
+    "both_new_cells": 0,
+    "either_new_cells": 6,
+    "union_km2": 0.0216,
+    "agreement_km2": 0.0,
+    "jaccard": 0.0
+  }
+}
