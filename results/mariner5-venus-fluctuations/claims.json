@@ -1,0 +1,95 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "encounter-frames",
+      "printed": "356",
+      "statement": "Valid distinct encounter magnetometer frames.",
+      "compute": "json('summary.json','/encounter/retained_rows')"
+    },
+    {
+      "id": "inbound-mean-before",
+      "printed": "7.650",
+      "statement": "Inbound magnitude peak median before the split, nT.",
+      "compute": "json('summary.json','/events/inbound/primary/maxima/magnitude/median_before_nt')"
+    },
+    {
+      "id": "inbound-mean-after",
+      "printed": "12.475",
+      "statement": "Inbound magnitude peak median after the split, nT.",
+      "compute": "json('summary.json','/events/inbound/primary/maxima/magnitude/median_after_nt')"
+    },
+    {
+      "id": "outbound-vector-before",
+      "printed": "4.994",
+      "statement": "Outbound vector variability peak median before the split, nT.",
+      "compute": "json('summary.json','/events/outbound/primary/maxima/vector_variability/median_before_nt')"
+    },
+    {
+      "id": "outbound-vector-after",
+      "printed": "0.670",
+      "statement": "Outbound vector variability peak median after the split, nT.",
+      "compute": "json('summary.json','/events/outbound/primary/maxima/vector_variability/median_after_nt')"
+    },
+    {
+      "id": "outbound-vector-peak",
+      "printed": "1.787",
+      "statement": "Outbound vector variability absolute log ratio.",
+      "compute": "json('summary.json','/events/outbound/primary/maxima/vector_variability/abs_log_ratio')"
+    },
+    {
+      "id": "outbound-vector-time",
+      "printed": "1.56",
+      "statement": "Offset of outbound vector variability peak from the historical marker in minutes.",
+      "compute": "json('summary.json','/events/outbound/primary/maxima/vector_variability/offset_minutes')"
+    },
+    {
+      "id": "outbound-magnitude-time",
+      "printed": "-5.16",
+      "statement": "Offset of outbound magnitude peak from the historical marker in minutes.",
+      "compute": "json('summary.json','/events/outbound/primary/maxima/magnitude/offset_minutes')"
+    },
+    {
+      "id": "outbound-magnitude-narrow",
+      "printed": "0.483",
+      "statement": "Magnitude score for the exploratory scan limited to five minutes.",
+      "compute": "json('summary.json','/events/outbound/exploratory_five_minute_scan/maxima/magnitude/abs_log_ratio')"
+    },
+    {
+      "id": "outbound-vector-cruise-atleast",
+      "printed": "0",
+      "statement": "Cruise windows at or above the outbound vector score.",
+      "compute": "json('summary.json','/events/outbound/comparisons/vector_variability/cruise_peaks_at_least_as_high')"
+    },
+    {
+      "id": "outbound-vector-one-frame",
+      "printed": "16",
+      "statement": "One-frame deletions retaining the score and original direction at the outbound vector peak.",
+      "compute": "json('summary.json','/events/outbound/comparisons/vector_variability/deletion_strength_and_original_sign')"
+    },
+    {
+      "id": "cruise-frames",
+      "printed": "4,409",
+      "statement": "Accepted low-rate cruise frames across the control blocks.",
+      "compute": "json('cruise-inputs.json','/selection/cruise/accepted')"
+    },
+    {
+      "id": "cruise-blocks",
+      "printed": "96",
+      "statement": "Cruise search blocks with eligible vector scores.",
+      "compute": "json('summary.json','/cruise_score_context/vector_variability/eligible_blocks')"
+    },
+    {
+      "id": "cruise-days",
+      "printed": "29",
+      "statement": "Distinct dates with eligible vector scores.",
+      "compute": "json('summary.json','/cruise_score_context/vector_variability/eligible_days')"
+    },
+    {
+      "id": "earth-before",
+      "printed": "0",
+      "statement": "Quality-filtered Earth-check frames before the published reference.",
+      "compute": "json('summary.json','/earth_control/frames_before_reference')"
+    }
+  ]
+}

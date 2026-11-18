@@ -79,7 +79,11 @@ def encounter():
 
 def coast():
     low, high = [], []
-    with (ROOT / "cruise-controls.csv").open(newline="", encoding="ascii") as stream:
+    path = ROOT / "cruise-controls.csv"
+    expected = json.loads((ROOT / "cruise-inputs.json").read_bytes())["output_sha256"]
+    if sha256(path.read_bytes()).hexdigest() != expected:
+        raise ValueError("Cruise subset does not match the recorded extraction hash")
+    with path.open(newline="", encoding="ascii") as stream:
         for row in csv.DictReader(stream):
             second = relative_utc(row["utc"])
             values = tuple(float(row[key]) for key in ("mean_magnitude_nt", "vector_std_nt", "magnitude_std_nt"))
@@ -105,17 +109,17 @@ def measure(before, after, index, multiplier):
     }
 
 
-def scan(frames, center, near=120, far=480, minimum=5, limit_gap=80, deviation_scale=1):
+def scan(frames, center, near=120, far=480, minimum=5, limit_gap=80, deviation_scale=1, radius=600):
     frames = sorted(frames, key=lambda f: f.second)
     times = [frame.second for frame in frames]
     maxima = dict.fromkeys(METRICS)
-    floor = bisect_left(times, center - 600)
-    ceiling = bisect_right(times, center + 600)
+    floor = bisect_left(times, center - radius)
+    ceiling = bisect_right(times, center + radius)
     valid_splits = 0
     for i in range(max(0, floor - 1), min(ceiling, len(frames) - 1)):
         left, right = frames[i:i + 2]
         at = (left.second + right.second) / 2
-        if not center - 600 <= at <= center + 600 or not 0 < right.second - left.second <= limit_gap:
+        if not center - radius <= at <= center + radius or not 0 < right.second - left.second <= limit_gap:
             continue
         before, after = sides(frames, times, at, near, far)
         if min(len(before), len(after)) < minimum:
@@ -210,6 +214,7 @@ def run():
             "reference_utc": utc(center),
             "primary": primary,
             "comparisons": compare(primary, frames, controls, context, key),
+            "exploratory_five_minute_scan": scan(frames, center, radius=300),
             "longer_windows": scan(frames, center, near=180, far=720, minimum=8),
             "sample_to_population_deviation_sensitivity": scan(frames, center, deviation_scale=sqrt(2 / 3)),
         }
@@ -225,7 +230,12 @@ def run():
         "cruise_score_context": context,
         "cruise_anchors": controls,
         "encounter_day_controls": same_day,
-        "earth_control": {"selected_frames": len(earth), "scan": scan(earth, anchor, minimum=20, limit_gap=25)},
+        "earth_control": {
+            "selected_frames": len(earth),
+            "frames_before_reference": sum(frame.second < anchor for frame in earth),
+            "first_frame_utc": utc(min(frame.second for frame in earth)) if earth else None,
+            "scan": scan(earth, anchor, minimum=20, limit_gap=25),
+        },
     }
 
 
