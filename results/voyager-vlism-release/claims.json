@@ -1,0 +1,113 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "display-profiles",
+      "printed": "5",
+      "statement": "Version-matched native XML and public HTML profiles showing the 12-hour display pattern.",
+      "compute": "json('catalog-summary.json','/profile_count_showing_12h_display_pattern')"
+    },
+    {
+      "id": "registry-matches",
+      "printed": "4",
+      "statement": "Available version-matched registry records agreeing with their native XML.",
+      "compute": "json('catalog-summary.json','/registry_match_count')"
+    },
+    {
+      "id": "vg1-rows",
+      "printed": "755",
+      "statement": "Source Voyager 1 observation rows.",
+      "compute": "json('catalog-summary.json','/products/voyager1/rows')"
+    },
+    {
+      "id": "vg1-epochs",
+      "printed": "748",
+      "statement": "Distinct Voyager 1 SCET values.",
+      "compute": "json('catalog-summary.json','/products/voyager1/unique_times')"
+    },
+    {
+      "id": "vg2-rows",
+      "printed": "5",
+      "statement": "Source Voyager 2 observation rows.",
+      "compute": "json('catalog-summary.json','/products/voyager2/rows')"
+    },
+    {
+      "id": "collection-display-vg1",
+      "printed": "1",
+      "statement": "Voyager 1 rows excluded by the displayed collection interval.",
+      "compute": "json('catalog-summary.json','/products/voyager1/filter_effects/collection_display/excluded')"
+    },
+    {
+      "id": "bundle-display-vg2",
+      "printed": "1",
+      "statement": "Voyager 2 rows excluded by the displayed bundle interval.",
+      "compute": "json('catalog-summary.json','/products/voyager2/filter_effects/bundle_display/excluded')"
+    },
+    {
+      "id": "collection-native-vg2",
+      "printed": "1",
+      "statement": "Voyager 2 rows excluded by the native collection interval.",
+      "compute": "json('catalog-summary.json','/products/voyager2/filter_effects/collection_xml/excluded')"
+    },
+    {
+      "id": "frequency-field",
+      "printed": "3110",
+      "statement": "Frequency field in hertz for the Voyager 2 row on June 26, 2020.",
+      "compute": "json('catalog-summary.json','/voyager2_frequency_density_rows/1/listed_fpe_hz')"
+    },
+    {
+      "id": "frequency-density",
+      "printed": "0.11994",
+      "statement": "Density in cm^-3 derived from the listed frequency field for the June 2020 event.",
+      "compute": "json('catalog-summary.json','/voyager2_frequency_density_rows/1/density_from_listed_fpe_cm3')"
+    },
+    {
+      "id": "reported-density",
+      "printed": "0.087",
+      "statement": "Voyager 2 archived June 2020 electron density in cm^-3.",
+      "compute": "json('catalog-summary.json','/voyager2_frequency_density_rows/1/listed_density_cm3')"
+    },
+    {
+      "id": "frequency-density-difference",
+      "printed": "38",
+      "statement": "Largest relative difference in percent for the five Voyager 2 rows, from the June 2020 event.",
+      "compute": "100 * json('catalog-summary.json','/products/voyager2/density_conversion/epo/max_relative_difference')"
+    },
+    {
+      "id": "field-training",
+      "printed": "21",
+      "statement": "Matched Voyager 1 training days in 2023.",
+      "compute": "json('field-summary.json','/w12/yearly/2023/field_fit/days')"
+    },
+    {
+      "id": "field-coefficient",
+      "printed": "0.29083",
+      "statement": "Frozen density-to-field ratio in cm^-3/nT.",
+      "compute": "json('field-summary.json','/w12/training_density_per_nt')"
+    },
+    {
+      "id": "holdout-days",
+      "printed": "4",
+      "statement": "Matched days in the 2025 holdout.",
+      "compute": "json('field-summary.json','/w12/yearly/2025/field_fit/days')"
+    },
+    {
+      "id": "holdout-blocks",
+      "printed": "3",
+      "statement": "Occupied 14-day blocks in the 2025 holdout.",
+      "compute": "json('field-summary.json','/w12/yearly/2025/field_fit/blocks')"
+    },
+    {
+      "id": "holdout-field-error",
+      "printed": "0.02164",
+      "statement": "Held-out median absolute log error, fixed field relation.",
+      "compute": "json('field-summary.json','/w12/yearly/2025/field_fit/median_absolute_log_error')"
+    },
+    {
+      "id": "holdout-stationary-error",
+      "printed": "0.00841",
+      "statement": "Held-out median absolute log error, stationary baseline.",
+      "compute": "json('field-summary.json','/w12/yearly/2025/stationary_baseline/median_absolute_log_error')"
+    }
+  ]
+}

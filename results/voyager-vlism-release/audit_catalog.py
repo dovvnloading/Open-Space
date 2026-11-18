@@ -192,7 +192,28 @@ def run():
                                for name, limits in cover.items()},
             "density_conversion": density_arithmetic(items),
         }
+    voy2_rows = []
+    for row in product_rows(files, 2):
+        density, frequency = float(row["N_e"]), float(row["Fpe"])
+        low, high = float(row["N_e_min"]), float(row["N_e_max"])
+        predicted = (frequency / 8980) ** 2
+        voy2_rows.append({
+            "scet": format_utc(utc(row["SCET"])),
+            "marked_hz": float(row["Marked_Value"]),
+            "listed_fpe_hz": frequency,
+            "listed_density_cm3": density,
+            "listed_low_cm3": low,
+            "listed_high_cm3": high,
+            "density_from_listed_fpe_cm3": predicted,
+            "listed_fpe_prediction_in_bounds": low <= predicted <= high,
+            "frequency_implied_by_listed_density_hz": 8980 * density ** 0.5,
+        })
     return {
+        "profile_count_showing_12h_display_pattern": sum(
+            profile["display_matches_12h_without_meridiem"] is True for profile in comparisons.values()
+        ),
+        "registry_match_count": sum(profile["registry_matches_label"] is True for profile in comparisons.values()),
+        "voyager2_frequency_density_rows": voy2_rows,
         "exact_version_profile_comparisons": comparisons,
         "registry_api_unavailable_for_matching_maven_version": True,
         "products": products,
