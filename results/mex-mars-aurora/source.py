@@ -43,7 +43,7 @@ def _number(value):
     if not math.isfinite(result):
         raise ValueError("Nonfinite table value")
     # PDS labels document these missing/corrupt and closed-loop placeholders.
-    if result in (-999.9, -999.999999, -99999.999999, -999999999.999999):
+    if result in (-999.9, -999.999999, -99999.999999, -9999999.999999, -999999999.999999):
         return None
     return result
 

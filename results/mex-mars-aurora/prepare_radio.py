@@ -10,7 +10,7 @@ from pathlib import Path
 from statistics import median
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
-from source import parse_rows
+from source import _columns, parse_rows
 
 ROOT = Path(__file__).resolve().parent
 RATIO = 3 / 11
@@ -24,6 +24,7 @@ def optional_median(values):
 def reduce(rows):
     buckets = defaultdict(list)
     differences = []
+    observed = [r["observed_hz"] for r in rows if r["observed_hz"] is not None and r["observed_hz"] > 0]
     for row in rows:
         obs, pred, residual = (row[key] for key in ("observed_hz", "predicted_hz", "residual_hz"))
         if obs is None or pred is None or residual is None or obs <= 0 or pred <= 0:
@@ -41,7 +42,12 @@ def reduce(rows):
             )},
         }
     return per_second, {
-        "native_rows": len(rows), "valid_frequency_rows": len(differences),
+        "native_rows": len(rows),
+        "positive_observed_rows": len(observed),
+        "median_positive_native_observed_hz": median(observed) if observed else None,
+        "missing_reported_residual_rows": sum(r["residual_hz"] is None for r in rows),
+        "present_archive_differential_rows": sum(r["differential_hz"] is not None for r in rows),
+        "valid_frequency_rows": len(differences),
         "eligible_seconds": len(per_second),
         "max_abs_residual_replay_error_hz": max(differences) if differences else None,
         "native_utc_first_last": [rows[0]["utc"], rows[-1]["utc"]],
@@ -82,7 +88,11 @@ def run(data_root, output, receipt_output):
         stats = {}
         for band in ("s", "x"):
             path = data_root / names[band]
-            by_band[band], stats[band] = reduce(parse_rows(path, path.with_suffix(".lbl")))
+            label = path.with_suffix(".lbl")
+            by_band[band], stats[band] = reduce(parse_rows(path, label))
+            stats[band]["observed_label_column"] = next(
+                name for name in _columns(label.read_text(encoding="ascii")) if name.startswith("OBSERVED ")
+            )
         s, x = by_band["s"], by_band["x"]
         common = sorted(s.keys() & x.keys())
         stats["common_seconds"] = len(common)
@@ -101,7 +111,24 @@ def run(data_root, output, receipt_output):
     with ZipFile(output, "w") as archive:
         info = ZipInfo("radio-seconds.csv")
         archive.writestr(info, rows.getvalue().encode("ascii"), compress_type=ZIP_DEFLATED, compresslevel=9)
-    receipt_output.write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8", newline="\n")
+    dsn = [stats for key, stats in results.items() if key.endswith("-dsn")]
+    quality = {
+        "released_dsn_passes": len(dsn),
+        "dsn_s_files_labeled_x_band": sum(
+            "X-BAND" in stats["s"]["observed_label_column"] for stats in dsn
+        ),
+        "dsn_s_files_carrier_2_to_3_ghz": sum(
+            2e9 <= stats["s"]["median_positive_native_observed_hz"] <= 3e9 for stats in dsn
+        ),
+        "dsn_passes_with_calibrated_pairs": sum(stats["common_seconds"] > 0 for stats in dsn),
+        "dsn_s_files_all_residuals_missing": sum(
+            stats["s"]["missing_reported_residual_rows"] == stats["s"]["native_rows"] for stats in dsn
+        ),
+    }
+    receipt_output.write_text(
+        json.dumps({"quality": quality, "groups": results}, indent=2) + "\n",
+        encoding="utf-8", newline="\n"
+    )
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 219 entries: 95 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 23 corrections to published catalogs and papers, and 36 carefully recorded null or inconclusive checks.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 220 entries: 95 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 36 carefully recorded null or inconclusive checks.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -107,6 +107,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### The Moon and Mars
 
+- **Restored Mars Express S-band files carry X-band field labels.** The carrier values identify the band in all six Deep Space Network passes. Three passes have no calibrated S-band residuals. The matched occultations near the March 2024 aurora yield a background-sensitive comparison. *Correction* · [Details](results/mex-mars-aurora/README.md)
 - **The dawn strip west of Arsia Mons gives an alignment-sensitive result.** January and November Odyssey images share a narrow ground strip. After accounting for broad brightness changes, the two-band contrast fails the fixed cloud-brightening test at the archived alignment. *Null result* · [Details](results/themis-arsia-morning/README.md)
 - **What Orion's camera recorded near two Artemis II lunar flash reports.** The downlink has frames around both speech cues. Around the second, substantial image changes occur about every 0.2002 seconds and the lunar disk is difficult to locate. The higher-cadence onboard clip starts after both cues. *Measured* · [Details](results/artemis2-saw3-observability/README.md)
 - **Two Apollo 17 eclipse windows showed no compelling moonquake excess.** The event counts were compared with uneclipsed full Moons and adjacent windows. A separate test of deep moonquake sources found no unusual pairing. Recording coverage and detection efficiency limit both tests. *Null result* · [Details](results/apollo-lunar-seismicity/README.md)
