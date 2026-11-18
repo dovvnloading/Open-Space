@@ -1,0 +1,302 @@
+.research-scene {
+  --rs-metal: #dfb58d;
+  position: absolute;
+  inset: 0;
+  min-width: 0;
+  min-height: 0;
+  isolation: isolate;
+  overflow: hidden;
+  color: #eee8dc;
+  background: #080b10;
+  container-type: inline-size;
+}
+.rs-camera,
+.rs-stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.rs-camera {
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  outline-offset: -3px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.rs-camera:focus-visible {
+  outline: 2px solid #f6b984;
+}
+.rs-camera.rs-dragging {
+  cursor: grabbing;
+}
+.rs-stars {
+  display: block;
+  pointer-events: none;
+}
+.rs-plate {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+  pointer-events: none;
+  line-height: 1;
+}
+.rs-plate[hidden],
+.research-scene [hidden] {
+  display: none !important;
+}
+.rs-source {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: none;
+}
+.rs-plate[data-mode="disc"] .rs-source {
+  border-radius: 50%;
+}
+.rs-plate[data-mode="field"],
+.rs-plate[data-mode="figure"] {
+  background: #090c11;
+  box-shadow:
+    0 0 0 1px #ffffff47,
+    0 0 0 5px #0a0d13bd,
+    0 0 0 6px #bed2e21b,
+    0 12px 40px #000b;
+}
+.rs-plate[data-mode="field"]::before,
+.rs-plate[data-mode="figure"]::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: -8px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--rs-metal), var(--rs-metal)) left top / 13px 1px no-repeat,
+    linear-gradient(var(--rs-metal), var(--rs-metal)) left top / 1px 13px no-repeat,
+    linear-gradient(var(--rs-metal), var(--rs-metal)) right top / 13px 1px no-repeat,
+    linear-gradient(var(--rs-metal), var(--rs-metal)) right top / 1px 13px no-repeat,
+    linear-gradient(var(--rs-metal), var(--rs-metal)) right bottom / 13px 1px no-repeat,
+    linear-gradient(var(--rs-metal), var(--rs-metal)) right bottom / 1px 13px no-repeat,
+    linear-gradient(var(--rs-metal), var(--rs-metal)) left bottom / 13px 1px no-repeat,
+    linear-gradient(var(--rs-metal), var(--rs-metal)) left bottom / 1px 13px no-repeat;
+}
+.rs-plate[data-mode="illustration"] .rs-source {
+  mask-image:
+    linear-gradient(transparent, black 16%, black 81%, transparent),
+    radial-gradient(ellipse 60% 67% at 56% 49%, black 47%, transparent 98%);
+  mask-composite: intersect;
+}
+.rs-target-mark {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  transform: translate(-50%, -50%);
+  border: 1px solid #ffd990;
+  border-radius: 50%;
+  box-shadow: 0 0 3px #000;
+}
+.research-scene button.rs-target-mark {
+  background: transparent;
+  pointer-events: auto;
+  padding: 0;
+  cursor: pointer;
+}
+.research-scene button.rs-target-mark::before {
+  content: "";
+  position: absolute;
+  inset: -7px -21px -7px -7px;
+}
+.research-scene button.rs-target-mark:hover,
+.research-scene button.rs-target-mark:focus-visible {
+  border-color: white;
+  box-shadow: 0 0 8px #ffcc87;
+}
+.rs-target-mark span {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 4px);
+  transform: translateY(-50%);
+  padding: 2px 4px;
+  border-radius: 1px;
+  font: 11px/1 var(--mono, "IBM Plex Mono", monospace);
+  color: #ffdfa5;
+  background: #080b10cf;
+}
+.rs-image-scale {
+  position: absolute;
+  bottom: 6%;
+  right: 6%;
+  min-height: 8px;
+  border: 1px solid #ffeece;
+  border-top: 0;
+  color: #fff2d6;
+  font: 10px/1.3 var(--mono, "IBM Plex Mono", monospace);
+  text-align: center;
+  text-shadow: 0 1px 4px #000;
+}
+.rs-controls,
+.rs-credit,
+.research-scene .rs-skip {
+  position: absolute;
+  z-index: 2;
+}
+.rs-actions {
+  position: absolute;
+  left: clamp(10px, 2vw, 26px);
+  bottom: 53px;
+  display: flex;
+  gap: 5px;
+}
+.rs-actions button {
+  color: #eae3d7;
+  border: 1px solid #6c665d;
+  border-radius: 3px;
+  padding: 5px 8px;
+  background: #10151ce8;
+  font: 11px/1.4 var(--sans, "DM Sans", sans-serif);
+  cursor: pointer;
+}
+.rs-actions button:hover {
+  background: #352d26;
+  border-color: #c59d7b;
+}
+.research-scene[data-phase="flight"] .rs-actions {
+  visibility: hidden;
+}
+.rs-controls {
+  left: clamp(10px, 2vw, 26px);
+  bottom: 13px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #515257ad;
+  border-radius: 4px;
+  padding: 2px;
+  background: #0b0f15eb;
+}
+.research-scene .rs-controls button,
+.research-scene .rs-skip {
+  color: #e5e1da;
+  border-radius: 2px;
+  border: 0;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.research-scene .rs-controls button {
+  width: 31px;
+  height: 30px;
+  padding: 0;
+  background: transparent;
+  font: 18px/1 var(--sans, "DM Sans", sans-serif);
+}
+.research-scene .rs-controls button svg {
+  width: 15px;
+  height: 15px;
+}
+.research-scene .rs-controls button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.research-scene .rs-controls button:hover:enabled,
+.research-scene .rs-skip:hover {
+  color: #ffd7b0;
+  background: #302923;
+}
+.research-scene button:focus-visible,
+.rs-credit a:focus-visible {
+  outline: 2px solid #ffc086;
+  outline-offset: 0;
+}
+.rs-zoom-note {
+  padding: 0 6px;
+  margin-left: 2px;
+  border-left: 1px solid #494343;
+  min-width: 34px;
+  color: #cfb59a;
+  text-align: center;
+  font: 10px/1.35 var(--mono, "IBM Plex Mono", monospace);
+}
+.rs-credit {
+  right: clamp(10px, 2vw, 26px);
+  bottom: 17px;
+  max-width: calc(100% - 178px);
+  display: flex;
+  justify-content: flex-end;
+  text-align: right;
+  font: 10px/1.45 var(--mono, "IBM Plex Mono", monospace);
+}
+.rs-origin {
+  color: #c6c5c4;
+  background: #090d12e3;
+  padding: 3px 6px;
+  border-radius: 2px;
+  overflow-wrap: anywhere;
+}
+a.rs-origin {
+  text-decoration: underline;
+  text-decoration-color: #807369;
+  text-underline-offset: 3px;
+}
+.research-scene .rs-skip {
+  right: clamp(10px, 2vw, 26px);
+  bottom: 54px;
+  border: 1px solid #796855;
+  background: #181716de;
+  padding: 7px 11px;
+  font: 11px/1.2 var(--mono, "IBM Plex Mono", monospace);
+}
+.research-scene[data-phase="flight"] .rs-target-mark,
+.research-scene[data-phase="flight"] .rs-image-scale {
+  visibility: hidden;
+}
+.rs-no-canvas .rs-camera {
+  background: radial-gradient(ellipse at 60% 53%, #243043, #101621 30%, #090d14 65%);
+}
+.rs-no-canvas[data-view="station"] .rs-camera::after {
+  content: "";
+  position: absolute;
+  left: var(--rs-x, 55%);
+  top: var(--rs-y, 54%);
+  width: var(--rs-diameter, 44%);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) rotate(-8deg) scaleY(0.84);
+  border: 2px solid #788a9d;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #1e354a, #0a101a 33%, #9aa9b5 34%, transparent 35%),
+    repeating-conic-gradient(from 8deg, #405263, #172435 33deg, #7a8c9c 35deg, #0e1722 36deg);
+  box-shadow:
+    0 0 45px #42628338,
+    inset 0 0 0 5px #0e1722;
+}
+@container (max-width:500px) {
+  .rs-actions {
+    left: 9px;
+    bottom: 48px;
+  }
+  .rs-controls {
+    left: 9px;
+    bottom: 8px;
+  }
+  .rs-credit {
+    right: 8px;
+    bottom: 8px;
+    max-width: calc(100% - 143px);
+    font-size: 9px;
+  }
+  .rs-zoom-note {
+    min-width: 26px;
+    padding: 0 4px;
+  }
+  .research-scene .rs-controls button {
+    width: 28px;
+    height: 28px;
+  }
+  .research-scene .rs-skip {
+    right: 9px;
+    bottom: 48px;
+  }
+}

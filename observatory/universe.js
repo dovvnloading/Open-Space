@@ -770,7 +770,7 @@ export function scaleBar(unitsPerPixel) {
 }
 
 /** Mount the modal simulator and return an idempotent teardown function. */
-export function mountUniverse(container, { onClose, onEvidence, targets = [], locationSearch = "" } = {}) {
+export function mountUniverse(container, { onClose, onResearch, locationSearch = "" } = {}) {
   const previousFocus = document.activeElement;
   const modal = document.createElement("dialog");
   modal.className = "os-universe";
@@ -786,6 +786,7 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [], lo
           <button type="button" data-level="world">World</button>
         </nav>
         <div class="osu-baractions">
+          ${onResearch ? '<button class="osu-atlas-toggle osu-research-switch" data-act="researchFlights" type="button">Research flights</button>' : ""}
           <button class="osu-atlas-toggle" data-act="atlas" type="button" aria-expanded="false" aria-controls="osu-destination-atlas">${icon("layers")}<span>Atlas</span></button>
           <button class="osu-icon" data-act="help" type="button" aria-expanded="false" aria-label="Navigation help" title="Navigation help">${icon("help")}</button>
           <button class="osu-icon" data-act="exit" type="button" aria-label="Close universe simulator" title="Back to observatory">${icon("close")}</button>
@@ -834,7 +835,6 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [], lo
           </details>
           <form class="osu-jump"><label>Go to a system address<input name="address" placeholder="G001–S00001" maxlength="14" required autocomplete="off" spellcheck="false"></label><button type="submit">Go</button></form>
           <small data-ref="jumpError" role="status"></small>
-          <div class="osu-research" hidden><label>Open a research dossier<select data-ref="research"></select></label></div>
         </aside>
         <div class="osu-scale"><i aria-hidden="true"></i><span data-ref="scale"></span></div>
         <div class="osu-nocanvas" hidden>Use the destination controls to explore this simulated sky.</div>
@@ -1206,21 +1206,6 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [], lo
     if (!help.hidden) $(".osu-jump input").focus();
     else act("help").focus();
   }
-  const selectResearch = ref("research");
-  if (targets.length && onEvidence) {
-    $(".osu-research").hidden = false;
-    const placeholder = new Option("Choose an investigation…", "");
-    selectResearch.add(placeholder);
-    targets.forEach((target, i) =>
-      selectResearch.add(new Option(target.target || target.title || target.name, String(i))),
-    );
-    listen(selectResearch, "change", () => {
-      if (selectResearch.value === "") return;
-      const target = targets[Number(selectResearch.value)];
-      cleanup();
-      onEvidence(target);
-    });
-  }
   listen($(".osu-jump"), "submit", (event) => {
     event.preventDefault();
     const parsed = parseSystemAddress($(".osu-jump input").value);
@@ -1261,6 +1246,9 @@ export function mountUniverse(container, { onClose, onEvidence, targets = [], lo
       return;
     }
     switch (button.dataset.act) {
+      case "researchFlights":
+        onResearch?.(currentHash());
+        break;
       case "exit":
         close();
         break;

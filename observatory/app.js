@@ -115,6 +115,7 @@ function showPlate(index) {
   text("instrument", target.instrument);
   text("epoch", target.epoch);
   text("disposition", target.status);
+  $("#hero-simulator").href = "#universe?target=" + encodeURIComponent(target.id);
   $("#hero-detail").href = "#target/" + target.id;
   $("#slide-count").innerHTML =
     String(slide + 1).padStart(2, "0") + " <em>/ " + String(targets.length).padStart(2, "0") + "</em>";
@@ -362,18 +363,25 @@ async function route() {
       disposeUniverse = null;
     }
     try {
-      const { mountUniverse } = await import("./universe.js");
+      const params = new URLSearchParams(search);
+      const research = !search || params.has("target") || params.get("view") === "research";
+      const module = await import(research ? "./research-flight.js" : "./universe.js");
       if (generation !== routeCounter) return;
       document.title = "Universe simulator · Open Space Observatory";
-      disposeUniverse = mountUniverse($("#universe-host"), {
-        targets,
-        locationSearch: search,
-        onClose: closeOverlay,
-        onEvidence: (t) => {
-          history.replaceState(history.state, "", "#target/" + encodeURIComponent(t.id));
-          route();
-        },
-      });
+      function changeMode(hash, state) {
+        history.replaceState({ ...history.state, ...state }, "", hash);
+        route();
+      }
+      disposeUniverse = research
+        ? module.mountResearchFlight($("#universe-host"), {
+            catalog, plates, requested: params.get("target"),
+            onClose: closeOverlay,
+            onGenerated: researchTarget => changeMode(history.state?.generatedHash || "#universe?view=galaxy&at=G001-S00229", { researchTarget }),
+          })
+        : module.mountUniverse($("#universe-host"), {
+            locationSearch: search, onClose: closeOverlay,
+            onResearch: generatedHash => changeMode("#universe?target=" + encodeURIComponent(history.state?.researchTarget || "mars"), { generatedHash }),
+          });
     } catch (error) {
       showNotice("The universe simulator could not open.", error);
     }
@@ -512,7 +520,7 @@ import("./universe.js")
     const total = (universeSize.galaxies * universeSize.systemsPerGalaxy).toLocaleString("en-US");
     text(
       "sim-scale",
-      `Explore ${universeSize.galaxies} generated galaxies and ${total} star systems. Choose a star, enter orbit, and inspect its worlds.`,
+      `Fly to a research target and open its observations in flight. The generated universe also holds ${total} model star systems.`,
     );
   })
   .catch((error) => console.warn("Universe preview unavailable", error));

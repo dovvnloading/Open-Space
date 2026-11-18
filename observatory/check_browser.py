@@ -1,6 +1,7 @@
 """Exercise a built observatory at a project subpath, or check a deployed URL."""
 
 import argparse
+import re
 from contextlib import contextmanager
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -141,8 +142,9 @@ def check_desktop(page, url):
     expect(page.locator("#main")).to_be_focused()
 
     page.get_by_role("link", name="Universe simulator", exact=True).click()
+    page.get_by_role("button", name="Generated universe", exact=True).click()
     expect(page.locator(".osu-levels")).to_be_visible()
-    page.locator(".osu-atlas-toggle").click()
+    page.get_by_role("button", name="Atlas", exact=True).click()
     expect(page.locator(".osu-place")).to_have_count(4)
     page.locator('[data-atlas-index="3"]').click()
     expect(page.locator('[data-ref="name"]')).to_have_text("Planet V")
@@ -220,6 +222,7 @@ def check_universe_links(page, url, engine):
     atlas = page.get_by_role("button", name="Atlas", exact=True)
     page.goto(archive)
     page.get_by_role("link", name="Universe simulator", exact=True).click()
+    page.get_by_role("button", name="Generated universe", exact=True).click()
     atlas.click()
     page.locator('[data-atlas-index="3"]').click()
     expect(name).to_have_text("Planet V")
@@ -266,6 +269,71 @@ def check_universe_links(page, url, engine):
     print(f"{engine}: simulated destinations, link copy, direct/reload and history passed.")
 
 
+def check_research_flights(page, url):
+    page.goto(url + "#target/quasar")
+    page.get_by_role("link", name="Fly to investigation").click()
+    flight = page.locator(".rf-universe")
+    expect(page).to_have_url(url + "#universe?target=quasar")
+    expect(flight.locator("h1:visible")).to_have_text("J0826+7002")
+    expect(flight.locator('[data-rfi-tab="data"]')).to_have_attribute("aria-selected", "true")
+    flight.get_by_role("button", name="Inspect lensed image B", exact=True).click()
+    expect(flight.locator(".desk-pin-selected")).to_have_attribute("data-pin", "B")
+    expect(flight.locator('[data-zoom="2"]')).to_have_attribute("aria-pressed", "true")
+    expect(flight.locator(".desk-pin")).to_have_count(2)
+    flight.get_by_role("button", name="Destinations", exact=True).click()
+    finder = page.get_by_role("dialog", name="Choose a destination")
+    count = page.evaluate("async () => (await (await fetch('./data/catalog.json')).json()).records.length")
+    expect(finder.locator(".rf-count")).to_have_text(f"{count} destinations")
+    finder.get_by_role("button", name="Sky pointings", exact=True).click()
+    pin = finder.locator('[data-sky-id="results-wr-117-2"]')
+    pin.focus()
+    expect(finder.locator("[data-map-label]")).to_contain_text("from J0826+7002")
+    assert finder.locator("[data-course]").get_attribute("d").startswith("M")
+    pin.click()
+    expect(flight.locator("h1:visible")).to_have_text("WR 117-2")
+    expect(page.locator(".rf-finder[open]")).to_have_count(0)
+    flight.get_by_role("tab", name="Report", exact=True).click()
+    expect(flight.get_by_text("Published WR 117-2 position", exact=True).first).to_be_visible()
+    expect(flight.locator(".rfi-reading a").first).to_have_attribute("href", re.compile(r"/blob/"))
+    flight.locator('[data-flight="sun"]').click()
+    flight.get_by_role("tab", name="Imagery").click()
+    slider = flight.get_by_role("slider", name="Solar frame time")
+    slider.focus()
+    slider.press("End")
+    expect(flight.locator("[data-clock]")).to_have_text("22:08:45 UTC")
+    flight.get_by_role("button", name="Generated universe", exact=True).click()
+    page.get_by_role("button", name="Research flights", exact=True).click()
+    expect(flight.locator("h1:visible")).to_have_text("The Sun")
+    expect(page).to_have_url(url + "#universe?target=sun")
+    # A native reload preserves the flight’s history entry in all three engines.
+    with page.expect_navigation():
+        page.evaluate("setTimeout(() => location.reload(), 0)")
+    expect(flight.locator("h1:visible")).to_have_text("The Sun")
+    page.go_back()
+    expect(page.locator("#dossier-title")).to_be_visible()
+    expect(page).to_have_url(url + "#target/quasar")
+    page.goto(url + "#universe?target=unlisted-research-address")
+    expect(flight.get_by_role("heading", name="Destination unavailable")).to_be_visible()
+    flight.get_by_role("button", name="Choose a destination", exact=True).click()
+    search = finder.get_by_role("searchbox")
+    search.fill("nothingmatches-93852")
+    expect(finder.locator(".rf-count")).to_have_text("0 destinations")
+    search.fill("Enceladus")
+    finder.locator('[data-go="results-cassini-uvis-enceladus-clock"]').click()
+    expect(flight.locator("h1:visible")).to_have_text("Enceladus")
+    expect(flight.locator("[data-arrival]")).to_have_text("Arrived at Enceladus")
+    page.emulate_media(reduced_motion="no-preference")
+    # Burst selections use the actual launch buttons and cancel older cameras.
+    flight.evaluate("""f => {
+        for (const id of ['mars','dwarf','sun']) f.querySelector('[data-flight="'+id+'"]').click();
+    }""")
+    expect(flight.locator(".research-scene")).to_have_count(1)
+    expect(flight.locator("[data-arrival]")).to_have_text("Arrived at The Sun", timeout=8000)
+    expect(flight.locator(".rs-source")).to_have_attribute("src", "./assets/sun-cor2.jpg")
+    page.emulate_media(reduced_motion="reduce")
+    print("Research flights: search, sky navigation, original imagery, source receipts, mode switching, deep links and history passed.")
+
+
 def check_mobile(page, url):
     page.goto(url)
     expect(page.locator("#cards a")).to_have_count(3)
@@ -274,6 +342,17 @@ def check_mobile(page, url):
     expect(page.locator("#plate-figure-link")).to_be_visible()
     page.get_by_role("button", name="Context image").click()
     page.get_by_role("link", name="Launch simulator").click()
+    flight = page.locator(".rf-universe")
+    expect(flight.locator(".rf-stage")).to_be_visible()
+    assert flight.locator("[data-close]").evaluate("b => b.getBoundingClientRect().right <= innerWidth")
+    flight.locator('.rf-mobile-switch button[data-view="instruments"]').click()
+    expect(flight.get_by_role("slider", name="Inspect observation")).to_be_visible()
+    assert flight.get_by_role("button", name="Interactive plot").get_attribute("aria-pressed") == "true"
+    flight.get_by_role("tab", name="Imagery").click()
+    expect(flight.get_by_role("button", name="Magnify 4 times")).to_be_visible()
+    flight.locator('.rf-mobile-switch button[data-view="field"]').click()
+    expect(flight.locator(".rf-stage")).to_be_visible()
+    page.get_by_role("button", name="Generated universe", exact=True).click()
     page.get_by_role("button", name="System", exact=True).click()
     expect(page.get_by_role("button", name="Play orbital motion")).to_be_visible()
     page.get_by_role("button", name="World", exact=True).click()
@@ -307,6 +386,7 @@ def run(url, engine, channel):
             if check == check_desktop:
                 check_published_records(page)
                 check_universe_links(page, url, engine)
+                check_research_flights(page, url)
             page.close()
         browser.close()
     if failures:

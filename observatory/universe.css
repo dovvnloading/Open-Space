@@ -768,3 +768,18 @@
   margin-top: 6px;
   color: #ffd7ba;
 }
+
+@media (min-width: 651px) and (max-width: 810px) {
+  .osu-bar { flex-wrap: wrap; gap: 4px 12px; padding: 8px 16px 0; }
+  .osu-baractions { margin-left: auto; }
+  .osu-levels { order: 3; width: 100%; justify-content: center; }
+}
+@media (max-width: 425px) {
+  .osu-brand > span:last-child {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}

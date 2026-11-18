@@ -25,6 +25,7 @@ from open_space.verify.catalog import catalog_entries, check_counts
 from open_space.verify.model import FAIL
 from open_space.verify.runner import DEFAULT_CHECKS, LEDGER_SCHEMA
 from open_space.verify.tree import RepoTree
+from observatory.research_destinations import build_destinations
 from observatory.verify_spotlights import verify_spotlights
 
 # These two shared-report entries were originally published with title hashes.
@@ -306,10 +307,12 @@ def main() -> None:
     ledger = json.loads(args.verification_ledger.read_bytes()) if args.verification_ledger else None
     audit = archive_audit(tree, repository, records, ledger)
     spotlights = build_spotlights(tree, repository, records, args.output)
+    destinations = build_destinations(tree, records, spotlights, repository, args.output,
+                                      lambda path: git("show", f"{tree.commit}:{path}"))
     catalog = {
         "schemaVersion": 1, "revision": revision, "repository": repository,
         "revisionDate": git("show", "-s", "--format=%cI", revision).decode().strip(),
-        "records": records, "spotlights": spotlights, "audit": audit,
+        "records": records, "spotlights": spotlights, "destinations": destinations, "audit": audit,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
