@@ -1,0 +1,73 @@
+{
+  "scope": "Published clock model differences over the as-flown schedule, including gaps. No photon or phase measurement.",
+  "utc_envelope": [
+    "2026-10-10T02:00:01",
+    "2026-10-10T07:50:00"
+  ],
+  "input_sha256": {
+    "234": "fe872bf396be44c6e4ee20551e4fde89c9cff0809e16057b5a35bcc2b0015e8e",
+    "235": "24a440096719c2f8c992d6c03e3c3ac769bc7f7638826b1a422d64a1a9d75d19",
+    "236": "f30744159e4dcff43a525d15318bd4fb88e561c1fda9fcc508e0db752bb30f96"
+  },
+  "coverage": {
+    "234": {
+      "bracketing_knots": 23,
+      "max_gap_seconds": 1000.0,
+      "clock_error_column_range": [
+        9.203675852738643e-05,
+        9.34051051183175e-05
+      ]
+    },
+    "235": {
+      "bracketing_knots": 23,
+      "max_gap_seconds": 1000.0,
+      "clock_error_column_range": [
+        9.0449094860933e-05,
+        9.194829320537211e-05
+      ]
+    },
+    "236": {
+      "bracketing_knots": 23,
+      "max_gap_seconds": 1000.0,
+      "clock_error_column_range": [
+        9.047668992752985e-05,
+        9.206607812434679e-05
+      ]
+    }
+  },
+  "runtime": {
+    "numpy": "2.5.5",
+    "scipy": "1.18.1",
+    "astropy": "8.0.3"
+  },
+  "pairs": {
+    "235-234": {
+      "union_segments": 22,
+      "finite_derivative_roots": 0,
+      "min_us": -4.775680629222952,
+      "max_us": 3.8540255416861364,
+      "envelope_offset_at_min_seconds": 0.0,
+      "envelope_offset_at_max_seconds": 20999.0,
+      "max_abs_change_from_start_us": 8.629706170909088
+    },
+    "236-235": {
+      "union_segments": 22,
+      "finite_derivative_roots": 0,
+      "min_us": 6.728088006732226,
+      "max_us": 13.23601896410136,
+      "envelope_offset_at_min_seconds": 20999.0,
+      "envelope_offset_at_max_seconds": 0.0,
+      "max_abs_change_from_start_us": 6.507930957369134
+    },
+    "236-234": {
+      "union_segments": 22,
+      "finite_derivative_roots": 0,
+      "min_us": 8.460338334878408,
+      "max_us": 10.582113548418363,
+      "envelope_offset_at_min_seconds": 0.0,
+      "envelope_offset_at_max_seconds": 20999.0,
+      "max_abs_change_from_start_us": 2.121775213539955
+    }
+  },
+  "code_sha256": "1b7a21e8d5083befbb8599b1e98314d78758d0e27e7e8b6055b18102f9671123"
+}
