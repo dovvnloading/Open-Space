@@ -1,0 +1,143 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "dsn-labels-x",
+      "printed": "6",
+      "statement": "DSN S-band table observed-column labels carrying an X-band name.",
+      "compute": "json('radio-reduction.json','/quality/dsn_s_files_labeled_x_band')"
+    },
+    {
+      "id": "dsn-physical-sband",
+      "printed": "6",
+      "statement": "DPS files whose measured carrier is in S-band.",
+      "compute": "json('radio-reduction.json','/quality/dsn_s_files_carrier_2_to_3_ghz')"
+    },
+    {
+      "id": "dsn-complete",
+      "printed": "3",
+      "statement": "DSN passes with common calibrated seconds.",
+      "compute": "json('radio-reduction.json','/quality/dsn_passes_with_calibrated_pairs')"
+    },
+    {
+      "id": "dsn-no-s-calibration",
+      "printed": "3",
+      "statement": "DSN S-band files with no populated calibrated residuals.",
+      "compute": "json('radio-reduction.json','/quality/dsn_s_files_all_residuals_missing')"
+    },
+    {
+      "id": "4436-no-s-missing",
+      "printed": "21,000",
+      "statement": "S-band residual rows missing in volume 4436.",
+      "compute": "json('radio-reduction.json','/groups/4436-dsn/s/missing_reported_residual_rows')"
+    },
+    {
+      "id": "4443-no-s-missing",
+      "printed": "21,010",
+      "statement": "S-band residual rows missing in volume 4443.",
+      "compute": "json('radio-reduction.json','/groups/4443-dsn/s/missing_reported_residual_rows')"
+    },
+    {
+      "id": "4452-no-s-missing",
+      "printed": "20,370",
+      "statement": "S-band residual rows missing in volume 4452.",
+      "compute": "json('radio-reduction.json','/groups/4452-dsn/s/missing_reported_residual_rows')"
+    },
+    {
+      "id": "4452-differential",
+      "printed": "1,710",
+      "statement": "Native differential rows present in volume 4452 S-band table.",
+      "compute": "json('radio-reduction.json','/groups/4452-dsn/s/present_archive_differential_rows')"
+    },
+    {
+      "id": "target-latitude-difference",
+      "printed": "0.51",
+      "statement": "Absolute median tangent latitude difference in degrees.",
+      "compute": "json('summary.json','/march_17_18_new_norcia_comparison/chains/tcl2/absolute_latitude_difference_deg')"
+    },
+    {
+      "id": "target-zenith-difference",
+      "printed": "0.66",
+      "statement": "Absolute median tangent solar zenith angle difference in degrees.",
+      "compute": "json('summary.json','/march_17_18_new_norcia_comparison/chains/tcl2/absolute_sza_difference_deg')"
+    },
+    {
+      "id": "spatial-matched-change",
+      "printed": "0.0213",
+      "statement": "Median later minus earlier limb signal across matched altitude bins, hertz.",
+      "compute": "json('summary.json','/march_17_18_new_norcia_comparison/chains/tcl2/median_after_minus_before_abs_hz')"
+    },
+    {
+      "id": "earlier-alternate-contrast",
+      "printed": "0.0866",
+      "statement": "Earlier limb median absolute residual with alternate background, hertz.",
+      "compute": "json('summary.json','/tracking_pairs/4432-tcl2/branches/0/alternate_sky/columns/d_hz/limb/median_absolute_hz')"
+    },
+    {
+      "id": "later-alternate-contrast",
+      "printed": "0.0806",
+      "statement": "Later limb median absolute residual with alternate background, hertz.",
+      "compute": "json('summary.json','/tracking_pairs/4434-tcl2/branches/0/alternate_sky/columns/d_hz/limb/median_absolute_hz')"
+    },
+    {
+      "id": "earlier-edac",
+      "printed": "56",
+      "statement": "NDMW0D0G counter in the first March 17 pass with measurements.",
+      "compute": "json('context.json','/edac_naive_archive_times/NDMW0D0G/passes/4432/inside/0/1')"
+    },
+    {
+      "id": "later-edac",
+      "printed": "59",
+      "statement": "NDMW0D0G count in the March 18 pass.",
+      "compute": "json('context.json','/edac_naive_archive_times/NDMW0D0G/passes/4434/inside/0/1')"
+    },
+    {
+      "id": "dss65-tec-10",
+      "printed": "34.11",
+      "statement": "Interpolated 10:00 UTC vertical UPC total electron content, TECU.",
+      "compute": "json('context.json','/earth_gnss/vertical_tec/2024-03-17T10:00:00/tecUHR/bilinear_tecu')"
+    },
+    {
+      "id": "dss65-tec-11",
+      "printed": "40.70",
+      "statement": "Interpolated 11:00 UTC vertical UPC total electron content, TECU.",
+      "compute": "json('context.json','/earth_gnss/vertical_tec/2024-03-17T11:00:00/tecUHR/bilinear_tecu')"
+    },
+    {
+      "id": "dss65-tec-12",
+      "printed": "44.77",
+      "statement": "Interpolated 12:00 UTC vertical UPC total electron content, TECU.",
+      "compute": "json('context.json','/earth_gnss/vertical_tec/2024-03-17T12:00:00/tecUHR/bilinear_tecu')"
+    },
+    {
+      "id": "4432-limb-residual",
+      "printed": "0.0781",
+      "statement": "Volume 4432 frozen median absolute limb residual, hertz.",
+      "compute": "json('summary.json','/tracking_pairs/4432-tcl2/branches/0/primary/columns/d_hz/limb/median_absolute_hz')"
+    },
+    {
+      "id": "4433-limb-residual",
+      "printed": "0.0677",
+      "statement": "Volume 4433 frozen median absolute limb residual, hertz.",
+      "compute": "json('summary.json','/tracking_pairs/4433-dsn/branches/0/primary/columns/d_hz/limb/median_absolute_hz')"
+    },
+    {
+      "id": "4434-limb-residual",
+      "printed": "0.0952",
+      "statement": "Volume 4434 frozen median absolute limb residual, hertz.",
+      "compute": "json('summary.json','/tracking_pairs/4434-tcl2/branches/0/primary/columns/d_hz/limb/median_absolute_hz')"
+    },
+    {
+      "id": "4445-limb-residual",
+      "printed": "0.0225",
+      "statement": "Volume 4445 frozen median absolute limb residual, hertz.",
+      "compute": "json('summary.json','/tracking_pairs/4445-dsn/branches/0/primary/columns/d_hz/limb/median_absolute_hz')"
+    },
+    {
+      "id": "4451-limb-residual",
+      "printed": "0.0470",
+      "statement": "Volume 4451 frozen median absolute limb residual, hertz.",
+      "compute": "json('summary.json','/tracking_pairs/4451-dsn/branches/0/primary/columns/d_hz/limb/median_absolute_hz')"
+    }
+  ]
+}
