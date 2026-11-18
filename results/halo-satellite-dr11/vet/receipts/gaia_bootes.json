@@ -1,0 +1,11 @@
+{
+  "url": "https://gaia.ari.uni-heidelberg.de/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=150000&QUERY=SELECT+g.source_id%2C+g.ra%2C+g.dec%2C+g.pmra%2C+g.pmdec%2C+g.pmra_error%2C+g.pmdec_error%2C+g.pmra_pmdec_corr%2C+g.parallax%2C+g.parallax_error%2C+g.ruwe%2C+g.phot_g_mean_mag%2C+g.bp_rp+FROM+gaiadr3.gaia_source+AS+g++WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cg.ra%2Cg.dec%29%2C+CIRCLE%28%27ICRS%27%2C210.5%2C14.5%2C2.5%29%29+AND+g.ra+BETWEEN+208.7+AND+212.3+AND+g.dec+BETWEEN+13.2+AND+15.8",
+  "checked_utc": "2026-11-17T12:17:11.644647+00:00",
+  "response_date": "Tue, 17 Nov 2026 12:17:08 GMT",
+  "response_bytes": 5776173,
+  "response_sha256": "fb792426eb37d5b42be3263ce092bc11765992f4ffbc5562b3199ff896673186",
+  "response_rows": 33964,
+  "retained_rows": 33964,
+  "output_sha256": "f302652ad57cefd08f0863dc51c49b9d7e06e440df557b83d1d900aca786598f",
+  "output": "gaia_bootes.csv.gz"
+}

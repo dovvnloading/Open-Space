@@ -1,0 +1,25 @@
+{
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "pandas": "2.2.3",
+  "scipy": "1.17.0",
+  "matplotlib": "3.10.8",
+  "catalogue_input_sha256": {
+    "bootes.csv.gz": "11ca81a0a90b4e5731b167a22b9e6a608cbcc1e7e454146a0a41ed3c83467c21",
+    "coma.csv.gz": "7f67edc4cfbb10c189ef0583f313ca42bc520b7e325b02c51e0aa50da2d7f5ec"
+  },
+  "model_sha256": "b22f655ca420a8d6286d8ac0f2c51fed79766918997573085d43c0f3f3e81e93",
+  "primary_commands": [
+    "python scripts/search.py",
+    "python scripts/inject.py",
+    "python scripts/inject_figure.py"
+  ],
+  "primary_commands_relative_to": "results/halo-satellite-dr11",
+  "selected_star_count": 57688,
+  "secondary_commands": [
+    "python scripts/off_control.py",
+    "python scripts/inject.py --off-control",
+    "python scripts/inject_figure.py --off-control",
+    "python scripts/inject_sky.py"
+  ]
+}
