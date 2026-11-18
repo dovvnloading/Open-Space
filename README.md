@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 207 entries: 90 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 32 carefully recorded null or inconclusive checks.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 208 entries: 91 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 32 carefully recorded null or inconclusive checks.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -80,6 +80,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 ### The Sun, space weather and Earth's sky
 
 - **Continuum timing in Proba-3 solar images.** In one September orbit, all 63 flagged Fe XIV products used a different-cycle continuum exposure with a smaller representative-time lag than either same-cycle donor, despite similar exposure-start lags. A ten-image sensitivity test found small sign changes under a bracketing continuum substitution. *Measured* · [Details](results/proba3-aspiics-continuum-timing/README.md)
+- **One wavelength bin drives an apparent Euclid emission line.** Removing a single usable bin turns a strong positive line fit negative in a source whose Euclid and DESI redshifts disagree. An agreement control retains its line after the same test. *Measured* · [Details](results/euclid-desi-line-disagreements/README.md)
 
 - **A magnetic "hole" in the solar wind reached Earth (6 Oct 2023).** Three spacecraft saw the magnetic field drop for about half an hour inside a known solar eruption, and the matching pressure pulse arrived at Earth on schedule. *Measured* · [Details](results/solar-wind-cavity-20231006/README.md)
 - **A solar magnetic structure reached the inner spacecraft last (28–29 Sep 2023).** A structure seen by Wind has a candidate counterpart at STEREO-A that arrived hours later, even though STEREO-A was closer to the Sun. *Candidate* · [Details](results/stereo-20230929/README.md)
