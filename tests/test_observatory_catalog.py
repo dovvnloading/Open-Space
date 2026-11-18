@@ -1,10 +1,13 @@
 """Visitor catalog regressions for grouped findings, source links and new reports."""
 
+import hashlib
 import json
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
 from pathlib import Path
 import unittest
 
-from observatory.build_catalog import build_records, source_link
+from observatory.build_catalog import build_records, build_spotlights, source_link
 from open_space.verify.tree import RepoTree
 
 
@@ -53,6 +56,25 @@ class ObservatoryCatalogTests(unittest.TestCase):
         self.assertIn(f"/tree/{self.tree.commit}/results/radio", directory["url"])
         with self.assertRaisesRegex(ValueError, "Missing evidence"):
             source_link(self.tree, self.repo, "results/unknown/README.md", "Data")
+
+    def test_spotlights_and_rendered_figure_come_from_requested_commit(self):
+        revision = self.tree.commit
+        raw = b"source table at revision"
+        image = b"rendered image with source digest " + hashlib.sha256(raw).hexdigest().encode()
+        curated = [{"path": "results/radio/README.md", "evidence": [],
+                    "figure": {"path": "results/radio/table.csv", "src": "data/figures/radio.svg"}}]
+        tree = RepoTree({**self.tree._files, "results/radio/table.csv": raw}, commit=revision)
+        records = [{"id": "radio", "status": "Candidate", "updatedAt": None,
+                    "links": [{"path": "results/radio/README.md"}]}]
+        blobs = {f"{revision}:observatory/data/spotlights.json": json.dumps(curated).encode(),
+                 f"{revision}:observatory/data/figures/radio.svg": image,
+                 f"{revision}:results/radio/table.csv": raw}
+        with TemporaryDirectory() as tmp, patch("observatory.build_catalog.git") as git:
+            git.side_effect = lambda operation, spec: blobs[spec] if operation == "show" else None
+            result = build_spotlights(tree, self.repo, records, Path(tmp) / "catalog.json")
+            self.assertEqual((Path(tmp) / "figures/radio.svg").read_bytes(), image)
+            self.assertEqual(result[0]["status"], "Candidate")
+            self.assertEqual(git.call_count, 3)
 
     def test_packaged_dossiers_have_figures_and_exact_evidence_links(self):
         site = Path(__file__).resolve().parents[1] / "observatory"

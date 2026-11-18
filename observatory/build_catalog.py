@@ -162,7 +162,7 @@ def build_records(tree: RepoTree, repository: str, dates: dict[str, str]) -> lis
 
 
 def build_spotlights(tree: RepoTree, repository: str, records: list[dict], output: Path) -> list[dict]:
-    curated = json.loads((HERE / "data/spotlights.json").read_text(encoding="utf-8"))
+    curated = json.loads(git("show", f"{tree.commit}:observatory/data/spotlights.json"))
     for item in curated:
         path = item["path"]
         matches = [r for r in records if any(link["path"] == path for link in r["links"])]
@@ -182,14 +182,13 @@ def build_spotlights(tree: RepoTree, repository: str, records: list[dict], outpu
         if figure["path"].endswith((".svg", ".png")):
             destination.write_bytes(git("show", f"{tree.commit}:{figure['path']}"))
         else:
-            image = (HERE / "data/figures" / name).read_bytes()
+            image = git("show", f"{tree.commit}:observatory/data/figures/{name}")
             # Matplotlib embeds the digest of the exact CSV drawn. Prevent an
             # archived figure from silently illustrating a changed data table.
             digest = hashlib.sha256(git("show", f"{tree.commit}:{figure['path']}")).hexdigest()
             if digest.encode() not in image:
                 raise ValueError(f"Regenerate {name} from {figure['path']} with render_figures.py")
-            if destination.resolve() != (HERE / "data/figures" / name).resolve():
-                destination.write_bytes(image)
+            destination.write_bytes(image)
     return curated
 
 
