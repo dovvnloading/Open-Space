@@ -444,6 +444,7 @@ document.addEventListener("click", (e) => {
   }
   e.preventDefault();
   if (location.hash === hash) return;
+  if (/^#(?:target\/|record\/|audit$|credits$|universe$)/.test(hash)) a.focus({ preventScroll: true });
   history.pushState({ fromDeckSite: true }, "", hash);
   route();
 });

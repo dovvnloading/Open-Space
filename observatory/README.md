@@ -19,7 +19,7 @@ python observatory/build_catalog.py --verification-ledger runs/observatory-ledge
 
 ## Evidence and publication
 
-The [Pages workflow](../.github/workflows/observatory.yml) builds a snapshot on relevant pushes to main. It verifies the committed bytes, checks the featured readouts against their source tables, validates the context images, and exercises every record’s displayed title, disposition and evidence links in Chromium. It also compares the rendered observation tables against all their published rows. Each classified record points to the exact README line that supplied its disposition. Additional research directories retain an unclassified research-record label. Folder checks cover the whole linked folder, which can contain several findings. The site keeps unresolved physical interpretations visible.
+The [Pages workflow](../.github/workflows/observatory.yml) builds a snapshot on relevant pushes to main. It verifies the committed bytes, checks the featured readouts against their source tables, validates the context images, and exercises every record’s displayed title, disposition and evidence links in Chromium, Firefox and WebKit. It also compares the rendered observation tables against all their published rows. Each classified record points to the exact README line that supplied its disposition. Additional research directories retain an unclassified research-record label. Folder checks cover the whole linked folder, which can contain several findings. The site keeps unresolved physical interpretations visible.
 
 The curated target descriptions and figure sources live in [spotlights.json](data/spotlights.json). The MAVEN and STIX plots embed their source CSV digests. If the underlying tables change, inspect the new measurements, regenerate the plots using [render_figures.py](data/render_figures.py) with Matplotlib installed, and review the dossier text before publishing.
 
@@ -36,8 +36,10 @@ python -m unittest discover -s tests -p 'test_observatory_*.py' -v
 node --test tests/observatory-simulation.test.mjs
 python observatory/check_media.py
 python -m pip install playwright==1.58.0
-python -m playwright install chromium
+python -m playwright install chromium firefox webkit
 python observatory/check_browser.py --directory observatory
+python observatory/check_browser.py --directory observatory --engine firefox
+python observatory/check_browser.py --directory observatory --engine webkit
 ```
 
 The [featured-source replay](data/spotlight-replay.md) records which original data were recovered and where archived inputs were used. The site bundles its plates, figures, fonts and code. [Image sources and reuse terms](assets/CREDITS.md) · [DM Sans license](assets/fonts/dm-sans-LICENSE.txt) · [IBM Plex Mono license](assets/fonts/plex-mono-LICENSE.txt).
