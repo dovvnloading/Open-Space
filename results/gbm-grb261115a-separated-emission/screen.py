@@ -129,7 +129,7 @@ def score_windows(data, reference, common, backgrounds):
         for i, j, width in windows(reference.start, reference.stop, common, limits):
             row = {"region": region, "start_s": float(reference.start[i]),
                    "stop_s": float(reference.stop[j - 1]), "nominal_width_s": width,
-                   "native_bins": j - i}
+                   "native_bins": int(j - i)}
             for name, detector in data.items():
                 count = int(detector.counts[i:j].sum())
                 exposure = float(detector.exposure[i:j].sum())
@@ -228,13 +228,14 @@ def main():
         "prompt_control": prompt,
         "regions": region_results,
     }
+    result_json = json.dumps(result, indent=2, allow_nan=False) + "\n"
     args.output.mkdir(parents=True)
     with (args.output / "windows.csv").open("w", encoding="utf-8", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=list(output[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(output)
     (args.output / "screen.json").write_text(
-        json.dumps(result, indent=2, allow_nan=False) + "\n", encoding="utf-8", newline="\n"
+        result_json, encoding="utf-8", newline="\n"
     )
 
 
