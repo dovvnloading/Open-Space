@@ -4,7 +4,7 @@ import argparse
 from collections import Counter, defaultdict
 import csv
 from hashlib import file_digest
-from itertools import permutations
+from itertools import islice, permutations
 import json
 import math
 from pathlib import Path
@@ -58,11 +58,15 @@ def linear(bins, tail):
     actual = np.array([v["value"] for v in bins])
     weights = slope_weights(dates)
     slope = np.dot(weights, actual)
-    permuted = np.array(list(permutations(actual))) @ weights
-    if tail == 0:
-        p = np.mean(abs(permuted) >= abs(slope) - 1e-9)
-    else:
-        p = np.mean(tail * permuted >= tail * slope - 1e-9)
+    rearrangements = permutations(actual)
+    exceedances = 0
+    for chunk in iter(lambda: list(islice(rearrangements, 8192)), []):
+        permuted = np.array(chunk) @ weights
+        if tail == 0:
+            exceedances += np.count_nonzero(abs(permuted) >= abs(slope) - 1e-9)
+        else:
+            exceedances += np.count_nonzero(tail * permuted >= tail * slope - 1e-9)
+    p = exceedances / math.factorial(len(actual))
     loo = [np.dot(slope_weights(np.delete(dates, i)), np.delete(actual, i)) for i in range(len(bins))]
     return float(slope), float(p), loo
 

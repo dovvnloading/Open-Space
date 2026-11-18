@@ -189,7 +189,10 @@ def retrieve(item, data, offline):
 def run_download(selection, data, output, workers, offline):
     with selection.open(encoding="utf-8", newline="") as stream:
         chosen = list(csv.DictReader(stream))
-    for phase in WINDOWS:
+    phases = {row["split"] for row in chosen}
+    if not phases <= {*WINDOWS, "coralie98", "coralie07"}:
+        raise ValueError("Unknown observing phase in the selection")
+    for phase in phases:
         (data / phase).mkdir(parents=True, exist_ok=True)
     with ThreadPoolExecutor(max_workers=workers) as pool:
         results = []

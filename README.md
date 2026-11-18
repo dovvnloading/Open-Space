@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 211 entries: 93 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 33 carefully recorded null or inconclusive checks.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 212 entries: 94 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 33 carefully recorded null or inconclusive checks.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -172,6 +172,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Stars, binaries and multiple-star systems
 
+- **The star HD 25673 keeps changing speed along our line of sight.** The newly public CORALIE spectra extend the previously reported HARPS drift through 2024. Its annual median velocity fell by 216.1 m/s in the modern CORALIE series, and astrometry also shows excess motion. A companion orbit is unresolved. *Measured* · [Details](results/coralie-rv-acceleration/README.md)
 - **A search for circularly polarised radio signals found known stars, not a new planet signal.** GJ 1151 and COCONUTS-2 A match previously published radio detections. Eleven nearby objects checked in available VLASS images showed no strong new signal; although many planet hosts lie within other surveys' image footprints, their individual radio limits are not yet measured. *Null result* · [Details](results/stellar-stokes-v/README.md)
 
 - **No new unexplained deep dimmers in a TESS sector.** A search of 384 stars in Sector 105 (June–July 2026) found no validated irregular eclipses. A striking dimming toward TIC 316937197 repeats every 18.767 days, but which star in the close blend eclipses remains unknown. Recovery tests found 56% of 2%-deep, 12-hour dips; this single-sector search weakly constrains rare, multi-day events. *Null result* · [Details](results/tess-asymmetric-dips/README.md)
