@@ -1,0 +1,84 @@
+{
+  "scope": "Retrospective calibration on 2023 published bolide groups. No 2026 values read.",
+  "runtime": {
+    "python": "3.14.0 (tags/v3.14.0:ebf955d, Oct  7 2025, 10:15:03) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.5.5"
+  },
+  "input_sha256": {
+    "flash-1-G16.csv": "9399c867cb4b50f358360c59f831b9b720b5886b310c7eabf48d6533faa52b40",
+    "flash-1-G18.csv": "73581981648c2737a7ba76ffa77192c0045fe24928bc68cd7a76863aea1be675",
+    "flash-2-G16.csv": "ff2a3f2043bf28f10625624499ce4d56c5f827f223b6f1ea0900cf546d3c2034",
+    "flash-2-G18.csv": "38599671a42419fbadc21a9e97038e9e28ca2c7c010964d38afa0db447aa82e5"
+  },
+  "code_sha256": {
+    "calibrate_corridor.py": "3050675d485a969ff1a82277377546af1bee97761bcfda8956c92aff6739be63",
+    "corridor.py": "b12eede7593fc4f8b178f2823c27677f075a027a4d9634173b529bf75c50380f",
+    "geometry.py": "342c10182a02fd44d08afe3ed5f9877563cd9cd7b7e3948f805dca287a2d2ba3"
+  },
+  "configuration": {
+    "bin_width_ms": 20,
+    "altitude_shell_offsets_km": [
+      40.0,
+      120.0
+    ],
+    "bin_selection": "Max GOES-16 energy on Unix UTC-aligned bins, earliest on ties. Compare GOES-18 in same bin."
+  },
+  "controls": {
+    "1": {
+      "bin_start_unix_ms": 1700583076780,
+      "east_groups": 10,
+      "west_groups": 10,
+      "east_centroid_deg": [
+        -111.0323920721501,
+        -11.909449606368879
+      ],
+      "west_arc_endpoints_ecef_unit": [
+        [
+          0.7803803267392396,
+          0.6242892269966186,
+          -0.03563013744461269
+        ],
+        [
+          0.782148461650555,
+          0.6220766509214556,
+          -0.03555874457873979
+        ]
+      ],
+      "status": "measured",
+      "west_centroid_deg": [
+        -110.05172587775755,
+        -11.914080597935818
+      ],
+      "arc_length_arcsec": 584.3848633239706,
+      "nearest_arc_residual_arcsec": 4.818174619611471
+    },
+    "2": {
+      "bin_start_unix_ms": 1700583079320,
+      "east_groups": 10,
+      "west_groups": 10,
+      "east_centroid_deg": [
+        -108.14894023079262,
+        -12.033446290303711
+      ],
+      "west_arc_endpoints_ecef_unit": [
+        [
+          0.7848413564308949,
+          0.6186599692599192,
+          -0.035831378302105706
+        ],
+        [
+          0.7865083274515821,
+          0.6165433699515871,
+          -0.03576204437745651
+        ]
+      ],
+      "status": "measured",
+      "west_centroid_deg": [
+        -107.12553097534497,
+        -12.06145888326943
+      ],
+      "arc_length_arcsec": 555.9055266390917,
+      "nearest_arc_residual_arcsec": 17.501338925849097
+    }
+  }
+}

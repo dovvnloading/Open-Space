@@ -367,6 +367,7 @@ The [cold-neighbour search methods and reproduction evidence](results/cold-neigh
 - [MMS four-spacecraft planar-screen methods and bounded negative result](results/mms-planar-screen/README.md).
 - [PUNCH two-image angular comparison methods and development evidence](results/punch-front-feasibility/README.md).
 - [Legacy Surveys DR11 resolved-satellite control recovery and injection tests](results/halo-satellite-dr11/README.md).
+- [GOES-19 group decoding and stereo direction calibration](results/goes19-stereo-screen/README.md).
 - [IMAP magnetic-depletion screen and proton-test protocol](results/imap-mag-swapi-screen/README.md).
 - [SO/PHI-FDT magnetic-proxy persistence screen and evidence](results/solar-phi-fdt-pilot/README.md).
 - [VAST TDE-candidate conditional repeatability and offline replay](results/vast-tde-repeatability/README.md). Its frozen stages document the [initial metadata pilot](results/vast-tde-metadata/README.md), [expanded cohort and development](results/vast-tde-expanded/README.md), and [holdout protocol](results/vast-tde-holdout/README.md).
