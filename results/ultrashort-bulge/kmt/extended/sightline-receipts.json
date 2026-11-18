@@ -1,0 +1,1114 @@
+[
+  {
+    "event": "KMT-2024-BLG-0824",
+    "ra_deg": 269.572875,
+    "dec_deg": -31.513919444444443,
+    "cone": {
+      "url": "https://kmtnet.kasi.re.kr/search/?search_type=radec&ra=269.572875000&dec=-31.513919444&ra_type=decimal_degree&arcsec=15",
+      "final_url": "https://kmtnet.kasi.re.kr/search/?search_type=radec&ra=269.572875000&dec=-31.513919444&ra_type=decimal_degree&arcsec=15",
+      "status": 200,
+      "utc": "Tue, 17 Nov 2026 11:20:37 GMT",
+      "size": 122433,
+      "sha256": "186cdd40bdd6552b00767a801f4e6d4aea54f16c73b60eb9d7a20593253184d8"
+    },
+    "reference_stars": [
+      {
+        "lcid": "BLG01N0206.028465",
+        "ra": 269.57288,
+        "dec": -31.51392,
+        "dist": 0.015367925632528692,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG01N0206.028465",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG01N0206.028465",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:20:42 GMT",
+          "size": 2914448,
+          "sha256": "c9f5c5486fa2fd979a7872d0abc66e1195df11e2bcc2212287aff1cbf30a729b"
+        }
+      },
+      {
+        "lcid": "BLG41N0207.029607",
+        "ra": 269.57288,
+        "dec": -31.51392,
+        "dist": 0.015367925632528692,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG41N0207.029607",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG41N0207.029607",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:20:43 GMT",
+          "size": 2776335,
+          "sha256": "58f4f06c6fa277f5dd8cfd3716c264f5ac6115e8cd8daa7935e9a30e2b4bf2df"
+        }
+      },
+      {
+        "lcid": "BLG01N0206.020608",
+        "ra": 269.57317,
+        "dec": -31.51383,
+        "dist": 0.9609169553832091,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG01N0206.020608",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG01N0206.020608",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:20:54 GMT",
+          "size": 2899647,
+          "sha256": "3c2cee1ca18bdf59596eab5c8567f68ab3551374d66c29cf685961ad9da3c377"
+        }
+      },
+      {
+        "lcid": "BLG01N0206.053453",
+        "ra": 269.57304,
+        "dec": -31.51306,
+        "dist": 3.135165306664343,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG01N0206.053453",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG01N0206.053453",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:20:53 GMT",
+          "size": 2924974,
+          "sha256": "16e1c0f2657a6c3ce3f7527bd74e32f20add04c4095c7cbfee2c12054947539a"
+        }
+      }
+    ],
+    "catalogs": [
+      {
+        "name": "gaia",
+        "receipt": {
+          "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Cruwe%2Cpmra%2Cpmdec+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C269.572875000%2C-31.513919444%2C0.0008333333%29%29",
+          "final_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Cruwe%2Cpmra%2Cpmdec+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C269.572875000%2C-31.513919444%2C0.0008333333%29%29",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:05 GMT",
+          "size": 384,
+          "sha256": "e89969018952ac874b520c22f4e6ecea57eabd38f9571313fcd1544a431d0596"
+        },
+        "rows": [
+          {
+            "source_id": "4043992428414849152",
+            "ra": "269.5726775819009",
+            "dec": "-31.514335078730664",
+            "phot_g_mean_mag": "17.389662",
+            "bp_rp": "1.5062084",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "2.5290716",
+            "pmra": "-2.7013166356711262",
+            "pmdec": "3.724092133838118"
+          },
+          {
+            "source_id": "4043992432556765056",
+            "ra": "269.5723951164795",
+            "dec": "-31.51449818920011",
+            "phot_g_mean_mag": "18.95039",
+            "bp_rp": "",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "",
+            "pmra": "",
+            "pmdec": ""
+          },
+          {
+            "source_id": "4043992432606186880",
+            "ra": "269.57314466869445",
+            "dec": "-31.513886432158845",
+            "phot_g_mean_mag": "19.85376",
+            "bp_rp": "",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "",
+            "pmra": "",
+            "pmdec": ""
+          }
+        ]
+      },
+      {
+        "name": "virac",
+        "receipt": {
+          "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F387%2Fvirac2&-c=269.572875000+-31.513919444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CRAJ2000%2CDEJ2000%2CJmag%2CHmag%2CKsmag%2Ce_Ksmag%2Co_Ksmag%2CMedKsmag%2CSJKsmag%2CetaKs%2CKsEp1%2CKsEpl",
+          "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F387%2Fvirac2&-c=269.572875000+-31.513919444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CRAJ2000%2CDEJ2000%2CJmag%2CHmag%2CKsmag%2Ce_Ksmag%2Co_Ksmag%2CMedKsmag%2CSJKsmag%2CetaKs%2CKsEp1%2CKsEpl",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:10 GMT",
+          "size": 4410,
+          "sha256": "a9a7d59993fc8c55a342af81801ee59e6ec98d639b5cbb221a0e9a1d932562ae"
+        },
+        "rows": [
+          {
+            "_r": "0.117",
+            "srcid": "13775867012270",
+            "RAJ2000": "269.572882799587",
+            "DEJ2000": "-31.513951182247",
+            "Jmag": "17.7601",
+            "Hmag": "17.0858",
+            "Ksmag": "16.8619",
+            "e_Ksmag": "0.1714",
+            "o_Ksmag": "72",
+            "MedKsmag": "0.090332",
+            "SJKsmag": "-0.1081",
+            "etaKs": "1.6669",
+            "KsEp1": "55308.34995028",
+            "KsEpl": "57841.37024500"
+          },
+          {
+            "_r": "0.819",
+            "srcid": "13775867007733",
+            "RAJ2000": "269.573138573528",
+            "DEJ2000": "-31.513884719306",
+            "Jmag": "17.5640",
+            "Hmag": "16.9380",
+            "Ksmag": "16.8363",
+            "e_Ksmag": "0.1662",
+            "o_Ksmag": "122",
+            "MedKsmag": "0.099147",
+            "SJKsmag": "-0.2974",
+            "etaKs": "1.9791",
+            "KsEp1": "55308.34995028",
+            "KsEpl": "57841.37498512"
+          },
+          {
+            "_r": "1.627",
+            "srcid": "13775867012196",
+            "RAJ2000": "269.572677582159",
+            "DEJ2000": "-31.514338817163",
+            "Jmag": "15.5020",
+            "Hmag": "14.9918",
+            "Ksmag": "14.8766",
+            "e_Ksmag": "0.0457",
+            "o_Ksmag": "171",
+            "MedKsmag": "0.025601",
+            "SJKsmag": "-0.0091",
+            "etaKs": "1.9311",
+            "KsEp1": "55308.34995028",
+            "KsEpl": "57841.37498512"
+          },
+          {
+            "_r": "2.573",
+            "srcid": "13775867014734",
+            "RAJ2000": "269.572406346059",
+            "DEJ2000": "-31.514512014100",
+            "Jmag": "16.6608",
+            "Hmag": "16.2000",
+            "Ksmag": "16.0737",
+            "e_Ksmag": "0.1103",
+            "o_Ksmag": "160",
+            "MedKsmag": "0.058253",
+            "SJKsmag": "-0.2495",
+            "etaKs": "1.7348",
+            "KsEp1": "55308.34995028",
+            "KsEpl": "57841.37498512"
+          }
+        ]
+      },
+      {
+        "name": "vvv",
+        "receipt": {
+          "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F348%2Fvvv2&-c=269.572875000+-31.513919444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CraJ2000%2CdeJ2000%2CJmag3%2CHmag3%2CKsmag3%2CJperrbits%2CKsperrbits",
+          "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F348%2Fvvv2&-c=269.572875000+-31.513919444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CraJ2000%2CdeJ2000%2CJmag3%2CHmag3%2CKsmag3%2CJperrbits%2CKsperrbits",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:15 GMT",
+          "size": 2669,
+          "sha256": "60ec1051735e9b2606d330a46ffcafa438052805381f63d6c95ea1d888d9cda4"
+        },
+        "rows": [
+          {
+            "_r": "1.717",
+            "srcid": "515562977618",
+            "Jmag3": "15.287",
+            "Hmag3": "14.819",
+            "Ksmag3": "14.721",
+            "Jperrbits": "8388736",
+            "Ksperrbits": "8388736"
+          }
+        ]
+      },
+      {
+        "name": "vsx",
+        "receipt": {
+          "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=269.572875000+-31.513919444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=Name%2CRAJ2000%2CDEJ2000%2CType%2CPeriod",
+          "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=269.572875000+-31.513919444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=Name%2CRAJ2000%2CDEJ2000%2CType%2CPeriod",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:21 GMT",
+          "size": 2228,
+          "sha256": "189c678e3c439ea7459e84b2a682daffaad478e9cf927d4f46c4d79440bd8f67"
+        },
+        "rows": []
+      }
+    ]
+  },
+  {
+    "event": "KMT-2024-BLG-3278",
+    "ra_deg": 268.41029166666664,
+    "dec_deg": -30.014469444444444,
+    "cone": {
+      "url": "https://kmtnet.kasi.re.kr/search/?search_type=radec&ra=268.410291667&dec=-30.014469444&ra_type=decimal_degree&arcsec=15",
+      "final_url": "https://kmtnet.kasi.re.kr/search/?search_type=radec&ra=268.410291667&dec=-30.014469444&ra_type=decimal_degree&arcsec=15",
+      "status": 200,
+      "utc": "Tue, 17 Nov 2026 11:20:37 GMT",
+      "size": 122440,
+      "sha256": "e697957b507e6843cf76c8b4e188cefa7eaa6e253129f52048b936da9eb21a0f"
+    },
+    "reference_stars": [
+      {
+        "lcid": "BLG42T0102.095780",
+        "ra": 268.41029,
+        "dec": -30.01447,
+        "dist": 0.005323605600495954,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG42T0102.095780",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG42T0102.095780",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:20:42 GMT",
+          "size": 4035904,
+          "sha256": "68bfbb06a39f0115179ccf85d8ec8dc003de2acb4c0c87f1adc3cb34e5dc2964"
+        }
+      },
+      {
+        "lcid": "BLG02T0201.095932",
+        "ra": 268.41029,
+        "dec": -30.01447,
+        "dist": 0.005323605600495954,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG02T0201.095932",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG02T0201.095932",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:20:43 GMT",
+          "size": 4076861,
+          "sha256": "7e2a59fe5606dbc166fe71318a49e5a4b5a36fd358645c0d6b19fea88bce2dcb"
+        }
+      },
+      {
+        "lcid": "BLG42T0102.045264",
+        "ra": 268.41021,
+        "dec": -30.01433,
+        "dist": 0.5628606351221956,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG42T0102.045264",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG42T0102.045264",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:20:53 GMT",
+          "size": 4058372,
+          "sha256": "05aff9eeb1efc6a6781b65313851399d3b41a520a763607b91b6de64c440acc7"
+        }
+      },
+      {
+        "lcid": "BLG42T0102.016435",
+        "ra": 268.40983,
+        "dec": -30.015,
+        "dist": 2.391478353623921,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG42T0102.016435",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG42T0102.016435",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:20:53 GMT",
+          "size": 4059473,
+          "sha256": "632cd1d5b92b039ec8d91813b0f273c6c2f587621b22a1e5eab23c6c4ff83d49"
+        }
+      }
+    ],
+    "catalogs": [
+      {
+        "name": "gaia",
+        "receipt": {
+          "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Cruwe%2Cpmra%2Cpmdec+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C268.410291667%2C-30.014469444%2C0.0008333333%29%29",
+          "final_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Cruwe%2Cpmra%2Cpmdec+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C268.410291667%2C-30.014469444%2C0.0008333333%29%29",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:05 GMT",
+          "size": 439,
+          "sha256": "7ca6a01159015bf91733e9e824f1aa8a1876aa19036aaa73436260485abc90a5"
+        },
+        "rows": [
+          {
+            "source_id": "4056382004582363008",
+            "ra": "268.4097862876041",
+            "dec": "-30.01387129365885",
+            "phot_g_mean_mag": "17.065403",
+            "bp_rp": "2.3087568",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "1.171892",
+            "pmra": "-3.8753005433089087",
+            "pmdec": "-2.578628438880361"
+          },
+          {
+            "source_id": "4056382004527353344",
+            "ra": "268.4098285574735",
+            "dec": "-30.015014542884884",
+            "phot_g_mean_mag": "19.007025",
+            "bp_rp": "",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "",
+            "pmra": "",
+            "pmdec": ""
+          },
+          {
+            "source_id": "4056382034610567680",
+            "ra": "268.41043623646055",
+            "dec": "-30.013780324559754",
+            "phot_g_mean_mag": "17.66735",
+            "bp_rp": "2.1093597",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "1.0153196",
+            "pmra": "-3.222268237891138",
+            "pmdec": "3.3929951366852538"
+          }
+        ]
+      },
+      {
+        "name": "virac",
+        "receipt": {
+          "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F387%2Fvirac2&-c=268.410291667+-30.014469444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CRAJ2000%2CDEJ2000%2CJmag%2CHmag%2CKsmag%2Ce_Ksmag%2Co_Ksmag%2CMedKsmag%2CSJKsmag%2CetaKs%2CKsEp1%2CKsEpl",
+          "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F387%2Fvirac2&-c=268.410291667+-30.014469444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CRAJ2000%2CDEJ2000%2CJmag%2CHmag%2CKsmag%2Ce_Ksmag%2Co_Ksmag%2CMedKsmag%2CSJKsmag%2CetaKs%2CKsEp1%2CKsEpl",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:10 GMT",
+          "size": 4559,
+          "sha256": "f509e133bb53a2491402fb3f18c1a2c7db3175118d5d242a8986b7cbd0383a62"
+        },
+        "rows": [
+          {
+            "_r": "0.286",
+            "srcid": "13636590002047",
+            "RAJ2000": "268.410202819573",
+            "DEJ2000": "-30.014449773262",
+            "Jmag": "17.6608",
+            "Hmag": "17.2676",
+            "Ksmag": "17.0255",
+            "e_Ksmag": "0.1709",
+            "o_Ksmag": "72",
+            "MedKsmag": "0.113926",
+            "SJKsmag": "-0.1334",
+            "etaKs": "1.6951",
+            "KsEp1": "55437.14236923",
+            "KsEpl": "58362.00628318"
+          },
+          {
+            "_r": "2.413",
+            "srcid": "13636590009412",
+            "RAJ2000": "268.409838131881",
+            "DEJ2000": "-30.015012792668",
+            "Jmag": "17.0395",
+            "Hmag": "16.6168",
+            "Ksmag": "16.5550",
+            "e_Ksmag": "0.1497",
+            "o_Ksmag": "139",
+            "MedKsmag": "0.109911",
+            "SJKsmag": "-0.0345",
+            "etaKs": "2.2747",
+            "KsEp1": "55386.30479366",
+            "KsEpl": "58362.00628318"
+          },
+          {
+            "_r": "2.522",
+            "srcid": "13636590020995",
+            "RAJ2000": "268.410437740070",
+            "DEJ2000": "-30.013780359698",
+            "Jmag": "14.7345",
+            "Hmag": "13.9917",
+            "Ksmag": "13.7427",
+            "e_Ksmag": "0.0730",
+            "o_Ksmag": "95",
+            "MedKsmag": "0.030887",
+            "SJKsmag": "0.6761",
+            "etaKs": "1.3712",
+            "KsEp1": "55386.30479366",
+            "KsEpl": "58359.01532955"
+          },
+          {
+            "_r": "2.667",
+            "srcid": "13636590017708",
+            "RAJ2000": "268.409787712385",
+            "DEJ2000": "-30.013870679237",
+            "Jmag": "14.2092",
+            "Hmag": "13.4670",
+            "Ksmag": "13.2641",
+            "e_Ksmag": "0.0335",
+            "o_Ksmag": "193",
+            "MedKsmag": "0.007451",
+            "SJKsmag": "0.2701",
+            "etaKs": "1.4121",
+            "KsEp1": "55386.30479366",
+            "KsEpl": "58362.00628318"
+          },
+          {
+            "_r": "2.909",
+            "srcid": "13636590015822",
+            "RAJ2000": "268.411201635012",
+            "DEJ2000": "-30.014290031797",
+            "Jmag": "18.0984",
+            "Hmag": "17.3741",
+            "Ksmag": "17.0519",
+            "e_Ksmag": "0.1528",
+            "o_Ksmag": "56",
+            "MedKsmag": "0.119556",
+            "SJKsmag": "-0.3267",
+            "etaKs": "2.2412",
+            "KsEp1": "55386.30479366",
+            "KsEpl": "58358.01675742"
+          }
+        ]
+      },
+      {
+        "name": "vvv",
+        "receipt": {
+          "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F348%2Fvvv2&-c=268.410291667+-30.014469444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CraJ2000%2CdeJ2000%2CJmag3%2CHmag3%2CKsmag3%2CJperrbits%2CKsperrbits",
+          "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F348%2Fvvv2&-c=268.410291667+-30.014469444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CraJ2000%2CdeJ2000%2CJmag3%2CHmag3%2CKsmag3%2CJperrbits%2CKsperrbits",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:15 GMT",
+          "size": 2730,
+          "sha256": "09d14a83a8987831488b4391d051860f25b2697c61b7a958fb634779fb879a3d"
+        },
+        "rows": [
+          {
+            "_r": "2.656",
+            "srcid": "515552775043",
+            "Jmag3": "14.484",
+            "Hmag3": "13.811",
+            "Ksmag3": "13.557",
+            "Jperrbits": "16",
+            "Ksperrbits": "16"
+          },
+          {
+            "_r": "2.722",
+            "srcid": "515553167682",
+            "Jmag3": "14.174",
+            "Hmag3": "13.489",
+            "Ksmag3": "13.250",
+            "Jperrbits": "16",
+            "Ksperrbits": "16"
+          }
+        ]
+      },
+      {
+        "name": "vsx",
+        "receipt": {
+          "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=268.410291667+-30.014469444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=Name%2CRAJ2000%2CDEJ2000%2CType%2CPeriod",
+          "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=268.410291667+-30.014469444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=Name%2CRAJ2000%2CDEJ2000%2CType%2CPeriod",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:21 GMT",
+          "size": 2228,
+          "sha256": "f91f6603b10fc23d9f73c367c62190fb0305f6fd2e9de375810c8615374aaa18"
+        },
+        "rows": []
+      }
+    ]
+  },
+  {
+    "event": "KMT-2025-BLG-1495",
+    "ra_deg": 271.43325,
+    "dec_deg": -27.58386111111111,
+    "cone": {
+      "url": "https://kmtnet.kasi.re.kr/search/?search_type=radec&ra=271.433250000&dec=-27.583861111&ra_type=decimal_degree&arcsec=15",
+      "final_url": "https://kmtnet.kasi.re.kr/search/?search_type=radec&ra=271.433250000&dec=-27.583861111&ra_type=decimal_degree&arcsec=15",
+      "status": 200,
+      "utc": "Tue, 17 Nov 2026 11:21:26 GMT",
+      "size": 122446,
+      "sha256": "2839d22e7dbcc3703cfca86bf9660e31a2dbad1bdcbf480073243da9b47ea135"
+    },
+    "reference_stars": [
+      {
+        "lcid": "BLG03M0203.048640",
+        "ra": 271.43325,
+        "dec": -27.58386,
+        "dist": 0.00434670577101264,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG03M0203.048640",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG03M0203.048640",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:33 GMT",
+          "size": 4004681,
+          "sha256": "36e9b4aa4eef403a7d8af7d60d0fd95133baed7cae15316def82af1831ed67d1"
+        }
+      },
+      {
+        "lcid": "BLG43M0204.049311",
+        "ra": 271.43325,
+        "dec": -27.58386,
+        "dist": 0.00434670577101264,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG43M0204.049311",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG43M0204.049311",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:33 GMT",
+          "size": 3964462,
+          "sha256": "348ba049e5a253579e84e37f5693282d073ebdaa79015ebbb8081e0de532c508"
+        }
+      },
+      {
+        "lcid": "BLG03M0203.076742",
+        "ra": 271.43329,
+        "dec": -27.58408,
+        "dist": 0.7982686983047363,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG03M0203.076742",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG03M0203.076742",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:47 GMT",
+          "size": 4005486,
+          "sha256": "ca0256ede10171ac33b47c614f11c49dd09cf51fce4e7e49a0a2af7067c16194"
+        }
+      },
+      {
+        "lcid": "BLG03M0203.089554",
+        "ra": 271.4325,
+        "dec": -27.58361,
+        "dist": 2.5581554439615766,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG03M0203.089554",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG03M0203.089554",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:47 GMT",
+          "size": 4068060,
+          "sha256": "ffcda8fb63608ec19ad956a22de75205b17a81ce4798d8ee06102d16f53437f0"
+        }
+      }
+    ],
+    "catalogs": [
+      {
+        "name": "gaia",
+        "receipt": {
+          "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Cruwe%2Cpmra%2Cpmdec+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C271.433250000%2C-27.583861111%2C0.0008333333%29%29",
+          "final_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Cruwe%2Cpmra%2Cpmdec+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C271.433250000%2C-27.583861111%2C0.0008333333%29%29",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:59 GMT",
+          "size": 602,
+          "sha256": "6b83dff27102aa095baef5d6d1c594f1114ba89f0eccb10c7ec7f90769470cb6"
+        },
+        "rows": [
+          {
+            "source_id": "4062941897108758912",
+            "ra": "271.43353275582456",
+            "dec": "-27.583422958170363",
+            "phot_g_mean_mag": "18.875423",
+            "bp_rp": "",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "1.8500189",
+            "pmra": "-8.090617425792903",
+            "pmdec": "-1.5093286983153895"
+          },
+          {
+            "source_id": "4062941892921397760",
+            "ra": "271.43400468986533",
+            "dec": "-27.58402939082111",
+            "phot_g_mean_mag": "19.087671",
+            "bp_rp": "",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "",
+            "pmra": "",
+            "pmdec": ""
+          },
+          {
+            "source_id": "4062941897079131008",
+            "ra": "271.4333024977126",
+            "dec": "-27.58457311823636",
+            "phot_g_mean_mag": "19.00967",
+            "bp_rp": "",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "",
+            "pmra": "",
+            "pmdec": ""
+          },
+          {
+            "source_id": "4062941897079133568",
+            "ra": "271.4335334338602",
+            "dec": "-27.583150394083145",
+            "phot_g_mean_mag": "19.033503",
+            "bp_rp": "",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "",
+            "pmra": "",
+            "pmdec": ""
+          },
+          {
+            "source_id": "4062941892921263872",
+            "ra": "271.4328184018692",
+            "dec": "-27.583867572890867",
+            "phot_g_mean_mag": "17.818323",
+            "bp_rp": "1.615963",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "1.6314958",
+            "pmra": "-4.883186726812634",
+            "pmdec": "-7.026183983969215"
+          }
+        ]
+      },
+      {
+        "name": "virac",
+        "receipt": {
+          "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F387%2Fvirac2&-c=271.433250000+-27.583861111&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CRAJ2000%2CDEJ2000%2CJmag%2CHmag%2CKsmag%2Ce_Ksmag%2Co_Ksmag%2CMedKsmag%2CSJKsmag%2CetaKs%2CKsEp1%2CKsEpl",
+          "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F387%2Fvirac2&-c=271.433250000+-27.583861111&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CRAJ2000%2CDEJ2000%2CJmag%2CHmag%2CKsmag%2Ce_Ksmag%2Co_Ksmag%2CMedKsmag%2CSJKsmag%2CetaKs%2CKsEp1%2CKsEpl",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:22:05 GMT",
+          "size": 5006,
+          "sha256": "31315aa1a3ad9daac067da25b8dbff538e9630defcf16f7dd0def3032cc79a1a"
+        },
+        "rows": [
+          {
+            "_r": "1.337",
+            "srcid": "13399056007771",
+            "RAJ2000": "271.432831153444",
+            "DEJ2000": "-27.583866971843",
+            "Jmag": "15.8448",
+            "Hmag": "15.3981",
+            "Ksmag": "15.3154",
+            "e_Ksmag": "0.0660",
+            "o_Ksmag": "640",
+            "MedKsmag": "0.033700",
+            "SJKsmag": "0.0761",
+            "etaKs": "1.9097",
+            "KsEp1": "55298.30617959",
+            "KsEpl": "57841.39849803"
+          },
+          {
+            "_r": "1.645",
+            "srcid": "13399056012509",
+            "RAJ2000": "271.433026043135",
+            "DEJ2000": "-27.584272610583",
+            "Jmag": "17.2009",
+            "Hmag": "16.6947",
+            "Ksmag": "16.6747",
+            "e_Ksmag": "0.1441",
+            "o_Ksmag": "467",
+            "MedKsmag": "0.096622",
+            "SJKsmag": "-0.0457",
+            "etaKs": "1.9192",
+            "KsEp1": "55298.30617959",
+            "KsEpl": "57841.39849803"
+          },
+          {
+            "_r": "1.731",
+            "srcid": "13399056005141",
+            "RAJ2000": "271.433533780872",
+            "DEJ2000": "-27.583451293380",
+            "Jmag": "16.3929",
+            "Hmag": "16.0833",
+            "Ksmag": "15.9453",
+            "e_Ksmag": "0.0949",
+            "o_Ksmag": "643",
+            "MedKsmag": "0.056263",
+            "SJKsmag": "0.0277",
+            "etaKs": "1.9272",
+            "KsEp1": "55298.30617959",
+            "KsEpl": "57841.39849803"
+          },
+          {
+            "_r": "2.372",
+            "srcid": "13399056015368",
+            "RAJ2000": "271.433977633066",
+            "DEJ2000": "-27.583996039996",
+            "Jmag": "17.3363",
+            "Hmag": "16.9100",
+            "Ksmag": "16.9073",
+            "e_Ksmag": "0.1404",
+            "o_Ksmag": "375",
+            "MedKsmag": "0.085087",
+            "SJKsmag": "-0.0224",
+            "etaKs": "1.7812",
+            "KsEp1": "55298.30617959",
+            "KsEpl": "57841.39849803"
+          },
+          {
+            "_r": "2.563",
+            "srcid": "13399056009625",
+            "RAJ2000": "271.433278732714",
+            "DEJ2000": "-27.584572734622",
+            "Jmag": "17.1623",
+            "Hmag": "16.7820",
+            "Ksmag": "16.6041",
+            "e_Ksmag": "0.2007",
+            "o_Ksmag": "237",
+            "MedKsmag": "0.115248",
+            "SJKsmag": "-0.0316",
+            "etaKs": "1.5161",
+            "KsEp1": "55778.16093255",
+            "KsEpl": "57589.20709248"
+          },
+          {
+            "_r": "2.662",
+            "srcid": "13399056011764",
+            "RAJ2000": "271.433143487650",
+            "DEJ2000": "-27.584594413986",
+            "Jmag": "",
+            "Hmag": "",
+            "Ksmag": "16.3893",
+            "e_Ksmag": "0.1607",
+            "o_Ksmag": "48",
+            "MedKsmag": "0.098595",
+            "SJKsmag": "-0.3208",
+            "etaKs": "1.6467",
+            "KsEp1": "55778.15994747",
+            "KsEpl": "57841.39849803"
+          },
+          {
+            "_r": "2.748",
+            "srcid": "13399056016852",
+            "RAJ2000": "271.433538378951",
+            "DEJ2000": "-27.583141958398",
+            "Jmag": "16.9702",
+            "Hmag": "16.5784",
+            "Ksmag": "16.3385",
+            "e_Ksmag": "0.1022",
+            "o_Ksmag": "465",
+            "MedKsmag": "0.065876",
+            "SJKsmag": "-0.0975",
+            "etaKs": "2.0823",
+            "KsEp1": "55298.30617959",
+            "KsEpl": "57841.39849803"
+          },
+          {
+            "_r": "2.772",
+            "srcid": "13399056008796",
+            "RAJ2000": "271.433029967298",
+            "DEJ2000": "-27.584605903817",
+            "Jmag": "17.1747",
+            "Hmag": "16.7263",
+            "Ksmag": "16.6241",
+            "e_Ksmag": "0.1548",
+            "o_Ksmag": "58",
+            "MedKsmag": "0.098474",
+            "SJKsmag": "-0.0175",
+            "etaKs": "1.5487",
+            "KsEp1": "55298.30617959",
+            "KsEpl": "57841.39768397"
+          }
+        ]
+      },
+      {
+        "name": "vvv",
+        "receipt": {
+          "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F348%2Fvvv2&-c=271.433250000+-27.583861111&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CraJ2000%2CdeJ2000%2CJmag3%2CHmag3%2CKsmag3%2CJperrbits%2CKsperrbits",
+          "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F348%2Fvvv2&-c=271.433250000+-27.583861111&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CraJ2000%2CdeJ2000%2CJmag3%2CHmag3%2CKsmag3%2CJperrbits%2CKsperrbits",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:22:13 GMT",
+          "size": 2791,
+          "sha256": "42a6ac2695c675b7a382063b9548d9e350e802da2ac6e5c88c6f7280e6e47ec0"
+        },
+        "rows": [
+          {
+            "_r": "1.032",
+            "srcid": "515499207438",
+            "Jmag3": "15.785",
+            "Hmag3": "",
+            "Ksmag3": "",
+            "Jperrbits": "16",
+            "Ksperrbits": "0"
+          },
+          {
+            "_r": "1.056",
+            "srcid": "515499476099",
+            "Jmag3": "",
+            "Hmag3": "15.630",
+            "Ksmag3": "15.677",
+            "Jperrbits": "0",
+            "Ksperrbits": "0"
+          },
+          {
+            "_r": "1.924",
+            "srcid": "515498677587",
+            "Jmag3": "16.257",
+            "Hmag3": "15.996",
+            "Ksmag3": "15.750",
+            "Jperrbits": "16",
+            "Ksperrbits": "16"
+          }
+        ]
+      },
+      {
+        "name": "vsx",
+        "receipt": {
+          "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=271.433250000+-27.583861111&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=Name%2CRAJ2000%2CDEJ2000%2CType%2CPeriod",
+          "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=271.433250000+-27.583861111&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=Name%2CRAJ2000%2CDEJ2000%2CType%2CPeriod",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:22:21 GMT",
+          "size": 2228,
+          "sha256": "df40846146862880df0134b560625a07c40e6534431119ee2d1fe49bea2b07cb"
+        },
+        "rows": []
+      }
+    ]
+  },
+  {
+    "event": "KMT-2025-BLG-0220",
+    "ra_deg": 268.0590416666667,
+    "dec_deg": -23.229769444444443,
+    "cone": {
+      "url": "https://kmtnet.kasi.re.kr/search/?search_type=radec&ra=268.059041667&dec=-23.229769444&ra_type=decimal_degree&arcsec=15",
+      "final_url": "https://kmtnet.kasi.re.kr/search/?search_type=radec&ra=268.059041667&dec=-23.229769444&ra_type=decimal_degree&arcsec=15",
+      "status": 200,
+      "utc": "Tue, 17 Nov 2026 11:21:26 GMT",
+      "size": 121667,
+      "sha256": "f08db3776203a5eabf03b76ea5323d4f84352f087ab6a60f3ba8659a6c7761e0"
+    },
+    "reference_stars": [
+      {
+        "lcid": "BLG38T0503.001345",
+        "ra": 268.05903,
+        "dec": -23.22977,
+        "dist": 0.038756433778799795,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG38T0503.001345",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG38T0503.001345",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:33 GMT",
+          "size": 512303,
+          "sha256": "170db8004ae08f344fad482af8f4388643e1272813e88b024b181a00c5482fed"
+        }
+      },
+      {
+        "lcid": "BLG38T0503.008820",
+        "ra": 268.05932,
+        "dec": -23.23003,
+        "dist": 1.3144024273067232,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG38T0503.008820",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG38T0503.008820",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:33 GMT",
+          "size": 511814,
+          "sha256": "65d64e4bf8afa9ca2e252a93d74dde6daf5317110bb43d5ebf8dd2c011d0953e"
+        }
+      },
+      {
+        "lcid": "BLG38T0503.002179",
+        "ra": 268.06124,
+        "dec": -23.22931,
+        "dist": 7.458144084871322,
+        "receipt": {
+          "url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG38T0503.002179",
+          "final_url": "https://kmtnet.kasi.re.kr/search/?action=download_lc&lcid=BLG38T0503.002179",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:42 GMT",
+          "size": 513186,
+          "sha256": "5f0951d04c6d041b9a706c27626b34d19322b7e27d45b36977c84442c98030d0"
+        }
+      }
+    ],
+    "catalogs": [
+      {
+        "name": "gaia",
+        "receipt": {
+          "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Cruwe%2Cpmra%2Cpmdec+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C268.059041667%2C-23.229769444%2C0.0008333333%29%29",
+          "final_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Cruwe%2Cpmra%2Cpmdec+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C268.059041667%2C-23.229769444%2C0.0008333333%29%29",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:21:49 GMT",
+          "size": 517,
+          "sha256": "3eea24b216ae4aa6a93af6f9a160f31e0649c9c5cf89ab8a8ebfedc3825415d8"
+        },
+        "rows": [
+          {
+            "source_id": "4068640700134350336",
+            "ra": "268.0588088358652",
+            "dec": "-23.23024375595734",
+            "phot_g_mean_mag": "19.809948",
+            "bp_rp": "",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "1.0648218",
+            "pmra": "-1.674210686289547",
+            "pmdec": "-1.9300989067749996"
+          },
+          {
+            "source_id": "4068641078091478016",
+            "ra": "268.0593152561295",
+            "dec": "-23.229960528885872",
+            "phot_g_mean_mag": "20.291866",
+            "bp_rp": "",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "",
+            "pmra": "",
+            "pmdec": ""
+          },
+          {
+            "source_id": "4068640695807686656",
+            "ra": "268.05831845000495",
+            "dec": "-23.23027116727759",
+            "phot_g_mean_mag": "20.682169",
+            "bp_rp": "",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "",
+            "pmra": "",
+            "pmdec": ""
+          },
+          {
+            "source_id": "4068641073764849920",
+            "ra": "268.05904607191934",
+            "dec": "-23.229696202449613",
+            "phot_g_mean_mag": "17.654993",
+            "bp_rp": "2.8655262",
+            "phot_variable_flag": "NOT_AVAILABLE",
+            "ruwe": "1.1162231",
+            "pmra": "-0.624632243151726",
+            "pmdec": "-9.88336312852886"
+          }
+        ]
+      },
+      {
+        "name": "virac",
+        "receipt": {
+          "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F387%2Fvirac2&-c=268.059041667+-23.229769444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CRAJ2000%2CDEJ2000%2CJmag%2CHmag%2CKsmag%2Ce_Ksmag%2Co_Ksmag%2CMedKsmag%2CSJKsmag%2CetaKs%2CKsEp1%2CKsEpl",
+          "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F387%2Fvirac2&-c=268.059041667+-23.229769444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CRAJ2000%2CDEJ2000%2CJmag%2CHmag%2CKsmag%2Ce_Ksmag%2Co_Ksmag%2CMedKsmag%2CSJKsmag%2CetaKs%2CKsEp1%2CKsEpl",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:22:55 GMT",
+          "size": 4857,
+          "sha256": "03da48cc8e4cc1fcb4a20ce7ddcc4cb2ec38c56c01a1b2b39aefa1d78613f8f1"
+        },
+        "rows": [
+          {
+            "_r": "0.279",
+            "srcid": "12964842008163",
+            "RAJ2000": "268.059046363860",
+            "DEJ2000": "-23.229691933588",
+            "Jmag": "14.1137",
+            "Hmag": "13.2311",
+            "Ksmag": "12.8561",
+            "e_Ksmag": "0.0163",
+            "o_Ksmag": "193",
+            "MedKsmag": "0.008307",
+            "SJKsmag": "-0.1881",
+            "etaKs": "2.1761",
+            "KsEp1": "55296.35327570",
+            "KsEpl": "58715.18153605"
+          },
+          {
+            "_r": "1.089",
+            "srcid": "12964842002103",
+            "RAJ2000": "268.059275513556",
+            "DEJ2000": "-23.229982293298",
+            "Jmag": "16.8737",
+            "Hmag": "16.4217",
+            "Ksmag": "16.0753",
+            "e_Ksmag": "0.1584",
+            "o_Ksmag": "139",
+            "MedKsmag": "0.119394",
+            "SJKsmag": "0.4378",
+            "etaKs": "1.1125",
+            "KsEp1": "55296.35327570",
+            "KsEpl": "58715.18153605"
+          },
+          {
+            "_r": "1.809",
+            "srcid": "12968937008595",
+            "RAJ2000": "268.058813288134",
+            "DEJ2000": "-23.230225976822",
+            "Jmag": "16.8681",
+            "Hmag": "16.3935",
+            "Ksmag": "16.1832",
+            "e_Ksmag": "0.1142",
+            "o_Ksmag": "182",
+            "MedKsmag": "0.065602",
+            "SJKsmag": "0.0841",
+            "etaKs": "1.8802",
+            "KsEp1": "55296.35327570",
+            "KsEpl": "58715.18153605"
+          },
+          {
+            "_r": "2.081",
+            "srcid": "12964842001679",
+            "RAJ2000": "268.059297483885",
+            "DEJ2000": "-23.229241479483",
+            "Jmag": "17.8548",
+            "Hmag": "17.2109",
+            "Ksmag": "16.8485",
+            "e_Ksmag": "0.1725",
+            "o_Ksmag": "115",
+            "MedKsmag": "0.099979",
+            "SJKsmag": "0.3353",
+            "etaKs": "1.5299",
+            "KsEp1": "55296.35327570",
+            "KsEpl": "58715.18117233"
+          },
+          {
+            "_r": "2.484",
+            "srcid": "12968937001305",
+            "RAJ2000": "268.058331562588",
+            "DEJ2000": "-23.229993905931",
+            "Jmag": "17.8703",
+            "Hmag": "17.1924",
+            "Ksmag": "16.9380",
+            "e_Ksmag": "0.1157",
+            "o_Ksmag": "58",
+            "MedKsmag": "0.070190",
+            "SJKsmag": "-0.2392",
+            "etaKs": "1.7334",
+            "KsEp1": "55296.35327570",
+            "KsEpl": "58564.35334179"
+          },
+          {
+            "_r": "2.911",
+            "srcid": "12968937011268",
+            "RAJ2000": "268.058904762776",
+            "DEJ2000": "-23.230568328593",
+            "Jmag": "17.9220",
+            "Hmag": "17.3089",
+            "Ksmag": "16.9713",
+            "e_Ksmag": "0.1219",
+            "o_Ksmag": "79",
+            "MedKsmag": "0.097286",
+            "SJKsmag": "0.0632",
+            "etaKs": "1.9337",
+            "KsEp1": "55296.35327570",
+            "KsEpl": "58715.18117233"
+          },
+          {
+            "_r": "2.991",
+            "srcid": "12968937004155",
+            "RAJ2000": "268.058317619825",
+            "DEJ2000": "-23.230267211595",
+            "Jmag": "17.1367",
+            "Hmag": "16.2792",
+            "Ksmag": "16.0460",
+            "e_Ksmag": "0.1098",
+            "o_Ksmag": "183",
+            "MedKsmag": "0.068203",
+            "SJKsmag": "0.3385",
+            "etaKs": "1.4749",
+            "KsEp1": "55296.35327570",
+            "KsEpl": "58715.18153605"
+          }
+        ]
+      },
+      {
+        "name": "vvv",
+        "receipt": {
+          "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F348%2Fvvv2&-c=268.059041667+-23.229769444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CraJ2000%2CdeJ2000%2CJmag3%2CHmag3%2CKsmag3%2CJperrbits%2CKsperrbits",
+          "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F348%2Fvvv2&-c=268.059041667+-23.229769444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=srcid%2CraJ2000%2CdeJ2000%2CJmag3%2CHmag3%2CKsmag3%2CJperrbits%2CKsperrbits",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:22:00 GMT",
+          "size": 2791,
+          "sha256": "22e9de1bf20a95ce277a70c3161958eaaf2288edf7504ae87984843f3dedc14c"
+        },
+        "rows": [
+          {
+            "_r": "0.390",
+            "srcid": "515442012782",
+            "Jmag3": "14.049",
+            "Hmag3": "13.191",
+            "Ksmag3": "12.799",
+            "Jperrbits": "16",
+            "Ksperrbits": "0"
+          },
+          {
+            "_r": "2.866",
+            "srcid": "515442621940",
+            "Jmag3": "",
+            "Hmag3": "16.360",
+            "Ksmag3": "15.930",
+            "Jperrbits": "0",
+            "Ksperrbits": "0"
+          },
+          {
+            "_r": "2.983",
+            "srcid": "515442191255",
+            "Jmag3": "16.719",
+            "Hmag3": "16.076",
+            "Ksmag3": "15.804",
+            "Jperrbits": "16",
+            "Ksperrbits": "0"
+          }
+        ]
+      },
+      {
+        "name": "vsx",
+        "receipt": {
+          "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=268.059041667+-23.229769444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=Name%2CRAJ2000%2CDEJ2000%2CType%2CPeriod",
+          "final_url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=268.059041667+-23.229769444&-c.rs=3&-out.add=_r&-sort=_r&-out.max=50&-out=Name%2CRAJ2000%2CDEJ2000%2CType%2CPeriod",
+          "status": 200,
+          "utc": "Tue, 17 Nov 2026 11:22:04 GMT",
+          "size": 2228,
+          "sha256": "c1130bf09f2b49eac3cb2ba34ee1bac2335a7fdc44d2d69ac5361f346a3a027e"
+        },
+        "rows": []
+      }
+    ]
+  }
+]

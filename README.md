@@ -4,7 +4,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 203 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 29 carefully recorded null or inconclusive checks.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 204 entries: 89 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 30 carefully recorded null or inconclusive checks.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -148,6 +148,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Planets around other stars
 
+- **No new Earth-mass rogue planet in 10,971 public bulge light curves.** Several short or large-source brightenings survived screening, but blends and competing lens models prevent a confirmed planetary discovery. Without a monitored-star count, the search cannot measure how common rogue planets are. *Null result* · [Details](results/ultrashort-bulge/README.md)
 - **A JWST search found no new wide planet around ten nearby stars.** Archive checks show that three apparent companions are previously recorded background sources. Contrast and injection tests describe only the searched parts of those images, not every possible companion. *Null result* · [Details](results/jwst-nearby-companions/README.md)
 - **Five more nearby stars checked for hidden planets with JWST.** No new companion was confirmed. One bright source proved to be a known background object and other peaks failed repeat-image checks; two faint signals still need deeper observations in later years to settle what they are. *Null result* · [Details](results/jwst-five-field-followup/README.md)
 - **Four "planets" that are really eclipsing stars.** TOI-3143.01's signal comes from the neighbouring binary TIC 384244835. A single eclipsing binary produced the two Kepler candidates KOI-7865.01 and KOI-7866.01. KOI-5275.01 is light from a binary 30 arcseconds away. *Correction* · [TOI-3143.01](results/tess-off-target-eclipse-sources/README.md) · [KOI-7865.01 and KOI-7866.01](results/koi-7865-eclipse-source/README.md) · [KOI-5275.01](results/koi-5275-eclipse-contamination/README.md)
@@ -365,6 +366,7 @@ The [cold-neighbour search methods and reproduction evidence](results/cold-neigh
 - [IXPE Mrk 501 conditional repeatability methods and evidence](results/ixpe-mrk501-repeat/README.md).
 - [MMS four-spacecraft planar-screen methods and bounded negative result](results/mms-planar-screen/README.md).
 - [PUNCH two-image angular comparison methods and development evidence](results/punch-front-feasibility/README.md).
+- [Legacy Surveys DR11 resolved-satellite control recovery and injection tests](results/halo-satellite-dr11/README.md).
 - [IMAP magnetic-depletion screen and proton-test protocol](results/imap-mag-swapi-screen/README.md).
 - [SO/PHI-FDT magnetic-proxy persistence screen and evidence](results/solar-phi-fdt-pilot/README.md).
 - [VAST TDE-candidate conditional repeatability and offline replay](results/vast-tde-repeatability/README.md). Its frozen stages document the [initial metadata pilot](results/vast-tde-metadata/README.md), [expanded cohort and development](results/vast-tde-expanded/README.md), and [holdout protocol](results/vast-tde-holdout/README.md).

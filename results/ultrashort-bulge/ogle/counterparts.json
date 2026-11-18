@@ -1,0 +1,416 @@
+[
+  {
+    "event": "2025-BLG-0867",
+    "product": "gaiaDR3_2arcsec",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Cruwe+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C269.818250000%2C-28.649666667%2C0.000555556%29%29",
+    "queried_utc": "2026-11-17T10:38:07+00:00",
+    "sha256": "7384b10b78c5fe776414830f179b43b2a1c2026c9e3470f52c7c24e85eef19cf",
+    "rows": [
+      {
+        "source_id": "4062574454012774656",
+        "ra": "269.81801167737996",
+        "dec": "-28.650093500030938",
+        "phot_g_mean_mag": "18.684273",
+        "bp_rp": "1.603962",
+        "phot_variable_flag": "NOT_AVAILABLE",
+        "ruwe": "1.3941147",
+        "sep_arcsec": 1.711
+      }
+    ],
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-0867",
+    "product": "vvvDR2_2arcsec",
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F348%2Fvvv2&-c=269.81825000+-28.64966667&-c.rs=2&-out.add=_r&-sort=_r&-out.max=20&-out=srcid%2Ciauname%2CRAJ2000%2CDEJ2000%2CJmag3%2CHmag3%2CKsmag3%2CJperrbits%2CHperrbits%2CKsperrbits",
+    "queried_utc": "2026-11-17T10:39:12+00:00",
+    "sha256": "9c4e8d8f75bf64757e510d92f675871f49ceb8de1f5322a44a4f7ddfb6e2d775",
+    "rows": [
+      [
+        "1.370",
+        "515510538701",
+        "VVV J175916.33-283900.00",
+        "269.818043",
+        "-28.650001",
+        " 16.829",
+        " 16.428",
+        " 16.303",
+        "       0",
+        "       0",
+        "       0"
+      ]
+    ],
+    "header": "_r\tsrcid\tiauname\tRAJ2000\tDEJ2000\tJmag3\tHmag3\tKsmag3\tJperrbits\tHperrbits\tKsperrbits",
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-0867",
+    "product": "VSX_5arcsec",
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=269.81825000+-28.64966667&-c.rs=5&-out.add=_r&-sort=_r&-out.max=20&-out=Name%2CType%2CRAJ2000%2CDEJ2000",
+    "queried_utc": "2026-11-17T10:38:01+00:00",
+    "sha256": "296d1e2a16a933fbc7a1e0e1372f8fb7989dc1e91f86e072509fdfe6e365e9b3",
+    "rows": [],
+    "header": null,
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-0867",
+    "product": "HST_JWST_CADC_footprint",
+    "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+30+obs_collection%2Cfacility_name%2Cinstrument_name%2Cobs_id%2Cdataproduct_type%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C269.818250000%2C-28.649666667%29%2Cs_region%29+AND+%28facility_name+IN+%28%27HST%27%2C%27JWST%27%29+OR+obs_collection+IN+%28%27HST%27%2C%27JWST%27%2C%27HSTHLA%27%29%29+AND+dataproduct_type%3D%27image%27",
+    "queried_utc": "2026-11-17T10:38:02+00:00",
+    "sha256": "448ee4bf1386374c76c3a2f4bf2eed0a95c1208abfb68e5f7f0cd0ba09bbd920",
+    "rows": [],
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-0867",
+    "product": "Euclid_EAS_footprint",
+    "url": "https://eas.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+30+obs_collection%2Cfacility_name%2Cinstrument_name%2Cobs_id%2Cdataproduct_type%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C269.818250000%2C-28.649666667%29%2Cs_region%29+AND+dataproduct_type%3D%27image%27",
+    "queried_utc": "2026-11-17T10:38:02+00:00",
+    "sha256": "448ee4bf1386374c76c3a2f4bf2eed0a95c1208abfb68e5f7f0cd0ba09bbd920",
+    "rows": [],
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-0867",
+    "product": "ogle_bundle",
+    "url": "https://www.astrouw.edu.pl/ogle/ogle4/ews/2025/blg-0867.tar.gz",
+    "queried_utc": "2026-11-17T10:38:02+00:00",
+    "sha256": "74dceace2db4778cee1eebcf84a59c2da8804b5ac6074241eba9e468c173b4ff",
+    "map_star_count": 4241,
+    "map_source_row": [
+      "45055",
+      "192.11",
+      "3612.90",
+      "20.443",
+      "1.684",
+      "18.759",
+      "79",
+      "0",
+      "0.121",
+      "7138",
+      "9",
+      "0.076"
+    ],
+    "map_sha256": "8b4c8e13b131e6107b3e1509de8a0ed2eeee269794f99f84d63fa8158c40d667",
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-1151",
+    "product": "gaiaDR3_2arcsec",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Cruwe+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C268.873916667%2C-27.866638889%2C0.000555556%29%29",
+    "queried_utc": "2026-11-17T10:38:03+00:00",
+    "sha256": "80f6e98b7900e42d4fb11046ed23299b008d7a92a756ed493bf8b678be879e70",
+    "rows": [
+      {
+        "source_id": "4063435783903289600",
+        "ra": "268.87394681078035",
+        "dec": "-27.86667298932167",
+        "phot_g_mean_mag": "19.491875",
+        "bp_rp": "3.129755",
+        "phot_variable_flag": "NOT_AVAILABLE",
+        "ruwe": "1.1241663",
+        "sep_arcsec": 0.156
+      },
+      {
+        "source_id": "4063435783903289728",
+        "ra": "268.87392171077096",
+        "dec": "-27.866518298713864",
+        "phot_g_mean_mag": "19.42961",
+        "bp_rp": "3.0433865",
+        "phot_variable_flag": "NOT_AVAILABLE",
+        "ruwe": "1.1698593",
+        "sep_arcsec": 0.434
+      }
+    ],
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-1151",
+    "product": "vvvDR2_2arcsec",
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F348%2Fvvv2&-c=268.87391667+-27.86663889&-c.rs=2&-out.add=_r&-sort=_r&-out.max=20&-out=srcid%2Ciauname%2CRAJ2000%2CDEJ2000%2CJmag3%2CHmag3%2CKsmag3%2CJperrbits%2CHperrbits%2CKsperrbits",
+    "queried_utc": "2026-11-17T10:38:03+00:00",
+    "sha256": "8b4fd28db603f7cb28fc3738f9190af1a65b0bf0155efeeab45f33694c62e41d",
+    "rows": [
+      [
+        "0.235",
+        "515500223983",
+        "VVV J175529.75-275159.70",
+        "268.873959",
+        "-27.866585",
+        " 14.471",
+        " 13.459",
+        " 12.978",
+        "      16",
+        "      16",
+        "      16"
+      ]
+    ],
+    "header": "_r\tsrcid\tiauname\tRAJ2000\tDEJ2000\tJmag3\tHmag3\tKsmag3\tJperrbits\tHperrbits\tKsperrbits",
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-1151",
+    "product": "VSX_5arcsec",
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=268.87391667+-27.86663889&-c.rs=5&-out.add=_r&-sort=_r&-out.max=20&-out=Name%2CType%2CRAJ2000%2CDEJ2000",
+    "queried_utc": "2026-11-17T10:38:05+00:00",
+    "sha256": "75b22677faa0ecc1f3df911e3a3ab1864579d4cb9a796aca923a37b233459c06",
+    "rows": [],
+    "header": null,
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-1151",
+    "product": "HST_JWST_CADC_footprint",
+    "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+30+obs_collection%2Cfacility_name%2Cinstrument_name%2Cobs_id%2Cdataproduct_type%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C268.873916667%2C-27.866638889%29%2Cs_region%29+AND+%28facility_name+IN+%28%27HST%27%2C%27JWST%27%29+OR+obs_collection+IN+%28%27HST%27%2C%27JWST%27%2C%27HSTHLA%27%29%29+AND+dataproduct_type%3D%27image%27",
+    "queried_utc": "2026-11-17T10:38:07+00:00",
+    "sha256": "448ee4bf1386374c76c3a2f4bf2eed0a95c1208abfb68e5f7f0cd0ba09bbd920",
+    "rows": [],
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-1151",
+    "product": "Euclid_EAS_footprint",
+    "url": "https://eas.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+30+obs_collection%2Cfacility_name%2Cinstrument_name%2Cobs_id%2Cdataproduct_type%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C268.873916667%2C-27.866638889%29%2Cs_region%29+AND+dataproduct_type%3D%27image%27",
+    "queried_utc": "2026-11-17T10:38:06+00:00",
+    "sha256": "448ee4bf1386374c76c3a2f4bf2eed0a95c1208abfb68e5f7f0cd0ba09bbd920",
+    "rows": [],
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-1151",
+    "product": "ogle_bundle",
+    "url": "https://www.astrouw.edu.pl/ogle/ogle4/ews/2025/blg-1151.tar.gz",
+    "queried_utc": "2026-11-17T10:38:07+00:00",
+    "sha256": "2563b86a656bd76b824feb9493fb096411a7920e562002a0be3e59e5b6ee0231",
+    "map_star_count": 3285,
+    "map_source_row": [
+      "48709",
+      "957.22",
+      "1920.59",
+      "20.377",
+      "2.776",
+      "17.602",
+      "86",
+      "1",
+      "0.085",
+      "5537",
+      "11",
+      "0.028"
+    ],
+    "map_sha256": "ca6c2a848a300f55862994dabb45dde7725bc90d6131c6f3e1d4fd3decea0a9d",
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-1201",
+    "product": "gaiaDR3_2arcsec",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Cruwe+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C268.186333333%2C-19.727138889%2C0.000555556%29%29",
+    "queried_utc": "2026-11-17T10:38:06+00:00",
+    "sha256": "9093aaad96a233e7493efed79d86af5821c26aaf4b506660c1aca6e22f39e819",
+    "rows": [
+      {
+        "source_id": "4119422641087934848",
+        "ra": "268.1861918255189",
+        "dec": "-19.7272194748033",
+        "phot_g_mean_mag": "17.167656",
+        "bp_rp": "1.8043518",
+        "phot_variable_flag": "NOT_AVAILABLE",
+        "ruwe": "0.9436115",
+        "sep_arcsec": 0.56
+      },
+      {
+        "source_id": "4119422641152552320",
+        "ra": "268.1864757375378",
+        "dec": "-19.727578472680385",
+        "phot_g_mean_mag": "19.258316",
+        "bp_rp": "",
+        "phot_variable_flag": "NOT_AVAILABLE",
+        "ruwe": "1.7264497",
+        "sep_arcsec": 1.654
+      }
+    ],
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-1201",
+    "product": "vvvDR2_2arcsec",
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F348%2Fvvv2&-c=268.18633333+-19.72713889&-c.rs=2&-out.add=_r&-sort=_r&-out.max=20&-out=srcid%2Ciauname%2CRAJ2000%2CDEJ2000%2CJmag3%2CHmag3%2CKsmag3%2CJperrbits%2CHperrbits%2CKsperrbits",
+    "queried_utc": "2026-11-17T10:38:06+00:00",
+    "sha256": "d6ea9d7e9c0663c54ef38f0a5542db2119dd73069e4517f02cc223c6dad9dde0",
+    "rows": [
+      [
+        "0.511",
+        "515404428337",
+        "VVV J175244.69-194337.98",
+        "268.186209",
+        "-19.727219",
+        " 14.831",
+        " 14.438",
+        " 14.214",
+        "       0",
+        "      16",
+        "       0"
+      ],
+      [
+        "1.472",
+        "515405588030",
+        "VVV J175244.75-194339.09",
+        "268.186472",
+        "-19.727526",
+        "       ",
+        " 16.037",
+        "       ",
+        "       0",
+        "      16",
+        "       0"
+      ]
+    ],
+    "header": "_r\tsrcid\tiauname\tRAJ2000\tDEJ2000\tJmag3\tHmag3\tKsmag3\tJperrbits\tHperrbits\tKsperrbits",
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-1201",
+    "product": "VSX_5arcsec",
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=268.18633333+-19.72713889&-c.rs=5&-out.add=_r&-sort=_r&-out.max=20&-out=Name%2CType%2CRAJ2000%2CDEJ2000",
+    "queried_utc": "2026-11-17T10:38:05+00:00",
+    "sha256": "2d56996f6ac90a862e25e833bfd1f2b177974770299409c31e1f0bdb5231d0d7",
+    "rows": [],
+    "header": null,
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-1201",
+    "product": "HST_JWST_CADC_footprint",
+    "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+30+obs_collection%2Cfacility_name%2Cinstrument_name%2Cobs_id%2Cdataproduct_type%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C268.186333333%2C-19.727138889%29%2Cs_region%29+AND+%28facility_name+IN+%28%27HST%27%2C%27JWST%27%29+OR+obs_collection+IN+%28%27HST%27%2C%27JWST%27%2C%27HSTHLA%27%29%29+AND+dataproduct_type%3D%27image%27",
+    "queried_utc": "2026-11-17T10:38:07+00:00",
+    "sha256": "448ee4bf1386374c76c3a2f4bf2eed0a95c1208abfb68e5f7f0cd0ba09bbd920",
+    "rows": [],
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-1201",
+    "product": "Euclid_EAS_footprint",
+    "url": "https://eas.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+30+obs_collection%2Cfacility_name%2Cinstrument_name%2Cobs_id%2Cdataproduct_type%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C268.186333333%2C-19.727138889%29%2Cs_region%29+AND+dataproduct_type%3D%27image%27",
+    "queried_utc": "2026-11-17T10:38:06+00:00",
+    "sha256": "448ee4bf1386374c76c3a2f4bf2eed0a95c1208abfb68e5f7f0cd0ba09bbd920",
+    "rows": [],
+    "status": "ok"
+  },
+  {
+    "event": "2025-BLG-1201",
+    "product": "ogle_bundle",
+    "url": "https://www.astrouw.edu.pl/ogle/ogle4/ews/2025/blg-1201.tar.gz",
+    "queried_utc": "2026-11-17T10:38:07+00:00",
+    "sha256": "86091e364ae3c435dc2fed8dc54fc72ab6869635b8e6aaa01f930dcf7fb67e6c",
+    "map_star_count": 0,
+    "map_source_row": null,
+    "map_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status": "ok"
+  },
+  {
+    "event": "2026-BLG-0843",
+    "product": "gaiaDR3_2arcsec",
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cbp_rp%2Cphot_variable_flag%2Cruwe+FROM+gaiadr3.gaia_source+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C270.440625000%2C-28.387750000%2C0.000555556%29%29",
+    "queried_utc": "2026-11-17T10:38:12+00:00",
+    "sha256": "efbac19d62b997011f153d58b2892e58f24346cda583a38eb9ace3b309f93558",
+    "rows": [
+      {
+        "source_id": "4062488722419236608",
+        "ra": "270.44061313969104",
+        "dec": "-28.387777888114027",
+        "phot_g_mean_mag": "17.300133",
+        "bp_rp": "1.8582125",
+        "phot_variable_flag": "NOT_AVAILABLE",
+        "ruwe": "1.5288172",
+        "sep_arcsec": 0.107
+      },
+      {
+        "source_id": "4062488726472400768",
+        "ra": "270.4410559763846",
+        "dec": "-28.38775818946546",
+        "phot_g_mean_mag": "18.389215",
+        "bp_rp": "",
+        "phot_variable_flag": "NOT_AVAILABLE",
+        "ruwe": "",
+        "sep_arcsec": 1.365
+      }
+    ],
+    "status": "ok"
+  },
+  {
+    "event": "2026-BLG-0843",
+    "product": "vvvDR2_2arcsec",
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=II%2F348%2Fvvv2&-c=270.44062500+-28.38775000&-c.rs=2&-out.add=_r&-sort=_r&-out.max=20&-out=srcid%2Ciauname%2CRAJ2000%2CDEJ2000%2CJmag3%2CHmag3%2CKsmag3%2CJperrbits%2CHperrbits%2CKsperrbits",
+    "queried_utc": "2026-11-17T10:39:11+00:00",
+    "sha256": "4cae69613bf404b54adc85e441cca81bdaf2c73bb29f6d35a7a7a527c50d8297",
+    "rows": [
+      [
+        "0.051",
+        "515519326242",
+        "VVV J180145.75-282315.88",
+        "270.440640",
+        "-28.387745",
+        " 14.532",
+        " 13.845",
+        " 13.624",
+        "      16",
+        "      16",
+        "      16"
+      ]
+    ],
+    "header": "_r\tsrcid\tiauname\tRAJ2000\tDEJ2000\tJmag3\tHmag3\tKsmag3\tJperrbits\tHperrbits\tKsperrbits",
+    "status": "ok"
+  },
+  {
+    "event": "2026-BLG-0843",
+    "product": "VSX_5arcsec",
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=B%2Fvsx%2Fvsx&-c=270.44062500+-28.38775000&-c.rs=5&-out.add=_r&-sort=_r&-out.max=20&-out=Name%2CType%2CRAJ2000%2CDEJ2000",
+    "queried_utc": "2026-11-17T10:38:10+00:00",
+    "sha256": "d2f24c9646025c733e6bdc1ca4dc7419c147e5238958297d187f2433c323649b",
+    "rows": [],
+    "header": null,
+    "status": "ok"
+  },
+  {
+    "event": "2026-BLG-0843",
+    "product": "HST_JWST_CADC_footprint",
+    "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+30+obs_collection%2Cfacility_name%2Cinstrument_name%2Cobs_id%2Cdataproduct_type%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C270.440625000%2C-28.387750000%29%2Cs_region%29+AND+%28facility_name+IN+%28%27HST%27%2C%27JWST%27%29+OR+obs_collection+IN+%28%27HST%27%2C%27JWST%27%2C%27HSTHLA%27%29%29+AND+dataproduct_type%3D%27image%27",
+    "queried_utc": "2026-11-17T10:38:13+00:00",
+    "sha256": "448ee4bf1386374c76c3a2f4bf2eed0a95c1208abfb68e5f7f0cd0ba09bbd920",
+    "rows": [],
+    "status": "ok"
+  },
+  {
+    "event": "2026-BLG-0843",
+    "product": "Euclid_EAS_footprint",
+    "url": "https://eas.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+30+obs_collection%2Cfacility_name%2Cinstrument_name%2Cobs_id%2Cdataproduct_type%2Ct_min%2Ct_max+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C270.440625000%2C-28.387750000%29%2Cs_region%29+AND+dataproduct_type%3D%27image%27",
+    "queried_utc": "2026-11-17T10:38:11+00:00",
+    "sha256": "448ee4bf1386374c76c3a2f4bf2eed0a95c1208abfb68e5f7f0cd0ba09bbd920",
+    "rows": [],
+    "status": "ok"
+  },
+  {
+    "event": "2026-BLG-0843",
+    "product": "ogle_bundle",
+    "url": "https://www.astrouw.edu.pl/ogle/ogle4/ews/2026/blg-0843.tar.gz",
+    "queried_utc": "2026-11-17T10:38:12+00:00",
+    "sha256": "05a4ad07a250e57ed1e21beb86adcf0b1b280cfb8a85f8cfa878e516e6063ff1",
+    "map_star_count": 5391,
+    "map_source_row": [
+      "93233",
+      "805.23",
+      "3247.33",
+      "17.927",
+      "1.942",
+      "15.985",
+      "89",
+      "1",
+      "0.014",
+      "6125",
+      "15",
+      "0.009"
+    ],
+    "map_sha256": "dd4c66484e02acf72264d7b1bc88c98bfd0a5c7164387e40ebc2f9b62a18600f",
+    "status": "ok"
+  }
+]

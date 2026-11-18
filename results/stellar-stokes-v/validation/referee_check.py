@@ -163,7 +163,7 @@ def main():
 
     print('PASS: published 21 V-LoTSS and 46 RACS source IDs; 126 on-pairs; 0 offsets;')
     print('PASS: 4,413 GOOD RACS and 1,293 GOOD VAST host polygons; no forced host V limits;')
-    print('PASS: 0/11 VLASS target and 0/88 independent control detections;')
+    print('PASS: 0/11 VLASS target and 0/88 offset-position detections;')
     print('PASS: local host V thresholds, raw catalogue/manifest SHA-256, output SHA-256, TESS timing.')
 
 
