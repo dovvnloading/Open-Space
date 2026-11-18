@@ -13,8 +13,8 @@ ROOT = Path(__file__).resolve().parent
 SCALES = (360, 720)
 
 
-def terrain(image, scale):
-    valid = np.isfinite(image).all(axis=0)
+def terrain(image, scale, shoulder_rows):
+    valid = np.isfinite(image).all(axis=0) & shoulder_rows[:, None]
     sigma = 1440 / scale
     weight = gaussian_filter(valid.astype(float), sigma, mode="constant")
     result = []
@@ -36,18 +36,18 @@ def pearson_by_band(first, second):
 
 
 def score_on_shoulders(pair, scale):
-    first = terrain(pair["earlier"], scale)
-    second = terrain(pair["later"], scale)
     grid = range(-720, 721, scale)
-    shifts = {(x, y): shift(second, (0, y // scale, x // scale), order=0,
-                             mode="constant", cval=np.nan, prefilter=False)
-              for x in grid for y in grid}
-    joint = np.isfinite(first).all(axis=0)
-    for moved in shifts.values():
-        joint &= np.isfinite(moved).all(axis=0)
     outputs = {}
     for shoulder in ("south", "north"):
-        cells = joint & interval(pair["lat_deg"][:, None], shoulder)
+        rows = interval(pair["lat_deg"], shoulder)
+        first = terrain(pair["earlier"], scale, rows)
+        second = terrain(pair["later"], scale, rows)
+        shifts = {(x, y): shift(second, (0, y // scale, x // scale), order=0,
+                                 mode="constant", cval=np.nan, prefilter=False)
+                  for x in grid for y in grid}
+        cells = np.isfinite(first).all(axis=0)
+        for moved in shifts.values():
+            cells &= np.isfinite(moved).all(axis=0)
         count = int(cells.sum())
         records = []
         outcome = {"identical_cells": count, "rows": records, "accepted_shift_m": None}
@@ -79,13 +79,23 @@ def score_on_shoulders(pair, scale):
     return outputs
 
 
+def test_no_external_pixels():
+    image = np.ones((2, 20, 20))
+    rows = (np.arange(20) >= 4) & (np.arange(20) < 15)
+    changed = image.copy()
+    changed[:, ~rows] *= 2
+    np.testing.assert_array_equal(terrain(image, 720, rows), terrain(changed, 720, rows))
+
+
 def run(source):
+    test_no_external_pixels()
     with np.load(source, allow_pickle=False) as bundle:
         scopes = {str(scale): score_on_shoulders(load_pair(bundle, "primary", scale), scale)
                   for scale in SCALES}
     selected = [row["accepted_shift_m"] for data in scopes.values() for row in data.values()]
     translation = selected[0] if selected[0] and all(item == selected[0] for item in selected) else None
-    return {"scales": scopes, "jointly_supported_translation_m": translation}
+    return {"terrain_mask_check": "Outside-shoulder changes leave the terrain array identical",
+            "scales": scopes, "jointly_supported_translation_m": translation}
 
 
 if __name__ == "__main__":
