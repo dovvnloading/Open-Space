@@ -1,0 +1,53 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "thebe-distance",
+      "printed": "5,495.88",
+      "statement": "Reconstructed minimum distance from Thebe in km.",
+      "compute": "json('summary.json','/passes/83/geometry/thebe/distance_km')"
+    },
+    {
+      "id": "sru-offset",
+      "printed": "18.817",
+      "statement": "Seconds between the nearest SRU midpoint and closest approach.",
+      "compute": "abs(json('summary.json','/passes/83/sru/thebe_offset_sec'))"
+    },
+    {
+      "id": "witness-t1",
+      "printed": "+0.20",
+      "statement": "T1 rate change relative to the local baseline in percent.",
+      "compute": "-100 * json('summary.json','/passes/83/jedi_primary/contrasts_by_minute_center/0/relative_deficit/0')"
+    },
+    {
+      "id": "witness-t3",
+      "printed": "−0.26",
+      "statement": "T3 rate change relative to the local baseline in percent.",
+      "compute": "-100 * json('summary.json','/passes/83/jedi_primary/contrasts_by_minute_center/0/relative_deficit/1')"
+    },
+    {
+      "id": "february-count",
+      "printed": "7",
+      "statement": "Actual number of data rows in the verified PJ81 SRU table.",
+      "compute": "json('summary.json','/passes/81/sru/table_rows')"
+    },
+    {
+      "id": "may-count",
+      "printed": "20",
+      "statement": "Actual number of data rows in the verified PJ83 SRU table.",
+      "compute": "json('summary.json','/passes/83/sru/table_rows')"
+    },
+    {
+      "id": "may-sru-count",
+      "printed": "1,162,363",
+      "statement": "Derived SRU rate per square CCD centimetre per second at the nearest exposure.",
+      "compute": "json('summary.json','/passes/83/sru/thebe_nearest_image/derived')"
+    },
+    {
+      "id": "march-pair-rank",
+      "printed": "0.955",
+      "statement": "Rank correlation from seven eligible March ASC and SRU pairs.",
+      "compute": "json('summary.json','/passes/82/sru_asc/spearman_rho')"
+    }
+  ]
+}
