@@ -1,0 +1,3 @@
+# Radiometric check after the failed provider-offset run
+
+The prescribed provider-offset run made the clear-water B11 medians negative by approximately 0.08–0.09, in conflict with the frozen plausibility gate. It produced no interpretable comparison. Preserve that entire run. The Earth Search items also carry an offset-applied flag. Before opening the alternate classified results, run the same masks, thresholds and bounds with the Sentinel COG offset set to zero. Landsat retains its documented calibration. Verify the Sentinel correction against independent original Level-2A pixels. Treat the corrected outcomes as provisional until that check is available.

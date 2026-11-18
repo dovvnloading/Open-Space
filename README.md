@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 212 entries: 94 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 20 corrections to published catalogs and papers, and 33 carefully recorded null or inconclusive checks.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 213 entries: 94 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 21 corrections to published catalogs and papers, and 33 carefully recorded null or inconclusive checks.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -96,8 +96,9 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **Fireballs recorded by instruments on the ground.** The Sims Corner fireball (Washington, 14 Aug 2026) and an Interior Alaska fireball (1 Jan 2022) left matching signals in seismometers and pressure sensors. Satellites place Sims Corner's brightest flash about 32 km up. *Measured* · [Details](results/sims-corner-seismoacoustic/README.md)
 - **Four meteors in under nine seconds (24 Aug 2026).** Four meteors over Germany and Denmark appeared to come from nearly the same point in the sky. A chance grouping is still possible. *Candidate* · [Details](results/gmn-meteor-clusters/README.md)
 
-### Earth’s rivers, wetlands and sea ice
+### Earth’s rivers, wetlands, sea ice and coastlines
 
+- **A second reflectance offset darkened recent Sentinel-2 scenes at Ioto.** An original-pixel comparison confirmed the 0.1 reflectance error in six Earth Search scenes. The corrected optical shoreline test left the timing of attachment unresolved. *Correction* · [Details](results/ioto-okinahama-shoreline/README.md)
 - **No Antarctic offshore opening passed the three-day AMSR3 screen.** A smaller patch persisted for three days in the sensitivity check. AMSR2 saw the low concentrations on both available days, while SSMIS estimated much more ice over the same cells. A smoothing test narrowed the gap. *Null result* · [Details](results/amsr3-antarctic-openings/README.md)
 - **Mali’s Inner Niger Delta shows a delayed seasonal flood wave (2024–26).** On two same-track SWOT RiverSP D July–January comparisons, Diré stood 4.64 m and 3.55 m higher while Mopti changed by no more than 0.18 m. Independent gauges and a second altimeter corroborate the stage contrasts; a persistent change in discharge was not established. *Measured* · [Details](results/mission05-swot-rivers/inner-niger/README.md)
 - **A one-day pulse of red-reflecting water in the northern Adriatic (6 Nov 2025).** NASA's PACE satellite, an offshore tower instrument and Europe's Sentinel-3 all saw the shelf water brighten in red light for a day and fade the next; PACE measured a 56% drop at 620 nm. Stirred-up or passing particles are plausible, the cause is unresolved, and similar events appear in earlier observations. *Measured* · [Details](results/pace-ocean-optical-transitions/README.md)
