@@ -363,6 +363,9 @@ if __name__=="__main__":
     elif _mode == "archive_services":
         from archive_services import main as _services_main
         _services_main()
+    elif _mode == "archive_gaia":
+        from archive_gaia import main as _gaia_main
+        _gaia_main()
     else:
         from control_validation import main as _controls_main
         _controls_main()

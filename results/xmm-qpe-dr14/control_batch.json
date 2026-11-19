@@ -1,13 +1,8 @@
 {
-  "stage": "replay",
-  "batch_id": "archive_no_merge_final_control_replay",
-  "targets": [
-    "GSN 069",
-    "RX J1301.9+2747",
-    "eRO-QPE1",
-    "eRO-QPE2",
-    "eRO-QPE3",
-    "eRO-QPE4"
-  ],
-  "note": "Safe control-only replay after SDSS 989-host provisional subcohort and failed pn/XSA/Gaia-complete gates. PR remains draft; no source survey admitted."
+  "stage": "archive_gaia",
+  "batch_id": "gaia_upload_probe_00000_00003",
+  "start": 0,
+  "stop": 3,
+  "chunk_size": 3,
+  "note": "Probe Gaia DR3 TAP upload positional/motion crossmatch on first three frozen post-SDSS sources; gate remains closed."
 }
