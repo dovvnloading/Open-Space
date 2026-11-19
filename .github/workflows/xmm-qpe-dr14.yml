@@ -7,6 +7,9 @@ on:
     paths:
       - 'results/xmm-qpe-dr14/**'
       - '!results/xmm-qpe-dr14/outputs/**'
+      # Documentation-only updates cannot change the frozen data run.
+      - '!results/xmm-qpe-dr14/README.md'
+      - '!results/xmm-qpe-dr14/REFEREE.md'
 
 permissions:
   contents: write
