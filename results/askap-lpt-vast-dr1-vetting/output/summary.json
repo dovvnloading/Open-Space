@@ -1,14 +1,83 @@
 {
+  "catalogue_status_counts": {
+    "erass1": {
+      "match": 8,
+      "unavailable": 52
+    },
+    "gaia": {
+      "match": 12,
+      "no_catalog_match": 48
+    },
+    "legacy_dr10": {
+      "unavailable": 60
+    },
+    "panstarrs": {
+      "match": 30,
+      "unavailable": 30
+    },
+    "racs_high_i": {
+      "match": 42,
+      "unavailable": 18
+    },
+    "racs_low_i": {
+      "match": 46,
+      "unavailable": 14
+    },
+    "racs_mid_i": {
+      "match": 47,
+      "unavailable": 13
+    },
+    "swift": {
+      "no_catalog_match": 60
+    },
+    "unwise": {
+      "match": 33,
+      "no_catalog_match": 26,
+      "unavailable": 1
+    }
+  },
   "classes": {
+    "gaia_position_match_source_nature_undetermined": 6,
     "known_pulsar": 15,
-    "stellar_counterpart_flare_unconfirmed": 8,
-    "unresolved_not_polarisation_vetted": 37
+    "plausible_stellar_counterpart_no_confirmed_flare": 2,
+    "unresolved_polarisation_and_host_incomplete": 37
   },
   "complete_source_images": 60,
   "discovery_validated": false,
   "epoch_measurements": 693,
+  "gaia_ambiguous_position_matches": [
+    "14199978",
+    "15234744",
+    "14696867",
+    "14477933",
+    "13978416",
+    "14069582"
+  ],
+  "gaia_stellar_candidates_with_support": [
+    "13629007",
+    "13572974"
+  ],
+  "image_claim_limit": "119px centered cutouts cannot reject full ASKAP field-edge and distant sidelobe contamination",
   "literature": "ATNF v18 prior-identification checked in baseline; individual ATel/ADS check only if a genuine polarised remainder survives",
+  "native_automated_flagged_epochs": 122,
+  "native_automated_flagged_sources": 17,
   "native_images": 693,
+  "onoff_classes": {
+    "13299183": "unresolved_polarisation_and_host_incomplete",
+    "13399649": "unresolved_polarisation_and_host_incomplete",
+    "13497959": "unresolved_polarisation_and_host_incomplete",
+    "13564869": "known_pulsar",
+    "13593032": "known_pulsar",
+    "13629007": "plausible_stellar_counterpart_no_confirmed_flare",
+    "13767816": "unresolved_polarisation_and_host_incomplete",
+    "13805206": "unresolved_polarisation_and_host_incomplete",
+    "14015818": "unresolved_polarisation_and_host_incomplete",
+    "14133427": "unresolved_polarisation_and_host_incomplete",
+    "14164377": "unresolved_polarisation_and_host_incomplete",
+    "14476792": "unresolved_polarisation_and_host_incomplete",
+    "14593764": "known_pulsar",
+    "15304967": "unresolved_polarisation_and_host_incomplete"
+  },
   "onoff_ids": [
     "13299183",
     "13399649",
@@ -26,10 +95,13 @@
     "15304967"
   ],
   "periodicity": "not tested: no validated compact polarised counterpart-free target or seconds-scale series",
+  "racs_i_noncontemporaneous_spectra": 45,
   "racs_low2_v_catalogue_probe": "no_small_V_catalogue_in_bounded_DAP_directory_listing",
   "racs_low2_v_selected_matches": 0,
+  "scope": "native Stokes I cutout inspection and public catalogue matches only; no calibrated Stokes V/short-cadence time series",
   "source_count": 60,
   "status": "conservative_followup_not_discovery",
   "stokes_v": "not measured in published VAST source FITS cubes; CASDA AS207/RACS-low2 I,V require separately staged products and leakage controls",
+  "stokes_v_non_detection_claimed": false,
   "survey_queries": 600
 }

@@ -1,0 +1,30 @@
+{
+  "Gaia_rule": "within 2 arcsec AND parallax significance >=5 OR G<8; only plausible star, not flare",
+  "catalogue_nonmatches": "not upper limits; require footprint, exposure, optical depth and reliability",
+  "classification_counts": {
+    "gaia_position_match_source_nature_undetermined": 6,
+    "known_pulsar": 15,
+    "plausible_stellar_counterpart_no_confirmed_flare": 2,
+    "unresolved_polarisation_and_host_incomplete": 37
+  },
+  "gaia_ambiguous_matches": [
+    "14199978",
+    "15234744",
+    "14696867",
+    "14477933",
+    "13978416",
+    "14069582"
+  ],
+  "gaia_plausible_stars": [
+    "13629007",
+    "13572974"
+  ],
+  "inputs": [
+    "classifications.csv pre-revision",
+    "counterpart_receipts.json",
+    "epoch_image_audit.csv"
+  ],
+  "method": "independent referee reclassification of committed source/counterpart receipts",
+  "no_new_LPT": true,
+  "panstarrs_requirement": "nDetections>=2 and valid 0<g/r PSF magnitude<35; many zero-detection catalogue rows cannot prove optical counterparts"
+}
