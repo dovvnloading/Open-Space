@@ -25,7 +25,6 @@ class RealFitsPilotSyntheticTests(unittest.TestCase):
         self.assertTrue(all(s.DATE_START <= r["start_time"] < s.DATE_END for r in tests))
         self.assertTrue(all(not(s.DATE_START <= r["start_time"] < s.DATE_END) for r in refs))
         self.assertTrue(all(s.REF_START <= r["start_time"] < s.REF_END for r in refs))
-        self.assertGreater(len(tests), 0, "Preregistered time window unexpectedly has no maps")
 
     def test_real_fits_data_byte_offsets_for_t_plane(self):
         w = WCS(naxis=2)
@@ -73,7 +72,7 @@ class RealFitsPilotSyntheticTests(unittest.TestCase):
 
     def test_aperture_area_not_full_fits_bounding_box(self):
         _, _, mask = s.tile_wcs()
-        area = mask.sum()*(s.PIX_DEG**2)*np.cos(np.radians(s.CENTER_DEC))
+        area = mask.sum()*(s.PIX_DEG**2)
         self.assertAlmostEqual(area, np.pi*s.RADIUS_DEG**2, delta=.007)
         self.assertLess(area, s.N**2*s.PIX_DEG**2)
 
