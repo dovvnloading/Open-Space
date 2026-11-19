@@ -50,7 +50,7 @@ jobs:
               git push origin "HEAD:$GITHUB_REF_NAME"
             fi
           }
-          python -m py_compile "$src"/{control_audit,selection,calibrate,reselect,aggregate,pixel_review,external,referee}.py
+          python -m py_compile "$src"/{control_audit,selection,calibrate,reselect,aggregate,pixel_review,external,wise_mirror,candidate_probs,referee}.py
           if [[ ! -f "$src/output/audit_summary.json" ]]; then
             python -u "$src/control_audit.py"
             save_batch
@@ -76,14 +76,19 @@ jobs:
             }
             exit 0
           fi
-          if [[ ! -f "$src/output/image_pixel_receipts.json" ]]; then
-            python -u "$src/pixel_review.py"
-            save_batch
-          fi
+          # Independent S3 tile lookup is mandatory because SIA proxy 502
+          # returns no science pixels; overwrite the failed SIA-only receipt.
+          python -u "$src/pixel_review.py"
+          save_batch
           if [[ ! -f "$src/output/external_summary.json" ]]; then
             python -u "$src/external.py"
             save_batch
           fi
+          # Keep original IRSA errors; try a second public CatWISE/unWISE route.
+          python -u "$src/wise_mirror.py"
+          save_batch
+          python -u "$src/candidate_probs.py"
+          save_batch
           python -u "$src/referee.py"
           save_batch
       - name: Preserve receipts on success or failure

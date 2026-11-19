@@ -103,9 +103,38 @@ def main():
     if goodpix<8:report["warnings"].append("Not all eight top ranks obtained usable science FITS pixels; artefacts remain unresolved")
     if external.get("actual_public_spectra_examined",0)==0:
         report["warnings"].append("Public spectrum *metadata* only; no new redshift established")
+    model=jd(OUT/"conditional_model.json")
+    two_class=jd(OUT/"ranked_conditional_top100.json")
+    if len(two_class)!=100 or model["field_quasar_probability_calibrated"] is not False:
+        raise AssertionError("Conditional model incorrectly reported field calibration")
+    if model["training_label_quasars"]!=24 or model["training_label_dwarfs"]!=14:
+        raise AssertionError("Unexpected label cohort")
+    pcount=0
+    for i,r in enumerate(two_class):
+        p=r.get("conditional_p_quasar_vs_dwarf")
+        pd=r.get("conditional_p_dwarf_vs_quasar")
+        if p is not None:
+            pcount+=1
+            if pd is None or abs((p+pd)-1)>3e-8:
+                raise AssertionError("Conditional two-class posterior fails to sum to one")
+            if r["conditional_colour_density_status"]!="UNVALIDATED_CONDITIONAL_TWO_CLASS_MODEL":
+                raise AssertionError("Unsupported extrapolated posterior")
+        elif r["conditional_colour_density_status"]=="UNVALIDATED_CONDITIONAL_TWO_CLASS_MODEL":
+            raise AssertionError("Claimed numeric model without posterior")
+        if r.get("field_quasar_probability") is not None:
+            raise AssertionError("Invented field prior")
+    if pcount!=model["top100_with_numeric_conditional_probability"]:
+        raise AssertionError("Conditional-model scored count mismatch")
+    report["conditional_two_class_model_n_supported"]=pcount
+    report["conditional_model_LOO_Brier"]=model["cross_validated_leave_one_out_Brier"]
+    report["checks"].append("Top-100 quasar-versus-dwarf probabilities are explicitly conditional and withheld outside labelled colours")
+    mirror=jd(OUT/"wise_mirror_summary.json") if (OUT/"wise_mirror_summary.json").exists() else None
+    if mirror is not None:
+        report["CatWISE_mirror_matches"]=mirror["CatWISE2020_mirror_position_matched_W1_W2"]
+        report["unWISE_mirror_matches"]=mirror["unWISE_fallback_position_matches"]
     report["warnings"]+= [
       "Training and evaluation use same labelled control cohort: 21/24 is conditional, resubstitution apparent recall, not calibrated field completeness",
-      "5/14 known dwarfs retained; weak and nonrepresentative contamination estimate; galaxies/blends/other dwarfs absent",
+      "4/14 known dwarfs retained; weak and nonrepresentative contamination estimate; galaxies/blends/other dwarfs absent",
       "Catalogue HATS cells are not a clean imaging effective-area map",
       "No spectroscopic new quasar. A photometric ranked source is not a discovery."]
     report.update(status="INDEPENDENT_RECEIPT_PASS_PHOTOMETRIC_ONLY_NO_DISCOVERY",

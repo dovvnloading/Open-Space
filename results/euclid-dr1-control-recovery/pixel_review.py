@@ -7,7 +7,8 @@ and human visual validation are NOT implied by obtaining a PNG.
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from pathlib import Path
 from urllib.parse import urlsplit
-import hashlib, json, math, io, csv, sys
+import hashlib, json, math, io, csv, sys, time
+import s3fs
 import numpy as np
 import requests
 from astropy.io import fits
@@ -87,50 +88,98 @@ def bounded_stamp(key,ra,dec,band,path):
           status="REAL_FITS_SCIENCE_PIXELS_RANGE_READ_NOT_HUMAN_CLEARED",
           image_artefacts_cleared=False,detector_persistence_reviewed=False)
 
+def s3_mer_product_list(tileid):
+    """Get public MER science mosaic paths without the fragile SIA proxy.
+    Catalogue TILEID is an actual MER tile identifier. Fail closed rather than
+    confusing a missing S3 object with a source nondetection.
+    """
+    tid=str(int(tileid))
+    if not tid.isdigit() or len(tid)!=9:
+        raise ValueError("Invalid MER TILEID")
+    fs=s3fs.S3FileSystem(anon=True,client_kwargs={"region_name":"us-east-1"})
+    root=f"{BUCKET}/dr1/MER/{tid}/"
+    products={}
+    for instrument in ("VIS","NISP"):
+        entries=fs.ls(root+instrument,detail=False)
+        for path in sorted(entries):
+            name=path.rsplit("/",1)[-1]
+            if not name.lower().endswith(".fits") or "BGSUB-MOSAIC" not in name:
+                continue
+            band="VIS" if instrument=="VIS" and "BGSUB-MOSAIC-VIS" in name else None
+            if instrument=="NISP":
+                for b in ("Y","J","H"):
+                    if f"BGSUB-MOSAIC-NIR-{b}_" in name:
+                        band=b
+                        break
+            if band and band not in products:
+                products[band]=path.split(BUCKET+"/",1)[1]
+    return [{"energy_bandpassname":band,
+             "dataproduct_subtype":"science",
+             "direct_s3_key":products[band],
+             "access_url":"s3://"+BUCKET+"/"+products[band]}
+            for band in BANDS if band in products]
+
+
 def one(row,rank):
     ra,dec=float(row["ra"]),float(row["dec"])
     result={"rank":rank,"id":row["id"],"ra":ra,"dec":dec,
+            "tileid":row.get("tileid"),
             "query_endpoint":SIA,"status":"QUERY_ERROR",
             "image_artefacts_cleared":False,"bands":[]}
+    records=[]
+    # SIA first for an explicit provenance receipt, then direct public S3.
     try:
         q=requests.get(SIA,params={"COLLECTION":"euclid_dr1_wide_DpdMerBksMosaic",
               "POS":f"CIRCLE {ra:.8f} {dec:.8f} 0.002",
-              "FORMAT":"image/fits","MAXREC":50,"RESPONSEFORMAT":"CSV"},timeout=(12,35))
+              "FORMAT":"image/fits","MAXREC":50,"RESPONSEFORMAT":"CSV"},timeout=(8,20))
         result["sia_status"]=q.status_code
         result["sia_sha256"]=sha(q.content)
         records=parse(q)
         result["sia_rows"]=len(records)
-        seen=set()
-        for rec in records:
-            band=str(rec.get("energy_bandpassname") or "").strip().upper()
-            if band not in BANDS or band in seen:continue
-            subtype=str(rec.get("dataproduct_subtype") or "").strip().lower()
-            if subtype and subtype!="science":continue
-            try:
-                key=key_for(rec)
-                if band=="VIS" and "/VIS/" not in key:continue
-                if band!="VIS" and "/NISP/" not in key:continue
-            except Exception as e:
-                result["bands"].append({"band":band,"error":type(e).__name__+": "+str(e),
-                                        "status":"SIA_UNSUPPORTED_SOURCE"})
-                continue
-            seen.add(band)
-            image_path=PNGS/f"rank_{rank:02d}_{band}.png"
-            try:
-                item=bounded_stamp(key,ra,dec,band,image_path)
-            except Exception as e:
-                item={"band":band,"s3_key":key,"status":"FITS_PIXEL_ERROR_NOT_A_NEGATIVE_OBSERVATION",
-                      "error":type(e).__name__+": "+str(e)[:320],
-                      "image_artefacts_cleared":False}
-            result["bands"].append(item)
-            if len(seen)>=4:break
-        n=sum(v["status"]=="REAL_FITS_SCIENCE_PIXELS_RANGE_READ_NOT_HUMAN_CLEARED"
-              for v in result["bands"])
-        result["science_bands_with_pixels"]=n
-        result["status"]=("SCIENCE_PIXELS_READ_AUTOMATED_METRICS_ONLY" if n else
-                          "NO_USABLE_SCIENCE_PIXELS_NOT_CLEARED")
     except Exception as e:
-        result["error"]=type(e).__name__+": "+str(e)[:380]
+        result["sia_error"]=type(e).__name__+": "+str(e)[:180]
+    # Direct, exact tile cloud lookup also covers SIA empty or 502 errors.
+    try:
+        tile_records=s3_mer_product_list(row["tileid"])
+        result["s3_tile_objects_found"]=len(tile_records)
+        result["s3_lookup_status"]="PUBLIC_TILE_LOOKUP_SUCCESS"
+        if tile_records:
+            records=tile_records
+            result["source_route"]="DIRECT_PUBLIC_S3_MER_TILE_AND_FITS_RANGE"
+        else:
+            result["source_route"]="NO_TILE_SCIENCE_PRODUCTS_REPORTED"
+    except Exception as e:
+        result["s3_lookup_status"]="S3_TILE_LOOKUP_ERROR_NOT_NO_COVERAGE"
+        result["s3_lookup_error"]=type(e).__name__+": "+str(e)[:320]
+        result["source_route"]="SIA_METADATA_FALLBACK_ONLY"
+    seen=set()
+    for rec in records:
+        band=str(rec.get("energy_bandpassname") or "").strip().upper()
+        if band not in BANDS or band in seen:continue
+        subtype=str(rec.get("dataproduct_subtype") or "").strip().lower()
+        if subtype and subtype!="science":continue
+        try:
+            key=rec.get("direct_s3_key") or key_for(rec)
+            if band=="VIS" and "/VIS/" not in key:continue
+            if band!="VIS" and "/NISP/" not in key:continue
+        except Exception as e:
+            result["bands"].append({"band":band,"error":type(e).__name__+": "+str(e),
+                                    "status":"SIA_UNSUPPORTED_SOURCE"})
+            continue
+        seen.add(band)
+        image_path=PNGS/f"rank_{rank:02d}_{band}.png"
+        try:
+            item=bounded_stamp(key,ra,dec,band,image_path)
+        except Exception as e:
+            item={"band":band,"s3_key":key,"status":"FITS_PIXEL_ERROR_NOT_A_NEGATIVE_OBSERVATION",
+                  "error":type(e).__name__+": "+str(e)[:320],
+                  "image_artefacts_cleared":False}
+        result["bands"].append(item)
+    n=sum(v["status"]=="REAL_FITS_SCIENCE_PIXELS_RANGE_READ_NOT_HUMAN_CLEARED"
+          for v in result["bands"])
+    result["science_bands_with_pixels"]=n
+    result["status"]=("SCIENCE_PIXELS_READ_AUTOMATED_METRICS_ONLY" if n else
+                      "NO_USABLE_SCIENCE_PIXELS_NOT_CLEARED")
     return result
 
 def main():
