@@ -60,7 +60,7 @@ def threshold(masses, lam, quantile):
     required = -math.log(quantile)
     if lam[0] < required or lam[-1] > required:
         return None
-    return float(10**np.interp(np.log(required), np.log(lam[::-1].clip(1e-250)), np.log(masses[::-1])))
+    return float(np.exp(np.interp(np.log(required), np.log(lam[::-1].clip(1e-250)), np.log(masses[::-1]))))
 
 
 def calculate():
@@ -104,7 +104,13 @@ def calculate():
                 raise ValueError("non-monotone integrated abundance")
             quant = {f"p{int(q*1000):03d}": threshold(MASS_GRID, lam, q)
                      for q in (0.5, 0.95, 0.99, 0.999)}
-            m1 = float(10**np.interp(np.log(1.), np.log(lam[::-1].clip(1e-250)), np.log(MASS_GRID[::-1])))
+            m1 = float(np.exp(np.interp(np.log(1.), np.log(lam[::-1].clip(1e-250)), np.log(MASS_GRID[::-1]))))
+            if not (MASS_GRID[0] <= m1 <= MASS_GRID[-1]):
+                raise ValueError("expected-one halo mass outside integration grid")
+            if any(x is None or not MASS_GRID[0] <= x <= MASS_GRID[-1] for x in quant.values()):
+                raise ValueError("maximum-halo quantile outside integration grid")
+            if any(x >= y for x,y in zip(list(quant.values()),list(quant.values())[1:])):
+                raise ValueError("nonmonotone maximum halo quantiles")
             b["models"][model] = {
                 "mass_definition": mdef,
                 "M_halo_msun_expected_one": m1,
