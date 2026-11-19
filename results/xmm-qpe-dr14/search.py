@@ -366,6 +366,9 @@ if __name__=="__main__":
     elif _mode == "archive_gaia":
         from archive_gaia import main as _gaia_main
         _gaia_main()
+    elif _mode == "archive_finalize":
+        from archive_finalize import main as _finalize_main
+        _finalize_main()
     else:
         from control_validation import main as _controls_main
         _controls_main()
