@@ -1,0 +1,39 @@
+name: ACT DR6 depth-1 MapCat inventory
+on:
+  pull_request:
+    paths:
+      - 'results/act-dr6-mm-transients/**'
+      - '.github/workflows/act-dr6-depth1-inventory.yml'
+  push:
+    branches:
+      - research/act-dr6-mm-transient-search
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Freeze public SODACAN MapCat (not a FITS transient search)
+        run: |
+          python results/act-dr6-mm-transients/freeze_mapcat.py --download \
+            --db /tmp/act-mapcat.db \
+            --out act-depth1-manifest.jsonl \
+            --receipt act-depth1-inventory-receipt.json
+      - name: Publish inventory receipt
+        if: success()
+        run: cat act-depth1-inventory-receipt.json >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload catalog inventory as reproducible artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: act-depth1-inventory
+          path: |
+            act-depth1-manifest.jsonl
+            act-depth1-inventory-receipt.json
+          retention-days: 30
