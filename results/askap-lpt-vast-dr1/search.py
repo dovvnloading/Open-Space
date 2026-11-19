@@ -53,6 +53,7 @@ def getjson(s,url,receipts,params=None):
                   "sha256":hashlib.sha256(r.content).hexdigest(),"type":"metadata"})
  r.raise_for_status();return r.json()
 def acquire(s,cache,receipts):
+ """Resolve the DOI to specific file objects, preserving all attempted routes."""
  cache.mkdir(parents=True,exist_ok=True)
  meta=None
  for ident in [DOI,"csiro:73391"]:
@@ -61,16 +62,49 @@ def acquire(s,cache,receipts):
  if meta is None:raise RuntimeError("CSIRO DAP collection metadata inaccessible")
  fed=meta.get("id",{}).get("identifier")
  if not fed:raise RuntimeError("CSIRO DAP collection identifier absent")
- listing=getjson(s,f"{DAP}/collections/{fed}/files.json",receipts,
-                 {"folder":"/lightcurves","page":1,"sb":"filename","size":50})
- entries=listing.get("file",listing.get("files",[]))
- if isinstance(entries,dict):entries=[entries]
- urls={}
- for x in entries:
-  p=str(x.get("filename","")).lstrip("/")
-  if p.startswith("lightcurves/") and p.split("/")[-1] in FILES:
-   urls[p.split("/")[-1]]=f"{DAP}/collections/{fed}/downloadfile?fileName={quote('/'+p,safe='')}"
- if set(urls)!=set(FILES):raise RuntimeError(f"DAP lightcurves missing: {set(FILES)-set(urls)}, observed: {[x.get('filename') for x in entries[:20]]}")
+ write(cache/"collection_metadata.json",meta)
+ receipts.append({"type":"collection_shape","keys":list(meta),
+   "file_related_keys":[k for k in meta if "file" in k.lower() or "folder" in k.lower()],
+   "identifiers":[str(meta.get("id",{}))[:250]],"frozen_metadata_sha256":digest(cache/"collection_metadata.json")})
+ ids=[fed,quote(fed,safe=""),DOI,quote(DOI,safe=""),"102.100.100/713166",quote("102.100.100/713166",safe="")]
+ listing=None;good_id=None
+ for identifier in dict.fromkeys(ids):
+  for extra in ["files.json","files"]:
+   try:
+    candidate=getjson(s,f"{DAP}/collections/{identifier}/{extra}",receipts,
+       {"folder":"/lightcurves","page":1,"sb":"filename","size":50})
+    if candidate.get("file") or candidate.get("files"):
+     listing=candidate;good_id=identifier;break
+   except Exception:pass
+  if listing is not None:break
+ if listing is not None:
+  entries=listing.get("file",listing.get("files",[]))
+  if isinstance(entries,dict):entries=[entries]
+  urls={}
+  for e in entries:
+   raw=str(e.get("filename","")).lstrip("/")
+   if raw.startswith("lightcurves/") and raw.split("/")[-1] in FILES:
+    urls[raw.split("/")[-1]]=f"{DAP}/collections/{good_id}/downloadfile?fileName={quote('/'+raw,safe='')}"
+  if set(urls)!=set(FILES):
+   raise RuntimeError(f"DAP file index missing {set(FILES)-set(urls)}; seen {[e.get('filename') for e in entries[:8]]}")
+ else:
+  # The pinned upstream example notebook gives precisely these published
+  # lightcurves file names. Test the image CSV before reading any large blob.
+  urls=None
+  for identifier in dict.fromkeys(ids):
+   first=f"{DAP}/collections/{identifier}/downloadfile?fileName={quote('/lightcurves/'+FILES[0],safe='')}"
+   try:
+    with s.get(first,stream=True,timeout=(10,30)) as r:
+     head=next(r.iter_content(256),b"")
+     receipts.append({"type":"direct_download_probe","url":first,"http":r.status_code,
+       "content_type":r.headers.get("content-type"),"head_sha256":hashlib.sha256(head).hexdigest(),
+       "head_hex":head[:14].hex()})
+     if r.status_code==200 and b"DOCTYPE" not in head and b"<html" not in head.lower():
+      urls={name:f"{DAP}/collections/{identifier}/downloadfile?fileName={quote('/lightcurves/'+name,safe='')}" for name in FILES}
+      break
+   except Exception as e:
+    receipts.append({"type":"direct_download_probe","url":first,"error":str(e)[:150]})
+  if urls is None:raise RuntimeError("Collection metadata accessible, but all DAP files.json and direct-download routes failed")
  paths={}
  for name in FILES:
   p=cache/name
