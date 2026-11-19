@@ -1,0 +1,85 @@
+name: ACT DR6 depth-1 MapCat inventory
+on:
+  pull_request:
+    paths:
+      - 'results/act-dr6-mm-transients/**'
+      - '.github/workflows/act-dr6-depth1-inventory.yml'
+  push:
+    branches:
+      - research/act-dr6-mm-transient-search
+    paths:
+      - '.github/workflows/act-dr6-depth1-inventory.yml'
+      - 'results/act-dr6-mm-transients/freeze_*.py'
+      - 'results/act-dr6-mm-transients/test_*.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile every ACT research script
+        run: python -m compileall -q results/act-dr6-mm-transients
+      - name: Synthetic matched-filter and rate-gate tests
+        run: |
+          python -m pip install numpy scipy
+          python -m unittest discover -s results/act-dr6-mm-transients -p 'test_*.py' -v
+      - name: Freeze public SODACAN MapCat (not a FITS transient search)
+        run: |
+          python results/act-dr6-mm-transients/freeze_mapcat.py --download \
+            --db /tmp/act-mapcat.db \
+            --out act-depth1-manifest.jsonl \
+            --receipt act-depth1-inventory-receipt.json
+      - name: Verify and pin catalog-eligible ACT 90/150/220 GHz rows
+        run: |
+          python results/act-dr6-mm-transients/freeze_scoped.py \
+            --manifest act-depth1-manifest.jsonl \
+            --catalog-receipt act-depth1-inventory-receipt.json \
+            --out results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz \
+            --receipt results/act-dr6-mm-transients/eligible-inventory-receipt.json
+      - name: Audit array/scan-stem duplication and time conventions
+        run: |
+          python results/act-dr6-mm-transients/audit_catalog.py \
+            --manifest results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz \
+            --out results/act-dr6-mm-transients/catalog-metadata-audit.json
+      - name: Commit pinned 27,512-row dataset on branch, never on PR
+        if: github.event_name == 'push' && github.ref_name == 'research/act-dr6-mm-transient-search'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin "$GITHUB_REF_NAME"
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse "origin/$GITHUB_REF_NAME")" ]; then
+            echo "Branch advanced; skip stale commit"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz \
+                  results/act-dr6-mm-transients/eligible-inventory-receipt.json \
+                  results/act-dr6-mm-transients/catalog-metadata-audit.json
+          if git diff --cached --quiet; then
+            echo "Pinned dataset already committed"
+            exit 0
+          fi
+          git commit -m 'research(act-dr6): pin eligible 27,512-row depth-1 inventory and checksum'
+          git push origin "HEAD:$GITHUB_REF_NAME"
+      - name: Publish inventory receipt
+        if: success()
+        run: cat act-depth1-inventory-receipt.json >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload catalog inventory as reproducible artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: act-depth1-inventory
+          path: |
+            act-depth1-manifest.jsonl
+            act-depth1-inventory-receipt.json
+            results/act-dr6-mm-transients/eligible-inventory-receipt.json
+            results/act-dr6-mm-transients/catalog-metadata-audit.json
+            results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz
+          retention-days: 30

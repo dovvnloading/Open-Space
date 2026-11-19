@@ -1,0 +1,38 @@
+name: ACT published-transient header coverage probe
+on:
+  push:
+    branches: [research/act-dr6-mm-transient-search]
+    paths:
+      - 'results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy>=1.24' 'astropy>=5'
+      - name: Probe published Naess event positions in depth-1 FITS headers
+        run: |
+          python results/act-dr6-mm-transients/probe_control_headers.py \
+            --manifest results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz \
+            --out act-control-header-probe.json --max-maps-per-control 60 --workers 6
+      - name: Publish probe receipt
+        if: always()
+        run: |
+          if [ -f act-control-header-probe.json ]; then
+            python -c "import json; d=json.load(open('act-control-header-probe.json')); print({k:v for k,v in d.items() if k != 'observations'})" >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Preserve all attempted header requests and failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: act-published-controls-header-probe
+          path: act-control-header-probe.json
+          if-no-files-found: warn
+          retention-days: 30
