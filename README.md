@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 223 entries: 97 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 37 carefully recorded null or inconclusive checks. The unclassified ACT real-pixel feasibility pilot below is separate from these classified scientific-result counts.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 224 entries: 98 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 37 carefully recorded null or inconclusive checks. The unclassified ACT real-pixel feasibility pilot below is separate from these classified scientific-result counts.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -273,6 +273,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 **Cosmic rays**
 
+- **New catalogues narrow—but do not identify—the engines of LHAASO's most extreme gamma rays.** Of 25 sources without an originally listed TeV counterpart in a 90-source transcription, 19 lie near a Fermi gamma-ray catalogue object, versus about 9.5 in latitude-matched shifted skies. The 2026 HAWC catalogue overlaps 13. Crowding and incomplete X-ray and radio coverage prevent a firm accelerator identification. *Measured (catalogue screen only)* · [Details](results/lhaaso-dark-counterparts/README.md)
 - **A six-event cosmic-ray line did not point to a proven source.** In a reconstructed 10% sample of Auger events, 999 scrambled skies found similarly sized energy-ordered chains about 23% of the time. Centaurus A and nearby starbursts showed hints but no source-catalogue signal survived all 39 tested trials. Two major catalogue searches remain undone. *Inconclusive pilot* · [Details](results/auger-open-uhcr-source-search/README.md)
 
 **Pulsars and magnetars**
