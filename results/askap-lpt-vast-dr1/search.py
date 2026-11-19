@@ -179,7 +179,7 @@ def gaia(s,leaders,out):
   try:
    r=s.get(url,params={"REQUEST":"doQuery","LANG":"ADQL","FORMAT":"csv","QUERY":q},timeout=(10,30))
    row.update({"status":r.status_code,"sha256":hashlib.sha256(r.content).hexdigest()});r.raise_for_status()
-   table=pd.read_csv(io.StringIO(r.text),comment="#")
+   table=pd.read_csv(io.StringIO(r.text),comment="#",dtype={"source_id":"string"})
    if not {"ra","dec"}.issubset(table.columns):raise RuntimeError("Gaia CSV missing coords")
    row["matches"]=[{"gaia_id":str(x["source_id"]),
       "arcsec":round(dist(ra,dec,x["ra"],x["dec"]),2),"parallax_mas":None if pd.isna(x.parallax) else float(x.parallax)}
@@ -189,29 +189,54 @@ def gaia(s,leaders,out):
   result["checked"].append(row)
  write(out/"gaia_receipts.json",result);return result
 def atnf(s,leaders,out):
- url="https://www.atnf.csiro.au/research/pulsar/psrcat/downloads/psrcat.db"
- status={"url":url,"state":"unavailable","nearest":[]}
+ """ATNF known pulsars, with newest public 2026 PSRCAT v18 DAP fallback."""
+ legacy="https://www.atnf.csiro.au/research/pulsar/psrcat/downloads/psrcat.db"
+ result={"state":"unavailable","requests":[],"nearest":[]}
+ raw=None
  try:
-  r=s.get(url,timeout=(20,75));r.raise_for_status()
-  status.update({"http":r.status_code,"bytes":len(r.content),"sha256":hashlib.sha256(r.content).hexdigest()})
+  try:
+   r=s.get(legacy,timeout=(12,30))
+   result["requests"].append({"url":legacy,"http":r.status_code})
+   if r.ok and b"PSRJ" in r.content: raw=r.content;result["url"]=legacy
+  except Exception as e:result["requests"].append({"url":legacy,"error":str(e)[:120]})
+  if raw is None:
+   doi="10.25919/qkn0-vm25"
+   metadata=s.get(f"{DAP}/collections/{doi}",timeout=(15,45))
+   result["requests"].append({"url":metadata.url,"http":metadata.status_code});metadata.raise_for_status()
+   fid=metadata.json().get("id",{}).get("identifier")
+   if not fid:raise RuntimeError("missing ATNF release Fedora id")
+   index=s.get(f"{DAP}/collections/{fid}/files",
+       params={"folder":"/","page":1,"size":100,"sb":"filename"},timeout=(15,45))
+   result["requests"].append({"url":index.url,"http":index.status_code});index.raise_for_status()
+   files=index.json().get("file",[])
+   if isinstance(files,dict):files=[files]
+   paths=[str(f.get("filename","")) for f in files if str(f.get("filename","")).rsplit("/",1)[-1]=="psrcat.db"]
+   if not paths:raise RuntimeError(f"no psrcat.db in first {len(files)} ATNF public files")
+   from urllib.parse import quote
+   url=f"{DAP}/collections/{fid}/downloadfile?fileName={quote('/'+paths[0].lstrip('/'),safe='')}"
+   r=s.get(url,timeout=(20,100))
+   result["requests"].append({"url":url,"http":r.status_code});r.raise_for_status()
+   raw=r.content;result["url"]=url
+  if b"PSRJ" not in raw or len(raw)<10000:raise RuntimeError("ATNF response is not a populated PSRJ database")
+  result["bytes"]=len(raw);result["sha256"]=hashlib.sha256(raw).hexdigest()
   from astropy.coordinates import SkyCoord
   import astropy.units as u
   pulsars=[]
-  for block in r.text.split("@"):
-   props=dict(re.findall(r"(?m)^(PSRJ|RAJ|DECJ)\s+(\S+)",block))
-   if set(("PSRJ","RAJ","DECJ"))<=set(props):
+  for block in raw.decode("utf-8","replace").split("@"):
+   f=dict(re.findall(r"(?m)^(PSRJ|RAJ|DECJ)\s+(\S+)",block))
+   if set(("PSRJ","RAJ","DECJ"))<=set(f):
     try:
-     c=SkyCoord(props["RAJ"],props["DECJ"],unit=(u.hourangle,u.deg))
-     pulsars.append((props["PSRJ"],c.ra.deg,c.dec.deg))
+     pos=SkyCoord(f["RAJ"],f["DECJ"],unit=(u.hourangle,u.deg))
+     pulsars.append((f["PSRJ"],pos.ra.deg,pos.dec.deg))
     except Exception:pass
-  if len(pulsars)<100:raise RuntimeError(f"Only {len(pulsars)} parsed pulsars")
-  status["state"]="queried";status["n_pulsars"]=len(pulsars)
-  for lead in leaders:
-   d,n=min((dist(lead["wavg_ra"],lead["wavg_dec"],p[1],p[2]),p[0]) for p in pulsars)
-   status["nearest"].append({"source":str(lead["source"]),"psr":n,
-      "arcsec":round(d,2),"within_30arcsec":d<=30})
- except Exception as e:status["error"]=str(e)[:200]
- write(out/"atnf_receipts.json",status);return status
+  if len(pulsars)<100:raise RuntimeError(f"ATNF only {len(pulsars)} parseable sources")
+  result["state"]="queried";result["n_pulsars"]=len(pulsars)
+  for source in leaders:
+   d,name=min((dist(source["wavg_ra"],source["wavg_dec"],x[1],x[2]),x[0]) for x in pulsars)
+   result["nearest"].append({"source":str(source["source"]),"psr":name,
+       "arcsec":round(d,2),"within_30arcsec":d<=30})
+ except Exception as ex:result["error"]=str(ex)[:300]
+ write(out/"atnf_receipts.json",result);return result
 def main():
  p=argparse.ArgumentParser();p.add_argument("--out",type=Path,required=True)
  p.add_argument("--cache",type=Path,default=Path("/tmp/vast-dr1"));args=p.parse_args()
@@ -235,10 +260,14 @@ def main():
   src=pd.read_parquet(files[FILES[1]])
   if "source" not in src and src.index.name=="source":src=src.reset_index()
   summary["source_rows"]=len(src)
-  rank=screen(src);summary["screen_all"]=len(rank);rank=rank.head(60)
+  rank=screen(src);summary["screen_all"]=len(rank)
+  rank.to_csv(out/"all_screened_sources.csv",index=False)
+  rank=rank.head(60)
   summary["ranked_rows"]=len(rank);rank.to_csv(out/"ranked_sources.csv",index=False)
   import pyarrow.parquet as pq
   summary["measurement_rows"]=pq.ParquetFile(files[FILES[2]]).metadata.num_rows
+  summary["paper_reported_measurement_rows"]=6449202
+  summary["measured_minus_paper_count"]=summary["measurement_rows"]-6449202
   leaders=rank.to_dict("records")
   summary["epoch_review"]=epochs(files[FILES[2]],leaders,out) if leaders else {"status":"no_leads","rows":0}
   summary["gaia"]=gaia(s,leaders,out) if leaders else {"status":"no_leads"}
