@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 330
     concurrency:
-      group: dja-zgt9-pr197-manual
+      group: dja-zgt9-pr197-followup-fast
       cancel-in-progress: false
     permissions:
       contents: write
@@ -97,7 +97,7 @@ jobs:
         if: github.event_name == 'push'
         continue-on-error: true
         run: |
-          python "$RESULT/followup_probe.py" --out "$RESULT/outputs/runs/$GITHUB_RUN_ID"
+          python "$RESULT/followup_probe.py" --no-mast --out "$RESULT/outputs/runs/$GITHUB_RUN_ID"
       - name: Same-pipeline interloper injection/recovery diagnostics (not physical posterior)
         if: github.event_name == 'push'
         continue-on-error: true
