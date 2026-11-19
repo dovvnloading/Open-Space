@@ -265,7 +265,9 @@ def sources(im,mask,rms):
     background=ndi.gaussian_filter(base,6)
     signal=base-background
     maxmap=ndi.maximum_filter(signal,size=5)
-    m=good & (signal>8*rms) & (signal==maxmap) & ndi.binary_erosion(good,iterations=11)
+    # Match the pre-existing V5 four-pixel aperture validity rule, not an
+    # 11-pixel erosion that removes all stars in sparse flagged mosaics.
+    m=good & (signal>8*rms) & (signal==maxmap) & ndi.binary_erosion(good,iterations=4)
     yy,xx=np.where(m)
     found=[]
     for x,y in zip(xx,yy):
