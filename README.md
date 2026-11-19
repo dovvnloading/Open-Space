@@ -291,6 +291,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **A shared trend in MeerKAT pulsar rotation measures.** It is linked to the choice of ionospheric corrections. Its physical cause is not identified. *Measured* · [Signal](results/meerkat-shared-faraday-rotation/README.md) · [Origin tests](results/meerkat-common-mode-origin/README.md)
 - **The slow radio source GLEAM-X J1627's pulse parts move closer at higher frequency.** *Measured* · [Details](results/gleamx-j1627-pulse-separation/README.md)
 - **An ASKAP search found 149 strongly variable compact radio sources, but no confirmed new slow pulses.** Fourteen shortlisted light curves have bright and faint episodes; three match already-known pulsars, while the rest still need image and timing checks. *Measured (catalogue screen only)* · [Details](results/askap-lpt-vast-dr1/README.md)
+- **An ASKAP follow-up examined 693 original radio images from 60 unusually variable sources.** Fifteen are known pulsars, two have plausible stellar counterparts, and 43 remain unexplained; circular polarisation and rapid pulses still need checking, so no new slow radio transient is confirmed. *Measured* (bounded image audit) · [Details](results/askap-lpt-vast-dr1-vetting/README.md)
 - **Tracing 120 pulsars back to supernova remnants.** The search recovered two known birthplaces and established no new ones. *Null result* · [Details](results/pulsar-shell-backtraces/README.md)
 
 **Fast radio bursts**
