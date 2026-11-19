@@ -1,0 +1,46 @@
+{
+  "utc": "2026-11-19T09:03:44.773990+00:00",
+  "purpose": "Try independent SDSS/Legacy host services after LS DR10 TAP outages; no sky screen.",
+  "tests": [
+    {
+      "name": "sdss_single",
+      "url": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+      "http_status": 200,
+      "bytes": 157,
+      "content_type": "text/plain",
+      "elapsed_s": 2.85,
+      "sha256": "8932cfb839959435f3e9cf930b05ea42a03419ec285d0b061b67c715852a47a9",
+      "excerpt": "#Table1\nobjID,ra,dec,type,mode,clean\n1237667444048855291,195.500588322182,27.7827129033554,3,1,1\n1237667444048855293,195.499763117672,27.7840874136442,3,1,0\n",
+      "query_ok": true
+    },
+    {
+      "name": "sdss_batch",
+      "url": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+      "http_status": 200,
+      "bytes": 111,
+      "content_type": "text/plain",
+      "elapsed_s": 0.08,
+      "sha256": "3c3fcb73aa18357ed776085cf8cffcf34f1e541576528f37556589c406eaac18",
+      "excerpt": "#Table1\ndetid,objID,ra,dec,type,mode,clean\nRXJ1301,1237667444048855291,195.500588322182,27.7827129033554,3,1,1\n",
+      "query_ok": true
+    },
+    {
+      "name": "sdss_nearby",
+      "url": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+      "http_status": 200,
+      "bytes": 82,
+      "content_type": "text/plain",
+      "elapsed_s": 0.08,
+      "sha256": "df1dcb28597cc4db7dd9a9277dc622e498384833ce0233a2374213842dfdb2a4",
+      "excerpt": "#Table1\nobjID,ra,dec,type\n1237667444048855291,195.500588322182,27.7827129033554,3\n",
+      "query_ok": true
+    },
+    {
+      "name": "noirlab_beta_cone",
+      "url": "https://beta.datalab.noirlab.edu/tap/sync",
+      "error": "SSLError(MaxRetryError(\"HTTPSConnectionPool(host='beta.datalab.noirlab.edu', port=443): Max retries exceeded with url: /tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+5+ls_id%2Cra%2Cdec%2Ctype+FROM+ls_dr10.tractor+WHERE+%27t%27%3DQ3C_RADIAL_QUERY%28ra%2Cdec%2C19.786098%2C-34.191813%2C0.002%29 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1018)')))\"))",
+      "elapsed_s": 0.17,
+      "query_ok": false
+    }
+  ]
+}
