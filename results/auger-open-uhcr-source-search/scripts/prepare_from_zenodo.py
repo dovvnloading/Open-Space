@@ -23,7 +23,7 @@ MIRROR_GIT_SHA1 = {
 }
 
 def git_blob_oid(blob):
-    return hashlib.sha1(("blob %s\\0" % len(blob)).encode() + blob).hexdigest()
+    return hashlib.sha1(("blob %s\0" % len(blob)).encode() + blob).hexdigest()
 
 def number(value):
     x = float(value)
@@ -80,7 +80,7 @@ def main():
     events.sort(key=lambda v: v[1])
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open("w", encoding="utf8", newline="") as f:
-        writer = csv.writer(f, lineterminator="\\n")
+        writer = csv.writer(f, lineterminator="\n")
         writer.writerow(("sample","sdid","gpstime","energy_eev","ra_deg","dec_deg","zenith_deg"))
         writer.writerows(events)
     manifest["selected_ledger"] = {"rows":len(events),"sha256":hashlib.sha256(args.out.read_bytes()).hexdigest(),"path":str(args.out)}
