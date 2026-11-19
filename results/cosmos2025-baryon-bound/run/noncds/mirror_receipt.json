@@ -1,7 +1,7 @@
 {
-  "started_utc": "2026-11-19T03:53:51.501786+00:00",
-  "runner": "GitHub Actions 1000056895",
-  "github_run_id": "44454134461",
+  "started_utc": "2026-11-19T03:57:29.360264+00:00",
+  "runner": "GitHub Actions 1000056942",
+  "github_run_id": "44454925847",
   "required_release": "COSMOS2025 official IAP v1.1 2026-05-04",
   "expected_rows": 784016,
   "refuse_cds": true,
@@ -13,7 +13,7 @@
     {
       "id": "iap_catalogue",
       "url": "https://cosmos2025.iap.fr/catalog.html",
-      "started_utc": "2026-11-19T03:53:51.502135+00:00",
+      "started_utc": "2026-11-19T03:57:29.360603+00:00",
       "host": "cosmos2025.iap.fr",
       "dns": {
         "status": "ok",
@@ -30,7 +30,7 @@
     {
       "id": "iap_download_form",
       "url": "https://cosmos2025.iap.fr/catalog_download.php",
-      "started_utc": "2026-11-19T03:53:51.502381+00:00",
+      "started_utc": "2026-11-19T03:57:29.360870+00:00",
       "host": "cosmos2025.iap.fr",
       "dns": {
         "status": "ok",
@@ -47,7 +47,7 @@
     {
       "id": "caltech_dr1",
       "url": "https://cosmos.astro.caltech.edu/page/cosmosweb-dr",
-      "started_utc": "2026-11-19T03:53:51.502637+00:00",
+      "started_utc": "2026-11-19T03:57:29.361305+00:00",
       "host": "cosmos.astro.caltech.edu",
       "dns": {
         "status": "ok",
@@ -61,7 +61,7 @@
         "content_type": "text/html; charset=utf-8",
         "content_length": null,
         "sample_bytes": 29415,
-        "sample_sha256": "8d36457a6dc019e40c52e3b113395e00537dd94912add568237b1dd2e5f50bf0",
+        "sample_sha256": "4e616a0c9a9fc94b33e5326de603ba29310830f5e703fa97fa6665adb675321f",
         "sample_truncated": false
       },
       "page_metadata": {
@@ -73,7 +73,7 @@
     {
       "id": "irsa_cosmos",
       "url": "https://irsa.ipac.caltech.edu/data/COSMOS/overview.html",
-      "started_utc": "2026-11-19T03:53:51.502951+00:00",
+      "started_utc": "2026-11-19T03:57:29.361460+00:00",
       "host": "irsa.ipac.caltech.edu",
       "dns": {
         "status": "ok",
@@ -94,7 +94,7 @@
     {
       "id": "irsa_tap_tables",
       "url": "https://irsa.ipac.caltech.edu/TAP/tables",
-      "started_utc": "2026-11-19T03:53:51.503386+00:00",
+      "started_utc": "2026-11-19T03:57:29.361887+00:00",
       "host": "irsa.ipac.caltech.edu",
       "dns": {
         "status": "ok",
@@ -115,8 +115,8 @@
     },
     {
       "id": "zenodo_cosmos2025",
-      "url": "https://zenodo.org/api/records?q=COSMOS2025&size=30",
-      "started_utc": "2026-11-19T03:53:51.504189+00:00",
+      "url": "https://zenodo.org/api/records?q=COSMOS2025&size=25",
+      "started_utc": "2026-11-19T03:57:29.362693+00:00",
       "host": "zenodo.org",
       "dns": {
         "status": "ok",
@@ -132,16 +132,54 @@
         ]
       },
       "http": {
-        "status": "failed",
-        "error_type": "HTTPError",
-        "error": "HTTP Error 400: BAD REQUEST",
-        "code": 400
-      }
+        "status": 200,
+        "final_url": "https://zenodo.org/api/records?q=COSMOS2025&size=25",
+        "content_type": "application/json",
+        "content_length": "69786",
+        "sample_bytes": 69786,
+        "sample_sha256": "aa20e0ad6096ea4f9f5c0b0035c572bbe28575fc5042c3f81ef64a25d1cc3931",
+        "sample_truncated": false
+      },
+      "zenodo_records_examined": 8,
+      "zenodo_rejected": [
+        {
+          "id": 15772407,
+          "reason": "not_team_authored"
+        },
+        {
+          "id": 20442435,
+          "reason": "not_catalogue_title"
+        },
+        {
+          "id": 21760263,
+          "reason": "not_team_authored"
+        },
+        {
+          "id": 20559722,
+          "reason": "not_team_authored"
+        },
+        {
+          "id": 21795091,
+          "reason": "not_team_authored"
+        },
+        {
+          "id": 19830179,
+          "reason": "not_team_authored"
+        },
+        {
+          "id": 20707447,
+          "reason": "not_team_authored"
+        },
+        {
+          "id": 18442316,
+          "reason": "not_team_authored"
+        }
+      ]
     },
     {
       "id": "zenodo_mastercatalog",
-      "url": "https://zenodo.org/api/records?q=COSMOSWeb_mastercatalog&size=30",
-      "started_utc": "2026-11-19T03:53:51.504405+00:00",
+      "url": "https://zenodo.org/api/records?q=COSMOSWeb_mastercatalog&size=25",
+      "started_utc": "2026-11-19T03:57:29.362920+00:00",
       "host": "zenodo.org",
       "dns": {
         "status": "ok",
@@ -157,16 +195,21 @@
         ]
       },
       "http": {
-        "status": "failed",
-        "error_type": "HTTPError",
-        "error": "HTTP Error 400: BAD REQUEST",
-        "code": 400
-      }
+        "status": 200,
+        "final_url": "https://zenodo.org/api/records?q=COSMOSWeb_mastercatalog&size=25",
+        "content_type": "application/json",
+        "content_length": "449",
+        "sample_bytes": 449,
+        "sample_sha256": "177f690f000cee07a00d4cf77340100b0815672363467049f863f30d607b4f48",
+        "sample_truncated": false
+      },
+      "zenodo_records_examined": 0,
+      "zenodo_rejected": []
     },
     {
       "id": "publisher_paper",
       "url": "https://www.aanda.org/articles/aa/full_html/2025/12/aa55799-25/aa55799-25.html",
-      "started_utc": "2026-11-19T03:53:51.504698+00:00",
+      "started_utc": "2026-11-19T03:57:29.363112+00:00",
       "host": "www.aanda.org",
       "dns": {
         "status": "ok",
@@ -184,12 +227,12 @@
     {
       "id": "github_control",
       "url": "https://github.com/",
-      "started_utc": "2026-11-19T03:53:51.504989+00:00",
+      "started_utc": "2026-11-19T03:57:29.363589+00:00",
       "host": "github.com",
       "dns": {
         "status": "ok",
         "addresses": [
-          "140.82.114.4"
+          "140.82.112.4"
         ]
       },
       "http": {
@@ -197,17 +240,21 @@
         "final_url": "https://github.com/",
         "content_type": "text/html; charset=utf-8",
         "content_length": null,
-        "sample_bytes": 536962,
-        "sample_sha256": "a6bdeb8f022c45851065388fc9c2cfa9bc8cd441b889860f9b11562f87c822fd",
+        "sample_bytes": 537035,
+        "sample_sha256": "38ea28a6f5f29b87b660057e854deb387b8425582d1ca0e32500e9f11d52d311",
         "sample_truncated": false
       }
     }
   ],
   "download_attempts": [],
   "scientific_disposition": "not_measured",
-  "script_sha256": "00556cc4ed834740663dfe6f97f466602ca5ec2e059492e05c4f46f73fd2596a",
+  "script_sha256": "f4b9b84c38ba70e41022c14f08617d13bea96cc9818926086e46b2c72b71897f",
   "candidate_urls": [],
   "blocked_reason": "No official full-COSMOS2025 FITS link found/reachable without publisher form, or every discovered candidate failed transfer/784016-row FITS validation; see per-host HTTP and exact transfer errors. Not a scientific null.",
-  "finished_utc": "2026-11-19T03:54:12.242234+00:00",
-  "derived_sha256": {}
+  "finished_utc": "2026-11-19T03:58:10.347208+00:00",
+  "derived_sha256": {
+    "halo_bounds.json": "6640731301df680bd862b5b7b83f5f0d5d21e4449e4a7b0ddd0fad4413712e8e",
+    "independent_referee.json": "6c1f095ab4d83a80e32a0545146948ecfd66c62ddefc9627032342c093f056e9",
+    "numerical_versions.txt": "db0a764d922f1c163c645edb9d14df8c77e46d438908ed66c492b1002d6b7c07"
+  }
 }
