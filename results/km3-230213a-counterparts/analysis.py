@@ -225,6 +225,7 @@ def analyze_family(family,rows,shifts):
         shift_counts.append(sum(sep(ra,EVENT["dec_deg"],r["ra"],r["dec"])<=3 for r in rows))
     obs=len(seen)
     pcount=(1+sum(c>=obs for c in shift_counts))/(len(shift_counts)+1)
+    plower=(1+sum(c<=obs for c in shift_counts))/(len(shift_counts)+1)
     # For each row: "as good or better" spatial AND temporal match, within pre-fixed window,
     # and *any* object of the full same temporal-selected catalogue.
     results=[]
@@ -250,6 +251,9 @@ def analyze_family(family,rows,shifts):
     return results,{"status":"CONDITIONAL_SCREENER_ONLY", "temporal_parent_count":len(rows),
       "observed_in_3deg":obs, "empirical_mean_count":round(mean,5),
       "p_shift_count_ge_observed":round(pcount,6),
+      "p_shift_count_le_observed":round(plower,6),
+      "skyshift_min_count":min(shift_counts),"skyshift_max_count":max(shift_counts),
+      "skyshift_n_zero":sum(n==0 for n in shift_counts),
       "uniform_sky_density_per_deg2":round(len(rows)/41252.96125,8),
       "uniform_sky_expected_3deg":round(len(rows)*area/41252.96125,6),
       "uniform_density_caveat":"diagnostic only, not source or chance association posterior",
@@ -274,6 +278,11 @@ def main():
     if chime is not None:
         matches,stats=analyze_family("CHIME_FRB",chime,shifts)
         summaries["families"]["CHIME_FRB"]=stats;new.extend(matches)
+    # Freeze all 2023-epoch temporally eligible parent objects so another
+    # implementation can independently verify the positions and sky-shift null.
+    parent=(tns or [])+(chime or [])
+    write_csv("temporal_parent_sample.csv",parent,
+       ["family","name","ra","dec","dt_days","source_utc","type","ra_err","dec_err"])
     new.sort(key=lambda r:(r["p_conditional_skyshift"],r["event_dt_days"],r["name"]))
     write_csv("new_associations.csv",new,["family","name","event_dt_days","sep_deg",
       "within_1h","within_90pct","within_99pct","ra_deg","dec_deg","date_from_catalog",
