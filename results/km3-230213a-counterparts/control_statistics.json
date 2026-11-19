@@ -1,0 +1,112 @@
+{
+  "event": {
+    "dec_deg": -7.8,
+    "mjd_utc": 59988.0533299,
+    "name": "KM3-230213A",
+    "ra_deg": 94.3,
+    "radii_deg": {
+      "50": 1.2,
+      "68": 1.5,
+      "90": 2.2,
+      "99": 3.0
+    }
+  },
+  "families": {
+    "CHIME_FRB": {
+      "empirical_mean_count": 0.0,
+      "limitations": "RA-shift ignores survey pointing, cadence and Galactic gradients; no complete selection function",
+      "n_shifts": 999,
+      "observed_in_3deg": 0,
+      "p_shift_count_ge_observed": 1.0,
+      "status": "CONDITIONAL_SCREENER_ONLY",
+      "temporal_parent_count": 0,
+      "uniform_density_caveat": "diagnostic only, not source or chance association posterior",
+      "uniform_sky_density_per_deg2": 0.0,
+      "uniform_sky_expected_3deg": 0.0
+    }
+  },
+  "known_reproduction": {
+    "count": 17,
+    "inside_50pct": 2,
+    "inside_68pct": 3,
+    "inside_90pct": 8,
+    "inside_99pct": 17,
+    "maximum_rounding_residual_deg": 0.041394
+  },
+  "public_catalogue_status": {
+    "CHIME": {
+      "columns": [
+        "tns_name",
+        "previous_name",
+        "repeater_name",
+        "event_id",
+        "sub_num",
+        "ra",
+        "ra_err",
+        "dec",
+        "dec_err",
+        "ra_dec_notes",
+        "gl",
+        "gb",
+        "exp_up",
+        "exp_up_err",
+        "exp_low",
+        "exp_low_err",
+        "exp_notes",
+        "bonsai_snr",
+        "bonsai_dm",
+        "low_ft_68",
+        "up_ft_68",
+        "low_ft_95",
+        "up_ft_95",
+        "snr_fitb",
+        "dm_fitb",
+        "dm_fitb_err",
+        "dm_exc_ne2001",
+        "dm_exc_ymw16",
+        "bc_width",
+        "scat_time",
+        "scat_time_err",
+        "flux",
+        "flux_err",
+        "fluence",
+        "fluence_err",
+        "fluence_notes",
+        "fluence_win_extended",
+        "mjd_400",
+        "mjd_400_err",
+        "mjd_inf",
+        "mjd_inf_err",
+        "width_fitb",
+        "width_fitb_err",
+        "sp_idx",
+        "sp_idx_err",
+        "sp_run",
+        "sp_run_err",
+        "high_freq",
+        "low_freq",
+        "peak_freq",
+        "chi_sq",
+        "dof",
+        "flag_frac",
+        "notes_fitb",
+        "intrachan_flag",
+        "excluded_flag",
+        "sidelobe_flag",
+        "citizen_science_flag",
+        "catalog1_flag",
+        "catalog1_param_flag"
+      ],
+      "eligible_temporal_unique_events": 0,
+      "limitations": "CHIME exposure nonuniform; centroid-only 3-degree membership is not localization overlap and multi-beam errors require native region",
+      "parsed_rows": 5008,
+      "raw_rows": 5045,
+      "status": "DOWNLOADED_CATALOG_2"
+    },
+    "TNS": {
+      "meaning": "cannot exclude an optical/TDE counterpart",
+      "status": "UNAVAILABLE"
+    }
+  },
+  "statistical_interpretation": "conditional sky-shift p is a catalog-only diagnostic, not source association posterior; no globally validated p for incomplete search families"
+}
