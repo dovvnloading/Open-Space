@@ -342,6 +342,9 @@ if __name__=="__main__":
     if _mode == "replay":
         from replay_controls import main as _replay_main
         _replay_main()
+    elif _mode == "archive_probe":
+        from archive_probe import main as _probe_main
+        _probe_main()
     else:
         from control_validation import main as _controls_main
         _controls_main()
