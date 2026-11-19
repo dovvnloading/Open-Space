@@ -79,29 +79,88 @@ def csv_table(raw):
     return f
 
 def vizier(key, table, min_rows=1):
-    query = f'SELECT * FROM "{table}"'
-    errors = []
-    for host in TAP:
+    """Prefer independent live CfA/IDIA VizieR mirrors while Strasbourg is down."""
+    urls = ["https://vizier.cfa.harvard.edu/viz-bin/asu-csv",
+            "https://vizier.idia.ac.za/viz-bin/asu-csv"]
+    errors=[]
+    for host in urls:
         try:
-            raw, full_url = get(host, params={
-                "REQUEST": "doQuery", "LANG": "ADQL", "FORMAT": "csv",
-                "MAXREC": "30000", "QUERY": query
-            })
-            tab = csv_table(raw)
-            if len(tab) < min_rows:
-                raise ValueError(f"unexpected short table {len(tab)} < {min_rows}")
-            RECEIPTS[key] = {
-                "status": "loaded", "table": table, "url": full_url,
-                "retrieved_utc": utc(), "raw_sha256": digest(raw),
-                "bytes": len(raw), "rows": len(tab), "columns": list(tab.columns)
-            }
-            if key == "lhaaso":
-                (FROZEN / "1lhaaso_cao2024_vizier.csv").write_bytes(raw)
+            response=SESSION.get(host,params={"-source":table,"-out.all":"1",
+                                              "-out.max":"20000"},
+                                 timeout=(9,35))
+            response.raise_for_status()
+            raw=response.content
+            if len(raw)>15_000_000:
+                raise ValueError("mirror response too large; use targeted query")
+            tab=csv_table(raw)
+            if len(tab)<min_rows:
+                raise ValueError(f"mirror row count {len(tab)} < {min_rows}")
+            RECEIPTS[key]={"status":"loaded","table":table,"url":response.url,
+                "mirror":"CfA/IDIA", "retrieved_utc":utc(),
+                "raw_sha256":digest(raw),"bytes":len(raw),"rows":len(tab),
+                "columns":list(tab.columns)}
+            if key=="lhaaso":
+                (FROZEN/"1lhaaso_cao2024_vizier.csv").write_bytes(raw)
+                RECEIPTS[key]["frozen_path"]="frozen/1lhaaso_cao2024_vizier.csv"
+                RECEIPTS[key]["input_variant"]="vizier_2024_cds_mirror"
             return tab
-        except Exception as exc:
-            errors.append(str(exc)[:650])
-    RECEIPTS[key] = {"status": "pending", "table": table, "errors": errors}
+        except Exception as exc: errors.append(repr(exc)[:400])
+    RECEIPTS[key]={"status":"pending","table":table,"errors":errors}
     return None
+
+
+def github_preprint_fallback():
+    """Author-associated Gammapy transcription of Cao's arXiv 2023 table.
+
+    This is NOT VizieR 2024 data. Keep its distinct provenance and a pending
+    primary-release comparison, even if counts reproduce 90/43.
+    """
+    key="lhaaso"
+    url="https://raw.githubusercontent.com/gammapy/gammapy-data/main/catalogs/lhaaso_cat.csv"
+    raw=file_url("gammapy_2023_preprint_table",url,max_bytes=500_000)
+    if raw is None:return None
+    try:
+        original=pd.read_csv(io.BytesIO(raw),dtype=str,keep_default_na=True)
+        if len(original)!=180 or len(original.columns)<11:
+            raise ValueError(f"unexpected transcription shape {original.shape}")
+        name=original.iloc[:,0].astype("string").str.strip().replace("",pd.NA).ffill()
+        name=(name.str.replace("$+$","+",regex=False)
+                  .str.replace("$-$","-",regex=False)
+                  .str.replace("*","",regex=False)
+                  .str.replace("1LHAASO","1LHAASO ",regex=False)
+                  .str.replace(r"\s+"," ",regex=True).str.strip())
+        result=pd.DataFrame({
+          "1LHAASO":name,
+          "f_1LHAASO":name.str.contains(r"u$",regex=True).map({True:"u",False:""}),
+          "Comp":original.iloc[:,1].astype(str).str.replace("*","",regex=False).str.strip().str.upper(),
+          "RAJ2000":original.iloc[:,2].map(number),
+          "DEJ2000":original.iloc[:,3].map(number),
+          "ePos":original.iloc[:,4].map(number),
+          "r39":original.iloc[:,5].map(number),
+          "TS":original.iloc[:,6].map(number),
+          "N0":original.iloc[:,7].map(number),
+          "Index":original.iloc[:,8].map(number),
+          "TS100":original.iloc[:,9].map(number),
+          "Assoc":original.iloc[:,10].str.strip().replace("",pd.NA)
+        })
+        if result["1LHAASO"].nunique()!=90:
+            raise ValueError(f"wrong unique names: {result['1LHAASO'].nunique()}")
+        (FROZEN/"1lhaaso_gammapy_2023_source.csv").write_bytes(raw)
+        RECEIPTS[key]={
+            "status":"loaded","url":url,"retrieved_utc":utc(),
+            "input_variant":"gammapy_2023_preprint_transcription",
+            "source_original_cds_verified":False,
+            "source_original_cds_status":"pending_during_CDS_outage",
+            "frozen_path":"frozen/1lhaaso_gammapy_2023_source.csv",
+            "raw_sha256":digest(raw),"bytes":len(raw),"rows":len(original),
+            "unique_names":result["1LHAASO"].nunique(),
+            "columns":list(original.columns),
+            "note":"Cao arXiv 2023 table transcribed by Gammapy, not 2024 VizieR original; no original-byte equivalence claimed."
+        }
+        return result
+    except Exception as exc:
+        RECEIPTS[key]={"status":"invalid_schema","source":url,"error":repr(exc)}
+        return None
 
 def file_url(key, url, *, max_bytes=150_000_000):
     try:
@@ -163,6 +222,8 @@ def base_record(name, ra, dec, size=0.0, **kw):
 
 def lhaaso():
     tab = vizier("lhaaso", "J/ApJS/271/25/catalog", min_rows=170)
+    if tab is None:
+        tab = github_preprint_fallback()
     if tab is None:
         return None
     if "1LHAASO" not in tab or "Comp" not in tab:
