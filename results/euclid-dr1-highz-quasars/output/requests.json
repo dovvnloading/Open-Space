@@ -1,0 +1,135 @@
+[
+  {
+    "label": "south_irsa_reference",
+    "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+    "utc": "2026-11-19T06:11:06.527566+00:00",
+    "adql": "SELECT TOP 1500 object_id,ra,dec,tileid,vis_det,point_like_prob,spurious_prob,det_quality_flag,ellipticity,mumax_minus_mag,deblended_flag,blended_prob,gaia_id,flag_vis,flag_y,flag_j,flag_h,flux_vis_3fwhm_aper,fluxerr_vis_3fwhm_aper,flux_y_3fwhm_aper,fluxerr_y_3fwhm_aper,flux_j_3fwhm_aper,fluxerr_j_3fwhm_aper,flux_h_3fwhm_aper,fluxerr_h_3fwhm_aper,flux_g_ext_decam_3fwhm_aper,fluxerr_g_ext_decam_3fwhm_aper,flux_r_ext_decam_3fwhm_aper,fluxerr_r_ext_decam_3fwhm_aper,flux_i_ext_decam_3fwhm_aper,fluxerr_i_ext_decam_3fwhm_aper,flux_z_ext_decam_3fwhm_aper,fluxerr_z_ext_decam_3fwhm_aper,flux_i_ext_panstarrs_3fwhm_aper,fluxerr_i_ext_panstarrs_3fwhm_aper,flux_z_ext_panstarrs_3fwhm_aper,fluxerr_z_ext_panstarrs_3fwhm_aper FROM euclid_dr1_mer_catalogue_wide_survey WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',90.7299000,-45.3529000,0.3500000)) AND vis_det=0 AND flux_j_3fwhm_aper>0.65 AND flux_h_3fwhm_aper>0 AND fluxerr_j_3fwhm_aper>0 AND fluxerr_h_3fwhm_aper>0 AND flux_y_3fwhm_aper<0.85*flux_j_3fwhm_aper AND flux_j_3fwhm_aper>0.65*flux_h_3fwhm_aper AND (spurious_prob<0.7 OR spurious_prob IS NULL)",
+    "adql_sha256": "feb754dc665c5a06d830586e916442429cba2a4528873769a9bf4cac83e0e0f7",
+    "error": "HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=95)",
+    "done_utc": "2026-11-19T06:12:41.808811+00:00"
+  },
+  {
+    "label": "south_offset",
+    "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+    "utc": "2026-11-19T06:12:41.808977+00:00",
+    "adql": "SELECT TOP 1500 object_id,ra,dec,tileid,vis_det,point_like_prob,spurious_prob,det_quality_flag,ellipticity,mumax_minus_mag,deblended_flag,blended_prob,gaia_id,flag_vis,flag_y,flag_j,flag_h,flux_vis_3fwhm_aper,fluxerr_vis_3fwhm_aper,flux_y_3fwhm_aper,fluxerr_y_3fwhm_aper,flux_j_3fwhm_aper,fluxerr_j_3fwhm_aper,flux_h_3fwhm_aper,fluxerr_h_3fwhm_aper,flux_g_ext_decam_3fwhm_aper,fluxerr_g_ext_decam_3fwhm_aper,flux_r_ext_decam_3fwhm_aper,fluxerr_r_ext_decam_3fwhm_aper,flux_i_ext_decam_3fwhm_aper,fluxerr_i_ext_decam_3fwhm_aper,flux_z_ext_decam_3fwhm_aper,fluxerr_z_ext_decam_3fwhm_aper,flux_i_ext_panstarrs_3fwhm_aper,fluxerr_i_ext_panstarrs_3fwhm_aper,flux_z_ext_panstarrs_3fwhm_aper,fluxerr_z_ext_panstarrs_3fwhm_aper FROM euclid_dr1_mer_catalogue_wide_survey WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',91.4000000,-45.3500000,0.3500000)) AND vis_det=0 AND flux_j_3fwhm_aper>0.65 AND flux_h_3fwhm_aper>0 AND fluxerr_j_3fwhm_aper>0 AND fluxerr_h_3fwhm_aper>0 AND flux_y_3fwhm_aper<0.85*flux_j_3fwhm_aper AND flux_j_3fwhm_aper>0.65*flux_h_3fwhm_aper AND (spurious_prob<0.7 OR spurious_prob IS NULL)",
+    "adql_sha256": "d843103e70e8767859702690bea92fdad1bce3f3b1e265784d09560a429500fb",
+    "error": "HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=95)",
+    "done_utc": "2026-11-19T06:14:17.043230+00:00"
+  },
+  {
+    "label": "north_z7p77_control",
+    "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+    "utc": "2026-11-19T06:14:17.043314+00:00",
+    "adql": "SELECT TOP 1500 object_id,ra,dec,tileid,vis_det,point_like_prob,spurious_prob,det_quality_flag,ellipticity,mumax_minus_mag,deblended_flag,blended_prob,gaia_id,flag_vis,flag_y,flag_j,flag_h,flux_vis_3fwhm_aper,fluxerr_vis_3fwhm_aper,flux_y_3fwhm_aper,fluxerr_y_3fwhm_aper,flux_j_3fwhm_aper,fluxerr_j_3fwhm_aper,flux_h_3fwhm_aper,fluxerr_h_3fwhm_aper,flux_g_ext_decam_3fwhm_aper,fluxerr_g_ext_decam_3fwhm_aper,flux_r_ext_decam_3fwhm_aper,fluxerr_r_ext_decam_3fwhm_aper,flux_i_ext_decam_3fwhm_aper,fluxerr_i_ext_decam_3fwhm_aper,flux_z_ext_decam_3fwhm_aper,fluxerr_z_ext_decam_3fwhm_aper,flux_i_ext_panstarrs_3fwhm_aper,fluxerr_i_ext_panstarrs_3fwhm_aper,flux_z_ext_panstarrs_3fwhm_aper,fluxerr_z_ext_panstarrs_3fwhm_aper FROM euclid_dr1_mer_catalogue_wide_survey WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',262.2614580,64.1716940,0.3500000)) AND vis_det=0 AND flux_j_3fwhm_aper>0.65 AND flux_h_3fwhm_aper>0 AND fluxerr_j_3fwhm_aper>0 AND fluxerr_h_3fwhm_aper>0 AND flux_y_3fwhm_aper<0.85*flux_j_3fwhm_aper AND flux_j_3fwhm_aper>0.65*flux_h_3fwhm_aper AND (spurious_prob<0.7 OR spurious_prob IS NULL)",
+    "adql_sha256": "406db58998e96564ee6cf39d1d81e694e8c1a65a85637d5938ed00f7ca18fdb8",
+    "error": "HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=95)",
+    "done_utc": "2026-11-19T06:15:52.313139+00:00"
+  },
+  {
+    "label": "north_offset",
+    "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+    "utc": "2026-11-19T06:15:52.313216+00:00",
+    "adql": "SELECT TOP 1500 object_id,ra,dec,tileid,vis_det,point_like_prob,spurious_prob,det_quality_flag,ellipticity,mumax_minus_mag,deblended_flag,blended_prob,gaia_id,flag_vis,flag_y,flag_j,flag_h,flux_vis_3fwhm_aper,fluxerr_vis_3fwhm_aper,flux_y_3fwhm_aper,fluxerr_y_3fwhm_aper,flux_j_3fwhm_aper,fluxerr_j_3fwhm_aper,flux_h_3fwhm_aper,fluxerr_h_3fwhm_aper,flux_g_ext_decam_3fwhm_aper,fluxerr_g_ext_decam_3fwhm_aper,flux_r_ext_decam_3fwhm_aper,fluxerr_r_ext_decam_3fwhm_aper,flux_i_ext_decam_3fwhm_aper,fluxerr_i_ext_decam_3fwhm_aper,flux_z_ext_decam_3fwhm_aper,fluxerr_z_ext_decam_3fwhm_aper,flux_i_ext_panstarrs_3fwhm_aper,fluxerr_i_ext_panstarrs_3fwhm_aper,flux_z_ext_panstarrs_3fwhm_aper,fluxerr_z_ext_panstarrs_3fwhm_aper FROM euclid_dr1_mer_catalogue_wide_survey WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',263.0000000,64.2000000,0.3500000)) AND vis_det=0 AND flux_j_3fwhm_aper>0.65 AND flux_h_3fwhm_aper>0 AND fluxerr_j_3fwhm_aper>0 AND fluxerr_h_3fwhm_aper>0 AND flux_y_3fwhm_aper<0.85*flux_j_3fwhm_aper AND flux_j_3fwhm_aper>0.65*flux_h_3fwhm_aper AND (spurious_prob<0.7 OR spurious_prob IS NULL)",
+    "adql_sha256": "e0f48694e78ecff690f993c874382abcd2ea01025a01842ca775e30081044ef7",
+    "error": "HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=95)",
+    "done_utc": "2026-11-19T06:17:27.590408+00:00"
+  },
+  {
+    "label": "north_z7p69_control",
+    "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+    "utc": "2026-11-19T06:17:27.590490+00:00",
+    "adql": "SELECT TOP 1500 object_id,ra,dec,tileid,vis_det,point_like_prob,spurious_prob,det_quality_flag,ellipticity,mumax_minus_mag,deblended_flag,blended_prob,gaia_id,flag_vis,flag_y,flag_j,flag_h,flux_vis_3fwhm_aper,fluxerr_vis_3fwhm_aper,flux_y_3fwhm_aper,fluxerr_y_3fwhm_aper,flux_j_3fwhm_aper,fluxerr_j_3fwhm_aper,flux_h_3fwhm_aper,fluxerr_h_3fwhm_aper,flux_g_ext_decam_3fwhm_aper,fluxerr_g_ext_decam_3fwhm_aper,flux_r_ext_decam_3fwhm_aper,fluxerr_r_ext_decam_3fwhm_aper,flux_i_ext_decam_3fwhm_aper,fluxerr_i_ext_decam_3fwhm_aper,flux_z_ext_decam_3fwhm_aper,fluxerr_z_ext_decam_3fwhm_aper,flux_i_ext_panstarrs_3fwhm_aper,fluxerr_i_ext_panstarrs_3fwhm_aper,flux_z_ext_panstarrs_3fwhm_aper,fluxerr_z_ext_panstarrs_3fwhm_aper FROM euclid_dr1_mer_catalogue_wide_survey WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',193.2856250,70.9089720,0.3500000)) AND vis_det=0 AND flux_j_3fwhm_aper>0.65 AND flux_h_3fwhm_aper>0 AND fluxerr_j_3fwhm_aper>0 AND fluxerr_h_3fwhm_aper>0 AND flux_y_3fwhm_aper<0.85*flux_j_3fwhm_aper AND flux_j_3fwhm_aper>0.65*flux_h_3fwhm_aper AND (spurious_prob<0.7 OR spurious_prob IS NULL)",
+    "adql_sha256": "046eecb3fa3d880d27aefeaea27d1bcdaaa0dc3d6687c1ea03b9921132c7fd87",
+    "error": "HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=95)",
+    "done_utc": "2026-11-19T06:19:02.834335+00:00"
+  },
+  {
+    "label": "deep_north",
+    "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+    "utc": "2026-11-19T06:19:02.834426+00:00",
+    "adql": "SELECT TOP 1500 object_id,ra,dec,tileid,vis_det,point_like_prob,spurious_prob,det_quality_flag,ellipticity,mumax_minus_mag,deblended_flag,blended_prob,gaia_id,flag_vis,flag_y,flag_j,flag_h,flux_vis_3fwhm_aper,fluxerr_vis_3fwhm_aper,flux_y_3fwhm_aper,fluxerr_y_3fwhm_aper,flux_j_3fwhm_aper,fluxerr_j_3fwhm_aper,flux_h_3fwhm_aper,fluxerr_h_3fwhm_aper,flux_g_ext_decam_3fwhm_aper,fluxerr_g_ext_decam_3fwhm_aper,flux_r_ext_decam_3fwhm_aper,fluxerr_r_ext_decam_3fwhm_aper,flux_i_ext_decam_3fwhm_aper,fluxerr_i_ext_decam_3fwhm_aper,flux_z_ext_decam_3fwhm_aper,fluxerr_z_ext_decam_3fwhm_aper,flux_i_ext_panstarrs_3fwhm_aper,fluxerr_i_ext_panstarrs_3fwhm_aper,flux_z_ext_panstarrs_3fwhm_aper,fluxerr_z_ext_panstarrs_3fwhm_aper FROM euclid_dr1_mer_catalogue_deep_survey WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',273.1670000,64.3687000,0.1200000)) AND vis_det=0 AND flux_j_3fwhm_aper>0.65 AND flux_h_3fwhm_aper>0 AND fluxerr_j_3fwhm_aper>0 AND fluxerr_h_3fwhm_aper>0 AND flux_y_3fwhm_aper<0.85*flux_j_3fwhm_aper AND flux_j_3fwhm_aper>0.65*flux_h_3fwhm_aper AND (spurious_prob<0.7 OR spurious_prob IS NULL)",
+    "adql_sha256": "f74853611455dd9234c7e25925156f7729a68747f8f55af87fd434d2c1b50096",
+    "error": "HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=95)",
+    "done_utc": "2026-11-19T06:20:38.135237+00:00"
+  },
+  {
+    "label": "deep_fornax",
+    "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+    "utc": "2026-11-19T06:20:38.135329+00:00",
+    "adql": "SELECT TOP 1500 object_id,ra,dec,tileid,vis_det,point_like_prob,spurious_prob,det_quality_flag,ellipticity,mumax_minus_mag,deblended_flag,blended_prob,gaia_id,flag_vis,flag_y,flag_j,flag_h,flux_vis_3fwhm_aper,fluxerr_vis_3fwhm_aper,flux_y_3fwhm_aper,fluxerr_y_3fwhm_aper,flux_j_3fwhm_aper,fluxerr_j_3fwhm_aper,flux_h_3fwhm_aper,fluxerr_h_3fwhm_aper,flux_g_ext_decam_3fwhm_aper,fluxerr_g_ext_decam_3fwhm_aper,flux_r_ext_decam_3fwhm_aper,fluxerr_r_ext_decam_3fwhm_aper,flux_i_ext_decam_3fwhm_aper,fluxerr_i_ext_decam_3fwhm_aper,flux_z_ext_decam_3fwhm_aper,fluxerr_z_ext_decam_3fwhm_aper,flux_i_ext_panstarrs_3fwhm_aper,fluxerr_i_ext_panstarrs_3fwhm_aper,flux_z_ext_panstarrs_3fwhm_aper,fluxerr_z_ext_panstarrs_3fwhm_aper FROM euclid_dr1_mer_catalogue_deep_survey WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',54.0000000,-35.0000000,0.1200000)) AND vis_det=0 AND flux_j_3fwhm_aper>0.65 AND flux_h_3fwhm_aper>0 AND fluxerr_j_3fwhm_aper>0 AND fluxerr_h_3fwhm_aper>0 AND flux_y_3fwhm_aper<0.85*flux_j_3fwhm_aper AND flux_j_3fwhm_aper>0.65*flux_h_3fwhm_aper AND (spurious_prob<0.7 OR spurious_prob IS NULL)",
+    "adql_sha256": "1f1b88289fa38c1fddec02159b8a4da4ee44cb9f82740c65eb343e02509db709",
+    "error": "HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=95)",
+    "done_utc": "2026-11-19T06:22:13.344824+00:00"
+  },
+  {
+    "label": "ctrl_EUCL J172902_75p641018_1_wide",
+    "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+    "utc": "2026-11-19T06:22:13.347337+00:00",
+    "adql": "SELECT TOP 1500 object_id,ra,dec,vis_det,flux_j_3fwhm_aper FROM euclid_dr1_mer_catalogue_wide_survey WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',262.2614580,64.1716940,0.0013889))",
+    "adql_sha256": "1340d8478317364940da5bc985b83604285cc7591882959e12d71458f1b05e6f",
+    "error": "HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=30)",
+    "done_utc": "2026-11-19T06:22:43.562397+00:00"
+  },
+  {
+    "label": "ctrl_EUCL J172902_75p641018_1_deep",
+    "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+    "utc": "2026-11-19T06:22:43.562434+00:00",
+    "adql": "SELECT TOP 1500 object_id,ra,dec,vis_det,flux_j_3fwhm_aper FROM euclid_dr1_mer_catalogue_deep_survey WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',262.2614580,64.1716940,0.0013889))",
+    "adql_sha256": "14eb9d3c1ef71d9990e7067d9c209b257887dd4fe769a723ee91923b3edc8732",
+    "error": "HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=30)",
+    "done_utc": "2026-11-19T06:23:13.739529+00:00"
+  },
+  {
+    "label": "ctrl_EUCL J125308_55p705432_3_wide",
+    "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+    "utc": "2026-11-19T06:23:13.739569+00:00",
+    "adql": "SELECT TOP 1500 object_id,ra,dec,vis_det,flux_j_3fwhm_aper FROM euclid_dr1_mer_catalogue_wide_survey WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',193.2856250,70.9089720,0.0013889))",
+    "adql_sha256": "77587570e2e66447ba765d97559aea819d5e4e921de09e3c0e1713a130c0a6a5",
+    "http_code": 502,
+    "response_bytes": 341,
+    "response_sha256": "6c5cbf315d1e65021bda341d39f2f9126b1e63d3099d07c315894bd11add085b",
+    "response_file": "output/raw/ctrl_EUCL J125308_55p705432_3_wide.response",
+    "error": "502 Server Error: Proxy Error for url: https://irsa.ipac.caltech.edu/TAP/sync",
+    "done_utc": "2026-11-19T06:23:14.143510+00:00"
+  },
+  {
+    "label": "ctrl_EUCL J125308_55p705432_3_deep",
+    "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+    "utc": "2026-11-19T06:23:14.144300+00:00",
+    "adql": "SELECT TOP 1500 object_id,ra,dec,vis_det,flux_j_3fwhm_aper FROM euclid_dr1_mer_catalogue_deep_survey WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',193.2856250,70.9089720,0.0013889))",
+    "adql_sha256": "c3cd50168c5dcae25fffdea572b4c1e968c8e34eaca8a27c01b3e007dd1eabe1",
+    "http_code": 502,
+    "response_bytes": 341,
+    "response_sha256": "6c5cbf315d1e65021bda341d39f2f9126b1e63d3099d07c315894bd11add085b",
+    "response_file": "output/raw/ctrl_EUCL J125308_55p705432_3_deep.response",
+    "error": "502 Server Error: Proxy Error for url: https://irsa.ipac.caltech.edu/TAP/sync",
+    "done_utc": "2026-11-19T06:23:14.880013+00:00"
+  },
+  {
+    "label": "ctrl_EUCL J101255_87p663058_0_wide",
+    "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+    "utc": "2026-11-19T06:23:14.880822+00:00",
+    "adql": "SELECT TOP 1500 object_id,ra,dec,vis_det,flux_j_3fwhm_aper FROM euclid_dr1_mer_catalogue_wide_survey WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',153.2327920,66.5161110,0.0013889))",
+    "adql_sha256": "3e5c40b3ca93a3f148c6e48bb0e7177bd724b90517984b1b9ca85a22af1b82df",
+    "http_code": 502,
+    "response_bytes": 341,
+    "response_sha256": "6c5cbf315d1e65021bda341d39f2f9126b1e63d3099d07c315894bd11add085b",
+    "response_file": "output/raw/ctrl_EUCL J101255_87p663058_0_wide.response",
+    "error": "502 Server Error: Proxy Error for url: https://irsa.ipac.caltech.edu/TAP/sync",
+    "done_utc": "2026-11-19T06:23:15.391710+00:00"
+  },
+  {
+    "label": "ctrl_EUCL J101255_87p663058_0_deep",
+    "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+    "utc": "2026-11-19T06:23:15.392553+00:00",
+    "adql": "SELECT TOP 1500 object_id,ra,dec,vis_det,flux_j_3fwhm_aper FROM euclid_dr1_mer_catalogue_deep_survey WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',153.2327920,66.5161110,0.0013889))",
+    "adql_sha256": "d7da3f5ffe84639a71372480625c63084fbccef72e2239a3bd022246a0c54409",
+    "http_code": 502,
+    "response_bytes": 341,
+    "response_sha256": "6c5cbf315d1e65021bda341d39f2f9126b1e63d3099d07c315894bd11add085b",
+    "response_file": "output/raw/ctrl_EUCL J101255_87p663058_0_deep.response",
+    "error": "502 Server Error: Proxy Error for url: https://irsa.ipac.caltech.edu/TAP/sync",
+    "done_utc": "2026-11-19T06:23:15.802401+00:00"
+  }
+]

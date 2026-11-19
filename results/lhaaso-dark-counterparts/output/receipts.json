@@ -1,0 +1,142 @@
+{
+  "askap_emu": {
+    "reason": "No validated release-dependent mosaic footprint or uniform source-selection query in this run; do not claim non-detections.",
+    "status": "pending"
+  },
+  "atnf_psrcat_v2_latest": {
+    "bytes": 1249005,
+    "parser": "direct published ATNF psrcat.db record decoder, no cached psrqpy calculations",
+    "psrcat_db_sha256": "bac32471fef3e60cfd734f1db85503a9bd0a565018cb98edff54475f87eb642f",
+    "pulsars_with_coordinates": 4503,
+    "pulsars_with_distance": 4406,
+    "pulsars_with_edot": 2898,
+    "raw_sha256": "55daa29f71f344c8de4064969b5812d6cb3a9b851efae0bef004ac9d5f6740c0",
+    "retrieved_utc": "2026-11-19T05:32:17.620385+00:00",
+    "status": "loaded",
+    "url": "https://www.atnf.csiro.au/research/pulsar/psrcat/downloads/psrcat_pkg.tar.gz",
+    "version": "not_in_first_header"
+  },
+  "erass1_dr1_hard": {
+    "bytes": 2057573,
+    "fits_sha256": "ba3f4b452dd20d58a68c408baf557fba516d8a9cd04dda68772bd8ec995d89e0",
+    "raw_sha256": "ef1d2dbcff2c193f1434d58cb6dc97e6370a1e8af24752a379b265313cc48837",
+    "retrieved_utc": "2026-11-19T05:32:29.882416+00:00",
+    "scope": "eROSITA-DE public western half sky only; approximate l=180..360 Galactic",
+    "sources": 5466,
+    "status": "loaded",
+    "url": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/MerloniA_DR1/eRASS1_Hard.tar.gz"
+  },
+  "erass1_dr1_main_soft": {
+    "reason": "930203-source catalogue not ingested; eRASS1-hard-only results do not rule out soft counterparts; half-sky rights mask required.",
+    "status": "pending",
+    "url": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/"
+  },
+  "fermi_4fgl_dr4_v35": {
+    "bytes": 7819200,
+    "raw_sha256": "e3b3ea278412b7bda4c259ab558f00b76605be59eb84e44086a862a179ffc3e6",
+    "retrieved_utc": "2026-11-19T05:32:02.810823+00:00",
+    "sources": 7195,
+    "status": "loaded",
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/14yr_catalog/gll_psc_v35.fit"
+  },
+  "gaia_dr3_hunt_ref": {
+    "errors": [
+      "HTTPError('404 Client Error: Not Found for url: https://vizier.cfa.harvard.edu/viz-bin/asu-csv?-source=J%2FA%2BA%2F673%2FA114%2Fclusters&-out.all=1&-out.max=20000')",
+      "HTTPError('404 Client Error: Not Found for url: https://vizier.idia.ac.za/viz-bin/asu-csv?-source=J%2FA%2BA%2F673%2FA114%2Fclusters&-out.all=1&-out.max=20000')"
+    ],
+    "status": "pending",
+    "table": "J/A+A/673/A114/clusters"
+  },
+  "gammapy_2023_preprint_table": {
+    "bytes": 18611,
+    "raw_sha256": "0e10ce0f7625d454d0574a6ed3e2d0bb27cddf153739c7d665455c878b6f5841",
+    "retrieved_utc": "2026-11-19T05:31:58.386882+00:00",
+    "status": "loaded",
+    "url": "https://raw.githubusercontent.com/gammapy/gammapy-data/main/catalogs/lhaaso_cat.csv"
+  },
+  "green_2024": {
+    "bytes": 31994,
+    "raw_sha256": "0dcffa17be68c3f2467d5e80eae40c6dddba68195b5a4765556c6b4e9f966396",
+    "retrieved_utc": "2026-11-19T05:32:26.837378+00:00",
+    "sources": 310,
+    "status": "loaded",
+    "url": "https://www.mrao.cam.ac.uk/projects/surveys/snrs/snrs.data.html",
+    "version": "2024 October, summary of all 310 Green SNRs"
+  },
+  "hawc4_arxiv_2602_00263": {
+    "arxiv_id": "2602.00263",
+    "bytes": 713758,
+    "entries": 85,
+    "frozen_path": "frozen/hawc4_2026_ar5iv.html.gz",
+    "raw_sha256": "d91921dfaff207382359d62c10b6b4e7be4c1bfafee8d27e1d4f82a7b7595278",
+    "retrieved_utc": "2026-11-19T05:32:40.457082+00:00",
+    "source": "Alfaro et al. 2026 arXiv:2602.00263 Table 1",
+    "status": "loaded",
+    "survey_note": "TeV class veto, not proof of which accelerator powers a UHE source.",
+    "url": "https://ar5iv.labs.arxiv.org/html/2602.00263"
+  },
+  "hess_hgps_legacy": {
+    "bytes": 49644,
+    "raw_sha256": "2cdd4af56f60ff0f577a16549570f4945ccbb9bace85ecd163ebb957615d42d5",
+    "retrieved_utc": "2026-11-19T05:32:38.695293+00:00",
+    "sources": 78,
+    "status": "loaded",
+    "url": "https://hess.in2p3.fr/wp-content/uploads/2025/09/hgps_catalog_v1.fits.gz.zip"
+  },
+  "lhaaso": {
+    "bytes": 18611,
+    "columns": [
+      "#Source name ",
+      "Components",
+      "$\\alpha_{2000}$ ",
+      "$\\delta_{2000}$ ",
+      "$\\sigma_{p 95 stat}$ ",
+      "$r_{39}$ ",
+      "TS ",
+      "$N_0$ ",
+      "$\\Gamma$ ",
+      "TS$_{100}$",
+      "Asso.(Sep.[$^{\\circ}$])"
+    ],
+    "frozen_path": "frozen/1lhaaso_gammapy_2023_source.csv",
+    "input_variant": "gammapy_2023_preprint_transcription",
+    "note": "Cao arXiv 2023 table transcribed by Gammapy, not 2024 VizieR original; no original-byte equivalence claimed.",
+    "published_tev_unassociated": 25,
+    "raw_sha256": "0e10ce0f7625d454d0574a6ed3e2d0bb27cddf153739c7d665455c878b6f5841",
+    "retrieved_utc": "2026-11-19T05:31:58.396342+00:00",
+    "rows": 180,
+    "source_original_cds_status": "pending_during_CDS_outage",
+    "source_original_cds_verified": false,
+    "status": "loaded",
+    "uhe_sources": 43,
+    "unique_names": 90,
+    "unique_sources": 90,
+    "url": "https://raw.githubusercontent.com/gammapy/gammapy-data/main/catalogs/lhaaso_cat.csv"
+  },
+  "meerkat_smgps_compact_510599": {
+    "reason": "Dense 510599-source radio compact catalogue needs footprint/extended-source classification; SMGPS SNR candidate table is NOT this catalogue.",
+    "status": "pending",
+    "url": "https://doi.org/10.48479/h16d-2z55"
+  },
+  "smgps_new_snr_candidates": {
+    "errors": [
+      "HTTPError('404 Client Error: Not Found for url: https://vizier.cfa.harvard.edu/viz-bin/asu-csv?-source=J%2FA%2BA%2F693%2FA247%2Fmeerkatc&-out.all=1&-out.max=20000')",
+      "HTTPError('404 Client Error: Not Found for url: https://vizier.idia.ac.za/viz-bin/asu-csv?-source=J%2FA%2BA%2F693%2FA247%2Fmeerkatc&-out.all=1&-out.max=20000')"
+    ],
+    "status": "pending",
+    "table": "J/A+A/693/A247/meerkatc"
+  },
+  "snrcat_full": {
+    "reason": "SMGPS SNRcat overlap subset is NOT the full live SNRcat; external SNRcat coverage/version requires independent freeze.",
+    "status": "pending",
+    "url": "https://www.samarsafi-harb.com/snrcat"
+  },
+  "snrcat_smgps_overlap": {
+    "errors": [
+      "HTTPError('404 Client Error: Not Found for url: https://vizier.cfa.harvard.edu/viz-bin/asu-csv?-source=J%2FA%2BA%2F693%2FA247%2Fksnrcat&-out.all=1&-out.max=20000')",
+      "HTTPError('404 Client Error: Not Found for url: https://vizier.idia.ac.za/viz-bin/asu-csv?-source=J%2FA%2BA%2F693%2FA247%2Fksnrcat&-out.all=1&-out.max=20000')"
+    ],
+    "status": "pending",
+    "table": "J/A+A/693/A247/ksnrcat"
+  }
+}

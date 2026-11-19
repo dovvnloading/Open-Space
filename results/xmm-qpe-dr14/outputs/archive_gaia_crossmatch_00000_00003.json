@@ -1,0 +1,78 @@
+{
+  "utc": "2026-11-19T10:01:30.045472+00:00",
+  "status": "COMPLETE",
+  "catalogue": "Gaia DR3 gaia_source, positional separation <=1arcsec",
+  "criteria": "Positive parallax SNR >=5 or absolute single component proper-motion SNR >=5",
+  "input_manifest_sha256": "49cfc7f4d663215ce339f131f5182296f432af173427faabd09e0b332cae840a",
+  "start": 0,
+  "stop": 3,
+  "total_post_sdss": 989,
+  "target_count": 3,
+  "queries": [
+    {
+      "ok": true,
+      "endpoint": "https://gaia.ari.uni-heidelberg.de/tap/sync",
+      "attempt": 1,
+      "query_sha256": "084fae9970ce1d3d4d95d95b0d5ca4c1a598a0351dae72b6c5dc4a4ad80f3aa1",
+      "n_targets": 3,
+      "n_rows": 3,
+      "bytes": 627,
+      "elapsed_s": 2.0,
+      "index_start": 0,
+      "index_stop": 3
+    }
+  ],
+  "source_rows": [
+    {
+      "detid": "100050103010001",
+      "source_id": "1293977889990508544",
+      "gaia_ra": "220.531131301326",
+      "gaia_dec": "35.43970510562826",
+      "parallax": "-0.0322159132219973",
+      "parallax_over_error": "-1.3506457",
+      "pmra": "0.053804575321621695",
+      "pmra_error": "0.015898447",
+      "pmdec": "-0.015326822937293429",
+      "pmdec_error": "0.02276985",
+      "ruwe": "1.2536716"
+    },
+    {
+      "detid": "100050103010002",
+      "source_id": "1293978267946550144",
+      "gaia_ra": "220.5211934503538",
+      "gaia_dec": "35.46893071149157",
+      "parallax": "0.1739234454790271",
+      "parallax_over_error": "0.23627973",
+      "pmra": "0.6631011796972914",
+      "pmra_error": "0.7074552",
+      "pmdec": "0.6845506904925392",
+      "pmdec_error": "0.8524764",
+      "ruwe": "1.1091161"
+    },
+    {
+      "detid": "100096501010002",
+      "source_id": "2648391424441612032",
+      "gaia_ra": "343.8247509457972",
+      "gaia_dec": "-3.145003356731568",
+      "parallax": "0.5748310721841465",
+      "parallax_over_error": "0.7033535",
+      "pmra": "-0.6530059225666885",
+      "pmra_error": "0.6758582",
+      "pmdec": "-0.375552495474472",
+      "pmdec_error": "0.63110363",
+      "ruwe": "1.0116522"
+    }
+  ],
+  "stellar_flags": [],
+  "missing_chunks": [],
+  "archive_screen_permitted": false,
+  "limitations": [
+    "Gaia stars are potential line-of-sight matches; host verification required",
+    "No comprehensive SIMBAD/4LAC/blazar matching",
+    "No Legacy DR10 full-sky galaxy sample",
+    "No new-source EPIC-pn light curve screened"
+  ],
+  "n_gaia_matches": 3,
+  "n_stellar_flagged_detections": 0,
+  "n_observations_screened_pn": 0
+}

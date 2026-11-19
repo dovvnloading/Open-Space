@@ -1,0 +1,163 @@
+{
+  "time_utc": "2026-11-19T06:23:15.803725+00:00",
+  "release": "Euclid DR1-Foundation",
+  "release_date": "2026-11-12",
+  "release_footprint_deg2_approx": 1900,
+  "freeze_sha256": "4e427c201cc7ca4f643414e361a1b71bdde2202625fa0024551ad1f95c0ee882",
+  "script_sha256": "f7f61e5d4f121fa6ff65ef0915119f2151c11636bb88878267588352e6009785",
+  "fields": [
+    {
+      "id": "south_irsa_reference",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 90.7299,
+      "dec": -45.3529,
+      "radius_deg": 0.35,
+      "requested_area_deg2": 0.384844,
+      "status": "FAILED",
+      "rows": null,
+      "hit_cap": false
+    },
+    {
+      "id": "south_offset",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 91.4,
+      "dec": -45.35,
+      "radius_deg": 0.35,
+      "requested_area_deg2": 0.384844,
+      "status": "FAILED",
+      "rows": null,
+      "hit_cap": false
+    },
+    {
+      "id": "north_z7p77_control",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 262.261458,
+      "dec": 64.171694,
+      "radius_deg": 0.35,
+      "requested_area_deg2": 0.384844,
+      "status": "FAILED",
+      "rows": null,
+      "hit_cap": false
+    },
+    {
+      "id": "north_offset",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 263,
+      "dec": 64.2,
+      "radius_deg": 0.35,
+      "requested_area_deg2": 0.384844,
+      "status": "FAILED",
+      "rows": null,
+      "hit_cap": false
+    },
+    {
+      "id": "north_z7p69_control",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 193.285625,
+      "dec": 70.908972,
+      "radius_deg": 0.35,
+      "requested_area_deg2": 0.384844,
+      "status": "FAILED",
+      "rows": null,
+      "hit_cap": false
+    },
+    {
+      "id": "deep_north",
+      "table": "euclid_dr1_mer_catalogue_deep_survey",
+      "ra": 273.167,
+      "dec": 64.3687,
+      "radius_deg": 0.12,
+      "requested_area_deg2": 0.045239,
+      "status": "FAILED",
+      "rows": null,
+      "hit_cap": false
+    },
+    {
+      "id": "deep_fornax",
+      "table": "euclid_dr1_mer_catalogue_deep_survey",
+      "ra": 54,
+      "dec": -35,
+      "radius_deg": 0.12,
+      "requested_area_deg2": 0.045239,
+      "status": "FAILED",
+      "rows": null,
+      "hit_cap": false
+    }
+  ],
+  "sum_requested_cone_area_deg2_NOT_VALID_EFFECTIVE_AREA": 2.014698,
+  "n_queries_failed": 7,
+  "n_queries_capped": 0,
+  "unique_broad_rows": 0,
+  "strict_proxy_rows": 0,
+  "shortlist_count": 0,
+  "strict_rows_not_independently_vetted": 0,
+  "reject_counts_overlapping": {},
+  "known_controls": [
+    {
+      "name": "EUCL J172902.75+641018.1",
+      "z_literature": 7.77,
+      "trials": [
+        {
+          "table": "euclid_dr1_mer_catalogue_wide_survey",
+          "status": "ERROR",
+          "n": null
+        },
+        {
+          "table": "euclid_dr1_mer_catalogue_deep_survey",
+          "status": "ERROR",
+          "n": null
+        }
+      ],
+      "note": "Catalog lookup not a positive recovery of frozen dropout cut"
+    },
+    {
+      "name": "EUCL J125308.55+705432.3",
+      "z_literature": 7.69,
+      "trials": [
+        {
+          "table": "euclid_dr1_mer_catalogue_wide_survey",
+          "status": "ERROR",
+          "n": null
+        },
+        {
+          "table": "euclid_dr1_mer_catalogue_deep_survey",
+          "status": "ERROR",
+          "n": null
+        }
+      ],
+      "note": "Catalog lookup not a positive recovery of frozen dropout cut"
+    },
+    {
+      "name": "EUCL J101255.87+663058.0",
+      "z_literature": 7.61,
+      "trials": [
+        {
+          "table": "euclid_dr1_mer_catalogue_wide_survey",
+          "status": "ERROR",
+          "n": null
+        },
+        {
+          "table": "euclid_dr1_mer_catalogue_deep_survey",
+          "status": "ERROR",
+          "n": null
+        }
+      ],
+      "note": "Catalog lookup not a positive recovery of frozen dropout cut"
+    }
+  ],
+  "status": "PARTIAL",
+  "new_quasar_confirmed": false,
+  "new_spectrum_confirmed": false,
+  "discovery_claim": false,
+  "probability_status": "Toy track versus toy L/T/Y. Not empirical or astrophysical posterior.",
+  "pending": [
+    "independent Legacy/DES/PanSTARRS flux limits",
+    "NIR PSF shape and image artifacts",
+    "dwarf spectral-library bandpass calibration",
+    "red galaxy and injection controls",
+    "Gaia/CatWISE significant motion tests",
+    "DESI DR1 SDSS ESO JWST spectra",
+    "eRASS1 VLASS LoTSS RACS footprint-aware checks",
+    "measured effective footprint"
+  ]
+}

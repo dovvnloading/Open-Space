@@ -1,0 +1,106 @@
+{
+  "all_requested_catalogues_complete": false,
+  "checks": [
+    {
+      "detail": "0e10ce0f7625d454d0574a6ed3e2d0bb27cddf153739c7d665455c878b6f5841",
+      "name": "original-bytes-sha256",
+      "pass": true
+    },
+    {
+      "detail": {
+        "input_rows": 180,
+        "input_sources": 90,
+        "variant": "gammapy_2023_preprint_transcription"
+      },
+      "name": "180-components-90-sources",
+      "pass": true
+    },
+    {
+      "detail": {
+        "uhe": 43
+      },
+      "name": "43-uhe",
+      "pass": true
+    },
+    {
+      "detail": "unit: published source, not detector",
+      "name": "unique-position-valid",
+      "pass": true
+    },
+    {
+      "detail": 25,
+      "name": "dark-sample-recount",
+      "pass": true
+    },
+    {
+      "detail": {
+        "classes": 9,
+        "expected": 225,
+        "found": 225
+      },
+      "name": "all-dark-sources-screened-or-marked-pending",
+      "pass": true
+    },
+    {
+      "detail": {
+        "eligible_rows": 105
+      },
+      "name": "some-real-class-coverage",
+      "pass": true
+    },
+    {
+      "detail": {
+        "n_max": 512,
+        "n_min": 239
+      },
+      "name": "finite-sample-p-bounds",
+      "pass": true
+    },
+    {
+      "detail": {
+        "out_of_footprint": 24
+      },
+      "name": "unobserved-erass-not-nondetection",
+      "pass": true
+    },
+    {
+      "detail": {
+        "incomplete": 0
+      },
+      "name": "strict-dark-is-tristate",
+      "pass": true
+    },
+    {
+      "detail": {
+        "pairs": 120
+      },
+      "name": "pair-within-morphology-aperture",
+      "pass": true
+    },
+    {
+      "detail": "All candidate labels geometrical",
+      "name": "no-pair-physical-claim",
+      "pass": true
+    },
+    {
+      "detail": "Claim gate unchanged",
+      "name": "no-novel-class-claim",
+      "pass": true
+    }
+  ],
+  "discovery_level_finding": false,
+  "independence": "independent code/data bookkeeping review, not independent telescope measurement",
+  "missing_catalogues": [
+    "askap_emu",
+    "erass1_dr1_main_soft",
+    "gaia_dr3_hunt_ref",
+    "meerkat_smgps_compact_510599",
+    "smgps_new_snr_candidates",
+    "snrcat_full",
+    "snrcat_smgps_overlap"
+  ],
+  "pass": true,
+  "passed": 13,
+  "remarkable_permitted": false,
+  "total": 13
+}

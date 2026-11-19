@@ -1,0 +1,94 @@
+{
+  "as_of_utc": "2026-11-19T09:45:10.325584+00:00",
+  "status": "PILOT_FINISHED_NOT_GATED",
+  "pilot_obsids": [
+    "0872392901",
+    "0306630101",
+    "0200730401"
+  ],
+  "limits": "5 min per obs, 3 obs per job, 3GiB per obs; downloaded tar and source product SHA256",
+  "n_eligible_obsids": 742,
+  "parent_manifest_sha256": "93475a72d00393c236b36065a60ef6fdb6f8c066c9e945c7e543ec47a8321357",
+  "method": "FROZEN NET EPIC-pn 300s control_validation.find_eruptions",
+  "processed_sources": [
+    {
+      "detid": "108723929010001",
+      "obs_id": "0872392901",
+      "status": "PPS_unavailable"
+    },
+    {
+      "detid": "103066301010002",
+      "obs_id": "0306630101",
+      "status": "PPS_unavailable"
+    },
+    {
+      "detid": "103066301010007",
+      "obs_id": "0306630101",
+      "status": "PPS_unavailable"
+    },
+    {
+      "detid": "103066301010011",
+      "obs_id": "0306630101",
+      "status": "PPS_unavailable"
+    },
+    {
+      "detid": "102007304010001",
+      "obs_id": "0200730401",
+      "status": "PPS_unavailable"
+    },
+    {
+      "detid": "102007304010005",
+      "obs_id": "0200730401",
+      "status": "PPS_unavailable"
+    }
+  ],
+  "downloads": [
+    {
+      "control": "pilot:0872392901",
+      "obsid": "0872392901",
+      "url": "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio?obsno=0872392901&level=PPS&extension=FTZ&instname=PN&name=SRCTSR",
+      "requested_utc": "2026-11-19T09:45:10.326045+00:00",
+      "byte_cap": 3221225472,
+      "wall_cap_s": 300,
+      "status": "unavailable",
+      "error": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))",
+      "elapsed_s": 1.5
+    },
+    {
+      "control": "pilot:0306630101",
+      "obsid": "0306630101",
+      "url": "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio?obsno=0306630101&level=PPS&extension=FTZ&instname=PN&name=SRCTSR",
+      "requested_utc": "2026-11-19T09:45:11.849640+00:00",
+      "byte_cap": 3221225472,
+      "wall_cap_s": 300,
+      "status": "unavailable",
+      "error": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))",
+      "elapsed_s": 0.9
+    },
+    {
+      "control": "pilot:0200730401",
+      "obsid": "0200730401",
+      "url": "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio?obsno=0200730401&level=PPS&extension=FTZ&instname=PN&name=SRCTSR",
+      "requested_utc": "2026-11-19T09:45:12.800291+00:00",
+      "byte_cap": 3221225472,
+      "wall_cap_s": 300,
+      "status": "unavailable",
+      "error": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))",
+      "elapsed_s": 1.0
+    }
+  ],
+  "eligible_obsids": 3,
+  "obsids_with_parsed_pn": 0,
+  "pn_detections_screened": 0,
+  "unvetted_recurrent_flags": 0,
+  "validated_new_qpe": 0,
+  "survey_incomplete_eligible_obsids": 742,
+  "archive_screen_permitted": false,
+  "limitations": [
+    "No independent 4XMM-host LS all-sky census; Gaia/blazar exclusions not complete",
+    "No independent background region, particle GTI, epatplot pile-up veto, or spectral evolution",
+    "Only first three pre-registered catalogue-ranked observations attempted",
+    "No archive-wide empirical false-positive rate or injection-derived selection efficiency",
+    "Flagged source positions are not validated new QPEs; TDE/AGN/stellar novelty untested"
+  ]
+}

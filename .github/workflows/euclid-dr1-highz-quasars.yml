@@ -1,0 +1,65 @@
+name: Euclid DR1-F frozen high-z quasar cone pilot
+on:
+  push:
+    branches:
+      - research/euclid-dr1-highz-quasars
+    paths:
+      - 'results/euclid-dr1-highz-quasars/run.py'
+      - 'results/euclid-dr1-highz-quasars/run_s3.py'
+      - 'results/euclid-dr1-highz-quasars/referee.py'
+      - 'results/euclid-dr1-highz-quasars/freeze.json'
+      - 'results/euclid-dr1-highz-quasars/tests.py'
+      - '.github/workflows/euclid-dr1-highz-quasars.yml'
+permissions:
+  contents: write
+concurrency:
+  group: euclid-dr1-highz-research
+  cancel-in-progress: false
+jobs:
+  data-and-computation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 32
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies and test frozen selection guards
+        run: |
+          python -m pip install 'requests>=2.31,<3' 'numpy>=2' 'pyarrow>=20' 'astropy>=6' 'astropy-healpix>=1.1'
+          python -m unittest discover -s results/euclid-dr1-highz-quasars -p 'tests.py' -v
+          sha256sum results/euclid-dr1-highz-quasars/freeze.json results/euclid-dr1-highz-quasars/run.py results/euclid-dr1-highz-quasars/run_s3.py
+          python -m py_compile results/euclid-dr1-highz-quasars/run_s3.py results/euclid-dr1-highz-quasars/referee.py
+      - name: Read public DR1-F HATS/Parquet S3 partitions and compute same frozen cone screen
+        timeout-minutes: 28
+        run: |
+          python -u results/euclid-dr1-highz-quasars/run_s3.py
+          python -u results/euclid-dr1-highz-quasars/referee.py
+      - name: Upload all raw responses and receipts even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: euclid-dr1-highz-frozen-raw-and-receipts
+          path: |
+            results/euclid-dr1-highz-quasars/s3_output/
+            results/euclid-dr1-highz-quasars/output/
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Commit results in one batch without triggering again
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          folder=results/euclid-dr1-highz-quasars/s3_output
+          test -f "$folder/summary.json" || { echo 'No summary to commit'; exit 0; }
+          git fetch origin "$GITHUB_REF_NAME"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse "origin/$GITHUB_REF_NAME")" || { echo 'Branch changed; skip stale result'; exit 0; }
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$folder"
+          if ! git diff --cached --quiet; then
+            git commit -m 'research(euclid): deposit frozen DR1-F cone receipts and output'
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
