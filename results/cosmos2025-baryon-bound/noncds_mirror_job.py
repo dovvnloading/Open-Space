@@ -35,8 +35,8 @@ PAGES = [
     ("caltech_dr1", "https://cosmos.astro.caltech.edu/page/cosmosweb-dr"),
     ("irsa_cosmos", "https://irsa.ipac.caltech.edu/data/COSMOS/overview.html"),
     ("irsa_tap_tables", "https://irsa.ipac.caltech.edu/TAP/tables"),
-    ("zenodo_cosmos2025", "https://zenodo.org/api/records?q=COSMOS2025&size=30"),
-    ("zenodo_mastercatalog", "https://zenodo.org/api/records?q=COSMOSWeb_mastercatalog&size=30"),
+    ("zenodo_cosmos2025", "https://zenodo.org/api/records?q=COSMOS2025&size=25"),
+    ("zenodo_mastercatalog", "https://zenodo.org/api/records?q=COSMOSWeb_mastercatalog&size=25"),
     ("publisher_paper", "https://www.aanda.org/articles/aa/full_html/2025/12/aa55799-25/aa55799-25.html"),
     ("github_control", "https://github.com/"),
 ]
@@ -57,7 +57,7 @@ def digest(path):
     return h.hexdigest()
 
 
-def request(url, timeout=20):
+def request(url, timeout=40):
     return urlopen(Request(url, headers={"User-Agent": UA, "Accept": "*/*"}), timeout=timeout)
 
 

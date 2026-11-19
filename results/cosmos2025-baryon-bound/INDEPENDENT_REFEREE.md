@@ -36,3 +36,11 @@
 - There is **no acquired FITS file**, real source rows, joint mass-redshift posterior, independent EAZY+Prospector/Bagpipes SED posterior fit, object-wise interloper/AGN/MIRI/spectroscopic check, or population-level Eddington-corrected exceedance inference. Existing nominal halo-bound calculations do not change this.
 
 **Decision:** Scientific status **inconclusive due to access failure, not a measured null**. Keep #194 as an unmerged draft. No root README catalogue entry and no [REMARKABLE] log entry until actual data become available and the full prespecified review can pass.
+
+## Dedicated non-CDS runner referee addendum (2026-11-19 UTC)
+
+I reviewed the **completed** single-job [Actions #44454134461](https://github.com/dovvnloading/Open-Space/actions/runs/44454134461), not just its submission. [Source receipt](run/noncds/mirror_receipt.json) says `BLOCKED_NO_VERIFIED_NONCDS_CATALOGUE` and `source_sha256 = null` with `source_bytes_verified = 0`; none of the tested pages supplied a verified non-CDS COSMOS2025 784,016-row mastercatalog. DNS works on the runner; IAP HTTP requests timed out. Caltech and IRSA discovery endpoints answered successfully but no full COSMOS2025 FITS was located. The Zenodo 400 responses were **our defect** (anonymous `size=30` violates 25 limit) and cannot be interpreted as source unavailability. A corrected script triggers another run, and only that new receipt can close this particular route check.
+
+[Machine referee](run/noncds/independent_referee.json) checks all derived-source receipt digests and independent six-shell comoving HMF volumes; the freshly run [halo file](run/noncds/halo_bounds.json) SHA-256 is `6640731301df680bd862b5b7b83f5f0d5d21e4449e4a7b0ddd0fad4413712e8e` and alternate-source receipt SHA-256 is `2c85ec412bed846face13696cd0035af610ff6572e17503661781bf9ec2beecc`. This **repairs the previous "provisional HMF not re-run" concern**, not the absent-observation problem. No EAZY + Bagpipes/Prospector refit, joint (z, mass) posterior, blending/AGN/star and spectroscopy audit or Eddington-corrected statistical test was completed.
+
+**Referee verdict: BLOCKED / NO MERGE / NO [REMARKABLE]**. An extreme halo quantile cannot substitute for an actual high-redshift source measurement, even after an arithmetic verification.
