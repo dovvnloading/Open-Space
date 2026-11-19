@@ -1,0 +1,215 @@
+{
+  "time_utc": "2026-11-19T06:30:15.238910+00:00",
+  "release": "Euclid DR1-Foundation",
+  "release_date": "2026-11-12",
+  "wide_catalog_doi": "10.26131/IRSA673",
+  "deep_catalog_doi": "10.26131/IRSA675",
+  "original_freeze_sha256": "4e427c201cc7ca4f643414e361a1b71bdde2202625fa0024551ad1f95c0ee882",
+  "s3_script_sha256": "629dd19d6a9f6578e8648528f19a505716d056c2bfa84999eb7b5c4749f443ab",
+  "source_metadata": [
+    {
+      "kind": "wide_survey",
+      "uri": "https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/contributed/dr1/hats/reformatted_catalogs/mer_catalogue_wide_survey/euclid_dr1_reformatted_catalogs_mer_catalogue_wide_survey-hats/partition_info.csv",
+      "bytes": 12977,
+      "sha256": "f7940bcaed19b6f67295c5592cc81783d798c0f858062d7293e5e3dfbfa57c2a",
+      "etag": "\"964e3b1c1248835f7d9f1f314cfc8dc6\"",
+      "retrieved_utc": "2026-11-19T06:30:14.129465+00:00"
+    },
+    {
+      "kind": "deep_survey",
+      "uri": "https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/contributed/dr1/hats/reformatted_catalogs/mer_catalogue_deep_survey/euclid_dr1_reformatted_catalogs_mer_catalogue_deep_survey-hats/partition_info.csv",
+      "bytes": 527,
+      "sha256": "22ad3c91a8d579250163824df464eed0eba23d917527c9fb069302c122e32711",
+      "etag": "\"519301c62a181c26e5cb1a9e6f5be201\"",
+      "retrieved_utc": "2026-11-19T06:30:15.139286+00:00"
+    }
+  ],
+  "queried_cones": [
+    {
+      "id": "south_irsa_reference",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 90.7299,
+      "dec": -45.3529,
+      "r": 0.35
+    },
+    {
+      "id": "south_offset",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 91.4,
+      "dec": -45.35,
+      "r": 0.35
+    },
+    {
+      "id": "north_z7p77_control",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 262.261458,
+      "dec": 64.171694,
+      "r": 0.35
+    },
+    {
+      "id": "north_offset",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 263,
+      "dec": 64.2,
+      "r": 0.35
+    },
+    {
+      "id": "north_z7p69_control",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 193.285625,
+      "dec": 70.908972,
+      "r": 0.35
+    },
+    {
+      "id": "deep_north",
+      "table": "euclid_dr1_mer_catalogue_deep_survey",
+      "ra": 273.167,
+      "dec": 64.3687,
+      "r": 0.12
+    },
+    {
+      "id": "deep_fornax",
+      "table": "euclid_dr1_mer_catalogue_deep_survey",
+      "ra": 54,
+      "dec": -35,
+      "r": 0.12
+    }
+  ],
+  "nominal_requested_cones_deg2_NOT_VERIFIED_IMAGE_FOOTPRINT": 2.014698,
+  "field_partitions": {
+    "south_irsa_reference": {
+      "status": "FAILED_OR_UNREAD_PARTITION",
+      "n_intersecting_partitions": 1,
+      "n_scheduled_partitions": 1
+    },
+    "south_offset": {
+      "status": "FAILED_OR_UNREAD_PARTITION",
+      "n_intersecting_partitions": 1,
+      "n_scheduled_partitions": 1
+    },
+    "north_z7p77_control": {
+      "status": "FAILED_OR_UNREAD_PARTITION",
+      "n_intersecting_partitions": 2,
+      "n_scheduled_partitions": 2
+    },
+    "north_offset": {
+      "status": "FAILED_OR_UNREAD_PARTITION",
+      "n_intersecting_partitions": 2,
+      "n_scheduled_partitions": 2
+    },
+    "north_z7p69_control": {
+      "status": "FAILED_OR_UNREAD_PARTITION",
+      "n_intersecting_partitions": 4,
+      "n_scheduled_partitions": 4
+    },
+    "deep_north": {
+      "status": "FAILED_OR_UNREAD_PARTITION",
+      "n_intersecting_partitions": 1,
+      "n_scheduled_partitions": 1
+    },
+    "deep_fornax": {
+      "status": "FAILED_OR_UNREAD_PARTITION",
+      "n_intersecting_partitions": 0,
+      "n_scheduled_partitions": 0
+    }
+  },
+  "partitions_scheduled": 8,
+  "partitions_read": 0,
+  "partitions_failed": 8,
+  "sources_satisfying_broad_NIR_VIStable_colours": 0,
+  "strict_colour_shape_proxy_count": 0,
+  "strict_shortlist_count": 0,
+  "strict_unvetted_beyond_shortlist": 0,
+  "rejection_flags_not_disjoint": {},
+  "known_quasars": [
+    {
+      "name": "EUCL J172902.75+641018.1",
+      "literature_z": 7.77,
+      "nearest": [],
+      "catalog_recovered": false,
+      "dropout_cut_recovered": false
+    },
+    {
+      "name": "EUCL J125308.55+705432.3",
+      "literature_z": 7.69,
+      "nearest": [],
+      "catalog_recovered": false,
+      "dropout_cut_recovered": false
+    },
+    {
+      "name": "EUCL J101255.87+663058.0",
+      "literature_z": 7.61,
+      "nearest": [],
+      "catalog_recovered": false,
+      "dropout_cut_recovered": false
+    }
+  ],
+  "discovery_level": false,
+  "confirmed_new_quasars": 0,
+  "status": "S3_PARTIAL_OR_BLOCKED",
+  "failure_details": [
+    {
+      "stage": "parquet",
+      "kind": "wide_survey",
+      "Norder": 3,
+      "Npix": 181,
+      "error": "404 Client Error: Not Found for url: https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/contributed/dr1/hats/reformatted_catalogs/mer_catalogue_wide_survey/euclid_dr1_reformatted_catalogs_mer_catalogue_wide_survey-hats/dataset/Norder=3/Dir=0/Npix=181.parquet"
+    },
+    {
+      "stage": "parquet",
+      "kind": "wide_survey",
+      "Norder": 5,
+      "Npix": 2558,
+      "error": "404 Client Error: Not Found for url: https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/contributed/dr1/hats/reformatted_catalogs/mer_catalogue_wide_survey/euclid_dr1_reformatted_catalogs_mer_catalogue_wide_survey-hats/dataset/Norder=5/Dir=0/Npix=2558.parquet"
+    },
+    {
+      "stage": "parquet",
+      "kind": "wide_survey",
+      "Norder": 5,
+      "Npix": 2994,
+      "error": "404 Client Error: Not Found for url: https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/contributed/dr1/hats/reformatted_catalogs/mer_catalogue_wide_survey/euclid_dr1_reformatted_catalogs_mer_catalogue_wide_survey-hats/dataset/Norder=5/Dir=0/Npix=2994.parquet"
+    },
+    {
+      "stage": "parquet",
+      "kind": "wide_survey",
+      "Norder": 5,
+      "Npix": 2995,
+      "error": "404 Client Error: Not Found for url: https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/contributed/dr1/hats/reformatted_catalogs/mer_catalogue_wide_survey/euclid_dr1_reformatted_catalogs_mer_catalogue_wide_survey-hats/dataset/Norder=5/Dir=0/Npix=2995.parquet"
+    },
+    {
+      "stage": "parquet",
+      "kind": "wide_survey",
+      "Norder": 5,
+      "Npix": 3000,
+      "error": "404 Client Error: Not Found for url: https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/contributed/dr1/hats/reformatted_catalogs/mer_catalogue_wide_survey/euclid_dr1_reformatted_catalogs_mer_catalogue_wide_survey-hats/dataset/Norder=5/Dir=0/Npix=3000.parquet"
+    },
+    {
+      "stage": "parquet",
+      "kind": "wide_survey",
+      "Norder": 5,
+      "Npix": 3001,
+      "error": "404 Client Error: Not Found for url: https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/contributed/dr1/hats/reformatted_catalogs/mer_catalogue_wide_survey/euclid_dr1_reformatted_catalogs_mer_catalogue_wide_survey-hats/dataset/Norder=5/Dir=0/Npix=3001.parquet"
+    },
+    {
+      "stage": "parquet",
+      "kind": "wide_survey",
+      "Norder": 5,
+      "Npix": 9890,
+      "error": "404 Client Error: Not Found for url: https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/contributed/dr1/hats/reformatted_catalogs/mer_catalogue_wide_survey/euclid_dr1_reformatted_catalogs_mer_catalogue_wide_survey-hats/dataset/Norder=5/Dir=0/Npix=9890.parquet"
+    },
+    {
+      "stage": "parquet",
+      "kind": "deep_survey",
+      "Norder": 4,
+      "Npix": 959,
+      "error": "404 Client Error: Not Found for url: https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/contributed/dr1/hats/reformatted_catalogs/mer_catalogue_deep_survey/euclid_dr1_reformatted_catalogs_mer_catalogue_deep_survey-hats/dataset/Norder=4/Dir=0/Npix=959.parquet"
+    }
+  ],
+  "limitations": [
+    "not full DR1 footprint; requested cones not measured effective area",
+    "point-like classification NOT established by ellipticity",
+    "toy colour likelihood not a calibrated probability",
+    "no confirmed spectra, external WISE/radio/Xray or image/artefact controls",
+    "full known z>6.5 quasar population not cross-checked"
+  ]
+}
