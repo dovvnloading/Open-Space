@@ -1,0 +1,84 @@
+name: GWTC independent strong-lensing census
+
+on:
+  push:
+    branches:
+      - research/gwtc-lensed-pair-census
+    paths:
+      - '.github/workflows/gwtc-lensed-pair-census.yml'
+      - 'results/gwtc-lensed-pair-census/run.py'
+      - 'results/gwtc-lensed-pair-census/test_census.py'
+      # Deliberately no outputs/**, README.md or root README.md: runner commits cannot loop.
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gwtc-lensing-branch
+  cancel-in-progress: true
+
+jobs:
+  fetch-freeze-compute-referee:
+    name: One job for internet access, pinned PE, all-pair proxy and posterior controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 160
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical analysis dependencies
+        run: |
+          python -m pip install --disable-pip-version-check numpy scipy h5py healpy
+      - name: Check scientific invariants on synthetic inputs
+        run: |
+          python -m compileall -q results/gwtc-lensed-pair-census
+          python results/gwtc-lensed-pair-census/run.py --test-only
+          python -m unittest discover -s results/gwtc-lensed-pair-census -p 'test_census.py' -v
+      - name: Freeze GWOSC and four versioned Zenodo records, compute, download and check posteriors
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+          PYTHONUNBUFFERED: '1'
+        run: |
+          set -o pipefail
+          python results/gwtc-lensed-pair-census/run.py 2>&1 | tee "$RUNNER_TEMP/gwtc-census.log"
+      - name: Commit generated evidence in one bounded batch (also on failure)
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin "$GITHUB_REF_NAME"
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse "origin/$GITHUB_REF_NAME")" ]; then
+            echo "Head changed during calculation, refusing to overwrite newer work"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f results/gwtc-lensed-pair-census/outputs/
+          if git diff --cached --quiet; then
+            echo "No changed evidence files"
+            exit 0
+          fi
+          git commit -m 'research(gwtc): freeze Zenodo files, PE hashes and lensing-screen evidence'
+          git push origin "HEAD:$GITHUB_REF_NAME"
+      - name: Upload frozen receipts as a separate Actions artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gwtc-lensing-census-receipts
+          path: |
+            results/gwtc-lensed-pair-census/outputs/
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Summarize scientific status
+        if: always()
+        shell: bash
+        run: |
+          if [ -f results/gwtc-lensed-pair-census/outputs/RESULT.md ]; then
+            cat results/gwtc-lensed-pair-census/outputs/RESULT.md >> "$GITHUB_STEP_SUMMARY"
+          elif [ -f results/gwtc-lensed-pair-census/outputs/fatal_error.json ]; then
+            echo 'Analysis FAILED; not a result. See fatal_error.json.' >> "$GITHUB_STEP_SUMMARY"
+          fi
