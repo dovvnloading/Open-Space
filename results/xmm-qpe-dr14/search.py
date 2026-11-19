@@ -348,6 +348,9 @@ if __name__=="__main__":
     elif _mode == "archive_hosts":
         from archive_hosts import main as _hosts_main
         _hosts_main()
+    elif _mode == "archive_freeze":
+        from archive_freeze import main as _freeze_main
+        _freeze_main()
     else:
         from control_validation import main as _controls_main
         _controls_main()
