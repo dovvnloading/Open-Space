@@ -105,7 +105,7 @@ def parse_field(line, field):
         return None
     try:
         num = float(raw.replace("D", "E"))
-        return num if math.isfinite(num) and num not in (-99., -999., -9999.) else None
+        return num if math.isfinite(num) and num not in (-99., -99.9, -999., -999.9, -9999.) else None
     except ValueError:
         return None
 
@@ -115,6 +115,7 @@ def triage(readme, source, out):
     n = 0
     z6 = 0
     ztail6 = 0
+    z_gt15 = 0
     counts = {}
     rows = []
     bad = 0
@@ -132,6 +133,8 @@ def triage(readme, source, out):
                 z6 += 1
             if zu is not None and zu > 6 and typ == 0:
                 ztail6 += 1
+            if z is not None and z > 15 and typ == 0:
+                z_gt15 += 1
             if z is None or mass is None or typ is None:
                 bad += 1
             if typ != 0 or (z is None or z <= 6) and (zu is None or zu <= 6):
@@ -162,7 +165,7 @@ def triage(readme, source, out):
         w.writeheader()
         w.writerows(rows[:250])
     return {"row_count": n, "galaxy_zfinal_gt6": z6,
-            "galaxy_zpdf_u68_gt6": ztail6, "galaxy_zfinal_or_u68_gt6": len(rows),
+            "galaxy_zpdf_u68_gt6": ztail6, "galaxy_zfinal_gt15": z_gt15, "galaxy_zfinal_or_u68_gt6": len(rows),
             "unusable_rows": bad, "bin_summary": counts,
             "triage_top250": "highz_triage_top250.csv",
             "selection_warning": "Univariate zPDF 68% upper bound only: NOT a full joint redshift-mass posterior, NOT a test of exceedance."}
