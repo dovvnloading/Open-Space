@@ -20,6 +20,18 @@ class Tests(unittest.TestCase):
         self.assertEqual(run.key_from_url("https://irsacloud.ipac.caltech.edu/ibe/data/euclid/"+expected),expected)
         with self.assertRaises(ValueError):
             run.key_from_url("https://evil.invalid/ibe/data/euclid/"+expected)
+    def test_local_psf_proxy_on_synthetic_sources(self):
+        yy,xx=np.mgrid[0:run.NP,0:run.NP]
+        a=np.zeros((run.NP,run.NP),dtype=np.float32)
+        for x,y in [(200,200),(400,200),(600,200),(800,200),
+                    (200,500),(400,500),(600,500),(800,500)]:
+            a+=200*np.exp(-((xx-x)**2+(yy-y)**2)/(2*1.4**2))
+        mask=np.ones_like(a,dtype=bool)
+        rms=np.ones_like(a,dtype=np.float32)
+        fit,rec=run.psf_calibrate(a,a*1.3,mask,rms,rms)
+        self.assertIsNotNone(fit)
+        self.assertEqual(rec["status"],"EMPIRICAL_COMPACT_SOURCE_PSF_AND_FLUX_PROXY")
+        self.assertAlmostEqual(fit[2],1.3,places=3)
     def test_streak_rejected(self):
         a=np.zeros((run.NP,run.NP),dtype=np.float32)
         mask=np.zeros_like(a,dtype=bool)

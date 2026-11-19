@@ -35,7 +35,7 @@ for field in f["fields"]:
             assert 0<b["detection_area_deg2"]<=b["joint_area_deg2"]<=p["nominal_square_deg"]*1.001
             assert b["raw_trigger_count"]==len([x for x in p["raw_triggers"]
                 if x["band"]==b["band"] and x["pair_obs_ids"]==b["obs_ids"]])
-            assert b["calibration"]["status"]=="EMPIRICAL_STAR_PSF_AND_FLUX_MATCH"
+            assert b["calibration"]["status"]=="EMPIRICAL_COMPACT_SOURCE_PSF_AND_FLUX_PROXY"
         statuses.append(b["status"])
 assert s["independent_calibrated_visit_pairs"]==statuses.count("EMPIRICALLY_SCREENED_UNCONFIRMED")
 assert s["raw_difference_triggers"]==raw_count
