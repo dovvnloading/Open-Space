@@ -1,0 +1,38 @@
+# No validated new QPE (bounded archive screen)
+
+Run UTC: 2026-11-19T06:43:26.096307+00:00
+
+## Executed checks
+
+~~~json
+{
+  "full_catalogue_rows": 1035832,
+  "tseries_rows": 372313,
+  "eligible_soft_long_detections": 33488,
+  "catalogue_verified_md5": "47c6bd113cb8510db418665472c81b48",
+  "frozen_manifest_sha256": "c2793211c74f9a85992253fba76743a94bcdf2cffb2137f29a3037907d4e56a5",
+  "control_catalogue_matches": {
+    "GSN 069": 33,
+    "RX J1301.9+2747": 5,
+    "eRO-QPE1": 2,
+    "eRO-QPE2": 3,
+    "eRO-QPE3": 2,
+    "AT2019qiz": 0
+  },
+  "pps_requests": 12,
+  "pps_detections_with_parsed_lightcurve": 9,
+  "unvetted_repeat_flags": 0,
+  "known_qpe_flare_recovery": "NOT VALIDATED"
+}
+~~~
+
+## Unresolved limitations
+
+- This is only an X-ray prefilter: no Legacy Surveys/SDSS/2MASS galaxy-centroid or Gaia stellar rejection
+- At most 12 detections were requested from PPS; incomplete sampling cannot yield an archive-wide null
+- Full source-vs-background light curves, soft-band recurrence, source pile-up, spectral temperature evolution not validated
+- No actual control-QPE flare recovery or injection-based completeness; no empirical false-positive rate
+- No eRASS1/Swift/Chandra epoch check or ATel/TNS/literature clearance of any unvetted flags
+
+The source list is frozen before looking at PPS light curves.
+No discovery label or remarkable-findings entry is justified.

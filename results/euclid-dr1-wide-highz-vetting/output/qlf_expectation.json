@@ -1,0 +1,42 @@
+{
+  "J_limit_AB": 23.0,
+  "approx_M1450_at_limit_z7": -23.985,
+  "approx_M1450_at_limit_z9": -24.369,
+  "cosmology": {
+    "H0_km_s_Mpc": 67.7,
+    "Omega_m": 0.31,
+    "flat": true
+  },
+  "density_evolution": "k=-0.78 exponential-in-redshift normalization, held fixed when extrapolating beyond z=7",
+  "empirical_yang2026_scaled_nominal_area": 7.6,
+  "empirical_yang2026_survey_area_approx_deg2": 3000,
+  "empirical_yang2026_z_gte_7_count": 12,
+  "k_source": "Matsuoka et al. 2023 Table 2 (fixed parameter), adopted also by Owl-z (2025)",
+  "lf_source": "Matsuoka et al. 2023 ApJL 949 L42 Table 2 standard fit; doi:10.3847/2041-8213/acd69f",
+  "limitations": [
+    "Matsuoka 2023 LF fit at approximately z=7 extrapolated to z=9 with fixed k",
+    "J treated as flat-fnu monochromatic AB flux near rest 1450 A without synthetic-filter SED and Ly-alpha transmission corrections",
+    "Nominal 1900 deg2 not an exposure-weighted usable area",
+    "J<=23 is a uniform threshold approximation; not the spatially varying detection or strict cut probability",
+    "Different empirical and LF counts have selection, redshift, and flux-window differences; do not compare as discovery yield or a null result",
+    "LF parameter covariance and cosmic variance not propagated"
+  ],
+  "masked_release_area_measured": false,
+  "method": "Double-power-law M1450 LF integrated over comoving volume and apparent J_AB limit",
+  "model": {
+    "Mstar_AB": -25.6,
+    "alpha": -1.2,
+    "beta": -3.34,
+    "k": -0.78,
+    "phi_star_Gpc_minus3_mag_minus1": 1.35
+  },
+  "nominal_release_wide_area_deg2": 1900.0,
+  "not_a_completeness_corrected_strict_selection_expectation": true,
+  "predicted_J_le_23_z_7_to_9_nominal_area": 18.71,
+  "predicted_surface_density_deg_minus2": 0.009848,
+  "yang_reference": "Yang et al. 2026 A&A 711 A104, doi:10.1051/0004-6361/202658883",
+  "z_range": [
+    7.0,
+    9.0
+  ]
+}

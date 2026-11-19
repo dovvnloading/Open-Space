@@ -1,0 +1,92 @@
+name: Euclid DR1-F cold T/Y dwarf independent wide survey
+on:
+  push:
+    branches:
+      - research/euclid-dr1f-cold-ty-dwarfs
+    paths:
+      - 'results/euclid-dr1f-cold-ty-dwarfs/**'
+      - '!results/euclid-dr1f-cold-ty-dwarfs/output/**'
+      - '!results/euclid-dr1f-cold-ty-dwarfs/README.md'
+      - '!results/euclid-dr1f-cold-ty-dwarfs/REFEREE.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: euclid-dr1f-cold-ty-dwarfs
+  cancel-in-progress: false
+
+jobs:
+  data-and-computation:
+    if: github.ref == 'refs/heads/research/euclid-dr1f-cold-ty-dwarfs'
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install frozen index readers and run independent offline tests
+        run: |
+          python -m pip install 'requests>=2.31,<3' 'numpy>=2,<3' 'pyarrow>=20' 'astropy>=6' 'astropy-healpix>=1.1' 'scipy>=1.13'
+          python -m py_compile results/euclid-dr1f-cold-ty-dwarfs/*.py
+          python -m unittest discover -s results/euclid-dr1f-cold-ty-dwarfs -p tests.py -v
+      - name: Source-access and complete computation with persistent batch checkpointing
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          src=results/euclid-dr1f-cold-ty-dwarfs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          started=$(date +%s)
+          limit=18000
+
+          save_batch() {
+            git add "$src/output"
+            if ! git diff --cached --quiet; then
+              git commit -m 'research(euclid-cold-ty): checkpoint new HATS batch / evidence'
+              git push origin "HEAD:$GITHUB_REF_NAME"
+            fi
+          }
+
+          python -u "$src/bootstrap.py"
+          save_batch
+          while [ $(( $(date +%s) - started )) -lt "$limit" ]; do
+            if ! python -u "$src/selection.py"; then
+              save_batch
+              echo 'Publisher or selection failure: checkpoint retained, no full-sky claim.' >&2
+              exit 1
+            fi
+            phase=$(python -c 'import json;print(json.load(open("results/euclid-dr1f-cold-ty-dwarfs/output/status.json"))["phase"])')
+            if [[ "$phase" == SCANNED_ALL_PARTITIONS ]]; then
+              # Re-run external checks and referee after a vetting-code correction.
+              # Frozen partition packets stay untouched, and a new receipt replaces
+              # an earlier failed network query without pretending it was a limit.
+              python -u "$src/aggregate.py"
+              python -u "$src/vet.py"
+              python -u "$src/referee.py"
+              save_batch
+              echo 'All 768 partitions and independent referee complete. No discovery inferred from colours alone.'
+              exit 0
+            fi
+            save_batch
+          done
+          echo 'Runner time budget reached; checkpoints committed. Dispatching sequential continuation.'
+          gh workflow run euclid-dr1f-cold-ty-dwarfs.yml --ref "$GITHUB_REF_NAME" || {
+            echo 'Dispatch denied; checkpoint saved. Explicit operator branch dispatch needed.' >&2
+            exit 1
+          }
+      - name: Preserve finite receipts even on an incomplete or failed run
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: euclid-dr1f-cold-ty-hats-receipts
+          path: results/euclid-dr1f-cold-ty-dwarfs/output/
+          retention-days: 14
+          if-no-files-found: warn

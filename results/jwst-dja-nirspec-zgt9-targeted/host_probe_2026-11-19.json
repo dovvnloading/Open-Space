@@ -1,0 +1,99 @@
+{
+  "checked_at_utc": "2026-11-19T03:23:24.975030+00:00",
+  "environment": "ChatGPT compute container (not GitHub Actions or a web crawler)",
+  "os": "Linux 6.18.57",
+  "probe": "getent ahostsv4 and direct curl --noproxy '*' HTTPS HEAD, DNS 4s and curl 7s per URL",
+  "results": [
+    {
+      "name": "zenodo-summary",
+      "url": "https://zenodo.org/records/15472354/files/dja_msaexp_emission_lines_v4.4.csv.gz?download=1",
+      "hostname": "zenodo.org",
+      "dns": {
+        "returncode": 2,
+        "stdout": "",
+        "stderr": ""
+      },
+      "https_head": {
+        "returncode": 6,
+        "stdout": "http_code=000 remote_ip= err=Could not resolve host: zenodo.org",
+        "stderr": "curl: (6) Could not resolve host: zenodo.org"
+      }
+    },
+    {
+      "name": "dja-s3-summary-path",
+      "url": "https://s3.amazonaws.com/msaexp-nirspec/extractions/dja_msaexp_emission_lines_v4.4.csv.gz",
+      "hostname": "s3.amazonaws.com",
+      "dns": {
+        "returncode": 124,
+        "stdout": "",
+        "stderr": "timeout after 4s"
+      },
+      "https_head": {
+        "returncode": 6,
+        "stdout": "http_code=000 remote_ip= err=Could not resolve host: s3.amazonaws.com",
+        "stderr": "curl: (6) Could not resolve host: s3.amazonaws.com"
+      }
+    },
+    {
+      "name": "dja-s3-virtual-host",
+      "url": "https://msaexp-nirspec.s3.amazonaws.com/extractions/dja_msaexp_emission_lines_v4.4.csv.gz",
+      "hostname": "msaexp-nirspec.s3.amazonaws.com",
+      "dns": {
+        "returncode": 2,
+        "stdout": "",
+        "stderr": ""
+      },
+      "https_head": {
+        "returncode": 28,
+        "stdout": "http_code=000 remote_ip= err=Resolving timed out after 7001 milliseconds",
+        "stderr": "curl: (28) Resolving timed out after 7001 milliseconds"
+      }
+    },
+    {
+      "name": "dja-documentation",
+      "url": "https://dawn-cph.github.io/dja/general/api_summary/",
+      "hostname": "dawn-cph.github.io",
+      "dns": {
+        "returncode": 124,
+        "stdout": "",
+        "stderr": "timeout after 4s"
+      },
+      "https_head": {
+        "returncode": 6,
+        "stdout": "http_code=000 remote_ip= err=Could not resolve host: dawn-cph.github.io",
+        "stderr": "curl: (6) Could not resolve host: dawn-cph.github.io"
+      }
+    },
+    {
+      "name": "mast-api",
+      "url": "https://mast.stsci.edu/api/v0/invoke",
+      "hostname": "mast.stsci.edu",
+      "dns": {
+        "returncode": 124,
+        "stdout": "",
+        "stderr": "timeout after 4s"
+      },
+      "https_head": {
+        "returncode": 28,
+        "stdout": "http_code=000 remote_ip= err=Resolving timed out after 7000 milliseconds",
+        "stderr": "curl: (28) Resolving timed out after 7000 milliseconds"
+      }
+    },
+    {
+      "name": "mast-archive",
+      "url": "https://archive.stsci.edu/",
+      "hostname": "archive.stsci.edu",
+      "dns": {
+        "returncode": 124,
+        "stdout": "",
+        "stderr": "timeout after 4s"
+      },
+      "https_head": {
+        "returncode": 6,
+        "stdout": "http_code=000 remote_ip= err=Could not resolve host: archive.stsci.edu",
+        "stderr": "curl: (6) Could not resolve host: archive.stsci.edu"
+      }
+    }
+  ],
+  "interpretation": "No source selection, FITS extraction, fitting, 2D inspection or NIRCam matching is possible unless raw catalog and selected spectra are retrieved and verified. This is not an astrophysical null."
+}

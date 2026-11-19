@@ -1,0 +1,46 @@
+{
+  "status": "CONTROL-TUNED ONLY; external validity and archive-screen admission NOT established",
+  "release": "4XMM-DR14 v1.0",
+  "output_mode": "control_replay",
+  "spectrum": "PPS PN NET RATE1+RATE2+RATE3 = 0.2-2.0keV, errors quadrature, BACK1-3 scaled",
+  "camera": "EPIC-pn",
+  "bins_s": 300,
+  "time_gaps": "65% exposure threshold; never interpolate gaps",
+  "quiet_baseline": "20th percentile of good net rate",
+  "height_min": "quiet+max(4*median(net rate error),2*1.4826*MAD(net rate))",
+  "prominence_min": "max(4*median(net rate error),1*1.4826*MAD(net rate))",
+  "min_peak_separation_s": 3600,
+  "filter_sigma_bins": 1.2,
+  "per_bin_excess_sigma_min": 3.5,
+  "matched_filter_family_gaussian_width_s": [
+    450,
+    850,
+    1300
+  ],
+  "matched_filter_sigma_min": 7,
+  "amplitude_vs_quiet_min": 3,
+  "background_veto": "if local scaled background enhancement > max(0.5*net_peak_excess, 5*median(source error))",
+  "controls": [
+    "GSN 069",
+    "RX J1301.9+2747",
+    "eRO-QPE1",
+    "eRO-QPE2",
+    "eRO-QPE3",
+    "eRO-QPE4"
+  ],
+  "published_control_counts": {
+    "GSN 069": 5,
+    "RX J1301.9+2747": 8,
+    "eRO-QPE1": 2,
+    "eRO-QPE2": 9,
+    "eRO-QPE3": 2,
+    "eRO-QPE4": 3
+  },
+  "literature": [
+    "https://doi.org/10.1093/rasti/rzad015",
+    "https://doi.org/10.1051/0004-6361/202348881",
+    "https://doi.org/10.1051/0004-6361/202450861"
+  ],
+  "archive_screen_permitted": false,
+  "limitations": "No independent backgrounds, pileup/GTI, spectral hysteresis, galaxy host nuclear selection, injection test, or empirical FPR."
+}

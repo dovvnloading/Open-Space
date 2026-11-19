@@ -1,0 +1,107 @@
+name: COSMOS2025 single-job non-CDS release audit
+on:
+  workflow_dispatch:
+    inputs:
+      official_fits_url:
+        description: "Optional verified HTTPS publisher/Zenodo full FITS URL (never bypass a form)"
+        required: false
+        type: string
+  push:
+    branches:
+      - research/cosmos2025-baryon-bound
+    paths:
+      - '.github/workflows/cosmos2025-baryon-bound.yml'
+      - 'results/cosmos2025-baryon-bound/*.py'
+concurrency:
+  group: cosmos2025-noncds-one-job-${{ github.ref }}
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  noncds-source-and-baryon-audit:
+    if: github.ref == 'refs/heads/research/cosmos2025-baryon-bound' && !contains(github.event.head_commit.message, '[skip ci]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    defaults:
+      run:
+        shell: bash
+    env:
+      RESULT: results/cosmos2025-baryon-bound
+    steps:
+      - name: Check out exact PR branch commit
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 1
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned catalogue and halo analysis packages
+        run: |
+          python -m pip install --disable-pip-version-check 'numpy>=1.26,<3' 'scipy>=1.11,<2' 'astropy>=6,<8' 'colossus==1.3.9'
+          python -m py_compile "$RESULT/noncds_mirror_job.py" "$RESULT/noncds_referee.py" "$RESULT/halo_bound.py"
+      - name: Probe non-CDS official hosts, download validated full FITS and chunk screen
+        id: mirror
+        continue-on-error: true
+        env:
+          OFFICIAL_FITS_URL: ${{ inputs.official_fits_url }}
+        run: |
+          mkdir -p "$RESULT/run/noncds"
+          python "$RESULT/noncds_mirror_job.py" \
+            --out "$RESULT/run/noncds" \
+            --tmp "$RUNNER_TEMP/cosmos2025_official" \
+            --official-url "$OFFICIAL_FITS_URL"
+      - name: Compute six-bin Sheth-Tormen/Tinker halo-max distribution
+        id: halo
+        continue-on-error: true
+        run: |
+          mkdir -p "$RESULT/run/noncds"
+          python "$RESULT/halo_bound.py" --out "$RESULT/run/noncds/halo_bounds.json"
+      - name: Review numerical receipt and block unsupported science
+        id: referee
+        continue-on-error: true
+        run: |
+          python "$RESULT/noncds_referee.py" \
+            --run "$RESULT/run/noncds" \
+            --halo "$RESULT/run/noncds/halo_bounds.json"
+      - name: Freeze exact numerical package versions
+        if: always()
+        run: |
+          mkdir -p "$RESULT/run/noncds"
+          python -m pip freeze | grep -iE '^(numpy|scipy|astropy|colossus|eazy|bagpipes|nautilus-sampler)==' \
+            > "$RESULT/run/noncds/numerical_versions.txt" || true
+      - name: Commit all compact receipts once with source hashes, never raw FITS
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin research/cosmos2025-baryon-bound
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse FETCH_HEAD)" ]; then
+            echo "::warning::Branch moved; refusing stale-result deposit."
+            exit 0
+          fi
+          git add -- "$RESULT/run/noncds"
+          if ! git diff --cached --quiet; then
+            git commit -m "research: deposit one-job COSMOS2025 mirror/HMF/referee receipts [skip ci]"
+            git push origin HEAD:research/cosmos2025-baryon-bound
+          fi
+      - name: Artifact fallback for exact receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cosmos2025-onejob-noncds-receipts
+          path: results/cosmos2025-baryon-bound/run/noncds/
+          if-no-files-found: warn
+      - name: Fail closed unless all source/SED/spectroscopic vetting passes
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, pathlib, sys
+          p = pathlib.Path('results/cosmos2025-baryon-bound/run/noncds/independent_referee.json')
+          if not p.exists():
+              sys.exit('Referee report absent: no merge.')
+          result = json.loads(p.read_text())
+          if not result.get('ready_to_merge', False):
+              sys.exit('Scientific review blocked: ' + result['disposition'])
+          PY

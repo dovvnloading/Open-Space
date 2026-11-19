@@ -1,0 +1,120 @@
+{
+  "catalogues": {
+    "abell2744": {
+      "attempts": [
+        {
+          "reason": "HTTPError: HTTP Error 404: Not Found",
+          "url": "https://archive.stsci.edu/hlsps/glass-jwst/jwst/nircam/abell2744/hlsp_glass-jwst_jwst_nircam_abell2744_multiband_v1.0_cat.fits"
+        },
+        {
+          "reason": "ValueError: TOO_SHORT",
+          "url": "https://archive.stsci.edu/pub/hlsp/glass-jwst/jwst/nircam/abell2744/hlsp_glass-jwst_jwst_nircam_abell2744_multiband_v1.0_cat.fits"
+        }
+      ],
+      "status": "CATALOG_DOWNLOAD_FAILED"
+    },
+    "goods-n": {
+      "attempts": [
+        {
+          "reason": "HTTPError: HTTP Error 404: Not Found",
+          "url": "https://archive.stsci.edu/hlsps/jades/jwst/nircam/goods-n/hlsp_jades_jwst_nircam_goods-n_photometry_v1.0_catalog.fits"
+        },
+        {
+          "reason": "ValueError: TOO_SHORT",
+          "url": "https://archive.stsci.edu/pub/hlsp/jades/jwst/nircam/goods-n/hlsp_jades_jwst_nircam_goods-n_photometry_v1.0_catalog.fits"
+        }
+      ],
+      "status": "CATALOG_DOWNLOAD_FAILED"
+    },
+    "goods-s": {
+      "attempts": [
+        {
+          "reason": "HTTPError: HTTP Error 404: Not Found",
+          "url": "https://archive.stsci.edu/hlsps/jades/jwst/nircam/goods-s-deep/hlsp_jades_jwst_nircam_goods-s-deep_photometry_v2.0_catalog.fits"
+        },
+        {
+          "reason": "ValueError: TOO_SHORT",
+          "url": "https://archive.stsci.edu/pub/hlsp/jades/jwst/nircam/goods-s-deep/hlsp_jades_jwst_nircam_goods-s-deep_photometry_v2.0_catalog.fits"
+        }
+      ],
+      "status": "CATALOG_DOWNLOAD_FAILED"
+    }
+  },
+  "groups": {
+    "1": {
+      "catalogue_field": "abell2744",
+      "coord_deg": {
+        "dec": -30.3723142,
+        "ra": 3.5176845
+      },
+      "status": "CATALOG_DOWNLOAD_FAILED_NO_UPPER_LIMIT"
+    },
+    "11": {
+      "catalogue_field": "goods-n",
+      "coord_deg": {
+        "dec": 62.2889794,
+        "ra": 189.1598107
+      },
+      "status": "CATALOG_DOWNLOAD_FAILED_NO_UPPER_LIMIT"
+    },
+    "16": {
+      "catalogue_field": null,
+      "coord_deg": {
+        "dec": -5.2757994,
+        "ra": 34.2348499
+      },
+      "status": "NO_COVERED_CATALOGUE_IN_THIS_PROBE_NOT_NONDETECTION"
+    },
+    "18": {
+      "catalogue_field": null,
+      "coord_deg": {
+        "dec": -5.30882864,
+        "ra": 34.40264342
+      },
+      "status": "NO_COVERED_CATALOGUE_IN_THIS_PROBE_NOT_NONDETECTION"
+    },
+    "22": {
+      "catalogue_field": "goods-s",
+      "coord_deg": {
+        "dec": -27.8225409,
+        "ra": 53.1600823
+      },
+      "status": "CATALOG_DOWNLOAD_FAILED_NO_UPPER_LIMIT"
+    },
+    "24": {
+      "catalogue_field": "goods-s",
+      "coord_deg": {
+        "dec": -27.8654331,
+        "ra": 53.0834664
+      },
+      "status": "CATALOG_DOWNLOAD_FAILED_NO_UPPER_LIMIT"
+    },
+    "26": {
+      "catalogue_field": "goods-s",
+      "coord_deg": {
+        "dec": -27.80256411,
+        "ra": 53.17821736
+      },
+      "status": "CATALOG_DOWNLOAD_FAILED_NO_UPPER_LIMIT"
+    },
+    "4": {
+      "catalogue_field": null,
+      "coord_deg": {
+        "dec": 2.3654608,
+        "ra": 150.1511588
+      },
+      "status": "NO_COVERED_CATALOGUE_IN_THIS_PROBE_NOT_NONDETECTION"
+    },
+    "6": {
+      "catalogue_field": null,
+      "coord_deg": {
+        "dec": -5.15115992,
+        "ra": 34.42340061
+      },
+      "status": "NO_COVERED_CATALOGUE_IN_THIS_PROBE_NOT_NONDETECTION"
+    }
+  },
+  "method": "Existing published NIRCam catalogues at exact sky positions; no forced photometry or uncertainty calibration",
+  "status": "CATALOG_BOUNDED_PROBE_NO_REDSHIFT_POSTERIOR",
+  "throughput": {}
+}

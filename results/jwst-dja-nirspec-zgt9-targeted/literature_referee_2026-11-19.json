@@ -1,0 +1,1442 @@
+{
+  "schema": "open-space/dja-v44-independent-referee-literature-v1",
+  "review_utc": "2026-11-19",
+  "source_run_id": 44454883069,
+  "source_pr": 197,
+  "scope": "64 positive-control/catalog/uncalibrated-proxy z>12 review rows; distinct source grouping at <=0.25 arcsec; not a complete survey",
+  "sky_grouping_radius_arcsec": 0.25,
+  "observed_catalog_records": 80367,
+  "selected_fits_verified": 999,
+  "source_files_received": 999,
+  "coadded_2d_figures": 64,
+  "source_selection_limit": "Only z_best or z_phot>9 and baseline controls were downloaded; no quick fit was run on the other 79,368 catalog entries.",
+  "calibration_limit": "Proxy values can be nonphysical >1 at ~1e-13 floating-point; no calibrated class odds. Known low-z/9-11 objects receive high z>12 scores.",
+  "image_limit": "Figures are automated coadded SCI/WHT views; native disjoint exposures, slit/shutter/bad pixel maps not examined. GitHub image pixels were not accessible to this referee environment.",
+  "nircam_limit": "No independently associated NIRCam flux/limits or filter-convolved SEDs.",
+  "literature_scope": "Bounded public web exact-source and sky-coordinate checks, MNRAS 2026 Table 1, ApJ 2026 Tang Table B1, Hviding 2025 RUBIES, GLASS 10003 and JADES 58975; no exhaustive per-source ADS/arXiv. The suggested_followup_queries are search prompts, not receipts proving every query was executed.",
+  "summary": {
+    "unique_positions": 27,
+    "rows": 64,
+    "counts_by_referee_class": {
+      "KNOWN_PUBLISHED_Z_GT12": 10,
+      "UNRESOLVED_NOT_NEW": 9,
+      "KNOWN_PUBLISHED_Z_LE12": 5,
+      "DJA_CATALOG_LOWER_Z_UNINDEPENDENTLY_VALIDATED": 2,
+      "CATALOG_LOWER_Z_IDENTITY_CONFLICT": 1
+    },
+    "rows_by_referee_class": {
+      "KNOWN_PUBLISHED_Z_GT12": 37,
+      "UNRESOLVED_NOT_NEW": 10,
+      "KNOWN_PUBLISHED_Z_LE12": 5,
+      "DJA_CATALOG_LOWER_Z_UNINDEPENDENTLY_VALIDATED": 2,
+      "CATALOG_LOWER_Z_IDENTITY_CONFLICT": 10
+    },
+    "discovery_level_validated": 0,
+    "priority_search_complete": 0,
+    "serious_failures": [
+      "RUBIES-UDS-144195 z3.36 scores near1 z>12 proxy",
+      "JADES-GN-11508 published z9.93 scores 1 z>12 proxy",
+      "JADES-GS-20021387 published z11.06 scores 0.992 z>12 proxy",
+      "GLASS-10003 published z9.3127 scores 0.467",
+      "10 rows of ID 183349 wrongly called known GS-z14-0 due 0.5 arcsec radius"
+    ]
+  },
+  "references": [
+    "https://academic.oup.com/mnras/article/548/3/stag701/8653929",
+    "https://doi.org/10.3847/1538-4357/ae4edb",
+    "https://doi.org/10.1051/0004-6361/202555816",
+    "https://escholarship.org/content/qt80h7j3rn/qt80h7j3rn_noSplash_e869eaa1a99b4248f7972397c5ff9da6.pdf",
+    "https://uhra.herts.ac.uk/id/eprint/10807/2/aa46107-23.pdf"
+  ],
+  "entries": [
+    {
+      "group_id": 0,
+      "coord_deg": {
+        "ra": 3.4989827,
+        "dec": -30.3247534
+      },
+      "members": 2,
+      "program_source_ids": [
+        "3073_22600"
+      ],
+      "highest_proxy_score": 1.0000000000001266,
+      "referee_class": "KNOWN_PUBLISHED_Z_GT12",
+      "published_alias": "GHZ2 / GLASS-z12",
+      "published_z": 12.338,
+      "evidence_reason": "Exact 3073_22600 and coordinates; previously published",
+      "published_source_urls": [
+        "https://academic.oup.com/mnras/article/548/3/stag701/8653929"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "abell2744-castellano1-v4_prism-clear_3073_22600.spec.fits",
+          "root": "abell2744-castellano1-v4",
+          "queue_index": 0,
+          "dja_z_best": "12.339301",
+          "fit_z_conditional": 12.276862714364418,
+          "p_gt12_uncalibrated": 1.0000000000001266,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        },
+        {
+          "file": "abell2744-castellano2-v4_prism-clear_3073_22600.spec.fits",
+          "root": "abell2744-castellano2-v4",
+          "queue_index": 1,
+          "dja_z_best": "12.339301",
+          "fit_z_conditional": 12.47486085892574,
+          "p_gt12_uncalibrated": 0.9999999999999252,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"3073_22600\" JWST NIRSpec redshift",
+        "\"3.498983\" \"-30.324753\" JWST"
+      ]
+    },
+    {
+      "group_id": 1,
+      "coord_deg": {
+        "ra": 3.5176845,
+        "dec": -30.3723142
+      },
+      "members": 1,
+      "program_source_ids": [
+        "3073_50252"
+      ],
+      "highest_proxy_score": 0.07499631636175752,
+      "referee_class": "UNRESOLVED_NOT_NEW",
+      "published_alias": null,
+      "published_z": null,
+      "evidence_reason": "No decisive source-specific match from bounded public literature searches; absence of match is NOT novelty. ADS/arXiv, full 2D/NIRCam and interloper re-fitting still needed.",
+      "published_source_urls": [],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "abell2744-castellano2-v4_prism-clear_3073_50252.spec.fits",
+          "root": "abell2744-castellano2-v4",
+          "queue_index": 2,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 15.41025220747775,
+          "p_gt12_uncalibrated": 0.07499631636175752,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"3073_50252\" JWST NIRSpec redshift",
+        "\"3.517685\" \"-30.372314\" JWST"
+      ]
+    },
+    {
+      "group_id": 2,
+      "coord_deg": {
+        "ra": 3.61716258,
+        "dec": -30.42554588
+      },
+      "members": 1,
+      "program_source_ids": [
+        "1324_10003"
+      ],
+      "highest_proxy_score": 0.46695125123290554,
+      "referee_class": "KNOWN_PUBLISHED_Z_LE12",
+      "published_alias": "GLASS-10003 / Gz9p3",
+      "published_z": 9.3127,
+      "evidence_reason": "Exact GLASS 10003 and coordinates: spectroscopic [O II], not z>12",
+      "published_source_urls": [
+        "https://escholarship.org/content/qt80h7j3rn/qt80h7j3rn_noSplash_e869eaa1a99b4248f7972397c5ff9da6.pdf"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "abell2744-glass-v4_g235h-f170lp_1324_10003.spec.fits",
+          "root": "abell2744-glass-v4",
+          "queue_index": 3,
+          "dja_z_best": "9.319026",
+          "fit_z_conditional": 13.049998450963182,
+          "p_gt12_uncalibrated": 0.46695125123290554,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1324_10003\" JWST NIRSpec redshift",
+        "\"3.617163\" \"-30.425546\" JWST"
+      ]
+    },
+    {
+      "group_id": 3,
+      "coord_deg": {
+        "ra": 150.0933178,
+        "dec": 2.2731591
+      },
+      "members": 1,
+      "program_source_ids": [
+        "6368_102896"
+      ],
+      "highest_proxy_score": 0.014662952995843127,
+      "referee_class": "KNOWN_PUBLISHED_Z_GT12",
+      "published_alias": "MoM-z14",
+      "published_z": 14.44,
+      "evidence_reason": "Same coordinates at 150.09333, +2.27316 despite alternate program/source ID",
+      "published_source_urls": [
+        "https://academic.oup.com/mnras/article/548/3/stag701/8653929"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "capers-cos07-v4_prism-clear_6368_102896.spec.fits",
+          "root": "capers-cos07-v4",
+          "queue_index": 4,
+          "dja_z_best": "14.480445",
+          "fit_z_conditional": 13.451622502523408,
+          "p_gt12_uncalibrated": 0.014662952995843127,
+          "original_baseline_label": "MoM-z14:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"6368_102896\" JWST NIRSpec redshift",
+        "\"150.093318\" \"2.273159\" JWST"
+      ]
+    },
+    {
+      "group_id": 4,
+      "coord_deg": {
+        "ra": 150.1511588,
+        "dec": 2.3654608
+      },
+      "members": 1,
+      "program_source_ids": [
+        "6368_211132"
+      ],
+      "highest_proxy_score": 0.18242331285626254,
+      "referee_class": "UNRESOLVED_NOT_NEW",
+      "published_alias": null,
+      "published_z": null,
+      "evidence_reason": "No decisive source-specific match from bounded public literature searches; absence of match is NOT novelty. ADS/arXiv, full 2D/NIRCam and interloper re-fitting still needed.",
+      "published_source_urls": [],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "capers-cos16-v4_prism-clear_6368_211132.spec.fits",
+          "root": "capers-cos16-v4",
+          "queue_index": 5,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 17.493294338725534,
+          "p_gt12_uncalibrated": 0.18242331285626254,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"6368_211132\" JWST NIRSpec redshift",
+        "\"150.151159\" \"2.365461\" JWST"
+      ]
+    },
+    {
+      "group_id": 5,
+      "coord_deg": {
+        "ra": 214.8071669,
+        "dec": 52.7902044
+      },
+      "members": 1,
+      "program_source_ids": [
+        "6368_65480"
+      ],
+      "highest_proxy_score": 0.9800957330152765,
+      "referee_class": "KNOWN_PUBLISHED_Z_GT12",
+      "published_alias": "CAPERS-EGS-65480",
+      "published_z": 12.344,
+      "evidence_reason": "Exact 6368_65480 ID and coordinates; published in 2026",
+      "published_source_urls": [
+        "https://academic.oup.com/mnras/article/548/3/stag701/8653929"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "capers-egs55-v4_prism-clear_6368_65480.spec.fits",
+          "root": "capers-egs55-v4",
+          "queue_index": 6,
+          "dja_z_best": "12.709344",
+          "fit_z_conditional": 12.385395479836237,
+          "p_gt12_uncalibrated": 0.9800957330152765,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"6368_65480\" JWST NIRSpec redshift",
+        "\"214.807167\" \"52.790204\" JWST"
+      ]
+    },
+    {
+      "group_id": 6,
+      "coord_deg": {
+        "ra": 34.42340061,
+        "dec": -5.15115992
+      },
+      "members": 1,
+      "program_source_ids": [
+        "6368_151513"
+      ],
+      "highest_proxy_score": 0.4098094947636647,
+      "referee_class": "UNRESOLVED_NOT_NEW",
+      "published_alias": null,
+      "published_z": null,
+      "evidence_reason": "No decisive source-specific match from bounded public literature searches; absence of match is NOT novelty. ADS/arXiv, full 2D/NIRCam and interloper re-fitting still needed.",
+      "published_source_urls": [],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "capers-udsp2-v4_prism-clear_6368_151513.spec.fits",
+          "root": "capers-udsp2-v4",
+          "queue_index": 7,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 12.692702762736936,
+          "p_gt12_uncalibrated": 0.4098094947636647,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"6368_151513\" JWST NIRSpec redshift",
+        "\"34.423401\" \"-5.151160\" JWST"
+      ]
+    },
+    {
+      "group_id": 7,
+      "coord_deg": {
+        "ra": 53.16639164,
+        "dec": -27.82155934
+      },
+      "members": 8,
+      "program_source_ids": [
+        "1210_b111",
+        "1210_b283",
+        "3215_20096216"
+      ],
+      "highest_proxy_score": 1.0000000000000533,
+      "referee_class": "KNOWN_PUBLISHED_Z_GT12",
+      "published_alias": "GS-z12-0",
+      "published_z": 12.516,
+      "evidence_reason": "Exact 3215_20096216 and coordinates; multiple coadds not independent discoveries",
+      "published_source_urls": [
+        "https://academic.oup.com/mnras/article/548/3/stag701/8653929"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "gds-deep-v4_g140m-f070lp_1210_b111.spec.fits",
+          "root": "gds-deep-v4",
+          "queue_index": 8,
+          "dja_z_best": "12.53835875",
+          "fit_z_conditional": 14.656456750398615,
+          "p_gt12_uncalibrated": 0.5426894252495615,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        },
+        {
+          "file": "gds-deep-v4_g235m-f170lp_1210_b111.spec.fits",
+          "root": "gds-deep-v4",
+          "queue_index": 9,
+          "dja_z_best": "12.53835875",
+          "fit_z_conditional": 11.383087163002358,
+          "p_gt12_uncalibrated": 0.008111837390265175,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        },
+        {
+          "file": "gds-deep-v4_g395h-f290lp_1210_b111.spec.fits",
+          "root": "gds-deep-v4",
+          "queue_index": 12,
+          "dja_z_best": "12.53835875",
+          "fit_z_conditional": 13.44615877170021,
+          "p_gt12_uncalibrated": 0.012889377130537253,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        },
+        {
+          "file": "gds-deep-v4_g395m-f290lp_1210_b111.spec.fits",
+          "root": "gds-deep-v4",
+          "queue_index": 15,
+          "dja_z_best": "12.53835875",
+          "fit_z_conditional": 13.482456812329994,
+          "p_gt12_uncalibrated": 0.005879159078153284,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        },
+        {
+          "file": "gds-deep-v4_prism-clear_1210_b283.spec.fits",
+          "root": "gds-deep-v4",
+          "queue_index": 16,
+          "dja_z_best": "12.53835875",
+          "fit_z_conditional": 13.083695633123808,
+          "p_gt12_uncalibrated": 0.985681406669408,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        },
+        {
+          "file": "gds-udeep-v4_g140m-f070lp_3215_20096216.spec.fits",
+          "root": "gds-udeep-v4",
+          "queue_index": 18,
+          "dja_z_best": "12.53835875",
+          "fit_z_conditional": 12.259024563142598,
+          "p_gt12_uncalibrated": 0.028789708999642227,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        },
+        {
+          "file": "gds-udeep-v4_g395m-f290lp_3215_20096216.spec.fits",
+          "root": "gds-udeep-v4",
+          "queue_index": 20,
+          "dja_z_best": "12.53835875",
+          "fit_z_conditional": 13.502140429800958,
+          "p_gt12_uncalibrated": 0.011597784679341343,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        },
+        {
+          "file": "gds-udeep-v4_prism-clear_3215_20096216.spec.fits",
+          "root": "gds-udeep-v4",
+          "queue_index": 22,
+          "dja_z_best": "12.53835875",
+          "fit_z_conditional": 12.828546023241564,
+          "p_gt12_uncalibrated": 1.0000000000000533,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1210_b111\" JWST NIRSpec redshift",
+        "\"53.166392\" \"-27.821559\" JWST"
+      ]
+    },
+    {
+      "group_id": 8,
+      "coord_deg": {
+        "ra": 53.14993722,
+        "dec": -27.77650863
+      },
+      "members": 8,
+      "program_source_ids": [
+        "1210_b238",
+        "1210_b60",
+        "3215_20128771"
+      ],
+      "highest_proxy_score": 0.999998997130588,
+      "referee_class": "KNOWN_PUBLISHED_Z_GT12",
+      "published_alias": "GS-z13-0",
+      "published_z": 12.926,
+      "evidence_reason": "Exact 3215_20128771 ID and coordinates plus cross-root aliases",
+      "published_source_urls": [
+        "https://academic.oup.com/mnras/article/548/3/stag701/8653929"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "gds-deep-v4_g235m-f170lp_1210_b238.spec.fits",
+          "root": "gds-deep-v4",
+          "queue_index": 10,
+          "dja_z_best": "13.072592",
+          "fit_z_conditional": 12.641391018819972,
+          "p_gt12_uncalibrated": 0.01931144196440785,
+          "original_baseline_label": "GS-z13-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "gds-deep-v4_g395h-f290lp_1210_b238.spec.fits",
+          "root": "gds-deep-v4",
+          "queue_index": 13,
+          "dja_z_best": "13.072592",
+          "fit_z_conditional": 13.452038521715796,
+          "p_gt12_uncalibrated": 0.012810797105531247,
+          "original_baseline_label": "GS-z13-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "gds-deep-v4_prism-clear_1210_b60.spec.fits",
+          "root": "gds-deep-v4",
+          "queue_index": 17,
+          "dja_z_best": "13.072592",
+          "fit_z_conditional": 13.635632045798976,
+          "p_gt12_uncalibrated": 0.47364741792073256,
+          "original_baseline_label": "GS-z13-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "gds-udeep-v4_g140m-f070lp_3215_20128771.spec.fits",
+          "root": "gds-udeep-v4",
+          "queue_index": 19,
+          "dja_z_best": "13.072592",
+          "fit_z_conditional": 9.87150758456791,
+          "p_gt12_uncalibrated": 0.0001186238919563349,
+          "original_baseline_label": "GS-z13-0:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "gds-udeep-v4_g395m-f290lp_3215_20128771.spec.fits",
+          "root": "gds-udeep-v4",
+          "queue_index": 21,
+          "dja_z_best": "13.072592",
+          "fit_z_conditional": 13.364415773660271,
+          "p_gt12_uncalibrated": 0.011687761215449902,
+          "original_baseline_label": "GS-z13-0:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "gds-udeep-v4_prism-clear_3215_20128771.spec.fits",
+          "root": "gds-udeep-v4",
+          "queue_index": 23,
+          "dja_z_best": "13.072592",
+          "fit_z_conditional": 13.061191537918738,
+          "p_gt12_uncalibrated": 0.999998997130588,
+          "original_baseline_label": "GS-z13-0:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "gds-deep-v4_g395m-f290lp_1210_b238.spec.fits",
+          "root": "gds-deep-v4",
+          "queue_index": 52,
+          "dja_z_best": "13.072592",
+          "fit_z_conditional": 13.451548763080535,
+          "p_gt12_uncalibrated": 0.01240058270901892,
+          "original_baseline_label": "GS-z13-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "gds-deep-v4_g140m-f070lp_1210_b238.spec.fits",
+          "root": "gds-deep-v4",
+          "queue_index": 53,
+          "dja_z_best": "13.072592",
+          "fit_z_conditional": 13.090281947175146,
+          "p_gt12_uncalibrated": 0.014104718147717363,
+          "original_baseline_label": "GS-z13-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1210_b238\" JWST NIRSpec redshift",
+        "\"53.149937\" \"-27.776509\" JWST"
+      ]
+    },
+    {
+      "group_id": 9,
+      "coord_deg": {
+        "ra": 53.11388507,
+        "dec": -27.79585583
+      },
+      "members": 1,
+      "program_source_ids": [
+        "1210_b260"
+      ],
+      "highest_proxy_score": 0.05215572281370865,
+      "referee_class": "DJA_CATALOG_LOWER_Z_UNINDEPENDENTLY_VALIDATED",
+      "published_alias": null,
+      "published_z": 1.9848408,
+      "evidence_reason": "DJA z_best below z>12 with only a disjoint grating high-z proxy; no external source-specific spectral publication verified.",
+      "published_source_urls": [],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "gds-deep-v4_g235m-f170lp_1210_b260.spec.fits",
+          "root": "gds-deep-v4",
+          "queue_index": 11,
+          "dja_z_best": "1.9848408",
+          "fit_z_conditional": 14.248221690905293,
+          "p_gt12_uncalibrated": 0.05215572281370865,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1210_b260\" JWST NIRSpec redshift",
+        "\"53.113885\" \"-27.795856\" JWST"
+      ]
+    },
+    {
+      "group_id": 10,
+      "coord_deg": {
+        "ra": 53.112434,
+        "dec": -27.774609
+      },
+      "members": 1,
+      "program_source_ids": [
+        "1210_58975"
+      ],
+      "highest_proxy_score": 0.1350045088667669,
+      "referee_class": "KNOWN_PUBLISHED_Z_LE12",
+      "published_alias": "JADES-GS 10058975",
+      "published_z": 9.438,
+      "evidence_reason": "Exact RA/Dec in Cameron et al. 2023 Table A1; previous redshift z9.438",
+      "published_source_urls": [
+        "https://uhra.herts.ac.uk/id/eprint/10807/2/aa46107-23.pdf"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "gds-deep-v4_g395m-f290lp_1210_58975.spec.fits",
+          "root": "gds-deep-v4",
+          "queue_index": 14,
+          "dja_z_best": "9.436153899999999",
+          "fit_z_conditional": 13.31493339404289,
+          "p_gt12_uncalibrated": 0.1350045088667669,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1210_58975\" JWST NIRSpec redshift",
+        "\"53.112434\" \"-27.774609\" JWST"
+      ]
+    },
+    {
+      "group_id": 11,
+      "coord_deg": {
+        "ra": 189.1598107,
+        "dec": 62.2889794
+      },
+      "members": 2,
+      "program_source_ids": [
+        "1181_19411"
+      ],
+      "highest_proxy_score": 1.0000000000001186,
+      "referee_class": "UNRESOLVED_NOT_NEW",
+      "published_alias": null,
+      "published_z": null,
+      "evidence_reason": "No decisive source-specific match from bounded public literature searches; absence of match is NOT novelty. ADS/arXiv, full 2D/NIRCam and interloper re-fitting still needed.",
+      "published_source_urls": [],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "jades-gdn11-v4_prism-clear_1181_19411.spec.fits",
+          "root": "jades-gdn11-v4",
+          "queue_index": 24,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 15.268542002430548,
+          "p_gt12_uncalibrated": 0.2833505001514876,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        },
+        {
+          "file": "jades-gdn11-v4_g140m-f070lp_1181_19411.spec.fits",
+          "root": "jades-gdn11-v4",
+          "queue_index": 56,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 15.549011768524577,
+          "p_gt12_uncalibrated": 1.0000000000001186,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1181_19411\" JWST NIRSpec redshift",
+        "\"189.159811\" \"62.288979\" JWST"
+      ]
+    },
+    {
+      "group_id": 12,
+      "coord_deg": {
+        "ra": 53.0830522,
+        "dec": -27.8556219
+      },
+      "members": 10,
+      "program_source_ids": [
+        "1286_183349",
+        "1287_183349"
+      ],
+      "highest_proxy_score": 0.0332234768985394,
+      "referee_class": "CATALOG_LOWER_Z_IDENTITY_CONFLICT",
+      "published_alias": null,
+      "published_z": 3.4737317125,
+      "evidence_reason": "MSA IDs 183349 (not published GS-z14-0 183348); 0.37 arcsec apart and catalog z_best3.47. The automated 0.5-arcsec positional match incorrectly labels 10 rows as GS-z14-0 positive controls.",
+      "published_source_urls": [
+        "https://academic.oup.com/mnras/article/548/3/stag701/8653929"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "jades-gds02-v4_g140m-f070lp_1286_183349.spec.fits",
+          "root": "jades-gds02-v4",
+          "queue_index": 25,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 9.062374046535512,
+          "p_gt12_uncalibrated": 9.804554067024763e-50,
+          "original_baseline_label": "GS-z14-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds02-v4_g235m-f170lp_1286_183349.spec.fits",
+          "root": "jades-gds02-v4",
+          "queue_index": 26,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 10.47226245306102,
+          "p_gt12_uncalibrated": 0.00009787138119674401,
+          "original_baseline_label": "GS-z14-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds02-v4_g395h-f290lp_1286_183349.spec.fits",
+          "root": "jades-gds02-v4",
+          "queue_index": 27,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 13.386387087192919,
+          "p_gt12_uncalibrated": 0.02069534284591375,
+          "original_baseline_label": "GS-z14-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds02-v4_g395m-f290lp_1286_183349.spec.fits",
+          "root": "jades-gds02-v4",
+          "queue_index": 28,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 13.406478610126376,
+          "p_gt12_uncalibrated": 0.013415268025437022,
+          "original_baseline_label": "GS-z14-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds02-v4_prism-clear_1286_183349.spec.fits",
+          "root": "jades-gds02-v4",
+          "queue_index": 29,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 9,
+          "p_gt12_uncalibrated": 2.0385139683481302e-165,
+          "original_baseline_label": "GS-z14-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g140m-f070lp_1287_183349.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 31,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 9.251203739545131,
+          "p_gt12_uncalibrated": 5.8308276391008935e-19,
+          "original_baseline_label": "GS-z14-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g235m-f170lp_1287_183349.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 34,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 12.138182423017753,
+          "p_gt12_uncalibrated": 0.0332234768985394,
+          "original_baseline_label": "GS-z14-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g395h-f290lp_1287_183349.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 37,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 13.4175931388343,
+          "p_gt12_uncalibrated": 0.00628298284812234,
+          "original_baseline_label": "GS-z14-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g395m-f290lp_1287_183349.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 40,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 13.440632202200886,
+          "p_gt12_uncalibrated": 0.015823884344031994,
+          "original_baseline_label": "GS-z14-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_prism-clear_1287_183349.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 43,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 18,
+          "p_gt12_uncalibrated": 0,
+          "original_baseline_label": "GS-z14-0:position",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1286_183349\" JWST NIRSpec redshift",
+        "\"53.083052\" \"-27.855622\" JWST"
+      ]
+    },
+    {
+      "group_id": 13,
+      "coord_deg": {
+        "ra": 53.0829371,
+        "dec": -27.8556321
+      },
+      "members": 5,
+      "program_source_ids": [
+        "1287_183348"
+      ],
+      "highest_proxy_score": 1.0000000000000104,
+      "referee_class": "KNOWN_PUBLISHED_Z_GT12",
+      "published_alias": "GS-z14-0",
+      "published_z": 14.179,
+      "evidence_reason": "Exact 1287_183348 ID and coordinates",
+      "published_source_urls": [
+        "https://academic.oup.com/mnras/article/548/3/stag701/8653929"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "jades-gds10-v4_g140m-f070lp_1287_183348.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 30,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 14.554757387052696,
+          "p_gt12_uncalibrated": 0.062168846113206354,
+          "original_baseline_label": "GS-z14-0:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g235m-f170lp_1287_183348.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 33,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 14.309458002273857,
+          "p_gt12_uncalibrated": 0.2468887135981943,
+          "original_baseline_label": "GS-z14-0:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g395h-f290lp_1287_183348.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 36,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 13.430710277164405,
+          "p_gt12_uncalibrated": 0.015913118290428557,
+          "original_baseline_label": "GS-z14-0:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g395m-f290lp_1287_183348.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 39,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 13.430854993728575,
+          "p_gt12_uncalibrated": 0.029898530477339882,
+          "original_baseline_label": "GS-z14-0:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_prism-clear_1287_183348.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 42,
+          "dja_z_best": "3.4737317125000002",
+          "fit_z_conditional": 14.253625106387386,
+          "p_gt12_uncalibrated": 1.0000000000000104,
+          "original_baseline_label": "GS-z14-0:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1287_183348\" JWST NIRSpec redshift",
+        "\"53.082937\" \"-27.855632\" JWST"
+      ]
+    },
+    {
+      "group_id": 14,
+      "coord_deg": {
+        "ra": 53.0742705,
+        "dec": -27.8859192
+      },
+      "members": 5,
+      "program_source_ids": [
+        "1287_20018044"
+      ],
+      "highest_proxy_score": 0.9999999996893236,
+      "referee_class": "KNOWN_PUBLISHED_Z_GT12",
+      "published_alias": "GS-z14-1",
+      "published_z": 14.044,
+      "evidence_reason": "Exact 1287_20018044 ID and coordinates",
+      "published_source_urls": [
+        "https://academic.oup.com/mnras/article/548/3/stag701/8653929"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "jades-gds10-v4_g140m-f070lp_1287_20018044.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 32,
+          "dja_z_best": "14.075879",
+          "fit_z_conditional": 12.97224029826935,
+          "p_gt12_uncalibrated": 0.005222947819293058,
+          "original_baseline_label": "GS-z14-1:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g235m-f170lp_1287_20018044.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 35,
+          "dja_z_best": "14.075879",
+          "fit_z_conditional": 12.66226404300057,
+          "p_gt12_uncalibrated": 0.041602376592684655,
+          "original_baseline_label": "GS-z14-1:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g395h-f290lp_1287_20018044.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 38,
+          "dja_z_best": "14.075879",
+          "fit_z_conditional": 13.458559324617534,
+          "p_gt12_uncalibrated": 0.01508789087776091,
+          "original_baseline_label": "GS-z14-1:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g395m-f290lp_1287_20018044.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 41,
+          "dja_z_best": "14.075879",
+          "fit_z_conditional": 13.46118043617111,
+          "p_gt12_uncalibrated": 0.013752029507420896,
+          "original_baseline_label": "GS-z14-1:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_prism-clear_1287_20018044.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 45,
+          "dja_z_best": "14.075879",
+          "fit_z_conditional": 13.898868552368256,
+          "p_gt12_uncalibrated": 0.9999999996893236,
+          "original_baseline_label": "GS-z14-1:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1287_20018044\" JWST NIRSpec redshift",
+        "\"53.074270\" \"-27.885919\" JWST"
+      ]
+    },
+    {
+      "group_id": 15,
+      "coord_deg": {
+        "ra": 53.0647541,
+        "dec": -27.8902378
+      },
+      "members": 5,
+      "program_source_ids": [
+        "1287_20013731"
+      ],
+      "highest_proxy_score": 0.4531654746456152,
+      "referee_class": "KNOWN_PUBLISHED_Z_GT12",
+      "published_alias": "JADES-GS-z13-1-LA",
+      "published_z": 12.955,
+      "evidence_reason": "Exact 1287_20013731 ID and coordinates",
+      "published_source_urls": [
+        "https://academic.oup.com/mnras/article/548/3/stag701/8653929"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "jades-gds10-v4_prism-clear_1287_20013731.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 44,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 12.915588798673062,
+          "p_gt12_uncalibrated": 0.4531654746456152,
+          "original_baseline_label": "JADES-GS-z13-1-LA:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g395h-f290lp_1287_20013731.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 58,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 13.463037305242777,
+          "p_gt12_uncalibrated": 0.011432270493622903,
+          "original_baseline_label": "JADES-GS-z13-1-LA:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g395m-f290lp_1287_20013731.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 59,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 13.466477881879273,
+          "p_gt12_uncalibrated": 0.009776508179825238,
+          "original_baseline_label": "JADES-GS-z13-1-LA:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g140m-f070lp_1287_20013731.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 60,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 12.775901821925922,
+          "p_gt12_uncalibrated": 0.010944119820313231,
+          "original_baseline_label": "JADES-GS-z13-1-LA:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        },
+        {
+          "file": "jades-gds10-v4_g235m-f170lp_1287_20013731.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 61,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 10.871234582099516,
+          "p_gt12_uncalibrated": 0.004186222926610115,
+          "original_baseline_label": "JADES-GS-z13-1-LA:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1287_20013731\" JWST NIRSpec redshift",
+        "\"53.064754\" \"-27.890238\" JWST"
+      ]
+    },
+    {
+      "group_id": 16,
+      "coord_deg": {
+        "ra": 34.2348499,
+        "dec": -5.2757994
+      },
+      "members": 1,
+      "program_source_ids": [
+        "4233_22104"
+      ],
+      "highest_proxy_score": 0.0890065984381502,
+      "referee_class": "UNRESOLVED_NOT_NEW",
+      "published_alias": null,
+      "published_z": null,
+      "evidence_reason": "No decisive source-specific match from bounded public literature searches; absence of match is NOT novelty. ADS/arXiv, full 2D/NIRCam and interloper re-fitting still needed.",
+      "published_source_urls": [],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "rubies-uds1-v4_prism-clear_4233_22104.spec.fits",
+          "root": "rubies-uds1-v4",
+          "queue_index": 46,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 16.567032859395727,
+          "p_gt12_uncalibrated": 0.0890065984381502,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"4233_22104\" JWST NIRSpec redshift",
+        "\"34.234850\" \"-5.275799\" JWST"
+      ]
+    },
+    {
+      "group_id": 17,
+      "coord_deg": {
+        "ra": 34.32515593,
+        "dec": -5.14368529
+      },
+      "members": 1,
+      "program_source_ids": [
+        "4233_144195"
+      ],
+      "highest_proxy_score": 0.9999999999983985,
+      "referee_class": "KNOWN_PUBLISHED_Z_LE12",
+      "published_alias": "RUBIES-UDS-144195 dusty broad-Balmer galaxy",
+      "published_z": 3.36,
+      "evidence_reason": "Hviding et al. 2025 Table B1 same ID and exact coordinates; paper explicitly notes a Balmer break masquerading as photometric z~14",
+      "published_source_urls": [
+        "https://doi.org/10.1051/0004-6361/202555816"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "rubies-uds23-v4_prism-clear_4233_144195.spec.fits",
+          "root": "rubies-uds23-v4",
+          "queue_index": 47,
+          "dja_z_best": "3.353739",
+          "fit_z_conditional": 13.95000076878282,
+          "p_gt12_uncalibrated": 0.9999999999983985,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"4233_144195\" JWST NIRSpec redshift",
+        "\"34.325156\" \"-5.143685\" JWST"
+      ]
+    },
+    {
+      "group_id": 18,
+      "coord_deg": {
+        "ra": 34.40264342,
+        "dec": -5.30882864
+      },
+      "members": 1,
+      "program_source_ids": [
+        "4233_7420"
+      ],
+      "highest_proxy_score": 0.0742054823898243,
+      "referee_class": "UNRESOLVED_NOT_NEW",
+      "published_alias": null,
+      "published_z": null,
+      "evidence_reason": "No decisive source-specific match from bounded public literature searches; absence of match is NOT novelty. ADS/arXiv, full 2D/NIRCam and interloper re-fitting still needed.",
+      "published_source_urls": [],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "rubies-uds41-v4_prism-clear_4233_7420.spec.fits",
+          "root": "rubies-uds41-v4",
+          "queue_index": 48,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 12.580731218692081,
+          "p_gt12_uncalibrated": 0.0742054823898243,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"4233_7420\" JWST NIRSpec redshift",
+        "\"34.402643\" \"-5.308829\" JWST"
+      ]
+    },
+    {
+      "group_id": 19,
+      "coord_deg": {
+        "ra": 3.57086932,
+        "dec": -30.40158533
+      },
+      "members": 1,
+      "program_source_ids": [
+        "2561_13077"
+      ],
+      "highest_proxy_score": 0.11332897008479317,
+      "referee_class": "KNOWN_PUBLISHED_Z_GT12",
+      "published_alias": "UNCOVER-13077",
+      "published_z": 12.908,
+      "evidence_reason": "Exact 2561_13077 ID and coordinates",
+      "published_source_urls": [
+        "https://academic.oup.com/mnras/article/548/3/stag701/8653929"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "uncover-v4_prism-clear_2561_13077.spec.fits",
+          "root": "uncover-v4",
+          "queue_index": 49,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 13.102638058487294,
+          "p_gt12_uncalibrated": 0.11332897008479317,
+          "original_baseline_label": "UNCOVER-13077:id",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "KNOWN_PUBLISHED_CONTROL"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"2561_13077\" JWST NIRSpec redshift",
+        "\"3.570869\" \"-30.401585\" JWST"
+      ]
+    },
+    {
+      "group_id": 20,
+      "coord_deg": {
+        "ra": 3.51356332,
+        "dec": -30.35679963
+      },
+      "members": 1,
+      "program_source_ids": [
+        "2561_38766"
+      ],
+      "highest_proxy_score": 0.9760657159263343,
+      "referee_class": "KNOWN_PUBLISHED_Z_GT12",
+      "published_alias": "UNCOVER-38766",
+      "published_z": 12.393,
+      "evidence_reason": "Exact 2561_38766 ID and coordinates; absent from PR195 six-control baseline",
+      "published_source_urls": [
+        "https://academic.oup.com/mnras/article/548/3/stag701/8653929"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "uncover-v4_prism-clear_2561_38766.spec.fits",
+          "root": "uncover-v4",
+          "queue_index": 50,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 12.402066191854193,
+          "p_gt12_uncalibrated": 0.9760657159263343,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"2561_38766\" JWST NIRSpec redshift",
+        "\"3.513563\" \"-30.356800\" JWST"
+      ]
+    },
+    {
+      "group_id": 21,
+      "coord_deg": {
+        "ra": 34.42393426,
+        "dec": -5.10633417
+      },
+      "members": 1,
+      "program_source_ids": [
+        "3567_170595"
+      ],
+      "highest_proxy_score": 0.05185912580996215,
+      "referee_class": "DJA_CATALOG_LOWER_Z_UNINDEPENDENTLY_VALIDATED",
+      "published_alias": null,
+      "published_z": 3.6817095,
+      "evidence_reason": "DJA z_best below z>12 with only a disjoint grating high-z proxy; no external source-specific spectral publication verified.",
+      "published_source_urls": [],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "valentino-obs19-v4_g235m-f170lp_3567_170595.spec.fits",
+          "root": "valentino-obs19-v4",
+          "queue_index": 51,
+          "dja_z_best": "3.6817095",
+          "fit_z_conditional": 14.159975193325629,
+          "p_gt12_uncalibrated": 0.05185912580996215,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"3567_170595\" JWST NIRSpec redshift",
+        "\"34.423934\" \"-5.106334\" JWST"
+      ]
+    },
+    {
+      "group_id": 22,
+      "coord_deg": {
+        "ra": 53.1600823,
+        "dec": -27.8225409
+      },
+      "members": 1,
+      "program_source_ids": [
+        "3215_20095279"
+      ],
+      "highest_proxy_score": 0.10961857110511745,
+      "referee_class": "UNRESOLVED_NOT_NEW",
+      "published_alias": null,
+      "published_z": null,
+      "evidence_reason": "No decisive source-specific match from bounded public literature searches; absence of match is NOT novelty. ADS/arXiv, full 2D/NIRCam and interloper re-fitting still needed.",
+      "published_source_urls": [],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "gds-udeep-v4_g140m-f070lp_3215_20095279.spec.fits",
+          "root": "gds-udeep-v4",
+          "queue_index": 54,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 16.950438781262218,
+          "p_gt12_uncalibrated": 0.10961857110511745,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"3215_20095279\" JWST NIRSpec redshift",
+        "\"53.160082\" \"-27.822541\" JWST"
+      ]
+    },
+    {
+      "group_id": 23,
+      "coord_deg": {
+        "ra": 189.1844591,
+        "dec": 62.2624895
+      },
+      "members": 1,
+      "program_source_ids": [
+        "1181_11508"
+      ],
+      "highest_proxy_score": 1,
+      "referee_class": "KNOWN_PUBLISHED_Z_LE12",
+      "published_alias": "JADES-GN-11508",
+      "published_z": 9.93,
+      "evidence_reason": "Tang et al. 2026 Table B1 exact 1181_11508 ID/position; z9.93 despite proxy z17.65",
+      "published_source_urls": [
+        "https://doi.org/10.3847/1538-4357/ae4edb"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "jades-gdn10-v4_g235m-f170lp_1181_11508.spec.fits",
+          "root": "jades-gdn10-v4",
+          "queue_index": 55,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 17.65,
+          "p_gt12_uncalibrated": 1,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1181_11508\" JWST NIRSpec redshift",
+        "\"189.184459\" \"62.262490\" JWST"
+      ]
+    },
+    {
+      "group_id": 24,
+      "coord_deg": {
+        "ra": 53.0834664,
+        "dec": -27.8654331
+      },
+      "members": 1,
+      "program_source_ids": [
+        "1286_176143"
+      ],
+      "highest_proxy_score": 0.9972164600339186,
+      "referee_class": "UNRESOLVED_NOT_NEW",
+      "published_alias": null,
+      "published_z": null,
+      "evidence_reason": "No decisive source-specific match from bounded public literature searches; absence of match is NOT novelty. ADS/arXiv, full 2D/NIRCam and interloper re-fitting still needed.",
+      "published_source_urls": [],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "jades-gds06-v4_g235m-f170lp_1286_176143.spec.fits",
+          "root": "jades-gds06-v4",
+          "queue_index": 57,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 16.88681675734072,
+          "p_gt12_uncalibrated": 0.9972164600339186,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1286_176143\" JWST NIRSpec redshift",
+        "\"53.083466\" \"-27.865433\" JWST"
+      ]
+    },
+    {
+      "group_id": 25,
+      "coord_deg": {
+        "ra": 53.0671523,
+        "dec": -27.8831711
+      },
+      "members": 1,
+      "program_source_ids": [
+        "1287_20021387"
+      ],
+      "highest_proxy_score": 0.9922561659320488,
+      "referee_class": "KNOWN_PUBLISHED_Z_LE12",
+      "published_alias": "JADES-GS-20021387",
+      "published_z": 11.06,
+      "evidence_reason": "Tang et al. 2026 Table B1 exact 1287_20021387 ID/position; z11.06 despite proxy z14.81",
+      "published_source_urls": [
+        "https://doi.org/10.3847/1538-4357/ae4edb"
+      ],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "jades-gds10-v4_g140m-f070lp_1287_20021387.spec.fits",
+          "root": "jades-gds10-v4",
+          "queue_index": 62,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 14.806975987209098,
+          "p_gt12_uncalibrated": 0.9922561659320488,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1287_20021387\" JWST NIRSpec redshift",
+        "\"53.067152\" \"-27.883171\" JWST"
+      ]
+    },
+    {
+      "group_id": 26,
+      "coord_deg": {
+        "ra": 53.17821736,
+        "dec": -27.80256411
+      },
+      "members": 1,
+      "program_source_ids": [
+        "1180_b37"
+      ],
+      "highest_proxy_score": 0.21708185805895472,
+      "referee_class": "UNRESOLVED_NOT_NEW",
+      "published_alias": null,
+      "published_z": null,
+      "evidence_reason": "No decisive source-specific match from bounded public literature searches; absence of match is NOT novelty. ADS/arXiv, full 2D/NIRCam and interloper re-fitting still needed.",
+      "published_source_urls": [],
+      "search_limitation": "Bounded public-web matches/compilations, not an exhaustive ADS/arXiv per-source search",
+      "individual_spectra": [
+        {
+          "file": "jades-gds-wide2-v4_g235m-f170lp_1180_b37.spec.fits",
+          "root": "jades-gds-wide2-v4",
+          "queue_index": 63,
+          "dja_z_best": "-1.0",
+          "fit_z_conditional": 16.36774276920489,
+          "p_gt12_uncalibrated": 0.21708185805895472,
+          "original_baseline_label": "",
+          "two_d": "DJA_COADD_2D_PLOTTED_NOT_INDEPENDENT_VISIT_REVIEW",
+          "priority_in_runner": "UNREVIEWED_NOT_NEW"
+        }
+      ],
+      "suggested_followup_queries": [
+        "\"1180_b37\" JWST NIRSpec redshift",
+        "\"53.178217\" \"-27.802564\" JWST"
+      ]
+    }
+  ]
+}
