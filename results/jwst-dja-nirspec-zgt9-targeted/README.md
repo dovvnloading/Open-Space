@@ -1,6 +1,6 @@
 # Targeted DJA v4.4 z>9 NIRSpec screen — blocked data-access continuation
 
-**Claim (2026-11-19 UTC): No astronomical spectrum was downloaded, fitted, or validated in this continuation. There is NO new z>12 discovery, no calibrated interloper probability, and no survey-wide null result.** This is a blocked continuation of [merged PR #195](../../../../pull/195), not a replacement of its frozen 80,367-spectrum scope.
+**Claim (2026-11-19 UTC): No astronomical spectrum was downloaded, fitted, or validated in this continuation. There is NO new z>12 discovery, no calibrated interloper probability, and no survey-wide null result.** This is a blocked continuation of [merged PR #195](https://github.com/dovvnloading/Open-Space/pull/195), not a replacement of its frozen 80,367-spectrum scope.
 
 ## Why the targeted analysis is blocked
 
@@ -26,3 +26,27 @@ At 2026-11-19 03:23:24 UTC, the local compute container failed DNS/HTTPS HEAD te
 | Claim/remarkable label | **NONE** |
 
 The [published positive controls](../jwst-dja-nirspec-highz-screen/literature_baseline.json) include MoM-z14, JADES-GS-z14-0 and other *already known* z>12 objects; their existence **does not** establish an independent recovery here. Treat this branch as **draft/unmerged** while host retrieval is blocked. Never add `[REMARKABLE]` or alter `docs/REMARKABLE_FINDINGS.md` without independent discovery-level evidence.
+
+## Local commands (not Actions)
+
+The following tests ran **in the compute container** using only synthetic rows (no remote spectra): `select_targets.py --self-test` **PASS**; `download_targets.py --self-test` **PASS**; 5-row selector fixture **PASS** (3 selected); 2-row plan fixture **PASS** (1 unique URL). These do not test real source coverage or the physical fitting algorithm.
+
+When DNS is restored, use the **existing pinned PR #195 downloader** for **catalog-only** retrieval; this deliberately skips every 8.4-GB combined FITS shard. Do not run the old full-shard `screen.py` on per-object `.spec.fits`.
+
+```sh
+python results/jwst-dja-nirspec-zgt9-targeted/host_probe.py > /data/dja-v44/host_probe.json
+python results/jwst-dja-nirspec-zgt9-targeted/select_targets.py --self-test
+python results/jwst-dja-nirspec-zgt9-targeted/download_targets.py --self-test
+python results/jwst-dja-nirspec-highz-screen/retrieve.py download --catalog-only --cache /data/dja-v44
+python results/jwst-dja-nirspec-zgt9-targeted/select_targets.py \
+  --catalog /data/dja-v44/dja_msaexp_emission_lines_v4.4.csv.gz \
+  --out /data/dja-v44/selection
+python results/jwst-dja-nirspec-zgt9-targeted/download_targets.py \
+  --selected /data/dja-v44/selection/selected_spectra.csv \
+  --selection-receipt /data/dja-v44/selection/selection_receipt.json \
+  --out /data/dja-v44/targeted
+```
+
+Expected generated *uncommitted* artifacts, **only after a real catalog is verified**: `catalog_audit.csv` (the complete denominator), `selected_spectra.csv` (every eligible catalog row), `selection_receipt.json` (hashes/counts/known-control matches), `targeted_plan.json`, and `download_receipts.jsonl` plus actual `fits/` bytes if network retrieval succeeds. Do not confuse the planned URLs or locally generated SHA-256s with publisher-certified source-level redshifts. Actual 1D/2D fits, separate detector exposures, NIRCam filter photometry and per-survivor literature priority remain separate **unimplemented validation gates**; they cannot be substituted by the synthetic checks.
+
+The [skeptical referee report](REFEREE.md) formally **rejects scientific acceptance and merging** while the data gates are absent.
