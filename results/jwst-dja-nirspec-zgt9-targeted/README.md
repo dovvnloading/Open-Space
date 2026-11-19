@@ -35,3 +35,20 @@ This is a **targeted** continuation of [merged PR #195](https://github.com/dovvn
 To reproduce on a runner with external network, see [WORKFLOW.md](WORKFLOW.md) and `run_dispatch.py`. On this branch the existing [JWST workflow](../../.github/workflows/jwst-dja-nirspec-preflight.yml) supports manual dispatch **and future automatic pushes that touch this result folder**, excluding `outputs/**` to avoid self-trigger loops. Future attempts write `outputs/runs/<run_id>/` without overwriting the first successful run. The initial manual run remains frozen in `outputs/`. The only validated numerical method tests are synthetic fixtures; no native per-exposure detector/slit checks or NIRCam filter-convolved SEDs have been performed.
 
 **Required before readiness/merge:** independently validate native 2D integrations and DQ/contamination, measure NIRCam fluxes/limits and convolve both high-/low-z models, calibrate stellar/Balmer/line-confusion posterior odds against published low-z controls and injected false breaks, complete alias/coordinate literature checks for all nine unresolved groups (ADS, arXiv, DJA/JADES/CEERS/UNCOVER/MoM/GLASS). An actual `z>14` galaxy requires coherent independent spectroscopic and photometric evidence, not a model rank.
+
+
+## 2026-11-19 lead follow-up — independent nine-group referee
+
+**Updated evidence, not a discovery:** GitHub Actions [#44459389472](https://github.com/dovvnloading/Open-Space/actions/runs/44459389472) and [#44460415546](https://github.com/dovvnloading/Open-Space/actions/runs/44460415546) downloaded/reviewed the 10 spectra for the nine initially unresolved sky groups, checked their coadd SLITS metadata, matched JADES DR4 catalogue identities, and ran bounded 1D surrogate interloper injections. The new [full referee](REFEREE_FOLLOWUP_2026-11-19.md) and [machine-readable nine-group ledger](FOLLOWUP_NINE_2026-11-19.json) supersede the previous nine-way *unresolved* tally as follows:
+
+| 1 | `3073_50252` | Unresolved; no independently validated redshift | No independent physical redshift evidence |
+| 4 | `6368_211132` | Unresolved; no independently validated redshift | No independent physical redshift evidence |
+| 6 | `6368_151513` | Unresolved; no independently validated redshift | No independent physical redshift evidence |
+| 11 | `1181_19411` | JADES DR4 target, quality E; no measured redshift | DR4 `goods-n-mediumjwst_19411`, flag E |
+| 16 | `4233_22104` | Unresolved; no independently validated redshift | No independent physical redshift evidence |
+| 18 | `4233_7420` | Unresolved; no independently validated redshift | No independent physical redshift evidence |
+| 22 | `3215_20095279` | JADES DR4 target, quality E; no measured redshift | DR4 `goods-s-ultradeep_20095279`, flag E |
+| 24 | `1286_176143` | JADES DR4 z=3.60656, quality D (tentative, not secure) | DR4 z=3.60656, flag D; 3/20 dusty interlopers pass false-high gate |
+| 26 | `1180_b37` | Empty-background shutter B37; not a galaxy | 3/3 SLITS records refer to `background_37`; source RA=Dec=0 |
+
+**Summary:** **1 sky-background artefact** (`1180_b37`; all raw-source SLITS rows marked `background_37`, RA=Dec=0), **1 tentative lower-z** (`1286_176143`, JADES DR4 z=3.60656 flag D), **2 JADES DR4 catalogued survey targets with redshift flag E** (`1181_19411`, `3215_20095279`), and **5 still unresolved**. Published survey target does **not** imply published measured high-z. All native-integration DQ checks, independent NIRCam flux/upper-limit measurements, complete filter-convolved alternatives, calibrated physical redshift posteriors and exhaustive ADS/arXiv/survey alias priority checks **remain missing**. The 20-per-family 1D injection diagnostics cannot calibrate physical redshift odds; 3/20 dusty interlopers already fool the near-1-scored `1286_176143` fit. **Zero validated new z>12 galaxies. PR #197 remains DRAFT, UNMERGED, with no merger SHA. No `[REMARKABLE]` label.**

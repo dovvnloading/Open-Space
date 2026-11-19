@@ -46,3 +46,8 @@ The 64 z>12 *review rows* are **not 64 distinct candidate galaxies**. Grouping t
 The new push job will be **branch/path filtered** to `results/jwst-dja-nirspec-zgt9-targeted/**`, excluding generated `outputs/**` to prevent loops. Each future run writes `outputs/runs/<run_id>/` so receipts do not overwrite run #44454883069. This configuration is staged in the same PR and not a separate claim of an additional run.
 
 **Approve only an internally useful exploratory workflow+receipts, not a scientific discovery. Under the user's evidence-gated merge instructions, do NOT mark ready or merge #197.** No new secure z>12 object, no survey-wide null, no `[REMARKABLE]` or `docs/REMARKABLE_FINDINGS.md` entry is justified.
+
+
+## 2026-11-19 lead follow-up (supersedes the earlier nine unresolved tally)
+
+The nine positions were re-examined in two further successful runner passes. Read [the independent full updated decision](REFEREE_FOLLOWUP_2026-11-19.md) and the [per-group machine-readable dispositions](FOLLOWUP_NINE_2026-11-19.json). **One `1180_b37` is empty-sky background, one `1286_176143` has a tentative quality-D JADES DR4 z=3.60656, two other JADES positions have quality-E no-redshift matches, and five remain unresolved.** None is validated as new z>12. Native detector DQ, complete shutter contamination, NIRCam flux/upper limits, physical redshift posteriors and exhaustive literature priority still fail the scientific gate. **CHANGES REQUIRED; KEEP DRAFT / UNMERGED; no merge SHA.**
