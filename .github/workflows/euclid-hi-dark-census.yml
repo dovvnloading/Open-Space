@@ -1,0 +1,77 @@
+name: Euclid DR1-F blind H I census (frozen)
+on:
+  push:
+    branches:
+      - research/euclid-hi-dark-census
+    paths:
+      - 'results/euclid-hi-dark-census/run.py'
+      - 'results/euclid-hi-dark-census/freeze.json'
+      - 'results/euclid-hi-dark-census/followup.py'
+      - 'results/euclid-hi-dark-census/tests.py'
+      - '.github/workflows/euclid-hi-dark-census.yml'
+permissions:
+  contents: write
+concurrency:
+  group: euclid-hi-dark-census
+  cancel-in-progress: false
+jobs:
+  acquire-crossmatch-referee:
+    runs-on: ubuntu-latest
+    timeout-minutes: 48
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencies and reproducible source sanity
+        run: |
+          python -m pip install --disable-pip-version-check 'numpy>=1.26,<3' 'pandas>=2.2,<3' 'requests>=2.31,<3' 'astropy>=6,<9' 'mocpy>=0.17,<1' 'scipy>=1.12,<2'
+          python -m py_compile results/euclid-hi-dark-census/run.py
+          sha256sum results/euclid-hi-dark-census/{run.py,freeze.json}
+          if test -f results/euclid-hi-dark-census/tests.py; then
+            python -m unittest discover -s results/euclid-hi-dark-census -p tests.py -v
+          fi
+      - name: Retrieve all frozen blind HI catalogues and official Euclid DR1 Wide and Deep footprints
+        timeout-minutes: 32
+        run: python -u results/euclid-hi-dark-census/run.py
+      - name: Optical, redshift, imagery and independent referee triage
+        if: success()
+        timeout-minutes: 10
+        run: |
+          if test -f results/euclid-hi-dark-census/followup.py; then
+            python -u results/euclid-hi-dark-census/followup.py
+          fi
+      - name: Upload receipts and derived tables
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: euclid-hi-dr1-foundation-census-receipts
+          path: |
+            results/euclid-hi-dark-census/output/receipts.json
+            results/euclid-hi-dark-census/output/summary.json
+            results/euclid-hi-dark-census/output/footprint_hits.csv
+            results/euclid-hi-dark-census/output/priority_for_followup.csv
+            results/euclid-hi-dark-census/output/followup.json
+            results/euclid-hi-dark-census/output/referee.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Commit all compact outputs in one batch, never trigger from generated files
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          folder=results/euclid-hi-dark-census/output
+          test -f "$folder/summary.json" || { echo 'No summary produced'; exit 0; }
+          git fetch origin "$GITHUB_REF_NAME"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse "origin/$GITHUB_REF_NAME")" || { echo 'Branch moved during run, refusing stale push'; exit 0; }
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for file in receipts.json summary.json footprint_hits.csv priority_for_followup.csv followup.json referee.json; do
+            if test -f "$folder/$file"; then git add -f "$folder/$file"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m 'research(hi): deposit frozen Euclid footprint and blind-catalogue receipts'
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
