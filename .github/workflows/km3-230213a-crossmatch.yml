@@ -8,6 +8,9 @@ on:
       - 'results/km3-230213a-counterparts/swift_grb.py'
       - '.github/workflows/km3-230213a-crossmatch.yml'
   workflow_dispatch:
+concurrency:
+  group: km3-230213a-evidence
+  cancel-in-progress: false
 permissions:
   contents: write
 jobs:
@@ -39,7 +42,13 @@ jobs:
           git add results/km3-230213a-counterparts/SHA256SUMS results/km3-230213a-counterparts/swift_grb_matches.csv results/km3-230213a-counterparts/swift_grb_receipt.json results/km3-230213a-counterparts/known_replay.csv results/km3-230213a-counterparts/new_associations.csv results/km3-230213a-counterparts/retrieval_receipts.json results/km3-230213a-counterparts/control_statistics.json results/km3-230213a-counterparts/referee_results.json
           if ! git diff --cached --quiet; then
             git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'research(km3): archive released-catalogue audit, controls and receipt digests'
-            git push origin HEAD:research/km3-230213a-counterparts
+            # The research branch may have moved after this run checked out.
+            # Rebase the output-only commit onto the latest head, never force-push.
+            for attempt in 1 2 3; do
+              git fetch origin research/km3-230213a-counterparts
+              git rebase origin/research/km3-230213a-counterparts
+              if git push origin HEAD:research/km3-230213a-counterparts; then break; fi
+            done
           fi
       - uses: actions/upload-artifact@v4
         if: always()
