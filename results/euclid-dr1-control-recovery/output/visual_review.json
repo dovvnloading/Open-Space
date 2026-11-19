@@ -1,0 +1,104 @@
+{
+  "status": "QUALITATIVE_MOSAIC_PREVIEW_REVIEW_NOT_EXPOSURE_LEVEL_ARTIFACT_CLEARANCE",
+  "method": "Viewed all eight J, all eight Y/H and leading VIS preview panels, each independently contrast-stretched to 1st–99.5th percentile. Source at WCS cutout centre. Visual morphology is qualitative, not a flux or PSF analysis.",
+  "provenance": "output/image_pixel_receipts.json; 32 original MER FITS science 251x251 pixel sections, S3 byte-range reads; per-image science SHA256 and preview PNG SHA256 in receipts",
+  "mosaic_science_pixel_targets": 8,
+  "mosaic_science_bands_per_target": 4,
+  "detector_exposure_level_review_complete": false,
+  "artefact_cleared_count": 0,
+  "known_limitations": [
+    "Background in preview stretched independently per band; brightness comparison across bands is invalid",
+    "MER mosaics do not resolve single-exposure persistence/ghost histories",
+    "Image thumbnails do not supply bit masks, source segmentation, PSF-fitting, or forced optical/WISE fluxes",
+    "A visual risk flag is not proof a source is astrophysical or spurious"
+  ],
+  "rows": [
+    {
+      "rank": 1,
+      "id": "-615262033606966661",
+      "flags": [
+        "NEARBY_EXTENDED_OBJECT_IN_STAMP",
+        "CENTER_IR_SOURCE_FAINT_OR_NEEDS_CENTROID_CHECK"
+      ],
+      "assessment": "Possible compact central NISP signal in a crowded/structured field; no obvious large crossing streak at centre",
+      "followup": "REQUIRES_CENTROID_PSF_AND_EXPOSURE_REVIEW",
+      "artefact_cleared": false
+    },
+    {
+      "rank": 2,
+      "id": "-642780668608958826",
+      "flags": [
+        "BRIGHT_VERTICAL_STREAK_LEFT_OF_SOURCE_ALL_BANDS",
+        "POTENTIAL_LOCAL_BACKGROUND_CONTAMINATION"
+      ],
+      "assessment": "Strong linear feature left of the centre in VIS and NISP mosaics; source not image-cleared",
+      "followup": "HOLD_NEAR_STREAK_UNTIL_EXPOSURES_AND_MASKS",
+      "artefact_cleared": false
+    },
+    {
+      "rank": 3,
+      "id": "-464108856519632999",
+      "flags": [
+        "BRIGHT_NEIGHBOR_LOWER_LEFT",
+        "CENTER_NISP_PSF_NEEDS_ASSOCIATION"
+      ],
+      "assessment": "Centre has a compact NIR feature, with strong neighboring sources in the stamp",
+      "followup": "REQUIRES_DEBLEND_AND_EXPOSURE_REVIEW",
+      "artefact_cleared": false
+    },
+    {
+      "rank": 4,
+      "id": "-580697145407050206",
+      "flags": [
+        "CROWDED_FIELD_NEAR_STAMP_EDGE"
+      ],
+      "assessment": "Compact central NIR feature seen; no evidence to clear exposure defects",
+      "followup": "REQUIRES_MULTIBAND_CENTROID_AND_MASK_REVIEW",
+      "artefact_cleared": false
+    },
+    {
+      "rank": 5,
+      "id": "-728937611292911060",
+      "flags": [
+        "BRIGHT_CENTRAL_JH_SOURCE",
+        "DARK_PSF_ANNULAR_OR_SUBTRACTION_STRUCTURE"
+      ],
+      "assessment": "Central NIR source with dark ring/background structure in J (possibly PSF or processing; not classified)",
+      "followup": "HOLD_PSF_SATURATION_AND_PER_EXPOSURE_REVIEW",
+      "artefact_cleared": false
+    },
+    {
+      "rank": 6,
+      "id": "-464123285327831920",
+      "flags": [
+        "COMPACT_CENTRAL_NISP_SOURCE",
+        "STRUCTURED_NISP_BACKGROUND"
+      ],
+      "assessment": "Central compact NISP source; extreme colour needs independent forced-aperture flux measurement",
+      "followup": "REQUIRES_FLUX_PSF_AND_EXPOSURE_REVIEW",
+      "artefact_cleared": false
+    },
+    {
+      "rank": 7,
+      "id": "-758338901467120575",
+      "flags": [
+        "DARK_VERTICAL_STRIPE_THROUGH_CENTRAL_NISP_REGION",
+        "POTENTIAL_MASK_OR_DETECTOR_GAP"
+      ],
+      "assessment": "Dark strip passes close to / through the central candidate region in Y, J and H mosaic previews; source reliability is particularly doubtful",
+      "followup": "HOLD_NISP_STRIPE_AND_MASK_INVESTIGATION",
+      "artefact_cleared": false
+    },
+    {
+      "rank": 8,
+      "id": "-318088655326522487",
+      "flags": [
+        "STRUCTURED_NOISY_NISP_BACKGROUND",
+        "IRREGULAR_CENTRAL_PATCH"
+      ],
+      "assessment": "Weak irregular central feature in strongly structured background; source association uncertain",
+      "followup": "REQUIRES_CENTERED_PSF_AND_EXPOSURE_REVIEW",
+      "artefact_cleared": false
+    }
+  ]
+}
