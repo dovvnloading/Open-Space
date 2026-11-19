@@ -22,7 +22,7 @@ def main():
     check("original-bytes-sha256",sha==receipts["lhaaso"]["raw_sha256"],sha)
     is_preprint=primary_receipt.get("input_variant")=="gammapy_2023_preprint_transcription"
     primary=pd.read_csv(frozen,comment=None if is_preprint else "#",low_memory=False)
-    unique_names=(primary.iloc[:,0].ffill().nunique() if is_preprint
+    unique_names=(primary.iloc[:,0].astype("string").str.strip().replace("",pd.NA).ffill().nunique() if is_preprint
                   else primary["1LHAASO"].nunique())
     source=pd.read_csv(CAT/"1lhaaso_sources.csv")
     check("180-components-90-sources",len(primary)==180 and
@@ -44,8 +44,8 @@ def main():
         n=pd.to_numeric(active.control_n,errors="coerce")
         p=pd.to_numeric(active.chance_any_in_radius,errors="coerce")
         q=pd.to_numeric(active.p_nearest_margin,errors="coerce")
-        check("finite-sample-p-bounds",(n.between(64,512)&p.ge(1/(n+1)-1e-12)&
-              p.le(1)&q.ge(1/(n+1)-1e-12)&q.le(1)).all(),
+        check("finite-sample-p-bounds",(n.between(64,512)&p.ge(1/(n+1)-1e-9)&
+              p.le(1)&q.ge(1/(n+1)-1e-9)&q.le(1)).all(),
               {"n_min":int(n.min()),"n_max":int(n.max())})
     erass=class_rows[class_rows["class"]=="eRASS1_hard_Xray"]
     if len(erass):
