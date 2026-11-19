@@ -298,7 +298,11 @@ def scan_observation(obsid, rows):
     preferred=[n for n in pn if re.search(r"SRCTSR8([0-9A-F]{3})\.FTZ$",n,re.I) and
                re.search(r"SRCTSR8([0-9A-F]{3})\.FTZ$",n,re.I).group(1).upper() in expected]
     alternatives=[n for n in pn if n not in preferred]
-    pick=preferred+alternatives[:max(0, min(25,len(rows)*8)-len(preferred))]
+    # DR14 PPS source indices can disagree with current HEASARC PPS order.
+    # Probe more coordinate-labelled FITS products when that happens;
+    # never treat a source number alone as proof of identity.
+    limit=min(80,max(40,len(rows)*30))
+    pick=preferred+alternatives[:max(0,limit-len(preferred))]
     record["n_source_products_scheduled"]=len(pick)
     record["possible_uninspected_source_products"]=len(pn)-len(pick)
     for name in pick:
