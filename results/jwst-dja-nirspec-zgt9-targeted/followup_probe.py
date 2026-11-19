@@ -38,10 +38,21 @@ def clean(x):
 def utc():
     return dt.datetime.now(dt.timezone.utc).isoformat()
 
+def json_safe(x):
+    if isinstance(x, dict):
+        return {str(k):json_safe(v) for k,v in x.items()}
+    if isinstance(x, (list,tuple)):
+        return [json_safe(v) for v in x]
+    if isinstance(x,np.generic):
+        return json_safe(x.item())
+    if isinstance(x,float) and not np.isfinite(x):
+        return None
+    return x
+
 def write(path, payload):
     path.parent.mkdir(parents=True, exist_ok=True)
     t = path.with_suffix(path.suffix + ".partial")
-    t.write_text(json.dumps(payload, indent=2, allow_nan=False, sort_keys=True) + "\n")
+    t.write_text(json.dumps(json_safe(payload), indent=2, allow_nan=False, sort_keys=True) + "\n")
     t.replace(path)
 
 def hdus(path):
@@ -65,6 +76,12 @@ def hdus(path):
                 q = np.asarray(unit.data)
                 row["finite_fraction"] = float(np.mean(np.isfinite(q)))
                 row["median_absolute"] = float(np.nanmedian(np.abs(q)))
+            if unit.name == "SLITS" and unit.data is not None:
+                row["columns"] = list(unit.columns.names)
+                row["slit_table_rows"] = int(len(unit.data))
+                for key in ("SOURCE_ID","SLITID","MSAID","SHUTTER_ID"):
+                    if key in unit.columns.names:
+                        row["unique_"+key.lower()] = [clean(v) for v in np.unique(unit.data[key])[:15]]
             summary["extensions"].append(row)
         summary["has_coadd_SCI"] = "SCI" in h
         summary["has_2d_DQ"] = "DQ" in h and h["DQ"].data is not None

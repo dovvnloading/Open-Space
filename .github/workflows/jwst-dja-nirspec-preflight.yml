@@ -98,6 +98,11 @@ jobs:
         continue-on-error: true
         run: |
           python "$RESULT/followup_probe.py" --out "$RESULT/outputs/runs/$GITHUB_RUN_ID"
+      - name: Same-pipeline interloper injection/recovery diagnostics (not physical posterior)
+        if: github.event_name == 'push'
+        continue-on-error: true
+        run: |
+          python "$RESULT/followup_injections.py" --out "$RESULT/outputs/runs/$GITHUB_RUN_ID"
       - name: Commit observed receipts, compact catalog, 1D fits, and z>12 figures as ONE push
         if: always()
         shell: bash
@@ -127,23 +132,31 @@ jobs:
         run: |
           python - <<'PY'
           import json, pathlib, os
-          p=pathlib.Path(f"results/jwst-dja-nirspec-zgt9-targeted/outputs/runs/{os.environ['GITHUB_RUN_ID']}/run_receipt.json")
-          if not p.exists():
-              raise SystemExit("BLOCKED: no scientific run receipt; leave PR draft")
-          r=json.loads(p.read_text())
-          status=r.get("status","UNKNOWN")
-          print("DJA v4.4 z>9 job:",status)
-          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
-              f.write(f"### DJA v4.4 targeted run: {status}\n\n")
-              f.write("Unvetted 1D proxies only; NO discovery, calibrated posterior or null.\n")
+          out=pathlib.Path(f"results/jwst-dja-nirspec-zgt9-targeted/outputs/runs/{os.environ['GITHUB_RUN_ID']}")
           if os.environ.get("GITHUB_EVENT_NAME") == "push":
-              f=p.parent/"followup_probe.json"
-              if not f.exists():
-                  raise SystemExit("Followup receipt missing; leave PR draft")
-              q=json.loads(f.read_text())
-              if len(q.get("targets",[]))!=9 or q.get("observed_spec_fits",0)!=10:
-                  raise SystemExit("Incomplete nine-target follow-up; leave PR draft")
-              print("Focused nine-target FITS inventory complete; NO native DQ/posterior validation")
-          elif status!="ONE_D_FITS_COMPLETED_VALIDATION_PENDING_NO_DISCOVERY":
-              raise SystemExit("Incomplete downloads/fits; leave PR draft/unmerged")
+              p=out/"followup_probe.json"
+              q=out/"followup_injections.json"
+              if not p.exists() or not q.exists():
+                  raise SystemExit("Focused follow-up output missing; leave PR draft")
+              probe=json.loads(p.read_text()); inj=json.loads(q.read_text())
+              print("Nine-target downloaded:",probe.get("observed_spec_fits"),
+                    "interloper injections:",inj.get("spectra_completed"))
+              if (len(probe.get("targets",[])) != 9 or
+                  probe.get("observed_spec_fits") != 10 or
+                  inj.get("spectra_completed") != 10):
+                  raise SystemExit("Incomplete nine-target data or injections; leave PR draft")
+              with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
+                  f.write("### Nine-target follow-up: observed 10 FITS; 10 injection suites\n\n")
+                  f.write("No integration DQ / photometric physical posterior established.\n")
+          else:
+              p=out/"run_receipt.json"
+              if not p.exists():
+                  raise SystemExit("BLOCKED: no scientific run receipt; leave PR draft")
+              r=json.loads(p.read_text()); status=r.get("status","UNKNOWN")
+              print("DJA v4.4 z>9 job:",status)
+              with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
+                  f.write(f"### DJA v4.4 targeted run: {status}\n\n")
+                  f.write("Unvetted 1D proxies only; NO discovery, calibrated posterior or null.\n")
+              if status!="ONE_D_FITS_COMPLETED_VALIDATION_PENDING_NO_DISCOVERY":
+                  raise SystemExit("Incomplete downloads/fits; leave PR draft/unmerged")
           PY
