@@ -1,0 +1,32 @@
+{
+  "utc": "2026-11-19T08:57:46.548011+00:00",
+  "purpose": "Test anonymous LS DR10 bulk host crossmatch. No screen unless full audited cohort can be frozen.",
+  "tests": [
+    {
+      "name": "tap_cone",
+      "url": "https://datalab.noirlab.edu/tap/sync",
+      "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='datalab.noirlab.edu', port=443): Read timed out. (read timeout=60)\"))",
+      "elapsed_s": 60.19,
+      "query_ok": false
+    },
+    {
+      "name": "tap_upload",
+      "url": "https://datalab.noirlab.edu/tap/sync",
+      "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='datalab.noirlab.edu', port=443): Read timed out. (read timeout=60)\"))",
+      "elapsed_s": 60.16,
+      "query_ok": false
+    },
+    {
+      "name": "query_sql_values",
+      "url": "https://datalab.noirlab.edu/query",
+      "http_status": 200,
+      "bytes": 38,
+      "content_type": "text/html; charset=utf-8",
+      "elapsed_s": 0.24,
+      "sha256": "0e8269abcf7e6d8220ae07bd1639b5c4949ee744d104fe54f899f9b7080d1ff4",
+      "excerpt": "Hello World from queryManager! 2.21.0\n",
+      "query_ok": true
+    }
+  ],
+  "all_sites_responded": false
+}

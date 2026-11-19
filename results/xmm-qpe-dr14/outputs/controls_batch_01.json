@@ -1,0 +1,126 @@
+{
+  "controls": [
+    {
+      "analysis": {
+        "background_baseline_cps": 0.010507,
+        "background_veto": "source BACK1-3 compared locally; FBKTSR not yet independently checked",
+        "bin_s": 300,
+        "binned_good_exposure_h": 20.298,
+        "intervals_h": [
+          11.583
+        ],
+        "n_peaks": 2,
+        "native_bin_s": 1.46,
+        "net_baseline_cps": 0.008893,
+        "peaks": [
+          {
+            "amplitude_vs_quiet": 80.6,
+            "background_rate_cps": 0.01295,
+            "excess_sigma": 13.15,
+            "mjd_tt": 59058.286458,
+            "net_rate_cps": 0.71675,
+            "time_since_first_h": 11.5
+          },
+          {
+            "amplitude_vs_quiet": 344.0,
+            "background_rate_cps": 0.0217,
+            "excess_sigma": 27.06,
+            "mjd_tt": 59058.769097,
+            "net_rate_cps": 3.05924,
+            "time_since_first_h": 23.083
+          }
+        ],
+        "pile_up_status": "NOT VALIDATED",
+        "published_peak_time_match": "NOT VERIFIED (ranges are not individual timestamps)",
+        "published_range_h": [
+          1.5,
+          30.0
+        ],
+        "range_match": true,
+        "span_h": 23.583,
+        "spectral_temperature_evolution": "NOT MEASURED (energy-resolved count rates only)",
+        "status": "recurrence_range_match_preliminary"
+      },
+      "candidate_products": [
+        [
+          "0861910201/pps/P0861910201PNX000SRCTSR8001.FTZ",
+          1083734
+        ]
+      ],
+      "catalog_dec": -10.336339,
+      "catalog_ra": 37.946609,
+      "columns": [
+        "TIME",
+        "RATE",
+        "ERROR",
+        "FRACEXP",
+        "BACKV",
+        "BACKE",
+        "RATE1",
+        "RATE1_ERR",
+        "BACK1V",
+        "BACK1E",
+        "RATE2",
+        "RATE2_ERR",
+        "BACK2V",
+        "BACK2E",
+        "RATE3",
+        "RATE3_ERR",
+        "BACK3V",
+        "BACK3E",
+        "RATE4",
+        "RATE4_ERR",
+        "BACK4V",
+        "BACK4E",
+        "RATE5",
+        "RATE5_ERR",
+        "BACK5V",
+        "BACK5E",
+        "EXP_ID",
+        "TIMEDEL"
+      ],
+      "control": "eRO-QPE1",
+      "detid": "108619102010001",
+      "hduclass2": "NET",
+      "identity": "DR14 position-matched within 12 arcsec; PPS association needs header verification",
+      "lightcurve": {
+        "path": "outputs/control_curve_eRO-QPE1_0861910201.csv",
+        "sha256": "37bd935871ec3e1795864fb27a49a355085f59413ba1d05a639d0cc1b7e7d403"
+      },
+      "mjdref_tt": 50814.0,
+      "obsid": "0861910201",
+      "pps_srcnum": 1,
+      "product_filename": "P0861910201PNX000SRCTSR8001.FTZ",
+      "product_sha256": "39229f8504f66b39f4c576da50f2c7ed097a37bacfd4091a88b42ef3a8f8710f",
+      "published_note": "2020 July 27 XMM1, three overlapping eruptions; do not equate subpeaks with period",
+      "published_period_range_h": [
+        1.5,
+        30.0
+      ],
+      "published_reference": "https://doi.org/10.1038/s41586-021-03394-6",
+      "status": "processed_energy_resolved_net_pn"
+    },
+    {
+      "candidate_products": [],
+      "catalog_dec": -28.766949,
+      "catalog_ra": 210.222195,
+      "control": "eRO-QPE3",
+      "detid": "108837701010005",
+      "identity": "DR14 position-matched within 12 arcsec; PPS association needs header verification",
+      "obsid": "0883770101",
+      "pps_srcnum": 5,
+      "published_note": "2022 July XMM1, two peaks ~20.4 h apart",
+      "published_period_range_h": [
+        16.0,
+        22.0
+      ],
+      "published_reference": "https://doi.org/10.1051/0004-6361/202348881",
+      "status": "no_matching_merged_source_product"
+    }
+  ],
+  "method": "NET PN merged RATE1+2+3, 0.2-2 keV, 300s",
+  "synthetic": {
+    "background_only_fixture_rejected": true,
+    "four_peak_10h_fixture": true
+  }
+}
