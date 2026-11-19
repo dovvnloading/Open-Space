@@ -151,7 +151,7 @@ def main():
            "sdss_pairs_sha256":digest(HOSTS),
            "parent_xray_detections":len(xray),"sdss_matched_detections":len(hmap),
            "sdss_pairs":len(host_rows),
-           "selection_pre_registered":"one clean galaxy match <=2 arcsec; EP_EXTENT <=6 arcsec and EP_EXTENT_ML<4; PN_ONTIME >=21600 s; PN_FLAG<=1; keep soft HR and TSERIES prefilter",
+           "selection_pre_registered":"one clean galaxy match <=2 arcsec; EP_EXTENT <=6 arcsec and EP_EXTENT_ML<4; PN_ONTIME >=21600 s; PN_FLAG 12-character quality mask with no serious bits 7/8/10/11/12, PN_8_CTS>=250; keep soft HR and TSERIES parent prefilter",
            "status":"running","download_receipts":[],
            "blocks":["SDSS footprint incompleteness: LS DR10 inaccessible to runner",
               "No Gaia high-PM/parallax source exclusion, no SIMBAD/4LAC known blazar clearance",
@@ -185,7 +185,8 @@ def main():
                 exp=number(d["PN_ONTIME"])
                 extent=number(d["EP_EXTENT"])
                 extent_ml=number(d["EP_EXTENT_ML"])
-                flag=number(d["PN_FLAG"])
+                flag=norm_id(d["PN_FLAG"]).upper()
+                pncts=number(d["PN_8_CTS"])
                 pileup=number(d["PN_PILEUP"]) if "PN_PILEUP" in det.names else None
                 if len(pairs)!=1:
                     counts["ambiguous_galaxy"]+=1
@@ -196,8 +197,15 @@ def main():
                 if not (exp is not None and exp>=21600):
                     counts["no_long_epic_pn"]+=1
                     continue
-                if not (flag is not None and flag<=1):
-                    counts["pn_flag"]+=1
+                # 4XMM PN_FLAG is 12 chars F/T/- (not an integer);
+                # severe quality bits 7/8/10/11/12 must be unset.
+                # The parent prefilter already requires SUM_FLAG<=1.
+                if not (len(flag)==12 and set(flag)<=set("FT")
+                        and all(flag[j]=="F" for j in (6,7,9,10,11))):
+                    counts["pn_flag_bad_or_missing"]+=1
+                    continue
+                if not (pncts is not None and pncts>=250):
+                    counts["pn_insufficient_counts"]+=1
                     continue
                 x=xray[identifier]; g=pairs[0]
                 rows.append({"detid":identifier,"srcid":x["srcid"],"obs_id":x["obs_id"],
@@ -206,7 +214,7 @@ def main():
                              "host_dec":g["host_dec"],"offset_arcsec":g["offset_arcsec"],
                              "modelmag_r":g["modelmag_r"],
                              "pn_ontime_s":round(exp,1),"ep_extent":round(extent,2),
-                             "ep_extent_ml":round(extent_ml,2),"pn_flag":int(flag),
+                             "ep_extent_ml":round(extent_ml,2),"pn_flag":flag,"pn_8_cts":round(pncts,1),
                              "pn_pileup_diagnostic":pileup,
                              "cts":x["cts"],"hr3":x["hr3"],"hr4":x["hr4"],
                              "score":x["score"]})
