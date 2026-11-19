@@ -66,9 +66,17 @@ jobs:
             phase=$(python -c 'import json; print(json.load(open("results/euclid-dr1-wide-highz-vetting/output/summary.json"))["status"])')
             if [[ "$phase" == SCAN_COMPLETE ]]; then
               set +e
-              python -u "$src/vet.py" &&
-                python -u "$src/image_review.py" &&
+              if [[ -f "$src/output/vetting_status.json" &&
+                    -f "$src/output/image_pixel_receipts.json" &&
+                    -f "$src/output/probability_supported_candidates.json" ]]; then
+                # Reuse persisted network receipts; a referee-only correction
+                # must not repeat bounded external queries.
                 python -u "$src/referee.py"
+              else
+                python -u "$src/vet.py" &&
+                  python -u "$src/image_review.py" &&
+                  python -u "$src/referee.py"
+              fi
               success=$?
               set -e
               save_batch

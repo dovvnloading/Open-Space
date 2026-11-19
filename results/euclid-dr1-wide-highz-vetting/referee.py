@@ -66,7 +66,9 @@ def shape(r):
 
 
 def optical(r):
-    return any((s is not None and s>3) for s in (ratio(r,b) for b in EXT))
+    # The frozen aggregate records three-decimal ground-band SNR values
+    # BEFORE applying its >3 screen. Reproduce the quantization boundary.
+    return any((s is not None and round(s,3)>3) for s in (ratio(r,b) for b in EXT))
 
 
 def main():
