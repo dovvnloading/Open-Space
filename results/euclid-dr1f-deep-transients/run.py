@@ -419,7 +419,7 @@ def analyse_field(field,manifest):
                     np.array([p["x"] for p in hits]),np.array([p["y"] for p in hits]),0)
                 for q,x,y in zip(hits,skyra,skydec):
                     q.update(field=n,band=band,ra_deg=float(x),dec_deg=float(y),
-                             pair_obs_ids=pair["obs_ids"],"status":"UNVETTED_DIFFERENCE_TRIGGER")
+                             pair_obs_ids=pair["obs_ids"],status="UNVETTED_DIFFERENCE_TRIGGER")
                 pair["raw_trigger_count"]=len(hits)
                 pair["top_triggers"]=hits[:8]
                 output["raw_triggers"]+=hits
