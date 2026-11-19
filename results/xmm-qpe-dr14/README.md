@@ -1,6 +1,6 @@
-# 4XMM-DR14 search for X-ray quasi-periodic eruptions — control-only calibration
+# 4XMM-DR14 QPE search — SDSS host audit, failed gated pn-screen pilot
 
-**Current result (19 November 2026):** Known-QPE soft-X-ray recurrence **recovered in six of six selected QPE-active XMM observations**, with **29 of 29 published bright-eruption peak counts overlapped**. This is **not** independently verified flare-level completeness, **not** a new QPE detection, **not** an archive-wide screen of nuclear galaxies and **not** a calibrated null. Draft [PR #205](https://github.com/dovvnloading/Open-Space/pull/205) must **remain draft; do not merge.**
+**Current result (19 November 2026):** Known QPE control recurrence remains **6/6 active XMM epochs** with **29/29 published bright-event peak-count overlap (in-sample; not sensitivity)**. A full **33,488-row** soft/long X-ray prefilter was queried against SDSS DR18: **2,510** clean galaxy-centroid associations within 2 arcsec. A published-MD5-verified, pointlike long-pn catalogue gate froze **1,108 provisional detections in 742 XMM observations**. **Three** pre-registered XSA PPS observations failed at transport; **zero new-source pn light curves were screened**. No independently confirmed new QPE, vetted candidate, calibrated false-positive rate or archive-wide null. [PR #205](https://github.com/dovvnloading/Open-Space/pull/205) remains **DRAFT, not merged**.
 
 ## Measured positive-control recovery
 
@@ -22,16 +22,29 @@ Source-specific XMM PPS merged EPIC-pn `PNX000SRCTSR8###.FTZ` from the XSA, with
 
 The branch continues to use the existing push-triggered [`.github/workflows/xmm-qpe-dr14.yml`](../../.github/workflows/xmm-qpe-dr14.yml) on `research/xmm-qpe-dr14`; source changes are separate batches, and output-only result commits do not recurse. The last job performs a no-network six-control replay. The historical [original pilot outputs](outputs/summary.json) demonstrate only feasibility; **do not interpret their failed control checks as a negative result.**
 
-## Referee decision: not ready for archive survey or merge
+## Gated archive host-screen attempt and referee verdict
 
-The original frozen 4XMM-DR14 prefilter has **33,488 soft/long X-ray detections**; these have **not** been crossmatched to an optically selected, completeness-controlled census of **galaxy nuclei**. No post-control candidate screen has therefore run, and **zero new candidate QPEs have been independently checked**. It would be inaccurate to report no new QPEs *in the catalogue*: the archive has not been searched with validated nuclear-host selection.
+### Auditable cohort freeze
 
-**Required before screening or an eventual merge:** independently align the full set of published eruption timestamps (especially eRO-QPE1's incomplete second peak), validate particle flare GTIs and separate source/background light curves, pile-up and soft spectral/hardness evolution, negative stellar and non-QPE AGN controls, injection/recovery and a false-alarm distribution; freeze host crossmatching and survey completeness; then screen archived nuclear detections using the frozen thresholds and vet candidates against Gaia, host offsets, XMM background variability, TNS, ATel, published QPEs and transient/AGN literature. See [independent referee report](REFEREE.md) and [control recovery audit](outputs/CONTROL_RECOVERY.md).
+- **33,488** eligible soft/long 4XMM detections (original X-ray-only prefilter; not galaxy nuclei) were each queried in 419/419 successful SDSS DR18 SQL batches.
+- **2,510 detections / 2,519 pairs** met the SDSS PhotoPrimary morphological clean primary galaxy nucleus 2-arcsec positional requirement; 9 detections had ambiguous galaxy matches.
+- A checksum-verified 4XMM-DR14 detection FITS, fetched in 60 HTTP 206 range chunks (MD5 47c6bd113cb8510db418665472c81b48), froze **1,108** point-like long-EPIC-pn, PN-photon-count-qualified detections in **742 unique observations** and **897 unique X-ray SRCIDs**. The filter requires a unique SDSS galaxy match, EP_EXTENT<=6 arcsec, EP_EXTENT_ML<4, PN_ONTIME>=21600 s, PN_8_CTS>=250, and clean critical positions in the 12-character PN_FLAG, in addition to the existing soft-hardness/quality cuts. An early zero arising from misparsing PN_FLAG as numeric was **rejected and corrected**. [Receipt](outputs/archive_pn_point_freeze.json).
+- **3 pre-registered PPS observations** (0872392901, 0306630101, 0200730401) were tried in one bounded runner job; all requests failed as ESA XSA closed the connection. **0/742 observations and 0/1,108 new-source pn detections** were actually screened. Zero observed new flags is not an archive null. [PPS failure receipt](outputs/archive_pilot_batch_01.json).
 
-**Coverage exclusions:** AT2019qiz and Ansky have no qualifying QPE-active XMM epoch in this frozen DR14-era control setup; they are **not** counted as false negatives. **No** `[REMARKABLE]` label, `docs/REMARKABLE_FINDINGS.md` entry or merge commit is warranted.
+### Controls, injection and background
+
+- The original frozen soft-band NET PN finder and its threshold JSON are **unchanged**. Six known QPE epochs pass the published recurrence-range control; bright-event 29/29 *count-only*, not all individual published event timestamps.
+- Two-Gaussian quiet-series injections on those same six known-QPE controls recovered both injected event times in **240/324** trials. This is rate-level, not event-list injection or a calibrated survey sensitivity function.
+- Shuffling the actual eruption-containing controls yielded **210/210** recurrent flags; this is **not an independent astrophysical negative-control sample or survey false-positive rate**. The scaled in-source BACK1-3 series gave **0/6** recurrence flags, but no independent off-source region or particle-flare GTI was verified. [Diagnostic details](outputs/archive_statistical_checks.json).
+- The full Legacy Surveys sky, Gaia proper-motion/star veto, 4LAC/SIMBAD blazar clearance, pn event-level pile-up and particle-background screening, non-QPE AGN/TDE/star negative controls, eRASS1/Swift/Chandra and TNS/ATel/literature candidate vetting are **not completed**.
+
+**Independent methodological referee decision: KEEP DRAFT, DO NOT MERGE.** No validated new QPE and no [REMARKABLE] marker or docs/REMARKABLE_FINDINGS.md entry. The remaining 742 provisional XMM observations have no validated new-source pn curves, FDR and sensitivity are undefined, and an archive null or discovery would be unsupported. Full numerators, hashes, run IDs, and blockers are in the [archive audit](outputs/ARCHIVE_SCREEN_AUDIT.md) and [referee report](REFEREE.md).
+
+**Control-scope exclusions:** AT2019qiz and Ansky do not have qualifying QPE-active DR14-era XMM control epochs. They are not scored as failures.
 
 ## Reproduction/evidence
 
 - [Published-count benchmark](https://doi.org/10.1093/rasti/rzad015) (Webbe & Young 2023, Table 1); [eRO-QPE3/4 times](https://doi.org/10.1051/0004-6361/202348881) (Arcodia et al. 2024); [RX fitted peak timing](https://doi.org/10.1051/0004-6361/202450861) (Giustini et al. 2024).
 - [Control batches 1–4](outputs/CONTROL_RECOVERY.md), [PPS receipts](outputs/control_receipts_batch_03.json), [replay](outputs/control_replay.json), and [strict frozen selection](outputs/frozen_selection.json).
-- [PR #205](https://github.com/dovvnloading/Open-Space/pull/205) for the run history and the explicit draft review status.
+- [Final host/pn gate](outputs/archive_pn_point_freeze.json), [SDSS crossmatch receipt](outputs/archive_sdss_receipt_00000_33488.json), [surrogate injection/shuffle controls](outputs/archive_statistical_checks.json), [PPS pilot failure](outputs/archive_pilot_batch_01.json), [machine admission decision](outputs/archive_screen_gate.json), and [full runner audit](outputs/ARCHIVE_SCREEN_AUDIT.md).
+- [PR #205](https://github.com/dovvnloading/Open-Space/pull/205) for run history and explicit draft status.
