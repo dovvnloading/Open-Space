@@ -29,7 +29,7 @@ def read_image(path):
             data = data[0]  # T of T,Q,U maps
         if data.ndim != 2:
             raise ValueError(f"Unexpected FITS image dimensions: {path}")
-        return data.copy(), wcs.to_header(relax=True).tostring(sep="\\n", padding=False), wcs
+        return data.copy(), wcs.to_header(relax=True).tostring(sep="\n", padding=False), wcs
 
 
 def main():
@@ -45,8 +45,12 @@ def main():
     p.add_argument("--threshold", type=float, default=7.0)
     args = p.parse_args()
     ref_receipt = json.loads(args.reference_receipt.read_text())
-    if args.obs_id not in ref_receipt.get("excluded_map_ids", []):
-        p.error("Reference has not documented exclusion of observation")
+    if args.obs_id not in ref_receipt.get("excluded_map_ids", []) or ref_receipt.get("leave_one_out") is not True:
+        p.error("Reference has not documented an observation-excluded coadd")
+    if ref_receipt.get("reference_map_sha256") != digest(args.reference):
+        p.error("Reference coadd does not match checksum in its exclusion receipt")
+    if ref_receipt.get("reference_ivar_sha256") != digest(args.reference_ivar):
+        p.error("Reference inverse variance does not match its exclusion receipt")
     beam = json.loads(args.beam_receipt.read_text())
     if beam.get("kind") != "measured_ACT_beam" or beam.get("psf_sha256") != digest(args.psf):
         p.error("Missing or mismatched measured ACT beam receipt")
@@ -89,7 +93,7 @@ def main():
         "valid_rate_limit": False,
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\\n")
+    args.out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
     print(json.dumps({k: v for k, v in payload.items() if k != "white_positive_peaks"}, indent=2))
     print("Uncalibrated peaks:", len(positions))
 
