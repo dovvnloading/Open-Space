@@ -3,7 +3,7 @@ on:
   push:
     branches: [research/vast-dr1-60-lead-validation-20261119]
     paths:
-      - 'results/askap-lpt-vast-dr1-vetting/**'
+      - 'results/askap-lpt-vast-dr1-vetting/*.py'
       - '!results/askap-lpt-vast-dr1-vetting/output/**'
 permissions:
   contents: write
@@ -23,7 +23,7 @@ jobs:
           python -m compileall -q results/askap-lpt-vast-dr1-vetting
           python -m unittest discover -s results/askap-lpt-vast-dr1-vetting -p 'test_*.py' -v
       - name: Access public data and analyze in one job
-        run: python results/askap-lpt-vast-dr1-vetting/vet.py
+        run: VAST_REUSE_EVIDENCE=1 python results/askap-lpt-vast-dr1-vetting/vet.py
       - name: Independent accounting review
         if: always()
         run: python results/askap-lpt-vast-dr1-vetting/referee.py

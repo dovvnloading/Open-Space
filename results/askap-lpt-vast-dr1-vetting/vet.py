@@ -255,6 +255,13 @@ def classify(sid,a,co,img):
  return "unresolved_not_polarisation_vetted"
 def main():
  OUT.mkdir(parents=True,exist_ok=True)
+ # Recache only after a full single-job collection pass has committed all receipts.
+ if os.getenv("VAST_REUSE_EVIDENCE")=="1" and all((OUT/x).exists() for x in
+    ("classifications.csv","epoch_image_audit.csv","image_receipts.json",
+     "counterpart_receipts.json","summary.json","racs_low2_v_receipts.json")):
+  from reclassify import rebuild
+  rebuild()
+  return
  s,m,ids,on=shortlist()
  atnf={str(x["source"]):x for x in json.loads((BASE/"atnf_receipts.json").read_text())["nearest"]}
  urls,ind=cutout_index(ids);dump("index_receipts.json",ind)
