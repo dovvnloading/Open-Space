@@ -48,12 +48,22 @@ def main():
         # JPL model parameters are in au/d^2, not 10^-8 au/d^2.
         jpl=[x*1e8 for x in jpl]
     else: jpl=None
+    jpl_norm=math.sqrt(sum(x*x for x in jpl)) if jpl else None
+    jpl_direction=[x/jpl_norm for x in jpl] if jpl_norm else None
+    ind_direction=[x/norm for x in coeff]
+    angular_separation=math.degrees(math.acos(max(-1.,min(1.,
+        sum(x*y for x,y in zip(ind_direction,jpl_direction)))))) if jpl_direction else None
     comparisons={"independent_inverse_square_A_1e8_au_d2":coeff,
         "independent_formal_sigma_1e8_au_d2":sigma,
         "independent_norm_1e8_au_d2":norm,
-        "independent_direction_RTN_unit":[x/norm for x in coeff],
+        "independent_direction_RTN_unit":ind_direction,
         "jpl_model_parameters":pars,
         "jpl_A_1e8_au_d2":jpl,
+        "jpl_norm_1e8_au_d2":jpl_norm,
+        "jpl_direction_RTN_unit":jpl_direction,
+        "direction_difference_degrees":angular_separation,
+        "jpl_solution_data_arc":"Temporary JWST support fit #55: 117 observations 2025-10-03 to 2026-10-16 (a different sample from public MPC 80-column arc through 2026-04-14).",
+        "jpl_force_law":"JPL #55 ALN=1, exponent NM=2, NN=0, NK=0 and fitted delayed peak DT; not an identical zero-delay fit.",
         "jpl_minus_independent_A_1e8_au_d2":[jpl[i]-coeff[i] for i in range(3)] if jpl else None,
         "warning":"JPL delayed peak DT (when present) and different weighting/systematics are not fitted by our symmetric r^-2 model. Formal sigmas are not a systematic error budget."}
     dump("jpl_comparison.json",comparisons)
@@ -82,11 +92,11 @@ def main():
                     "kg_s":value,"kind":row["kind"],"reference":row["reference"],
                     "note":row["note"]})
             elif species=="OH":
-                qwater=q*1.1
+                qwater=q/0.84
                 value=qwater*MOLECULE_KG["H2O"]
                 kg_s+=value
                 gas_members.append({"species":"H2O_from_OH_proxy","q_OH_s":q,
-                    "assumed_H2O_to_OH_factor":1.1,"kg_s":value,
+                    "assumed_H2O_to_OH_factor":1./0.84,"kg_s":value,
                     "reference":row["reference"],"kind":row["kind"]})
         a_RTN=[x*1e-8*AU_M/(DAY_S*DAY_S)/r**2 for x in coeff]
         a=math.sqrt(sum(x*x for x in a_RTN))
@@ -130,8 +140,9 @@ def main():
             "sum_species_limit":"Only listed contemporaneous gas fluxes; unmeasured species and distributed ice sources are not constrained.",
             "direction_limit":"Q data provide no jet direction; eta applies to the vector sum and can be near zero even if gas is abundant.",
             "model_limit":"Symmetric r^-2 RTN independent fit; JPL has delayed response; outburst timing is sparse."},
-        "example_eta_at_500m_s_density500":{k:fid(k,R)["minimum_efficiency_needed"] if fid(k,R) else None
-                 for k,R in [("jwst_aug06",.42),("jwst_aug06",1.3),
+        "example_eta_at_500m_s_density500":{f"{k}_R{R}":fid(k,R)["minimum_efficiency_needed"] if fid(k,R) else None
+                 for k,R in [("jwst_aug06_nuclear",.42),("jwst_aug06_nuclear",1.3),
+                     ("jwst_aug06",.42),("jwst_aug06",1.3),
                     ("juice_nov02",.42),("juice_nov02",1.3),
                     ("jwst_dec23",.42),("jwst_dec23",1.3)]}}
     dump("summary.json",summary)
@@ -146,17 +157,19 @@ def main():
         "",
         f"Fitted unit RTN direction: {comparisons['independent_direction_RTN_unit']}. The nongravitational acceleration at heliocentric distance r is fitted as A/r^2.",
         "",
+        f"JPL #55: RTN coefficients {comparisons['jpl_A_1e8_au_d2']} with DT={pars.get('DT',{}).get('value')} days; the vectors differ by {angular_separation:.1f} degrees. JPL's 117 positions (2025 Oct 3–2026 Oct 16) are **not** our MPC sample (2025 May–2026 Apr), so this angular difference cannot be interpreted as a physical conflict.",
+        "",
         "### Flux-to-recoil scenario (density 500 kg/m^3; 500 m/s; fully collimated efficiency eta <= 1)",
         "",
         "| Gas measurement epoch | Radius (km) | Required eta | Magnitude possible at eta <= 1? |",
         "| --- | ---: | ---: | --- |",
     ]
-    for k in ["jwst_aug06","juice_nov02","jwst_dec23"]:
+    for k in ["jwst_aug06_nuclear","jwst_aug06","juice_nov02","jwst_dec23"]:
         for R in [.42,1.3]:
             g=fid(k,R)
             if g:
                 report.append(f"| {k} | {R:.2f} | {g['minimum_efficiency_needed']:.3g} | {'Yes' if g['magnitude_feasible_at_eta_le_1'] else 'No'} |")
-    report += ["","The numerical grid also covers 0.22–2.8 km radii, 300–1000 kg/m^3 densities and 200–1000 m/s exhaust speeds. A 'No' in one row is **not** proof of excess acceleration; missing gas species, uncertain active fraction, a smaller nucleus or alternative gas speeds remain possible.","",
+    report += ["","The JWST near-nucleus and terminal-coma Aug 6 inputs are **alternative** extraction scenarios, not additive gas sources; both use the same observation date.","","The numerical grid also covers 0.22–2.8 km radii, 300–1000 kg/m^3 densities and 200–1000 m/s exhaust speeds. A 'No' in one row is **not** proof of excess acceleration; missing gas species, uncertain active fraction, a smaller nucleus or alternative gas speeds remain possible.","",
       "Scalar measured Q cannot establish the radial, transverse and normal momentum vector: observed gas jets and nucleus spin/orientation would be needed. Large-aperture OH can arise from distributed icy grains. A fit with fixed r^-2 cannot resolve perihelion asymmetry, and fitting uncertainty is not exclusively statistical.",
       "","Detailed values: [orbit.json](orbit.json), [jpl_comparison.json](jpl_comparison.json), [recoil_epochs.json](recoil_epochs.json), [recoil_grid.json](recoil_grid.json) and [retrieval receipts](retrieval_receipts.json).",
       ""]

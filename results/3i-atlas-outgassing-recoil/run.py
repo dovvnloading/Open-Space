@@ -225,6 +225,20 @@ def run_orbit():
             except Exception as e:
                 fits[law]={"error":str(e),"traceback":traceback.format_exc()[-2500:]}
                 print("FIT FAILED",law,str(e),flush=True)
+        # Separate pre/post-perihelion coefficient fits probe activity-law
+        # stationarity with the SAME publicly sampled positions and rules.
+        if "state_ssb_icrf" in fits.get("r2_rtn",{}):
+            for key,side in [("preperi_r2_rtn",t<2460977.5),
+                             ("postperi_r2_rtn",t>=2460977.5)]:
+                try:
+                    p=np.array(fits["r2_rtn"]["state_ssb_icrf"])
+                    fits[key]=model_fit(key,p,epoch,t,observers,east,north,
+                                        sigma,positions,side,r2,old_water)
+                    print("SPLIT",key,fits[key]["fit_count"],
+                          fits[key]["radial_transverse_normal_A_1e8_au_d2"],
+                          flush=True)
+                except Exception as e:
+                    fits[key]={"error":str(e),"traceback":traceback.format_exc()[-2500:]}
         # Temporal validation is genuinely withheld: latest ten percent by
         # receipt epoch, *not* included in fitting or clipping.
         if "state_ssb_icrf" in fits.get("r2_rtn",{}):
