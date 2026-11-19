@@ -66,3 +66,10 @@ The [all-beam checkpoint pipeline](beam_followup.py) reuses the [PR #211 SIA-to-
 
 **Referee gates are fail-closed:** A missing image, timeout or capped Legacy response is *unknown*, not counterpart-free; single-dish beam proximity does not establish an HI host. A genuine starless classification requires verified full four-band imaging/masks, blind extended-light injection completeness, host association and H I cube/RFI/tidal/HVC/confusion vetting and robust stellar SED/dust/distance modelling. The previous **1,375-position footprint census is unchanged**. Until these validations pass the PR remains draft and no `[REMARKABLE]` finding may be logged. Current checkpoint counts: [full-beam referee](output/full_beam_referee.json) and [status](output/beam_followup_status.json).
 
+<!-- BEGIN ALL-BEAM FOLLOWUP -->
+## All-position S3/HATS follow-up (independent status)
+
+Processed **8/1375** H I catalogue-entry beams in checkpoint batches (complete: **false**). DESI DR1 beam/velocity associations: **0**; Legacy DR10 photo-z credible-range associations: **0**; Euclid HATS accessed at **8** positions; **0** have four-band native MER pixels spanning one complete single-dish beam. Per-band full beam pixel counts: {'VIS': 0, 'Y': 0, 'J': 0, 'H': 0}. Local masked-injection 90% recovery estimates: {'VIS': 0, 'Y': 0, 'J': 0, 'H': 0}. Conditional mass scenarios: **0**, **none** validated. Four-band pixel positions lacking these redshift associations: **0**, unvetted rather than proven starless.
+
+**Independent verdict:** zero validated starless galaxies, zero defensible Mstar upper limits or gas/stellar bounds; HI RFI, cubes, tidal environment, confusion, per-image quality flags and stellar SED priors prevent a physical discovery or a statistical incidence upper bound. **Remain draft; no [REMARKABLE] tag.** See [machine referee](output/full_beam_referee.json) and [per-position compressed batches](output/beam_batches/).
+<!-- END ALL-BEAM FOLLOWUP -->

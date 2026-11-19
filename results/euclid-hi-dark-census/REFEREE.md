@@ -20,3 +20,11 @@ The final independent inspection used [run #44488561210](https://github.com/dovv
 **PASS:** catalogue download provenance; all-row position/beam–MOC screen; transparent fixed numeric thresholds; source-level statuses and missing-data handling; one branch-only path-scoped data job; no unsupported discovery label. **FAIL:** physical classification and sensitivity completeness. A zero in the field `confirmed_starless_HI_galaxies` means **zero validated discoveries from this pipeline**, not zero starless galaxies in Euclid and not an incidence confidence interval.
 
 For a defensible full study: deduplicate overlapping HI beams using redshift/uncertainty, verify native VIS/NISP coverage and flags for *every* surviving beam, perform forced multi-scale source+blank-aperture photometry and injection tests, infer Mstar limits over SED/distance uncertainties, crossmatch DESI/SDSS/photo-z, and inspect H I cube/line-profile, RFI, velocity-matched environment, resolved gas geometry, and previous literature for each potentially starless target. Only then consider scientific null rate or `[REMARKABLE]`.
+
+<!-- BEGIN ALL-BEAM FOLLOWUP -->
+## All-position S3/HATS follow-up (independent status)
+
+Processed **8/1375** H I catalogue-entry beams in checkpoint batches (complete: **false**). DESI DR1 beam/velocity associations: **0**; Legacy DR10 photo-z credible-range associations: **0**; Euclid HATS accessed at **8** positions; **0** have four-band native MER pixels spanning one complete single-dish beam. Per-band full beam pixel counts: {'VIS': 0, 'Y': 0, 'J': 0, 'H': 0}. Local masked-injection 90% recovery estimates: {'VIS': 0, 'Y': 0, 'J': 0, 'H': 0}. Conditional mass scenarios: **0**, **none** validated. Four-band pixel positions lacking these redshift associations: **0**, unvetted rather than proven starless.
+
+**Independent verdict:** zero validated starless galaxies, zero defensible Mstar upper limits or gas/stellar bounds; HI RFI, cubes, tidal environment, confusion, per-image quality flags and stellar SED priors prevent a physical discovery or a statistical incidence upper bound. **Remain draft; no [REMARKABLE] tag.** See [machine referee](output/full_beam_referee.json) and [per-position compressed batches](output/beam_batches/).
+<!-- END ALL-BEAM FOLLOWUP -->
