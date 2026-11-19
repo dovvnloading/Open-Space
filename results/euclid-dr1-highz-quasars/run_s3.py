@@ -279,7 +279,9 @@ def main():
     (OUT/"partitions.json").write_text(json.dumps(records,indent=2)+"\n")
     (OUT/"source_receipts.json").write_text(json.dumps(raws,indent=2)+"\n")
     # CSV of all broad colour rows (not raw HATS bytes); audit of all selected rows.
-    columns=["object_id","ra","dec","_table","_field","vis_det","flux_y_3fwhm_aper",
+    columns=["object_id","ra","dec","_table","_field","vis_det",
+       "flux_vis_3fwhm_aper","fluxerr_vis_3fwhm_aper",
+       "flux_y_3fwhm_aper",
        "fluxerr_y_3fwhm_aper","flux_j_3fwhm_aper","fluxerr_j_3fwhm_aper",
        "flux_h_3fwhm_aper","fluxerr_h_3fwhm_aper","ellipticity","spurious_prob",
        "flag_j","flag_h"]

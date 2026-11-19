@@ -6,6 +6,7 @@ on:
     paths:
       - 'results/euclid-dr1-highz-quasars/run.py'
       - 'results/euclid-dr1-highz-quasars/run_s3.py'
+      - 'results/euclid-dr1-highz-quasars/referee.py'
       - 'results/euclid-dr1-highz-quasars/freeze.json'
       - 'results/euclid-dr1-highz-quasars/tests.py'
       - '.github/workflows/euclid-dr1-highz-quasars.yml'
@@ -30,10 +31,12 @@ jobs:
           python -m pip install 'requests>=2.31,<3' 'numpy>=2' 'pyarrow>=20' 'astropy>=6' 'astropy-healpix>=1.1'
           python -m unittest discover -s results/euclid-dr1-highz-quasars -p 'tests.py' -v
           sha256sum results/euclid-dr1-highz-quasars/freeze.json results/euclid-dr1-highz-quasars/run.py results/euclid-dr1-highz-quasars/run_s3.py
-          python -m py_compile results/euclid-dr1-highz-quasars/run_s3.py
+          python -m py_compile results/euclid-dr1-highz-quasars/run_s3.py results/euclid-dr1-highz-quasars/referee.py
       - name: Read public DR1-F HATS/Parquet S3 partitions and compute same frozen cone screen
         timeout-minutes: 28
-        run: python -u results/euclid-dr1-highz-quasars/run_s3.py
+        run: |
+          python -u results/euclid-dr1-highz-quasars/run_s3.py
+          python -u results/euclid-dr1-highz-quasars/referee.py
       - name: Upload all raw responses and receipts even on failure
         if: always()
         uses: actions/upload-artifact@v4
