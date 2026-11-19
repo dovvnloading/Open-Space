@@ -1,0 +1,82 @@
+name: ACT preregistered pa4/f150 2018 science-pixel pilot
+on:
+  push:
+    branches: [research/act-dr6-mm-transient-search]
+    paths:
+      - 'results/act-dr6-mm-transients/PREREGISTRATION.md'
+      - 'results/act-dr6-mm-transients/run_preregistered_field.py'
+      - '.github/workflows/act-dr6-field-search.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: act-fixed-f150-pilot-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  science-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile, exercise synthetic controls and preserve preregistration
+        run: |
+          python -m pip install 'numpy>=2.0' 'scipy>=1.12' 'astropy>=6'
+          python -m compileall -q results/act-dr6-mm-transients
+          python -m unittest discover -s results/act-dr6-mm-transients -p 'test_*.py' -v
+          sha256sum results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz
+          cat results/act-dr6-mm-transients/PREREGISTRATION.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Read actual FITS science and ivar pixels, build disjoint-night reference and controls
+        timeout-minutes: 29
+        run: |
+          python -u results/act-dr6-mm-transients/run_preregistered_field.py > act-science-pilot-console.log 2>&1 || {
+            cat act-science-pilot-console.log
+            exit 1
+          }
+          tail -n 100 act-science-pilot-console.log
+      - name: Report explicit remaining scientific gates
+        if: always()
+        shell: bash
+        run: |
+          if [ -f results/act-dr6-mm-transients/science-pilot-receipt.json ]; then
+            python - <<'PY'
+          import json, os
+          x=json.load(open("results/act-dr6-mm-transients/science-pilot-receipt.json"))
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
+              f.write("\n### ACT real-pixel pilot (not a discovery / not a rate limit)\n")
+              for k in ("num_test_rows","num_reference_rows","num_test_maps_science_pixels","num_reference_maps_science_pixels","blocker","effective_area_time_deg2_days","rate_limit","discovery"):
+                  f.write(f"- {k}: {x.get(k)}\n")
+          PY
+          else
+            echo 'No science receipt was emitted; the run failed before completing the attempt.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Preserve code-produced receipts and raw log, including errors
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: act-preregistered-2018-real-science-pilot
+          path: |
+            results/act-dr6-mm-transients/science-pilot-receipt.json
+            act-science-pilot-console.log
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Commit evidence back to same research branch (never update merged PR)
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin "$GITHUB_REF_NAME"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse "origin/$GITHUB_REF_NAME")" || {
+            echo 'Research branch changed during run; do not commit stale receipt.'
+            exit 0
+          }
+          test -f results/act-dr6-mm-transients/science-pilot-receipt.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/act-dr6-mm-transients/science-pilot-receipt.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'research(act): record real-pixel preregistered pilot and open validity gates'
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
