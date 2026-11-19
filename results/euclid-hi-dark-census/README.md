@@ -59,3 +59,10 @@ These cases are **comparison examples, not newly reidentified objects in our sel
 The independent critical assessment is in [REFEREE.md](REFEREE.md). **Disposition: measured and reproducible footprint eligibility only; no `[REMARKABLE]` tag or findings-log entry.** The decisive next experiment is all-position forced VIS/NISP/Legacy/unWISE imaging with injections and per-band masks, then redshift/environment/HI-cube checks for genuinely counterpart-free sources.
 
 **Euclid credit:** This work has made use of the Data Release (DR1) data from the Euclid mission of the European Space Agency (ESA). This study also uses archival publicly released Arecibo ALFALFA, FAST FASHI and ASKAP WALLABY data.
+
+## All-position networked follow-up initiated
+
+The [all-beam checkpoint pipeline](beam_followup.py) reuses the [PR #211 SIA-to-S3 FITS range-read method](https://github.com/dovvnloading/Open-Space/pull/211) and the public Euclid DR1 HATS Parquet collections, with DESI DR1 spectra and Legacy DR10 photo-z keyed joins. Batches are individually hashed, committed, and independently replayed; generated output paths do not trigger Actions. It attempts native VIS/Y/J/H pixels over the full nominal HI beam (rather than a 7–25 arcsec thumbnail) and masked, local exponential-profile injections at effective radii 2, 5, 10 and 20 arcsec. Photo-z matches and conditional stellar-mass scenarios are separately labelled as model-dependent, **not validated bounds**.
+
+**Referee gates are fail-closed:** A missing image, timeout or capped Legacy response is *unknown*, not counterpart-free; single-dish beam proximity does not establish an HI host. A genuine starless classification requires verified full four-band imaging/masks, blind extended-light injection completeness, host association and H I cube/RFI/tidal/HVC/confusion vetting and robust stellar SED/dust/distance modelling. The previous **1,375-position footprint census is unchanged**. Until these validations pass the PR remains draft and no `[REMARKABLE]` finding may be logged. Current checkpoint counts: [full-beam referee](output/full_beam_referee.json) and [status](output/beam_followup_status.json).
+
