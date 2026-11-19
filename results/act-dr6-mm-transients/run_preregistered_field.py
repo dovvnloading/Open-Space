@@ -274,6 +274,17 @@ def to_float(v):
     return float(v) if v is not None and np.isfinite(v) else None
 
 
+
+def checkpoint(result, stage):
+    # If an Actions runner times out, preserve exactly which science bytes and
+    # failures were observed; a partial checkpoint is not a completed search.
+    result["run_stage"] = stage
+    dst = BASE / "science-pilot-receipt.json"
+    part = BASE / "science-pilot-receipt.json.partial"
+    part.write_text(json.dumps(result, indent=2, sort_keys=True, allow_nan=False)+"\\n")
+    part.replace(dst)
+
+
 def analyse(tests, refs, aperture):
     result = {"classification": "actual_fits_byte_range_pilot_not_calibrated_survey",
               "utc": datetime.now(timezone.utc).isoformat(),
@@ -299,6 +310,7 @@ def analyse(tests, refs, aperture):
         result["reference_observations"].append(rec)
         resrefs.append((rec, pair))
         print("REF", rec["map_name"], rec["status"], flush=True)
+        checkpoint(result, "references_in_progress")
     reference, reference_ivar, nightly = ref_coadd(resrefs)
     result["controls"]["reference_nights_with_science_pixels"] = [day for day, _, _ in (nightly or [])]
     result["controls"]["reference_leave_out_entire_test_epoch"] = True
@@ -308,6 +320,8 @@ def analyse(tests, refs, aperture):
         result["test_observations"].append(rec)
         testpairs.append((rec, pair))
         print("TEST", rec["map_name"], rec["status"], flush=True)
+        checkpoint(result, "observations_in_progress")
+    checkpoint(result, "before_reference_and_beam_controls")
     result["num_test_maps_science_pixels"] = sum(p is not None for _, p in testpairs)
     result["num_reference_maps_science_pixels"] = sum(p is not None for _, p in resrefs)
     if reference is None or not np.any(reference_ivar > 0):
@@ -390,6 +404,7 @@ def analyse(tests, refs, aperture):
     result["injections"] = {"kind": "actual_observation_pixels_coadd_beam_provisional",
                             "factors_white_noise_sigma": [6,8,10,15],
                             "seed": 192, "not_validated_survey_selection_function": True}
+    checkpoint(result, "finished_provisional_not_survey_validated")
     return result
 
 
