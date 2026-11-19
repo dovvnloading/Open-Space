@@ -35,10 +35,36 @@ for name, val in stat["public_catalogue_status"].items():
         assert name not in ("TNS","CHIME") or all(
             r["family"] not in (("TNS_OPTICAL","TNS_TDE_LONG") if name=="TNS" else ("CHIME_FRB",))
             for r in new)
+# Independently recompute each published count from the frozen, time-filtered
+# source positions with a vector-dot-product sphere formula (not the discovery
+# implementation's haversine function). Recompute the entire 999-sky null.
+import random
+with (ROOT/"temporal_parent_sample.csv").open() as f:
+    parents=list(csv.DictReader(f))
+assert len(parents)==sum(d["temporal_parent_count"] for d in stat["families"].values())
+def dot_dist(ref_ra, ref_dec, row):
+    a,b,c,d=map(math.radians,(ref_ra,ref_dec,float(row["ra"]),float(row["dec"])))
+    x=math.sin(b)*math.sin(d)+math.cos(b)*math.cos(d)*math.cos(a-c)
+    return math.degrees(math.acos(max(-1.,min(1.,x))))
+shifter=random.Random(230213)
+shifts=[shifter.uniform(6.5,353.5) for _ in range(999)]
+for fam, fstat in stat["families"].items():
+    entries=[r for r in parents if r["family"]==fam]
+    assert len(entries)==fstat["temporal_parent_count"]
+    obs=sum(dot_dist(94.3,-7.8,r)<=3 for r in entries)
+    assert obs==fstat["observed_in_3deg"]
+    counts=[sum(dot_dist((94.3+delta)%360,-7.8,r)<=3 for r in entries) for delta in shifts]
+    assert min(counts)==fstat["skyshift_min_count"]
+    assert max(counts)==fstat["skyshift_max_count"]
+    assert counts.count(0)==fstat["skyshift_n_zero"]
+    assert abs((1+sum(x<=obs for x in counts))/1000-fstat["p_shift_count_le_observed"]) < 5.1e-7
+    assert abs((1+sum(x>=obs for x in counts))/1000-fstat["p_shift_count_ge_observed"]) < 5.1e-7
+    assert abs(sum(counts)/len(counts)-fstat["empirical_mean_count"])<0.00001
+
 assert receipts["controls"]["valid_shifts"]==999
 out={"referee_status":"PASS_WITH_STRICT_SCOPE_LIMITATIONS","known_entries_replayed":len(replay),
      "catalogue_matches":len(new),"family_counts":{k:v["observed_in_3deg"] for k,v in stat["families"].items()},
-     "files_checked":["known_17.csv","known_replay.csv","new_associations.csv",
+     "files_checked":["known_17.csv","known_replay.csv","new_associations.csv","temporal_parent_sample.csv",
                       "control_statistics.json","retrieval_receipts.json"],
      "unvalidated":["catalogue completeness","survey sky-exposure/footprints",
                     "original optical onset/peak and forced photometry",
