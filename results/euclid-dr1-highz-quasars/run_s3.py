@@ -265,7 +265,7 @@ def main():
        "sources_satisfying_broad_NIR_VIStable_colours":len(found),
        "strict_colour_shape_proxy_count":len(strict),
        "strict_shortlist_count":len(shortlist),
-       "strict_unvetted_beyond_shortlist":max(0,len(strict)-len(shortlist),
+       "strict_unvetted_beyond_shortlist":max(0,len(strict)-len(shortlist)),
        "rejection_flags_not_disjoint":reject,
        "known_quasars":controls_result,
        "discovery_level":False,"confirmed_new_quasars":0,
