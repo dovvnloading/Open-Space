@@ -1,0 +1,56 @@
+name: Euclid DR1-F control-first reselection (one networked job)
+on:
+  push:
+    branches:
+      - research/euclid-dr1-control-recovery
+    paths:
+      - 'results/euclid-dr1-control-recovery/**'
+      - '!results/euclid-dr1-control-recovery/output/**'
+      - '!results/euclid-dr1-control-recovery/README.md'
+      - '!results/euclid-dr1-control-recovery/REFEREE.md'
+      - '.github/workflows/euclid-dr1-control-recovery.yml'
+
+permissions:
+  contents: write
+concurrency:
+  group: euclid-dr1-control-first-recovery
+  cancel-in-progress: false
+
+jobs:
+  data-and-computation:
+    if: github.ref == 'refs/heads/research/euclid-dr1-control-recovery'
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install data libraries
+        run: |
+          python -m pip install 'requests>=2.31,<3' 'numpy>=2,<3' 'pyarrow>=20' 'astropy>=6' 'astropy-healpix>=1.1' 'fsspec>=2025' 's3fs>=2025'
+      - name: Replay old selection on matched controls from source Parquet
+        run: |
+          python -u results/euclid-dr1-control-recovery/control_audit.py
+      - name: Checkpoint audit results on this branch
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/euclid-dr1-control-recovery/output
+          if ! git diff --cached --quiet; then
+            git commit -m 'research(euclid): raw control diagnostic receipts'
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
+      - name: Preserve receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: euclid-dr1-control-first-audit
+          path: results/euclid-dr1-control-recovery/output/
+          retention-days: 30
+          if-no-files-found: warn
