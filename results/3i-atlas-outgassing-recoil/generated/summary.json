@@ -1,0 +1,115 @@
+{
+  "fit": {
+    "independent_inverse_square_A_1e8_au_d2": [
+      1.8563398977971597,
+      3.864825899595547,
+      -0.7445122491566394
+    ],
+    "independent_formal_sigma_1e8_au_d2": [
+      0.31474096183598016,
+      0.24040713090394644,
+      0.022822371371143825
+    ],
+    "independent_norm_1e8_au_d2": 4.351686516683202,
+    "independent_direction_RTN_unit": [
+      0.42657941712493513,
+      0.8881213949531609,
+      -0.17108591032519888
+    ],
+    "jpl_model_parameters": {
+      "A1": {
+        "value": 4.618075728659534e-08,
+        "sigma": 4.838e-09,
+        "units": "au/d^2",
+        "kind": "EST"
+      },
+      "A2": {
+        "value": -9.559184898971008e-09,
+        "sigma": 2.012e-09,
+        "units": "au/d^2",
+        "kind": "EST"
+      },
+      "A3": {
+        "value": -8.294590264785863e-09,
+        "sigma": 1.651e-09,
+        "units": "au/d^2",
+        "kind": "EST"
+      },
+      "DT": {
+        "value": 28.46530795960495,
+        "sigma": 9.195,
+        "units": "d",
+        "kind": "EST"
+      }
+    },
+    "jpl_A_1e8_au_d2": [
+      4.618075728659534,
+      -0.9559184898971008,
+      -0.8294590264785864
+    ],
+    "jpl_norm_1e8_au_d2": 4.788361501763233,
+    "jpl_direction_RTN_unit": [
+      0.9644375695024291,
+      -0.19963373474310578,
+      -0.1732239777997447
+    ],
+    "direction_difference_degrees": 74.70752258528613,
+    "jpl_solution_data_arc": "Temporary JWST support fit #55: 117 observations 2025-10-03 to 2026-10-16 (a different sample from public MPC 80-column arc through 2026-04-14).",
+    "jpl_force_law": "JPL #55 ALN=1, exponent NM=2, NN=0, NK=0 and fitted delayed peak DT; not an identical zero-delay fit.",
+    "jpl_minus_independent_A_1e8_au_d2": [
+      2.7617358308623743,
+      -4.820744389492648,
+      -0.084946777321947
+    ],
+    "warning": "JPL delayed peak DT (when present) and different weighting/systematics are not fitted by our symmetric r^-2 model. Formal sigmas are not a systematic error budget."
+  },
+  "n_production_entries": 38,
+  "n_epoch_groups": 21,
+  "n_grid_rows": 1134,
+  "physical_limits": {
+    "radii_km": [
+      0.22,
+      0.42,
+      0.6,
+      1.1,
+      1.3,
+      1.5,
+      2.8
+    ],
+    "rho_kg_m3": [
+      300,
+      500,
+      1000
+    ],
+    "exhaust_speed_m_s": [
+      200,
+      500,
+      1000
+    ],
+    "momentum_efficiency_sample": [
+      0.1,
+      0.3,
+      0.5,
+      1.0
+    ],
+    "mass_basis": "spherical uniform density",
+    "required_RTN_direction": [
+      0.42657941712493513,
+      0.8881213949531609,
+      -0.17108591032519888
+    ],
+    "sum_species_limit": "Only listed contemporaneous gas fluxes; unmeasured species and distributed ice sources are not constrained.",
+    "direction_limit": "Q data provide no jet direction; eta applies to the vector sum and can be near zero even if gas is abundant.",
+    "model_limit": "Symmetric r^-2 RTN independent fit; JPL has delayed response; outburst timing is sparse."
+  },
+  "example_eta_at_500m_s_density500": {
+    "jwst_aug06_nuclear_R0.42": 0.3048874446480626,
+    "jwst_aug06_nuclear_R1.3": 9.041109435965254,
+    "jwst_aug06_R0.42": 0.16577348353160296,
+    "jwst_aug06_R1.3": 4.915834457927488,
+    "juice_nov02_R0.42": 0.04868242931480467,
+    "juice_nov02_R1.3": 1.44362511074163,
+    "jwst_dec23_R0.42": 0.13809693606706597,
+    "jwst_dec23_R1.3": 4.095116193436778
+  }
+}

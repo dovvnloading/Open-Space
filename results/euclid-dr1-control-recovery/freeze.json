@@ -1,0 +1,26 @@
+{
+  "selection_id": "euclid-dr1-f-control-recovery-v1",
+  "source_index_sha256": "f7940bcaed19b6f67295c5592cc81783d798c0f858062d7293e5e3dfbfa57c2a",
+  "scope": "published 768 Wide MER HATS leaves, catalogue rows; not measured clean imaging area",
+  "preregistered_from": "2026-11-19 source replay of 24 matched z>6.5 quasars and 14 matched spectroscopic dwarf controls",
+  "selection_rule": {
+    "J_flux_min": 0.65,
+    "J_SNR_min": 6,
+    "H_SNR_min": 4,
+    "VIS_abs_SNR_max_exclusive": 7,
+    "Y_minus_J_detection_or_2sigma_lower_limit_min": 0,
+    "J_minus_H_min": -0.2,
+    "J_minus_H_max": 0.48,
+    "ellipticity_max_exclusive": 0.4,
+    "mumax_minus_mag_min": -1.45,
+    "mumax_minus_mag_max": -0.75,
+    "spurious_prob_max_exclusive_or_missing": 0.7,
+    "VIS_DET_requirement": "none (VIS detection flag and aperture SNR are different quantities)",
+    "J_H_flag_requirement": "not hard veto, recorded and downranked",
+    "signed_VIS_requirement": "absolute aperture SNR to avoid falsely treating negative noise excursions as a detection"
+  },
+  "guaranteed_output_policy": "top 200 by deterministic score per source partition, sufficient to recover all global top 200; exact pass counts for all rows",
+  "qualification": "Labels are used to choose a relaxed high-recall screen. Measured matched-control recovery is resubstitution, not held-out completeness; dwarf fraction from 14 nonrepresentative labels is not field purity.",
+  "vetoes_for_second_stage": "inspect VIS/NISP pixels, optical associations, CatWISE/unWISE motion and colours, literature and actual public spectra; do not mistake unavailable response for nondetection",
+  "discovery_level": false
+}

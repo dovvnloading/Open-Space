@@ -1,0 +1,3127 @@
+[
+  {
+    "checked_utc": "2026-11-19T08:23:38.893687+00:00",
+    "dec": -57.65648037510797,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-344582599576564803",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 34.45668988 AND 34.45983010 AND dec BETWEEN -57.65732038 AND -57.65564038",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:09.482511+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',34.45825999,-57.65648038,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:12.885118+00:00"
+      },
+      "Euclid_image_metadata": {
+        "endpoint": "https://irsa.ipac.caltech.edu/SIA",
+        "http_status": 200,
+        "image_level_artifact_status": "NOT_EVALUATED_REQUIRES_PIXEL_LEVEL_VIS_AND_NISP_EXPOSURE_REVIEW",
+        "response_bytes": 260868,
+        "response_sha256": "6aa25b5e17b8430a0d4836fff5eb25fa4648494f5dd92762c49b3320f8476bd4",
+        "service": "Euclid_IRSA_SIA_image_metadata",
+        "status": "IMAGE_METADATA_RESPONSE_NOT_PIXEL_CHECKED",
+        "url_count": 1,
+        "utc": "2026-11-19T08:23:38.126479+00:00"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',34.45825999,-57.65648038,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:23:08.176482+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -57.65648037510797,
+            "ra": 34.45825999235679,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:25.796130+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 34.45725999 AND 34.45925999 AND p.dec BETWEEN -57.65748038 AND -57.65548038",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:23:12.645659+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',34.45825999,-57.65648038,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:23:09.283691+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',34.45825999,-57.65648038,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:22:35.831307+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',34.45825999,-57.65648038,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:22:52.015603+00:00"
+      }
+    },
+    "ra": 34.45825999235679,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:23:43.575254+00:00",
+    "dec": -22.472137684230137,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-640623252224721376",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 64.06141620 AND 64.06323425 AND dec BETWEEN -22.47297768 AND -22.47129768",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:09.488993+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',64.06232522,-22.47213768,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:17.990502+00:00"
+      },
+      "Euclid_image_metadata": {
+        "endpoint": "https://irsa.ipac.caltech.edu/SIA",
+        "http_status": 200,
+        "image_level_artifact_status": "NOT_EVALUATED_REQUIRES_PIXEL_LEVEL_VIS_AND_NISP_EXPOSURE_REVIEW",
+        "response_bytes": 144251,
+        "response_sha256": "187e3cd275d9a4bb57ddc276a1c2409658e8c04c2fb55d45aee7105f57724b04",
+        "service": "Euclid_IRSA_SIA_image_metadata",
+        "status": "IMAGE_METADATA_RESPONSE_NOT_PIXEL_CHECKED",
+        "url_count": 1,
+        "utc": "2026-11-19T08:23:42.805348+00:00"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',64.06232522,-22.47213768,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:23:08.179231+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -22.472137684230137,
+            "ra": 64.06232522278103,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:30.586290+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 64.06132522 AND 64.06332522 AND p.dec BETWEEN -22.47313768 AND -22.47113768",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:23:13.116477+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',64.06232522,-22.47213768,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:23:09.261052+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',64.06232522,-22.47213768,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:22:35.831766+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',64.06232522,-22.47213768,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:22:52.019995+00:00"
+      }
+    },
+    "ra": 64.06232522278103,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:23:38.973863+00:00",
+    "dec": -39.95429718552675,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-687809343399542971",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 68.77983858 AND 68.78203020 AND dec BETWEEN -39.95513719 AND -39.95345719",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:09.484606+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',68.78093439,-39.95429719,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:12.940772+00:00"
+      },
+      "Euclid_image_metadata": {
+        "endpoint": "https://irsa.ipac.caltech.edu/SIA",
+        "http_status": 200,
+        "image_level_artifact_status": "NOT_EVALUATED_REQUIRES_PIXEL_LEVEL_VIS_AND_NISP_EXPOSURE_REVIEW",
+        "response_bytes": 144257,
+        "response_sha256": "2240d264a7cb2d58fce3115090ae536715ae809ee6c1693317829d2e55b85b5f",
+        "service": "Euclid_IRSA_SIA_image_metadata",
+        "status": "IMAGE_METADATA_RESPONSE_NOT_PIXEL_CHECKED",
+        "url_count": 1,
+        "utc": "2026-11-19T08:23:38.145759+00:00"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',68.78093439,-39.95429719,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:23:08.177365+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -39.95429718552675,
+            "ra": 68.78093439306267,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:25.796989+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 68.77993439 AND 68.78193439 AND p.dec BETWEEN -39.95529719 AND -39.95329719",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:23:12.611423+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',68.78093439,-39.95429719,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:23:09.282091+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',68.78093439,-39.95429719,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:22:35.833063+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',68.78093439,-39.95429719,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:22:52.017086+00:00"
+      }
+    },
+    "ra": 68.78093439306267,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:23:38.943651+00:00",
+    "dec": -53.004637480917914,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-828861472530046374",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 82.88475128 AND 82.88754313 AND dec BETWEEN -53.00547748 AND -53.00379748",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:09.486772+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',82.88614720,-53.00463748,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:13.340797+00:00"
+      },
+      "Euclid_image_metadata": {
+        "endpoint": "https://irsa.ipac.caltech.edu/SIA",
+        "http_status": 200,
+        "image_level_artifact_status": "NOT_EVALUATED_REQUIRES_PIXEL_LEVEL_VIS_AND_NISP_EXPOSURE_REVIEW",
+        "response_bytes": 144029,
+        "response_sha256": "78fe69d9c69e0faa9b4f617374130d36e7e139a46786c2fa46d66edf8dfc0cf0",
+        "service": "Euclid_IRSA_SIA_image_metadata",
+        "status": "IMAGE_METADATA_RESPONSE_NOT_PIXEL_CHECKED",
+        "url_count": 1,
+        "utc": "2026-11-19T08:23:38.144838+00:00"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',82.88614720,-53.00463748,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:23:08.176671+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -53.004637480917914,
+            "ra": 82.88614720485084,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:25.790596+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 82.88514720 AND 82.88714720 AND p.dec BETWEEN -53.00563748 AND -53.00363748",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:23:13.115680+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',82.88614720,-53.00463748,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:23:09.273047+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',82.88614720,-53.00463748,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:22:35.834649+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',82.88614720,-53.00463748,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:22:52.022764+00:00"
+      }
+    },
+    "ra": 82.88614720485084,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:24:40.167328+00:00",
+    "dec": -34.906106912296366,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-698973702349061069",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 69.89634602 AND 69.89839457 AND dec BETWEEN -34.90694691 AND -34.90526691",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:12.249127+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',69.89737030,-34.90610691,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:14.634444+00:00"
+      },
+      "Euclid_image_metadata": {
+        "endpoint": "https://irsa.ipac.caltech.edu/SIA",
+        "http_status": 200,
+        "image_level_artifact_status": "NOT_EVALUATED_REQUIRES_PIXEL_LEVEL_VIS_AND_NISP_EXPOSURE_REVIEW",
+        "response_bytes": 144025,
+        "response_sha256": "5e77718c86a8509af6cc7a7226024286c4c5749178d40938b982a41886c449fe",
+        "service": "Euclid_IRSA_SIA_image_metadata",
+        "status": "IMAGE_METADATA_RESPONSE_NOT_PIXEL_CHECKED",
+        "url_count": 1,
+        "utc": "2026-11-19T08:24:39.372401+00:00"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',69.89737030,-34.90610691,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:24:11.160099+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -34.906106912296366,
+            "ra": 69.89737029770835,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:27.200458+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 69.89637030 AND 69.89837030 AND p.dec BETWEEN -34.90710691 AND -34.90510691",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:24:14.323988+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',69.89737030,-34.90610691,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:24:12.077038+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',69.89737030,-34.90610691,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:38.893785+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',69.89737030,-34.90610691,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:55.039732+00:00"
+      }
+    },
+    "ra": 69.89737029770835,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:24:39.773847+00:00",
+    "dec": -42.083202395769554,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-788744903420832023",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 78.87335856 AND 78.87562218 AND dec BETWEEN -42.08404240 AND -42.08236240",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:12.244261+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',78.87449037,-42.08320240,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:14.224591+00:00"
+      },
+      "Euclid_image_metadata": {
+        "endpoint": "https://irsa.ipac.caltech.edu/SIA",
+        "http_status": 200,
+        "image_level_artifact_status": "NOT_EVALUATED_REQUIRES_PIXEL_LEVEL_VIS_AND_NISP_EXPOSURE_REVIEW",
+        "response_bytes": 144197,
+        "response_sha256": "86c8f9099a285ac0e8c900a5b37153c12aba021295e78350166b65cd3bb6db2b",
+        "service": "Euclid_IRSA_SIA_image_metadata",
+        "status": "IMAGE_METADATA_RESPONSE_NOT_PIXEL_CHECKED",
+        "url_count": 1,
+        "utc": "2026-11-19T08:24:39.010608+00:00"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',78.87449037,-42.08320240,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:24:11.250129+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -42.083202395769554,
+            "ra": 78.87449036835531,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:26.815789+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 78.87349037 AND 78.87549037 AND p.dec BETWEEN -42.08420240 AND -42.08220240",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:24:13.899422+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',78.87449037,-42.08320240,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:24:12.078752+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',78.87449037,-42.08320240,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:38.943748+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',78.87449037,-42.08320240,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:55.115062+00:00"
+      }
+    },
+    "ra": 78.87449036835531,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:24:40.219132+00:00",
+    "dec": -29.201302380270974,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-906283629292013023",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 90.62740068 AND 90.62932527 AND dec BETWEEN -29.20214238 AND -29.20046238",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:12.245170+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',90.62836298,-29.20130238,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:14.592365+00:00"
+      },
+      "Euclid_image_metadata": {
+        "endpoint": "https://irsa.ipac.caltech.edu/SIA",
+        "http_status": 200,
+        "image_level_artifact_status": "NOT_EVALUATED_REQUIRES_PIXEL_LEVEL_VIS_AND_NISP_EXPOSURE_REVIEW",
+        "response_bytes": 144313,
+        "response_sha256": "f59760fda993870b2804b12ee7821be4853a2b2910ac17b7e64e36fa28753219",
+        "service": "Euclid_IRSA_SIA_image_metadata",
+        "status": "IMAGE_METADATA_RESPONSE_NOT_PIXEL_CHECKED",
+        "url_count": 1,
+        "utc": "2026-11-19T08:24:39.383582+00:00"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',90.62836298,-29.20130238,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:24:11.264986+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -29.201302380270974,
+            "ra": 90.62836297646167,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:27.182438+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 90.62736298 AND 90.62936298 AND p.dec BETWEEN -29.20230238 AND -29.20030238",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:24:14.418024+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',90.62836298,-29.20130238,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:24:12.080463+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',90.62836298,-29.20130238,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:38.973936+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',90.62836298,-29.20130238,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:55.113521+00:00"
+      }
+    },
+    "ra": 90.62836297646167,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:24:42.105045+00:00",
+    "dec": -30.305896685472256,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-624207488303058966",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 62.41977587 AND 62.42172179 AND dec BETWEEN -30.30673669 AND -30.30505669",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:17.134340+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',62.42074883,-30.30589669,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:21.873604+00:00"
+      },
+      "Euclid_image_metadata": {
+        "endpoint": "https://irsa.ipac.caltech.edu/SIA",
+        "http_status": 200,
+        "image_level_artifact_status": "NOT_EVALUATED_REQUIRES_PIXEL_LEVEL_VIS_AND_NISP_EXPOSURE_REVIEW",
+        "response_bytes": 144475,
+        "response_sha256": "5f3813f5659f5e05bf0c741d8e93c137dd8270fefe346a8b273f6c174a7f448a",
+        "service": "Euclid_IRSA_SIA_image_metadata",
+        "status": "IMAGE_METADATA_RESPONSE_NOT_PIXEL_CHECKED",
+        "url_count": 1,
+        "utc": "2026-11-19T08:24:41.337856+00:00"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',62.42074883,-30.30589669,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:24:15.864233+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "http_status": 200,
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -30.305896685472256,
+            "ra": 62.42074883287596,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "response_sha256": "73f65c19bcd180da99a2fe84a8a3892bc7ee6d430843568d2e28bd3bbe05bdf3",
+        "returned_rows": 30,
+        "service": "MAST_CAOM_all_products",
+        "spectroscopic_products": 0,
+        "status": "METADATA_RETURNED_NEEDS_OBSERVATION_VALIDATION",
+        "utc": "2026-11-19T08:24:34.488570+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 62.41974883 AND 62.42174883 AND p.dec BETWEEN -30.30689669 AND -30.30489669",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:24:21.556736+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',62.42074883,-30.30589669,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:24:16.968459+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',62.42074883,-30.30589669,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:43.575340+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',62.42074883,-30.30589669,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:23:59.711725+00:00"
+      }
+    },
+    "ra": 62.42074883287596,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:25:41.888223+00:00",
+    "dec": -37.97001730402138,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-770674859379700173",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 77.06642043 AND 77.06855151 AND dec BETWEEN -37.97085730 AND -37.96917730",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:14.476058+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',77.06748597,-37.97001730,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:16.844121+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',77.06748597,-37.97001730,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:25:13.133506+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -37.97001730402138,
+            "ra": 77.0674859730697,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:29.687539+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 77.06648597 AND 77.06848597 AND p.dec BETWEEN -37.97101730 AND -37.96901730",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:25:16.629290+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',77.06748597,-37.97001730,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:25:14.306561+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',77.06748597,-37.97001730,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:39.773930+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',77.06748597,-37.97001730,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:55.920270+00:00"
+      }
+    },
+    "ra": 77.0674859730697,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:25:41.189809+00:00",
+    "dec": -34.026492692459406,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-751324068340264926",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 75.13139333 AND 75.13342041 AND dec BETWEEN -34.02733269 AND -34.02565269",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:13.708553+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',75.13240687,-34.02649269,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:16.308163+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',75.13240687,-34.02649269,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:25:12.472247+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -34.026492692459406,
+            "ra": 75.13240687180613,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:29.024295+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 75.13140687 AND 75.13340687 AND p.dec BETWEEN -34.02749269 AND -34.02549269",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:25:16.134420+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',75.13240687,-34.02649269,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:25:13.559755+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',75.13240687,-34.02649269,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:40.167402+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',75.13240687,-34.02649269,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:56.335042+00:00"
+      }
+    },
+    "ra": 75.13240687180613,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:25:41.204741+00:00",
+    "dec": -36.39721306019186,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-857252480363972130",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 85.72420444 AND 85.72629160 AND dec BETWEEN -36.39805306 AND -36.39637306",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:13.707122+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',85.72524802,-36.39721306,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:16.344672+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',85.72524802,-36.39721306,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:25:12.476036+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -36.39721306019186,
+            "ra": 85.72524802146634,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:29.011816+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 85.72424802 AND 85.72624802 AND p.dec BETWEEN -36.39821306 AND -36.39621306",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:25:16.136629+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',85.72524802,-36.39721306,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:25:13.552389+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',85.72524802,-36.39721306,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:40.219213+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',85.72524802,-36.39721306,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:56.336440+00:00"
+      }
+    },
+    "ra": 85.72524802146634,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:25:44.838362+00:00",
+    "dec": 78.32324720643744,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "2174450639783232472",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 217.44091357 AND 217.44921438 AND dec BETWEEN 78.32240721 AND 78.32408721",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:15.741845+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',217.44506397,78.32324721,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:20.003144+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',217.44506397,78.32324721,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:25:14.396130+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": 78.32324720643744,
+            "ra": 217.44506397480706,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:32.596470+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 217.44406397 AND 217.44606397 AND p.dec BETWEEN 78.32224721 AND 78.32424721",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:25:19.678437+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',217.44506397,78.32324721,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:25:15.590737+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',217.44506397,78.32324721,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:42.105132+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',217.44506397,78.32324721,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:24:58.280442+00:00"
+      }
+    },
+    "ra": 217.44506397480706,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:26:40.495871+00:00",
+    "dec": -50.476311091949974,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-424723234504763110",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 42.47100354 AND 42.47364340 AND dec BETWEEN -50.47715109 AND -50.47547109",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:14.831596+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',42.47232347,-50.47631109,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:18.255553+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',42.47232347,-50.47631109,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:26:13.443545+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "http_status": 200,
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -50.476311091949974,
+            "ra": 42.472323471830116,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "response_sha256": "35f0aba1f813730a48924b737ae1d53e9cf8f7d6a9048c954c3aa22062613827",
+        "returned_rows": 13,
+        "service": "MAST_CAOM_all_products",
+        "spectroscopic_products": 0,
+        "status": "METADATA_RETURNED_NEEDS_OBSERVATION_VALIDATION",
+        "utc": "2026-11-19T08:26:30.880255+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 42.47132347 AND 42.47332347 AND p.dec BETWEEN -50.47731109 AND -50.47531109",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:26:18.048381+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',42.47232347,-50.47631109,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:26:14.692243+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',42.47232347,-50.47631109,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:41.189931+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',42.47232347,-50.47631109,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:57.316913+00:00"
+      }
+    },
+    "ra": 42.472323471830116,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:26:43.971052+00:00",
+    "dec": -58.86375123018451,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-347263253588637512",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 34.72470083 AND 34.72794987 AND dec BETWEEN -58.86459123 AND -58.86291123",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:14.854311+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',34.72632535,-58.86375123,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:19.225004+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',34.72632535,-58.86375123,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:26:13.439520+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "http_status": 200,
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -58.86375123018451,
+            "ra": 34.72632535202027,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "response_sha256": "1ecf0b2baa09b7fe27ea46f3818b5b133ff5467c0b8ac7cf00e79735158d12ed",
+        "returned_rows": 20,
+        "service": "MAST_CAOM_all_products",
+        "spectroscopic_products": 0,
+        "status": "METADATA_RETURNED_NEEDS_OBSERVATION_VALIDATION",
+        "utc": "2026-11-19T08:26:31.841116+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 34.72532535 AND 34.72732535 AND p.dec BETWEEN -58.86475123 AND -58.86275123",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:26:19.053640+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',34.72632535,-58.86375123,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:26:14.683304+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',34.72632535,-58.86375123,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:41.204809+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',34.72632535,-58.86375123,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:57.317090+00:00"
+      }
+    },
+    "ra": 34.72632535202027,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:26:43.800188+00:00",
+    "dec": 67.48219474612853,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "2793077860674821947",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 279.30559263 AND 279.30997939 AND dec BETWEEN 67.48135475 AND 67.48303475",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:15.072877+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',279.30778601,67.48219475,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:19.173627+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',279.30778601,67.48219475,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:26:14.159727+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": 67.48219474612853,
+            "ra": 279.3077860122159,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:31.615424+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 279.30678601 AND 279.30878601 AND p.dec BETWEEN 67.48119475 AND 67.48319475",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:26:18.990078+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',279.30778601,67.48219475,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:26:14.914263+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',279.30778601,67.48219475,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:41.888310+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',279.30778601,67.48219475,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:58.032195+00:00"
+      }
+    },
+    "ra": 279.3077860122159,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:26:46.090140+00:00",
+    "dec": -42.180597245931544,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-955017226421805972",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 95.50058906 AND 95.50285617 AND dec BETWEEN -42.18143725 AND -42.17975725",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:18.092813+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',95.50172261,-42.18059725,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:21.258032+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',95.50172261,-42.18059725,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:26:17.158394+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -42.180597245931544,
+            "ra": 95.50172261313502,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:33.862247+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 95.50072261 AND 95.50272261 AND p.dec BETWEEN -42.18159725 AND -42.17959725",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:26:21.100846+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',95.50172261,-42.18059725,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:26:17.904420+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',95.50172261,-42.18059725,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:25:44.838447+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',95.50172261,-42.18059725,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:01.000977+00:00"
+      }
+    },
+    "ra": 95.50172261313502,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:27:35.332287+00:00",
+    "dec": 63.77217350495222,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "1435231063637721735",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 143.52120566 AND 143.52500707 AND dec BETWEEN 63.77133350 AND 63.77301350",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:14.008194+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',143.52310636,63.77217350,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:16.379500+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',143.52310636,63.77217350,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:27:12.755129+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "http_status": 200,
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": 63.77217350495222,
+            "ra": 143.52310636191442,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "response_sha256": "d2974eed616aabe0e654e47ded32e4485f0f2146be977098bed646430fd9655a",
+        "returned_rows": 17,
+        "service": "MAST_CAOM_all_products",
+        "spectroscopic_products": 0,
+        "status": "METADATA_RETURNED_NEEDS_OBSERVATION_VALIDATION",
+        "utc": "2026-11-19T08:27:29.100288+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 143.52210636 AND 143.52410636 AND p.dec BETWEEN 63.77117350 AND 63.77317350",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:27:16.147954+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',143.52310636,63.77217350,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:27:13.847429+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',143.52310636,63.77217350,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:40.495958+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',143.52310636,63.77217350,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:56.631522+00:00"
+      }
+    },
+    "ra": 143.52310636191442,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:27:40.436317+00:00",
+    "dec": -49.72547151681509,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-439370167497254715",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 43.93571738 AND 43.93831618 AND dec BETWEEN -49.72631152 AND -49.72463152",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:17.011213+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',43.93701678,-49.72547152,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:18.888971+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',43.93701678,-49.72547152,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:27:16.092458+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "http_status": 200,
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -49.72547151681509,
+            "ra": 43.93701678043586,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "response_sha256": "f89aa31400a8239151dc02e2d28c0a0f547edfd0c8d612fca0de63096059ceda",
+        "returned_rows": 21,
+        "service": "MAST_CAOM_all_products",
+        "spectroscopic_products": 0,
+        "status": "METADATA_RETURNED_NEEDS_OBSERVATION_VALIDATION",
+        "utc": "2026-11-19T08:27:31.344396+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 43.93601678 AND 43.93801678 AND p.dec BETWEEN -49.72647152 AND -49.72447152",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:27:18.707037+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',43.93701678,-49.72547152,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:27:16.874921+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',43.93701678,-49.72547152,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:43.800275+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',43.93701678,-49.72547152,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:59.975890+00:00"
+      }
+    },
+    "ra": 43.93701678043586,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:27:44.436509+00:00",
+    "dec": -38.27010034313558,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-793601871382701003",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 79.35911722 AND 79.36125708 AND dec BETWEEN -38.27094034 AND -38.26926034",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:17.411744+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',79.36018715,-38.27010034,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:19.671041+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',79.36018715,-38.27010034,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:27:16.200112+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -38.27010034313558,
+            "ra": 79.36018714883903,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:32.270578+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 79.35918715 AND 79.36118715 AND p.dec BETWEEN -38.27110034 AND -38.26910034",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:27:19.506103+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',79.36018715,-38.27010034,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:27:17.251943+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',79.36018715,-38.27010034,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:43.971138+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',79.36018715,-38.27010034,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:00.088458+00:00"
+      }
+    },
+    "ra": 79.36018714883903,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:27:42.777983+00:00",
+    "dec": 67.68174833727606,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "1979379213676817483",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 197.93570939 AND 197.94013334 AND dec BETWEEN 67.68090834 AND 67.68258834",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:19.250881+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',197.93792136,67.68174834,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:20.960529+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',197.93792136,67.68174834,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:27:18.335518+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "http_status": 200,
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": 67.68174833727606,
+            "ra": 197.9379213631778,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "response_sha256": "388ae948065d0e786ce9885404c37a67099ed57f2117e752355b947955f9a918",
+        "returned_rows": 27,
+        "service": "MAST_CAOM_all_products",
+        "spectroscopic_products": 0,
+        "status": "METADATA_RETURNED_NEEDS_OBSERVATION_VALIDATION",
+        "utc": "2026-11-19T08:27:33.577436+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 197.93692136 AND 197.93892136 AND p.dec BETWEEN 67.68074834 AND 67.68274834",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:27:20.809796+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',197.93792136,67.68174834,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:27:19.089641+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',197.93792136,67.68174834,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:26:46.090229+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',197.93792136,67.68174834,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:02.220752+00:00"
+      }
+    },
+    "ra": 197.9379213631778,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:28:35.447558+00:00",
+    "dec": -34.91759239542537,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-854778732349175923",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 85.47684881 AND 85.47889765 AND dec BETWEEN -34.91843240 AND -34.91675240",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:28:08.509214+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',85.47787323,-34.91759240,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:28:10.822922+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',85.47787323,-34.91759240,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:28:07.601942+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -34.91759239542537,
+            "ra": 85.47787322972904,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:28:23.267303+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 85.47687323 AND 85.47887323 AND p.dec BETWEEN -34.91859240 AND -34.91659240",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:28:10.655022+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',85.47787323,-34.91759240,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:28:08.368440+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',85.47787323,-34.91759240,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:35.332378+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',85.47787323,-34.91759240,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:51.454596+00:00"
+      }
+    },
+    "ra": 85.47787322972904,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:28:33.588998+00:00",
+    "dec": -37.22700340623304,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-336594772372270034",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 33.65842228 AND 33.66053219 AND dec BETWEEN -37.22784341 AND -37.22616341",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:28:14.128556+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',33.65947723,-37.22700341,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:28:16.349577+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',33.65947723,-37.22700341,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:28:12.725298+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "http_status": 200,
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -37.22700340623304,
+            "ra": 33.65947723416076,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "response_sha256": "5040215ed51411ec39e4f5ede47fd47b0510969cadf5c96aae3ad72f0c400292",
+        "returned_rows": 17,
+        "service": "MAST_CAOM_all_products",
+        "spectroscopic_products": 0,
+        "status": "METADATA_RETURNED_NEEDS_OBSERVATION_VALIDATION",
+        "utc": "2026-11-19T08:28:29.054639+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 33.65847723 AND 33.66047723 AND p.dec BETWEEN -37.22800341 AND -37.22600341",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:28:16.157422+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',33.65947723,-37.22700341,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:28:13.948063+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',33.65947723,-37.22700341,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:40.436400+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',33.65947723,-37.22700341,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:56.602274+00:00"
+      }
+    },
+    "ra": 33.65947723416076,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:28:43.291767+00:00",
+    "dec": -35.33366965122347,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-770335387353336696",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 77.03250910 AND 77.03456843 AND dec BETWEEN -35.33450965 AND -35.33282965",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:28:16.351817+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',77.03353877,-35.33366965,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:28:18.532444+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',77.03353877,-35.33366965,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:28:15.001195+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -35.33366965122347,
+            "ra": 77.03353876758977,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:28:31.129086+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 77.03253877 AND 77.03453877 AND p.dec BETWEEN -35.33466965 AND -35.33266965",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:28:18.327690+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',77.03353877,-35.33366965,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:28:16.177005+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',77.03353877,-35.33366965,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:42.778070+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',77.03353877,-35.33366965,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:58.902208+00:00"
+      }
+    },
+    "ra": 77.03353876758977,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  },
+  {
+    "checked_utc": "2026-11-19T08:28:44.817346+00:00",
+    "dec": -54.79964160205757,
+    "diagnostics": {
+      "W1_minus_W2_vega_mag": null,
+      "catwise_motion_component_significances": [],
+      "foreground_motion_diagnostic": "NOT_ESTABLISHED",
+      "gaia_astrometric_component_significances": [],
+      "unwise_W1_over_W2_catalog_flux_ratio": null,
+      "unwise_color_status": "FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR",
+      "unwise_flux_significances": [
+        null,
+        null
+      ],
+      "wise_color_status": "UNAVAILABLE"
+    },
+    "id": "-772136963547996416",
+    "image_level_artifact_checked": false,
+    "known_quasar_literature_review_complete": false,
+    "queries": {
+      "DESI_DR1": {
+        "adql": "SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix WHERE ra BETWEEN 77.21223908 AND 77.21515353 AND dec BETWEEN -54.80048160 AND -54.79880160",
+        "catalog_match": null,
+        "endpoint": "https://datalab.noirlab.edu/tap/sync",
+        "error": "RuntimeError: TAP_VOTABLE_RESPONSE_[{'name': 'QUERY_STATUS', 'value': 'ERROR', 'message': 'IllegalArgumentException: Column [ra] does not exist.'}]",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 326,
+        "response_sha256": "2713ca3638b8250ad3778d477006fb1ca498600c139a76ab507393073f575ba4",
+        "service": "DESI_DR1_catalog_redshift_not_spectrum",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:28:17.716322+00:00"
+      },
+      "ESO": {
+        "adql": "SELECT TOP 10 obs_id,s_ra,s_dec,dataproduct_type FROM ivoa.obscore WHERE dataproduct_type='spectrum' AND 1=CONTAINS(POINT('ICRS',s_ra,s_dec),CIRCLE('ICRS',77.21369630,-54.79964160,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://archive.eso.org/tap_obs/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='archive.eso.org', port=443): Read timed out. (read timeout=12)",
+        "nearest_arcsec": null,
+        "service": "ESO_archive_spectrum_metadata",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:28:20.078787+00:00"
+      },
+      "Euclid_image_metadata": {
+        "image_level_artifact_status": "NOT_EVALUATED",
+        "status": "NOT_QUERIED_OUTSIDE_TOP_8"
+      },
+      "Gaia_DR3": {
+        "adql": "SELECT TOP 10 source_id,ra,dec,pmra,pmra_error,pmdec,pmdec_error,parallax,parallax_error FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',77.21369630,-54.79964160,0.00075))",
+        "catalog_match": null,
+        "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "http_status": 200,
+        "nearest_arcsec": null,
+        "response_bytes": 75,
+        "response_sha256": "e57d64424ed78016eb192aac5a17794109ea889eabf7d7f75b6461f9664b0bde",
+        "returned_rows": 0,
+        "service": "Gaia_DR3",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:28:16.687598+00:00"
+      },
+      "MAST": {
+        "endpoint": "https://mast.stsci.edu/portal/Mashup/Mashup.asmx/api/v0/invoke",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='mast.stsci.edu', port=443): Read timed out. (read timeout=12)",
+        "params": {
+          "format": "json",
+          "pagesize": 50,
+          "params": {
+            "dec": -54.79964160205757,
+            "ra": 77.21369630366546,
+            "radius": 0.0008333333333333334
+          },
+          "service": "Mast.Caom.Cone"
+        },
+        "service": "MAST_CAOM_all_products",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:28:32.663171+00:00"
+      },
+      "SDSS": {
+        "endpoint": "https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch",
+        "http_status": 200,
+        "query": "SELECT TOP 5 s.specObjID,s.z,p.ra,p.dec FROM SpecObj AS s JOIN PhotoObj AS p ON s.bestObjID=p.objID WHERE p.ra BETWEEN 77.21269630 AND 77.21469630 AND p.dec BETWEEN -54.80064160 AND -54.79864160",
+        "response_bytes": 27,
+        "response_sha256": "6b31521902769372b5fef7153b1203bae6273451c95cc4caa6fc35a7b4ec420e",
+        "returned_rows": 0,
+        "service": "SDSS_DR18_spectroscopy_metadata",
+        "status": "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT",
+        "utc": "2026-11-19T08:28:19.846971+00:00"
+      },
+      "SIMBAD": {
+        "adql": "SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',77.21369630,-54.79964160,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "http_status": 200,
+        "mirror_ingest_date": "2026-10-14",
+        "nearest_arcsec": null,
+        "prior_failed_mirrors": [],
+        "response_bytes": 21,
+        "response_sha256": "dacceb2c2f16c1784e0ddc3d6fbb0833563438603b26cb28ee27b7f8a60a6cba",
+        "returned_rows": 0,
+        "service": "SIMBAD_MIRROR_literature_not_exhaustive",
+        "status": "NO_CATALOG_ROWS_NOT_A_FLUX_LIMIT",
+        "utc": "2026-11-19T08:28:17.551061+00:00"
+      },
+      "catwise_2020": {
+        "adql": "SELECT TOP 10 ra,dec,w1mpro,w2mpro,pmra,pmdec,sigpmra,sigpmdec FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',77.21369630,-54.79964160,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "catwise_2020",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:27:44.436604+00:00"
+      },
+      "unwise_2019": {
+        "adql": "SELECT TOP 10 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_2019 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',77.21369630,-54.79964160,0.001))",
+        "catalog_match": null,
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "error": "ReadTimeout: HTTPSConnectionPool(host='irsa.ipac.caltech.edu', port=443): Read timed out. (read timeout=16)",
+        "nearest_arcsec": null,
+        "service": "unwise_2019",
+        "status": "QUERY_ERROR",
+        "utc": "2026-11-19T08:28:00.552481+00:00"
+      }
+    },
+    "ra": 77.21369630366546,
+    "spectroscopic_redshift_confirmed_by_this_study": false
+  }
+]

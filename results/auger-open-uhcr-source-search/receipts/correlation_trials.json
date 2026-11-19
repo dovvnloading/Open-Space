@@ -1,0 +1,1061 @@
+{
+  "schema": "auger_pilot_v1",
+  "timestamp_utc": "2026-11-19",
+  "data": "inputs/auger_mirror_sd_ge8.csv",
+  "catalogues": "inputs/catalogues_curated.csv",
+  "events_above_8": 3111,
+  "source_count": {
+    "LHAASO_1": 90,
+    "MAGNETARS_HIST": 30,
+    "YOUNG_ATNF": 173,
+    "CENT_A": 1,
+    "STARBURST_PILOT": 5
+  },
+  "rng": "xorshift32",
+  "seed_dipole": 20261119,
+  "seed_ra": 20261120,
+  "seed_energy": 20261121,
+  "sky_control": "independently uniform right ascension, fixed declination + energy",
+  "energy_control": "shuffle energies within SD1500 and inclined strata across fixed RA/Dec",
+  "dipole": {
+    "n": 3111,
+    "amplitude": 0.025422,
+    "phaseDeg": 137.676,
+    "pScramble": 0.622,
+    "pRayleighApprox": 0.60493,
+    "nullAmpMean": 0.032341,
+    "method": "unweighted first-harmonic RA; NOT full declination/exposure-corrected 3D dipole"
+  },
+  "ra_scramble": {
+    "B": 999,
+    "minLocal": 0.005,
+    "pGlobal": 0.101,
+    "trialCount": 39,
+    "top": [
+      {
+        "catalog": "CENT_A",
+        "energyMin": 32,
+        "radius": 27,
+        "count": 28,
+        "nullMean": 16.5506,
+        "pLocal": 0.005
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 20,
+        "radius": 25,
+        "count": 172,
+        "nullMean": 145.7778,
+        "pLocal": 0.006
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 20,
+        "radius": 5,
+        "count": 65,
+        "nullMean": 48.3634,
+        "pLocal": 0.008
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 27,
+        "count": 11,
+        "nullMean": 5.1241,
+        "pLocal": 0.013
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 20,
+        "radius": 10,
+        "count": 132,
+        "nullMean": 113.984,
+        "pLocal": 0.025
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 32,
+        "radius": 20,
+        "count": 91,
+        "nullMean": 80.2693,
+        "pLocal": 0.028
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 20,
+        "radius": 10,
+        "count": 79,
+        "nullMean": 63.7838,
+        "pLocal": 0.028
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 20,
+        "radius": 20,
+        "count": 200,
+        "nullMean": 181.954,
+        "pLocal": 0.03
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 20,
+        "radius": 27,
+        "count": 59,
+        "nullMean": 46.8408,
+        "pLocal": 0.044
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 32,
+        "radius": 10,
+        "count": 44,
+        "nullMean": 36.2402,
+        "pLocal": 0.062
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 32,
+        "radius": 20,
+        "count": 70,
+        "nullMean": 61.1441,
+        "pLocal": 0.063
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 20,
+        "radius": 20,
+        "count": 261,
+        "nullMean": 247.4474,
+        "pLocal": 0.093
+      }
+    ],
+    "controls": [
+      {
+        "catalog": "CENT_A",
+        "energyMin": 32,
+        "radius": 27,
+        "count": 28,
+        "nullMean": 16.5506,
+        "pLocal": 0.005
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 20,
+        "radius": 25,
+        "count": 172,
+        "nullMean": 145.7778,
+        "pLocal": 0.006
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 27,
+        "count": 11,
+        "nullMean": 5.1241,
+        "pLocal": 0.013
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 20,
+        "radius": 27,
+        "count": 59,
+        "nullMean": 46.8408,
+        "pLocal": 0.044
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 45,
+        "radius": 25,
+        "count": 21,
+        "nullMean": 17.2432,
+        "pLocal": 0.169
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 15,
+        "count": 3,
+        "nullMean": 1.6016,
+        "pLocal": 0.218
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 20,
+        "radius": 15,
+        "count": 18,
+        "nullMean": 15.4945,
+        "pLocal": 0.296
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 32,
+        "radius": 25,
+        "count": 52,
+        "nullMean": 49.0541,
+        "pLocal": 0.332
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 32,
+        "radius": 15,
+        "count": 6,
+        "nullMean": 5.6957,
+        "pLocal": 0.5
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 20,
+        "radius": 13,
+        "count": 46,
+        "nullMean": 46.0621,
+        "pLocal": 0.526
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 32,
+        "radius": 13,
+        "count": 15,
+        "nullMean": 15.8509,
+        "pLocal": 0.637
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 45,
+        "radius": 13,
+        "count": 5,
+        "nullMean": 5.6997,
+        "pLocal": 0.694
+      }
+    ],
+    "allResults": [
+      {
+        "catalog": "CENT_A",
+        "energyMin": 32,
+        "radius": 27,
+        "count": 28,
+        "nullMean": 16.5506,
+        "pLocal": 0.005
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 20,
+        "radius": 25,
+        "count": 172,
+        "nullMean": 145.7778,
+        "pLocal": 0.006
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 20,
+        "radius": 5,
+        "count": 65,
+        "nullMean": 48.3634,
+        "pLocal": 0.008
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 27,
+        "count": 11,
+        "nullMean": 5.1241,
+        "pLocal": 0.013
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 20,
+        "radius": 10,
+        "count": 132,
+        "nullMean": 113.984,
+        "pLocal": 0.025
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 32,
+        "radius": 20,
+        "count": 91,
+        "nullMean": 80.2693,
+        "pLocal": 0.028
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 20,
+        "radius": 10,
+        "count": 79,
+        "nullMean": 63.7838,
+        "pLocal": 0.028
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 20,
+        "radius": 20,
+        "count": 200,
+        "nullMean": 181.954,
+        "pLocal": 0.03
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 20,
+        "radius": 27,
+        "count": 59,
+        "nullMean": 46.8408,
+        "pLocal": 0.044
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 32,
+        "radius": 10,
+        "count": 44,
+        "nullMean": 36.2402,
+        "pLocal": 0.062
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 32,
+        "radius": 20,
+        "count": 70,
+        "nullMean": 61.1441,
+        "pLocal": 0.063
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 20,
+        "radius": 20,
+        "count": 261,
+        "nullMean": 247.4474,
+        "pLocal": 0.093
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 45,
+        "radius": 25,
+        "count": 21,
+        "nullMean": 17.2432,
+        "pLocal": 0.169
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 20,
+        "radius": 10,
+        "count": 40,
+        "nullMean": 34.4494,
+        "pLocal": 0.171
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 15,
+        "count": 3,
+        "nullMean": 1.6016,
+        "pLocal": 0.218
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 45,
+        "radius": 20,
+        "count": 32,
+        "nullMean": 29.1231,
+        "pLocal": 0.25
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 32,
+        "radius": 10,
+        "count": 24,
+        "nullMean": 21.037,
+        "pLocal": 0.274
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 45,
+        "radius": 5,
+        "count": 4,
+        "nullMean": 2.6977,
+        "pLocal": 0.276
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 20,
+        "radius": 15,
+        "count": 18,
+        "nullMean": 15.4945,
+        "pLocal": 0.296
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 32,
+        "radius": 5,
+        "count": 18,
+        "nullMean": 15.3894,
+        "pLocal": 0.301
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 32,
+        "radius": 25,
+        "count": 52,
+        "nullMean": 49.0541,
+        "pLocal": 0.332
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 45,
+        "radius": 5,
+        "count": 6,
+        "nullMean": 5.1692,
+        "pLocal": 0.397
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 45,
+        "radius": 20,
+        "count": 23,
+        "nullMean": 21.8198,
+        "pLocal": 0.405
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 20,
+        "radius": 5,
+        "count": 23,
+        "nullMean": 21.4985,
+        "pLocal": 0.415
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 45,
+        "radius": 10,
+        "count": 14,
+        "nullMean": 13.0921,
+        "pLocal": 0.43
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 32,
+        "radius": 10,
+        "count": 9,
+        "nullMean": 8.4935,
+        "pLocal": 0.493
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 32,
+        "radius": 15,
+        "count": 6,
+        "nullMean": 5.6957,
+        "pLocal": 0.5
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 20,
+        "radius": 13,
+        "count": 46,
+        "nullMean": 46.0621,
+        "pLocal": 0.526
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 45,
+        "radius": 10,
+        "count": 8,
+        "nullMean": 7.8839,
+        "pLocal": 0.537
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 32,
+        "radius": 5,
+        "count": 7,
+        "nullMean": 7.1612,
+        "pLocal": 0.572
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 45,
+        "radius": 10,
+        "count": 4,
+        "nullMean": 3.8428,
+        "pLocal": 0.576
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 32,
+        "radius": 13,
+        "count": 15,
+        "nullMean": 15.8509,
+        "pLocal": 0.637
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 20,
+        "radius": 5,
+        "count": 13,
+        "nullMean": 14.2412,
+        "pLocal": 0.668
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 45,
+        "radius": 13,
+        "count": 5,
+        "nullMean": 5.6997,
+        "pLocal": 0.694
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 45,
+        "radius": 20,
+        "count": 8,
+        "nullMean": 9.3824,
+        "pLocal": 0.774
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 32,
+        "radius": 20,
+        "count": 18,
+        "nullMean": 21.1912,
+        "pLocal": 0.848
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 32,
+        "radius": 5,
+        "count": 2,
+        "nullMean": 3.5175,
+        "pLocal": 0.885
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 20,
+        "radius": 20,
+        "count": 75,
+        "nullMean": 82.8649,
+        "pLocal": 0.89
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 45,
+        "radius": 5,
+        "count": 0,
+        "nullMean": 1.6186,
+        "pLocal": 1
+      }
+    ]
+  },
+  "energy_shuffle": {
+    "B": 999,
+    "minLocal": 0.008,
+    "pGlobal": 0.101,
+    "trialCount": 39,
+    "top": [
+      {
+        "catalog": "CENT_A",
+        "energyMin": 32,
+        "radius": 27,
+        "count": 28,
+        "nullMean": 18.4905,
+        "pLocal": 0.008
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 32,
+        "radius": 20,
+        "count": 91,
+        "nullMean": 82.1802,
+        "pLocal": 0.061
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 27,
+        "count": 11,
+        "nullMean": 6.971,
+        "pLocal": 0.064
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 32,
+        "radius": 20,
+        "count": 70,
+        "nullMean": 62.8028,
+        "pLocal": 0.093
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 45,
+        "radius": 5,
+        "count": 4,
+        "nullMean": 2.6396,
+        "pLocal": 0.279
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 32,
+        "radius": 10,
+        "count": 44,
+        "nullMean": 41.6837,
+        "pLocal": 0.348
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 15,
+        "count": 3,
+        "nullMean": 2.1411,
+        "pLocal": 0.374
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 45,
+        "radius": 20,
+        "count": 32,
+        "nullMean": 30.6927,
+        "pLocal": 0.421
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 45,
+        "radius": 25,
+        "count": 21,
+        "nullMean": 20.2743,
+        "pLocal": 0.468
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 32,
+        "radius": 13,
+        "count": 15,
+        "nullMean": 14.5485,
+        "pLocal": 0.498
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 32,
+        "radius": 15,
+        "count": 6,
+        "nullMean": 5.6326,
+        "pLocal": 0.509
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 45,
+        "radius": 20,
+        "count": 23,
+        "nullMean": 23.4494,
+        "pLocal": 0.588
+      }
+    ],
+    "controls": [
+      {
+        "catalog": "CENT_A",
+        "energyMin": 32,
+        "radius": 27,
+        "count": 28,
+        "nullMean": 18.4905,
+        "pLocal": 0.008
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 27,
+        "count": 11,
+        "nullMean": 6.971,
+        "pLocal": 0.064
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 15,
+        "count": 3,
+        "nullMean": 2.1411,
+        "pLocal": 0.374
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 45,
+        "radius": 25,
+        "count": 21,
+        "nullMean": 20.2743,
+        "pLocal": 0.468
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 32,
+        "radius": 13,
+        "count": 15,
+        "nullMean": 14.5485,
+        "pLocal": 0.498
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 32,
+        "radius": 15,
+        "count": 6,
+        "nullMean": 5.6326,
+        "pLocal": 0.509
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 45,
+        "radius": 13,
+        "count": 5,
+        "nullMean": 5.5425,
+        "pLocal": 0.672
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 32,
+        "radius": 25,
+        "count": 52,
+        "nullMean": 53.964,
+        "pLocal": 0.695
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 20,
+        "radius": 25,
+        "count": 172,
+        "nullMean": 172,
+        "pLocal": 1
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 20,
+        "radius": 27,
+        "count": 59,
+        "nullMean": 59,
+        "pLocal": 1
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 20,
+        "radius": 13,
+        "count": 46,
+        "nullMean": 46,
+        "pLocal": 1
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 20,
+        "radius": 15,
+        "count": 18,
+        "nullMean": 18,
+        "pLocal": 1
+      }
+    ],
+    "allResults": [
+      {
+        "catalog": "CENT_A",
+        "energyMin": 32,
+        "radius": 27,
+        "count": 28,
+        "nullMean": 18.4905,
+        "pLocal": 0.008
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 32,
+        "radius": 20,
+        "count": 91,
+        "nullMean": 82.1802,
+        "pLocal": 0.061
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 27,
+        "count": 11,
+        "nullMean": 6.971,
+        "pLocal": 0.064
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 32,
+        "radius": 20,
+        "count": 70,
+        "nullMean": 62.8028,
+        "pLocal": 0.093
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 45,
+        "radius": 5,
+        "count": 4,
+        "nullMean": 2.6396,
+        "pLocal": 0.279
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 32,
+        "radius": 10,
+        "count": 44,
+        "nullMean": 41.6837,
+        "pLocal": 0.348
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 15,
+        "count": 3,
+        "nullMean": 2.1411,
+        "pLocal": 0.374
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 45,
+        "radius": 20,
+        "count": 32,
+        "nullMean": 30.6927,
+        "pLocal": 0.421
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 45,
+        "radius": 25,
+        "count": 21,
+        "nullMean": 20.2743,
+        "pLocal": 0.468
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 32,
+        "radius": 13,
+        "count": 15,
+        "nullMean": 14.5485,
+        "pLocal": 0.498
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 32,
+        "radius": 15,
+        "count": 6,
+        "nullMean": 5.6326,
+        "pLocal": 0.509
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 45,
+        "radius": 20,
+        "count": 23,
+        "nullMean": 23.4494,
+        "pLocal": 0.588
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 32,
+        "radius": 5,
+        "count": 7,
+        "nullMean": 7.2132,
+        "pLocal": 0.619
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 32,
+        "radius": 10,
+        "count": 24,
+        "nullMean": 24.9099,
+        "pLocal": 0.634
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 45,
+        "radius": 13,
+        "count": 5,
+        "nullMean": 5.5425,
+        "pLocal": 0.672
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 45,
+        "radius": 20,
+        "count": 8,
+        "nullMean": 8.7397,
+        "pLocal": 0.684
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 32,
+        "radius": 25,
+        "count": 52,
+        "nullMean": 53.964,
+        "pLocal": 0.695
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 45,
+        "radius": 10,
+        "count": 4,
+        "nullMean": 4.7407,
+        "pLocal": 0.729
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 45,
+        "radius": 10,
+        "count": 14,
+        "nullMean": 15.5666,
+        "pLocal": 0.737
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 45,
+        "radius": 10,
+        "count": 8,
+        "nullMean": 9.2503,
+        "pLocal": 0.74
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 32,
+        "radius": 5,
+        "count": 18,
+        "nullMean": 20.5455,
+        "pLocal": 0.805
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 45,
+        "radius": 5,
+        "count": 6,
+        "nullMean": 7.6727,
+        "pLocal": 0.813
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 32,
+        "radius": 10,
+        "count": 9,
+        "nullMean": 12.6326,
+        "pLocal": 0.94
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 32,
+        "radius": 20,
+        "count": 18,
+        "nullMean": 23.6006,
+        "pLocal": 0.955
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 32,
+        "radius": 5,
+        "count": 2,
+        "nullMean": 4.1722,
+        "pLocal": 0.958
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 20,
+        "radius": 20,
+        "count": 261,
+        "nullMean": 261,
+        "pLocal": 1
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 20,
+        "radius": 20,
+        "count": 200,
+        "nullMean": 200,
+        "pLocal": 1
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 20,
+        "radius": 25,
+        "count": 172,
+        "nullMean": 172,
+        "pLocal": 1
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 20,
+        "radius": 10,
+        "count": 132,
+        "nullMean": 132,
+        "pLocal": 1
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 20,
+        "radius": 10,
+        "count": 79,
+        "nullMean": 79,
+        "pLocal": 1
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 20,
+        "radius": 20,
+        "count": 75,
+        "nullMean": 75,
+        "pLocal": 1
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 20,
+        "radius": 5,
+        "count": 65,
+        "nullMean": 65,
+        "pLocal": 1
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 20,
+        "radius": 27,
+        "count": 59,
+        "nullMean": 59,
+        "pLocal": 1
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 20,
+        "radius": 13,
+        "count": 46,
+        "nullMean": 46,
+        "pLocal": 1
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 20,
+        "radius": 10,
+        "count": 40,
+        "nullMean": 40,
+        "pLocal": 1
+      },
+      {
+        "catalog": "MAGNETARS_HIST",
+        "energyMin": 20,
+        "radius": 5,
+        "count": 23,
+        "nullMean": 23,
+        "pLocal": 1
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 20,
+        "radius": 15,
+        "count": 18,
+        "nullMean": 18,
+        "pLocal": 1
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 20,
+        "radius": 5,
+        "count": 13,
+        "nullMean": 13,
+        "pLocal": 1
+      },
+      {
+        "catalog": "LHAASO_1",
+        "energyMin": 45,
+        "radius": 5,
+        "count": 0,
+        "nullMean": 1.5335,
+        "pLocal": 1
+      }
+    ]
+  }
+}
