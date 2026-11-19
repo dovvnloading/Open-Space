@@ -77,9 +77,10 @@
   "matched_filter": {
     "catalog_vetoes_run": false,
     "classification": "literature_based_gaussian_fwhm_envelope_white_noise_screen_only",
+    "empirical_white_snr_jackknife_mad": 12.09803266391544,
     "jpl_horizons_run": false,
     "observation_excluded_reference": true,
-    "published_transient_recovery_screen_only": true,
+    "published_transient_recovery_screen_only": false,
     "scans": [
       {
         "actual_data_injections_fwhm_envelope": {
@@ -321,25 +322,39 @@
         "provisional_peaks_omitted_beyond_first_30": 0,
         "published_positive_control": {
           "all_gaussian_fwhm_peak_snr": {
-            "1.2": 21.20815615291746,
-            "1.4": 24.14978862134466,
-            "1.6": 27.036425225665056
+            "1.2": 19.828787597012617,
+            "1.4": 22.849895953413494,
+            "1.6": 25.848054060665856
           },
-          "highest_white_snr_within_3arcmin": 24.14978862134466,
+          "empirical_mad_rescaled_peak": 1.7612641718886102,
+          "highest_white_snr_within_3arcmin": 22.849895953413494,
           "known_event_not_novel": true,
-          "peak_offset_arcmin": 3.1622776601683795,
+          "mean_time_within_6h_of_published_peak": false,
+          "peak_offset_arcmin": 3.0,
           "published_dec_deg": 16.1652,
-          "published_peak_date_utc": "2018-09-11",
+          "published_peak_time_utc_from_Naess2021": "2018-09-11T23:36:00+00:00",
           "published_ra_deg": 301.9952,
           "published_source": "Naess2021_2018-09-11",
-          "screen_recovered_nominal": true,
-          "status": "provisional_white_noise_screen_only",
+          "screen_recovered_nominal": false,
+          "status": "not_a_scientific_recovery_without_independent_psf_and_noise_calibration",
           "tested_epoch_start": "2018-09-10 23:06:59.646032",
           "tested_epoch_stop": "2018-09-11 01:59:01.425747",
           "timing": {
-            "error": "ValueError: could not convert string to float: '2018-09-10 23:06:59.000000'",
-            "status": "time_pixel_failed"
-          }
+            "http_status": 206,
+            "native_pixel_xy": [
+              7833,
+              4387
+            ],
+            "period_ctime_from_catalog": "2018-09-10 23:06:59.000000",
+            "period_start_unix": 1536620819.0,
+            "seconds_from_period_start": 135.8124237060547,
+            "status": "mean_time_fits_pixel_read",
+            "time_map_header_sha256": "479ad536d98dad5c22e4c249f4e5826001ccc52ebf4090dfd1c394611695624b",
+            "time_pixel_sha256": "dda37f40be2bd8f35d1cfc606bb8bf843a2f3588cf75b37fa8fdf098b5a00d18",
+            "unix_utc": 1536620954.8124237,
+            "utc": "2018-09-10T23:09:14.812424+00:00"
+          },
+          "within_2arcmin": false
         },
         "scan_time_start": "2018-09-10 23:06:59.646032",
         "scan_time_stop": "2018-09-11 01:59:01.425747",
@@ -473,25 +488,39 @@
         "provisional_peaks_omitted_beyond_first_30": 0,
         "published_positive_control": {
           "all_gaussian_fwhm_peak_snr": {
-            "1.2": -5.897550910837596,
-            "1.4": -6.805043060584625,
-            "1.6": -7.738753131276405
+            "1.2": -6.9417300903365975,
+            "1.4": -8.507222410914945,
+            "1.6": -10.074118690403967
           },
-          "highest_white_snr_within_3arcmin": -6.805043060584625,
+          "empirical_mad_rescaled_peak": -0.9167822978621489,
+          "highest_white_snr_within_3arcmin": -8.507222410914945,
           "known_event_not_novel": true,
-          "peak_offset_arcmin": 3.905124837953327,
+          "mean_time_within_6h_of_published_peak": false,
+          "peak_offset_arcmin": 2.9154759474226504,
           "published_dec_deg": 16.1652,
-          "published_peak_date_utc": "2018-09-11",
+          "published_peak_time_utc_from_Naess2021": "2018-09-11T23:36:00+00:00",
           "published_ra_deg": 301.9952,
           "published_source": "Naess2021_2018-09-11",
           "screen_recovered_nominal": false,
-          "status": "provisional_white_noise_screen_only",
+          "status": "not_a_scientific_recovery_without_independent_psf_and_noise_calibration",
           "tested_epoch_start": "2018-09-12 23:06:29.949002",
           "tested_epoch_stop": "2018-09-13 10:33:04.709378",
           "timing": {
-            "error": "ValueError: could not convert string to float: '2018-09-12 23:06:29.000000'",
-            "status": "time_pixel_failed"
-          }
+            "http_status": 206,
+            "native_pixel_xy": [
+              22555,
+              4386
+            ],
+            "period_ctime_from_catalog": "2018-09-12 23:06:29.000000",
+            "period_start_unix": 1536793589.0,
+            "seconds_from_period_start": 3077.803955078125,
+            "status": "mean_time_fits_pixel_read",
+            "time_map_header_sha256": "ede002673db3e77cefcfca43bbf507859fe1a0cb3d706de296d014b2fff68800",
+            "time_pixel_sha256": "606cb5492d9784fe0b2cd749b765102a6c37bb568125e3f3f6d3db3d2fd015e5",
+            "unix_utc": 1536796666.803955,
+            "utc": "2018-09-12T23:57:46.803955+00:00"
+          },
+          "within_2arcmin": false
         },
         "scan_time_start": "2018-09-12 23:06:29.949002",
         "scan_time_stop": "2018-09-13 10:33:04.709378",
@@ -8268,5 +8297,5 @@
       "valid_aperture_pixels": 4053
     }
   ],
-  "utc": "2026-11-19T04:05:13.033877+00:00"
+  "utc": "2026-11-19T04:11:25.743762+00:00"
 }
