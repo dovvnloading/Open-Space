@@ -1,0 +1,67 @@
+name: Euclid DR1-F deep field visit-pair differences
+on:
+  push:
+    branches:
+      - research/euclid-dr1f-deep-transients
+    paths:
+      - 'results/euclid-dr1f-deep-transients/**'
+      - '!results/euclid-dr1f-deep-transients/output/**'
+      - '!results/euclid-dr1f-deep-transients/README.md'
+      - '!results/euclid-dr1f-deep-transients/REFEREE.md'
+permissions:
+  contents: write
+concurrency:
+  group: euclid-dr1f-deep-transients
+  cancel-in-progress: false
+jobs:
+  data-and-computation:
+    if: github.ref == 'refs/heads/research/euclid-dr1f-deep-transients'
+    runs-on: ubuntu-latest
+    timeout-minutes: 320
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install source readers and run offline tests
+        shell: bash
+        run: |
+          python -m pip install 'numpy>=2,<3' 'scipy>=1.13,<2' 'astropy>=6,<8' 'matplotlib>=3.8,<4' 'requests>=2.31,<3' 's3fs>=2025,<2027'
+          python -m py_compile results/euclid-dr1f-deep-transients/{run,referee,tests}.py
+          ( cd results/euclid-dr1f-deep-transients && python -m unittest tests -v )
+      - name: Network data plus analysis in one bounded, checkpointed job
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=results/euclid-dr1f-deep-transients
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          save_batch() {
+            git add "$src/output"
+            if ! git diff --cached --quiet; then
+              git commit -m 'research(euclid-deep): checkpoint frozen field and receipts'
+              git pull --rebase origin "$GITHUB_REF_NAME"
+              git push origin "HEAD:$GITHUB_REF_NAME"
+            fi
+          }
+          started=$(date +%s)
+          until [[ -f "$src/output/summary.json" ]]; do
+            python -u "$src/run.py" || { save_batch; exit 1; }
+            save_batch
+            if (( $(date +%s) - started > 17400 )); then
+              echo 'Runtime budget hit. Evidence checkpointed; resume by explicit non-output source-path push.' >&2
+              exit 1
+            fi
+          done
+          python -u "$src/referee.py"
+          save_batch
+      - name: Upload even failing receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: euclid-dr1f-deep-transient-receipts
+          path: results/euclid-dr1f-deep-transients/output/
+          retention-days: 30
+          if-no-files-found: warn
