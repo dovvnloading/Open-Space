@@ -106,7 +106,7 @@ def main():
     for c in scan.load_controls():
         x=by_control.get(c["name"])
         controls.append({
-            "name":c["name"],"class":c["class"],"z":c["z"],
+            "name":c["name"],"class":c["class"],"source":c["source"],"z":c["z"],
             "nearest":x, "catalog_matched_within_3arcsec":x is not None,
             "strict_recovered":bool(x and x["strict_pass"]),
             "coverage_if_unmatched":"NOT_ESTABLISHED_BY_HEALPIX_PARTITION"})
@@ -155,9 +155,14 @@ def main():
         "strict_meeting_nir_mumax_ellipticity_diagnostic":n_morph,
         "strict_with_ground_optical_gt_3sigma":n_optical,
         "ranked_morphology_colour_optical_survivors":len(ranked),
-        "controls_yang2026_count":sum(c["class"]=="quasar" for c in controls),
-        "controls_yang2026_catalog_matched":len(matched_q),
-        "controls_yang2026_strict_recovered":len(recovered_q),
+        "controls_yang2026_count":sum(c["class"]=="quasar" and c["source"]=="Yang2026" for c in controls),
+        "controls_yang2026_catalog_matched":sum(c["source"]=="Yang2026" for c in matched_q),
+        "controls_yang2026_strict_recovered":sum(c["source"]=="Yang2026" for c in recovered_q),
+        "controls_banados_census_20260318_count":sum(c["source"]=="Banados_census_20260318" for c in controls),
+        "controls_banados_census_20260318_catalog_matched":sum(c["source"]=="Banados_census_20260318" for c in matched_q),
+        "controls_banados_census_20260318_strict_recovered":sum(c["source"]=="Banados_census_20260318" for c in recovered_q),
+        "controls_combined_catalog_matched":len(matched_q),
+        "controls_combined_strict_recovered":len(recovered_q),
         "recovery_fraction_among_catalog_matched_controls":(
             len(recovered_q)/len(matched_q) if matched_q else None),
         "full_footprint_control_denominator_verified":False,
@@ -173,7 +178,7 @@ def main():
             "VIS-based POINT_LIKE_PROB is not valid for VIS dropouts",
             "NISP shape criterion transferred from an ultracool-dwarf study is a diagnostic",
             "Strict selection is not a calibrated quasar probability",
-            "Yang's 31 discovery controls are not an exhaustive global high-z quasar census",
+            "89 Bañados March 2026 census plus 31 Yang July 2026 discoveries are a dated baseline, not an exhaustive November 2026 all-sky census",
             "An undetected control may be outside released imaging or missing from the MER catalogue",
             "External spectral and image artefact validation is separate and incomplete"]}
     js(OUT/"summary.json",summary)

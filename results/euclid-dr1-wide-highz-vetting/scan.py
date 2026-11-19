@@ -94,17 +94,24 @@ def catalogue_index():
 
 def load_controls():
     out = []
-    for filename, typ in (("controls.tsv", "quasar"), ("dwarfs.tsv", "dwarf")):
+    for filename, typ in (("controls.tsv", "quasar"), ("census.tsv", "quasar"), ("dwarfs.tsv", "dwarf")):
         with (ROOT / filename).open() as f:
             for row in csv.DictReader(f, delimiter="\t"):
                 name = row["name"]
-                m = re.search(r"J(\d{2})(\d{2})(\d{2}\.\d+)([+-])(\d{2})(\d{2})(\d{2}\.\d+)", name)
-                if not m:
-                    raise ValueError("Invalid control name " + name)
-                hh, mm, ss, sign, dd, dm, ds = m.groups()
-                ra = (int(hh) + int(mm)/60 + float(ss)/3600)*15
-                dec = (int(dd) + int(dm)/60 + float(ds)/3600)*(1 if sign == "+" else -1)
+                if filename == "census.tsv":
+                    ra = float(row["ra_deg"])
+                    dec = float(row["dec_deg"])
+                    source = "Banados_census_20260318"
+                else:
+                    m = re.search(r"J(\d{2})(\d{2})(\d{2}\.\d+)([+-])(\d{2})(\d{2})(\d{2}\.\d+)", name)
+                    if not m:
+                        raise ValueError("Invalid control name " + name)
+                    hh, mm, ss, sign, dd, dm, ds = m.groups()
+                    ra = (int(hh) + int(mm)/60 + float(ss)/3600)*15
+                    dec = (int(dd) + int(dm)/60 + float(ds)/3600)*(1 if sign == "+" else -1)
+                    source = "Yang2026" if typ == "quasar" else "Yang2026_dwarf"
                 out.append({"name": name, "class": typ, "ra": ra, "dec": dec,
+                            "source": source,
                             "z": float(row.get("z", "nan")) if typ == "quasar" else None})
     return out
 
@@ -174,7 +181,8 @@ def scalar(v):
     if isinstance(v, (np.integer,)):
         return int(v)
     if isinstance(v, (np.floating,)):
-        return float(v)
+        f = float(v)
+        return f if math.isfinite(f) else None
     if isinstance(v, bytes):
         return v.decode("utf-8", "replace")
     if isinstance(v, float) and not math.isfinite(v):
@@ -240,7 +248,7 @@ def scan_partition(record, fs, controls):
                     for i, dist in nearest(ra, dec, c):
                         r = row_dict(tab, i, yj, jh, yl)
                         result_controls.append({
-                            "name": c["name"], "class": c["class"],
+                            "name": c["name"], "class": c["class"], "source": c["source"],
                             "z": c["z"], "object_id": str(r["object_id"]),
                             "sep_arcsec": round(dist, 5),
                             "broad_pass": bool(broad[i]),
