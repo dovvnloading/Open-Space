@@ -10,6 +10,11 @@
 4. Statistical diagnostics on the six known positive controls: **240/324** synthetic paired rate injections matched both input peaks, **210/210** time permutations of eruption-containing control curves flagged recurrent patterns, **0/6** scaled source-background proxy flags. The time permutations have QPE outbursts, so **they are not null backgrounds**. The BACK proxy is **not an independent background region**. No survey-wide false-positive probability, FDR or independent completeness results from these numbers.
 5. Three preselected observations (0872392901, 0306630101, 0200730401), six prospective pn detection rows, were requested via the existing PPS archive interface with 5-min/observation and 3GiB byte ceilings. **All three XSA connections closed without data; zero new-source pn light curves were analyzed.** Run receipts in outputs/archive_pilot_batch_01.json. The final safe six-control replay succeeded and keeps the gate false.
 
+
+### Subsequent SDSS contaminant audit
+
+After the 1,108-detection freeze, an independently recorded SDSS DR18 SpecObjAll/PhotoPrimary run completed without missing SQL batches: 205 unique spectroscopic host positions (419 spectroscopic rows), 119 detections classified as QSO/STAR/recognized BL Lac or coincident clean SDSS stars excluded, **989 surviving provisional detections / 795 unique SRCIDs / 688 obsIDs**. There were **zero** clean SDSS nearby stars within 1 arcsec, but **Gaia and full 4LAC/SIMBAD exclusions remain unverified**. A targeted connection probe again failed on the three pilot obsIDs and known control GSN 069, so archive PN access remains unavailable. [Receipt](outputs/archive_sdss_stellar_blazar_audit.json), [remaining subcohort](outputs/archive_sdss_after_exclusions.csv). No change to rejection disposition or validated new-QPE count.
+
 ## Blocking issues
 
 - **No archive screen actually completed:** 0 of 742 provisional eligible pn observations successfully checked (three download failures are missing data, not non-eruptions); 0 vetted source flares. Therefore neither an archive-wide null nor a meaningful zero-candidate claim can be made.

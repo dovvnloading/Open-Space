@@ -17,6 +17,13 @@
 
 Host crossmatch QA: X-ray parent SHA-256 c2793211c74f9a85992253fba76743a94bcdf2cffb2137f29a3037907d4e56a5; SDSS pair file SHA-256 b1495de1b3f28a7e3a7b21f73df30f96d43607a77db0231d445e1280eae0481f; final provisional point-pn manifest SHA-256 93475a72d00393c236b36065a60ef6fdb6f8c066c9e945c7e543ec47a8321357. All three input stages were recorded with source-code and API receipts.
 
+
+## Subsequent SDSS-only stellar / broadline AGN rejection (not Gaia-complete)
+
+A further bounded SDSS DR18 audit of the 1,108 initially point/pn-qualified detections completed all SpecObjAll and PhotoPrimary near-star batches. It identified 205 unique SDSS spectroscopic hosts (419 spectrum rows), **119** detection rows with class QSO or STAR or recognized BL Lac/blazar subclass to exclude, and **0** clean morphological SDSS stars within 1 arcsec. The resulting second-stage provisional host list has **989 detection rows, 795 unique X-ray SRCIDs and 688 distinct XMM obsIDs**. The baseline freeze of 1,108 is preserved unchanged for provenance; the smaller file is outputs/archive_sdss_after_exclusions.csv and complete query receipts are in outputs/archive_sdss_stellar_blazar_audit.json. This is an SDSS-only spectroscopic/stellar exclusion: host galaxies without spectra are unclassified, and proper-motion/parallax Gaia stars and SIMBAD/4LAC non-SDSS blazars have NOT been systematically excluded.
+
+Four XSA no-download probes (the three pre-registered pilot observations and known-QPE control GSN 069) again failed with RemoteDisconnected. Therefore the **989 remaining provisional detections / 688 observations are still not screened at the pn curve level**, and the FDR and candidate vetting gates remain closed.
+
 ## Reproducibility and repairs
 
 - NOIRLab LS DR10 TAP cone and upload timed out or returned HTTP 502; its anonymous QueryManager query endpoint returned HTTP 401. Beta endpoint certificate validation failed. A documented SDSS DR18 SQL alternative succeeded via SkyServer: all 419 chunks completed without missing IDs. Only SDSS-footprint host completeness is addressed; do not extrapolate to the whole LS sky.

@@ -1,6 +1,6 @@
 # 4XMM-DR14 QPE search — SDSS host audit, failed gated pn-screen pilot
 
-**Current result (19 November 2026):** Known QPE control recurrence remains **6/6 active XMM epochs** with **29/29 published bright-event peak-count overlap (in-sample; not sensitivity)**. A full **33,488-row** soft/long X-ray prefilter was queried against SDSS DR18: **2,510** clean galaxy-centroid associations within 2 arcsec. A published-MD5-verified, pointlike long-pn catalogue gate froze **1,108 provisional detections in 742 XMM observations**. **Three** pre-registered XSA PPS observations failed at transport; **zero new-source pn light curves were screened**. No independently confirmed new QPE, vetted candidate, calibrated false-positive rate or archive-wide null. [PR #205](https://github.com/dovvnloading/Open-Space/pull/205) remains **DRAFT, not merged**.
+**Current result (19 November 2026):** Known QPE control recurrence remains **6/6 active XMM epochs** with **29/29 published bright-event peak-count overlap (in-sample; not sensitivity)**. A full **33,488-row** soft/long X-ray prefilter was queried against SDSS DR18: **2,510** clean galaxy-centroid associations within 2 arcsec. A published-MD5-verified, pointlike long-pn catalogue gate first froze **1,108 detections in 742 XMM observations**; a verified SDSS spectroscopy/nearby-star audit excluded **119**, leaving **989 still-provisional detections in 688 observations** (Gaia and full blazar clearance missing). **Three** pre-registered XSA PPS observations failed at transport; **zero new-source pn light curves were screened**. No independently confirmed new QPE, vetted candidate, calibrated false-positive rate or archive-wide null. [PR #205](https://github.com/dovvnloading/Open-Space/pull/205) remains **DRAFT, not merged**.
 
 ## Measured positive-control recovery
 
@@ -41,6 +41,11 @@ The branch continues to use the existing push-triggered [`.github/workflows/xmm-
 **Independent methodological referee decision: KEEP DRAFT, DO NOT MERGE.** No validated new QPE and no [REMARKABLE] marker or docs/REMARKABLE_FINDINGS.md entry. The remaining 742 provisional XMM observations have no validated new-source pn curves, FDR and sensitivity are undefined, and an archive null or discovery would be unsupported. Full numerators, hashes, run IDs, and blockers are in the [archive audit](outputs/ARCHIVE_SCREEN_AUDIT.md) and [referee report](REFEREE.md).
 
 **Control-scope exclusions:** AT2019qiz and Ansky do not have qualifying QPE-active DR14-era XMM control epochs. They are not scored as failures.
+
+
+### Additional SDSS contaminant-only audit (not a complete host vet)
+
+A later bounded, successful SDSS DR18 SpecObjAll and near-star crossmatch of the 1,108 detection rows found 205 unique hosts with spectra (419 spectroscopic rows), and **119 source detections** with spectroscopy classified as QSO/STAR or recognized BL Lac/blazar subclass; it found **0 nearby clean SDSS stars within 1 arcsec**. This excludes the 119 rows conservatively and leaves **989 provisional detections, 795 unique X-ray SRCIDs and 688 unique XMM observations** in the [post-exclusion manifest](outputs/archive_sdss_after_exclusions.csv). The run made all SQL chunks successfully and retried PPS access for the three pilot observations plus a known QPE control; all four ESO/XSA connection attempts failed again. **No Gaia proper-motion/parallax, complete SIMBAD/4LAC blazar rejection or new pn light curves were obtained.** The 1,108-to-989 count is an SDSS-only reduction, *not* a validated galaxy-nucleus survey or screening result. [Independent exclusion receipt](outputs/archive_sdss_stellar_blazar_audit.json).
 
 ## Reproduction/evidence
 
