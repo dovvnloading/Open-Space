@@ -20,8 +20,9 @@
       "ra_deg": 52.932
     }
   ],
+  "fixed_issue": "v2 S3 observation display identifiers used a non-unique name segment. v3 adds SHA256(S3 science key) display IDs, no visit/image change.",
   "freeze_file_sha256": "bdd7c5998ec1e756f0d8a30f7264956875060c583186a223c367276807df30fc",
-  "method_version": "2026-11-19-direct-S3-v2-no-image-inspection",
+  "method_version": "2026-11-19-direct-S3-v3-unique-object-ids",
   "predecessor": "failed IRSA SIA 502 for all three fields; retained in output/sia_v1_failure.json",
   "probe_file_sha256": "f556d9eb216438507cf738817fc08e2ab464d6f781baadb3888fb50b3836fbcd",
   "receipts": [
@@ -539,7 +540,8 @@
         "source_sha256": "63142b22db50c6223aeb00884290c8531461abd11d8bdd91845d043ca85b0a07",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "north_Y_102158276_MER",
+      "obs_id": "north_Y_cd3503c266800a",
+      "pre_rekey_display_id": "north_Y_102158276_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/102158276/NISP/EUC_MER_MOSAIC-NIR-Y-FLAG_TILE102158276-C43449_20250703T010142.659888Z_00.00.fits",
@@ -610,10 +612,11 @@
         "source_sha256": "c0c4989b194a0fad45d94a723666f3e238dea8b33280af53fafa1438eb1c2cf7",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "north_Y_102158276_MER",
+      "obs_id": "north_Y_8a11775abef99c",
       "pair_independence": {
-        "north_Y_102158276_MER": false
+        "north_Y_cd3503c266800a": false
       },
+      "pre_rekey_display_id": "north_Y_102158276_MER",
       "product_association_cleared": false,
       "products": {
         "flag": "dr1/MER/102158276/NISP/EUC_MER_MOSAIC-NIR-Y-FLAG_TILE102158276-A5BCE2_20250715T022400.509967Z_00.00.fits",
@@ -678,10 +681,12 @@
         "source_sha256": "0a710225df0e050cbb26946eb5d2946ebe05a7825e74884a84cdd8df7bb84c70",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "north_Y_102158276_MER",
+      "obs_id": "north_Y_6e7856e0a8a521",
       "pair_independence": {
-        "north_Y_102158276_MER": false
+        "north_Y_8a11775abef99c": false,
+        "north_Y_cd3503c266800a": true
       },
+      "pre_rekey_display_id": "north_Y_102158276_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/102158276/NISP/EUC_MER_MOSAIC-NIR-Y-FLAG_TILE102158276-495510_20250721T025734.373656Z_00.00.fits",
@@ -740,7 +745,8 @@
         "source_sha256": "9579f3e4772c677a4b8bdb2f37b105f200af0ad4042058610ed4b0f45b5a468e",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "north_J_102158276_MER",
+      "obs_id": "north_J_700829423a13f0",
+      "pre_rekey_display_id": "north_J_102158276_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/102158276/NISP/EUC_MER_MOSAIC-NIR-J-FLAG_TILE102158276-C350CF_20250725T163902.991254Z_00.00.fits",
@@ -805,10 +811,11 @@
         "source_sha256": "d816c853b0c51f0c7e94cb9e0e11fe5d4f55cfb18290f4fa2807b0d8a362bb3c",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "north_J_102158276_MER",
+      "obs_id": "north_J_3a2830c4345b61",
       "pair_independence": {
-        "north_J_102158276_MER": false
+        "north_J_700829423a13f0": false
       },
+      "pre_rekey_display_id": "north_J_102158276_MER",
       "product_association_cleared": false,
       "products": {
         "flag": "dr1/MER/102158276/NISP/EUC_MER_MOSAIC-NIR-J-FLAG_TILE102158276-AD0FAF_20250715T022453.459338Z_00.00.fits",
@@ -879,10 +886,12 @@
         "source_sha256": "c6b17e4488febc5a2332a2a4c20ba3e50041b97e56bd4db0c947be1e7450c507",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "north_J_102158276_MER",
+      "obs_id": "north_J_fcf247822e30e0",
       "pair_independence": {
-        "north_J_102158276_MER": false
+        "north_J_3a2830c4345b61": false,
+        "north_J_700829423a13f0": true
       },
+      "pre_rekey_display_id": "north_J_102158276_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/102158276/NISP/EUC_MER_MOSAIC-NIR-J-FLAG_TILE102158276-842E19_20250723T234931.743723Z_00.00.fits",
@@ -947,7 +956,8 @@
         "source_sha256": "ba09fc0baf493e753883147575fc32fd76fe5ebc66d737018b81689980c98d2b",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "north_H_102158276_MER",
+      "obs_id": "north_H_5a166e22fa49f8",
+      "pre_rekey_display_id": "north_H_102158276_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/102158276/NISP/EUC_MER_MOSAIC-NIR-H-FLAG_TILE102158276-CC6BCA_20250630T150914.918629Z_00.00.fits",
@@ -1018,10 +1028,11 @@
         "source_sha256": "25c390353bc54c38f45ceacee547469e41718b56db89a771584ed2f053f7f644",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "north_H_102158276_MER",
+      "obs_id": "north_H_3987cbe05e2c0f",
       "pair_independence": {
-        "north_H_102158276_MER": false
+        "north_H_5a166e22fa49f8": false
       },
+      "pre_rekey_display_id": "north_H_102158276_MER",
       "product_association_cleared": false,
       "products": {
         "flag": "dr1/MER/102158276/NISP/EUC_MER_MOSAIC-NIR-H-FLAG_TILE102158276-B5D4EF_20250715T182649.721974Z_00.00.fits",
@@ -1092,10 +1103,12 @@
         "source_sha256": "90e5da8e938e57137fda04826029edabf3ed1ecc020bdad347826bee4975045f",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "north_H_102158276_MER",
+      "obs_id": "north_H_2a11b734a09141",
       "pair_independence": {
-        "north_H_102158276_MER": false
+        "north_H_3987cbe05e2c0f": false,
+        "north_H_5a166e22fa49f8": true
       },
+      "pre_rekey_display_id": "north_H_102158276_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/102158276/NISP/EUC_MER_MOSAIC-NIR-H-FLAG_TILE102158276-411FB5_20250723T234918.037612Z_00.00.fits",
@@ -1322,7 +1335,8 @@
         "source_sha256": "41bb191c055a15e79d7ac4518127149f14685855a8e7d0305fc298b7fec85081",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "south_VIS_101283344_MER",
+      "obs_id": "south_VIS_02b6018c04b57a",
+      "pre_rekey_display_id": "south_VIS_101283344_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101283344/VIS/EUC_MER_MOSAIC-VIS-FLAG_TILE101283344-D91F36_20251003T064720.763098Z_00.00.fits",
@@ -1549,10 +1563,11 @@
         "source_sha256": "3a3265a5dec1da9807df6d392dd02b77e85c6bb37ab99981744a41ef0a250f07",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "south_VIS_101284304_MER",
+      "obs_id": "south_VIS_cdf86f83997a7a",
       "pair_independence": {
-        "south_VIS_101283344_MER": false
+        "south_VIS_02b6018c04b57a": false
       },
+      "pre_rekey_display_id": "south_VIS_101284304_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101284304/VIS/EUC_MER_MOSAIC-VIS-FLAG_TILE101284304-894CA0_20250929T223657.004516Z_00.00.fits",
@@ -1755,7 +1770,8 @@
         "source_sha256": "0a68336d87f77659354a7cbc3c4ce9cef3af5f62ba7a6cef7ab2d4100f764e1b",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "south_Y_101283344_MER",
+      "obs_id": "south_Y_87afb770a40a90",
+      "pre_rekey_display_id": "south_Y_101283344_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101283344/NISP/EUC_MER_MOSAIC-NIR-Y-FLAG_TILE101283344-F4C524_20251003T041937.383340Z_00.00.fits",
@@ -1952,10 +1968,11 @@
         "source_sha256": "cce1489f3c77d3e332eae5003a6edf8478f36dcfe10a2e1ffd64ac44c47b2417",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "south_Y_101284304_MER",
+      "obs_id": "south_Y_28cc92ac436033",
       "pair_independence": {
-        "south_Y_101283344_MER": true
+        "south_Y_87afb770a40a90": true
       },
+      "pre_rekey_display_id": "south_Y_101284304_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101284304/NISP/EUC_MER_MOSAIC-NIR-Y-FLAG_TILE101284304-57A768_20250929T220203.184647Z_00.00.fits",
@@ -2158,7 +2175,8 @@
         "source_sha256": "42cd3589422337747051581a032377201a9d28cd23cfdc55b1ab970f5097a067",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "south_J_101283344_MER",
+      "obs_id": "south_J_3f8188ad1a91a0",
+      "pre_rekey_display_id": "south_J_101283344_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101283344/NISP/EUC_MER_MOSAIC-NIR-J-FLAG_TILE101283344-DE0A28_20251003T013832.431282Z_00.00.fits",
@@ -2355,10 +2373,11 @@
         "source_sha256": "5a9961d766208fc59334be056cc1fae7cb331c53f53d700d6f8db3dfebfcb3be",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "south_J_101284304_MER",
+      "obs_id": "south_J_4a35436816984f",
       "pair_independence": {
-        "south_J_101283344_MER": true
+        "south_J_3f8188ad1a91a0": true
       },
+      "pre_rekey_display_id": "south_J_101284304_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101284304/NISP/EUC_MER_MOSAIC-NIR-J-FLAG_TILE101284304-427651_20250929T213437.711623Z_00.00.fits",
@@ -2561,7 +2580,8 @@
         "source_sha256": "1cd48e40cb8024a2d7473eb992b5afca05f26c3f1f919f1ab8b9d49c7710fd0b",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "south_H_101283344_MER",
+      "obs_id": "south_H_20eba36f2282ce",
+      "pre_rekey_display_id": "south_H_101283344_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101283344/NISP/EUC_MER_MOSAIC-NIR-H-FLAG_TILE101283344-5D9466_20251003T021134.128603Z_00.00.fits",
@@ -2758,10 +2778,11 @@
         "source_sha256": "205ecd13b0e73b43944c8dd38ed71fdc0b649509a5de6e4a4b16e1ec9e5eaf08",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "south_H_101284304_MER",
+      "obs_id": "south_H_751933af22829b",
       "pair_independence": {
-        "south_H_101283344_MER": true
+        "south_H_20eba36f2282ce": true
       },
+      "pre_rekey_display_id": "south_H_101284304_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101284304/NISP/EUC_MER_MOSAIC-NIR-H-FLAG_TILE101284304-C119BB_20250929T225112.212256Z_00.00.fits",
@@ -2862,7 +2883,8 @@
         "source_sha256": "88b6d09fb268752c52ddd1737eb6fd7889568c607be816c4af51272a5c8af80d",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "fornax_VIS_101375805_MER",
+      "obs_id": "fornax_VIS_33a5e456ad0f0b",
+      "pre_rekey_display_id": "fornax_VIS_101375805_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101375805/VIS/EUC_MER_MOSAIC-VIS-FLAG_TILE101375805-FFC873_20250802T172536.616815Z_00.00.fits",
@@ -3965,10 +3987,11 @@
         "source_sha256": "f2d2d48cc9b938c6c18388d9e159f91fc8ca38d56ec2fe936854d974d196eb2b",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "fornax_VIS_101375805_MER",
+      "obs_id": "fornax_VIS_4ff054ad4feece",
       "pair_independence": {
-        "fornax_VIS_101375805_MER": true
+        "fornax_VIS_33a5e456ad0f0b": true
       },
+      "pre_rekey_display_id": "fornax_VIS_101375805_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101375805/VIS/EUC_MER_MOSAIC-VIS-FLAG_TILE101375805-92617_20250516T142641.220179Z_00.00.fits",
@@ -4033,7 +4056,8 @@
         "source_sha256": "ffac1200fadadd75b21a994248f98a7a433e0b5f75d1ca624697a05c1eb13e60",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "fornax_Y_101375805_MER",
+      "obs_id": "fornax_Y_c0b4c055f5b5c6",
+      "pre_rekey_display_id": "fornax_Y_101375805_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-Y-FLAG_TILE101375805-D9DA85_20250802T171952.573754Z_00.00.fits",
@@ -4698,10 +4722,11 @@
         "source_sha256": "a0a9588fd4f545d48eb440adc48e90b26d8edd0811ab3724bfb066dad371d851",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "fornax_Y_101375805_MER",
+      "obs_id": "fornax_Y_9a52ce0135102a",
       "pair_independence": {
-        "fornax_Y_101375805_MER": true
+        "fornax_Y_c0b4c055f5b5c6": true
       },
+      "pre_rekey_display_id": "fornax_Y_101375805_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-Y-FLAG_TILE101375805-8E7EBD_20250516T134920.692709Z_00.00.fits",
@@ -4766,7 +4791,8 @@
         "source_sha256": "37cfe4b9f7e3c7a231e8acf7a42b851925bf3547e7cfbd36b85529666dcd4d8d",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "fornax_J_101375805_MER",
+      "obs_id": "fornax_J_3d5c9d98bcde60",
+      "pre_rekey_display_id": "fornax_J_101375805_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-J-FLAG_TILE101375805-545364_20250802T172030.590287Z_00.00.fits",
@@ -5425,10 +5451,11 @@
         "source_sha256": "a357cd70acf94b54d986ba9257976c584fc6f4d6af6e041ad4b2282b08e22c4c",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "fornax_J_101375805_MER",
+      "obs_id": "fornax_J_f2adaa9522ad7a",
       "pair_independence": {
-        "fornax_J_101375805_MER": true
+        "fornax_J_3d5c9d98bcde60": true
       },
+      "pre_rekey_display_id": "fornax_J_101375805_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-J-FLAG_TILE101375805-F6F7D5_20250516T134802.565161Z_00.00.fits",
@@ -6087,7 +6114,8 @@
         "source_sha256": "21afed806c644d99152006065c183aeaef7476c50be430baf2b7a4b62037c6e6",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "fornax_H_101375805_MER",
+      "obs_id": "fornax_H_43a3bbf219aa85",
+      "pre_rekey_display_id": "fornax_H_101375805_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-H-FLAG_TILE101375805-93C736_20250516T134758.281223Z_00.00.fits",
@@ -6152,10 +6180,11 @@
         "source_sha256": "ce4d4c15ee2f5b8938c08754cd54937ff59ff8762e43f6232abcaca81a73e545",
         "status": "LAYER_POINT_COVERAGE"
       },
-      "obs_id": "fornax_H_101375805_MER",
+      "obs_id": "fornax_H_3efe563e4dd208",
       "pair_independence": {
-        "fornax_H_101375805_MER": true
+        "fornax_H_43a3bbf219aa85": true
       },
+      "pre_rekey_display_id": "fornax_H_101375805_MER",
       "product_association_cleared": true,
       "products": {
         "flag": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-H-FLAG_TILE101375805-B4C5CC_20250802T171953.198889Z_00.00.fits",
