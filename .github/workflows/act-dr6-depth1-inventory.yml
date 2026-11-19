@@ -42,6 +42,11 @@ jobs:
             --catalog-receipt act-depth1-inventory-receipt.json \
             --out results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz \
             --receipt results/act-dr6-mm-transients/eligible-inventory-receipt.json
+      - name: Audit array/scan-stem duplication and time conventions
+        run: |
+          python results/act-dr6-mm-transients/audit_catalog.py \
+            --manifest results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz \
+            --out results/act-dr6-mm-transients/catalog-metadata-audit.json
       - name: Commit pinned 27,512-row dataset on branch, never on PR
         if: github.event_name == 'push' && github.ref_name == 'research/act-dr6-mm-transient-search'
         shell: bash
@@ -55,7 +60,8 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz \
-                  results/act-dr6-mm-transients/eligible-inventory-receipt.json
+                  results/act-dr6-mm-transients/eligible-inventory-receipt.json \
+                  results/act-dr6-mm-transients/catalog-metadata-audit.json
           if git diff --cached --quiet; then
             echo "Pinned dataset already committed"
             exit 0
@@ -74,5 +80,6 @@ jobs:
             act-depth1-manifest.jsonl
             act-depth1-inventory-receipt.json
             results/act-dr6-mm-transients/eligible-inventory-receipt.json
+            results/act-dr6-mm-transients/catalog-metadata-audit.json
             results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz
           retention-days: 30
