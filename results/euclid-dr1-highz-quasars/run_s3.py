@@ -75,6 +75,37 @@ def broad(r):
             and h is not None and h>0 and y is not None and y<.85*j
             and j>.65*h and je is not None and je>0 and he is not None
             and he>0 and (spur is None or spur<.7))
+
+class HTTPRangeFile(io.RawIOBase):
+    """Parquet fallback: exact S3 HTTP ranges with SHA256 per byte-range."""
+    def __init__(self,url,size,etag):
+        self.url,self.size,self.etag,self.pos=url,size,etag,0
+        self.ranges=[]
+    def readable(self):return True
+    def seekable(self):return True
+    def tell(self):return self.pos
+    def seek(self,offset,whence=0):
+        if whence==0:self.pos=offset
+        elif whence==1:self.pos+=offset
+        elif whence==2:self.pos=self.size+offset
+        else:raise ValueError(whence)
+        return self.pos
+    def read(self,n=-1):
+        if n is None or n<0:n=self.size-self.pos
+        n=min(n,self.size-self.pos)
+        if n<=0:return b""
+        a,b=self.pos,self.pos+n-1
+        headers={"Range":"bytes=%d-%d"%(a,b),"Accept-Encoding":"identity"}
+        if self.etag:headers["If-Match"]=self.etag
+        rr=requests.get(self.url,headers=headers,timeout=65)
+        rr.raise_for_status()
+        expected="bytes %d-%d/%d"%(a,b,self.size)
+        if rr.status_code!=206 or rr.headers.get("Content-Range")!=expected or len(rr.content)!=n:
+            raise IOError("Unexpected S3 HTTP range response")
+        self.ranges.append([a,b,sha(rr.content)])
+        self.pos+=n
+        return rr.content
+
 def scalar(x):
     if isinstance(x,bytes):return x.decode("utf-8","replace")
     if isinstance(x,(np.integer,)):return int(x)
@@ -141,8 +172,14 @@ def main():
                 head.raise_for_status()
                 entry["content_length"]=int(head.headers.get("Content-Length","0"))
                 entry["s3_etag"]=head.headers.get("ETag")
-                if fs is None:raise RuntimeError("S3 filesystem unavailable")
-                stream=fs.open_input_file(BUCKET+"/"+fullpath)
+                try:
+                    if fs is None:raise RuntimeError("S3 filesystem unavailable")
+                    stream=fs.open_input_file(BUCKET+"/"+fullpath)
+                    entry["transport"]="s3-native"
+                except Exception as e:
+                    entry["native_transport_error"]=str(e)[:240]
+                    stream=HTTPRangeFile(url,entry["content_length"],entry["s3_etag"])
+                    entry["transport"]="s3-http-ranges"
                 pf=pq.ParquetFile(stream)
                 available=set(pf.schema_arrow.names)
                 columns=[c for c in FIELDS if c in available]
@@ -193,6 +230,8 @@ def main():
                         key=kind+"/"+x["object_id"]
                         found.setdefault(key,x)
                         count_broad+=1
+                if entry["transport"]=="s3-http-ranges":
+                    entry["range_sha256_receipts"]=stream.ranges
                 stream.close()
                 entry["broad_cone_rows_before_dedup"]=count_broad
                 entry["positive_control_objects"]=count_probes
