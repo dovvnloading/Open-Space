@@ -26,7 +26,7 @@ CAT={
  "legacy_dr10_photoz_subset":("VII/300",3),
  "unwise":("II/363/unwise",3),
  "panstarrs":("II/349/ps1",3),
- "erass1":("J/A+A/682/A34",12),
+ "erass1":("J/A+A/682/A34/erass1-m",12),
  "swift":("IX/58/2sxps",12)}
 FREQ={"racs_low_i":887.5,"racs_mid_i":1367.5,"racs_high_i":1655.5}
 def dump(name,x):
@@ -157,36 +157,75 @@ def cutout_one(sid,url,srow,g):
    plt.close(fig)
  except Exception as e:report["error"]=f"{type(e).__name__}: {str(e)[:170]}"
  return report,results
-def viz(cat,ra,dec,radius):
- u0="https://vizier.cds.unistra.fr/viz-bin/asu-tsv"
- params={"-source":cat,"-c":f"{ra:.8f} {dec:.8f}","-c.rs":radius,
-         "-out.max":8,"-out.all":"","-out.add":"_r"}
+def gaia_direct(ra,dec,radius):
+ """Direct ESAC TAP fallback for CDS outage (the earlier PR 200 route)."""
+ endpoint="https://gea.esac.esa.int/tap-server/tap/sync"
+ q=("SELECT TOP 25 source_id,ra,dec,parallax,phot_g_mean_mag FROM gaiadr3.gaia_source "
+    f"WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',{ra:.8f},{dec:.8f},{radius/3600:.10f}))")
  try:
-  r=requests.get(u0,params=params,timeout=(9,16),headers={"User-Agent":"Open-Space-LPT-followup/1.0"})
-  r.raise_for_status();rows=[];cols=None
-  for line in r.text.splitlines():
-   if not line or line.startswith("#"):continue
-   q=line.split("\t")
-   if cols is None:
-    if len(q)>1:cols=[x.strip() for x in q]
-    continue
-   if len(q)!=len(cols) or all(not x.strip("- ") for x in q):continue
-   d=dict(zip(cols,[x.strip() for x in q]))
-   for x,y in [("RAJ2000","DEJ2000"),("RAdeg","DEdeg"),("RA_ICRS","DE_ICRS"),("RA","DE")]:
-    if val(d.get(x)) is not None and val(d.get(y)) is not None:
-     sep=angular(ra,dec,float(d[x]),float(d[y]))
-     if sep<=radius+.2:rows.append((sep,d))
-     break
-  if not rows:return {"status":"no_catalog_match","url":r.url,"columns":(cols or [])[:12]}
-  rows.sort(key=lambda x:x[0])
-  sep,d=rows[0]
-  fields={k:v for k,v in d.items() if v and k in {
-    "Name","SourceID","RAJ2000","DEJ2000","RAdeg","DEdeg","Ftot","Fpeak","S_Code",
-    "Flag","Plx","e_Plx","Gmag","W1mag","W2mag","gmag","rmag","zmag","objID",
-    "PS1","AllWISE","Class","Type","RA_ICRS","DE_ICRS","_r","W1","W2"}}
-  return {"status":"match","arcsec":round(sep,3),"record":fields,"url":r.url}
- except Exception as e:
-  return {"status":"unavailable","catalog":cat,"error":f"{type(e).__name__}: {str(e)[:130]}"}
+  r=requests.get(endpoint,params={"REQUEST":"doQuery","LANG":"ADQL","FORMAT":"csv","QUERY":q},
+     timeout=(12,35),headers={"User-Agent":"Open-Space-LPT-followup/1.1"})
+  r.raise_for_status()
+  t=pd.read_csv(io.StringIO(r.text),comment="#",dtype={"source_id":str})
+  candidates=[]
+  for _,x in t.iterrows():
+   if val(x.ra) is not None and val(x.dec) is not None:
+    sep=angular(ra,dec,float(x.ra),float(x.dec))
+    if sep<=radius+.1:
+     candidates.append((sep,x))
+  if not candidates:return {"status":"no_catalog_match","url":r.url,"catalogue":"Gaia DR3 ESAC TAP"}
+  sep,x=min(candidates,key=lambda p:p[0])
+  return {"status":"match","arcsec":round(sep,3),"record":{
+     "SourceID":str(x.source_id),"RAJ2000":float(x.ra),"DEJ2000":float(x.dec),
+     "Plx":val(x.parallax),"Gmag":val(x.phot_g_mean_mag)},
+     "url":r.url,"catalogue":"Gaia DR3 ESAC TAP"}
+ except Exception as ex:
+  return {"status":"unavailable","error":f"{type(ex).__name__}: {str(ex)[:145]}","catalogue":"Gaia DR3 ESAC TAP"}
+def parse_tsv(body,ra,dec,radius):
+ rows=[];cols=None
+ for line in body.splitlines():
+  if not line or line.startswith("#"):continue
+  q=line.split("\t")
+  if cols is None:
+   if len(q)>1:cols=[x.strip() for x in q]
+   continue
+  if len(q)!=len(cols) or all(not x.strip("- ") for x in q):continue
+  d=dict(zip(cols,[x.strip() for x in q]))
+  for x,y in [("RAJ2000","DEJ2000"),("RAdeg","DEdeg"),("RA_ICRS","DE_ICRS"),("RA","DE")]:
+   if val(d.get(x)) is not None and val(d.get(y)) is not None:
+    sep=angular(ra,dec,float(d[x]),float(d[y]))
+    if sep<=radius+.2:rows.append((sep,d))
+    break
+ if not rows:return {"status":"no_catalog_match","columns":(cols or [])[:16]}
+ sep,d=min(rows,key=lambda x:x[0])
+ fields={k:v for k,v in d.items() if v and k in {
+  "Name","SourceID","RAJ2000","DEJ2000","RAdeg","DEdeg","Ftot","Fpeak","S_Code",
+  "Flag","Plx","e_Plx","Gmag","W1mag","W2mag","gmag","rmag","zmag","objID",
+  "PS1","AllWISE","Class","Type","RA_ICRS","DE_ICRS","_r","W1","W2","Stot","S1.4"}}
+ return {"status":"match","arcsec":round(sep,3),"record":fields}
+def viz(cat,ra,dec,radius):
+ """Mirror-aware ASU query; CDS main server outage 9 November 2026."""
+ params={"-source":cat,"-c":f"{ra:.8f} {dec:.8f}","-c.rs":str(radius),
+         "-out.max":"8","-out.all":"","-out.add":"_r"}
+ errors=[]
+ for host in ("vizier.cfa.harvard.edu","vizier.idia.ac.za"):
+  url=f"https://{host}/viz-bin/asu-tsv"
+  try:
+   r=requests.get(url,params=params,timeout=(10,19),headers={"User-Agent":"Open-Space-LPT-followup/1.1"})
+   r.raise_for_status()
+   if r.text.lstrip().startswith("<html") or "Internal Server Error" in r.text[:300]:
+    raise ValueError("returned HTML not ASU catalogue rows")
+   out=parse_tsv(r.text,ra,dec,radius)
+   if out["status"]=="no_catalog_match" and not out["columns"]:
+    raise ValueError("no schema returned; not a measured non-detection")
+   out.update({"url":r.url,"mirror":host})
+   return out
+  except Exception as ex:errors.append(f"{host}: {type(ex).__name__}: {str(ex)[:100]}")
+ if cat=="I/355/gaiadr3":
+  g=gaia_direct(ra,dec,radius)
+  g["mirror_errors"]=errors
+  return g
+ return {"status":"unavailable","catalog":cat,"errors":errors}
 def match_one(sid,ra,dec):
  return sid,{name:viz(cat,ra,dec,rad) for name,(cat,rad) in CAT.items()}
 def slope(c):
@@ -241,6 +280,14 @@ def main():
     sid,obj=done.result();co[sid]=obj
    dump("counterpart_receipts.json",co)
    print(f"Surveys {len(co)}/60",flush=True)
+
+ # Independent bounded RACS-low2 circular-polarisation catalogue lookup; never infer upper limits.
+ try:
+  from racs_v import probe
+  vprobe=probe({sid:(float(s.loc[sid].wavg_ra),float(s.loc[sid].wavg_dec)) for sid in ids})
+ except Exception as e:
+  vprobe={"status":"unavailable","error":f"{type(e).__name__}: {str(e)[:150]}"}
+ dump("racs_low2_v_receipts.json",vprobe)
  rows=[]
  for sid in ids:
   c=co.get(sid,{})
@@ -264,7 +311,7 @@ def main():
   "stokes_v":"not measured in published VAST source FITS cubes; CASDA AS207/RACS-low2 I,V require separately staged products and leakage controls",
   "periodicity":"not tested: no validated compact polarised counterpart-free target or seconds-scale series",
   "literature":"ATNF v18 prior-identification checked in baseline; individual ATel/ADS check only if a genuine polarised remainder survives",
-  "discovery_validated":False})
+  "discovery_validated":False,"racs_low2_v_catalogue_probe":vprobe.get("status"),"racs_low2_v_selected_matches":len(vprobe.get("matches",{}))})
  print(json.dumps(classes,indent=2),flush=True)
 if __name__=="__main__":
  try:main()
