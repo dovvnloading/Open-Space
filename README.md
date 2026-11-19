@@ -344,6 +344,8 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Galaxies and the distant universe
 
+- **Where Euclid's new images overlap clouds of hydrogen gas.** A frozen comparison of 191,367 released ALFALFA, FAST FASHI and WALLABY catalogue entries with the November 2026 Euclid footprint found 1,375 radio-beam overlaps (117 ALFALFA, 1,258 FAST, none in the WALLABY pilot table). Most have not been checked against deep images and redshifts, so **no starless galaxy is confirmed** and no stellar-mass or population limit is established. *Measured (footprint only; follow-up incomplete)* · [Results and limits](results/euclid-hi-dark-census/README.md)
+
 - **One known early quasar recovered, but no new record from the fresh Euclid release.** A limited search of new Euclid DR1 infrared data found 290 objects with quasar-like colour *cuts*, including 41 with unusually extreme colours. The known z≈7.69 quasar reappeared, but dwarf stars, image artefacts and unexamined follow-up data prevent classifying any new object as a quasar; this was not a search of the whole release. *Measured, inconclusive* · [Details](results/euclid-dr1-highz-quasars/README.md)
 
 - **One wavelength bin drives an apparent Euclid emission line.** Removing a single usable bin turns a strong positive line fit negative in a source whose Euclid and DESI redshifts disagree. An agreement control retains its line after the same test. *Measured* · [Details](results/euclid-desi-line-disagreements/README.md)
