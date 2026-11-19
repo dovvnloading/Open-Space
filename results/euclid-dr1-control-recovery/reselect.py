@@ -4,7 +4,7 @@ Original strict-selected JSONLs CANNOT recover rows excluded by old cuts.
 Reuse original 768 S3 key/ETag receipts, stream projected Parquet row groups,
 store exact global eligibility counts and rank-preserving top 200/partition.
 """
-import gzip,hashlib,json,math,sys,os
+import gzip,hashlib,json,math,sys,os,requests,time
 from pathlib import Path
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor,as_completed
@@ -62,9 +62,21 @@ def scan_one(part,fs):
     # Immutable source receipt from fully replayed PR208 output, not re-listing
     # against a possibly changing HATS prefix.
     key=part["key"]
-    head=scan.SESSION.head(scan.BASE+key,timeout=60)
-    head.raise_for_status()
-    if head.headers.get("ETag")!=part["etag"]:
+    actual_etag=None
+    for attempt in range(5):
+        try:
+            # Independent short-lived session per worker avoids stale pooled
+            # publisher connections; no metadata is accepted without ETag.
+            with requests.Session() as sess:
+                response=sess.head(scan.BASE+key,timeout=(20,60))
+                response.raise_for_status()
+                actual_etag=response.headers.get("ETag")
+            break
+        except requests.RequestException as e:
+            if attempt==4:raise
+            print("SOURCE_HEAD_RETRY",key,attempt+1,type(e).__name__,flush=True)
+            time.sleep(min(3*2**attempt,24))
+    if actual_etag!=part["etag"]:
         raise RuntimeError("Source ETag changed: "+key)
     with fs.open_input_file(scan.BUCKET+"/"+key) as stream:
         parquet=pq.ParquetFile(stream)
@@ -101,6 +113,25 @@ def scan_one(part,fs):
                 "retained_top_rows":len(top),
                 "rank_truncation_threshold":top[-1]["rank_score"] if len(top)==selection.TOP_PER_PARTITION else None,
                 "top":top}
+
+def retry_scan_one(part,fs):
+    for attempt in range(4):
+        try:
+            return scan_one(part,fs)
+        except Exception as e:
+            # A deterministic source identity or schema mismatch must fail
+            # closed. Broken sockets / S3 rate limiting can be retried.
+            msg=str(e)
+            if any(mark in msg for mark in
+                   ("Source ETag changed","Parquet rows changed",
+                    "Missing required data fields","Projected row group count mismatch")):
+                raise
+            if attempt==3:
+                raise
+            print("SOURCE_PARTITION_RETRY",
+                  part["Norder"],part["Npix"],attempt+1,
+                  type(e).__name__,str(e)[:200],flush=True)
+            time.sleep(min(5*2**attempt,40))
 
 def prior_partitions():
     seq=[]
@@ -140,7 +171,7 @@ def main():
     fs=pafs.S3FileSystem(anonymous=True,region="us-east-1",request_timeout=120,connect_timeout=25)
     found={}
     with ThreadPoolExecutor(max_workers=int(os.getenv("EUCLID_PARTITION_WORKERS","4"))) as pool:
-        futures={pool.submit(scan_one,p,fs):i for i,p in enumerate(sub)}
+        futures={pool.submit(retry_scan_one,p,fs):i for i,p in enumerate(sub)}
         for f in as_completed(futures):
             i=futures[f]
             x=f.result()
