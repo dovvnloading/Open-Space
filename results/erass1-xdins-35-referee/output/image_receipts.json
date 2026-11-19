@@ -19,15 +19,79 @@
       "status": "queried_sia"
     },
     "LS10": {
-      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://www.legacysurvey.org/viewer/fits-cutout?ra=9.3324478&dec=-72.2368862&layer=ls-dr10&size=80&pixscale=0.262&bands=grz",
-      "status": "unavailable_or_uninterpretable"
+      "bands": {
+        "g": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "g",
+          "crowding_warning": true,
+          "detected_at_position_5sigma": true,
+          "five_sigma_ab_mag": 22.2,
+          "five_sigma_nmg_ab": 1.31843,
+          "forced_nmg_ab": 7.58859,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 0.18458,
+          "snr": 41.113,
+          "status": "measured",
+          "survey": "LS10"
+        },
+        "r": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "r",
+          "crowding_warning": true,
+          "detected_at_position_5sigma": true,
+          "five_sigma_ab_mag": 21.973,
+          "five_sigma_nmg_ab": 1.62513,
+          "forced_nmg_ab": 5.81175,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 0.22752,
+          "snr": 25.544,
+          "status": "measured",
+          "survey": "LS10"
+        },
+        "z": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "z",
+          "crowding_warning": true,
+          "detected_at_position_5sigma": true,
+          "five_sigma_ab_mag": 21.646,
+          "five_sigma_nmg_ab": 2.19594,
+          "forced_nmg_ab": 3.60691,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 0.30743,
+          "snr": 11.732,
+          "status": "measured",
+          "survey": "LS10"
+        }
+      },
+      "receipt": {
+        "bytes": 80640,
+        "http": 200,
+        "sha256": "29d41134d6dc979567372f4317a092124c3679c9db203c75b155103ba4f293f3",
+        "url": "https://www.legacysurvey.org/viewer/fits-cutout?ra=9.3324478&dec=-72.2368862&layer=ls-dr10&size=80&pixscale=0.262&bands=grz"
+      },
+      "status": "downloaded"
     },
     "PS1": {
       "status": "outside_declination_footprint"
     },
     "dec": -72.2368862,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      9.332450 -72.236890 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>  ",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -81,9 +145,9 @@
         }
       },
       "receipt": {
-        "bytes": 62284,
+        "bytes": 62277,
         "http": 200,
-        "sha256": "0b3074830cda071739806d71c82fbdf38544a3572190e1b534568a5734ea021d",
+        "sha256": "0297339e7d88aebd3f27c57dae3fbe8776ac0e56df715fd4962a81add3d5217d",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=9.3324478&dec=-72.2368862&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -181,7 +245,7 @@
     },
     "dec": -68.1504897,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      69.957600 -68.150490 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result> ",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -235,9 +299,9 @@
         }
       },
       "receipt": {
-        "bytes": 62310,
+        "bytes": 62316,
         "http": 200,
-        "sha256": "431d1ca5bbd8b305313d253f649faa27e54fa97a78b4ee3346bd79c959d32b21",
+        "sha256": "8ed3fae2c96aaab8dec732db6ccf57cbe2a4123413e63c95089ab567856d0ce1",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=69.9575989&dec=-68.1504897&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -263,7 +327,7 @@
       "status": "queried_sia"
     },
     "LS10": {
-      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://www.legacysurvey.org/viewer/fits-cutout?ra=76.3414685&dec=-68.7607753&layer=ls-dr10&size=80&pixscale=0.262&bands=grz",
+      "error": "HTTPError: 500 Server Error: Internal Server Error for url: https://www.legacysurvey.org/viewer/fits-cutout?ra=76.3414685&dec=-68.7607753&layer=ls-dr10&size=80&pixscale=0.262&bands=grz",
       "status": "unavailable_or_uninterpretable"
     },
     "PS1": {
@@ -271,7 +335,7 @@
     },
     "dec": -68.7607753,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      76.341470 -68.760780 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result> ",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -327,7 +391,7 @@
       "receipt": {
         "bytes": 61990,
         "http": 200,
-        "sha256": "2f6765e0e003f08fe4947761abd27b6afd293ea3494cf0df7901f1f28784649c",
+        "sha256": "791abb9f28396dbca17411ffa70b60011fd4ffd1d0458f54b9405dbd26978db4",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=76.3414685&dec=-68.7607753&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -395,7 +459,7 @@
     },
     "dec": -67.7712134,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      75.560850 -67.771210 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result> ",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -449,9 +513,9 @@
         }
       },
       "receipt": {
-        "bytes": 61919,
+        "bytes": 61917,
         "http": 200,
-        "sha256": "da7b47f028a93783adbb998341178f84820905384e144359d64d8d29a8980dfe",
+        "sha256": "d52f625781d993a55ca6cd5e6823e6e317d0c982887252412d476bfea17f8873",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=75.5608479&dec=-67.7712134&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -477,7 +541,7 @@
       "status": "queried_sia"
     },
     "LS10": {
-      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://www.legacysurvey.org/viewer/fits-cutout?ra=77.0639117&dec=-69.3085418&layer=ls-dr10&size=80&pixscale=0.262&bands=grz",
+      "error": "HTTPError: 500 Server Error: Internal Server Error for url: https://www.legacysurvey.org/viewer/fits-cutout?ra=77.0639117&dec=-69.3085418&layer=ls-dr10&size=80&pixscale=0.262&bands=grz",
       "status": "unavailable_or_uninterpretable"
     },
     "PS1": {
@@ -485,7 +549,7 @@
     },
     "dec": -69.3085418,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      77.063910 -69.308540 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result> ",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -539,9 +603,9 @@
         }
       },
       "receipt": {
-        "bytes": 61958,
+        "bytes": 61953,
         "http": 200,
-        "sha256": "787f61f748d8dba54718ec0bbfbda6ec6b84f2e6bdf6b09fa70b555482098307",
+        "sha256": "7ae694feb896e3bb23c2ff1cc74dbe9a173cf793d7f95344f58978cfd53b9a90",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=77.0639117&dec=-69.3085418&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -567,15 +631,79 @@
       "status": "queried_sia"
     },
     "LS10": {
-      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://www.legacysurvey.org/viewer/fits-cutout?ra=80.0636383&dec=-65.7413723&layer=ls-dr10&size=80&pixscale=0.262&bands=grz",
-      "status": "unavailable_or_uninterpretable"
+      "bands": {
+        "g": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "g",
+          "crowding_warning": false,
+          "detected_at_position_5sigma": true,
+          "five_sigma_ab_mag": 20.358,
+          "five_sigma_nmg_ab": 7.19007,
+          "forced_nmg_ab": 13.27785,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 1.00661,
+          "snr": 13.191,
+          "status": "measured",
+          "survey": "LS10"
+        },
+        "r": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "r",
+          "crowding_warning": false,
+          "detected_at_position_5sigma": false,
+          "five_sigma_ab_mag": 20.009,
+          "five_sigma_nmg_ab": 9.91867,
+          "forced_nmg_ab": 6.57824,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 1.38861,
+          "snr": 4.737,
+          "status": "measured",
+          "survey": "LS10"
+        },
+        "z": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "z",
+          "crowding_warning": true,
+          "detected_at_position_5sigma": false,
+          "five_sigma_ab_mag": 19.892,
+          "five_sigma_nmg_ab": 11.04362,
+          "forced_nmg_ab": 1.97816,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 1.54611,
+          "snr": 1.279,
+          "status": "measured",
+          "survey": "LS10"
+        }
+      },
+      "receipt": {
+        "bytes": 80640,
+        "http": 200,
+        "sha256": "ba1163e9d0ba91826466726cfa06551e802eba4bad816a9a7dce3d2352a99fad",
+        "url": "https://www.legacysurvey.org/viewer/fits-cutout?ra=80.0636383&dec=-65.7413723&layer=ls-dr10&size=80&pixscale=0.262&bands=grz"
+      },
+      "status": "downloaded"
     },
     "PS1": {
       "status": "outside_declination_footprint"
     },
     "dec": -65.7413723,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      80.063640 -65.741370 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result> ",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -629,9 +757,9 @@
         }
       },
       "receipt": {
-        "bytes": 61526,
+        "bytes": 61527,
         "http": 200,
-        "sha256": "529b74891e1d1b5364ae84a6229b5894df06e6d8de3859ff122fc33a06b20c31",
+        "sha256": "9d18a004bfcbb8758c49c83c54126924566bf2bde96bfcfb7bb474544c67cd17",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=80.0636383&dec=-65.7413723&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -657,15 +785,64 @@
       "status": "queried_sia"
     },
     "LS10": {
-      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://www.legacysurvey.org/viewer/fits-cutout?ra=86.693585&dec=-71.1485524&layer=ls-dr10&size=80&pixscale=0.262&bands=grz",
-      "status": "unavailable_or_uninterpretable"
+      "bands": {
+        "g": {
+          "error": "ValueError: nonpositive_aperture_noise",
+          "status": "unavailable_or_uninterpretable"
+        },
+        "r": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "r",
+          "crowding_warning": true,
+          "detected_at_position_5sigma": true,
+          "five_sigma_ab_mag": 19.522,
+          "five_sigma_nmg_ab": 15.53103,
+          "forced_nmg_ab": 14.86369,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 2.17434,
+          "snr": 6.836,
+          "status": "measured",
+          "survey": "LS10"
+        },
+        "z": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "z",
+          "crowding_warning": true,
+          "detected_at_position_5sigma": true,
+          "five_sigma_ab_mag": 19.444,
+          "five_sigma_nmg_ab": 16.69329,
+          "forced_nmg_ab": 13.92811,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 2.33706,
+          "snr": 5.96,
+          "status": "measured",
+          "survey": "LS10"
+        }
+      },
+      "receipt": {
+        "bytes": 80640,
+        "http": 200,
+        "sha256": "121fa9d9df064437fe97a5f686c1e58d3ff890f30c3dc49b13dbefb8efba34ac",
+        "url": "https://www.legacysurvey.org/viewer/fits-cutout?ra=86.693585&dec=-71.1485524&layer=ls-dr10&size=80&pixscale=0.262&bands=grz"
+      },
+      "status": "downloaded"
     },
     "PS1": {
       "status": "outside_declination_footprint"
     },
     "dec": -71.1485524,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      86.693590 -71.148550 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result> ",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -719,9 +896,9 @@
         }
       },
       "receipt": {
-        "bytes": 61732,
+        "bytes": 61727,
         "http": 200,
-        "sha256": "3ca03140ece3c85764f1471e62605b795a66228691d4fe281935473dd843787c",
+        "sha256": "b45c648fbf7a14ceb34744b759d929567feffc969cf5d2c55e9c8a27c78d671b",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=86.693585&dec=-71.1485524&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -819,7 +996,7 @@
     },
     "dec": -70.6705261,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      92.161970 -70.670530 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result> ",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -873,9 +1050,9 @@
         }
       },
       "receipt": {
-        "bytes": 103011,
+        "bytes": 103009,
         "http": 200,
-        "sha256": "57d98c864778e5098f7c49aa43b40a9373432e9678e3e8fa3cb344aa19fac5fe",
+        "sha256": "29b1fc40a24263f1f80c71a4d85223b3403259d94a01654fcac25cba71dcb4ab",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=92.1619673&dec=-70.6705261&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -973,7 +1150,7 @@
     },
     "dec": -69.763024,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      96.582650 -69.763020 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result> ",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -1027,9 +1204,9 @@
         }
       },
       "receipt": {
-        "bytes": 61471,
+        "bytes": 61469,
         "http": 200,
-        "sha256": "e7837883b8dd8bd2e508069b30de06e5e793802ac2f69ec5cc7ebd5d4a2db1b4",
+        "sha256": "eb0baeb4251ea6ee83c0a773ac1310d74a424b91e7e821204e962a2d224348e5",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=96.582646&dec=-69.763024&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -1055,7 +1232,7 @@
       "status": "queried_sia"
     },
     "LS10": {
-      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://www.legacysurvey.org/viewer/fits-cutout?ra=104.9508977&dec=14.2393089&layer=ls-dr10&size=80&pixscale=0.262&bands=grz",
+      "error": "HTTPError: 500 Server Error: Internal Server Error for url: https://www.legacysurvey.org/viewer/fits-cutout?ra=104.9508977&dec=14.2393089&layer=ls-dr10&size=80&pixscale=0.262&bands=grz",
       "status": "unavailable_or_uninterpretable"
     },
     "PS1": {
@@ -1077,7 +1254,7 @@
           "receipt": {
             "bytes": 54720,
             "http": 200,
-            "sha256": "6f0c6a74646a2252f5b4424d7388a561c5bf1a6f9b6fc7ca1551faada7bc39da",
+            "sha256": "cf76ca1e6c478067ec5b87adc6c494bd2823feeebc11ba03493cf80f763855ee",
             "url": "https://ps1images.stsci.edu/cgi-bin/fitscut.cgi?ra=104.9508977&dec=14.2393089&size=96&format=fits&red=%2Frings.v3.skycell%2F1616%2F058%2Frings.v3.skycell.1616.058.stk.g.unconv.fits"
           },
           "sigma_aperture_nmg_ab": 0.20057,
@@ -1102,7 +1279,7 @@
           "receipt": {
             "bytes": 63360,
             "http": 200,
-            "sha256": "b6c7659cfa6b18b077b468327186a757234e2d91e0a3b67a71ca6730151fd01e",
+            "sha256": "38b61b778ff7adb8b246c99b7126d109b24f033e19444960ed68b6884875e0ce",
             "url": "https://ps1images.stsci.edu/cgi-bin/fitscut.cgi?ra=104.9508977&dec=14.2393089&size=96&format=fits&red=%2Frings.v3.skycell%2F1616%2F058%2Frings.v3.skycell.1616.058.stk.r.unconv.fits"
           },
           "sigma_aperture_nmg_ab": 0.32835,
@@ -1121,7 +1298,7 @@
     },
     "dec": 14.2393089,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      104.950900 14.239310 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result> ",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -1175,9 +1352,9 @@
         }
       },
       "receipt": {
-        "bytes": 63012,
+        "bytes": 63009,
         "http": 200,
-        "sha256": "184da20c0283f1f05b183415131d3f303b8c0af70ce797e8ec568302a57bb318",
+        "sha256": "8e0c243c51c61277b54053f108a4f936c40e4c5aa22961303eeb978637b07880",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=104.9508977&dec=14.2393089&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -1211,7 +1388,7 @@
     },
     "dec": -31.4303191,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      110.102840 -31.430320 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -1265,9 +1442,9 @@
         }
       },
       "receipt": {
-        "bytes": 62925,
+        "bytes": 62921,
         "http": 200,
-        "sha256": "be138dc37293480bbef0a5b60f550018afd5f29790ae36a64b0d75645ed8371c",
+        "sha256": "c5dd18a9bb40687b445dc54a1bcef96699a8b7a090b1d52354b4b9d94eaa49b0",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=110.1028397&dec=-31.4303191&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -1317,7 +1494,7 @@
     },
     "dec": -23.4736691,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      113.578460 -23.473670 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -1371,9 +1548,9 @@
         }
       },
       "receipt": {
-        "bytes": 125026,
+        "bytes": 125024,
         "http": 200,
-        "sha256": "7067e064e6ee671a958f3141e5b43fdd0f106a014f59b92edca0e5439c933e19",
+        "sha256": "63404cb01683f8cc6baa1dc805cce299139cf82ef1b2e7ef8d6118d6121ade45",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=113.5784593&dec=-23.4736691&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -1407,7 +1584,7 @@
     },
     "dec": -41.3757583,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      121.597830 -41.375760 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -1461,9 +1638,9 @@
         }
       },
       "receipt": {
-        "bytes": 97719,
+        "bytes": 97712,
         "http": 200,
-        "sha256": "f47b628f8c43e5d8a30cf08250ee3089d836e946af0abb38c23ef41f4ce6425b",
+        "sha256": "167428f9af47e1d86f2dcb7e645f3ce395ffbb3cfee6a2158d8e49d56c7be44c",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=121.5978327&dec=-41.3757583&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -1497,7 +1674,7 @@
     },
     "dec": -42.9704222,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      126.062110 -42.970420 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -1553,7 +1730,7 @@
       "receipt": {
         "bytes": 62209,
         "http": 200,
-        "sha256": "3a7889dac1f1167648cc066e8281ae63341f48b13a94267d72019e58d0bb9acd",
+        "sha256": "7cb6807851e9b9514d9d26d9482cfd33830618e5567543d234316812cfe505cb",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=126.0621097&dec=-42.9704222&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -1587,7 +1764,7 @@
     },
     "dec": -42.549484,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      125.610830 -42.549480 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -1641,9 +1818,9 @@
         }
       },
       "receipt": {
-        "bytes": 62471,
+        "bytes": 62470,
         "http": 200,
-        "sha256": "61bd6e59b3d5026a0b34d3141ca0b0cb36b031f8befb70dd9e0b4502a5029189",
+        "sha256": "adcc06c5ad061e495c5bc9f678c2cb8281b3dc6292def8f2f4ad8f265e2f9c68",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=125.6108318&dec=-42.549484&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -1677,7 +1854,7 @@
     },
     "dec": -42.8919715,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      125.064470 -42.891970 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -1733,7 +1910,7 @@
       "receipt": {
         "bytes": 62538,
         "http": 200,
-        "sha256": "454a3c29b2e650c86c2792bfbf04f0f4fa7a7883c4a1fd7c624f3ecaf3b97de8",
+        "sha256": "657c40e537e1757bd4528f19bb80a7ffa65586adc56c5e39230400c45e2865ae",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=125.0644662&dec=-42.8919715&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -1767,7 +1944,7 @@
     },
     "dec": -42.8680056,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      126.007860 -42.868010 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -1821,9 +1998,9 @@
         }
       },
       "receipt": {
-        "bytes": 62647,
+        "bytes": 62644,
         "http": 200,
-        "sha256": "06b841297ed405e39759804c8c869dbba887fd4b9cea81ce376a2dfd11c4cc0b",
+        "sha256": "0fbb3011a5f0908533b9088a9b9a073026c0efeae1e5156ebc5d3389664ce32e",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=126.007856&dec=-42.8680056&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -1857,7 +2034,7 @@
     },
     "dec": -43.2347922,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      125.969200 -43.234790 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -1911,9 +2088,9 @@
         }
       },
       "receipt": {
-        "bytes": 62143,
+        "bytes": 62142,
         "http": 200,
-        "sha256": "5d0c6584f5677f30849b6f46fda81ebe05c012cceac26e119a5e48f460e34fd7",
+        "sha256": "4cc1f390eec87f1f2687bb935b1c285d6578864a060ac04d6abf77a6bbee30d0",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=125.9691998&dec=-43.2347922&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -1947,7 +2124,7 @@
     },
     "dec": -43.0276805,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      125.109950 -43.027680 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -2003,7 +2180,7 @@
       "receipt": {
         "bytes": 62409,
         "http": 200,
-        "sha256": "9415f8738999a11e93e80f4b18e0a2cc63e89302ebbeefa0db39a2a5abed8656",
+        "sha256": "cd9f75936f9607bef95f1f6c111f7fbf872a58bcd796bb01a1ca5c0c4fbce561",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=125.1099489&dec=-43.0276805&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -2037,7 +2214,7 @@
     },
     "dec": -45.7311619,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      135.117580 -45.731160 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -2091,9 +2268,9 @@
         }
       },
       "receipt": {
-        "bytes": 62683,
+        "bytes": 62688,
         "http": 200,
-        "sha256": "ec951fe968d87382d9c742b4d8ca8d0c1084918dae2675e9684d16899658710f",
+        "sha256": "86dbe48512fd81688f24f0141b0ac42711c804d5e0f4fca7a9098e8f695e1ea4",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=135.1175808&dec=-45.7311619&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -2127,7 +2304,7 @@
     },
     "dec": -52.448625,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      164.495000 -52.448630 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -2183,7 +2360,7 @@
       "receipt": {
         "bytes": 62723,
         "http": 200,
-        "sha256": "fa1457133845c42d4c1dbc8378799c8a15546c1fbb2952ad0c3b8d52b54d054d",
+        "sha256": "0cbc75b143206c2b01db471def6a7fcf05f3c19dc627205d16b206c0915bd815",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=164.4950048&dec=-52.448625&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -2217,7 +2394,7 @@
     },
     "dec": -52.8988261,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      173.081760 -52.898830 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -2271,9 +2448,9 @@
         }
       },
       "receipt": {
-        "bytes": 62502,
+        "bytes": 62497,
         "http": 200,
-        "sha256": "338226b2670558cfabefd59fd40a0b9f7e954b6a55eeb1d8e8800e011de3ec6f",
+        "sha256": "2bc56fa6ca5f1badfbafd872aaa3eec09fab0d179ab1e1d5616ec83d0f80a2fc",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=173.081758&dec=-52.8988261&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -2307,7 +2484,7 @@
     },
     "dec": -62.6242278,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      177.744300 -62.624230 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -2361,9 +2538,9 @@
         }
       },
       "receipt": {
-        "bytes": 62654,
+        "bytes": 62650,
         "http": 200,
-        "sha256": "f8dacca9ae86ab2654bb9e7ad28ffbf71b281e7f4063e0c62a008c96c35e7bd5",
+        "sha256": "b53d8bbdf0dba9331d21cea440e655b66a8bd2d28472376840e8c516ec12c196",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=177.7443032&dec=-62.6242278&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -2397,7 +2574,7 @@
     },
     "dec": -62.7726374,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      177.499960 -62.772640 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -2453,7 +2630,7 @@
       "receipt": {
         "bytes": 62676,
         "http": 200,
-        "sha256": "7c8e5db1d50f561ff1121d90810c7ee4657e4d20d0fba106299f94ce1f3ce384",
+        "sha256": "72418a42c23b37d689361ebb0baae56b92a7ea25868ab6314c2e75007d87cb15",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=177.4999611&dec=-62.7726374&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -2487,7 +2664,7 @@
     },
     "dec": -62.6942419,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      177.856470 -62.694240 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -2541,9 +2718,9 @@
         }
       },
       "receipt": {
-        "bytes": 62350,
+        "bytes": 62349,
         "http": 200,
-        "sha256": "b6da3312eb7e4af17ca7f49acf07588bcd5fadb7fe99aed34f46aa0de9da463a",
+        "sha256": "494d6f06ded27f8b1d4cab40546d2e5c2770908f4894fe8ccfe13a9d1b794d02",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=177.8564718&dec=-62.6942419&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -2577,7 +2754,7 @@
     },
     "dec": -62.6573516,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      177.395810 -62.657350 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -2631,9 +2808,9 @@
         }
       },
       "receipt": {
-        "bytes": 62445,
+        "bytes": 62444,
         "http": 200,
-        "sha256": "c16f816f5a9ca6452986b08f876a5f8470ca9fe7b733b12aba82e0ca883207d2",
+        "sha256": "a61eb56a6e0fd6ecd5c6cc58f586ea5d3f7f3c0b4814f53d9e7ba05caf505d87",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=177.3958085&dec=-62.6573516&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -2667,7 +2844,7 @@
     },
     "dec": -62.6459057,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      177.743860 -62.645910 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -2721,9 +2898,9 @@
         }
       },
       "receipt": {
-        "bytes": 62560,
+        "bytes": 62559,
         "http": 200,
-        "sha256": "ad41f729fedee60cb9c618ee63fdca7abbef636c76ef455360588b5d7742ad6e",
+        "sha256": "4266bcf27003a37c89d2f04a1dc044772718b0e7349b9adab253afb916d87d78",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=177.743864&dec=-62.6459057&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -2757,7 +2934,7 @@
     },
     "dec": -62.305771,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      177.745120 -62.305770 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -2811,9 +2988,9 @@
         }
       },
       "receipt": {
-        "bytes": 62562,
+        "bytes": 62558,
         "http": 200,
-        "sha256": "ddb95583c111c31b1dbfcc7cef9beccbd01093ab279fbdfb878a8a1de021db31",
+        "sha256": "7726158bf87b530fb8a96edfcb3094e3e2428f44051c893f6f9499b82827aa37",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=177.7451192&dec=-62.305771&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -2847,7 +3024,7 @@
     },
     "dec": -52.6150279,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      182.948890 -52.615030 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -2901,9 +3078,9 @@
         }
       },
       "receipt": {
-        "bytes": 62589,
+        "bytes": 62587,
         "http": 200,
-        "sha256": "a12f2f1efa6a608726ceac1dd2f073a5a2b67d35bdd302fb1123311f9dc4924e",
+        "sha256": "ee9810abe062d71f4a2e1e958ecf4ace0be6166f6cfd45c7731ce0e3e3618a23",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=182.9488877&dec=-52.6150279&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -2929,8 +3106,72 @@
       "status": "queried_sia"
     },
     "LS10": {
-      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://www.legacysurvey.org/viewer/fits-cutout?ra=197.1995119&dec=21.452317&layer=ls-dr10&size=80&pixscale=0.262&bands=grz",
-      "status": "unavailable_or_uninterpretable"
+      "bands": {
+        "g": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "g",
+          "crowding_warning": false,
+          "detected_at_position_5sigma": false,
+          "five_sigma_ab_mag": 24.432,
+          "five_sigma_nmg_ab": 0.1688,
+          "forced_nmg_ab": 0.01521,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 0.02363,
+          "snr": 0.644,
+          "status": "measured",
+          "survey": "LS10"
+        },
+        "r": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "r",
+          "crowding_warning": false,
+          "detected_at_position_5sigma": false,
+          "five_sigma_ab_mag": 24.013,
+          "five_sigma_nmg_ab": 0.24827,
+          "forced_nmg_ab": -0.09983,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 0.03476,
+          "snr": -2.872,
+          "status": "measured",
+          "survey": "LS10"
+        },
+        "z": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "z",
+          "crowding_warning": false,
+          "detected_at_position_5sigma": false,
+          "five_sigma_ab_mag": 22.698,
+          "five_sigma_nmg_ab": 0.83344,
+          "forced_nmg_ab": -0.02769,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 0.11668,
+          "snr": -0.237,
+          "status": "measured",
+          "survey": "LS10"
+        }
+      },
+      "receipt": {
+        "bytes": 80640,
+        "http": 200,
+        "sha256": "a2bf4a752592c4492c17acbefce050e2dfa43a45ddafee20d56106e739d95d98",
+        "url": "https://www.legacysurvey.org/viewer/fits-cutout?ra=197.1995119&dec=21.452317&layer=ls-dr10&size=80&pixscale=0.262&bands=grz"
+      },
+      "status": "downloaded"
     },
     "PS1": {
       "bands": {
@@ -2951,7 +3192,7 @@
           "receipt": {
             "bytes": 54720,
             "http": 200,
-            "sha256": "d6832c87deceba7f94ecfef748a1f954562a1d4ab9b912ab3e823ebe5bf5d0ea",
+            "sha256": "311ecf01309655e51ab81843123c45b06351ee14b3454f65f58bfc9059ce1ffe",
             "url": "https://ps1images.stsci.edu/cgi-bin/fitscut.cgi?ra=197.1995119&dec=21.452317&size=96&format=fits&red=%2Frings.v3.skycell%2F1810%2F034%2Frings.v3.skycell.1810.034.stk.g.unconv.fits"
           },
           "sigma_aperture_nmg_ab": 0.18744,
@@ -2976,7 +3217,7 @@
           "receipt": {
             "bytes": 57600,
             "http": 200,
-            "sha256": "4a74c65a3d8659884cf7dd8eaaddde2e4168b6be6521f8e59f10c6c29cae3cc3",
+            "sha256": "3e90b8c265bab9959dc947a40763b1d93cd5142f1bb1f022d01c7e42f03d6b1c",
             "url": "https://ps1images.stsci.edu/cgi-bin/fitscut.cgi?ra=197.1995119&dec=21.452317&size=96&format=fits&red=%2Frings.v3.skycell%2F1810%2F034%2Frings.v3.skycell.1810.034.stk.r.unconv.fits"
           },
           "sigma_aperture_nmg_ab": 0.30097,
@@ -2995,7 +3236,7 @@
     },
     "dec": 21.452317,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      197.199510 21.452320 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result> ",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -3049,9 +3290,9 @@
         }
       },
       "receipt": {
-        "bytes": 62584,
+        "bytes": 62586,
         "http": 200,
-        "sha256": "2a2b9a2859145cebff2e0d1624e08b7779ee3e8bfcfa5a056898c859f05a35d9",
+        "sha256": "3e08d98619cba61a4b77cedb47d7dcb088139444029beb276d4271cc1b8d5910",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=197.1995119&dec=21.452317&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -3077,8 +3318,72 @@
       "status": "queried_sia"
     },
     "LS10": {
-      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://www.legacysurvey.org/viewer/fits-cutout?ra=225.0397167&dec=-26.0110765&layer=ls-dr10&size=80&pixscale=0.262&bands=grz",
-      "status": "unavailable_or_uninterpretable"
+      "bands": {
+        "g": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "g",
+          "crowding_warning": false,
+          "detected_at_position_5sigma": false,
+          "five_sigma_ab_mag": 24.215,
+          "five_sigma_nmg_ab": 0.20598,
+          "forced_nmg_ab": -0.03829,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 0.02884,
+          "snr": -1.328,
+          "status": "measured",
+          "survey": "LS10"
+        },
+        "r": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "r",
+          "crowding_warning": false,
+          "detected_at_position_5sigma": false,
+          "five_sigma_ab_mag": 23.764,
+          "five_sigma_nmg_ab": 0.31227,
+          "forced_nmg_ab": -0.1443,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 0.04372,
+          "snr": -3.301,
+          "status": "measured",
+          "survey": "LS10"
+        },
+        "z": {
+          "aperture_radius_arcsec": 1.25,
+          "band": "z",
+          "crowding_warning": false,
+          "detected_at_position_5sigma": false,
+          "five_sigma_ab_mag": 22.571,
+          "five_sigma_nmg_ab": 0.93679,
+          "forced_nmg_ab": -0.23901,
+          "offsource_aperture_samples": 211,
+          "pixscale_arcsec": 0.262,
+          "position_pixel": [
+            39.5,
+            39.5
+          ],
+          "sigma_aperture_nmg_ab": 0.13115,
+          "snr": -1.822,
+          "status": "measured",
+          "survey": "LS10"
+        }
+      },
+      "receipt": {
+        "bytes": 80640,
+        "http": 200,
+        "sha256": "a1b6e794be72fcfde00bcfad16d641a9c0712ed816a0ed5557e7ec1fcf3132be",
+        "url": "https://www.legacysurvey.org/viewer/fits-cutout?ra=225.0397167&dec=-26.0110765&layer=ls-dr10&size=80&pixscale=0.262&bands=grz"
+      },
+      "status": "downloaded"
     },
     "PS1": {
       "bands": {
@@ -3099,7 +3404,7 @@
           "receipt": {
             "bytes": 54720,
             "http": 200,
-            "sha256": "7668c137616ff14c14130e7648ab27879a10ba7f9c81fca472c921b2ad53e551",
+            "sha256": "df42a82963fb0d32c5300a05fcfdb5e1ba2debdda04c0b999bbe762f26864e1d",
             "url": "https://ps1images.stsci.edu/cgi-bin/fitscut.cgi?ra=225.0397167&dec=-26.0110765&size=96&format=fits&red=%2Frings.v3.skycell%2F0765%2F042%2Frings.v3.skycell.0765.042.stk.g.unconv.fits"
           },
           "sigma_aperture_nmg_ab": 0.11728,
@@ -3124,7 +3429,7 @@
           "receipt": {
             "bytes": 57600,
             "http": 200,
-            "sha256": "894e15bbf6b687d8c3e2b91944438415d0be8c7b6fa3d95570269c989ac27fe8",
+            "sha256": "186638480f62c00de6944c18e482ce2615748a3c74c49814fda0f7a4d25e31b9",
             "url": "https://ps1images.stsci.edu/cgi-bin/fitscut.cgi?ra=225.0397167&dec=-26.0110765&size=96&format=fits&red=%2Frings.v3.skycell%2F0765%2F042%2Frings.v3.skycell.0765.042.stk.r.unconv.fits"
           },
           "sigma_aperture_nmg_ab": 0.14719,
@@ -3143,7 +3448,7 @@
     },
     "dec": -26.0110765,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      225.039720 -26.011080 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -3197,9 +3502,9 @@
         }
       },
       "receipt": {
-        "bytes": 63456,
+        "bytes": 63455,
         "http": 200,
-        "sha256": "4466373b18cf47ed4d88d462b9a3f1e88b21f7d19ff11d704e4f83186252815d",
+        "sha256": "a64e29464f64f0f28d63dca24cb447a1e42ab32e230c78b4baee7a107c50d1fa",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=225.0397167&dec=-26.0110765&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -3233,7 +3538,7 @@
     },
     "dec": -42.1390327,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      225.804390 -42.139030 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -3287,9 +3592,9 @@
         }
       },
       "receipt": {
-        "bytes": 62462,
+        "bytes": 62460,
         "http": 200,
-        "sha256": "4aa04d15a669d21503715edfb6ed89cf32a3078b10ffe2dfa95e1aa58415a97c",
+        "sha256": "9eea53f730e65d396682beaf288132cc7cd7bdfee19674b4c6ce3048517177ba",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=225.8043879&dec=-42.1390327&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -3323,7 +3628,7 @@
     },
     "dec": -42.0723715,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      225.704270 -42.072370 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -3377,9 +3682,9 @@
         }
       },
       "receipt": {
-        "bytes": 62677,
+        "bytes": 62679,
         "http": 200,
-        "sha256": "0752df81b4668f182f22ca453bb20c3b8e208bbc7f2951b054d3c18f64fe2cde",
+        "sha256": "804e649b7223567b9549e6670b31bb073d02a35b801af0c50ad15881b1c47e81",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=225.7042728&dec=-42.0723715&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -3432,7 +3737,7 @@
     },
     "dec": -37.9103529,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      284.151250 -37.910350 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -3486,9 +3791,9 @@
         }
       },
       "receipt": {
-        "bytes": 63184,
+        "bytes": 63185,
         "http": 200,
-        "sha256": "c40a61a989687a97389ef9bbe584c4b9889a0f2dcec021f9353b09cbc5693d2d",
+        "sha256": "a991d466f23e1dbdccbb2dbb94dba15a2a6576b5f181b2fcd507aa2c0c495e38",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=284.1512534&dec=-37.9103529&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
@@ -3586,7 +3891,7 @@
     },
     "dec": -49.2975676,
     "galactic_dust": {
-      "error": "ValueError: IRSA_dust_XML_no_SFD_value",
+      "error": "ValueError: IRSA_dust_XML_no_SFD_value; excerpt: <?xml version=\"1.0\"?> <results status=\"ok\">   <input>     <objname>      285.410230 -49.297570 equ J2000    </objname>     <regSize>       5.0 deg     </regSize>   </input>   <result>",
       "status": "unavailable_or_uninterpretable"
     },
     "galactic_l_b_deg": [
@@ -3640,9 +3945,9 @@
         }
       },
       "receipt": {
-        "bytes": 62623,
+        "bytes": 62628,
         "http": 200,
-        "sha256": "a90df073e32a82f616bfbcd03bd630d743c7dc62432f08075c506375b334b673",
+        "sha256": "45eb55681389b139e378df3b2ee1d5fff63241fd245b7887863cbdd93a5bb8c4",
         "url": "https://unwise.me/cutout_fits?version=neo7&ra=285.4102294&dec=-49.2975676&size=64&bands=12&file_img_m=on&file_invvar_m=on"
       },
       "status": "downloaded"
