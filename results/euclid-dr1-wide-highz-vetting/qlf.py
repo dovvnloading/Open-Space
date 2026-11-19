@@ -46,9 +46,9 @@ def expectation(area_deg2=A_DEG2,j_limit=J_LIMIT_AB,zmax=Z1):
         dr=mag-MSTAR
         number=(PHISTAR_GPC*1e-9)*10**(K*(z-7)) / (
             10**(.4*(ALPHA+1)*dr)+10**(.4*(BETA+1)*dr))
-        integrated_phi.append(np.trapz(number,mag))
+        integrated_phi.append(np.trapezoid(number,mag))
     solid_angle=area_deg2*(math.pi/180)**2
-    count=float(solid_angle*np.trapz(vol*np.asarray(integrated_phi),zz))
+    count=float(solid_angle*np.trapezoid(vol*np.asarray(integrated_phi),zz))
     return count, float(ml[0]),float(ml[-1])
 
 

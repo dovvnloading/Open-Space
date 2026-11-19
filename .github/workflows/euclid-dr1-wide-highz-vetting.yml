@@ -68,11 +68,11 @@ jobs:
               set +e
               if [[ -f "$src/output/vetting_status.json" &&
                     -f "$src/output/image_pixel_receipts.json" &&
-                    -f "$src/output/probability_supported_candidates.json" &&
-                    -f "$src/output/qlf_expectation.json" ]]; then
-                # Reuse persisted network receipts; a referee-only correction
-                # must not repeat bounded external queries.
-                python -u "$src/referee.py"
+                    -f "$src/output/probability_supported_candidates.json" ]]; then
+                # Reuse immutable external-query receipts, re-run only the
+                # cheap QLF integral and independent referee.
+                python -u "$src/qlf.py" &&
+                  python -u "$src/referee.py"
               else
                 python -u "$src/vet.py" &&
                   python -u "$src/image_review.py" &&
