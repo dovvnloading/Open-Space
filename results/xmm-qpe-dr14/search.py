@@ -369,6 +369,9 @@ if __name__=="__main__":
     elif _mode == "heasarc_batch":
         from heasarc_batch import main as _heasarc_batch_main
         _heasarc_batch_main()
+    elif _mode == "heasarc_rescue":
+        from heasarc_rescue import main as _heasarc_rescue_main
+        _heasarc_rescue_main()
     elif _mode == "heasarc_probe":
         from heasarc_screen import main as _heasarc_main
         _heasarc_main()

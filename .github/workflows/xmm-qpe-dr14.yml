@@ -43,6 +43,12 @@ jobs:
             results/xmm-qpe-dr14/outputs/heasarc_summary_*.json
             results/xmm-qpe-dr14/outputs/heasarc_aggregate_referee.json
             results/xmm-qpe-dr14/outputs/HEASARC_REFEREE.md
+            results/xmm-qpe-dr14/outputs/heasarc_rescue_*.json
+            results/xmm-qpe-dr14/outputs/heasarc_postrescue_referee.json
+            results/xmm-qpe-dr14/outputs/HEASARC_POSTRESCUE_REFEREE.md
+            results/xmm-qpe-dr14/outputs/heasarc_trigger_*.json
+            results/xmm-qpe-dr14/outputs/heasarc_trigger_curve_*.csv
+            results/xmm-qpe-dr14/outputs/heasarc_rescue_auxiliary_failure_*.json
           retention-days: 7
       - name: Commit receipts and results as a single batch
         if: always()
