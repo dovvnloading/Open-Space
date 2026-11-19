@@ -1,0 +1,52 @@
+name: ASKAP VAST DR1 60-lead native-image follow-up
+on:
+  push:
+    branches: [research/vast-dr1-60-lead-validation-20261119]
+    paths:
+      - 'results/askap-lpt-vast-dr1-vetting/**'
+      - '!results/askap-lpt-vast-dr1-vetting/output/**'
+permissions:
+  contents: write
+jobs:
+  validate-all-60:
+    runs-on: ubuntu-latest
+    timeout-minutes: 115
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install bounded dependencies
+        run: python -m pip install --disable-pip-version-check 'numpy>=1.26' 'pandas>=2.2' 'astropy>=6' 'matplotlib>=3.8' 'requests>=2.31'
+      - name: Offline tests
+        run: |
+          python -m compileall -q results/askap-lpt-vast-dr1-vetting
+          python -m unittest discover -s results/askap-lpt-vast-dr1-vetting -p 'test_*.py' -v
+      - name: Access public data and analyze in one job
+        run: python results/askap-lpt-vast-dr1-vetting/vet.py
+      - name: Independent accounting review
+        if: always()
+        run: python results/askap-lpt-vast-dr1-vetting/referee.py
+      - name: Commit receipts and montages in two batches
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch origin "$GITHUB_REF_NAME"
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse "origin/$GITHUB_REF_NAME")" ]; then echo 'Stale branch; no push'; exit 0; fi
+          for pattern in '*.csv *.json' 'montages/*.png'; do
+            for sub in $pattern; do
+              git add -f results/askap-lpt-vast-dr1-vetting/output/$sub || true
+            done
+            if git diff --cached --quiet; then continue; fi
+            git commit -m 'research(vast): add bounded validation evidence'
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vast-dr1-60-lead-evidence
+          path: results/askap-lpt-vast-dr1-vetting/output/
+          if-no-files-found: warn
