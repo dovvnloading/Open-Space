@@ -41,6 +41,8 @@ To reproduce on a runner with external network, see [WORKFLOW.md](WORKFLOW.md) a
 
 **Updated evidence, not a discovery:** GitHub Actions [#44459389472](https://github.com/dovvnloading/Open-Space/actions/runs/44459389472) and [#44460415546](https://github.com/dovvnloading/Open-Space/actions/runs/44460415546) downloaded/reviewed the 10 spectra for the nine initially unresolved sky groups, checked their coadd SLITS metadata, matched JADES DR4 catalogue identities, and ran bounded 1D surrogate interloper injections. The new [full referee](REFEREE_FOLLOWUP_2026-11-19.md) and [machine-readable nine-group ledger](FOLLOWUP_NINE_2026-11-19.json) supersede the previous nine-way *unresolved* tally as follows:
 
+| Sky group | DJA program/source | Evidence-bounded disposition | Discriminating observation |
+| --- | --- | --- | --- |
 | 1 | `3073_50252` | Unresolved; no independently validated redshift | No independent physical redshift evidence |
 | 4 | `6368_211132` | Unresolved; no independently validated redshift | No independent physical redshift evidence |
 | 6 | `6368_151513` | Unresolved; no independently validated redshift | No independent physical redshift evidence |
