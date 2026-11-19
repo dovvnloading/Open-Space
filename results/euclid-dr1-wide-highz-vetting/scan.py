@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Full wide HATS Parquet streaming screen; executed on networked GitHub Actions only."""
 import csv
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import gzip
 import hashlib
 import io
@@ -294,23 +295,42 @@ def main():
     fs = pafs.S3FileSystem(anonymous=True, region="us-east-1", request_timeout=90,
                           connect_timeout=15, proxy_options=os.environ.get("HTTPS_PROXY") or None)
     rows, receipts = [], []
-    try:
-        for k, entry in enumerate(selected):
-            receipt, part_rows = scan_partition(entry, fs, controls)
-            rows.extend(part_rows)
-            receipts.append(receipt)
-            print(f"SCAN batch {n} partition {k+1}/{len(selected)} "
-                  f"({entry['Norder']},{entry['Npix']}) broad={receipt['broad']} "
-                  f"strict={receipt['strict']}", flush=True)
-    except Exception as e:
+    results = {}
+    failed = None
+    nworkers = max(1, min(6, int(os.environ.get("EUCLID_PARTITION_WORKERS", "6"))))
+    # Parallel network I/O and Arrow row groups inside the ONE runner job.
+    # Each partition is self-contained; deterministic index order is restored
+    # before checkpointing, and every failed future invalidates its batch.
+    with ThreadPoolExecutor(max_workers=nworkers) as pool:
+        futures = {pool.submit(scan_partition, entry, fs, controls): (k,entry)
+                   for k,entry in enumerate(selected)}
+        for future in as_completed(futures):
+            k,entry = futures[future]
+            try:
+                receipt, part_rows = future.result()
+                results[k] = (receipt, part_rows)
+                print(f"SCAN batch {n} partition {k+1}/{len(selected)} "
+                      f"({entry['Norder']},{entry['Npix']}) broad={receipt['broad']} "
+                      f"strict={receipt['strict']}", flush=True)
+            except Exception as e:
+                if failed is None:
+                    failed = (entry, e)
+                print(f"PARTITION_FAILURE batch={n} index={k} "
+                      f"error={type(e).__name__}: {str(e)[:200]}", flush=True)
+    if failed is not None or len(results) != len(selected):
+        entry,e = failed if failed is not None else (selected[0], RuntimeError("missing future result"))
         state = {"phase": "BLOCKED_PARTITION_FAILURE", "batch": n,
-                 "read_partitions_before_failure": len(receipts),
+                 "read_partitions_before_failure": len(results),
                  "failed": {"Norder": entry["Norder"], "Npix": entry["Npix"],
                             "error": type(e).__name__ + ": " + str(e)[:500]},
                  "time_utc": utc()}
         (OUT / "status.json").write_text(json.dumps(state, indent=2)+"\n")
         print("BLOCKED_SCAN", json.dumps(state), flush=True)
-        raise
+        raise RuntimeError("A publisher partition failed; no full survey claim")
+    for k in range(len(selected)):
+        receipt, part_rows = results[k]
+        rows.extend(part_rows)
+        receipts.append(receipt)
     data = BATCHES / f"batch_{n:03d}_candidates.jsonl.gz"
     with gzip.open(data, "wt", encoding="utf-8", compresslevel=6) as f:
         for r in rows:
