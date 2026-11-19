@@ -9,7 +9,12 @@ ROOT=Path(__file__).resolve().parent
 sys.path.insert(0,str(ROOT))
 from selection import cold_mask,cold_row
 from bootstrap import propagate,angular_arcsec,subtype,cold_type
-from referee import validate_row
+# selection imports the previous Euclid scan path; load OUR referee explicitly.
+import importlib.util
+spec=importlib.util.spec_from_file_location("cold_ty_referee",ROOT/"referee.py")
+module=importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+validate_row=module.validate_row
 
 def tab(**changes):
     row={"vis_det":0,"flag_j":0,"flag_h":0,"spurious_prob":.1,
