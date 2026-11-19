@@ -45,6 +45,6 @@ For publication-grade claims, the native 2D pixels, MSA shutters/overlaps, bad-p
 | NIRCam consistency and literature crossmatch | PENDING |
 | Independent skeptical review | COMPLETE as critical documentation; review REJECTS scientific claims |
 
-The source-*scope* inventory, scripts, published-checksum ledger, literature baseline and dated referee report are deposited. Native source-level inventories, observed raw hashes, 1D fits, 2D receipts and object-specific photometry/literature records are **still absent**. The only warranted outcome is **incomplete coverage and an unexecuted astrophysical screen**, not a null detection or a discovery.
+The source-*scope* inventory, scripts, published-checksum ledger, literature baseline and dated referee report are deposited. A [fail-closed dossier gate](candidate_gate.py) rejects claims without SHA-256 provenance for separate 2D exposures, pixel/slit checks, calibrated alternate-redshift evidence, NIRCam filter/flux records and an ADS/arXiv/DJA/JADES/CEERS/UNCOVER/MoM/GLASS priority receipt; it **does not** substitute for performing those checks. Native source-level inventories, observed raw hashes, 1D fits, 2D receipts and object-specific photometry/literature records are **still absent**. The only warranted outcome is **incomplete coverage and an unexecuted astrophysical screen**, not a null detection or a discovery.
 
 **Separation of work:** this campaign uses only JWST NIRSpec DJA/MAST archival spectroscopy; it does not touch the COSMOS2025 stellar-mass/baryon-bound question in PR #194.
