@@ -5,6 +5,7 @@ on:
     paths:
       - 'results/km3-230213a-counterparts/analysis.py'
       - 'results/km3-230213a-counterparts/known_17.csv'
+      - 'results/km3-230213a-counterparts/swift_grb.py'
       - '.github/workflows/km3-230213a-crossmatch.yml'
   workflow_dispatch:
 permissions:
@@ -23,17 +24,19 @@ jobs:
           python-version: '3.12'
       - name: Audit event, replay published candidates, and retrieve fresh TNS and CHIME catalogs
         run: python results/km3-230213a-counterparts/analysis.py
+      - name: Independently screen NASA Swift GRB archive with registered 1-day window
+        run: python results/km3-230213a-counterparts/swift_grb.py
       - name: Replay fixed-input statistical validation and write compact receipts
         run: |
           python results/km3-230213a-counterparts/referee.py
       - name: Fingerprint source and result records with SHA-256
         working-directory: results/km3-230213a-counterparts
         run: |
-          sha256sum analysis.py referee.py known_17.csv known_replay.csv PUBLISHED_BASELINE.md new_associations.csv retrieval_receipts.json control_statistics.json referee_results.json > SHA256SUMS
+          sha256sum analysis.py referee.py swift_grb.py swift_grb_matches.csv swift_grb_receipt.json known_17.csv known_replay.csv PUBLISHED_BASELINE.md new_associations.csv retrieval_receipts.json control_statistics.json referee_results.json > SHA256SUMS
           sha256sum -c SHA256SUMS
       - name: Commit hashes and derived results to this branch
         run: |
-          git add results/km3-230213a-counterparts/SHA256SUMS results/km3-230213a-counterparts/known_replay.csv results/km3-230213a-counterparts/new_associations.csv results/km3-230213a-counterparts/retrieval_receipts.json results/km3-230213a-counterparts/control_statistics.json results/km3-230213a-counterparts/referee_results.json
+          git add results/km3-230213a-counterparts/SHA256SUMS results/km3-230213a-counterparts/swift_grb_matches.csv results/km3-230213a-counterparts/swift_grb_receipt.json results/km3-230213a-counterparts/known_replay.csv results/km3-230213a-counterparts/new_associations.csv results/km3-230213a-counterparts/retrieval_receipts.json results/km3-230213a-counterparts/control_statistics.json results/km3-230213a-counterparts/referee_results.json
           if ! git diff --cached --quiet; then
             git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'research(km3): archive released-catalogue audit, controls and receipt digests'
             git push origin HEAD:research/km3-230213a-counterparts
@@ -43,6 +46,8 @@ jobs:
         with:
           name: km3-230213a-transient-catalogue-evidence
           path: |
+            results/km3-230213a-counterparts/swift_grb_matches.csv
+            results/km3-230213a-counterparts/swift_grb_receipt.json
             results/km3-230213a-counterparts/SHA256SUMS
             results/km3-230213a-counterparts/known_replay.csv
             results/km3-230213a-counterparts/new_associations.csv
