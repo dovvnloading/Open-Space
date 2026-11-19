@@ -271,6 +271,10 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Neutron stars, black holes and cosmic explosions
 
+**Cosmic rays**
+
+- **A six-event cosmic-ray line did not point to a proven source.** In a reconstructed 10% sample of Auger events, 999 scrambled skies found similarly sized energy-ordered chains about 23% of the time. Centaurus A and nearby starbursts showed hints but no source-catalogue signal survived all 39 tested trials. Two major catalogue searches remain undone. *Inconclusive pilot* · [Details](results/auger-open-uhcr-source-search/README.md)
+
 **Pulsars and magnetars**
 
 - **A magnetar catalog's clock was 69.184 seconds early.** The two famous microsecond bursts are also only weakly tied to their magnetars. *Correction* · [Details](results/nicer-magnetar-microbursts/README.md)
@@ -379,6 +383,8 @@ Some multi-part investigations also keep index pages and search logs: [15 Nov ar
 - **Honest limits.** These results have not been peer reviewed. "No earlier report found" means our literature search found none, not that priority is guaranteed. Candidates need independent confirmation. Corrections, confirmations and refutations are all welcome.
 
 ## For researchers and developers
+
+- **A JWST most-distant-galaxy search is prepared but not yet tested on the telescope pixels.** The [DJA/MAST NIRSpec preflight](results/jwst-dja-nirspec-highz-screen/README.md) records the public spectrum-release inventory and reproducible test scripts; raw downloads, independent redshift fits, 2D and photometric checks remain pending. **No new galaxy and no survey-wide null result are claimed.** *Provisional; excluded from the completed-results count.*
 
 The [DR20 AGN pilot methods and calibration checks](results/dr20-clagn-pilot/README.md) document a bounded multi-epoch spectroscopy experiment.
 
