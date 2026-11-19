@@ -6,6 +6,8 @@ Returns a machine-readable list of blockers, even if arithmetic passes.
 """
 import argparse
 import csv
+import gzip
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -45,6 +47,16 @@ def review(folder):
             blockers.append("CDS mirror version not demonstrated identical to IAP v1.1 May 2026.")
             blockers.append("zPDF-u68 / marginal mass quantiles are not joint p(M*,z); cannot establish true high-z candidate denominator.")
             blockers.append("Catalogue rows lack individual source IDs/coordinates until photometry product is paired and validated.")
+            full=folder/"run"/"highz_triage_all.csv.gz"
+            if not full.exists():
+                blockers.append("Full marginal high-z triage is not deposited; top 250 may hide candidates.")
+            else:
+                assert hashlib.sha256(full.read_bytes()).hexdigest()==c["triage_all_sha256"]
+                with gzip.open(full,"rt",newline="") as ff:
+                    allrows=list(csv.DictReader(ff))
+                assert len(allrows)==c["galaxy_zfinal_or_u68_gt6"]
+                verified.append("ALL marginal high-z source rows retained and compressed with an exact SHA256.")
+
             top=folder/"run"/"highz_triage_top250.csv"
             if top.exists():
                 with top.open() as f:rows=list(csv.DictReader(f))
@@ -52,6 +64,22 @@ def review(folder):
                 masses=[float(x["mass_u68"]) for x in rows if x["mass_u68"]]
                 assert all(a>=b for a,b in zip(masses,masses[1:])), "triage not mass ranked"
                 verified.append("Ranked 68%-mass-upper triage rows are monotonic.")
+    phot=folder/"run"/"photometry_receipt.json"
+    if not phot.exists():
+        blockers.append("No hashed full 37-band photometry source and row-index/coordinate association.")
+    else:
+        assoc=json.loads(phot.read_text())
+        assert assoc["record_count"]==784016
+        assert len(assoc["sha256_raw_download"])==64
+        joined=folder/"run"/"highz_candidate_photometry.csv"
+        assert joined.exists()
+        with joined.open(newline="") as pf:
+            sources=list(csv.DictReader(pf))
+        assert len(sources)==assoc["joined_shortlist_rows"]
+        assert len(set(row["Id"] for row in sources))==len(sources)
+        verified.append("Full photometry source hashed and top-ranked candidate IDs/coordinates unique in CDS row alignment.")
+        blockers.append("CDS cross-extension row alignment is not an independent cross-release v1.1 match; no imaging or SED validation.")
+
     if not hmf.exists():
         blockers.append("Numerical ST/Tinker extreme-halo results not deposited.")
     else:
