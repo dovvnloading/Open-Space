@@ -334,6 +334,14 @@ def main():
                           "checks":SUMMARY["checks"],
                           "limits":SUMMARY["limits"]},indent=2))
 if __name__=="__main__":
-    # Positive controls must pass before the archive screen is permitted.
-    from control_validation import main as controls_main
-    controls_main()
+    # Explicitly separate no-network control replay from control downloads.
+    # An archive stage is intentionally NOT exposed by this dispatch.
+    from pathlib import Path as _Path
+    import json as _json
+    _mode = _json.loads((_Path(__file__).resolve().parent / "control_batch.json").read_text()).get("stage")
+    if _mode == "replay":
+        from replay_controls import main as _replay_main
+        _replay_main()
+    else:
+        from control_validation import main as _controls_main
+        _controls_main()

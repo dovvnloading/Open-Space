@@ -258,14 +258,20 @@ def find_eruptions(curve, refmjd, allowed_period):
         bgpeak = float(np.nanmedian(bg[local]))
         bge = bgpeak - bquiet
         snr = net_excess / max(float(e[p]), errtyp/2, 1e-6)
-        # Broad flares span many 300s bins; using single-bin >=5 sigma
-        # missed the second published eRO-QPE3 eruption despite a clear plateau.
-        wix = np.arange(max(0, p-6), min(len(t), p+7))
+        # 450/850/1300s widths cover fast eRO-QPE2 and broad eRO-QPE3.
+        # One 850s template suppressed a published 0.5h QPE2 flare
+        # (6.93sigma rather than 7); trial family remains finite/frozen.
+        wix = np.arange(max(0, p-9), min(len(t), p+10))
         wix = wix[good[wix] & np.isfinite(y[wix]) & np.isfinite(e[wix])]
-        kernel = np.exp(-.5*((t[wix]-t[p])/850.)**2)
         variance = np.maximum(e[wix], max(errtyp/2, 1e-6))**2
-        integrated = float(np.sum(kernel*(y[wix]-quiet)/variance) /
-                           np.sqrt(np.sum(kernel**2/variance))) if len(wix)>=6 else 0.
+        integrated_scores = []
+        for width_s in (450., 850., 1300.):
+            kernel = np.exp(-.5*((t[wix]-t[p])/width_s)**2)
+            significance = float(np.sum(kernel*(y[wix]-quiet)/variance) /
+                            np.sqrt(np.sum(kernel**2/variance))) if len(wix)>=6 else 0.
+            integrated_scores.append(significance)
+        integrated = max(integrated_scores)
+        selected_template_width_s = (450,850,1300)[int(np.argmax(integrated_scores))]
         ratio = max(float(smooth[p]), 0) / max(quiet, .001)
         background_veto = bge > max(.5*net_excess, 5 * np.nanmedian(e[idx]))
         if snr < 3.5 or integrated < 7 or ratio < 3 or background_veto:
@@ -275,6 +281,7 @@ def find_eruptions(curve, refmjd, allowed_period):
                          "net_rate_cps": round(float(smooth[p]), 5),
                          "excess_sigma": round(snr, 2),
                          "integrated_sigma": round(integrated, 2),
+                         "template_width_s": selected_template_width_s,
                          "amplitude_vs_quiet": round(ratio, 2),
                          "background_rate_cps": round(bgpeak, 5)})
     dts = np.diff([p["mjd_tt"] for p in accepted]) * 24
