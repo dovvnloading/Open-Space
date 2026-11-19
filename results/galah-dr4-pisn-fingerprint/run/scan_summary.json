@@ -1,0 +1,114 @@
+{
+  "criteria_sha256": "073046d8737adb177164ace8c6e7efb80afb29e69432f0f1b05db63aadd59c01",
+  "data_receipt": {
+    "attempt": 1,
+    "bytes": 757998720,
+    "http": {
+      "content_length": "757998720",
+      "etag": "\"2d2e2480-61ce07015e8c0\"",
+      "last_modified": "Wed, 10 Jul 2024 08:28:59 GMT",
+      "response_url": "https://cloud.datacentral.org.au/teamdata/GALAH/public/GALAH_DR4/catalogs/galah_dr4_allstar_240705.fits",
+      "status": 200
+    },
+    "sha256": "97911d4436a42c77eb6d8c2116eecfb28fa927be83302aa66bbeb58d95889693",
+    "source": "live_download",
+    "url": "https://cloud.datacentral.org.au/teamdata/GALAH/public/GALAH_DR4/catalogs/galah_dr4_allstar_240705.fits"
+  },
+  "element_coverage": {
+    "al": {
+      "flag_undetectable_bit_in_base": 4328,
+      "flag_upper_limit_bit_in_base": 641,
+      "flag_zero_in_base": 217,
+      "missing_or_rejected_in_base": 4972,
+      "unflagged_finite_uncertainty_eligible_in_base": 217
+    },
+    "ba": {
+      "flag_undetectable_bit_in_base": 140,
+      "flag_upper_limit_bit_in_base": 191,
+      "flag_zero_in_base": 4849,
+      "missing_or_rejected_in_base": 341,
+      "unflagged_finite_uncertainty_eligible_in_base": 4848
+    },
+    "co": {
+      "flag_undetectable_bit_in_base": 945,
+      "flag_upper_limit_bit_in_base": 2783,
+      "flag_zero_in_base": 1460,
+      "missing_or_rejected_in_base": 3729,
+      "unflagged_finite_uncertainty_eligible_in_base": 1460
+    },
+    "mg": {
+      "flag_undetectable_bit_in_base": 681,
+      "flag_upper_limit_bit_in_base": 926,
+      "flag_zero_in_base": 3582,
+      "missing_or_rejected_in_base": 1607,
+      "unflagged_finite_uncertainty_eligible_in_base": 3582
+    },
+    "na": {
+      "flag_undetectable_bit_in_base": 579,
+      "flag_upper_limit_bit_in_base": 2139,
+      "flag_zero_in_base": 2469,
+      "missing_or_rejected_in_base": 2720,
+      "unflagged_finite_uncertainty_eligible_in_base": 2469
+    },
+    "sr": {
+      "flag_undetectable_bit_in_base": 5165,
+      "flag_upper_limit_bit_in_base": 6,
+      "flag_zero_in_base": 17,
+      "missing_or_rejected_in_base": 5172,
+      "unflagged_finite_uncertainty_eligible_in_base": 17
+    },
+    "zn": {
+      "flag_undetectable_bit_in_base": 297,
+      "flag_upper_limit_bit_in_base": 1292,
+      "flag_zero_in_base": 3594,
+      "missing_or_rejected_in_base": 1595,
+      "unflagged_finite_uncertainty_eligible_in_base": 3594
+    }
+  },
+  "injection": {
+    "assumed_true_dex": {
+      "al": -1,
+      "ba": -0.6,
+      "co": -0.6,
+      "mg": 0,
+      "na": -1.2,
+      "sr": -0.6,
+      "zn": -0.55
+    },
+    "five": {
+      "completeness_conditional_on_flags": 0.9989237882653061,
+      "eligible_stars": 196,
+      "monte_carlo_standard_error": 0.00014637503805534592,
+      "passing_trials": 50122,
+      "trials_per_star": 256,
+      "warning": "Measured-abundance flags are not independent of true composition; this is not astrophysical search completeness."
+    },
+    "five_total_base_completeness_proxy": 0.03773155954904606,
+    "seven": {
+      "completeness_conditional_on_flags": 0.9958147321428571,
+      "eligible_stars": 14,
+      "monte_carlo_standard_error": 0.001078367776768104,
+      "passing_trials": 3569,
+      "trials_per_star": 256,
+      "warning": "Measured-abundance flags are not independent of true composition; this is not astrophysical search completeness."
+    },
+    "seven_total_base_completeness_proxy": 0.0026867231162073617
+  },
+  "interpretation": "These hard-threshold flags do NOT establish PISN origin. Published PISN/CCSN/Ia yields, censored-data likelihoods, survey cross-checks and line vetting remain uncompleted.",
+  "rows": {
+    "all_five_measured": 196,
+    "all_seven_measured": 14,
+    "catalogue": 917588,
+    "co_and_zn_measured": 1409,
+    "fe_h_range_only": 11181,
+    "five_pattern_pass": 0,
+    "metal_poor_quality_base": 5189,
+    "odd_even_3_measured": 217,
+    "odd_even_3_pass_thresholds": 9,
+    "overall_flag_and_SNR_only": 631925,
+    "seven_pattern_pass": 0
+  },
+  "run_utc": "2026-11-19T02:10:47.210087+00:00",
+  "script_sha256": "ad162e18860d6754d2c0f15719f6f6c96cab4ee1935a3cd65b5314b8aa2e6271",
+  "source_model": "GALAH DR4 official 240705 allstar; one row per star"
+}
