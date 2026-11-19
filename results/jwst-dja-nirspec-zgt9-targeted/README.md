@@ -1,6 +1,6 @@
 # DJA v4.4 targeted JWST/NIRSpec z>9 follow-up — 999 real spectra, no validated discovery
 
-**Claim (2026-11-19 UTC): GitHub Actions successfully downloaded and fitted 999 targeted public JWST/NIRSpec spectra, but established **NO securely new z>12 galaxy**, **NO calibrated `P(low-z|D)`**, and **NO survey-wide null.** The 1D likelihoods are exploratory, 2D images are coadds, independent NIRCam and source-level checks remain undone, and a referee found strong false-positive high-z model ranks. This PR must **remain DRAFT and UNMERGED**. Do not mark `[REMARKABLE]` or edit `docs/REMARKABLE_FINDINGS.md`.
+**Claim (2026-11-19 UTC): GitHub Actions successfully downloaded and fitted 999 targeted public JWST/NIRSpec spectra, but established **NO securely new z>12 galaxy**, **NO calibrated `P(low-z|D)`**, and **NO survey-wide null.** The 1D likelihoods are exploratory, 2D images are coadds, independent NIRCam and source-level checks remain undone, and a referee found strong false-positive high-z model ranks. It is merged as a bounded, inconclusive record: five groups remain unresolved and none is a new z>12 candidate on this evidence. Do not mark `[REMARKABLE]` or edit `docs/REMARKABLE_FINDINGS.md`.
 
 ## What was actually downloaded and computed
 
