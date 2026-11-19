@@ -17,7 +17,7 @@ OUT=ROOT/"output"
 N=40
 EPOCH_EUCLID=2024.25
 CATWISE_EPOCH=2015.405
-IRSA="https://irsa.ipac.caltech.edu/TAP/sync"
+DATALAB="https://datalab.noirlab.edu/tap/sync"
 HEADERS={"User-Agent":"Open-Space-DR1F-independent-cold-TY/1.0"}
 
 def utc():
@@ -81,11 +81,21 @@ def catwise(r):
     ra,dec=float(r["ra"]),float(r["dec"])
     # Position at 2024 may differ by 9 yr of motion from CatWISE epoch.
     # A 15 arcsec search misses very high-PM objects; record that limitation.
-    sql=("SELECT TOP 100 source_name,ra,dec,ra_pm,dec_pm,pmra,pmdec,"
+    # NOIRLab Astro Data Lab hosts the *identical CatWISE2020 release*.
+    # IRSA TAP returned an HTTP 502 proxy error for every initial query.
+    # A bounding box avoids a multi-billion-row ADQL spherical full scan;
+    # exact separation is checked after propagation of each returned row.
+    half_dec=15/3600
+    half_ra=half_dec/max(.1,math.cos(math.radians(dec)))
+    low,high=ra-half_ra,ra+half_ra
+    where_ra=(f"ra BETWEEN {low:.9f} AND {high:.9f}" if 0<=low and high<=360 else
+              (f"(ra >= {low+360:.9f} OR ra <= {high:.9f})" if low<0 else
+               f"(ra >= {low:.9f} OR ra <= {high-360:.9f})"))
+    sql=("SELECT TOP 150 source_name,ra,dec,ra_pm,dec_pm,pmra,pmdec,"
          "sigpmra,sigpmdec,w1mpro_pm,w2mpro_pm,w1snr_pm,w2snr_pm "
-         "FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),"
-         f"CIRCLE('ICRS',{ra:.8f},{dec:.8f},{15/3600:.9f}))")
-    item=tap("CatWISE2020",IRSA,sql,ra,dec,max_sep=16,timeout=22)
+         "FROM catwise2020.main WHERE "+where_ra+
+         f" AND dec BETWEEN {dec-half_dec:.9f} AND {dec+half_dec:.9f}")
+    item=tap("CatWISE2020",DATALAB,sql,ra,dec,max_sep=16,timeout=22)
     item["motion_propagated_match"]=bool(item.get("catalog_match"))
     item["position_only_without_motion_fit"]=False
     if item.get("catalog_match"):
@@ -115,11 +125,16 @@ def catwise(r):
 
 def unwise(r):
     ra,dec=float(r["ra"]),float(r["dec"])
-    sql=("SELECT TOP 30 ra,dec,flux_1,dflux_1,flux_2,dflux_2,"
-         "fracflux_1,fracflux_2 FROM unwise_2019 "
-         "WHERE 1=CONTAINS(POINT('ICRS',ra,dec),"
-         f"CIRCLE('ICRS',{ra:.8f},{dec:.8f},{5/3600:.9f}))")
-    item=tap("unWISE_2019",IRSA,sql,ra,dec,max_sep=3)
+    half_dec=5/3600
+    half_ra=half_dec/max(.1,math.cos(math.radians(dec)))
+    low,high=ra-half_ra,ra+half_ra
+    where_ra=(f"ra BETWEEN {low:.9f} AND {high:.9f}" if 0<=low and high<=360 else
+              (f"(ra >= {low+360:.9f} OR ra <= {high:.9f})" if low<0 else
+               f"(ra >= {low:.9f} OR ra <= {high-360:.9f})"))
+    sql=("SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,"
+         "fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE "+
+         where_ra+f" AND dec BETWEEN {dec-half_dec:.9f} AND {dec+half_dec:.9f}")
+    item=tap("unWISE_2019",DATALAB,sql,ra,dec,max_sep=3)
     item["flux_ratio_is_not_vega_colour"]=True
     return item
 
@@ -235,6 +250,14 @@ def main():
     shortlist=json.loads((OUT/"unvetted_shortlist.json").read_text())
     calibration=json.loads((OUT/"reference_calibration.json").read_text())
     checked=[]
+    prior=OUT/"external_receipts.json"
+    archive=OUT/"first_pass_irsa_proxy_failures.json"
+    if prior.exists() and not archive.exists():
+        old=json.loads(prior.read_text())
+        if old and all(x.get("query_receipts",{}).get("catwise",{}).get("http_status")==502
+                       and x.get("query_receipts",{}).get("unwise",{}).get("http_status")==502
+                       for x in old):
+            archive.write_bytes(prior.read_bytes())
     with ThreadPoolExecutor(max_workers=4) as pool:
         futures={pool.submit(vet_one,i,r,calibration):i for i,r in enumerate(shortlist[:N])}
         for f in as_completed(futures):
