@@ -334,4 +334,6 @@ def main():
                           "checks":SUMMARY["checks"],
                           "limits":SUMMARY["limits"]},indent=2))
 if __name__=="__main__":
-    main()
+    # Positive controls must pass before the archive screen is permitted.
+    from control_validation import main as controls_main
+    controls_main()
