@@ -47,7 +47,7 @@ def main():
         raise AssertionError("Original controls did not replay")
     qpass=sum(scalar(r) for r in matchedq);dpass=sum(scalar(r) for r in matchedd)
     if (qpass,dpass)!=(21,4):
-        raise AssertionError("Frozen scalar recovery not 21/24,5/14: "+str((qpass,dpass)))
+        raise AssertionError("Frozen scalar recovery not 21/24,4/14: "+str((qpass,dpass)))
     if qpass!=control["matched_quasar_recovery"]["numerator"]:
         raise AssertionError("Candidate selector and referee differ")
     report["checks"].append("Scalar independent control replay: 21/24 matched quasars, 4/14 matched dwarfs; old 3/24")
