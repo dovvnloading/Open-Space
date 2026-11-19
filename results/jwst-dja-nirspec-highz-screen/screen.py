@@ -25,7 +25,7 @@ HI=np.round(np.arange(10.0,18.001,0.10),2)
 LOW=np.round(np.arange(2.6,5.501,0.15),2)
 EM=np.round(np.arange(0.5,9.501,0.35),2)
 PRIORS={"high":.02,"dusty":.55,"emission":.28,"dwarf":.10,"artifact":.05}
-OUTCOL=("band index root file srcid objid ra dec grade dja_z_best valid_bins "
+OUTCOL=("band index root file srcid msaid slitid ra dec grade dja_z_best valid_bins "
         "two_sided q16_high q50_high q84_high p_gt14_proxy p_gt12_proxy "
         "p_lowz_gal_proxy p_dwarf_proxy p_artifact_proxy "
         "p_gt12_prior_0p002 p_gt12_prior_0p20 status").split()
@@ -214,7 +214,8 @@ def run(cache,out,batch):
                     for k in range(j-i):
                         meta=groups[b][i+k]
                         row=dict(band=b,index=int(meta["index"]),root=meta["root"],
-                                 file=meta["file"],srcid=meta["srcid"],objid=meta["objid"],
+                                 file=meta["file"],srcid=meta["srcid"],msaid=meta["msaid"],
+                                 slitid=meta["slitid"],
                                  ra=meta["ra"],dec=meta["dec"],grade=meta["grade"],
                                  dja_z_best=meta["z_best"],valid_bins=int(good[:,k].sum()))
                         for key in OUTCOL:
