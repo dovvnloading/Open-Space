@@ -302,25 +302,33 @@ def snr_radius(size):
     return min(2.0, max([float(v) for v in nums], default=0.0) / 120)
 
 def green():
-    t = vizier("green_2024", "VII/297/snrs", min_rows=300)
-    if t is None: return
-    result=[]
-    for _,r in t.iterrows():
-        n=str(r.get("SNR","")).strip()
-        m=re.search(r"G?\s*(\d{1,3}\.\d+)([+-]\d+\.\d+)",n)
-        if m:
+    """Official Cambridge Green 2024 Oct summary, not a VizieR proxy."""
+    from bs4 import BeautifulSoup
+    url="https://www.mrao.cam.ac.uk/projects/surveys/snrs/snrs.data.html"
+    raw=file_url("green_2024",url,max_bytes=1_000_000)
+    if raw is None:return
+    try:
+        soup=BeautifulSoup(raw,"html.parser")
+        text=soup.get_text()
+        pat=r"(?m)^\s*(\d{1,3}\.\d+)\s+([+-]\d+\.\d+)\s+(\d{2})\s+(\d{2})\s+(\d{2})\s+([+-]\d{2})\s+(\d{2})\s+([0-9.x?]+)"
+        result=[]
+        for m in re.finditer(pat,text):
             l=float(m.group(1)); b=float(m.group(2))
+            size=m.group(8)
             ra,dec=galactic_to_equatorial(l,b)
-            ra=float(ra);dec=float(dec)
-        else:
-            try:
-                c=SkyCoord(str(r["RAJ2000"])+" "+str(r["DEJ2000"]),unit=(u.hourangle,u.deg))
-                ra=float(c.ra.deg);dec=float(c.dec.deg)
-            except Exception: continue
-        v=base_record(n,ra,dec,size=snr_radius(r.get("Size",np.nan)),catalogue="Green2024")
-        if v: result.append(v)
-    if len(result)<300: raise ValueError("Green normalization did not recover 300 sources")
-    records(result,"green_snrs.csv")
+            x=base_record("G"+m.group(1)+m.group(2),float(ra),float(dec),
+                          size=snr_radius(size),catalogue="Green2024Oct",
+                          size_original_arcmin=size)
+            if x:result.append(x)
+        if len(result)!=310:
+            raise ValueError(f"Green 2024 page parser recovered {len(result)} rather than 310 SNRs")
+        records(result,"green_snrs.csv")
+        RECEIPTS["green_2024"]["sources"]=len(result)
+        RECEIPTS["green_2024"]["version"]="2024 October, summary of all 310 Green SNRs"
+    except Exception as exc:
+        RECEIPTS["green_2024"]["status"]="invalid_schema"
+        RECEIPTS["green_2024"]["error"]=repr(exc)
+
 
 def meerkat_snrcat():
     # These are *radio-SNR candidates*, not a 510k-row compact-source census.
@@ -343,18 +351,33 @@ def meerkat_snrcat():
         RECEIPTS[key]["normalized"] = len(rows)
 
 def erass_hard():
-    t=vizier("erass1_dr1_hard", "J/A+A/682/A34/erass1-h", min_rows=5400)
-    if t is None: return
-    ra,dec=coords(t,ra=("RA_ICRS","RAdeg","RAJ2000","RA"),dec=("DE_ICRS","DEdeg","DEJ2000","DEC"))
-    rows=[]
-    for i,(a,d) in enumerate(zip(ra,dec)):
-        x=base_record(str(col(t,"IAUName","Name").iloc[i]),a,d,catalogue="eRASS1-hard")
-        if x: rows.append(x)
-    if len(rows)<5000:
+    """Official eROSITA-DE DR1 hard 2.3-5 keV FITS; only German half sky."""
+    url="https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/MerloniA_DR1/eRASS1_Hard.tar.gz"
+    raw=file_url("erass1_dr1_hard",url,max_bytes=15_000_000)
+    if raw is None:return
+    try:
+        with tarfile.open(fileobj=io.BytesIO(raw),mode="r:gz") as tar:
+            names=[n for n in tar.getmembers() if n.name.endswith(".fits")]
+            if not names:raise ValueError("No .fits member in official hard archive")
+            fitsbytes=tar.extractfile(names[0]).read()
+        with fits.open(io.BytesIO(fitsbytes),memmap=False) as h:
+            t=h[1].data
+            out=[]
+            for r in t:
+                name=r["IAUNAME"]
+                if isinstance(name,bytes):name=name.decode(errors="replace")
+                x=base_record(name,float(r["RA"]),float(r["DEC"]),
+                              size=max(0,float(r["EXT"])/3600) if np.isfinite(r["EXT"]) else 0,
+                              catalogue="eRASS1_Hard_DR1",flux_2_3_5=float(r["ML_FLUX_0"]) if np.isfinite(r["ML_FLUX_0"]) else float("nan"))
+                if x:out.append(x)
+        if not 5000<=len(out)<=7000:raise ValueError(f"unexpected hard catalogue count {len(out)}")
+        records(out,"erass1_hard.csv")
+        RECEIPTS["erass1_dr1_hard"].update({"sources":len(out),"fits_sha256":digest(fitsbytes),
+         "scope":"eROSITA-DE public western half sky only; approximate l=180..360 Galactic"})
+    except Exception as exc:
         RECEIPTS["erass1_dr1_hard"]["status"]="invalid_schema"
-        RECEIPTS["erass1_dr1_hard"]["error"]=f"only {len(rows)} positions parsed"
-        return
-    records(rows,"erass1_hard.csv")
+        RECEIPTS["erass1_dr1_hard"]["error"]=repr(exc)
+
 
 def gaia_young():
     t=vizier("gaia_dr3_hunt_ref", "J/A+A/673/A114/clusters", min_rows=7000)
@@ -387,7 +410,7 @@ def atnf():
             db=tf.extractfile("psrcat_tar/psrcat.db").read()
         dbpath=OUT/"psrcat_raw.db"
         dbpath.write_bytes(db)
-        q=psrqpy.QueryATNF(path_to_db=str(dbpath),params=["PSRJ","RAJD","DECJD","EDOT","DIST","AGE","P0","P1"],cache=False)
+        q=psrqpy.QueryATNF(loadfromdb=str(dbpath),params=["PSRJ","RAJD","DECJD","EDOT","DIST","AGE","P0","P1"],cache=False)
         tab=q.pandas
         items=[]
         for _,r in tab.iterrows():
@@ -417,7 +440,8 @@ def hess():
         with zipfile.ZipFile(io.BytesIO(raw)) as z:
             names=[n for n in z.namelist() if n.endswith(".fits.gz")]
             if not names: raise ValueError("no FITS GZ in archive")
-            arr=gzip.decompress(z.read(names[0]))
+            zbytes=z.read(names[0])
+            arr=zbytes if zbytes.startswith(b"SIMPLE") else gzip.decompress(zbytes)
         with fits.open(io.BytesIO(arr)) as h:
             lines=[]
             for hd in h[1:]:
