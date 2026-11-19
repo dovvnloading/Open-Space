@@ -175,6 +175,8 @@ def chime_selection():
         reader=csv.DictReader(io.StringIO(data.decode("utf-8-sig")))
         fields=reader.fieldnames or []
         total=0; parsed=0
+        min_mjd=float("inf");max_mjd=-float("inf");nearest_dt=float("inf")
+        near_7d=0;near_30d=0
         for r in reader:
             total+=1
             name=str(pick(r,"tns_name","event_id","tnsname") or "")
@@ -185,6 +187,10 @@ def chime_selection():
             except (ValueError,TypeError):continue
             if ra is None or dec is None or not (40000<t<100000):continue
             parsed+=1
+            min_mjd=min(min_mjd,t);max_mjd=max(max_mjd,t)
+            nearest_dt=min(nearest_dt,abs(t-EVENT["mjd_utc"]))
+            near_7d+=abs(t-EVENT["mjd_utc"])<=7
+            near_30d+=abs(t-EVENT["mjd_utc"])<=30
             if not name: name="CHIME-%d" % total
             if name in seen: continue
             seen.add(name)
@@ -196,6 +202,10 @@ def chime_selection():
         if total < 3000 or parsed < 2500:
             raise ValueError("suspicious CHIME Catalog 2: rows=%d parsed=%d" % (total,parsed))
         return rows,{"status":"DOWNLOADED_CATALOG_2","raw_rows":total,"parsed_rows":parsed,
+                    "min_mjd":min_mjd,"max_mjd":max_mjd,
+                    "nearest_event_abs_days":round(nearest_dt,7),
+                    "subbursts_within_7days":near_7d,
+                    "subbursts_within_30days":near_30d,
                     "eligible_temporal_unique_events":len(rows),"columns":fields,
                     "limitations":"CHIME exposure nonuniform; centroid-only 3-degree membership is not localization overlap and multi-beam errors require native region"}
     except Exception as ex:
