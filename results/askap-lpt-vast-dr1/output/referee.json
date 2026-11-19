@@ -1,20 +1,27 @@
 {
   "checks": {
-    "complete": false,
-    "image_hash": false,
-    "image_rows": false,
+    "complete": true,
+    "image_hash": true,
+    "image_rows": true,
     "measurement_rows": false,
     "no_discovery": true,
-    "no_fpr_claim": false,
+    "no_fpr_claim": true,
     "no_period": true,
     "protocol_hash": true,
-    "rank_rows": false,
-    "source_rows": false
+    "rank_rows": true,
+    "rank_sorted": true,
+    "rank_unique": true,
+    "source_rows": true
   },
   "disposition": "No validated new LPT: variability is not a measured minute-to-hour period",
   "independent_review_scope": "audit of counts, hashes and claims only; native pixel re-reduction NOT done",
   "pass": false,
   "pending": [
-    "data retrieval"
+    "VAST native FITS cutout inspection and field-specific noise",
+    "RACS low/mid/high I/V/Q/U photometry",
+    "Legacy Surveys/unWISE counterpart exclusion",
+    "10-second or snapshot periodicity (not in released DR1 tables)",
+    "eRASS1/Swift X-ray, SIMBAD/literature checks",
+    "empirical AGN scintillation/flare-star false-positive calibration"
   ]
 }
