@@ -45,8 +45,8 @@ CONTROL_PAIRS = [
     ("GW190424_180648", "GW190910_112807"),  # LVK O3a Hanabi log10 B = -3.9
 ]
 N_POST = 1400
-MAX_POST_FILES = 28
-TOP_PROXY_PAIRS = 12
+MAX_POST_FILES = 12
+TOP_PROXY_PAIRS = 3
 
 
 def dump(name, obj):
@@ -376,9 +376,11 @@ def get_posterior(h5, event):
         raise ValueError("Insufficient samples")
     seed = int.from_bytes(hashlib.sha256(event.encode()).digest()[:8], "big")
     idx = np.sort(np.random.default_rng(seed).choice(n, min(n, N_POST), replace=False))
+    # Read indexed structured HDF5 samples just once, not for each of 12 fields.
+    block = ds[idx] if isinstance(ds, h5py.Dataset) else None
     def col(key):
         if key not in columns: return None
-        return np.asarray(ds[idx][key] if isinstance(ds, h5py.Dataset) else ds[key][idx], dtype=float)
+        return np.asarray(block[key] if block is not None else ds[key][idx], dtype=float)
     m1, m2 = col("mass_1"), col("mass_2")
     a1, a2 = col("a_1"), col("a_2")
     ct1, ct2 = col("cos_tilt_1"), col("cos_tilt_2")
@@ -436,7 +438,7 @@ def files_and_posteriors(pop, ranked, meta):
             if n not in selected and len(selected) < MAX_POST_FILES:
                 selected.append(n)
     dump("target_selection.json", {"selection_frozen_before_downloading_posteriors": True,
-        "method": "all 4 published LVK pairs plus top 12 from full GWOSC mass+chi_eff+SIS delay proxy",
+        "method": "all 4 published LVK pairs plus top 3 from full GWOSC mass+chi_eff+SIS delay proxy",
         "max_posterior_files": MAX_POST_FILES, "events": selected, "pairs": target_pairs})
     receipts, failed = [], {}
     with tempfile.TemporaryDirectory(prefix="gwtc-lensing-") as dirname:
