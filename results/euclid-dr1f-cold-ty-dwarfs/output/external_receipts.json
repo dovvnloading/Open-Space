@@ -2,7 +2,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:10.075202+00:00",
+    "checked_utc": "2026-11-19T09:54:55.478559+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -29,7 +29,7 @@
         "returned_rows": 3,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:01.091222+00:00"
+        "utc": "2026-11-19T09:54:47.694346+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 10.84130838 AND 10.84458313 AND dec BETWEEN -52.35848087 AND -52.35648087",
@@ -42,7 +42,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:08.065563+00:00"
+        "utc": "2026-11-19T09:54:53.129550+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -53,7 +53,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:09.780064+00:00"
+        "utc": "2026-11-19T09:54:54.902175+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',10.84294575,-52.35748087,0.0014))",
@@ -68,13 +68,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:09.966159+00:00"
+        "utc": "2026-11-19T09:54:55.210624+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 10.840671620 AND 10.845219889 AND dec BETWEEN -52.358869761 AND -52.356091983",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 10.840671620 AND 10.845219889 AND dec BETWEEN -52.358869761 AND -52.356091983",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 10.840671620 AND 10.845219889 AND dec BETWEEN -52.358869761 AND -52.356091983",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -82,7 +88,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:06.446831+00:00"
+        "utc": "2026-11-19T09:54:51.496068+00:00"
       }
     },
     "ra": 10.842945754823576,
@@ -92,7 +98,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:10.544422+00:00",
+    "checked_utc": "2026-11-19T09:54:55.638836+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -119,7 +125,7 @@
         "returned_rows": 2,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:01.091841+00:00"
+        "utc": "2026-11-19T09:54:47.694769+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 15.01479096 AND 15.01815967 AND dec BETWEEN -53.58101314 AND -53.57901314",
@@ -138,7 +144,7 @@
         "returned_rows": 1,
         "source": "Legacy_DR10_catalogue",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:08.371570+00:00"
+        "utc": "2026-11-19T09:54:53.482110+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -149,7 +155,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:10.273420+00:00"
+        "utc": "2026-11-19T09:54:55.200650+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',15.01647532,-53.58001314,0.0014))",
@@ -164,13 +170,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:10.423726+00:00"
+        "utc": "2026-11-19T09:54:55.410023+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 15.014135938 AND 15.018814698 AND dec BETWEEN -53.581402025 AND -53.578624247",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 15.014135938 AND 15.018814698 AND dec BETWEEN -53.581402025 AND -53.578624247",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 15.014135938 AND 15.018814698 AND dec BETWEEN -53.581402025 AND -53.578624247",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -178,7 +190,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:06.473706+00:00"
+        "utc": "2026-11-19T09:54:51.864836+00:00"
       }
     },
     "ra": 15.016475317853343,
@@ -188,7 +200,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:10.538367+00:00",
+    "checked_utc": "2026-11-19T09:54:55.831884+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -215,7 +227,7 @@
         "returned_rows": 1,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:01.092162+00:00"
+        "utc": "2026-11-19T09:54:47.695048+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 27.79257012 AND 27.79562956 AND dec BETWEEN -49.17881904 AND -49.17681904",
@@ -228,7 +240,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:08.205322+00:00"
+        "utc": "2026-11-19T09:54:53.673648+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -239,7 +251,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:10.271433+00:00"
+        "utc": "2026-11-19T09:54:55.420989+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',27.79409984,-49.17781904,0.0014))",
@@ -254,13 +266,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:10.409016+00:00"
+        "utc": "2026-11-19T09:54:55.697102+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 27.791975227 AND 27.796224454 AND dec BETWEEN -49.179207933 AND -49.176430155",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 27.791975227 AND 27.796224454 AND dec BETWEEN -49.179207933 AND -49.176430155",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 27.791975227 AND 27.796224454 AND dec BETWEEN -49.179207933 AND -49.176430155",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -268,7 +286,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:06.420511+00:00"
+        "utc": "2026-11-19T09:54:51.867457+00:00"
       }
     },
     "ra": 27.794099840321266,
@@ -278,7 +296,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:09.991225+00:00",
+    "checked_utc": "2026-11-19T09:54:55.480176+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -305,7 +323,7 @@
         "returned_rows": 0,
         "source": "CatWISE2020",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:01.093476+00:00"
+        "utc": "2026-11-19T09:54:47.697913+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 30.08675724 AND 30.08996795 AND dec BETWEEN -51.47173364 AND -51.46973364",
@@ -318,7 +336,7 @@
         "returned_rows": 1,
         "source": "Legacy_DR10_catalogue",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:07.993536+00:00"
+        "utc": "2026-11-19T09:54:53.357677+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -329,7 +347,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:09.593156+00:00"
+        "utc": "2026-11-19T09:54:55.001522+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',30.08836259,-51.47073364,0.0014))",
@@ -344,13 +362,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:09.847016+00:00"
+        "utc": "2026-11-19T09:54:55.273610+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 30.086132930 AND 30.090592256 AND dec BETWEEN -51.472122525 AND -51.469344747",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 30.086132930 AND 30.090592256 AND dec BETWEEN -51.472122525 AND -51.469344747",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 30.086132930 AND 30.090592256 AND dec BETWEEN -51.472122525 AND -51.469344747",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -358,7 +382,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:06.422554+00:00"
+        "utc": "2026-11-19T09:54:51.775644+00:00"
       }
     },
     "ra": 30.088362593069206,
@@ -368,7 +392,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:20.001769+00:00",
+    "checked_utc": "2026-11-19T09:55:03.430953+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -395,7 +419,7 @@
         "returned_rows": 3,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:09.991299+00:00"
+        "utc": "2026-11-19T09:54:55.478647+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 32.07567650 AND 32.07846988 AND dec BETWEEN -44.27748600 AND -44.27548600",
@@ -408,7 +432,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:13.285264+00:00"
+        "utc": "2026-11-19T09:55:01.159890+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -419,7 +443,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:19.690224+00:00"
+        "utc": "2026-11-19T09:55:03.019782+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',32.07707319,-44.27648600,0.0014))",
@@ -434,13 +458,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:19.888879+00:00"
+        "utc": "2026-11-19T09:55:03.292948+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 32.075133346 AND 32.079013036 AND dec BETWEEN -44.277874889 AND -44.275097111",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 32.075133346 AND 32.079013036 AND dec BETWEEN -44.277874889 AND -44.275097111",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 32.075133346 AND 32.079013036 AND dec BETWEEN -44.277874889 AND -44.275097111",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -448,7 +478,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:11.614642+00:00"
+        "utc": "2026-11-19T09:54:59.601187+00:00"
       }
     },
     "ra": 32.07707319125472,
@@ -458,7 +488,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:20.144281+00:00",
+    "checked_utc": "2026-11-19T09:55:02.980662+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -485,7 +515,7 @@
         "returned_rows": 2,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:10.075289+00:00"
+        "utc": "2026-11-19T09:54:55.480230+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 34.91838483 AND 34.92094001 AND dec BETWEEN -38.49032931 AND -38.48832931",
@@ -498,7 +528,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:13.387894+00:00"
+        "utc": "2026-11-19T09:55:00.931658+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -509,7 +539,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:19.859094+00:00"
+        "utc": "2026-11-19T09:55:02.529359+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',34.91966242,-38.48932931,0.0014))",
@@ -524,13 +554,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:20.036308+00:00"
+        "utc": "2026-11-19T09:55:02.799616+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 34.917887990 AND 34.921436849 AND dec BETWEEN -38.490718204 AND -38.487940426",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 34.917887990 AND 34.921436849 AND dec BETWEEN -38.490718204 AND -38.487940426",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 34.917887990 AND 34.921436849 AND dec BETWEEN -38.490718204 AND -38.487940426",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -538,7 +574,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:11.767577+00:00"
+        "utc": "2026-11-19T09:54:59.269946+00:00"
       }
     },
     "ra": 34.91966241931762,
@@ -548,7 +584,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:20.580442+00:00",
+    "checked_utc": "2026-11-19T09:55:04.037167+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -575,7 +611,7 @@
         "returned_rows": 0,
         "source": "CatWISE2020",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:10.538436+00:00"
+        "utc": "2026-11-19T09:54:55.638936+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 37.29692790 AND 37.30099749 AND dec BETWEEN -60.56511891 AND -60.56311891",
@@ -588,7 +624,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:18.678736+00:00"
+        "utc": "2026-11-19T09:55:01.720941+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -599,7 +635,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:20.307898+00:00"
+        "utc": "2026-11-19T09:55:03.425424+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',37.29896270,-60.56411891,0.0014))",
@@ -614,13 +650,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:20.447761+00:00"
+        "utc": "2026-11-19T09:55:03.725035+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 37.296136587 AND 37.301788804 AND dec BETWEEN -60.565507798 AND -60.562730020",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 37.296136587 AND 37.301788804 AND dec BETWEEN -60.565507798 AND -60.562730020",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 37.296136587 AND 37.301788804 AND dec BETWEEN -60.565507798 AND -60.562730020",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -628,7 +670,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:12.153362+00:00"
+        "utc": "2026-11-19T09:54:59.607939+00:00"
       }
     },
     "ra": 37.29896269539298,
@@ -638,7 +680,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:20.756607+00:00",
+    "checked_utc": "2026-11-19T09:55:04.418126+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -665,7 +707,7 @@
         "returned_rows": 1,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:10.544519+00:00"
+        "utc": "2026-11-19T09:54:55.831964+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 39.79108447 AND 39.79423372 AND dec BETWEEN -50.57565869 AND -50.57365869",
@@ -678,7 +720,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:18.690068+00:00"
+        "utc": "2026-11-19T09:55:01.719194+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -689,7 +731,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:20.470412+00:00"
+        "utc": "2026-11-19T09:55:03.998116+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',39.79265910,-50.57465869,0.0014))",
@@ -704,13 +746,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:20.621187+00:00"
+        "utc": "2026-11-19T09:55:04.244791+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 39.790472121 AND 39.794846077 AND dec BETWEEN -50.576047575 AND -50.573269797",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 39.790472121 AND 39.794846077 AND dec BETWEEN -50.576047575 AND -50.573269797",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 39.790472121 AND 39.794846077 AND dec BETWEEN -50.576047575 AND -50.573269797",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -718,7 +766,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:12.240422+00:00"
+        "utc": "2026-11-19T09:54:59.664163+00:00"
       }
     },
     "ra": 39.79265909894722,
@@ -728,7 +776,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:34.512251+00:00",
+    "checked_utc": "2026-11-19T09:55:10.611169+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -755,7 +803,7 @@
         "returned_rows": 1,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:20.001877+00:00"
+        "utc": "2026-11-19T09:55:02.980738+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 40.27777297 AND 40.28115235 AND dec BETWEEN -53.71452532 AND -53.71252532",
@@ -774,7 +822,7 @@
         "returned_rows": 1,
         "source": "Legacy_DR10_catalogue",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:32.445120+00:00"
+        "utc": "2026-11-19T09:55:08.368556+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -785,7 +833,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:34.152215+00:00"
+        "utc": "2026-11-19T09:55:10.252339+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',40.27946266,-53.71352532,0.0014))",
@@ -800,13 +848,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:34.401738+00:00"
+        "utc": "2026-11-19T09:55:10.476570+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 40.277115862 AND 40.281809458 AND dec BETWEEN -53.714914211 AND -53.712136433",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 40.277115862 AND 40.281809458 AND dec BETWEEN -53.714914211 AND -53.712136433",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 40.277115862 AND 40.281809458 AND dec BETWEEN -53.714914211 AND -53.712136433",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -814,7 +868,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:26.319882+00:00"
+        "utc": "2026-11-19T09:55:06.576390+00:00"
       }
     },
     "ra": 40.27946266029176,
@@ -824,7 +878,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:34.710302+00:00",
+    "checked_utc": "2026-11-19T09:55:10.944551+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -851,7 +905,7 @@
         "returned_rows": 0,
         "source": "CatWISE2020",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:20.144348+00:00"
+        "utc": "2026-11-19T09:55:03.431044+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 45.15393482 AND 45.15711952 AND dec BETWEEN -51.09811224 AND -51.09611224",
@@ -864,7 +918,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:32.414408+00:00"
+        "utc": "2026-11-19T09:55:09.000728+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -875,7 +929,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:34.405340+00:00"
+        "utc": "2026-11-19T09:55:10.541033+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',45.15552717,-51.09711224,0.0014))",
@@ -890,13 +944,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:34.600024+00:00"
+        "utc": "2026-11-19T09:55:10.758459+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 45.153315571 AND 45.157738768 AND dec BETWEEN -51.098501134 AND -51.095723356",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 45.153315571 AND 45.157738768 AND dec BETWEEN -51.098501134 AND -51.095723356",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 45.153315571 AND 45.157738768 AND dec BETWEEN -51.098501134 AND -51.095723356",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -904,7 +964,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:26.241859+00:00"
+        "utc": "2026-11-19T09:55:07.309403+00:00"
       }
     },
     "ra": 45.15552716985617,
@@ -914,7 +974,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:36.658649+00:00",
+    "checked_utc": "2026-11-19T09:55:11.404183+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -941,7 +1001,7 @@
         "returned_rows": 2,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:20.580513+00:00"
+        "utc": "2026-11-19T09:55:04.037247+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 52.54046459 AND 52.54430131 AND dec BETWEEN -58.58289567 AND -58.58089567",
@@ -954,7 +1014,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:33.121112+00:00"
+        "utc": "2026-11-19T09:55:09.420228+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -965,7 +1025,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:36.362090+00:00"
+        "utc": "2026-11-19T09:55:10.920024+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',52.54238295,-58.58189567,0.0014))",
@@ -980,13 +1040,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:36.555655+00:00"
+        "utc": "2026-11-19T09:55:11.212458+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 52.539718564 AND 52.545047335 AND dec BETWEEN -58.583284558 AND -58.580506780",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 52.539718564 AND 52.545047335 AND dec BETWEEN -58.583284558 AND -58.580506780",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 52.539718564 AND 52.545047335 AND dec BETWEEN -58.583284558 AND -58.580506780",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -994,7 +1060,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:26.895458+00:00"
+        "utc": "2026-11-19T09:55:07.604570+00:00"
       }
     },
     "ra": 52.5423829496723,
@@ -1004,7 +1070,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:37.503452+00:00",
+    "checked_utc": "2026-11-19T09:55:11.916100+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -1031,7 +1097,7 @@
         "returned_rows": 2,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:20.756686+00:00"
+        "utc": "2026-11-19T09:55:04.418210+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 52.64988157 AND 52.65231004 AND dec BETWEEN -34.55784055 AND -34.55584055",
@@ -1044,7 +1110,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:33.442370+00:00"
+        "utc": "2026-11-19T09:55:09.786907+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -1055,7 +1121,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:37.236007+00:00"
+        "utc": "2026-11-19T09:55:11.473023+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',52.65109580,-34.55684055,0.0014))",
@@ -1070,13 +1136,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:37.380897+00:00"
+        "utc": "2026-11-19T09:55:11.758222+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 52.649409364 AND 52.652782239 AND dec BETWEEN -34.558229439 AND -34.555451662",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 52.649409364 AND 52.652782239 AND dec BETWEEN -34.558229439 AND -34.555451662",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 52.649409364 AND 52.652782239 AND dec BETWEEN -34.558229439 AND -34.555451662",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -1084,7 +1156,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:27.307695+00:00"
+        "utc": "2026-11-19T09:55:07.922792+00:00"
       }
     },
     "ra": 52.65109580146443,
@@ -1094,7 +1166,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:45.067984+00:00",
+    "checked_utc": "2026-11-19T09:55:22.486910+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -1121,7 +1193,7 @@
         "returned_rows": 3,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:34.512318+00:00"
+        "utc": "2026-11-19T09:55:10.611239+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 53.54509396 AND 53.54784171 AND dec BETWEEN -43.29299254 AND -43.29099254",
@@ -1134,7 +1206,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:39.276124+00:00"
+        "utc": "2026-11-19T09:55:19.196451+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -1145,7 +1217,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:44.794777+00:00"
+        "utc": "2026-11-19T09:55:22.007023+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',53.54646783,-43.29199254,0.0014))",
@@ -1160,13 +1232,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:44.958255+00:00"
+        "utc": "2026-11-19T09:55:22.297992+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 53.544559674 AND 53.548375992 AND dec BETWEEN -43.293381425 AND -43.290603647",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 53.544559674 AND 53.548375992 AND dec BETWEEN -43.293381425 AND -43.290603647",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 53.544559674 AND 53.548375992 AND dec BETWEEN -43.293381425 AND -43.290603647",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -1174,7 +1252,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:37.829779+00:00"
+        "utc": "2026-11-19T09:55:14.060894+00:00"
       }
     },
     "ra": 53.54646783273131,
@@ -1184,7 +1262,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:46.146584+00:00",
+    "checked_utc": "2026-11-19T09:55:24.478825+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -1211,7 +1289,7 @@
         "returned_rows": 3,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:34.710371+00:00"
+        "utc": "2026-11-19T09:55:10.944623+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 53.60544582 AND 53.60797870 AND dec BETWEEN -37.85137376 AND -37.84937376",
@@ -1224,7 +1302,7 @@
         "returned_rows": 1,
         "source": "Legacy_DR10_catalogue",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:44.274125+00:00"
+        "utc": "2026-11-19T09:55:20.990473+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -1235,7 +1313,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:45.831453+00:00"
+        "utc": "2026-11-19T09:55:24.102320+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',53.60671226,-37.85037376,0.0014))",
@@ -1250,13 +1328,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:46.045445+00:00"
+        "utc": "2026-11-19T09:55:24.314079+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 53.604953317 AND 53.608471202 AND dec BETWEEN -37.851762653 AND -37.848984876",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 53.604953317 AND 53.608471202 AND dec BETWEEN -37.851762653 AND -37.848984876",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 53.604953317 AND 53.608471202 AND dec BETWEEN -37.851762653 AND -37.848984876",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -1264,7 +1348,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:38.221620+00:00"
+        "utc": "2026-11-19T09:55:15.165352+00:00"
       }
     },
     "ra": 53.606712259341265,
@@ -1274,7 +1358,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:46.155148+00:00",
+    "checked_utc": "2026-11-19T09:55:31.149857+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -1301,7 +1385,7 @@
         "returned_rows": 4,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:36.658716+00:00"
+        "utc": "2026-11-19T09:55:11.404261+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 65.85307937 AND 65.85674444 AND dec BETWEEN -56.92894629 AND -56.92694629",
@@ -1314,7 +1398,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:44.320935+00:00"
+        "utc": "2026-11-19T09:55:21.959108+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -1325,7 +1409,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:45.902991+00:00"
+        "utc": "2026-11-19T09:55:30.636194+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',65.85491191,-56.92794629,0.0014))",
@@ -1340,13 +1424,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:46.043346+00:00"
+        "utc": "2026-11-19T09:55:30.945487+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 65.852366723 AND 65.857457087 AND dec BETWEEN -56.929335177 AND -56.926557399",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 65.852366723 AND 65.857457087 AND dec BETWEEN -56.929335177 AND -56.926557399",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 65.852366723 AND 65.857457087 AND dec BETWEEN -56.929335177 AND -56.926557399",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -1354,7 +1444,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:38.746030+00:00"
+        "utc": "2026-11-19T09:55:19.150912+00:00"
       }
     },
     "ra": 65.85491190516876,
@@ -1364,7 +1454,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:46.522324+00:00",
+    "checked_utc": "2026-11-19T09:55:30.974522+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -1391,7 +1481,7 @@
         "returned_rows": 4,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:37.503524+00:00"
+        "utc": "2026-11-19T09:55:11.916173+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 69.59716476 AND 69.59975196 AND dec BETWEEN -39.37368165 AND -39.37168165",
@@ -1404,7 +1494,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:44.722885+00:00"
+        "utc": "2026-11-19T09:55:21.961707+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -1415,7 +1505,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:46.241584+00:00"
+        "utc": "2026-11-19T09:55:30.574682+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',69.59845836,-39.37268165,0.0014))",
@@ -1430,13 +1520,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:46.414282+00:00"
+        "utc": "2026-11-19T09:55:30.801887+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 69.596661696 AND 69.600255031 AND dec BETWEEN -39.374070535 AND -39.371292757",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 69.596661696 AND 69.600255031 AND dec BETWEEN -39.374070535 AND -39.371292757",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 69.596661696 AND 69.600255031 AND dec BETWEEN -39.374070535 AND -39.371292757",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -1444,7 +1540,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:39.082187+00:00"
+        "utc": "2026-11-19T09:55:19.152199+00:00"
       }
     },
     "ra": 69.59845836357867,
@@ -1454,7 +1550,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:50.180117+00:00",
+    "checked_utc": "2026-11-19T09:55:53.722195+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -1481,7 +1577,7 @@
         "returned_rows": 8,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:45.068051+00:00"
+        "utc": "2026-11-19T09:55:22.486985+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 69.92840119 AND 69.93051555 AND dec BETWEEN -18.93162654 AND -18.92962654",
@@ -1494,7 +1590,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:48.136361+00:00"
+        "utc": "2026-11-19T09:55:46.791103+00:00"
       },
       "panstarrs": {
         "catalog_match": {
@@ -1517,7 +1613,7 @@
         "returned_rows": 1,
         "source": "PanSTARRS_DR2_mean",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:49.896423+00:00"
+        "utc": "2026-11-19T09:55:52.213279+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',69.92945837,-18.93062654,0.0014))",
@@ -1532,13 +1628,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:50.073418+00:00"
+        "utc": "2026-11-19T09:55:52.441940+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 69.927990061 AND 69.930926674 AND dec BETWEEN -18.932015424 AND -18.929237647",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 69.927990061 AND 69.930926674 AND dec BETWEEN -18.932015424 AND -18.929237647",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 69.927990061 AND 69.930926674 AND dec BETWEEN -18.932015424 AND -18.929237647",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -1546,7 +1648,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:46.555639+00:00"
+        "utc": "2026-11-19T09:55:34.423480+00:00"
       }
     },
     "ra": 69.92945836756428,
@@ -1556,7 +1658,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:51.297925+00:00",
+    "checked_utc": "2026-11-19T09:55:55.432509+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -1583,7 +1685,7 @@
         "returned_rows": 2,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:46.146659+00:00"
+        "utc": "2026-11-19T09:55:24.478944+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 71.21737597 AND 71.22006892 AND dec BETWEEN -42.04079789 AND -42.03879789",
@@ -1602,7 +1704,7 @@
         "returned_rows": 1,
         "source": "Legacy_DR10_catalogue",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:49.262487+00:00"
+        "utc": "2026-11-19T09:55:49.357489+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -1613,7 +1715,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:51.008089+00:00"
+        "utc": "2026-11-19T09:55:55.066669+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',71.21872244,-42.03979789,0.0014))",
@@ -1628,13 +1730,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:51.189345+00:00"
+        "utc": "2026-11-19T09:55:55.293734+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 71.216852338 AND 71.220592547 AND dec BETWEEN -42.041186775 AND -42.038408997",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 71.216852338 AND 71.220592547 AND dec BETWEEN -42.041186775 AND -42.038408997",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 71.216852338 AND 71.220592547 AND dec BETWEEN -42.041186775 AND -42.038408997",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -1642,7 +1750,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:47.767604+00:00"
+        "utc": "2026-11-19T09:55:42.308390+00:00"
       }
     },
     "ra": 71.21872244259188,
@@ -1652,7 +1760,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:51.331251+00:00",
+    "checked_utc": "2026-11-19T09:55:57.297853+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -1679,7 +1787,7 @@
         "returned_rows": 3,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:46.155219+00:00"
+        "utc": "2026-11-19T09:55:30.974594+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 76.40217537 AND 76.40449503 AND dec BETWEEN -30.43668500 AND -30.43468500",
@@ -1692,7 +1800,7 @@
         "returned_rows": 1,
         "source": "Legacy_DR10_catalogue",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:49.197181+00:00"
+        "utc": "2026-11-19T09:55:52.704194+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -1703,7 +1811,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:51.033386+00:00"
+        "utc": "2026-11-19T09:55:56.558763+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',76.40333520,-30.43568500,0.0014))",
@@ -1718,13 +1826,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:51.187364+00:00"
+        "utc": "2026-11-19T09:55:56.869512+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 76.401724331 AND 76.404946070 AND dec BETWEEN -30.437073893 AND -30.434296115",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 76.401724331 AND 76.404946070 AND dec BETWEEN -30.437073893 AND -30.434296115",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 76.401724331 AND 76.404946070 AND dec BETWEEN -30.437073893 AND -30.434296115",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -1732,7 +1846,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:47.751476+00:00"
+        "utc": "2026-11-19T09:55:48.510364+00:00"
       }
     },
     "ra": 76.40333520029156,
@@ -1742,7 +1856,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:51.577203+00:00",
+    "checked_utc": "2026-11-19T09:55:57.303966+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -1769,7 +1883,7 @@
         "returned_rows": 5,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:46.522404+00:00"
+        "utc": "2026-11-19T09:55:31.149968+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 81.22907972 AND 81.23265711 AND dec BETWEEN -56.00974646 AND -56.00774646",
@@ -1782,7 +1896,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:49.501605+00:00"
+        "utc": "2026-11-19T09:55:52.318335+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -1793,7 +1907,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:51.337976+00:00"
+        "utc": "2026-11-19T09:55:56.910414+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',81.23086841,-56.00874646,0.0014))",
@@ -1808,13 +1922,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:51.481088+00:00"
+        "utc": "2026-11-19T09:55:57.135667+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 81.228384113 AND 81.233352714 AND dec BETWEEN -56.010135349 AND -56.007357571",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 81.228384113 AND 81.233352714 AND dec BETWEEN -56.010135349 AND -56.007357571",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 81.228384113 AND 81.233352714 AND dec BETWEEN -56.010135349 AND -56.007357571",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -1822,7 +1942,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:48.122504+00:00"
+        "utc": "2026-11-19T09:55:46.841390+00:00"
       }
     },
     "ra": 81.23086841370157,
@@ -1832,7 +1952,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:57.493187+00:00",
+    "checked_utc": "2026-11-19T09:56:03.235709+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -1859,7 +1979,7 @@
         "returned_rows": 3,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:50.180192+00:00"
+        "utc": "2026-11-19T09:55:53.722276+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 81.95708224 AND 81.96079282 AND dec BETWEEN -57.38548615 AND -57.38348615",
@@ -1878,7 +1998,7 @@
         "returned_rows": 1,
         "source": "Legacy_DR10_catalogue",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:53.814893+00:00"
+        "utc": "2026-11-19T09:56:00.878886+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -1889,7 +2009,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:57.199077+00:00"
+        "utc": "2026-11-19T09:56:02.769110+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',81.95893753,-57.38448615,0.0014))",
@@ -1904,13 +2024,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:57.367668+00:00"
+        "utc": "2026-11-19T09:56:03.084045+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 81.956360737 AND 81.961514325 AND dec BETWEEN -57.385875042 AND -57.383097264",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 81.956360737 AND 81.961514325 AND dec BETWEEN -57.385875042 AND -57.383097264",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 81.956360737 AND 81.961514325 AND dec BETWEEN -57.385875042 AND -57.383097264",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -1918,7 +2044,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:52.278206+00:00"
+        "utc": "2026-11-19T09:55:58.891369+00:00"
       }
     },
     "ra": 81.95893753103023,
@@ -1928,7 +2054,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:58.652657+00:00",
+    "checked_utc": "2026-11-19T09:56:04.514215+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -1955,7 +2081,7 @@
         "returned_rows": 5,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:51.297993+00:00"
+        "utc": "2026-11-19T09:55:55.432587+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 85.48605415 AND 85.48952662 AND dec BETWEEN -54.83411658 AND -54.83211658",
@@ -1968,7 +2094,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:56.393274+00:00"
+        "utc": "2026-11-19T09:56:02.074695+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -1979,7 +2105,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:58.344986+00:00"
+        "utc": "2026-11-19T09:56:03.870266+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',85.48779039,-54.83311658,0.0014))",
@@ -1994,13 +2120,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:58.516286+00:00"
+        "utc": "2026-11-19T09:56:04.040135+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 85.485378952 AND 85.490201819 AND dec BETWEEN -54.834505471 AND -54.831727693",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 85.485378952 AND 85.490201819 AND dec BETWEEN -54.834505471 AND -54.831727693",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 85.485378952 AND 85.490201819 AND dec BETWEEN -54.834505471 AND -54.831727693",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -2008,7 +2140,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:53.027365+00:00"
+        "utc": "2026-11-19T09:56:00.214998+00:00"
       }
     },
     "ra": 85.48779038533789,
@@ -2018,7 +2150,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:58.642207+00:00",
+    "checked_utc": "2026-11-19T09:56:05.242577+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -2045,7 +2177,7 @@
         "returned_rows": 0,
         "source": "CatWISE2020",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:51.331321+00:00"
+        "utc": "2026-11-19T09:55:57.297953+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 89.78666138 AND 89.78882651 AND dec BETWEEN -22.52320608 AND -22.52120608",
@@ -2058,7 +2190,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:56.390949+00:00"
+        "utc": "2026-11-19T09:56:03.215594+00:00"
       },
       "panstarrs": {
         "catalog_match": {
@@ -2081,7 +2213,7 @@
         "returned_rows": 2,
         "source": "PanSTARRS_DR2_mean",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:58.341694+00:00"
+        "utc": "2026-11-19T09:56:04.839701+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',89.78774395,-22.52220608,0.0014))",
@@ -2096,13 +2228,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:58.512852+00:00"
+        "utc": "2026-11-19T09:56:05.059040+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 89.786240382 AND 89.789247510 AND dec BETWEEN -22.523594966 AND -22.520817188",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 89.786240382 AND 89.789247510 AND dec BETWEEN -22.523594966 AND -22.520817188",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 89.786240382 AND 89.789247510 AND dec BETWEEN -22.523594966 AND -22.520817188",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -2110,7 +2248,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:52.957615+00:00"
+        "utc": "2026-11-19T09:56:01.161450+00:00"
       }
     },
     "ra": 89.78774394613126,
@@ -2120,7 +2258,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:49:58.816020+00:00",
+    "checked_utc": "2026-11-19T09:56:05.733219+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -2147,7 +2285,7 @@
         "returned_rows": 3,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:51.577270+00:00"
+        "utc": "2026-11-19T09:55:57.304047+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 176.63116546 AND 176.63726367 AND dec BETWEEN 70.85367661 AND 70.85567661",
@@ -2160,7 +2298,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:56.681643+00:00"
+        "utc": "2026-11-19T09:56:02.763580+00:00"
       },
       "panstarrs": {
         "catalog_match": {
@@ -2183,7 +2321,7 @@
         "returned_rows": 1,
         "source": "PanSTARRS_DR2_mean",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:58.546885+00:00"
+        "utc": "2026-11-19T09:56:04.348708+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',176.63421457,70.85467661,0.0014))",
@@ -2198,13 +2336,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:58.689585+00:00"
+        "utc": "2026-11-19T09:56:04.558334+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 176.629979702 AND 176.638449433 AND dec BETWEEN 70.853287724 AND 70.856065501",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 176.629979702 AND 176.638449433 AND dec BETWEEN 70.853287724 AND 70.856065501",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 176.629979702 AND 176.638449433 AND dec BETWEEN 70.853287724 AND 70.856065501",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -2212,7 +2356,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:49:53.146346+00:00"
+        "utc": "2026-11-19T09:56:01.056980+00:00"
       }
     },
     "ra": 176.63421456781037,
@@ -2222,7 +2366,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:05.380116+00:00",
+    "checked_utc": "2026-11-19T09:56:10.592044+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -2249,7 +2393,7 @@
         "returned_rows": 0,
         "source": "CatWISE2020",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:49:57.493261+00:00"
+        "utc": "2026-11-19T09:56:03.235781+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 188.40860733 AND 188.41327788 AND dec BETWEEN 64.64465732 AND 64.64665732",
@@ -2262,7 +2406,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:03.411488+00:00"
+        "utc": "2026-11-19T09:56:08.390179+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -2273,7 +2417,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:05.087326+00:00"
+        "utc": "2026-11-19T09:56:10.215611+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',188.41094261,64.64565732,0.0014))",
@@ -2288,13 +2432,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:05.233250+00:00"
+        "utc": "2026-11-19T09:56:10.443011+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 188.407699172 AND 188.414186046 AND dec BETWEEN 64.644268429 AND 64.647046207",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 188.407699172 AND 188.414186046 AND dec BETWEEN 64.644268429 AND 64.647046207",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 188.407699172 AND 188.414186046 AND dec BETWEEN 64.644268429 AND 64.647046207",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -2302,7 +2452,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:01.684018+00:00"
+        "utc": "2026-11-19T09:56:06.826652+00:00"
       }
     },
     "ra": 188.41094260917154,
@@ -2312,7 +2462,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:11.375031+00:00",
+    "checked_utc": "2026-11-19T09:56:12.163941+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -2339,7 +2489,7 @@
         "returned_rows": 1,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:58.642276+00:00"
+        "utc": "2026-11-19T09:56:04.514289+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 193.17802561 AND 193.18277433 AND dec BETWEEN 65.09072987 AND 65.09272987",
@@ -2352,7 +2502,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:04.271604+00:00"
+        "utc": "2026-11-19T09:56:10.134140+00:00"
       },
       "panstarrs": {
         "catalog_match": {
@@ -2375,7 +2525,7 @@
         "returned_rows": 1,
         "source": "PanSTARRS_DR2_mean",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:11.065252+00:00"
+        "utc": "2026-11-19T09:56:11.768722+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',193.18039997,65.09172987,0.0014))",
@@ -2390,13 +2540,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:11.229605+00:00"
+        "utc": "2026-11-19T09:56:12.012248+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 193.177102253 AND 193.183697688 AND dec BETWEEN 65.090340980 AND 65.093118758",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 193.177102253 AND 193.183697688 AND dec BETWEEN 65.090340980 AND 65.093118758",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 193.177102253 AND 193.183697688 AND dec BETWEEN 65.090340980 AND 65.093118758",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -2404,7 +2560,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:02.707256+00:00"
+        "utc": "2026-11-19T09:56:07.997130+00:00"
       }
     },
     "ra": 193.18039997062252,
@@ -2414,7 +2570,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:11.042324+00:00",
+    "checked_utc": "2026-11-19T09:56:12.286256+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -2441,7 +2597,7 @@
         "returned_rows": 1,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:58.652703+00:00"
+        "utc": "2026-11-19T09:56:05.242654+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 197.63521390 AND 197.64127315 AND dec BETWEEN 70.72575750 AND 70.72775750",
@@ -2454,7 +2610,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:04.229089+00:00"
+        "utc": "2026-11-19T09:56:10.172290+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -2465,7 +2621,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:10.760196+00:00"
+        "utc": "2026-11-19T09:56:11.926211+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',197.63824353,70.72675750,0.0014))",
@@ -2480,13 +2636,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:10.928956+00:00"
+        "utc": "2026-11-19T09:56:12.148003+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 197.634035711 AND 197.642451342 AND dec BETWEEN 70.725368611 AND 70.728146389",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 197.634035711 AND 197.642451342 AND dec BETWEEN 70.725368611 AND 70.728146389",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 197.634035711 AND 197.642451342 AND dec BETWEEN 70.725368611 AND 70.728146389",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -2494,7 +2656,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:02.705252+00:00"
+        "utc": "2026-11-19T09:56:08.568798+00:00"
       }
     },
     "ra": 197.63824352654456,
@@ -2504,7 +2666,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:11.252433+00:00",
+    "checked_utc": "2026-11-19T09:56:13.625014+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -2531,7 +2693,7 @@
         "returned_rows": 4,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:49:58.816091+00:00"
+        "utc": "2026-11-19T09:56:05.733300+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 223.47787166 AND 223.48428694 AND dec BETWEEN 71.83393748 AND 71.83593748",
@@ -2544,7 +2706,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:04.387534+00:00"
+        "utc": "2026-11-19T09:56:10.892004+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -2555,7 +2717,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:10.959504+00:00"
+        "utc": "2026-11-19T09:56:12.390757+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',223.48107930,71.83493748,0.0014))",
@@ -2570,13 +2732,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:11.110305+00:00"
+        "utc": "2026-11-19T09:56:12.623236+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 223.476624247 AND 223.485534361 AND dec BETWEEN 71.833548594 AND 71.836326371",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 223.476624247 AND 223.485534361 AND dec BETWEEN 71.833548594 AND 71.836326371",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 223.476624247 AND 223.485534361 AND dec BETWEEN 71.833548594 AND 71.836326371",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -2584,7 +2752,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:02.982413+00:00"
+        "utc": "2026-11-19T09:56:09.232938+00:00"
       }
     },
     "ra": 223.48107930381485,
@@ -2594,7 +2762,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:15.702443+00:00",
+    "checked_utc": "2026-11-19T09:56:17.450049+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -2621,7 +2789,7 @@
         "returned_rows": 4,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:05.380186+00:00"
+        "utc": "2026-11-19T09:56:10.592122+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 227.56933586 AND 227.57528254 AND dec BETWEEN 70.34602788 AND 70.34802788",
@@ -2634,7 +2802,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:13.427226+00:00"
+        "utc": "2026-11-19T09:56:15.507178+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -2645,7 +2813,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:15.438497+00:00"
+        "utc": "2026-11-19T09:56:17.103525+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',227.57230920,70.34702788,0.0014))",
@@ -2660,13 +2828,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:15.604867+00:00"
+        "utc": "2026-11-19T09:56:17.314627+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 227.568179563 AND 227.576438834 AND dec BETWEEN 70.345638995 AND 70.348416773",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 227.568179563 AND 227.576438834 AND dec BETWEEN 70.345638995 AND 70.348416773",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 227.568179563 AND 227.576438834 AND dec BETWEEN 70.345638995 AND 70.348416773",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -2674,7 +2848,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:11.666409+00:00"
+        "utc": "2026-11-19T09:56:13.943474+00:00"
       }
     },
     "ra": 227.57230919832867,
@@ -2684,7 +2858,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:16.082659+00:00",
+    "checked_utc": "2026-11-19T09:56:19.332438+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -2711,7 +2885,7 @@
         "returned_rows": 1,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:11.042399+00:00"
+        "utc": "2026-11-19T09:56:12.164021+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 261.08015649 AND 261.08415094 AND dec BETWEEN 59.95305247 AND 59.95505247",
@@ -2724,7 +2898,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:14.345684+00:00"
+        "utc": "2026-11-19T09:56:17.137286+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -2735,7 +2909,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:15.806182+00:00"
+        "utc": "2026-11-19T09:56:18.948692+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',261.08215372,59.95405247,0.0014))",
@@ -2750,13 +2924,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:15.957697+00:00"
+        "utc": "2026-11-19T09:56:19.199195+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 261.079379790 AND 261.084927641 AND dec BETWEEN 59.952663578 AND 59.955441356",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 261.079379790 AND 261.084927641 AND dec BETWEEN 59.952663578 AND 59.955441356",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 261.079379790 AND 261.084927641 AND dec BETWEEN 59.952663578 AND 59.955441356",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -2764,7 +2944,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:12.591578+00:00"
+        "utc": "2026-11-19T09:56:15.551340+00:00"
       }
     },
     "ra": 261.0821537156551,
@@ -2774,7 +2954,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:16.710652+00:00",
+    "checked_utc": "2026-11-19T09:56:19.312584+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -2801,7 +2981,7 @@
         "returned_rows": 4,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:11.252510+00:00"
+        "utc": "2026-11-19T09:56:12.286329+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 278.62597462 AND 278.63088214 AND dec BETWEEN 65.94874983 AND 65.95074983",
@@ -2814,7 +2994,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:14.771021+00:00"
+        "utc": "2026-11-19T09:56:17.052282+00:00"
       },
       "panstarrs": {
         "catalog_match": {
@@ -2837,7 +3017,7 @@
         "returned_rows": 1,
         "source": "PanSTARRS_DR2_mean",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:16.464976+00:00"
+        "utc": "2026-11-19T09:56:18.928857+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',278.62842838,65.94974983,0.0014))",
@@ -2852,13 +3032,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:16.613997+00:00"
+        "utc": "2026-11-19T09:56:19.177733+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 278.625020378 AND 278.631836380 AND dec BETWEEN 65.948360945 AND 65.951138723",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 278.625020378 AND 278.631836380 AND dec BETWEEN 65.948360945 AND 65.951138723",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 278.625020378 AND 278.631836380 AND dec BETWEEN 65.948360945 AND 65.951138723",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -2866,7 +3052,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:12.823915+00:00"
+        "utc": "2026-11-19T09:56:15.543853+00:00"
       }
     },
     "ra": 278.6284283790371,
@@ -2876,7 +3062,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:22.465495+00:00",
+    "checked_utc": "2026-11-19T09:56:21.269776+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -2903,7 +3089,7 @@
         "returned_rows": 5,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:11.375096+00:00"
+        "utc": "2026-11-19T09:56:13.625103+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 265.73307033 AND 265.73691314 AND dec BETWEEN 58.63644226 AND 58.63844226",
@@ -2916,7 +3102,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:14.890543+00:00"
+        "utc": "2026-11-19T09:56:18.922432+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -2927,7 +3113,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:22.119606+00:00"
+        "utc": "2026-11-19T09:56:20.814476+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',265.73499173,58.63744226,0.0014))",
@@ -2942,13 +3128,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:22.320692+00:00"
+        "utc": "2026-11-19T09:56:21.128610+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 265.732323113 AND 265.737660357 AND dec BETWEEN 58.636053376 AND 58.638831154",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 265.732323113 AND 265.737660357 AND dec BETWEEN 58.636053376 AND 58.638831154",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 265.732323113 AND 265.737660357 AND dec BETWEEN 58.636053376 AND 58.638831154",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -2956,7 +3148,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:12.963045+00:00"
+        "utc": "2026-11-19T09:56:16.905565+00:00"
       }
     },
     "ra": 265.7349917347353,
@@ -2966,7 +3158,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:31.679761+00:00",
+    "checked_utc": "2026-11-19T09:56:24.509749+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -2993,7 +3185,7 @@
         "returned_rows": 4,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:15.702525+00:00"
+        "utc": "2026-11-19T09:56:17.450133+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 66.76105953 AND 66.76391741 AND dec BETWEEN -45.58845398 AND -45.58645398",
@@ -3006,7 +3198,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:24.176726+00:00"
+        "utc": "2026-11-19T09:56:22.446195+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -3017,7 +3209,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:31.262149+00:00"
+        "utc": "2026-11-19T09:56:24.154082+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',66.76248847,-45.58745398,0.0014))",
@@ -3032,13 +3224,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:31.425617+00:00"
+        "utc": "2026-11-19T09:56:24.377283+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 66.760503831 AND 66.764473107 AND dec BETWEEN -45.588842868 AND -45.586065090",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 66.760503831 AND 66.764473107 AND dec BETWEEN -45.588842868 AND -45.586065090",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 66.760503831 AND 66.764473107 AND dec BETWEEN -45.588842868 AND -45.586065090",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -3046,7 +3244,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:22.614815+00:00"
+        "utc": "2026-11-19T09:56:20.863096+00:00"
       }
     },
     "ra": 66.76248846914669,
@@ -3056,7 +3254,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:37.462453+00:00",
+    "checked_utc": "2026-11-19T09:56:27.855443+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -3083,17 +3281,20 @@
         "returned_rows": 3,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:16.082742+00:00"
+        "utc": "2026-11-19T09:56:19.312664+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 77.49829331 AND 77.50089027 AND dec BETWEEN -39.63550277 AND -39.63350277",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ReadTimeout: HTTPSConnectionPool(host='datalab.noirlab.edu', port=443): Read timed out. (read timeout=12)",
+        "http_status": 200,
         "nearest_arcsec": null,
+        "response_bytes": 28,
+        "response_sha256": "798d4d6d5d04f048373a9d5578b6e2c65d53c5cbc1e927598d2c012638435c23",
+        "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
-        "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:25.051182+00:00"
+        "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
+        "utc": "2026-11-19T09:56:24.769035+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -3104,7 +3305,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:37.183862+00:00"
+        "utc": "2026-11-19T09:56:26.837952+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',77.49959179,-39.63450277,0.0014))",
@@ -3119,13 +3320,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:37.345480+00:00"
+        "utc": "2026-11-19T09:56:27.051577+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 77.497788340 AND 77.501395238 AND dec BETWEEN -39.635891657 AND -39.633113879",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 77.497788340 AND 77.501395238 AND dec BETWEEN -39.635891657 AND -39.633113879",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 77.497788340 AND 77.501395238 AND dec BETWEEN -39.635891657 AND -39.633113879",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -3133,7 +3340,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:23.191369+00:00"
+        "utc": "2026-11-19T09:56:23.005691+00:00"
       }
     },
     "ra": 77.49959178905236,
@@ -3143,7 +3350,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:38.973367+00:00",
+    "checked_utc": "2026-11-19T09:56:26.350309+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -3170,7 +3377,7 @@
         "returned_rows": 1,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:16.710732+00:00"
+        "utc": "2026-11-19T09:56:19.332510+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 38.26030939 AND 38.26296764 AND dec BETWEEN -41.20465327 AND -41.20265327",
@@ -3183,7 +3390,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:30.586403+00:00"
+        "utc": "2026-11-19T09:56:24.467413+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -3194,7 +3401,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:38.692491+00:00"
+        "utc": "2026-11-19T09:56:26.008517+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',38.26163852,-41.20365327,0.0014))",
@@ -3209,13 +3416,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:38.872684+00:00"
+        "utc": "2026-11-19T09:56:26.210925+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 38.259792504 AND 38.263484527 AND dec BETWEEN -41.205042154 AND -41.202264377",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 38.259792504 AND 38.263484527 AND dec BETWEEN -41.205042154 AND -41.202264377",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 38.259792504 AND 38.263484527 AND dec BETWEEN -41.205042154 AND -41.202264377",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -3223,7 +3436,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:23.748528+00:00"
+        "utc": "2026-11-19T09:56:22.822034+00:00"
       }
     },
     "ra": 38.261638515524496,
@@ -3233,7 +3446,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:39.744623+00:00",
+    "checked_utc": "2026-11-19T09:56:29.463209+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -3260,7 +3473,7 @@
         "returned_rows": 2,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:22.465570+00:00"
+        "utc": "2026-11-19T09:56:21.269890+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 28.04021776 AND 28.04395194 AND dec BETWEEN -57.61689474 AND -57.61489474",
@@ -3273,7 +3486,7 @@
         "returned_rows": 1,
         "source": "Legacy_DR10_catalogue",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:31.055920+00:00"
+        "utc": "2026-11-19T09:56:26.799224+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -3284,7 +3497,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:39.427177+00:00"
+        "utc": "2026-11-19T09:56:29.093611+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',28.04208485,-57.61589474,0.0014))",
@@ -3299,13 +3512,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:39.641386+00:00"
+        "utc": "2026-11-19T09:56:29.323695+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 28.039491666 AND 28.044678030 AND dec BETWEEN -57.617283633 AND -57.614505855",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 28.039491666 AND 28.044678030 AND dec BETWEEN -57.617283633 AND -57.614505855",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 28.039491666 AND 28.044678030 AND dec BETWEEN -57.617283633 AND -57.614505855",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -3313,7 +3532,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:24.178675+00:00"
+        "utc": "2026-11-19T09:56:24.771549+00:00"
       }
     },
     "ra": 28.042084848358005,
@@ -3323,7 +3542,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:53.659270+00:00",
+    "checked_utc": "2026-11-19T09:56:32.505381+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -3350,7 +3569,7 @@
         "returned_rows": 2,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:31.679845+00:00"
+        "utc": "2026-11-19T09:56:24.509828+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 143.90405204 AND 143.90833960 AND dec BETWEEN 62.19390473 AND 62.19590473",
@@ -3363,7 +3582,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:48.838158+00:00"
+        "utc": "2026-11-19T09:56:30.460366+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -3374,7 +3593,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:53.391358+00:00"
+        "utc": "2026-11-19T09:56:32.087626+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',143.90619582,62.19490473,0.0014))",
@@ -3389,13 +3608,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:53.549365+00:00"
+        "utc": "2026-11-19T09:56:32.293314+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 143.903218346 AND 143.909173296 AND dec BETWEEN 62.193515844 AND 62.196293622",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 143.903218346 AND 143.909173296 AND dec BETWEEN 62.193515844 AND 62.196293622",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 143.903218346 AND 143.909173296 AND dec BETWEEN 62.193515844 AND 62.196293622",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -3403,7 +3628,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:44.771243+00:00"
+        "utc": "2026-11-19T09:56:28.434331+00:00"
       }
     },
     "ra": 143.90619582080822,
@@ -3413,7 +3638,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:53.650213+00:00",
+    "checked_utc": "2026-11-19T09:56:34.127548+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -3440,7 +3665,7 @@
         "returned_rows": 4,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:37.462535+00:00"
+        "utc": "2026-11-19T09:56:26.350403+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 79.58031847 AND 79.58259956 AND dec BETWEEN -28.74570181 AND -28.74370181",
@@ -3453,7 +3678,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:49.111777+00:00"
+        "utc": "2026-11-19T09:56:32.252204+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -3464,7 +3689,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:53.392910+00:00"
+        "utc": "2026-11-19T09:56:33.743486+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',79.58145902,-28.74470181,0.0014))",
@@ -3479,13 +3704,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:53.551412+00:00"
+        "utc": "2026-11-19T09:56:33.954632+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 79.579874921 AND 79.583043111 AND dec BETWEEN -28.746090698 AND -28.743312921",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 79.579874921 AND 79.583043111 AND dec BETWEEN -28.746090698 AND -28.743312921",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 79.579874921 AND 79.583043111 AND dec BETWEEN -28.746090698 AND -28.743312921",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -3493,7 +3724,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:44.874539+00:00"
+        "utc": "2026-11-19T09:56:30.642077+00:00"
       }
     },
     "ra": 79.58145901592515,
@@ -3503,7 +3734,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:54.144313+00:00",
+    "checked_utc": "2026-11-19T09:56:37.111369+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -3530,7 +3761,7 @@
         "returned_rows": 4,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:38.973446+00:00"
+        "utc": "2026-11-19T09:56:27.855525+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 81.73848632 AND 81.74086091 AND dec BETWEEN -32.62278567 AND -32.62078567",
@@ -3549,7 +3780,7 @@
         "returned_rows": 1,
         "source": "Legacy_DR10_catalogue",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:49.726869+00:00"
+        "utc": "2026-11-19T09:56:32.803223+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -3560,7 +3791,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:53.899246+00:00"
+        "utc": "2026-11-19T09:56:34.572794+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',81.73967362,-32.62178567,0.0014))",
@@ -3575,13 +3806,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:54.042328+00:00"
+        "utc": "2026-11-19T09:56:34.847051+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 81.738024588 AND 81.741322642 AND dec BETWEEN -32.623174561 AND -32.620396784",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 81.738024588 AND 81.741322642 AND dec BETWEEN -32.623174561 AND -32.620396784",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 81.738024588 AND 81.741322642 AND dec BETWEEN -32.623174561 AND -32.620396784",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -3589,7 +3826,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:45.592335+00:00"
+        "utc": "2026-11-19T09:56:31.171812+00:00"
       }
     },
     "ra": 81.739673615276,
@@ -3599,7 +3836,7 @@
   {
     "Euclid_NISP_PSF_checked": false,
     "WISE_methane_proxy_supported": false,
-    "checked_utc": "2026-11-19T09:50:56.027523+00:00",
+    "checked_utc": "2026-11-19T09:56:36.249013+00:00",
     "conditional_physical_properties": {
       "Teff_and_distance_status": "NO_VALIDATED_SPECTRAL_SUBTYPE_OR_CALIBRATION",
       "Teff_estimate_K": null,
@@ -3626,7 +3863,7 @@
         "returned_rows": 2,
         "source": "CatWISE2020",
         "status": "CATALOG_ROWS",
-        "utc": "2026-11-19T09:50:39.744699+00:00"
+        "utc": "2026-11-19T09:56:29.463288+00:00"
       },
       "legacy": {
         "adql": "SELECT TOP 30 ra,dec,flux_g,flux_r,flux_z FROM ls_dr10.tractor WHERE ra BETWEEN 77.15717178 AND 77.15934613 AND dec BETWEEN -23.10186225 AND -23.09986225",
@@ -3639,7 +3876,7 @@
         "returned_rows": 0,
         "source": "Legacy_DR10_catalogue",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:53.279267+00:00"
+        "utc": "2026-11-19T09:56:34.361324+00:00"
       },
       "panstarrs": {
         "catalog_match": null,
@@ -3650,7 +3887,7 @@
         "returned_rows": 0,
         "source": "PanSTARRS_DR2_mean",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:55.753619+00:00"
+        "utc": "2026-11-19T09:56:35.878343+00:00"
       },
       "simbad": {
         "adql": "SELECT TOP 20 main_id,ra,dec,otype FROM basic WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',77.15825895,-23.10086225,0.0014))",
@@ -3665,13 +3902,19 @@
         "returned_rows": 0,
         "source": "SIMBAD_mirror",
         "status": "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT",
-        "utc": "2026-11-19T09:50:55.917894+00:00"
+        "utc": "2026-11-19T09:56:36.089280+00:00"
       },
       "unwise": {
-        "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 77.156748987 AND 77.159768916 AND dec BETWEEN -23.102251143 AND -23.099473365",
+        "adql": "SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE ra BETWEEN 77.156748987 AND 77.159768916 AND dec BETWEEN -23.102251143 AND -23.099473365",
         "catalog_match": null,
         "endpoint": "https://datalab.noirlab.edu/tap/sync",
-        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2",
+        "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+        "first_projection_error": {
+          "adql": "SELECT TOP 60 ra,dec,flux_1,dflux_1,flux_2,dflux_2,fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE ra BETWEEN 77.156748987 AND 77.159768916 AND dec BETWEEN -23.102251143 AND -23.099473365",
+          "error": "ValueError: TAP returned XML/service error: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<VOTABLE xmlns=\"http://www.ivoa.net/xml/VOTable/v1.2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.2\">\r\n  <RESOURCE type=\"results\">\r\n    <INFO name=\"QUERY_STA",
+          "http_status": 200,
+          "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e"
+        },
         "flux_ratio_is_not_vega_colour": true,
         "http_status": 200,
         "nearest_arcsec": null,
@@ -3679,7 +3922,7 @@
         "response_sha256": "f82f142847ba82df538c5fceb656325deb6253d69e349f8dcdd75cc5b894b04e",
         "source": "unWISE_2019",
         "status": "QUERY_ERROR",
-        "utc": "2026-11-19T09:50:48.776590+00:00"
+        "utc": "2026-11-19T09:56:32.832752+00:00"
       }
     },
     "ra": 77.1582589518582,
