@@ -42,7 +42,7 @@ def download_catalog(target: Path) -> None:
             out.write(data)
     with target.open("rb") as stream:
         header = stream.read(16)
-    if target.stat().st_size < 100 or header != b"SQLite format 3\\x00":
+    if target.stat().st_size < 100 or header != b"SQLite format 3\x00":
         raise ValueError("Downloaded MapCat is not a valid SQLite header")
 
 
@@ -59,7 +59,7 @@ def freeze(db: Path, out: Path) -> dict:
         empty = Counter()
         n = 0
         last_name = None
-        with out.open("w", encoding="utf-8", newline="\\n") as handle:
+        with out.open("w", encoding="utf-8", newline="\n") as handle:
             for row in conn.execute(sql):
                 obj = dict(zip(COLUMNS, row))
                 if last_name is not None and obj["map_name"] == last_name:
@@ -69,7 +69,7 @@ def freeze(db: Path, out: Path) -> dict:
                     if not obj[field]:
                         empty[field] += 1
                 tally[str(obj["frequency"])] += 1
-                handle.write(json.dumps(obj, sort_keys=True, separators=(",", ":"), default=str) + "\\n")
+                handle.write(json.dumps(obj, sort_keys=True, separators=(",", ":"), default=str) + "\n")
                 n += 1
     if n == 0:
         raise ValueError("No depth_one_maps: no survey inventory can be frozen")
@@ -104,7 +104,7 @@ def main() -> None:
         parser.error("No MapCat database at --db (pass --download or stage the SQLite file)")
     rec = freeze(args.db, args.out)
     args.receipt.parent.mkdir(parents=True, exist_ok=True)
-    args.receipt.write_text(json.dumps(rec, indent=2, sort_keys=True) + "\\n", encoding="utf-8")
+    args.receipt.write_text(json.dumps(rec, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(rec, indent=2, sort_keys=True))
 
 
