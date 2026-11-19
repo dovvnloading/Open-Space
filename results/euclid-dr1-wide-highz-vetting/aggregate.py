@@ -178,6 +178,9 @@ def main():
             "External spectral and image artefact validation is separate and incomplete"]}
     js(OUT/"summary.json",summary)
     js(OUT/"controls.json",controls)
+    with gzip.open(OUT/"ranked_survivors.jsonl.gz", "wt", encoding="utf-8", compresslevel=6) as handle:
+        for item in ranked:
+            handle.write(json.dumps(item, sort_keys=True, allow_nan=False)+"\n")
     js(OUT/"ranked_candidates.json",ranked[:1000])
     js(OUT/"top_100_unvetted.json",ranked[:100])
     print("AGGREGATE",json.dumps({k:summary[k] for k in
