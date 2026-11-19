@@ -26,3 +26,13 @@
 ## Decision
 
 **DO NOT MERGE YET.** Do not mark ready, add a root README result, or alter docs/REMARKABLE_FINDINGS.md until the work yields a completed scientifically supported detection, quantitative null, or rigorously characterized inconclusive outcome. An unfinished data download is not a null result. Another referee should reproduce the frozen code/data hashes and independently sign off on all astrophysical vetting before escalation.
+
+## Follow-up referee check: independent local DNS receipt audit (2026-11-19 UTC)
+
+**Verdict unchanged: BLOCKED / DO NOT MERGE.** This audit is independent from the earlier GitHub Actions transfer in *execution path* (the sandbox, not Actions) and checks the new source evidence against strict invariants; it is a **self-audit**, not a different astronomer's independent replication or a candidate-level review.
+
+- [Probe code](probe_catalog_sources.py) and [machine receipt](run/host_probe.json) record nine official/alternative-discovery URLs over seven hosts, all failing at DNS (Python gaierror errno -3) in this local environment, including a GitHub connectivity control. No HTTPS request reached any publisher. This establishes a **local network restriction**, not an outage on those sites. Caltech links to IAP; IRSA, MAST and Zenodo have not been shown to distribute this specific catalogue.
+- Executed [local audit script](audit_host_receipt.py), with [machine report](run/host_probe_referee.json): nine assertions passed, including exact source probe SHA-256 **a11c743d6eb92e111e7fcd9f6b1764d6855e10f1fe55bde2169e2ccd7e00e5d0** and receipt SHA-256 **24780cda971f0fb8d48cd9742bf1e1eb7ec1259924be73ca992854f41bc7555f**; local audit script SHA-256 **27633d1ae70a932521a2520c4a256a82c32556f34233da9a5e74a3ff3d4a37e8**; audit report SHA-256 **bf60312ea0bd13c7ca66bc75e0e703a501e0bbfeb1eddc0ec2f6cbafb16d19b7**.
+- There is **no acquired FITS file**, real source rows, joint mass-redshift posterior, independent EAZY+Prospector/Bagpipes SED posterior fit, object-wise interloper/AGN/MIRI/spectroscopic check, or population-level Eddington-corrected exceedance inference. Existing nominal halo-bound calculations do not change this.
+
+**Decision:** Scientific status **inconclusive due to access failure, not a measured null**. Keep #194 as an unmerged draft. No root README catalogue entry and no [REMARKABLE] log entry until actual data become available and the full prespecified review can pass.
