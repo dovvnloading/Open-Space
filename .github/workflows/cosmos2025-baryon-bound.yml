@@ -1,86 +1,107 @@
-name: COSMOS2025 cosmic-baryon audit (CDS frozen scan)
+name: COSMOS2025 single-job non-CDS release audit
 on:
+  workflow_dispatch:
+    inputs:
+      official_fits_url:
+        description: "Optional verified HTTPS publisher/Zenodo full FITS URL (never bypass a form)"
+        required: false
+        type: string
   push:
-    branches: [research/cosmos2025-baryon-bound]
+    branches:
+      - research/cosmos2025-baryon-bound
     paths:
       - '.github/workflows/cosmos2025-baryon-bound.yml'
-      - 'results/cosmos2025-baryon-bound/screen.py'
-      - 'results/cosmos2025-baryon-bound/join_photometry.py'
-      - 'results/cosmos2025-baryon-bound/halo_bound.py'
-      - 'results/cosmos2025-baryon-bound/referee.py'
-  workflow_dispatch:
+      - 'results/cosmos2025-baryon-bound/*.py'
 concurrency:
-  group: cosmos2025-source-audit-${{ github.ref }}
-  cancel-in-progress: true
+  group: cosmos2025-noncds-one-job-${{ github.ref }}
+  cancel-in-progress: false
 permissions:
   contents: write
 jobs:
-  cds-catalogue-audit:
-    if: github.ref == 'refs/heads/research/cosmos2025-baryon-bound'
+  noncds-source-and-baryon-audit:
+    if: github.ref == 'refs/heads/research/cosmos2025-baryon-bound' && !contains(github.event.head_commit.message, '[skip ci]')
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 120
+    defaults:
+      run:
+        shell: bash
+    env:
+      RESULT: results/cosmos2025-baryon-bound
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out exact PR branch commit
+        uses: actions/checkout@v4
         with:
           persist-credentials: true
-      - uses: actions/setup-python@v5
+          fetch-depth: 1
+      - name: Python 3.12
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install quantitative halo model dependencies
-        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11' 'colossus==1.3.9'
-      - name: 'Frozen CDS release: hash source bytes and triage every row'
-        id: scan
-        continue-on-error: true
-        run: python results/cosmos2025-baryon-bound/screen.py --out results/cosmos2025-baryon-bound/run
-      - name: 'Source associations: stream entire CDS photometry and join high-z rows'
-        id: phot
-        continue-on-error: true
-        if: steps.scan.outcome == 'success'
+      - name: Install pinned catalogue and halo analysis packages
         run: |
-          python results/cosmos2025-baryon-bound/join_photometry.py \
-            --shortlist results/cosmos2025-baryon-bound/run/highz_triage_top250.csv \
-            --out results/cosmos2025-baryon-bound/run
-      - name: Compute independently reproducible ST99/Tinker08 survey maxima
+          python -m pip install --disable-pip-version-check 'numpy>=1.26,<3' 'scipy>=1.11,<2' 'astropy>=6,<8' 'colossus==1.3.9'
+          python -m py_compile "$RESULT/noncds_mirror_job.py" "$RESULT/noncds_referee.py" "$RESULT/halo_bound.py"
+      - name: Probe non-CDS official hosts, download validated full FITS and chunk screen
+        id: mirror
+        continue-on-error: true
+        env:
+          OFFICIAL_FITS_URL: ${{ inputs.official_fits_url }}
+        run: |
+          mkdir -p "$RESULT/run/noncds"
+          python "$RESULT/noncds_mirror_job.py" \
+            --out "$RESULT/run/noncds" \
+            --tmp "$RUNNER_TEMP/cosmos2025_official" \
+            --official-url "$OFFICIAL_FITS_URL"
+      - name: Compute six-bin Sheth-Tormen/Tinker halo-max distribution
         id: halo
         continue-on-error: true
-        run: python results/cosmos2025-baryon-bound/halo_bound.py --out results/cosmos2025-baryon-bound/run/halo_bounds.json
-      - name: Independent arithmetic referee and explicit blockers
+        run: |
+          mkdir -p "$RESULT/run/noncds"
+          python "$RESULT/halo_bound.py" --out "$RESULT/run/noncds/halo_bounds.json"
+      - name: Review numerical receipt and block unsupported science
         id: referee
         continue-on-error: true
-        run: python results/cosmos2025-baryon-bound/referee.py --out results/cosmos2025-baryon-bound/run/referee_report.json
-      - name: Record exact numerical package versions
-        if: always()
-        run: python -m pip freeze | grep -iE '^(numpy|scipy|colossus)=' > results/cosmos2025-baryon-bound/run/requirements_actual.txt || true
-      - name: Remove raw bulk data from deposit
+        run: |
+          python "$RESULT/noncds_referee.py" \
+            --run "$RESULT/run/noncds" \
+            --halo "$RESULT/run/noncds/halo_bounds.json"
+      - name: Freeze exact numerical package versions
         if: always()
         run: |
-          rm -f results/cosmos2025-baryon-bound/run/ReadMe
-          rm -f results/cosmos2025-baryon-bound/run/lephare.dat.gz
-          rm -f results/cosmos2025-baryon-bound/run/lephare.dat
-      - name: Deposit reproducible compact receipts on research branch
+          mkdir -p "$RESULT/run/noncds"
+          python -m pip freeze | grep -iE '^(numpy|scipy|astropy|colossus|eazy|bagpipes|nautilus-sampler)==' \
+            > "$RESULT/run/noncds/numerical_versions.txt" || true
+      - name: Commit all compact receipts once with source hashes, never raw FITS
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin research/cosmos2025-baryon-bound
           if [ "$(git rev-parse HEAD)" != "$(git rev-parse FETCH_HEAD)" ]; then
-            echo "::warning::This run started at a superseded analysis commit; do not deposit stale scientific receipts."
+            echo "::warning::Branch moved; refusing stale-result deposit."
             exit 0
           fi
-          git add results/cosmos2025-baryon-bound/run
+          git add -- "$RESULT/run/noncds"
           if ! git diff --cached --quiet; then
-            git commit -m "research: deposit COSMOS2025 archived catalogue scan receipt"
-            git fetch origin research/cosmos2025-baryon-bound
-            git rebase origin/research/cosmos2025-baryon-bound
+            git commit -m "research: deposit one-job COSMOS2025 mirror/HMF/referee receipts [skip ci]"
             git push origin HEAD:research/cosmos2025-baryon-bound
           fi
-      - name: Preserve machine-readable audit even if repository write fails
+      - name: Artifact fallback for exact receipts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cosmos2025-cds-audit-receipt
-          path: results/cosmos2025-baryon-bound/run/
+          name: cosmos2025-onejob-noncds-receipts
+          path: results/cosmos2025-baryon-bound/run/noncds/
           if-no-files-found: warn
-      - name: Require complete source scan before scientific interpretation
-        if: steps.scan.outcome != 'success' || steps.halo.outcome != 'success' || steps.referee.outcome != 'success' || steps.phot.outcome != 'success'
-        run: exit 1
+      - name: Fail closed unless all source/SED/spectroscopic vetting passes
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, pathlib, sys
+          p = pathlib.Path('results/cosmos2025-baryon-bound/run/noncds/independent_referee.json')
+          if not p.exists():
+              sys.exit('Referee report absent: no merge.')
+          result = json.loads(p.read_text())
+          if not result.get('ready_to_merge', False):
+              sys.exit('Scientific review blocked: ' + result['disposition'])
+          PY
