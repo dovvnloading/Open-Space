@@ -1,0 +1,23 @@
+{
+  "caveats": [
+    "longitude shifts do not reproduce longitude-dependent sensitivity/crowding",
+    "surveys with approximate sky footprints cannot certify absence or global significance",
+    "radio SNR candidates, X-ray points and GeV coincidences are not proof of same accelerator",
+    "KM2A power-law integration 25-100 TeV requires independent spectral consistency checks",
+    "pair p values are positional screening only; Bonferroni shown for multiplicity",
+    "known literature association proposals must be checked before any novelty label"
+  ],
+  "chance_p_definition": "(1+number of latitude-matched longitude controls with a match)/(1+eligible control count)",
+  "controls_per_class_expected": 512,
+  "discovery_claim": false,
+  "minimum_resolvable_p": 0.001949317738791423,
+  "physical_identifications": 0,
+  "published_tev_unassociated": 25,
+  "published_tev_unassociated_uhe": 10,
+  "radius_rule_deg": "clip(1LHAASO ePos95stat + r39 + 0.2, 0.35, 1.5); counterpart catalog radius added",
+  "shift_seed": 20261119,
+  "source_count": 90,
+  "strict_census_complete": true,
+  "strict_no_GeV_PSR_SNR_if_all_loaded": 5,
+  "uhe_source_count": 43
+}
