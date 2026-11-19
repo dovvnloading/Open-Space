@@ -14,6 +14,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from scipy.spatial import cKDTree
+from astropy.coordinates import SkyCoord
+import astropy.units as u
 
 ROOT=Path(__file__).resolve().parent
 OUT=ROOT/"output"
@@ -29,6 +31,7 @@ CLASSES={
     "eRASS1_hard_Xray":("erass1_hard.csv","erass_approx"),
     "Gaia_DR3_young_OC":("gaia_young_clusters.csv","all_sky"),
     "TeV_HESS_HGPS_legacy":("hess_hgps.csv","hess_approx"),
+    "TeV_HAWC4_2026":("hawc4_sources.csv","hawc4_approx"),
 }
 PC_KPC=3.0856775814913673e21
 TEV_ERG=1.602176634
@@ -57,6 +60,9 @@ def footprint(name,l,b):
         return (((l>=252)&(l<=358))|((l>=2)&(l<=61))) & (np.abs(b)<=1.5)
     if name=="hess_approx":
         return ((l>=250)|(l<=65))&(np.abs(b)<=3.0)
+    if name=="hawc4_approx":
+        dec=SkyCoord(l=l*u.deg,b=b*u.deg,frame="galactic").icrs.dec.deg
+        return (dec>=-25.0)&(dec<=65.0)
     raise ValueError(name)
 
 def search_tree(tree,cat,ls,bs):
@@ -128,7 +134,8 @@ def main():
             "SMGPS_known_SNRcat_subset":"snrcat_smgps_overlap",
             "eRASS1_hard_Xray":"erass1_dr1_hard",
             "Gaia_DR3_young_OC":"gaia_dr3_hunt_ref",
-            "TeV_HESS_HGPS_legacy":"hess_hgps_legacy"}[classname]
+            "TeV_HESS_HGPS_legacy":"hess_hgps_legacy",
+            "TeV_HAWC4_2026":"hawc4_arxiv_2602_00263"}[classname]
         if not file.exists() or rec.get(receipt_name,{}).get("status")!="loaded":
             for _,s in primary.iterrows():
                 rows.append({"source":s["name"],"uhe":bool(s.uhe),"class":classname,
