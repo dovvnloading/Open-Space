@@ -457,4 +457,9 @@ def main():
     print(json.dumps({x:receipt.get(x) for x in
         ("status","obsids_attempted","pn_detections_screened","unvetted_recurrent_triggers","candidates_validated")},indent=2))
 
+    if start + count == 670:
+        # Compact cross-batch audit, including unmet scientific gates.
+        from heasarc_aggregate import main as audit_main
+        audit_main()
+
 if __name__=="__main__": main()
