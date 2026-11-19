@@ -1,6 +1,6 @@
 # Independent-methods referee check — 2026-11-19 (adversarial self-review, **not** an external referee)
 
-**Verdict: publish as an incomplete, calibrated *pilot*, not a discovery and not a comprehensive null.** All tests below were performed without GitHub Actions. The work cannot answer the full five-catalogue / published-UHECR-catalogue question and must not carry `[REMARKABLE]`.
+**Verdict: publish as an incomplete, calibrated *pilot*, not a discovery and not a comprehensive null.** All tests below were performed without GitHub Actions. The work cannot answer the full five-catalogue / published-UHECR-catalogue question and must not be labelled as a remarkable finding.
 
 ## Independent checks against the committed inputs (completed)
 
