@@ -22,9 +22,9 @@ import urllib.request
 HERE = Path(__file__).resolve().parent
 SOURCES = json.loads((HERE / "frozen_sources.json").read_text())
 COLUMNS = (
-    "index", "root", "file", "srcid", "objid", "ra", "dec",
-    "grating", "filter", "grade", "z_best", "z_prism", "z_grating",
-    "dataset", "msamet", "nfiles", "phot_dr"
+    "index", "root", "file", "srcid", "msaid", "slitid", "ra", "dec",
+    "grating", "filter", "grade", "z_best", "z_phot",
+    "dataset", "msamet", "nfiles"
 )
 SHARDS = {row["band"]: row for row in SOURCES["dja"]["spectral_shards"]}
 
