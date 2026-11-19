@@ -1,0 +1,41 @@
+{
+  "description": "Idealized nominal solid-angle geometry ONLY; no depth mask, source selection or completeness",
+  "area_deg2": 0.54,
+  "H0_km_s_Mpc": 67.32,
+  "Om0": 0.3158,
+  "flat": true,
+  "formula": "V=A_sr * [D_c(z_hi)^3-D_c(z_lo)^3]/3",
+  "independent_check": "adaptive quadrature integral A_sr*c*D_c(z)^2/H(z) dz, agreement better than 1e-12 relative",
+  "redshift_bins": [
+    {
+      "z_lo_exclusive": 6,
+      "z_hi_inclusive": 7,
+      "volume_mpc3": 4717016.07
+    },
+    {
+      "z_lo_exclusive": 7,
+      "z_hi_inclusive": 8,
+      "volume_mpc3": 4236849.846
+    },
+    {
+      "z_lo_exclusive": 8,
+      "z_hi_inclusive": 9,
+      "volume_mpc3": 3825888.52
+    },
+    {
+      "z_lo_exclusive": 9,
+      "z_hi_inclusive": 10,
+      "volume_mpc3": 3473952.44
+    },
+    {
+      "z_lo_exclusive": 10,
+      "z_hi_inclusive": 12,
+      "volume_mpc3": 6080627.886
+    },
+    {
+      "z_lo_exclusive": 12,
+      "z_hi_inclusive": 15,
+      "volume_mpc3": 7468745.9
+    }
+  ]
+}

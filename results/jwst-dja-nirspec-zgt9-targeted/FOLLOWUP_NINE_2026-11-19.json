@@ -1,0 +1,1010 @@
+{
+  "schema": "open-space/jwst-dja-v44-nine-group-scientific-followup-v1",
+  "review_date_utc": "2026-11-19",
+  "source_repository": "dovvnloading/Open-Space",
+  "source_branch": "research/jwst-dja-v44-zgt9-targeted",
+  "source_pr": 197,
+  "source_prior_grouping_file": "results/jwst-dja-nirspec-zgt9-targeted/literature_referee_2026-11-19.json",
+  "actual_GitHub_Action_runs": [
+    44459389472,
+    44460415546
+  ],
+  "runtime_evidence_files": [
+    "results/jwst-dja-nirspec-zgt9-targeted/outputs/runs/44459389472/followup_probe.json",
+    "results/jwst-dja-nirspec-zgt9-targeted/outputs/runs/44459389472/followup_injections.json",
+    "results/jwst-dja-nirspec-zgt9-targeted/outputs/runs/44460415546/followup_nircam.json",
+    "results/jwst-dja-nirspec-zgt9-targeted/outputs/runs/44460415546/followup_slits.json"
+  ],
+  "dr4_catalogue": {
+    "url": "https://jades.herts.ac.uk/DR4/Combined_DR4_external_v1.2.1.fits",
+    "verified_sha256": "4b4e7fd4306208ee801406c7ed73fdab895a2e67184af7f639a91e5f9c8ab7d4",
+    "bytes": 94124160,
+    "quality_flags_documentation": "https://jades.herts.ac.uk/DR4/Readme_DR4_catalogues.md"
+  },
+  "key_failure_cases": [
+    "Published RUBIES-UDS-144195 z3.36 scores near-unity high-z proxy",
+    "Published JADES-GN-11508 z9.93 scores near-unity high-z proxy",
+    "Group 24 z3.60656(D) JADES has proxy 0.997216 and 3/20 dusty-Balmer false-high injections"
+  ],
+  "priority_status": "Only exact-name/coordinate public-web and JADES DR4 catalogue checked; NOT a complete ADS/arXiv or every survey catalogue and alias priority audit",
+  "injection_limit": "20 per synthetic family per spectrum, 10 spectra; selected surrogate families, diagonal errors, no independent astrophysical prior or physical posterior calibration",
+  "native_dq_limit": "SCI/WHT coadds and per-coadd SLITS exposure metadata inspected, but no detector-specific integrations/DQ images, bad-pixel/cosmic-ray analysis, full overlapping shutter configuration, or contamination clearance",
+  "nircam_limit": "Attempted survey photometry catalogue retrieval, but all three catalogue URLs failed; zero measured NIRCam fluxes or upper limits at slit positions, no exact filter-convolved SED comparisons",
+  "referee_verdict": "CHANGES_REQUIRED_KEEP_PR197_DRAFT_UNMERGED",
+  "merge_sha": null,
+  "remarkable_entry_allowed": false,
+  "summary": {
+    "total_groups": 9,
+    "total_spectra": 10,
+    "counts": {
+      "UNRESOLVED_NO_PROVEN_CLASS": 5,
+      "PUBLISHED_SURVEY_TARGET_Z_UNDETERMINED": 2,
+      "LOWER_Z_TENTATIVE_CATALOG": 1,
+      "ARTEFACT_EMPTY_SKY_SHUTTER": 1
+    },
+    "validated_new_z_gt12": 0,
+    "physical_posteriors": 0,
+    "checked_native_integration_DQ": 0,
+    "independent_NIRCam_flux_matches": 0,
+    "all_slit_DJA_SCI_present": true,
+    "photometry_missing_reason": "Public catalogue download URL attempts failed / some fields not queried; never interpret absence as upper limit",
+    "can_mark_ready_and_merge": false
+  },
+  "groups": [
+    {
+      "group_id": 1,
+      "source_ids": [
+        "3073_50252"
+      ],
+      "ra_deg": 3.5176845,
+      "dec_deg": -30.3723142,
+      "spectrum_count": 1,
+      "disposition": "UNRESOLVED_NO_PROVEN_CLASS",
+      "explanation": "Unresolved; no independently validated redshift",
+      "new_z_gt12_candidate_validated": false,
+      "physical_redshift_posterior": null,
+      "jades_dr4_matches": [],
+      "slit_evidence": {
+        "coadd_fits_count": 1,
+        "all_extractions_have_SCI": true,
+        "all_coadds_without_DQ": true,
+        "coadd_slit_table_row_counts": [
+          9
+        ],
+        "same_source_id_within_each_coadd": true,
+        "background_37_slit_records": 0,
+        "source_coordinates_in_slits": [
+          "3.5176845,-30.3723142"
+        ],
+        "native_detector_integration_DQ_verified": false,
+        "all_neighbour_shutters_checked": false,
+        "contamination_excluded": false
+      },
+      "nircam": {
+        "status": "CATALOG_DOWNLOAD_FAILED_NO_UPPER_LIMIT",
+        "catalogue_field": "abell2744",
+        "measured_flux_count": 0,
+        "upper_limit_count": 0,
+        "exact_filter_sed_comparison": "NOT_DONE"
+      },
+      "fitting": [
+        {
+          "file": "abell2744-castellano2-v4_prism-clear_3073_50252.spec.fits",
+          "observed_uncalibrated_proxy_p_z_gt12": 0.07499631636175746,
+          "observed_uncalibrated_conditional_high_z_quantiles": [
+            13.920483085344696,
+            15.410252207477747,
+            16.328719347378048
+          ],
+          "injection_n_per_family": 20,
+          "injection_recovery": {
+            "dusty_balmer": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.018186935847297525,
+              "proxy_max": 0.0850244298672283
+            },
+            "line_confusion": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.009082809780919254,
+              "proxy_max": 0.02584865226411093
+            },
+            "cool_dwarf_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.0004940892702993931,
+              "proxy_max": 0.05757140942995087
+            },
+            "detector_spike_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.005069292838253343,
+              "proxy_max": 0.04361132429513021
+            },
+            "highz_recovery": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.02731347648116754,
+              "proxy_max": 0.11605019200296147
+            }
+          },
+          "physical_redshift_posterior": null
+        }
+      ],
+      "priority": {
+        "source_aliases_considered": [
+          "3073_50252"
+        ],
+        "JADES_DR4_exact_coordinate_match": false,
+        "full_ADS_arxiv_survey_priority_completed": false,
+        "explicit_priority_newness": "NOT_CLAIMED"
+      }
+    },
+    {
+      "group_id": 4,
+      "source_ids": [
+        "6368_211132"
+      ],
+      "ra_deg": 150.1511588,
+      "dec_deg": 2.3654608,
+      "spectrum_count": 1,
+      "disposition": "UNRESOLVED_NO_PROVEN_CLASS",
+      "explanation": "Unresolved; no independently validated redshift",
+      "new_z_gt12_candidate_validated": false,
+      "physical_redshift_posterior": null,
+      "jades_dr4_matches": [],
+      "slit_evidence": {
+        "coadd_fits_count": 1,
+        "all_extractions_have_SCI": true,
+        "all_coadds_without_DQ": true,
+        "coadd_slit_table_row_counts": [
+          18
+        ],
+        "same_source_id_within_each_coadd": true,
+        "background_37_slit_records": 0,
+        "source_coordinates_in_slits": [
+          "150.15115879999,2.3654608"
+        ],
+        "native_detector_integration_DQ_verified": false,
+        "all_neighbour_shutters_checked": false,
+        "contamination_excluded": false
+      },
+      "nircam": {
+        "status": "NO_COVERED_CATALOGUE_IN_THIS_PROBE_NOT_NONDETECTION",
+        "catalogue_field": null,
+        "measured_flux_count": 0,
+        "upper_limit_count": 0,
+        "exact_filter_sed_comparison": "NOT_DONE"
+      },
+      "fitting": [
+        {
+          "file": "capers-cos16-v4_prism-clear_6368_211132.spec.fits",
+          "observed_uncalibrated_proxy_p_z_gt12": 0.18242331285626992,
+          "observed_uncalibrated_conditional_high_z_quantiles": [
+            17.03834762894277,
+            17.49329433872555,
+            17.856995106896733
+          ],
+          "injection_n_per_family": 20,
+          "injection_recovery": {
+            "dusty_balmer": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 3.839248987865488e-9,
+              "proxy_max": 0.06897125172393646
+            },
+            "line_confusion": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 1.9392686263574561e-47,
+              "proxy_max": 0.0000381638378381764
+            },
+            "cool_dwarf_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 8.455876343336006e-102,
+              "proxy_max": 3.921007945624116e-9
+            },
+            "detector_spike_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 1.333394434770277e-38,
+              "proxy_max": 0.0003351519114810815
+            },
+            "highz_recovery": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 14,
+              "rate": 0.7,
+              "proxy_median": 0.9934832603987437,
+              "proxy_max": 1.0000000000000404
+            }
+          },
+          "physical_redshift_posterior": null
+        }
+      ],
+      "priority": {
+        "source_aliases_considered": [
+          "6368_211132"
+        ],
+        "JADES_DR4_exact_coordinate_match": false,
+        "full_ADS_arxiv_survey_priority_completed": false,
+        "explicit_priority_newness": "NOT_CLAIMED"
+      }
+    },
+    {
+      "group_id": 6,
+      "source_ids": [
+        "6368_151513"
+      ],
+      "ra_deg": 34.42340061,
+      "dec_deg": -5.15115992,
+      "spectrum_count": 1,
+      "disposition": "UNRESOLVED_NO_PROVEN_CLASS",
+      "explanation": "Unresolved; no independently validated redshift",
+      "new_z_gt12_candidate_validated": false,
+      "physical_redshift_posterior": null,
+      "jades_dr4_matches": [],
+      "slit_evidence": {
+        "coadd_fits_count": 1,
+        "all_extractions_have_SCI": true,
+        "all_coadds_without_DQ": true,
+        "coadd_slit_table_row_counts": [
+          12
+        ],
+        "same_source_id_within_each_coadd": true,
+        "background_37_slit_records": 0,
+        "source_coordinates_in_slits": [
+          "34.42340061342,-5.151159917"
+        ],
+        "native_detector_integration_DQ_verified": false,
+        "all_neighbour_shutters_checked": false,
+        "contamination_excluded": false
+      },
+      "nircam": {
+        "status": "NO_COVERED_CATALOGUE_IN_THIS_PROBE_NOT_NONDETECTION",
+        "catalogue_field": null,
+        "measured_flux_count": 0,
+        "upper_limit_count": 0,
+        "exact_filter_sed_comparison": "NOT_DONE"
+      },
+      "fitting": [
+        {
+          "file": "capers-udsp2-v4_prism-clear_6368_151513.spec.fits",
+          "observed_uncalibrated_proxy_p_z_gt12": 0.4098094947636715,
+          "observed_uncalibrated_conditional_high_z_quantiles": [
+            12.281045101005388,
+            12.692702762736944,
+            13.296308079513272
+          ],
+          "injection_n_per_family": 20,
+          "injection_recovery": {
+            "dusty_balmer": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.010660909992721016,
+              "proxy_max": 0.07142188856581597
+            },
+            "line_confusion": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.0076537090764424495,
+              "proxy_max": 0.03400682137207902
+            },
+            "cool_dwarf_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.0022310397417757604,
+              "proxy_max": 0.028998033584628956
+            },
+            "detector_spike_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.008723976286590192,
+              "proxy_max": 0.02748707158592238
+            },
+            "highz_recovery": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.02719739862481052,
+              "proxy_max": 0.1205336703219262
+            }
+          },
+          "physical_redshift_posterior": null
+        }
+      ],
+      "priority": {
+        "source_aliases_considered": [
+          "6368_151513"
+        ],
+        "JADES_DR4_exact_coordinate_match": false,
+        "full_ADS_arxiv_survey_priority_completed": false,
+        "explicit_priority_newness": "NOT_CLAIMED"
+      }
+    },
+    {
+      "group_id": 11,
+      "source_ids": [
+        "1181_19411"
+      ],
+      "ra_deg": 189.1598107,
+      "dec_deg": 62.2889794,
+      "spectrum_count": 2,
+      "disposition": "PUBLISHED_SURVEY_TARGET_Z_UNDETERMINED",
+      "explanation": "JADES DR4 target, quality E; no measured redshift",
+      "new_z_gt12_candidate_validated": false,
+      "physical_redshift_posterior": null,
+      "jades_dr4_matches": [
+        {
+          "NIRSpec_ID": 19411,
+          "PID": 1181,
+          "TIER": "goods-n-mediumjwst",
+          "Unique_ID": "goods-n-mediumjwst_19411",
+          "identity_compatible_0p2_arcsec": true,
+          "nInt_G140M": 9,
+          "nInt_G235M": 9,
+          "nInt_Prism": 9,
+          "sep_arcsec": 0.00005281310298232352,
+          "z_PRISM": null,
+          "z_R1000": null,
+          "z_Spec": -1,
+          "z_Spec_flag": "E"
+        }
+      ],
+      "slit_evidence": {
+        "coadd_fits_count": 2,
+        "all_extractions_have_SCI": true,
+        "all_coadds_without_DQ": true,
+        "coadd_slit_table_row_counts": [
+          9,
+          18
+        ],
+        "same_source_id_within_each_coadd": true,
+        "background_37_slit_records": 0,
+        "source_coordinates_in_slits": [
+          "189.15981070000004,62.2889794"
+        ],
+        "native_detector_integration_DQ_verified": false,
+        "all_neighbour_shutters_checked": false,
+        "contamination_excluded": false
+      },
+      "nircam": {
+        "status": "CATALOG_DOWNLOAD_FAILED_NO_UPPER_LIMIT",
+        "catalogue_field": "goods-n",
+        "measured_flux_count": 0,
+        "upper_limit_count": 0,
+        "exact_filter_sed_comparison": "NOT_DONE"
+      },
+      "fitting": [
+        {
+          "file": "jades-gdn11-v4_prism-clear_1181_19411.spec.fits",
+          "observed_uncalibrated_proxy_p_z_gt12": 0.28335050015148006,
+          "observed_uncalibrated_conditional_high_z_quantiles": [
+            14.408269278833757,
+            15.26854200243053,
+            16.596300195303623
+          ],
+          "injection_n_per_family": 20,
+          "injection_recovery": {
+            "dusty_balmer": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.0031636172334803276,
+              "proxy_max": 0.04685989012068625
+            },
+            "line_confusion": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.000821588151657356,
+              "proxy_max": 0.08099893735559338
+            },
+            "cool_dwarf_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 1.5183754021824893e-10,
+              "proxy_max": 0.009457962119181066
+            },
+            "detector_spike_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.0017930704467557365,
+              "proxy_max": 0.02164210827275254
+            },
+            "highz_recovery": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 1,
+              "rate": 0.05,
+              "proxy_median": 0.07398189077294028,
+              "proxy_max": 0.7249902830201269
+            }
+          },
+          "physical_redshift_posterior": null
+        },
+        {
+          "file": "jades-gdn11-v4_g140m-f070lp_1181_19411.spec.fits",
+          "observed_uncalibrated_proxy_p_z_gt12": 1.000000000000162,
+          "observed_uncalibrated_conditional_high_z_quantiles": [
+            15.5143236430618,
+            15.549011768524574,
+            15.58369989398735
+          ],
+          "injection_n_per_family": 20,
+          "injection_recovery": {
+            "dusty_balmer": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 4.1187308253480167e-50,
+              "proxy_max": 0.00010582071453307514
+            },
+            "line_confusion": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 3.590562008877615e-148,
+              "proxy_max": 0.000020803253119309408
+            },
+            "cool_dwarf_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 7.952652601899435e-199,
+              "proxy_max": 3.317306871325841e-79
+            },
+            "detector_spike_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 1.955355537083858e-144,
+              "proxy_max": 3.8709882477208715e-12
+            },
+            "highz_recovery": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 18,
+              "rate": 0.9,
+              "proxy_median": 0.9999994494739026,
+              "proxy_max": 1.0000000000000253
+            }
+          },
+          "physical_redshift_posterior": null
+        }
+      ],
+      "priority": {
+        "source_aliases_considered": [
+          "1181_19411",
+          "goods-n-mediumjwst_19411"
+        ],
+        "JADES_DR4_exact_coordinate_match": true,
+        "full_ADS_arxiv_survey_priority_completed": false,
+        "explicit_priority_newness": "NOT_CLAIMED"
+      }
+    },
+    {
+      "group_id": 16,
+      "source_ids": [
+        "4233_22104"
+      ],
+      "ra_deg": 34.2348499,
+      "dec_deg": -5.2757994,
+      "spectrum_count": 1,
+      "disposition": "UNRESOLVED_NO_PROVEN_CLASS",
+      "explanation": "Unresolved; no independently validated redshift",
+      "new_z_gt12_candidate_validated": false,
+      "physical_redshift_posterior": null,
+      "jades_dr4_matches": [],
+      "slit_evidence": {
+        "coadd_fits_count": 1,
+        "all_extractions_have_SCI": true,
+        "all_coadds_without_DQ": true,
+        "coadd_slit_table_row_counts": [
+          3
+        ],
+        "same_source_id_within_each_coadd": true,
+        "background_37_slit_records": 0,
+        "source_coordinates_in_slits": [
+          "34.2348499,-5.275799399999982"
+        ],
+        "native_detector_integration_DQ_verified": false,
+        "all_neighbour_shutters_checked": false,
+        "contamination_excluded": false
+      },
+      "nircam": {
+        "status": "NO_COVERED_CATALOGUE_IN_THIS_PROBE_NOT_NONDETECTION",
+        "catalogue_field": null,
+        "measured_flux_count": 0,
+        "upper_limit_count": 0,
+        "exact_filter_sed_comparison": "NOT_DONE"
+      },
+      "fitting": [
+        {
+          "file": "rubies-uds1-v4_prism-clear_4233_22104.spec.fits",
+          "observed_uncalibrated_proxy_p_z_gt12": 0.08900659843815241,
+          "observed_uncalibrated_conditional_high_z_quantiles": [
+            15.086503035914431,
+            16.567032859395734,
+            17.61211116016963
+          ],
+          "injection_n_per_family": 20,
+          "injection_recovery": {
+            "dusty_balmer": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.013582175037502205,
+              "proxy_max": 0.08104750990176124
+            },
+            "line_confusion": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.010955366662172894,
+              "proxy_max": 0.11092930894578011
+            },
+            "cool_dwarf_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.002872851390937379,
+              "proxy_max": 0.0469296803882384
+            },
+            "detector_spike_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.009638392962029375,
+              "proxy_max": 0.021305708131551557
+            },
+            "highz_recovery": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.027381538471955024,
+              "proxy_max": 0.10416710539705748
+            }
+          },
+          "physical_redshift_posterior": null
+        }
+      ],
+      "priority": {
+        "source_aliases_considered": [
+          "4233_22104"
+        ],
+        "JADES_DR4_exact_coordinate_match": false,
+        "full_ADS_arxiv_survey_priority_completed": false,
+        "explicit_priority_newness": "NOT_CLAIMED"
+      }
+    },
+    {
+      "group_id": 18,
+      "source_ids": [
+        "4233_7420"
+      ],
+      "ra_deg": 34.40264342,
+      "dec_deg": -5.30882864,
+      "spectrum_count": 1,
+      "disposition": "UNRESOLVED_NO_PROVEN_CLASS",
+      "explanation": "Unresolved; no independently validated redshift",
+      "new_z_gt12_candidate_validated": false,
+      "physical_redshift_posterior": null,
+      "jades_dr4_matches": [],
+      "slit_evidence": {
+        "coadd_fits_count": 1,
+        "all_extractions_have_SCI": true,
+        "all_coadds_without_DQ": true,
+        "coadd_slit_table_row_counts": [
+          3
+        ],
+        "same_source_id_within_each_coadd": true,
+        "background_37_slit_records": 0,
+        "source_coordinates_in_slits": [
+          "34.40264342397,-5.30882864301"
+        ],
+        "native_detector_integration_DQ_verified": false,
+        "all_neighbour_shutters_checked": false,
+        "contamination_excluded": false
+      },
+      "nircam": {
+        "status": "NO_COVERED_CATALOGUE_IN_THIS_PROBE_NOT_NONDETECTION",
+        "catalogue_field": null,
+        "measured_flux_count": 0,
+        "upper_limit_count": 0,
+        "exact_filter_sed_comparison": "NOT_DONE"
+      },
+      "fitting": [
+        {
+          "file": "rubies-uds41-v4_prism-clear_4233_7420.spec.fits",
+          "observed_uncalibrated_proxy_p_z_gt12": 0.07420548238982047,
+          "observed_uncalibrated_conditional_high_z_quantiles": [
+            10.19414346002777,
+            12.580731218692062,
+            13.290496575102797
+          ],
+          "injection_n_per_family": 20,
+          "injection_recovery": {
+            "dusty_balmer": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.012309752815177568,
+              "proxy_max": 0.03191553830528583
+            },
+            "line_confusion": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.008764422349732568,
+              "proxy_max": 0.021008447706758665
+            },
+            "cool_dwarf_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.0012991438901911296,
+              "proxy_max": 0.01365640584136192
+            },
+            "detector_spike_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.004564373777119499,
+              "proxy_max": 0.022326989472772556
+            },
+            "highz_recovery": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.015474121266041299,
+              "proxy_max": 0.07441951298955554
+            }
+          },
+          "physical_redshift_posterior": null
+        }
+      ],
+      "priority": {
+        "source_aliases_considered": [
+          "4233_7420"
+        ],
+        "JADES_DR4_exact_coordinate_match": false,
+        "full_ADS_arxiv_survey_priority_completed": false,
+        "explicit_priority_newness": "NOT_CLAIMED"
+      }
+    },
+    {
+      "group_id": 22,
+      "source_ids": [
+        "3215_20095279"
+      ],
+      "ra_deg": 53.1600823,
+      "dec_deg": -27.8225409,
+      "spectrum_count": 1,
+      "disposition": "PUBLISHED_SURVEY_TARGET_Z_UNDETERMINED",
+      "explanation": "JADES DR4 target, quality E; no measured redshift",
+      "new_z_gt12_candidate_validated": false,
+      "physical_redshift_posterior": null,
+      "jades_dr4_matches": [
+        {
+          "NIRSpec_ID": 20095279,
+          "PID": 3215,
+          "TIER": "goods-s-ultradeep",
+          "Unique_ID": "goods-s-ultradeep_20095279",
+          "identity_compatible_0p2_arcsec": true,
+          "nInt_G140M": 6,
+          "nInt_G235M": 0,
+          "nInt_Prism": 42,
+          "sep_arcsec": 0,
+          "z_PRISM": null,
+          "z_R1000": null,
+          "z_Spec": -1,
+          "z_Spec_flag": "E"
+        }
+      ],
+      "slit_evidence": {
+        "coadd_fits_count": 1,
+        "all_extractions_have_SCI": true,
+        "all_coadds_without_DQ": true,
+        "coadd_slit_table_row_counts": [
+          12
+        ],
+        "same_source_id_within_each_coadd": true,
+        "background_37_slit_records": 0,
+        "source_coordinates_in_slits": [
+          "53.1600823,-27.82254089999998"
+        ],
+        "native_detector_integration_DQ_verified": false,
+        "all_neighbour_shutters_checked": false,
+        "contamination_excluded": false
+      },
+      "nircam": {
+        "status": "CATALOG_DOWNLOAD_FAILED_NO_UPPER_LIMIT",
+        "catalogue_field": "goods-s",
+        "measured_flux_count": 0,
+        "upper_limit_count": 0,
+        "exact_filter_sed_comparison": "NOT_DONE"
+      },
+      "fitting": [
+        {
+          "file": "gds-udeep-v4_g140m-f070lp_3215_20095279.spec.fits",
+          "observed_uncalibrated_proxy_p_z_gt12": 0.1096185711051174,
+          "observed_uncalibrated_conditional_high_z_quantiles": [
+            15.338528240579011,
+            16.950438781262218,
+            17.715239145468345
+          ],
+          "injection_n_per_family": 20,
+          "injection_recovery": {
+            "dusty_balmer": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.010776516698530214,
+              "proxy_max": 0.18266843601480515
+            },
+            "line_confusion": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.0011858215841723469,
+              "proxy_max": 0.0222757386974977
+            },
+            "cool_dwarf_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.00013889548904904664,
+              "proxy_max": 0.04169501507265043
+            },
+            "detector_spike_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.00012635971659599244,
+              "proxy_max": 0.02462656339152306
+            },
+            "highz_recovery": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.05510312003440655,
+              "proxy_max": 0.4284911289603322
+            }
+          },
+          "physical_redshift_posterior": null
+        }
+      ],
+      "priority": {
+        "source_aliases_considered": [
+          "3215_20095279",
+          "goods-s-ultradeep_20095279"
+        ],
+        "JADES_DR4_exact_coordinate_match": true,
+        "full_ADS_arxiv_survey_priority_completed": false,
+        "explicit_priority_newness": "NOT_CLAIMED"
+      }
+    },
+    {
+      "group_id": 24,
+      "source_ids": [
+        "1286_176143"
+      ],
+      "ra_deg": 53.0834664,
+      "dec_deg": -27.8654331,
+      "spectrum_count": 1,
+      "disposition": "LOWER_Z_TENTATIVE_CATALOG",
+      "explanation": "JADES DR4 z=3.60656, quality D (tentative, not secure)",
+      "new_z_gt12_candidate_validated": false,
+      "physical_redshift_posterior": null,
+      "jades_dr4_matches": [
+        {
+          "NIRSpec_ID": 176143,
+          "PID": 1286,
+          "TIER": "goods-s-mediumjwst",
+          "Unique_ID": "goods-s-mediumjwst_176143",
+          "identity_compatible_0p2_arcsec": true,
+          "nInt_G140M": 4,
+          "nInt_G235M": 9,
+          "nInt_Prism": 9,
+          "sep_arcsec": 0,
+          "z_PRISM": 3.60656,
+          "z_R1000": null,
+          "z_Spec": 3.60656,
+          "z_Spec_flag": "D"
+        }
+      ],
+      "slit_evidence": {
+        "coadd_fits_count": 1,
+        "all_extractions_have_SCI": true,
+        "all_coadds_without_DQ": true,
+        "coadd_slit_table_row_counts": [
+          18
+        ],
+        "same_source_id_within_each_coadd": true,
+        "background_37_slit_records": 0,
+        "source_coordinates_in_slits": [
+          "53.0834664,-27.86543310000002"
+        ],
+        "native_detector_integration_DQ_verified": false,
+        "all_neighbour_shutters_checked": false,
+        "contamination_excluded": false
+      },
+      "nircam": {
+        "status": "CATALOG_DOWNLOAD_FAILED_NO_UPPER_LIMIT",
+        "catalogue_field": "goods-s",
+        "measured_flux_count": 0,
+        "upper_limit_count": 0,
+        "exact_filter_sed_comparison": "NOT_DONE"
+      },
+      "fitting": [
+        {
+          "file": "jades-gds06-v4_g235m-f170lp_1286_176143.spec.fits",
+          "observed_uncalibrated_proxy_p_z_gt12": 0.9972164600335933,
+          "observed_uncalibrated_conditional_high_z_quantiles": [
+            16.825661763211237,
+            16.88681675734079,
+            17.028550778464812
+          ],
+          "injection_n_per_family": 20,
+          "injection_recovery": {
+            "dusty_balmer": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 3,
+              "rate": 0.15,
+              "proxy_median": 1.4693343422100916e-8,
+              "proxy_max": 0.999978691190989
+            },
+            "line_confusion": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.0021842466248290122,
+              "proxy_max": 0.07607587553245392
+            },
+            "cool_dwarf_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 3.279133538622001e-10,
+              "proxy_max": 0.0007019010007523561
+            },
+            "detector_spike_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.00009468088164592148,
+              "proxy_max": 0.004915790091634416
+            },
+            "highz_recovery": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 9,
+              "rate": 0.45,
+              "proxy_median": 0.5195411338964209,
+              "proxy_max": 0.9999901261211568
+            }
+          },
+          "physical_redshift_posterior": null
+        }
+      ],
+      "priority": {
+        "source_aliases_considered": [
+          "1286_176143",
+          "goods-s-mediumjwst_176143"
+        ],
+        "JADES_DR4_exact_coordinate_match": true,
+        "full_ADS_arxiv_survey_priority_completed": false,
+        "explicit_priority_newness": "NOT_CLAIMED"
+      }
+    },
+    {
+      "group_id": 26,
+      "source_ids": [
+        "1180_b37"
+      ],
+      "ra_deg": 53.17821736,
+      "dec_deg": -27.80256411,
+      "spectrum_count": 1,
+      "disposition": "ARTEFACT_EMPTY_SKY_SHUTTER",
+      "explanation": "Empty-background shutter B37; not a galaxy",
+      "new_z_gt12_candidate_validated": false,
+      "physical_redshift_posterior": null,
+      "jades_dr4_matches": [],
+      "slit_evidence": {
+        "coadd_fits_count": 1,
+        "all_extractions_have_SCI": true,
+        "all_coadds_without_DQ": true,
+        "coadd_slit_table_row_counts": [
+          3
+        ],
+        "same_source_id_within_each_coadd": true,
+        "background_37_slit_records": 3,
+        "source_coordinates_in_slits": [
+          "0,0"
+        ],
+        "native_detector_integration_DQ_verified": false,
+        "all_neighbour_shutters_checked": false,
+        "contamination_excluded": false
+      },
+      "nircam": {
+        "status": "CATALOG_DOWNLOAD_FAILED_NO_UPPER_LIMIT",
+        "catalogue_field": "goods-s",
+        "measured_flux_count": 0,
+        "upper_limit_count": 0,
+        "exact_filter_sed_comparison": "NOT_DONE"
+      },
+      "fitting": [
+        {
+          "file": "jades-gds-wide2-v4_g235m-f170lp_1180_b37.spec.fits",
+          "observed_uncalibrated_proxy_p_z_gt12": 0.2170818580589568,
+          "observed_uncalibrated_conditional_high_z_quantiles": [
+            15.900204996429602,
+            16.36774276920489,
+            16.71994046155776
+          ],
+          "injection_n_per_family": 20,
+          "injection_recovery": {
+            "dusty_balmer": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.010016541813241759,
+              "proxy_max": 0.0521179295093307
+            },
+            "line_confusion": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.009785636323457542,
+              "proxy_max": 0.021154929561339925
+            },
+            "cool_dwarf_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.01095155896670133,
+              "proxy_max": 0.04951219241347439
+            },
+            "detector_spike_surrogate": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.0076989719640251225,
+              "proxy_max": 0.03194884590935437
+            },
+            "highz_recovery": {
+              "n": 20,
+              "false_highz_threshold_and_two_sides": 0,
+              "rate": 0,
+              "proxy_median": 0.021847167342454517,
+              "proxy_max": 0.07940976010586719
+            }
+          },
+          "physical_redshift_posterior": null
+        }
+      ],
+      "priority": {
+        "source_aliases_considered": [
+          "1180_b37"
+        ],
+        "JADES_DR4_exact_coordinate_match": false,
+        "full_ADS_arxiv_survey_priority_completed": false,
+        "explicit_priority_newness": "NOT_CLAIMED"
+      }
+    }
+  ]
+}

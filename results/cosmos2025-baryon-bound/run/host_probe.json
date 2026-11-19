@@ -1,0 +1,149 @@
+{
+  "timestamp_utc": "2026-11-19T03:23:04.970475+00:00",
+  "execution_environment": "local ChatGPT execution container (not GitHub Actions)",
+  "request_type": "DNS A/AAAA resolution followed by HTTPS HEAD only on success; no dataset payload fetch",
+  "catalogue_download_attempted": false,
+  "catalogue_bytes_received": 0,
+  "catalogue_sha256": null,
+  "catalogue_rows_verified": 0,
+  "access_result": "HOST_CHECKS_NO_HTTP_ROUTE",
+  "important_caveat": "DNS failure of the sandbox does not establish publisher outage; IAP uses a request form and is not an open direct FITS endpoint; IRSA/Zenodo not confirmed mirrors.",
+  "checks": [
+    {
+      "label": "IAP official catalogue page",
+      "url": "https://cosmos2025.iap.fr/catalog.html",
+      "role": "publisher",
+      "hostname": "cosmos2025.iap.fr",
+      "dns": {
+        "status": "failed",
+        "exception": "gaierror",
+        "errno": -3,
+        "message": "[Errno -3] Temporary failure in name resolution"
+      },
+      "https": {
+        "status": "not_attempted_dns_failed"
+      }
+    },
+    {
+      "label": "IAP official request form",
+      "url": "https://cosmos2025.iap.fr/catalog_download.php",
+      "role": "publisher gated form",
+      "hostname": "cosmos2025.iap.fr",
+      "dns": {
+        "status": "failed",
+        "exception": "gaierror",
+        "errno": -3,
+        "message": "[Errno -3] Temporary failure in name resolution"
+      },
+      "https": {
+        "status": "not_attempted_dns_failed"
+      }
+    },
+    {
+      "label": "COSMOS-Web public release portal",
+      "url": "https://cosmos.astro.caltech.edu/page/cosmosweb-dr",
+      "role": "publisher pointing to IAP",
+      "hostname": "cosmos.astro.caltech.edu",
+      "dns": {
+        "status": "failed",
+        "exception": "gaierror",
+        "errno": -3,
+        "message": "[Errno -3] Temporary failure in name resolution"
+      },
+      "https": {
+        "status": "not_attempted_dns_failed"
+      }
+    },
+    {
+      "label": "IRSA paper bibliography",
+      "url": "https://irsa.ipac.caltech.edu/bibdata/2025/S/2025A%26A...704A.339S.html",
+      "role": "possible data-pointer; not verified catalogue mirror",
+      "hostname": "irsa.ipac.caltech.edu",
+      "dns": {
+        "status": "failed",
+        "exception": "gaierror",
+        "errno": -3,
+        "message": "[Errno -3] Temporary failure in name resolution"
+      },
+      "https": {
+        "status": "not_attempted_dns_failed"
+      }
+    },
+    {
+      "label": "IRSA TAP capability",
+      "url": "https://irsa.ipac.caltech.edu/TAP/capabilities",
+      "role": "candidate query service; COSMOS2025 table not verified",
+      "hostname": "irsa.ipac.caltech.edu",
+      "dns": {
+        "status": "failed",
+        "exception": "gaierror",
+        "errno": -3,
+        "message": "[Errno -3] Temporary failure in name resolution"
+      },
+      "https": {
+        "status": "not_attempted_dns_failed"
+      }
+    },
+    {
+      "label": "Zenodo records API search",
+      "url": "https://zenodo.org/api/records?q=COSMOS2025&size=1",
+      "role": "candidate mirror discovery; not verified mirror",
+      "hostname": "zenodo.org",
+      "dns": {
+        "status": "failed",
+        "exception": "gaierror",
+        "errno": -3,
+        "message": "[Errno -3] Temporary failure in name resolution"
+      },
+      "https": {
+        "status": "not_attempted_dns_failed"
+      }
+    },
+    {
+      "label": "CDS published catalogue",
+      "url": "https://cdsarc.cds.unistra.fr/ftp/J/A%2BA/704/A339/ReadMe",
+      "role": "published older catalogue",
+      "hostname": "cdsarc.cds.unistra.fr",
+      "dns": {
+        "status": "failed",
+        "exception": "gaierror",
+        "errno": -3,
+        "message": "[Errno -3] Temporary failure in name resolution"
+      },
+      "https": {
+        "status": "not_attempted_dns_failed"
+      }
+    },
+    {
+      "label": "MAST bibliography",
+      "url": "https://archive.stsci.edu/mastbibref.php?bibcode=2025A%26A...704A.339S",
+      "role": "possible data-pointer; not verified catalogue mirror",
+      "hostname": "archive.stsci.edu",
+      "dns": {
+        "status": "failed",
+        "exception": "gaierror",
+        "errno": -3,
+        "message": "[Errno -3] Temporary failure in name resolution"
+      },
+      "https": {
+        "status": "not_attempted_dns_failed"
+      }
+    },
+    {
+      "label": "GitHub connectivity control",
+      "url": "https://github.com/",
+      "role": "network control only",
+      "hostname": "github.com",
+      "dns": {
+        "status": "failed",
+        "exception": "gaierror",
+        "errno": -3,
+        "message": "[Errno -3] Temporary failure in name resolution"
+      },
+      "https": {
+        "status": "not_attempted_dns_failed"
+      }
+    }
+  ],
+  "script_sha256": "a11c743d6eb92e111e7fcd9f6b1764d6855e10f1fe55bde2169e2ccd7e00e5d0"
+}

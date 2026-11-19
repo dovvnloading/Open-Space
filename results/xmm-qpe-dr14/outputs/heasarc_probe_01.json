@@ -1,0 +1,1409 @@
+{
+  "as_of_utc": "2026-11-19T10:31:37.291085+00:00",
+  "host": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/",
+  "purpose": "US HEASARC mirror PPS directory and source/background filename probe",
+  "obsids": {
+    "0123700101": [
+      {
+        "attempt": 1,
+        "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0123700101/PPS/",
+        "http_status": 200,
+        "content_type": "text/html;charset=ISO-8859-1",
+        "bytes": 474852,
+        "elapsed_s": 0.58,
+        "entries": 3128,
+        "pps_src_tsr": 122,
+        "pps_fbk_tsr": 2,
+        "src_examples": [
+          "P0123700101PNS003SRCTSR800A.FTZ",
+          "P0123700101PNS003SRCTSR800B.FTZ",
+          "P0123700101PNS003SRCTSR800C.FTZ",
+          "P0123700101PNS003SRCTSR800D.FTZ",
+          "P0123700101PNS003SRCTSR800E.FTZ",
+          "P0123700101PNS003SRCTSR800F.FTZ",
+          "P0123700101PNS003SRCTSR801B.FTZ",
+          "P0123700101PNS003SRCTSR801C.FTZ",
+          "P0123700101PNS003SRCTSR801D.FTZ",
+          "P0123700101PNS003SRCTSR801F.FTZ",
+          "P0123700101PNS003SRCTSR802A.FTZ",
+          "P0123700101PNS003SRCTSR802B.FTZ"
+        ],
+        "fbk_examples": [
+          "P0123700101PNS003FBKTSR0000.FTZ"
+        ],
+        "pn_examples": [
+          "P0123700101PNS003BGSPEC000A.FTZ",
+          "P0123700101PNS003BGSPEC000B.FTZ",
+          "P0123700101PNS003BGSPEC000C.FTZ",
+          "P0123700101PNS003BGSPEC000D.FTZ",
+          "P0123700101PNS003BGSPEC000E.FTZ",
+          "P0123700101PNS003BGSPEC000F.FTZ",
+          "P0123700101PNS003BGSPEC0001.FTZ",
+          "P0123700101PNS003BGSPEC0002.FTZ",
+          "P0123700101PNS003BGSPEC0003.FTZ",
+          "P0123700101PNS003BGSPEC0004.FTZ",
+          "P0123700101PNS003BGSPEC0005.FTZ",
+          "P0123700101PNS003BGSPEC0006.FTZ",
+          "P0123700101PNS003BGSPEC0007.FTZ",
+          "P0123700101PNS003BGSPEC0008.FTZ",
+          "P0123700101PNS003BGSPEC0009.FTZ",
+          "P0123700101PNS003BGSPEC001B.FTZ",
+          "P0123700101PNS003BGSPEC001C.FTZ",
+          "P0123700101PNS003BGSPEC001D.FTZ",
+          "P0123700101PNS003BGSPEC001F.FTZ",
+          "P0123700101PNS003BGSPEC0010.FTZ",
+          "P0123700101PNS003BGSPEC0011.FTZ",
+          "P0123700101PNS003BGSPEC0012.FTZ",
+          "P0123700101PNS003BGSPEC0013.FTZ",
+          "P0123700101PNS003BGSPEC0014.FTZ",
+          "P0123700101PNS003BGSPEC0015.FTZ"
+        ],
+        "html_sha256": "12a1c16898b89c88b7733bced37838a454aba0e8c901439104a3334d1fe5365d",
+        "fits_samples": [
+          {
+            "filename": "P0123700101PNS003SRCTSR800A.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0123700101/PPS/P0123700101PNS003SRCTSR800A.FTZ",
+            "http_status": 200,
+            "bytes": 389271,
+            "compressed_sha256": "f1bba5b9e15b5a4ff128bd2338e4177100c74bfbe7297e4b3105b3aca3a09b9e",
+            "uncompressed_bytes": 1241280,
+            "uncompressed_sha256": "7cb4181bf1229acc3da1189380219763daea88dad81dba34c2da355ee15ce490",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 42330,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "BACKV",
+                  "BACKE"
+                ],
+                "headers": {
+                  "HDUCLAS2": "NET",
+                  "SRC_RA": 163.529028266771,
+                  "SRC_DEC": 57.5902232646708,
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 179,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "BKG_GTIS",
+                "rows": 179,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "REGION_SRC",
+                "rows": 1,
+                "cols": [
+                  "SHAPE",
+                  "X",
+                  "Y",
+                  "R"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          },
+          {
+            "filename": "P0123700101PNS003SRCTSR800B.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0123700101/PPS/P0123700101PNS003SRCTSR800B.FTZ",
+            "http_status": 200,
+            "bytes": 383387,
+            "compressed_sha256": "4cebd59adf05b6bb0efe1db2be547851ac61cac22ec7efc3024c75bce66ec162",
+            "uncompressed_bytes": 1247040,
+            "uncompressed_sha256": "575ccde9cd068696ea0f8145b14f9d6258cce400a966af7cc65567f38a483d06",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 42330,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "BACKV",
+                  "BACKE"
+                ],
+                "headers": {
+                  "HDUCLAS2": "NET",
+                  "SRC_RA": 163.400679110981,
+                  "SRC_DEC": 57.6334025433869,
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 182,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "BKG_GTIS",
+                "rows": 182,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "REGION_SRC",
+                "rows": 1,
+                "cols": [
+                  "SHAPE",
+                  "X",
+                  "Y",
+                  "R"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          },
+          {
+            "filename": "P0123700101PNS003SRCTSR800C.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0123700101/PPS/P0123700101PNS003SRCTSR800C.FTZ",
+            "http_status": 200,
+            "bytes": 390019,
+            "compressed_sha256": "2fccdf0e3348ae73f5bdc08f1e6e90ddc4759cbc7e3c468ea29e0ca68a49d4ca",
+            "uncompressed_bytes": 1241280,
+            "uncompressed_sha256": "4093aefed230e756fb9bd98e6cb445b084d78fd8cfdf05c846d5e18791a5d3eb",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 42330,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "BACKV",
+                  "BACKE"
+                ],
+                "headers": {
+                  "HDUCLAS2": "NET",
+                  "SRC_RA": 162.976084981873,
+                  "SRC_DEC": 57.5771129953004,
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 170,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "BKG_GTIS",
+                "rows": 170,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "REGION_SRC",
+                "rows": 1,
+                "cols": [
+                  "SHAPE",
+                  "X",
+                  "Y",
+                  "R"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          },
+          {
+            "filename": "P0123700101PNS003FBKTSR0000.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0123700101/PPS/P0123700101PNS003FBKTSR0000.FTZ",
+            "http_status": 200,
+            "bytes": 190214,
+            "compressed_sha256": "da44794bbc0be2f2fd9bba920c2547352c4403744220797d635c4f65301f5ca3",
+            "uncompressed_bytes": 535680,
+            "uncompressed_sha256": "d3174aa2d2d34837291780bb5ba332323ac509b91855bc974c95b71c98f88f46",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 6181,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "T_ELAPSED"
+                ],
+                "headers": {
+                  "HDUCLAS2": "TOTAL",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 133,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "MASK",
+                "rows": 200,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "REGION",
+                "rows": 29,
+                "cols": [
+                  "SHAPE",
+                  "DETX",
+                  "DETY",
+                  "R",
+                  "ROTANG",
+                  "COMPONENT"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "0872392901": [
+      {
+        "attempt": 1,
+        "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0872392901/PPS/",
+        "http_status": 200,
+        "content_type": "text/html;charset=ISO-8859-1",
+        "bytes": 174124,
+        "elapsed_s": 0.16,
+        "entries": 1193,
+        "pps_src_tsr": 6,
+        "pps_fbk_tsr": 5,
+        "src_examples": [
+          "P0872392901PNS003SRCTSR8001.FTZ",
+          "P0872392901PNS003SRCTSR8002.FTZ",
+          "P0872392901PNS003SRCTSR8014.FTZ",
+          "P0872392901PNX000SRCTSR8001.FTZ",
+          "P0872392901PNX000SRCTSR8002.FTZ",
+          "P0872392901PNX000SRCTSR8014.FTZ"
+        ],
+        "fbk_examples": [
+          "P0872392901PNS003FBKTSR0000.FTZ"
+        ],
+        "pn_examples": [
+          "P0872392901PNS003BGSPEC0001.FTZ",
+          "P0872392901PNS003BGSPEC0002.FTZ",
+          "P0872392901PNS003BGSPEC0014.FTZ",
+          "P0872392901PNS003EXPMAP1000.FTZ",
+          "P0872392901PNS003EXPMAP2000.FTZ",
+          "P0872392901PNS003EXPMAP3000.FTZ",
+          "P0872392901PNS003EXPMAP4000.FTZ",
+          "P0872392901PNS003EXPMAP5000.FTZ",
+          "P0872392901PNS003EXPMAP8000.FTZ",
+          "P0872392901PNS003EXPMAP8000.PNG",
+          "P0872392901PNS003FBKTSR0000.FTZ",
+          "P0872392901PNS003FBKTSR0000.PDF",
+          "P0872392901PNS003FBKTSR0000.PNG",
+          "P0872392901PNS003IMAGE_1000.FTZ",
+          "P0872392901PNS003IMAGE_2000.FTZ",
+          "P0872392901PNS003IMAGE_3000.FTZ",
+          "P0872392901PNS003IMAGE_4000.FTZ",
+          "P0872392901PNS003IMAGE_5000.FTZ",
+          "P0872392901PNS003IMAGE_8000.FTZ",
+          "P0872392901PNS003IMAGE_8000.PNG",
+          "P0872392901PNS003PIEVLI0000.FTZ",
+          "P0872392901PNS003SFFTPL0001.PDF",
+          "P0872392901PNS003SFFTPL0002.PDF",
+          "P0872392901PNS003SFFTPL0014.PDF",
+          "P0872392901PNS003SPCPLT0001.PDF"
+        ],
+        "html_sha256": "4e72dd9e755672851d9d78d1826c3d6eb8957e022a317979680a83f5d81ab6fa",
+        "fits_samples": [
+          {
+            "filename": "P0872392901PNS003SRCTSR8001.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0872392901/PPS/P0872392901PNS003SRCTSR8001.FTZ",
+            "http_status": 200,
+            "bytes": 3274689,
+            "compressed_sha256": "853ff5554ae82b53e0bee105711fc71bafcb0a431622ca978ee7055e8a09e6c2",
+            "uncompressed_bytes": 15272640,
+            "uncompressed_sha256": "c948a40f2da589e77ad587b826836bbce736235cab3401f6d9580d1bf7fa131d",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 543668,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "BACKV",
+                  "BACKE"
+                ],
+                "headers": {
+                  "HDUCLAS2": "NET",
+                  "SRC_RA": 208.474430081556,
+                  "SRC_DEC": 53.9970931373114,
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 74,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "BKG_GTIS",
+                "rows": 74,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "REGION_SRC",
+                "rows": 1,
+                "cols": [
+                  "SHAPE",
+                  "X",
+                  "Y",
+                  "R"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          },
+          {
+            "filename": "P0872392901PNS003SRCTSR8002.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0872392901/PPS/P0872392901PNS003SRCTSR8002.FTZ",
+            "http_status": 200,
+            "bytes": 3210200,
+            "compressed_sha256": "508a7d25ae60c53089f3637f32e7ee62d89d23f7b5d01754e03b4369f4af493b",
+            "uncompressed_bytes": 15272640,
+            "uncompressed_sha256": "203300f1002833733ce9c8edecb86325016c2c5eb7e1be4f7145d99c683a9af6",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 543668,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "BACKV",
+                  "BACKE"
+                ],
+                "headers": {
+                  "HDUCLAS2": "NET",
+                  "SRC_RA": 208.379331715812,
+                  "SRC_DEC": 54.0106705645623,
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 74,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "BKG_GTIS",
+                "rows": 74,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "REGION_SRC",
+                "rows": 1,
+                "cols": [
+                  "SHAPE",
+                  "X",
+                  "Y",
+                  "R"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          },
+          {
+            "filename": "P0872392901PNS003SRCTSR8014.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0872392901/PPS/P0872392901PNS003SRCTSR8014.FTZ",
+            "http_status": 200,
+            "bytes": 3172336,
+            "compressed_sha256": "b01800fa7e2608e3f2bec07fd369bfcf926d78bc51764640f071bac422dc93bf",
+            "uncompressed_bytes": 15272640,
+            "uncompressed_sha256": "145368d584ab12b1631df02451dcf1af22cc5afe0b50889e810db3e0930aa10d",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 543668,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "BACKV",
+                  "BACKE"
+                ],
+                "headers": {
+                  "HDUCLAS2": "NET",
+                  "SRC_RA": 208.440315441352,
+                  "SRC_DEC": 54.0206386729424,
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 74,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "BKG_GTIS",
+                "rows": 74,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "REGION_SRC",
+                "rows": 1,
+                "cols": [
+                  "SHAPE",
+                  "X",
+                  "Y",
+                  "R"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          },
+          {
+            "filename": "P0872392901PNS003FBKTSR0000.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0872392901/PPS/P0872392901PNS003FBKTSR0000.FTZ",
+            "http_status": 200,
+            "bytes": 11171,
+            "compressed_sha256": "b8a61820f2a58572011222a30aaea92ed0d270a91ebccddc25b7b180b4aa1033",
+            "uncompressed_bytes": 63360,
+            "uncompressed_sha256": "e08729a59c2bf38bf35a8fe2ef90b15f5ed459391d842d9b09c46dff60ebcd21",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 187,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "T_ELAPSED"
+                ],
+                "headers": {
+                  "HDUCLAS2": "TOTAL",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 1,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "MASK",
+                "rows": 200,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "REGION",
+                "rows": 2,
+                "cols": [
+                  "SHAPE",
+                  "DETX",
+                  "DETY",
+                  "R",
+                  "ROTANG",
+                  "COMPONENT"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "0005010301": [
+      {
+        "attempt": 1,
+        "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0005010301/PPS/",
+        "http_status": 200,
+        "content_type": "text/html;charset=ISO-8859-1",
+        "bytes": 114139,
+        "elapsed_s": 0.1,
+        "entries": 750,
+        "pps_src_tsr": 10,
+        "pps_fbk_tsr": 5,
+        "src_examples": [
+          "P0005010301PNS003SRCTSR800B.FTZ",
+          "P0005010301PNS003SRCTSR8001.FTZ",
+          "P0005010301PNS003SRCTSR8002.FTZ",
+          "P0005010301PNS003SRCTSR8008.FTZ",
+          "P0005010301PNS003SRCTSR8009.FTZ",
+          "P0005010301PNX000SRCTSR800B.FTZ",
+          "P0005010301PNX000SRCTSR8001.FTZ",
+          "P0005010301PNX000SRCTSR8002.FTZ",
+          "P0005010301PNX000SRCTSR8008.FTZ",
+          "P0005010301PNX000SRCTSR8009.FTZ"
+        ],
+        "fbk_examples": [
+          "P0005010301PNS003FBKTSR0000.FTZ"
+        ],
+        "pn_examples": [
+          "P0005010301PNS003BGSPEC000B.FTZ",
+          "P0005010301PNS003BGSPEC0001.FTZ",
+          "P0005010301PNS003BGSPEC0002.FTZ",
+          "P0005010301PNS003BGSPEC0008.FTZ",
+          "P0005010301PNS003BGSPEC0009.FTZ",
+          "P0005010301PNS003EXPMAP1000.FTZ",
+          "P0005010301PNS003EXPMAP2000.FTZ",
+          "P0005010301PNS003EXPMAP3000.FTZ",
+          "P0005010301PNS003EXPMAP4000.FTZ",
+          "P0005010301PNS003EXPMAP5000.FTZ",
+          "P0005010301PNS003EXPMAP8000.FTZ",
+          "P0005010301PNS003EXPMAP8000.PNG",
+          "P0005010301PNS003FBKTSR0000.FTZ",
+          "P0005010301PNS003FBKTSR0000.PDF",
+          "P0005010301PNS003FBKTSR0000.PNG",
+          "P0005010301PNS003IMAGE_1000.FTZ",
+          "P0005010301PNS003IMAGE_2000.FTZ",
+          "P0005010301PNS003IMAGE_3000.FTZ",
+          "P0005010301PNS003IMAGE_4000.FTZ",
+          "P0005010301PNS003IMAGE_5000.FTZ",
+          "P0005010301PNS003IMAGE_8000.FTZ",
+          "P0005010301PNS003IMAGE_8000.PNG",
+          "P0005010301PNS003PIEVLI0000.FTZ",
+          "P0005010301PNS003SFFTPL000B.PDF",
+          "P0005010301PNS003SFFTPL0001.PDF"
+        ],
+        "html_sha256": "7f485b1efb9d518849a243c958454e604639bcd6b1bd70e9e8e89e52bd663de7",
+        "fits_samples": [
+          {
+            "filename": "P0005010301PNS003SRCTSR800B.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0005010301/PPS/P0005010301PNS003SRCTSR800B.FTZ",
+            "http_status": 200,
+            "bytes": 1187216,
+            "compressed_sha256": "ea21d63e04c33abc5bd94c145adc27b85c00f5690a68cab0ebd2da980adafca4",
+            "uncompressed_bytes": 6120000,
+            "uncompressed_sha256": "374beed4b51e772a119d61213f741ba93ccc45754f0f08fbac446c8058576d97",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 216768,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "BACKV",
+                  "BACKE"
+                ],
+                "headers": {
+                  "HDUCLAS2": "NET",
+                  "SRC_RA": 220.549462975497,
+                  "SRC_DEC": 35.4377635522789,
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 4,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "BKG_GTIS",
+                "rows": 4,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "REGION_SRC",
+                "rows": 1,
+                "cols": [
+                  "SHAPE",
+                  "X",
+                  "Y",
+                  "R"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          },
+          {
+            "filename": "P0005010301PNS003SRCTSR8001.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0005010301/PPS/P0005010301PNS003SRCTSR8001.FTZ",
+            "http_status": 200,
+            "bytes": 1450780,
+            "compressed_sha256": "d31fb3c9e96448aac21b85e143169ff3600f2c273f58571340f0c3cf8e3a5dc6",
+            "uncompressed_bytes": 6120000,
+            "uncompressed_sha256": "c9ed9ddd6d2294bcb9b441c66150631c96934642025787aeeba86bdcc4be329f",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 216768,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "BACKV",
+                  "BACKE"
+                ],
+                "headers": {
+                  "HDUCLAS2": "NET",
+                  "SRC_RA": 220.53167328867,
+                  "SRC_DEC": 35.4396052355054,
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 4,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "BKG_GTIS",
+                "rows": 4,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "REGION_SRC",
+                "rows": 1,
+                "cols": [
+                  "SHAPE",
+                  "X",
+                  "Y",
+                  "R"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          },
+          {
+            "filename": "P0005010301PNS003SRCTSR8002.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0005010301/PPS/P0005010301PNS003SRCTSR8002.FTZ",
+            "http_status": 200,
+            "bytes": 1209474,
+            "compressed_sha256": "e84a178a37ce413d9b536073f31e6aa33f5ec0d3620c3c5c8f4ce894570d9495",
+            "uncompressed_bytes": 6120000,
+            "uncompressed_sha256": "0b62bc392bc4149b2d9facab9602731a8d42544a01021ff618a9d97af802773e",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 216768,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "BACKV",
+                  "BACKE"
+                ],
+                "headers": {
+                  "HDUCLAS2": "NET",
+                  "SRC_RA": 220.521868523489,
+                  "SRC_DEC": 35.4688329524157,
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 4,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "BKG_GTIS",
+                "rows": 4,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "REGION_SRC",
+                "rows": 1,
+                "cols": [
+                  "SHAPE",
+                  "X",
+                  "Y",
+                  "R"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          },
+          {
+            "filename": "P0005010301PNS003FBKTSR0000.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0005010301/PPS/P0005010301PNS003FBKTSR0000.FTZ",
+            "http_status": 200,
+            "bytes": 7599,
+            "compressed_sha256": "5416abf629f7f5509bf2f77f47669c37efea50a5c99a56029151973513a36011",
+            "uncompressed_bytes": 57600,
+            "uncompressed_sha256": "e744430609b355c173098e6626586379dfdc859f89d529ad7870e446b726e8b5",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 75,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "T_ELAPSED"
+                ],
+                "headers": {
+                  "HDUCLAS2": "TOTAL",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 1,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "MASK",
+                "rows": 200,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "REGION",
+                "rows": 2,
+                "cols": [
+                  "SHAPE",
+                  "DETX",
+                  "DETY",
+                  "R",
+                  "ROTANG",
+                  "COMPONENT"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "0851180401": [
+      {
+        "attempt": 1,
+        "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0851180401/PPS/",
+        "http_status": 200,
+        "content_type": "text/html;charset=ISO-8859-1",
+        "bytes": 604078,
+        "elapsed_s": 0.55,
+        "entries": 4145,
+        "pps_src_tsr": 250,
+        "pps_fbk_tsr": 5,
+        "src_examples": [
+          "P0851180401PNS001SRCTSR80A8.FTZ",
+          "P0851180401PNS001SRCTSR80C1.FTZ",
+          "P0851180401PNS001SRCTSR80C7.FTZ",
+          "P0851180401PNS001SRCTSR80CC.FTZ",
+          "P0851180401PNS001SRCTSR80D1.FTZ",
+          "P0851180401PNS001SRCTSR800A.FTZ",
+          "P0851180401PNS001SRCTSR800B.FTZ",
+          "P0851180401PNS001SRCTSR800C.FTZ",
+          "P0851180401PNS001SRCTSR800D.FTZ",
+          "P0851180401PNS001SRCTSR800E.FTZ",
+          "P0851180401PNS001SRCTSR801A.FTZ",
+          "P0851180401PNS001SRCTSR801B.FTZ"
+        ],
+        "fbk_examples": [
+          "P0851180401PNS001FBKTSR0000.FTZ"
+        ],
+        "pn_examples": [
+          "P0851180401PNS001BGSPEC00A8.FTZ",
+          "P0851180401PNS001BGSPEC00C1.FTZ",
+          "P0851180401PNS001BGSPEC00C7.FTZ",
+          "P0851180401PNS001BGSPEC00CC.FTZ",
+          "P0851180401PNS001BGSPEC00D1.FTZ",
+          "P0851180401PNS001BGSPEC000A.FTZ",
+          "P0851180401PNS001BGSPEC000B.FTZ",
+          "P0851180401PNS001BGSPEC000C.FTZ",
+          "P0851180401PNS001BGSPEC000D.FTZ",
+          "P0851180401PNS001BGSPEC000E.FTZ",
+          "P0851180401PNS001BGSPEC0001.FTZ",
+          "P0851180401PNS001BGSPEC0004.FTZ",
+          "P0851180401PNS001BGSPEC0005.FTZ",
+          "P0851180401PNS001BGSPEC0006.FTZ",
+          "P0851180401PNS001BGSPEC0007.FTZ",
+          "P0851180401PNS001BGSPEC0008.FTZ",
+          "P0851180401PNS001BGSPEC0009.FTZ",
+          "P0851180401PNS001BGSPEC001A.FTZ",
+          "P0851180401PNS001BGSPEC001B.FTZ",
+          "P0851180401PNS001BGSPEC001C.FTZ",
+          "P0851180401PNS001BGSPEC001D.FTZ",
+          "P0851180401PNS001BGSPEC001E.FTZ",
+          "P0851180401PNS001BGSPEC001F.FTZ",
+          "P0851180401PNS001BGSPEC0010.FTZ",
+          "P0851180401PNS001BGSPEC0011.FTZ"
+        ],
+        "html_sha256": "5fc2fec9205630a089a0ab5a7115297ebecd658fe2b82abca7c05dc072272115",
+        "fits_samples": [
+          {
+            "filename": "P0851180401PNS001SRCTSR80A8.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0851180401/PPS/P0851180401PNS001SRCTSR80A8.FTZ",
+            "http_status": 200,
+            "bytes": 807016,
+            "compressed_sha256": "52e629510ffb61c4c1d3dba96ff1055f065b690e4200fa2bee0e6f1083ecdad9",
+            "uncompressed_bytes": 2592000,
+            "uncompressed_sha256": "2cf7c2b4760e458a5df1469fe5ab9a0dcd062f0b7700d80c05c3b084c45886de",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 90522,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "BACKV",
+                  "BACKE"
+                ],
+                "headers": {
+                  "HDUCLAS2": "NET",
+                  "SRC_RA": 19.5079506962725,
+                  "SRC_DEC": -34.2947425785771,
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 5,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "BKG_GTIS",
+                "rows": 5,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "REGION_SRC",
+                "rows": 1,
+                "cols": [
+                  "SHAPE",
+                  "X",
+                  "Y",
+                  "R"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          },
+          {
+            "filename": "P0851180401PNS001SRCTSR80C1.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0851180401/PPS/P0851180401PNS001SRCTSR80C1.FTZ",
+            "http_status": 200,
+            "bytes": 766323,
+            "compressed_sha256": "fc3d072f24244d548f1d0da5f0bc4481ed4dc3270f411656b1bb46a72a4b30af",
+            "uncompressed_bytes": 2592000,
+            "uncompressed_sha256": "c3d98493be314febff73d564fb6eaf612a9dc3f294ec9fb5904219f189ffa17e",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 90522,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "BACKV",
+                  "BACKE"
+                ],
+                "headers": {
+                  "HDUCLAS2": "NET",
+                  "SRC_RA": 19.8864190027133,
+                  "SRC_DEC": -34.3711740715032,
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 5,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "BKG_GTIS",
+                "rows": 5,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "REGION_SRC",
+                "rows": 1,
+                "cols": [
+                  "SHAPE",
+                  "X",
+                  "Y",
+                  "R"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          },
+          {
+            "filename": "P0851180401PNS001SRCTSR80C7.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0851180401/PPS/P0851180401PNS001SRCTSR80C7.FTZ",
+            "http_status": 200,
+            "bytes": 806152,
+            "compressed_sha256": "c63791a0aafdd6eca29682fa587148ad2c53193e476aeaa696c13d1d2231128c",
+            "uncompressed_bytes": 2592000,
+            "uncompressed_sha256": "7fbf2c01b2ced64b32df54e079d587e7e9c2cddceb26423b0180cfd769399afc",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 90522,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "BACKV",
+                  "BACKE"
+                ],
+                "headers": {
+                  "HDUCLAS2": "NET",
+                  "SRC_RA": 19.5975919171877,
+                  "SRC_DEC": -34.3760265659669,
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 5,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "BKG_GTIS",
+                "rows": 5,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "REGION_SRC",
+                "rows": 1,
+                "cols": [
+                  "SHAPE",
+                  "X",
+                  "Y",
+                  "R"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          },
+          {
+            "filename": "P0851180401PNS001FBKTSR0000.FTZ",
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/0851180401/PPS/P0851180401PNS001FBKTSR0000.FTZ",
+            "http_status": 200,
+            "bytes": 401116,
+            "compressed_sha256": "380f1c59ecfe25de251cba30a7993b54d357facdc32ea87fe25927c5a4373539",
+            "uncompressed_bytes": 875520,
+            "uncompressed_sha256": "a7f680598fcffbadeb56b2d5e432542c1a9a60b63ab21165bda1177d0715969c",
+            "hdus": [
+              {
+                "name": "PRIMARY",
+                "rows": 0,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "RATE",
+                "rows": 13217,
+                "cols": [
+                  "TIME",
+                  "RATE",
+                  "ERROR",
+                  "FRACEXP",
+                  "T_ELAPSED"
+                ],
+                "headers": {
+                  "HDUCLAS2": "TOTAL",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "SRC_GTIS",
+                "rows": 2,
+                "cols": [
+                  "START",
+                  "STOP"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD",
+                  "MJDREF": 50814.0,
+                  "TIMESYS": "TT"
+                }
+              },
+              {
+                "name": "MASK",
+                "rows": 200,
+                "cols": [],
+                "headers": {}
+              },
+              {
+                "name": "REGION",
+                "rows": 35,
+                "cols": [
+                  "SHAPE",
+                  "DETX",
+                  "DETY",
+                  "R",
+                  "ROTANG",
+                  "COMPONENT"
+                ],
+                "headers": {
+                  "HDUCLAS2": "STANDARD"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "complete_survey": false,
+  "pn_curves_screened": 0
+}

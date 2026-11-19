@@ -1,0 +1,9 @@
+{
+  "started_utc": "2026-11-19T02:58:09.118682+00:00",
+  "release": "CDS J/A+A/704/A339, VizieR inserted 2026-01-06, updated 2026-03-02; not verified against IAP v1.1 (2026-05-04)",
+  "expected_rows": 784016,
+  "status": "FAILED (incomplete data; no scientific conclusion)",
+  "selection": "Type=0 AND (zfinal>6 OR zPDF-u68>6), ranked by marginal mass-u68",
+  "error": "Traceback (most recent call last):\n  File \"/home/runner/work/Open-Space/Open-Space/results/cosmos2025-baryon-bound/screen.py\", line 181, in main\n    receipt1 = get([b + \"ReadMe\" for b in BASES], rpath)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/Open-Space/Open-Space/results/cosmos2025-baryon-bound/screen.py\", line 59, in get\n    raise RuntimeError(\"All CDS download endpoints failed: \" + json.dumps(failures))\nRuntimeError: All CDS download endpoints failed: [{\"url\": \"https://cdsarc.cds.unistra.fr/ftp/J/A+A/704/A339/ReadMe\", \"error\": \"URLError(TimeoutError('timed out'))\"}, {\"url\": \"https://cdsarc.cds.unistra.fr/ftp/J/A%2BA/704/A339/ReadMe\", \"error\": \"URLError(TimeoutError('timed out'))\"}, {\"url\": \"https://cdsarc.u-strasbg.fr/ftp/J/A+A/704/A339/ReadMe\", \"error\": \"URLError(TimeoutError('timed out'))\"}]\n",
+  "ended_utc": "2026-11-19T03:04:10.522478+00:00"
+}

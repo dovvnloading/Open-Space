@@ -1,0 +1,19 @@
+{
+  "protocol_version": "2026-11-19-trigger-lock-1",
+  "release": "4XMM-DR14 v1.0",
+  "catalogue_md5": "47c6bd113cb8510db418665472c81b48",
+  "cuts": {
+    "TSERIES": true,
+    "SUM_FLAG_max": 1,
+    "EP_8_CTS_min": 250,
+    "camera_ontime_s_min": 21600,
+    "EP_HR3_lt": -0.3,
+    "EP_HR4_lt": -0.4
+  },
+  "ranking": "-log10(max(EP_CHI2PROB,1e-15)) + 2*clip(EP_FVAR,0,5)",
+  "max_ranked_detections": 8,
+  "max_total_pps_requests": 12,
+  "positive_controls": "GSN 069; RX J1301.9+2747; eRO-QPE1-3; AT2019qiz; eRO-QPE4 and Ansky positions pending",
+  "integrity": "The job must freeze the full eligible detection list before PPS queries; failure to download data is not a null result.",
+  "caveats": "No discovery, positive-control recovery, host classifications, sensitivity estimate or false-positive rate is implied by this frozen configuration."
+}
