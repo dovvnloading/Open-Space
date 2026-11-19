@@ -6,6 +6,7 @@ on:
     paths:
       - "results/erass1-xdins-search/run.py"
       - "results/erass1-xdins-search/referee.py"
+      - "results/erass1-xdins-search/official_followup.py"
       - "results/erass1-xdins-search/requirements.txt"
       # Deliberately excludes output/** and README edits to prevent recursion.
 permissions:
@@ -26,7 +27,16 @@ jobs:
       - name: Download official DR1 data and execute the frozen screen
         id: run
         continue-on-error: true
-        run: python results/erass1-xdins-search/run.py
+        run: |
+          if [ ! -s results/erass1-xdins-search/output/screened_main.csv ]; then
+            python results/erass1-xdins-search/run.py
+          else
+            echo "Reusing SHA-receipted frozen main/hard catalogue screen from committed output."
+          fi
+      - name: Join official eROSITA Gaia, Legacy DR10 and CatWISE releases
+        id: followup
+        continue-on-error: true
+        run: python results/erass1-xdins-search/official_followup.py
       - name: Referee file-level consistency separately
         if: always()
         run: python results/erass1-xdins-search/referee.py
@@ -41,5 +51,5 @@ jobs:
             git push origin HEAD:research/erass1-xdins-20261119
           fi
       - name: Propagate data-retrieval failure
-        if: steps.run.outcome == 'failure'
+        if: steps.run.outcome == 'failure' || steps.followup.outcome == 'failure'
         run: exit 1
