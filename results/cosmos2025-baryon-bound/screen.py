@@ -160,6 +160,16 @@ def triage(readme, source, out):
     # objects for later full posterior matching, then cap compact repo output.
     rows.sort(key=lambda r: r.get("mass_u68") if r.get("mass_u68") is not None else -1e6, reverse=True)
     fields = ["source_row_1based"] + [c for c in COLUMNS if c in cols]
+    # Keep ALL marginal high-z triage rows, not only the top-ranked shortlist.
+    # gzip mtime=0 makes this derived evidence stable across reruns.
+    import io
+    with (out / "highz_triage_all.csv.gz").open("wb") as fileobj:
+        with gzip.GzipFile(filename="",fileobj=fileobj,mode="wb",mtime=0) as compressed:
+            with io.TextIOWrapper(compressed,encoding="utf-8",newline="") as stream:
+                writer=csv.DictWriter(stream,fieldnames=fields,extrasaction="ignore")
+                writer.writeheader()
+                writer.writerows(rows)
+    digest=hashlib.sha256((out / "highz_triage_all.csv.gz").read_bytes()).hexdigest()
     with (out / "highz_triage_top250.csv").open("w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
         w.writeheader()
@@ -167,6 +177,8 @@ def triage(readme, source, out):
     return {"row_count": n, "galaxy_zfinal_gt6": z6,
             "galaxy_zpdf_u68_gt6": ztail6, "galaxy_zfinal_gt15": z_gt15, "galaxy_zfinal_or_u68_gt6": len(rows),
             "unusable_rows": bad, "bin_summary": counts,
+            "triage_all": "highz_triage_all.csv.gz",
+            "triage_all_sha256": digest,
             "triage_top250": "highz_triage_top250.csv",
             "selection_warning": "Univariate zPDF 68% upper bound only: NOT a full joint redshift-mass posterior, NOT a test of exceedance."}
 
