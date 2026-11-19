@@ -54,41 +54,32 @@ def request_probe(name, method, url, **kwargs):
 
 def main():
     rec={"utc": dt.datetime.now(dt.timezone.utc).isoformat(),
-         "purpose":"Test anonymous LS DR10 bulk host crossmatch. No screen unless full audited cohort can be frozen.",
+         "purpose":"Try independent SDSS/Legacy host services after LS DR10 TAP outages; no sky screen.",
          "tests":[]}
-    sample=[("GSN069", 19.786098, -34.191813),
-            ("RXJ1301", 195.50054, 27.78267),
-            ("eROQPE2", 38.704042, -44.325458)]
-    query=("SELECT TOP 5 ls_id,ra,dec,type,brick_primary,flux_r "
-           "FROM ls_dr10.tractor WHERE 't'=Q3C_RADIAL_QUERY("
-           "ra,dec,19.786098,-34.191813,0.002)")
-    rec["tests"].append(request_probe("tap_cone", "GET", ENDPOINT,
-       data={"REQUEST":"doQuery","LANG":"ADQL","FORMAT":"csv","QUERY":query}))
-    uploaded=votable(sample)
-    adql=("SELECT TOP 30 x.detid, x.ra AS xra, x.dec AS xdec,"
-          " t.ls_id, t.ra AS gra, t.dec AS gdec, t.type, t.brick_primary, t.flux_r"
-          " FROM TAP_UPLOAD.xray AS x, ls_dr10.tractor AS t"
-          " WHERE 't'=Q3C_JOIN(x.ra,x.dec,t.ra,t.dec,0.000555555556)"
-          " AND t.type IN ('EXP','DEV','SER','REX') AND t.brick_primary=1")
-    rec["tests"].append(request_probe("tap_upload", "POST", ENDPOINT,
-       data={"REQUEST":"doQuery","LANG":"ADQL","FORMAT":"csv",
-             "QUERY":adql,"UPLOAD":"xray,param:xray"},
-       files={"xray":("xray.xml",uploaded,"application/x-votable+xml")}))
-    sql=("WITH x(detid,xra,xdec) AS (VALUES "
-         "('GSN069',19.786098,-34.191813),('RXJ1301',195.50054,27.78267)) "
-         "SELECT x.detid,t.ls_id,t.ra,t.dec,t.type,t.brick_primary "
-         "FROM x,ls_dr10.tractor t WHERE "
-         "q3c_join(x.xra,x.xdec,t.ra,t.dec,0.000555555556) "
-         "AND t.type IN ('EXP','DEV','SER','REX') LIMIT 20")
-    url = "https://datalab.noirlab.edu/query/query"
-    rec["tests"].append(request_probe("query_manager_values", "GET",
-        url, params={"sql":sql,"ofmt":"csv"}))
-    rec["tests"].append(request_probe("query_manager_cone", "GET",
-        url, params={"sql":"SELECT ls_id,ra,dec,type,brick_primary FROM ls_dr10.tractor WHERE q3c_radial_query(ra,dec,19.786098,-34.191813,0.002) LIMIT 10","ofmt":"csv"}))
-    rec["tests"].append(request_probe("query_manager_adql", "GET",
-        url, params={"adql":"SELECT TOP 10 ls_id,ra,dec,type FROM ls_dr10.tractor WHERE 't'=Q3C_RADIAL_QUERY(ra,dec,19.786098,-34.191813,0.002)","ofmt":"csv"}))
-    rec["all_sites_responded"] = all("http_status" in r for r in rec["tests"])
-    (OUT/"archive_probe_02.json").write_text(json.dumps(rec,indent=2)+"\n")
+    sdss="https://skyserver.sdss.org/dr18/SkyServerWS/SearchTools/SqlSearch"
+    single=("SELECT TOP 20 p.objID,p.ra,p.dec,p.type,p.mode,p.clean "
+            "FROM PhotoPrimary p WHERE p.ra BETWEEN 195.499 AND 195.503 "
+            "AND p.dec BETWEEN 27.780 AND 27.785 AND p.type=3")
+    rec["tests"].append(request_probe("sdss_single", "GET", sdss,
+       params={"cmd":single,"format":"csv"}))
+    sql=("SELECT x.detid, p.objID, p.ra, p.dec, p.type, p.mode, p.clean "
+         "FROM (VALUES ('RXJ1301',195.50054,27.78267),"
+         "('GSN069',19.786098,-34.191813)) AS x(detid,ra,dec) "
+         "CROSS APPLY dbo.fGetNearbyObjEq(x.ra,x.dec,0.0333333) AS n "
+         "JOIN PhotoPrimary AS p ON n.objID=p.objID "
+         "WHERE p.type=3")
+    rec["tests"].append(request_probe("sdss_batch", "GET", sdss,
+       params={"cmd":sql,"format":"csv"}))
+    direct=("SELECT TOP 15 p.objID,p.ra,p.dec,p.type FROM PhotoPrimary p "
+            "JOIN dbo.fGetNearbyObjEq(195.50054,27.78267,0.0333333) AS n "
+            "ON p.objID=n.objID WHERE p.type=3")
+    rec["tests"].append(request_probe("sdss_nearby", "GET", sdss,
+       params={"cmd":direct,"format":"csv"}))
+    beta="https://beta.datalab.noirlab.edu/tap/sync"
+    rec["tests"].append(request_probe("noirlab_beta_cone", "GET", beta,
+       params={"REQUEST":"doQuery","LANG":"ADQL","FORMAT":"csv",
+               "QUERY":"SELECT TOP 5 ls_id,ra,dec,type FROM ls_dr10.tractor WHERE 't'=Q3C_RADIAL_QUERY(ra,dec,19.786098,-34.191813,0.002)"}))
+    (OUT/"archive_probe_03.json").write_text(json.dumps(rec,indent=2)+"\n")
     print(json.dumps(rec,indent=2),flush=True)
 
 if __name__=="__main__":
