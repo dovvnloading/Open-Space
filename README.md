@@ -278,7 +278,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 **Pulsars and magnetars**
 
-- **An eROSITA search recovered seven known isolated neutron-star controls but confirmed no new one.** A fixed screen of 930,203 eRASS1 sources retained 1,330 very soft leads; 1,056 have high-probability published optical/infrared associations. Optical depth, X-ray spectral and timing checks are incomplete, so the remaining sources are not discoveries or a calibrated all-sky null. *Null result (bounded screen)* · [Details](results/erass1-xdins-search/README.md)
+- **An eROSITA search recovered seven known isolated neutron-star controls but confirmed no new one.** A fixed screen of 930,203 eRASS1 sources retained 1,330 very soft leads; 1,056 have high-probability published optical/infrared associations. Optical depth, X-ray spectral and timing checks are incomplete, so the remaining sources are not discoveries or a calibrated all-sky null. *Null result* (bounded screen) · [Details](results/erass1-xdins-search/README.md)
 - **A magnetar catalog's clock was 69.184 seconds early.** The two famous microsecond bursts are also only weakly tied to their magnetars. *Correction* · [Details](results/nicer-magnetar-microbursts/README.md)
 - **Neutron star 4U 1538−522 is slowing down faster.** Its spin period grew by 0.485 seconds between April and November 2026. *Measured* · [Details](results/4u-1538-522/README.md)
 - **GX 1+4 resumed spinning down after a reported standstill.** *Measured* · [Details](results/gx-1p4/README.md)
