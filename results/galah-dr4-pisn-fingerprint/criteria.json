@@ -1,0 +1,62 @@
+{
+  "release": "GALAH DR4 galah_dr4_allstar_240705 (one row per star)",
+  "metallicity_dex": {
+    "min": -5.5,
+    "max": -1.5,
+    "flag_fe_h_ignored": "Known GALAH DR4 flagging bug; require flag_sp=0"
+  },
+  "quality": {
+    "flag_sp": 0,
+    "snr_px_ccd3_gt": 30,
+    "per_element_flag": 0,
+    "per_element_sigma_dex_min_exclusive": 0,
+    "per_element_sigma_dex_max": 0.35
+  },
+  "gate": {
+    "na_minus_mg_max": -0.7,
+    "al_minus_mg_max": -0.5,
+    "co_fe_max": -0.25,
+    "zn_fe_max": -0.2,
+    "ba_fe_max": 0,
+    "sr_fe_max": 0
+  },
+  "measured_elements": [
+    "na",
+    "al",
+    "mg",
+    "co",
+    "zn",
+    "ba",
+    "sr"
+  ],
+  "five_element_gate": [
+    "na",
+    "al",
+    "mg",
+    "co",
+    "zn"
+  ],
+  "seven_element_gate": [
+    "na",
+    "al",
+    "mg",
+    "co",
+    "zn",
+    "ba",
+    "sr"
+  ],
+  "upper_limits": "Do not enter detection-only gates; non-detections and limits have their own censored likelihood, not yet implemented",
+  "date_frozen_utc": "2026-11-19",
+  "seed": 19002358,
+  "injection_trials": 256,
+  "injection_dex": {
+    "na": -1.2,
+    "mg": 0,
+    "al": -1,
+    "co": -0.6,
+    "zn": -0.55,
+    "ba": -0.6,
+    "sr": -0.6
+  },
+  "analysis_priority": "Coverage-conditional injection diagnostic only; no PISN-versus-CCSN/Ia claim until actual model grids and matched likelihoods are loaded."
+}
