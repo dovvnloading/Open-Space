@@ -38,10 +38,10 @@ jobs:
         timeout-minutes: 32
         run: python -u results/euclid-hi-dark-census/run.py
       - name: Optical, redshift, imagery and independent referee triage
-        if: success()
+        if: always()
         timeout-minutes: 22
         run: |
-          if test -f results/euclid-hi-dark-census/followup.py; then
+          if test -f results/euclid-hi-dark-census/followup.py && test -f results/euclid-hi-dark-census/output/footprint_hits.csv; then
             python -u results/euclid-hi-dark-census/followup.py
             python -u results/euclid-hi-dark-census/imaging.py
           fi
