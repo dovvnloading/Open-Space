@@ -1,21 +1,119 @@
 {
+  "calibrated_all_sky_null": false,
   "checks": {
-    "complete": true,
-    "image_hash": true,
-    "image_rows": true,
-    "measurement_rows": false,
-    "no_discovery": true,
-    "no_fpr_claim": true,
-    "no_period": true,
-    "protocol_hash": true,
-    "rank_rows": true,
-    "rank_sorted": true,
-    "rank_unique": true,
-    "source_rows": true
+    "14_disappearance_patterns": true,
+    "actual_images": true,
+    "actual_sources": true,
+    "all_149_preserved": true,
+    "all_epochs_in_frozen_images": true,
+    "all_thresholds_reproduced": true,
+    "distinct_screen_ids": true,
+    "epoch_60_sources": true,
+    "epoch_693_rows": true,
+    "image_digest": true,
+    "known_controls_not_covered": true,
+    "no_false_positive_rate_invented": true,
+    "one_row_publication_discrepancy_documented": true,
+    "protocol_digest": true,
+    "ranking_monotonic": true,
+    "science_incomplete_not_discovery": true,
+    "screen_completed": true,
+    "top60_same_prefix": true,
+    "top_60_preserved": true
   },
-  "disposition": "No validated new LPT: variability is not a measured minute-to-hour period",
-  "independent_review_scope": "audit of counts, hashes and claims only; native pixel re-reduction NOT done",
-  "pass": false,
+  "disposition": "No new validated long-period transient; 14 are unvetted light-curve patterns",
+  "external_vetting": {
+    "atnf_status": "queried",
+    "gaia_queried": 12
+  },
+  "independent_review_scope": "Independent CSV/epoch/field consistency and threshold reimplementation; no native image or pulse-time proof",
+  "lightcurve_disappearance_patterns": [
+    {
+      "brightest_detected_mjy_beam": 20.467,
+      "forced_below_3sigma_epochs": 1,
+      "high_detected_epochs": 7,
+      "source": "13564869"
+    },
+    {
+      "brightest_detected_mjy_beam": 13.995,
+      "forced_below_3sigma_epochs": 2,
+      "high_detected_epochs": 3,
+      "source": "14133427"
+    },
+    {
+      "brightest_detected_mjy_beam": 12.765,
+      "forced_below_3sigma_epochs": 4,
+      "high_detected_epochs": 4,
+      "source": "13805206"
+    },
+    {
+      "brightest_detected_mjy_beam": 9.548,
+      "forced_below_3sigma_epochs": 1,
+      "high_detected_epochs": 9,
+      "source": "13299183"
+    },
+    {
+      "brightest_detected_mjy_beam": 7.541,
+      "forced_below_3sigma_epochs": 1,
+      "high_detected_epochs": 5,
+      "source": "13399649"
+    },
+    {
+      "brightest_detected_mjy_beam": 7.019,
+      "forced_below_3sigma_epochs": 4,
+      "high_detected_epochs": 3,
+      "source": "15304967"
+    },
+    {
+      "brightest_detected_mjy_beam": 7.004,
+      "forced_below_3sigma_epochs": 3,
+      "high_detected_epochs": 4,
+      "source": "14593764"
+    },
+    {
+      "brightest_detected_mjy_beam": 6.263,
+      "forced_below_3sigma_epochs": 2,
+      "high_detected_epochs": 3,
+      "source": "13767816"
+    },
+    {
+      "brightest_detected_mjy_beam": 6.236,
+      "forced_below_3sigma_epochs": 1,
+      "high_detected_epochs": 4,
+      "source": "13593032"
+    },
+    {
+      "brightest_detected_mjy_beam": 6.231,
+      "forced_below_3sigma_epochs": 1,
+      "high_detected_epochs": 8,
+      "source": "14015818"
+    },
+    {
+      "brightest_detected_mjy_beam": 6.162,
+      "forced_below_3sigma_epochs": 3,
+      "high_detected_epochs": 2,
+      "source": "14164377"
+    },
+    {
+      "brightest_detected_mjy_beam": 6.111,
+      "forced_below_3sigma_epochs": 5,
+      "high_detected_epochs": 2,
+      "source": "13629007"
+    },
+    {
+      "brightest_detected_mjy_beam": 6.046,
+      "forced_below_3sigma_epochs": 5,
+      "high_detected_epochs": 2,
+      "source": "13497959"
+    },
+    {
+      "brightest_detected_mjy_beam": 5.849,
+      "forced_below_3sigma_epochs": 1,
+      "high_detected_epochs": 9,
+      "source": "14476792"
+    }
+  ],
+  "pass": true,
   "pending": [
     "VAST native FITS cutout inspection and field-specific noise",
     "RACS low/mid/high I/V/Q/U photometry",
@@ -23,5 +121,23 @@
     "10-second or snapshot periodicity (not in released DR1 tables)",
     "eRASS1/Swift X-ray, SIMBAD/literature checks",
     "empirical AGN scintillation/flare-star false-positive calibration"
+  ],
+  "under_one_hour_epoch_pairs": [
+    {
+      "min_separation_minutes": 13.105,
+      "source": "13885557"
+    },
+    {
+      "min_separation_minutes": 13.105,
+      "source": "14199978"
+    },
+    {
+      "min_separation_minutes": 13.105,
+      "source": "14200096"
+    },
+    {
+      "min_separation_minutes": 53.748,
+      "source": "14491158"
+    }
   ]
 }
