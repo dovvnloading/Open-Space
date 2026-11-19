@@ -5,6 +5,8 @@ on:
     paths:
       - 'results/act-dr6-mm-transients/PREREGISTRATION.md'
       - 'results/act-dr6-mm-transients/run_preregistered_field.py'
+      - 'results/act-dr6-mm-transients/test_preregistered_field.py'
+      - 'results/act-dr6-mm-transients/roi-footprint-cache.json'
       - '.github/workflows/act-dr6-field-search.yml'
   workflow_dispatch:
 permissions:
@@ -32,10 +34,18 @@ jobs:
         timeout-minutes: 29
         run: |
           python -u results/act-dr6-mm-transients/run_preregistered_field.py > act-science-pilot-console.log 2>&1 || {
-            cat act-science-pilot-console.log
+            tail -n 100 act-science-pilot-console.log
             exit 1
           }
-          tail -n 100 act-science-pilot-console.log
+          tail -n 65 act-science-pilot-console.log
+          python - <<'PY'
+          import json
+          r=json.load(open('results/act-dr6-mm-transients/science-pilot-receipt.json'))
+          assert r.get('matched_filter') is not None, 'Filter was never run'
+          assert r['matched_filter'].get('scans'), 'No science-bearing matched-filter scans'
+          assert not r.get('blocker'), r.get('blocker')
+          assert r['controls']['reference_epoch_leakage_count']==0, 'Contaminated reference'
+          PY
       - name: Report explicit remaining scientific gates
         if: always()
         shell: bash
@@ -46,7 +56,7 @@ jobs:
           x=json.load(open("results/act-dr6-mm-transients/science-pilot-receipt.json"))
           with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
               f.write("\n### ACT real-pixel pilot (not a discovery / not a rate limit)\n")
-              for k in ("num_test_rows","num_reference_rows","num_test_maps_science_pixels","num_reference_maps_science_pixels","blocker","effective_area_time_deg2_days","rate_limit","discovery"):
+              for k in ("num_test_rows","num_reference_rows","num_test_maps_science_pixels","num_reference_maps_science_pixels","cached_nonoverlap_header_records","observed_white_noise_screened_peaks","blocker","effective_area_time_deg2_days","rate_limit","discovery"):
                   f.write(f"- {k}: {x.get(k)}\n")
           PY
           else

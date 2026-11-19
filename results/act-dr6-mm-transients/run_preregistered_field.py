@@ -27,7 +27,7 @@ from scipy.ndimage import map_coordinates
 from scipy.special import j0
 
 from freeze_mapcat import ROOT, digest
-from mf_core import matched_filter, peaks, inject
+from mf_core import matched_filter, peaks, inject, gaussian_peak_psf
 
 BASE = Path(__file__).resolve().parent
 MANIFEST = BASE / "eligible-act-depth1.jsonl.gz"
@@ -40,9 +40,22 @@ MAX_HEADER = 65536
 MAX_WINDOW = 500
 MAX_REQUESTS_PER_FITS = 520
 USER_AGENT = "Open-Space-ACT-fixed-f150-science-pilot/1.0"
-# Published DR6 coadd beam (measured), not validated for a single depth-1
-# observation; any corresponding MF SNR is PROVISIONAL only.
-BEAM_URL = "https://lambda.gsfc.nasa.gov/data/act/beams/act_dr6.02_daytime_beams.tar.gz"
+# Published f150 AdvACT resolution, not a measured pa4 depth-1 transfer function.
+# +/-0.2 arcmin is an intentionally broad ASSUMED sensitivity bracket, NOT
+# a measured 1-sigma error. Every screen and injection tests all three widths.
+BEAM_FWHM_ARCMIN = (1.2, 1.4, 1.6)
+BEAM_REFERENCE = "https://doi.org/10.3847/1538-4357/ace599"
+BEAM_ARCHIVE_NOT_APPLICABLE = "https://lambda.gsfc.nasa.gov/product/act/act_dr6.02/act_dr6.02_harmonic_beams_profiles_get.html"
+CACHE_FILE = BASE / "roi-footprint-cache.json"
+KNOWN_RA, KNOWN_DEC = 301.9952, 16.1652
+
+
+
+def in_interval(value, low, high):
+    # MapCat start_time uses a SPACE rather than the ISO 'T' separator.
+    # String comparisons against a 'T' boundary silently excluded Sept 10,
+    # incorrectly allowed Sept 10 as a reference (the original run).
+    return datetime.fromisoformat(low) <= datetime.fromisoformat(str(value)) < datetime.fromisoformat(high)
 
 
 def selection():
@@ -50,12 +63,20 @@ def selection():
         raise ValueError("Frozen compressed catalog hash mismatch")
     rows = [json.loads(line) for line in gzip.open(MANIFEST, "rt", encoding="utf-8")]
     rows = [r for r in rows if r["tube_slot"] == "pa4" and r["frequency"] == "f150"]
-    tests = [r for r in rows if DATE_START <= r["start_time"] < DATE_END]
-    refs = [r for r in rows if REF_START <= r["start_time"] < REF_END
-            and not (DATE_START <= r["start_time"] < DATE_END)]
+    tests = [r for r in rows if in_interval(r["start_time"], DATE_START, DATE_END)]
+    refs = [r for r in rows if in_interval(r["start_time"], REF_START, REF_END)
+            and not in_interval(r["start_time"], DATE_START, DATE_END)]
     if len({r["map_id"] for r in tests + refs}) != len(tests + refs):
         raise ValueError("Duplicate map id in frozen subset")
+    assert all(not in_interval(r["start_time"], DATE_START, DATE_END) for r in refs)
     return tests, refs
+
+
+def load_footprint_cache():
+    data = json.loads(CACHE_FILE.read_text())
+    if data["frozen_manifest_sha256"] != MANIFEST_SHA or data["baseline_commit_sha"] != "d66894f7e0ad434d7d5b73d12df95a18d8fcf9f4":
+        raise ValueError("Cached header-footprint provenance does not match frozen catalog/baseline")
+    return data["outside_header_records"]
 
 
 def digest_bytes(data):
@@ -128,7 +149,7 @@ def tile_wcs():
     return ra, dec, sep <= RADIUS_DEG
 
 
-def access_tile(path, ra, dec):
+def access_tile(path, ra, dec, *, ivar=False):
     if not path or "://" in path or ".." in path or "?" in path or "#" in path:
         raise ValueError("Invalid frozen product path")
     url = ROOT + "/" + path.lstrip("/")
@@ -165,8 +186,28 @@ def access_tile(path, ra, dec):
     ys = y-y0
     safe_x = np.where(within, xs, -100)
     safe_y = np.where(within, ys, -100)
-    interp = map_coordinates(tile, [safe_y, safe_x], order=1, mode="constant", cval=np.nan)
-    interp[~within] = np.nan
+    if ivar:
+        # Propagate WHITE diagonal variances through bilinear reprojection,
+        # rather than interpolating inverse variance as if it were a scalar.
+        # Neighbor-to-neighbor scan covariance remains unmodelled.
+        ix = np.clip(np.floor(safe_x).astype(int), 0, tile.shape[1]-2)
+        iy = np.clip(np.floor(safe_y).astype(int), 0, tile.shape[0]-2)
+        fx = np.clip(safe_x-ix, 0., 1.)
+        fy = np.clip(safe_y-iy, 0., 1.)
+        var = np.zeros(ra.shape, dtype=float)
+        ok = within.copy()
+        for dy in (0, 1):
+            for dx in (0, 1):
+                q = tile[iy+dy, ix+dx]
+                a = (fy if dy else 1-fy)*(fx if dx else 1-fx)
+                ok &= (q > 0) & np.isfinite(q)
+                var += np.divide(a*a, q, out=np.full(ra.shape, np.inf),
+                                 where=(q>0)&np.isfinite(q))
+        interp = np.divide(1., var, out=np.zeros_like(var), where=ok & np.isfinite(var) & (var>0))
+        interp[~ok] = 0
+    else:
+        interp = map_coordinates(tile, [safe_y, safe_x], order=1, mode="constant", cval=np.nan)
+        interp[~within] = np.nan
     meta.update({
         "roi_overlap": True, "url": url,
         "science_bytes": (x1-x0)*(y1-y0)*bpp,
@@ -178,12 +219,20 @@ def access_tile(path, ra, dec):
     return interp, meta
 
 
-def read_pair(row, ra, dec, aperture):
+def read_pair(row, ra, dec, aperture, cache=None):
     rec = {"map_id": str(row["map_id"]), "map_name": row["map_name"],
            "start_time": row["start_time"], "stop_time": row["stop_time"]}
+    cached = (cache or {}).get(str(row["map_id"]))
+    if cached:
+        if (cached["map_name"] != row["map_name"] or cached["start_time"] != row["start_time"] or
+                cached["stop_time"] != row["stop_time"] or cached["status"] != "outside_fits_footprint"):
+            raise ValueError("Frozen row disagrees with baseline science-run FITS-header exclusion")
+        # Reuse ONLY previously WCS-verified noncoverage, never science pixels.
+        # An origin product mutation would invalidate this optimization.
+        return {**cached, "reuse": "prior_run_FITS_header_outside_only_not_rechecked"}, None
     try:
         m, rm = access_tile(row["map_path"], ra, dec)
-        i, ri = access_tile(row["ivar_path"], ra, dec)
+        i, ri = access_tile(row["ivar_path"], ra, dec, ivar=True)
         if not rm.get("roi_overlap") or not ri.get("roi_overlap"):
             rec["status"] = "outside_fits_footprint"
             rec["map_header"] = rm
@@ -205,45 +254,58 @@ def read_pair(row, ra, dec, aperture):
         return rec, None
 
 
-def measured_coadd_psf():
-    """Attempt public measured beam profile; not depth-1 beam validation."""
-    req = Request(BEAM_URL, headers={"User-Agent": USER_AGENT})
-    with urlopen(req, timeout=90) as response:
-        data = response.read(25*1024*1024 + 1)
-    if len(data) > 25*1024*1024:
-        raise ValueError("Beam archive exceeded 25 MiB")
-    names = []
-    with tarfile.open(fileobj=io.BytesIO(data), mode="r:gz") as tar:
-        for item in tar:
-            if item.isfile() and "pa4_f150" in item.name and "coadd" in item.name and ("jitter_mono" in item.name or "instant" in item.name):
-                names.append(item.name)
-        if not names:
-            raise ValueError("pa4_f150 measured coadd profile missing from beam archive")
-        name = sorted(names, key=lambda n: ("jitter_mono" not in n, len(n), n))[0]
-        raw = tar.extractfile(name).read()
-    arr = np.loadtxt(io.BytesIO(raw), comments="#")
-    if arr.ndim != 2 or arr.shape[1] < 2:
-        raise ValueError("Beam profile not two-column")
-    ell, bl = arr[:, 0], arr[:, 1]
-    order = np.argsort(ell)
-    ell, bl = ell[order], bl[order]
-    keep = (ell >= 0) & (ell <= 30000) & np.isfinite(bl)
-    ell, bl = ell[keep], bl[keep]
-    if len(ell) < 50:
-        raise ValueError("Insufficient measured beam multipoles")
-    yy, xx = np.mgrid[-12:13, -12:13]
-    theta = np.hypot(xx, yy)*np.deg2rad(PIX_DEG)
-    profile = np.trapezoid(ell[:,None,None]*bl[:,None,None]*j0(ell[:,None,None]*theta[None,:,:]), ell, axis=0)
-    profile /= profile[12, 12]
-    min_value = float(profile.min())
-    # The white-noise pilot uses the nonnegative central lobe only.
-    psf = np.maximum(profile, 0.)
-    psf /= psf.max()
-    return psf, {"kind": "published_DR6_coadd_harmonic_beam_not_validated_for_depth1",
-                 "beam_archive_url": BEAM_URL, "archive_sha256": digest_bytes(data),
-                 "beam_member": name, "member_sha256": digest_bytes(raw),
-                 "negative_sidelobe_min_before_clipping": min_value,
-                 "psf_sha256": digest_bytes(psf.tobytes()), "validated_for_single_observation": False}
+def beam_family():
+    psfs = {}
+    for width in BEAM_FWHM_ARCMIN:
+        sigma_pix = width / (60*PIX_DEG) / (2*np.sqrt(2*np.log(2)))
+        psfs[width] = gaussian_peak_psf(sigma_pix, radius_sigma=6.)
+    return psfs, {
+        "kind": "documented_gaussian_fallback_screen_not_measured_pa4_depth1_beam",
+        "nominal_fwhm_arcmin": 1.4,
+        "fwhm_sensitivity_envelope_arcmin": [1.2, 1.6],
+        "envelope_is_assumed_not_measured_statistical_1sigma": True,
+        "nominal_resolution_published_reference": BEAM_REFERENCE,
+        "coadd_beam_archive_not_instrument_specific_depth1": BEAM_ARCHIVE_NOT_APPLICABLE,
+        "psf_sha256_by_fwhm_arcmin": {str(k): digest_bytes(v.tobytes()) for k, v in psfs.items()},
+        "validated_for_single_observation": False,
+        "transfer_function_validated": False,
+        "beam_uncertainty_propagated_into_snr_and_injection": True
+    }
+
+
+def time_at_position(row, ra_deg, dec_deg):
+    # ACT depth-1 time FITS: ivar-weighted SECONDS AFTER PERIOD START (ctime).
+    # This is a single nearest native map pixel, not a scan-duration estimate.
+    path = row.get("mean_time_path")
+    if not path:
+        return {"status": "missing_mean_time_path"}
+    try:
+        if "://" in path or ".." in path or "?" in path:
+            raise ValueError("Unsafe time-map path")
+        url = ROOT + "/" + path.lstrip("/")
+        h, meta = fits_header(url)
+        x, y = WCS(h).celestial.all_world2pix(ra_deg, dec_deg, 0)
+        nx, ny = int(h["NAXIS1"]), int(h["NAXIS2"])
+        ix, iy = int(round(float(x))), int(round(float(y)))
+        if not (0 <= ix < nx and 0 <= iy < ny):
+            return {"status": "outside_time_map"}
+        bpp = abs(int(h["BITPIX"]))//8
+        start = int(meta["header_bytes"]) + (iy*nx+ix)*bpp
+        raw, transfer = fetch_range(url, start, start+bpp-1)
+        val = float(np.frombuffer(raw, dtype=">f4" if bpp == 4 else ">f8")[0])
+        epoch = float(row["ctime"]) + val
+        start_epoch = datetime.fromisoformat(row["start_time"]).replace(tzinfo=timezone.utc).timestamp()
+        stop_epoch = datetime.fromisoformat(row["stop_time"]).replace(tzinfo=timezone.utc).timestamp()
+        if not (np.isfinite(val) and 0 <= val <= stop_epoch - start_epoch + 120 and
+                start_epoch-120 <= epoch <= stop_epoch+120):
+            raise ValueError("Time FITS pixel disagrees with frozen scan interval")
+        return {"status": "mean_time_fits_pixel_read", "unix_utc": epoch,
+                "utc": datetime.fromtimestamp(epoch, timezone.utc).isoformat(),
+                "period_ctime_unix": row["ctime"], "seconds_from_period_start": val,
+                "native_pixel_xy": [ix, iy], "time_map_header_sha256": meta["header_64k_sha256"],
+                "time_pixel_sha256": digest_bytes(raw), "http_status": transfer["status"]}
+    except Exception as e:
+        return {"status": "time_pixel_failed", "error": f"{type(e).__name__}: {e}"}
 
 
 def ref_coadd(ref_records):
@@ -288,7 +350,7 @@ def checkpoint(result, stage):
 def analyse(tests, refs, aperture):
     result = {"classification": "actual_fits_byte_range_pilot_not_calibrated_survey",
               "utc": datetime.now(timezone.utc).isoformat(),
-              "pr_number": 192, "pr_already_merged_before_this_experiment": True,
+              "historical_inventory_pr": 192, "new_pr_not_yet_assigned_by_runner": True,
               "eligible_gzip_sha256": MANIFEST_SHA,
               "preregistered_selection": {
                   "band": "pa4/f150", "test_start": DATE_START, "test_stop": DATE_END,
@@ -304,9 +366,12 @@ def analyse(tests, refs, aperture):
               "independent_referee_can_validate_survey": False,
               "discovery": False, "remarkable": False}
     ra, dec, region_mask = aperture
+    footprint_cache = load_footprint_cache()
+    result["cached_nonoverlap_header_records"] = 0
     resrefs = []
     for row in refs:
-        rec, pair = read_pair(row, ra, dec, region_mask)
+        rec, pair = read_pair(row, ra, dec, region_mask, footprint_cache)
+        result["cached_nonoverlap_header_records"] += int("reuse" in rec)
         result["reference_observations"].append(rec)
         resrefs.append((rec, pair))
         print("REF", rec["map_name"], rec["status"], flush=True)
@@ -316,7 +381,8 @@ def analyse(tests, refs, aperture):
     result["controls"]["reference_leave_out_entire_test_epoch"] = True
     testpairs = []
     for row in tests:
-        rec, pair = read_pair(row, ra, dec, region_mask)
+        rec, pair = read_pair(row, ra, dec, region_mask, footprint_cache)
+        result["cached_nonoverlap_header_records"] += int("reuse" in rec)
         result["test_observations"].append(rec)
         testpairs.append((rec, pair))
         print("TEST", rec["map_name"], rec["status"], flush=True)
@@ -327,12 +393,13 @@ def analyse(tests, refs, aperture):
     if reference is None or not np.any(reference_ivar > 0):
         result["blocker"] = "No independent >=3-night reference ivar in preregistered ROI"
         return result
-    try:
-        psf, beam_receipt = measured_coadd_psf()
-        result["beam"] = beam_receipt
-    except Exception as e:
-        result["beam"] = {"status": "measured_beam_unavailable", "error": f"{type(e).__name__}: {e}"}
-        result["blocker"] = "Published measured beam profile not retrieved; no filter run"
+    psfs, beam_receipt = beam_family()
+    psf = psfs[1.4]
+    result["beam"] = beam_receipt
+    result["controls"]["reference_epoch_leakage_count"] = sum(
+        in_interval(x["start_time"], DATE_START, DATE_END) for x, p in resrefs if p is not None)
+    if result["controls"]["reference_epoch_leakage_count"]:
+        result["blocker"] = "Reference contamination: test epoch included"
         return result
     odd = [v for j, v in enumerate(nightly) if j % 2 == 0]
     even = [v for j, v in enumerate(nightly) if j % 2 == 1]
@@ -350,18 +417,27 @@ def analyse(tests, refs, aperture):
             "night_sets": [[r[0] for r in odd], [r[0] for r in even]],
             "negative_tail_white_7": int(np.sum(split["snr_white"] < -7)),
             "positive_tail_white_7": int(np.sum(split["snr_white"] > 7)),
-            "valid_centres": int(split["eligible"].sum())}
+            "negative_peaks_white_7": len(peaks(-np.where(split["eligible"] & region_mask, split["snr_white"], np.nan), 7, 6)),
+            "positive_peaks_white_7": len(peaks(np.where(split["eligible"] & region_mask, split["snr_white"], np.nan), 7, 6)),
+            "valid_centres_in_aperture": int(np.sum(split["eligible"] & region_mask)),
+            "white_snr_mad": to_float(1.4826*np.nanmedian(np.abs(
+                split["snr_white"][split["eligible"] & region_mask] -
+                np.nanmedian(split["snr_white"][split["eligible"] & region_mask]))))
+                if np.any(split["eligible"] & region_mask) else None}
     scans = []
     rng = np.random.default_rng(192)
+    row_by_id = {str(row["map_id"]): row for row in tests}
     for rec, pair in testpairs:
         if pair is None:
             continue
         m, im = pair
         try:
-            s = matched_filter(m, reference, im, reference_ivar, psf, independent_reference=True)
+            filtered = {k: matched_filter(m, reference, im, reference_ivar, p,
+                        independent_reference=True) for k, p in psfs.items()}
         except Exception as e:
             scans.append({"map_id": rec["map_id"], "error": f"{type(e).__name__}: {e}"})
             continue
+        s = filtered[1.4]
         snr = s["snr_white"]
         good = s["eligible"] & region_mask & np.isfinite(snr)
         found = peaks(np.where(good, snr, np.nan), threshold=7, distance_pix=6)
@@ -370,40 +446,98 @@ def analyse(tests, refs, aperture):
         candidates = []
         for p in found[:30]:
             y, x = p["y"], p["x"]
+            width_screen = {}
+            for width, filt in filtered.items():
+                width_screen[str(width)] = {
+                    "snr_white_at_nominal_peak": to_float(filt["snr_white"][y, x]),
+                    "native_amplitude": to_float(filt["amplitude_native"][y, x])}
             candidates.append({**p, "ra_deg": float(ra[y,x]), "dec_deg": float(dec[y,x]),
                                "flux_native_uK_provisional": to_float(s["amplitude_native"][y,x]),
-                               "disposition": "unvetted_noise_uncalibrated_peak_not_discovery"})
+                               "gaussian_fwhm_sensitivity": width_screen,
+                               "disposition": "uncalibrated_not_a_discovery_requires_catalog_and_time_vetoes"})
         yy, xx = np.mgrid[23:N-23:23, 23:N-23:23]
         choices = [(int(y), int(x)) for y, x in zip(yy.ravel(), xx.ravel()) if good[y,x]]
         if len(choices) > 25:
             choices = [choices[k] for k in sorted(rng.choice(len(choices), 25, replace=False))]
-        inj = {}
-        for factor in (6, 8, 10, 15):
-            success = 0
-            for y, x in choices:
-                amp = factor * float(s["sigma_white_native"][y,x])
-                test = inject(m, psf, amp, y, x)
-                res = matched_filter(test, reference, im, reference_ivar, psf, independent_reference=True)
-                success += bool(np.isfinite(res["snr_white"][y,x]) and res["snr_white"][y,x] >= 7)
-            inj[str(factor)] = {"recovered": int(success), "attempted": len(choices)}
-        scans.append({"map_id": rec["map_id"], "valid_psf_centres_in_aperture": int(good.sum()),
+        injection_family = {}
+        for width, template in psfs.items():
+            filt = filtered[width]
+            width_injections = {}
+            for factor in (6, 8, 10, 15):
+                success = 0
+                for y, x in choices:
+                    if not filt["eligible"][y, x]:
+                        continue
+                    amp = factor * float(filt["sigma_white_native"][y,x])
+                    sim = inject(m, template, amp, y, x)
+                    res = matched_filter(sim, reference, im, reference_ivar, template,
+                                         independent_reference=True)
+                    success += bool(np.isfinite(res["snr_white"][y,x]) and res["snr_white"][y,x] >= 7)
+                width_injections[str(factor)] = {"recovered": success,
+                                                  "attempted": len(choices)}
+            injection_family[str(width)] = width_injections
+        # Known Naess et al. 2021 transient: targeted, never a new discovery.
+        cy = cx = N//2
+        near = np.zeros_like(good, dtype=bool)
+        near[cy-6:cy+7, cx-6:cx+7] = True
+        near &= good
+        near_snr = np.where(near, snr, -np.inf)
+        recovery = {"published_source": "Naess2021_2018-09-11",
+                    "published_ra_deg": KNOWN_RA, "published_dec_deg": KNOWN_DEC,
+                    "published_peak_date_utc": "2018-09-11",
+                    "known_event_not_novel": True,
+                    "tested_epoch_start": rec["start_time"],
+                    "tested_epoch_stop": rec["stop_time"],
+                    "timing": time_at_position(row_by_id[rec["map_id"]], KNOWN_RA, KNOWN_DEC)}
+        if np.any(near):
+            y0, x0 = np.unravel_index(int(np.argmax(near_snr)), near_snr.shape)
+            recovery.update({"highest_white_snr_within_3arcmin": to_float(snr[y0,x0]),
+                             "peak_offset_arcmin": to_float(np.hypot(y0-cy,x0-cx)*0.5),
+                             "all_gaussian_fwhm_peak_snr": {
+                                 str(w): to_float(f["snr_white"][y0,x0])
+                                 for w,f in filtered.items()},
+                             "screen_recovered_nominal": bool(snr[y0,x0] >= 7),
+                             "status": "provisional_white_noise_screen_only"})
+        else:
+            recovery["status"] = "no_valid_filter_centres_at_published_source"
+        width_tails = {
+            str(w): {"positive_local_peaks_7": len(peaks(np.where(
+                        f["eligible"] & region_mask, f["snr_white"], np.nan),7,6)),
+                     "negative_sign_flipped_local_peaks_7": len(peaks(-np.where(
+                        f["eligible"] & region_mask, f["snr_white"], np.nan),7,6))}
+            for w, f in filtered.items()}
+        scans.append({"map_id": rec["map_id"], "scan_time_start": rec["start_time"],
+                      "scan_time_stop": rec["stop_time"],
+                      "valid_psf_centres_in_aperture": int(good.sum()),
                       "positive_white_snr_pixels_ge_7": positive,
                       "sign_flip_negative_white_snr_pixels_le_minus_7": negative,
-                      "provisional_peaks": candidates, "actual_data_injections": inj,
+                      "positive_local_peaks_7": len(found),
+                      "sign_flipped_negative_local_peaks_7": len(peaks(np.where(good, -snr, np.nan),7,6)),
+                      "gaussian_beam_width_tail_sensitivity": width_tails,
+                      "provisional_peaks": candidates,
+                      "provisional_peaks_omitted_beyond_first_30": max(len(found)-30,0),
+                      "actual_data_injections_fwhm_envelope": injection_family,
+                      "published_positive_control": recovery,
                       "snr_white_mad": to_float(np.nanmedian(np.abs(snr[good] -
                           np.nanmedian(snr[good])))*1.4826) if np.any(good) else None})
     result["matched_filter"] = {
-        "classification": "published_DR6_coadd_beam_white_noise_screen_only",
+        "classification": "literature_based_gaussian_fwhm_envelope_white_noise_screen_only",
         "observation_excluded_reference": True,
         "source_noise_correlations_validated": False,
         "survey_trials_calibrated": False,
         "catalog_vetoes_run": False,
         "jpl_horizons_run": False,
-        "published_transient_recovered": False,
+        "published_transient_recovery_screen_only": any(
+            s.get("published_positive_control",{}).get("screen_recovered_nominal",False) for s in scans),
         "scans": scans}
-    result["injections"] = {"kind": "actual_observation_pixels_coadd_beam_provisional",
+    result["injections"] = {"kind": "actual_observation_pixels_literature_gaussian_beam_envelope_provisional",
                             "factors_white_noise_sigma": [6,8,10,15],
-                            "seed": 192, "not_validated_survey_selection_function": True}
+                            "seed": 192, "not_validated_survey_selection_function": True,
+                            "fwhm_arcmin_bracket": [1.2,1.4,1.6]}
+    if not scans or any("error" in s for s in scans):
+        result["blocker"] = "No complete matched-filter result for at least one science-bearing test map"
+    result["observed_white_noise_screened_peaks"] = sum(s.get("positive_local_peaks_7",0) for s in scans)
+    result["candidate_vetting_required"] = bool(result["observed_white_noise_screened_peaks"])
     checkpoint(result, "finished_provisional_not_survey_validated")
     return result
 

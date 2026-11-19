@@ -22,9 +22,24 @@ class RealFitsPilotSyntheticTests(unittest.TestCase):
         tests, refs = s.selection()
         self.assertEqual(len({str(r["map_id"]) for r in tests+refs}), len(tests)+len(refs))
         self.assertTrue(all(r["tube_slot"] == "pa4" and r["frequency"] == "f150" for r in tests+refs))
-        self.assertTrue(all(s.DATE_START <= r["start_time"] < s.DATE_END for r in tests))
-        self.assertTrue(all(not(s.DATE_START <= r["start_time"] < s.DATE_END) for r in refs))
-        self.assertTrue(all(s.REF_START <= r["start_time"] < s.REF_END for r in refs))
+        self.assertTrue(all(s.in_interval(r["start_time"], s.DATE_START, s.DATE_END) for r in tests))
+        self.assertTrue(all(not s.in_interval(r["start_time"], s.DATE_START, s.DATE_END) for r in refs))
+        self.assertTrue(all(s.in_interval(r["start_time"], s.REF_START, s.REF_END) for r in refs))
+        self.assertTrue(any(r["start_time"].startswith("2018-09-10") for r in tests))
+        self.assertFalse(any(r["start_time"].startswith("2018-09-10") for r in refs))
+
+    def test_space_separated_catalog_timestamps_obey_calendar_day_boundaries(self):
+        self.assertTrue(s.in_interval("2018-09-10 23:06:59", s.DATE_START, s.DATE_END))
+        self.assertFalse(s.in_interval("2018-09-10 23:06:59", s.REF_START, s.DATE_START))
+        self.assertFalse(s.in_interval("2018-09-13 00:00:00", s.DATE_START, s.DATE_END))
+        self.assertTrue(s.in_interval("2018-09-13 00:00:00", s.REF_START, s.REF_END))
+
+    def test_gaussian_beam_fwhm_uncertainty_is_propagated(self):
+        psfs, receipt = s.beam_family()
+        self.assertEqual(sorted(psfs), [1.2,1.4,1.6])
+        self.assertEqual(receipt["fwhm_sensitivity_envelope_arcmin"], [1.2,1.6])
+        self.assertFalse(receipt["validated_for_single_observation"])
+        self.assertTrue(psfs[1.6].sum() > psfs[1.2].sum())
 
     def test_real_fits_data_byte_offsets_for_t_plane(self):
         w = WCS(naxis=2)
