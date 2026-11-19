@@ -1,0 +1,43 @@
+{
+  "protocol": "v1 deterministic first-lexical science visits before any pixel screen; frozen archive-derived manifest on first run",
+  "release": "IRSA DR1-Foundation 2026-11-12 Deep MER",
+  "fields": [
+    {
+      "name": "north",
+      "ra_deg": 273.167,
+      "dec_deg": 64.3687,
+      "context": "prior 5 arcmin VIS development area; first two visits exploratory, third previously unopened"
+    },
+    {
+      "name": "south",
+      "ra_deg": 61.241,
+      "dec_deg": -48.423,
+      "context": "published EDF South centre"
+    },
+    {
+      "name": "fornax",
+      "ra_deg": 52.932,
+      "dec_deg": -28.088,
+      "context": "published EDF Fornax centre"
+    }
+  ],
+  "patch_pixels": 1200,
+  "pixel_scale_arcsec": 0.1,
+  "max_visits_per_band": 3,
+  "bands": [
+    "VIS",
+    "Y",
+    "J",
+    "H"
+  ],
+  "minimum_independent_time_days": 1,
+  "threshold_sigma": 6.5,
+  "injection_levels_sigma": [
+    7,
+    10,
+    15
+  ],
+  "random_seed": 20261119,
+  "discovery_requirements": "Independent detector exposures, PSF and flux calibration, Gaia, MPC/Horizons, TNS, literature, host photo-z, confirmed epochs",
+  "limitations": "2 arcmin square per field, NOT full deep survey; science and rates conditional on observed and validated pixels"
+}

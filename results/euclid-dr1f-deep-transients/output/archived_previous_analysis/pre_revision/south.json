@@ -1,0 +1,397 @@
+{
+  "band_results": [
+    {
+      "band": "VIS",
+      "disjoint_detector_layers_center": false,
+      "obs_ids": [
+        "south_VIS_02b6018c04b57a",
+        "south_VIS_cdf86f83997a7a"
+      ],
+      "status": "INDEPENDENCE_NOT_VERIFIED",
+      "validated_discovery": false
+    },
+    {
+      "band": "Y",
+      "disjoint_detector_layers_center": true,
+      "individual_good_pixels": [
+        1440000,
+        0
+      ],
+      "joint_area_deg2": 0.0,
+      "mask_provenance": "DR1 DPDD bit0=INVALID; VIS also SAT/COSMIC/GHOST excluded; uint32 bit integrity retained in float64 sampling",
+      "obs_ids": [
+        "south_Y_87afb770a40a90",
+        "south_Y_28cc92ac436033"
+      ],
+      "status": "INSUFFICIENT_JOINT_UNMASKED_PIXELS",
+      "unmasked_pixels": 0,
+      "validated_discovery": false
+    },
+    {
+      "band": "J",
+      "disjoint_detector_layers_center": true,
+      "individual_good_pixels": [
+        1440000,
+        0
+      ],
+      "joint_area_deg2": 0.0,
+      "mask_provenance": "DR1 DPDD bit0=INVALID; VIS also SAT/COSMIC/GHOST excluded; uint32 bit integrity retained in float64 sampling",
+      "obs_ids": [
+        "south_J_3f8188ad1a91a0",
+        "south_J_4a35436816984f"
+      ],
+      "status": "INSUFFICIENT_JOINT_UNMASKED_PIXELS",
+      "unmasked_pixels": 0,
+      "validated_discovery": false
+    },
+    {
+      "band": "H",
+      "disjoint_detector_layers_center": true,
+      "individual_good_pixels": [
+        1440000,
+        0
+      ],
+      "joint_area_deg2": 0.0,
+      "mask_provenance": "DR1 DPDD bit0=INVALID; VIS also SAT/COSMIC/GHOST excluded; uint32 bit integrity retained in float64 sampling",
+      "obs_ids": [
+        "south_H_20eba36f2282ce",
+        "south_H_751933af22829b"
+      ],
+      "status": "INSUFFICIENT_JOINT_UNMASKED_PIXELS",
+      "unmasked_pixels": 0,
+      "validated_discovery": false
+    }
+  ],
+  "center": [
+    61.241,
+    -48.423
+  ],
+  "field": "south",
+  "nominal_square_deg": 0.0011111111111111111,
+  "patch_pixels": 1200,
+  "pixel_receipts": [
+    {
+      "band": "VIS",
+      "errors": {},
+      "obs_id": "south_VIS_02b6018c04b57a",
+      "pixels": [
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            3445,
+            7266,
+            4655,
+            8476
+          ],
+          "header_wcs_crval": [
+            61.1970596,
+            -48.5
+          ],
+          "interpolated": true,
+          "key": "dr1/MER/101283344/VIS/EUC_MER_BGSUB-MOSAIC-VIS_TILE101283344-6FD43_20251003T201453.294835Z_00.00.fits",
+          "kind": "science",
+          "sampled_sha256": "df224cf52fd708267a8b0f03d12abc636e1600623f9246241644784457272a0a",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            3445,
+            7266,
+            4655,
+            8476
+          ],
+          "header_wcs_crval": [
+            61.1970596,
+            -48.5
+          ],
+          "interpolated": true,
+          "key": "dr1/MER/101283344/VIS/EUC_MER_MOSAIC-VIS-RMS_TILE101283344-964535_20251003T064720.763069Z_00.00.fits",
+          "kind": "rms",
+          "sampled_sha256": "ecd04195d7e72bf49bb1f5de0f8f92858a9fd4a36af09aa4716393b494675f71",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            3445,
+            7266,
+            4655,
+            8476
+          ],
+          "header_wcs_crval": [
+            61.1970596,
+            -48.5
+          ],
+          "interpolated": false,
+          "key": "dr1/MER/101283344/VIS/EUC_MER_MOSAIC-VIS-FLAG_TILE101283344-D91F36_20251003T064720.763098Z_00.00.fits",
+          "kind": "flag",
+          "sampled_sha256": "4b9f4143f0bc64d9c6ff301a87a220746a15d4941abf1e45330ba30abc8773b5",
+          "valid_coordinate_fraction": 1.0
+        }
+      ]
+    },
+    {
+      "band": "VIS",
+      "errors": {
+        "flag": "ValueError: Input pixel bounds invalid",
+        "rms": "ValueError: Input pixel bounds invalid",
+        "science": "ValueError: Input pixel bounds invalid"
+      },
+      "obs_id": "south_VIS_cdf86f83997a7a",
+      "pixels": []
+    },
+    {
+      "band": "Y",
+      "errors": {},
+      "obs_id": "south_Y_87afb770a40a90",
+      "pixels": [
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            3445,
+            7266,
+            4655,
+            8476
+          ],
+          "header_wcs_crval": [
+            61.1970596,
+            -48.5
+          ],
+          "interpolated": true,
+          "key": "dr1/MER/101283344/NISP/EUC_MER_BGSUB-MOSAIC-NIR-Y_TILE101283344-25C222_20251003T065720.837480Z_00.00.fits",
+          "kind": "science",
+          "sampled_sha256": "3cc819f8bb52b008747b99f5fb03ebdc713bcddc3bc90656ae4f3d7faf16be21",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            3445,
+            7266,
+            4655,
+            8476
+          ],
+          "header_wcs_crval": [
+            61.1970596,
+            -48.5
+          ],
+          "interpolated": true,
+          "key": "dr1/MER/101283344/NISP/EUC_MER_MOSAIC-NIR-Y-RMS_TILE101283344-221CE8_20251003T041937.383309Z_00.00.fits",
+          "kind": "rms",
+          "sampled_sha256": "05815360d29c7892d40c57f42f49360b6b934c3eeccede7022857f1b2839c083",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            3445,
+            7266,
+            4655,
+            8476
+          ],
+          "header_wcs_crval": [
+            61.1970596,
+            -48.5
+          ],
+          "interpolated": false,
+          "key": "dr1/MER/101283344/NISP/EUC_MER_MOSAIC-NIR-Y-FLAG_TILE101283344-F4C524_20251003T041937.383340Z_00.00.fits",
+          "kind": "flag",
+          "sampled_sha256": "b881ddbbb7953b6e45328cc33e23881dadc355b3f74bf443642bfb76ea8d4703",
+          "valid_coordinate_fraction": 1.0
+        }
+      ]
+    },
+    {
+      "band": "Y",
+      "errors": {
+        "flag": "ValueError: Input pixel bounds invalid",
+        "rms": "ValueError: Input pixel bounds invalid",
+        "science": "ValueError: Input pixel bounds invalid"
+      },
+      "obs_id": "south_Y_28cc92ac436033",
+      "pixels": []
+    },
+    {
+      "band": "J",
+      "errors": {},
+      "obs_id": "south_J_3f8188ad1a91a0",
+      "pixels": [
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            3445,
+            7266,
+            4655,
+            8476
+          ],
+          "header_wcs_crval": [
+            61.1970596,
+            -48.5
+          ],
+          "interpolated": true,
+          "key": "dr1/MER/101283344/NISP/EUC_MER_BGSUB-MOSAIC-NIR-J_TILE101283344-CBFC7E_20251003T025619.789436Z_00.00.fits",
+          "kind": "science",
+          "sampled_sha256": "c034a46732433733d30edbbe71ba46654bd527a8a602fed75e29ab4c9d791799",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            3445,
+            7266,
+            4655,
+            8476
+          ],
+          "header_wcs_crval": [
+            61.1970596,
+            -48.5
+          ],
+          "interpolated": true,
+          "key": "dr1/MER/101283344/NISP/EUC_MER_MOSAIC-NIR-J-RMS_TILE101283344-7FA13C_20251003T013832.431248Z_00.00.fits",
+          "kind": "rms",
+          "sampled_sha256": "7fccefcb6c37e3fe2d745da735204e5ce4677c0c887bfa33b8ade1188e8d27e7",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            3445,
+            7266,
+            4655,
+            8476
+          ],
+          "header_wcs_crval": [
+            61.1970596,
+            -48.5
+          ],
+          "interpolated": false,
+          "key": "dr1/MER/101283344/NISP/EUC_MER_MOSAIC-NIR-J-FLAG_TILE101283344-DE0A28_20251003T013832.431282Z_00.00.fits",
+          "kind": "flag",
+          "sampled_sha256": "3f01cecc4d9b6f1e3101b20e22bf8eab927803929a26ef39e96815e4e67cd9da",
+          "valid_coordinate_fraction": 1.0
+        }
+      ]
+    },
+    {
+      "band": "J",
+      "errors": {
+        "flag": "ValueError: Input pixel bounds invalid",
+        "rms": "ValueError: Input pixel bounds invalid",
+        "science": "ValueError: Input pixel bounds invalid"
+      },
+      "obs_id": "south_J_4a35436816984f",
+      "pixels": []
+    },
+    {
+      "band": "H",
+      "errors": {},
+      "obs_id": "south_H_20eba36f2282ce",
+      "pixels": [
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            3445,
+            7266,
+            4655,
+            8476
+          ],
+          "header_wcs_crval": [
+            61.1970596,
+            -48.5
+          ],
+          "interpolated": true,
+          "key": "dr1/MER/101283344/NISP/EUC_MER_BGSUB-MOSAIC-NIR-H_TILE101283344-CA442A_20251003T031440.108019Z_00.00.fits",
+          "kind": "science",
+          "sampled_sha256": "c368c34f20743ed8a309f914ff28494093a63ce73ced55bdc5cdf664d5246f62",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            3445,
+            7266,
+            4655,
+            8476
+          ],
+          "header_wcs_crval": [
+            61.1970596,
+            -48.5
+          ],
+          "interpolated": true,
+          "key": "dr1/MER/101283344/NISP/EUC_MER_MOSAIC-NIR-H-RMS_TILE101283344-52887C_20251003T021134.128576Z_00.00.fits",
+          "kind": "rms",
+          "sampled_sha256": "6e03ccd4bf348ac3ce8d77de870ea5c7074ca4c8301027387e600f3a2a2d750b",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            3445,
+            7266,
+            4655,
+            8476
+          ],
+          "header_wcs_crval": [
+            61.1970596,
+            -48.5
+          ],
+          "interpolated": false,
+          "key": "dr1/MER/101283344/NISP/EUC_MER_MOSAIC-NIR-H-FLAG_TILE101283344-5D9466_20251003T021134.128603Z_00.00.fits",
+          "kind": "flag",
+          "sampled_sha256": "f36cd86286a7940b077406f00e4493221231ceb7d085a846c15b1818eb4813db",
+          "valid_coordinate_fraction": 1.0
+        }
+      ]
+    },
+    {
+      "band": "H",
+      "errors": {
+        "flag": "ValueError: Input pixel bounds invalid",
+        "rms": "ValueError: Input pixel bounds invalid",
+        "science": "ValueError: Input pixel bounds invalid"
+      },
+      "obs_id": "south_H_751933af22829b",
+      "pixels": []
+    }
+  ],
+  "raw_triggers": [],
+  "status": "NO_CALIBRATED_PAIR",
+  "utc": "2026-11-19T11:27:50.742100+00:00"
+}

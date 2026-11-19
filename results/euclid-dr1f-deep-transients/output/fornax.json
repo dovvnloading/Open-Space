@@ -1,0 +1,2595 @@
+{
+  "band_results": [
+    {
+      "band": "VIS",
+      "disjoint_detector_layers_center": 1,
+      "individual_good_pixels": [
+        1120328,
+        9414
+      ],
+      "joint_area_deg2": 5.640432098765433e-06,
+      "mask_provenance": "DR1 DPDD bit0=INVALID; VIS also SAT/COSMIC/GHOST excluded; uint32 bit integrity retained in float64 sampling",
+      "obs_ids": [
+        "fornax_VIS_33a5e456ad0f0b",
+        "fornax_VIS_4ff054ad4feece"
+      ],
+      "status": "INSUFFICIENT_JOINT_UNMASKED_PIXELS",
+      "unmasked_pixels": 7310,
+      "validated_discovery": 0
+    },
+    {
+      "band": "Y",
+      "calibration": {
+        "n_matched": 17,
+        "psf_sigmas_px": [
+          2.6750535154631354,
+          2.9244728255124426
+        ],
+        "robust_fractional_scale_scatter": 0.013521074003403213,
+        "scale_b_over_a": 0.9970467091998224,
+        "source_detection": "reused prior Euclid North v5 signal>8*RMS local-source screen; no independent stellar IDs",
+        "status": "EMPIRICAL_COMPACT_SOURCE_PSF_AND_FLUX_PROXY"
+      },
+      "control_scatter": 0.17783768475055695,
+      "detection_area_deg2": 0.0010671111111111113,
+      "difference_pixel_sha256": "8280699372508e7379573301ab30f2fcd07e54e445aab0d7ed447f6e6538f53d",
+      "disjoint_detector_layers_center": 1,
+      "individual_good_pixels": [
+        1440000,
+        1440000
+      ],
+      "injection": {
+        "not_included": "raw exposure persistence, time-dependent host subtraction, missed mosaic coverage",
+        "nuisance_model": "empirical control-noise, fixed photometric scale and PSF",
+        "status": "CONDITIONAL_DIFFERENCE_MAP_INJECTIONS",
+        "trials": [
+          {
+            "efficiency": 0.775,
+            "input_filtered_peak_sigma": 7,
+            "placed": 40,
+            "recovered": 31
+          },
+          {
+            "efficiency": 1.0,
+            "input_filtered_peak_sigma": 10,
+            "placed": 40,
+            "recovered": 40
+          },
+          {
+            "efficiency": 1.0,
+            "input_filtered_peak_sigma": 15,
+            "placed": 40,
+            "recovered": 40
+          }
+        ]
+      },
+      "joint_area_deg2": 0.0011111111111111113,
+      "mask_provenance": "DR1 DPDD bit0=INVALID; VIS also SAT/COSMIC/GHOST excluded; uint32 bit integrity retained in float64 sampling",
+      "obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "raw_trigger_count": 34,
+      "status": "EMPIRICALLY_SCREENED_UNCONFIRMED",
+      "top_triggers": [
+        {
+          "band": "Y",
+          "dec_deg": -28.0920138888814,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_Y_c0b4c055f5b5c6",
+            "fornax_Y_9a52ce0135102a"
+          ],
+          "ra_deg": 52.93201574360326,
+          "shape_axis_ratio": 1.081539977573722,
+          "sigma_empirical": 955.787841796875,
+          "sign": 1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 599,
+          "y": 455
+        },
+        {
+          "band": "Y",
+          "dec_deg": -28.100152674299075,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_Y_c0b4c055f5b5c6",
+            "fornax_Y_9a52ce0135102a"
+          ],
+          "ra_deg": 52.92666251386421,
+          "shape_axis_ratio": 1.0186302261288345,
+          "sigma_empirical": 250.38026428222656,
+          "sign": -1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 769,
+          "y": 162
+        },
+        {
+          "band": "Y",
+          "dec_deg": -28.09209722206337,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_Y_c0b4c055f5b5c6",
+            "fornax_Y_9a52ce0135102a"
+          ],
+          "ra_deg": 52.931795332998824,
+          "shape_axis_ratio": 1.2086267896281435,
+          "sigma_empirical": 242.52796936035156,
+          "sign": -1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 606,
+          "y": 452
+        },
+        {
+          "band": "Y",
+          "dec_deg": -28.102651784486405,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_Y_c0b4c055f5b5c6",
+            "fornax_Y_9a52ce0135102a"
+          ],
+          "ra_deg": 52.91545183352352,
+          "shape_axis_ratio": 1.1355173323729257,
+          "sigma_empirical": 207.74853515625,
+          "sign": 1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 1125,
+          "y": 72
+        },
+        {
+          "band": "Y",
+          "dec_deg": -28.095096893255143,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_Y_c0b4c055f5b5c6",
+            "fornax_Y_9a52ce0135102a"
+          ],
+          "ra_deg": 52.92247484654913,
+          "shape_axis_ratio": 1.2477092934988763,
+          "sigma_empirical": 159.699951171875,
+          "sign": 1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 902,
+          "y": 344
+        },
+        {
+          "band": "Y",
+          "dec_deg": -28.102790692166298,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_Y_c0b4c055f5b5c6",
+            "fornax_Y_9a52ce0135102a"
+          ],
+          "ra_deg": 52.91560926393919,
+          "shape_axis_ratio": 1.0822059912701536,
+          "sigma_empirical": 56.665000915527344,
+          "sign": -1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 1120,
+          "y": 67
+        },
+        {
+          "band": "Y",
+          "dec_deg": -28.076041662313802,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_Y_c0b4c055f5b5c6",
+            "fornax_Y_9a52ce0135102a"
+          ],
+          "ra_deg": 52.930882370448565,
+          "shape_axis_ratio": 1.1457878211316443,
+          "sigma_empirical": 53.564090728759766,
+          "sign": 1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 635,
+          "y": 1030
+        },
+        {
+          "band": "Y",
+          "dec_deg": -28.095208017282136,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_Y_c0b4c055f5b5c6",
+            "fornax_Y_9a52ce0135102a"
+          ],
+          "ra_deg": 52.92266376554612,
+          "shape_axis_ratio": 1.3051402398582068,
+          "sigma_empirical": 41.686737060546875,
+          "sign": -1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 896,
+          "y": 340
+        }
+      ],
+      "unmasked_pixels": 1440000,
+      "validated_discovery": 0
+    },
+    {
+      "band": "J",
+      "calibration": {
+        "n_matched": 24,
+        "psf_sigmas_px": [
+          2.753063585554617,
+          2.9104878019806026
+        ],
+        "robust_fractional_scale_scatter": 0.012291910836367437,
+        "scale_b_over_a": 0.9992007029223775,
+        "source_detection": "reused prior Euclid North v5 signal>8*RMS local-source screen; no independent stellar IDs",
+        "status": "EMPIRICAL_COMPACT_SOURCE_PSF_AND_FLUX_PROXY"
+      },
+      "control_scatter": 0.2061927169561386,
+      "detection_area_deg2": 0.0010671111111111113,
+      "difference_pixel_sha256": "f67e32c6b6cb1d3af63325a7e1308b177929db5a77e8d76156a394ee07bba477",
+      "disjoint_detector_layers_center": 1,
+      "individual_good_pixels": [
+        1440000,
+        1440000
+      ],
+      "injection": {
+        "not_included": "raw exposure persistence, time-dependent host subtraction, missed mosaic coverage",
+        "nuisance_model": "empirical control-noise, fixed photometric scale and PSF",
+        "status": "CONDITIONAL_DIFFERENCE_MAP_INJECTIONS",
+        "trials": [
+          {
+            "efficiency": 0.65,
+            "input_filtered_peak_sigma": 7,
+            "placed": 40,
+            "recovered": 26
+          },
+          {
+            "efficiency": 1.0,
+            "input_filtered_peak_sigma": 10,
+            "placed": 40,
+            "recovered": 40
+          },
+          {
+            "efficiency": 1.0,
+            "input_filtered_peak_sigma": 15,
+            "placed": 40,
+            "recovered": 40
+          }
+        ]
+      },
+      "joint_area_deg2": 0.0011111111111111113,
+      "mask_provenance": "DR1 DPDD bit0=INVALID; VIS also SAT/COSMIC/GHOST excluded; uint32 bit integrity retained in float64 sampling",
+      "obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "raw_trigger_count": 26,
+      "status": "EMPIRICALLY_SCREENED_UNCONFIRMED",
+      "top_triggers": [
+        {
+          "band": "J",
+          "dec_deg": -28.09195833332612,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_J_3d5c9d98bcde60",
+            "fornax_J_f2adaa9522ad7a"
+          ],
+          "ra_deg": 52.93201574359511,
+          "shape_axis_ratio": 1.3050108429414713,
+          "sigma_empirical": 446.0546875,
+          "sign": 1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 599,
+          "y": 457
+        },
+        {
+          "band": "J",
+          "dec_deg": -28.092124999920074,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_J_3d5c9d98bcde60",
+            "fornax_J_f2adaa9522ad7a"
+          ],
+          "ra_deg": 52.931858307424065,
+          "shape_axis_ratio": 1.3629788167187875,
+          "sigma_empirical": 216.06768798828125,
+          "sign": -1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 604,
+          "y": 451
+        },
+        {
+          "band": "J",
+          "dec_deg": -28.09512467320328,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_J_3d5c9d98bcde60",
+            "fornax_J_f2adaa9522ad7a"
+          ],
+          "ra_deg": 52.9225063322026,
+          "shape_axis_ratio": 1.02367511451783,
+          "sigma_empirical": 139.52159118652344,
+          "sign": 1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 901,
+          "y": 343
+        },
+        {
+          "band": "J",
+          "dec_deg": -28.095124657854207,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_J_3d5c9d98bcde60",
+            "fornax_J_f2adaa9522ad7a"
+          ],
+          "ra_deg": 52.92228591537566,
+          "shape_axis_ratio": 1.683020898787646,
+          "sigma_empirical": 67.7576675415039,
+          "sign": -1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 908,
+          "y": 343
+        },
+        {
+          "band": "J",
+          "dec_deg": -28.10270732105031,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_J_3d5c9d98bcde60",
+            "fornax_J_f2adaa9522ad7a"
+          ],
+          "ra_deg": 52.915294373254966,
+          "shape_axis_ratio": 1.3957164968973765,
+          "sigma_empirical": 66.86676788330078,
+          "sign": -1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 1130,
+          "y": 70
+        },
+        {
+          "band": "J",
+          "dec_deg": -28.073930378040096,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_J_3d5c9d98bcde60",
+            "fornax_J_f2adaa9522ad7a"
+          ],
+          "ra_deg": 52.93900472351402,
+          "shape_axis_ratio": 1.4827142158016668,
+          "sigma_empirical": 55.995670318603516,
+          "sign": 1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 377,
+          "y": 1106
+        },
+        {
+          "band": "J",
+          "dec_deg": -28.07601388427862,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_J_3d5c9d98bcde60",
+            "fornax_J_f2adaa9522ad7a"
+          ],
+          "ra_deg": 52.93085088822328,
+          "shape_axis_ratio": 1.2557217412857993,
+          "sigma_empirical": 34.7943000793457,
+          "sign": 1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 636,
+          "y": 1031
+        },
+        {
+          "band": "J",
+          "dec_deg": -28.090847144028235,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_J_3d5c9d98bcde60",
+            "fornax_J_f2adaa9522ad7a"
+          ],
+          "ra_deg": 52.9366443124787,
+          "shape_axis_ratio": 1.1710090630332433,
+          "sigma_empirical": 34.54413986206055,
+          "sign": 1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 452,
+          "y": 497
+        }
+      ],
+      "unmasked_pixels": 1440000,
+      "validated_discovery": 0
+    },
+    {
+      "band": "H",
+      "calibration": {
+        "n_matched": 25,
+        "psf_sigmas_px": [
+          2.941856085873595,
+          2.862044519595544
+        ],
+        "robust_fractional_scale_scatter": 0.00811033032588822,
+        "scale_b_over_a": 1.0062009288139833,
+        "source_detection": "reused prior Euclid North v5 signal>8*RMS local-source screen; no independent stellar IDs",
+        "status": "EMPIRICAL_COMPACT_SOURCE_PSF_AND_FLUX_PROXY"
+      },
+      "control_scatter": 0.19525562226772308,
+      "detection_area_deg2": 0.0010671111111111113,
+      "difference_pixel_sha256": "70453fa3d3846f93e47ffd054d8397ea0345d2989f8f743ec6a5232eb8fcb38e",
+      "disjoint_detector_layers_center": 1,
+      "individual_good_pixels": [
+        1440000,
+        1440000
+      ],
+      "injection": {
+        "not_included": "raw exposure persistence, time-dependent host subtraction, missed mosaic coverage",
+        "nuisance_model": "empirical control-noise, fixed photometric scale and PSF",
+        "status": "CONDITIONAL_DIFFERENCE_MAP_INJECTIONS",
+        "trials": [
+          {
+            "efficiency": 0.7,
+            "input_filtered_peak_sigma": 7,
+            "placed": 40,
+            "recovered": 28
+          },
+          {
+            "efficiency": 1.0,
+            "input_filtered_peak_sigma": 10,
+            "placed": 40,
+            "recovered": 40
+          },
+          {
+            "efficiency": 1.0,
+            "input_filtered_peak_sigma": 15,
+            "placed": 40,
+            "recovered": 40
+          }
+        ]
+      },
+      "joint_area_deg2": 0.0011111111111111113,
+      "mask_provenance": "DR1 DPDD bit0=INVALID; VIS also SAT/COSMIC/GHOST excluded; uint32 bit integrity retained in float64 sampling",
+      "obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "raw_trigger_count": 30,
+      "status": "EMPIRICALLY_SCREENED_UNCONFIRMED",
+      "top_triggers": [
+        {
+          "band": "H",
+          "dec_deg": -28.0920138888814,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_H_43a3bbf219aa85",
+            "fornax_H_3efe563e4dd208"
+          ],
+          "ra_deg": 52.93201574360326,
+          "shape_axis_ratio": 1.3788182558488882,
+          "sigma_empirical": 305.2925720214844,
+          "sign": -1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 599,
+          "y": 455
+        },
+        {
+          "band": "H",
+          "dec_deg": -28.09209722210651,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_H_43a3bbf219aa85",
+            "fornax_H_3efe563e4dd208"
+          ],
+          "ra_deg": 52.93182682022977,
+          "shape_axis_ratio": 1.4620330416115603,
+          "sigma_empirical": 276.33428955078125,
+          "sign": 1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 605,
+          "y": 452
+        },
+        {
+          "band": "H",
+          "dec_deg": -28.076513882246136,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_H_43a3bbf219aa85",
+            "fornax_H_3efe563e4dd208"
+          ],
+          "ra_deg": 52.93063050424498,
+          "shape_axis_ratio": 1.3772201494913436,
+          "sigma_empirical": 81.0059814453125,
+          "sign": 1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 643,
+          "y": 1013
+        },
+        {
+          "band": "H",
+          "dec_deg": -28.10262401048715,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_H_43a3bbf219aa85",
+            "fornax_H_3efe563e4dd208"
+          ],
+          "ra_deg": 52.91548332812212,
+          "shape_axis_ratio": 1.5109109082701133,
+          "sigma_empirical": 78.35134887695312,
+          "sign": -1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 1124,
+          "y": 73
+        },
+        {
+          "band": "H",
+          "dec_deg": -28.09504134634268,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_H_43a3bbf219aa85",
+            "fornax_H_3efe563e4dd208"
+          ],
+          "ra_deg": 52.92260080385329,
+          "shape_axis_ratio": 1.2587640491500274,
+          "sigma_empirical": 44.50118637084961,
+          "sign": -1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 898,
+          "y": 346
+        },
+        {
+          "band": "H",
+          "dec_deg": -28.10276287659982,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_H_43a3bbf219aa85",
+            "fornax_H_3efe563e4dd208"
+          ],
+          "ra_deg": 52.9152943646091,
+          "shape_axis_ratio": 1.5910336429765672,
+          "sigma_empirical": 43.780513763427734,
+          "sign": 1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 1130,
+          "y": 68
+        },
+        {
+          "band": "H",
+          "dec_deg": -28.095152435631157,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_H_43a3bbf219aa85",
+            "fornax_H_3efe563e4dd208"
+          ],
+          "ra_deg": 52.92228591286211,
+          "shape_axis_ratio": 1.1051430080260145,
+          "sigma_empirical": 41.09526443481445,
+          "sign": 1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 908,
+          "y": 342
+        },
+        {
+          "band": "H",
+          "dec_deg": -28.090763810695368,
+          "field": "fornax",
+          "pair_obs_ids": [
+            "fornax_H_43a3bbf219aa85",
+            "fornax_H_3efe563e4dd208"
+          ],
+          "ra_deg": 52.936644308873646,
+          "shape_axis_ratio": 1.4765756788379867,
+          "sigma_empirical": 28.49532699584961,
+          "sign": -1,
+          "status": "UNVETTED_DIFFERENCE_TRIGGER",
+          "x": 452,
+          "y": 500
+        }
+      ],
+      "unmasked_pixels": 1440000,
+      "validated_discovery": 0
+    }
+  ],
+  "center": [
+    52.932,
+    -28.088
+  ],
+  "field": "fornax",
+  "nominal_square_deg": 0.0011111111111111111,
+  "patch_pixels": 1200,
+  "pixel_receipts": [
+    {
+      "band": "VIS",
+      "errors": {},
+      "obs_id": "fornax_VIS_33a5e456ad0f0b",
+      "pixels": [
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/VIS/EUC_MER_BGSUB-MOSAIC-VIS_TILE101375805-68F71D_20250802T181117.115927Z_00.00.fits",
+          "kind": "science",
+          "sampled_sha256": "dc51be3fa5c65337dd35243747e80dcbe4ad814e9f09e5143833b33a23d7a398",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/VIS/EUC_MER_MOSAIC-VIS-RMS_TILE101375805-141FEE_20250802T172536.616801Z_00.00.fits",
+          "kind": "rms",
+          "sampled_sha256": "ed2177f89063cf795bcb9f2e210f86ccf0cbd334244afc3023a9b9d27a2322a7",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 0,
+          "key": "dr1/MER/101375805/VIS/EUC_MER_MOSAIC-VIS-FLAG_TILE101375805-FFC873_20250802T172536.616815Z_00.00.fits",
+          "kind": "flag",
+          "sampled_sha256": "cd44e4660d35072d79ef8d9b8bd00a65a2d98d4917d4c0ea067e4c9a2fe086f5",
+          "valid_coordinate_fraction": 1.0
+        }
+      ]
+    },
+    {
+      "band": "VIS",
+      "errors": {},
+      "obs_id": "fornax_VIS_4ff054ad4feece",
+      "pixels": [
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/VIS/EUC_MER_BGSUB-MOSAIC-VIS_TILE101375805-D23F52_20250516T194247.189512Z_00.00.fits",
+          "kind": "science",
+          "sampled_sha256": "d64a0f106d8c172ea03c1fb34526b53ab31022e25157a1172a5a1a04afc1b1ef",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/VIS/EUC_MER_MOSAIC-VIS-RMS_TILE101375805-FAB244_20250516T142641.220167Z_00.00.fits",
+          "kind": "rms",
+          "sampled_sha256": "7916bee25d61b59c2ccbacfb0478e38ebd4443127925f01357dce47aaff19249",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 0,
+          "key": "dr1/MER/101375805/VIS/EUC_MER_MOSAIC-VIS-FLAG_TILE101375805-92617_20250516T142641.220179Z_00.00.fits",
+          "kind": "flag",
+          "sampled_sha256": "87e340f1331c33a2c9953772b82f532c5a1c59d0a6844775d36f39445f51a7e0",
+          "valid_coordinate_fraction": 1.0
+        }
+      ]
+    },
+    {
+      "band": "Y",
+      "errors": {},
+      "obs_id": "fornax_Y_c0b4c055f5b5c6",
+      "pixels": [
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_BGSUB-MOSAIC-NIR-Y_TILE101375805-63CEA0_20250802T173718.146550Z_00.00.fits",
+          "kind": "science",
+          "sampled_sha256": "f7283046f31c8054cab7bf65e03b01e4f7a3a2f2f191cda9e9a08bad2d5123c7",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-Y-RMS_TILE101375805-3AD4D_20250802T171952.573738Z_00.00.fits",
+          "kind": "rms",
+          "sampled_sha256": "7bef7ac398a33d5518f4ac8fed2c5431ca170975de1fac4592ce66566ffaa4c3",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 0,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-Y-FLAG_TILE101375805-D9DA85_20250802T171952.573754Z_00.00.fits",
+          "kind": "flag",
+          "sampled_sha256": "a8f85c051a60988b51de77de14ed6c9770a6801564a63c82e3d043eeffbafc0d",
+          "valid_coordinate_fraction": 1.0
+        }
+      ]
+    },
+    {
+      "band": "Y",
+      "errors": {},
+      "obs_id": "fornax_Y_9a52ce0135102a",
+      "pixels": [
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_BGSUB-MOSAIC-NIR-Y_TILE101375805-F1494F_20250516T151118.237813Z_00.00.fits",
+          "kind": "science",
+          "sampled_sha256": "8e1fbe4b06be62554c1fce8bfb48500458d7688090c6cb603af18f5edb235e5f",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-Y-RMS_TILE101375805-DD823D_20250516T134920.692696Z_00.00.fits",
+          "kind": "rms",
+          "sampled_sha256": "e9e8391cc3441fc8e34baf0d2160bc9689877772255ff54b3709372e72c5bda2",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 0,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-Y-FLAG_TILE101375805-8E7EBD_20250516T134920.692709Z_00.00.fits",
+          "kind": "flag",
+          "sampled_sha256": "fc02935de8f06bfea3b30ec38cf2a18f625acab3e8023d9888c30abe78d12fc2",
+          "valid_coordinate_fraction": 1.0
+        }
+      ]
+    },
+    {
+      "band": "J",
+      "errors": {},
+      "obs_id": "fornax_J_3d5c9d98bcde60",
+      "pixels": [
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_BGSUB-MOSAIC-NIR-J_TILE101375805-157DF9_20250802T174011.215566Z_00.00.fits",
+          "kind": "science",
+          "sampled_sha256": "4c6de3384364fb4988b70fb5adaa755a341e6810ad120ebe35742954db1e43fc",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-J-RMS_TILE101375805-467C38_20250802T172030.590271Z_00.00.fits",
+          "kind": "rms",
+          "sampled_sha256": "bcbd6b31ff4dcb902f3b0b04dc83487387ab1d6ec555b21c5ab8ab53058db405",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 0,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-J-FLAG_TILE101375805-545364_20250802T172030.590287Z_00.00.fits",
+          "kind": "flag",
+          "sampled_sha256": "da6e2faf0d8ab3be9d5bd43704b0e5fc0978ec60168932437f7716b2cff4cc2c",
+          "valid_coordinate_fraction": 1.0
+        }
+      ]
+    },
+    {
+      "band": "J",
+      "errors": {},
+      "obs_id": "fornax_J_f2adaa9522ad7a",
+      "pixels": [
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_BGSUB-MOSAIC-NIR-J_TILE101375805-3FFAE8_20250516T151300.548504Z_00.00.fits",
+          "kind": "science",
+          "sampled_sha256": "ea56bb7e3a6c0cbb4f56aa2ddc29b230f5c90e5747eb8149556d47a88dc3e39e",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-J-RMS_TILE101375805-517B1A_20250516T134802.565148Z_00.00.fits",
+          "kind": "rms",
+          "sampled_sha256": "b936dc31b51018377a64488fa85882ae6379de58f55bf00759ec1e68b608ccee",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 0,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-J-FLAG_TILE101375805-F6F7D5_20250516T134802.565161Z_00.00.fits",
+          "kind": "flag",
+          "sampled_sha256": "ab02ddbeebb5bc95bc71c7303d768cdd4d21dbfd59fd365948909dd7a6de79b4",
+          "valid_coordinate_fraction": 1.0
+        }
+      ]
+    },
+    {
+      "band": "H",
+      "errors": {},
+      "obs_id": "fornax_H_43a3bbf219aa85",
+      "pixels": [
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_BGSUB-MOSAIC-NIR-H_TILE101375805-163A80_20250516T150528.755954Z_00.00.fits",
+          "kind": "science",
+          "sampled_sha256": "b479117c7f6582b7eec97f023ebad473f862e289ff02ab5ce20be70d42870ffe",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-H-RMS_TILE101375805-C9A68F_20250516T134758.281211Z_00.00.fits",
+          "kind": "rms",
+          "sampled_sha256": "38cda6124859d67f03eae7db102ffb133d96fb69ddc6be6cc790d60b441e6810",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 0,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-H-FLAG_TILE101375805-93C736_20250516T134758.281223Z_00.00.fits",
+          "kind": "flag",
+          "sampled_sha256": "d37a57dd9f1ff5a979578e56edd74b6e0e3bb2adc3979996fb6405eccfe08216",
+          "valid_coordinate_fraction": 1.0
+        }
+      ]
+    },
+    {
+      "band": "H",
+      "errors": {},
+      "obs_id": "fornax_H_3efe563e4dd208",
+      "pixels": [
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_BGSUB-MOSAIC-NIR-H_TILE101375805-EA72FF_20250802T173653.034068Z_00.00.fits",
+          "kind": "science",
+          "sampled_sha256": "d28d2ad4e5da1469c642dd2ced4f6d47d893989babb38053499ea422cf56392b",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 1,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-H-RMS_TILE101375805-43362D_20250802T171953.198875Z_00.00.fits",
+          "kind": "rms",
+          "sampled_sha256": "e981426408d6dda5d3e0549e8f98322ff3678c922eea379afcdd18d785ef271b",
+          "valid_coordinate_fraction": 1.0
+        },
+        {
+          "block_shape": [
+            1210,
+            1210
+          ],
+          "bounds_xyxy": [
+            1115,
+            1325,
+            2325,
+            2535
+          ],
+          "header_wcs_crval": [
+            52.82559667615,
+            -28.0
+          ],
+          "interpolated": 0,
+          "key": "dr1/MER/101375805/NISP/EUC_MER_MOSAIC-NIR-H-FLAG_TILE101375805-B4C5CC_20250802T171953.198889Z_00.00.fits",
+          "kind": "flag",
+          "sampled_sha256": "6f914bb5a683bf20453ab2cdfa60697325eafd502eb1fe925fc04b3f02a20c4b",
+          "valid_coordinate_fraction": 1.0
+        }
+      ]
+    }
+  ],
+  "raw_triggers": [
+    {
+      "band": "Y",
+      "dec_deg": -28.0920138888814,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.93201574360326,
+      "shape_axis_ratio": 1.081539977573722,
+      "sigma_empirical": 955.787841796875,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 599,
+      "y": 455
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.100152674299075,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.92666251386421,
+      "shape_axis_ratio": 1.0186302261288345,
+      "sigma_empirical": 250.38026428222656,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 769,
+      "y": 162
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.09209722206337,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.931795332998824,
+      "shape_axis_ratio": 1.2086267896281435,
+      "sigma_empirical": 242.52796936035156,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 606,
+      "y": 452
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.102651784486405,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.91545183352352,
+      "shape_axis_ratio": 1.1355173323729257,
+      "sigma_empirical": 207.74853515625,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 1125,
+      "y": 72
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.095096893255143,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.92247484654913,
+      "shape_axis_ratio": 1.2477092934988763,
+      "sigma_empirical": 159.699951171875,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 902,
+      "y": 344
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.102790692166298,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.91560926393919,
+      "shape_axis_ratio": 1.0822059912701536,
+      "sigma_empirical": 56.665000915527344,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 1120,
+      "y": 67
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.076041662313802,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.930882370448565,
+      "shape_axis_ratio": 1.1457878211316443,
+      "sigma_empirical": 53.564090728759766,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 635,
+      "y": 1030
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.095208017282136,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.92266376554612,
+      "shape_axis_ratio": 1.3051402398582068,
+      "sigma_empirical": 41.686737060546875,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 896,
+      "y": 340
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.09081936625062,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.93664431127702,
+      "shape_axis_ratio": 1.058778481082815,
+      "sigma_empirical": 40.110782623291016,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 452,
+      "y": 498
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.08187452270565,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.94347600280076,
+      "shape_axis_ratio": 1.4379967767492003,
+      "sigma_empirical": 38.00898361206055,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 235,
+      "y": 820
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.079457926636376,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.942594205845275,
+      "shape_axis_ratio": 1.047396341797843,
+      "sigma_empirical": 35.54770278930664,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 263,
+      "y": 907
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.07315266239708,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.93765096074259,
+      "shape_axis_ratio": 1.276453661691235,
+      "sigma_empirical": 23.99772071838379,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 420,
+      "y": 1134
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.083513874863364,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.93396779460364,
+      "shape_axis_ratio": 1.166172835292251,
+      "sigma_empirical": 21.29066276550293,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 537,
+      "y": 761
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.103513625397035,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.94051820177348,
+      "shape_axis_ratio": 1.3040389851571355,
+      "sigma_empirical": 21.08838653564453,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 329,
+      "y": 41
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.101401643911345,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.94968161225685,
+      "shape_axis_ratio": 1.6956574615011748,
+      "sigma_empirical": 16.997526168823242,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 38,
+      "y": 117
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.076124993682406,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.93066199175215,
+      "shape_axis_ratio": 1.1372039339216344,
+      "sigma_empirical": 14.64870548248291,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 642,
+      "y": 1027
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.09748565412947,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.920774238813756,
+      "shape_axis_ratio": 1.130827658702916,
+      "sigma_empirical": 13.993359565734863,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 956,
+      "y": 258
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.087013888780252,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.93182682842953,
+      "shape_axis_ratio": 1.2069958414536428,
+      "sigma_empirical": 13.933786392211914,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 605,
+      "y": 635
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.074097036614813,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.939162144146735,
+      "shape_axis_ratio": 1.3184204476723118,
+      "sigma_empirical": 13.4407958984375,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 372,
+      "y": 1100
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.074097052596784,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.93884732462687,
+      "shape_axis_ratio": 1.2510642457744963,
+      "sigma_empirical": 13.315895080566406,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 382,
+      "y": 1100
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.07456895698896,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.920398849656856,
+      "shape_axis_ratio": 1.5456800392963141,
+      "sigma_empirical": 13.091029167175293,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 968,
+      "y": 1083
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.08534603217069,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.95011976152379,
+      "shape_axis_ratio": 1.4273926657596894,
+      "sigma_empirical": 12.591828346252441,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 24,
+      "y": 695
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.08206898014947,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.94331860214017,
+      "shape_axis_ratio": 1.2530902607595609,
+      "sigma_empirical": 11.341032981872559,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 240,
+      "y": 813
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.090986039148323,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.93645539705792,
+      "shape_axis_ratio": 1.3969871162881469,
+      "sigma_empirical": 10.288540840148926,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 458,
+      "y": 492
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.073235302850094,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.9469380663026,
+      "shape_axis_ratio": 1.317892091968273,
+      "sigma_empirical": 9.729607582092285,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 125,
+      "y": 1131
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.086263629840875,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.9235461379054,
+      "shape_axis_ratio": 1.2507139211957845,
+      "sigma_empirical": 8.742915153503418,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 868,
+      "y": 662
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.083652765907082,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.933810373377405,
+      "shape_axis_ratio": 1.4160502135687574,
+      "sigma_empirical": 7.892264366149902,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 542,
+      "y": 756
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.080735006576212,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.91454217848767,
+      "shape_axis_ratio": 1.1882769437842147,
+      "sigma_empirical": 7.725594520568848,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 1154,
+      "y": 861
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.073347098962675,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.937839861369376,
+      "shape_axis_ratio": 1.4154175753589138,
+      "sigma_empirical": 7.700741291046143,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 414,
+      "y": 1127
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.10176366479507,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.93985677152443,
+      "shape_axis_ratio": 1.545672445517336,
+      "sigma_empirical": 7.574866771697998,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 350,
+      "y": 104
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.088096773161727,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.94313032129196,
+      "shape_axis_ratio": 1.5152316156720562,
+      "sigma_empirical": 7.495959281921387,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 246,
+      "y": 596
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.09009619164193,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.91513890242986,
+      "shape_axis_ratio": 1.28816087048868,
+      "sigma_empirical": 7.3336615562438965,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 1135,
+      "y": 524
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.087180555159428,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.931669399215885,
+      "shape_axis_ratio": 1.5973860169300411,
+      "sigma_empirical": 7.079225063323975,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 610,
+      "y": 629
+    },
+    {
+      "band": "Y",
+      "dec_deg": -28.08620728747183,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_Y_c0b4c055f5b5c6",
+        "fornax_Y_9a52ce0135102a"
+      ],
+      "ra_deg": 52.94898642882471,
+      "shape_axis_ratio": 1.6054741777434864,
+      "sigma_empirical": 7.005688190460205,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 60,
+      "y": 664
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.09195833332612,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.93201574359511,
+      "shape_axis_ratio": 1.3050108429414713,
+      "sigma_empirical": 446.0546875,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 599,
+      "y": 457
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.092124999920074,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.931858307424065,
+      "shape_axis_ratio": 1.3629788167187875,
+      "sigma_empirical": 216.06768798828125,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 604,
+      "y": 451
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.09512467320328,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.9225063322026,
+      "shape_axis_ratio": 1.02367511451783,
+      "sigma_empirical": 139.52159118652344,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 901,
+      "y": 343
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.095124657854207,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.92228591537566,
+      "shape_axis_ratio": 1.683020898787646,
+      "sigma_empirical": 67.7576675415039,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 908,
+      "y": 343
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.10270732105031,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.915294373254966,
+      "shape_axis_ratio": 1.3957164968973765,
+      "sigma_empirical": 66.86676788330078,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 1130,
+      "y": 70
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.073930378040096,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.93900472351402,
+      "shape_axis_ratio": 1.4827142158016668,
+      "sigma_empirical": 55.995670318603516,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 377,
+      "y": 1106
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.07601388427862,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.93085088822328,
+      "shape_axis_ratio": 1.2557217412857993,
+      "sigma_empirical": 34.7943000793457,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 636,
+      "y": 1031
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.090847144028235,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.9366443124787,
+      "shape_axis_ratio": 1.1710090630332433,
+      "sigma_empirical": 34.54413986206055,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 452,
+      "y": 497
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.074069274820843,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.938847322855445,
+      "shape_axis_ratio": 1.2534281143181731,
+      "sigma_empirical": 22.84569549560547,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 382,
+      "y": 1101
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.101401639869927,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.94971310221435,
+      "shape_axis_ratio": 1.3857823509950236,
+      "sigma_empirical": 21.63679313659668,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 37,
+      "y": 117
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.078347210846665,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.933778800720816,
+      "shape_axis_ratio": 1.1928078869769854,
+      "sigma_empirical": 19.08968734741211,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 543,
+      "y": 947
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.087069444371732,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.931858314096296,
+      "shape_axis_ratio": 1.067035314020475,
+      "sigma_empirical": 18.702451705932617,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 604,
+      "y": 633
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.07615277176069,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.93069347396114,
+      "shape_axis_ratio": 1.2895173971344525,
+      "sigma_empirical": 17.780654907226562,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 641,
+      "y": 1026
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.074596737408,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.920430328753355,
+      "shape_axis_ratio": 1.2217056228163115,
+      "sigma_empirical": 14.947009086608887,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 967,
+      "y": 1082
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.098208190139584,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.93828206014994,
+      "shape_axis_ratio": 1.3672682885914582,
+      "sigma_empirical": 14.23421573638916,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 400,
+      "y": 232
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.073180438880005,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.937682443887866,
+      "shape_axis_ratio": 1.4009704787813477,
+      "sigma_empirical": 14.184199333190918,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 419,
+      "y": 1133
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.08534602803138,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.95015124677194,
+      "shape_axis_ratio": 1.5438298898356198,
+      "sigma_empirical": 13.542625427246094,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 23,
+      "y": 695
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.0974856566891,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.92080572762413,
+      "shape_axis_ratio": 1.0274843539659861,
+      "sigma_empirical": 13.45232105255127,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 955,
+      "y": 258
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.082096788406567,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.94294079350395,
+      "shape_axis_ratio": 1.3788030535738725,
+      "sigma_empirical": 13.397608757019043,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 252,
+      "y": 812
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.07323600457348,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.93743059323049,
+      "shape_axis_ratio": 1.3976691835956208,
+      "sigma_empirical": 10.152412414550781,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 427,
+      "y": 1131
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.079569052119457,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.94240531547319,
+      "shape_axis_ratio": 1.1385859399892841,
+      "sigma_empirical": 9.328503608703613,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 269,
+      "y": 903
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.10176366119225,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.9399197516561,
+      "shape_axis_ratio": 1.6608381932232614,
+      "sigma_empirical": 8.603116989135742,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 348,
+      "y": 104
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.083624988539075,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.933778888162784,
+      "shape_axis_ratio": 1.137268694240259,
+      "sigma_empirical": 8.53515911102295,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 543,
+      "y": 757
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.080596093662646,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.914353297938405,
+      "shape_axis_ratio": 1.6638147825278409,
+      "sigma_empirical": 8.443717002868652,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 1160,
+      "y": 866
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.09731910884358,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.94161981691341,
+      "shape_axis_ratio": 1.2225722554227945,
+      "sigma_empirical": 7.587154865264893,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 294,
+      "y": 264
+    },
+    {
+      "band": "J",
+      "dec_deg": -28.087847220402985,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_J_3d5c9d98bcde60",
+        "fornax_J_f2adaa9522ad7a"
+      ],
+      "ra_deg": 52.931291565349255,
+      "shape_axis_ratio": 1.3136525012889846,
+      "sigma_empirical": 6.73967981338501,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 622,
+      "y": 605
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.0920138888814,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.93201574360326,
+      "shape_axis_ratio": 1.3788182558488882,
+      "sigma_empirical": 305.2925720214844,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 599,
+      "y": 455
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.09209722210651,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.93182682022977,
+      "shape_axis_ratio": 1.4620330416115603,
+      "sigma_empirical": 276.33428955078125,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 605,
+      "y": 452
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.076513882246136,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.93063050424498,
+      "shape_axis_ratio": 1.3772201494913436,
+      "sigma_empirical": 81.0059814453125,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 643,
+      "y": 1013
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.10262401048715,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.91548332812212,
+      "shape_axis_ratio": 1.5109109082701133,
+      "sigma_empirical": 78.35134887695312,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 1124,
+      "y": 73
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.09504134634268,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.92260080385329,
+      "shape_axis_ratio": 1.2587640491500274,
+      "sigma_empirical": 44.50118637084961,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 898,
+      "y": 346
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.10276287659982,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.9152943646091,
+      "shape_axis_ratio": 1.5910336429765672,
+      "sigma_empirical": 43.780513763427734,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 1130,
+      "y": 68
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.095152435631157,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.92228591286211,
+      "shape_axis_ratio": 1.1051430080260145,
+      "sigma_empirical": 41.09526443481445,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 908,
+      "y": 342
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.090763810695368,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.936644308873646,
+      "shape_axis_ratio": 1.4765756788379867,
+      "sigma_empirical": 28.49532699584961,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 452,
+      "y": 500
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.07604166256521,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.93091385297114,
+      "shape_axis_ratio": 1.497549450592595,
+      "sigma_empirical": 27.449304580688477,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 634,
+      "y": 1030
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.081818961899437,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.94353896529362,
+      "shape_axis_ratio": 1.4627581774020841,
+      "sigma_empirical": 24.679113388061523,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 233,
+      "y": 822
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.09090270682896,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.93642390671907,
+      "shape_axis_ratio": 1.1466200516280114,
+      "sigma_empirical": 23.213144302368164,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 459,
+      "y": 495
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.10137386209498,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.949713097630756,
+      "shape_axis_ratio": 1.292122483364937,
+      "sigma_empirical": 20.2952880859375,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 37,
+      "y": 118
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.085318246108564,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.95018272731568,
+      "shape_axis_ratio": 1.5421275251195092,
+      "sigma_empirical": 17.968942642211914,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 22,
+      "y": 696
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.083486095706125,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.93406224821097,
+      "shape_axis_ratio": 1.217838513819379,
+      "sigma_empirical": 15.804742813110352,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 534,
+      "y": 762
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.073236003330884,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.93746207493019,
+      "shape_axis_ratio": 1.571942147940998,
+      "sigma_empirical": 14.705841064453125,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 426,
+      "y": 1131
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.07315196269448,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.947001018055964,
+      "shape_axis_ratio": 1.125215787381096,
+      "sigma_empirical": 14.186246871948242,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 123,
+      "y": 1134
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.10145722355883,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.949492681564784,
+      "shape_axis_ratio": 1.5958052875144586,
+      "sigma_empirical": 13.31798267364502,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 44,
+      "y": 115
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.073041547393903,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.937745399822944,
+      "shape_axis_ratio": 1.3923344912850222,
+      "sigma_empirical": 12.649991035461426,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 417,
+      "y": 1138
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.079430141574594,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.942688653649945,
+      "shape_axis_ratio": 1.2362731228183375,
+      "sigma_empirical": 12.611830711364746,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 260,
+      "y": 908
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.073346430901257,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.94678067310833,
+      "shape_axis_ratio": 1.3389118711374604,
+      "sigma_empirical": 12.397132873535156,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 130,
+      "y": 1127
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.074541184492812,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.92046181682108,
+      "shape_axis_ratio": 1.4114640215158907,
+      "sigma_empirical": 11.818574905395508,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 966,
+      "y": 1084
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.087124999603873,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.931669399386955,
+      "shape_axis_ratio": 1.3795802003253985,
+      "sigma_empirical": 9.638007164001465,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 610,
+      "y": 631
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.076346937760956,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.92313764474421,
+      "shape_axis_ratio": 1.3311362387926489,
+      "sigma_empirical": 9.442316055297852,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 881,
+      "y": 1019
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.079541271964658,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.94243679632898,
+      "shape_axis_ratio": 1.4856268448754824,
+      "sigma_empirical": 9.288582801818848,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 268,
+      "y": 904
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.074680052080623,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.92020994491872,
+      "shape_axis_ratio": 1.5148891257760677,
+      "sigma_empirical": 8.985480308532715,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 974,
+      "y": 1079
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.072708149457416,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.92486943004002,
+      "shape_axis_ratio": 1.3221712913743915,
+      "sigma_empirical": 8.807465553283691,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 826,
+      "y": 1150
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.087013888880882,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.931952771389874,
+      "shape_axis_ratio": 1.3478114283083662,
+      "sigma_empirical": 7.792108535766602,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 601,
+      "y": 635
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.08573550561913,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.94492474225894,
+      "shape_axis_ratio": 1.4242265552230393,
+      "sigma_empirical": 7.643489360809326,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 189,
+      "y": 681
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.073458330520182,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.931071287928575,
+      "shape_axis_ratio": 1.3811957832988704,
+      "sigma_empirical": 7.1778082847595215,
+      "sign": -1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 629,
+      "y": 1123
+    },
+    {
+      "band": "H",
+      "dec_deg": -28.101874786534598,
+      "field": "fornax",
+      "pair_obs_ids": [
+        "fornax_H_43a3bbf219aa85",
+        "fornax_H_3efe563e4dd208"
+      ],
+      "ra_deg": 52.93966783906613,
+      "shape_axis_ratio": 1.453607025812828,
+      "sigma_empirical": 6.597723484039307,
+      "sign": 1,
+      "status": "UNVETTED_DIFFERENCE_TRIGGER",
+      "x": 356,
+      "y": 100
+    }
+  ],
+  "status": "FIELDS_SCREENED_WITH_LIMITS",
+  "utc": "2026-11-19T11:38:50.901983+00:00"
+}
