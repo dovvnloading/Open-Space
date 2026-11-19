@@ -366,6 +366,9 @@ if __name__=="__main__":
     elif _mode == "archive_gaia":
         from archive_gaia import main as _gaia_main
         _gaia_main()
+    elif _mode == "heasarc_batch":
+        from heasarc_batch import main as _heasarc_batch_main
+        _heasarc_batch_main()
     elif _mode == "heasarc_probe":
         from heasarc_screen import main as _heasarc_main
         _heasarc_main()
