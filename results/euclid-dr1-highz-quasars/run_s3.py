@@ -7,6 +7,8 @@ freeze.json. HATS partition metadata, source ETags, projected selected rows,
 and processing receipts are deposited; this is not a full 1900 deg² survey.
 """
 import csv,hashlib,io,json,math,os,sys,time
+from xml.etree import ElementTree as ET
+from urllib.parse import quote
 from pathlib import Path
 from collections import defaultdict
 import numpy as np
@@ -161,13 +163,22 @@ def main():
               "bounded",len(matching),flush=True)
         for pr in matching:
             order,pixel=int(pr["Norder"]),int(pr["Npix"])
-            rel="dataset/Norder=%d/Dir=%s/Npix=%d.parquet" % (order,pr["Dir"],pixel)
-            fullpath=parent+rel
-            url=BASE+fullpath
+            pixel_dir=parent+("dataset/Norder=%d/Dir=%s/Npix=%d/" % (order,pr["Dir"],pixel))
+            listing_url=BASE+"?list-type=2&prefix="+quote(pixel_dir,safe="/")
             entry={"kind":kind,"Norder":order,"Npix":pixel,"Dir":pr["Dir"],
-                   "advertised_rows":int(pr["num_rows"]),"object_uri":url,
+                   "advertised_rows":int(pr["num_rows"]),"prefix_listing_url":listing_url,
                    "read_timestamp_utc":frozen.utc()}
             try:
+                listing=get(listing_url)
+                entry["listing_sha256"]=sha(listing.content)
+                xml=ET.fromstring(listing.content)
+                keys=[x.find("{*}Key").text for x in xml.findall("{*}Contents")
+                      if x.find("{*}Key") is not None and x.find("{*}Key").text.endswith(".parquet")]
+                if len(keys)!=1:
+                    raise ValueError("Expected exactly one Parquet object in HATS pixel: "+repr(keys[:8]))
+                fullpath=keys[0]
+                url=BASE+fullpath
+                entry["object_uri"]=url
                 head=requests.head(url,timeout=25)
                 head.raise_for_status()
                 entry["content_length"]=int(head.headers.get("Content-Length","0"))
