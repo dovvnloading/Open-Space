@@ -1,0 +1,426 @@
+"""Public-catalogue acquisition for the 1LHAASO dark-source experiment.
+
+This script runs on the *GitHub Actions runner*, not the sandbox. Failed catalogues
+produce explicit pending receipts; a missing catalogue is never a non-detection.
+The original 1LHAASO CDS CSV bytes are frozen for replay.
+"""
+from __future__ import annotations
+
+import datetime as dt
+import gzip
+import hashlib
+import io
+import json
+import os
+import re
+import tarfile
+import time
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import requests
+from astropy.coordinates import SkyCoord
+from astropy.io import fits
+import astropy.units as u
+
+ROOT = Path(__file__).resolve().parent
+OUT = ROOT / "output"
+CAT = OUT / "catalogs"
+FROZEN = OUT / "frozen"
+for p in (OUT, CAT, FROZEN):
+    p.mkdir(parents=True, exist_ok=True)
+RECEIPTS: dict = {}
+SESSION = requests.Session()
+SESSION.headers.update({"User-Agent": "Open-Space-public-astronomy-audit/1.0 (citation and hashes)"})
+TAP = [
+    "https://tapvizier.cds.unistra.fr/TAPVizieR/tap/sync",
+    "https://tapvizier.u-strasbg.fr/TAPVizieR/tap/sync",
+]
+
+def utc():
+    return dt.datetime.now(dt.timezone.utc).isoformat()
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+def write_json(path, data):
+    Path(path).write_text(json.dumps(data, indent=2, sort_keys=True, default=str) + "\n")
+
+def get(url, *, params=None, timeout=130, max_bytes=150_000_000):
+    last = None
+    for attempt in range(3):
+        try:
+            with SESSION.get(url, params=params, timeout=(20, timeout), stream=True) as r:
+                r.raise_for_status()
+                chunks, n = [], 0
+                for b in r.iter_content(1 << 20):
+                    if b:
+                        chunks.append(b)
+                        n += len(b)
+                        if n > max_bytes:
+                            raise ValueError("catalogue exceeds configured byte cap")
+                data = b"".join(chunks)
+                if not data or b"Too many requests were received" in data[:200]:
+                    raise ValueError("blank/rate-limited catalogue")
+                return data, r.url
+        except Exception as exc:
+            last = repr(exc)
+            time.sleep(2 * (attempt + 1))
+    raise RuntimeError(f"{url}: {last}")
+
+def csv_table(raw):
+    if raw.lstrip().lower().startswith(b"<!doctype") or raw.lstrip().startswith(b"<html"):
+        raise ValueError("TAP returned HTML rather than a catalogue")
+    f = pd.read_csv(io.BytesIO(raw), comment="#", low_memory=False)
+    f.columns = [x.strip() for x in f.columns]
+    if len(f.columns) <= 2:
+        raise ValueError(f"unexpected TAP CSV columns: {list(f.columns)}")
+    return f
+
+def vizier(key, table, min_rows=1):
+    query = f'SELECT * FROM "{table}"'
+    errors = []
+    for host in TAP:
+        try:
+            raw, full_url = get(host, params={
+                "REQUEST": "doQuery", "LANG": "ADQL", "FORMAT": "csv",
+                "MAXREC": "30000", "QUERY": query
+            })
+            tab = csv_table(raw)
+            if len(tab) < min_rows:
+                raise ValueError(f"unexpected short table {len(tab)} < {min_rows}")
+            RECEIPTS[key] = {
+                "status": "loaded", "table": table, "url": full_url,
+                "retrieved_utc": utc(), "raw_sha256": digest(raw),
+                "bytes": len(raw), "rows": len(tab), "columns": list(tab.columns)
+            }
+            if key == "lhaaso":
+                (FROZEN / "1lhaaso_cao2024_vizier.csv").write_bytes(raw)
+            return tab
+        except Exception as exc:
+            errors.append(str(exc)[:650])
+    RECEIPTS[key] = {"status": "pending", "table": table, "errors": errors}
+    return None
+
+def file_url(key, url, *, max_bytes=150_000_000):
+    try:
+        raw, resolved = get(url, max_bytes=max_bytes)
+        RECEIPTS[key] = {
+            "status": "loaded", "url": resolved, "retrieved_utc": utc(),
+            "raw_sha256": digest(raw), "bytes": len(raw)
+        }
+        return raw
+    except Exception as exc:
+        RECEIPTS[key] = {"status": "pending", "url": url, "error": str(exc)[:650]}
+        return None
+
+def col(df, *names, default=np.nan):
+    for n in names:
+        if n in df.columns:
+            return df[n]
+    return pd.Series([default] * len(df), index=df.index)
+
+def number(x):
+    try:
+        if x is None or pd.isna(x): return float("nan")
+        if isinstance(x, (int, float)): return float(x)
+        m = re.search(r"[-+]?\d*\.?\d+(?:[Ee][-+]?\d+)?", str(x))
+        return float(m.group()) if m else float("nan")
+    except Exception:
+        return float("nan")
+
+def galactic_to_equatorial(l, b):
+    v = SkyCoord(l=np.asarray(l)*u.deg, b=np.asarray(b)*u.deg, frame="galactic").icrs
+    return np.asarray(v.ra.deg), np.asarray(v.dec.deg)
+
+def coords(df, *, ra=("RAJ2000", "RAdeg", "RA_ICRS", "RAJ", "RAJD"), dec=("DEJ2000", "DEdeg", "DE_ICRS", "DEJ", "DECJD")):
+    a, d = col(df, *ra), col(df, *dec)
+    av = pd.to_numeric(a, errors="coerce").to_numpy()
+    dv = pd.to_numeric(d, errors="coerce").to_numpy()
+    if np.isfinite(av).sum() and np.isfinite(dv).sum():
+        return av, dv
+    # Some catalogue fields are sexagesimal, but never parse numerical degrees as hours.
+    try:
+        sky = SkyCoord(a.astype(str).to_list(), d.astype(str).to_list(),
+                       unit=(u.hourangle, u.deg), frame="icrs")
+        return np.asarray(sky.ra.deg), np.asarray(sky.dec.deg)
+    except Exception:
+        return av, dv
+
+def records(items, fname):
+    frame = pd.DataFrame(items)
+    frame.to_csv(CAT / fname, index=False, float_format="%.9g")
+    return frame
+
+def base_record(name, ra, dec, size=0.0, **kw):
+    if not np.isfinite(ra) or not np.isfinite(dec) or abs(dec) > 90:
+        return None
+    c = SkyCoord(ra*u.deg, dec*u.deg, frame="icrs").galactic
+    return {"name": str(name).strip(), "ra": float(ra), "dec": float(dec),
+            "l": float(c.l.deg), "b": float(c.b.deg), "radius_deg": float(size or 0),
+            **kw}
+
+def lhaaso():
+    tab = vizier("lhaaso", "J/ApJS/271/25/catalog", min_rows=170)
+    if tab is None:
+        return None
+    if "1LHAASO" not in tab or "Comp" not in tab:
+        RECEIPTS["lhaaso"]["status"] = "invalid_schema"
+        return None
+    src = []
+    for name, rows in tab.groupby("1LHAASO", dropna=True, sort=True):
+        rows = rows.copy()
+        rows["_ts"] = pd.to_numeric(col(rows, "TS"), errors="coerce")
+        rows["_ra"] = pd.to_numeric(col(rows, "RAJ2000"), errors="coerce")
+        rows["_dec"] = pd.to_numeric(col(rows, "DEJ2000"), errors="coerce")
+        measured = rows[rows["_ra"].notna() & rows["_dec"].notna()]
+        if measured.empty:
+            raise AssertionError(f"no measured component: {name}")
+        # Source name follows the most-significant instrument component.
+        winner = measured.sort_values("_ts", ascending=False).iloc[0]
+        assoc = sorted(set(x for x in rows["Assoc"].dropna().astype(str).str.strip()
+                           if x and x.lower() != "nan")) if "Assoc" in rows else []
+        flags = "".join(rows.get("f_1LHAASO", pd.Series(dtype=str)).fillna("").astype(str))
+        flag_u = "u" in flags or str(name).rstrip().endswith("u")
+        km = rows[(rows.Comp.astype(str).str.upper() == "KM2A") & rows["_ra"].notna()]
+        k = km.sort_values("_ts", ascending=False).iloc[0] if len(km) else None
+        val = base_record(str(name).strip() + ("u" if flag_u and not str(name).endswith("u") else ""),
+                          number(winner["RAJ2000"]), number(winner["DEJ2000"]),
+                          size=0,
+                          r39_deg=max(0.0, number(winner.get("r39", 0))) if np.isfinite(number(winner.get("r39", 0))) else 0,
+                          r95_deg=max(0.0, number(winner.get("ePos", 0))) if np.isfinite(number(winner.get("ePos", 0))) else 0,
+                          component=str(winner["Comp"]),
+                          ts=number(winner.get("TS", np.nan)),
+                          km2a_ts100=number(k.get("TS100", np.nan)) if k is not None else float("nan"),
+                          km2a_n0=number(k.get("N0", np.nan)) if k is not None else float("nan"),
+                          km2a_index=number(k.get("Index", np.nan)) if k is not None else float("nan"),
+                          uhe=flag_u, known_tev=bool(assoc),
+                          tev_associations=";".join(assoc),
+                          n_components=len(rows))
+        if val is not None:
+            src.append(val)
+    s = records(src, "1lhaaso_sources.csv")
+    # Fail closed if the frozen input is not the published 90/43.
+    assert len(s) == 90, f"distinct source count {len(s)} != 90"
+    assert int(s.uhe.sum()) == 43, f"UHE source count {int(s.uhe.sum())} != 43"
+    RECEIPTS["lhaaso"]["unique_sources"] = len(s)
+    RECEIPTS["lhaaso"]["uhe_sources"] = int(s.uhe.sum())
+    RECEIPTS["lhaaso"]["published_tev_unassociated"] = int((~s.known_tev).sum())
+    return s
+
+def fermi():
+    url = "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/14yr_catalog/gll_psc_v35.fit"
+    raw = file_url("fermi_4fgl_dr4_v35", url)
+    if raw is None: return
+    try:
+        with fits.open(io.BytesIO(raw), memmap=False) as hdus:
+            t = pd.DataFrame(np.array(hdus[1].data).byteswap().view(np.ndarray)) if False else hdus[1].data
+            result = []
+            for r in t:
+                name = r["Source_Name"]
+                if isinstance(name, bytes): name = name.decode(errors="replace")
+                x = base_record(name, float(r["RAJ2000"]), float(r["DEJ2000"]),
+                                size=0,
+                                cls=str(r["CLASS1"]).strip() if "CLASS1" in t.names else "",
+                                assoc=str(r["ASSOC1"]).strip() if "ASSOC1" in t.names else "",
+                                data_release=int(r["DataRelease"]) if "DataRelease" in t.names else None)
+                if x: result.append(x)
+        if len(result) < 7000: raise ValueError(f"4FGL contains only {len(result)} valid sources")
+        records(result, "fermi_dr4.csv")
+        RECEIPTS["fermi_4fgl_dr4_v35"]["sources"] = len(result)
+    except Exception as exc:
+        RECEIPTS["fermi_4fgl_dr4_v35"]["status"] = "invalid_schema"
+        RECEIPTS["fermi_4fgl_dr4_v35"]["error"] = repr(exc)
+
+def snr_radius(size):
+    # Green/SNR candidates: angular sizes often in arcminutes, e.g. '30x20'.
+    if pd.isna(size): return 0.0
+    nums = re.findall(r"\d+(?:\.\d+)?", str(size))
+    return min(2.0, max([float(v) for v in nums], default=0.0) / 120)
+
+def green():
+    t = vizier("green_2024", "VII/297/snrs", min_rows=300)
+    if t is None: return
+    result=[]
+    for _,r in t.iterrows():
+        n=str(r.get("SNR","")).strip()
+        m=re.search(r"G?\s*(\d{1,3}\.\d+)([+-]\d+\.\d+)",n)
+        if m:
+            l=float(m.group(1)); b=float(m.group(2))
+            ra,dec=galactic_to_equatorial(l,b)
+            ra=float(ra);dec=float(dec)
+        else:
+            try:
+                c=SkyCoord(str(r["RAJ2000"])+" "+str(r["DEJ2000"]),unit=(u.hourangle,u.deg))
+                ra=float(c.ra.deg);dec=float(c.dec.deg)
+            except Exception: continue
+        v=base_record(n,ra,dec,size=snr_radius(r.get("Size",np.nan)),catalogue="Green2024")
+        if v: result.append(v)
+    if len(result)<300: raise ValueError("Green normalization did not recover 300 sources")
+    records(result,"green_snrs.csv")
+
+def meerkat_snrcat():
+    # These are *radio-SNR candidates*, not a 510k-row compact-source census.
+    for key,table,fn,minrow in [
+        ("smgps_new_snr_candidates","J/A+A/693/A247/meerkatc","smgps_candidates.csv",230),
+        ("snrcat_smgps_overlap","J/A+A/693/A247/ksnrcat","smgps_snrcat.csv",25),
+    ]:
+        t=vizier(key,table,min_rows=minrow)
+        if t is None: continue
+        rows=[]
+        for _,r in t.iterrows():
+            l=number(r.get("GLON",np.nan)); b=number(r.get("GLAT",np.nan))
+            if not np.isfinite(l) or not np.isfinite(b): continue
+            ra,dec=galactic_to_equatorial(l,b)
+            x=base_record(str(r.get("Name",r.get("SNR",""))),float(ra),float(dec),
+                          size=number(r.get("Radius",r.get("Rad",0)))/60 if np.isfinite(number(r.get("Radius",r.get("Rad",0)))) else 0,
+                          catalogue=key)
+            if x: rows.append(x)
+        records(rows,fn)
+        RECEIPTS[key]["normalized"] = len(rows)
+
+def erass_hard():
+    t=vizier("erass1_dr1_hard", "J/A+A/682/A34/erass1-h", min_rows=5400)
+    if t is None: return
+    ra,dec=coords(t,ra=("RA_ICRS","RAdeg","RAJ2000","RA"),dec=("DE_ICRS","DEdeg","DEJ2000","DEC"))
+    rows=[]
+    for i,(a,d) in enumerate(zip(ra,dec)):
+        x=base_record(str(col(t,"IAUName","Name").iloc[i]),a,d,catalogue="eRASS1-hard")
+        if x: rows.append(x)
+    if len(rows)<5000:
+        RECEIPTS["erass1_dr1_hard"]["status"]="invalid_schema"
+        RECEIPTS["erass1_dr1_hard"]["error"]=f"only {len(rows)} positions parsed"
+        return
+    records(rows,"erass1_hard.csv")
+
+def gaia_young():
+    t=vizier("gaia_dr3_hunt_ref", "J/A+A/673/A114/clusters", min_rows=7000)
+    if t is None: return
+    ra,dec=coords(t,ra=("RA_ICRS","RAJ2000"),dec=("DE_ICRS","DEJ2000"))
+    result=[]
+    for i,(a,d) in enumerate(zip(ra,dec)):
+        r=t.iloc[i]
+        age=number(r.get("logAge50",np.nan))
+        typ=str(r.get("Type","")).strip()
+        # Open clusters only. Young is <10 Myr (logAge<7), never all Gaia stars.
+        if typ != "o" or not np.isfinite(age) or age>=7: continue
+        x=base_record(str(r.get("Name","")),a,d,size=max(0,number(r.get("rt",0))) if np.isfinite(number(r.get("rt",0))) else 0,
+                      log_age=age,distance_pc=number(r.get("dist50",np.nan)))
+        if x: result.append(x)
+    records(result,"gaia_young_clusters.csv")
+    RECEIPTS["gaia_dr3_hunt_ref"]["young_open_clusters"] = len(result)
+
+def atnf():
+    import psrqpy
+    urls=["https://www.atnf.csiro.au/research/pulsar/psrcat/downloads/psrcat_pkg.tar.gz",
+          "https://www.atnf.csiro.au/research/pulsar/psrcat/downloads/psrcat_pkg.tar.gz"]
+    blob=None
+    for url in urls:
+        blob=file_url("atnf_psrcat_v2_latest",url,max_bytes=40_000_000)
+        if blob: break
+    if blob is None: return
+    try:
+        with tarfile.open(fileobj=io.BytesIO(blob), mode="r:gz") as tf:
+            db=tf.extractfile("psrcat_tar/psrcat.db").read()
+        dbpath=OUT/"psrcat_raw.db"
+        dbpath.write_bytes(db)
+        q=psrqpy.QueryATNF(path_to_db=str(dbpath),params=["PSRJ","RAJD","DECJD","EDOT","DIST","AGE","P0","P1"],cache=False)
+        tab=q.pandas
+        items=[]
+        for _,r in tab.iterrows():
+            a=number(r.get("RAJD",np.nan)); d=number(r.get("DECJD",np.nan))
+            x=base_record(str(r.get("PSRJ","")),a,d,edot_erg_s=number(r.get("EDOT",np.nan)),
+                          distance_kpc=number(r.get("DIST",np.nan)),age_yr=number(r.get("AGE",np.nan)),
+                          period_s=number(r.get("P0",np.nan)))
+            if x: items.append(x)
+        if len(items)<3000: raise ValueError(f"ATNF only {len(items)} usable pulsars")
+        records(items,"atnf_pulsars.csv")
+        RECEIPTS["atnf_psrcat_v2_latest"]["psrcat_db_sha256"]=digest(db)
+        RECEIPTS["atnf_psrcat_v2_latest"]["version"]=str(getattr(q,"version","unreported"))
+        RECEIPTS["atnf_psrcat_v2_latest"]["pulsars_with_coordinates"]=len(items)
+    except Exception as exc:
+        RECEIPTS["atnf_psrcat_v2_latest"]["status"]="invalid_schema"
+        RECEIPTS["atnf_psrcat_v2_latest"]["error"]=repr(exc)
+    finally:
+        (OUT/"psrcat_raw.db").unlink(missing_ok=True)
+
+def hess():
+    # HGPS 2018 is a legacy veto catalogue; do not describe it as post-2024.
+    url="https://hess.in2p3.fr/wp-content/uploads/2025/09/hgps_catalog_v1.fits.gz.zip"
+    raw=file_url("hess_hgps_legacy",url,max_bytes=20_000_000)
+    if raw is None:return
+    try:
+        import zipfile
+        with zipfile.ZipFile(io.BytesIO(raw)) as z:
+            names=[n for n in z.namelist() if n.endswith(".fits.gz")]
+            if not names: raise ValueError("no FITS GZ in archive")
+            arr=gzip.decompress(z.read(names[0]))
+        with fits.open(io.BytesIO(arr)) as h:
+            lines=[]
+            for hd in h[1:]:
+                if not getattr(hd,"columns",None): continue
+                for r in hd.data:
+                    names=hd.columns.names
+                    if "RA" in names and "DEC" in names:
+                        a=number(r["RA"]);d=number(r["DEC"])
+                    elif "GLON" in names and "GLAT" in names:
+                        a,d=galactic_to_equatorial(number(r["GLON"]),number(r["GLAT"]))
+                    else: continue
+                    name=str(r["Source_Name"]) if "Source_Name" in names else str(r["Name"]) if "Name" in names else ""
+                    x=base_record(name,float(a),float(d),catalogue="HESS-HGPS")
+                    if x:lines.append(x)
+                if len(lines)>50:break
+        if len(lines)<50: raise ValueError(f"HGPS schema yielded {len(lines)} positions")
+        records(lines,"hess_hgps.csv")
+        RECEIPTS["hess_hgps_legacy"]["sources"]=len(lines)
+    except Exception as exc:
+        RECEIPTS["hess_hgps_legacy"]["status"]="invalid_schema"
+        RECEIPTS["hess_hgps_legacy"]["error"]=str(exc)
+
+def pending_only():
+    # These require a validated survey footprint and a machine-readable
+    # counterpart-specific sample, not a blanket sky non-detection.
+    RECEIPTS["erass1_dr1_main_soft"]={
+      "status":"pending", "reason":"930203-source catalogue not ingested; eRASS1-hard-only results do not rule out soft counterparts; half-sky rights mask required.",
+      "url":"https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/"}
+    RECEIPTS["meerkat_smgps_compact_510599"]={
+      "status":"pending", "reason":"Dense 510599-source radio compact catalogue needs footprint/extended-source classification; SMGPS SNR candidate table is NOT this catalogue.",
+      "url":"https://doi.org/10.48479/h16d-2z55"}
+    RECEIPTS["askap_emu"]={
+      "status":"pending", "reason":"No validated release-dependent mosaic footprint or uniform source-selection query in this run; do not claim non-detections."}
+    RECEIPTS["snrcat_full"]={
+      "status":"pending", "reason":"SMGPS SNRcat overlap subset is NOT the full live SNRcat; external SNRcat coverage/version requires independent freeze.",
+      "url":"https://www.samarsafi-harb.com/snrcat"}
+    RECEIPTS["hawc_latest"]={
+      "status":"pending", "reason":"Newest HAWC release and machine-readable authoritative catalogue not frozen; older 3HWC is not a post-2024 discovery.",
+      "url":"https://data.hawc-observatory.org/datasets/3hwc-survey/catalog.php"}
+
+def main():
+    s=lhaaso()
+    if s is None:
+        pending_only()
+        write_json(OUT/"receipts.json",RECEIPTS)
+        write_json(OUT/"run_status.json",{"status":"primary_catalogue_unavailable","time_utc":utc(),"claims_allowed":False})
+        raise SystemExit("Failed to freeze/validate the primary Cao 2024 catalogue; no census will be claimed.")
+    stages=[
+      ("fermi",fermi),("atnf",atnf),("green",green),
+      ("smgps SNR",meerkat_snrcat),("eROSITA hard",erass_hard),
+      ("Gaia young clusters",gaia_young),("HESS legacy",hess)
+    ]
+    for label,fn in stages:
+        try:
+            fn()
+        except Exception as exc:
+            RECEIPTS["stage_"+label]={"status":"pending","error":repr(exc)}
+    pending_only()
+    write_json(OUT/"receipts.json",RECEIPTS)
+    write_json(OUT/"run_status.json",{
+        "status":"primary_validated_counterpart_catalogues_partial",
+        "time_utc":utc(), "claims_allowed":False,
+        "loaded":sorted(k for k,v in RECEIPTS.items() if v.get("status")=="loaded"),
+        "pending":sorted(k for k,v in RECEIPTS.items() if v.get("status")!="loaded")})
+    print("PRIMARY SOURCES:",len(s),"UHE:",s.uhe.sum())
+    print("CATALOGUE RECEIPTS:",{k:v.get("status") for k,v in RECEIPTS.items()})
+
+if __name__=="__main__": main()
