@@ -245,30 +245,39 @@ def robust(x):
     m=float(np.median(arr))
     return max(float(1.4826*np.median(np.abs(arr-m))),1e-12)
 
-def sources(im,mask):
-    local=np.where(mask,im,np.nan)
-    sky=np.nanmedian(local)
-    sig=robust(local[mask])
-    if not np.isfinite(sig):return []
-    z=ndi.gaussian_filter(np.where(mask,local-sky,0),1.1)
-    m=(z==ndi.maximum_filter(z,size=17)) & (z>7*sig) & ndi.binary_erosion(mask,iterations=15)
+def sources(im,mask,rms):
+    """Prior North v5 positive local-peak/RMS rule, not a global image MAD.
+    Empirical compact-source PSF proxy; stellar identities unverified.
+    """
+    good=mask & np.isfinite(rms) & (rms>0)
+    if good.sum()<100:return []
+    sky=float(np.median(im[good]))
+    base=np.where(good,im,sky)
+    background=ndi.gaussian_filter(base,6)
+    signal=base-background
+    maxmap=ndi.maximum_filter(signal,size=5)
+    m=good & (signal>8*rms) & (signal==maxmap) & ndi.binary_erosion(good,iterations=11)
     yy,xx=np.where(m)
     found=[]
     for x,y in zip(xx,yy):
         if x<16 or y<16 or x>=NP-16 or y>=NP-16:continue
-        stamp=np.maximum(im[y-9:y+10,x-9:x+10]-sky,0)
+        sub=im[y-9:y+10,x-9:x+10]
         Y,X=np.mgrid[-9:10,-9:10]
-        s=stamp.sum()
-        if s<=0:continue
-        cx=float((stamp*X).sum()/s);cy=float((stamp*Y).sum()/s)
-        r2=float((stamp*((X-cx)**2+(Y-cy)**2)).sum()/s)
+        ring=(X*X+Y*Y>=40)
+        local_sky=float(np.median(sub[ring]))
+        stamp=np.maximum(sub-local_sky,0)
+        ss=stamp.sum()
+        if ss<=0:continue
+        cx=float((stamp*X).sum()/ss)
+        cy=float((stamp*Y).sum()/ss)
+        r2=float((stamp*((X-cx)**2+(Y-cy)**2)).sum()/ss)
         sigma=math.sqrt(max(r2/2,.25))
-        if .8<sigma<12 and abs(cx)<2 and abs(cy)<2:
+        if .8<sigma<10 and abs(cx)<2 and abs(cy)<2:
             found.append((int(x),int(y),float(sigma)))
     return found
 
-def psf_calibrate(a,b,mask):
-    sa=sources(a,mask);sb=sources(b,mask)
+def psf_calibrate(a,b,mask,rms_a,rms_b):
+    sa=sources(a,mask,rms_a);sb=sources(b,mask,rms_b)
     psfa=float(np.median([p[2] for p in sa])) if len(sa)>=6 else None
     psfb=float(np.median([p[2] for p in sb])) if len(sb)>=6 else None
     # Never invent a PSF if too few usable calibration sources exist.
@@ -290,7 +299,7 @@ def psf_calibrate(a,b,mask):
     spread=robust(pairs)
     if not (.2<=rat<=5 and np.isfinite(spread) and spread/rat<.25):
         return None,{"status":"UNSTABLE_PHOTOMETRIC_SCALE","n":len(pairs),"scale":rat,"scatter":spread}
-    return (psfa,psfb,rat),{"status":"EMPIRICAL_STAR_PSF_AND_FLUX_MATCH","n_matched":len(pairs),
+    return (psfa,psfb,rat),{"status":"EMPIRICAL_COMPACT_SOURCE_PSF_AND_FLUX_PROXY","n_matched":len(pairs),
                           "psf_sigmas_px":[psfa,psfb],"scale_b_over_a":rat,
                           "robust_fractional_scale_scatter":spread/rat}
 
@@ -406,8 +415,9 @@ def analyse_field(field,manifest):
                 noise=robust(np.concatenate((a["science"][mask][::50],b["science"][mask][::50])))
                 if not np.isfinite(noise):
                     pair["status"]="INVALID_SCIENCE_NOISE";output["band_results"].append(pair);continue
-                cal,calrec=psf_calibrate(a["science"],b["science"],mask)
+                cal,calrec=psf_calibrate(a["science"],b["science"],mask,a["rms"],b["rms"])
                 pair["calibration"]=calrec
+                pair["calibration"]["source_detection"]="reused prior Euclid North v5 signal>8*RMS local-source screen; no independent stellar IDs"
                 if cal is None:
                     pair["status"]="NO_STABLE_PSF_OR_FLUX_CALIBRATION";output["band_results"].append(pair);continue
                 diff,filt,clean,scatter,width=matched_diff(a["science"],b["science"],mask,cal)
