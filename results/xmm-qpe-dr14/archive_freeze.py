@@ -5,6 +5,9 @@ Not a validated complete LS/SDSS nuclear-galaxy parent; Gaia, SIMBAD/blazar
 vetoes and per-observation background/pileup still require downstream review.
 """
 import csv
+import concurrent.futures
+import os
+import re
 import datetime as dt
 import gzip
 import hashlib
@@ -50,36 +53,77 @@ def number(v,default=None):
         return default
 
 def download(urls,path,records):
-    for url in urls:
-        r={"url":url,"start_utc":dt.datetime.now(dt.timezone.utc).isoformat()}
-        start=time.monotonic()
-        try:
-            with API.get(url,stream=True,timeout=(25,90)) as resp:
-                r["http"]=resp.status_code
-                resp.raise_for_status()
-                if int(resp.headers.get("content-length") or 0)>1250*2**20:
-                    raise ValueError("catalogue compressed >1250MiB")
-                md5=hashlib.md5()
-                n=0
-                with path.open("wb") as fp:
-                    for block in resp.iter_content(2**20):
-                        if block:
-                            n+=len(block)
-                            if n>1250*2**20 or time.monotonic()-start>18*60:
-                                raise TimeoutError("catalogue stream budget exceeded")
-                            md5.update(block)
-                            fp.write(block)
-                r.update(size_bytes=n,md5=md5.hexdigest())
-                if md5.hexdigest()!=CAT_MD5:
-                    raise ValueError("published 4XMM catalogue MD5 mismatch")
-                r["verified"]=True
-                records.append(r)
-                return True
-        except Exception as ex:
-            r.update(error=repr(ex)[:400],verified=False)
-            records.append(r)
-            path.unlink(missing_ok=True)
-    return False
+    """Complete checksum-pinned file via bounded concurrent HTTPS byte ranges."""
+    url=urls[0]
+    expected_size=1005466736  # Content-Range from dedicated 206 probe.
+    part_size=16*1024*1024
+    jobs=[(s,min(s+part_size,expected_size)-1)
+          for s in range(0,expected_size,part_size)]
+    nworkers=8
+    started=time.monotonic()
+    record={"url":url,"method":"HTTP Range 206; 8 parallel 16MiB chunks",
+            "expected_size_bytes":expected_size,"expected_md5":CAT_MD5,
+            "n_parts":len(jobs),"verified":False,"chunks":[]}
+    fd=os.open(path,os.O_RDWR|os.O_CREAT|os.O_TRUNC,0o600)
+    os.ftruncate(fd,expected_size)
+    def get_chunk(bounds):
+        first,last=bounds
+        hdr={"Range":f"bytes={first}-{last}",
+             "User-Agent":"Open-Space/DR14-SDSS-range-verified/1.0"}
+        last_error="no attempts"
+        for attempt in range(1,4):
+            received=0; h=hashlib.sha256()
+            try:
+                if time.monotonic()-started>35*60:
+                    raise TimeoutError("whole catalogue byte-range budget exceeded")
+                with requests.get(url,headers=hdr,stream=True,
+                                  timeout=(12,105)) as response:
+                    cr=response.headers.get("Content-Range","")
+                    if response.status_code!=206 or cr!=f"bytes {first}-{last}/{expected_size}":
+                        raise ValueError(f"invalid HTTP Range: {response.status_code} {cr}")
+                    for block in response.iter_content(1024**2):
+                        if not block:continue
+                        if received+len(block)>last-first+1:
+                            raise ValueError("received over requested byte range")
+                        written=os.pwrite(fd,block,first+received)
+                        if written!=len(block):
+                            raise IOError("short disk pwrite")
+                        received+=len(block);h.update(block)
+                    if received!=last-first+1:
+                        raise IOError(f"range length {received} vs {last-first+1}")
+                return {"first":first,"last":last,"sha256":h.hexdigest(),
+                        "bytes":received,"attempt":attempt}
+            except Exception as exc:
+                last_error=repr(exc)[:250]
+                time.sleep(min(attempt,3))
+        raise RuntimeError(f"range {first}-{last} failed: {last_error}")
+    try:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=nworkers) as pool:
+            futures=[pool.submit(get_chunk,x) for x in jobs]
+            for f in concurrent.futures.as_completed(futures):
+                result=f.result()
+                record["chunks"].append(result)
+                if len(record["chunks"])%10==0:
+                    print("CATALOGUE RANGE",len(record["chunks"]),"of",len(jobs),
+                          "elapsed",round(time.monotonic()-started,1),flush=True)
+        os.fsync(fd)
+    except Exception as exc:
+        record["error"]=repr(exc)[:550]
+        record["elapsed_s"]=round(time.monotonic()-started,1)
+        records.append(record)
+        return False
+    finally:
+        os.close(fd)
+    m=hashlib.md5()
+    with path.open("rb") as fp:
+        for data in iter(lambda: fp.read(2**20),b""):
+            m.update(data)
+    record.update(elapsed_s=round(time.monotonic()-started,1),
+                  bytes=path.stat().st_size,md5=m.hexdigest(),
+                  n_received_parts=len(record["chunks"]))
+    record["verified"]=bool(m.hexdigest()==CAT_MD5)
+    records.append(record)
+    return record["verified"]
 
 def main():
     cfg=json.loads((BASE/"control_batch.json").read_text())
