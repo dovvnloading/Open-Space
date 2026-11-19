@@ -103,6 +103,16 @@ jobs:
         continue-on-error: true
         run: |
           python "$RESULT/followup_injections.py" --out "$RESULT/outputs/runs/$GITHUB_RUN_ID"
+      - name: Bounded NIRCam catalogue / exact-filter SED photometry probe
+        if: github.event_name == 'push'
+        continue-on-error: true
+        run: |
+          timeout 420s python "$RESULT/followup_nircam.py" --out "$RESULT/outputs/runs/$GITHUB_RUN_ID"
+      - name: Inspect coadd slit/shutter metadata for interloper overlap (not native DQ)
+        if: github.event_name == 'push'
+        continue-on-error: true
+        run: |
+          python "$RESULT/followup_slits.py" --out "$RESULT/outputs/runs/$GITHUB_RUN_ID"
       - name: Commit observed receipts, compact catalog, 1D fits, and z>12 figures as ONE push
         if: always()
         shell: bash
