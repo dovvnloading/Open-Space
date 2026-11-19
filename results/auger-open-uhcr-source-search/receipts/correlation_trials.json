@@ -16,7 +16,7 @@
   "seed_ra": 20261120,
   "seed_energy": 20261121,
   "sky_control": "independently uniform right ascension, fixed declination + energy",
-  "energy_control": "shuffle energies across fixed RA/Dec",
+  "energy_control": "shuffle energies within SD1500 and inclined strata across fixed RA/Dec",
   "dipole": {
     "n": 3111,
     "amplitude": 0.025422,
@@ -544,8 +544,8 @@
   },
   "energy_shuffle": {
     "B": 999,
-    "minLocal": 0.002,
-    "pGlobal": 0.031,
+    "minLocal": 0.008,
+    "pGlobal": 0.101,
     "trialCount": 39,
     "top": [
       {
@@ -553,96 +553,96 @@
         "energyMin": 32,
         "radius": 27,
         "count": 28,
-        "nullMean": 18.7157,
-        "pLocal": 0.002
-      },
-      {
-        "catalog": "CENT_A",
-        "energyMin": 45,
-        "radius": 27,
-        "count": 11,
-        "nullMean": 6.8238,
-        "pLocal": 0.055
+        "nullMean": 18.4905,
+        "pLocal": 0.008
       },
       {
         "catalog": "YOUNG_ATNF",
         "energyMin": 32,
         "radius": 20,
         "count": 91,
-        "nullMean": 82.3804,
-        "pLocal": 0.058
+        "nullMean": 82.1802,
+        "pLocal": 0.061
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 27,
+        "count": 11,
+        "nullMean": 6.971,
+        "pLocal": 0.064
       },
       {
         "catalog": "MAGNETARS_HIST",
         "energyMin": 32,
         "radius": 20,
         "count": 70,
-        "nullMean": 63.2112,
-        "pLocal": 0.12
+        "nullMean": 62.8028,
+        "pLocal": 0.093
       },
       {
         "catalog": "MAGNETARS_HIST",
         "energyMin": 45,
         "radius": 5,
         "count": 4,
-        "nullMean": 2.7237,
-        "pLocal": 0.277
-      },
-      {
-        "catalog": "CENT_A",
-        "energyMin": 45,
-        "radius": 15,
-        "count": 3,
-        "nullMean": 2.018,
-        "pLocal": 0.33
+        "nullMean": 2.6396,
+        "pLocal": 0.279
       },
       {
         "catalog": "YOUNG_ATNF",
         "energyMin": 32,
         "radius": 10,
         "count": 44,
-        "nullMean": 41.6577,
-        "pLocal": 0.333
+        "nullMean": 41.6837,
+        "pLocal": 0.348
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 15,
+        "count": 3,
+        "nullMean": 2.1411,
+        "pLocal": 0.374
       },
       {
         "catalog": "YOUNG_ATNF",
         "energyMin": 45,
         "radius": 20,
         "count": 32,
-        "nullMean": 30.7127,
-        "pLocal": 0.426
+        "nullMean": 30.6927,
+        "pLocal": 0.421
       },
       {
         "catalog": "STARBURST_PILOT",
         "energyMin": 45,
         "radius": 25,
         "count": 21,
-        "nullMean": 20.1001,
-        "pLocal": 0.436
+        "nullMean": 20.2743,
+        "pLocal": 0.468
       },
       {
         "catalog": "STARBURST_PILOT",
         "energyMin": 32,
         "radius": 13,
         "count": 15,
-        "nullMean": 14.3694,
-        "pLocal": 0.461
+        "nullMean": 14.5485,
+        "pLocal": 0.498
       },
       {
         "catalog": "CENT_A",
         "energyMin": 32,
         "radius": 15,
         "count": 6,
-        "nullMean": 5.5736,
-        "pLocal": 0.488
+        "nullMean": 5.6326,
+        "pLocal": 0.509
       },
       {
         "catalog": "MAGNETARS_HIST",
         "energyMin": 45,
         "radius": 20,
         "count": 23,
-        "nullMean": 23.4825,
-        "pLocal": 0.619
+        "nullMean": 23.4494,
+        "pLocal": 0.588
       }
     ],
     "controls": [
@@ -651,64 +651,64 @@
         "energyMin": 32,
         "radius": 27,
         "count": 28,
-        "nullMean": 18.7157,
-        "pLocal": 0.002
+        "nullMean": 18.4905,
+        "pLocal": 0.008
       },
       {
         "catalog": "CENT_A",
         "energyMin": 45,
         "radius": 27,
         "count": 11,
-        "nullMean": 6.8238,
-        "pLocal": 0.055
+        "nullMean": 6.971,
+        "pLocal": 0.064
       },
       {
         "catalog": "CENT_A",
         "energyMin": 45,
         "radius": 15,
         "count": 3,
-        "nullMean": 2.018,
-        "pLocal": 0.33
+        "nullMean": 2.1411,
+        "pLocal": 0.374
       },
       {
         "catalog": "STARBURST_PILOT",
         "energyMin": 45,
         "radius": 25,
         "count": 21,
-        "nullMean": 20.1001,
-        "pLocal": 0.436
+        "nullMean": 20.2743,
+        "pLocal": 0.468
       },
       {
         "catalog": "STARBURST_PILOT",
         "energyMin": 32,
         "radius": 13,
         "count": 15,
-        "nullMean": 14.3694,
-        "pLocal": 0.461
+        "nullMean": 14.5485,
+        "pLocal": 0.498
       },
       {
         "catalog": "CENT_A",
         "energyMin": 32,
         "radius": 15,
         "count": 6,
-        "nullMean": 5.5736,
-        "pLocal": 0.488
+        "nullMean": 5.6326,
+        "pLocal": 0.509
       },
       {
         "catalog": "STARBURST_PILOT",
         "energyMin": 45,
         "radius": 13,
         "count": 5,
-        "nullMean": 5.2973,
-        "pLocal": 0.638
+        "nullMean": 5.5425,
+        "pLocal": 0.672
       },
       {
         "catalog": "STARBURST_PILOT",
         "energyMin": 32,
         "radius": 25,
         "count": 52,
-        "nullMean": 54.024,
-        "pLocal": 0.703
+        "nullMean": 53.964,
+        "pLocal": 0.695
       },
       {
         "catalog": "STARBURST_PILOT",
@@ -749,200 +749,200 @@
         "energyMin": 32,
         "radius": 27,
         "count": 28,
-        "nullMean": 18.7157,
-        "pLocal": 0.002
-      },
-      {
-        "catalog": "CENT_A",
-        "energyMin": 45,
-        "radius": 27,
-        "count": 11,
-        "nullMean": 6.8238,
-        "pLocal": 0.055
+        "nullMean": 18.4905,
+        "pLocal": 0.008
       },
       {
         "catalog": "YOUNG_ATNF",
         "energyMin": 32,
         "radius": 20,
         "count": 91,
-        "nullMean": 82.3804,
-        "pLocal": 0.058
+        "nullMean": 82.1802,
+        "pLocal": 0.061
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 27,
+        "count": 11,
+        "nullMean": 6.971,
+        "pLocal": 0.064
       },
       {
         "catalog": "MAGNETARS_HIST",
         "energyMin": 32,
         "radius": 20,
         "count": 70,
-        "nullMean": 63.2112,
-        "pLocal": 0.12
+        "nullMean": 62.8028,
+        "pLocal": 0.093
       },
       {
         "catalog": "MAGNETARS_HIST",
         "energyMin": 45,
         "radius": 5,
         "count": 4,
-        "nullMean": 2.7237,
-        "pLocal": 0.277
-      },
-      {
-        "catalog": "CENT_A",
-        "energyMin": 45,
-        "radius": 15,
-        "count": 3,
-        "nullMean": 2.018,
-        "pLocal": 0.33
+        "nullMean": 2.6396,
+        "pLocal": 0.279
       },
       {
         "catalog": "YOUNG_ATNF",
         "energyMin": 32,
         "radius": 10,
         "count": 44,
-        "nullMean": 41.6577,
-        "pLocal": 0.333
+        "nullMean": 41.6837,
+        "pLocal": 0.348
+      },
+      {
+        "catalog": "CENT_A",
+        "energyMin": 45,
+        "radius": 15,
+        "count": 3,
+        "nullMean": 2.1411,
+        "pLocal": 0.374
       },
       {
         "catalog": "YOUNG_ATNF",
         "energyMin": 45,
         "radius": 20,
         "count": 32,
-        "nullMean": 30.7127,
-        "pLocal": 0.426
+        "nullMean": 30.6927,
+        "pLocal": 0.421
       },
       {
         "catalog": "STARBURST_PILOT",
         "energyMin": 45,
         "radius": 25,
         "count": 21,
-        "nullMean": 20.1001,
-        "pLocal": 0.436
+        "nullMean": 20.2743,
+        "pLocal": 0.468
       },
       {
         "catalog": "STARBURST_PILOT",
         "energyMin": 32,
         "radius": 13,
         "count": 15,
-        "nullMean": 14.3694,
-        "pLocal": 0.461
+        "nullMean": 14.5485,
+        "pLocal": 0.498
       },
       {
         "catalog": "CENT_A",
         "energyMin": 32,
         "radius": 15,
         "count": 6,
-        "nullMean": 5.5736,
-        "pLocal": 0.488
+        "nullMean": 5.6326,
+        "pLocal": 0.509
       },
       {
         "catalog": "MAGNETARS_HIST",
         "energyMin": 45,
         "radius": 20,
         "count": 23,
-        "nullMean": 23.4825,
-        "pLocal": 0.619
+        "nullMean": 23.4494,
+        "pLocal": 0.588
       },
       {
         "catalog": "MAGNETARS_HIST",
         "energyMin": 32,
         "radius": 5,
         "count": 7,
-        "nullMean": 7.3183,
-        "pLocal": 0.632
-      },
-      {
-        "catalog": "STARBURST_PILOT",
-        "energyMin": 45,
-        "radius": 13,
-        "count": 5,
-        "nullMean": 5.2973,
-        "pLocal": 0.638
+        "nullMean": 7.2132,
+        "pLocal": 0.619
       },
       {
         "catalog": "MAGNETARS_HIST",
         "energyMin": 32,
         "radius": 10,
         "count": 24,
-        "nullMean": 24.985,
-        "pLocal": 0.647
+        "nullMean": 24.9099,
+        "pLocal": 0.634
+      },
+      {
+        "catalog": "STARBURST_PILOT",
+        "energyMin": 45,
+        "radius": 13,
+        "count": 5,
+        "nullMean": 5.5425,
+        "pLocal": 0.672
       },
       {
         "catalog": "LHAASO_1",
         "energyMin": 45,
         "radius": 20,
         "count": 8,
-        "nullMean": 8.8909,
-        "pLocal": 0.701
+        "nullMean": 8.7397,
+        "pLocal": 0.684
       },
       {
         "catalog": "STARBURST_PILOT",
         "energyMin": 32,
         "radius": 25,
         "count": 52,
-        "nullMean": 54.024,
-        "pLocal": 0.703
+        "nullMean": 53.964,
+        "pLocal": 0.695
       },
       {
         "catalog": "LHAASO_1",
         "energyMin": 45,
         "radius": 10,
         "count": 4,
-        "nullMean": 4.7107,
-        "pLocal": 0.724
+        "nullMean": 4.7407,
+        "pLocal": 0.729
       },
       {
         "catalog": "YOUNG_ATNF",
         "energyMin": 45,
         "radius": 10,
         "count": 14,
-        "nullMean": 15.4484,
-        "pLocal": 0.733
+        "nullMean": 15.5666,
+        "pLocal": 0.737
       },
       {
         "catalog": "MAGNETARS_HIST",
         "energyMin": 45,
         "radius": 10,
         "count": 8,
-        "nullMean": 9.3554,
-        "pLocal": 0.766
+        "nullMean": 9.2503,
+        "pLocal": 0.74
+      },
+      {
+        "catalog": "YOUNG_ATNF",
+        "energyMin": 32,
+        "radius": 5,
+        "count": 18,
+        "nullMean": 20.5455,
+        "pLocal": 0.805
       },
       {
         "catalog": "YOUNG_ATNF",
         "energyMin": 45,
         "radius": 5,
         "count": 6,
-        "nullMean": 7.5876,
-        "pLocal": 0.816
-      },
-      {
-        "catalog": "YOUNG_ATNF",
-        "energyMin": 32,
-        "radius": 5,
-        "count": 18,
-        "nullMean": 20.6216,
-        "pLocal": 0.818
+        "nullMean": 7.6727,
+        "pLocal": 0.813
       },
       {
         "catalog": "LHAASO_1",
         "energyMin": 32,
         "radius": 10,
         "count": 9,
-        "nullMean": 12.5646,
-        "pLocal": 0.926
+        "nullMean": 12.6326,
+        "pLocal": 0.94
       },
       {
         "catalog": "LHAASO_1",
         "energyMin": 32,
         "radius": 20,
         "count": 18,
-        "nullMean": 23.7528,
-        "pLocal": 0.947
+        "nullMean": 23.6006,
+        "pLocal": 0.955
       },
       {
         "catalog": "LHAASO_1",
         "energyMin": 32,
         "radius": 5,
         "count": 2,
-        "nullMean": 4.0701,
-        "pLocal": 0.953
+        "nullMean": 4.1722,
+        "pLocal": 0.958
       },
       {
         "catalog": "YOUNG_ATNF",
@@ -1053,7 +1053,7 @@
         "energyMin": 45,
         "radius": 5,
         "count": 0,
-        "nullMean": 1.5065,
+        "nullMean": 1.5335,
         "pLocal": 1
       }
     ]
