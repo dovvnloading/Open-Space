@@ -45,7 +45,7 @@ def review(folder):
                 assert "cds" in rec["url"].lower()
             verified.append("Whole-source CDS record count and hashed byte receipts.")
             blockers.append("CDS mirror version not demonstrated identical to IAP v1.1 May 2026.")
-            blockers.append("zPDF-u68 / marginal mass quantiles are not joint p(M*,z); cannot establish true high-z candidate denominator.")
+            blockers.append("COSMOS2025 physical-property mass intervals hold redshift at the point estimate: they do NOT propagate z uncertainty. They are not a joint p(M*,z) and cannot establish a true high-z candidate denominator.")
             blockers.append("Catalogue rows lack individual source IDs/coordinates until photometry product is paired and validated.")
             full=folder/"run"/"highz_triage_all.csv.gz"
             if not full.exists():
@@ -54,7 +54,8 @@ def review(folder):
                 assert hashlib.sha256(full.read_bytes()).hexdigest()==c["triage_all_sha256"]
                 with gzip.open(full,"rt",newline="") as ff:
                     allrows=list(csv.DictReader(ff))
-                assert len(allrows)==c["galaxy_zfinal_or_u68_gt6"]
+                assert len(allrows)==c["galaxy_and_agn_zfinal_or_u68_gt6"]
+                assert c["galaxy_zfinal_or_u68_gt6"]+c["agn_zfinal_or_u68_gt6"]==len(allrows)
                 verified.append("ALL marginal high-z source rows retained and compressed with an exact SHA256.")
 
             top=folder/"run"/"highz_triage_top250.csv"
