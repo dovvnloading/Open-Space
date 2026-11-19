@@ -380,6 +380,8 @@ Some multi-part investigations also keep index pages and search logs: [15 Nov ar
 
 ## For researchers and developers
 
+- **A JWST most-distant-galaxy search is prepared but not yet tested on the telescope pixels.** The [DJA/MAST NIRSpec preflight](results/jwst-dja-nirspec-highz-screen/README.md) records the public spectrum-release inventory and reproducible test scripts; raw downloads, independent redshift fits, 2D and photometric checks remain pending. **No new galaxy and no survey-wide null result are claimed.** *Provisional; excluded from the completed-results count.*
+
 The [DR20 AGN pilot methods and calibration checks](results/dr20-clagn-pilot/README.md) document a bounded multi-epoch spectroscopy experiment.
 
 The [cold-neighbour search methods and reproduction evidence](results/cold-neighbours-motion-selected/README.md) document bounded catalogue and image tests.
