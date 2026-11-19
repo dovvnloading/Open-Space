@@ -1,56 +1,22 @@
-# One dedicated manual GitHub Actions runner for PR #197
+# DJA v4.4 z>9 NIRSpec — manual and automatic Actions runner
 
-The default branch already contains the workflow
-`.github/workflows/jwst-dja-nirspec-preflight.yml` with
-`workflow_dispatch`. PR #197 extends this EXISTING file with a single
-gated science job. It can therefore run on the PR branch **without**
-putting the research code on main first.
+The existing GitHub workflow `.github/workflows/jwst-dja-nirspec-preflight.yml` is configured on the PR branch for **one** networked job `targeted-dja-v44-zgt9`. It uses GitHub-hosted Actions runners, not the offline local Python sandbox.
 
-To launch: GitHub repository → **Actions** → **JWST DJA NIRSpec
-high-z preflight** → **Run workflow** → select
-`research/jwst-dja-v44-zgt9-targeted` → **Run workflow**.
-No extra input is needed. This is deliberately **manual only**: it
-does not start on every push. `workflow_dispatch` has no native path
-filter; its one research job is guarded by the exact branch ref and
-touches only `results/jwst-dja-nirspec-zgt9-targeted/`.
-The legacy PR #195 preflight is not run on manual dispatch.
+## Triggering
 
-The job uses the GitHub-hosted network, not the networkless Python
-sandbox. It fetches the **exact v4.4 summary CSV.gz** (publisher MD5
-`721c58c446f4a4eb1570aef02c4ab47b`), verifies all 80,367
-catalog rows, and selects any spectrum with a DJA redshift hint >9
-plus published z>12 positive controls. It then fetches **only those
-individual .spec.fits** from the DJA S3 HTTPS host, with the
-documented alternate CANUCS bucket where appropriate; **no
-8.4-GB Zenodo spectral shard is downloaded**. Each GET, SHA-256,
-failure and FITS check is recorded.
+- **Manual:** Actions → **JWST DJA NIRSpec high-z preflight** → **Run workflow** → branch `research/jwst-dja-v44-zgt9-targeted`. This worked for [run #44454883069](https://github.com/dovvnloading/Open-Space/actions/runs/44454883069).
+- **Automatic future runs:** a `push` to `research/jwst-dja-v44-zgt9-targeted` changing files under `results/jwst-dja-nirspec-zgt9-targeted/**` or the workflow file triggers the **same** job. **Output-only changes under `results/jwst-dja-nirspec-zgt9-targeted/outputs/**` are excluded by the negative path pattern**, preventing the Actions bot's automatic commit from rerunning itself. The legacy #195 preflight job is skipped on pushes to the targeted branch.
+- `workflow_dispatch` does not support native `paths` filters; the workflow applies branch/job guards. There is one research job, no matrix or separate downloader/fit jobs. The Actions run deposits receipts with one Git commit/push using a narrowly scoped `contents: write` token.
+- Future runs write to **`outputs/runs/<run_id>/`** rather than overwriting the original [run #44454883069](outputs/run_receipt.json) output set at `outputs/`. Its observed job finished successfully and committed 999 FITS download receipts, 999 unvetted 1D proxy fits and 64 plotted coadded 2D figures.
 
-The 1D model reuses PR #195's *exploratory* high-z
-Lyman-break/wing versus dusty Balmer, line-confusion, stellar/dwarf
-and artefact template comparisons, now including z=9–10; the
-numerical scores are **NOT calibrated astrophysical probabilities**.
-For every catalog z>12 solution, matched published control and
-proxy-supported z>12 review item, it attempts a figure displaying
-the actual FITS SCI (and WHT, when available) 2D pixels plus 1D
-spectrum. A co-added extraction is NOT a disjoint independent
-exposure and the 2D x-axis may be approximate. If SCI is absent,
-the record explicitly says so.
+## Fixed data and computation
 
-A compact 80,367-row denominator, target selection list, observed
-download and redshift-fit receipts, all available 2D figures, and an
-object-by-object z>12 priority-review queue are committed **once**
-to `outputs/` on the PR branch by the workflow's scoped token.
-The full audit is additionally an Actions artifact; raw FITS and
-the 133 MB summary are **not** committed. All non-control objects
-remain `UNREVIEWED_NOT_NEW`. The job does NOT invent an ADS/arXiv
-priority verdict, independent native-exposure/DQ check or NIRCam
-passband-convolved photometric validation.
+The code downloads only the **133,004,545-byte** publisher-MD5-verified DJA v4.4 **summary CSV.gz**, checks all 80,367 rows, and selects `z_best>9`, `z_phot>9`, and six literature baseline controls. It downloads only those individual `spec.fits` products by verified DJA S3 URL, using a documented alternate CANUCS bucket where applicable, with HTTPS GET, byte counts, SHA-256 and FITS HDU validation. The initial successful run selected and downloaded 999 spectra totaling **2,038,757,760 bytes**. The nine combined Zenodo spectral shards are **not** downloaded.
 
-**Blocking behavior:** A failed publisher MD5, DNS/HTTPS GET,
-partial individual FITS retrieval or numerical error is recorded in
-`outputs/run_receipt.json` and the job fails. A complete unvetted
-1D run may still have a green workflow, but **PR #197 remains a draft**
-until a separate referee has examined source-specific 2D/native
-exposures, NIRCam flux limits, interloper priors and the literature
-for *every* surviving z>12 case. No `[REMARKABLE]` or discovery
-claim follows from this automation.
+The 1D model uses the prior PR #195 Lyman continuum break/damping-wing versus dusty Balmer/4000 Å, line-confusion, approximate stellar/brown-dwarf and artefact templates; it is an **uncalibrated proxy**, not validated posterior odds. Its 2D figures show individual coadded SCI (and WHT, if present) pixels, not independent detector exposures. The source names, 1D fit values, observed download digests, 2D images and a z>12 review queue are committed; large raw FITS and the 133 MB original catalog are left outside Git.
+
+## Data gate and scientific release gate
+
+The workflow emits `run_receipt.json` even on GET/MD5/fitting failures, and marks a run failed on blocked retrieval or partial downloads. A green run only means the **observed scripted retrieval and unvetted 1D computation** completed. It cannot establish new z>12 galaxies, a fully sampled survey null, NIRCam red/blue SED support, clean independent native exposures or literature novelty.
+
+The [referee report](REFEREE.md) and [27-position identity ledger](literature_referee_2026-11-19.json) found published lower-z false positives including RUBIES-UDS-144195 and JADES-GN-11508, as well as a too-wide 0.5″ positive-control crossmatch. The next selector uses **0.2″** with an explicit nearby-source regression test. No `[REMARKABLE]` entry. **PR #197 remains draft/unmerged until full independent validation.**

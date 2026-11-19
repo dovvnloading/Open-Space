@@ -9,6 +9,12 @@ on:
   push:
     branches:
       - "research/jwst-dja-nirspec-highz-screen"
+      - "research/jwst-dja-v44-zgt9-targeted"
+    paths:
+      - "results/jwst-dja-nirspec-highz-screen/**"
+      - "results/jwst-dja-nirspec-zgt9-targeted/**"
+      - "!results/jwst-dja-nirspec-zgt9-targeted/outputs/**"
+      - ".github/workflows/jwst-dja-nirspec-preflight.yml"
   workflow_dispatch:
 
 permissions:
@@ -16,7 +22,10 @@ permissions:
 
 jobs:
   preflight:
-    if: github.event_name != 'workflow_dispatch'
+    if: >-
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'push' &&
+       github.ref == 'refs/heads/research/jwst-dja-nirspec-highz-screen')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -38,11 +47,12 @@ jobs:
         run: python -m open_space.verify --worktree
 
   targeted-dja-v44-zgt9:
-    # workflow_dispatch does not natively support paths filters. Only the
-    # branch for PR #197 can run the manual science job, which operates on
-    # results/jwst-dja-nirspec-zgt9-targeted/ exclusively.
+    # workflow_dispatch has no paths filter; push is path-filtered above.
+    # Bot commits to outputs/** are excluded, avoiding recursive runs.
+    # Only PR #197's dedicated branch can run this science job.
     if: >-
-      github.event_name == 'workflow_dispatch' &&
+      (github.event_name == 'workflow_dispatch' ||
+       github.event_name == 'push') &&
       github.ref == 'refs/heads/research/jwst-dja-v44-zgt9-targeted'
     runs-on: ubuntu-latest
     timeout-minutes: 330
@@ -76,12 +86,12 @@ jobs:
       - name: Probe archive endpoints from GitHub Actions
         continue-on-error: true
         run: |
-          mkdir -p "$RESULT/outputs"
-          python "$RESULT/host_probe.py" > "$RESULT/outputs/runner_host_probe.json"
+          mkdir -p "$RESULT/outputs/runs/$GITHUB_RUN_ID"
+          python "$RESULT/host_probe.py" > "$RESULT/outputs/runs/$GITHUB_RUN_ID/runner_host_probe.json"
       - name: Verify v4.4 MD5, select z>9 and controls, fetch ONLY selected FITS, fit and plot 2D
         continue-on-error: true
         run: |
-          python "$RESULT/run_dispatch.py" --work /tmp/dja-zgt9 --out "$RESULT/outputs"
+          python "$RESULT/run_dispatch.py" --work /tmp/dja-zgt9 --out "$RESULT/outputs/runs/$GITHUB_RUN_ID"
       - name: Commit observed receipts, compact catalog, 1D fits, and z>12 figures as ONE push
         if: always()
         shell: bash
@@ -111,7 +121,7 @@ jobs:
         run: |
           python - <<'PY'
           import json, pathlib, os
-          p=pathlib.Path("results/jwst-dja-nirspec-zgt9-targeted/outputs/run_receipt.json")
+          p=pathlib.Path(f"results/jwst-dja-nirspec-zgt9-targeted/outputs/runs/{os.environ['GITHUB_RUN_ID']}/run_receipt.json")
           if not p.exists():
               raise SystemExit("BLOCKED: no scientific run receipt; leave PR draft")
           r=json.loads(p.read_text())

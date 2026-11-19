@@ -35,7 +35,7 @@ def angular_sep_arcsec(a, b, c, d):
     return 2 * math.asin(min(1., math.sqrt(max(0., hav)))) * 180/math.pi * 3600
 
 
-def classify(row, zcols, controls, radius=0.5):
+def classify(row, zcols, controls, radius=0.2):
     hints = []
     for col in zcols:
         try:
@@ -126,6 +126,15 @@ def self_test():
     assert [bool(a or b) for a,b in reasons] == [True, True, True, False, True]
     assert reasons[2][1] == ["control:position"]
     assert reasons[4][1] == ["control:id"]
+    # A real v4.4 neighboring low-z galaxy, MSA 183349, lies ~0.37 arcsec
+    # from published GS-z14-0 MSA 183348. 0.5 arcsec falsely called it a
+    # published positive control; a 0.2 arcsec positional gate rejects it.
+    gs14 = [{"name":"GS-z14-0", "catalog_source_id":"1287_183348",
+             "ra_deg":53.0829371, "dec_deg":-27.8556321}]
+    neighbour = {"z_best":"3.4737", "z_phot":"-1.0",
+                 "file":"jades-gds10-v4_prism-clear_1287_183349.spec.fits",
+                 "ra":"53.0830522","dec":"-27.8556219"}
+    assert classify(neighbour, ("z_best","z_phot"), gs14) == ([],[])
     assert angular_sep_arcsec(10,20,10,20)==0
     print("PASS selection rule / positive-control positional & ID inclusion (synthetic only)")
 
