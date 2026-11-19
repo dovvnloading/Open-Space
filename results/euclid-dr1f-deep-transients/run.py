@@ -325,7 +325,9 @@ def psf_calibrate(a,b,mask,rms_a,rms_b):
     if len(pairs)<6:
         return None,{"status":"INSUFFICIENT_MATCHED_STARS","matched":len(pairs),"sources_a":len(sa),"sources_b":len(sb)}
     rat=float(np.median(pairs))
-    spread=robust(pairs)
+    # The sky-noise robust() helper requires >=40 pixels; here only six
+    # matched compact sources are predeclared as sufficient for a scale.
+    spread=max(float(1.4826*np.median(np.abs(np.asarray(pairs)-rat))),1e-12)
     if not (.2<=rat<=5 and np.isfinite(spread) and spread/rat<.25):
         return None,{"status":"UNSTABLE_PHOTOMETRIC_SCALE","n":len(pairs),"scale":rat,"scatter":spread}
     return (psfa,psfb,rat),{"status":"EMPIRICAL_COMPACT_SOURCE_PSF_AND_FLUX_PROXY","n_matched":len(pairs),
