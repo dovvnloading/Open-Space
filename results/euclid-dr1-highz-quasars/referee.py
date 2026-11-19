@@ -89,7 +89,12 @@ def audit():
     assert summary["confirmed_new_quasars"]==0 and not summary["discovery_level"]
     requested=sum(2*math.pi*(180/math.pi)**2*(1-math.cos(math.radians(x["r"])))
                   for x in freeze["fields"])
-    assert round(requested,6)==summary["nominal_requested_cones_deg2_NOT_VERIFIED_IMAGE_FOOTPRINT"]
+    # The prospectively deposited TAP report sums individually rounded cone areas.
+    per_cone_rounded=sum(round(2*math.pi*(180/math.pi)**2*
+                              (1-math.cos(math.radians(x["r"]))),6)
+                         for x in freeze["fields"])
+    assert abs(per_cone_rounded-
+               summary["nominal_requested_cones_deg2_NOT_VERIFIED_IMAGE_FOOTPRINT"])<1e-6
     blue=sum(jh<-.5 for jh in dist)
     near_qso=sum(-.5<=jh<=.45 for jh in dist)
     report={
