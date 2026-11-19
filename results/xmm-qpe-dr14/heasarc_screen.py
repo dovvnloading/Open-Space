@@ -43,6 +43,8 @@ def listing(obsid, retries=2):
                 trial["entries"] = len(set(entries))
                 trial["pps_src_tsr"] = len([x for x in entries if "PN" in x.upper() and "SRCTSR" in x.upper()])
                 trial["pps_fbk_tsr"] = len([x for x in entries if "PN" in x.upper() and "FBKTSR" in x.upper()])
+                trial["src_examples"] = [x for x in entries if x.upper().startswith("P"+obsid+"PN") and "SRCTSR" in x.upper() and x.upper().endswith(".FTZ")][:12]
+                trial["fbk_examples"] = [x for x in entries if x.upper().startswith("P"+obsid+"PN") and "FBKTSR" in x.upper() and x.upper().endswith(".FTZ")][:5]
                 trial["pn_examples"] = [x for x in entries if x.upper().startswith("P"+obsid+"PN")][:25]
                 trial["html_sha256"] = hashlib.sha256(response.content).hexdigest()
                 if not entries:
@@ -65,7 +67,44 @@ def main():
          "obsids":{},"complete_survey":False,"pn_curves_screened":0}
     for obsid in obsids:
         rec["obsids"][obsid]=listing(obsid)
+        if cfg.get("inspect_fits") and "http_status" in rec["obsids"][obsid][-1]:
+            rec["obsids"][obsid][-1]["fits_samples"]=inspect_sample(obsid,rec["obsids"][obsid][-1])
         (OUT/"heasarc_probe_01.json").write_text(json.dumps(rec,indent=2)+"\n")
         print("HEASARC_PROBE",obsid,json.dumps(rec["obsids"][obsid][-1])[:1000],flush=True)
+
+
+def inspect_sample(obsid, trial):
+    import gzip
+    import io
+    from astropy.io import fits
+    names=trial.get("src_examples",[])[:3] + trial.get("fbk_examples",[])[:1]
+    out=[]
+    for name in names:
+        record={"filename":name,"url":HOST+obsid+"/PPS/"+name}
+        try:
+            with S.get(record["url"],stream=True,timeout=(15,40)) as response:
+                record["http_status"]=response.status_code
+                response.raise_for_status()
+                buf=bytearray()
+                for chunk in response.iter_content(262144):
+                    buf.extend(chunk)
+                    if len(buf)>30*1024*1024:raise ValueError("30MiB probe limit")
+            record["bytes"]=len(buf)
+            record["compressed_sha256"]=hashlib.sha256(buf).hexdigest()
+            raw=gzip.decompress(bytes(buf)) if name.upper().endswith(".FTZ") else bytes(buf)
+            record["uncompressed_bytes"]=len(raw)
+            record["uncompressed_sha256"]=hashlib.sha256(raw).hexdigest()
+            with fits.open(io.BytesIO(raw),memmap=False) as h:
+                record["hdus"]=[]
+                for x in h[:5]:
+                    row={"name":x.name,"rows":len(x.data) if x.data is not None else 0,
+                        "cols":list(x.data.names)[:50] if x.data is not None and hasattr(x.data,"names") else []}
+                    row["headers"]={k:x.header.get(k) for k in ("HDUCLAS2","SRC_RA","SRC_DEC",
+                      "RA_OBJ","DEC_OBJ","RA","DEC","MJDREF","MJDREFI","MJDREFF","TIMESYS","BGOPTCUT") if k in x.header}
+                    record["hdus"].append(row)
+        except Exception as exc:
+            record["error"]=repr(exc)[:250]
+        out.append(record)
+    return out
 
 if __name__=="__main__": main()
