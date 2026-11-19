@@ -1,0 +1,131 @@
+{
+  "utc": "2026-11-19T08:29:42.277920+00:00",
+  "policy": "First two non-spectroscopic source positions sorted survey/id from deterministic catalog-referee sample",
+  "tested": 2,
+  "per_position": [
+    {
+      "id": 300,
+      "ra_deg": 7.51542,
+      "dec_deg": 3.51417,
+      "timestamp": "2026-11-19T08:29:42.278416+00:00",
+      "image_sensitivity": {
+        "wide_VIS": {
+          "status": "EXPLORATORY_NOT_VALIDATED",
+          "center_flux_adu_per_sec": 27.5641348650679,
+          "blank_median_adu_per_sec": 6.715361617156304,
+          "blank_mad_sigma_adu_per_sec": 29.58127604470061,
+          "central_SNR_rough": 0.7047962777672867,
+          "aperture_radius_arcsec": 3.0,
+          "aperture_area_arcsec2": 28.280000000004524,
+          "n_blank_apertures": 12,
+          "empirical_5sigma_mag_AB": 18.97503272869783,
+          "empirical_5sigma_mean_SB_mag_AB_arcsec2": 22.603731241510157,
+          "flag_mask_verified": false,
+          "completeness_calibrated": false,
+          "interpretation": "Local background-aperture diagnostic only; unmasked sources/correlated samples.",
+          "tile_id": "102087949",
+          "s3_key": "dr1/MER/102087949/VIS/EUC_MER_BGSUB-MOSAIC-VIS_TILE102087949-1EF1E3_20250810T191527.597046Z_00.00.fits",
+          "s3_bucket": "nasa-irsa-euclid-dr1",
+          "source_MAGZERO_AB": 24.4,
+          "source_BUNIT": "ADU/s",
+          "source_DATASER": "DR1_R1",
+          "source_PPLANID": "MER_ProcessTile_EUCLID_2.0.32-DATA_RELEASE-trochequ-PLAN-000000"
+        }
+      },
+      "image_access": [
+        {
+          "collection": "euclid_dr1_deep_DpdMerBksMosaic",
+          "rows": 0
+        },
+        {
+          "collection": "euclid_dr1_wide_DpdMerBksMosaic",
+          "rows": 32
+        },
+        {
+          "collection": "euclid_dr1_wide_DpdMerBksMosaic",
+          "band": "Y",
+          "status": "IMAGE_ERROR",
+          "error": "Uncalibrated/nonstandard BUNIT: ELECTRON/s"
+        },
+        {
+          "collection": "euclid_dr1_wide_DpdMerBksMosaic",
+          "band": "J",
+          "status": "IMAGE_ERROR",
+          "error": "Uncalibrated/nonstandard BUNIT: ELECTRON/s"
+        },
+        {
+          "collection": "euclid_dr1_wide_DpdMerBksMosaic",
+          "band": "H",
+          "status": "IMAGE_ERROR",
+          "error": "Uncalibrated/nonstandard BUNIT: ELECTRON/s"
+        }
+      ],
+      "validated_Mstar_limit": null,
+      "validated_MHI_over_Mstar_bound": null,
+      "valid_local_pixel_estimates": 1
+    },
+    {
+      "id": 301,
+      "ra_deg": 7.5475,
+      "dec_deg": 2.09528,
+      "timestamp": "2026-11-19T08:29:53.087357+00:00",
+      "image_sensitivity": {
+        "wide_VIS": {
+          "status": "EXPLORATORY_NOT_VALIDATED",
+          "center_flux_adu_per_sec": 710.5008651912212,
+          "blank_median_adu_per_sec": 51.43989438563585,
+          "blank_mad_sigma_adu_per_sec": 390.3237864499468,
+          "central_SNR_rough": 1.6884980974381385,
+          "aperture_radius_arcsec": 3.0,
+          "aperture_area_arcsec2": 28.280000000004524,
+          "n_blank_apertures": 12,
+          "empirical_5sigma_mag_AB": 16.174012443847026,
+          "empirical_5sigma_mean_SB_mag_AB_arcsec2": 19.80271095665935,
+          "flag_mask_verified": false,
+          "completeness_calibrated": false,
+          "interpretation": "Local background-aperture diagnostic only; unmasked sources/correlated samples.",
+          "tile_id": "102085789",
+          "s3_key": "dr1/MER/102085789/VIS/EUC_MER_BGSUB-MOSAIC-VIS_TILE102085789-92A248_20250810T110933.638740Z_00.00.fits",
+          "s3_bucket": "nasa-irsa-euclid-dr1",
+          "source_MAGZERO_AB": 24.4,
+          "source_BUNIT": "ADU/s",
+          "source_DATASER": "DR1_R1",
+          "source_PPLANID": "MER_ProcessTile_EUCLID_2.0.32-DATA_RELEASE-trochequ-PLAN-000000"
+        }
+      },
+      "image_access": [
+        {
+          "collection": "euclid_dr1_deep_DpdMerBksMosaic",
+          "rows": 0
+        },
+        {
+          "collection": "euclid_dr1_wide_DpdMerBksMosaic",
+          "rows": 32
+        },
+        {
+          "collection": "euclid_dr1_wide_DpdMerBksMosaic",
+          "band": "Y",
+          "status": "IMAGE_ERROR",
+          "error": "Uncalibrated/nonstandard BUNIT: ELECTRON/s"
+        },
+        {
+          "collection": "euclid_dr1_wide_DpdMerBksMosaic",
+          "band": "J",
+          "status": "IMAGE_ERROR",
+          "error": "Uncalibrated/nonstandard BUNIT: ELECTRON/s"
+        },
+        {
+          "collection": "euclid_dr1_wide_DpdMerBksMosaic",
+          "band": "H",
+          "status": "IMAGE_ERROR",
+          "error": "Uncalibrated/nonstandard BUNIT: ELECTRON/s"
+        }
+      ],
+      "validated_Mstar_limit": null,
+      "validated_MHI_over_Mstar_bound": null,
+      "valid_local_pixel_estimates": 1
+    }
+  ],
+  "validated_stellar_upper_limits_count": 0,
+  "reason": "Not validated: background apertures lack exposure/segmentation-quality masks, injection-completeness calibration, and robust source SED/distance association. Even a numeric local limit is NOT an astrophysical Mstar bound."
+}

@@ -1,0 +1,5 @@
+# Output provenance and revision order
+
+The reproducible input catalogue-and-Euclid-footprint result is `summary.json`, `footprint_hits.csv` and `receipts.json`; all three have the same geometry/denominator in the completed 19 November runner. An earlier (08:29 UTC) optical attempt populated the checked-in `followup.json`, `followup_receipts.json` and `native_pixel_checks.json`. **Those three files are historical and must NOT be used as the latest follow-up.**
+
+The **latest corrected runner**, [run #44488561210](https://github.com/dovvnloading/Open-Space/actions/runs/44488561210), verified 17/32 plausible DESI redshift matches, 15 incomplete archive queries and eight native Euclid VIS/NISP band cutouts at two positions. The full corrected JSON files and their SHA-256 hashes are indexed by [LATEST_RUN.json](LATEST_RUN.json) and archived as an [Actions artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44488561210/artifacts/14512297924) for 30 days. No validated stellar-mass limits or dark galaxies resulted. Re-running `run.py`, then `followup.py` and `imaging.py` replaces the historical files with the latest algorithm's outputs.

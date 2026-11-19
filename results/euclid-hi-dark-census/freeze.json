@@ -1,0 +1,55 @@
+{
+  "study": "Euclid DR1-Foundation 2026-11-12 x public blind HI releases; immutable query definitions; downloaded response SHA-256 frozen in run receipts",
+  "frozen_utc": "2026-11-19",
+  "footprint": [
+    {
+      "id": "wide_tiles",
+      "url": "https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/dr1/MOC/euclid_dr1_wide.moc.moc.fits"
+    },
+    {
+      "id": "deep_tiles",
+      "url": "https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/dr1/MOC/euclid_dr1_deep.moc.moc.fits"
+    }
+  ],
+  "catalogs": [
+    {
+      "id": "ALFALFA_alpha100",
+      "release": "2018 alpha.100 extragalactic source catalog, Cornell revised table 2 dated 190808",
+      "type": "csv",
+      "url": "https://egg.astro.cornell.edu/alfalfa/data/a100files/a100.code12.table2.190808.csv",
+      "beam_fwhm_arcsec": 210
+    },
+    {
+      "id": "FASHI_DR2",
+      "release": "2026 FASHI DR2 complete extragalactic HI table, 156411 rows",
+      "type": "csv",
+      "url": "https://nadc.china-vo.org/res/file_upload/download?id=1538184",
+      "sha256": "9c612acac23776b99630f72330f818ca01b6e76517d0107a7872b056b703db4a",
+      "beam_fwhm_arcsec": 174
+    },
+    {
+      "id": "WALLABY_PDR2",
+      "release": "Pilot PDR2 public 30-arcsec source catalogue (DR1 and DR2), CANFAR YouCat TAP",
+      "type": "tap",
+      "endpoint": "https://ws-uv.canfar.net/youcat/sync",
+      "adql": "SELECT * FROM cirada.Wallaby_dr2_source_catalogue",
+      "beam_fwhm_arcsec": 30
+    }
+  ],
+  "footprint_policy": "Use actual IRSA DR1 wide+deep MOCs; first-pass center+16 edge samples at beam FWHM/2; no pixel-level completeness inferred from MOC.",
+  "detection_policy": "All input rows retained in denominators. Galaxy-like triage: >=1e7 M_sun when mass provided, W50>=30 km/s, cz_radio>=600 km/s; no automatic dark-galaxy classification.",
+  "followup_cap": 32,
+  "known": [
+    "AGC 229385",
+    "Cloud-9",
+    "WALLABY dark clouds",
+    "FAST dark clouds",
+    "ALFALFA almost dark"
+  ],
+  "docs": {
+    "euclid": "https://irsa.ipac.caltech.edu/euclid-archive-documentation/data-products/",
+    "wallaby": "https://wallaby-survey.org/data/data-pilot-survey-dr2/",
+    "alfalfa": "https://egg.astro.cornell.edu/alfalfa/data/",
+    "fashi": "https://arxiv.org/html/2606.31539v1"
+  }
+}
