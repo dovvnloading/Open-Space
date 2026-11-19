@@ -48,7 +48,9 @@ def tap(label,endpoint,sql,ra,dec,max_sep=3,fields=("ra","dec"),timeout=16):
                     "response_bytes":len(response.content)})
         response.raise_for_status()
         if response.text.lstrip().startswith("<"):
-            raise ValueError("TAP returned XML/service error: "+response.text[:160])
+            # Preserve the *end* of TAP error VOTABLE, where INFO/QUERY_STATUS
+            # gives the column/schema reason (the XML prolog is unhelpful).
+            raise ValueError("TAP returned XML/service error: "+response.text[-650:])
         entries=list(csv.DictReader(io.StringIO(response.text.lstrip("\ufeff"))))
         rec["returned_rows"]=len(entries)
         rec["status"]="CATALOG_ROWS" if entries else "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT"
@@ -135,6 +137,16 @@ def unwise(r):
          "fracflux_1,fracflux_2 FROM unwise_dr1.object WHERE "+
          where_ra+f" AND dec BETWEEN {dec-half_dec:.9f} AND {dec+half_dec:.9f}")
     item=tap("unWISE_2019",DATALAB,sql,ra,dec,max_sep=3)
+    if item["status"]=="QUERY_ERROR":
+        # Data Lab columns may differ from the raw IRSA unWISE list. Attempt
+        # a portable 4-column table projection, retaining the first failure.
+        lean=("SELECT TOP 60 ra,dec,flux_1,flux_2 FROM unwise_dr1.object WHERE "
+              +where_ra+f" AND dec BETWEEN {dec-half_dec:.9f} AND {dec+half_dec:.9f}")
+        retry=tap("unWISE_2019",DATALAB,lean,ra,dec,max_sep=3)
+        retry["first_projection_error"]={"adql":sql,"http_status":item.get("http_status"),
+                                          "error":item.get("error"),
+                                          "response_sha256":item.get("response_sha256")}
+        item=retry
     item["flux_ratio_is_not_vega_colour"]=True
     return item
 
@@ -258,6 +270,13 @@ def main():
                        and x.get("query_receipts",{}).get("unwise",{}).get("http_status")==502
                        for x in old):
             archive.write_bytes(prior.read_bytes())
+    prior2=OUT/"second_pass_unwise_schema_failures.json"
+    if prior.exists() and not prior2.exists():
+        old=json.loads(prior.read_text())
+        if old and all(x.get("query_receipts",{}).get("catwise",{}).get("status")!="QUERY_ERROR"
+                       and x.get("query_receipts",{}).get("unwise",{}).get("status")=="QUERY_ERROR"
+                       for x in old):
+            prior2.write_bytes(prior.read_bytes())
     with ThreadPoolExecutor(max_workers=4) as pool:
         futures={pool.submit(vet_one,i,r,calibration):i for i,r in enumerate(shortlist[:N])}
         for f in as_completed(futures):
@@ -270,6 +289,16 @@ def main():
             print("VET",i,len(futures),res["lead_status"],flush=True)
     checked.sort(key=lambda x:x["rank_slot"])
     save("external_receipts.json",checked)
+    # The 2 actually strict-recovered late-T/Y controls are *positive*
+    # external matching tests; 40 unmatched new leads alone cannot
+    # distinguish a healthy WISE mirror from an empty/broken service.
+    known=json.loads((OUT/"controls_recovery.json").read_text())
+    probes=[]
+    for obj in known:
+        if obj["class"]=="cold_dwarf" and obj["mask_recovered"]:
+            probes.append({"name":obj["name"],"spectral_type":obj["spectral_type"],
+                "catwise":catwise({"ra":obj["predicted_ra_deg"],"dec":obj["predicted_dec_deg"]})})
+    save("wise_control_probes.json",probes)
     report=Counter()
     for r in checked:
         report["checked"]+=1
