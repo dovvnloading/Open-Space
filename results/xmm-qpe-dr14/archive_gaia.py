@@ -22,8 +22,8 @@ FROZEN=OUT/"archive_sdss_stellar_blazar_audit.json"
 S=requests.Session()
 S.headers["User-Agent"]="Open-Space-XMM-QPE-Gaia-DR3-stellar-audit"
 ENDPOINTS=[
- "https://gea.esac.esa.int/tap-server/tap/sync",
- "https://gaia.ari.uni-heidelberg.de/tap/sync"
+ "https://gaia.ari.uni-heidelberg.de/tap/sync",
+ "https://gea.esac.esa.int/tap-server/tap/sync"
 ]
 ADQL=("SELECT x.detid, g.source_id, g.ra AS gaia_ra, g.dec AS gaia_dec,"
       " g.parallax, g.parallax_over_error, g.pmra, g.pmra_error,"
