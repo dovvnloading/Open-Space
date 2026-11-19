@@ -28,7 +28,7 @@ BASES = (
 )
 RELEASE = "CDS J/A+A/704/A339, VizieR inserted 2026-01-06, updated 2026-03-02; not verified against IAP v1.1 (2026-05-04)"
 N_EXPECTED = 784016
-COLUMNS = ["zfinal", "type", "zpdf_med", "zpdf_l68", "zpdf_u68", "mass_med", "mass_l68", "mass_u68",
+COLUMNS = ["zfinal", "type", "zpdf_med", "zpdf_l68", "zpdf_u68", "zchi2", "nbfilt", "zp_agn", "mass_med", "mass_l68", "mass_u68",
            "mass_minchi2", "chi2_best", "chi_star", "chi2_agn", "flag_chandra"]
 BINS = [(6., 7.), (7., 8.), (8., 9.), (9., 10.), (10., 12.), (12., 15.)]
 
@@ -115,6 +115,8 @@ def triage(readme, source, out):
     n = 0
     z6 = 0
     ztail6 = 0
+    candidates_galaxy = 0
+    candidates_agn = 0
     z_gt15 = 0
     counts = {}
     rows = []
@@ -137,8 +139,12 @@ def triage(readme, source, out):
                 z_gt15 += 1
             if z is None or mass is None or typ is None:
                 bad += 1
-            if typ != 0 or (z is None or z <= 6) and (zu is None or zu <= 6):
+            if typ not in (0, 2) or ((z is None or z <= 6) and (zu is None or zu <= 6)):
                 continue
+            if typ == 0:
+                candidates_galaxy += 1
+            else:
+                candidates_agn += 1
             item = {"source_row_1based": n}
             item.update(vals)
             rows.append(item)
@@ -156,8 +162,10 @@ def triage(readme, source, out):
                             binitem[name] = value
     if n != N_EXPECTED:
         raise RuntimeError("Row count %d != documented 784016; refusing partial scan" % n)
-    # A redshift upper 68% interval is NOT P(z>6). Preserve all qualifying
-    # objects for later full posterior matching, then cap compact repo output.
+    # A redshift upper 68% interval is NOT P(z>6). Preserve all galaxy AND AGN
+    # classifications for subsequent contamination/host-galaxy analysis;
+    # no Type=2 mass is presumed stellar. Type=1 stars must also be checked
+    # as possible misclassifications when evaluating source-level candidates.
     rows.sort(key=lambda r: r.get("mass_u68") if r.get("mass_u68") is not None else -1e6, reverse=True)
     fields = ["source_row_1based"] + [c for c in COLUMNS if c in cols]
     # Keep ALL marginal high-z triage rows, not only the top-ranked shortlist.
@@ -175,7 +183,10 @@ def triage(readme, source, out):
         w.writeheader()
         w.writerows(rows[:250])
     return {"row_count": n, "galaxy_zfinal_gt6": z6,
-            "galaxy_zpdf_u68_gt6": ztail6, "galaxy_zfinal_gt15": z_gt15, "galaxy_zfinal_or_u68_gt6": len(rows),
+            "galaxy_zpdf_u68_gt6": ztail6, "galaxy_zfinal_gt15": z_gt15,
+            "galaxy_zfinal_or_u68_gt6": candidates_galaxy,
+            "agn_zfinal_or_u68_gt6": candidates_agn,
+            "galaxy_and_agn_zfinal_or_u68_gt6": len(rows),
             "unusable_rows": bad, "bin_summary": counts,
             "triage_all": "highz_triage_all.csv.gz",
             "triage_all_sha256": digest,
@@ -189,7 +200,7 @@ def main():
     out = args.out
     out.mkdir(parents=True, exist_ok=True)
     report = {"started_utc": utc(), "release": RELEASE, "expected_rows": N_EXPECTED, "status": "started",
-              "selection": "Type=0 AND (zfinal>6 OR zPDF-u68>6), ranked by marginal mass-u68"}
+              "selection": "Type IN (0 galaxy, 2 AGN) AND (zfinal>6 OR zPDF-u68>6), ranked by fixed-redshift marginal mass-u68"}
     try:
         rpath = out / "ReadMe"
         cpath = out / "lephare.dat.gz"
