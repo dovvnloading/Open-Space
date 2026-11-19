@@ -1,0 +1,62 @@
+{
+  "utc": "2026-11-19T09:01:31.264616+00:00",
+  "purpose": "Test anonymous LS DR10 bulk host crossmatch. No screen unless full audited cohort can be frozen.",
+  "tests": [
+    {
+      "name": "tap_cone",
+      "url": "https://datalab.noirlab.edu/tap/sync",
+      "http_status": 502,
+      "bytes": 157,
+      "content_type": "text/html",
+      "elapsed_s": 0.21,
+      "sha256": "9b07423e0d95917bb5416b9e466cfe71089a598cab4d358f09c16d9aee94e2fa",
+      "excerpt": "<html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.31.8</center>\r\n</body>\r\n</html>\r\n",
+      "query_ok": false
+    },
+    {
+      "name": "tap_upload",
+      "url": "https://datalab.noirlab.edu/tap/sync",
+      "http_status": 502,
+      "bytes": 157,
+      "content_type": "text/html",
+      "elapsed_s": 0.06,
+      "sha256": "9b07423e0d95917bb5416b9e466cfe71089a598cab4d358f09c16d9aee94e2fa",
+      "excerpt": "<html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.31.8</center>\r\n</body>\r\n</html>\r\n",
+      "query_ok": false
+    },
+    {
+      "name": "query_manager_values",
+      "url": "https://datalab.noirlab.edu/query/query",
+      "http_status": 401,
+      "bytes": 46,
+      "content_type": "text/html; charset=utf-8",
+      "elapsed_s": 0.06,
+      "sha256": "655181074714c68ca10d9b9cfc987800b9b918bd60225a44b23f8768b58b5d8c",
+      "excerpt": "Error: The provided security token is invalid.",
+      "query_ok": false
+    },
+    {
+      "name": "query_manager_cone",
+      "url": "https://datalab.noirlab.edu/query/query",
+      "http_status": 401,
+      "bytes": 46,
+      "content_type": "text/html; charset=utf-8",
+      "elapsed_s": 0.06,
+      "sha256": "655181074714c68ca10d9b9cfc987800b9b918bd60225a44b23f8768b58b5d8c",
+      "excerpt": "Error: The provided security token is invalid.",
+      "query_ok": false
+    },
+    {
+      "name": "query_manager_adql",
+      "url": "https://datalab.noirlab.edu/query/query",
+      "http_status": 401,
+      "bytes": 46,
+      "content_type": "text/html; charset=utf-8",
+      "elapsed_s": 0.06,
+      "sha256": "655181074714c68ca10d9b9cfc987800b9b918bd60225a44b23f8768b58b5d8c",
+      "excerpt": "Error: The provided security token is invalid.",
+      "query_ok": false
+    }
+  ],
+  "all_sites_responded": true
+}
