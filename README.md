@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 224 entries: 99 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 36 carefully recorded null or inconclusive checks. The unclassified ACT real-pixel feasibility pilot below is separate from these classified scientific-result counts.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 224 entries: 98 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 37 carefully recorded null or inconclusive checks. The unclassified ACT real-pixel feasibility pilot below is separate from these classified scientific-result counts.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -313,6 +313,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **An expanding X-ray ring around GRB 180728A.** The ring is likely an echo from a dust layer about 158 parsecs away. *Candidate* · [Details](results/swift-grb-dust-echoes/README.md)
 - **An X-ray transient reconnected with its gamma-ray counterpart.** FXT 981217. *Correction* · [Details](results/fxt-981217-batse/README.md)
 - **A search for repeat black-hole mergers found no unusual pair in GWTC-5.0.** Across 5,356 eligible pairs, randomly rotating the sky maps produced a match at least as strong as the leading pair in 11,181 of 20,000 trials. *Null result* · [Details](results/gwtc-successive-mergers/README.md)
+- **No convincing lensed pair passed a first gravitational-wave catalogue screen.** Among 141 black-hole merger events in GWTC-2.1, GWTC-3 and GWTC-4.0, all 9,870 pairs were screened for similar masses, spins and plausible lensing delays. The highest score was equalled or beaten in 956 of 1,500 shuffled controls (false-alarm fraction 0.637575); a full posterior search and phase, strain and lens-galaxy checks remain unfinished. *Null result* · [Details](results/gwtc-lensed-pair-census/README.md)
 - **No short 150 Hz gravitational-wave bursts in a sample of public LIGO data.** A search of 539,386 seconds of Hanford and Livingston data from the O4b run found nothing above its fixed threshold. For one specified kind of burst this limits the rate to 0.601 per day at the 90% level. *Null result* · [Details](results/mission04-o4b-bursts/README.md)
 
 **Black holes, outbursts and supernovae**
