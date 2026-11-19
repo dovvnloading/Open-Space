@@ -62,7 +62,7 @@ def main():
     query=("SELECT TOP 5 ls_id,ra,dec,type,brick_primary,flux_r "
            "FROM ls_dr10.tractor WHERE 't'=Q3C_RADIAL_QUERY("
            "ra,dec,19.786098,-34.191813,0.002)")
-    rec["tests"].append(request_probe("tap_cone", "POST", ENDPOINT,
+    rec["tests"].append(request_probe("tap_cone", "GET", ENDPOINT,
        data={"REQUEST":"doQuery","LANG":"ADQL","FORMAT":"csv","QUERY":query}))
     uploaded=votable(sample)
     adql=("SELECT TOP 30 x.detid, x.ra AS xra, x.dec AS xdec,"
@@ -80,11 +80,15 @@ def main():
          "FROM x,ls_dr10.tractor t WHERE "
          "q3c_join(x.xra,x.xdec,t.ra,t.dec,0.000555555556) "
          "AND t.type IN ('EXP','DEV','SER','REX') LIMIT 20")
-    rec["tests"].append(request_probe("query_sql_values", "GET",
-        "https://datalab.noirlab.edu/query",
-        params={"sql":sql,"ofmt":"csv"}))
+    url = "https://datalab.noirlab.edu/query/query"
+    rec["tests"].append(request_probe("query_manager_values", "GET",
+        url, params={"sql":sql,"ofmt":"csv"}))
+    rec["tests"].append(request_probe("query_manager_cone", "GET",
+        url, params={"sql":"SELECT ls_id,ra,dec,type,brick_primary FROM ls_dr10.tractor WHERE q3c_radial_query(ra,dec,19.786098,-34.191813,0.002) LIMIT 10","ofmt":"csv"}))
+    rec["tests"].append(request_probe("query_manager_adql", "GET",
+        url, params={"adql":"SELECT TOP 10 ls_id,ra,dec,type FROM ls_dr10.tractor WHERE 't'=Q3C_RADIAL_QUERY(ra,dec,19.786098,-34.191813,0.002)","ofmt":"csv"}))
     rec["all_sites_responded"] = all("http_status" in r for r in rec["tests"])
-    (OUT/"archive_probe_01.json").write_text(json.dumps(rec,indent=2)+"\n")
+    (OUT/"archive_probe_02.json").write_text(json.dumps(rec,indent=2)+"\n")
     print(json.dumps(rec,indent=2),flush=True)
 
 if __name__=="__main__":
