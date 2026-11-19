@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/cosmos2025-baryon-bound.yml'
       - 'results/cosmos2025-baryon-bound/screen.py'
+      - 'results/cosmos2025-baryon-bound/join_photometry.py'
       - 'results/cosmos2025-baryon-bound/halo_bound.py'
       - 'results/cosmos2025-baryon-bound/referee.py'
   workflow_dispatch:
@@ -28,6 +29,14 @@ jobs:
         id: scan
         continue-on-error: true
         run: python results/cosmos2025-baryon-bound/screen.py --out results/cosmos2025-baryon-bound/run
+      - name: 'Source associations: stream entire CDS photometry and join high-z rows'
+        id: phot
+        continue-on-error: true
+        if: steps.scan.outcome == 'success'
+        run: |
+          python results/cosmos2025-baryon-bound/join_photometry.py \
+            --shortlist results/cosmos2025-baryon-bound/run/highz_triage_top250.csv \
+            --out results/cosmos2025-baryon-bound/run
       - name: Compute independently reproducible ST99/Tinker08 survey maxima
         id: halo
         continue-on-error: true
@@ -65,5 +74,5 @@ jobs:
           path: results/cosmos2025-baryon-bound/run/
           if-no-files-found: warn
       - name: Require complete source scan before scientific interpretation
-        if: steps.scan.outcome != 'success' || steps.halo.outcome != 'success' || steps.referee.outcome != 'success'
+        if: steps.scan.outcome != 'success' || steps.halo.outcome != 'success' || steps.referee.outcome != 'success' || steps.phot.outcome != 'success'
         run: exit 1
