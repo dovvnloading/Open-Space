@@ -31,7 +31,10 @@ def from_csv(path):
         raise ValueError("No good 300s bins in saved control " + str(path))
     times = np.array([float(row["time_s"]) for row in rows])
     start = float(times[0])
-    n = int(round((times[-1] - start) / BINSIZE_S))+1
+    # The saved CSV omits *bad* PN bins, including the terminal GTI closure.
+    # Retain a masked 3000s end window rather than turning the last valid bin
+    # into an artificial time-series boundary; mask bins remain non-photometric.
+    n = int(round((times[-1] - start) / BINSIZE_S))+1+10
     t = start + np.arange(n)*BINSIZE_S
     y,e,b = (np.full(n, np.nan) for _ in range(3))
     hard = np.full(n,np.nan)
@@ -102,7 +105,8 @@ def main():
              "published_period_h_range":spec["published_h"],
              "net_baseline_cps":result.get("net_baseline_cps"),
              "background_baseline_cps":result.get("background_baseline_cps"),
-             "binned_good_exposure_h":result.get("binned_good_exposure_h")}
+             "binned_good_exposure_h":result.get("binned_good_exposure_h"),
+             "terminal_GTI_note":"Saved CSV omits invalid bins; replay pads 10 masked bins at end; late events may be partially observed"}
         if name=="RX J1301.9+2747":
             row["rx_individual_published_peak_alignment"]=rx_individual_match(
                 result.get("peaks",[]))
@@ -119,7 +123,7 @@ def main():
     # Note: count overlap is not flare-level sensitivity until every published
     # peak has a one-to-one time-aligned match and background exclusions pass.
     summary={"publication":LIT,"method":"NET PPS EPIC-pn 0.2-2keV RATE1-3, 300s; 4-sigma prominence, 3.5-sigma per bin, 7-sigma integrated, 3x quiet baseline; scaled-background veto",
-             "method_status":"positive-control tuned; NOT independently surveyed",
+             "method_status":"positive-control tuned; NOT independently surveyed; terminal masked GTI padding applied in replay",
              "synthetic_fixture":tests,
              "total_positive_control_epochs":len(EXPECTED),
              "epochs_with_usable_position_verified_pn_curves":n_curves,
@@ -144,7 +148,7 @@ def main():
     store("control_replay.json",{"summary":summary,"controls":rows})
     store("control_gate_replay.json",summary)
     print(json.dumps({"summary":summary,
-                      "controls":[{"name":r["source"],"n":r["n_peaks"],
+                      "controls":[{"name":r["source"],"n":r.get("observed_threshold_peaks"),
                                    "recurrence":r["recurrence_range_matched"]}
                                   for r in rows]},indent=2))
 if __name__=="__main__":
