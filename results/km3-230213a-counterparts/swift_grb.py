@@ -82,10 +82,15 @@ try:
                 "status":"UNVERIFIED_SWIFT_GRB_COINCIDENCE","physical_chance_p":"NOT_ESTIMABLE_WITHOUT_ALL_MISSION_EXPOSURE"})
     shifts=[random.Random(230213+i).uniform(6.5,353.5) for i in range(999)]
     nullcounts=[]
-    for s in shifts:
-        ra_ref=(ra0+s)%360
-        z=sum(degrees(2*__import__("math").asin(min(1,(sin(radians((v["dec"]-dec0)/2)**2+
-           cos(radians(v["dec"]))*cos(radians(dec0))*sin(radians((v["ra"]-ra_ref)/2)**2)**.5)))<=3 for v in filt)
+    for shift in shifts:
+        ra_ref=(ra0+shift)%360
+        z=0
+        for v in filt:
+            sind=sin(radians((v["dec"]-dec0)/2))**2
+            sinra=sin(radians((v["ra"]-ra_ref)/2))**2
+            a=sind+cos(radians(v["dec"]))*cos(radians(dec0))*sinra
+            d=degrees(2*__import__("math").asin(min(1.,max(0.,a)**0.5)))
+            z+=int(d<=3)
         nullcounts.append(z)
     obs=len(matches)
     record.update({"status":"COMPLETE_SWIFT_TABLE_ONLY","parsed_swift_grbs":len(burst),
