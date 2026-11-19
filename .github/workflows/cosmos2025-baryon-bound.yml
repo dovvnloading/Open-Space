@@ -1,0 +1,56 @@
+name: COSMOS2025 cosmic-baryon audit (CDS frozen scan)
+on:
+  push:
+    branches: [research/cosmos2025-baryon-bound]
+    paths:
+      - '.github/workflows/cosmos2025-baryon-bound.yml'
+      - 'results/cosmos2025-baryon-bound/screen.py'
+      - 'results/cosmos2025-baryon-bound/halo_bound.py'
+      - 'results/cosmos2025-baryon-bound/referee.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  cds-catalogue-audit:
+    if: github.ref == 'refs/heads/research/cosmos2025-baryon-bound'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Frozen CDS release: hash source bytes and triage every row
+        id: scan
+        continue-on-error: true
+        run: python results/cosmos2025-baryon-bound/screen.py --out results/cosmos2025-baryon-bound/run
+      - name: Remove raw bulk data from deposit
+        if: always()
+        run: |
+          rm -f results/cosmos2025-baryon-bound/run/ReadMe
+          rm -f results/cosmos2025-baryon-bound/run/lephare.dat.gz
+          rm -f results/cosmos2025-baryon-bound/run/lephare.dat
+      - name: Deposit reproducible compact receipts on research branch
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/cosmos2025-baryon-bound/run
+          if ! git diff --cached --quiet; then
+            git commit -m "research: deposit COSMOS2025 archived catalogue scan receipt"
+            git fetch origin research/cosmos2025-baryon-bound
+            git rebase origin/research/cosmos2025-baryon-bound
+            git push origin HEAD:research/cosmos2025-baryon-bound
+          fi
+      - name: Preserve machine-readable audit even if repository write fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cosmos2025-cds-audit-receipt
+          path: results/cosmos2025-baryon-bound/run/
+          if-no-files-found: warn
+      - name: Require complete source scan before scientific interpretation
+        if: steps.scan.outcome != 'success'
+        run: exit 1
