@@ -39,7 +39,7 @@ jobs:
       - name: Checkpoint source-derived batches and referee without retriggering on output paths
         shell: bash
         env:
-          GH_TOKEN: \${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           src=results/euclid-hi-dark-census
