@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 222 completed investigation entries: 97 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 36 carefully recorded null or inconclusive checks. A separate ACT map inventory is listed as incomplete preparation, not a scientific result.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 223 entries: 97 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 37 carefully recorded null or inconclusive checks. The ACT map-inventory entry below is separate from these completed-investigation counts.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -182,6 +182,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Stars, binaries and multiple-star systems
 
+- **No complete PISN-style chemical fingerprint in the well-measured GALAH DR4 subset.** All 917,588 stars were screened; of 5,189 quality-selected metal-poor stars, only 196 have all five key unflagged elemental measurements, and none passes the frozen abundance cuts. Just 14 also have usable strontium and barium. No very metal-poor ([Fe/H] ≤ −2.5) star has the full five-element set, so this does not rule out primordial supernova descendants; yield-model and independent survey tests remain unfinished. *Null result (coverage-limited screen)* · [Methods, source hash, catalogue rows and sensitivity](results/galah-dr4-pisn-fingerprint/README.md)
 - **The star HD 25673 keeps changing speed along our line of sight.** The newly public CORALIE spectra extend the previously reported HARPS drift through 2024. Its annual median velocity fell by 216.1 m/s in the modern CORALIE series, and astrometry also shows excess motion. A companion orbit is unresolved. *Measured* · [Details](results/coralie-rv-acceleration/README.md)
 - **A search for circularly polarised radio signals found known stars, not a new planet signal.** GJ 1151 and COCONUTS-2 A match previously published radio detections. Eleven nearby objects checked in available VLASS images showed no strong new signal; although many planet hosts lie within other surveys' image footprints, their individual radio limits are not yet measured. *Null result* · [Details](results/stellar-stokes-v/README.md)
 
@@ -294,6 +295,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 **Gamma-ray bursts and gravitational waves**
 
+- **The 220-PeV KM3NeT neutrino still has no identified source.** All 17 published blazar candidates reproduce within its 3° region. A separate screen of 2,938 public TNS transients and six longer-window TDEs found none in that region near February 2023, and CHIME/FRB Catalog 2 lists no burst within a day. Optical survey gaps, other high-energy alerts and untested monitoring limit the conclusion. *Null result (bounded catalogues)* · [Details](results/km3-230213a-counterparts/README.md)
 - **No new neutrino source in a frozen transient crossmatch.** Thirteen archival infrared flare pairs span ten IceCube alerts and are consistent with the registered chance models; incomplete coverage and weak time shuffles limit the inference. *Null result* · [Details](results/neutrino-transient-crossmatch/README.md)
 - **A proposed gamma-ray oscillation screen failed its synthetic calibration.** The two-burst pilot provides descriptive data, but does not support a physical oscillation test. *Null result* · [Details](results/gbm-conditional-screen/README.md)
 
