@@ -58,6 +58,8 @@ def bounded_stamp(key,ra,dec,band,path):
         idx,hdu=viable[0]
         wc=WCS(hdu.header).celestial
         x,y=wc.world_to_pixel(coord)
+        # Astropy WCS may return length-one ndarrays for a scalar SkyCoord.
+        x=float(np.asarray(x).reshape(-1)[0]);y=float(np.asarray(y).reshape(-1)[0])
         if not np.isfinite(x) or not np.isfinite(y):raise ValueError("Invalid target WCS pixel")
         nx=int(hdu.header["NAXIS1"]);ny=int(hdu.header["NAXIS2"])
         if x < 0 or x >= nx or y < 0 or y >= ny:
