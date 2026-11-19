@@ -45,9 +45,8 @@ def unwise_gator(r):
             raise RuntimeError("GATOR_HTTP_"+str(v.status_code))
         # Gator's IPAC table has | delimited schema and raw data; do not
         # guess positional columns or fluxes without a parsed table.
-        from astropy.table import Table
-        import io
-        t=Table.read(io.StringIO(v.text),format="ascii.ipac")
+        from astropy.io import ascii
+        t=ascii.read(v.text,format="ipac")
         out["returned_rows"]=len(t)
         out["status"]="CATALOG_ROWS_NOT_ASSOCIATED" if len(t) else "NO_ROWS_NOT_FLUX_LIMIT"
         matches=[]
