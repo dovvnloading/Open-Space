@@ -26,6 +26,10 @@ HST constraints that set the size grid (not independent gas-production measureme
 
 ## Prior papers already making the orbit-to-gas comparison
 
+- [Forbes & Butler (2025/2026)](https://arxiv.org/abs/2512.18341): matched observed mass loss to nongravitational orbit solutions and obtained roughly 0.82–1.05 km **diameters** for one lagged acceleration solution and adopted efficiencies; strongly model-dependent.
+- [Eubanks et al. (2025)](https://doi.org/10.3847/2515-5172/ae2915): added spacecraft astrometry and modeled delayed nongravitational acceleration; their negative peak offset contrasts with some later JPL solutions, illustrating phase/selection sensitivity.
+- [Cloete, Loeb & Vereš (2025)](https://arxiv.org/abs/2509.21408): early **preperihelion** upper limit and corresponding nucleus-size constraint, superseded by postperihelion astrometry; not a positive detection.
+- [Neukart (2025)](https://arxiv.org/abs/2511.07450): anisotropic conventional volatile thermophysical recoil model, distinct from a direct public full-MPC refit.
 - [Spada, Królikowska & Dones (2026), A&A 714 A79](https://doi.org/10.1051/0004-6361/202659645): independent MPC fit with explicit astrometric weighting and outlier tests; NG detected; pre/post arcs incompatible in coefficients; JPL #54 3-axis + delayed outgassing law broadly reproduced. Their solution makes clear formal uncertainties understate systematics.
 - [Thoss, Loeb & Burkert (2026)](https://arxiv.org/abs/2603.15735): CO2-dominated recoil gives R~0.42 km at rho=500kg/m³ and eta=0.5 in their assumptions; compares with Hubble photometric radius and distributed coma water.
 - [Ahuja et al. (2026)](https://doi.org/10.1093/mnras/stag1800): uses published JPL A1/A2/A3 and gas production to estimate R~0.60±0.04 km at rho~538kg/m³; not an independently fitted orbit.
