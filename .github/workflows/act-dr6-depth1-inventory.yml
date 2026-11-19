@@ -23,6 +23,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Compile every ACT research script
+        run: python -m compileall -q results/act-dr6-mm-transients
       - name: Synthetic matched-filter and rate-gate tests
         run: |
           python -m pip install numpy scipy
