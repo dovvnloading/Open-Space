@@ -360,6 +360,9 @@ if __name__=="__main__":
     elif _mode == "archive_exclusions":
         from archive_exclusions import main as _ex_main
         _ex_main()
+    elif _mode == "archive_services":
+        from archive_services import main as _services_main
+        _services_main()
     else:
         from control_validation import main as _controls_main
         _controls_main()
