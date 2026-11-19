@@ -7,13 +7,13 @@ In the public COSMOS-Web COSMOS2025 galaxy catalogue (approx. 0.54 deg² JWST NI
 
 **Freeze rule:** fix publication/release, source files and SHA-256, sky footprint, redshift bins, mass conventions/IMF, selection, photometry + flags, priors, model versions, HMF convention and cosmology *before* drawing conclusions. No point-estimate-only candidate cut.
 
-## Ledger (initial)
+## Ledger (observed, 2026-11-19 UTC)
 | Check | Status | Evidence / missing prerequisite |
 | --- | --- | --- |
 | Scientific label rule | Completed | Read [remarkable findings](../../docs/REMARKABLE_FINDINGS.md); do not add [REMARKABLE] absent discovery-grade validation |
-| Public release query + bytes and SHA-256 | Pending execution | Freeze canonical COSMOS2025 release/table, machine query, download time, row count and exact hashes |
+| Public release query + bytes and SHA-256 | **FAILED acquisition** | Three official CDS archive URLs timed out at ReadMe stage on [GitHub Actions #44445639190](https://github.com/dovvnloading/Open-Space/actions/runs/44445639190); [failure receipt](run/receipt.json) committed. No catalogue bytes or row count independently verified |
 | Posterior-based z>6 candidate selection | Pending | Need joint individual \(p(M_*,z)\) or defensible likelihood-based posterior sampling, not just catalog best fits |
-| Halo mass function and survey volume | Nominal geometry checked; HMF pending | Geometry in `nominal_shell_volumes.json`; two-HMF script committed, selection footprint/cosmic variance pending |
+| Halo mass function and survey volume | Nominal geometry checked; HMF provisional and not independently replayed | Numerical job #44445915491 computed a model envelope, but exposed an exponentiation bug since fixed; [exact mathematical repair](HALO_PROVISIONAL.md). No accepted new-run result or survey footprint |
 | Eddington bias, look-elsewhere, completeness | Pending | Need measurement likelihood and survey selection |
 | Independent SED fits (EAZY + Prospector/Bagpipes) | Pending | Need individual multi-band fluxes, errors, covariances, apertures, priors and calibrated installations |
 | AGN/line, dusty z~2–4, brown dwarf, blends | Pending | Need imaging/deblend and competing SED fits |
@@ -24,8 +24,8 @@ In the public COSMOS-Web COSMOS2025 galaxy catalogue (approx. 0.54 deg² JWST NI
 
 - **Completed: release inventory and protocol.** [Source register and validation contract](SOURCES_AND_PROTOCOL.md) identify official IAP v1.1 (2026-05-04), the older CDS tabular mirror, precise fixed-width columns and source-vetting gates.
 - **Completed: independent nominal survey shell geometry.** [Nominal volumes](nominal_shell_volumes.json), for area=0.54 deg² and specified cosmology, were verified using separate D_c³/3 and ∫ D_c²/H(z) dz formulas. *Not footprint-masked.*
-- **Committed, not yet executed successfully:** [complete 784,016-row CDS source/hash screen](screen.py); [all marginal high-z row indices and top-250 triage](screen.py); [full photometry source hash + coordinate/flux row join](join_photometry.py); [volume-integrated two-HMF envelope](halo_bound.py); [joint SED-draw posterior diagnostic](posterior_exceedance.py); [independent numerical referee](referee.py).
-- **Queued:** [GitHub Actions research run](https://github.com/dovvnloading/Open-Space/actions/workflows/cosmos2025-baryon-bound.yml) should commit run/receipt.json, run/columns.json, run/highz_triage_all.csv.gz, run/highz_triage_top250.csv, run/photometry_receipt.json, run/highz_candidate_photometry.csv, run/halo_bounds.json, run/referee_report.json, and exact numerical package versions. **These files do not establish evidence until the job completes with valid source hashes, full row counts, and independent checks.**
+- **Committed:** [full CDS source/hash screen](screen.py), [photometry join](join_photometry.py), [ST99/Tinker08 envelope](halo_bound.py), [joint-posterior diagnostic](posterior_exceedance.py), and [numerical referee](referee.py). **Full catalogue scan failed** because three CDS ReadMe endpoints timed out; no source rows or hashes were acquired. A preliminary HMF run completed with an identified interpolation exponent bug; [receipt and algebraic recovery](HALO_PROVISIONAL.md) are retained for transparency.
+- **Evidence status:** [Audit workflow](https://github.com/dovvnloading/Open-Space/actions/workflows/cosmos2025-baryon-bound.yml) generated [a committed failed-download receipt](run/receipt.json). No verified `columns.json`, high-z candidate row extract, photometry join or joint posterior exists. Remaining historical queued jobs are not evidence of success; only a valid full-source scan and independent referee count.
 
 ```bash
 python results/cosmos2025-baryon-bound/screen.py --out results/cosmos2025-baryon-bound/run
@@ -36,6 +36,6 @@ python results/cosmos2025-baryon-bound/referee.py --out results/cosmos2025-baryo
 # do not substitute LePHARE marginal intervals.
 ```
 
-**No catalogue rows, their downloaded SHA-256 hashes, halo-model quantiles, SED-refit posterior chains, high-z candidate classifications, or spectroscopic crosschecks are currently verified. Never manufacture them.**
+**No catalogue rows or their downloaded SHA-256 hashes, direct post-fix halo quantiles, SED-refit posterior chains, high-z candidate classifications, or spectroscopic crosschecks are currently verified.** Do not treat a failed transfer as a null and do not infer a ΛCDM result from the provisional HMF table.
 
-**Disposition at creation:** open investigation; not a detection; not a quantitative null.
+**Disposition after first attempted replay:** blocked by unavailable source data and source-level astrophysical checks. Draft PR #194 remains unmerged; no root catalog entry or discovery log addition.
