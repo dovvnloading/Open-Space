@@ -354,6 +354,9 @@ if __name__=="__main__":
     elif _mode == "archive_diagnostics":
         from archive_diagnostics import main as _diag_main
         _diag_main()
+    elif _mode == "archive_pilot":
+        from archive_pilot import main as _pilot_main
+        _pilot_main()
     else:
         from control_validation import main as _controls_main
         _controls_main()
