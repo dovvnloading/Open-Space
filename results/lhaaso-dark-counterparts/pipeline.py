@@ -228,7 +228,8 @@ def lhaaso():
         return None
     if "1LHAASO" not in tab or "Comp" not in tab:
         RECEIPTS["lhaaso"]["status"] = "invalid_schema"
-        return None
+        tab = github_preprint_fallback()
+        if tab is None: return None
     src = []
     for name, rows in tab.groupby("1LHAASO", dropna=True, sort=True):
         rows = rows.copy()
