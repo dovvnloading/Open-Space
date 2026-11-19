@@ -1,0 +1,45 @@
+name: eRASS1 XDINS frozen screen (branch-local)
+on:
+  push:
+    branches:
+      - research/erass1-xdins-20261119
+    paths:
+      - "results/erass1-xdins-search/run.py"
+      - "results/erass1-xdins-search/referee.py"
+      - "results/erass1-xdins-search/requirements.txt"
+      # Deliberately excludes output/** and README edits to prevent recursion.
+permissions:
+  contents: write
+jobs:
+  screen-and-record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install frozen scientific stack
+        run: python -m pip install -r results/erass1-xdins-search/requirements.txt
+      - name: Download official DR1 data and execute the frozen screen
+        id: run
+        continue-on-error: true
+        run: python results/erass1-xdins-search/run.py
+      - name: Referee file-level consistency separately
+        if: always()
+        run: python results/erass1-xdins-search/referee.py
+      - name: Commit bounded scientific outputs in one batch (does not retrigger)
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/erass1-xdins-search/output/
+          if ! git diff --cached --quiet; then
+            git commit -m "Record frozen eRASS1 DR1 screen, checksums and referee evidence"
+            git push origin HEAD:research/erass1-xdins-20261119
+          fi
+      - name: Propagate data-retrieval failure
+        if: steps.run.outcome == 'failure'
+        run: exit 1
