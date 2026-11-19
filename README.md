@@ -289,7 +289,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **Electron gas thins from west to east across the star cluster NGC 6517.** Four pulsars predict the radio delays of ten others. *Measured* · [Details](results/ngc-6517-dispersion-gradient/README.md)
 - **A shared trend in MeerKAT pulsar rotation measures.** It is linked to the choice of ionospheric corrections. Its physical cause is not identified. *Measured* · [Signal](results/meerkat-shared-faraday-rotation/README.md) · [Origin tests](results/meerkat-common-mode-origin/README.md)
 - **The slow radio source GLEAM-X J1627's pulse parts move closer at higher frequency.** *Measured* · [Details](results/gleamx-j1627-pulse-separation/README.md)
-- **A new ASKAP radio catalogue screen found 149 strongly variable compact sources, but no confirmed slow pulses.** In 60 closely examined light curves, 14 show bright detections and faint measured epochs; their true nature needs native radio images and short-time timing. *Measured (catalogue screening only)* · [Details](results/askap-lpt-vast-dr1/README.md)
+- **An ASKAP search found 149 strongly variable compact radio sources, but no confirmed new slow pulses.** Fourteen shortlisted light curves have bright and faint episodes; three match already-known pulsars, while the rest still need image and timing checks. *Measured (catalogue screen only)* · [Details](results/askap-lpt-vast-dr1/README.md)
 - **Tracing 120 pulsars back to supernova remnants.** The search recovered two known birthplaces and established no new ones. *Null result* · [Details](results/pulsar-shell-backtraces/README.md)
 
 **Fast radio bursts**
