@@ -145,7 +145,7 @@ def normalize_catalog(df, cfg):
         decs = ["dec", "dec_deg", "dec_hi", "dec_deg_hi", "DEdeg", "dec_j2000", "pos_dec"]
     ra, rac = position(df, ras, ra=True)
     dec, decc = position(df, decs)
-    keys = ["AGC", "AGCNr", "AGCnr", "name", "source_name", "fashi_id", "id", "source_id", "name_hi"]
+    keys = ["AGC", "AGCNr", "AGCnr", "fashi_id", "name", "source_name", "id", "source_id", "name_hi"]
     key = column(df, keys)
     ids = df[key].astype(str).to_numpy() if key else np.array([str(i) for i in range(len(df))])
     # Preserve native measurements, and never guess a distance for a velocity-only source.
@@ -154,13 +154,13 @@ def normalize_catalog(df, cfg):
     fill = np.isfinite(freq) & (freq > 1000) & (freq < 1500) & ~np.isfinite(v)
     v[fill] = C_KMS * (HI_MHZ / freq[fill] - 1)
     width = numeric(df, ["W_50", "W50", "w50", "w50_kms", "w50_corrected", "W50c"])
-    mass = numeric(df, ["log10Mass", "logMHI", "log_mhi", "mass", "m_hi", "log10_mhi"])
+    mass = numeric(df, ["log10Mass", "logMH", "logMHI", "log_mhi", "mass", "m_hi", "log10_mhi"])
     logmass = mass.copy()
     # catalogued mass is log10(M_sun) unless encoded as actual solar masses
     hi = np.isfinite(mass) & (mass > 1000)
     logmass[hi] = np.log10(mass[hi])
     logmass[~(np.isfinite(logmass) & (logmass > 4) & (logmass < 14))] = np.nan
-    flux = numeric(df, ["S21", "FHI", "f_sum", "flux", "flux_int", "s_int", "f_sum_corr", "integrated_flux"])
+    flux = numeric(df, ["S21", "HIflux", "FHI", "S_sum", "f_sum", "flux", "flux_int", "s_int", "f_sum_corr", "integrated_flux"])
     dist = numeric(df, ["distance", "Dist", "D", "D_Mpc", "dist_mpc"])
     # Only derive mass when there is a positive catalog distance and integrated flux.
     derive = ~np.isfinite(logmass) & (dist > 0) & (flux > 0)
@@ -256,6 +256,12 @@ def run():
         receipts["catalogues"].append(rec)
     del df
     if allcat and len(mocs)==len(CFG["footprint"]):
+        # A successful but empty public catalogue response is not a catalogue
+        # completion; WALLABY PDR2 has published thousands of detections.
+        empty = [c["id"] for c in CFG["catalogs"] if not any(
+            len(x)>0 and x.survey.iloc[0]==c["id"] for x in allcat)]
+        if empty: receipts["errors"].append("Missing or zero-row surveys: "+",".join(empty))
+
         full = pd.concat(allcat, ignore_index=True)
         full=coverage(full,mocs)
         match=env_counts(full)
@@ -280,7 +286,7 @@ def run():
                 "galaxy_like_covered":int((b.galaxy_like_screen).sum()) if "galaxy_like_screen" in b else
                     int((b.w50_kms.ge(30)&b.vopt_kms_or_derived.ge(600)&(b.logMHI.ge(7)|b.logMHI.isna())).sum()),
                 "catalog_loaded":True})
-        summary={"start_utc":receipts["start_utc"],"complete_all_catalogues":len(allcat)==len(CFG["catalogs"]),
+        summary={"start_utc":receipts["start_utc"],"complete_all_catalogues":len(allcat)==len(CFG["catalogs"]) and not receipts["errors"],
                  "complete_footprint":True,"counts":counts, "input_total":len(full),
                  "in_footprint_center_or_sampled_edge":len(match),
                  "shortlist_count":len(priority),"stellar_mass_upper_limits_count":0,
