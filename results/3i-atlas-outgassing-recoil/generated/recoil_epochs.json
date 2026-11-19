@@ -1,0 +1,837 @@
+[
+  {
+    "epoch": "vlt_jul23",
+    "date": "2025-07-23",
+    "r_au": 3.78,
+    "measured_species": [
+      {
+        "species": "Ni",
+        "kind": "detection",
+        "Q_s": 1.62e+22,
+        "Q_sigma_s": 5e+21,
+        "facility": "VLT X-shooter",
+        "reference": "https://www.research.ed.ac.uk/en/publications/very-large-telescope-observations-of-interstellar-comet-3iatlas-i/"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 0.0,
+    "gases_in_recoil": [],
+    "fitted_RTN_accel_m_s2": [
+      2.6035853931140032e-08,
+      5.420561326649438e-08,
+      -1.0442059771483115e-08
+    ],
+    "fitted_norm_m_s2": 6.103401356450055e-08,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "swift_jul31",
+    "date": "2025-07-31",
+    "r_au": 3.51,
+    "measured_species": [
+      {
+        "species": "H2O",
+        "kind": "detection_model_dependent",
+        "Q_s": 1.35e+27,
+        "Q_sigma_s": 2.7e+26,
+        "facility": "Swift UVOT OH",
+        "reference": "https://arxiv.org/abs/2508.04675"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 40.38535291824582,
+    "gases_in_recoil": [
+      {
+        "species": "H2O",
+        "q_molecules_s": 1.35e+27,
+        "kg_s": 40.38535291824582,
+        "kind": "detection_model_dependent",
+        "reference": "https://arxiv.org/abs/2508.04675",
+        "note": "Original adopted reddening; later aperture reductions differ"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      3.019542822783105e-08,
+      6.286568165818283e-08,
+      -1.2110317841483377e-08
+    ],
+    "fitted_norm_m_s2": 7.078500981445034e-08,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "jwst_aug06",
+    "date": "2025-08-06",
+    "r_au": 3.32,
+    "measured_species": [
+      {
+        "species": "CO2",
+        "kind": "detection",
+        "Q_s": 1.7e+27,
+        "Q_sigma_s": 1e+25,
+        "facility": "JWST NIRSpec terminal coma",
+        "reference": "https://doi.org/10.3847/2041-8213/ae2fff"
+      },
+      {
+        "species": "CO",
+        "kind": "detection",
+        "Q_s": 3.7e+26,
+        "Q_sigma_s": 2e+25,
+        "facility": "JWST NIRSpec terminal coma",
+        "reference": "https://doi.org/10.3847/2041-8213/ae2fff"
+      },
+      {
+        "species": "H2O",
+        "kind": "detection",
+        "Q_s": 2.23e+26,
+        "Q_sigma_s": 8e+24,
+        "facility": "JWST NIRSpec terminal coma",
+        "reference": "https://doi.org/10.3847/2041-8213/ae2fff"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 148.11559205264297,
+    "gases_in_recoil": [
+      {
+        "species": "CO2",
+        "q_molecules_s": 1.7e+27,
+        "kg_s": 124.2351398876056,
+        "kind": "detection",
+        "reference": "https://doi.org/10.3847/2041-8213/ae2fff",
+        "note": "Terminal coma-integrated Q; near-nucleus extracted Q smaller"
+      },
+      {
+        "species": "CO",
+        "q_molecules_s": 3.7e+26,
+        "kg_s": 17.209390164467884,
+        "kind": "detection",
+        "reference": "https://doi.org/10.3847/2041-8213/ae2fff",
+        "note": "Terminal Q"
+      },
+      {
+        "species": "H2O",
+        "q_molecules_s": 2.23e+26,
+        "kg_s": 6.671062000569496,
+        "kind": "detection",
+        "reference": "https://doi.org/10.3847/2041-8213/ae2fff",
+        "note": "May include icy grain distributed source"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      3.3750425978888555e-08,
+      7.026704570664994e-08,
+      -1.353610165107956e-08
+    ],
+    "fitted_norm_m_s2": 7.911873996724938e-08,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "spherex_aug12",
+    "date": "2025-08-12",
+    "r_au": 3.17,
+    "measured_species": [
+      {
+        "species": "CO2",
+        "kind": "detection",
+        "Q_s": 9.4e+26,
+        "Q_sigma_s": null,
+        "facility": "SPHEREx and IRTF SpeX",
+        "reference": "https://arxiv.org/abs/2508.15469"
+      },
+      {
+        "species": "CO",
+        "kind": "upper_limit_3sigma",
+        "Q_s": 2.8e+26,
+        "Q_sigma_s": null,
+        "facility": "SPHEREx",
+        "reference": "https://arxiv.org/abs/2508.15469"
+      },
+      {
+        "species": "H2O",
+        "kind": "upper_limit_3sigma",
+        "Q_s": 1.5e+26,
+        "Q_sigma_s": null,
+        "facility": "SPHEREx",
+        "reference": "https://arxiv.org/abs/2508.15469"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 86.20530813042573,
+    "gases_in_recoil": [
+      {
+        "species": "CO2",
+        "q_molecules_s": 9.4e+26,
+        "kg_s": 68.69472440844073,
+        "kind": "detection",
+        "reference": "https://arxiv.org/abs/2508.15469",
+        "note": "CO2 coma gas"
+      },
+      {
+        "species": "CO",
+        "q_molecules_s": 2.8e+26,
+        "kg_s": 13.023322286624346,
+        "kind": "upper_limit_3sigma",
+        "reference": "https://arxiv.org/abs/2508.15469",
+        "note": "Not a detection"
+      },
+      {
+        "species": "H2O",
+        "q_molecules_s": 1.5e+26,
+        "kg_s": 4.487261435360647,
+        "kind": "upper_limit_3sigma",
+        "reference": "https://arxiv.org/abs/2508.15469",
+        "note": "Not a detection"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      3.70200415278987e-08,
+      7.707425535103128e-08,
+      -1.4847428757262916e-08
+    ],
+    "fitted_norm_m_s2": 8.678346877917082e-08,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "swift_aug19",
+    "date": "2025-08-19",
+    "r_au": 2.9,
+    "measured_species": [
+      {
+        "species": "H2O",
+        "kind": "detection_model_dependent",
+        "Q_s": 1.36e+27,
+        "Q_sigma_s": 3.5e+26,
+        "facility": "Swift UVOT OH",
+        "reference": "https://doi.org/10.3847/2041-8213/ae2fff"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 40.68450368060321,
+    "gases_in_recoil": [
+      {
+        "species": "H2O",
+        "q_molecules_s": 1.36e+27,
+        "kg_s": 40.68450368060321,
+        "kind": "detection_model_dependent",
+        "reference": "https://doi.org/10.3847/2041-8213/ae2fff",
+        "note": "Wide aperture; quoted from later compilation"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      4.423432762303225e-08,
+      9.209411231830895e-08,
+      -1.7740823643146174e-08
+    ],
+    "fitted_norm_m_s2": 1.0369541015636262e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "lowell_aug19",
+    "date": "2025-08-19",
+    "r_au": 2.91,
+    "measured_species": [
+      {
+        "species": "CN",
+        "kind": "detection",
+        "Q_s": 7.23e+24,
+        "Q_sigma_s": 1.28e+24,
+        "facility": "Lowell 1.1m Schleicher",
+        "reference": "https://www.astronomerstelegram.org/?read=17352"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 0.0,
+    "gases_in_recoil": [],
+    "fitted_RTN_accel_m_s2": [
+      4.39308339898798e-08,
+      9.14622506343782e-08,
+      -1.7619103085563384e-08
+    ],
+    "fitted_norm_m_s2": 1.0298395146668195e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "vlt_aug21",
+    "date": "2025-08-21",
+    "r_au": 2.85,
+    "measured_species": [
+      {
+        "species": "CN",
+        "kind": "detection",
+        "Q_s": 4.07e+23,
+        "Q_sigma_s": 5e+22,
+        "facility": "VLT X-shooter",
+        "reference": "https://www.research.ed.ac.uk/en/publications/very-large-telescope-observations-of-interstellar-comet-3iatlas-i/"
+      },
+      {
+        "species": "Ni",
+        "kind": "detection",
+        "Q_s": 4.68e+22,
+        "Q_sigma_s": 7.5e+21,
+        "facility": "VLT X-shooter",
+        "reference": "https://www.research.ed.ac.uk/en/publications/very-large-telescope-observations-of-interstellar-comet-3iatlas-i/"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 0.0,
+    "gases_in_recoil": [],
+    "fitted_RTN_accel_m_s2": [
+      4.5800024045515693e-08,
+      9.535383005195176e-08,
+      -1.8368769078345253e-08
+    ],
+    "fitted_norm_m_s2": 1.073657617008322e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "vlt_aug28",
+    "date": "2025-08-28",
+    "r_au": 2.64,
+    "measured_species": [
+      {
+        "species": "OH",
+        "kind": "detection",
+        "Q_s": 3.8e+26,
+        "Q_sigma_s": 4e+25,
+        "facility": "VLT UVES",
+        "reference": "https://doi.org/10.1051/0004-6361/202662346"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 12.50450186653834,
+    "gases_in_recoil": [
+      {
+        "species": "H2O_from_OH_proxy",
+        "q_OH_s": 3.8e+26,
+        "assumed_H2O_to_OH_factor": 1.1,
+        "kg_s": 12.50450186653834,
+        "reference": "https://doi.org/10.1051/0004-6361/202662346",
+        "kind": "detection"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      5.337619021316879e-08,
+      1.1112710694975008e-07,
+      -2.1407301256723386e-08
+    ],
+    "fitted_norm_m_s2": 1.2512603297391664e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "vlt_sep04",
+    "date": "2025-09-04",
+    "r_au": 2.44,
+    "measured_species": [
+      {
+        "species": "OH",
+        "kind": "detection",
+        "Q_s": 6.17e+26,
+        "Q_sigma_s": 3e+25,
+        "facility": "VLT UVES",
+        "reference": "https://doi.org/10.1051/0004-6361/202662346"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 20.303362241195146,
+    "gases_in_recoil": [
+      {
+        "species": "H2O_from_OH_proxy",
+        "q_OH_s": 6.17e+26,
+        "assumed_H2O_to_OH_factor": 1.1,
+        "kg_s": 20.303362241195146,
+        "reference": "https://doi.org/10.1051/0004-6361/202662346",
+        "kind": "detection"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      6.248499988405356e-08,
+      1.3009128671677275e-07,
+      -2.5060522513917516e-08
+    ],
+    "fitted_norm_m_s2": 1.4647917216726176e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "vlt_sep10",
+    "date": "2025-09-10",
+    "r_au": 2.25,
+    "measured_species": [
+      {
+        "species": "OH",
+        "kind": "detection",
+        "Q_s": 1.74e+27,
+        "Q_sigma_s": 5e+26,
+        "facility": "VLT UVES",
+        "reference": "https://doi.org/10.1051/0004-6361/202662346"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 57.257455915201874,
+    "gases_in_recoil": [
+      {
+        "species": "H2O_from_OH_proxy",
+        "q_OH_s": 1.74e+27,
+        "assumed_H2O_to_OH_factor": 1.1,
+        "kg_s": 57.257455915201874,
+        "reference": "https://doi.org/10.1051/0004-6361/202662346",
+        "kind": "detection"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      7.348359413524962e-08,
+      1.5298992288335372e-07,
+      -2.947166949903394e-08
+    ],
+    "fitted_norm_m_s2": 1.7226239988444634e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "juice_nov02",
+    "date": "2025-11-02",
+    "r_au": 1.363,
+    "measured_species": [
+      {
+        "species": "H2O",
+        "kind": "detection",
+        "Q_s": 8e+28,
+        "Q_sigma_s": 8e+27,
+        "facility": "JUICE MAJIS",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47"
+      },
+      {
+        "species": "CO2",
+        "kind": "detection",
+        "Q_s": 8.2e+27,
+        "Q_sigma_s": 8e+26,
+        "facility": "JUICE MAJIS",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 2992.4579500815803,
+    "gases_in_recoil": [
+      {
+        "species": "H2O",
+        "q_molecules_s": 8e+28,
+        "kg_s": 2393.206098859012,
+        "kind": "detection",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47",
+        "note": "Very near perihelion"
+      },
+      {
+        "species": "CO2",
+        "q_molecules_s": 8.2e+27,
+        "kg_s": 599.2518512225682,
+        "kind": "detection",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47",
+        "note": "Very near perihelion"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      2.0024593763255885e-07,
+      4.169040847365729e-07,
+      -8.03115601772122e-08
+    ],
+    "fitted_norm_m_s2": 4.694224090374044e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "soho_nov06",
+    "date": "2025-11-06",
+    "r_au": 1.38,
+    "measured_species": [
+      {
+        "species": "H2O",
+        "kind": "detection",
+        "Q_s": 3.17e+29,
+        "Q_sigma_s": null,
+        "facility": "SOHO SWAN Lyman alpha",
+        "reference": "https://www.nature.com/articles/s41550-026-02850-5"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 9483.079166728834,
+    "gases_in_recoil": [
+      {
+        "species": "H2O",
+        "q_molecules_s": 3.17e+29,
+        "kg_s": 9483.079166728834,
+        "kind": "detection",
+        "reference": "https://www.nature.com/articles/s41550-026-02850-5",
+        "note": "Large aperture source; independently much higher than JUICE"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      1.9534273015632287e-07,
+      4.0669580161572066e-07,
+      -7.83450571512599e-08
+    ],
+    "fitted_norm_m_s2": 4.579281660444286e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "juice_nov12",
+    "date": "2025-11-12",
+    "r_au": 1.447,
+    "measured_species": [
+      {
+        "species": "H2O",
+        "kind": "detection",
+        "Q_s": 6.8e+28,
+        "Q_sigma_s": 7e+27,
+        "facility": "JUICE MAJIS",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47"
+      },
+      {
+        "species": "CO2",
+        "kind": "detection",
+        "Q_s": 6.9e+27,
+        "Q_sigma_s": 1e+27,
+        "facility": "JUICE MAJIS",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 2538.473692985736,
+    "gases_in_recoil": [
+      {
+        "species": "H2O",
+        "q_molecules_s": 6.8e+28,
+        "kg_s": 2034.22518403016,
+        "kind": "detection",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47",
+        "note": "Near-nucleus water"
+      },
+      {
+        "species": "CO2",
+        "q_molecules_s": 6.9e+27,
+        "kg_s": 504.2485089555757,
+        "kind": "detection",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47",
+        "note": "Near-nucleus carbon dioxide"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      1.7767174336804415e-07,
+      3.699055093358459e-07,
+      -7.125784961228999e-08
+    ],
+    "fitted_norm_m_s2": 4.165033197464571e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "juice_nov19",
+    "date": "2025-11-19",
+    "r_au": 1.555,
+    "measured_species": [
+      {
+        "species": "H2O",
+        "kind": "detection",
+        "Q_s": 4.7e+28,
+        "Q_sigma_s": 7e+27,
+        "facility": "JUICE MAJIS",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47"
+      },
+      {
+        "species": "CO2",
+        "kind": "detection",
+        "Q_s": 5.9e+27,
+        "Q_sigma_s": 1.4e+27,
+        "facility": "JUICE MAJIS",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 1837.1775979837123,
+    "gases_in_recoil": [
+      {
+        "species": "H2O",
+        "q_molecules_s": 4.7e+28,
+        "kg_s": 1406.0085830796693,
+        "kind": "detection",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47",
+        "note": "Water release"
+      },
+      {
+        "species": "CO2",
+        "q_molecules_s": 5.9e+27,
+        "kg_s": 431.16901490404297,
+        "kind": "detection",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47",
+        "note": "Carbon dioxide release"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      1.5384898638752754e-07,
+      3.203074759760459e-07,
+      -6.170338472052991e-08
+    ],
+    "fitted_norm_m_s2": 3.606573130612834e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "juice_nov25",
+    "date": "2025-11-25",
+    "r_au": 1.678,
+    "measured_species": [
+      {
+        "species": "H2O",
+        "kind": "marginal_detection",
+        "Q_s": 4.1e+28,
+        "Q_sigma_s": 1.2e+28,
+        "facility": "JUICE MAJIS",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47"
+      },
+      {
+        "species": "CO2",
+        "kind": "detection",
+        "Q_s": 4e+27,
+        "Q_sigma_s": 7e+26,
+        "facility": "JUICE MAJIS",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 1518.8361018713745,
+    "gases_in_recoil": [
+      {
+        "species": "H2O",
+        "q_molecules_s": 4.1e+28,
+        "kg_s": 1226.5181256652436,
+        "kind": "marginal_detection",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47",
+        "note": "Marginal detection late date"
+      },
+      {
+        "species": "CO2",
+        "q_molecules_s": 4e+27,
+        "kg_s": 292.3179762061308,
+        "kind": "detection",
+        "reference": "https://doi.org/10.3847/2041-8213/ae8a47",
+        "note": "Three of eight cubes"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      1.3212089684414207e-07,
+      2.750704569820258e-07,
+      -5.2989016821084805e-08
+    ],
+    "fitted_norm_m_s2": 3.097216873111506e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "trappist_nov29",
+    "date": "2025-11-29",
+    "r_au": 1.76,
+    "measured_species": [
+      {
+        "species": "OH",
+        "kind": "detection",
+        "Q_s": 1.67e+28,
+        "Q_sigma_s": 2.7e+27,
+        "facility": "TRAPPIST-North",
+        "reference": "https://www.astronomerstelegram.org/?read=17515"
+      },
+      {
+        "species": "CN",
+        "kind": "detection",
+        "Q_s": 5.54e+25,
+        "Q_sigma_s": 1.9e+24,
+        "facility": "TRAPPIST-North",
+        "reference": "https://www.astronomerstelegram.org/?read=17515"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 549.5399504505007,
+    "gases_in_recoil": [
+      {
+        "species": "H2O_from_OH_proxy",
+        "q_OH_s": 1.67e+28,
+        "assumed_H2O_to_OH_factor": 1.1,
+        "kg_s": 549.5399504505007,
+        "reference": "https://www.astronomerstelegram.org/?read=17515",
+        "kind": "detection"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      1.200964279796298e-07,
+      2.500359906369377e-07,
+      -4.8166427827627624e-08
+    ],
+    "fitted_norm_m_s2": 2.815335741913125e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "trappist_dec07",
+    "date": "2025-12-07",
+    "r_au": 1.98,
+    "measured_species": [
+      {
+        "species": "OH",
+        "kind": "detection",
+        "Q_s": 6.93e+27,
+        "Q_sigma_s": 1.13e+27,
+        "facility": "TRAPPIST-North",
+        "reference": "https://www.astronomerstelegram.org/?read=17538"
+      },
+      {
+        "species": "CN",
+        "kind": "detection",
+        "Q_s": 3.64e+25,
+        "Q_sigma_s": 2.4e+24,
+        "facility": "TRAPPIST-North",
+        "reference": "https://www.astronomerstelegram.org/?read=17538"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 228.04262614502812,
+    "gases_in_recoil": [
+      {
+        "species": "H2O_from_OH_proxy",
+        "q_OH_s": 6.93e+27,
+        "assumed_H2O_to_OH_factor": 1.1,
+        "kg_s": 228.04262614502812,
+        "reference": "https://www.astronomerstelegram.org/?read=17538",
+        "kind": "detection"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      9.48910048234112e-08,
+      1.9755930124400016e-07,
+      -3.805742445639713e-08
+    ],
+    "fitted_norm_m_s2": 2.2244628084251852e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "spherex_dec12",
+    "date": "2025-12-12",
+    "r_au": 2.1,
+    "measured_species": [
+      {
+        "species": "H2O",
+        "kind": "detection",
+        "Q_s": 1.4e+28,
+        "Q_sigma_s": 2.8e+27,
+        "facility": "SPHEREx",
+        "reference": "https://doi.org/10.3847/1538-3881/ae578d"
+      },
+      {
+        "species": "CO2",
+        "kind": "derived_from_Q_ratio",
+        "Q_s": 2.94e+27,
+        "Q_sigma_s": 8e+26,
+        "facility": "SPHEREx",
+        "reference": "https://doi.org/10.3847/1538-3881/ae578d"
+      },
+      {
+        "species": "CO",
+        "kind": "derived_from_Q_ratio",
+        "Q_s": 7.7e+27,
+        "Q_sigma_s": null,
+        "facility": "SPHEREx",
+        "reference": "https://doi.org/10.3847/1538-3881/ae578d"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 991.8061426940027,
+    "gases_in_recoil": [
+      {
+        "species": "H2O",
+        "q_molecules_s": 1.4e+28,
+        "kg_s": 418.81106730032707,
+        "kind": "detection",
+        "reference": "https://doi.org/10.3847/1538-3881/ae578d",
+        "note": "Dec 8-15 aggregate rate"
+      },
+      {
+        "species": "CO2",
+        "q_molecules_s": 2.94e+27,
+        "kg_s": 214.85371251150616,
+        "kind": "derived_from_Q_ratio",
+        "reference": "https://doi.org/10.3847/1538-3881/ae578d",
+        "note": "CO2/H2O 0.21 plus water 1.4e28"
+      },
+      {
+        "species": "CO",
+        "q_molecules_s": 7.7e+27,
+        "kg_s": 358.14136288216946,
+        "kind": "derived_from_Q_ratio",
+        "reference": "https://doi.org/10.3847/1538-3881/ae578d",
+        "note": "CO/H2O 0.55; cross-source band estimates"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      8.43561667368937e-08,
+      1.7562618698344178e-07,
+      -3.383227365960529e-08
+    ],
+    "fitted_norm_m_s2": 1.9775020394898178e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  },
+  {
+    "epoch": "jwst_dec23",
+    "date": "2025-12-23",
+    "r_au": 2.4,
+    "measured_species": [
+      {
+        "species": "CO",
+        "kind": "detection",
+        "Q_s": 3.82e+27,
+        "Q_sigma_s": 1e+25,
+        "facility": "JWST NIRSpec IFU",
+        "reference": "https://borowiecki.dev/pdf/2603.20460"
+      },
+      {
+        "species": "CO2",
+        "kind": "detection",
+        "Q_s": 1.59e+27,
+        "Q_sigma_s": 1e+25,
+        "facility": "JWST NIRSpec IFU",
+        "reference": "https://borowiecki.dev/pdf/2603.20460"
+      },
+      {
+        "species": "H2O",
+        "kind": "detection",
+        "Q_s": 1.55e+27,
+        "Q_sigma_s": 1.2e+26,
+        "facility": "JWST NIRSpec IFU",
+        "reference": "https://borowiecki.dev/pdf/2603.20460"
+      }
+    ],
+    "included_gas_mass_loss_kg_s": 340.2400891891339,
+    "gases_in_recoil": [
+      {
+        "species": "CO",
+        "q_molecules_s": 3.82e+27,
+        "kg_s": 177.67532548180358,
+        "kind": "detection",
+        "reference": "https://borowiecki.dev/pdf/2603.20460",
+        "note": "Dec 22-23 spectroscopic Q"
+      },
+      {
+        "species": "CO2",
+        "q_molecules_s": 1.59e+27,
+        "kg_s": 116.19639554193701,
+        "kind": "detection",
+        "reference": "https://borowiecki.dev/pdf/2603.20460",
+        "note": "Dec 22-23 spectroscopic Q"
+      },
+      {
+        "species": "H2O",
+        "q_molecules_s": 1.55e+27,
+        "kg_s": 46.368368165393356,
+        "kind": "detection",
+        "reference": "https://borowiecki.dev/pdf/2603.20460",
+        "note": "Dec 22-23 spectroscopic Q"
+      }
+    ],
+    "fitted_RTN_accel_m_s2": [
+      6.458519015793425e-08,
+      1.344637994091976e-07,
+      -2.59028345206353e-08
+    ],
+    "fitted_norm_m_s2": 1.5140249989843917e-07,
+    "missing_species_are_not_zero": true,
+    "jet_geometry_unmeasured": true
+  }
+]
