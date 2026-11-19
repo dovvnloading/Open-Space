@@ -9,6 +9,9 @@ on:
       - 'results/cosmos2025-baryon-bound/halo_bound.py'
       - 'results/cosmos2025-baryon-bound/referee.py'
   workflow_dispatch:
+concurrency:
+  group: cosmos2025-source-audit-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
@@ -59,6 +62,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin research/cosmos2025-baryon-bound
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse FETCH_HEAD)" ]; then
+            echo "::warning::This run started at a superseded analysis commit; do not deposit stale scientific receipts."
+            exit 0
+          fi
           git add results/cosmos2025-baryon-bound/run
           if ! git diff --cached --quiet; then
             git commit -m "research: deposit COSMOS2025 archived catalogue scan receipt"
