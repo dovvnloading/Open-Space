@@ -1,0 +1,36 @@
+{
+  "as_of_utc": "2026-11-19T09:10:50.147092+00:00",
+  "catalogue": "4XMM-DR14 v1.0",
+  "catalogue_published_md5": "47c6bd113cb8510db418665472c81b48",
+  "sdss": "SDSS DR18 PhotoPrimary clean=1,mode=1,type=3,host centroid <=2arcsec",
+  "parent_manifest_sha256": "c2793211c74f9a85992253fba76743a94bcdf2cffb2137f29a3037907d4e56a5",
+  "sdss_pairs_sha256": "b1495de1b3f28a7e3a7b21f73df30f96d43607a77db0231d445e1280eae0481f",
+  "parent_xray_detections": 33488,
+  "sdss_matched_detections": 2510,
+  "sdss_pairs": 2519,
+  "selection_pre_registered": "one clean galaxy match <=2 arcsec; EP_EXTENT <=6 arcsec and EP_EXTENT_ML<4; PN_ONTIME >=21600 s; PN_FLAG<=1; keep soft HR and TSERIES prefilter",
+  "status": "CATALOGUE_UNAVAILABLE",
+  "download_receipts": [
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/catalogues/4XMM_DR14cat_v1.0.fits.gz",
+      "start_utc": "2026-11-19T09:10:50.151901+00:00",
+      "http": 200,
+      "error": "TimeoutError('catalogue stream budget exceeded')",
+      "verified": false
+    },
+    {
+      "url": "https://xmmssc.irap.omp.eu/Catalogue/4XMM-DR14/4XMM_DR14cat_v1.0.fits.gz",
+      "start_utc": "2026-11-19T09:28:50.461994+00:00",
+      "error": "ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'xmmssc.irap.omp.eu\\', port=443): Max retries exceeded with url: /Catalogue/4XMM-DR14/4XMM_DR14cat_v1.0.fits.gz (Caused by NameResolutionError(\"HTTPSConnection(host=\\'xmmssc.irap.omp.eu\\', port=443): Failed to resolve \\'xmmssc.irap.omp.eu\\' ([Errno -2] Name or service not known)\"))'))",
+      "verified": false
+    }
+  ],
+  "blocks": [
+    "SDSS footprint incompleteness: LS DR10 inaccessible to runner",
+    "No Gaia high-PM/parallax source exclusion, no SIMBAD/4LAC known blazar clearance",
+    "PN_PILEUP field is diagnostic, not an independently measured epatplot pileup veto",
+    "No independent pn background region/GTI or event-level luminosity and spectra",
+    "Host centers and classifications are SDSS morphology, not spectroscopically verified nuclei",
+    "No EPIC-pn light curve accessed in this freeze stage"
+  ]
+}
