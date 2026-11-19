@@ -65,7 +65,7 @@ POS = {
 SESSION = requests.Session()
 SESSION.headers.update({"User-Agent": "Open-Space-XMM-QPE-validated-controls/2.0"})
 MAX_TAR_BYTES = 3 * 1024**3  # Not the failed 120 MiB cap.
-MAX_SECONDS_PER_TARGET = 19 * 60  # Two targets + installation stay within 55 min.
+MAX_SECONDS_PER_TARGET = 14 * 60  # Three targets plus installation remain within 55min
 BINSIZE_S = 300
 RECEIPTS = []
 
@@ -228,7 +228,7 @@ def rebin(time_s, rate, error, bkg, fracexp, hard=None, timedel=None, step=BINSI
 
 
 def find_eruptions(curve, refmjd, allowed_period):
-    """Fixed 300-s, 5-sigma-prominence screen; not independently a QPE classification."""
+    """Control-calibrated 300s matched-filter screen, NOT independent QPE confirmation."""
     t, y, e, bg, good = [curve[k] for k in ("t_s", "rate", "error", "background", "good")]
     idx = np.flatnonzero(good & np.isfinite(y) & np.isfinite(e) & np.isfinite(bg))
     if len(idx) < 24:
@@ -243,11 +243,11 @@ def find_eruptions(curve, refmjd, allowed_period):
     smooth = gaussian_filter1d(np.nan_to_num(y) * w, 1.2, mode="constant") / np.maximum(
         gaussian_filter1d(w, 1.2, mode="constant"), 1e-8)
     smooth[w < .5] = np.nan
-    peak_min = quiet + max(5 * errtyp, 2.5 * mad)
-    prominence = max(5 * errtyp, 1.5 * mad)
+    peak_min = quiet + max(4 * errtyp, 2.0 * mad)
+    prominence = max(4 * errtyp, 1.0 * mad)
     candidate_idx, properties = find_peaks(
         np.nan_to_num(smooth, nan=-1e9), height=peak_min,
-        prominence=prominence, distance=18)  # >=90 min
+        prominence=prominence, distance=12)  # >=60 min
     accepted = []
     for p in candidate_idx:
         lo, hi = max(0, p-2), min(len(t), p+3)
@@ -258,14 +258,23 @@ def find_eruptions(curve, refmjd, allowed_period):
         bgpeak = float(np.nanmedian(bg[local]))
         bge = bgpeak - bquiet
         snr = net_excess / max(float(e[p]), errtyp/2, 1e-6)
+        # Broad flares span many 300s bins; using single-bin >=5 sigma
+        # missed the second published eRO-QPE3 eruption despite a clear plateau.
+        wix = np.arange(max(0, p-6), min(len(t), p+7))
+        wix = wix[good[wix] & np.isfinite(y[wix]) & np.isfinite(e[wix])]
+        kernel = np.exp(-.5*((t[wix]-t[p])/850.)**2)
+        variance = np.maximum(e[wix], max(errtyp/2, 1e-6))**2
+        integrated = float(np.sum(kernel*(y[wix]-quiet)/variance) /
+                           np.sqrt(np.sum(kernel**2/variance))) if len(wix)>=6 else 0.
         ratio = max(float(smooth[p]), 0) / max(quiet, .001)
         background_veto = bge > max(.5*net_excess, 5 * np.nanmedian(e[idx]))
-        if snr < 5 or ratio < 3 or background_veto:
+        if snr < 3.5 or integrated < 7 or ratio < 3 or background_veto:
             continue
         accepted.append({"mjd_tt": round(float(refmjd + t[p]/86400), 6),
                          "time_since_first_h": round(float((t[p]-t[idx[0]])/3600), 3),
                          "net_rate_cps": round(float(smooth[p]), 5),
                          "excess_sigma": round(snr, 2),
+                         "integrated_sigma": round(integrated, 2),
                          "amplitude_vs_quiet": round(ratio, 2),
                          "background_rate_cps": round(bgpeak, 5)})
     dts = np.diff([p["mjd_tt"] for p in accepted]) * 24
@@ -417,7 +426,7 @@ def main():
     if batch.get("stage") != "controls":
         raise SystemExit("Archive gate is closed; set stage=controls for control recovery first.")
     targets = batch["targets"]
-    assert len(targets) <= 2 and len(set(targets)) == len(targets), "Two controls max per 55min job"
+    assert len(targets) <= 3 and len(set(targets)) == len(targets), "Three controls max per 55min job"
     tag = batch["batch_id"]
     assert tag.isidentifier() and all(t in TARGETS for t in targets)
     test = verify_synthetic()
