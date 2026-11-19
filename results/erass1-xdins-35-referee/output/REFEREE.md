@@ -4,7 +4,7 @@ This file is generated from explicit source evidence, not catalogue blank fields
 
 | Check | Outcome |
 |---|---|
-| finished_utc | 2026-11-19T06:48:29.639979+00:00 |
+| finished_utc | 2026-11-19T06:50:56.224589+00:00 |
 | source_count | 35 |
 | known_INS | 6 |
 | known_M7 | 4 |
@@ -14,7 +14,8 @@ This file is generated from explicit source evidence, not catalogue blank fields
 | with_position_forced_optical | 10 |
 | with_g_lower_bound | 7 |
 | provisional_g_bounds_gt_1e4 | 0 |
-| archival_query_status | {'XMM': 'query_failed_not_nondetection', 'Chandra': 'query_failed_not_nondetection', 'Swift': 'query_failed_not_nondetection'} |
+| dust_sightlines_measured | 35 |
+| archival_query_status | {'XMM': 'query_failed_not_nondetection', 'Chandra': 'queried', 'Swift': 'queried'} |
 | ATNF_status | queried |
 | Kurpas_status | unavailable_novelty_unverified |
 | native_X_ray_spectra_fit | False |
