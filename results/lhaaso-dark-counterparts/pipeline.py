@@ -397,38 +397,98 @@ def gaia_young():
     RECEIPTS["gaia_dr3_hunt_ref"]["young_open_clusters"] = len(result)
 
 def atnf():
-    import psrqpy
-    urls=["https://www.atnf.csiro.au/research/pulsar/psrcat/downloads/psrcat_pkg.tar.gz",
-          "https://www.atnf.csiro.au/research/pulsar/psrcat/downloads/psrcat_pkg.tar.gz"]
-    blob=None
-    for url in urls:
-        blob=file_url("atnf_psrcat_v2_latest",url,max_bytes=40_000_000)
-        if blob: break
-    if blob is None: return
+    """Parse the published ATNF psrcat.db directly, freezing its archive digest.
+
+    The ATNF database records are key/value lines separated by '@'; all derived
+    Edot/characteristic ages use conventional I=10^45 cgs assumptions. Missing
+    DM distances remain unknown rather than filled with fabricated distances.
+    """
+    url="https://www.atnf.csiro.au/research/pulsar/psrcat/downloads/psrcat_pkg.tar.gz"
+    blob=file_url("atnf_psrcat_v2_latest",url,max_bytes=40_000_000)
+    if blob is None:return
     try:
-        with tarfile.open(fileobj=io.BytesIO(blob), mode="r:gz") as tf:
-            db=tf.extractfile("psrcat_tar/psrcat.db").read()
-        dbpath=OUT/"psrcat_raw.db"
-        dbpath.write_bytes(db)
-        q=psrqpy.QueryATNF(loadfromdb=str(dbpath),params=["PSRJ","RAJD","DECJD","EDOT","DIST","AGE","P0","P1"],cache=False)
-        tab=q.pandas
-        items=[]
-        for _,r in tab.iterrows():
-            a=number(r.get("RAJD",np.nan)); d=number(r.get("DECJD",np.nan))
-            x=base_record(str(r.get("PSRJ","")),a,d,edot_erg_s=number(r.get("EDOT",np.nan)),
-                          distance_kpc=number(r.get("DIST",np.nan)),age_yr=number(r.get("AGE",np.nan)),
-                          period_s=number(r.get("P0",np.nan)))
-            if x: items.append(x)
-        if len(items)<3000: raise ValueError(f"ATNF only {len(items)} usable pulsars")
-        records(items,"atnf_pulsars.csv")
-        RECEIPTS["atnf_psrcat_v2_latest"]["psrcat_db_sha256"]=digest(db)
-        RECEIPTS["atnf_psrcat_v2_latest"]["version"]=str(getattr(q,"version","unreported"))
-        RECEIPTS["atnf_psrcat_v2_latest"]["pulsars_with_coordinates"]=len(items)
+        with tarfile.open(fileobj=io.BytesIO(blob),mode="r:gz") as tf:
+            paths=[m for m in tf.getmembers() if m.isfile() and m.name.endswith("/psrcat.db")]
+            if len(paths)!=1:raise ValueError(f"database archive paths {len(paths)}")
+            db=tf.extractfile(paths[0]).read()
+        from astropy.coordinates import BarycentricTrueEcliptic
+        sources=[]
+        current={}
+        def flush():
+            if not current:return
+            name=current.get("PSRJ",current.get("JNAME",current.get("NAME","")))
+            if not name:return
+            ra,dec=float("nan"),float("nan")
+            if "RAJD" in current and "DECJD" in current:
+                ra=number(current["RAJD"]);dec=number(current["DECJD"])
+            elif "RAJ" in current and "DECJ" in current:
+                try:
+                    sky=SkyCoord(current["RAJ"],current["DECJ"],unit=(u.hourangle,u.deg),frame="icrs")
+                    ra=float(sky.ra.deg);dec=float(sky.dec.deg)
+                except (ValueError,TypeError):pass
+            elif "ELONG" in current and "ELAT" in current:
+                try:
+                    sky=SkyCoord(lon=number(current["ELONG"])*u.deg,
+                                 lat=number(current["ELAT"])*u.deg,
+                                 frame=BarycentricTrueEcliptic).icrs
+                    ra=float(sky.ra.deg);dec=float(sky.dec.deg)
+                except (ValueError,TypeError):pass
+            p0=number(current.get("P0"))
+            p1=number(current.get("P1"))
+            f0=number(current.get("F0"))
+            f1=number(current.get("F1"))
+            if not np.isfinite(p0) and np.isfinite(f0) and f0>0:p0=1/f0
+            if not np.isfinite(p1) and np.isfinite(f1) and np.isfinite(f0) and f0>0:
+                p1=-f1/(f0*f0)
+            edot=number(current.get("EDOT"))
+            if not np.isfinite(edot) and np.isfinite(p0) and p0>0 and np.isfinite(p1) and p1>0:
+                edot=4*np.pi**2*1e45*p1/p0**3
+            age=number(current.get("AGE"))
+            if not np.isfinite(age) and np.isfinite(p0) and p0>0 and np.isfinite(p1) and p1>0:
+                age=p0/(2*p1)/(365.25*86400)
+            d=float("nan"); ds="no_reported_distance"
+            for candidate in ("DIST_A","DIST","DIST_DM","DIST_DM1"):
+                x=number(current.get(candidate))
+                if np.isfinite(x) and x>0:
+                    d=x;ds=candidate;break
+            if not np.isfinite(d):
+                px=number(current.get("PX"))
+                if np.isfinite(px) and px>0:
+                    d=1/px;ds="inverse_parallax_unbiased_not_justified"
+            val=base_record(name,ra,dec,edot_erg_s=edot,
+                            distance_kpc=d,distance_source=ds,
+                            age_yr=age,period_s=p0,period_derivative=p1,
+                            age_model="characteristic_P_2Pdot",
+                            edot_model="4pi2_I_Pdot_over_P3_I1e45")
+            if val:sources.append(val)
+        for rawline in db.decode("ascii",errors="replace").splitlines():
+            line=rawline.strip()
+            if not line or line.startswith("#"):continue
+            if line.startswith("@"):
+                flush();current={}
+                continue
+            parts=line.split()
+            if len(parts)>=2 and re.match(r"^[A-Z_][A-Z0-9_]*$",parts[0]):
+                current[parts[0]]=parts[1]
+        flush()
+        if not (3000<=len(sources)<=7000):
+            raise ValueError(f"ATNF db parser yielded {len(sources)} positions, expected 3000-7000")
+        df=records(sources,"atnf_pulsars.csv")
+        if not df["name"].is_unique:
+            raise ValueError("duplicate PSRJ identifiers")
+        first=db[:2500].decode("ascii",errors="replace")
+        version=re.search(r"(?i)(?:version|ver)\s*:?\s*v?(\d+\.\d+(?:\.\d+)?)",first)
+        RECEIPTS["atnf_psrcat_v2_latest"].update({
+            "psrcat_db_sha256":digest(db),
+            "version":version.group(1) if version else "not_in_first_header",
+            "pulsars_with_coordinates":len(sources),
+            "pulsars_with_edot":int(np.isfinite(df.edot_erg_s).sum()),
+            "pulsars_with_distance":int(np.isfinite(df.distance_kpc).sum()),
+            "parser":"direct published ATNF psrcat.db record decoder, no cached psrqpy calculations"})
     except Exception as exc:
         RECEIPTS["atnf_psrcat_v2_latest"]["status"]="invalid_schema"
         RECEIPTS["atnf_psrcat_v2_latest"]["error"]=repr(exc)
-    finally:
-        (OUT/"psrcat_raw.db").unlink(missing_ok=True)
+
 
 def hess():
     # HGPS 2018 is a legacy veto catalogue; do not describe it as post-2024.
