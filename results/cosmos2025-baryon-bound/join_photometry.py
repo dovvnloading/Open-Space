@@ -119,27 +119,27 @@ def run(out, shortlist):
     try:
         # Hash exactly the REMOTE file bytes while streaming the decompressed
         # 5,563-byte records. Limit decompressed bytes and validate rows.
-        class HashStream:
+        import io
+        class HashStream(io.RawIOBase):
             def __init__(self,r):
                 self.r=r
-            def read(self,sz=-1):
+            def readable(self):
+                return True
+            def readinto(self,b):
                 nonlocal total
-                block=self.r.read(sz)
+                block=self.r.read(len(b))
                 if block:
                     sha.update(block)
                     total+=len(block)
                     if total>MAX_SOURCE_BYTES:
                         raise ValueError("remote input exceeds stream safety bound")
-                return block
-            def readinto(self,b):
-                block=self.read(len(b))
-                b[:len(block)]=block
+                    b[:len(block)]=block
                 return len(block)
-        import io
-        wrapped=io.BufferedReader(io.RawIOBase()) if False else None
+
         # gzip.GzipFile accepts fileobj with a read() method; decompressed
         # data iterator is exposed via io.TextIOWrapper.
-        source=gzip.GzipFile(fileobj=HashStream(response)) if compressed else HashStream(response)
+        wrapped=io.BufferedReader(HashStream(response),buffer_size=1024*1024)
+        source=gzip.GzipFile(fileobj=wrapped) if compressed else wrapped
         with io.TextIOWrapper(source,encoding="ascii",errors="strict") as inp:
             for line in inp:
                 if not line.strip():
