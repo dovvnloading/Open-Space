@@ -16,22 +16,28 @@ def main():
     checks=[]
     def check(name,ok,detail):
         checks.append({"name":name,"pass":bool(ok),"detail":detail})
-    frozen=OUT/"frozen"/"1lhaaso_cao2024_vizier.csv"
+    primary_receipt=receipts["lhaaso"]
+    frozen=OUT/primary_receipt.get("frozen_path","frozen/1lhaaso_cao2024_vizier.csv")
     sha=hashlib.sha256(frozen.read_bytes()).hexdigest()
     check("original-bytes-sha256",sha==receipts["lhaaso"]["raw_sha256"],sha)
-    primary=pd.read_csv(frozen,comment="#",low_memory=False)
+    is_preprint=primary_receipt.get("input_variant")=="gammapy_2023_preprint_transcription"
+    primary=pd.read_csv(frozen,comment=None if is_preprint else "#",low_memory=False)
+    unique_names=(primary.iloc[:,0].ffill().nunique() if is_preprint
+                  else primary["1LHAASO"].nunique())
     source=pd.read_csv(CAT/"1lhaaso_sources.csv")
     check("180-components-90-sources",len(primary)==180 and
-          primary["1LHAASO"].nunique()==90 and len(source)==90,
-          {"input_rows":len(primary),"input_sources":primary["1LHAASO"].nunique()})
+          unique_names==90 and len(source)==90,
+          {"input_rows":len(primary),"input_sources":unique_names,
+           "variant":primary_receipt.get("input_variant")})
     check("43-uhe",int(source.uhe.sum())==43,{"uhe":int(source.uhe.sum())})
     check("unique-position-valid",source.name.is_unique and source.ra.between(0,360).all() and
           source.dec.between(-90,90).all(),"unit: published source, not detector")
     dark=source.loc[~source.known_tev]
     check("dark-sample-recount",len(dark)==summary["published_tev_unassociated"],len(dark))
     class_rows=pd.read_csv(OUT/"source_class_controls.csv")
-    check("all-dark-sources-screened-or-marked-pending",len(class_rows)==len(dark)*8,
-          {"found":len(class_rows),"expected":len(dark)*8})
+    n_classes=class_rows["class"].nunique()
+    check("all-dark-sources-screened-or-marked-pending",n_classes==9 and len(class_rows)==len(dark)*n_classes,
+          {"found":len(class_rows),"expected":len(dark)*n_classes,"classes":n_classes})
     active=class_rows[class_rows.status.str.startswith("screened")].copy()
     check("some-real-class-coverage",len(active)>0,{"eligible_rows":len(active)})
     if len(active):
@@ -78,10 +84,13 @@ def main():
       "",
       "**Result:** positional/energetic candidate screen only; no new accelerator identified.",
       "",
-      "Frozen Cao (2024) table: "+str(len(source))+" physical sources, "+
+      "Frozen Cao 1LHAASO transcription: "+str(len(source))+" physical sources, "+
       str(int(source.uhe.sum()))+" UHE, "+str(len(dark))+
       " lacking an original TeV association; "+str(int(dark.uhe.sum()))+" of the latter UHE.",
       "A negative association is not a survey non-detection unless that class has a validated footprint.",
+      ("**Primary-data limitation:** Gammapy transcription of the 2023 Cao preprint is frozen and hashed; "
+       "the 2024 CDS VizieR bytes could not be verified during the Nov 2026 CDS outage."
+       if is_preprint else "The 2024 CDS VizieR original mirror bytes are archived and hashed."),
       "",
       "## Sky-shifted class controls",
       "",
@@ -109,7 +118,10 @@ def main():
       "eRASS1 hard is not the 930203-source soft main catalogue. Only the German half-sky is public.",
       "- SMGPS SNR candidates are not the 510599-source compact radio catalogue. "
       "The project's prior SMGPS image-index astrometry correction is relevant when using maps.",
-      "- Fermi DR4 v35 is a corrected 2024 release of a catalogue first published 2023; "
+      "- 4HWC (Alfaro et al. 2026 arXiv:2602.00263) is the newest HAWC catalogue; "
+      "its TeV detections and association proposals pre-empt novelty. "
+      "Declination acceptance is approximate; no global HAWC4 p-value is quoted.",
+      "- Fermi DR4 v35 is a corrected 2024 release of a catalogue first published 2023; 
       "HGPS is 2018 legacy. Never attribute new detections to a survey they predate.",
       "- ATNF spin-down and distance allow a necessary power/size test, not causality; "
       "KM2A 25-100 TeV power-law flux is not a measured bolometric budget.",
