@@ -1,10 +1,10 @@
 {
-  "start_utc": "2026-11-19T07:51:11.307320+00:00",
-  "config_sha256": "b8989536fef2081067b2d9175a6a5a94ea55d308a5a82abb8d80e0c1f2f90c4c",
+  "start_utc": "2026-11-19T08:01:08.570904+00:00",
+  "config_sha256": "45f8d8424a8c3f1b9c9ea45518762c310063e7a00db44fe998b10a4a1c95a57c",
   "footprints": [
     {
       "id": "footprint_wide_tiles",
-      "time_utc": "2026-11-19T07:51:11.307385+00:00",
+      "time_utc": "2026-11-19T08:01:08.570970+00:00",
       "url": "https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/dr1/MOC/euclid_dr1_wide.moc.moc.fits",
       "adql": null,
       "query_sha256": null,
@@ -20,7 +20,7 @@
     },
     {
       "id": "footprint_deep_tiles",
-      "time_utc": "2026-11-19T07:51:11.729148+00:00",
+      "time_utc": "2026-11-19T08:01:09.023746+00:00",
       "url": "https://nasa-irsa-euclid-dr1.s3.us-east-1.amazonaws.com/dr1/MOC/euclid_dr1_deep.moc.moc.fits",
       "adql": null,
       "query_sha256": null,
@@ -38,7 +38,7 @@
   "catalogues": [
     {
       "id": "ALFALFA_alpha100",
-      "time_utc": "2026-11-19T07:51:11.969747+00:00",
+      "time_utc": "2026-11-19T08:01:09.236392+00:00",
       "url": "https://egg.astro.cornell.edu/alfalfa/data/a100files/a100.code12.table2.190808.csv",
       "adql": null,
       "query_sha256": null,
@@ -78,11 +78,11 @@
       "finite_positions": 31502,
       "finite_velocity": 31502,
       "finite_W50": 31502,
-      "finite_logMHI": 0
+      "finite_logMHI": 31502
     },
     {
       "id": "FASHI_DR2",
-      "time_utc": "2026-11-19T07:51:12.557938+00:00",
+      "time_utc": "2026-11-19T08:01:10.133375+00:00",
       "url": "https://nadc.china-vo.org/res/file_upload/download?id=1538184",
       "adql": null,
       "query_sha256": null,
@@ -135,25 +135,31 @@
       ],
       "ra_column": "ra",
       "dec_column": "dec",
-      "id_column": "name",
+      "id_column": "fashi_id",
       "optical_column": null,
       "finite_positions": 156411,
       "finite_velocity": 156411,
       "finite_W50": 156411,
-      "finite_logMHI": 156409
+      "finite_logMHI": 156411
     },
     {
       "id": "WALLABY_PDR2",
-      "time_utc": "2026-11-19T07:54:36.272351+00:00",
-      "url": "https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync",
-      "adql": "SELECT * FROM cirada.Wallaby_dr2_source_catalogue",
-      "query_sha256": "b5ee40fd92b0de4ae5574746d81b96b6074c02a4fb1b1c7c963be15448a91928",
+      "time_utc": "2026-11-19T08:01:21.698725+00:00",
+      "url": "https://casda.csiro.au/casda_vo_tools/tap/sync",
+      "adql": "SELECT * FROM AS102.wallaby_pilot_dr2_sourcefind_cat_v01",
+      "query_sha256": "cf5fc6d6cdde2ac98969e806eeb3e67852060843447dc97cadf2bb9a19d2c08c",
       "expected_sha256": null,
-      "http_code": 400,
+      "http_code": 200,
+      "bytes": 449,
+      "sha256": "81943826d7ed449e7742f4fcb251414b9c883c842b1223c4cbb04da818bac88b",
+      "content_type": "application/x-votable+xml;charset=ISO-8859-1",
+      "final_url": "https://casda.csiro.au/casda_vo_tools/tap/sync",
       "status": "ERROR",
-      "error": "400 Client Error: Bad Request for url: https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/argus/sync/eo6ssqwqqcjkxc26/run"
+      "error": "HTML/XML rather than expected data"
     }
   ],
-  "errors": [],
-  "finish_utc": "2026-11-19T07:54:41.394890+00:00"
+  "errors": [
+    "Missing or zero-row surveys: WALLABY_PDR2"
+  ],
+  "finish_utc": "2026-11-19T08:01:28.275280+00:00"
 }
