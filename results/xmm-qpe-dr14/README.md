@@ -1,49 +1,37 @@
-# Archival XMM-Newton QPE search: 4XMM-DR14 feasibility pilot
+# 4XMM-DR14 search for X-ray quasi-periodic eruptions — control-only calibration
 
-**Result (reviewed, 19 November 2026): INCONCLUSIVE. No new nuclear QPE identified; no calibrated null established.** GitHub Actions [run 44470633598](https://github.com/dovvnloading/Open-Space/actions/runs/44470633598) succeeded at 07:20 UTC and committed real data receipts and screening outputs. That operational success **is not scientific validation**. A prior attempt, [run 44468260187](https://github.com/dovvnloading/Open-Space/actions/runs/44468260187), timed out.
+**Current result (19 November 2026):** Known-QPE soft-X-ray recurrence **recovered in six of six selected QPE-active XMM observations**, with **29 of 29 published bright-eruption peak counts overlapped**. This is **not** independently verified flare-level completeness, **not** a new QPE detection, **not** an archive-wide screen of nuclear galaxies and **not** a calibrated null. Draft [PR #205](https://github.com/dovvnloading/Open-Space/pull/205) must **remain draft; do not merge.**
 
-## Fixed observations and provenance
+## Measured positive-control recovery
 
-- Full **4XMM-DR14 v1.0** detection FITS from the HEASARC fixed-release URL: HTTP 200, 1,005,466,736 downloaded bytes; published MD5 `47c6bd113cb8510db418665472c81b48` verified; downloaded SHA-256 `6d8703ad0ac3b8f737e1c293651905c2c7a4a1007c430add67d4cdf95b916597`.
-- Catalogue: **1,035,832** detection rows, **372,313** rows flagged TSERIES. Registered soft/long prefilter left **33,488** detections, frozen in [frozen_detections.csv](outputs/frozen_detections.csv) with SHA-256 `c2793211c74f9a85992253fba76743a94bcdf2cffb2137f29a3037907d4e56a5` (digest recorded in the run manifest; not independently redownloaded in this review).
-- Screen cuts: TSERIES, SUM_FLAG ≤ 1, EP_8_CTS ≥ 250, at least one camera ontime ≥ 21,600 s, EP_HR3 < −0.3, EP_HR4 < −0.4. This is an **X-ray spectral/exposure** selection, not a galaxy-nucleus selection.
-- Selected first **eight ranked detections** plus four catalogue-matched known-source controls, at most 12 PPS requests. **9/12** requests yielded parsable EPIC-pn source light curves. The three unavailable products were truncated at the job's **120 MiB per-request** limit. All 12 download attempts, including three repeated downloads of observation 0011420101 for separate sources, are recorded with timestamps, URLs, byte counts, hashes or explicit errors in [receipts.json](outputs/receipts.json).
-- Source scripts and [frozen_config.json](frozen_config.json) are preserved. The complete [frozen_selection.json](outputs/frozen_selection.json) contains some bare `NaN` values and is **not strict JSON**; this is an identified reproducibility defect to fix before a stronger release. The observed catalogue and PPS downloads are not permanently vendored; reruns depend on their public archive endpoints.
+| Control | QPE-active XMM obsID | Published bright eruptions | Recovered soft peaks | Recovered peak separations (hours) |
+| --- | --- | ---: | ---: | --- |
+| GSN 069 | 0851180401 | 5 | 5 | 8.333, 9.333, 8.583, 9.333 |
+| RX J1301.9+2747 | 0864560101 | 8 | 8 | 1.333, 5.000, 2.917, 5.417, 3.250, 5.583, 3.917 |
+| eRO-QPE1 | 0861910201 | 2 | 2 | 11.583 (second flare is partially observed) |
+| eRO-QPE2 | 0872390101 | 9 | 9 | 2.333–2.500 |
+| eRO-QPE3 | 0883770101 | 2 | 2 | 20.417 (published ~20.4) |
+| eRO-QPE4 | 0883770401 | 3 | 3 | 9.750, 14.750 (published 9.82, 14.70) |
+| **Total** | **6 epochs** | **29** | **29** | **6/6 controls show recurring peaks** |
 
-## Temporal screen and all flagged nuclear candidates
+The six-epoch source-level **operational recovery is 6/6 (100%)**. Bright-event count overlap is **29/29 (100%)** as a capped, count-only upper bound, **not a measured sensitivity or individually proven 29-event match**. For RX J1301.9+2747, the independently tabulated ten 2020 fitted/partial peak timestamps yield **8/10** matches within ±1200 seconds; the bright-event benchmark is eight. For eRO-QPE1 the measured 11.583-hour within-epoch separation must not be mistaken for the later NICER mean ~18.5-hour recurrence. Literature and quantitative caveats are in [control recovery audit](outputs/CONTROL_RECOVERY.md), [machine-readable replay results](outputs/control_replay.json) and [control gate](outputs/control_gate_replay.json).
 
-The eight ranked sources were 4XMM J144207.4+352622, J114323.6+195817, J123600.5−395215, J161742.0−833750, J051541.4+010441, J064059.8+095149, J064048.1+095339, and J064022.6+094946. The pilot parsed EPIC-pn broad-band light curves for **all eight**; none triggered the scripted repeated-peak detector. There were **zero unvetted repeat flags**, not zero QPEs in the parent population. [Light-curve checks](outputs/lightcurve_checks.json) · [Empty flags](outputs/unvetted_flags.json).
+## Method, frozen in-sample for control replay
 
-**There are no candidate nuclei with validated repeated soft flares to report.** No source has a measured QPE recurrence period, peak-to-quiescent amplitude, or thermal-temperature evolution from this run. EP_HR3/HR4 catalogue cuts are not temperature measurements; a parsed broad-band flare flag is not evidence of a nuclear QPE. None of the eight was cross-matched to a Legacy Surveys/SDSS/2MASS galaxy nucleus or passed Gaia stellar rejection.
+Source-specific XMM PPS merged EPIC-pn `PNX000SRCTSR8###.FTZ` from the XSA, with FITS `SRC_RA/SRC_DEC` crosschecks (0.67–3.27 arcsec across all six). Source soft bands `RATE1+RATE2+RATE3` form the **0.2–2 keV background-subtracted NET** count rate; `BACK1V+BACK2V+BACK3V` form the local scaled background. Exposure-weighted 300-second bins preserve GTI gaps. A fixed 3.5-sigma single-bin + 7-sigma multiscale (450/850/1300 s) peak criterion, minimum 3x baseline and scaled-background flare veto are documented in [control thresholds](control_thresholds.json), implemented in [control_validation.py](control_validation.py); [replay_controls.py](replay_controls.py) reruns saved binned curves without XSA network requests. The 120 MiB XSA budget that caused the pilot control failures was raised to a bounded 3 GiB per target with at most three downloads per 55-minute Actions job, SHA-256 receipts per product and stream; eRO-QPE3's PPS source index was repaired through FITS positional selection rather than assuming the older DR14 source number.
 
-## Known-QPE controls: catalogue presence ≠ flare recovery
+The branch continues to use the existing push-triggered [`.github/workflows/xmm-qpe-dr14.yml`](../../.github/workflows/xmm-qpe-dr14.yml) on `research/xmm-qpe-dr14`; source changes are separate batches, and output-only result commits do not recurse. The last job performs a no-network six-control replay. The historical [original pilot outputs](outputs/summary.json) demonstrate only feasibility; **do not interpret their failed control checks as a negative result.**
 
-| Published control | DR14 position-matched detections (within 12″) | Pilot PPS test | Actual QPE-flare recovery |
-| --- | ---: | --- | --- |
-| GSN 069 | 33 | Obs 0851180401: 120 MiB PPS cap exceeded | **No** |
-| RX J1301.9+2747 | 5 | Obs 0864560101: 120 MiB cap exceeded | **No** |
-| eRO-QPE1 | 2 | Obs 0861910201 parsed, 25.264 h light-curve span; detector found zero peaks | **No — known-source false negative / sensitivity unverified** |
-| eRO-QPE2 | 3 | Obs 0872390101: 120 MiB cap exceeded | **No** |
-| eRO-QPE3 | 2 | Position matches only; not in capped PPS requests | **Not tested** |
-| AT2019qiz | 0 | No 12″ position match at supplied coordinates; no PPS retrieval | **Not tested** |
-| eRO-QPE4 | Not queried | Position not in frozen control table | **Not tested** |
-| Ansky (SDSS1335+0728) | Not queried | Position not in frozen control table | **Not tested** |
+## Referee decision: not ready for archive survey or merge
 
-**Positive-control flare recovery is 0 validated, not a measured recovery fraction.** Four named controls were requested, but only eRO-QPE1 yielded a parsed light curve; even that source's known QPE activity was not recovered. No inference of QPE absence can be made from the other download failures, limited epochs, or from a detector that fails its positive control.
+The original frozen 4XMM-DR14 prefilter has **33,488 soft/long X-ray detections**; these have **not** been crossmatched to an optically selected, completeness-controlled census of **galaxy nuclei**. No post-control candidate screen has therefore run, and **zero new candidate QPEs have been independently checked**. It would be inaccurate to report no new QPEs *in the catalogue*: the archive has not been searched with validated nuclear-host selection.
 
-## Prior literature / novelty audit
+**Required before screening or an eventual merge:** independently align the full set of published eruption timestamps (especially eRO-QPE1's incomplete second peak), validate particle flare GTIs and separate source/background light curves, pile-up and soft spectral/hardness evolution, negative stellar and non-QPE AGN controls, injection/recovery and a false-alarm distribution; freeze host crossmatching and survey completeness; then screen archived nuclear detections using the frozen thresholds and vet candidates against Gaia, host offsets, XMM background variability, TNS, ATel, published QPEs and transient/AGN literature. See [independent referee report](REFEREE.md) and [control recovery audit](outputs/CONTROL_RECOVERY.md).
 
-A targeted cross-check verifies that named controls were **already known in the literature**, not newly discovered in this run: GSN 069, RX J1301.9+2747 and eRO-QPE1–2 are discussed in [Giustini et al. (2024)](https://doi.org/10.1051/0004-6361/202450861); eRO-QPE3 and eRO-QPE4 are published in [Arcodia et al. (2024)](https://doi.org/10.1051/0004-6361/202348881); [AT2019qiz's QPEs](https://www.nature.com/articles/s41586-024-08023-6) were published in 2024; [Ansky's QPEs](https://doi.org/10.1051/0004-6361/202555258) were published by 2025. These are **external prior reports**, not recovered flares in our output. Further sources, e.g. eRO-QPE5 and J2344, are discussed in [later literature](https://doi.org/10.1051/0004-6361/202558531) and were not part of this frozen control set. **No fresh candidate passed the time-series screen, hence no candidate-specific ATel/TNS/AGN/TDE prior-art clearance was performed.** It must not be represented as a completed literature exclusion of new QPEs.
+**Coverage exclusions:** AT2019qiz and Ansky have no qualifying QPE-active XMM epoch in this frozen DR14-era control setup; they are **not** counted as false negatives. **No** `[REMARKABLE]` label, `docs/REMARKABLE_FINDINGS.md` entry or merge commit is warranted.
 
-## Referee verdict and blockers
+## Reproduction/evidence
 
-**REJECT as a QPE discovery or calibrated null; retain as an inconclusive pilot only.** [Independent-referee audit](REFEREE.md) documents: no validated known-QPE flare recovery; 3/4 requested controls missing or truncated; untested eRO-QPE3/4, AT2019qiz and Ansky; no background flare/GTI/pile-up vetting or soft-band spectral fits; no host identification, Swift/Chandra/eRASS1 cross-epochs, injections, or false-positive rate. **Recovery fraction and false-positive rate are undefined**, not zero. Strict JSON serialization of the frozen selection requires repair.
-
-A future substantive search must use source-specific PPS retrieval without the 120 MiB whole-archive cap, energy-resolved source/background light curves and scientifically motivated time binning; show actual published-control flares with measured recurrence and amplitude; then freeze a broad nuclear-host sample, inject flares, test stellar/background controls, and vet any source against prior announcements and other X-ray epochs.
-
-**Classification:** unclassified feasibility pilot; not a measured null and **not [REMARKABLE]**. The findings policy in `docs/REMARKABLE_FINDINGS.md` does not permit an entry.
-
-## Files / replay
-
-- [Run summary](outputs/summary.json) · [machine receipts](outputs/receipts.json) · [full frozen list](outputs/frozen_detections.csv) · [selected sample and controls](outputs/frozen_selection.json) · [EPIC-pn results](outputs/lightcurve_checks.json) · [run report](outputs/RUN_REPORT.md).
-- `search.py` runs as **one network-enabled GitHub Actions job**, triggered only by pushes to the research branch affecting science code or frozen configuration under this result folder. Generated outputs and documentation-only changes do not re-run it. Scientific dependencies are pinned in `.github/workflows/xmm-qpe-dr14.yml`.
+- [Published-count benchmark](https://doi.org/10.1093/rasti/rzad015) (Webbe & Young 2023, Table 1); [eRO-QPE3/4 times](https://doi.org/10.1051/0004-6361/202348881) (Arcodia et al. 2024); [RX fitted peak timing](https://doi.org/10.1051/0004-6361/202450861) (Giustini et al. 2024).
+- [Control batches 1–4](outputs/CONTROL_RECOVERY.md), [PPS receipts](outputs/control_receipts_batch_03.json), [replay](outputs/control_replay.json), and [strict frozen selection](outputs/frozen_selection.json).
+- [PR #205](https://github.com/dovvnloading/Open-Space/pull/205) for the run history and the explicit draft review status.
