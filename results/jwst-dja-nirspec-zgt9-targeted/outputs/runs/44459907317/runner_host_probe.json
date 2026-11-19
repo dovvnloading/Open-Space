@@ -1,0 +1,99 @@
+{
+  "checked_at_utc": "2026-11-19T04:40:58.994965+00:00",
+  "environment": "ChatGPT compute container (NOT GitHub Actions/web crawler)",
+  "os": "Linux 7.0.0-1019-azure",
+  "probe": "getent ahostsv4 + direct curl --noproxy '*' HTTPS HEAD",
+  "results": [
+    {
+      "name": "zenodo-summary",
+      "url": "https://zenodo.org/records/15472354/files/dja_msaexp_emission_lines_v4.4.csv.gz?download=1",
+      "hostname": "zenodo.org",
+      "dns": {
+        "returncode": 0,
+        "stdout": "137.138.121.78  STREAM zenodo.org\n137.138.121.78  DGRAM  \n137.138.121.78  RAW    \n188.185.45.63   STREAM \n188.185.45.63   DGRAM  \n188.185.45.63   RAW    \n188.185.51.60   STREAM \n188.185.51.60   DGRAM  \n188.185.51.60   RAW    \n188.185.47.192  STREAM \n188.185.47.192  DGRAM  \n188.185.47.192  RAW    \n18",
+        "stderr": ""
+      },
+      "https_head": {
+        "returncode": 0,
+        "stdout": "http_code=200 remote_ip=188.185.51.60 err=",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "dja-s3-summary-path",
+      "url": "https://s3.amazonaws.com/msaexp-nirspec/extractions/dja_msaexp_emission_lines_v4.4.csv.gz",
+      "hostname": "s3.amazonaws.com",
+      "dns": {
+        "returncode": 0,
+        "stdout": "16.15.246.210   STREAM s3.amazonaws.com\n16.15.246.210   DGRAM  \n16.15.246.210   RAW    \n16.15.207.105   STREAM \n16.15.207.105   DGRAM  \n16.15.207.105   RAW    \n52.216.59.240   STREAM \n52.216.59.240   DGRAM  \n52.216.59.240   RAW    \n16.15.213.34    STREAM \n16.15.213.34    DGRAM  \n16.15.213.34    RAW ",
+        "stderr": ""
+      },
+      "https_head": {
+        "returncode": 0,
+        "stdout": "http_code=200 remote_ip=52.217.174.168 err=",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "dja-s3-virtual-host",
+      "url": "https://msaexp-nirspec.s3.amazonaws.com/extractions/dja_msaexp_emission_lines_v4.4.csv.gz",
+      "hostname": "msaexp-nirspec.s3.amazonaws.com",
+      "dns": {
+        "returncode": 0,
+        "stdout": "16.15.236.86    STREAM s3-w.us-east-1.amazonaws.com\n16.15.236.86    DGRAM  \n16.15.236.86    RAW    \n16.15.254.75    STREAM \n16.15.254.75    DGRAM  \n16.15.254.75    RAW    \n16.15.244.232   STREAM \n16.15.244.232   DGRAM  \n16.15.244.232   RAW    \n52.216.221.186  STREAM \n52.216.221.186  DGRAM  \n52.216.2",
+        "stderr": ""
+      },
+      "https_head": {
+        "returncode": 0,
+        "stdout": "http_code=200 remote_ip=16.15.228.204 err=",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "dja-documentation",
+      "url": "https://dawn-cph.github.io/dja/general/api_summary/",
+      "hostname": "dawn-cph.github.io",
+      "dns": {
+        "returncode": 0,
+        "stdout": "185.199.108.153 STREAM dawn-cph.github.io\n185.199.108.153 DGRAM  \n185.199.108.153 RAW    \n185.199.109.153 STREAM \n185.199.109.153 DGRAM  \n185.199.109.153 RAW    \n185.199.110.153 STREAM \n185.199.110.153 DGRAM  \n185.199.110.153 RAW    \n185.199.111.153 STREAM \n185.199.111.153 DGRAM  \n185.199.111.153 RA",
+        "stderr": ""
+      },
+      "https_head": {
+        "returncode": 0,
+        "stdout": "http_code=200 remote_ip=185.199.109.153 err=",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "mast-api",
+      "url": "https://mast.stsci.edu/api/v0/invoke",
+      "hostname": "mast.stsci.edu",
+      "dns": {
+        "returncode": 0,
+        "stdout": "130.167.220.112 STREAM mast-cluster.stsci.edu\n130.167.220.112 DGRAM  \n130.167.220.112 RAW    \n130.167.220.33  STREAM \n130.167.220.33  DGRAM  \n130.167.220.33  RAW    \n130.167.220.32  STREAM \n130.167.220.32  DGRAM  \n130.167.220.32  RAW    \n130.167.220.111 STREAM \n130.167.220.111 DGRAM  \n130.167.220.11",
+        "stderr": ""
+      },
+      "https_head": {
+        "returncode": 0,
+        "stdout": "http_code=500 remote_ip=130.167.220.33 err=",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "mast-archive",
+      "url": "https://archive.stsci.edu/",
+      "hostname": "archive.stsci.edu",
+      "dns": {
+        "returncode": 0,
+        "stdout": "130.167.201.70  STREAM plarch3.stsci.edu\n130.167.201.70  DGRAM  \n130.167.201.70  RAW",
+        "stderr": ""
+      },
+      "https_head": {
+        "returncode": 0,
+        "stdout": "http_code=200 remote_ip=130.167.201.70 err=",
+        "stderr": ""
+      }
+    }
+  ],
+  "limitation": "No raw source catalog or spectra received; no astrophysical inference."
+}
