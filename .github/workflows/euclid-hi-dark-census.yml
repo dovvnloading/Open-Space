@@ -50,6 +50,9 @@ jobs:
             git add "$src/README.md" "$src/REFEREE.md" README.md
             if ! git diff --cached --quiet; then
               git commit -m 'research(hi): checkpoint all-beam source receipts and referee'
+              # A concurrent documentation commit can advance the branch during a batch.
+              # Rebase the checkpoint commit instead of failing a non-fast-forward push.
+              git pull --rebase origin "$GITHUB_REF_NAME"
               git push origin "HEAD:$GITHUB_REF_NAME"
             fi
           }
