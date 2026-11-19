@@ -27,6 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: research/euclid-dr1-control-recovery
           persist-credentials: true
       - uses: actions/setup-python@v5
         with:
