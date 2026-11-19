@@ -6,6 +6,8 @@ on:
     paths:
       - 'results/euclid-dr1-wide-highz-vetting/**'
       - '!results/euclid-dr1-wide-highz-vetting/output/**'
+      - '!results/euclid-dr1-wide-highz-vetting/README.md'
+      - '!results/euclid-dr1-wide-highz-vetting/REFEREE.md'
   workflow_dispatch:
 
 permissions:
@@ -31,7 +33,7 @@ jobs:
       - name: Install source-data readers and run offline selection tests
         run: |
           python -m pip install 'requests>=2.31,<3' 'numpy>=2,<3' 'pyarrow>=20' 'astropy>=6' 'astropy-healpix>=1.1'
-          python -m py_compile results/euclid-dr1-wide-highz-vetting/scan.py results/euclid-dr1-wide-highz-vetting/aggregate.py results/euclid-dr1-wide-highz-vetting/vet.py
+          python -m py_compile results/euclid-dr1-wide-highz-vetting/scan.py results/euclid-dr1-wide-highz-vetting/aggregate.py results/euclid-dr1-wide-highz-vetting/vet.py results/euclid-dr1-wide-highz-vetting/image_review.py results/euclid-dr1-wide-highz-vetting/referee.py
           python -m unittest discover -s results/euclid-dr1-wide-highz-vetting -p tests.py -v
       - name: Stream every HATS partition by row group, checkpoint and vet
         shell: bash
@@ -64,7 +66,9 @@ jobs:
             phase=$(python -c 'import json; print(json.load(open("results/euclid-dr1-wide-highz-vetting/output/summary.json"))["status"])')
             if [[ "$phase" == SCAN_COMPLETE ]]; then
               set +e
-              python -u "$src/vet.py"
+              python -u "$src/vet.py" &&
+                python -u "$src/image_review.py" &&
+                python -u "$src/referee.py"
               success=$?
               set -e
               save_batch

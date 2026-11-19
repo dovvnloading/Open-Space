@@ -59,6 +59,12 @@ class VetTests(unittest.TestCase):
     def test_too_few_controls_withholds_probability(self):
         r=vet.diagnostics(np.array([[1,0]]),np.array([[0,0]]))
         self.assertEqual(r["model_status"],"INSUFFICIENT_MATCHED_LABELED_CONTROLS")
+    def test_no_extrapolation_outside_labelled_colour_support(self):
+        q=np.array([[.8,.1],[1.1,.0],[1.2,.3],[.9,-.1],[1.0,.2]])
+        d=np.array([[.2,-.2],[.3,.0],[.5,-.1],[.1,.2],[.4,.3]])
+        self.assertLess(vet.min_training_distance((1.05,.1),q,d),4)
+        self.assertGreater(vet.min_training_distance((4.0,.1),q,d),4)
+
     def test_gaia_movement_rejects_dwarf(self):
         d=vet.motion_and_wise({
             "Gaia_DR3":{"catalog_match":{"pmra":"20","pmra_error":"1"}},

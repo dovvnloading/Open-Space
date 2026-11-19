@@ -308,6 +308,12 @@ def vet_one(row, slot):
             "spectroscopic_redshift_confirmed_by_this_study":False,
             "known_quasar_literature_review_complete":False}
 
+def min_training_distance(x, q, d, bandwidth=.32):
+    """Distance to nearest labelled control, in fixed KDE bandwidth units."""
+    points=np.concatenate((q,d),axis=0)
+    return float(np.min(np.linalg.norm((points-np.asarray(x))/bandwidth,axis=1)))
+
+
 def main():
     summary_file=OUT/"summary.json"
     if not summary_file.exists():
@@ -331,20 +337,38 @@ def main():
         y=good(row.get("Y_minus_J_AB"))
         jh=good(row.get("J_minus_H_AB"))
         if valid and y is not None and jh is not None:
-            row["p_quasar_vs_dwarf"] = round(p_q_given_q_or_d((y,jh),q,d),7)
-            row["p_quasar_vs_dwarf_prior_1pct"] = round(p_q_given_q_or_d((y,jh),q,d,.01),7)
-            row["probability_status"]="UNVALIDATED_TWO_CLASS_KDE_ASSUMED_PRIOR_NO_OTHER_CONTAMINANTS"
+            distance=min_training_distance((y,jh),q,d)
+            row["nearest_labeled_colour_distance_kde_bandwidths"]=round(distance,3)
+            if distance > 4:
+                row["p_quasar_vs_dwarf"]=None
+                row["p_quasar_vs_dwarf_prior_1pct"]=None
+                row["probability_status"]="OUTSIDE_EMPIRICAL_COLOUR_SUPPORT_NO_NUMERIC_PROBABILITY"
+            else:
+                p1=p_q_given_q_or_d((y,jh),q,d)
+                p10=p_q_given_q_or_d((y,jh),q,d,.01)
+                if p1 is not None and p10 is not None:
+                    row["p_quasar_vs_dwarf"]=round(p1,7)
+                    row["p_quasar_vs_dwarf_prior_1pct"]=round(p10,7)
+                    row["probability_status"]="UNVALIDATED_CONDITIONAL_Q_VS_DWARF_PRIOR_0P001"
+                else:
+                    row["p_quasar_vs_dwarf"]=None
+                    row["p_quasar_vs_dwarf_prior_1pct"]=None
+                    row["probability_status"]="ZERO_EMPIRICAL_DENSITY_NO_NUMERIC_PROBABILITY"
         else:
             row["p_quasar_vs_dwarf"]=None
+            row["p_quasar_vs_dwarf_prior_1pct"]=None
             row["probability_status"]="UNAVAILABLE_INSUFFICIENT_EMPIRICAL_CONTROLS_OR_COLOURS"
-    ranked=sorted(rows,key=lambda r:(
-        -(r["p_quasar_vs_dwarf"] if r["p_quasar_vs_dwarf"] is not None else 0),
-        -r["rank_score"],r["id"]))
+    # Rank on fixed photometric heuristic, NOT model output; a two-class
+    # posterior cannot be used as a discovery-quality score.
+    ranked=sorted(rows,key=lambda r:(-r["rank_score"],r["id"]))
     final=OUT/"ranked_vetted.jsonl.gz"
     with gzip.open(final,"wt",encoding="utf-8",compresslevel=6) as f:
         for row in ranked:
             f.write(json.dumps(row,sort_keys=True,allow_nan=False)+"\n")
     save(OUT/"top_candidates.json",ranked[:100])
+    supported=sorted((r for r in ranked if r["p_quasar_vs_dwarf"] is not None),
+                     key=lambda r:(-r["p_quasar_vs_dwarf"],-r["rank_score"],r["id"]))
+    save(OUT/"probability_supported_candidates.json",supported[:100])
     external=[]
     work=list(enumerate(ranked[:TOP_EXTERNAL]))
     with ThreadPoolExecutor(max_workers=4) as pool:
@@ -391,6 +415,11 @@ def main():
             "all_spectra_and_literature_complete":False,
             "full_known_z_gt_6p5_footprint_recovery_fraction":None,
             "posterior_is_calibrated":False,
+            "posterior_out_of_empirical_colour_support_count":sum(
+                 x["probability_status"]=="OUTSIDE_EMPIRICAL_COLOUR_SUPPORT_NO_NUMERIC_PROBABILITY"
+                 for x in ranked),
+            "conditional_probabilities_available_count":sum(
+                 x["p_quasar_vs_dwarf"] is not None for x in ranked),
             "discovery_level":False,
             "run_utc":utc()}
     save(OUT/"vetting_status.json",status)
