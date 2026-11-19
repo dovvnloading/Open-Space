@@ -65,11 +65,12 @@ jobs:
             fi
             phase=$(python -c 'import json;print(json.load(open("results/euclid-dr1f-cold-ty-dwarfs/output/status.json"))["phase"])')
             if [[ "$phase" == SCANNED_ALL_PARTITIONS ]]; then
-              if [[ ! -f "$src/output/referee.json" ]]; then
-                python -u "$src/aggregate.py"
-                python -u "$src/vet.py"
-                python -u "$src/referee.py"
-              fi
+              # Re-run external checks and referee after a vetting-code correction.
+              # Frozen partition packets stay untouched, and a new receipt replaces
+              # an earlier failed network query without pretending it was a limit.
+              python -u "$src/aggregate.py"
+              python -u "$src/vet.py"
+              python -u "$src/referee.py"
               save_batch
               echo 'All 768 partitions and independent referee complete. No discovery inferred from colours alone.'
               exit 0
