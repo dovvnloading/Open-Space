@@ -22,10 +22,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install quantitative halo model dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.11' 'colossus==1.3.9'
       - name: 'Frozen CDS release: hash source bytes and triage every row'
         id: scan
         continue-on-error: true
         run: python results/cosmos2025-baryon-bound/screen.py --out results/cosmos2025-baryon-bound/run
+      - name: Compute independently reproducible ST99/Tinker08 survey maxima
+        id: halo
+        continue-on-error: true
+        run: python results/cosmos2025-baryon-bound/halo_bound.py --out results/cosmos2025-baryon-bound/run/halo_bounds.json
       - name: Remove raw bulk data from deposit
         if: always()
         run: |
@@ -52,5 +58,5 @@ jobs:
           path: results/cosmos2025-baryon-bound/run/
           if-no-files-found: warn
       - name: Require complete source scan before scientific interpretation
-        if: steps.scan.outcome != 'success'
+        if: steps.scan.outcome != 'success' || steps.halo.outcome != 'success'
         run: exit 1
