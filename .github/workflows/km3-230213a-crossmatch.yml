@@ -1,0 +1,45 @@
+name: KM3-230213A public transient counterpart audit
+on:
+  push:
+    branches: [research/km3-230213a-counterparts]
+    paths:
+      - 'results/km3-230213a-counterparts/analysis.py'
+      - 'results/km3-230213a-counterparts/known_17.csv'
+      - '.github/workflows/km3-230213a-crossmatch.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  crossmatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/km3-230213a-counterparts
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Audit event, replay published candidates, and retrieve fresh TNS and CHIME catalogs
+        run: python results/km3-230213a-counterparts/analysis.py
+      - name: Replay fixed-input statistical validation and write compact receipts
+        run: |
+          python results/km3-230213a-counterparts/referee.py
+      - name: Commit hashes and derived results to this branch
+        run: |
+          git add results/km3-230213a-counterparts/known_replay.csv results/km3-230213a-counterparts/new_associations.csv results/km3-230213a-counterparts/retrieval_receipts.json results/km3-230213a-counterparts/control_statistics.json results/km3-230213a-counterparts/referee_results.json
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'research(km3): archive released-catalogue audit, controls and receipt digests'
+            git push origin HEAD:research/km3-230213a-counterparts
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: km3-230213a-transient-catalogue-evidence
+          path: |
+            results/km3-230213a-counterparts/known_replay.csv
+            results/km3-230213a-counterparts/new_associations.csv
+            results/km3-230213a-counterparts/retrieval_receipts.json
+            results/km3-230213a-counterparts/control_statistics.json
+            results/km3-230213a-counterparts/referee_results.json
