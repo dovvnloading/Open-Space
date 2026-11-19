@@ -103,6 +103,10 @@ def review(folder):
                 assert all(v is not None for v in vals)
                 assert all(x<y for x,y in zip(vals,vals[1:])),(lo,hi,model,quant)
                 for key in ("p500","p950","p990","p999"):
+                    assert grid[0] <= quant[key] <= grid[-1], "halo mass outside physical integration grid"
+                    target=-math.log({"p500":0.5,"p950":0.95,"p990":0.99,"p999":0.999}[key])
+                    observed=float(np.interp(math.log10(quant[key]),np.log10(grid),lam))
+                    assert abs(math.log(observed/target))<0.15, (lo,hi,model,key,observed,target)
                     assert abs(entry["max_stellar_baryon_quantiles_log10"][key]-
                                math.log10(0.16*quant[key]))<1e-8
                 count_at_expected=float(np.interp(math.log10(entry["M_halo_msun_expected_one"]),
