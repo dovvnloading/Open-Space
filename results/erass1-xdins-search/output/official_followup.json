@@ -1,0 +1,61 @@
+{
+  "assertions": [
+    "Association tables are source-matching probabilities, NOT 5-sigma optical non-detections.",
+    "A missing LS10 join row or absent counterpart cannot establish that Legacy Surveys covered the exact position.",
+    "Even with local g depth, Maccacaro V-based flux ratio with g substituted is not physically calibrated.",
+    "The screened 1,330 are not a complete unbiased soft-X-ray XDINS sample; native spectra/timing and pixel checks remain absent."
+  ],
+  "counts": {
+    "all_sources_validated_xdins": 0,
+    "any_secure_counterpart_in_full_screen": 1056,
+    "no_secure_counterpart_in_full_screen": 274,
+    "source_rows": 1330,
+    "top60_count": 60,
+    "top60_ls10_5sigma_g_depth_available": 18,
+    "top60_no_secure_counterpart": 35,
+    "top60_secure_counterpart": 25
+  },
+  "pending": [
+    "Pan-STARRS1, DES, unWISE and 2MASS independent detection+limiting-depth tests at 1,330 positions",
+    "Image-level LS DR10 g/r/z non-detection upper limits and coverage for no-counterpart sky positions",
+    "Native XMM, Chandra, Swift spectra, light curves and pulsation searches",
+    "Verified Kurpas+ other 2024-26 prior-object matching and latest ATNF radio pulsar catalogue",
+    "Independent completeness injection and variability rejection"
+  ],
+  "release_tables_completed": 3,
+  "scope": "frozen main-screen sources, direct official counterpart joins",
+  "sources": 1330,
+  "tables": {
+    "CW2020": {
+      "matched_xray_UIDs": 1330,
+      "missing_fields": [],
+      "rows_in_release": 1001527,
+      "sources_with_association": 1301,
+      "sources_with_secure_association": 955,
+      "status": "ok"
+    },
+    "GDR3": {
+      "matched_xray_UIDs": 1330,
+      "missing_fields": [
+        "parallax",
+        "pmra",
+        "pmdec",
+        "phot_g_mean_mag",
+        "parallax_over_error"
+      ],
+      "rows_in_release": 959261,
+      "sources_with_association": 1320,
+      "sources_with_secure_association": 976,
+      "status": "ok"
+    },
+    "LS10": {
+      "matched_xray_UIDs": 1330,
+      "missing_fields": [],
+      "rows_in_release": 966194,
+      "sources_with_association": 909,
+      "sources_with_secure_association": 775,
+      "status": "ok"
+    }
+  },
+  "top60": 60
+}

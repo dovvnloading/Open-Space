@@ -1,0 +1,91 @@
+{
+  "began_utc": "2026-11-19T06:03:35.473254+00:00",
+  "downloads": [
+    {
+      "archive_bytes": 490390929,
+      "archive_sha256": "368eb4994328725a63222d330f8315d144cf4778fe68876ef038c6c4087aa29c",
+      "attempt": 1,
+      "content_type": "application/x-gzip",
+      "etag": "\"1d3ac591-640caf3da37c0\"",
+      "fits_bytes": 1359593280,
+      "fits_member": "Salvato_etal2025_DR1_LS10.colfits",
+      "fits_sha256": "c323c3c0b31fa037ce6f39efd9897ec79c1a5951e80b9576a8d4d4f2acde7341",
+      "hdu_name": "Joined",
+      "hdu_rows": 1,
+      "http": 200,
+      "last_modified": "Fri, 10 Oct 2025 09:57:59 GMT",
+      "missing_requested_fields": [],
+      "name": "LS10",
+      "resolved_url": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/SalvatoM_DR1/Salvato_etal2025_DR1_LS10.colfits.tgz",
+      "rows_or_vector_length": 966194,
+      "status": "ok",
+      "time_utc": "2026-11-19T06:03:35.477468+00:00",
+      "url": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/SalvatoM_DR1/Salvato_etal2025_DR1_LS10.colfits.tgz"
+    },
+    {
+      "archive_bytes": 398248982,
+      "archive_sha256": "d1d85833783c4f24b9769cbd0d3e6909315bd941e20934561b59fe868f920754",
+      "attempt": 1,
+      "content_type": "application/x-gzip",
+      "etag": "\"17bccc16-640caf046b0c0\"",
+      "fits_bytes": 877826880,
+      "fits_member": "Salvato_etal2025_DR1_GDR3.colfits",
+      "fits_sha256": "14b17d90ca85779537769b1d5a643840cdedca0162852703495939d2bd82513e",
+      "hdu_name": "Joined",
+      "hdu_rows": 1,
+      "http": 200,
+      "last_modified": "Fri, 10 Oct 2025 09:56:59 GMT",
+      "missing_requested_fields": [
+        "parallax",
+        "pmra",
+        "pmdec",
+        "phot_g_mean_mag",
+        "parallax_over_error"
+      ],
+      "name": "GDR3",
+      "resolved_url": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/SalvatoM_DR1/Salvato_etal2025_DR1_GDR3.colfits.tgz",
+      "rows_or_vector_length": 959261,
+      "status": "ok",
+      "time_utc": "2026-11-19T06:03:58.644105+00:00",
+      "url": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/SalvatoM_DR1/Salvato_etal2025_DR1_GDR3.colfits.tgz"
+    },
+    {
+      "archive_bytes": 350361463,
+      "archive_sha256": "f24f2d543ffa1bb4ceeb78d9e49c2bffcf68235f8150b4e15c2164210c314af3",
+      "attempt": 1,
+      "content_type": "application/x-gzip",
+      "etag": "\"14e21777-640caecb329c0\"",
+      "fits_bytes": 937529280,
+      "fits_member": "Salvato_etal2025_DR1_CW2020.colfits",
+      "fits_sha256": "0dc921ab7a0f37760562c3c36f0e245ee3ca741d2a2222c6739e70fa739e822c",
+      "hdu_name": "Joined",
+      "hdu_rows": 1,
+      "http": 200,
+      "last_modified": "Fri, 10 Oct 2025 09:55:59 GMT",
+      "missing_requested_fields": [],
+      "name": "CW2020",
+      "resolved_url": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/SalvatoM_DR1/Salvato_etal2025_DR1_CW2020.colfits.tgz",
+      "rows_or_vector_length": 1001527,
+      "status": "ok",
+      "time_utc": "2026-11-19T06:04:16.987391+00:00",
+      "url": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/SalvatoM_DR1/Salvato_etal2025_DR1_CW2020.colfits.tgz"
+    }
+  ],
+  "finished_utc": "2026-11-19T06:04:35.553079+00:00",
+  "protocol": {
+    "do_not_conclude": "no association != no object; LS10 depths not automatically available at absent-counterpart positions",
+    "fx_fopt_proxy": "Maccacaro log10(f_X/f_V)=log10(f_X)+0.4*V+5.37, substituted g for V for context ONLY (uncalibrated)",
+    "join": "exact X-ray UID (not 8-arcsec sky proximity); choose max NWAY p_any \u00d7 p_i per catalogue",
+    "limit_definition": "5-sigma LS10 g-band point-source depth from PSFDEPTH_G only where positive and in footprint",
+    "reference_main": "eRASS1 Main.v1.2 full-screen outputs from run.py",
+    "release": "Salvato et al. 2025 (A&A 704 A344) official eRASS1 optical/IR counterparts, distributed 2026-06-09",
+    "secure_NWAY_p_any": 0.8,
+    "surveys": [
+      "LS10",
+      "GDR3",
+      "CW2020"
+    ],
+    "tentative_NWAY_p_any": 0.1
+  },
+  "status": "all_official_tables_checked"
+}
