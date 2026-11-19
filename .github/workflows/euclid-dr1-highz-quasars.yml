@@ -5,6 +5,7 @@ on:
       - research/euclid-dr1-highz-quasars
     paths:
       - 'results/euclid-dr1-highz-quasars/run.py'
+      - 'results/euclid-dr1-highz-quasars/run_s3.py'
       - 'results/euclid-dr1-highz-quasars/freeze.json'
       - 'results/euclid-dr1-highz-quasars/tests.py'
       - '.github/workflows/euclid-dr1-highz-quasars.yml'
@@ -26,18 +27,21 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies and test frozen selection guards
         run: |
-          python -m pip install 'requests>=2.31,<3'
+          python -m pip install 'requests>=2.31,<3' 'numpy>=2' 'pyarrow>=20' 'astropy>=6' 'astropy-healpix>=1.1'
           python -m unittest discover -s results/euclid-dr1-highz-quasars -p 'tests.py' -v
-          sha256sum results/euclid-dr1-highz-quasars/freeze.json results/euclid-dr1-highz-quasars/run.py
-      - name: Fetch public Euclid DR1-F and perform frozen computation
+          sha256sum results/euclid-dr1-highz-quasars/freeze.json results/euclid-dr1-highz-quasars/run.py results/euclid-dr1-highz-quasars/run_s3.py
+          python -m py_compile results/euclid-dr1-highz-quasars/run_s3.py
+      - name: Read public DR1-F HATS/Parquet S3 partitions and compute same frozen cone screen
         timeout-minutes: 28
-        run: python -u results/euclid-dr1-highz-quasars/run.py
+        run: python -u results/euclid-dr1-highz-quasars/run_s3.py
       - name: Upload all raw responses and receipts even on failure
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: euclid-dr1-highz-frozen-raw-and-receipts
-          path: results/euclid-dr1-highz-quasars/output/
+          path: |
+            results/euclid-dr1-highz-quasars/s3_output/
+            results/euclid-dr1-highz-quasars/output/
           if-no-files-found: warn
           retention-days: 30
       - name: Commit results in one batch without triggering again
@@ -45,7 +49,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          folder=results/euclid-dr1-highz-quasars/output
+          folder=results/euclid-dr1-highz-quasars/s3_output
           test -f "$folder/summary.json" || { echo 'No summary to commit'; exit 0; }
           git fetch origin "$GITHUB_REF_NAME"
           test "$(git rev-parse HEAD)" = "$(git rev-parse "origin/$GITHUB_REF_NAME")" || { echo 'Branch changed; skip stale result'; exit 0; }
