@@ -244,10 +244,10 @@ def dust(s,row):
     b,rec=fetch(s,"https://irsa.ipac.caltech.edu/cgi-bin/DUST/nph-dust",
                 {"locstr":f"{ra} {dec}"},limit=100000,timeout=(8,18))
     t=b.decode(errors="replace")
-    candidates=[r"<refPixelValueSandF>\\s*([\\d.eE+\\-]+)",
-                r"<refPixelValueSFD>\\s*([\\d.eE+\\-]+)",
-                r"<meanValueSandF>\\s*([\\d.eE+\\-]+)",
-                r"<meanValueSFD>\\s*([\\d.eE+\\-]+)"]
+    candidates=[r"<refPixelValueSandF>\s*([\d.eE+\-]+)",
+                r"<refPixelValueSFD>\s*([\d.eE+\-]+)",
+                r"<meanValueSandF>\s*([\d.eE+\-]+)",
+                r"<meanValueSFD>\s*([\d.eE+\-]+)"]
     vals=[float(m.group(1)) for p in candidates if (m:=re.search(p,t))]
     if not vals:raise ValueError("IRSA_dust_XML_no_SFD_value; excerpt: "+t[:240].replace("\n"," "))
     ebv=vals[0]
@@ -273,7 +273,7 @@ def heasarc_archives(rows):
         s=requests.Session();s.headers.update(HEAD)
         try:
             b,receipt=post_fetch(s,"https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
-                 {"REQUEST":"doQuery","LANG":"ADQL","FORMAT":"csv","QUERY":query},limit=4_000_000,timeout=(12,65))
+                 {"REQUEST":"doQuery","LANG":"ADQL","QUERY":query},limit=4_000_000,timeout=(12,65))
             if b.lstrip().startswith(b"<"):
                 raw=b.decode(errors="replace")
                 m=re.search(r'<INFO[^>]*name="QUERY_STATUS"[^>]*value="([^"]+)"[^>]*>(.*?)</INFO>',raw,re.I|re.S)
@@ -464,6 +464,7 @@ def main():
        "with_position_forced_optical":sum(x["optical"]["bands_with_position_forced_photometry"]>0 for x in out),
        "with_g_lower_bound":sum(x["optical"]["g_observed_fX_over_nu_fnu_lower_bound"] is not None for x in out),
        "provisional_g_bounds_gt_1e4":sum(x["optical"]["g_bound_exceeds_1e4"] for x in out),
+       "dust_sightlines_measured":sum(im.get("galactic_dust",{}).get("status")=="SandF_integrated_dust_proxy" for im in images),
        "archival_query_status":{n:v["status"] for n,v in arch.items()},
        "ATNF_status":at["status"],"Kurpas_status":lit["status"],
        "native_X_ray_spectra_fit":False,"long_term_variability_established":False,
