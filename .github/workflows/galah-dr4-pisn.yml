@@ -29,7 +29,12 @@ jobs:
           python results/galah-dr4-pisn-fingerprint/screen.py \
             --cache "$RUNNER_TEMP/galah_dr4_allstar_240705.fits" \
             --out "results/galah-dr4-pisn-fingerprint/run"
-      - name: Recalculate disputed Xing et al. J1010 control\n        run: python results/galah-dr4-pisn-fingerprint/control.py\n      - name: Independent arithmetic referee of deposited full-scan outputs\n        if: steps.scan.outcome == 'success'\n        run: python results/galah-dr4-pisn-fingerprint/referee.py\n      - name: Deposit receipts to dedicated research branch
+      - name: Recalculate disputed Xing et al. J1010 control
+        run: python results/galah-dr4-pisn-fingerprint/control.py
+      - name: Independent arithmetic referee of deposited full-scan outputs
+        if: steps.scan.outcome == 'success'
+        run: python results/galah-dr4-pisn-fingerprint/referee.py
+      - name: Deposit receipts to dedicated research branch
         if: always()
         run: |
           git config user.name "github-actions[bot]"
@@ -37,7 +42,9 @@ jobs:
           git add results/galah-dr4-pisn-fingerprint/run/ results/galah-dr4-pisn-fingerprint/j1010_control_receipt.json results/galah-dr4-pisn-fingerprint/referee_report.json
           if ! git diff --cached --quiet; then
             git commit -m "research: deposit hashed GALAH DR4 full-catalogue scan receipt"
-            git fetch origin "${{ github.head_ref }}"\n            git rebase "origin/${{ github.head_ref }}"\n            git push origin "HEAD:${{ github.head_ref }}"
+            git fetch origin "${{ github.head_ref }}"
+            git rebase "origin/${{ github.head_ref }}"
+            git push origin "HEAD:${{ github.head_ref }}"
           fi
       - uses: actions/upload-artifact@v4
         if: always()
