@@ -281,7 +281,7 @@ def checkpoint(result, stage):
     result["run_stage"] = stage
     dst = BASE / "science-pilot-receipt.json"
     part = BASE / "science-pilot-receipt.json.partial"
-    part.write_text(json.dumps(result, indent=2, sort_keys=True, allow_nan=False)+"\\n")
+    part.write_text(json.dumps(result, indent=2, sort_keys=True, allow_nan=False)+"\n")
     part.replace(dst)
 
 
