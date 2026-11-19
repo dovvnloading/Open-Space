@@ -345,6 +345,9 @@ if __name__=="__main__":
     elif _mode == "archive_probe":
         from archive_probe import main as _probe_main
         _probe_main()
+    elif _mode == "archive_hosts":
+        from archive_hosts import main as _hosts_main
+        _hosts_main()
     else:
         from control_validation import main as _controls_main
         _controls_main()
