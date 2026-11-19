@@ -6,6 +6,7 @@ Requires a previously frozen manifest SHA-256. Does not search images.
 from __future__ import annotations
 
 import argparse
+import gzip
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -13,6 +14,8 @@ from pathlib import Path, PurePosixPath
 from urllib.request import Request, urlopen
 
 from freeze_mapcat import ROOT, digest
+
+EXPECTED_SCOPED_SHA256 = "b6a0c020e3b03bc23aac66536ae1b31cb8889cbc3295c1d2acf16f8de3952503"
 
 
 def product_url(relative: str) -> str:
@@ -65,12 +68,13 @@ def main() -> None:
     ap.add_argument("--max-product-mib", type=int, default=512)
     args = ap.parse_args()
     expected = args.manifest_sha256.lower()
-    if len(expected) != 64 or digest(args.manifest) != expected:
+    if expected != EXPECTED_SCOPED_SHA256 or digest(args.manifest) != expected:
         ap.error("manifest SHA-256 mismatch; do not silently update the survey selection")
     if not 1 <= args.max_product_mib <= 4096:
         ap.error("max-product-mib must be between 1 and 4096")
     selected = []
-    with args.manifest.open(encoding="utf-8") as stream:
+    opener = gzip.open if args.manifest.suffix == ".gz" else open
+    with opener(args.manifest, "rt", encoding="utf-8") as stream:
         for line in stream:
             row = json.loads(line)
             if row["map_name"] == args.map_name:
