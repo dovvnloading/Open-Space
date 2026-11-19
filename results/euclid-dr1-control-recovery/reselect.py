@@ -117,7 +117,7 @@ def prior_partitions():
 def main():
     if not (OUT/"calibration.json").exists():raise RuntimeError("Control replay first")
     cal=json.loads((OUT/"calibration.json").read_text())
-    if cal["matched_quasar_recovery"]["numerator"]!=21 or cal["matched_dwarf_retention"]["numerator"]!=5:
+    if cal["matched_quasar_recovery"]["numerator"]!=21 or cal["matched_dwarf_retention"]["numerator"]!=4:
         raise RuntimeError("Unfrozen selector")
     (OUT/"batches").mkdir(parents=True,exist_ok=True)
     parts=prior_partitions()

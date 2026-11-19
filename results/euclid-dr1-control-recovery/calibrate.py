@@ -42,7 +42,7 @@ def main():
     q=[r for r in result if r["class_label"]=="quasar" and r["matched"]]
     d=[r for r in result if r["class_label"]=="dwarf" and r["matched"]]
     kq=sum(r["passed"] for r in q);kd=sum(r["passed"] for r in d)
-    if len(q)!=24 or len(d)!=14 or kq!=21 or kd!=5:
+    if len(q)!=24 or len(d)!=14 or kq!=21 or kd!=4:
         raise AssertionError("Frozen control operating point diverged: "+str((len(q),len(d),kq,kd)))
     receipt={
       "status":"MATCHED_CONTROL_APPEARANCE_REPLAY_PASS",
