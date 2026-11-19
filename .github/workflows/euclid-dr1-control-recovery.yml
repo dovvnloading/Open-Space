@@ -9,9 +9,12 @@ on:
       - '!results/euclid-dr1-control-recovery/README.md'
       - '!results/euclid-dr1-control-recovery/REFEREE.md'
       - '.github/workflows/euclid-dr1-control-recovery.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
+  actions: write
+
 concurrency:
   group: euclid-dr1-control-first-recovery
   cancel-in-progress: false
@@ -28,29 +31,66 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install data libraries
+      - name: Install FITS byte-range readers, Parquet readers, source services
         run: |
           python -m pip install 'requests>=2.31,<3' 'numpy>=2,<3' 'pyarrow>=20' 'astropy>=6' 'astropy-healpix>=1.1' 'fsspec>=2025' 's3fs>=2025'
-      - name: Replay old selection on matched controls from source Parquet
-        run: |
-          python -u results/euclid-dr1-control-recovery/control_audit.py
-      - name: Checkpoint audit results on this branch
-        if: always()
+      - name: One audited job — calibrate, stream in checkpoint batches, image/spectrum-vet and referee
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          src=results/euclid-dr1-control-recovery
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add results/euclid-dr1-control-recovery/output
-          if ! git diff --cached --quiet; then
-            git commit -m 'research(euclid): raw control diagnostic receipts'
-            git push origin "HEAD:$GITHUB_REF_NAME"
+          save_batch() {
+            git add "$src/output"
+            if ! git diff --cached --quiet; then
+              git commit -m 'research(euclid): checkpoint source reread and validation receipts'
+              git push origin "HEAD:$GITHUB_REF_NAME"
+            fi
+          }
+          python -m py_compile "$src"/{control_audit,selection,calibrate,reselect,aggregate,pixel_review,external,referee}.py
+          if [[ ! -f "$src/output/audit_summary.json" ]]; then
+            python -u "$src/control_audit.py"
+            save_batch
           fi
-      - name: Preserve receipts
+          python -u "$src/calibrate.py"
+          save_batch
+          start=$(date +%s)
+          budget=18000
+          while [[ ! -f "$src/output/summary.json" && $(( $(date +%s) - start )) -lt $budget ]]; do
+            python -u "$src/reselect.py" || { save_batch; exit 1; }
+            save_batch
+            done_batches=$(python -c 'import json; print(json.load(open("results/euclid-dr1-control-recovery/output/status.json"))["completed_batches"])')
+            if [[ "$done_batches" == 32 ]]; then
+              python -u "$src/aggregate.py"
+              save_batch
+              break
+            fi
+          done
+          if [[ ! -f "$src/output/summary.json" ]]; then
+            echo "Time budget reached. Completed full-source HATS batches are checkpointed."
+            gh workflow run euclid-dr1-control-recovery.yml --ref "$GITHUB_REF_NAME" || {
+              echo "Dispatch unavailable; continuation requires one explicit non-output source-path push." >&2
+            }
+            exit 0
+          fi
+          if [[ ! -f "$src/output/image_pixel_receipts.json" ]]; then
+            python -u "$src/pixel_review.py"
+            save_batch
+          fi
+          if [[ ! -f "$src/output/external_summary.json" ]]; then
+            python -u "$src/external.py"
+            save_batch
+          fi
+          python -u "$src/referee.py"
+          save_batch
+      - name: Preserve receipts on success or failure
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: euclid-dr1-control-first-audit
+          name: euclid-dr1-control-first-reselection
           path: results/euclid-dr1-control-recovery/output/
           retention-days: 30
           if-no-files-found: warn
