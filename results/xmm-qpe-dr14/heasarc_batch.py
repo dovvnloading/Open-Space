@@ -356,7 +356,7 @@ def main():
     assert re.fullmatch(r"[a-zA-Z0-9_]+",batch)
     start=int(config["start"])
     count=int(config["count"])
-    assert 0<=start<670 and 1<=count<=120
+    assert 0<=start<670 and 1<=count<=180
     cohort,fr=manifest()
     # The three pre-registered pilot targets precede chronological ordering;
     # all remaining observations are deterministic, no new-data reprioritization.
@@ -412,6 +412,48 @@ def main():
         "Stellar/SIMBAD/4LAC and eRASS/Swift/Chandra/TNS/ATel novelty vetting deferred for every new trigger",
         "SDSS-footprint provisional hosts are not complete all-sky galaxy-nucleus selection"]
     save(filename,receipt)
+    # Short, independently auditable batch index; long per-file receipts remain
+    # in the primary JSON file. Observations absent from this run are not nulls.
+    valid=[(o,s) for o in receipt["observations"] for s in o.get("source_results",[])
+           if s.get("status")=="position_verified_net_pn_soft_screened"]
+    flagged=[(o,s) for o,s in valid if s.get("unvetted_repeated_peak_trigger")]
+    finder_status={}
+    for _,s in valid:
+        status=s.get("finder",{}).get("status","unknown")
+        finder_status[status]=finder_status.get(status,0)+1
+    inject=[s.get("poisson_count_domain_injection",{}) for _,s in valid]
+    short={
+        "as_of_utc":utc(),"batch_id":batch,"manifest_sha256":fr["final_csv_sha256"],
+        "first_index":start,"requested":count,"status":receipt["status"],
+        "obsids_attempted":len(receipt["observations"]),
+        "obsids_with_screened_pn":len({o["obs_id"] for o,s in valid}),
+        "pn_detections_screened":len(valid),
+        "finder_statuses":finder_status,
+        "preliminary_recurrent_triggers":len(flagged),
+        "trigger_details":[{
+           "obs_id":o["obs_id"],"detid":s.get("detid"),"ra":s.get("ra"),"dec":s.get("dec"),
+           "source_product":s.get("pn_product"),"source_sep_arcsec":s.get("source_sep_arcsec"),
+           "finder":s.get("finder"),"field_particle":s.get("independent_field_particle_background"),
+           "offsource_scaled_background":s.get("offsource_scaled_background_control")
+        } for o,s in flagged],
+        "source_masked_field_background_compared":sum(
+           s.get("independent_field_particle_background",{}).get("status")
+             =="compared_source_masked_particle_flare_field" for _,s in valid),
+        "local_source_offsource_background_control_flags":sum(
+           s.get("offsource_scaled_background_control",{}).get("recurrence_unvetted") is True
+           for _,s in valid),
+        "poisson_count_domain_surrogate_trials":sum(x.get("n_trials",0) for x in inject),
+        "poisson_count_domain_surrogate_two_peak_recoveries":sum(x.get("n_recovered",0) for x in inject),
+        "not_screened_obsids":[{
+          "obs_id":o["obs_id"],"status":o.get("status"),
+          "merged_pn_products":o.get("pn_merged_srctsr8_available"),
+          "uninspected_products":o.get("possible_uninspected_source_products")
+        } for o in receipt["observations"] if not any(
+           s.get("status")=="position_verified_net_pn_soft_screened"
+           for s in o.get("source_results",[]))],
+        "validated_new_qpe":0,"science_gate":"CLOSED",
+        "primary_receipt":filename}
+    save(f"heasarc_summary_{batch}.json",short)
     print(json.dumps({x:receipt.get(x) for x in
         ("status","obsids_attempted","pn_detections_screened","unvetted_recurrent_triggers","candidates_validated")},indent=2))
 
