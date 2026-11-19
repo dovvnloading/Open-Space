@@ -1,0 +1,213 @@
+{
+  "started_utc": "2026-11-19T03:53:51.501786+00:00",
+  "runner": "GitHub Actions 1000056895",
+  "github_run_id": "44454134461",
+  "required_release": "COSMOS2025 official IAP v1.1 2026-05-04",
+  "expected_rows": 784016,
+  "refuse_cds": true,
+  "publisher_form_submission_attempted": false,
+  "status": "BLOCKED_NO_VERIFIED_NONCDS_CATALOGUE",
+  "source_bytes_verified": 0,
+  "source_sha256": null,
+  "checks": [
+    {
+      "id": "iap_catalogue",
+      "url": "https://cosmos2025.iap.fr/catalog.html",
+      "started_utc": "2026-11-19T03:53:51.502135+00:00",
+      "host": "cosmos2025.iap.fr",
+      "dns": {
+        "status": "ok",
+        "addresses": [
+          "194.57.221.236"
+        ]
+      },
+      "http": {
+        "status": "failed",
+        "error_type": "URLError",
+        "error": "<urlopen error timed out>"
+      }
+    },
+    {
+      "id": "iap_download_form",
+      "url": "https://cosmos2025.iap.fr/catalog_download.php",
+      "started_utc": "2026-11-19T03:53:51.502381+00:00",
+      "host": "cosmos2025.iap.fr",
+      "dns": {
+        "status": "ok",
+        "addresses": [
+          "194.57.221.236"
+        ]
+      },
+      "http": {
+        "status": "failed",
+        "error_type": "URLError",
+        "error": "<urlopen error timed out>"
+      }
+    },
+    {
+      "id": "caltech_dr1",
+      "url": "https://cosmos.astro.caltech.edu/page/cosmosweb-dr",
+      "started_utc": "2026-11-19T03:53:51.502637+00:00",
+      "host": "cosmos.astro.caltech.edu",
+      "dns": {
+        "status": "ok",
+        "addresses": [
+          "131.215.198.54"
+        ]
+      },
+      "http": {
+        "status": 200,
+        "final_url": "https://cosmos.astro.caltech.edu/page/cosmosweb-dr",
+        "content_type": "text/html; charset=utf-8",
+        "content_length": null,
+        "sample_bytes": 29415,
+        "sample_sha256": "8d36457a6dc019e40c52e3b113395e00537dd94912add568237b1dd2e5f50bf0",
+        "sample_truncated": false
+      },
+      "page_metadata": {
+        "form_present": false,
+        "captcha_field_present": true,
+        "links_seen": 86
+      }
+    },
+    {
+      "id": "irsa_cosmos",
+      "url": "https://irsa.ipac.caltech.edu/data/COSMOS/overview.html",
+      "started_utc": "2026-11-19T03:53:51.502951+00:00",
+      "host": "irsa.ipac.caltech.edu",
+      "dns": {
+        "status": "ok",
+        "addresses": [
+          "134.4.54.42"
+        ]
+      },
+      "http": {
+        "status": 200,
+        "final_url": "https://irsa.ipac.caltech.edu/data/COSMOS/overview.html",
+        "content_type": "text/html",
+        "content_length": null,
+        "sample_bytes": 38796,
+        "sample_sha256": "f4c774e130d7c2330c5cf1bfba89cae883d4b1d01625938d90891a4aa423dddf",
+        "sample_truncated": false
+      }
+    },
+    {
+      "id": "irsa_tap_tables",
+      "url": "https://irsa.ipac.caltech.edu/TAP/tables",
+      "started_utc": "2026-11-19T03:53:51.503386+00:00",
+      "host": "irsa.ipac.caltech.edu",
+      "dns": {
+        "status": "ok",
+        "addresses": [
+          "134.4.54.42"
+        ]
+      },
+      "http": {
+        "status": 200,
+        "final_url": "https://irsa.ipac.caltech.edu/TAP/tables",
+        "content_type": "text/xml",
+        "content_length": "165402",
+        "sample_bytes": 165402,
+        "sample_sha256": "b3eb515be7180e6befb517bbb34fbd06e702f6d5b35e34b3519f132d6bd58cec",
+        "sample_truncated": false
+      },
+      "mentions_cosmos2025": false
+    },
+    {
+      "id": "zenodo_cosmos2025",
+      "url": "https://zenodo.org/api/records?q=COSMOS2025&size=30",
+      "started_utc": "2026-11-19T03:53:51.504189+00:00",
+      "host": "zenodo.org",
+      "dns": {
+        "status": "ok",
+        "addresses": [
+          "137.138.121.78",
+          "188.185.40.132",
+          "188.185.42.113",
+          "188.185.45.63",
+          "188.185.47.192",
+          "188.185.51.60",
+          "2001:1458:d00:16::100:7f",
+          "2001:1458:d00:24::100:2f0"
+        ]
+      },
+      "http": {
+        "status": "failed",
+        "error_type": "HTTPError",
+        "error": "HTTP Error 400: BAD REQUEST",
+        "code": 400
+      }
+    },
+    {
+      "id": "zenodo_mastercatalog",
+      "url": "https://zenodo.org/api/records?q=COSMOSWeb_mastercatalog&size=30",
+      "started_utc": "2026-11-19T03:53:51.504405+00:00",
+      "host": "zenodo.org",
+      "dns": {
+        "status": "ok",
+        "addresses": [
+          "137.138.121.78",
+          "188.185.40.132",
+          "188.185.42.113",
+          "188.185.45.63",
+          "188.185.47.192",
+          "188.185.51.60",
+          "2001:1458:d00:16::100:7f",
+          "2001:1458:d00:24::100:2f0"
+        ]
+      },
+      "http": {
+        "status": "failed",
+        "error_type": "HTTPError",
+        "error": "HTTP Error 400: BAD REQUEST",
+        "code": 400
+      }
+    },
+    {
+      "id": "publisher_paper",
+      "url": "https://www.aanda.org/articles/aa/full_html/2025/12/aa55799-25/aa55799-25.html",
+      "started_utc": "2026-11-19T03:53:51.504698+00:00",
+      "host": "www.aanda.org",
+      "dns": {
+        "status": "ok",
+        "addresses": [
+          "51.79.103.1"
+        ]
+      },
+      "http": {
+        "status": "failed",
+        "error_type": "HTTPError",
+        "error": "HTTP Error 403: Forbidden",
+        "code": 403
+      }
+    },
+    {
+      "id": "github_control",
+      "url": "https://github.com/",
+      "started_utc": "2026-11-19T03:53:51.504989+00:00",
+      "host": "github.com",
+      "dns": {
+        "status": "ok",
+        "addresses": [
+          "140.82.114.4"
+        ]
+      },
+      "http": {
+        "status": 200,
+        "final_url": "https://github.com/",
+        "content_type": "text/html; charset=utf-8",
+        "content_length": null,
+        "sample_bytes": 536962,
+        "sample_sha256": "a6bdeb8f022c45851065388fc9c2cfa9bc8cd441b889860f9b11562f87c822fd",
+        "sample_truncated": false
+      }
+    }
+  ],
+  "download_attempts": [],
+  "scientific_disposition": "not_measured",
+  "script_sha256": "00556cc4ed834740663dfe6f97f466602ca5ec2e059492e05c4f46f73fd2596a",
+  "candidate_urls": [],
+  "blocked_reason": "No official full-COSMOS2025 FITS link found/reachable without publisher form, or every discovered candidate failed transfer/784016-row FITS validation; see per-host HTTP and exact transfer errors. Not a scientific null.",
+  "finished_utc": "2026-11-19T03:54:12.242234+00:00",
+  "derived_sha256": {}
+}
