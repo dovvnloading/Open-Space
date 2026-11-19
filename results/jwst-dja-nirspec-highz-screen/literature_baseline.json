@@ -1,0 +1,81 @@
+{
+  "schema": "open-space/jwst-nirspec-priority-baseline-v1",
+  "checked_date": "2026-11-18",
+  "scope": "Known spectroscopically confirmed or published extreme-z examples; background control and crossmatch starting set only; NOT a literature-complete priority screen",
+  "source_references": [
+    {
+      "url": "https://astro.theoj.org/article/156033-a-cosmic-miracle-a-remarkably-luminous-galaxy-at-_z_-sub-spec-sub-14-44-confirmed-with-jwst",
+      "paper": "Naidu et al. 2026, Open Journal of Astrophysics 9, DOI 10.33232/001c.156033",
+      "use": "MoM-z14 z=14.44 +/- 0.02; discovery already published"
+    },
+    {
+      "url": "https://academic.oup.com/mnras/article/548/3/stag701/8653929",
+      "paper": "MNRAS 548(3), stag701, compiled literature table for spectroscopically confirmed z>=10 sources",
+      "use": "Known-source identifiers and redshifts below"
+    },
+    {
+      "url": "https://dawn-cph.github.io/dja/spectroscopy/nirspec/",
+      "paper": "DAWN JWST Archive NIRSpec spectrum release page",
+      "use": "DJA grades, object lookup and observations"
+    }
+  ],
+  "published_positive_controls": [
+    {
+      "name": "MoM-z14",
+      "z_spec": 14.44,
+      "catalog_source_id": "5224_277193",
+      "ra_deg": 150.09333,
+      "dec_deg": 2.27316,
+      "published": true
+    },
+    {
+      "name": "GS-z14-0",
+      "z_spec": 14.179,
+      "catalog_source_id": "1287_183348",
+      "ra_deg": 53.08294,
+      "dec_deg": -27.85563,
+      "published": true
+    },
+    {
+      "name": "GS-z14-1",
+      "z_spec": 14.044,
+      "catalog_source_id": "1287_20018044",
+      "ra_deg": 53.07427,
+      "dec_deg": -27.88592,
+      "published": true
+    },
+    {
+      "name": "JADES-GS-z13-1-LA",
+      "z_spec": 12.955,
+      "catalog_source_id": "1287_20013731",
+      "ra_deg": 53.06475,
+      "dec_deg": -27.89024,
+      "published": true
+    },
+    {
+      "name": "GS-z13-0",
+      "z_spec": 12.926,
+      "catalog_source_id": "3215_20128771",
+      "ra_deg": 53.14988,
+      "dec_deg": -27.7765,
+      "published": true
+    },
+    {
+      "name": "UNCOVER-13077",
+      "z_spec": 12.908,
+      "catalog_source_id": "2561_13077",
+      "ra_deg": 3.57087,
+      "dec_deg": -30.40159,
+      "published": true
+    }
+  ],
+  "not_completed": [
+    "Coordinate/alias crossmatch of new source list",
+    "ADS object-specific searches",
+    "arXiv object-specific searches",
+    "recent DJA high-z compilation reconciliation",
+    "JADES/CEERS/UNCOVER/MoM/GLASS full-source papers and tables",
+    "priority verification for any ranked candidate"
+  ],
+  "decision": "Published controls are not new findings, and this finite baseline is no negative priority claim."
+}
