@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Frozen CDS release: hash source bytes and triage every row
+      - name: 'Frozen CDS release: hash source bytes and triage every row'
         id: scan
         continue-on-error: true
         run: python results/cosmos2025-baryon-bound/screen.py --out results/cosmos2025-baryon-bound/run
