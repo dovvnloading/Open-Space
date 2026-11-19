@@ -32,6 +32,13 @@ jobs:
         id: halo
         continue-on-error: true
         run: python results/cosmos2025-baryon-bound/halo_bound.py --out results/cosmos2025-baryon-bound/run/halo_bounds.json
+      - name: Independent arithmetic referee and explicit blockers
+        id: referee
+        continue-on-error: true
+        run: python results/cosmos2025-baryon-bound/referee.py --out results/cosmos2025-baryon-bound/run/referee_report.json
+      - name: Record exact numerical package versions
+        if: always()
+        run: python -m pip freeze | grep -iE '^(numpy|scipy|colossus)=' > results/cosmos2025-baryon-bound/run/requirements_actual.txt || true
       - name: Remove raw bulk data from deposit
         if: always()
         run: |
@@ -58,5 +65,5 @@ jobs:
           path: results/cosmos2025-baryon-bound/run/
           if-no-files-found: warn
       - name: Require complete source scan before scientific interpretation
-        if: steps.scan.outcome != 'success' || steps.halo.outcome != 'success'
+        if: steps.scan.outcome != 'success' || steps.halo.outcome != 'success' || steps.referee.outcome != 'success'
         run: exit 1
