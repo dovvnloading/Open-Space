@@ -79,6 +79,7 @@ def calculate():
                                 "Tinker08 beyond calibration redshifts",
                                 "no cosmic variance, baryon depletion, completeness, or lensing corrections",
                                 "all nominal NIRCam area assumed valid in every bin; real selection varies"],
+        "halo_mass_grid_msun": MASS_GRID.tolist(),
         "bins": []
     }
     for z1,z2 in BINS:
@@ -112,6 +113,7 @@ def calculate():
                 "max_halo_quantiles_msun": quant,
                 "max_stellar_baryon_quantiles_log10": {k: math.log10(FB*x) if x is not None else None
                                                        for k,x in quant.items()},
+                "lambda_expected_count_by_halo_mass_grid": lam.tolist(),
                 "lambda_at_halo_mass_1e12": float(np.interp(12., np.log10(MASS_GRID), lam)),
                 "lambda_at_halo_mass_1e13": float(np.interp(13., np.log10(MASS_GRID), lam)),
             }
