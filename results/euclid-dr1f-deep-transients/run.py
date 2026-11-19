@@ -204,11 +204,15 @@ def image(key,wout,order=1):
         if x1<=x0 or y1<=y0 or (x1-x0)*(y1-y0)>4*NP*NP:
             raise ValueError("Input pixel bounds invalid")
         block=np.asarray(hd.section[y0:y1,x0:x1])
-        sampled=ndi.map_coordinates(block.astype(np.float32),[yy-y0,xx-x0],order=order,
+        # For bit flags use float64 with nearest-neighbour: float32 loses low
+        # bits of large integer masks, silently corrupting the INVALID bit.
+        pixel_dtype=np.float64 if order==0 else np.float32
+        sampled=ndi.map_coordinates(block.astype(pixel_dtype),[yy-y0,xx-x0],order=order,
                      mode="constant",cval=np.nan if order==1 else 2147483647,
-                     prefilter=False).astype(np.float32)
+                     prefilter=False).astype(pixel_dtype)
+        hash_dtype="<f8" if order==0 else "<f4"
         receipt={"key":key,"bounds_xyxy":[x0,y0,x1,y1],"block_shape":list(block.shape),
-                 "sampled_sha256":sha(np.ascontiguousarray(sampled,dtype="<f4").tobytes()),
+                 "sampled_sha256":sha(np.ascontiguousarray(sampled,dtype=hash_dtype).tobytes()),
                  "valid_coordinate_fraction":float(np.isfinite(sampled).mean()),
                  "header_wcs_crval":[float(a) for a in w.wcs.crval],
                  "interpolated":order==1}
@@ -233,11 +237,16 @@ def good_mask(a):
     if not all(k in a for k in ("science","rms","flag")):
         return np.zeros((NP,NP),bool)
     flag=a["flag"].astype(np.int64)
-    # DR1 VIS bits 18 and 24 treated as permitted exploratory bits; all
-    # other bits are masked, including any unrecognised NISP bits.
-    allowed=(1<<18)|(1<<24) if a["band"]=="VIS" else 0
+    # Euclid DR1 DPDD VIS/NIR calibrated-frame definitions: bit 0 is the
+    # INVALID bit, activated for critical defects (hot/cold/saturated/cosmic).
+    # MER propagates flags as OR; requiring every *informational* bit to be
+    # zero over many stacked inputs destroys actual sky coverage.
+    # For VIS additionally exclude direct SAT, COSMIC and GHOST flags.
+    # Additional warning bits and exposure-level artefacts still require a
+    # separate detector-level review before any discovery is validated.
+    fatal=1 | (8|16|32 if a["band"]=="VIS" else 0)
     return (np.isfinite(a["science"]) & np.isfinite(a["rms"]) &
-        (a["rms"]>0)&np.isfinite(a["flag"]) & ((flag&~allowed)==0))
+        (a["rms"]>0)&np.isfinite(a["flag"]) & ((flag&fatal)==0))
 
 def robust(x):
     arr=np.asarray(x);arr=arr[np.isfinite(arr)]
@@ -408,6 +417,8 @@ def analyse_field(field,manifest):
                 ma,mb=good_mask(a),good_mask(b)
                 mask=ma & mb
                 pair["unmasked_pixels"]=int(mask.sum())
+                pair["mask_provenance"]="DR1 DPDD bit0=INVALID; VIS also SAT/COSMIC/GHOST excluded; uint32 bit integrity retained in float64 sampling"
+                pair["individual_good_pixels"]=[int(ma.sum()),int(mb.sum())]
                 pair["joint_area_deg2"]=float(mask.sum())*(PIXEL_ARCSEC/3600)**2
                 if mask.sum()<NP*NP*.15:
                     pair["status"]="INSUFFICIENT_JOINT_UNMASKED_PIXELS"
