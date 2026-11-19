@@ -351,6 +351,9 @@ if __name__=="__main__":
     elif _mode == "archive_freeze":
         from archive_freeze import main as _freeze_main
         _freeze_main()
+    elif _mode == "archive_diagnostics":
+        from archive_diagnostics import main as _diag_main
+        _diag_main()
     else:
         from control_validation import main as _controls_main
         _controls_main()
