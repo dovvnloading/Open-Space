@@ -268,7 +268,7 @@ def heasarc_archives(rows):
     # a proof of long-term non-variability. Never interpret a failed query as absent.
     searches={}
     cones=" OR ".join("(1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',"+str(r["ra"])+","+str(r["dec"])+",0.006)))" for r in rows)
-    for label,table in [("XMM","xmm4dr14"),("Chandra","csc"),("Swift","swift2sxps")]:
+    for label,table in [("XMM","xmmssc"),("Chandra","csc"),("Swift","swift2sxps")]:
         query="SELECT TOP 1000 name,ra,dec FROM "+table+" WHERE "+cones
         s=requests.Session();s.headers.update(HEAD)
         try:
@@ -371,7 +371,8 @@ def main():
             for row,im in zip(no,images):
                 with requests.Session() as ss:
                     ss.headers.update(HEAD)
-                    im["galactic_dust"]=attempt("galactic_dust",lambda: dust(ss,row))
+                    if im.get("galactic_dust",{}).get("status")!="SandF_integrated_dust_proxy":
+                        im["galactic_dust"]=attempt("galactic_dust",lambda: dust(ss,row))
         else:
             with ThreadPoolExecutor(max_workers=5) as pool:images=list(pool.map(one,no))
     else:
@@ -466,6 +467,7 @@ def main():
        "provisional_g_bounds_gt_1e4":sum(x["optical"]["g_bound_exceeds_1e4"] for x in out),
        "dust_sightlines_measured":sum(im.get("galactic_dust",{}).get("status")=="SandF_integrated_dust_proxy" for im in images),
        "archival_query_status":{n:v["status"] for n,v in arch.items()},
+       "archival_source_match_counts":{n:sum(bool(v.get("matches",{}).get(x["uid"])) for x in no) if v.get("status")=="queried" else None for n,v in arch.items()},
        "ATNF_status":at["status"],"Kurpas_status":lit["status"],
        "native_X_ray_spectra_fit":False,"long_term_variability_established":False,
        "NH_spectral_fit":False,"novelty_audit_complete":False,
