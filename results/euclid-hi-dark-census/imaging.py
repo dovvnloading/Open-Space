@@ -97,8 +97,10 @@ def scan_one(hi):
                             head=hdul[0].header
                             if mode=="wide" and "-DATA_RELEASE-" not in str(head.get("PPLANID","")):
                                 continue
-                            if str(head.get("BUNIT","")).strip()!="ADU/s":
-                                raise ValueError("Nonstandard or missing BUNIT")
+                            unit=str(head.get("BUNIT","")).strip()
+                            if not (unit=="ADU/s" or
+                                    (band!="VIS" and unit.lower() in ("electrons","electron","e-"))):
+                                raise ValueError("Uncalibrated/nonstandard BUNIT: "+unit)
                             zp=finite(head.get("MAGZERO"))
                             if zp is None:raise ValueError("Missing AB zero point")
                             wcs=WCS(head)
@@ -106,7 +108,7 @@ def scan_one(hi):
                                             size=44*u.arcsec,wcs=wcs,mode="partial",fill_value=np.nan)
                             pix=np.asarray(subset.data,dtype=float)
                             # Native MER pixel scale 0.1"/pix, validate rather than assume.
-                            cd=abs(float(wcs.proj_plane_pixel_scales()[0]))*3600 if hasattr(wcs,"proj_plane_pixel_scales") else .1
+                            cd=abs(float(wcs.proj_plane_pixel_scales()[0].to_value(u.deg)))*3600
                             if not .095<cd<.105:raise ValueError("Unexpected pixel scale")
                             lim=sky_limit(pix,zp,scale=cd)
                             lim.update({"tile_id":str(row["obs_id"])[:9],

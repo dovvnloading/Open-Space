@@ -14,6 +14,7 @@ import math
 import threading
 import time
 from pathlib import Path
+from astropy.io.votable import parse_single_table
 import requests
 import numpy as np
 import pandas as pd
@@ -64,8 +65,22 @@ def query(row,task):
                     "response_sha256":digest(r.content)})
         r.raise_for_status()
         raw=r.content.decode("utf-8-sig","replace")
-        if raw.lstrip().startswith("<"):raise ValueError("XML/HTML returned instead of CSV")
-        rows=list(csv.DictReader(io.StringIO(raw)))
+        if raw.lstrip().startswith("<"):
+            if "<VOTABLE" not in raw[:1200].upper():
+                raise ValueError("Non-VOTABLE XML/HTML: "+raw[:310].replace("\\n"," "))
+            try:
+                vt=parse_single_table(io.BytesIO(r.content)).to_table()
+                rows=[{str(k).lower():("" if np.ma.is_masked(rec[k]) else
+                     (rec[k].decode("utf-8","replace") if isinstance(rec[k],bytes)
+                      else str(rec[k]))) for k in vt.colnames} for rec in vt]
+            except Exception as exc:
+                raise ValueError("VOTABLE_PARSE_OR_QUERY_ERROR: "+str(exc)[:180]+
+                                 "; XML prefix: "+raw[:310].replace("\\n"," ")) from exc
+            rec["response_format"]="VOTABLE"
+        else:
+            rows=[{str(k).lower().strip():v for k,v in ent.items()}
+                  for ent in csv.DictReader(io.StringIO(raw))]
+            rec["response_format"]="CSV"
         if rows and (racol not in rows[0] or deccol not in rows[0]):
             raise ValueError("Expected coordinate columns absent")
         if not rows and not raw.strip():raise ValueError("Empty TAP response")
@@ -84,7 +99,7 @@ def query(row,task):
         nearest=[{"sep_arcsec":round(s,4),"row":{k:v for k,v in ent.items()}} for s,ent in matched[:4]]
         return rec,nearest
     except Exception as ex:
-        rec.update({"status":"QUERY_ERROR","error":str(ex)[:220]})
+        rec.update({"status":"QUERY_ERROR","error":str(ex)[:550]})
         return rec,[]
 def evaluate(row,results):
     statuses={k:results[k][0]["status"] for k in TASKS}
@@ -160,7 +175,7 @@ def main():
     else:targ=hits.head(0)
     print("Frozen optical-followup sample:",len(targ),[(x,int((targ.survey==x).sum())) for x in surveys],flush=True)
     result=[];all_receipts=[]
-    with cf.ThreadPoolExecutor(max_workers=8) as pool:
+    with cf.ThreadPoolExecutor(max_workers=5) as pool:
         futures={pool.submit(one,row):row for row in targ.itertuples(index=False)}
         for f in cf.as_completed(futures):
             item=futures[f]
