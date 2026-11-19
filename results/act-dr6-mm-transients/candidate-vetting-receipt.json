@@ -1,0 +1,720 @@
+{
+  "actual_timing_pixel_attempted_for_each_peak": true,
+  "classification": "provisional_candidate_service_queries_not_associations",
+  "count_of_peaks_examined": 9,
+  "discovery": false,
+  "external_vetting_complete": false,
+  "horizons_only_jupiter_and_small_bodies_not_an_exhaustive_solar_system_veto": true,
+  "no_peak_omitted": true,
+  "objects": [
+    {
+      "angular_distance_to_published_ACT_2018_event_arcmin_approx": 15.89170076847515,
+      "association_verdict": "unvetted",
+      "dec_deg": 16.00675841463423,
+      "input_is_a_provisional_peak_not_a_vetted_candidate": true,
+      "mandatory_gates_not_resolved": [
+        "measured_pa4_depth1_beam_and_transfer",
+        "scan_correlated_noise_and_trials",
+        "multi_epoch_multi_array_independence",
+        "Gaia_radio_matches_not_interpreted_as_associations",
+        "GCN_TNS_search_pages_are_not_authoritative_broker_crossmatches",
+        "JPL_SB_IDENT_and_Jupiter_only_do_not_exclude_all_moving_objects",
+        "native_pixel_time_and_coverage_for_event_model"
+      ],
+      "map_id": "01a112cbadcd75fc860bdd667e62bc31",
+      "nominal_white_snr": 31.619273975799864,
+      "ra_deg": 302.2119346380182,
+      "services": {
+        "gaia_dr3_tap_5arcsec": {
+          "bytes": 982,
+          "http_status": 200,
+          "response_sha256": "fd45dc3ceb823c0e357e2eb7e12cabbf1b95483302196baa3ceb4aea6be50245",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+TOP+8+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cparallax+FROM+gaiadr3.gaia_source+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C302.21193464%2C16.00675841%2C0.001388889%29%29%3D1"
+        },
+        "gcn_public_html_not_conclusive": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://gcn.nasa.gov/search?query=302.21193464%2C16.00675841"
+        },
+        "jpl_horizons_jupiter_only_not_all_objects": {
+          "bytes": 8483,
+          "horizons_ephemeris_lines": [
+            "2018-Sep-10 23:08 Nm  15 04 35.91 -16 30 30.9",
+            " 2018-Sep-10 23:09 Nm  15 04 35.94 -16 30 31.1"
+          ],
+          "horizons_error": null,
+          "horizons_has_ephemeris": true,
+          "http_status": 200,
+          "response_sha256": "3513c1c32df51ba1311faa45b2508a0ed6f6971a96ff15c955961c9bd42b9355",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27599%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40399%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27-67.7875%2C-22.9586%2C5.19%27&START_TIME=%272018-09-10+23%3A08%27&STOP_TIME=%272018-09-10+23%3A10%27&STEP_SIZE=%271+m%27&QUANTITIES=%271%27"
+        },
+        "jpl_sb_ident_topocentric_2pass": {
+          "error": "HTTPError: HTTP Error 503: Service Temporarily Unavailable",
+          "status": "request_failed",
+          "url": "https://ssd-api.jpl.nasa.gov/sb_ident.api?lon=-67.7875&lat=-22.9586&alt=5.19&obs-time=2018-09-10_23%3A08%3A51&fov-ra-center=20-08-50.86&fov-dec-center=%2B16-00-24.33&fov-ra-hwidth=0.20&fov-dec-hwidth=3.0&two-pass=true&suppress-first-pass=true&req-elem=false"
+        },
+        "nvss_vizier_90arcsec": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source=VIII%2F65%2Fnvss&-c=302.21193464+%2B16.00675841&-c.rs=90&-out.max=30"
+        },
+        "simbad_2arcmin": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=302.21193464+%2B16.00675841&Radius=2&Radius.unit=arcmin&output.format=ASCII"
+        },
+        "tns_public_html_not_conclusive": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://www.wis-tns.org/search?ra=302.2119346380182&decl=16.00675841463423&radius=2&coords_unit=arcmin&format=html"
+        }
+      },
+      "time_from_actual_mean_time_fits": {
+        "http_status": 206,
+        "native_pixel_xy": [
+          7807,
+          4368
+        ],
+        "period_ctime_from_catalog": "2018-09-10 23:06:59.000000",
+        "period_start_unix": 1536620819.0,
+        "seconds_from_period_start": 112.7457275390625,
+        "status": "mean_time_fits_pixel_read",
+        "time_map_header_sha256": "479ad536d98dad5c22e4c249f4e5826001ccc52ebf4090dfd1c394611695624b",
+        "time_pixel_sha256": "cf17b8d6d6cfc48b94def55256134dc12a1b835dbb7ef75186951109e2c83957",
+        "unix_utc": 1536620931.7457275,
+        "utc": "2018-09-10T23:08:51.745728+00:00"
+      }
+    },
+    {
+      "angular_distance_to_published_ACT_2018_event_arcmin_approx": 5.593659305779109,
+      "association_verdict": "unvetted",
+      "dec_deg": 16.073532713087523,
+      "input_is_a_provisional_peak_not_a_vetted_candidate": true,
+      "mandatory_gates_not_resolved": [
+        "measured_pa4_depth1_beam_and_transfer",
+        "scan_correlated_noise_and_trials",
+        "multi_epoch_multi_array_independence",
+        "Gaia_radio_matches_not_interpreted_as_associations",
+        "GCN_TNS_search_pages_are_not_authoritative_broker_crossmatches",
+        "JPL_SB_IDENT_and_Jupiter_only_do_not_exclude_all_moving_objects",
+        "native_pixel_time_and_coverage_for_event_model"
+      ],
+      "map_id": "01a112cbadcd75fc860bdd667e62bc31",
+      "nominal_white_snr": 31.03078382063836,
+      "ra_deg": 301.9778553014995,
+      "services": {
+        "gaia_dr3_tap_5arcsec": {
+          "bytes": 982,
+          "http_status": 200,
+          "response_sha256": "fd45dc3ceb823c0e357e2eb7e12cabbf1b95483302196baa3ceb4aea6be50245",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+TOP+8+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cparallax+FROM+gaiadr3.gaia_source+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C301.97785530%2C16.07353271%2C0.001388889%29%29%3D1"
+        },
+        "gcn_public_html_not_conclusive": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://gcn.nasa.gov/search?query=301.97785530%2C16.07353271"
+        },
+        "jpl_horizons_jupiter_only_not_all_objects": {
+          "error": "HTTPError: HTTP Error 503: Service Temporarily Unavailable",
+          "status": "request_failed",
+          "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27599%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40399%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27-67.7875%2C-22.9586%2C5.19%27&START_TIME=%272018-09-10+23%3A09%27&STOP_TIME=%272018-09-10+23%3A11%27&STEP_SIZE=%271+m%27&QUANTITIES=%271%27"
+        },
+        "jpl_sb_ident_topocentric_2pass": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://ssd-api.jpl.nasa.gov/sb_ident.api?lon=-67.7875&lat=-22.9586&alt=5.19&obs-time=2018-09-10_23%3A09%3A16&fov-ra-center=20-07-54.69&fov-dec-center=%2B16-04-24.72&fov-ra-hwidth=0.20&fov-dec-hwidth=3.0&two-pass=true&suppress-first-pass=true&req-elem=false"
+        },
+        "nvss_vizier_90arcsec": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source=VIII%2F65%2Fnvss&-c=301.97785530+%2B16.07353271&-c.rs=90&-out.max=30"
+        },
+        "simbad_2arcmin": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=301.97785530+%2B16.07353271&Radius=2&Radius.unit=arcmin&output.format=ASCII"
+        },
+        "tns_public_html_not_conclusive": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://www.wis-tns.org/search?ra=301.9778553014995&decl=16.073532713087523&radius=2&coords_unit=arcmin&format=html"
+        }
+      },
+      "time_from_actual_mean_time_fits": {
+        "http_status": 206,
+        "native_pixel_xy": [
+          7835,
+          4376
+        ],
+        "period_ctime_from_catalog": "2018-09-10 23:06:59.000000",
+        "period_start_unix": 1536620819.0,
+        "seconds_from_period_start": 137.12757873535156,
+        "status": "mean_time_fits_pixel_read",
+        "time_map_header_sha256": "479ad536d98dad5c22e4c249f4e5826001ccc52ebf4090dfd1c394611695624b",
+        "time_pixel_sha256": "1909a9110d96008831259900472878b9b1df16d3416e5c5249ff6b167f39a26b",
+        "unix_utc": 1536620956.1275787,
+        "utc": "2018-09-10T23:09:16.127579+00:00"
+      }
+    },
+    {
+      "angular_distance_to_published_ACT_2018_event_arcmin_approx": 9.353707318774639,
+      "association_verdict": "unvetted",
+      "dec_deg": 16.01519599405943,
+      "input_is_a_provisional_peak_not_a_vetted_candidate": true,
+      "mandatory_gates_not_resolved": [
+        "measured_pa4_depth1_beam_and_transfer",
+        "scan_correlated_noise_and_trials",
+        "multi_epoch_multi_array_independence",
+        "Gaia_radio_matches_not_interpreted_as_associations",
+        "GCN_TNS_search_pages_are_not_authoritative_broker_crossmatches",
+        "JPL_SB_IDENT_and_Jupiter_only_do_not_exclude_all_moving_objects",
+        "native_pixel_time_and_coverage_for_event_model"
+      ],
+      "map_id": "01a112cbadcd75fc860bdd667e62bc31",
+      "nominal_white_snr": 30.29490171749935,
+      "ra_deg": 302.0385489521988,
+      "services": {
+        "gaia_dr3_tap_5arcsec": {
+          "bytes": 1161,
+          "http_status": 200,
+          "response_sha256": "ebacf604a6a9b0d35147f05a5f21bcaddf52dbdef7099ec821bea48b276f0d9a",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+TOP+8+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cparallax+FROM+gaiadr3.gaia_source+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C302.03854895%2C16.01519599%2C0.001388889%29%29%3D1"
+        },
+        "gcn_public_html_not_conclusive": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://gcn.nasa.gov/search?query=302.03854895%2C16.01519599"
+        },
+        "jpl_horizons_jupiter_only_not_all_objects": {
+          "error": "HTTPError: HTTP Error 503: Service Temporarily Unavailable",
+          "status": "request_failed",
+          "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27599%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40399%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27-67.7875%2C-22.9586%2C5.19%27&START_TIME=%272018-09-10+23%3A09%27&STOP_TIME=%272018-09-10+23%3A11%27&STEP_SIZE=%271+m%27&QUANTITIES=%271%27"
+        },
+        "jpl_sb_ident_topocentric_2pass": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://ssd-api.jpl.nasa.gov/sb_ident.api?lon=-67.7875&lat=-22.9586&alt=5.19&obs-time=2018-09-10_23%3A09%3A16&fov-ra-center=20-08-09.25&fov-dec-center=%2B16-00-54.71&fov-ra-hwidth=0.20&fov-dec-hwidth=3.0&two-pass=true&suppress-first-pass=true&req-elem=false"
+        },
+        "nvss_vizier_90arcsec": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source=VIII%2F65%2Fnvss&-c=302.03854895+%2B16.01519599&-c.rs=90&-out.max=30"
+        },
+        "simbad_2arcmin": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=302.03854895+%2B16.01519599&Radius=2&Radius.unit=arcmin&output.format=ASCII"
+        },
+        "tns_public_html_not_conclusive": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://www.wis-tns.org/search?ra=302.0385489521988&decl=16.01519599405943&radius=2&coords_unit=arcmin&format=html"
+        }
+      },
+      "time_from_actual_mean_time_fits": {
+        "http_status": 206,
+        "native_pixel_xy": [
+          7827,
+          4369
+        ],
+        "period_ctime_from_catalog": "2018-09-10 23:06:59.000000",
+        "period_start_unix": 1536620819.0,
+        "seconds_from_period_start": 137.3919677734375,
+        "status": "mean_time_fits_pixel_read",
+        "time_map_header_sha256": "479ad536d98dad5c22e4c249f4e5826001ccc52ebf4090dfd1c394611695624b",
+        "time_pixel_sha256": "1ac68abc6e311f988fb26eafd0a55149db1724128c0639d303d23e5be66dc8b8",
+        "unix_utc": 1536620956.3919678,
+        "utc": "2018-09-10T23:09:16.391968+00:00"
+      }
+    },
+    {
+      "angular_distance_to_published_ACT_2018_event_arcmin_approx": 17.171014485335082,
+      "association_verdict": "unvetted",
+      "dec_deg": 16.35675478854447,
+      "input_is_a_provisional_peak_not_a_vetted_candidate": true,
+      "mandatory_gates_not_resolved": [
+        "measured_pa4_depth1_beam_and_transfer",
+        "scan_correlated_noise_and_trials",
+        "multi_epoch_multi_array_independence",
+        "Gaia_radio_matches_not_interpreted_as_associations",
+        "GCN_TNS_search_pages_are_not_authoritative_broker_crossmatches",
+        "JPL_SB_IDENT_and_Jupiter_only_do_not_exclude_all_moving_objects",
+        "native_pixel_time_and_coverage_for_event_model"
+      ],
+      "map_id": "01a112cbadcd75fc860bdd667e62bc31",
+      "nominal_white_snr": 26.692139829077348,
+      "ra_deg": 302.21231877991994,
+      "services": {
+        "gaia_dr3_tap_5arcsec": {
+          "bytes": 982,
+          "http_status": 200,
+          "response_sha256": "fd45dc3ceb823c0e357e2eb7e12cabbf1b95483302196baa3ceb4aea6be50245",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+TOP+8+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cparallax+FROM+gaiadr3.gaia_source+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C302.21231878%2C16.35675479%2C0.001388889%29%29%3D1"
+        },
+        "gcn_public_html_not_conclusive": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://gcn.nasa.gov/search?query=302.21231878%2C16.35675479"
+        },
+        "jpl_horizons_jupiter_only_not_all_objects": {
+          "bytes": 8483,
+          "horizons_ephemeris_lines": [
+            "2018-Sep-10 23:11 Nm  15 04 35.99 -16 30 31.3",
+            " 2018-Sep-10 23:12 Nm  15 04 36.01 -16 30 31.4"
+          ],
+          "horizons_error": null,
+          "horizons_has_ephemeris": true,
+          "http_status": 200,
+          "response_sha256": "010365e6f33caecbfb2b436089171eee86ccb45d7429529764a35b7e5db0c911",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27599%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40399%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27-67.7875%2C-22.9586%2C5.19%27&START_TIME=%272018-09-10+23%3A11%27&STOP_TIME=%272018-09-10+23%3A13%27&STEP_SIZE=%271+m%27&QUANTITIES=%271%27"
+        },
+        "jpl_sb_ident_topocentric_2pass": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://ssd-api.jpl.nasa.gov/sb_ident.api?lon=-67.7875&lat=-22.9586&alt=5.19&obs-time=2018-09-10_23%3A11%3A14&fov-ra-center=20-08-50.96&fov-dec-center=%2B16-21-24.32&fov-ra-hwidth=0.20&fov-dec-hwidth=3.0&two-pass=true&suppress-first-pass=true&req-elem=false"
+        },
+        "nvss_vizier_90arcsec": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source=VIII%2F65%2Fnvss&-c=302.21231878+%2B16.35675479&-c.rs=90&-out.max=30"
+        },
+        "simbad_2arcmin": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=302.21231878+%2B16.35675479&Radius=2&Radius.unit=arcmin&output.format=ASCII"
+        },
+        "tns_public_html_not_conclusive": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://www.wis-tns.org/search?ra=302.21231877991994&decl=16.35675478854447&radius=2&coords_unit=arcmin&format=html"
+        }
+      },
+      "time_from_actual_mean_time_fits": {
+        "http_status": 206,
+        "native_pixel_xy": [
+          7807,
+          4410
+        ],
+        "period_ctime_from_catalog": "2018-09-10 23:06:59.000000",
+        "period_start_unix": 1536620819.0,
+        "seconds_from_period_start": 255.34356689453125,
+        "status": "mean_time_fits_pixel_read",
+        "time_map_header_sha256": "479ad536d98dad5c22e4c249f4e5826001ccc52ebf4090dfd1c394611695624b",
+        "time_pixel_sha256": "3a58cf9b88eeb24380d3efaee9fe52d82a999b0f363b83c84a4f95e782f91c5c",
+        "unix_utc": 1536621074.343567,
+        "utc": "2018-09-10T23:11:14.343567+00:00"
+      }
+    },
+    {
+      "angular_distance_to_published_ACT_2018_event_arcmin_approx": 14.1910573946696,
+      "association_verdict": "unvetted",
+      "dec_deg": 16.03177478994112,
+      "input_is_a_provisional_peak_not_a_vetted_candidate": true,
+      "mandatory_gates_not_resolved": [
+        "measured_pa4_depth1_beam_and_transfer",
+        "scan_correlated_noise_and_trials",
+        "multi_epoch_multi_array_independence",
+        "Gaia_radio_matches_not_interpreted_as_associations",
+        "GCN_TNS_search_pages_are_not_authoritative_broker_crossmatches",
+        "JPL_SB_IDENT_and_Jupiter_only_do_not_exclude_all_moving_objects",
+        "native_pixel_time_and_coverage_for_event_model"
+      ],
+      "map_id": "01a112cbadcd75fc860bdd667e62bc31",
+      "nominal_white_snr": 25.64186980275059,
+      "ra_deg": 301.79577878475277,
+      "services": {
+        "gaia_dr3_tap_5arcsec": {
+          "bytes": 1069,
+          "http_status": 200,
+          "response_sha256": "a67f2a2046af75e224a1b4b947b62603a064a9cf2f923e783fe5a6d29b806996",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+TOP+8+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cparallax+FROM+gaiadr3.gaia_source+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C301.79577878%2C16.03177479%2C0.001388889%29%29%3D1"
+        },
+        "gcn_public_html_not_conclusive": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://gcn.nasa.gov/search?query=301.79577878%2C16.03177479"
+        },
+        "jpl_horizons_jupiter_only_not_all_objects": {
+          "bytes": 8483,
+          "horizons_ephemeris_lines": [
+            "2018-Sep-10 23:08 Nm  15 04 35.91 -16 30 30.9",
+            " 2018-Sep-10 23:09 Nm  15 04 35.94 -16 30 31.1"
+          ],
+          "horizons_error": null,
+          "horizons_has_ephemeris": true,
+          "http_status": 200,
+          "response_sha256": "da9b3297b5fd7f12878a7eb842d206e7b1d5e9f4b0712acc0074141d29ed0940",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27599%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40399%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27-67.7875%2C-22.9586%2C5.19%27&START_TIME=%272018-09-10+23%3A08%27&STOP_TIME=%272018-09-10+23%3A10%27&STEP_SIZE=%271+m%27&QUANTITIES=%271%27"
+        },
+        "jpl_sb_ident_topocentric_2pass": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://ssd-api.jpl.nasa.gov/sb_ident.api?lon=-67.7875&lat=-22.9586&alt=5.19&obs-time=2018-09-10_23%3A08%3A10&fov-ra-center=20-07-10.99&fov-dec-center=%2B16-01-54.39&fov-ra-hwidth=0.20&fov-dec-hwidth=3.0&two-pass=true&suppress-first-pass=true&req-elem=false"
+        },
+        "nvss_vizier_90arcsec": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source=VIII%2F65%2Fnvss&-c=301.79577878+%2B16.03177479&-c.rs=90&-out.max=30"
+        },
+        "simbad_2arcmin": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=301.79577878+%2B16.03177479&Radius=2&Radius.unit=arcmin&output.format=ASCII"
+        },
+        "tns_public_html_not_conclusive": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://www.wis-tns.org/search?ra=301.79577878475277&decl=16.03177478994112&radius=2&coords_unit=arcmin&format=html"
+        }
+      },
+      "time_from_actual_mean_time_fits": {
+        "http_status": 206,
+        "native_pixel_xy": [
+          7857,
+          4371
+        ],
+        "period_ctime_from_catalog": "2018-09-10 23:06:59.000000",
+        "period_start_unix": 1536620819.0,
+        "seconds_from_period_start": 71.0895004272461,
+        "status": "mean_time_fits_pixel_read",
+        "time_map_header_sha256": "479ad536d98dad5c22e4c249f4e5826001ccc52ebf4090dfd1c394611695624b",
+        "time_pixel_sha256": "9b7bd9228a0ed684e22267658f46c885963015dbe9da2fe5ac1700a3bd7982fd",
+        "unix_utc": 1536620890.0895004,
+        "utc": "2018-09-10T23:08:10.089500+00:00"
+      }
+    },
+    {
+      "angular_distance_to_published_ACT_2018_event_arcmin_approx": 10.709216539638104,
+      "association_verdict": "unvetted",
+      "dec_deg": 16.040160996255313,
+      "input_is_a_provisional_peak_not_a_vetted_candidate": true,
+      "mandatory_gates_not_resolved": [
+        "measured_pa4_depth1_beam_and_transfer",
+        "scan_correlated_noise_and_trials",
+        "multi_epoch_multi_array_independence",
+        "Gaia_radio_matches_not_interpreted_as_associations",
+        "GCN_TNS_search_pages_are_not_authoritative_broker_crossmatches",
+        "JPL_SB_IDENT_and_Jupiter_only_do_not_exclude_all_moving_objects",
+        "native_pixel_time_and_coverage_for_event_model"
+      ],
+      "map_id": "01a112cbadcd75fc860bdd667e62bc31",
+      "nominal_white_snr": 24.424974347369243,
+      "ra_deg": 301.865136904203,
+      "services": {
+        "gaia_dr3_tap_5arcsec": {
+          "bytes": 1145,
+          "http_status": 200,
+          "response_sha256": "7061a8ab3a86b545395f9aeb8ea3aef1ef9eca9c89787937c2fa0008c9451ddc",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+TOP+8+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cparallax+FROM+gaiadr3.gaia_source+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C301.86513690%2C16.04016100%2C0.001388889%29%29%3D1"
+        },
+        "gcn_public_html_not_conclusive": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://gcn.nasa.gov/search?query=301.86513690%2C16.04016100"
+        },
+        "jpl_horizons_jupiter_only_not_all_objects": {
+          "bytes": 8483,
+          "horizons_ephemeris_lines": [
+            "2018-Sep-10 23:08 Nm  15 04 35.91 -16 30 30.9",
+            " 2018-Sep-10 23:09 Nm  15 04 35.94 -16 30 31.1"
+          ],
+          "horizons_error": null,
+          "horizons_has_ephemeris": true,
+          "http_status": 200,
+          "response_sha256": "c2974d4d7d3b1a22702c1f2edeb35a6fa2c9882df178047e088f9cf6d935c24a",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27599%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40399%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27-67.7875%2C-22.9586%2C5.19%27&START_TIME=%272018-09-10+23%3A08%27&STOP_TIME=%272018-09-10+23%3A10%27&STEP_SIZE=%271+m%27&QUANTITIES=%271%27"
+        },
+        "jpl_sb_ident_topocentric_2pass": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://ssd-api.jpl.nasa.gov/sb_ident.api?lon=-67.7875&lat=-22.9586&alt=5.19&obs-time=2018-09-10_23%3A08%3A22&fov-ra-center=20-07-27.63&fov-dec-center=%2B16-02-24.58&fov-ra-hwidth=0.20&fov-dec-hwidth=3.0&two-pass=true&suppress-first-pass=true&req-elem=false"
+        },
+        "nvss_vizier_90arcsec": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source=VIII%2F65%2Fnvss&-c=301.86513690+%2B16.04016100&-c.rs=90&-out.max=30"
+        },
+        "simbad_2arcmin": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=301.86513690+%2B16.04016100&Radius=2&Radius.unit=arcmin&output.format=ASCII"
+        },
+        "tns_public_html_not_conclusive": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://www.wis-tns.org/search?ra=301.865136904203&decl=16.040160996255313&radius=2&coords_unit=arcmin&format=html"
+        }
+      },
+      "time_from_actual_mean_time_fits": {
+        "http_status": 206,
+        "native_pixel_xy": [
+          7848,
+          4372
+        ],
+        "period_ctime_from_catalog": "2018-09-10 23:06:59.000000",
+        "period_start_unix": 1536620819.0,
+        "seconds_from_period_start": 83.18733978271484,
+        "status": "mean_time_fits_pixel_read",
+        "time_map_header_sha256": "479ad536d98dad5c22e4c249f4e5826001ccc52ebf4090dfd1c394611695624b",
+        "time_pixel_sha256": "991617ee97766d69893cd7f13c6eeb3f6c2dfdbb3ca9237e433ef29ba45f3fd5",
+        "unix_utc": 1536620902.1873398,
+        "utc": "2018-09-10T23:08:22.187340+00:00"
+      }
+    },
+    {
+      "angular_distance_to_published_ACT_2018_event_arcmin_approx": 15.87570358358395,
+      "association_verdict": "unvetted",
+      "dec_deg": 16.190030911372517,
+      "input_is_a_provisional_peak_not_a_vetted_candidate": true,
+      "mandatory_gates_not_resolved": [
+        "measured_pa4_depth1_beam_and_transfer",
+        "scan_correlated_noise_and_trials",
+        "multi_epoch_multi_array_independence",
+        "Gaia_radio_matches_not_interpreted_as_associations",
+        "GCN_TNS_search_pages_are_not_authoritative_broker_crossmatches",
+        "JPL_SB_IDENT_and_Jupiter_only_do_not_exclude_all_moving_objects",
+        "native_pixel_time_and_coverage_for_event_model"
+      ],
+      "map_id": "01a112cbadcd75fc860bdd667e62bc31",
+      "nominal_white_snr": 21.170745168778012,
+      "ra_deg": 302.2641995590044,
+      "services": {
+        "gaia_dr3_tap_5arcsec": {
+          "bytes": 982,
+          "http_status": 200,
+          "response_sha256": "fd45dc3ceb823c0e357e2eb7e12cabbf1b95483302196baa3ceb4aea6be50245",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+TOP+8+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cparallax+FROM+gaiadr3.gaia_source+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C302.26419956%2C16.19003091%2C0.001388889%29%29%3D1"
+        },
+        "gcn_public_html_not_conclusive": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://gcn.nasa.gov/search?query=302.26419956%2C16.19003091"
+        },
+        "jpl_horizons_jupiter_only_not_all_objects": {
+          "bytes": 8483,
+          "horizons_ephemeris_lines": [
+            "2018-Sep-10 23:10 Nm  15 04 35.96 -16 30 31.2",
+            " 2018-Sep-10 23:11 Nm  15 04 35.99 -16 30 31.3"
+          ],
+          "horizons_error": null,
+          "horizons_has_ephemeris": true,
+          "http_status": 200,
+          "response_sha256": "4b9a091e13e40ea28e381f7ef363d260384278512cf6e3f0c136f27a74dd0a56",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27599%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40399%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27-67.7875%2C-22.9586%2C5.19%27&START_TIME=%272018-09-10+23%3A10%27&STOP_TIME=%272018-09-10+23%3A12%27&STEP_SIZE=%271+m%27&QUANTITIES=%271%27"
+        },
+        "jpl_sb_ident_topocentric_2pass": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://ssd-api.jpl.nasa.gov/sb_ident.api?lon=-67.7875&lat=-22.9586&alt=5.19&obs-time=2018-09-10_23%3A10%3A26&fov-ra-center=20-09-03.41&fov-dec-center=%2B16-11-24.11&fov-ra-hwidth=0.20&fov-dec-hwidth=3.0&two-pass=true&suppress-first-pass=true&req-elem=false"
+        },
+        "nvss_vizier_90arcsec": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source=VIII%2F65%2Fnvss&-c=302.26419956+%2B16.19003091&-c.rs=90&-out.max=30"
+        },
+        "simbad_2arcmin": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=302.26419956+%2B16.19003091&Radius=2&Radius.unit=arcmin&output.format=ASCII"
+        },
+        "tns_public_html_not_conclusive": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://www.wis-tns.org/search?ra=302.2641995590044&decl=16.190030911372517&radius=2&coords_unit=arcmin&format=html"
+        }
+      },
+      "time_from_actual_mean_time_fits": {
+        "http_status": 206,
+        "native_pixel_xy": [
+          7800,
+          4390
+        ],
+        "period_ctime_from_catalog": "2018-09-10 23:06:59.000000",
+        "period_start_unix": 1536620819.0,
+        "seconds_from_period_start": 207.69984436035156,
+        "status": "mean_time_fits_pixel_read",
+        "time_map_header_sha256": "479ad536d98dad5c22e4c249f4e5826001ccc52ebf4090dfd1c394611695624b",
+        "time_pixel_sha256": "68b906969023527ea2dbef1840559f253d2d886bd653dfe2f86fd3605c0054b5",
+        "unix_utc": 1536621026.6998444,
+        "utc": "2018-09-10T23:10:26.699844+00:00"
+      }
+    },
+    {
+      "angular_distance_to_published_ACT_2018_event_arcmin_approx": 16.719809132458003,
+      "association_verdict": "unvetted",
+      "dec_deg": 16.00674033464496,
+      "input_is_a_provisional_peak_not_a_vetted_candidate": true,
+      "mandatory_gates_not_resolved": [
+        "measured_pa4_depth1_beam_and_transfer",
+        "scan_correlated_noise_and_trials",
+        "multi_epoch_multi_array_independence",
+        "Gaia_radio_matches_not_interpreted_as_associations",
+        "GCN_TNS_search_pages_are_not_authoritative_broker_crossmatches",
+        "JPL_SB_IDENT_and_Jupiter_only_do_not_exclude_all_moving_objects",
+        "native_pixel_time_and_coverage_for_event_model"
+      ],
+      "map_id": "01a112c3d789747ca8898a1f611157b2",
+      "nominal_white_snr": 17.846800976097857,
+      "ra_deg": 302.2292732232819,
+      "services": {
+        "gaia_dr3_tap_5arcsec": {
+          "bytes": 982,
+          "http_status": 200,
+          "response_sha256": "fd45dc3ceb823c0e357e2eb7e12cabbf1b95483302196baa3ceb4aea6be50245",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+TOP+8+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cparallax+FROM+gaiadr3.gaia_source+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C302.22927322%2C16.00674033%2C0.001388889%29%29%3D1"
+        },
+        "gcn_public_html_not_conclusive": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://gcn.nasa.gov/search?query=302.22927322%2C16.00674033"
+        },
+        "jpl_horizons_jupiter_only_not_all_objects": {
+          "bytes": 8483,
+          "horizons_ephemeris_lines": [
+            "2018-Sep-12 23:58  m  15 05 52.76 -16 36 10.2",
+            " 2018-Sep-12 23:59  m  15 05 52.79 -16 36 10.3"
+          ],
+          "horizons_error": null,
+          "horizons_has_ephemeris": true,
+          "http_status": 200,
+          "response_sha256": "f8c90dd923edbd50ff6dac7f5e7932559558d72768caa5134ca8d8dcc99f9167",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27599%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40399%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27-67.7875%2C-22.9586%2C5.19%27&START_TIME=%272018-09-12+23%3A58%27&STOP_TIME=%272018-09-13+00%3A00%27&STEP_SIZE=%271+m%27&QUANTITIES=%271%27"
+        },
+        "jpl_sb_ident_topocentric_2pass": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://ssd-api.jpl.nasa.gov/sb_ident.api?lon=-67.7875&lat=-22.9586&alt=5.19&obs-time=2018-09-12_23%3A58%3A00&fov-ra-center=20-08-55.03&fov-dec-center=%2B16-00-24.27&fov-ra-hwidth=0.20&fov-dec-hwidth=3.0&two-pass=true&suppress-first-pass=true&req-elem=false"
+        },
+        "nvss_vizier_90arcsec": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source=VIII%2F65%2Fnvss&-c=302.22927322+%2B16.00674033&-c.rs=90&-out.max=30"
+        },
+        "simbad_2arcmin": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=302.22927322+%2B16.00674033&Radius=2&Radius.unit=arcmin&output.format=ASCII"
+        },
+        "tns_public_html_not_conclusive": {
+          "error": "HTTPError: HTTP Error 429: Too Many Requests",
+          "status": "request_failed",
+          "url": "https://www.wis-tns.org/search?ra=302.2292732232819&decl=16.00674033464496&radius=2&coords_unit=arcmin&format=html"
+        }
+      },
+      "time_from_actual_mean_time_fits": {
+        "http_status": 206,
+        "native_pixel_xy": [
+          22526,
+          4367
+        ],
+        "period_ctime_from_catalog": "2018-09-12 23:06:29.000000",
+        "period_start_unix": 1536793589.0,
+        "seconds_from_period_start": 3091.9619140625,
+        "status": "mean_time_fits_pixel_read",
+        "time_map_header_sha256": "ede002673db3e77cefcfca43bbf507859fe1a0cb3d706de296d014b2fff68800",
+        "time_pixel_sha256": "85f22272ed2e54e05c5e0179e905b2a8a857271847f39dd611768c6affe0b33f",
+        "unix_utc": 1536796680.961914,
+        "utc": "2018-09-12T23:58:00.961914+00:00"
+      }
+    },
+    {
+      "angular_distance_to_published_ACT_2018_event_arcmin_approx": 16.52491315742709,
+      "association_verdict": "unvetted",
+      "dec_deg": 16.381794374523107,
+      "input_is_a_provisional_peak_not_a_vetted_candidate": true,
+      "mandatory_gates_not_resolved": [
+        "measured_pa4_depth1_beam_and_transfer",
+        "scan_correlated_noise_and_trials",
+        "multi_epoch_multi_array_independence",
+        "Gaia_radio_matches_not_interpreted_as_associations",
+        "GCN_TNS_search_pages_are_not_authoritative_broker_crossmatches",
+        "JPL_SB_IDENT_and_Jupiter_only_do_not_exclude_all_moving_objects",
+        "native_pixel_time_and_coverage_for_event_model"
+      ],
+      "map_id": "01a112c3d789747ca8898a1f611157b2",
+      "nominal_white_snr": 12.43598988383889,
+      "ra_deg": 301.82148268398646,
+      "services": {
+        "gaia_dr3_tap_5arcsec": {
+          "bytes": 982,
+          "http_status": 200,
+          "response_sha256": "fd45dc3ceb823c0e357e2eb7e12cabbf1b95483302196baa3ceb4aea6be50245",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+TOP+8+source_id%2Cra%2Cdec%2Cphot_g_mean_mag%2Cparallax+FROM+gaiadr3.gaia_source+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C301.82148268%2C16.38179437%2C0.001388889%29%29%3D1"
+        },
+        "gcn_public_html_not_conclusive": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://gcn.nasa.gov/search?query=301.82148268%2C16.38179437"
+        },
+        "jpl_horizons_jupiter_only_not_all_objects": {
+          "bytes": 8483,
+          "horizons_ephemeris_lines": [
+            "2018-Sep-12 23:59  m  15 05 52.79 -16 36 10.3",
+            " 2018-Sep-13 00:00  m  15 05 52.81 -16 36 10.4"
+          ],
+          "horizons_error": null,
+          "horizons_has_ephemeris": true,
+          "http_status": 200,
+          "response_sha256": "77c2e6d5ec442592e68652d7e8a1730e65c66cb8c767a928db06f3e55571994c",
+          "status": "http_response_not_independently_interpreted",
+          "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27599%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40399%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27-67.7875%2C-22.9586%2C5.19%27&START_TIME=%272018-09-12+23%3A59%27&STOP_TIME=%272018-09-13+00%3A01%27&STEP_SIZE=%271+m%27&QUANTITIES=%271%27"
+        },
+        "jpl_sb_ident_topocentric_2pass": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://ssd-api.jpl.nasa.gov/sb_ident.api?lon=-67.7875&lat=-22.9586&alt=5.19&obs-time=2018-09-12_23%3A59%3A52&fov-ra-center=20-07-17.16&fov-dec-center=%2B16-22-54.46&fov-ra-hwidth=0.20&fov-dec-hwidth=3.0&two-pass=true&suppress-first-pass=true&req-elem=false"
+        },
+        "nvss_vizier_90arcsec": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://vizier.cds.unistra.fr/viz-bin/asu-tsv?-source=VIII%2F65%2Fnvss&-c=301.82148268+%2B16.38179437&-c.rs=90&-out.max=30"
+        },
+        "simbad_2arcmin": {
+          "error": "HTTPError: HTTP Error 404: Not Found",
+          "status": "request_failed",
+          "url": "https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=301.82148268+%2B16.38179437&Radius=2&Radius.unit=arcmin&output.format=ASCII"
+        },
+        "tns_public_html_not_conclusive": {
+          "error": "TimeoutError: The read operation timed out",
+          "status": "request_failed",
+          "url": "https://www.wis-tns.org/search?ra=301.82148268398646&decl=16.381794374523107&radius=2&coords_unit=arcmin&format=html"
+        }
+      },
+      "time_from_actual_mean_time_fits": {
+        "http_status": 206,
+        "native_pixel_xy": [
+          22575,
+          4412
+        ],
+        "period_ctime_from_catalog": "2018-09-12 23:06:29.000000",
+        "period_start_unix": 1536793589.0,
+        "seconds_from_period_start": 3203.6806640625,
+        "status": "mean_time_fits_pixel_read",
+        "time_map_header_sha256": "ede002673db3e77cefcfca43bbf507859fe1a0cb3d706de296d014b2fff68800",
+        "time_pixel_sha256": "187eab795dd516a9fb41b8a3e65eacd7e5e7a723656209c3b35c4a256dadbf0c",
+        "unix_utc": 1536796792.680664,
+        "utc": "2018-09-12T23:59:52.680664+00:00"
+      }
+    }
+  ],
+  "published_control_is_known": "ACT-T J200758+160954; Naess et al. 2021",
+  "rate_limit": null,
+  "source": "actual depth1 pixel screen: science-pilot-receipt.json",
+  "utc": "2026-11-19T04:13:34.615636+00:00",
+  "vlass_racs_not_machine_crossmatched": true
+}
