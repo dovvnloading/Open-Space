@@ -7,9 +7,13 @@ on:
   push:
     branches:
       - research/act-dr6-mm-transient-search
+    paths:
+      - '.github/workflows/act-dr6-depth1-inventory.yml'
+      - 'results/act-dr6-mm-transients/freeze_*.py'
+      - 'results/act-dr6-mm-transients/test_*.py'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   freeze:
     runs-on: ubuntu-latest
@@ -29,6 +33,33 @@ jobs:
             --db /tmp/act-mapcat.db \
             --out act-depth1-manifest.jsonl \
             --receipt act-depth1-inventory-receipt.json
+      - name: Verify and pin catalog-eligible ACT 90/150/220 GHz rows
+        run: |
+          python results/act-dr6-mm-transients/freeze_scoped.py \
+            --manifest act-depth1-manifest.jsonl \
+            --catalog-receipt act-depth1-inventory-receipt.json \
+            --out results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz \
+            --receipt results/act-dr6-mm-transients/eligible-inventory-receipt.json
+      - name: Commit pinned 27,512-row dataset on branch, never on PR
+        if: github.event_name == 'push' && github.ref_name == 'research/act-dr6-mm-transient-search'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin "$GITHUB_REF_NAME"
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse "origin/$GITHUB_REF_NAME")" ]; then
+            echo "Branch advanced; skip stale commit"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz \
+                  results/act-dr6-mm-transients/eligible-inventory-receipt.json
+          if git diff --cached --quiet; then
+            echo "Pinned dataset already committed"
+            exit 0
+          fi
+          git commit -m 'research(act-dr6): pin eligible 27,512-row depth-1 inventory and checksum'
+          git push origin "HEAD:$GITHUB_REF_NAME"
       - name: Publish inventory receipt
         if: success()
         run: cat act-depth1-inventory-receipt.json >> "$GITHUB_STEP_SUMMARY"
@@ -40,4 +71,6 @@ jobs:
           path: |
             act-depth1-manifest.jsonl
             act-depth1-inventory-receipt.json
+            results/act-dr6-mm-transients/eligible-inventory-receipt.json
+            results/act-dr6-mm-transients/eligible-act-depth1.jsonl.gz
           retention-days: 30
