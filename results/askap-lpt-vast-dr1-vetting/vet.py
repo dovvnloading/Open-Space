@@ -23,11 +23,9 @@ CAT={
  "racs_mid_i":("J/other/PASA/41.3/gcompsm",7),
  "racs_high_i":("J/other/PASA/42.38/gcompsh",7),
  "gaia":("I/355/gaiadr3",3),
- "legacy_dr10_photoz_subset":("VII/300",3),
- "unwise":("II/363/unwise",3),
- "panstarrs":("II/349/ps1",3),
+"panstarrs":("II/349/ps1",3),
  "erass1":("J/A+A/682/A34/erass1-m",12),
- "swift":("IX/58/2sxps",12)}
+}
 FREQ={"racs_low_i":887.5,"racs_mid_i":1367.5,"racs_high_i":1655.5}
 def dump(name,x):
  OUT.mkdir(exist_ok=True,parents=True)
@@ -227,7 +225,11 @@ def viz(cat,ra,dec,radius):
   return g
  return {"status":"unavailable","catalog":cat,"errors":errors}
 def match_one(sid,ra,dec):
- return sid,{name:viz(cat,ra,dec,rad) for name,(cat,rad) in CAT.items()}
+ from counterpart_direct import QUERIES
+ data={name:viz(cat,ra,dec,rad) for name,(cat,rad) in CAT.items()}
+ for name,fn in QUERIES.items():
+  data[name]=fn(ra,dec)
+ return sid,data
 def slope(c):
  pts=[]
  for name,nu in FREQ.items():
@@ -247,8 +249,9 @@ def classify(sid,a,co,img):
  if r.get("epochs_audited",0)<r.get("epochs_expected",1):return "unresolved_incomplete_native_images"
  if co.get("gaia",{}).get("status")=="match" and co["gaia"].get("arcsec",999)<2:
   return "stellar_counterpart_flare_unconfirmed"
- if co.get("legacy_dr10_photoz_subset",{}).get("status")=="match":
-  return "extragalactic_counterpart_agn_scintillation_possible"
+ dr=co.get("legacy_dr10",{})
+ if dr.get("status")=="match" and str(dr.get("record",{}).get("type","")).upper() in ("EXP","DEV","SER","REX"):
+  return "resolved_optical_host_agn_scintillation_possible"
  return "unresolved_not_polarisation_vetted"
 def main():
  OUT.mkdir(parents=True,exist_ok=True)
@@ -307,7 +310,7 @@ def main():
   "onoff_ids":on,"epoch_measurements":693,
   "native_images":sum(x.get("epochs_audited",0) for x in img.values()),
   "complete_source_images":sum(x.get("status")=="complete" for x in img.values()),
-  "survey_queries":60*len(CAT),"classes":classes,
+  "survey_queries":60*(len(CAT)+4),"classes":classes,
   "stokes_v":"not measured in published VAST source FITS cubes; CASDA AS207/RACS-low2 I,V require separately staged products and leakage controls",
   "periodicity":"not tested: no validated compact polarised counterpart-free target or seconds-scale series",
   "literature":"ATNF v18 prior-identification checked in baseline; individual ATel/ADS check only if a genuine polarised remainder survives",
