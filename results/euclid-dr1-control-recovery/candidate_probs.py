@@ -72,9 +72,9 @@ def main():
                                    -r["rank_score"],r["id"]))
     save("conditional_supported_top100.json",supported)
     loo=[]
-    for group,points,other,truth in (("quasar",q,d,1),("dwarf",d,q,0)):
-        for i,x in enumerate(points):
-            same=np.delete(points,i,axis=0)
+    for group,group_points,other,truth in (("quasar",q,d,1),("dwarf",d,q,0)):
+        for i,x in enumerate(group_points):
+            same=np.delete(group_points,i,axis=0)
             proba=posterior(x,same,other,PRIOR) if truth else posterior(x,other,same,PRIOR)
             if proba is None:raise AssertionError("Missing LOO probability")
             loo.append({"class":group,"p":proba,"truth":truth})

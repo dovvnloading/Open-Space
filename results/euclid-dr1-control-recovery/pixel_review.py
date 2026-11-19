@@ -94,8 +94,7 @@ def direct_tile_sources(tileid):
     constructs an unverified FITS filename or reads the full mosaic.
     """
     tile=str(int(tileid))
-    fs=s3fs.S3FileSystem(anon=True,client_kwargs={"region_name":"us-east-1"},
-                         connect_timeout=15,read_timeout=60)
+    fs=s3fs.S3FileSystem(anon=True,client_kwargs={"region_name":"us-east-1"})
     sources={}
     errors={}
     for dirname in ("VIS","NISP"):
