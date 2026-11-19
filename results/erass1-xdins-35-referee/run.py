@@ -244,13 +244,14 @@ def dust(s,row):
     b,rec=fetch(s,"https://irsa.ipac.caltech.edu/cgi-bin/DUST/nph-dust",
                 {"locstr":f"{ra} {dec}"},limit=100000,timeout=(8,18))
     t=b.decode(errors="replace")
-    candidates=[r"<meanValueSandF>([\d.eE+\-]+)</meanValueSandF>",
-                r"<refPixelValueSFD>([\d.eE+\-]+)</refPixelValueSFD>",
-                r"<meanValueSFD>([\d.eE+\-]+)</meanValueSFD>"]
+    candidates=[r"<refPixelValueSandF>\\s*([\\d.eE+\\-]+)",
+                r"<refPixelValueSFD>\\s*([\\d.eE+\\-]+)",
+                r"<meanValueSandF>\\s*([\\d.eE+\\-]+)",
+                r"<meanValueSFD>\\s*([\\d.eE+\\-]+)"]
     vals=[float(m.group(1)) for p in candidates if (m:=re.search(p,t))]
     if not vals:raise ValueError("IRSA_dust_XML_no_SFD_value; excerpt: "+t[:240].replace("\n"," "))
     ebv=vals[0]
-    return {"status":"SFD_integrated_dust_proxy","E_BV_mag":round(ebv,4),
+    return {"status":"SandF_integrated_dust_proxy","E_BV_mag":round(ebv,4),
             "NH_proxy_cm2":round(8.8e21*ebv,0),"receipt":rec,
             "warning":"SFD full-column dust not a measured X-ray N_H; dust-to-gas varies"}
 def one(row):
@@ -273,11 +274,25 @@ def heasarc_archives(rows):
         try:
             b,receipt=post_fetch(s,"https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
                  {"REQUEST":"doQuery","LANG":"ADQL","FORMAT":"csv","QUERY":query},limit=4_000_000,timeout=(12,65))
-            if b.lstrip().startswith((b"<",b"ERROR")):
-                raise ValueError("TAP_returned_XML_or_error:"+b[:190].decode(errors="replace"))
-            rr=list(csv.DictReader(io.StringIO(b.decode("utf-8-sig"))))
-            if not rr or "ra" not in {k.lower() for k in rr[0]}:
-                raise ValueError("TAP_no_parseable_RA_Dec")
+            if b.lstrip().startswith(b"<"):
+                raw=b.decode(errors="replace")
+                m=re.search(r'<INFO[^>]*name="QUERY_STATUS"[^>]*value="([^"]+)"[^>]*>(.*?)</INFO>',raw,re.I|re.S)
+                if m and m.group(1).upper()!="OK":
+                    raise ValueError("TAP_QUERY_STATUS_"+m.group(1)+": "+re.sub("<[^>]+>"," ",m.group(2))[:300])
+                try:
+                    tb=Table.read(io.BytesIO(b),format="votable")
+                    rr=[{k:str(row[k]) for k in tb.colnames} for row in tb]
+                    colnames={k.lower() for k in tb.colnames}
+                except Exception as e:
+                    raise ValueError("TAP_VOTABLE_parse_failed:"+str(e)[:200]+
+                                     " QUERY_STATUS_excerpt:"+str(m.group(0)[:200] if m else raw[-400:]))
+            elif b.lstrip().startswith(b"ERROR"):
+                raise ValueError("TAP_plain_error:"+b[:350].decode(errors="replace"))
+            else:
+                rr=list(csv.DictReader(io.StringIO(b.decode("utf-8-sig"))))
+                colnames={k.lower() for k in rr[0]} if rr else set(b.decode().split("\n")[0].lower().split(","))
+            if "ra" not in colnames or "dec" not in colnames:
+                raise ValueError("TAP_no_parseable_RA_Dec_or_empty_columns:"+str(colnames))
             searches[label]={"status":"queried","receipt":receipt,"rows_returned":len(rr),"matches":{}}
             for x in rows:
                 c=SkyCoord(float(x["ra"])*u.deg,float(x["dec"])*u.deg)
@@ -346,8 +361,21 @@ def main():
        "frozen_input":{"official_top60_sha256":sha(PREV/"official_top60.csv"),
          "screened_main_sha256":sha(PREV/"screened_main.csv"),"count":len(no)},
        "warning":"Positions are eROSITA not optical; non-association is not an upper limit."}
-    with ThreadPoolExecutor(max_workers=5) as pool:
-        images=list(pool.map(one,no))
+    # Reuse previously hashed native FITS-derived photometry and only refresh
+    # the dust sightlines. Avoid redownloading large coadds / rate-limited service.
+    imgpath=OUT/"image_receipts.json"
+    if imgpath.exists():
+        old=json.loads(imgpath.read_text())
+        if [v.get("uid") for v in old]==[v["uid"] for v in no]:
+            images=old
+            for row,im in zip(no,images):
+                with requests.Session() as ss:
+                    ss.headers.update(HEAD)
+                    im["galactic_dust"]=attempt("galactic_dust",lambda: dust(ss,row))
+        else:
+            with ThreadPoolExecutor(max_workers=5) as pool:images=list(pool.map(one,no))
+    else:
+        with ThreadPoolExecutor(max_workers=5) as pool:images=list(pool.map(one,no))
     writejson("image_receipts.json",images)
     arch=heasarc_archives(no)
     writejson("archive_receipts.json",arch)
