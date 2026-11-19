@@ -17,8 +17,8 @@
 
 | Preregistered family | Exact gate | State / reason |
 |---|---|---|
-| Swift GRB archive | ±1d and ±1h | Registered, script and runner integrated; Swift only is not complete GCN+Fermi, and overlaps uncertainty needs attention |
-| GCN/GBM GRBs | ±1d and ±1h | PENDING complete GCN circular + Fermi GBM all-sky sample, revised regions and coverage |
+| NASA Swift GRB table (HTTP 200, source SHA256 b3b13a8b9e339ecff3a44464191c1556298997e4a4a227cb97fe5ef75f3452d3), 3,900,078 HTML bytes | ±1d and ±1h | **COMPLETED Swift subset**: 1,658 tabulated events with date and BAT direction (2,046 listed total, some incomplete); **0 bursts in ±1 day**; spatial p for count ≥0 is 1.000 but all-mission rate/exposure is untested; [audit artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44442949469/artifacts/14492201221) |
+| Non-Swift GCN/GBM GRBs | ±1d and ±1h | PENDING complete GCN circular + Fermi GBM all-sky sample, revised regions and coverage |
 | Swift MAXI/BAT/XRT non-GRB transients | ±7d primary, ±30d sensitivity | PENDING time-dependent exposure and source-episode/cross-instrument dedup |
 | ZTF/ATLAS forced photometry | ±30d primary, TDE/nuclear ±180d | PENDING full field footprints, forced-source light curves and pre-event non-detections |
 | New Fermi-LAT blazar light-curve repository | ±30d ±180d | PENDING differential weekly bins from frozen latest public release and eligible flux thresholds; gamma flares in original papers are KNOWN |
