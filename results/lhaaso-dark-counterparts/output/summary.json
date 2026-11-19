@@ -1,4 +1,5 @@
 {
+  "all_requested_catalogues_complete": false,
   "caveats": [
     "longitude shifts do not reproduce longitude-dependent sensitivity/crowding",
     "surveys with approximate sky footprints cannot certify absence or global significance",
@@ -9,6 +10,7 @@
   ],
   "chance_p_definition": "(1+number of latitude-matched longitude controls with a match)/(1+eligible control count)",
   "controls_per_class_expected": 512,
+  "core_three_GeV_ATNF_Green_screen_complete": true,
   "discovery_claim": false,
   "minimum_resolvable_p": 0.001949317738791423,
   "physical_identifications": 0,
@@ -17,7 +19,8 @@
   "radius_rule_deg": "clip(1LHAASO ePos95stat + r39 + 0.2, 0.35, 1.5); counterpart catalog radius added",
   "shift_seed": 20261119,
   "source_count": 90,
-  "strict_census_complete": true,
+  "strict_census_complete": false,
+  "strict_census_scope_note": "The 5 no-match cases are only for 4FGL-DR4, ATNF and Green; not global non-detections across missing radio/X-ray/cluster catalogues.",
   "strict_no_GeV_PSR_SNR_if_all_loaded": 5,
   "uhe_source_count": 43
 }
