@@ -41,6 +41,11 @@ class RealFitsPilotSyntheticTests(unittest.TestCase):
         self.assertFalse(receipt["validated_for_single_observation"])
         self.assertTrue(psfs[1.6].sum() > psfs[1.2].sum())
 
+    def test_mapcat_ctime_string_is_not_unix_float(self):
+        from datetime import datetime, timezone
+        dt = datetime.fromisoformat("2018-09-11 23:06:30.000000").replace(tzinfo=timezone.utc)
+        self.assertGreater(dt.timestamp(), 1_500_000_000)
+
     def test_real_fits_data_byte_offsets_for_t_plane(self):
         w = WCS(naxis=2)
         w.wcs.ctype = ["RA---TAN", "DEC--TAN"]

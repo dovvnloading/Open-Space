@@ -7,6 +7,7 @@ on:
       - 'results/act-dr6-mm-transients/run_preregistered_field.py'
       - 'results/act-dr6-mm-transients/test_preregistered_field.py'
       - 'results/act-dr6-mm-transients/roi-footprint-cache.json'
+      - 'results/act-dr6-mm-transients/vet_candidates.py'
       - '.github/workflows/act-dr6-field-search.yml'
   workflow_dispatch:
 permissions:
@@ -46,6 +47,14 @@ jobs:
           assert not r.get('blocker'), r.get('blocker')
           assert r['controls']['reference_epoch_leakage_count']==0, 'Contaminated reference'
           PY
+      - name: Timestamped JPL, Gaia, radio, SIMBAD, GCN and TNS attempts (no automated veto claims)
+        timeout-minutes: 8
+        run: |
+          python -u results/act-dr6-mm-transients/vet_candidates.py > act-vetting-console.log 2>&1 || {
+            tail -n 80 act-vetting-console.log
+            exit 1
+          }
+          tail -n 50 act-vetting-console.log
       - name: Report explicit remaining scientific gates
         if: always()
         shell: bash
@@ -70,6 +79,8 @@ jobs:
           path: |
             results/act-dr6-mm-transients/science-pilot-receipt.json
             act-science-pilot-console.log
+            results/act-dr6-mm-transients/candidate-vetting-receipt.json
+            act-vetting-console.log
           if-no-files-found: warn
           retention-days: 30
       - name: Commit evidence back to same research branch (never update merged PR)
@@ -85,7 +96,7 @@ jobs:
           test -f results/act-dr6-mm-transients/science-pilot-receipt.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add results/act-dr6-mm-transients/science-pilot-receipt.json
+          git add results/act-dr6-mm-transients/science-pilot-receipt.json results/act-dr6-mm-transients/candidate-vetting-receipt.json
           if ! git diff --cached --quiet; then
             git commit -m 'research(act): record real-pixel preregistered pilot and open validity gates'
             git push origin "HEAD:$GITHUB_REF_NAME"

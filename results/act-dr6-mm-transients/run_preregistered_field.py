@@ -293,7 +293,12 @@ def time_at_position(row, ra_deg, dec_deg):
         start = int(meta["header_bytes"]) + (iy*nx+ix)*bpp
         raw, transfer = fetch_range(url, start, start+bpp-1)
         val = float(np.frombuffer(raw, dtype=">f4" if bpp == 4 else ">f8")[0])
-        epoch = float(row["ctime"]) + val
+        ctime_text = str(row["ctime"])
+        if "-" in ctime_text or "T" in ctime_text or " " in ctime_text:
+            period_start = datetime.fromisoformat(ctime_text).replace(tzinfo=timezone.utc).timestamp()
+        else:
+            period_start = float(ctime_text)
+        epoch = period_start + val
         start_epoch = datetime.fromisoformat(row["start_time"]).replace(tzinfo=timezone.utc).timestamp()
         stop_epoch = datetime.fromisoformat(row["stop_time"]).replace(tzinfo=timezone.utc).timestamp()
         if not (np.isfinite(val) and 0 <= val <= stop_epoch - start_epoch + 120 and
@@ -301,7 +306,8 @@ def time_at_position(row, ra_deg, dec_deg):
             raise ValueError("Time FITS pixel disagrees with frozen scan interval")
         return {"status": "mean_time_fits_pixel_read", "unix_utc": epoch,
                 "utc": datetime.fromtimestamp(epoch, timezone.utc).isoformat(),
-                "period_ctime_unix": row["ctime"], "seconds_from_period_start": val,
+                "period_ctime_from_catalog": row["ctime"], "period_start_unix": period_start,
+                "seconds_from_period_start": val,
                 "native_pixel_xy": [ix, iy], "time_map_header_sha256": meta["header_64k_sha256"],
                 "time_pixel_sha256": digest_bytes(raw), "http_status": transfer["status"]}
     except Exception as e:
@@ -478,26 +484,37 @@ def analyse(tests, refs, aperture):
             injection_family[str(width)] = width_injections
         # Known Naess et al. 2021 transient: targeted, never a new discovery.
         cy = cx = N//2
-        near = np.zeros_like(good, dtype=bool)
-        near[cy-6:cy+7, cx-6:cx+7] = True
-        near &= good
+        grid_y, grid_x = np.ogrid[:N, :N]
+        near = ((grid_y-cy)**2 + (grid_x-cx)**2 <= 6**2) & good
         near_snr = np.where(near, snr, -np.inf)
         recovery = {"published_source": "Naess2021_2018-09-11",
                     "published_ra_deg": KNOWN_RA, "published_dec_deg": KNOWN_DEC,
-                    "published_peak_date_utc": "2018-09-11",
+                    "published_peak_time_utc_from_Naess2021": "2018-09-11T23:36:00+00:00",
                     "known_event_not_novel": True,
                     "tested_epoch_start": rec["start_time"],
                     "tested_epoch_stop": rec["stop_time"],
                     "timing": time_at_position(row_by_id[rec["map_id"]], KNOWN_RA, KNOWN_DEC)}
         if np.any(near):
             y0, x0 = np.unravel_index(int(np.argmax(near_snr)), near_snr.shape)
+            separation = float(np.hypot(y0-cy,x0-cx)*0.5)
+            pixel_time = recovery["timing"]
+            observed_near_published_peak = (pixel_time.get("status") == "mean_time_fits_pixel_read" and
+                abs(pixel_time["unix_utc"] - datetime.fromisoformat(
+                    "2018-09-11T23:36:00+00:00").timestamp()) <= 6*3600)
+            nominal_mad = to_float(1.4826*np.nanmedian(np.abs(
+                snr[good]-np.nanmedian(snr[good])))) if np.any(good) else None
             recovery.update({"highest_white_snr_within_3arcmin": to_float(snr[y0,x0]),
-                             "peak_offset_arcmin": to_float(np.hypot(y0-cy,x0-cx)*0.5),
+                             "peak_offset_arcmin": separation,
+                             "empirical_mad_rescaled_peak": to_float(
+                                 snr[y0,x0]/max(nominal_mad or 1, 1)),
+                             "within_2arcmin": separation <= 2.0,
+                             "mean_time_within_6h_of_published_peak": bool(observed_near_published_peak),
                              "all_gaussian_fwhm_peak_snr": {
                                  str(w): to_float(f["snr_white"][y0,x0])
                                  for w,f in filtered.items()},
-                             "screen_recovered_nominal": bool(snr[y0,x0] >= 7),
-                             "status": "provisional_white_noise_screen_only"})
+                             "screen_recovered_nominal": bool(snr[y0,x0] >= 7 and
+                                   separation <= 2.0 and observed_near_published_peak),
+                             "status": "not_a_scientific_recovery_without_independent_psf_and_noise_calibration"})
         else:
             recovery["status"] = "no_valid_filter_centres_at_published_source"
         width_tails = {
@@ -529,6 +546,8 @@ def analyse(tests, refs, aperture):
         "jpl_horizons_run": False,
         "published_transient_recovery_screen_only": any(
             s.get("published_positive_control",{}).get("screen_recovered_nominal",False) for s in scans),
+        "empirical_white_snr_jackknife_mad": result["controls"].get(
+            "independent_split_night_jackknife",{}).get("white_snr_mad"),
         "scans": scans}
     result["injections"] = {"kind": "actual_observation_pixels_literature_gaussian_beam_envelope_provisional",
                             "factors_white_noise_sigma": [6,8,10,15],
