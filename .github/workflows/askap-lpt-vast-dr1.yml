@@ -1,0 +1,50 @@
+name: ASKAP VAST DR1 LPT frozen dataset run
+on:
+  push:
+    branches: [research/askap-lpt-vast-dr1-20261118]
+    paths:
+      - 'results/askap-lpt-vast-dr1/*.py'
+      - '!results/askap-lpt-vast-dr1/output/**'
+permissions:
+  contents: write
+jobs:
+  archive-screen-and-referee:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install bounded analysis dependencies
+        run: python -m pip install --disable-pip-version-check 'numpy>=1.26' 'pandas>=2.2' 'pyarrow>=17' 'requests>=2.31' 'astropy>=6'
+      - name: Compile and offline method tests
+        run: |
+          python -m compileall -q results/askap-lpt-vast-dr1
+          python -m unittest discover -s results/askap-lpt-vast-dr1 -p 'test_*.py' -v
+      - name: Acquire and screen public VAST DR1 data
+        run: python results/askap-lpt-vast-dr1/search.py --cache "$RUNNER_TEMP/vast-dr1" --out results/askap-lpt-vast-dr1/output
+      - name: Referee integrity assertions
+        if: always()
+        run: python results/askap-lpt-vast-dr1/referee.py results/askap-lpt-vast-dr1/output
+      - name: Commit receipts and compact results as a batch
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add results/askap-lpt-vast-dr1/output
+          if git diff --cached --quiet; then exit 0; fi
+          git fetch origin "$GITHUB_REF_NAME"
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse "origin/$GITHUB_REF_NAME")" ]; then
+            echo 'Branch moved; skipping stale output'
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'research(askap): pin DR1 data receipts and conservative referee'
+          git push origin "HEAD:$GITHUB_REF_NAME"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: askap-lpt-vast-dr1-evidence
+          path: results/askap-lpt-vast-dr1/output/
+          if-no-files-found: warn
+          retention-days: 30
