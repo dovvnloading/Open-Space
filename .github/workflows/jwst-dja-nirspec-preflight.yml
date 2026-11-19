@@ -16,6 +16,7 @@ permissions:
 
 jobs:
   preflight:
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -23,15 +24,102 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Compile the new source
+      - name: Compile the original source
         run: python -m compileall -q results/jwst-dja-nirspec-highz-screen
       - name: Check frozen release and explicit missing-evidence status
         run: python results/jwst-dja-nirspec-highz-screen/verify_preflight.py
-      - name: Install numerical dependencies for synthetic invariant test
+      - name: Install numerical dependencies
         run: python -m pip install numpy scipy
-      - name: Reproduce synthetic numerical model invariants, NOT astrophysical detection
+      - name: Check synthetic numerical invariants (not real observations)
         run: python results/jwst-dja-nirspec-highz-screen/screen.py --self-test
-      - name: Check fail-closed high-z candidate review gate
+      - name: Check fail-closed review gate
         run: python results/jwst-dja-nirspec-highz-screen/candidate_gate.py --self-test
       - name: Check repository links and number claims
         run: python -m open_space.verify --worktree
+
+  targeted-dja-v44-zgt9:
+    # workflow_dispatch does not natively support paths filters. Only the
+    # branch for PR #197 can run the manual science job, which operates on
+    # results/jwst-dja-nirspec-zgt9-targeted/ exclusively.
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      github.ref == 'refs/heads/research/jwst-dja-v44-zgt9-targeted'
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    concurrency:
+      group: dja-zgt9-pr197-manual
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      MPLBACKEND: Agg
+      PYTHONUNBUFFERED: "1"
+      RESULT: results/jwst-dja-nirspec-zgt9-targeted
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/jwst-dja-v44-zgt9-targeted
+          persist-credentials: true
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install FITS and model dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.13,<2' 'astropy>=6,<8' 'matplotlib>=3.8,<4'
+      - name: Check synthetic parser/model/plot (not observations)
+        run: |
+          python "$RESULT/select_targets.py" --self-test
+          python "$RESULT/download_targets.py" --self-test
+          python "$RESULT/run_dispatch.py" --self-test
+      - name: Probe archive endpoints from GitHub Actions
+        continue-on-error: true
+        run: |
+          mkdir -p "$RESULT/outputs"
+          python "$RESULT/host_probe.py" > "$RESULT/outputs/runner_host_probe.json"
+      - name: Verify v4.4 MD5, select z>9 and controls, fetch ONLY selected FITS, fit and plot 2D
+        continue-on-error: true
+        run: |
+          python "$RESULT/run_dispatch.py" --work /tmp/dja-zgt9 --out "$RESULT/outputs"
+      - name: Commit observed receipts, compact catalog, 1D fits, and z>12 figures as ONE push
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = "refs/heads/research/jwst-dja-v44-zgt9-targeted"
+          mkdir -p "$RESULT/outputs"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f -A -- "$RESULT/outputs"
+          if git diff --cached --quiet; then
+            echo "No observed outputs to commit"; exit 0
+          fi
+          git commit -m "research: deposit DJA v4.4 runner receipt and unvetted fits [skip ci]"
+          git push origin HEAD:refs/heads/research/jwst-dja-v44-zgt9-targeted
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dja-v44-pr197-observed-audit
+          path: |
+            results/jwst-dja-nirspec-zgt9-targeted/outputs/
+            /tmp/dja-zgt9/selection/catalog_audit.csv
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Fail explicitly on blocked/incomplete retrieval (never a survey null)
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, pathlib, os
+          p=pathlib.Path("results/jwst-dja-nirspec-zgt9-targeted/outputs/run_receipt.json")
+          if not p.exists():
+              raise SystemExit("BLOCKED: no scientific run receipt; leave PR draft")
+          r=json.loads(p.read_text())
+          status=r.get("status","UNKNOWN")
+          print("DJA v4.4 z>9 job:",status)
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
+              f.write(f"### DJA v4.4 targeted run: {status}\n\n")
+              f.write("Unvetted 1D proxies only; NO discovery, calibrated posterior or null.\n")
+          if status!="ONE_D_FITS_COMPLETED_VALIDATION_PENDING_NO_DISCOVERY":
+              raise SystemExit("Incomplete downloads/fits; leave PR draft/unmerged")
+          PY

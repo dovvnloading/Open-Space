@@ -2,7 +2,11 @@
 
 **Claim (2026-11-19 UTC): No astronomical spectrum was downloaded, fitted, or validated in this continuation. There is NO new z>12 discovery, no calibrated interloper probability, and no survey-wide null result.** This is a blocked continuation of [merged PR #195](https://github.com/dovvnloading/Open-Space/pull/195), not a replacement of its frozen 80,367-spectrum scope.
 
-## Why the targeted analysis is blocked
+## GitHub Actions data attempt (new, not yet executed)
+
+A **single manually dispatched** GitHub-hosted runner is staged in the existing JWST preflight workflow, branch-gated to PR #197. See [WORKFLOW.md](WORKFLOW.md) for the exact Run workflow steps, pinned Zenodo summary and individual DJA S3 FITS strategy, downloaded SHA-256 receipts, uncalibrated five-family 1D fit, attempted 2D cutouts and candidate literature-review queue. The job will commit observed output receipts in **one** push. **This source-code addition is not evidence of any successful download, astrophysical fit, literature priority check or validated galaxy.** Until `outputs/run_receipt.json` exists with real bytes, the only observed network result remains the local DNS failure described below. The job itself does not establish independent NIRCam photometry, separate native 2D exposures or novelty; its `z>12` queue requires a separate skeptical human-level review.
+
+## Why the targeted analysis was locally blocked
 
 At 2026-11-19 03:23:24 UTC, the local compute container failed DNS/HTTPS HEAD tests of the exact [Zenodo v4.4](https://zenodo.org/records/15472354) summary CSV, the [DJA S3 extraction host](https://dawn-cph.github.io/dja/general/api_summary/) (path-style and virtual-host style), the DJA documentation host, and two MAST hosts. See [observed machine-readable probe](host_probe_2026-11-19.json) and [reproducible probe script](host_probe.py). All six had HTTP code `000`; curl exited 6 (could not resolve host) or 28 (DNS timeout). The old PR already recorded an independent failed retrieval. Web-indexed descriptions of the archive are not data bytes and **cannot** substitute for FITS and hash receipts.
 
