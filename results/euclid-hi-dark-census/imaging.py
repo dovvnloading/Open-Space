@@ -99,7 +99,7 @@ def scan_one(hi):
                                 continue
                             unit=str(head.get("BUNIT","")).strip()
                             if not (unit=="ADU/s" or
-                                    (band!="VIS" and unit.lower() in ("electrons","electron","e-"))):
+                                    (band!="VIS" and unit.lower() in ("electrons","electron","e-","electron/s","electrons/s"))):
                                 raise ValueError("Uncalibrated/nonstandard BUNIT: "+unit)
                             zp=finite(head.get("MAGZERO"))
                             if zp is None:raise ValueError("Missing AB zero point")

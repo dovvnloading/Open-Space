@@ -29,6 +29,13 @@ class FrozenEligibilityTests(unittest.TestCase):
         self.assertEqual(out.iloc[0]["id"],"11")
         self.assertAlmostEqual(out.iloc[0]["logMHI"],9.2)
         self.assertEqual(rec["finite_velocity"],1)
+    def test_wallaby_radio_frequency_hz(self):
+        x=pd.DataFrame([{"name":"WALLABY TEST","ra":12.0,"dec":-20.0,
+                         "freq":1.4e9,"w50":85,"log_m_hi":9.15}])
+        out,rec=pipeline.normalize_catalog(x,{"id":"WALLABY_PDR2",
+                                               "beam_fwhm_arcsec":30})
+        self.assertTrue(np.isfinite(out.iloc[0]["vopt_kms_or_derived"]))
+        self.assertAlmostEqual(out.iloc[0]["logMHI"],9.15)
     def test_masked_missing_mass_not_zero(self):
         x=pd.DataFrame([{"AGCNr":1,"RAdeg_HI":25.,"DECdeg_HI":5.,
                          "Vhelio":2500,"W50":60,"HIflux":np.nan,"Dist":np.nan,"logMH":np.nan}])

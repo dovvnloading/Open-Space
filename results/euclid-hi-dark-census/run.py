@@ -151,6 +151,8 @@ def normalize_catalog(df, cfg):
     # Preserve native measurements, and never guess a distance for a velocity-only source.
     v = numeric(df, ["cz", "vhelio", "Vhel", "v_sys", "vopt", "v_rad", "vel", "v_center"])
     freq = numeric(df, ["freq", "freq_mhz", "frequency"])
+    # WALLABY SoFiA catalogues encode frequencies in Hz; FASHI uses MHz.
+    freq = np.where((freq>1e8)&(freq<2e9), freq/1e6, freq)
     fill = np.isfinite(freq) & (freq > 1000) & (freq < 1500) & ~np.isfinite(v)
     v[fill] = C_KMS * (HI_MHZ / freq[fill] - 1)
     width = numeric(df, ["W_50", "W50", "w50", "w50_kms", "w50_corrected", "W50c"])

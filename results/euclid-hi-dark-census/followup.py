@@ -13,6 +13,7 @@ import json
 import math
 import threading
 import time
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from astropy.io.votable import parse_single_table
 import requests
@@ -53,9 +54,19 @@ def query(row,task):
     # finite beam radius, not a 2" optical match; do not treat dense-field
     # SELECT TOP saturation as a complete counterpart search.
     cap=400 if task.startswith("euclid") else (150 if task=="legacy_dr10" else 100)
+    # NOIRLab's TAP PostgreSQL parser does not implement ADQL POINT().
+    # Query an enclosing RA/Dec box, then enforce the angular beam radius
+    # with separation() below. Handle RA=0 wrap explicitly.
+    dra=radius/max(.01,math.cos(math.radians(dec)))
+    ra_low=(ra-dra)%360; ra_high=(ra+dra)%360
+    dec_low=max(-90,dec-radius);dec_high=min(90,dec+radius)
+    if ra_low<=ra_high:
+        ra_clause=f"({racol} BETWEEN {ra_low:.8f} AND {ra_high:.8f})"
+    else:
+        ra_clause=f"({racol}>={ra_low:.8f} OR {racol}<={ra_high:.8f})"
     sql=(f"SELECT TOP {cap} {cols} FROM {table} WHERE "
-        f"1=CONTAINS(POINT('ICRS',{racol},{deccol}),"
-        f"CIRCLE('ICRS',{ra:.8f},{dec:.8f},{radius:.8f}))")
+         f"({deccol} BETWEEN {dec_low:.8f} AND {dec_high:.8f}) "
+         f"AND {ra_clause}")
     rec={"task":task,"table":table,"url":endpoint,"query":sql,
          "query_sha256":digest(sql.encode()),"utc":utc()}
     try:
@@ -69,6 +80,13 @@ def query(row,task):
             if "<VOTABLE" not in raw[:1200].upper():
                 raise ValueError("Non-VOTABLE XML/HTML: "+raw[:310].replace("\\n"," "))
             try:
+                root=ET.fromstring(raw)
+                errors=[el for el in root.iter() if el.tag.endswith("INFO")
+                    and el.attrib.get("name")=="QUERY_STATUS"
+                    and el.attrib.get("value")=="ERROR"]
+                if errors:
+                    raise ValueError("TAP query rejected: "+
+                        ";".join((e.text or "").strip() for e in errors)[:400])
                 vt=parse_single_table(io.BytesIO(r.content)).to_table()
                 rows=[{str(k).lower():("" if np.ma.is_masked(rec[k]) else
                      (rec[k].decode("utf-8","replace") if isinstance(rec[k],bytes)
@@ -198,7 +216,7 @@ def main():
        "sources_with_any_query_error":sum(x.get("disposition")=="INCOMPLETE_ARCHIVE_QUERIES" for x in result),
        "stellar_mass_upper_limits_measured":0,"confirmed_dark_galaxies":0,
        "all_rows_optical_coverage_proven":False,
-       "gates_failed":["No native VIS/NISP pixel-based surface-brightness limit",
+       "gates_failed":["No validated, completeness-calibrated VIS/NISP surface-brightness limit",
                        "No forced SED flux or Mstar upper limits","No HI cube/RFI inspection",
                        "No environmental/tidal discrimination","No exhaustive optical association over all in-footprint HI rows"],
        "decision":"INCOMPLETE SCREEN; no discovery or null incidence inference"}
