@@ -16,6 +16,7 @@ import math
 import os
 from pathlib import Path
 import time
+from xml.etree import ElementTree as ET
 
 import numpy as np
 import requests
@@ -102,12 +103,20 @@ def diagnostics(q,d):
 def parse_csv(response):
     if response.status_code != 200:
         raise RuntimeError("HTTP_"+str(response.status_code)+" "+response.text[:150])
-    txt=response.text
+    txt=response.text.lstrip("\ufeff")
     if txt.lstrip().startswith("<"):
-        raise RuntimeError("SERVICE_XML_ERROR_"+txt[:160].replace("\n"," "))
-    if not txt.strip():
+        try:
+            root=ET.fromstring(response.content)
+            details=[{"name":x.get("name"),"value":x.get("value"),"message":(x.text or "")[:200]}
+                     for x in root.findall(".//{*}INFO")]
+            raise RuntimeError("TAP_VOTABLE_RESPONSE_"+str(details)[:320])
+        except ET.ParseError:
+            raise RuntimeError("SERVICE_XML_UNPARSEABLE_"+txt[:160].replace("\n"," "))
+    lines=[line for line in txt.splitlines()
+           if line.strip() and not line.lstrip().startswith("#")]
+    if not lines:
         return []
-    rows=list(csv.DictReader(txt.splitlines()))
+    rows=list(csv.DictReader(lines))
     if rows and "ra" not in rows[0] and "s_ra" not in rows[0] and "main_id" not in rows[0]:
         raise RuntimeError("UNEXPECTED_TABLE_SCHEMA:"+str(list(rows[0])[:8]))
     return rows
@@ -167,15 +176,41 @@ def query_simbad(r):
     sql=("SELECT TOP 10 b.main_id,b.ra,b.dec,b.otype FROM basic AS b "
          "WHERE 1=CONTAINS(POINT('ICRS',b.ra,b.dec),"
          f"CIRCLE('ICRS',{ra:.8f},{dec:.8f},0.001))")
-    return tap_request("https://simbad.cds.unistra.fr/simbad/sim-tap/sync",
-                       sql,"SIMBAD_otypes_literature_not_exhaustive",("ra","dec"),r)
+    # CDS announced a Nov 2026 Strasbourg outage. Query an explicit
+    # independently hosted mirror, preserving its ingestion lag, then fail over.
+    attempts=[]
+    for endpoint,asof in (
+        ("https://simbad.cfa.harvard.edu/simbad/sim-tap/sync","2026-10-14"),
+        ("https://simbad.idia.ac.za/simbad/sim-tap/sync","UNVERIFIED")):
+        item=tap_request(endpoint,sql,"SIMBAD_MIRROR_literature_not_exhaustive",
+                         ("ra","dec"),r,timeout=18)
+        item["mirror_ingest_date"]=asof
+        if item["status"]!="QUERY_ERROR":
+            item["prior_failed_mirrors"]=attempts
+            return item
+        attempts.append({"endpoint":endpoint,"error":item.get("error"),
+                         "http_status":item.get("http_status")})
+    return {"service":"SIMBAD_MIRRORS","status":"QUERY_ERROR",
+            "mirror_attempts":attempts,"catalog_match":None,
+            "limitations":"CDS main site outage and mirror ingestion lag; unknown literature is not a nondetection"}
 
 def query_spectra(r,source):
     ra,dec=float(r["ra"]),float(r["dec"])
     if source=="DESI_DR1":
-        sql=("SELECT TOP 5 targetid,ra,dec,z FROM desi_dr1.zpix "
-             "WHERE 1=CONTAINS(POINT('ICRS',ra,dec),"
-             f"CIRCLE('ICRS',{ra:.8f},{dec:.8f},0.00083))")
+        # NOIRLab TAP's ADQL layer does not support CONTAINS/CIRCLE in this
+        # database. Use an indexable bounding box and postfilter to 3 arcsec.
+        half_dec=.00084
+        half_ra=half_dec/max(.1,math.cos(math.radians(dec)))
+        lo,hi=ra-half_ra,ra+half_ra
+        if lo<0:
+            ra_condition=f"(ra>={lo+360:.8f} OR ra<={hi:.8f})"
+        elif hi>=360:
+            ra_condition=f"(ra>={lo:.8f} OR ra<={hi-360:.8f})"
+        else:
+            ra_condition=f"ra BETWEEN {lo:.8f} AND {hi:.8f}"
+        sql=("SELECT TOP 10 id,ra,dec,z FROM desi_dr1.zpix "
+             f"WHERE {ra_condition} AND dec BETWEEN {dec-half_dec:.8f} "
+             f"AND {dec+half_dec:.8f}")
         return tap_request("https://datalab.noirlab.edu/tap/sync",sql,
                            "DESI_DR1_catalog_redshift_not_spectrum",("ra","dec"),r,timeout=12)
     if source=="ESO":
@@ -199,8 +234,21 @@ def query_spectra(r,source):
             record["http_status"]=response.status_code
             record["response_sha256"]=hashlib.sha256(response.content).hexdigest()
             record["response_bytes"]=len(response.content)
-            record["returned_rows"]=len(parse_csv(response))
-            record["status"]="QUERY_RETURNED_NEEDS_POSITIONAL_INSPECTION"
+            rows=parse_csv(response)
+            record["returned_rows"]=len(rows)
+            matches=[]
+            for obj in rows:
+                qra,qdec=good(obj.get("ra")),good(obj.get("dec"))
+                if qra is not None and qdec is not None:
+                    sep=sphere_distance(ra,dec,qra,qdec)
+                    if sep<=3:
+                        matches.append((sep,obj))
+            if matches:
+                sep,best=min(matches,key=lambda x:x[0])
+                record["nearest_arcsec"]=round(sep,4)
+                record["catalog_match"]=best
+            record["status"]=("MATCHED_SPECTRUM_METADATA_NOT_VALIDATED" if matches
+                else "NO_MATCHED_SPECTRUM_METADATA_NOT_A_COMPLETENESS_LIMIT")
         except Exception as ex:
             record["error"]=type(ex).__name__+": "+str(ex)[:220]
         return record
@@ -261,6 +309,15 @@ def motion_and_wise(queries):
     if a is not None and b is not None:
         result["W1_minus_W2_vega_mag"]=round(a-b,3)
         result["wise_color_status"]="CATWISE_CATALOG_PSF_COLOR_BLENDED_SOURCE_POSSIBLE"
+    unwise=queries.get("unwise_2019",{}).get("catalog_match") or {}
+    f1,f2=good(unwise.get("flux_1")),good(unwise.get("flux_2"))
+    d1,d2=good(unwise.get("dflux_1")),good(unwise.get("dflux_2"))
+    result["unwise_W1_over_W2_catalog_flux_ratio"]=(
+        round(f1/f2,5) if f1 is not None and f2 is not None and f1>0 and f2>0 else None)
+    result["unwise_flux_significances"]= [
+        round(a/b,2) if a is not None and b is not None and b>0 else None
+        for a,b in ((f1,d1),(f2,d2))]
+    result["unwise_color_status"]="FLUX_RATIO_ONLY_NOT_CALIBRATED_VEGA_COLOUR"
     gaia=queries.get("Gaia_DR3",{}).get("catalog_match") or {}
     gaia_sig=[]
     for val,err in (("pmra","pmra_error"),("pmdec","pmdec_error"),

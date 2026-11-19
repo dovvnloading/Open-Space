@@ -94,13 +94,18 @@ def cutout_url(url,ra,dec):
     if u.scheme!="https" or u.hostname not in ("irsa.ipac.caltech.edu","irsacloud.ipac.caltech.edu") or "/ibe/data/" not in u.path:
         return None
     params=dict(parse_qsl(u.query))
-    params.update({"center":f"{ra:.7f},{dec:.7f}deg","size":"20arcsec","gzip":"false"})
-    return urlunsplit((u.scheme,u.netloc,u.path,urlencode(params),u.fragment))
+    params.update({"center":f"{ra:.7f},{dec:.7f}deg","size":"0.333333arcmin","gzip":"false"})
+    # Match the publisher's literal center=RA,Decdeg and size=Narcmin examples.
+    return urlunsplit((u.scheme,u.netloc,u.path,urlencode(params,safe=","),u.fragment))
 
 
 def read_bounded(url):
     response=requests.get(url,timeout=(8,30),stream=True)
-    response.raise_for_status()
+    if response.status_code>=400:
+        body=response.raw.read(512,decode_content=True)
+        status=response.status_code
+        response.close()
+        raise RuntimeError("CUTOUT_HTTP_"+str(status)+"_"+body.decode("utf-8","replace")[:260])
     if int(response.headers.get("Content-Length") or 0)>MAX_BYTES:
         response.close()
         raise RuntimeError("CUTOUT_RESPONSE_TOO_LARGE")
