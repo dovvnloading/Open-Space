@@ -1,0 +1,41 @@
+{
+  "audit_utc": "2026-11-19",
+  "audit_kind": "Independent JS referee recomputation from deposited GitHub CSV, criteria and summary, not import of screen.py",
+  "status": "PASS: all 196 complete-five rows independently rechecked",
+  "source_sha256": "97911d4436a42c77eb6d8c2116eecfb28fa927be83302aa66bbeb58d95889693",
+  "criteria_sha256_upstream": "073046d8737adb177164ace8c6e7efb80afb29e69432f0f1b05db63aadd59c01",
+  "full_FITS_upstream_rows": 917588,
+  "quality_metal_poor_upstream_rows": 5189,
+  "all_five_recounted": 196,
+  "all_seven_recounted": 14,
+  "five_gate_recounted": 0,
+  "seven_gate_recounted": 0,
+  "odd_even_double_cut_recounted": 9,
+  "co_fe_cut_recounted": 0,
+  "zn_fe_cut_recounted": 5,
+  "fe_h_lte_minus2": 3,
+  "fe_h_lte_minus2point5": 0,
+  "min_co_fe": -0.15459862351417542,
+  "min_zn_fe": -0.304940402507782,
+  "relax_all_gates_by_0point1_dex": 0,
+  "relax_all_gates_by_0point2_dex": 0,
+  "most_Co_depleted": {
+    "sobject_id": "160422003001228",
+    "gaia_dr3_source_id": "5401818786664214144",
+    "fe_h": -2.282397747039795,
+    "na_minus_mg": -0.7595377564430237,
+    "al_minus_mg": -0.567141979932785,
+    "co_fe": -0.15459862351417542,
+    "zn_fe": 0.06861613690853119
+  },
+  "conditional_95pct_one_sided_binomial_upper": 0.015168135514885495,
+  "injection_five_conditional": 0.9989237882653061,
+  "injection_seven_conditional": 0.9958147321428571,
+  "control_J1010_na_mg_upper": -1.36,
+  "not_independently_verified": [
+    "All 917588 FITS row reductions independent of GitHub Actions run; input is SHA-pinned",
+    "Observed stellar abundance covariance and any PISN-versus-CCSN/Ia yield likelihood ratio",
+    "APOGEE DR17/LAMOST independent spectra, RV/blending/line fits, SIMBAD and SAGA"
+  ],
+  "conclusion": "0/196 is a robust measured-element hard-gate null with fragile astrophysical completeness; cannot exclude PISN-enriched stars at [Fe/H] <= -2.5 and cannot claim a progenitor-class preference. No [REMARKABLE]."
+}
