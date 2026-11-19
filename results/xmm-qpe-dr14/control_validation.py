@@ -52,6 +52,16 @@ TARGETS = {
         "source": "https://doi.org/10.1051/0004-6361/202348881",
         "note": "2023 March XMM, repeat ~9.8-15.5 h; PPS identity needs checking"},
 }
+# Published X-ray astrometry, not pointing coordinates. Header SRC_RA/SRC_DEC is independently checked.
+POS = {
+    "GSN 069": (19.786098, -34.191813),
+    "RX J1301.9+2747": (195.50054, 27.78267),
+    "eRO-QPE1": (37.946917, -10.336197),
+    "eRO-QPE2": (38.704042, -44.325458),
+    "eRO-QPE3": (210.2222, -28.7665),
+    "eRO-QPE4": (71.3921, -10.2005),  # Arcodia et al. 2024, X-ray position
+}
+
 SESSION = requests.Session()
 SESSION.headers.update({"User-Agent": "Open-Space-XMM-QPE-validated-controls/2.0"})
 MAX_TAR_BYTES = 3 * 1024**3  # Not the failed 120 MiB cap.
@@ -293,58 +303,94 @@ def save_binned_curve(target, obsid, c, refmjd):
     return {"path": str(path.relative_to(BASE)), "sha256": checksum(path)}
 
 
+def source_sky_position(headers):
+    """The observation pointing is not the position of a detected source."""
+    for header in headers:
+        for ra_key, dec_key in (("SRC_RA", "SRC_DEC"), ("RA_OBJ", "DEC_OBJ"),
+                                ("RA", "DEC")):
+            if ra_key not in header or dec_key not in header:
+                continue
+            try:
+                ra, dec = float(header[ra_key]), float(header[dec_key])
+                if 0 <= ra < 360 and -90 <= dec <= 90:
+                    return ra, dec, ra_key, dec_key
+            except (TypeError, ValueError):
+                pass
+    return None
+
+
+def sep_arcsec(pos, expected):
+    ra1, dec1 = pos[:2]
+    ra2, dec2 = expected
+    delta_ra = ((ra1 - ra2 + 180) % 360 - 180) * math.cos(math.radians((dec1+dec2)/2))
+    return 3600 * math.hypot(delta_ra, dec1-dec2)
+
+
 def analyze_tar(tarpath, target, manifest):
     spec = TARGETS[target]
     ident = identify(target, manifest)
     result = {"control": target, "obsid": spec["obsid"], **ident,
               "published_period_range_h": spec["published_h"],
               "published_reference": spec["source"], "published_note": spec["note"],
+              "expected_ra_deg": POS[target][0], "expected_dec_deg": POS[target][1],
               "status": "not_analyzed"}
-    if ident["pps_srcnum"] is None:
-        result["status"] = "no_verified_catalogue_pps_source_number"
-        return result
-    wanted = f"{ident['pps_srcnum']:03X}"
-    candidates = []
+    found = []
+    # Select the merged observation-wide band-resolved PPS source series by actual
+    # source coordinates, because the latest XSA PPS source indexes may differ from DR14.
+    # A headerless file may be inspected diagnostically, never taken as a verified match.
     with tarfile.open(tarpath, "r:*") as archive:
-        for member in archive:
-            if not member.isfile() or member.size > 100 * 1024**2:
-                continue
-            name = Path(member.name).name.upper()
-            if not (name.startswith("P" + spec["obsid"] + "PNX000SRCTSR8")
-                    and name.endswith((".FTZ", ".FITS", ".FIT"))
-                    and wanted in name[-7:]):
-                continue
-            candidates.append((member.name, member.size))
-            raw = archive.extractfile(member).read()
+        candidates = [m for m in archive if m.isfile() and m.size <= 100*1024**2 and
+                      Path(m.name).name.upper().startswith("P" + spec["obsid"] + "PNX000SRCTSR8")
+                      and Path(m.name).suffix.upper() in (".FTZ", ".FIT", ".FITS")]
+        result["n_merged_pn_products"] = len(candidates)
+        result["available_merged_products"] = [
+            {"name": Path(m.name).name, "compressed_size": m.size} for m in candidates[:50]]
+        for m in candidates:
+            name = Path(m.name).name.upper()
+            expected_idx = f"{ident['pps_srcnum']:03X}" if ident["pps_srcnum"] is not None else None
+            from_catalog = expected_idx is not None and expected_idx in name[-7:]
             try:
-                if name.endswith(".FTZ"):
-                    raw = gzip.decompress(raw)
-                result["product_sha256"] = hashlib.sha256(raw).hexdigest()
-                result["product_filename"] = name
+                zipped = archive.extractfile(m).read()
+                raw = gzip.decompress(zipped) if name.endswith(".FTZ") else zipped
                 with fits.open(io.BytesIO(raw), memmap=False) as hdul:
                     rates = next((x for x in hdul[1:] if x.data is not None and
                                   hasattr(x.data, "names") and "RATE1" in x.data.names), None)
-                    if rates is None:
-                        raise ValueError("Merged pn energy-resolved RATE1-3 not present")
-                    if str(rates.header.get("HDUCLAS2", "NET")).strip() != "NET":
-                        raise ValueError("PN rate not certified background-subtracted NET")
+                    hdrs = [rates.header, hdul[0].header] if rates is not None else [hdul[0].header]
+                    pos = source_sky_position(hdrs)
+                    separation = sep_arcsec(pos, POS[target]) if pos else None
+                    info = {"name": name, "index_matches_DR14": bool(from_catalog),
+                            "source_position": list(pos[:2]) if pos else None,
+                            "position_keywords": list(pos[2:]) if pos else None,
+                            "separation_arcsec": round(separation, 2) if separation is not None else None,
+                            "has_energy_bands": bool(rates)}
+                    found.append(info)
+                    # Exact matched source position is decisive. Do not silently trust
+                    # a DR14 source index if the current PPS source position differs.
+                    if separation is None or separation > 15.0 or rates is None:
+                        continue
+                    if str(rates.header.get("HDUCLAS2", "")).strip() != "NET":
+                        raise ValueError("PPS source rate not certified background-subtracted NET")
                     t, net, err, bg, frac, hard, timedel = combine_energies(rates)
-                    mjdref = mjd_reference(rates.header)
+                    refmjd = mjd_reference(rates.header)
                     curve = rebin(t, net, err, bg, frac, hard, timedel)
-                    result["analysis"] = find_eruptions(curve, mjdref, spec["published_h"])
-                    result["lightcurve"] = save_binned_curve(target, spec["obsid"], curve, mjdref)
-                    result["columns"] = list(rates.data.names)
-                    result["hduclass2"] = rates.header.get("HDUCLAS2")
-                    result["mjdref_tt"] = mjdref
-                    result["status"] = "processed_energy_resolved_net_pn"
-                break
+                    result["analysis"] = find_eruptions(curve, refmjd, spec["published_h"])
+                    result["lightcurve"] = save_binned_curve(target, spec["obsid"], curve, refmjd)
+                    result.update(product_sha256=hashlib.sha256(raw).hexdigest(),
+                                  product_filename=name, columns=list(rates.data.names),
+                                  hduclass2=rates.header.get("HDUCLAS2"), mjdref_tt=refmjd,
+                                  status="processed_position_verified_net_pn",
+                                  source_position_deg=list(pos[:2]),
+                                  source_separation_arcsec=round(separation, 2),
+                                  identity="PPS RATE/primary FITS source coordinates matched published X-ray position")
+                    break
             except Exception as exc:
-                result.update(status="product_parse_error", error=repr(exc)[:400])
-    result["candidate_products"] = candidates[:12]
-    if not candidates:
-        result["status"] = "no_matching_merged_source_product"
+                found.append({"name": name, "parse_error": repr(exc)[:250]})
+    result["product_header_audit"] = found[:60]
+    if result["status"] == "not_analyzed":
+        result["status"] = (
+            "no_merged_pn_series_in_pps" if not candidates else
+            "no_fits_position_verified_soft_source_series")
     return result
-
 
 def verify_synthetic():
     """Do not run archive if detector fails bright, dim or background-only fixtures."""
