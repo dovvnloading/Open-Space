@@ -38,7 +38,25 @@ def sha(data):
     return hashlib.sha256(data).hexdigest()
 def dump(path,data):
     path.parent.mkdir(parents=True,exist_ok=True)
-    path.write_text(json.dumps(data,indent=2,sort_keys=True,allow_nan=False)+"\n")
+    # Explicitly report undefined calibration/control estimates; do not let
+    # one all-NaN statistic discard the other validated pixel receipts.
+    invalid=[]
+    def scrub(v,trail="$"):
+        if isinstance(v,(float,np.floating)):
+            if not math.isfinite(float(v)):
+                invalid.append(trail)
+                return None
+            return float(v)
+        if isinstance(v,(int,np.integer)):return int(v)
+        if isinstance(v,dict):
+            return {str(k):scrub(x,trail+"."+str(k)) for k,x in v.items()}
+        if isinstance(v,(list,tuple)):
+            return [scrub(x,trail+"["+str(i)+"]") for i,x in enumerate(v)]
+        return v
+    safe_data=scrub(data)
+    if invalid and isinstance(safe_data,dict):
+        safe_data["undefined_measurement_paths"]=invalid
+    path.write_text(json.dumps(safe_data,indent=2,sort_keys=True,allow_nan=False)+"\n")
 def safe(e):
     return type(e).__name__+": "+str(e)[:320]
 def fetch(url,**kwargs):
