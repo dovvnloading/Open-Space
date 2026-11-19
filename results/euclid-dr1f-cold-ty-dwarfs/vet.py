@@ -54,14 +54,25 @@ def tap(label,endpoint,sql,ra,dec,max_sep=3,fields=("ra","dec"),timeout=16):
         rec["status"]="CATALOG_ROWS" if entries else "NO_CATALOG_ROWS_NOT_AN_IMAGE_LIMIT"
         hits=[]
         for r in entries:
-            a,b=num(r.get(fields[0])),num(r.get(fields[1]))
+            if label=="CatWISE2020":
+                a,b=num(r.get("ra_pm")),num(r.get("dec_pm"))
+                mx,my=num(r.get("pmra")),num(r.get("pmdec"))
+                if None in (a,b,mx,my):continue
+                dt=EPOCH_EUCLID-CATWISE_EPOCH
+                a=(a+dt*mx/(3600*max(.05,math.cos(math.radians(b)))))%360
+                b=b+dt*my/3600
+            else:
+                a,b=num(r.get(fields[0])),num(r.get(fields[1]))
             if a is None or b is None:continue
             distance=sep(ra,dec,a,b)
-            if distance<=max_sep:hits.append((distance,r))
+            radius=2.5 if label=="CatWISE2020" else max_sep
+            if distance<=radius:hits.append((distance,r))
         if hits:
             dis,row=min(hits,key=lambda x:x[0])
             rec["nearest_arcsec"]=round(dis,4)
             rec["catalog_match"]=row
+            if label=="CatWISE2020":
+                rec["motion_propagated_match"]=True
     except Exception as e:
         rec["error"]=type(e).__name__+": "+str(e)[:250]
     return rec
@@ -75,15 +86,8 @@ def catwise(r):
          "FROM catwise_2020 WHERE 1=CONTAINS(POINT('ICRS',ra,dec),"
          f"CIRCLE('ICRS',{ra:.8f},{dec:.8f},{15/3600:.9f}))")
     item=tap("CatWISE2020",IRSA,sql,ra,dec,max_sep=16,timeout=22)
-    best=None
-    if item["status"]!="QUERY_ERROR":
-        # Re-fetch candidate rows in the same receipt via a parsed raw JSON
-        # convention: the TAP function only returns nearest static association.
-        # Below we explicitly query narrow motion solution within a *different*
-        # 15 arcsec radius at the projected 2015 position, not treating the
-        # nearest static association as a validated trajectory.
-        item["motion_propagated_match"]=False
-        item["nominal_catalog_position_only"]=True
+    item["motion_propagated_match"]=bool(item.get("catalog_match"))
+    item["position_only_without_motion_fit"]=False
     if item.get("catalog_match"):
         row=item["catalog_match"]
         a=num(row.get("ra_pm"));d=num(row.get("dec_pm"))
