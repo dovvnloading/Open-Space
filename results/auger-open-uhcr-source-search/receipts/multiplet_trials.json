@@ -1,0 +1,73 @@
+{
+  "schema": "auger_pilot_v1",
+  "timestamp_utc": "2026-11-19",
+  "rng": "xorshift32",
+  "cut": "E >=20 EeV, seed E >=45 EeV, cone 20 degrees, transverse 1.5 degrees, 0.9 Pearson r",
+  "catalog": "auger_mirror_sd_ge8.csv",
+  "energy": {
+    "B": 999,
+    "mode": "energy",
+    "observed": {
+      "n": 6,
+      "r": 0.94746,
+      "ids": [
+        "10388800",
+        "11051200",
+        "33002920",
+        "6858340",
+        "7985000",
+        "9765800"
+      ],
+      "seed": "33002920",
+      "sourceRA": 89.796,
+      "sourceDec": -49.789,
+      "extentDeg": 18.321,
+      "candidateAxes": 133,
+      "selectedN": 493,
+      "method": "Approximate Auger inspired tangent-plane 20 deg / 1.5 deg transverse; r>0.9; up to 2 leave-one-out trims; best over all seed-pair axes"
+    },
+    "pMaxMultiplicity": 0.252,
+    "nullMean": 4.758,
+    "nullMax": 8,
+    "nullHistogram": {
+      "0": 105,
+      "5": 643,
+      "6": 223,
+      "7": 24,
+      "8": 4
+    }
+  },
+  "sky": {
+    "B": 999,
+    "mode": "ra",
+    "observed": {
+      "n": 6,
+      "r": 0.94746,
+      "ids": [
+        "10388800",
+        "11051200",
+        "33002920",
+        "6858340",
+        "7985000",
+        "9765800"
+      ],
+      "seed": "33002920",
+      "sourceRA": 89.796,
+      "sourceDec": -49.789,
+      "extentDeg": 18.321,
+      "candidateAxes": 133,
+      "selectedN": 493,
+      "method": "Approximate Auger inspired tangent-plane 20 deg / 1.5 deg transverse; r>0.9; up to 2 leave-one-out trims; best over all seed-pair axes"
+    },
+    "pMaxMultiplicity": 0.233,
+    "nullMean": 4.681,
+    "nullMax": 7,
+    "nullHistogram": {
+      "0": 116,
+      "5": 651,
+      "6": 203,
+      "7": 29
+    }
+  },
+  "notes": "Approximate Auger-inspired search; global max multiplicity over seed-pair axes and up to two leave-one-out trims refitted for each control. Energy shuffles within SD1500 and inclined detector strata; no particle charge or GMF backtracking modeled."
+}

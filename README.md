@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 223 entries: 97 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 37 carefully recorded null or inconclusive checks. The ACT map-inventory entry below is separate from these completed-investigation counts.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 224 entries: 97 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 38 carefully recorded null or inconclusive checks. The ACT map-inventory entry below is separate from these completed-investigation counts.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -270,6 +270,10 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **Two exploratory searches of Rubin's first public alerts.** A search for fast-varying blue stars found one tentative five-minute signal, and a screen of nearby white dwarfs found deep dips that trace to detector edges and dimming in neighbouring stars at the same moment. Neither establishes a new object. *Null result* · [Details](results/rubin-alerce-2026/README.md)
 
 ### Neutron stars, black holes and cosmic explosions
+
+**Cosmic rays**
+
+- **A six-event cosmic-ray line did not point to a proven source.** In a reconstructed 10% sample of Auger events, 999 scrambled skies found similarly sized energy-ordered chains about 23% of the time. Centaurus A and nearby starbursts showed hints but no source-catalogue signal survived all 39 tested trials. Two major catalogue searches remain undone. *Inconclusive pilot* · [Details](results/auger-open-uhcr-source-search/README.md)
 
 **Pulsars and magnetars**
 
