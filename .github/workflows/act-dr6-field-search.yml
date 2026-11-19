@@ -11,7 +11,7 @@ permissions:
   contents: write
 concurrency:
   group: act-fixed-f150-pilot-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   science-pilot:
     runs-on: ubuntu-latest
