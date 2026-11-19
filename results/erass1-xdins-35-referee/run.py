@@ -5,7 +5,7 @@ The prior catalogue's *lack of a secure association* is NEVER substituted for
 image coverage, a measured upper limit, a spectral fit, or archival absence.
 """
 from __future__ import annotations
-import csv, hashlib, io, json, math, os, re, tarfile, tempfile, time
+import csv, hashlib, io, json, math, os, re, tarfile, tempfile, time, threading
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
@@ -25,15 +25,19 @@ PREV=ROOT.parent/"erass1-xdins-search"/"output"
 OUT.mkdir(exist_ok=True)
 BASE="https://www.legacysurvey.org/viewer/fits-cutout"
 KNOWN={
+ "110607500001":"PSR J0659+1414 (B0656+14; known rotation-powered INS)",
  "111112000001":"RX J0720.4-3125",
  "112113200001":"RX J0806.4-4123",
  "119606900001":"RX J1308.6+2127 (RBS 1223)",
  "128212900001":"RX J1856.5-3754",
+ "116414100004":"PSR J1057-5226 (B1055-52; known rotation-powered INS)",
 }
 PS1="https://ps1images.stsci.edu/cgi-bin/"
 NU_G=6.30e14
 AB_NMGY_FNU=3.631e-29 # erg cm^-2 s^-1 Hz^-1; AB 22.5 = 1 nMgy
 HEAD={"User-Agent":"Open-Space-XDINS-35-referee/1.0 (public research reproducibility)"}
+LS_LOCK=threading.Lock()
+LS_NEXT=[0.0]
 
 def readcsv(p):
     with open(p,newline="") as f: return list(csv.DictReader(f))
@@ -60,6 +64,17 @@ def fetch(s,url,params=None,limit=12_000_000,timeout=(10,28)):
     b=buf.getvalue()
     if not b:raise RuntimeError("empty_response")
     return b,{"url":uri,"bytes":len(b),"sha256":hashlib.sha256(b).hexdigest(),"http":r.status_code}
+def post_fetch(s,url,form,limit=4_000_000,timeout=(12,65)):
+    r=s.post(url,data=form,timeout=timeout,stream=True)
+    r.raise_for_status()
+    buf=io.BytesIO()
+    for b in r.iter_content(131072):
+        buf.write(b)
+        if buf.tell()>limit:raise RuntimeError("response_exceeds_size_cap")
+    b=buf.getvalue()
+    if not b:raise RuntimeError("empty_response")
+    return b,{"url":r.url,"bytes":len(b),"sha256":hashlib.sha256(b).hexdigest(),"http":r.status_code,
+              "request_method":"POST","ADQL_sha256":hashlib.sha256(form["QUERY"].encode()).hexdigest()}
 def img_measure(img, header, ra, dec, pixscale, band, survey):
     img=np.asarray(img,dtype=float)
     if img.ndim!=2 or min(img.shape)<25:raise ValueError("not_2D_or_too_small")
@@ -138,7 +153,19 @@ def attempt(name,func):
     except Exception as e:return {"status":"unavailable_or_uninterpretable","error":type(e).__name__+": "+str(e)[:220]}
 def legacy(s,row):
     ra,dec=float(row["ra"]),float(row["dec"])
-    b,receipt=fetch(s,BASE,{"ra":ra,"dec":dec,"layer":"ls-dr10","size":80,"pixscale":0.262,"bands":"grz"},limit=8_000_000)
+    # A global host pace avoids turning rate limits into false sky non-coverage.
+    for trial in range(3):
+        with LS_LOCK:
+            time.sleep(max(0,LS_NEXT[0]-time.monotonic()))
+            LS_NEXT[0]=time.monotonic()+5.0
+            try:
+                b,receipt=fetch(s,BASE,{"ra":ra,"dec":dec,"layer":"ls-dr10","size":80,"pixscale":0.262,"bands":"grz"},limit=8_000_000)
+                break
+            except requests.HTTPError as e:
+                if e.response is None or e.response.status_code!=429:raise
+                LS_NEXT[0]=time.monotonic()+18*(trial+1)
+    else:
+        raise RuntimeError("Legacy viewer still HTTP_429 after three spaced requests")
     ans={"receipt":receipt,"bands":{},"status":"downloaded"}
     for band in "grz":
         ans["bands"][band]=attempt(band,lambda band=band: phot_fits(b,ra,dec,"LS10",band,0.262))
@@ -221,7 +248,7 @@ def dust(s,row):
                 r"<refPixelValueSFD>([\d.eE+\-]+)</refPixelValueSFD>",
                 r"<meanValueSFD>([\d.eE+\-]+)</meanValueSFD>"]
     vals=[float(m.group(1)) for p in candidates if (m:=re.search(p,t))]
-    if not vals:raise ValueError("IRSA_dust_XML_no_SFD_value")
+    if not vals:raise ValueError("IRSA_dust_XML_no_SFD_value; excerpt: "+t[:240].replace("\n"," "))
     ebv=vals[0]
     return {"status":"SFD_integrated_dust_proxy","E_BV_mag":round(ebv,4),
             "NH_proxy_cm2":round(8.8e21*ebv,0),"receipt":rec,
@@ -244,7 +271,7 @@ def heasarc_archives(rows):
         query="SELECT TOP 1000 name,ra,dec FROM "+table+" WHERE "+cones
         s=requests.Session();s.headers.update(HEAD)
         try:
-            b,receipt=fetch(s,"https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+            b,receipt=post_fetch(s,"https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
                  {"REQUEST":"doQuery","LANG":"ADQL","FORMAT":"csv","QUERY":query},limit=4_000_000,timeout=(12,65))
             if b.lstrip().startswith((b"<",b"ERROR")):
                 raise ValueError("TAP_returned_XML_or_error:"+b[:190].decode(errors="replace"))
@@ -374,11 +401,11 @@ def main():
                "query_status":{n:v.get("status") for n,v in arch.items()},
                "variability":"Not measurable from positional matches alone"},
             "ATNF":{"status":at.get("status"),"matches":at.get("matches",{}).get(x["uid"]) if at.get("status")=="queried" else None},
-            "literature":{"status":lit.get("status"),"known_M7":bool(known),
+            "literature":{"status":lit.get("status"),"known_M7":x["uid"] in ("111112000001","112113200001","119606900001","128212900001"),
                "Kurpas_2024_novelty":"NOT VERIFIED unless published named control"},
             "decision":"Known XDINS positive control, not discovery" if known
                       else "Do not claim AGN/star/cluster/spurious/novel INS from these data alone"})
-    assert len(out)==35 and len([x for x in out if x["classification"]=="known INS"])==4
+    assert len(out)==35 and len([x for x in out if x["classification"]=="known INS"])==6
     assert not any(x["new_INS_candidate_validated"] for x in out)
     with open(OUT/"classifications.csv","w",newline="") as f:
         cols=["uid","name","classification","known_identity","eROSITA_poserr_arcsec","eROSITA_soft_fraction",
@@ -404,8 +431,8 @@ def main():
     writejson("source_evidence.json",out)
     summary={"finished_utc":datetime.now(timezone.utc).isoformat(),
        "frozen_input":evidence["frozen_input"],"source_count":35,
-       "known_INS":4,"new_validated_INS":0,
-       "still_unclassified":31,
+       "known_INS":6,"known_M7":4,"known_radio_pulsars":2,"new_validated_INS":0,
+       "still_unclassified":29,
        "with_position_forced_optical":sum(x["optical"]["bands_with_position_forced_photometry"]>0 for x in out),
        "with_g_lower_bound":sum(x["optical"]["g_observed_fX_over_nu_fnu_lower_bound"] is not None for x in out),
        "provisional_g_bounds_gt_1e4":sum(x["optical"]["g_bound_exceeds_1e4"] for x in out),
@@ -416,11 +443,11 @@ def main():
        "verdict":"NO NEW DISCOVERY CLAIM; incomplete independent multiwavelength vetting"}
     writejson("summary.json",summary)
     lines=["# Referee outcome: no independently demonstrated NEW XDINS","",
-     "This file is generated from explicit source evidence, not catalogue blank fields.","",
+     "This file is generated from explicit source evidence, not catalogue blank fields. Two radio pulsars are correctly counted as known INS, not new XDINS.","",
      "| Check | Outcome |","|---|---|"]
     for k,v in summary.items():
         if k not in ("frozen_input","verdict"):lines.append("| "+k+" | "+str(v).replace("|","/")+" |")
-    lines+=["","**Decision:** Four known XDINS are not novel. The other 31 remain unclassified; no source may be promoted without calibrated optical depth and corrected flux ratio, native eROSITA/XMM/Chandra/Swift spectral response fits, variability check, Galactic N_H, and complete prior-publication comparison. Optical aperture measurements are provisional where blends, PSF and image coverage are unvalidated. Failed upstream requests are not negative detections.","",
+    lines+=["","**Decision:** Four known XDINS plus two catalogued rotation-powered radio pulsars are not novel. The other 29 remain unclassified; no source may be promoted without calibrated optical depth and corrected flux ratio, native eROSITA/XMM/Chandra/Swift spectral response fits, variability check, Galactic N_H, and complete prior-publication comparison. Optical aperture measurements are provisional where blends, PSF and image coverage are unvalidated. Failed upstream requests are not negative detections.","",
     "Input receipts, per-source measurements and service failures: [source_evidence.json](source_evidence.json), [image_receipts.json](image_receipts.json), [archive_receipts.json](archive_receipts.json), [atnf_receipts.json](atnf_receipts.json), [literature_receipts.json](literature_receipts.json)."]
     (OUT/"REFEREE.md").write_text("\n".join(lines)+"\n")
     print(json.dumps(summary,sort_keys=True))
