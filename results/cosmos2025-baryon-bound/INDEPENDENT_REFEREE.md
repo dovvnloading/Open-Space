@@ -11,13 +11,17 @@
 
 ## Blocking defects and missing evidence
 
-1. **No downloaded source receipts yet.** The full-catalogue GitHub Actions audit is queued. No input SHA-256, complete-count replay, observed source ID or observed flux has been verified.
+1. **Catalogue acquisition failed.** [Actions #44445639190](https://github.com/dovvnloading/Open-Space/actions/runs/44445639190) timed out at the ReadMe stage on all three CDS source endpoints. The exact [committed failure receipt](run/receipt.json) is inspectable; no actual catalogue bytes, SHA256, full-row replay, source ID or measured flux has been obtained. This failure is not an observed null.
 2. **No joint mass-redshift selection.** The exploratory high-z cut based on zfinal or the upper 68% photo-z bound cannot find every secondary high-z PDF mode. Galaxy/AGN Type 0/2 separation is a triage, and stars misclassified in the source or prior fit remain adversarial controls.
 3. **No two independent SED posterior runs.** Fit EAZY plus Prospector/Bagpipes from calibrated multi-band source data; include AGN, high-EW nebular lines, dust/SFH/IMF redshift alternatives, covariance, model-prior sensitivity and sampler diagnostics.
 4. **No individual source-vetting ledger.** Brown dwarfs, dusty z~2–4 interlopers, extreme lines, unresolved blends, little red dots, MIRI coverage and limits, Chandra and radio matches, and cuts from the actual images remain untested.
 5. **No DJA/MAST/literature NIRSpec crossmatch.** For each actual coordinate, verify exposure, reduction, line ID and significance; no catalogue match is not proof of no spectrum.
 6. **No Eddington/selection/trials-aware significance.** Survey depth masks, halo cosmic variance, lensing, mass systematic uncertainties and source/bin look-elsewhere effects must enter a posterior-predictive population comparison. An expected-one bound crossing is not a ΛCDM rejection.
-7. **No executed two-HMF numerical envelope yet.** Sheth99/Tinker08 calculation and second arithmetic checker have been committed but not independently verified on actual results. Tinker08 z>6 extrapolation and FOF versus M200m are large systematic choices.
+7. **Provisional numerical HMF is not referee-cleared.** [Actions #44445915491](https://github.com/dovvnloading/Open-Space/actions/runs/44445915491) executed both HMF integrations, but the first threshold inversion used base-10 power for natural logs, producing unphysical max-halo masses. The exact [arithmetic repair receipt](HALO_PROVISIONAL.md) documents the mathematically recoverable values, the original SHA256 and corrective commits. Re-run the fixed code with independent Poisson tail tests before accepting them. Tinker08 z>6 extrapolation and FOF versus M200m mass definitions are additional systematics.
+
+## Severity and software defect note
+
+**Referee found and required correction of a blocking numerical bug,** and made the HMF code enforce mass-grid/monotonicity and Poisson-tail checks. A failed archive transfer and a preliminary numerical correction do not demonstrate source-level astrophysics. The manuscript claim remains unsupported.
 
 ## Decision
 
