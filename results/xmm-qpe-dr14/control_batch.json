@@ -1,5 +1,13 @@
 {
-  "stage": "archive_pilot",
-  "batch_id": "pilot_01",
-  "note": "Three preselected SDSS/DR14 pointlike long pn observations only, 5 min per obs; fixed finder, no candidate claim or gate opening."
+  "stage": "replay",
+  "batch_id": "archive_closeout_final_replay",
+  "targets": [
+    "GSN 069",
+    "RX J1301.9+2747",
+    "eRO-QPE1",
+    "eRO-QPE2",
+    "eRO-QPE3",
+    "eRO-QPE4"
+  ],
+  "note": "Safe, no-network 6-control replay. Post-control archive host audit froze 1108 SDSS pointlike/pn detections but zero new-source PN curves were downloadable; final archive gate stays false."
 }
