@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 224 entries: 98 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 37 carefully recorded null or inconclusive checks. The unclassified ACT real-pixel feasibility pilot below is separate from these classified scientific-result counts.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 224 entries: 97 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 38 carefully recorded null or inconclusive checks. The unclassified ACT real-pixel feasibility pilot below is separate from these classified scientific-result counts.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -278,6 +278,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 **Pulsars and magnetars**
 
+- **An eROSITA search recovered seven known isolated neutron-star controls but confirmed no new one.** A fixed screen of 930,203 eRASS1 sources retained 1,330 very soft leads; 1,056 have high-probability published optical/infrared associations. Optical depth, X-ray spectral and timing checks are incomplete, so the remaining sources are not discoveries or a calibrated all-sky null. *Null result* (bounded screen) · [Details](results/erass1-xdins-search/README.md)
 - **A magnetar catalog's clock was 69.184 seconds early.** The two famous microsecond bursts are also only weakly tied to their magnetars. *Correction* · [Details](results/nicer-magnetar-microbursts/README.md)
 - **Neutron star 4U 1538−522 is slowing down faster.** Its spin period grew by 0.485 seconds between April and November 2026. *Measured* · [Details](results/4u-1538-522/README.md)
 - **GX 1+4 resumed spinning down after a reported standstill.** *Measured* · [Details](results/gx-1p4/README.md)
