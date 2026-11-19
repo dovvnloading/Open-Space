@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 222 entries: 97 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 36 carefully recorded null or inconclusive checks.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 223 entries: 97 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 37 carefully recorded null or inconclusive checks.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -295,6 +295,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 **Gamma-ray bursts and gravitational waves**
 
+- **The 220-PeV KM3NeT neutrino still has no identified source.** All 17 published blazar candidates reproduce within its 3° region. A separate screen of 2,938 public TNS transients and six longer-window TDEs found none in that region near February 2023, and CHIME/FRB Catalog 2 lists no burst within a day. Optical survey gaps, other high-energy alerts and untested monitoring limit the conclusion. *Null result (bounded catalogues)* · [Details](results/km3-230213a-counterparts/README.md)
 - **No new neutrino source in a frozen transient crossmatch.** Thirteen archival infrared flare pairs span ten IceCube alerts and are consistent with the registered chance models; incomplete coverage and weak time shuffles limit the inference. *Null result* · [Details](results/neutrino-transient-crossmatch/README.md)
 - **A proposed gamma-ray oscillation screen failed its synthetic calibration.** The two-burst pilot provides descriptive data, but does not support a physical oscillation test. *Null result* · [Details](results/gbm-conditional-screen/README.md)
 
