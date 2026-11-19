@@ -1,0 +1,24 @@
+{
+  "conditional_priors": [
+    0.001,
+    0.01
+  ],
+  "crossvalidated_brier_score": 0.629861,
+  "crossvalidated_mean_p_for_dwarfs": 0.00096,
+  "crossvalidated_mean_p_for_quasars": 0.00136,
+  "crossvalidated_n": 38,
+  "frozen_colour_bandwidth_mag": 0.32,
+  "matched_clean_colours_dwarf": 14,
+  "matched_clean_colours_quasar": 24,
+  "method": "empirical 2-D (Y-J,J-H) fixed-bandwidth Gaussian KDE; conditional Bayesian reweighting only",
+  "model_caution": "Published controls are discovery-selected rather than a population-representative held-out sample; numerical posteriors are not empirical purity or discovery significance.",
+  "model_status": "UNVALIDATED_CONDITIONAL_TWO_CLASS_MODEL",
+  "model_validated_for_population": false,
+  "omitted_classes": [
+    "red galaxies",
+    "artifacts",
+    "blends",
+    "other stellar classes"
+  ],
+  "training_set_selection": "Yang et al. 2026 known quasars and spectroscopic dwarf contaminants matched within 3 arcsec"
+}

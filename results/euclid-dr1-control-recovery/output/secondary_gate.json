@@ -1,0 +1,83 @@
+{
+  "status": "SECONDARY_PRIORITY_TIER_NOT_A_COMPLETE_FIELD_SELECTION",
+  "source_selection_id": "euclid-dr1-f-control-recovery-v1",
+  "original_wide_catalogue_rows": 888152165,
+  "primary_eligible_full_source_rows": 1959717,
+  "full_source_single_diagnostic_counts": {
+    "no_3sigma_ground_optical_flag": 708402,
+    "clean_JH_flags": 1796764
+  },
+  "full_source_combined_secondary_count": null,
+  "full_source_combined_secondary_count_reason": "Only 200 highest-score eligible rows per HATS partition retained individually; no full 1,959,717-row joint VIS/ellipticity/flag/optical register is available; a new full source scan would be required.",
+  "secondary_tier_definition": {
+    "VIS_DET": 0,
+    "absolute_VIS_three_FWHM_aperture_SNR_lt": 2,
+    "NISP_ellipticity_lt": 0.2,
+    "NISP_MUMAX_MINUS_MAG_range_inclusive": [
+      -1.45,
+      -0.75
+    ],
+    "J_H_flags_zero": true,
+    "ground_optical_any_band_gt3": false,
+    "WISE": "Inspect W1-W2 and motion only when a true positional match exists; never reject missing flux as non-detection"
+  },
+  "tested_global_photometric_top100": {
+    "evaluated": 100,
+    "secondary_survivors": 19,
+    "secondary_original_rank_numbers": [
+      3,
+      6,
+      9,
+      12,
+      13,
+      16,
+      23,
+      28,
+      31,
+      34,
+      36,
+      42,
+      46,
+      53,
+      55,
+      64,
+      66,
+      67,
+      74
+    ]
+  },
+  "matched_known_quasars": {
+    "matched": 24,
+    "primary_eligible": 21,
+    "secondary_survivors": 4,
+    "secondary_names": [
+      "EUCL J125308.55+705432.3",
+      "EUCL J150537.32+773441.0",
+      "EUCL J115522.89+704612.3",
+      "EUCL J044657.86-570046.6"
+    ]
+  },
+  "matched_labelled_dwarfs": {
+    "matched": 14,
+    "primary_eligible": 4,
+    "secondary_survivors": 2,
+    "secondary_names": [
+      "EUCL J100835.25+691935.8",
+      "EUCL J131224.33+670729.5"
+    ]
+  },
+  "WISE": {
+    "attempted_priority_sources": 16,
+    "position_matched_CatWISE_W1W2": 0,
+    "position_matched_unWISE": 0,
+    "WISE_veto_applied": false
+  },
+  "limitations": [
+    "Top-100 count is exact only within that rank-selected cohort; do not extrapolate 19/100 to 1,959,717",
+    "Combined tier retains few matched quasars; does not supersede frozen 21/24 high-recall eligibility selection",
+    "Binned morphology and optical flags are not validated quasar-vs-dwarf purity controls",
+    "No mid-IR forced-flux limits or significant motion measurements were obtained",
+    "All candidate probabilities are uncalibrated Q-vs-labelled-dwarf conditional values",
+    "No new spectroscopic quasar; zero exposure-level artefact clearances"
+  ]
+}

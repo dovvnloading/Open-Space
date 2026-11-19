@@ -1,0 +1,86 @@
+{
+  "release": "Euclid DR1-Foundation",
+  "release_date": "2026-11-12",
+  "release_footprint_sqdeg_approx": 1900,
+  "doi": "10.26131/IRSA674",
+  "source": "https://irsa.ipac.caltech.edu/TAP/sync",
+  "cap": 1500,
+  "fields": [
+    {
+      "id": "south_irsa_reference",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 90.7299,
+      "dec": -45.3529,
+      "r": 0.35
+    },
+    {
+      "id": "south_offset",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 91.4,
+      "dec": -45.35,
+      "r": 0.35
+    },
+    {
+      "id": "north_z7p77_control",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 262.261458,
+      "dec": 64.171694,
+      "r": 0.35
+    },
+    {
+      "id": "north_offset",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 263,
+      "dec": 64.2,
+      "r": 0.35
+    },
+    {
+      "id": "north_z7p69_control",
+      "table": "euclid_dr1_mer_catalogue_wide_survey",
+      "ra": 193.285625,
+      "dec": 70.908972,
+      "r": 0.35
+    },
+    {
+      "id": "deep_north",
+      "table": "euclid_dr1_mer_catalogue_deep_survey",
+      "ra": 273.167,
+      "dec": 64.3687,
+      "r": 0.12
+    },
+    {
+      "id": "deep_fornax",
+      "table": "euclid_dr1_mer_catalogue_deep_survey",
+      "ra": 54,
+      "dec": -35,
+      "r": 0.12
+    }
+  ],
+  "known": [
+    {
+      "name": "EUCL J172902.75+641018.1",
+      "ra": 262.261458,
+      "dec": 64.171694,
+      "z": 7.77,
+      "source": "Yang et al 2026"
+    },
+    {
+      "name": "EUCL J125308.55+705432.3",
+      "ra": 193.285625,
+      "dec": 70.908972,
+      "z": 7.69,
+      "source": "Yang et al 2026"
+    },
+    {
+      "name": "EUCL J101255.87+663058.0",
+      "ra": 153.232792,
+      "dec": 66.516111,
+      "z": 7.61,
+      "source": "Yang et al 2026"
+    }
+  ],
+  "broad": "VIS_DET=0, J_flux>0.65 uJy, Y_flux<0.85*J, J>0.65*H, positive H, positive J/H errors, spurious_prob<0.7 or NULL",
+  "strict": "SNR(J)>=6, SNR(H)>=4, |SNR(VIS)|<2, Y-J>=0.40 or 2sigma lower bound>=0.40, J-H<=0.45, ellipticity<0.3; J/H flag=0",
+  "shortlist": 5,
+  "limitations": "Bounded preregistered cones, no measured sky coverage / completeness; NIR-only POINT_LIKE_PROB is null; no calibrated selection or discovery claim."
+}
