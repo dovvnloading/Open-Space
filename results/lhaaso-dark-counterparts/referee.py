@@ -121,7 +121,7 @@ def main():
       "- 4HWC (Alfaro et al. 2026 arXiv:2602.00263) is the newest HAWC catalogue; "
       "its TeV detections and association proposals pre-empt novelty. "
       "Declination acceptance is approximate; no global HAWC4 p-value is quoted.",
-      "- Fermi DR4 v35 is a corrected 2024 release of a catalogue first published 2023; 
+      "- Fermi DR4 v35 is a corrected 2024 release of a catalogue first published 2023; "
       "HGPS is 2018 legacy. Never attribute new detections to a survey they predate.",
       "- ATNF spin-down and distance allow a necessary power/size test, not causality; "
       "KM2A 25-100 TeV power-law flux is not a measured bolometric budget.",
