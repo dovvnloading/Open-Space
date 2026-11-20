@@ -346,7 +346,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Galaxies and the distant universe
 
-- **Where Euclid's new images overlap clouds of hydrogen gas.** The frozen HI survey inventory contains 1,375 beam/tile overlaps (117 ALFALFA, 1,258 FASHI, 0 WALLABY); 1112/1,375 received checkpointed S3/HATS/Legacy/DESI follow-up, with 0 full four-band-beam MER pixel sets. A beam redshift association does not prove HI host identity; no validated starless galaxy, stellar-mass limit or occurrence rate. *Measured (incomplete physical vetting)* · [Results and referee](results/euclid-hi-dark-census/README.md)
+- **Where Euclid's new images overlap clouds of hydrogen gas.** The frozen HI survey inventory contains 1,375 beam/tile overlaps (117 ALFALFA, 1,258 FASHI, 0 WALLABY); 1120/1,375 received checkpointed S3/HATS/Legacy/DESI follow-up, with 0 full four-band-beam MER pixel sets. A beam redshift association does not prove HI host identity; no validated starless galaxy, stellar-mass limit or occurrence rate. *Measured (incomplete physical vetting)* · [Results and referee](results/euclid-hi-dark-census/README.md)
 
 - **One known early quasar recovered, but no new record from the fresh Euclid release.** A limited search of new Euclid DR1 infrared data found 290 objects with quasar-like colour *cuts*, including 41 with unusually extreme colours. The known z≈7.69 quasar reappeared, but dwarf stars, image artefacts and unexamined follow-up data prevent classifying any new object as a quasar; this was not a search of the whole release. *Measured* (inconclusive) · [Details](results/euclid-dr1-highz-quasars/README.md)
 
