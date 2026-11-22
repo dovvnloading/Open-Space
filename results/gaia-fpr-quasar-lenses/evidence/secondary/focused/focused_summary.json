@@ -165,22 +165,6 @@
         ],
         "gaiadr3.qso_candidates": [
           {
-            "source_id": "916413362312824064",
-            "classlabel_dsc": "quasar",
-            "classlabel_dsc_joint": "unclassified",
-            "classlabel_oa": "QSO_Z15_25",
-            "redshift_qsoc": "0.18308565",
-            "redshift_qsoc_lower": "0.18265578",
-            "redshift_qsoc_upper": "0.18351568",
-            "flags_qsoc": "1",
-            "zscore_qsoc": "1.0",
-            "ccfratio_qsoc": "1.0",
-            "astrometric_selection_flag": "true",
-            "gaia_crf_source": "true",
-            "vari_best_class_name": "AGN",
-            "vari_agn_membership_score": "0.6441617957647023"
-          },
-          {
             "source_id": "916413362313609472",
             "classlabel_dsc": "galaxy",
             "classlabel_dsc_joint": "unclassified",
@@ -195,22 +179,25 @@
             "gaia_crf_source": "false",
             "vari_best_class_name": "AGN",
             "vari_agn_membership_score": "0.6226182545599809"
+          },
+          {
+            "source_id": "916413362312824064",
+            "classlabel_dsc": "quasar",
+            "classlabel_dsc_joint": "unclassified",
+            "classlabel_oa": "QSO_Z15_25",
+            "redshift_qsoc": "0.18308565",
+            "redshift_qsoc_lower": "0.18265578",
+            "redshift_qsoc_upper": "0.18351568",
+            "flags_qsoc": "1",
+            "zscore_qsoc": "1.0",
+            "ccfratio_qsoc": "1.0",
+            "astrometric_selection_flag": "true",
+            "gaia_crf_source": "true",
+            "vari_best_class_name": "AGN",
+            "vari_agn_membership_score": "0.6441617957647023"
           }
         ],
         "gaiadr3.astrophysical_parameters": [
-          {
-            "source_id": "916413362312824064",
-            "classprob_dsc_combmod_quasar": "0.99868387",
-            "classprob_dsc_combmod_galaxy": "4.8512916E-4",
-            "classprob_dsc_combmod_star": "8.3102996E-4",
-            "classprob_dsc_combmod_whitedwarf": "6.245325E-12",
-            "classprob_dsc_combmod_binarystar": "1.1836467E-8",
-            "classprob_dsc_specmod_quasar": "0.0048739132",
-            "classprob_dsc_specmod_galaxy": "7.209419E-4",
-            "classprob_dsc_specmod_star": "0.99295366",
-            "classprob_dsc_specmod_whitedwarf": "3.72531E-5",
-            "classprob_dsc_specmod_binarystar": "0.0014143068"
-          },
           {
             "source_id": "916413362313609472",
             "classprob_dsc_combmod_quasar": "0.22075723",
@@ -223,6 +210,19 @@
             "classprob_dsc_specmod_star": "0.0",
             "classprob_dsc_specmod_whitedwarf": "0.0011385953",
             "classprob_dsc_specmod_binarystar": "0.0"
+          },
+          {
+            "source_id": "916413362312824064",
+            "classprob_dsc_combmod_quasar": "0.99868387",
+            "classprob_dsc_combmod_galaxy": "4.8512916E-4",
+            "classprob_dsc_combmod_star": "8.3102996E-4",
+            "classprob_dsc_combmod_whitedwarf": "6.245325E-12",
+            "classprob_dsc_combmod_binarystar": "1.1836467E-8",
+            "classprob_dsc_specmod_quasar": "0.0048739132",
+            "classprob_dsc_specmod_galaxy": "7.209419E-4",
+            "classprob_dsc_specmod_star": "0.99295366",
+            "classprob_dsc_specmod_whitedwarf": "3.72531E-5",
+            "classprob_dsc_specmod_binarystar": "0.0014143068"
           }
         ]
       },
@@ -263,7 +263,7 @@
   ],
   "field_count": 2,
   "unique_gaia_image_sets": 2,
-  "input_review_packets_sha256": "dddba4e24eb84b0d1075b691a94c8c89f620b1ed9b217d4aa9e5e6068f51a630",
+  "input_review_packets_sha256": "881f8ef77778f0f39240028dc0b8904af98404415d666b77f930c2792e136e92",
   "query_receipts": {
     "gaiafpr.lens_catalogue_name": {
       "table": "gaiafpr.lens_catalogue_name",
@@ -326,7 +326,7 @@
       ],
       "status": "complete",
       "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
-      "sha256": "6d210303dca9817374583f4a9b0906a80595410529122131176bbe76491a9f2c",
+      "sha256": "8a4390095e041554f8ea7ec33de9679277b90bbefe94f93d84bd9bd97a5cdeee",
       "raw": "gaiadr3.qso_candidates.csv.gz",
       "bytes": 613,
       "rows": 3,
@@ -351,7 +351,7 @@
       ],
       "status": "complete",
       "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
-      "sha256": "8fff83b50b77910587998265b36ebde11e7fb50211f9b942df09a56f1cb22f24",
+      "sha256": "af18ef178fae00d4a3f82ab19d50df9230f867f55e7762bbb964dc72ced26215",
       "raw": "gaiadr3.astrophysical_parameters.csv.gz",
       "bytes": 851,
       "rows": 4,

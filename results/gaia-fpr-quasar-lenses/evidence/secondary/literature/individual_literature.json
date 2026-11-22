@@ -233,20 +233,11 @@
         "failures": []
       },
       {
-        "service": "https://simbad.idia.ac.za/simbad/sim-tap/sync",
+        "service": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
         "query": "SELECT DISTINCT b.main_id,r.bibcode,r.title,r.doi FROM basic AS b JOIN has_ref AS h ON b.oid=h.oidref JOIN ref AS r ON h.oidbibref=r.oidbib WHERE CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',125.7974221726,43.8884596883,0.00277777778))=1",
         "bytes": 3011,
         "sha256": "3435d3e01916d86b7ac1bab4d93e29ed65bab58d3d57d51630419d5ad395af7d",
-        "failures": [
-          {
-            "service": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
-            "error": "HTTPSConnectionPool(host='simbad.cfa.harvard.edu', port=443): Read timed out. (read timeout=45)"
-          },
-          {
-            "service": "https://simbad.cds.unistra.fr/simbad/sim-tap/sync",
-            "error": "HTTPSConnectionPool(host='simbad.cds.unistra.fr', port=443): Max retries exceeded with url: /simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=20000&QUERY=SELECT+DISTINCT+b.main_id%2Cr.b"
-          }
-        ]
+        "failures": []
       }
     ]
   }

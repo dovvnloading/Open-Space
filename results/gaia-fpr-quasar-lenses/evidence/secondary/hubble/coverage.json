@@ -1,0 +1,117 @@
+{
+  "systems": [
+    {
+      "id": "FW2917878464529177856",
+      "centre": [
+        90.04215490598635,
+        -21.25970914767372
+      ],
+      "verified_stamps": [],
+      "failures": [
+        {
+          "service": "HAPcut",
+          "error": "File is not a zip file"
+        }
+      ],
+      "inputs": [
+        {
+          "url": "https://catalogs.mast.stsci.edu/api/v0.1/hsc/v3/summary/magauto.csv?ra=90.04215490598635&dec=-21.25970914767372&radius=0.0016666666666666668&pagesize=5000",
+          "http": 200,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "url": "https://hla.stsci.edu/cgi-bin/hlaSIAP.cgi?POS=90.04215490598635%2C-21.25970914767372&SIZE=0.002&FORMAT=image%2Ffits",
+          "http": 200,
+          "bytes": 6953,
+          "sha256": "bf1cca6d63b025acad2e800b27c23163f3ab89eb2fb2153afc26442a97d6ac55"
+        },
+        {
+          "url": "https://mast.stsci.edu/hapcut/api/v0.1/astrocut?ra=90.04215490598635&dec=-21.25970914767372&x=0.0033333333333333335&y=0.0033333333333333335&units=d",
+          "http": 200,
+          "bytes": 80,
+          "sha256": "0f39d36a0e68885e3807f629a41f457ccdd3a06a76b8348087865165141ef5de"
+        }
+      ],
+      "caom": {
+        "status": "no_covering_HST_image_in_completed_MAST_query",
+        "image_records": 0,
+        "unknown_footprints": 0,
+        "covering": [],
+        "query_receipt": {
+          "url": "https://mast.stsci.edu/api/v0/invoke?request=%7B%22service%22%3A+%22Mast.Caom.Cone%22%2C+%22params%22%3A+%7B%22ra%22%3A+90.04215490598635%2C+%22dec%22%3A+-21.25970914767372%2C+%22radius%22%3A+0.0005555555555555556%7D%2C+%22format%22%3A+%22json%22%2C+%22pagesize%22%3A+2000%2C+%22page%22%3A+1%7D",
+          "upstream_bytes": 24475,
+          "file": "mast.json.gz",
+          "upstream_sha256": "9d90f00ffecba6d5edbc4f518b05e924af1e088742a68965304fe96256e4e4cf",
+          "sha256": "c9dba52b05dff5600a0a605b6ed2e25aa42d7604f684ccb7ac47c0eee4174d16"
+        },
+        "footprints": []
+      },
+      "hsc": {
+        "status": "unavailable",
+        "error": "HSC catalog columns not present"
+      },
+      "hla": {
+        "status": "query_complete",
+        "regional_rows": 0
+      }
+    },
+    {
+      "id": "FW916413362313609472",
+      "centre": [
+        125.79742217257653,
+        43.88845968830368
+      ],
+      "verified_stamps": [],
+      "failures": [
+        {
+          "service": "HAPcut",
+          "error": "File is not a zip file"
+        }
+      ],
+      "inputs": [
+        {
+          "url": "https://catalogs.mast.stsci.edu/api/v0.1/hsc/v3/summary/magauto.csv?ra=125.79742217257653&dec=43.88845968830368&radius=0.0016666666666666668&pagesize=5000",
+          "http": 200,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "url": "https://hla.stsci.edu/cgi-bin/hlaSIAP.cgi?POS=125.79742217257653%2C43.88845968830368&SIZE=0.002&FORMAT=image%2Ffits",
+          "http": 200,
+          "bytes": 6953,
+          "sha256": "ba9bbc78840706419fd47688248489637792b51103620873168d3c300a917394"
+        },
+        {
+          "url": "https://mast.stsci.edu/hapcut/api/v0.1/astrocut?ra=125.79742217257653&dec=43.88845968830368&x=0.0033333333333333335&y=0.0033333333333333335&units=d",
+          "http": 200,
+          "bytes": 80,
+          "sha256": "0f39d36a0e68885e3807f629a41f457ccdd3a06a76b8348087865165141ef5de"
+        }
+      ],
+      "caom": {
+        "status": "no_covering_HST_image_in_completed_MAST_query",
+        "image_records": 0,
+        "unknown_footprints": 0,
+        "covering": [],
+        "query_receipt": {
+          "url": "https://mast.stsci.edu/api/v0/invoke?request=%7B%22service%22%3A+%22Mast.Caom.Cone%22%2C+%22params%22%3A+%7B%22ra%22%3A+125.79742217257653%2C+%22dec%22%3A+43.88845968830368%2C+%22radius%22%3A+0.0005555555555555556%7D%2C+%22format%22%3A+%22json%22%2C+%22pagesize%22%3A+2000%2C+%22page%22%3A+1%7D",
+          "upstream_bytes": 23600,
+          "file": "mast.json.gz",
+          "upstream_sha256": "c6dbbe582a054090207eff2a2b8f59a377ac4e7669b2ddfc585f902f98428373",
+          "sha256": "24043d9b0ea5d3ab0cd058fe353579be191bc1554e16136dbb2d7812b719965a"
+        },
+        "footprints": []
+      },
+      "hsc": {
+        "status": "unavailable",
+        "error": "HSC catalog columns not present"
+      },
+      "hla": {
+        "status": "query_complete",
+        "regional_rows": 0
+      }
+    }
+  ],
+  "scope": "MAST public HST and HLA image footprints near the field and checksummed HLA/HAP cutouts. HSC alone is not an exposure inventory. An unavailable endpoint, unparsed footprint, or unusable cutout is not a non-detection."
+}
