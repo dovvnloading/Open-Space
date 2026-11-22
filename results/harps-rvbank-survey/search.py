@@ -1,9 +1,10 @@
-"""Dispatch-only HARPS time-series search. All velocities are in m/s and times in days."""
+"""HARPS time-series search. All velocities are in m/s and times in days."""
+from runtime import require_survey_workflow
+
 import argparse
 import csv
 import hashlib
 import json
-import os
 from contextlib import ExitStack
 from pathlib import Path
 
@@ -417,8 +418,7 @@ def main():
     parser.add_argument("--shards", type=int, default=1)
     parser.add_argument("--shard", type=int, default=0)
     args = parser.parse_args()
-    if os.getenv("GITHUB_ACTIONS") != "true" or os.getenv("GITHUB_EVENT_NAME") != "workflow_dispatch":
-        raise SystemExit("This search runs in the manually dispatched GitHub workflow.")
+    require_survey_workflow()
     if not (0 <= args.shard < args.shards):
         raise ValueError("invalid shard index")
     df = pd.read_csv(args.epochs, dtype={"star": str}, low_memory=False)

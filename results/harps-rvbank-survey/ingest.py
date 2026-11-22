@@ -1,9 +1,10 @@
 """Read the complete corrected RVBank epoch table, or the ESO Phase 3 RV catalogue."""
+from runtime import require_survey_workflow
+
 import argparse
 import hashlib
 import json
 import http.client
-import os
 import re
 import time
 from datetime import datetime, timezone
@@ -45,6 +46,7 @@ def download(url, path, manifest):
         entry = dict(url=url, retrieved_utc=datetime.now(timezone.utc).isoformat(),
                      file=path.name, attempt=attempt)
         try:
+            print(f"Retrieving {path.name}, attempt {attempt}", flush=True)
             with urlopen(request, timeout=120) as stream, path.open("wb") as sink:
                 expected = stream.headers.get("Content-Length")
                 while block := stream.read(1024 * 1024):
@@ -205,8 +207,7 @@ def main():
     parser.add_argument("--work", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
-    if os.getenv("GITHUB_ACTIONS") != "true" or os.getenv("GITHUB_EVENT_NAME") != "workflow_dispatch":
-        raise SystemExit("Ingestion runs in the manually dispatched GitHub Actions workflow.")
+    require_survey_workflow()
     work, out = args.work, args.out
     work.mkdir(parents=True, exist_ok=True)
     out.mkdir(parents=True, exist_ok=True)
@@ -249,6 +250,7 @@ def main():
         pd.DataFrame(manifest, columns=["url", "retrieved_utc", "file", "attempt", "status", "bytes", "sha256", "error"]).to_csv(
             out/"inputs.csv", index=False)
         (out/"ingest.json").write_text(json.dumps(dict(**info, warnings=errors), indent=2)+"\n")
+        print(json.dumps(dict(**info, warnings=errors)), flush=True)
 
 
 if __name__ == "__main__":

@@ -1,11 +1,12 @@
 """External signal checks and approximate joint single-companion mass fits."""
+from runtime import require_survey_workflow
+
 import argparse
 import csv
 from datetime import datetime, timezone
 from collections import defaultdict
 import hashlib
 import io
-import os
 from pathlib import Path
 import re
 import time
@@ -396,8 +397,7 @@ def save(out, name, rows, fields):
 
 
 def run(work, out):
-    if os.environ.get("GITHUB_EVENT_NAME") != "workflow_dispatch":
-        raise SystemExit("Archive vetting requires a workflow_dispatch job")
+    require_survey_workflow()
     db = Sources(work, out)
     targets = pd.read_csv(out/"targets.csv", dtype={"star": str}).set_index("star")
     stars = pd.read_csv(out/"stars.csv", dtype={"star": str}).set_index("star")
@@ -628,7 +628,11 @@ def run(work, out):
                 if epochs is None:
                     epochs = pd.read_csv(work/"epochs.csv.gz",dtype={"star":str}).groupby("star",sort=False)
                 try:
-                    outrow.update(joint_fit(h,sig,epochs.get_group(star),m,me))
+                    solution = joint_fit(h,sig,epochs.get_group(star),m,me)
+                    if star in trend_stars and "dynamical_mass_mjup" in solution:
+                        solution.pop("dynamical_mass_mjup")
+                        solution["joint_status"] = "residual acceleration prevents single-companion attribution"
+                    outrow.update(solution)
                 except (ValueError,np.linalg.LinAlgError,KeyError,FloatingPointError) as exc:
                     outrow["joint_status"]="unusable fit: "+str(exc)[:180]
             vet.append(outrow)

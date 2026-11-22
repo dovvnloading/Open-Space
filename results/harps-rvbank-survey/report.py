@@ -1,5 +1,6 @@
 """Validate shard coverage before summarizing blind fits, controls and injections."""
 import argparse
+from collections import defaultdict
 import difflib
 import hashlib
 import json
@@ -8,6 +9,7 @@ import re
 from pathlib import Path
 
 import pandas as pd
+from runtime import require_survey_workflow
 
 
 # The blind search does not import this module. These approximate published periods
@@ -58,15 +60,28 @@ def combine(out, shards, count):
         frame.to_csv(out / f"{name}.csv", index=False)
 
 
-def control_table(stars, signals):
-    star_ids = stars.star.str.upper().str.replace(r"\s+", "", regex=True)
+def control_table(stars, signals, vetting):
+    hosts = defaultdict(set)
+    def index_name(star, name):
+        # Preserve component names. A component of a multiple system cannot
+        # supply a control attached to an unqualified identifier.
+        m = re.fullmatch(r"HD[\s_-]*0*(\d+)", str(name).strip(), re.I)
+        if m:
+            hosts["HD" + str(int(m[1]))].add(star)
+    for star in stars.star:
+        index_name(star, star)
+    for row in vetting[["star", "identity", "aliases"]].drop_duplicates().itertuples(index=False):
+        index_name(row.star, row.identity)
+        for name in row.aliases.split("|"):
+            index_name(row.star, name)
     rows = []
     for host, periods in CONTROLS.items():
-        match = stars[star_ids == host]
+        match = stars[stars.star.isin(hosts[host])]
         for companion, period in periods.items():
-            row = {"host": host, "companion": companion, "reference_period_d": period}
+            row = {"host": host, "companion": companion, "reference_period_d": period,
+                   "matching_targets": " | ".join(sorted(hosts[host]))}
             if len(match) != 1:
-                row["outcome"] = "no unique HD identifier in inventory"
+                row["outcome"] = "ambiguous target identity" if len(match) else "host not identified"
             elif match.iloc[0].eligibility != "searched":
                 row["outcome"] = match.iloc[0].eligibility
             else:
@@ -83,6 +98,43 @@ def control_table(stars, signals):
                                         and best.delta_bic >= 10 else "period recovered below threshold"))
             rows.append(row)
     return pd.DataFrame(rows)
+
+
+def review_tables(out, signals, vetting):
+    # Use the complete fit key, including earlier peaks on multiplanet targets.
+    keep = ["star", "signal_index", "delta_bic", "gaussian_trials_screen", "flags"]
+    joined = vetting.merge(signals[keep], on=["star", "signal_index"], validate="one_to_one")
+    fields = ["star", "signal_index", "identity", "period_d", "k_ms", "ecc", "fap",
+              "minimum_mass_mjup", "dynamical_mass_mjup", "joint_status", "delta_bic",
+              "gaussian_trials_screen", "rv_status", "external_status", "flags", "reasons",
+              "prior_signal", "alias_matches", "rotation_check", "binary_check", "nasa_check",
+              "literature_check", "bibliography_matches"]
+    ranked = joined[fields].sort_values(["fap", "delta_bic", "star", "signal_index"],
+                                        ascending=[True, False, True, True])
+    survivors = ranked[ranked.rv_status.eq("pass")]
+    survivors.to_csv(out / "rv-survivors.csv", index=False)
+    inconclusive = ranked[(ranked.fap <= .01) & (ranked.delta_bic >= 10) &
+                          ranked.rv_status.eq("inconclusive") &
+                          ranked.external_status.eq("inconclusive")]
+    inconclusive.to_csv(out / "inconclusive-periods.csv", index=False)
+    papers = read(out / "literature.csv.gz")
+    papers[papers.star.isin(survivors.star)].sort_values(["star", "bibcode"]).to_csv(
+        out / "survivor-literature.csv", index=False)
+    return len(survivors), len(inconclusive)
+
+
+def query_coverage(out):
+    receipt = read(out / "catalog-inputs.csv")
+    rows = []
+    for source, data in receipt.groupby("source", sort=True):
+        ok = data.status.eq("ok")
+        failures = data.status.eq("failed")
+        rows.append(dict(source=source, queries_planned=len(data), successful=int(ok.sum()),
+                         failed=int(failures.sum()), skipped=int((~ok & ~failures).sum()),
+                         successful_rows=int(pd.to_numeric(data.loc[ok, "rows"]).sum())))
+    pd.DataFrame(rows, columns=["source", "queries_planned", "successful", "failed",
+                                "skipped", "successful_rows"]).to_csv(out / "source-coverage.csv", index=False)
+    return int(receipt.status.eq("ok").sum()), len(receipt)
 
 
 def catalog_patch(out, efficiency):
@@ -124,7 +176,9 @@ def summarize(out):
     searched = stars[stars.eligibility.eq("searched")]
     if searched.empty:
         raise ValueError("No eligible targets. Inspect coverage before interpreting the run.")
-    controls = control_table(stars, signals)
+    controls = control_table(stars, signals, vetting)
+    rv_survivors, unresolved = review_tables(out, signals, vetting)
+    source_ok, source_total = query_coverage(out)
     controls.to_csv(out / "published-controls.csv", index=False)
     # Fractions describe the initial detection stage at tested P, K and e on eligible
     # stars whose baseline admits P. They do not estimate population occurrence.
@@ -146,6 +200,9 @@ def summarize(out):
         catalog_targets=len(stars), spectra=int(stars.n_epochs.sum()),
         searched_targets=len(searched), searched_spectra=int(searched.n_epochs.sum()),
         fits=len(signals), injection_trials=int(injections.trials.sum()),
+        rv_survivors=rv_survivors, significant_inconclusive=unresolved,
+        queued_for_literature_review=int(vetting.external_status.eq("requires literature review").sum()),
+        external_queries_successful=source_ok, external_queries_planned=source_total,
         status_counts=dispositions, published_controls=len(controls),
         controls_above_threshold=int(controls.outcome.eq("period recovered above threshold").sum()),
     )
@@ -154,7 +211,9 @@ def summarize(out):
 
 **The search fitted {len(signals):,} periodic signals in {len(searched):,} of {len(stars):,} catalog targets.** The targets that met the cadence cuts contributed {counts['searched_spectra']:,} usable spectra. A fitted peak can arise from noise, activity, binarity, sampling or a known companion. Individual novelty claims require review of the source papers and object identities.
 
-The input was {ingest['source']}. See [input checksums](inputs.csv), [external catalog receipts](catalog-inputs.csv), [exposure dispositions](epoch-ledger.csv.gz) and [target eligibility](stars.csv). The [RV fit table](signals.csv) records periods, semiamplitudes, false-alarm estimates and diagnostic checks. The [external vetting table](vetting.csv) records companion-mass constraints and object-level checks, including unresolved evidence. The [acceleration table](accelerations.csv) records the status of long-term trends.
+The input was {ingest['source']}. See [input checksums](inputs.csv), [exposure dispositions](epoch-ledger.csv.gz) and [target eligibility](stars.csv). The [RV fit table](signals.csv) records periods, semiamplitudes, false-alarm estimates and diagnostic checks. The [external vetting table](vetting.csv) records companion-mass constraints and object-level checks, including unresolved evidence. The [acceleration table](accelerations.csv) records long-term trends.
+
+{rv_survivors:,} fits passed all internal RV tests. The [RV survivors](rv-survivors.csv) include their catalog and literature dispositions. The [associated bibliography](survivor-literature.csv) contains indexed references. Another {unresolved:,} fits met the statistical thresholds and retained unresolved checks in both the RV and external ledgers. See [inconclusive periods](inconclusive-periods.csv). Of {source_total:,} planned external queries, {source_ok:,} returned usable responses. [Coverage by source](source-coverage.csv) · [Query receipts](catalog-inputs.csv)
 
 The initial period search recovered {counts['controls_above_threshold']} of {len(controls)} prespecified published control periods above the adopted FAP and model-improvement thresholds. The denominator includes every prespecified control, including misses and targets outside coverage. See [control recovery](published-controls.csv).
 
@@ -167,7 +226,7 @@ The [injection grid](completeness-grid.csv) summarizes {counts['injection_trials
     body += f"""
 ## Reproduce the run
 
-Use the source at commit `{revision}`, its manual workflow and [installed software versions](packages.txt). The workflow records its commands, including shard count and selection criteria. Compare the exact archive and catalog input checksums between runs. [Actions run](https://github.com/{repo}/actions/runs/{run})
+Use the source at commit `{revision}`, the [survey workflow](../../../.github/workflows/harps-rvbank-survey.yml) and [installed software versions](packages.txt). The workflow records its commands, including shard count and selection criteria. Compare the exact archive and catalog input checksums between runs. [Actions run](https://github.com/{repo}/actions/runs/{run})
 """
     (out / "README.md").write_text(body)
     catalog_patch(out, efficiency)
@@ -186,8 +245,7 @@ def main():
     for cmd in (join, sub.add_parser("summarize")):
         cmd.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
-    if os.environ.get("GITHUB_EVENT_NAME") != "workflow_dispatch":
-        raise SystemExit("Run the survey through its manual workflow.")
+    require_survey_workflow()
     if args.step == "combine":
         combine(args.out, args.shards, args.count)
     else:

@@ -10,9 +10,7 @@ Each proposed companion needs a fitted period and RV semiamplitude, a mass estim
 
 ## Execution
 
-Archive acquisition and analysis belong to the single manual GitHub Actions workflow `harps-rvbank-survey.yml`. GitHub requires its workflow path to be registered on the default branch before it can receive a manual dispatch. The research branch contains the workflow for review. See [GitHub's dispatch documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflow_dispatch).
-
-After registration, run the following from an authenticated checkout with Actions write access.
+The HARPS workflow runs when its own YAML file changes on `survey/harps-rvbank-companions`. After registration on the default branch, the same workflow also accepts a manual dispatch.
 
 ```sh
 gh workflow run harps-rvbank-survey.yml --ref survey/harps-rvbank-companions
@@ -30,7 +28,7 @@ HD 32564 and the HARPS drift of HD 25673 already have entries in Open-Space. The
 
 ## Run products
 
-The run saves separate exposure and target ledgers, all RV fits, activity and alias tests, the injection grid, catalog queries, astrometric fits and matching bibliography records. It tests that the combined shards contain exactly one outcome for every target, preserves recoveries and misses for the controls, and writes a checksum manifest. The read-only workflow uploads these as the `harps-evidence` artifact for inspection before any catalog claim. That artifact includes a proposed root catalog edit with the measured recovery of circular 30-day, 10 m/s injections and the corresponding line 9 count change. The patch is generated only after the result exists. The source responses are saved in the same run as separate snapshot artifacts.
+The run saves separate exposure and target ledgers, all RV fits, activity and alias tests, the injection grid, catalog queries, astrometric fits and matching bibliography records. It tests that the combined shards contain exactly one outcome for every target, preserves recoveries and misses for the controls, and writes a checksum manifest. The final workflow job verifies the evidence checksums, runs the repository checks and commits the tables to `evidence/` on the survey branch. The `harps-evidence` artifact contains the same tables. That artifact includes a proposed root catalog edit with the measured recovery of circular 30-day, 10 m/s injections and the corresponding line 9 count change. The patch is generated only after the result exists. The source responses are saved in the same run as separate snapshot artifacts.
 
 Runtime commands and dependency pins are in the [workflow](../../.github/workflows/harps-rvbank-survey.yml) and [requirements](requirements.txt). For an identified run, retrieve its evidence with the following command, substituting the numerical run ID.
 

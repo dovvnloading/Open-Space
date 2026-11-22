@@ -1,5 +1,6 @@
-"""Deterministic synthetic regression checks for the manual HARPS survey workflow."""
-import os
+"""Deterministic synthetic regression checks for the HARPS survey workflow."""
+from runtime import require_survey_workflow
+
 
 import numpy as np
 import pandas as pd
@@ -44,8 +45,7 @@ def regression_check(t, err, era, rv):
 
 
 def main():
-    if os.getenv("GITHUB_ACTIONS") != "true" or os.getenv("GITHUB_EVENT_NAME") != "workflow_dispatch":
-        raise SystemExit("Run this synthetic control in the manually dispatched workflow.")
+    require_survey_workflow()
     rng = np.random.default_rng(42881)
     # Distinct local nights over both fibre eras. Add jitter in observing hour.
     t = 2456200 + np.sort(rng.choice(1900, 160, replace=False)) + rng.uniform(.45, .65, 160)

@@ -120,6 +120,7 @@ jobs:
           path: evidence
       - run: |
           python "$SURVEY/report.py" combine --out evidence --shards shards --count 12
+          python "$SURVEY/enrich.py" --work work --out evidence
           python "$SURVEY/vet.py" --work work --out evidence
           python "$SURVEY/report.py" summarize --out evidence
       - uses: actions/upload-artifact@v4
@@ -136,3 +137,43 @@ jobs:
           if-no-files-found: ignore
       - run: python -m open_space.verify
       - run: python -m unittest discover -s tests
+
+  publish:
+    name: Commit survey evidence to the research branch
+    needs: review
+    if: github.ref == 'refs/heads/survey/harps-rvbank-companions'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: harps-evidence
+          path: published-evidence
+      - name: Verify evidence and stage the run
+        run: |
+          set -euo pipefail
+          (cd published-evidence && sha256sum --check --quiet SHA256SUMS)
+          test -s published-evidence/survey.json
+          test -s published-evidence/inputs.csv
+          test -s published-evidence/vetting.csv
+          test -s published-evidence/published-controls.csv
+          test -s published-evidence/completeness-grid.csv
+          mkdir -p "$SURVEY/evidence"
+          rsync -a --delete published-evidence/ "$SURVEY/evidence/"
+          git add -f -- "$SURVEY/evidence"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m "Record HARPS survey evidence from Actions run $GITHUB_RUN_ID"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r "$SURVEY/requirements.txt" matplotlib
+      - run: python -m open_space.verify
+      - run: python -m unittest discover -s tests
+      - name: Publish the verified commit
+        run: git push origin HEAD:refs/heads/survey/harps-rvbank-companions
