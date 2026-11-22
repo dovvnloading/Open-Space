@@ -1,6 +1,6 @@
 """Read the published Salvato et al. eRASS1 counterpart associations for the leads."""
 import argparse
-import gzip
+import io
 import hashlib
 import json
 import re
@@ -40,7 +40,11 @@ def as_text(x):
 
 
 def values(hdu,col):
-    return np.asarray(hdu.data[col]).ravel()
+    arr=np.asarray(hdu.data[col]).ravel()
+    n=np.asarray(hdu.data["RA"]).size
+    if arr.size==1 and arr.dtype.kind=="S" and n>1 and arr.dtype.itemsize%n==0:
+        arr=arr.view(f"S{arr.dtype.itemsize//n}")
+    return arr
 
 
 def xyz(ra,dec):
@@ -68,7 +72,7 @@ def matched_rows(hdu, leads, note):
     # Require both coordinates of the eROSITA position. Do not substitute
     # an arbitrary nearby optical object for a released X-ray association.
     for rx,dx in [("erora","erodec"),("raero","decero"),("raerass1","decerass1"),
-                  ("erass1ra","erass1dec"),("rax","decx"),("xrayra","xraydec"),("ra","dec")]:
+                  ("erass1ra","erass1dec"),("rax","decx"),("xrayra","xraydec"),("ra","dec1"),("ra","dec")]:
         if rx not in lookup or dx not in lookup:
             continue
         x=values(hdu,lookup[rx]).astype(float)
@@ -112,8 +116,8 @@ def read_release(tag, leads, out):
             note["bytes"]=package.stat().st_size
             with tarfile.open(package,"r|gz") as tf:
                 for m in tf:
-                    if m.isfile() and m.name.lower().endswith((".fits",".fit",".fits.gz")):
-                        path=Path(root)/("table.fits.gz" if m.name.endswith(".gz") else "table.fits")
+                    if m.isfile() and m.name.lower().endswith((".colfits",".colfits.gz",".fits",".fit",".fits.gz")):
+                        path=Path(root)/("table.fits.gz" if m.name.lower().endswith(".gz") else "table.fits")
                         with path.open("wb") as dest:
                             shutil.copyfileobj(tf.extractfile(m),dest)
                         break
@@ -126,13 +130,13 @@ def read_release(tag, leads, out):
                 mapping=matched_rows(hdu,leads,note)
                 # Retain the published fields without imposing a generic cut on
                 # probabilities that may use different definitions across releases.
+                wanted=[k for k in cols if re.search(r"^(IAUNAME|DETUID|RA|DEC_1|bestCTP|NWAY_(p_any|p_i|match_flag|threshold8|Separation_.+)|LS10_(FULLID|OBJID|RELEASE|BRICKID|RA|DEC|TYPE|FLUX_R|FLUX_Z)|GDR3_(source_id_1|RA_1|DEC_1|parallax|parallax_error|pmra_in|pmra_error|pmdec|pmdec_error|PQSO|PGal|PSS)|CW2020_(source_id|RA_1|DEC_1|w1mpro|w2mpro)|.+_extragalactic|Hamstar_.+)$",k,re.I)]
+                n=np.asarray(hdu.data["RA"]).size
+                fields={k:v for k in wanted if (v:=values(hdu,k)).size==n}
                 for names,idxs in mapping.items():
                     for i in idxs:
                         record=dict(ero_name=names,catalog=tag,release_row=i+1)
-                        for col in cols:
-                            field=values(hdu,col)
-                            if i<len(field):
-                                record["pub_"+col]=as_text(field[i])
+                        record.update({"pub_"+k:as_text(v[i]) for k,v in fields.items()})
                         rows.append(record)
         note.update(status="ok",matched_ero_names=len(mapping),matched_rows=len(rows))
         print(tag, "join:", note["key"], "fields:", [x[0] for x in note["fields"]],flush=True)
@@ -152,7 +156,7 @@ def hard_catalog(inputs,dest):
         response=requests.get(url,timeout=(15,120))
         response.raise_for_status()
         note["sha256"]=hashlib.sha256(response.content).hexdigest()
-        with tarfile.open(fileobj=__import__("io").BytesIO(response.content)) as tar:
+        with tarfile.open(fileobj=io.BytesIO(response.content)) as tar:
             member=next(m for m in tar if m.isfile() and m.name.lower().endswith(".fits"))
             with fits.open(tar.extractfile(member),memmap=False) as hdus:
                 h=next(h for h in hdus if isinstance(h,fits.BinTableHDU))

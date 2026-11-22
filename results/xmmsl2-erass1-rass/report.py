@@ -49,6 +49,36 @@ def summarize(out):
             mask=register.disposition.eq("candidate") & register.published_tde.notna()
             register.loc[mask,"disposition"]="inconclusive"
             register.loc[mask,"rationale"]="Published TDE in the positional error circle; separate outburst unestablished"
+    controls_file=out/"positive_controls.csv"
+    if controls_file.exists():
+        known=pd.read_csv(controls_file).dropna(subset=["detection_uid"]).drop_duplicates("detection_uid").set_index("detection_uid")
+        register["known_slew_flare_reference"]=register.detection_uid.map(known.bibcode)
+        flag=register.known_slew_flare_reference.notna()
+        register.loc[flag,"disposition"]="previously_reported_flare"
+        register.loc[flag,"rationale"]="This slew flare has a published discovery paper in positive_controls.csv"
+    field_file=out/"published_hosts"/"local_galaxies.csv"
+    if field_file.exists():
+        galaxies=pd.read_csv(field_file,dtype={"ls_id":str})
+        first=galaxies.loc[galaxies["rank"].eq(1)].set_index("detection_uid")
+        for k in ("ls_id","type","host_ra","host_dec","sep_arcsec","pcc","shifted_at_least_as_good","shifted_total","empirical_fraction"):
+            register["local_galaxy_"+k]=register.detection_uid.map(first[k])
+    salvato=out/"published_hosts"/"LS10.csv.gz"
+    if salvato.exists() and salvato.stat().st_size>50:
+        prob=pd.read_csv(salvato,dtype=str,low_memory=False)
+        if {"pub_NWAY_p_i","pub_NWAY_p_any"}<=set(prob):
+            prob["sort_probability"]=pd.to_numeric(prob.pub_NWAY_p_i,errors="coerce")
+            best=prob.sort_values("sort_probability",ascending=False).drop_duplicates("ero_name").set_index("ero_name")
+            for k in ("pub_LS10_FULLID","pub_LS10_RA","pub_LS10_DEC","pub_LS10_TYPE","pub_NWAY_p_i","pub_NWAY_p_any","pub_bestCTP"):
+                if k in best:
+                    register["salvato_"+k[4:]]=register.ero_name.map(best[k])
+    cases_file=out/"casework"/"case_index.csv"
+    if cases_file.exists() and cases_file.stat().st_size>4:
+        cases=pd.read_csv(cases_file).set_index("detection_uid")
+        for k in ("interpretation","prior_event_leads","publications"):
+            register["case_"+k]=register.detection_uid.map(cases[k])
+        manual=register.disposition.eq("candidate") & (register.case_prior_event_leads.fillna(0).gt(0) | register.case_interpretation.fillna("").str.contains("bright-star alternative"))
+        register.loc[manual,"disposition"]="inconclusive"
+        register.loc[manual,"rationale"]="Source-specific publication or optical-loading alternative in casebook requires review"
     register.to_csv(out/"review_register.csv.gz",index=False)
     candidates=register.loc[register.disposition.eq("candidate")].sort_values("robust_model_floor_ratio",ascending=False)
     candidates.to_csv(out/"candidates.csv",index=False)
@@ -72,7 +102,7 @@ def summarize(out):
         return {str(k):int(v) for k,v in values.value_counts().items()}
     def json_load(name):
         return json.loads((out/name).read_text())
-    selected_cols=["detection_uid","name","ra","dec","high","low","low_kind","ratio","guarded_ratio","model_floor_ratio","robust_model_floor_ratio","host_id","host_type","xmm_counterpart","xmm_xtyp","known_associations","rationale","disposition"]
+    selected_cols=["detection_uid","name","ra","dec","high","low","low_kind","ratio","guarded_ratio","model_floor_ratio","robust_model_floor_ratio","host_id","host_type","xmm_counterpart","xmm_xtyp","known_associations","rationale","disposition","case_interpretation","case_publications","salvato_NWAY_p_any","salvato_NWAY_p_i","local_galaxy_pcc","local_galaxy_empirical_fraction"]
     examples=register.sort_values("guarded_ratio",ascending=False).drop_duplicates("source_group")
     examples[[c for c in selected_cols if c in examples]].to_csv(out/"review_examples.csv",index=False)
     missing_patterns={}

@@ -23,7 +23,10 @@ RELEVANT=re.compile(r"X.ray|tidal|TDE|transien|flar|variab|outburst|switch|erupt
 
 
 def get(url,**kwargs):
-    r=requests.get(url,headers=AGENT,timeout=(12,60),**kwargs)
+    headers=dict(AGENT)
+    if url.startswith("https://api.github.com/") and os.environ.get("GH_TOKEN"):
+        headers["Authorization"]="Bearer "+os.environ["GH_TOKEN"]
+    r=requests.get(url,headers=headers,timeout=(12,60),**kwargs)
     r.raise_for_status()
     return r
 
@@ -79,7 +82,7 @@ def catalog_snapshots(out):
                 repos.extend(part)
                 if len(part)<100:
                     break
-            selected=[p for p in repos if re.fullmatch(r"tde-\d+[-\d]*|tidaldisruptions-\d+[-\d]*|otter-data",p["name"],re.I)]
+            selected=[p for p in repos if re.fullmatch(r"tde-\d+[-\d]*|tidaldisruptions-\d+[-\d]*|otter-data|otterdb",p["name"],re.I)]
             receipts.append(dict(organization=org,matched_repositories=[p["full_name"] for p in selected]))
         except Exception as e:
             receipts.append(dict(organization=org,error=str(e)))

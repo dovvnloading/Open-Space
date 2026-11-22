@@ -52,11 +52,11 @@ SCHEMA = {
                 ext="ext extent extent0 sourceextent",
                 extlike="extlike extentlikelihood"),
     "rass": dict(F, name="name iauname 2rxs irocess rosat sourcename",
-                 pos="xerr poserrerr poserr errorradius positionerror",
+                 pos="poserror positionalerror poserrerr poserr errorradius positionerror positionuncertainty radecerror xerr",
                  posy="yerr",
                  rate="crates count_rate countrate crate srccountrate rate ct",
                  errrate="crateserr countrateerror countrateerr countrateerr1 ecrate ecrates crateerr erate rateerr",
-                 ml="eximl existence_likelihood existlikelihood detectionlikelihood detlikelihood likelihood",
+                 ml="eximl existence_likelihood existlikelihood detectionlikelihood detectlikelihood detlikelihood likelihoodofthedetection likelihood",
                  flag="sourcequalityflag sflag screeningflag spuriousflag suspectflag",
                  near="nearbysrcdetflag", region="extendedregionflag"),
 }
@@ -158,6 +158,15 @@ def select_columns(role, names, descriptions):
                 mapping[key] = name
             if key == "ext" and ("extent" in n or "extb6" in n) and not iserr and "lik" not in n:
                 mapping[key] = name
+    if role=="rass":
+        for n in names:
+            label=norm(n)
+            desc=str(descriptions.get(n,"")).lower()
+            if "ml" not in mapping and ("likelihood" in label or "likelihood" in desc):
+                if ("det" in label or "exist" in label or "detection likelihood" in desc) and "ext" not in label:
+                    mapping["ml"]=n
+            if "pos" not in mapping and ("err" in label or "uncertainty" in label) and "pos" in label:
+                mapping["pos"]=n
     required = {"ra", "dec", "name", "flux", "error"} if role != "rass" else {
         "ra", "dec", "name", "rate", "errrate"}
     if required - mapping.keys():

@@ -33,7 +33,7 @@ class Audit(Archive):
 def read_legacy(arc,table):
     for reader,args in [(get_tap_table,(NASA,table,"rass")),(get_tdat,(table,"rass"))]:
         try:
-            data,mapping,units,_ = reader(arc,*args)
+            data,mapping,units,desc = reader(arc,*args)
             # The TAP reader separately checks its result against SELECT COUNT(*).
             # The release-scale bounds catch empty/truncated historical mirrors.
             _,minimum,maximum = TABLES[table]
@@ -55,7 +55,8 @@ def read_legacy(arc,table):
                 raise ValueError("invalid 1RXS coordinates")
             arc.summary["catalogues"][table] = {"status":"ok","rows":len(data),
                     "reader":reader.__name__, "location":args[:-1],"mapping":mapping,
-                    "units":{k:str(units.get(v,"")) for k,v in mapping.items()}}
+                    "units":{k:str(units.get(v,"")) for k,v in mapping.items()},
+                    "legacy_schema":{str(k):str(v) for k,v in desc.items()}}
             arc.save()
             return data
         except Exception as exc:

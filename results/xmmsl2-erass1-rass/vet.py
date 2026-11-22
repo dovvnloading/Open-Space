@@ -1,6 +1,7 @@
 """Host and novelty checks for the slew search. Run inside the science job."""
 import argparse
 import csv
+from datetime import datetime, timezone
 import gzip
 import hashlib
 import io
@@ -9,6 +10,8 @@ import math
 import re
 import threading
 import subprocess
+import tarfile
+import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlparse
 import zipfile
@@ -99,11 +102,13 @@ class Audit:
         params = kwargs.get("data") or kwargs.get("params") or {}
         # Include the submitted coordinates/query or their digest; the original
         # input and code reproduce multipart uploads deterministically.
-        signature = hashlib.sha256(json.dumps(params, sort_keys=True).encode()).hexdigest()
+        upload_digests = {n:hashlib.sha256((v[1].encode() if isinstance(v[1],str) else v[1])).hexdigest()
+                          for n,v in kwargs.get("files",{}).items()}
+        signature = hashlib.sha256(json.dumps([params,upload_digests], sort_keys=True).encode()).hexdigest()
         try:
             response = requests.request(method, url, timeout=(10, 65), **kwargs)
             raw = response.content
-            self.record({"service": name, "url": url, "request_sha256": signature,
+            self.record({"service": name, "utc":datetime.now(timezone.utc).isoformat(), "url": url, "request_sha256": signature,
                          "status": response.status_code, "bytes": len(raw),
                          "sha256": hashlib.sha256(raw).hexdigest()})
             response.raise_for_status()
@@ -135,7 +140,8 @@ def select_points(rows, controls):
         ra, dec = float(row["ra"]), float(row["dec"])
         sig = number(row, "poserr_arcsec")
         gate = min(SEARCH_RADIUS, max(5, 2.45 * (sig if sig and sig > 0 else 8.0)))
-        points.append(dict(k=i * 5, i=i, shift=0, ra=ra, dec=dec, gate=gate))
+        points.append(dict(k=i * 5, i=i, shift=0, ra=ra, dec=dec, gate=gate,
+                           ero_name=scalar(row,"ero_name"), ero_ra=number(row,"ero_ra"),ero_dec=number(row,"ero_dec")))
         if controls:
             c = SkyCoord(ra * u.deg, dec * u.deg)
             for j, pa in enumerate((0, 90, 180, 270), 1):
@@ -265,6 +271,216 @@ WISE = {"id": ["AllWISE", "WISE", "designation"], "ra": ["RAJ2000", "RAdeg"],
 VSX = {"id": ["Name", "OID"], "type": ["Type"], "ra": ["RAJ2000"], "dec": ["DEJ2000"]}
 
 
+# Independent public catalogue front ends. Each route must recover a named
+# object before empty cone results on that route are accepted.
+SIMBAD_HOSTS = ("simbad.cfa.harvard.edu","simbad.u-strasbg.fr","simbad.cds.unistra.fr")
+SIMBAD_TAPS = ["https://"+h+"/simbad/sim-tap/sync" for h in SIMBAD_HOSTS]
+PROBES = {"Gaia":(269.4485,4.73942,"4472832130942575872"),
+          "WISE":(187.277915,2.052388,"122906"),
+          "VSX":(291.3663,42.78436,"rrlyr"),
+          "SIMBAD":(187.277915,2.052388,"3c273")}
+GAIA_NATIVE = {"id":["source_id"],"ra":["ra"],"dec":["dec"],"plx":["parallax"],
+               "e_plx":["parallax_error"],"pmra":["pmra"],"e_pmra":["pmra_error"],
+               "pmdec":["pmdec"],"e_pmdec":["pmdec_error"],"ruwe":["ruwe"],
+               "gmag":["phot_g_mean_mag"],"variable":["phot_variable_flag"]}
+WISE_NATIVE = {"id":["designation","source_id"],"ra":["ra"],"dec":["dec"],
+               "w1":["w1mpro"],"w2":["w2mpro"],"ccf":["cc_flags"]}
+
+
+def native_route(schema,fields,service,url,columns=None):
+    selected = columns or ",".join(v[0] for v in fields.values())
+    def run(audit,name,part):
+        if service=="datalab":
+            where=" OR ".join(f"q3c_radial_query(ra,dec,{p['ra']:.8f},{p['dec']:.8f},{SEARCH_RADIUS/3600:.8f})"
+                             for p in part)
+            query=f"SELECT {selected} FROM {schema} WHERE "+where
+            raw=audit.get(name+" "+schema,url,params={"sql":query,"ofmt":"csv","async":"False"},
+                          headers={"X-DL-AuthToken":"anonymous.0.0.anon_access"})
+            rows=csv_rows(raw)
+        else:
+            rows=tap(audit,name+" "+schema,url,f"SELECT {selected} FROM {schema} WHERE "+cones(part))
+        cleaned=[{k:scalar(row,*names) for k,names in fields.items()} for row in rows]
+        if cleaned and not all(r.get("id") and r.get("ra") and r.get("dec") for r in cleaned):
+            raise ValueError("unrecognized native source or coordinate fields")
+        return cleaned
+    return run
+
+
+def simbad_tap_route(url):
+    def run(audit,name,part):
+        rs=tap(audit,name,url,"SELECT oid,main_id,otype,ra,dec FROM basic WHERE "+cones(part))
+        return [dict(r,bib_tap=url) for r in rs]
+    return run
+
+
+def votable_rows(raw):
+    from astropy.io.votable import parse
+    xml = ET.fromstring(raw)
+    if any(str(info.get("value","")).upper() in ("ERROR","OVERFLOW")
+           for info in xml.iter() if info.tag.split("}")[-1]=="INFO"):
+        raise ValueError("error or truncated VO response")
+    if xml.tag.split("}")[-1].upper()!="VOTABLE":
+        raise ValueError("non-VOTable response")
+    tables=list(parse(io.BytesIO(raw),verify="ignore").iter_tables())
+    if not tables:
+        if re.search(r"(no (?:astronomical )?object|no matching|no result|no record)",str(raw[:16000]),re.I):
+            return []
+        raise ValueError("VOTable has no catalogue table")
+    out=[]
+    for extension in tables:
+        tab=extension.to_table(use_names_over_ids=True)
+        for row in tab:
+            out.append({k:str(row[k]).strip() for k in tab.colnames if not np.ma.is_masked(row[k])})
+    return out
+
+
+def harvard_vsx_tsv(audit,name,part):
+    rows=[]
+    for p in part:
+        raw=audit.get(name,"https://vizier.cfa.harvard.edu/viz-bin/asu-tsv",params={
+            "-source":"B/vsx/vsx","-c":f"{p['ra']:.8f} {p['dec']:+.8f}","-c.rs":SEARCH_RADIUS,
+            "-out":"Name,RAJ2000,DEJ2000,Type","-out.max":1000})
+        txt=raw.decode("utf-8-sig","replace")
+        scoped="#Name: B/vsx" in txt and "#RESOURCE=yCat_" in txt
+        if not scoped or re.search(r"^#(?:ERROR|INFO.*(?:QUERY_STATUS=ERROR|truncated|overflow))",txt,re.I|re.M):
+            raise ValueError("unrecognized or truncated VizieR VSX response")
+        lines=[line for line in txt.splitlines() if line and not line.startswith("#")]
+        if not lines:
+            continue
+        header=next(csv.reader([lines[0]],delimiter="\t"))
+        if not {"Name","RAJ2000","DEJ2000","Type"} <= set(header):
+            raise ValueError("VizieR VSX changed column names")
+        for r in csv.DictReader(lines[1:],fieldnames=header,delimiter="\t"):
+            ra,dec=number(r,"RAJ2000"),number(r,"DEJ2000")
+            if ra is not None and dec is not None:
+                rows.append(dict(id=scalar(r,"Name"),ra=ra,dec=dec,type=scalar(r,"Type")))
+    return rows
+
+
+def vizier_vsx_route(server):
+    def run(audit,name,part):
+        rs=[]
+        for p in part:
+            raw=audit.get(name,server+"/viz-bin/votable",params={"-source":"B/vsx/vsx",
+                "-c":f"{p['ra']:.8f} {p['dec']:+.8f}","-c.rs":SEARCH_RADIUS,
+                "-out":"Name,Type,_RAJ2000,_DEJ2000,RAJ2000,DEJ2000","-out.max":1000})
+            for row in votable_rows(raw):
+                ra,dec=parse_coord(scalar(row,"_RAJ2000","RAJ2000"),scalar(row,"_DEJ2000","DEJ2000"))
+                rs.append(dict(id=scalar(row,"Name","OID"),type=scalar(row,"Type"),ra=ra,dec=dec))
+        return rs
+    return run
+
+
+def aavso_vsx_route(audit,name,part):
+    rs=[]
+    for p in part:
+        raw=audit.get(name,"https://www.aavso.org/vsx/index.php",params={"view":"api.list","format":"json",
+                      "ra":p["ra"],"dec":p["dec"],"radius":SEARCH_RADIUS/3600})
+        payload=json.loads(raw)
+        if "VSXObjects" not in payload:
+            raise ValueError("unknown AAVSO response schema")
+        content=payload["VSXObjects"] or {}
+        records=content.get("VSXObject",[]) if isinstance(content,dict) else content
+        if isinstance(records,dict):
+            records=[records]
+        for r in records or []:
+            ra,dec=parse_coord(scalar(r,"RA2000","RA","RAJ2000"),scalar(r,"Declination2000","Declination","Dec","DEJ2000"))
+            rs.append(dict(id=scalar(r,"Name"),type=scalar(r,"VariabilityType","Type"),ra=ra,dec=dec))
+    return rs
+
+
+def sim_coo_route(host):
+    def run(audit,name,part):
+        rs=[]
+        for p in part:
+            raw=audit.get(name,"https://"+host+"/simbad/sim-coo",params={
+                    "Coord":f"{p['ra']:.8f} {p['dec']:+.8f}","CooFrame":"ICRS","CooEpoch":2000,
+                    "Radius":SEARCH_RADIUS,"Radius.unit":"arcsec","output.format":"VOTable",
+                    "output.params":"main_id,otype,ra(d),dec(d)"})
+            for r in votable_rows(raw):
+                ra,dec=parse_coord(scalar(r,"RA_d","RA(d)","RA","ra_d_ICRS_J2000.0"),
+                                   scalar(r,"DEC_d","DEC(d)","DEC","dec_d_ICRS_J2000.0"))
+                rs.append(dict(main_id=scalar(r,"MAIN_ID","identifier"),otype=scalar(r,"OTYPE","OTYPE_S"),
+                               oid=scalar(r,"oid","oidref"),ra=ra,dec=dec))
+        return rs
+    return run
+
+
+def public_routes(name):
+    if name=="Gaia":
+        return [("Data Lab Gaia DR3",native_route("gaia_dr3.gaia_source",GAIA_NATIVE,"datalab",DATALAB)),
+                ("ESA Gaia DR3",native_route("gaiadr3.gaia_source",GAIA_NATIVE,"tap","https://gea.esac.esa.int/tap-server/tap/sync")),
+                ("AIP Gaia DR3",native_route("gaiadr3.gaia_source",GAIA_NATIVE,"tap","https://gaia.aip.de/tap/sync"))]
+    if name=="WISE":
+        return [("Data Lab AllWISE",native_route("allwise.source",WISE_NATIVE,"datalab",DATALAB)),
+                ("IRSA AllWISE",native_route("allwise_p3as_psd",WISE_NATIVE,"tap","https://irsa.ipac.caltech.edu/TAP/sync"))]
+    if name=="VSX":
+        return [("Harvard VizieR ASU TSV",harvard_vsx_tsv)]+[(h,vizier_vsx_route("https://"+h)) for h in
+                 ("vizier.cfa.harvard.edu","vizier.iucaa.in","vizier.cds.unistra.fr")]+[("AAVSO direct",aavso_vsx_route)]
+    return [(SIMBAD_TAPS[0],simbad_tap_route(SIMBAD_TAPS[0])),
+            (SIMBAD_HOSTS[0],sim_coo_route(SIMBAD_HOSTS[0]))]+[(url,simbad_tap_route(url)) for url in SIMBAD_TAPS[1:]]+[
+                (h,sim_coo_route(h)) for h in SIMBAD_HOSTS[1:]]
+
+
+def verified_service(audit,name,points):
+    ra,dec,expected=PROBES[name]
+    center=[dict(ra=ra,dec=dec,k=-1)]
+    result,status={},{}
+    reasons=[]
+    for tag,query in public_routes(name):
+        missing=[p for p in points if status.get(p["k"])!="ok"]
+        if not missing:
+            break
+        try:
+            sample=query(audit,name,center)
+            def is_control(r):
+                # SIMBAD often returns the quasar's alternate display ID
+                # QSO B1226+023, rather than its 3C identifier.
+                label=re.sub(r"[^a-z0-9]","",scalar(r,"id","main_id").lower())
+                good=expected in label or (name=="SIMBAD" and ("1226023" in label or "122906" in label))
+                return good and distance(r,center[0])<5
+            if not any(is_control(r) for r in sample):
+                raise ValueError("named positive control absent; fields="+str(sample[:1])[:400])
+            audit.record({"service":name,"route":tag,"control":expected,"status":"passed"})
+            if name=="VSX" or "sim-coo" in query.__qualname__ or (name=="SIMBAD" and tag in SIMBAD_HOSTS):
+                # Single-cone services can fail on one coordinate. Keep other
+                # successful cones and avoid dropping an entire 35-source block.
+                def one(p):
+                    try:
+                        rr=query(audit,name,[p])
+                        m=match_fields([p],rr,(("ra",),("dec",)))
+                        return m.get(p["k"],[]),"ok"
+                    except Exception as exc:
+                        return [],clipped_failure(exc)
+                with ThreadPoolExecutor(max_workers=3) as pool:
+                    for p,(hits,state) in zip(missing,pool.map(one,missing)):
+                        result[p["k"]],status[p["k"]]=hits,state
+            else:
+                hits,checks=region_query(audit,name,missing,query,(("ra",),("dec",)))
+                for k,state in checks.items():
+                    if state=="ok":
+                        result[k]=hits.get(k,[])
+                    status[k]=state
+        except Exception as exc:
+            reasons.append(tag+": "+clipped_failure(exc))
+            audit.record({"service":name,"route":tag,"status":"failed","error":clipped_failure(exc)})
+    if not status or any(status.get(p["k"])!="ok" for p in points):
+        missing=[p for p in points if status.get(p["k"])!="ok"]
+        if name in ("Gaia","WISE","VSX"):
+            cat,fields={"Gaia":("I/355/gaiadr3",GAIA),"WISE":("II/328/allwise",WISE),"VSX":("B/vsx/vsx",VSX)}[name]
+            probe,ps=xmatch(audit,cat,center,fields)
+            if ps.get(-1)=="ok" and any(expected in re.sub(r"[^a-z0-9]","",q["id"].lower()) and
+                                         q["sep_arcsec"]<5 for q in probe.get(-1,[])):
+                hits,st=xmatch(audit,cat,missing,fields)
+                result.update(hits)
+                status.update(st)
+            else:
+                reasons.append("CDS XMatch positive control failed")
+        for p in missing:
+            status.setdefault(p["k"]," | ".join(reasons) or "validated service unavailable")
+    return result,status
+
+
 def stellar_astrometry(row):
     # Gaia proper motions are the two projected components in mas/yr. Requiring
     # one significant component avoids treating a noisy vector length as Gaussian.
@@ -294,7 +510,14 @@ def associate_refs(audit, simbad, points):
         try:
             query = ("SELECT h.oidref,r.bibcode,r.title FROM has_ref AS h JOIN ref AS r "
                      f"ON h.oidbibref=r.oidbib WHERE h.oidref IN ({keys})")
-            rows = tap(audit, "SIMBAD-bibliography", SIMBAD, query)
+            mirrors = list(dict.fromkeys([r["bib_tap"] for hits in simbad.values() for r in hits if r.get("bib_tap")] + SIMBAD_TAPS))
+            for url in mirrors:
+                try:
+                    rows = tap(audit,"SIMBAD-bibliography",url,query)
+                    break
+                except Exception:
+                    if url==mirrors[-1]:
+                        raise
             if len(rows) >= 100000:
                 raise ValueError("bibliography truncated")
             for r in rows:
@@ -320,6 +543,91 @@ def parse_coord(ra, dec):
     return pos.ra.deg, pos.dec.deg
 
 
+def tns_snapshot(audit,points):
+    """Search public Fink TNS snapshots for positive evidence if the official cone is down.
+
+    A broker can preserve only a subset or a dated snapshot. Its zero-hit
+    positions remain unverified against the complete TNS, even if our positive
+    control is present in the snapshot.
+    """
+    import pandas as pd
+    results=defaultdict(list)
+    seen=set()
+    for repo in ("astrolabsoftware/fink-science","astrolabsoftware/fink-broker"):
+        try:
+            api="https://api.github.com/repos/"+repo
+            rev=json.loads(audit.get("TNS-mirror-revision",api+"/commits/HEAD"))["sha"]
+            tree=json.loads(audit.get("TNS-mirror-inventory",api+"/git/trees/"+rev,
+                                      params={"recursive":"1"})).get("tree",[])
+            assets=[t for t in tree if t["type"]=="blob" and "tns" in t["path"].lower() and
+                    re.search(r"\.(parquet|csv|csv\.gz|csv\.zip)$",t["path"],re.I)]
+            for t in assets:
+                if t["sha"] in seen:
+                    continue
+                seen.add(t["sha"])
+                path=t["path"]
+                url="https://raw.githubusercontent.com/"+repo+"/"+rev+"/"+path
+                data=audit.get("TNS-mirror",url)
+                if data.startswith(b"version https://git-lfs.github.com/"):
+                    url="https://media.githubusercontent.com/media/"+repo+"/"+rev+"/"+path
+                    data=audit.get("TNS-mirror-LFS",url)
+                if path.lower().endswith(".parquet"):
+                    table=pd.read_parquet(io.BytesIO(data))
+                else:
+                    compression="gzip" if data.startswith(b"\x1f\x8b") else ("zip" if data.startswith(b"PK") else None)
+                    table=pd.read_csv(io.BytesIO(data),compression=compression,low_memory=False)
+                cols={str(c).lower().strip():c for c in table.columns}
+                ra=next((cols[c] for c in ("ra","ra_deg","radeg") if c in cols),None)
+                dec=next((cols[c] for c in ("dec","dec_deg","decdeg","decl") if c in cols),None)
+                name=next((cols[c] for c in ("name","fullname","tns_name","tnsname") if c in cols),None)
+                if not ra or not dec or not name:
+                    continue
+                names=table[name].astype(str).str.lower().str.replace(" ","",regex=False)
+                cow=table[names.str.endswith("2018cow")]
+                if not len(cow):
+                    continue
+                a,b=parse_coord(cow.iloc[0][ra],cow.iloc[0][dec])
+                if distance({"ra":a,"dec":b},{"ra":244.000925,"dec":22.268008})>5:
+                    continue
+                objs=[]
+                typ=next((cols[c] for c in ("type","obj. type","tns_type") if c in cols),None)
+                date=next((cols[c] for c in ("discovery date (ut)","discoverydate","discovery_date") if c in cols),None)
+                for values in table[[name,ra,dec]+([typ] if typ else [])].itertuples(index=False,name=None):
+                    try:
+                        a,b=parse_coord(values[1],values[2])
+                    except (ValueError,TypeError):
+                        continue
+                    objs.append({"name":str(values[0]),"ra":a,"dec":b,"type":str(values[3]) if typ else "",
+                                 "source_snapshot":url})
+                hits=match_fields(points,objs,(("ra",),("dec",)))
+                for k,rows in hits.items():
+                    results[k].extend(rows)
+                audit.record({"service":"TNS-broker-coverage","exact_snapshot":url,"rows":len(objs),
+                              "total":len(table),"positive_control":"AT 2018cow",
+                              "latest_event":str(table[date].dropna().astype(str).max()) if date else "",
+                              "columns":list(table.columns),"full_TNS_coverage":False})
+        except Exception as exc:
+            audit.record({"service":"TNS-broker-snapshot","repo":repo,"error":clipped_failure(exc)})
+    return results
+
+
+def backup_tns(audit,points,official_error):
+    try:
+        from tns_mirror import tns_lookup
+        hits,checks=tns_lookup(points,audit)
+        if all(checks.get(p["k"])=="ok" for p in points):
+            return hits,checks
+    except Exception as exc:
+        audit.record({"service":"TNS-secondary","error":clipped_failure(exc)})
+        hits,checks={},{}
+    alternate=tns_snapshot(audit,points)
+    for k,rs in hits.items():
+        alternate[k].extend(rs)
+    for p in points:
+        checks.setdefault(p["k"],official_error+" | complete current TNS unavailable")
+    return alternate,checks
+
+
 def tns(audit, points, previous):
     try:
         raw = audit.get("TNS", "https://www.wis-tns.org/system/files/tns_public_objects/tns_public_objects.csv.zip")
@@ -342,8 +650,9 @@ def tns(audit, points, previous):
                              "type": scalar(r, "Obj. Type", "Type"), "date": scalar(r,"Discovery Date (UT)")})
             except (TypeError, ValueError):
                 missed += 1
-        if not objs:
-            raise ValueError("TNS export returned zero usable objects")
+        if not any("2018cow" in obj["name"].replace(" ","") and
+                   distance(obj,{"ra":244.000925,"dec":22.268008})<5 for obj in objs):
+            raise ValueError("TNS export missing positive control AT 2018cow")
         matched = match_fields(points, objs, (("ra",), ("dec",)))
         audit.record({"service":"TNS", "parsed":len(objs), "unparsed":missed})
         return matched, {p["k"]: "ok" if not missed else f"partial ({missed} unreadable)" for p in points}
@@ -369,7 +678,7 @@ def tns(audit, points, previous):
         if not any("2018cow" in scalar(r, "Name").replace(" ", "") for r in control):
             raise ValueError("TNS official search missed positive control AT 2018cow")
     except Exception as exc:
-        return result, {p["k"]: archive_error + " | " + clipped_failure(exc) for p in points}
+        return backup_tns(audit,points,archive_error+" | "+clipped_failure(exc))
 
     def lookup(p):
         hits = []
@@ -410,6 +719,13 @@ def tns(audit, points, previous):
                     status[q["k"]] = state
                 if stop:
                     blocked = state
+    missing=[p for p in points if status.get(p["k"])!="ok" and not previous.get(p["k"])]
+    if missing:
+        supplement,checks=backup_tns(audit,missing,"official cone unavailable")
+        for p in missing:
+            k=p["k"]
+            result[k].extend(supplement.get(k,[]))
+            status[k]=checks[k]
     return result, status
 
 
@@ -442,6 +758,8 @@ def publication_catalogs(audit,papers):
         try:
             try:
                 found = viz.find_catalogs(terms)
+                if not found:
+                    raise ValueError("no primary metadata records")
             except Exception:
                 found = mirror.find_catalogs(terms)
             for name, resource in found.items():
@@ -454,6 +772,11 @@ def publication_catalogs(audit,papers):
             coverage[label] = {"status":clipped_failure(exc)}
     # Independent published sample with explicit archive identifier. The returned
     # table shape and coordinates still have to pass the same parsing checks.
+    # These release identifiers point to the van Velzen and Hammerstein
+    # population studies. Only a successfully parsed positional table counts.
+    catalogues.setdefault("J/ApJ/908/4",set()).add("TDE")
+    catalogues.setdefault("J/ApJ/942/9",set()).add("TDE")
+    catalogues.setdefault("J/MNRAS/508/3820",set()).add("Sazonov")
     for _,resource,label in papers.values():
         if resource:
             catalogues.setdefault(resource,set()).add(label)
@@ -536,7 +859,9 @@ def article_objects(audit, points, papers):
                 seendois.add(doi)
                 urls = [rec.get("resource",{}).get("primary",{}).get("URL","")]
                 urls.extend(x.get("URL","") for x in rec.get("link",[]))
-                urls = [x for x in dict.fromkeys(urls) if x.startswith("https://")]
+                urls = [re.sub("^http://","https://",x) for x in dict.fromkeys(urls) if x.startswith(("http://","https://"))]
+                if doi.lower()=="10.1051/0004-6361/201628241":
+                    urls.append("https://www.aanda.org/articles/aa/full_html/2016/08/aa28241-16/aa28241-16.html")
                 visited, seenids = set(), {}
                 for link in urls:
                     if link in visited:
@@ -574,7 +899,7 @@ def article_objects(audit, points, papers):
                     except Exception as exc:
                         audit.record({"service":"paper-full-text","doi":doi,"url":link,"error":clipped_failure(exc)})
                 if seenids:
-                    searched.add(kind)
+                    searched.add("slew" if doi in PRIOR_PAPERS else kind)
                     mapped = match_fields(points,list(seenids.values()),(("ra",),("dec",)))
                     for k,hits in mapped.items():
                         matches[k].extend(hits)
@@ -583,6 +908,191 @@ def article_objects(audit, points, papers):
         except Exception as exc:
             audit.record({"service":"Crossref","query":phrase,"error":clipped_failure(exc)})
     return matches, searched
+
+
+def byte_documents(raw, name, depth=0):
+    """Read journal attachments and arXiv source in memory without extraction."""
+    if depth > 3:
+        return
+    if raw.startswith(b"%PDF"):
+        r = subprocess.run(["pdftotext","-layout","-","-"],input=raw,capture_output=True,
+                           check=True,timeout=45)
+        yield name,r.stdout.decode("utf-8","replace")
+        return
+    if zipfile.is_zipfile(io.BytesIO(raw)):
+        with zipfile.ZipFile(io.BytesIO(raw)) as z:
+            for f in z.infolist():
+                if not f.is_dir() and f.file_size<=40_000_000:
+                    yield from byte_documents(z.read(f),name+"/"+f.filename,depth+1)
+        return
+    if raw.startswith(b"\x1f\x8b") or raw[257:262]==b"ustar":
+        try:
+            with tarfile.open(fileobj=io.BytesIO(raw),mode="r:*") as archive:
+                for m in archive:
+                    if m.isfile() and m.size<=40_000_000:
+                        yield from byte_documents(archive.extractfile(m).read(),name+"/"+m.name,depth+1)
+            return
+        except tarfile.TarError:
+            if raw.startswith(b"\x1f\x8b"):
+                yield from byte_documents(gzip.decompress(raw),name,depth+1)
+                return
+    if raw.startswith(b"SIMPLE  ="):
+        from astropy.table import Table
+        tab = Table.read(io.BytesIO(raw),format="fits")
+        yield name,"\n".join(" ".join(str(v) for v in row) for row in tab)
+        return
+    if b"\x00" not in raw[:4096] and not name.lower().endswith((".eps",".ps",".jpg",".png",".bib")):
+        yield name,raw.decode("utf-8","replace")
+
+
+def coordinate_names(body):
+    rows = {}
+    body = body.replace("−","-").replace("–","-").replace("$","").replace("\,"," ").replace("~"," ")
+    body = re.sub(r"(XMMSL[12]?)\s*\\[a-z]+\s*",r"\1 ",body,flags=re.I)
+    for m in IAU_NAME.finditer(body):
+        prefix, a, sign, d = m.groups()
+        if not prefix.upper().startswith("XMMSL"):
+            continue
+        try:
+            ra,dec = parse_coord(a[:2]+":"+a[2:4]+":"+a[4:],sign+d[:2]+":"+d[2:4]+":"+d[4:])
+        except ValueError:
+            continue
+        sid = f"{a}{sign}{d}"
+        rows[sid]={"name":prefix+" J"+sid,"ra":ra,"dec":dec}
+    return rows
+
+
+def li_supplement(audit,points,rec):
+    """Search exact-DOI supplements. Require the published sample size for a clean non-hit."""
+    doi="10.1093/mnras/stac714"
+    matches, opened, expected, samples = defaultdict(list),set(),set(),{}
+    candidates = [(r.get("URL",""),False) for r in rec.get("link",[])]
+    candidates.append((rec.get("resource",{}).get("primary",{}).get("URL",""),False))
+    abstract = re.sub("<[^>]+>"," ",rec.get("abstract",""))
+    arxiv_ids=set()
+    try:
+        payload=json.loads(audit.get("Li-SemanticScholar","https://api.semanticscholar.org/graph/v1/paper/DOI:"+doi,
+                           params={"fields":"externalIds,openAccessPdf,title,abstract"}))
+        if payload.get("externalIds",{}).get("ArXiv"):
+            arxiv_ids.add(payload["externalIds"]["ArXiv"])
+        candidates.append(((payload.get("openAccessPdf") or {}).get("url",""),False))
+        abstract+=" "+(payload.get("abstract") or "")
+    except Exception as exc:
+        audit.record({"service":"Li-SemanticScholar","error":clipped_failure(exc)})
+    try:
+        meta=json.loads(audit.get("Li-OpenAlex","https://api.openalex.org/works/https://doi.org/"+doi))
+        for loc in meta.get("locations",[]):
+            for url in (loc.get("landing_page_url"),loc.get("pdf_url")):
+                if url:
+                    if "arxiv.org/" in url:
+                        m=re.search(r"/(?:pdf|abs)/([0-9]{4}\.[0-9]{4,5})",url)
+                        if m:
+                            arxiv_ids.add(m.group(1))
+                    candidates.append((url,False))
+    except Exception as exc:
+        audit.record({"service":"Li-OpenAlex","error":clipped_failure(exc)})
+    try:
+        cat=ET.fromstring(audit.get("Li-arXiv-metadata","https://export.arxiv.org/api/query",
+                      params={"search_query":'doi:"'+doi+'"',"max_results":5}))
+        for entry in cat.findall("{*}entry"):
+            match=re.search(r"([0-9]{4}\.[0-9]{4,5})",entry.findtext("{*}id",""))
+            if match:
+                arxiv_ids.add(match.group(1))
+                abstract+=" "+entry.findtext("{*}summary","")
+    except Exception as exc:
+        audit.record({"service":"Li-arXiv-metadata","error":clipped_failure(exc)})
+    for ident in arxiv_ids:
+        candidates.extend([("https://arxiv.org/src/"+ident,True),("https://arxiv.org/pdf/"+ident,False)])
+    candidates.extend([("https://articles.adsabs.harvard.edu/pdf/2022MNRAS.512.3858L",False),
+                       ("https://ui.adsabs.harvard.edu/link_gateway/2022MNRAS.512.3858L/EPRINT_PDF",False)])
+    try:
+        found=json.loads(audit.get("Li-figshare-search","https://api.figshare.com/v2/articles",
+                                   params={"resource_doi":doi,"page_size":100}))
+        for item in found:
+            metadata=json.loads(audit.get("Li-figshare-record","https://api.figshare.com/v2/articles/"+str(item["id"])))
+            if doi in str(metadata.get("resource_doi","")).lower() or doi in " ".join(metadata.get("references",[])).lower():
+                candidates.extend((f.get("downloadUrl",""),True) for f in metadata.get("files",[])
+                                  if 0<f.get("size",0)<=40_000_000)
+    except Exception as exc:
+        audit.record({"service":"Li-figshare","error":clipped_failure(exc)})
+    try:
+        meta=json.loads(audit.get("Li-DataCite","https://api.datacite.org/dois",params={
+            "query":'relatedIdentifiers.relatedIdentifier:"'+doi+'"',"page[size]":80}))
+        for item in meta.get("data",[]):
+            fields=item["attributes"]
+            related=[str(x.get("relatedIdentifier","")).lower() for x in fields.get("relatedIdentifiers",[])]
+            if doi not in related:
+                continue
+            content=fields.get("contentUrl") or []
+            candidates.extend((u,True) for u in content if isinstance(u,str))
+            if fields.get("url"):
+                candidates.append((fields["url"],True))
+            audit.record({"service":"Li-related-deposit","doi":fields.get("doi"),"titles":fields.get("titles"),
+                          "content_url":content,"landing":fields.get("url")})
+    except Exception as exc:
+        audit.record({"service":"Li-DataCite","error":clipped_failure(exc)})
+    # Exact related DOI and record metadata bind any Zenodo files to the paper.
+    try:
+        meta=json.loads(audit.get("Li-Zenodo","https://zenodo.org/api/records",params={"q":'"'+doi+'"',"size":25}))
+        for rec0 in meta["hits"]["hits"]:
+            if doi.lower() in json.dumps(rec0.get("metadata",{})).lower():
+                for f in rec0.get("files",[]):
+                    if 0 < f.get("size",0) <= 40_000_000:
+                        candidates.append((f.get("links",{}).get("self",""),True))
+    except Exception as exc:
+        audit.record({"service":"Li-Zenodo","error":clipped_failure(exc)})
+    # Only explicit total-sample statements are used to corroborate completeness.
+    total_pattern=re.compile(r"(?:identified|selected|obtained|found|sample\s+(?:comprises|includes|contains|of))"
+            r"\s+(?:a\s+(?:total|sample)\s+of\s+)?([0-9][0-9,]+)\s+(?:highly\s+)?"
+            r"(?:variable\s+)?(?:X.ray\s+)?sources",re.I)
+    def collect_total(txt):
+        for m in total_pattern.finditer(re.sub(r"\s+"," ",txt)):
+            expected.add(int(m.group(1).replace(",","")))
+    collect_total(abstract)
+    for url,is_attachment in candidates:
+        if not url:
+            continue
+        url=re.sub(r"^http://","https://",url)
+        if not url.startswith("https://") or url in opened:
+            continue
+        opened.add(url)
+        try:
+            raw=audit.get("Li-source-material",url)
+            for doc,body in byte_documents(raw,url):
+                if body.lstrip().lower().startswith(("<html","<!doctype")):
+                    html=ArticleHTML()
+                    html.feed(body)
+                    for href in html.links:
+                        if re.search(r"suppl|stac714[_-]s|supporting.information",href,re.I):
+                            dest=urljoin(url,href).split("#")[0]
+                            if dest!=url and (dest,True) not in candidates:
+                                candidates.append((dest,True))
+                    body=" ".join(html.parts)
+                names=coordinate_names(body)
+                # A primary article may count its own sample in its abstract
+                # and provide a long main/appendix table. Retain sample counts
+                # by document and require independent agreement with total.
+                if doi in body or "Populations of highly variable" in body:
+                    collect_total(body[:18000])
+                if names:
+                    samples[doc]=names
+            audit.record({"service":"Li-source-material","url":url,"is_attachment":is_attachment})
+        except Exception as exc:
+            audit.record({"service":"Li-source-material","url":url,"error":clipped_failure(exc)})
+    allrows={}
+    for name,data in samples.items():
+        for key,row in data.items():
+            allrows[key]=dict(row,table="doi:"+doi,document=name)
+    # Illustrative names from unrelated sections cannot establish negative
+    # coverage. Require one data/TeX table with the reported number of sources.
+    eligible = [(doc,len(rows)) for doc,rows in samples.items() if
+                re.search(r"tab|suppl|\.csv|\.dat|\.fits|\.tsv",doc,re.I)]
+    complete = any(n>=20 and n in expected for _,n in eligible)
+    audit.record({"service":"Li-exact-coverage","doi":doi,"arxiv_ids":sorted(arxiv_ids),
+                  "expected_counts_from_primary":sorted(expected),"unique_slew_source_names":len(allrows),
+                  "table_counts":eligible,"complete":complete,"abstract":abstract[:4800]})
+    matched=match_fields(points,list(allrows.values()),(("ra",),("dec",)))
+    return matched,complete
 
 
 def publications(audit, points):
@@ -608,6 +1118,24 @@ def publications(audit, points):
                     continue
                 ra, dec = positional_columns(tab)
                 if not ra or not dec:
+                    item["columns"] = list(tab.colnames)
+                    if terms & {"Li2022","Strotjohann","Starling","slew transients","slew variability"}:
+                        identified=[]
+                        for idx,row in enumerate(tab):
+                            named={}
+                            for field in tab.colnames:
+                                value=str(row[field])
+                                if "xmmsl" in field.lower() and "xmmsl" not in value.lower():
+                                    value="XMMSL "+value
+                                named.update(coordinate_names(value))
+                            identified.extend(dict(obj,table=table_name,catalog=cat,record=idx+1)
+                                              for obj in named.values())
+                        if identified:
+                            hits=match_fields(points,identified,(("ra",),("dec",)))
+                            for k,rs in hits.items():
+                                result[k].extend(rs)
+                            item.update(status="coordinate names",usable=len(identified),rows_sha256=hash_table(tab))
+                            continue
                     item["status"] = "table lacks paired sky coordinates"
                     continue
                 # Hash the exact table projection used for the crossmatch.
@@ -646,7 +1174,11 @@ def publications(audit, points):
     if not covered:
         absent.append("TDE/slew samples")
     if "Li2022" not in complete:
-        absent.append("Li et al. 2022 source table (10.1093/mnras/stac714)")
+        extra,li_complete=li_supplement(audit,points,exact.get("10.1093/mnras/stac714",({},))[0])
+        for k,hits in extra.items():
+            result[k].extend(hits)
+        if not li_complete:
+            absent.append("Li et al. 2022 source table (10.1093/mnras/stac714)")
     return result, {p["k"]:"ok" if not absent else "incomplete "+", ".join(absent) for p in points}
 
 
@@ -733,16 +1265,63 @@ def ancillary(audit, points):
         try:
             raw = audit.get(cat, MPE_BASE + path)
             if path.endswith(".tgz"):
-                with tarfile.open(fileobj=io.BytesIO(raw),mode="r:*") as tf:
-                    entry = next(m for m in tf if m.isfile() and m.name.lower().endswith((".fits", ".fit")))
-                    raw = tf.extractfile(entry).read()
+                try:
+                    with tarfile.open(fileobj=io.BytesIO(raw),mode="r:*") as tf:
+                        options=[m for m in tf if m.isfile() and ".fits" in m.name.lower()]
+                        if not options:
+                            raise ValueError("archive contains no FITS members")
+                        raw=tf.extractfile(max(options,key=lambda m:m.size)).read()
+                except tarfile.TarError:
+                    raw=gzip.decompress(raw)
+            if raw.startswith(b"\x1f\x8b"):
+                raw=gzip.decompress(raw)
             with fits.open(io.BytesIO(raw),memmap=False) as hdus:
-                tab = next(h.data for h in hdus if getattr(h,"columns",None) and h.data is not None)
-                cols = {n.lower():n for n in tab.names}
-                pairs = [("ra","dec"),("ra_deg","dec_deg"),("ra_x","dec_x"),("ra_xray","dec_xray"),
-                         ("ra_corr","dec_corr"),("ra_erosita","dec_erosita"),("ra_erass1","dec_erass1"),
-                         ("raj2000","dej2000"), ("ra_opt","dec_opt"), ("ra_icrs","de_icrs")]
-                ra,dec = next((cols[a],cols[b]) for a,b in pairs if a in cols and b in cols)
+                hdu=next(h for h in hdus if getattr(h,"columns",None) and h.data is not None)
+                tab=hdu.data
+                cols={re.sub(r"[^a-z0-9]","",n.lower()):n for n in tab.names}
+                audit.record({"service":cat+"-schema","columns":list(tab.names),"units":{
+                    c.name:c.unit for c in hdu.columns if c.unit}})
+                pairs=[("erora","erodec"),("raero","decero"),("raerass1","decerass1"),
+                       ("ra","dec"),("radeg","decdeg"),("rax","decx"),("raxray","decxray"),
+                       ("racorr","deccorr"),("raerosita","decerosita"),
+                       ("raj2000","dej2000"),("raopt","decopt"),("raicrs","deicrs"),
+                       ("ragdr3","decgdr3"),("gaiara","gaiadec"),("raj2000","decj2000")]
+                if cat.startswith("HamStar"):
+                    pairs.insert(0,("ctpra","ctpdec"))
+                for key in cols:
+                    if key.startswith("ra"):
+                        pairs.append((key,"dec"+key[2:]))
+                        pairs.append((key,"de"+key[2:]))
+                    if key.endswith("ra"):
+                        pairs.append((key,key[:-2]+"dec"))
+                selected=next(((cols[a],cols[b]) for a,b in pairs if a in cols and b in cols),None)
+                if not selected:
+                    # Some counterpart releases contain only the DR1 source
+                    # designation and the Gaia donor ID. Use the published join.
+                    def normalized_id(v):
+                        hit=re.search(r"J[0-9]{6}(?:\.[0-9]+)?[+-][0-9]{6}(?:\.[0-9]+)?",str(v),re.I)
+                        return hit.group().upper() if hit else ""
+                    wanted=defaultdict(list)
+                    for p in points:
+                        if normalized_id(p.get("ero_name","")) and p["ero_ra"] is not None and p["ero_dec"] is not None:
+                            wanted[normalized_id(p["ero_name"])].append(p)
+                    named=[cols[n] for n in ("eroname","erass1","erass1name","iauname","eroiauname",
+                             "erass1iauname","name","srcname","xname") if n in cols]
+                    key=next((n for n in named if any(normalized_id(v) for v in np.asarray(tab[n]).ravel()[:20])),None)
+                    if not key:
+                        raise ValueError("no paired sky coordinates or eRASS1 designation in "+str(tab.names))
+                    ids=[cols[n] for n in ("gdr3","sourceid","gaiasourceid","gaiadr3","gaiadr3sourceid",
+                                           "name","id","xid") if n in cols]
+                    for j,v in enumerate(np.asarray(tab[key]).ravel()):
+                        for p in wanted.get(normalized_id(v),[]):
+                            er={"ra":p["ero_ra"],"dec":p["ero_dec"]}
+                            result[p["k"]].append(dict(catalog=cat,row=j+1,id=" | ".join(str(
+                                np.asarray(tab[n]).ravel()[j]) for n in ids),ra=er["ra"],dec=er["dec"],
+                                sep_arcsec=round(distance(er,p),3),method="exact DR1 designation"))
+                    states[cat]="ok"
+                    audit.record({"service":cat,"source_name_column":key,"rows":len(np.asarray(tab[key]).ravel())})
+                    continue
+                ra,dec=selected
                 xx, yy = np.asarray(tab[ra], dtype=float).ravel(), np.asarray(tab[dec],dtype=float).ravel()
                 mask = np.isfinite(xx) & np.isfinite(yy) & (np.abs(yy)<=90) & (xx>=0) & (xx<360)
                 if not np.any(mask):
@@ -750,13 +1329,26 @@ def ancillary(audit, points):
                 flat = np.flatnonzero(mask)
                 catpos = SkyCoord(xx[mask]*u.deg,yy[mask]*u.deg)
                 a,b,sep,_ = search_around_sky(centers,catpos,SEARCH_RADIUS*u.arcsec)
-                names = [cols[n] for n in ("iauname","name","detuid","erass1","designation","source_id",
-                                             "srcid","object","gaia_dr3","gaia_id","xid") if n in cols]
+                names = [cols[n] for n in ("eroiauname","ctpid","simbadname","iauname","name","detuid","erass1","designation","source_id",
+                                             "srcid","object","gdr3","gaiadr3","gaiadr3sourceid","gaiasourceid","gaiaid","sourceid","xid") if n in cols]
                 for i,j,d in zip(a,b,sep.arcsec):
                     idx = flat[j]
                     ids = [str(np.asarray(tab[n]).ravel()[idx]).strip() for n in names]
-                    result[points[i]["k"]].append({"catalog":cat, "id":" | ".join(ids), "row":int(idx+1),
-                                                   "ra":xx[idx], "dec":yy[idx], "sep_arcsec":round(d,3)})
+                    hit={"catalog":cat,"id":" | ".join(ids),"row":int(idx+1),
+                         "ra":xx[idx],"dec":yy[idx],"sep_arcsec":round(d,3)}
+                    if cat.startswith("HamStar"):
+                        for field in ("ERO_IAUNAME","CTP_ID","CTP_RANK","p_coronal","p_ij",
+                                      "PLX","SIMBAD_NAME","SIMBAD_OTYPE","CORONAL","FLAG_OPT"):
+                            col=cols.get(re.sub("[^a-z0-9]","",field.lower()))
+                            if col:
+                                val=np.asarray(tab[col]).ravel()[idx]
+                                hit[field]=(val.decode("utf-8","replace").strip() if isinstance(val,bytes) else str(val).strip())
+                        base=lambda value: str(value).lower().split("j")[-1].replace(" ","")
+                        ename=hit.get("ERO_IAUNAME")
+                        match=bool(ename and points[i].get("ero_name") and base(ename)==base(points[i]["ero_name"]))
+                        hit["same_ero_name"]=match
+                        hit["method"]="proper-motion corrected optical position at eRASS1 epoch"
+                    result[points[i]["k"]].append(hit)
                 states[cat] = "ok"
                 audit.record({"service":cat,"ra_col":ra,"dec_col":dec,
                               "valid_rows":int(mask.sum()), "total_rows":len(xx)})
@@ -768,6 +1360,13 @@ def ancillary(audit, points):
                     for p in points}
 
 
+def confident_coronal(row):
+    """Require one published coronal identification for this precise eROSITA source."""
+    return (row["catalog"]=="HamStar-likely" and row.get("same_ero_name") and
+            number(row,"CTP_RANK")==1 and (number(row,"p_coronal") or 0)>=0.8 and
+            (number(row,"p_ij") or 0)>=0.8)
+
+
 def vet_rows(rows, output_dir):
     """Return one verdict per input row. Write all positional alternatives and service outcomes."""
     rows = list(rows)
@@ -775,6 +1374,7 @@ def vet_rows(rows, output_dir):
     out.mkdir(parents=True, exist_ok=True)
     columns = ["id","ra","dec","match_radius_arcsec","vet_status","host_id","host_type","host_catalog",
                "host_offset_arcsec","rationale","known_associations","prior_bibcodes",
+               "prior_identity","stellar_evidence","event_review","bibliography_context",
                "shifted_host_controls","service_outcomes"]
     if not rows:
         write_table(out/"vetting.csv",[],columns)
@@ -783,12 +1383,12 @@ def vet_rows(rows, output_dir):
     real = [p for p in points if not p["shift"]]
     audit = Audit()
     tasks = {
-        "Gaia":(xmatch,(audit,"I/355/gaiadr3",points,GAIA)),
-        "WISE":(xmatch,(audit,"II/328/allwise",points,WISE)),
-        "VSX":(xmatch,(audit,"B/vsx/vsx",real,VSX)),
+        "Gaia":(verified_service,(audit,"Gaia",points)),
+        "WISE":(verified_service,(audit,"WISE",points)),
+        "VSX":(verified_service,(audit,"VSX",real)),
         "Legacy":(region_query,(audit,"Legacy",points,legacy_query,(("ra",),("dec",)))),
         "NED":(region_query,(audit,"NED",real,ned_query,(("ra",),("dec",)))),
-        "SIMBAD":(region_query,(audit,"SIMBAD",real,simbad_query,(("ra",),("dec",)))),
+        "SIMBAD":(verified_service,(audit,"SIMBAD",real)),
         "papers":(publications,(audit,real)),
         "MPE":(ancillary,(audit,real)),
     }
@@ -804,11 +1404,10 @@ def vet_rows(rows, output_dir):
     previously_classified = {}
     for p in real:
         k = p["k"]
-        previous_xray = any(r["sep_arcsec"] <= p["gate"] and TRANSIENT.fullmatch(r.get("otype",""))
-                            for r in found["SIMBAD"].get(k,[]))
-        previous_mpe = any(r["sep_arcsec"] <= p["gate"] and r["catalog"] in ("HamStar-likely","CV","HMXB","ULX")
-                           for r in found["MPE"].get(k,[]))
-        previously_classified[k] = previous_xray or previous_mpe
+        near = [h for h in found["MPE"].get(k,[]) if h["sep_arcsec"]<=p["gate"]]
+        binary = any(r["catalog"] in ("CV","HMXB","ULX") for r in near) or any(
+            TRANSIENT.fullmatch(r.get("otype","")) for r in found["SIMBAD"].get(k,[]) if r["sep_arcsec"]<=p["gate"])
+        previously_classified[k] = not binary and any(confident_coronal(r) for r in near)
     found["TNS"],status["TNS"] = tns(audit,real,previously_classified)
     refs, ref_status = associate_refs(audit, found["SIMBAD"], real)
     output, evidence, controls = [], [], []
@@ -821,47 +1420,76 @@ def vet_rows(rows, output_dir):
         checks = {name:states.get(k,"not searched") for name,states in status.items()}
         sim_ids = [int(h["oid"]) for h in in_gate["SIMBAD"] if h.get("oid")]
         checks["SIMBAD_bibliography"] = ("ok" if checks["SIMBAD"]=="ok" and
-                all(ref_status.get(n)=="ok" for n in sim_ids) else "incomplete")
+                len(sim_ids)==len(in_gate["SIMBAD"]) and all(ref_status.get(n)=="ok" for n in sim_ids) else "incomplete")
         citations = [ref for oid in sim_ids for ref in refs.get(oid,[])]
         host,typ,cat,sep,secure,host_issue = host_summary(in_gate)
-        known, uncertain = [], []
+        known, uncertain, identity, event, context = [], [], [], [], []
         xtype = scalar(source,"xmm_xtyp")
         xident = scalar(source,"xmm_counterpart","xmm_altident")
         xidsep = number(source,"xmm_iddist")
-        if xident and xtype and xidsep is not None and 0 <= xidsep <= p["gate"]:
-            if (re.search(r"\bstar\b|dwarf|stellar|cataclysmic|x.ray binary|flare star",xtype,re.I)
-                    or STELLAR.fullmatch(xtype) or TRANSIENT.fullmatch(xtype)):
-                if "?" in xtype:
-                    uncertain.append("tentative slew counterpart "+xident+" "+xtype)
-                else:
-                    known.append("slew counterpart "+xident+" "+xtype)
-        for h in in_gate["VSX"]:
-            # VSX includes unconfirmed variables and miscellaneous sources.
-            uncertain.append("VSX "+h["id"]+" "+h["type"])
+        binary_re = re.compile(r"^(HXB|LXB|XB|XRB|HMXB|LMXB|ULX|CV\*)$|x.ray binary|cataclysmic",re.I)
+        variablestar_re = re.compile(r"^(V\*|Fl\*|Er\*|RS\*|BY\*|RR\*|Mira|PulsV\*)$|flare star|variable star",re.I)
+        binary = any(binary_re.search(h["otype"]) for h in in_gate["SIMBAD"]) or any(
+                    h["catalog"] in ("CV","HMXB","ULX") for h in in_gate["MPE"])
+        xmm_shift = distance({"ra":scalar(source,"xmm_ra") or p["ra"],"dec":scalar(source,"xmm_dec") or p["dec"]},p)
+        if xident and xtype and xidsep is not None and xidsep >= 0:
+            identity.append("slew "+xident+" "+xtype+f" ({xidsep:g} arcsec from XMM)")
+            if xidsep+xmm_shift <= p["gate"]:
+                binary = binary or bool(binary_re.search(xtype))
+                if not binary and "?" not in xtype and variablestar_re.search(xtype):
+                    known.append("catalogued variable/flare star "+xident+" "+xtype)
+                elif not binary and (re.search(r"\bstar\b|dwarf|stellar",xtype,re.I) or STELLAR.fullmatch(xtype)):
+                    uncertain.append("possible stellar X-ray emitter "+xident+" "+xtype)
         for h in in_gate["SIMBAD"]:
-            if TRANSIENT.fullmatch(h["otype"]):
-                known.append("SIMBAD "+h["main_id"]+" "+h["otype"])
-            elif STELLAR.fullmatch(h["otype"]) or "*" in h["otype"]:
-                uncertain.append("stellar SIMBAD "+h["main_id"]+" "+h["otype"])
+            identity.append("SIMBAD "+h["main_id"]+" "+h["otype"])
+            if not binary and variablestar_re.search(h["otype"]):
+                known.append("catalogued SIMBAD variable/flare star "+h["main_id"]+" "+h["otype"])
+            elif not binary and (STELLAR.fullmatch(h["otype"]) or "*" in h["otype"]):
+                uncertain.append("stellar SIMBAD counterpart "+h["main_id"])
+            if re.fullmatch(r"(TDE|SN|Nova)\??",h["otype"],re.I):
+                event.append("catalogued "+h["otype"]+" "+h["main_id"]+"; compare event epochs")
         for h in in_gate["MPE"]:
             tag = h["catalog"]+" "+(h["id"] or f"row {h['row']}")
-            if h["catalog"] in ("HamStar-likely","CV","HMXB","ULX"):
-                known.append(tag)
-            else:
-                uncertain.append(tag)
+            identity.append(tag)
+            if not binary and confident_coronal(h):
+                known.append("rank-one, exact eRASS1 coronal-star identification "+tag)
+            elif not binary and h["catalog"].startswith("HamStar-"):
+                uncertain.append("possible coronal-star identification "+tag)
+        for h in in_gate["VSX"]:
+            identity.append("VSX "+h["id"]+" "+h["type"])
+            if not binary:
+                uncertain.append("potential known variable "+h["id"])
         for h in in_gate["TNS"]:
-            uncertain.append("TNS "+h["name"]+" "+h["type"])
+            event.append("TNS "+h["name"]+" "+h["type"]+f" ({h['sep_arcsec']} arcsec); compare event epochs")
         for h in in_gate["papers"]:
-            uncertain.append(h["table"]+" "+(h["name"] or f"row {h['record']}"))
+            event.append(h["table"]+" "+(h["name"] or f"row {h['record']}"))
         for h in in_gate["Gaia"]:
             if stellar_astrometry(h):
-                uncertain.append("significant Gaia stellar astrometry "+h["id"])
-                if any(distance(h,s)<=2 for s in in_gate["VSX"]):
-                    known.append("astrometric star coincident with VSX "+h["id"])
-            if scalar(h, "variable").upper() == "VARIABLE":
+                tag = "significant Gaia stellar astrometry "+h["id"]
+                identity.append(tag)
+                if not binary:
+                    uncertain.append(tag)
+                    if any(distance(h,s)<=2 for s in in_gate["VSX"]):
+                        known.append("astrometric star coincident with VSX "+h["id"])
+            if scalar(h, "variable").upper() == "VARIABLE" and not binary:
                 uncertain.append("Gaia variable "+h["id"])
+        # For a classified X-ray binary an isolated optical stellar counterpart
+        # can be a donor; stellar astrometry alone cannot reject this hypothesis.
+        if binary and not secure:
+            opt = in_gate["Gaia"] or in_gate["Legacy"]
+            if len(opt)==1 and all(distance(opt[0],h)<=2 for h in in_gate["Gaia"]+in_gate["Legacy"]):
+                cat = "Gaia" if in_gate["Gaia"] else "Legacy"
+                host,typ,sep = scalar(opt[0],"id","ls_id"),"possible donor in classified X-ray binary",opt[0]["sep_arcsec"]
+                secure,host_issue = bool(host),""
+        identifiers = [host,xident,scalar(source,"name")]+[h["main_id"] for h in in_gate["SIMBAD"]]
+        norm = lambda x: re.sub(r"[^a-z0-9]","",x.lower())
+        aliases = [norm(x) for x in identifiers if x and len(norm(x))>=6]
         for ref in citations:
-            uncertain.append("related published variability paper "+ref["bibcode"])
+            if any(x in norm(ref["title"]) for x in aliases):
+                event.append("object-named variability paper "+ref["bibcode"])
+            else:
+                context.append("host bibliography "+ref["bibcode"]+" (title has no matched alias)")
+        uncertain.extend(event)
 
         ctl = {}
         for label,catalog,qualifies in (("Gaia","Gaia",bool),("Legacy","Legacy",bool),
@@ -875,17 +1503,19 @@ def vet_rows(rows, output_dir):
                              "real_checked":int(checks[catalog]=="ok"),"match_radius_arcsec":round(p["gate"],2)})
         incomplete = [n for n,s in checks.items() if s!="ok" and n!="MPE"]
         if known:
-            outcome,why = "known_or_stellar","positional association with a previously classified source"
+            outcome,why = "known_or_stellar","catalogued stellar variability or published coronal identification"
         elif uncertain or incomplete or not secure:
             outcome = "inconclusive"
             why = " | ".join(filter(None,[host_issue, "prior association or stellar/variable alternative" if uncertain else "",
                                           "incomplete "+",".join(incomplete) if incomplete else ""]))
         else:
-            outcome,why = "candidate","unique nonstellar host; no prior event in completed positional and bibliography checks"
+            outcome,why = "candidate","optical/IR counterpart identified; no prior event in completed positional and object-named bibliography checks"
         output.append(dict(id=sid,ra=p["ra"],dec=p["dec"],match_radius_arcsec=round(p["gate"],2),
                            vet_status=outcome,host_id=host,host_type=typ,host_catalog=cat,host_offset_arcsec=sep,
                            rationale=why,known_associations=" | ".join(dict.fromkeys(known+uncertain)),
                            prior_bibcodes=" | ".join(sorted({r["bibcode"] for r in citations})),
+                           prior_identity=" | ".join(dict.fromkeys(identity)),stellar_evidence=" | ".join(known),
+                           event_review=" | ".join(dict.fromkeys(event)),bibliography_context=" | ".join(context),
                            shifted_host_controls=json.dumps(ctl,sort_keys=True),
                            service_outcomes=json.dumps(checks,sort_keys=True)))
         evidence.append({"id":sid,"ra":p["ra"],"dec":p["dec"],"gate_arcsec":p["gate"],
@@ -896,6 +1526,8 @@ def vet_rows(rows, output_dir):
     write_table(out/"host_shifted_controls.csv",controls,list(controls[0]))
     compressed_json(out/"counterpart_evidence.jsonl.gz",evidence)
     compressed_json(out/"vetting_provenance.jsonl.gz",audit.events)
+    (out/"tns_replica_coverage.json").write_text(json.dumps([
+        e for e in audit.events if e.get("service")=="TNS-replica-audit"],indent=2,default=str)+"\n")
     return output
 
 
