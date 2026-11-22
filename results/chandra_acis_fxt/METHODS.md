@@ -57,6 +57,8 @@ gh workflow run chandra-acis-fxt.yml --repo dovvnloading/Open-Space --ref resear
 
 The original primary run is pinned to commit `4663ab98666b5d9b5b116478f61d6cae5d49e104`, with primary group assignments in commit `0655e5b54215a3d7bbac1f6b2561379bb50c81cf`. Checkpoint deposits verify each source artifact and report exposure at all five trial durations. The selective catalog repair preserves the original response bytes, records changed classifications and repeats affected photometry. The final report uses the recorded human disposition of each surviving trigger. [Source run](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443) · [Artifact intake and exposure](evidence/primary_ingest/44985879443-1/PROGRESS.md) · [Held-out selection](HELD_OUT.md)
 
+ObsID 27089 contains an exploratory ten-photon excess about 4.4 arcminutes from the target of a GW170817 pointing. To reproduce its fixed-position follow-up, run `python results/chandra_acis_fxt/field_followup.py` in the same workflow after importing primary group 80 and its optical and CSC checks. The program verifies the original artifact, ledger, event file and diagnostic identity. It measures the relative concentration of source and neighboring photons, checks the deposited GCN snapshot, and searches all public pointed ACIS imaging visits through the survey cutoff. The per-visit records distinguish positive counts, supported upper limits, and missing detector coverage. This exploratory selection leaves the numerical blind and held-out results unchanged.
+
 The verification job and the evidence-commit job both require these commands to pass.
 
 ```sh

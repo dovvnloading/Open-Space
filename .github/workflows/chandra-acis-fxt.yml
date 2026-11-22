@@ -83,7 +83,7 @@ jobs:
       - name: Check source artifact validation and exposure accounting before import
         env:
           PYTHONPATH: results/chandra_acis_fxt
-        run: python -m unittest test_ingest_primary test_progress
+        run: python -m unittest test_ingest_primary test_progress test_field_followup
       - name: Synchronize the latest published catalog into the research branch
         run: |
           git config user.name 'github-actions[bot]'
@@ -98,6 +98,18 @@ jobs:
         run: python -u "$SURVEY/checkpoint.py" csc
       - name: Characterize optical and infrared counterparts of all retained real triggers
         run: python -u "$SURVEY/checkpoint.py" optical
+      - name: Check the ten-photon concentration offset from the GW170817 pointing
+        if: contains(github.event.head_commit.message, '[checkpoint-field]')
+        id: fixed_field
+        continue-on-error: true
+        timeout-minutes: 110
+        run: python -u "$SURVEY/field_followup.py"
+      - name: Deposit the exact photons, circular comparison and all-years visit results
+        if: always() && contains(github.event.head_commit.message, '[checkpoint-field]') && steps.fixed_field.outcome != 'skipped'
+        run: |
+          git add -- "$SURVEY/evidence/field_followup"
+          git diff --cached --quiet || git commit -qm "Measure the short excess 4.4 arcminutes from the GW170817 target across independent Chandra visits"
+          git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
       - name: Reproduce a measured flare with its archived source and control arrays
         if: contains(github.event.head_commit.message, '[checkpoint-replay]')
         id: measured_replay
@@ -126,6 +138,9 @@ jobs:
 
       - name: Require the requested measured-source replication to agree
         if: always() && contains(github.event.head_commit.message, '[checkpoint-replay]') && steps.measured_replay.outcome != 'success'
+        run: exit 1
+      - name: Check that each requested GW170817-field follow-up stage ran
+        if: always() && contains(github.event.head_commit.message, '[checkpoint-field]') && steps.fixed_field.outcome != 'success'
         run: exit 1
 
   target-review:
