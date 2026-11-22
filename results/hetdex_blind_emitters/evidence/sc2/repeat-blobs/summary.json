@@ -1,0 +1,32 @@
+{
+  "release": "sc2",
+  "input": "../vetted.jsonl.gz",
+  "input_sha256": "d59e838375c59d0269547d51951d2a2812f36129d62c3f32008592b64a9b0e0f",
+  "counts": {
+    "original_two_knot_proposals": 86106,
+    "cross_shot_midpoint_coincidences": 6020,
+    "displaced_minus50A_geometric_edges": 2,
+    "displaced_plus50A_geometric_edges": 0,
+    "geometry_consistent_edges": 1046,
+    "geometry_components": 609,
+    "geometry_matched_rows": 1433,
+    "systems_requiring_two_shot_cube_check": 24,
+    "bridge_measured": 43,
+    "systems_with_measurable_bridge_in_distinct_shots": 19
+  },
+  "system_statuses": {
+    "no clean independent geometry after spectral and resolution cuts": 585,
+    "measured bridge below joint central, sky and two-shot threshold": 17,
+    "incomplete independent cube coverage or sky measurements": 7
+  },
+  "ancillary_catalog_errors": {},
+  "failed_remote_inputs": {},
+  "scope": "Cohorts are connected components of directly matching catalog knot pairs in different shots of the same release. Each accepted pair has both endpoints within 1.25 arcsec and both centroids within 3.5 air Angstrom, permitting reversed brightness order. A prior resolved LAN association excludes that system from novelty follow-up. Every distinct retained geometry is tested; no rank cap. Incomplete cube or archive coverage remains unresolved.",
+  "geometric_control": "Hold both sky coordinates fixed and shift both knot wavelengths in the second shot by -50 or +50 A. These counts are positional/line coincidences before source or cube vetting.",
+  "spatial_tests": "Each independent shot needs a positive central aperture and two-Moffat-subtracted bridge at five empirical sigma, clean outer background, and the same requirements centered at the secondary knot. A nominal PSF residual is conditional on the observed seeing and adopted PSF. The experiment does not select single-center diffuse halos or objects missing from catalog knots.",
+  "products": [
+    "systems.jsonl.gz",
+    "vetted.jsonl.gz",
+    "inputs.json"
+  ]
+}
