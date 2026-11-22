@@ -1,0 +1,50 @@
+name: XMM slew transients across three surveys
+on:
+  workflow_dispatch:
+  push:
+    branches: ['survey/xmmsl2-erass1-rass']
+    paths: ['.github/workflows/xmmsl2-erass1-rass.yml']
+permissions:
+  contents: read
+concurrency:
+  group: xmmsl2-erass1-rass-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  STUDY: results/xmmsl2-erass1-rass
+jobs:
+  inventory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/xmmsl2-erass1-rass
+      - run: python "$STUDY/probe.py"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: survey-release-inventory
+          path: results/xmmsl2-erass1-rass/diagnostics
+          if-no-files-found: error
+  record:
+    needs: inventory
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: survey/xmmsl2-erass1-rass
+          sparse-checkout: results/xmmsl2-erass1-rass
+      - uses: actions/download-artifact@v4
+        with:
+          name: survey-release-inventory
+          path: results/xmmsl2-erass1-rass/diagnostics
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$STUDY/diagnostics"
+          if ! git diff --cached --quiet; then
+            git commit -m "Record official release endpoints and catalogue metadata"
+            git push origin HEAD:survey/xmmsl2-erass1-rass
+          fi
