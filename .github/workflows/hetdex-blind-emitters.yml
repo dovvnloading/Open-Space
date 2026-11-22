@@ -1,6 +1,12 @@
 name: HETDEX blind rare-emitter search
 on:
   workflow_dispatch:
+    inputs:
+      stage:
+        description: Research stage
+        type: choice
+        default: scan
+        options: [scan, vet, full]
   push:
     branches: [science/hetdex-blind-emitter-search]
     paths: [.github/workflows/hetdex-blind-emitters.yml]
@@ -8,28 +14,56 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: hetdex-rare-emitters-${{ github.ref }}
+  cancel-in-progress: false
+
 env:
   SURVEY: results/hetdex_blind_emitters
+  STAGE: ${{ inputs.stage || 'scan' }}
+  OMP_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
 
 jobs:
-  inventory:
+  research:
+    if: github.ref == 'refs/heads/science/hetdex-blind-emitter-search'
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      matrix:
+        release: [sc1, sc2]
+    env:
+      RELEASE: ${{ matrix.release }}
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
           filter: blob:none
           sparse-checkout: results/hetdex_blind_emitters
-      - run: python "$SURVEY/archive_inventory.py"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/setup-python@v5
         with:
-          name: archive-inventory
-          path: results/hetdex_blind_emitters/evidence/
-          if-no-files-found: error
+          python-version: "3.12"
+      - run: python -m pip install -r "$SURVEY/requirements.txt"
+      - name: Search every spectrum and run controls
+        if: env.STAGE != 'vet'
+        run: |
+          python "$SURVEY/scan.py" "$RELEASE" scan --cache "$RUNNER_TEMP/hetdex" --output "$SURVEY/evidence/$RELEASE" --workers 3
+      - name: Adjudicate leads and measure off-source apertures
+        if: env.STAGE != 'scan'
+        run: |
+          python "$SURVEY/scan.py" "$RELEASE" vet --cache "$RUNNER_TEMP/hetdex" --output "$SURVEY/evidence/$RELEASE"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: research-${{ matrix.release }}
+          path: results/hetdex_blind_emitters/evidence/${{ matrix.release }}/
+          if-no-files-found: warn
+          retention-days: 3
 
   publish:
-    needs: inventory
+    if: always() && needs.research.result != 'skipped' && github.ref == 'refs/heads/science/hetdex-blind-emitter-search'
+    needs: research
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -41,12 +75,19 @@ jobs:
           sparse-checkout: results/hetdex_blind_emitters
       - uses: actions/download-artifact@v4
         with:
-          name: archive-inventory
-          path: results/hetdex_blind_emitters/evidence/
-      - name: Commit archive receipts
+          pattern: research-*
+          path: ${{ runner.temp }}/hetdex-receipts
+      - name: Commit evidence to the research branch
         run: |
+          for release in sc1 sc2; do
+            src="$RUNNER_TEMP/hetdex-receipts/research-$release"
+            if test -d "$src"; then
+              mkdir -p "$SURVEY/evidence/$release"
+              cp -r "$src/." "$SURVEY/evidence/$release/"
+            fi
+          done
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add "$SURVEY/evidence"
-          git diff --cached --quiet || git commit -m 'Record HETDEX archive headers and access receipts'
+          git diff --cached --quiet || git commit -m "Record HETDEX $STAGE evidence from run $GITHUB_RUN_ID"
           git push origin HEAD:science/hetdex-blind-emitter-search
