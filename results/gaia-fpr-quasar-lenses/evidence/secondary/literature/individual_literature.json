@@ -1,0 +1,253 @@
+[
+  {
+    "system_id": "FW2917878464529177856",
+    "ra": 90.04215490598635,
+    "dec": -21.25970914767372,
+    "aliases": [],
+    "references": [],
+    "topic_titles": [],
+    "receipts": [
+      {
+        "service": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "query": "SELECT b.main_id,b.otype,b.ra,b.dec,i.id FROM basic AS b JOIN ident AS i ON b.oid=i.oidref WHERE CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',90.0421549060,-21.2597091477,0.00277777778))=1",
+        "bytes": 24,
+        "sha256": "b1cf6339cf2f14375ba5311d2322271ba68428c8a59518b2c9f4c5166a93e4de",
+        "failures": []
+      },
+      {
+        "service": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "query": "SELECT DISTINCT b.main_id,r.bibcode,r.title,r.doi FROM basic AS b JOIN has_ref AS h ON b.oid=h.oidref JOIN ref AS r ON h.oidbibref=r.oidbib WHERE CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',90.0421549060,-21.2597091477,0.00277777778))=1",
+        "bytes": 26,
+        "sha256": "2d28792a56fc162733fa5db2a45b66dd82ecb2532f54848561cc9cf85b1004e6",
+        "failures": []
+      }
+    ]
+  },
+  {
+    "system_id": "FW916413362313609472",
+    "ra": 125.79742217257653,
+    "dec": 43.88845968830368,
+    "aliases": [
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "otype": "QSO",
+        "ra": "125.79693388181",
+        "dec": "43.8884538772",
+        "id": "TIC 23645470"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "otype": "QSO",
+        "ra": "125.79693388181",
+        "dec": "43.8884538772",
+        "id": "2MASX J08231125+4353181"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "otype": "QSO",
+        "ra": "125.79693388181",
+        "dec": "43.8884538772",
+        "id": "Gaia DR3 916413362312824064"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "otype": "QSO",
+        "ra": "125.79693388181",
+        "dec": "43.8884538772",
+        "id": "ILT J082311.32+435318.4"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "otype": "QSO",
+        "ra": "125.79693388181",
+        "dec": "43.8884538772",
+        "id": "[HSN2016] J125.79+43.88"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "otype": "QSO",
+        "ra": "125.79693388181",
+        "dec": "43.8884538772",
+        "id": "2MASS J08231130+4353182"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "otype": "QSO",
+        "ra": "125.79693388181",
+        "dec": "43.8884538772",
+        "id": "2MASSI J0823113+435318"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "otype": "QSO",
+        "ra": "125.79693388181",
+        "dec": "43.8884538772",
+        "id": "[VV2006] J082311.3+435317"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "otype": "QSO",
+        "ra": "125.79693388181",
+        "dec": "43.8884538772",
+        "id": "[VV2010] J082311.3+435317"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "otype": "QSO",
+        "ra": "125.79693388181",
+        "dec": "43.8884538772",
+        "id": "LEDA 2231560"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "otype": "QSO",
+        "ra": "125.79693388181",
+        "dec": "43.8884538772",
+        "id": "SDSS J082311.26+435318.5"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "otype": "QSO",
+        "ra": "125.79693388181",
+        "dec": "43.8884538772",
+        "id": "Gaia DR2 916413362312824064"
+      }
+    ],
+    "references": [
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2002ApJ...569...23S",
+        "title": "The optical polarization of near-infrared-selected quasi-stellar objects.",
+        "doi": "10.1086/339208"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2003A&A...412...45P",
+        "title": "HYPERLEDA. I. Identification and designation of galaxies.",
+        "doi": "10.1051/0004-6361:20031411"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2006A&A...455..773V",
+        "title": "A catalogue of quasars and active nuclei: 12th edition.",
+        "doi": "10.1051/0004-6361:20065177"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2009A&A...505..385A",
+        "title": "The large quasar reference frame (LQRF). An optical representation of the  ICRS.",
+        "doi": "10.1051/0004-6361/200912041"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2010A&A...518A..10V",
+        "title": "A catalogue of quasars and active nuclei: 13th edition.",
+        "doi": "10.1051/0004-6361/201014188"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2014ApJS..214...23S",
+        "title": "Infrared spectra and photometry of complete samples of palomar-green and two micron all sky survey quasars.",
+        "doi": "10.1088/0067-0049/214/2/23"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2015MNRAS.452.4153A",
+        "title": "Constraint on the time variation of the fine-structure constant with the SDSS-III/BOSS DR12 quasar sample.",
+        "doi": "10.1093/mnras/stv1406"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2017A&A...597A..79P",
+        "title": "The Sloan Digital Sky Survey Quasar Catalog: Twelfth data release.",
+        "doi": "10.1051/0004-6361/201527999"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2017ApJS..228....6X",
+        "title": "Silicate dust in active galactic nuclei.",
+        "doi": "10.3847/1538-4365/228/1/6"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2018A&A...613A..51P",
+        "title": "The Sloan Digital Sky Survey Quasar Catalog: Fourteenth data release.",
+        "doi": "10.1051/0004-6361/201732445"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2018ApJS..234...16C",
+        "title": "A catalog of quasar properties from the Baryon Oscillation Spectroscopic Survey.",
+        "doi": "10.3847/1538-4365/aa9d90"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2019MNRAS.487.1823L",
+        "title": "Mid-infrared spectroscopic evidence for AGN heating warm molecular gas.",
+        "doi": "10.1093/mnras/stz1316"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2020ApJS..249...17R",
+        "title": "Spectral properties of quasars from Sloan Digital Sky Survey data release 14: the catalog.",
+        "doi": "10.3847/1538-4365/ab99c5"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2020ApJS..250....8L",
+        "title": "The Sloan Digital Sky Survey quasar catalog: Sixteenth Data Release.",
+        "doi": "10.3847/1538-4365/aba623"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2021ApJ...912...91T",
+        "title": "How does the polar dust affect the correlation between dust covering factor and Eddington ratio in type 1 quasars selected from the Sloan Digital Sky Survey Data Release 16?",
+        "doi": "10.3847/1538-4357/abe94a"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2022ApJS..259...37S",
+        "title": "The Infrared Database of Extragalactic Observables from Spitzer. II. The Database and Diagnostic Power of Crystalline Silicate Features in Galaxy Spectra.",
+        "doi": "10.3847/1538-4365/ac4989"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2022MNRAS.515.5159P",
+        "title": "Connecting radio emission to AGN wind properties with broad absorption line quasars.",
+        "doi": "10.1093/mnras/stac2067"
+      },
+      {
+        "main_id": "[VV2006] J082311.3+435317",
+        "bibcode": "2023ApJS..267...19I",
+        "title": "Fantastic Fits with fantasy of Active Galactic Nuclei Spectra: Exploring the Fe II Emission near the H{\\em \u03b1} Line.",
+        "doi": "10.3847/1538-4365/acd783"
+      }
+    ],
+    "topic_titles": [],
+    "receipts": [
+      {
+        "service": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "query": "SELECT b.main_id,b.otype,b.ra,b.dec,i.id FROM basic AS b JOIN ident AS i ON b.oid=i.oidref WHERE CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',125.7974221726,43.8884596883,0.00277777778))=1",
+        "bytes": 1094,
+        "sha256": "5ce40a588ade50d1c398e5066055e0639953e193e4c655824c77c2b4912a6964",
+        "failures": []
+      },
+      {
+        "service": "https://simbad.idia.ac.za/simbad/sim-tap/sync",
+        "query": "SELECT DISTINCT b.main_id,r.bibcode,r.title,r.doi FROM basic AS b JOIN has_ref AS h ON b.oid=h.oidref JOIN ref AS r ON h.oidbibref=r.oidbib WHERE CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',125.7974221726,43.8884596883,0.00277777778))=1",
+        "bytes": 3011,
+        "sha256": "3435d3e01916d86b7ac1bab4d93e29ed65bab58d3d57d51630419d5ad395af7d",
+        "failures": [
+          {
+            "service": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+            "error": "HTTPSConnectionPool(host='simbad.cfa.harvard.edu', port=443): Read timed out. (read timeout=45)"
+          },
+          {
+            "service": "https://simbad.cds.unistra.fr/simbad/sim-tap/sync",
+            "error": "HTTPSConnectionPool(host='simbad.cds.unistra.fr', port=443): Max retries exceeded with url: /simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=20000&QUERY=SELECT+DISTINCT+b.main_id%2Cr.b"
+          }
+        ]
+      }
+    ]
+  }
+]

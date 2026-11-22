@@ -1,0 +1,425 @@
+{
+  "centre_radec_deg": [
+    166.63931753248886,
+    -18.356724481391293
+  ],
+  "image_source_ids": [
+    "3552950878881101568",
+    "3552950883176150016"
+  ],
+  "surveys": {
+    "Legacy_DR10": {
+      "result": {
+        "status": "no_catalogued_extended_object",
+        "nearest_extended": null,
+        "objects": [
+          {
+            "object_id": "10995354916881458",
+            "ra": 166.6391019007333,
+            "dec": -18.3566187813419,
+            "type": "PSF",
+            "looks_extended": false,
+            "morphology_quality": false,
+            "half_light_radius_arcsec": 0.0,
+            "half_light_radius_error_arcsec": null,
+            "ra_coord_error_arcsec": 4.877672341850097e-05,
+            "dec_coord_error_arcsec": 5.198202326458045e-05,
+            "maskbits": "0",
+            "fitbits": "4224",
+            "ref_cat": "GE",
+            "release": "10000",
+            "bands": {
+              "g": {
+                "nobs": 9.0,
+                "psf_fwhm_arcsec": 1.682896,
+                "flux_nanomaggies": 133.57092,
+                "flux_error_nanomaggies": 0.10679789244102623,
+                "fracflux": 0.012072513,
+                "fracmasked": 0.019682232,
+                "fracin": 0.99987924,
+                "reduced_chi2": 32.899582
+              },
+              "r": {
+                "nobs": 8.0,
+                "psf_fwhm_arcsec": 1.419749,
+                "flux_nanomaggies": 149.56459,
+                "flux_error_nanomaggies": 0.11346539325568773,
+                "fracflux": 0.006373209,
+                "fracmasked": 0.00020955059,
+                "fracin": 0.99824923,
+                "reduced_chi2": 45.535603
+              },
+              "i": {
+                "nobs": 9.0,
+                "psf_fwhm_arcsec": 1.1470708,
+                "flux_nanomaggies": 163.61942,
+                "flux_error_nanomaggies": 0.1006668107411093,
+                "fracflux": 0.0035215884,
+                "fracmasked": 0.021929432,
+                "fracin": 0.9995598,
+                "reduced_chi2": 25.10483
+              },
+              "z": {
+                "nobs": 3.0,
+                "psf_fwhm_arcsec": 1.0666963,
+                "flux_nanomaggies": 184.93634,
+                "flux_error_nanomaggies": 0.22668246456699245,
+                "fracflux": 0.005019958,
+                "fracmasked": 0.11981761,
+                "fracin": 1.0,
+                "reduced_chi2": 30.071985
+              }
+            },
+            "centre_distance_arcsec": 0.829234771429748,
+            "image_distances_arcsec": [
+              3.1948577603628365,
+              2.289999370653732e-11
+            ]
+          },
+          {
+            "object_id": "10995354916881487",
+            "ra": 166.6399514108013,
+            "dec": -18.35698958589013,
+            "type": "PSF",
+            "looks_extended": false,
+            "morphology_quality": false,
+            "half_light_radius_arcsec": 0.0,
+            "half_light_radius_error_arcsec": null,
+            "ra_coord_error_arcsec": 9.967674013252933e-05,
+            "dec_coord_error_arcsec": 0.0001134618602274291,
+            "maskbits": "0",
+            "fitbits": "128",
+            "ref_cat": "GE",
+            "release": "10000",
+            "bands": {
+              "g": {
+                "nobs": 9.0,
+                "psf_fwhm_arcsec": 1.682896,
+                "flux_nanomaggies": 56.41997,
+                "flux_error_nanomaggies": 0.07884666434642497,
+                "fracflux": 0.06708493,
+                "fracmasked": 0.002132009,
+                "fracin": 0.9999268,
+                "reduced_chi2": 25.183945
+              },
+              "r": {
+                "nobs": 7.0,
+                "psf_fwhm_arcsec": 1.3985795,
+                "flux_nanomaggies": 52.0188,
+                "flux_error_nanomaggies": 0.08554706496864505,
+                "fracflux": 0.062490564,
+                "fracmasked": 0.0006888724,
+                "fracin": 0.9054165,
+                "reduced_chi2": 12.869516
+              },
+              "i": {
+                "nobs": 9.0,
+                "psf_fwhm_arcsec": 1.1470708,
+                "flux_nanomaggies": 53.40805,
+                "flux_error_nanomaggies": 0.07000378405181464,
+                "fracflux": 0.031287078,
+                "fracmasked": 0.0018598092,
+                "fracin": 0.9998248,
+                "reduced_chi2": 8.429136
+              },
+              "z": {
+                "nobs": 3.0,
+                "psf_fwhm_arcsec": 1.0666963,
+                "flux_nanomaggies": 68.295296,
+                "flux_error_nanomaggies": 0.1640016758564071,
+                "fracflux": 0.035168063,
+                "fracmasked": 0.0053296443,
+                "fracin": 0.99993753,
+                "reduced_chi2": 11.619696
+              }
+            },
+            "centre_distance_arcsec": 2.3667910396072096,
+            "image_distances_arcsec": [
+              8.693869883983494e-11,
+              3.194857760434373
+            ]
+          }
+        ]
+      },
+      "query": {
+        "url": "https://datalab.noirlab.edu/query/query",
+        "parameters": {
+          "sql": "SELECT * FROM ls_dr10.tractor WHERE q3c_radial_query(ra,dec,166.6393175325,-18.3567244814,0.001666666667) LIMIT 201",
+          "ofmt": "csv",
+          "out": "",
+          "drop": "False",
+          "async": "False"
+        },
+        "radius_arcsec": 6.0,
+        "attempts": [
+          {
+            "status_code": 200
+          },
+          {
+            "error": "ValueError: TAP status ['ERROR']"
+          },
+          {
+            "status_code": 200
+          }
+        ],
+        "sha256": "b24093e943b03b591509bcd7d3ad5a33e7d8c0a4eef1c5f59c941c6bcd4ffc86",
+        "bytes": 6101,
+        "raw_file": "Legacy_DR10.csv.gz",
+        "returned_rows": 2
+      }
+    },
+    "Legacy_DR9": {
+      "result": {
+        "status": "empty_catalogue_cone",
+        "nearest_extended": null,
+        "objects": []
+      },
+      "query": {
+        "url": "https://datalab.noirlab.edu/query/query",
+        "parameters": {
+          "sql": "SELECT * FROM ls_dr9.tractor WHERE q3c_radial_query(ra,dec,166.6393175325,-18.3567244814,0.001666666667) LIMIT 201",
+          "ofmt": "csv",
+          "out": "",
+          "drop": "False",
+          "async": "False"
+        },
+        "radius_arcsec": 6.0,
+        "attempts": [
+          {
+            "status_code": 200
+          },
+          {
+            "error": "ValueError: TAP status ['ERROR']"
+          },
+          {
+            "status_code": 200
+          }
+        ],
+        "sha256": "5de9535d354e8ddb22e24ee18575b1571a3c3bca9b7c153c6d2efdd53dc52442",
+        "bytes": 2160,
+        "raw_file": "Legacy_DR9.csv.gz",
+        "returned_rows": 0
+      }
+    },
+    "PS1_DR2_stack": {
+      "result": {
+        "status": "extended_object_offset_or_on_image",
+        "nearest_extended": {
+          "object_id": "85971666399442018",
+          "ra": 166.63995672,
+          "dec": -18.35694491,
+          "type": "stack",
+          "looks_extended": true,
+          "morphology_quality": false,
+          "valid_bands": [
+            "r",
+            "i",
+            "z"
+          ],
+          "extended_bands": [
+            "i"
+          ],
+          "primary_detection": 1.0,
+          "best_detection": 1.0,
+          "quality_flag": 52.0,
+          "n_stack_detections": 5.0,
+          "stack_ra_scatter_arcsec": 0.0010000000474974513,
+          "stack_dec_scatter_arcsec": 0.0010000000474974513,
+          "mean_ra_error_arcsec": 0.001096836131199277,
+          "mean_dec_error_arcsec": 0.0011002802789965766,
+          "bands": {
+            "r": {
+              "psf_mag": 17.948299407958984,
+              "kron_mag": 18.329099655151367,
+              "psf_mag_err": 0.004765999969094992,
+              "kron_mag_err": 0.0064199999906122684,
+              "psf_minus_kron_mag": -0.3808002471923828,
+              "nominal_error_mag": 0.007995696066314364,
+              "unmasked_fraction": 0.997635006904602,
+              "frames": 4.0,
+              "psf_major_fwhm_arcsec": 1.1544300317764282
+            },
+            "i": {
+              "psf_mag": 18.242300033569336,
+              "kron_mag": 18.088699340820312,
+              "psf_mag_err": 0.0034360000863671303,
+              "kron_mag_err": 0.004929000046104193,
+              "psf_minus_kron_mag": 0.15360069274902344,
+              "nominal_error_mag": 0.006008422259462967,
+              "unmasked_fraction": 0.9978439807891846,
+              "frames": 13.0,
+              "psf_major_fwhm_arcsec": 1.1422200202941895
+            },
+            "z": {
+              "psf_mag": 17.923799514770508,
+              "kron_mag": 17.936800003051758,
+              "psf_mag_err": 0.0038219999987632036,
+              "kron_mag_err": 0.005522000137716532,
+              "psf_minus_kron_mag": -0.01300048828125,
+              "nominal_error_mag": 0.00671566597676562,
+              "unmasked_fraction": 0.9974179863929749,
+              "frames": 14.0,
+              "psf_major_fwhm_arcsec": 0.9818339943885803
+            }
+          },
+          "centre_distance_arcsec": 2.3236793284248534,
+          "image_distances_arcsec": [
+            0.16185301201577115,
+            3.1478934613207823
+          ]
+        },
+        "distinct_image_matches": [],
+        "central": false,
+        "all_images_separately_catalogued": false,
+        "objects": [
+          {
+            "object_id": "85971666391992436",
+            "ra": 166.63911289,
+            "dec": -18.35657391,
+            "type": "stack",
+            "looks_extended": false,
+            "morphology_quality": false,
+            "valid_bands": [
+              "r",
+              "i",
+              "z"
+            ],
+            "extended_bands": [],
+            "primary_detection": 1.0,
+            "best_detection": 1.0,
+            "quality_flag": 60.0,
+            "n_stack_detections": 5.0,
+            "stack_ra_scatter_arcsec": 0.0010000000474974513,
+            "stack_dec_scatter_arcsec": 0.0010000000474974513,
+            "mean_ra_error_arcsec": 0.0004904172236522401,
+            "mean_dec_error_arcsec": 0.0004935154099713039,
+            "bands": {
+              "r": {
+                "psf_mag": 16.636199951171875,
+                "kron_mag": 16.931400299072266,
+                "psf_mag_err": 0.0020310000982135534,
+                "kron_mag_err": 0.002392000053077936,
+                "psf_minus_kron_mag": -0.2952003479003906,
+                "nominal_error_mag": 0.0031379333410492187,
+                "unmasked_fraction": 0.9976480007171631,
+                "frames": 5.0,
+                "psf_major_fwhm_arcsec": 1.155310034751892
+              },
+              "i": {
+                "psf_mag": 17.127500534057617,
+                "kron_mag": 17.065900802612305,
+                "psf_mag_err": 0.001487000030465424,
+                "kron_mag_err": 0.00203999993391335,
+                "psf_minus_kron_mag": 0.0615997314453125,
+                "nominal_error_mag": 0.0025244343566372734,
+                "unmasked_fraction": 0.9983800053596497,
+                "frames": 15.0,
+                "psf_major_fwhm_arcsec": 1.1420199871063232
+              },
+              "z": {
+                "psf_mag": 16.594499588012695,
+                "kron_mag": 16.628999710083008,
+                "psf_mag_err": 0.001572999986819923,
+                "kron_mag_err": 0.0021550001110881567,
+                "psf_minus_kron_mag": -0.0345001220703125,
+                "nominal_error_mag": 0.00266802444466415,
+                "unmasked_fraction": 0.9980000257492065,
+                "frames": 14.0,
+                "psf_major_fwhm_arcsec": 0.9815899729728699
+              }
+            },
+            "centre_distance_arcsec": 0.8847267382915447,
+            "image_distances_arcsec": [
+              3.2323236361930174,
+              0.16584336177692247
+            ]
+          },
+          {
+            "object_id": "85971666399442018",
+            "ra": 166.63995672,
+            "dec": -18.35694491,
+            "type": "stack",
+            "looks_extended": true,
+            "morphology_quality": false,
+            "valid_bands": [
+              "r",
+              "i",
+              "z"
+            ],
+            "extended_bands": [
+              "i"
+            ],
+            "primary_detection": 1.0,
+            "best_detection": 1.0,
+            "quality_flag": 52.0,
+            "n_stack_detections": 5.0,
+            "stack_ra_scatter_arcsec": 0.0010000000474974513,
+            "stack_dec_scatter_arcsec": 0.0010000000474974513,
+            "mean_ra_error_arcsec": 0.001096836131199277,
+            "mean_dec_error_arcsec": 0.0011002802789965766,
+            "bands": {
+              "r": {
+                "psf_mag": 17.948299407958984,
+                "kron_mag": 18.329099655151367,
+                "psf_mag_err": 0.004765999969094992,
+                "kron_mag_err": 0.0064199999906122684,
+                "psf_minus_kron_mag": -0.3808002471923828,
+                "nominal_error_mag": 0.007995696066314364,
+                "unmasked_fraction": 0.997635006904602,
+                "frames": 4.0,
+                "psf_major_fwhm_arcsec": 1.1544300317764282
+              },
+              "i": {
+                "psf_mag": 18.242300033569336,
+                "kron_mag": 18.088699340820312,
+                "psf_mag_err": 0.0034360000863671303,
+                "kron_mag_err": 0.004929000046104193,
+                "psf_minus_kron_mag": 0.15360069274902344,
+                "nominal_error_mag": 0.006008422259462967,
+                "unmasked_fraction": 0.9978439807891846,
+                "frames": 13.0,
+                "psf_major_fwhm_arcsec": 1.1422200202941895
+              },
+              "z": {
+                "psf_mag": 17.923799514770508,
+                "kron_mag": 17.936800003051758,
+                "psf_mag_err": 0.0038219999987632036,
+                "kron_mag_err": 0.005522000137716532,
+                "psf_minus_kron_mag": -0.01300048828125,
+                "nominal_error_mag": 0.00671566597676562,
+                "unmasked_fraction": 0.9974179863929749,
+                "frames": 14.0,
+                "psf_major_fwhm_arcsec": 0.9818339943885803
+              }
+            },
+            "centre_distance_arcsec": 2.3236793284248534,
+            "image_distances_arcsec": [
+              0.16185301201577115,
+              3.1478934613207823
+            ]
+          }
+        ]
+      },
+      "query": {
+        "url": "https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/stack.csv",
+        "parameters": {
+          "ra": "166.6393175325",
+          "dec": "-18.3567244814",
+          "radius": 0.0016666666666666668,
+          "columns": "[objID,raStack,decStack,raStackErr,decStackErr,raMean,decMean,raMeanErr,decMeanErr,qualityFlag,primaryDetection,bestDetection,nStackDetections,rPSFMag,rPSFMagErr,rKronMag,rKronMagErr,rpsfQfPerfect,rnFrames,rpsfMajorFWHM,iPSFMag,iPSFMagErr,iKronMag,iKronMagErr,ipsfQfPerfect,inFrames,ipsfMajorFWHM,zPSFMag,zPSFMagErr,zKronMag,zKronMagErr,zpsfQfPerfect,znFrames,zpsfMajorFWHM]",
+          "pagesize": 200
+        },
+        "radius_arcsec": 6.0,
+        "attempts": [
+          {
+            "status_code": 200
+          }
+        ],
+        "sha256": "d79d9ffd2725b2397c8907a01c98abef4eb1dab85c637778b5b7d0ea22651e7b",
+        "bytes": 1460,
+        "raw_file": "PS1_DR2_stack.csv.gz",
+        "returned_rows": 2
+      }
+    }
+  }
+}
