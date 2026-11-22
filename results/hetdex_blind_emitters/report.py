@@ -312,6 +312,15 @@ def main():
     for t in RELEASES:
         spatial=read(EVIDENCE/t/'repeat-blobs'/'summary.json')['counts']
         sections.append(f"{t.upper()} had {spatial.get('geometry_components',0):,} two-knot systems whose geometry and wavelengths recurred in distinct shots. Of these, {spatial.get('systems_requiring_two_shot_cube_check',0):,} met the local and prior-catalog selection for independent cube checks, {spatial.get('systems_with_measurable_bridge_in_distinct_shots',0):,} had measurable bridges in two shots, and {spatial.get('systems_with_both_knots_and_bridge_confirmed_twice',0):,} passed both knot-centered spatial tests twice.")
+    sections+=['','The endpoint audits give the positions, trial identifications and dispositions of every system that passed both spatial tests twice. [SC1 endpoint measurements and source checks](evidence/sc1/blob-followup/systems.csv) · [SC2 endpoint measurements and source checks](evidence/sc2/blob-followup/systems.csv).']
+    systems=[]
+    for t in RELEASES:
+        for item in read(EVIDENCE/t/'blob-followup'/'systems.json'):
+            a,b=item['knots']
+            reasons='; '.join(item.get('reasons') or item.get('passed') or [])
+            systems.append(f"| {t.upper()} / {item['group']} | {a['ra']:.6f}, {a['dec']:.6f} | {b['ra']:.6f}, {b['dec']:.6f} | {a['wave_air_A']:.1f} | {a['trial_redshifts']['Ly_alpha']:.5f} | {item['disposition']} | {reasons.replace('|', '/')} |")
+    if systems:
+        sections+=['','| Release / system | First knot RA, Dec (deg) | Second knot RA, Dec (deg) | Observed line (Å) | Trial Lyα z | Disposition | Evidence or remaining ambiguity |','|---|---|---|---:|---:|---|---|',*systems]
     sections.append('')
     sections+=['| Check on ranked features | SC1 | SC2 |',
                '|---|---:|---:|']
@@ -354,7 +363,8 @@ def main():
                '  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --release "$r" --cache "/tmp/hetdex-$r" --vet',
                '  python "$D/repeat_blobs.py" "$D/evidence/$r" "$D/evidence/$r/repeat-blobs" --release "$r" --cache "/tmp/hetdex-$r"',
                '  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --static-retry --vet --release "$r" --cache "/tmp/hetdex-$r"',
-               '  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --replay-saved','done',
+               '  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --replay-saved',
+               '  python "$D/blobs_followup.py" "$D/evidence/$r" --cache "/tmp/hetdex-$r"','done',
                'python "$D/report.py"','python -m open_space.verify','python -m unittest discover -s tests','```',
                '', '[Spectral method](SPECTRAL_METHODS.md) · [Spatial, imaging and literature checks](VETTING.md) · [HETDEX source catalog 1 and public data](https://doi.org/10.5281/zenodo.7448504) · [HETDEX source catalog 2 and public data](https://doi.org/10.5281/zenodo.19581262) · [HETDEX data products and associated catalogs](https://hetdex.org/data-results/) · [Prior HETDEX He II search](https://arxiv.org/abs/2609.16134).',
                '', 'These measurements use the public source catalogs of Mentuch Cooper et al. (2023, ApJ 943, 177) and Mentuch Cooper et al. (2026, ApJS 284, 67), obtained with VIRUS on the Hobby–Eberly Telescope. The release records list the HETDEX collaboration, telescope partners, funding and requested acknowledgements.']

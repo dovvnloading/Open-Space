@@ -6,7 +6,7 @@ on:
         description: Research stage
         type: choice
         default: full
-        options: [scan, vet, focus, finalize, full]
+        options: [scan, vet, focus, finalize, audit, full]
   push:
     branches: [science/hetdex-blind-emitter-search]
     paths: [.github/workflows/hetdex-blind-emitters.yml]
@@ -15,12 +15,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: hetdex-rare-emitters-${{ github.ref }}-${{ (inputs.stage || 'finalize') == 'focus' && 'followup' || (inputs.stage || 'finalize') == 'finalize' && 'finalize' || 'search' }}
+  group: hetdex-rare-emitters-${{ github.ref }}-${{ inputs.stage || 'audit' }}
   cancel-in-progress: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[replace-hetdex-run]') }}
 
 env:
   SURVEY: results/hetdex_blind_emitters
-  STAGE: ${{ inputs.stage || 'finalize' }}
+  STAGE: ${{ inputs.stage || 'audit' }}
   VET_RUN: "44995021247"
   FOCUS_RUN: "44999164862"
   OMP_NUM_THREADS: "1"
@@ -36,7 +36,7 @@ jobs:
       actions: read
     strategy:
       fail-fast: false
-      max-parallel: ${{ contains(fromJSON('["focus","finalize"]'), inputs.stage || 'finalize') && 1 || 2 }}
+      max-parallel: ${{ contains(fromJSON('["focus","finalize"]'), inputs.stage || 'audit') && 1 || 2 }}
       matrix:
         release: [sc2, sc1]
     env:
@@ -138,6 +138,13 @@ jobs:
           for name in ("focus/summary", "focus/saved-pair-summary", "repeat-blobs/summary"):
               print(d.name, name, json.loads((d / (name + ".json")).read_text())["counts"])
           PY
+      - name: Check both endpoints of every recurrent spatial excess against independent archives
+        if: env.STAGE == 'full' || env.STAGE == 'focus' || env.STAGE == 'finalize' || env.STAGE == 'audit'
+        run: |
+          d="$SURVEY/evidence/$RELEASE"
+          test -s "$d/focus/static-summary.json"
+          test -s "$d/focus/saved-pair-summary.json"
+          python "$SURVEY/blobs_followup.py" "$d" --cache "$RUNNER_TEMP/hetdex"
       - name: Wait for the original evidence commit before publishing the supplement
         if: (env.STAGE == 'focus' || env.STAGE == 'finalize') && matrix.release == 'sc1'
         env:
@@ -198,8 +205,16 @@ jobs:
           git diff --cached --quiet || git commit -m "Record HETDEX $STAGE evidence from run $GITHUB_RUN_ID"
           git push origin HEAD:science/hetdex-blind-emitter-search
 
+      - uses: actions/setup-python@v5
+        if: needs.research.result == 'success'
+        with:
+          python-version: "3.12"
+      - name: Install dependencies for the repository checks
+        if: needs.research.result == 'success'
+        run: python -m pip install '.[archive]' -r "$SURVEY/requirements.txt" pandas matplotlib
+
       - name: Build claim and verify branch
-        if: (env.STAGE == 'focus' || env.STAGE == 'full' || env.STAGE == 'finalize') && needs.research.result == 'success'
+        if: (env.STAGE == 'focus' || env.STAGE == 'full' || env.STAGE == 'finalize' || env.STAGE == 'audit') && needs.research.result == 'success'
         run: |
           python "$SURVEY/report.py"
           git add README.md "$SURVEY"

@@ -21,7 +21,7 @@ from photometry import imaging_ew
 CAT_URL = "https://web.corral.tacc.utexas.edu/hetdex/HETDEX/catalogs/"
 LAN = CAT_URL+"HETDEX_LAN/hetdex_lan_v0.3.fits"
 DESI = CAT_URL+"HETDEX_DESI/DESI_HETDEX_SPEC_v1.6.fits"
-DESI_BACKUP = "https://data.desi.lbl.gov/public/dr1/vac/dr1/hetdex/DESI_HETDEX_SPEC_v1.6.fits"
+DESI_BACKUP = "https://data.desi.lbl.gov/public/dr1/vac/dr1/hetdex/v1.6/DESI_HETDEX_SPEC_v1.6.fits"
 # Table 1, Mirza Khanlari et al. 2026, doi:10.3847/1538-4357/aea6d9.
 PRIOR = [(3005020033,165.19334,50.792854,2.213),(3007998098,221.16264,53.845905,1.994),
          (3009751099,19.451492,.471328,2.038),(3010547400,20.290672,-1.048341,2.053),

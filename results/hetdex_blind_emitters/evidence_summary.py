@@ -85,7 +85,7 @@ def legacy_focus(focus, revisions):
     return by_snapshot
 
 
-def adjudications(d, *, include_pair_replay=True):
+def adjudications(d, *, include_pair_replay=True, include_blob_followup=True):
     """Yield exactly one effective decision per original ledger row, in original order."""
     d=Path(d)
     focus=d/"focus"
@@ -129,6 +129,15 @@ def adjudications(d, *, include_pair_replay=True):
             if n in replay or tuple(row["key"])!=stable_key(row["peak"]):
                 raise ValueError(f"Invalid saved pair decision for first-pass line {n}")
             replay[n]=(line,row,"focus/saved-pair-decisions.jsonl.gz")
+    blob={}
+    blob_dir=d/"blob-followup"
+    if include_pair_replay and include_blob_followup and (blob_dir/"summary.json").exists():
+        expected_hashes.add(read(blob_dir/"summary.json")["input_sha256"])
+        for line,row in ledger(blob_dir/"vetted.jsonl.gz"):
+            n=checked_line(row)
+            if n in blob or row["peak"]["channel"]!="blob" or tuple(row["key"])!=stable_key(row["peak"]):
+                raise ValueError(f"Invalid spatial archival decision for first-pass line {n}")
+            blob[n]=(line,row,"blob-followup/vetted.jsonl.gz")
     if expected_hashes:
         with register.open("rb") as source:
             if expected_hashes!={hashlib.file_digest(source,"sha256").hexdigest()}:
@@ -162,8 +171,16 @@ def adjudications(d, *, include_pair_replay=True):
                 (path,line,row["vet"]["disposition"]) or measurement_id(row["peak"])!=measurement_id(prev["peak"])):
                 raise ValueError(f"Replayed pair does not match the effective decision on first-pass line {n}")
             line,row,path=newer
+        if n in blob:
+            updated=blob.pop(n)
+            prior=updated[1]
+            if ((prior["previous_ledger"],prior["previous_ledger_line"],prior["previous_disposition"])!=
+                (path,line,row["vet"]["disposition"]) or measurement_id(row["peak"])!=measurement_id(prior["peak"]) or
+                frozen_digest(row["peak"],row["vet"]).hex()!=prior["previous_snapshot_sha256"]):
+                raise ValueError(f"Spatial archival check has a different source or predecessor on first-pass line {n}")
+            line,row,path=updated
         yield line,row,path,original
-    if exact or legacy or replay:
+    if exact or legacy or replay or blob:
         raise ValueError("A supplementary decision lacks an identical original ledger record")
 
 
