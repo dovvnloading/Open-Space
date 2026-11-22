@@ -43,13 +43,19 @@ from astropy.io.votable import parse_single_table
 from scipy.stats import chi2
 
 GAIA = "https://gea.esac.esa.int/tap-server/tap/sync"
-SIMBAD = "https://simbad.cds.unistra.fr/simbad/sim-tap/sync"
-SIMBAD_CFA = "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync"
+SIMBAD = "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync"
 NED = "https://ned.ipac.caltech.edu/tap/sync"
 VIZIER = "https://vizier.cfa.harvard.edu/viz-bin/votable"
+MIRRORS = {
+    "gaia": ("gaia_aip", "https://gaia.aip.de/tap/sync"),
+    "simbad": ("simbad_idia", "https://simbad.idia.ac.za/simbad/sim-tap/sync"),
+    "quirola2023": ("quirola2023_idia", "https://vizier.idia.ac.za/viz-bin/votable"),
+    "dillmann2025": ("dillmann2025_idia", "https://vizier.idia.ac.za/viz-bin/votable"),
+}
 CUDIDI = ("https://zenodo.org/records/19160904/files/"
           "final_candidates_catalogue_2026_clean_with_suffixes.csv?download=1")
 CUDIDI_MD5 = "81e1fe86d8bb346ce1ca806f144a8d63"
+CAMPAIGN_REF = "refs/heads/research/chandra-acis-fast-transients"
 MAX_ROWS = 25000
 FIELD = 120.0  # Arcseconds. Density annulus extends from FIELD/4 to FIELD.
 
@@ -86,8 +92,9 @@ def read_input(label, url, root, replay, records, params=None):
             raise ValueError(f"{label} previously failed")
     if replay:
         raise ValueError(f"missing replay input {name}")
-    if os.getenv("GITHUB_ACTIONS") != "true" or os.getenv("GITHUB_EVENT_NAME") != "workflow_dispatch":
-        raise RuntimeError("Catalog retrieval requires a manually dispatched Actions run")
+    if (os.getenv("GITHUB_ACTIONS") != "true" or os.getenv("GITHUB_REF") != CAMPAIGN_REF
+            or os.getenv("GITHUB_EVENT_NAME") not in {"push", "workflow_dispatch"}):
+        raise RuntimeError("Catalog retrieval requires the research branch's Actions campaign")
     memo = {"url": url, "attempts": [], "ok": False}
     for attempt in range(3):
         body = None
@@ -123,7 +130,7 @@ def read_input(label, url, root, replay, records, params=None):
     raise ValueError(f"{label} retrieval failed")
 
 
-def catalog_rows(label, endpoint, query, required, root, replay, records):
+def catalog_rows(label, endpoint, query, required, root, replay, records, receipt_label=None):
     # Small published lists are cached whole and checked against the CDS ReadMe.
     fixed = {
         "quirola2023": ("J/A+A/675/A44/table3", "XRT,RAdeg,DEdeg,ObsID,ePos", 8),
@@ -132,10 +139,11 @@ def catalog_rows(label, endpoint, query, required, root, replay, records):
     params = {"REQUEST": "doQuery", "LANG": "ADQL", "FORMAT": "votable", "MAXREC": MAX_ROWS, "QUERY": query}
     if fixed:
         params = {"-source": fixed[0], "-out": fixed[1], "-out.max": MAX_ROWS}
-    raw = read_input(label, endpoint, root, replay, records, params)
+    receipt_label = receipt_label or label
+    raw = read_input(receipt_label, endpoint, root, replay, records, params)
     decode = decode_published_table if fixed else decode_table
     rows = decode(raw, tuple(required), fixed[2] if fixed else None)
-    records[label]["row_count"] = len(rows)
+    records[receipt_label]["row_count"] = len(rows)
     return rows
 
 
@@ -280,10 +288,11 @@ def vet_trigger(trigger, output_dir, *, replay=False):
             try:
                 rows = catalog_rows(label, endpoint, query, required, root, replay, records)
             except (OSError, ValueError, LookupError, TypeError, ET.ParseError) as exc:
-                if label != "simbad":
+                if label not in MIRRORS:
                     raise
                 records.setdefault(label, {})["query_error"] = str(exc)[:400]
-                rows = catalog_rows("simbad_cfa", SIMBAD_CFA, query, required, root, replay, records)
+                receipt_label, mirror = MIRRORS[label]
+                rows = catalog_rows(label, mirror, query, required, root, replay, records, receipt_label)
             nearby = []
             for row in rows:
                 if label == "gaia":

@@ -1,4 +1,4 @@
-"""Dispatch-only archive orchestration. Each completed observation is an atomic checkpoint."""
+"""Branch-scoped archive orchestration. Each completed observation is an atomic checkpoint."""
 import argparse
 import gzip
 import hashlib
@@ -204,10 +204,12 @@ def shard(group, output):
     })
     cache = output / "catalogs" / f"{os.environ['GITHUB_RUN_ID']}-{os.environ['GITHUB_RUN_ATTEMPT']}-{group}"
     cache.mkdir(parents=True, exist_ok=True)
+    print(f"Shard {group} has {len(groups[group])} assigned observations", flush=True)
     for obsid in groups[group]:
         remaining = int(deadline - time.monotonic())
         if remaining < 120:
             break
+        print(f"ObsID {obsid} started", flush=True)
         with tempfile.TemporaryDirectory() as tmp:
             try:
                 run = subprocess.run([sys.executable, __file__, "one", str(obsid), str(output),
@@ -221,6 +223,8 @@ def shard(group, output):
                 row["status"] = "error"
                 row["errors"].append(str(exc))
                 save_obs(path, row)
+        current = read_obs(output / "observations" / f"{obsid}.json.gz")
+        print(f"ObsID {obsid} {current['status']}: {str(current['errors'])[:500]}", flush=True)
     dump(output / f"shard-{group}.json", {"group": group, "assigned": groups[group],
          "completed_worker": True, "commit": os.environ["GITHUB_SHA"]})
 

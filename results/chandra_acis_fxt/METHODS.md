@@ -30,7 +30,7 @@ A trial of length D in a good-time interval of length L has max(0, L−3D) secon
 
 ## Run and replay
 
-Run these commands from an authenticated GitHub CLI after the repository has registered the manual workflow. All archive retrieval, catalog queries, calibration, control generation, injections and repository checks execute in that workflow. Four workers at most share the queue. Run artifacts preserve partial jobs. A subsequent manual dispatch resumes from deposited ObsID ledgers and pins previously acquired data. Repository writes are confined to the research branch.
+The maintainer enabled pushes that change the Chandra workflow file on the research branch. The Actions run link in each deposited summary identifies the exact revision. After default-branch registration, the same workflow also accepts the manual commands below. All archive retrieval, catalog queries, calibration, control generation, injections and repository checks execute in that workflow. The first three moderate-volume observations are selected using event counts and exposure only. Their complete evidence is checkpointed before the remaining inventory is assigned. At most four matrix workers share the queue. Run artifacts preserve partial jobs. A subsequent manual dispatch resumes from deposited ObsID ledgers and pins previously acquired data. Repository writes are confined to the research branch.
 
 ```sh
 gh workflow run chandra-acis-fxt.yml --repo dovvnloading/Open-Space --ref research/chandra-acis-fast-transients

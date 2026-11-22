@@ -82,6 +82,14 @@ class TestVet(unittest.TestCase):
         self.assertEqual(other_visit["status"], "ambiguous")
         self.assertEqual(other_visit["matches"][0]["kind"], "published_variability")
 
+    def test_mirror_preserves_failed_and_successful_receipts(self):
+        unavailable = b"<html>Service unavailable</html>"
+        result = self.screen(replacements={"gaia": unavailable, "gaia_aip": self.bodies["gaia"]})
+        self.assertEqual(result["status"], "no_counterpart")
+        self.assertIn("query_error", result["queries"]["gaia"])
+        self.assertEqual(result["queries"]["gaia"]["sha256"], hashlib.sha256(unavailable).hexdigest())
+        self.assertEqual(result["queries"]["gaia_aip"]["row_count"], 0)
+
     def test_warm_cache_and_replay_verify_bytes_without_network(self):
         original = b"fixture A"
         url = "https://catalog.example.invalid/fixture"
@@ -95,7 +103,7 @@ class TestVet(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             records = {}
-            workflow = {"GITHUB_ACTIONS": "true", "GITHUB_EVENT_NAME": "workflow_dispatch"}
+            workflow = {"GITHUB_ACTIONS": "true", "GITHUB_EVENT_NAME": "push", "GITHUB_REF": vet.CAMPAIGN_REF}
             with patch.dict(os.environ, workflow), patch.object(vet, "urlopen", return_value=Response(original)) as network:
                 self.assertEqual(vet.read_input("fixture", url, root, False, records), original)
                 self.assertEqual(network.call_count, 1)
@@ -106,3 +114,10 @@ class TestVet(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "altered catalog response"):
                     vet.read_input("fixture", url, root, True, {})
                 network.assert_not_called()
+
+    def test_push_on_another_branch_cannot_fetch(self):
+        env = {"GITHUB_ACTIONS": "true", "GITHUB_EVENT_NAME": "push", "GITHUB_REF": "refs/heads/main"}
+        with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, env), patch.object(vet, "urlopen") as network:
+            with self.assertRaisesRegex(RuntimeError, "research branch"):
+                vet.read_input("fixture", "https://catalog.example.invalid/fixture", Path(tmp), False, {})
+            network.assert_not_called()
