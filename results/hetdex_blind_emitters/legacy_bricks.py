@@ -178,13 +178,18 @@ def _paths(release, cap, brick):
             coadd, coadd + f"legacysurvey-{brick}-nexp-r.fits.fz")
 
 
+def native_cache_directory(cache):
+    directory = cache if isinstance(cache, (str, os.PathLike)) else cache.root
+    return Path(directory) / "legacy-tractor"
+
+
 def legacy_brick_cones(points, cache):
     """Return one full evidence object per input coordinate, preserving order."""
     coords = [(float(p["ra"]), float(p["dec"])) if isinstance(p, dict)
               else (float(p[0]), float(p[1])) for p in points]
     if not coords:
         return []
-    root = Path(getattr(cache, "root", cache)) / "legacy-tractor"
+    root = native_cache_directory(cache)
     geometry_receipts = []
     touched = None
     for release in ("dr10", "dr9"):

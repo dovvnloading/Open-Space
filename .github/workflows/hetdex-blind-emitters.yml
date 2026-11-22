@@ -6,7 +6,7 @@ on:
         description: Research stage
         type: choice
         default: full
-        options: [scan, vet, focus, finalize, audit, full]
+        options: [scan, vet, focus, finalize, audit, geometry, full]
   push:
     branches: [science/hetdex-blind-emitter-search]
     paths: [.github/workflows/hetdex-blind-emitters.yml]
@@ -20,7 +20,7 @@ concurrency:
 
 env:
   SURVEY: results/hetdex_blind_emitters
-  STAGE: ${{ inputs.stage || (contains(github.event.head_commit.message, '[full-hetdex]') && 'full') || 'audit' }}
+  STAGE: ${{ inputs.stage || (contains(github.event.head_commit.message, '[full-hetdex]') && 'full') || (contains(github.event.head_commit.message, '[geometry-hetdex]') && 'geometry') || 'audit' }}
   VET_RUN: "44995021247"
   FOCUS_RUN: "44999164862"
   OMP_NUM_THREADS: "1"
@@ -44,6 +44,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ env.STAGE == 'geometry' && github.ref_name || github.sha }}
           persist-credentials: false
           filter: blob:none
           sparse-checkout: results/hetdex_blind_emitters
@@ -144,11 +145,12 @@ jobs:
               print(d.name, name, json.loads((d / (name + ".json")).read_text())["counts"])
           PY
       - name: Check knots and bridge centers in native imaging and independent spectra
-        if: env.STAGE == 'full' || env.STAGE == 'focus' || env.STAGE == 'finalize' || env.STAGE == 'audit'
+        if: env.STAGE == 'full' || env.STAGE == 'focus' || env.STAGE == 'finalize' || env.STAGE == 'audit' || env.STAGE == 'geometry'
         run: |
           d="$SURVEY/evidence/$RELEASE"
           test -s "$d/focus/static-summary.json"
           test -s "$d/focus/saved-pair-summary.json"
+          if test "$STAGE" = geometry; then test -s "$d/ew-imaging/summary.json"; fi
           python "$SURVEY/blobs_followup.py" "$d" --cache "$RUNNER_TEMP/hetdex"
       - name: Measure native optical continua for independently identified Ly-alpha lines
         if: env.STAGE == 'full' || env.STAGE == 'focus' || env.STAGE == 'finalize' || env.STAGE == 'audit'
@@ -224,7 +226,7 @@ jobs:
         run: python -m pip install '.[archive]' -r "$SURVEY/requirements.txt" pandas matplotlib
 
       - name: Build claim and verify branch
-        if: (env.STAGE == 'focus' || env.STAGE == 'full' || env.STAGE == 'finalize' || env.STAGE == 'audit') && needs.research.result == 'success'
+        if: (env.STAGE == 'focus' || env.STAGE == 'full' || env.STAGE == 'finalize' || env.STAGE == 'audit' || env.STAGE == 'geometry') && needs.research.result == 'success'
         run: |
           python "$SURVEY/report.py"
           git add README.md "$SURVEY"

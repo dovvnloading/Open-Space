@@ -17,7 +17,7 @@ from astropy.wcs import WCS
 from astropy.wcs.utils import proj_plane_pixel_scales
 from scipy.ndimage import gaussian_filter
 
-from legacy_bricks import _fetch, _paths
+from legacy_bricks import _fetch, _paths, native_cache_directory
 
 
 def _hdu(hdul):
@@ -178,7 +178,7 @@ def _measure(images, x, y, xcat, ycat, radii, scale, radius, sigma):
 def _band(rec, cone, cache_dir, cube, band):
     from astropy.coordinates import SkyCoord
     import astropy.units as u
-    root = Path(getattr(cache_dir,"root",cache_dir)) / "legacy-tractor"
+    root = native_cache_directory(cache_dir)
     choices = [p for p in cone.get("coverage",[]) if p.get("contains_center") and p.get("status")=="queried"
                and p["release"]==cone.get("selected_release") and p["cap"]==cone.get("selected_cap")]
     fail = dict(status="unavailable",eligible=False,band=band,receipts=[])
