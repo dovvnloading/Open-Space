@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE version="1.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.ivoa.net/xml/VOTable/v1.3"
+  xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/v1.3">
+ <DESCRIPTION>
+   VizieR Astronomical Server vizier.idia.ac.za
+    Date: 2026-11-22T11:41:15 [V7.6.1]
+   Explanations and Statistics of UCDs:			See LINK below
+   In case of problem, please report to:	cds-question@unistra.fr
+ </DESCRIPTION>
+<!-- VOTable description at http://www.ivoa.net/Documents/latest/VOT.html -->
+<INFO name="service_protocol" value="ASU">  IVOID of the protocol through which the data was retrieved</INFO>
+<INFO name="request_date" value="2026-11-22T11:41:16">  Query execution date</INFO>
+<INFO name="request" value="https://vizier.idia.ac.za/viz-bin/votable?-source=J%2FA%2BA%2F675%2FA44%2Ftable3&amp;-out=%2A%2A&amp;-out.max=25000&amp;-out.add=_RAJ2000%2C_DEJ2000&amp;-oc.form=d">  Full request URL</INFO>
+<INFO name="contact" value="cds-question@unistra.fr">  Email or URL to contact publisher</INFO>
+<INFO name="server_software" value="VizieR/7.6.1">  Software version</INFO>
+<INFO name="publisher" value="CDS">  Data centre that produced the VOTable</INFO>
+
+<!--
+Execution Reports
+ -->
+
+<RESOURCE ID="yCat_36750044" name="J/A+A/675/A44" type="results">
+  <DESCRIPTION>Extragalactic fast X-ray transient cand. (Quirola-Vasquez+, 2023)</DESCRIPTION>  <INFO name="ivoid" value="ivo://cds.vizier/j/a+a/675/a44">    IVOID of underlying data collection  </INFO>
+  <INFO name="data_ivoid" value="ivo://cds.vizier/j/a+a/675/a44">    IVOID of underlying data collection  </INFO>
+  <INFO name="creator" value="Quirola-Vasquez J.">    First author or institution  </INFO>
+  <INFO name="cites" value="bibcode:2023A&amp;A...675A..44Q">    Article or Data origin sources  </INFO>
+  <INFO name="journal" value="A&amp;A">    Journal name  </INFO>
+  <INFO name="original_date" value="2023">    Year of the article publication  </INFO>
+  <INFO name="reference_url" value="https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/675/A44">    Dataset landing page  </INFO>
+  <INFO name="citation" value="doi:10.26093/cds/vizier.36750044">    Dataset identifier that can be used for citation  </INFO>
+  <INFO name="publication_date" value="2024-11-06">    Date of first publication in the data centre  </INFO>
+  <INFO name="rights_uri" value="https://cds.unistra.fr/vizier-org/licences_vizier.html">    Licence URI  </INFO>
+
+  <COOSYS ID="J2000" system="eq_FK5" equinox="J2000"/>
+  <TABLE ID="J_A_A_675_A44_table3" name="J/A+A/675/A44/table3">
+    <DESCRIPTION>Properties of the extragalactic FXT candidates detected and/or discussed in this work, ordered by date.</DESCRIPTION>
+    <!-- Definitions of GROUPs and FIELDs -->
+
+<!-- +++No column could be found to attach a LINK in table: J/A+A/675/A44/table3 -->
+    <FIELD name="_RAJ2000" ucd="pos.eq.ra" ref="J2000" datatype="double" width="11" precision="7" unit="deg"><!-- ucd="POS_EQ_RA" -->
+      <DESCRIPTION>Right ascension (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)</DESCRIPTION>
+    </FIELD>
+    <FIELD name="_DEJ2000" ucd="pos.eq.dec" ref="J2000" datatype="double" width="11" precision="7" unit="deg"><!-- ucd="POS_EQ_DEC" -->
+      <DESCRIPTION>Declination (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)</DESCRIPTION>
+    </FIELD>
+    <FIELD name="recno" ucd="meta.record" datatype="int" width="8"><!-- ucd="RECORD" -->
+      <DESCRIPTION>Record number assigned by the VizieR team. Should Not be used for identification.</DESCRIPTION>
+      <LINK href="http://vizier.idia.ac.za/viz-bin/VizieR-5?-info=XML&amp;-out.add=.&amp;-source=J/A+A/675/A44/table3&amp;recno=${recno}"/>
+    </FIELD>
+    <FIELD name="FXT" ucd="meta.id" datatype="short" width="2"><!-- ucd="ID_NUMBER" -->
+      <DESCRIPTION>[15/22] Shorthand identifier (FXT NN) used throughout this work</DESCRIPTION>
+    </FIELD>
+    <FIELD name="XRT" ucd="meta.id;meta.main" datatype="char" arraysize="10"><!-- ucd="ID_MAIN" -->
+      <DESCRIPTION>X-ray transient identifier (XRT date), plus previous name when available</DESCRIPTION>
+    </FIELD>
+    <FIELD name="n_XRT" ucd="meta.note" datatype="char" arraysize="1"><!-- ucd="NOTE" -->
+      <DESCRIPTION>[+] Note on XRT (1)</DESCRIPTION>
+      <LINK href="http://vizier.idia.ac.za/viz-bin/VizieR?-6N&amp;-info=XML&amp;-out.add=.&amp;&amp;lt;&amp;quot;Note&amp;quot;&amp;catid=36750044&amp;notid=1&amp;-out.emph=${n_XRT}"/>
+    </FIELD>
+    <FIELD name="ObsID" ucd="meta.id;obs" datatype="int" width="5"><!-- ucd="OBS_ID" -->
+      <DESCRIPTION>Chandra observation ID</DESCRIPTION>
+    </FIELD>
+    <FIELD name="Texp" ucd="time.duration;obs" datatype="float" width="4" precision="1" unit="ks"><!-- ucd="TIME_EXPTIME" -->
+      <DESCRIPTION>Chandra observation exposure time</DESCRIPTION>
+    </FIELD>
+    <FIELD name="Date" ucd="time.epoch;obs" datatype="char" arraysize="16*"><!-- ucd="TIME_DATE" -->
+      <DESCRIPTION>Chandra observation date</DESCRIPTION>
+    </FIELD>
+    <FIELD name="T90" ucd="time.duration;arith.ratio" datatype="float" width="4" precision="1" unit="ks"><!-- ucd="TIME_INTERVAL" -->
+      <DESCRIPTION>T_90_ duration, which measures the time over which the source emits the central 90% (i.e., from % to 95%) of its total measured counts, in units of ks</DESCRIPTION>
+    </FIELD>
+    <FIELD name="e_T90" ucd="stat.error" datatype="float" width="4" precision="1" unit="ks"><!-- ucd="ERROR" -->
+      <DESCRIPTION>Error on T90 (lower limit)</DESCRIPTION>
+    </FIELD>
+    <FIELD name="E_T90" ucd="stat.error;stat.max" datatype="float" width="4" precision="1" unit="ks"><!-- ucd="ERROR" -->
+      <DESCRIPTION>Error on T90 (upper limit)</DESCRIPTION>
+    </FIELD>
+    <FIELD name="RAJ2000" ucd="pos.eq.ra;meta.main" ref="J2000" datatype="double" width="9" precision="5" unit="deg"><!-- ucd="POS_EQ_RA_MAIN" -->
+      <DESCRIPTION>Right Ascension (J2000)</DESCRIPTION>
+    </FIELD>
+    <FIELD name="DEJ2000" ucd="pos.eq.dec;meta.main" ref="J2000" datatype="double" width="9" precision="5" unit="deg"><!-- ucd="POS_EQ_DEC_MAIN" -->
+      <DESCRIPTION>Declination (J2000)</DESCRIPTION>
+    </FIELD>
+    <FIELD name="OffAxis" ucd="instr.offset" datatype="float" width="4" precision="1" unit="arcmin"><!-- ucd="INST_ANG_OFFAXIS" -->
+      <DESCRIPTION>Off-axis angle of the FXT candidates, with respect to the Chandra aimpoint</DESCRIPTION>
+    </FIELD>
+    <FIELD name="ePos" ucd="stat.error;pos" datatype="float" width="5" precision="2" unit="arcsec"><!-- ucd="ERROR" -->
+      <DESCRIPTION>Estimated 2{sigma} X-ray positional uncertainty (see Sect. 2.5).</DESCRIPTION>
+    </FIELD>
+    <FIELD name="HR" ucd="phot.flux;arith.ratio" datatype="float" width="5" precision="2"><!-- ucd="SPECT_HARDNESS-RATIO" -->
+      <DESCRIPTION>Hardness ratio (2)</DESCRIPTION>
+    </FIELD>
+    <FIELD name="e_HR" ucd="stat.error" datatype="float" width="5" precision="2"><!-- ucd="ERROR" -->
+      <DESCRIPTION>Hardness ratio 1{sigma} uncertainty</DESCRIPTION>
+    </FIELD>
+    <FIELD name="S/N" ucd="stat.snr" datatype="float" width="4" precision="1"><!-- ucd="INST_S/N" -->
+      <DESCRIPTION>Approximate signal-to-noise ratio (S/N)</DESCRIPTION>
+    </FIELD>
+<DATA><TABLEDATA>
+<TR><TD>233.7349600</TD><TD>+23.4684900</TD><TD>1</TD><TD>15</TD><TD>XRT 140507</TD><TD></TD><TD>16093</TD><TD>68.8</TD><TD>2014-05-07</TD><TD>4.8</TD><TD>5.5</TD><TD>3.6</TD><TD>233.73496</TD><TD>+23.46849</TD><TD>2.2</TD><TD>0.80</TD><TD>-1.50</TD><TD>0.21</TD><TD>6.9</TD></TR>
+<TR><TD>053.0767200</TD><TD>-27.8734500</TD><TD>2</TD><TD>16</TD><TD>XRT 150322</TD><TD></TD><TD>16453</TD><TD>74.7</TD><TD>2015-03-21/22</TD><TD>10.3</TD><TD>6.3</TD><TD>9.0</TD><TD>053.07672</TD><TD>-27.87345</TD><TD>4.3</TD><TD>0.32</TD><TD>-0.33</TD><TD>0.08</TD><TD>35.2</TD></TR>
+<TR><TD>040.8297200</TD><TD>+32.3239000</TD><TD>3</TD><TD>17</TD><TD>XRT 151121</TD><TD></TD><TD>18715</TD><TD>24.5</TD><TD>2015-11-20/21</TD><TD>5.5</TD><TD>4.2</TD><TD>1.2</TD><TD>040.82972</TD><TD>+32.32390</TD><TD>8.6</TD><TD>2.00</TD><TD>-0.17</TD><TD>0.20</TD><TD>6.4</TD></TR>
+<TR><TD>036.7148900</TD><TD>-01.0831700</TD><TD>4</TD><TD>18</TD><TD>XRT 161125</TD><TD></TD><TD>19310</TD><TD>6.1</TD><TD>2016-11-25</TD><TD>2.9</TD><TD>2.4</TD><TD>0.8</TD><TD>036.71489</TD><TD>-01.08317</TD><TD>12.1</TD><TD>5.00</TD><TD>-0.64</TD><TD>0.18</TD><TD>4.3</TD></TR>
+<TR><TD>356.2643700</TD><TD>-42.6449400</TD><TD>5</TD><TD>19</TD><TD>XRT 170901</TD><TD>+</TD><TD>20635</TD><TD>77.0</TD><TD>2017-08-31/09-01</TD><TD>3.9</TD><TD>0.7</TD><TD>1.2</TD><TD>356.26437</TD><TD>-42.64494</TD><TD>3.1</TD><TD>0.14</TD><TD>0.00</TD><TD>0.08</TD><TD>43.7</TD></TR>
+<TR><TD>207.3471100</TD><TD>+26.5842100</TD><TD>6</TD><TD>20</TD><TD>XRT 191127</TD><TD></TD><TD>21831</TD><TD>22.5</TD><TD>2019-11-26/27</TD><TD>0.3</TD><TD>0.2</TD><TD>0.2</TD><TD>207.34711</TD><TD>+26.58421</TD><TD>5.9</TD><TD>1.20</TD><TD>-0.34</TD><TD>0.17</TD><TD>8.6</TD></TR>
+<TR><TD>050.4751600</TD><TD>+41.2470400</TD><TD>7</TD><TD>21</TD><TD>XRT 191223</TD><TD></TD><TD>23103</TD><TD>18.1</TD><TD>2019-12-23</TD><TD>3.7</TD><TD>0.5</TD><TD>2.4</TD><TD>050.47516</TD><TD>+41.24704</TD><TD>3.5</TD><TD>0.44</TD><TD>-0.16</TD><TD>0.20</TD><TD>9.7</TD></TR>
+<TR><TD>207.2352300</TD><TD>+26.6623000</TD><TD>8</TD><TD>22</TD><TD>XRT 210423</TD><TD>+</TD><TD>24604</TD><TD>26.4</TD><TD>2021-04-23/24</TD><TD>12.1</TD><TD>4.1</TD><TD>4.0</TD><TD>207.23523</TD><TD>+26.66230</TD><TD>7.5</TD><TD>0.60</TD><TD>-0.18</TD><TD>0.10</TD><TD>12.4</TD></TR>
+</TABLEDATA></DATA>
+</TABLE>
+<INFO name="matches" value="8">matching records</INFO>
+
+<INFO name="Warning" value="vc_coo can't change epoch"/>
+<INFO name="Warning" value="increase the precision for computed column 8"/>
+<INFO name="Warning" value="increase the precision for computed column 8"/>
+</RESOURCE>
+</VOTABLE>
