@@ -104,10 +104,15 @@ def perform(root,out,area,job,leads,retained):
     wrote,attempts,acquisition=[],[],[]
     old_dump,old_replay=visits.dump,visits.replay
     def write(p,item):
-        if p.name!="independent_visits.json":
-            need(p==path,"Native visit key differs")
+        if p.name=="one.json" and not p.resolve().is_relative_to(out.resolve()):
+            need(item==[receipt],"Native visit input manifest differs from the pinned product")
             old_dump(p,item)
-            wrote.append(p)
+            return
+        if p==out/"independent_visits.json":
+            return  # The native final reducer writes this once after all products finish.
+        need(p==path,"Native visit checkpoint key differs")
+        old_dump(p,item)
+        wrote.append(p)
     def take(manifest,dest):
         need(campaign.read(manifest)==[receipt],"Wrong pinned product request")
         start=time.monotonic()

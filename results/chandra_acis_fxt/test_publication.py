@@ -40,29 +40,41 @@ def source(oid):
                 url=f"https://cxc.cfa.harvard.edu/cdaftp/byobsid/{oid%10}/{oid}/primary/{name}")
 
 
-def fixture_lead(evidence,receipt,candidate):
+def fixture_lead(evidence,receipt,disposition,index=0):
     oid,h=receipt["obsid"],receipt["sha256"]
-    folder=evidence/"photometry"/str(oid)/receipt["filename"]/"real/0"
+    candidate=disposition=="candidate"
+    tag=f"real/{index}"
+    folder=evidence/"photometry"/str(oid)/receipt["filename"]/tag
     weights=save(folder/"peak_weights.fits.gz",{"fixture":"mock calibrated photon weights"})
     diag=save(folder/"diagnostics.json",{"fixture":"simulated aperture diagnostics"})
     host={"name":"Fixture Galaxy","redshift":.12,"separation_arcsec":.45} if candidate else None
     event=dict(ra_deg=120.25,dec_deg=30.5,position_error_arcsec=.9,event_mjd=59500.5,
-               duration_s=46.5,trial_duration_s=60,trigger_key="real/0",instrument_pass=True,
+               duration_s=46.5,trial_duration_s=60,trigger_key=tag,instrument_pass=True,
                on_counts=21,annulus_counts=4,annulus_area_ratio=12.,before_counts=1,before_s=1500.,
-               after_counts=0,after_s=2400.,seed_score=9. if candidate else 8.,
+               after_counts=0,after_s=2400.,seed_score=9. if candidate else 8.,seed_local_p=1e-9 if candidate else 1e-8,
                flux={"peak_flux_erg_cm2_s":2e-12,"flux_counting_sigma_erg_cm2_s":3e-13,
                      "gross_flux_erg_cm2_s":2.3e-12,"scaled_background_flux_erg_cm2_s":.3e-12,
                      "event_sha256":h,"calibrated_fits_sha256":digest(weights.read_bytes())},
                diagnostics={"input_sha256":h,"files":{"diagnostics.json":digest(diag.read_bytes())}},
                vet={"status":"host_candidate" if candidate else "no_counterpart","errors":{},"host":host,
                     "matches":[{"catalog":"fixture catalog","name":host["name"],"separation_arcsec":.45}] if host else []})
-    save(evidence/"observations"/f"{oid}.json.gz",{"obsid":oid,"status":"complete","products":[
-         {"input":receipt,"complete":True,"search":{"triggers":[event]}}]})
+    if disposition=="unresolved":
+        event["flux"]={"error":"Missing fixture calibration"}
+    if disposition=="rejected":
+        event["flux"].update(peak_flux_erg_cm2_s=-2e-12,gross_flux_erg_cm2_s=1e-12,scaled_background_flux_erg_cm2_s=3e-12)
+    p=evidence/"observations"/f"{oid}.json.gz"
+    if index:
+        ledger=json.loads(gzip.decompress(p.read_bytes()))
+        ledger["products"][0]["search"]["triggers"].append(event)
+    else:
+        ledger={"obsid":oid,"status":"followup_incomplete" if disposition=="unresolved" else "complete","products":[
+                {"input":receipt,"complete":True,"search":{"seed":int(h[:12],16),"triggers":[event]}}]}
+    save(p,ledger)
     lo,hi=pub.report.bounds(1,24)
     return {**{k:event[k] for k in ("ra_deg","dec_deg","position_error_arcsec","event_mjd","duration_s","trial_duration_s")},
-            "obsid":oid,"trigger_key":"real/0","input_sha256":h,"input_name":receipt["filename"],"input_url":receipt["url"],
-            "survey_fap":2/25,"control_exceedances":1,"null_reference":"maximum_score","status":event["vet"]["status"],
-            "peak_flux_erg_cm2_s":2e-12,"fap_lo95":lo,"fap_hi95":hi}
+            "obsid":oid,"trigger_key":tag,"input_sha256":h,"input_name":receipt["filename"],"input_url":receipt["url"],
+            "survey_fap":2/25,"control_exceedances":1,"null_reference":"instrument_maximum","status":event["vet"]["status"],
+            "peak_flux_erg_cm2_s":event["flux"].get("peak_flux_erg_cm2_s"),"fap_lo95":lo,"fap_hi95":hi}
 
 
 def build_supplement(supplement):
@@ -103,13 +115,14 @@ class TestPublication(unittest.TestCase):
             supplement=evidence/"supplemental_search/synthetic"
             corrected={"vet.py":"9f3615c635e42d60425be4738dd3ffd62dfe8aee74bc717736df951af2a996e8"}
             receipt=[source(91001),source(91002)]
-            leads=[fixture_lead(evidence,r,i==0) for i,r in enumerate(receipt)]
+            leads=[fixture_lead(evidence,receipt[0],"candidate"),fixture_lead(evidence,receipt[1],"unresolved"),
+                   fixture_lead(evidence,receipt[0],"rejected",1)]
             save(evidence/"leads.json",leads)
             save(evidence/"inventory/campaign.json",{"implementation":corrected,"followup_revision":"history/fixture"})
             save(evidence/"history/fixture/result.json",{"changed_or_attempted":{}})
             table(evidence/"obsid_coverage.csv",["obsid","status","scanned_all_products"],
                   [{"obsid":oid,"status":status,"scanned_all_products":i<2}
-                   for i,(oid,status) in enumerate(((91001,"complete"),(91002,"complete"),(91003,"unattempted")))])
+                   for i,(oid,status) in enumerate(((91001,"complete"),(91002,"followup_incomplete"),(91003,"unattempted")))])
             table(evidence/"event_receipts.csv",[*receipt[0],"included_in_inference"],
                   [{**r,"included_in_inference":True} for r in receipt])
             table(evidence/"control_trials.csv",["replica","surviving_or_unresolved","scanned_obsids","maximum_score","instrument_maximum"],
@@ -120,13 +133,19 @@ class TestPublication(unittest.TestCase):
                   [(60,8,3,3,2),(180,16,1,1,1),(600,8,1,0,0)]]
             table(evidence/"completeness.csv",list(grid[0]),grid)
             save(evidence/"summary.json",dict(exposure_by_duration_s={"60":2000000,"180":800000},scanned_obsids=2,
-                 completed_obsids=2,inventory_obsids=3,scheduled_injections=5,attempted_injections=4,recovered_injections=3,
-                 control_replicas=24,mean_control_survivors=1/24,scientific_leads=2,input_products=2,real_raw_triggers=9,
-                 real_instrument_pass=2))
+                 completed_obsids=1,inventory_obsids=3,scheduled_injections=5,attempted_injections=4,recovered_injections=3,
+                 control_replicas=24,mean_control_survivors=1/24,scientific_leads=3,input_products=2,real_raw_triggers=9,
+                 real_instrument_pass=3))
             build_supplement(supplement)
             note=here/"REVIEW.md"
             note.write_text("# Fixture review\n"+"".join(
-                f"\n## ObsID {r['obsid']}\n\nObsID {r['obsid']} real/0 EVT2 {r['sha256']}\n" for r in receipt))
+                f"\n## ObsID {r['obsid']}\n\nObsID {r['obsid']} real/0 and real/1 EVT2 {r['sha256']}\n" for r in receipt))
+            field=evidence/"field_followup/27089/45008126305-1"
+            save(field/"history/history.json",{})
+            frame=evidence/"frame_forensics/24912"/("0"*64)/"real/0/fixture"
+            save(frame/"result.json",{"status":"complete","measurement":{"instrument_ccd":8},
+                                      "target":{"obsid":24912,"trigger":"real/0"}})
+            (frame/"README.md").write_text("Synthetic S4 result\n")
             (here/"METHODS.md").write_text("# Synthetic fixture\n")
             old_entries=["- Another measurement. *Measured*","- Another correction. *Correction*"]
             (repo/"README.md").write_text("\n"*8+"3 entries, 2 new measurements, 0 candidate discoveries, 0 forecasts, "
@@ -136,15 +155,16 @@ class TestPublication(unittest.TestCase):
             self.addCleanup(pub.obs.cache_clear)
             with (patch.object(pub,"HERE",here),patch.object(pub.report,"ROOT",repo),patch.object(pub,"identity",return_value=corrected)):
                 groups,measured,signature,sources=pub.load(supplement)
-                written=[{"obsid":r["obsid"],"input_sha256":r["sha256"],"trigger_key":"real/0",
+                written=[{"obsid":r["obsid"],"input_sha256":r["input_sha256"],"trigger_key":r["trigger_key"],
                           "decision":decision,"reason":reason,"evidence":[f"REVIEW.md#obsid-{r['obsid']}"]}
-                         for r,decision,reason in zip(receipt,["candidate","unresolved"],
-                             ["A plausible galaxy association survived review.","The source distance remains unknown."],strict=True)]
+                         for r,decision,reason in zip(leads,["candidate","unresolved","rejected"],
+                             ["A plausible galaxy association survived review.","The source distance remains unknown.",
+                              "The CCD rows share a detector column."],strict=True)]
                 manifest=save(evidence/"decisions.json",{"reviewed_inputs_sha256":signature,"decisions":written})
                 decisions,cited=pub.adjudicate(campaign_read(manifest),measured,signature)
                 result=pub.publish(groups,measured,decisions,sources,cited,signature,manifest,supplement)
             self.assertEqual(campaign_read(evidence/"publication.json"),result)
-            self.assertEqual(result["dispositions"]["dated"],{"candidate":1,"unresolved":1})
+            self.assertEqual(result["dispositions"]["dated"],{"candidate":1,"unresolved":1,"rejected":1})
             self.assertEqual(result["label"],"Candidate")
             self.assertEqual(result["reviewed_inputs_sha256"],signature)
             self.assertEqual(result["decisions_sha256"],digest(manifest.read_bytes()))
@@ -162,6 +182,30 @@ class TestPublication(unittest.TestCase):
             self.assertLess(float(row["exceedance_lo95"]),1/24)
             self.assertGreater(float(row["exceedance_hi95"]),1/24)
             self.assertEqual(result["candidate_table_sha256"],digest((evidence/"fxt_candidates.csv").read_bytes()))
+            catalog=evidence/"reviewed_fxt_triggers.csv"
+            with catalog.open(newline="") as f:
+                every=list(csv.DictReader(f))
+            self.assertEqual(result["reviewed_rows"],3)
+            self.assertEqual(result["candidate_rows"],1)
+            self.assertEqual(result["reviewed_table_sha256"],digest(catalog.read_bytes()))
+            self.assertEqual([r for r in every if r["disposition"]=="candidate"],rows)
+            by_state={r["disposition"]:r for r in every}
+            self.assertEqual(set(by_state),{"candidate","unresolved","rejected"})
+            unavailable=by_state["unresolved"]
+            self.assertEqual((unavailable["photometry_status"],unavailable["photometry_error"]),
+                             ("unavailable","Missing fixture calibration"))
+            self.assertTrue(all(unavailable[k]=="" for k in ("peak_flux_erg_cm2_s","counting_sigma_erg_cm2_s",
+                          "gross_peak_flux_erg_cm2_s","scaled_peak_background_erg_cm2_s","calibrated_weights_sha256")))
+            rejected=by_state["rejected"]
+            self.assertEqual((rejected["trigger_key"],rejected["event_sha256"]),("real/1",receipt[0]["sha256"]))
+            self.assertEqual(tuple(float(rejected[k]) for k in ("peak_flux_erg_cm2_s","gross_peak_flux_erg_cm2_s",
+                             "scaled_peak_background_erg_cm2_s","counting_sigma_erg_cm2_s")),(-2e-12,1e-12,3e-12,3e-13))
+            self.assertEqual(float(rejected["seed_score"]),8.)
+            self.assertEqual(float(rejected["seed_local_p"]),1e-8)
+            self.assertEqual(int(rejected["search_random_seed"]),int(receipt[0]["sha256"][:12],16))
+            self.assertEqual(rejected["control_reference"],"instrument_maximum")
+            self.assertEqual(rejected["source_ledger_sha256"],digest((here/rejected["source_ledger"]).read_bytes()))
+            self.assertEqual(json.loads(unavailable["human_evidence"]),["REVIEW.md#obsid-91002"])
             plot=(evidence/"injection_recovery.png").read_bytes()
             self.assertEqual(plot[:8],b"\x89PNG\r\n\x1a\n")
             width,height=struct.unpack(">II",plot[16:24])
@@ -173,15 +217,23 @@ class TestPublication(unittest.TestCase):
             self.assertAlmostEqual(bounds["unresolved_date_sky"]["60"],-2*math.log(.05))
             self.assertIsNone(bounds["unresolved_date_sky"]["180"])
             conservative=result["instrument_pass_conservative_upper95_detected_events_per_Ms"]
+            review_rates=result["review_selection_upper95_events_per_Ms"]
+            accepted_mu=2*review_rates["accepted_candidates"]["60"]
+            possible_mu=2*review_rates["candidates_and_unresolved"]["60"]
+            self.assertAlmostEqual(math.exp(-accepted_mu)*(1+accepted_mu),.05)
+            self.assertAlmostEqual(math.exp(-possible_mu)*(1+possible_mu+possible_mu**2/2),.05)
+            self.assertLess(accepted_mu,possible_mu)
             mu=2*conservative["60"]
-            self.assertAlmostEqual(math.exp(-mu)*(1+mu+mu**2/2),.05)
+            self.assertAlmostEqual(math.exp(-mu)*(1+mu+mu**2/2+mu**3/6),.05)
             self.assertIsNone(conservative["600"])
             readme=(here/"README.md").read_text()
             for evidence_text in ("in 2 dated ObsIDs covering 2.000000 Ms","3 assigned ObsIDs, 2 fully scanned",
                                   "3 of 4 attempted (75.0%)","evidence/injection_recovery.png","evidence/fxt_candidates.csv",
-                                  "Unresolved · ObsID 91002, real/0.","The source distance remains unknown.",
+                                  "evidence/reviewed_fxt_triggers.csv","GW170817 field · all-years visits and exclusions",
+                                  "ACIS-S4 frame measurement · ObsID 24912, real/0","Unresolved · ObsID 91002, real/0.","The source distance remains unknown.",
                                   "2.000000–2.500000 Ms",receipt[0]["sha256"]):
                 self.assertIn(evidence_text,readme)
+            self.assertNotIn("GW170817 field · time-averaged rates",readme)
             lines=(repo/"README.md").read_text().splitlines()
             self.assertEqual(lines[8],"3 entries, 1 new measurements, 1 candidate discoveries, 0 forecasts, "
                              "1 corrections and 0 carefully recorded null results.")

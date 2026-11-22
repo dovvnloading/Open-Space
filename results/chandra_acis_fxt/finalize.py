@@ -22,7 +22,7 @@ MARK="stage_manifest.json.gz"
 SEAL="stage_seal.json"
 SUP=ROOT/"supplemental_search"/f"{ingest.RUN}-{ingest.ATTEMPT}"
 TABLES=("summary.json","obsid_coverage.csv","event_receipts.csv","control_trials.csv","leads.json","completeness.csv")
-SCRIPTS=("finalize.py","final_assembly.py","followup.py","catalog_pack.py","heldout.py","heldout_original.py","upload_recovery.py","completeness_figure.py","publication.py","candidate_inputs.py")
+SCRIPTS=("finalize.py","final_assembly.py","followup.py","catalog_pack.py","heldout.py","heldout_original.py","upload_recovery.py","completeness_figure.py","publication.py","candidate_inputs.py","frame_population.py")
 need=ingest.require
 sha=ingest.sha
 save=ingest.save
@@ -288,6 +288,7 @@ def output_receipt(path,key,outputs,status="complete",errors=()):
 
 def measured_report():
     import report
+    import frame_population
     rev,out=cycle_path()
     receipt=out/"measured_report.json"
     key=provenance()
@@ -312,6 +313,10 @@ def measured_report():
             if p.is_file() and p.name!="README.md":
                 followup.archive_replace(p,ROOT/p.name,out/"before_report"/p.name)
                 outputs.append(ROOT/p.name)
+        frames=frame_population.run(ROOT,"final")
+        need(frames["complete_scans"]==campaign.read(ROOT/"summary.json")["scanned_obsids"],
+             "ACIS-S4 scrutiny used a different observation cohort")
+        outputs.extend(p for p in (ROOT/"frame_forensics/population/final").iterdir() if p.is_file())
         output_receipt(receipt,key,outputs)
     print("Regenerated full corrected primary measurement tables; the catalog awaits written adjudication.")
 
@@ -365,6 +370,8 @@ def context(task):
     script={"csc":"csc_variability.py","optical":"lead_optical.py"}.get(task,task+".py")
     key={"measurement_sha256":sha(measured),"leads_sha256":sha(ROOT/"leads.json"),
          "program_sha256":sha(HERE/script)}
+    if task=="optical":
+        key["gaia_properties_sha256"]=sha(HERE/"gaia_properties.py")
     if task=="review":
         for f in (ROOT/"independent_visits/independent_visits.json",ROOT/"alerts/review.json"):
             key[f.name]=sha(f) if f.is_file() else None
@@ -391,6 +398,14 @@ def context(task):
                         errors.append(f"{oid} {tag}: partial optical catalog coverage")
                 else:
                     errors.append(f"{oid} {tag}: optical record unavailable")
+            classes=ROOT/"gaia_dr3_properties"
+            use(HERE/"gaia_properties.py","--evidence",ROOT)
+            use(HERE/"gaia_properties.py","--evidence",ROOT,"--replay")
+            need((classes/"associations.json").is_file(),"Missing Gaia source classifications and lookup receipts")
+            files.extend(p for p in classes.rglob("*") if p.is_file())
+            for source,results in campaign.read(classes/"associations.json")["sources"].items():
+                errors.extend(f"Gaia {source} {table}: classification lookup unavailable"
+                              for table,r in results.items() if r["status"]=="unavailable")
         elif task=="csc":
             files,errors=csc_context(out)
         elif task=="heldout":
@@ -438,6 +453,9 @@ def reports_ready(out):
         if task=="review":
             for p in (ROOT/"independent_visits/independent_visits.json",ROOT/"alerts/review.json"):
                 need(rec["key"][p.name]==(sha(p) if p.is_file() else None),"Regenerate human review after new context")
+        if task=="optical":
+            need(rec["key"].get("gaia_properties_sha256")==sha(HERE/"gaia_properties.py"),
+                 "Supplementary Gaia source classification implementation changed")
     return {task:campaign.read(out/(task+".json"))["status"] for task in ("heldout","csc","optical","visits","alerts","review")}
 
 
@@ -526,6 +544,7 @@ def pub_local(name):
 def verify_commit(receipt):
     import candidate_inputs as ci
     import publication
+    import verify_resources
     repo=HERE.parents[1]
     need(not receipt.resolve().is_relative_to(repo),"Write Git verification receipts to runner temporary storage")
     for command in (["git","diff","--quiet","HEAD","--"],):
@@ -538,6 +557,7 @@ def verify_commit(receipt):
     doc=campaign.read(out/"decisions.json")
     pub=campaign.read(ROOT/"publication.json")
     need(sha(ROOT/"fxt_candidates.csv")==pub["candidate_table_sha256"],"Published candidate table changed")
+    need(sha(ROOT/"reviewed_fxt_triggers.csv")==pub["reviewed_table_sha256"],"Published full trigger review table changed")
     need(sha(ROOT/"injection_recovery.png")==pub["recovery_figure_sha256"],"Published recovery figure changed")
     need(sha(out/"decisions.json")==release["decisions_sha256"]==pub["decisions_sha256"],"Final written decisions changed")
     sidecars=doc["review_source_sha256"]
@@ -565,6 +585,10 @@ def verify_commit(receipt):
     need(not tracked.strip(),"Untracked Chandra results must be committed before the final verifier")
     head=subprocess.check_output(["git","rev-parse","HEAD"],cwd=repo,text=True).strip()
     receipt.parent.mkdir(parents=True,exist_ok=True)
+    machine = verify_resources.machine()
+    size = verify_resources.tree_size()
+    reserve = verify_resources.reserve_for_tree(size,machine)
+    save(receipt.parent/"resource-budget.json",{"head":head,"before":machine,"tree":size,"memory_reserve":reserve})
     results=[]
     for i,cmd in enumerate(commands):
         output=receipt.parent/f"final-gate-{i}.log"

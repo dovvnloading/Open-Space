@@ -193,6 +193,7 @@ def measurements(g, files):
         event = prod["search"]["triggers"][int(trigger.split("/")[1])]
         need(prod["complete"] and prod["input"]["url"] == lead["input_url"] == receipt["url"] and
              receipt["filename"] == lead["input_name"] == prod["input"]["filename"] and int(receipt["bytes"]) == prod["input"]["bytes"]
+             and HEX.fullmatch(receipt["fits_sha256"]) and receipt["fits_sha256"] == prod["input"]["fits_sha256"]
              and event["trigger_key"] == trigger and event["instrument_pass"]
              and event["vet"]["status"] not in report.FINAL_VETO, "Lead and exact acquired trigger disagree")
         for field in ("ra_deg","dec_deg","position_error_arcsec","event_mjd","duration_s","trial_duration_s"):
@@ -208,7 +209,9 @@ def measurements(g, files):
         lo, hi = report.bounds(n,24)
         if primary:
             need(math.isclose(lo,lead["fap_lo95"]) and math.isclose(hi,lead["fap_hi95"]), "FAP precision mismatch")
-        out[ident] = dict(lead=lead, event=event, receipt=receipt, group=g, fap=fap, n=n, lo=lo, hi=hi)
+        out[ident] = dict(lead=lead, event=event, receipt=receipt, group=g, fap=fap, n=n, lo=lo, hi=hi,
+                          control_reference=column, search_seed=prod["search"]["seed"],
+                          revision=prod["input"].get("revision"), ledger=href(p), ledger_sha256=files[href(p)])
     return out
 
 
@@ -258,6 +261,58 @@ def flux_components(flux):
          gross > 0 and background >= 0 and math.isclose(net, gross-background, rel_tol=1e-9, abs_tol=1e-30),
          "Invalid signed peak photometry or inconsistent aperture and background components")
     return gross, background
+
+
+REVIEW_FIELDS = (
+    "cohort obsid trigger_key disposition ra_deg dec_deg position_error_arcsec event_mjd duration_s trial_duration_s "
+    "ccd_id start_met_s stop_met_s peak_start_met_s peak_window_s peak_live_s peak_counts peak_annulus_counts "
+    "on_counts annulus_counts annulus_area_ratio before_counts before_s after_counts after_s "
+    "photometry_status photometry_error peak_flux_erg_cm2_s counting_sigma_erg_cm2_s gross_peak_flux_erg_cm2_s "
+    "scaled_peak_background_erg_cm2_s catalog_status host host_redshift host_offset_arcsec nearest_catalog "
+    "nearest_name nearest_kind nearest_offset_arcsec search_random_seed seed_local_p seed_score control_reference "
+    "control_exceedances_of_24 survey_fap exceedance_lo95 exceedance_hi95 event_filename event_url event_bytes "
+    "event_sha256 decompressed_fits_sha256 archive_revision source_ledger source_ledger_sha256 calibrated_weights_sha256 "
+    "catalog_cache review human_evidence"
+).split()
+
+
+def reviewed_window(ident, result, decision):
+    oid, h, tag = ident
+    event, source = result["event"], result["receipt"]
+    vet, flux = event["vet"], event.get("flux") or {}
+    host = vet.get("host") or {}
+    nearest = next(iter(vet.get("matches") or []), {})
+    net = flux.get("peak_flux_erg_cm2_s")
+    sigma = flux.get("flux_counting_sigma_erg_cm2_s")
+    gross = flux.get("gross_flux_erg_cm2_s")
+    background = flux.get("scaled_background_flux_erg_cm2_s")
+    quantities = (net, sigma, gross, background)
+    need(all(v is None or math.isfinite(v) for v in quantities) and (sigma is None or sigma >= 0) and
+         (gross is None or gross >= 0) and (background is None or background >= 0) and
+         (flux.get("event_sha256") is None or flux["event_sha256"] == h), "Invalid stored flux value or input identity")
+    if all(v is not None for v in quantities):
+        flux_components(flux)
+        status = "calibrated"
+    else:
+        status = "partial" if any(v is not None for v in quantities) else "unavailable"
+    event_fields = ("ra_deg dec_deg position_error_arcsec event_mjd duration_s trial_duration_s ccd_id "
+                    "start_met_s stop_met_s peak_start_met_s peak_window_s peak_live_s peak_counts peak_annulus_counts "
+                    "on_counts annulus_counts annulus_area_ratio before_counts before_s after_counts after_s seed_local_p seed_score")
+    return {
+        "cohort":result["group"]["name"], "obsid":oid, "trigger_key":tag, "disposition":decision["decision"],
+        **{k:event.get(k) for k in event_fields.split()}, "photometry_status":status, "photometry_error":flux.get("error"),
+        "peak_flux_erg_cm2_s":net, "counting_sigma_erg_cm2_s":sigma, "gross_peak_flux_erg_cm2_s":gross,
+        "scaled_peak_background_erg_cm2_s":background, "catalog_status":vet["status"], "host":host.get("name"),
+        "host_redshift":host.get("redshift"), "host_offset_arcsec":host.get("separation_arcsec"),
+        "nearest_catalog":nearest.get("catalog"), "nearest_name":nearest.get("name"), "nearest_kind":nearest.get("kind"),
+        "nearest_offset_arcsec":nearest.get("separation_arcsec"), "search_random_seed":result["search_seed"],
+        "control_reference":result["control_reference"], "control_exceedances_of_24":result["n"], "survey_fap":result["fap"],
+        "exceedance_lo95":result["lo"], "exceedance_hi95":result["hi"], "event_filename":source["filename"],
+        "event_url":source["url"], "event_bytes":source["bytes"], "event_sha256":h, "decompressed_fits_sha256":source["fits_sha256"],
+        "archive_revision":result["revision"], "source_ledger":result["ledger"], "source_ledger_sha256":result["ledger_sha256"],
+        "calibrated_weights_sha256":flux.get("calibrated_fits_sha256"), "catalog_cache":event.get("catalog_cache"),
+        "review":decision["reason"], "human_evidence":json.dumps(decision["evidence"],ensure_ascii=False,separators=(",",":")),
+    }
 
 
 def adjudicate(manifest, leads, sig):
@@ -392,18 +447,35 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
                   "The supplemental cohorts contribute no exposure to the dated result. " + link(supplement/"release_bounds.json","Release-date evidence") + ".",
                   ""])
     instrument_bounds = instrument_rate_bounds(dated["instrument"], dated["exposure"])
-    lines.extend(["## Upper rate when every instrumental pass is counted", "",
+    adjudication_bounds = {}
+    if dated["complete"] == dated["scanned"]:
+        for scope, n_events in (("accepted_candidates",counts[PRIMARY]["candidate"]),
+                                ("candidates_and_unresolved",counts[PRIMARY]["candidate"]+counts[PRIMARY]["unresolved"])):
+            adjudication_bounds[scope] = instrument_rate_bounds(n_events, dated["exposure"])
+    lines.extend(["## Upper rates in the dated fields", "",
                   f"Counting all {dated['instrument']:,} distinct instrumental passes as possible FXTs gives a conservative "
                   "upper rate for distinct, instrument-detectable events in the dated fields. Each duration uses the full pass "
                   "count from all trial lengths, including known foreground events and ambiguous triggers. For a Poisson "
                   "process the 95% upper mean for N detected events is half the 95th percentile of a chi-square distribution "
                   "with 2(N+1) degrees of freedom. Dividing it by that duration's eligible start time bounds the mean number "
                   "of detectable events per Ms of field observation. The calculation assumes distinct events are resolved "
-                  "and makes no correction for missed flares, sky area, or source-population selection.", "",
-                  "| Assumed duration (s) | Conservative 95% upper detected events/Ms |", "|---:|---:|"])
+                  "and makes no correction for missed flares, sky area, or source-population selection."])
+    if adjudication_bounds:
+        lines.append(f"The review accepted {counts[PRIMARY]['candidate']} candidates and left "
+                     f"{counts[PRIMARY]['unresolved']} windows unresolved. The first column of rates bounds the yield "
+                     "of the completed search and manual candidate selection. The next counts every unresolved window "
+                     "as a possible new FXT. Both are conditional on the counterpart and discovery criteria. The "
+                     "injections measured instrumental recovery only.")
+    else:
+        lines.append("Incomplete counterpart or photometric follow-up prevents an upper bound for the fully reviewed selection.")
+    lines.extend(["", "| Assumed duration (s) | Accepted candidates | Candidates + unresolved | All instrumental passes |",
+                  "|---:|---:|---:|---:|",])
     for d in DURATIONS:
-        upper = instrument_bounds[str(d)]
-        lines.append(f"| {d} | " + (f"{upper:.5g}" if upper is not None else "—") + " |")
+        ds = str(d)
+        values = [adjudication_bounds.get(scope,{}).get(ds) for scope in ("accepted_candidates","candidates_and_unresolved")]
+        values.append(instrument_bounds[ds])
+        lines.append(f"| {d} | " + " | ".join(f"{v:.5g}" if v is not None else "—" for v in values) + " |")
+    lines.append("All rates in this table are one-sided 95% Poisson upper limits per million seconds of eligible flare-start time.")
     unknown = groups[2]
     if unknown["scanned"] and unknown["exposure"]["60"] > 0:
         certain = dated["exposure"]["60"] + groups[1]["exposure"]["60"]
@@ -413,8 +485,14 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
                       f"{certain/1e6:.6f}–{possible/1e6:.6f} Ms of eligible 60-second start time. "
                       "This interval describes release-date uncertainty in measured coverage."])
     candidate_file = HERE/"evidence/fxt_candidates.csv"
-    candidate_rows = []
-    lines.extend(["", "## Manual review", "", link(candidate_file,"New FXT candidates with exact inputs and measurements")])
+    reviewed_file = HERE/"evidence/reviewed_fxt_triggers.csv"
+    reviewed_rows = []
+    written = {key(row):row for row in read(manifest)["decisions"]}
+    need(written.keys() == decisions.keys() == leads.keys(), "Written decisions and publication identity sets differ")
+    lines.extend(["", "## Manual review", "", link(reviewed_file,"Every manually reviewed trigger, disposition and measurement")
+                  + " · " + link(candidate_file,"New FXT candidates with exact inputs and measurements"), "",
+                  "Both tables use the same columns. Blank flux fields indicate unavailable measurements. "
+                  "The human evidence column contains a JSON list of source links or survey-relative paths and section anchors."])
     signed = [v["event"]["flux"]["peak_flux_erg_cm2_s"] for v in leads.values()
               if v["event"].get("flux",{}).get("peak_flux_erg_cm2_s") is not None]
     if signed:
@@ -428,6 +506,9 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
         r, (state,reason,refs) = leads[ident], decisions[ident]
         oid, h, trig = ident
         ev, source = r["event"], r["receipt"]
+        note = written[ident]
+        need(state == note["decision"] and fmt(note["reason"]) == reason, "Written disposition changed during publication")
+        reviewed_rows.append(reviewed_window(ident,r,note))
         if state != "candidate":
             lines.extend(["",f"- **{state.capitalize()} · ObsID {oid}, {trig}.** {reason} {refs}"])
             continue
@@ -440,22 +521,6 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
         gross, background = flux_components(f)
         flux_note = (" The background subtraction leaves the source energy flux unconstrained in this minute."
                      if f["peak_flux_erg_cm2_s"] <= 0 else "")
-        near = matches[0] if matches else {}
-        candidate_rows.append({
-            "cohort":r["group"]["name"], "obsid":oid, "trigger_key":trig,
-            **{k: ev[k] for k in ("ra_deg","dec_deg","position_error_arcsec","event_mjd","duration_s","trial_duration_s")},
-            **{k: ev[k] for k in ("on_counts","annulus_counts","annulus_area_ratio","before_counts","before_s",
-                                   "after_counts","after_s")},
-            "peak_flux_erg_cm2_s":f["peak_flux_erg_cm2_s"],
-            "counting_sigma_erg_cm2_s":f["flux_counting_sigma_erg_cm2_s"],
-            "gross_peak_flux_erg_cm2_s":gross,"scaled_peak_background_erg_cm2_s":background,
-            "host":(host or {}).get("name"), "host_redshift":(host or {}).get("redshift"),
-            "host_offset_arcsec":(host or {}).get("separation_arcsec"),
-            "nearest_catalog":near.get("catalog"), "nearest_name":near.get("name"),
-            "nearest_offset_arcsec":near.get("separation_arcsec"), "control_exceedances_of_24":r["n"],
-            "survey_fap":r["fap"], "exceedance_lo95":r["lo"], "exceedance_hi95":r["hi"],
-            "event_filename":source["filename"],"event_url":source["url"],"event_bytes":source["bytes"],
-            "event_sha256":h,"decompressed_fits_sha256":source["fits_sha256"],"review":reason})
         lines.extend(["",f"### Candidate · ObsID {oid}, {trig}","",
                  f"{NAMES[r['group']['name']]}. ICRS position ({ev['ra_deg']}, {ev['dec_deg']})°, "
                  f"90% radius {ev['position_error_arcsec']}″. Peak MJD {ev['event_mjd']} UTC. Aperture-photon "
@@ -469,14 +534,15 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
                  f"The automated survey FAP was {r['fap']:.3g} ({r['n']}/24 control maxima). The exact 95% interval "
                  f"for that exceedance probability is {r['lo']:.4g}–{r['hi']:.4g}. {reason} {refs}", "",
                  f"Input {source['bytes']} bytes, SHA-256 `{h}`. [{fmt(source['filename'])}]({source['url']})"])
-    candidate_fields = ("cohort obsid trigger_key ra_deg dec_deg position_error_arcsec event_mjd duration_s trial_duration_s "
-                        "on_counts annulus_counts annulus_area_ratio before_counts before_s after_counts after_s "
-                        "peak_flux_erg_cm2_s counting_sigma_erg_cm2_s gross_peak_flux_erg_cm2_s scaled_peak_background_erg_cm2_s "
-                        "host host_redshift host_offset_arcsec nearest_catalog "
-                        "nearest_name nearest_offset_arcsec control_exceedances_of_24 survey_fap exceedance_lo95 exceedance_hi95 "
-                        "event_filename event_url event_bytes event_sha256 decompressed_fits_sha256 review").split()
-    report.rows_to_csv(candidate_file, candidate_fields, candidate_rows)
-    need(len(candidate_rows)==combined["candidate"], "Candidate table and adjudication counts disagree")
+    candidate_rows = [r for r in reviewed_rows if r["disposition"] == "candidate"]
+    expected = {(g,d):n for g,totals in counts.items() for d,n in totals.items()}
+    columns=set(REVIEW_FIELDS)
+    need(all(r.keys()==columns for r in reviewed_rows) and
+         {(r["obsid"],r["event_sha256"],r["trigger_key"]) for r in reviewed_rows}==leads.keys() and
+         Counter((r["cohort"],r["disposition"]) for r in reviewed_rows)==expected and
+         len(candidate_rows)==combined["candidate"], "Published table counts and cohort dispositions disagree")
+    report.rows_to_csv(reviewed_file, REVIEW_FIELDS, reviewed_rows)
+    report.rows_to_csv(candidate_file, REVIEW_FIELDS, candidate_rows)
     lines.extend(["","## Reproduction","",
                   "The archived EVT2 manifests bind the compressed and decompressed bytes to each observation. The full ledgers retain "
                   "all detector vetoes, catalog query receipts, eligible observing intervals and controls. "
@@ -487,15 +553,46 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
                   "python results/chandra_acis_fxt/report.py",
                   "python results/chandra_acis_fxt/publication.py --supplement " + href(supplement) +
                   " --decisions " + href(manifest), "```",""])
-    extra = [link(p,label) for label,p in (("Per-lead review",HERE/"evidence/LEAD_REVIEW.md"),
+    supporting = [(title,p) for title,p in (("Per-lead review",HERE/"evidence/LEAD_REVIEW.md"),
                          ("Independent visits",HERE/"evidence/independent_visits/independent_visits.json"),
-                         ("Contemporary notices",HERE/"evidence/alerts/review.json")) if p.is_file()]
-    if extra:
-        lines.extend([" · ".join(extra),""])
+                         ("Contemporary notices",HERE/"evidence/alerts/review.json"),
+                         ("Matched Gaia stellar, galaxy and quasar classifications",HERE/"evidence/gaia_dr3_properties/README.md"),
+                         ("S4 frame occupancy in real data and all 24 scrambles",HERE/"evidence/frame_forensics/population/final/README.md"),
+                         ("Field and detector measurements for ObsIDs 23324 and 32380",HERE/"PRIORITY.md")) if p.is_file()]
+    field = HERE/"evidence/field_followup/27089/45008126305-1"
+    for name,title in (("photon_check.json","GW170817 field · ObsID 27089 photon comparison"),
+                       ("history/history.json","GW170817 field · all-years visits and exclusions")):
+        if (field/name).is_file():
+            supporting.append((title,field/name))
+    for doc in sorted(field.glob("source_replay/*/README.md")):
+        if (doc.parent/"manifest.json").is_file():
+            supporting.append(("GW170817 field · time-averaged rates and original GCN circulars",doc))
+    for history in sorted((HERE/"evidence/pointed_visits").glob("**/history/history.json")):
+        base=history.parent.parent
+        if (base/"execution.json").is_file() and (base/"leads.json").is_file():
+            ids=", ".join(str(x["obsid"]) for x in read(base/"leads.json"))
+            supporting.append((f"All-mission independent aperture measurements for ObsIDs {ids}",history))
+            for energy in sorted(base.glob("*/**/ENERGY.md")):
+                supporting.append((f"Source and annular energy counts for ObsID {energy.relative_to(base).parts[0]}",energy))
+    for result in sorted((HERE/"evidence/frame_forensics").glob("*/*/real/*/*/result.json")):
+        doc = result.parent/"README.md"
+        item = read(result)
+        if doc.is_file() and item.get("status")=="complete" and (item.get("measurement") or {}).get("instrument_ccd")==8:
+            target = item["target"]
+            supporting.append((f"ACIS-S4 frame measurement · ObsID {int(target['obsid'])}, {target['trigger']}",doc))
+    for doc in sorted((HERE/"evidence/csc_deblend").glob("*/*/*/README.md")):
+        if doc.parent.name.isdecimal() and (doc.parent/"measurement.json").is_file():
+            supporting.append((f"Trial and CSC neighbor photon maps for ObsID {doc.parent.name}",doc))
+    if supporting:
+        lines.extend(["## Supporting measurements","",*(f"- {link(path,title)}" for title,path in supporting),""])
     outcome = {"label":label, "headline":headline,"reviewed_inputs_sha256":sig,"input_sha256":raw_inputs,
                "decisions_sha256":file_sha(manifest),"candidate_table_sha256":hashlib.sha256(candidate_file.read_bytes()).hexdigest(),
+               "reviewed_table_sha256":hashlib.sha256(reviewed_file.read_bytes()).hexdigest(),
+               "reviewed_rows":len(reviewed_rows),"candidate_rows":len(candidate_rows),
+               "supporting_measurements_sha256":{href(path):file_sha(path) for _,path in supporting},
                "recovery_figure_sha256":hashlib.sha256(figure.read_bytes()).hexdigest(),"cited_local_evidence_sha256":manual_hashes,"dispositions":counts,
                "conditional_upper95_detected_events_per_Ms":bounds,
+               "review_selection_upper95_events_per_Ms":adjudication_bounds,
                "instrument_pass_conservative_upper95_detected_events_per_Ms":instrument_bounds, "implementation_sha256":file_sha(Path(__file__))}
     # update_catalog checks the existing bullet and rewrites only line 9 and this entry.
     report.update_catalog(headline,label)

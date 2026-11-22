@@ -1,6 +1,6 @@
 # Human review of odd-numbered primary shards
 
-Reviewed worker ledgers from 55 odd-numbered primary shards. The 1822 ObsIDs represented contain 12185 raw real triggers and 106 real instrument passes with an unresolved catalog classification. The scope excludes the separately reported moderate-count cohort. [Actions run](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443)
+Reviewed worker ledgers from 63 odd-numbered primary shards. The 2102 ObsIDs represented contain 13656 raw real triggers and 120 real instrument passes with an unresolved catalog classification. The scope excludes the separately reported moderate-count cohort. [Actions run](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443)
 
 Counts in this index describe the available worker records, including partially processed observations. The combined survey report defines which observations and distinct triggers enter inference.
 
@@ -61,6 +61,14 @@ Counts in this index describe the available worker records, including partially 
 | 105 | 34 | 34 | 31 | 112 | 1 | 9 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749912364) |
 | 107 | 35 | 35 | 29 | 6 | 4 | 13 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749154006) |
 | 109 | 35 | 35 | 35 | 12 | 1 | 0 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749667796) |
+| 111 | 35 | 35 | 34 | 242 | 3 | 7 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750592341) |
+| 113 | 35 | 35 | 33 | 195 | 2 | 4 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750167042) |
+| 115 | 35 | 35 | 32 | 252 | 3 | 8 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750402116) |
+| 117 | 35 | 35 | 32 | 233 | 2 | 3 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14751281499) |
+| 119 | 35 | 35 | 33 | 129 | 4 | 3 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14751281663) |
+| 121 | 35 | 35 | 32 | 207 | 0 | 4 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750873194) |
+| 123 | 35 | 35 | 32 | 49 | 0 | 4 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750972678) |
+| 125 | 35 | 35 | 33 | 164 | 0 | 2 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750214546) |
 
 ## Retained real triggers
 
@@ -74,6 +82,8 @@ The window includes 10 aperture photons and 8 annular photons. Before and after 
 
 The aperture crosses a steep edge and covers a knot larger than the compact trial footprint. Both curves repeatedly approach zero and then rise over the full exposure. During the window the photons scatter over the small detector excursion, with elevated CCD-background statistic. The broad IRAS entry at 67 arcsec has unit chance upper bound and the NED classification is incomplete.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 1, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/27099/40405115dd4e6df3c7dc5d081ded4674c8a1631929cddeb882554b876a76fd24/real/310.json.gz), SHA-256 `e13664912a2ddd4eac7b8718e60373044b5e3f9f265dbd4ade68d6141d3ec067`.
+
 Input `acisf27099N002_evt2.fits.gz`, 127,158,960 bytes, SHA-256 `40405115dd4e6df3c7dc5d081ded4674c8a1631929cddeb882554b876a76fd24`. Detector plot SHA-256 `61cd296f8e917fbb9266df4d020a027ba7fff9beb19461b787fb65373707d9fb`, [Detector diagnostic](evidence/photometry/27099/acisf27099N002_evt2.fits.gz/real/310/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748895901) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/27099/primary/acisf27099N002_evt2.fits.gz)
 
 ### ObsID 27099 · acisf27099N002_evt2.fits.gz · real/473
@@ -85,6 +95,8 @@ Frozen pointing target `CXOUJ232327.8+584842`, proposal 24500364, “Monitoring 
 The window includes 20 aperture photons and 25 annular photons. Before and after the window the aperture holds 1708 photons in 36308 s and 120 in 2730 s. The trigger spans 19 frames and 20 detector pixels. Frozen classification **ambiguous**.
 
 The knot sits near one edge of the observed subarray. Twenty photons broadly trace the detector dither, but the bright patch extends well into the annulus and neighbouring rim. The full light curve shows recurring deep minima and peaks comparable to this one.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 1, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/27099/40405115dd4e6df3c7dc5d081ded4674c8a1631929cddeb882554b876a76fd24/real/473.json.gz), SHA-256 `02cf85eaef2782b71c1f7d3db6d274c144a2c52e0342bb63e799e5bb91e27658`.
 
 Input `acisf27099N002_evt2.fits.gz`, 127,158,960 bytes, SHA-256 `40405115dd4e6df3c7dc5d081ded4674c8a1631929cddeb882554b876a76fd24`. Detector plot SHA-256 `d1e5d3963922c755a657d432673be4f8e5201134b17229546b7f4032f7d73cf5`, [Detector diagnostic](evidence/photometry/27099/acisf27099N002_evt2.fits.gz/real/473/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748895901) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/27099/primary/acisf27099N002_evt2.fits.gz)
 
@@ -98,6 +110,8 @@ The window includes 8 aperture photons and 8 annular photons. Before and after t
 
 The source and annulus retain comparable nonzero surface brightness with numerous shorter excursions. The short detector scatter is consistent with extended sky emission. Both the 3FHL and IRAS positions have unit chance upper bounds.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 1, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/27099/40405115dd4e6df3c7dc5d081ded4674c8a1631929cddeb882554b876a76fd24/real/1291.json.gz), SHA-256 `3de72082fbd875942e90b6cf8924d0b09440bb1d2bb1c594097c450e36bb7ee6`.
+
 Input `acisf27099N002_evt2.fits.gz`, 127,158,960 bytes, SHA-256 `40405115dd4e6df3c7dc5d081ded4674c8a1631929cddeb882554b876a76fd24`. Detector plot SHA-256 `56bcbddfd14ea25d194f91b56a4e388047e52d69c29218fa4e36461addf7fc58`, [Detector diagnostic](evidence/photometry/27099/acisf27099N002_evt2.fits.gz/real/1291/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748895901) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/27099/primary/acisf27099N002_evt2.fits.gz)
 
 ### ObsID 27099 · acisf27099N002_evt2.fits.gz · real/1324
@@ -109,6 +123,8 @@ Frozen pointing target `CXOUJ232327.8+584842`, proposal 24500364, “Monitoring 
 The window includes 12 aperture photons and 22 annular photons. Before and after the window the aperture holds 1295 photons in 37647 s and 51 in 1391 s. The trigger spans 10 frames and 12 detector pixels. Frozen classification **ambiguous**.
 
 The source and annular curves rise and fall together through much of the exposure. The detector photons trace the moving field, as expected for the filament. The 60 s grouping does not isolate a transient from the recurring brightness changes of the persistent feature.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 2, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/27099/40405115dd4e6df3c7dc5d081ded4674c8a1631929cddeb882554b876a76fd24/real/1324.json.gz), SHA-256 `74092e90a3434910f31f895c963cc4e72f5a7886631f38b2b1df631fe34ec7db`.
 
 Input `acisf27099N002_evt2.fits.gz`, 127,158,960 bytes, SHA-256 `40405115dd4e6df3c7dc5d081ded4674c8a1631929cddeb882554b876a76fd24`. Detector plot SHA-256 `a23f33653eec58deb9e4545e1a7290cc1b0a95dc5f407be9198103367b78ea43`, [Detector diagnostic](evidence/photometry/27099/acisf27099N002_evt2.fits.gz/real/1324/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748895901) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/27099/primary/acisf27099N002_evt2.fits.gz)
 
@@ -122,6 +138,8 @@ The window includes 12 aperture photons and 18 annular photons. Before and after
 
 The bright irregular patch extends through the aperture into its annulus. Both light curves have many concurrent deep troughs and recoveries, with higher source peaks elsewhere. The dither-compatible detector scatter supports sampling structured Cas A emission.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/27099/40405115dd4e6df3c7dc5d081ded4674c8a1631929cddeb882554b876a76fd24/real/1345.json.gz), SHA-256 `f4ef92bb0b943b99133ceb5988bdd563bc8653c5a668ae3db36d1506c34c5c27`.
+
 Input `acisf27099N002_evt2.fits.gz`, 127,158,960 bytes, SHA-256 `40405115dd4e6df3c7dc5d081ded4674c8a1631929cddeb882554b876a76fd24`. Detector plot SHA-256 `13a8c9b69f4d8f6cb63dd32dd37ee7424642b816d7d0cdde6b1401cfe9598faa`, [Detector diagnostic](evidence/photometry/27099/acisf27099N002_evt2.fits.gz/real/1345/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748895901) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/27099/primary/acisf27099N002_evt2.fits.gz)
 
 ### ObsID 27099 · acisf27099N002_evt2.fits.gz · real/1545
@@ -133,6 +151,8 @@ Frozen pointing target `CXOUJ232327.8+584842`, proposal 24500364, “Monitoring 
 The window includes 21 aperture photons and 58 annular photons. Before and after the window the aperture holds 698 photons in 10204 s and 2210 in 28834 s. The trigger spans 18 frames and 18 detector pixels. Frozen classification **ambiguous**.
 
 Across the full exposure, the bright aperture and annulus repeatedly dip and recover together. The sky shows irregular bands through the extraction and the detector coordinates have sizable scatter around the short dither segment. An isolated source flare is unsupported.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/27099/40405115dd4e6df3c7dc5d081ded4674c8a1631929cddeb882554b876a76fd24/real/1545.json.gz), SHA-256 `24f70a9aed27fa76940849ff47866ef0ab9977d658839a3a09f2a23b3685bb05`.
 
 Input `acisf27099N002_evt2.fits.gz`, 127,158,960 bytes, SHA-256 `40405115dd4e6df3c7dc5d081ded4674c8a1631929cddeb882554b876a76fd24`. Detector plot SHA-256 `54f26cd9f0fb2c9f71fa6f282dce775f947d14b54ede9ef5f13823daad47ad58`, [Detector diagnostic](evidence/photometry/27099/acisf27099N002_evt2.fits.gz/real/1545/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748895901) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/27099/primary/acisf27099N002_evt2.fits.gz)
 
@@ -820,6 +840,8 @@ The window includes 10 aperture photons and 5 annular photons. Before and after 
 
 The source is spatially concentrated toward the edge of the HESS J1731−347 field, away from the bright diffuse patch. Both detector coordinates follow dither. The aperture peak is distinct, with two counts in each long flank and little annular variation. Its Galactic latitude is −0.77°. NED follow-up is incomplete, and the possible obscured stellar population limits physical interpretation.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean incomplete, PS1 stack incomplete, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/22968/00079c6725f196813f68a549b1d6fe674bf3c0479bb31a4a89a7dae3d762c980/real/0.json.gz), SHA-256 `e22c5f62fb77af2403ba30c10a67bf382a278dc15b5603d1ca5671d3941b214a`.
+
 Input `acisf22968N002_evt2.fits.gz`, 7,103,130 bytes, SHA-256 `00079c6725f196813f68a549b1d6fe674bf3c0479bb31a4a89a7dae3d762c980`. Detector plot SHA-256 `3188a354caf421876f9a7ace02779463bc6a94db00b075349b7e94868e8a382a`, [Detector diagnostic](evidence/photometry/22968/acisf22968N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745414741) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/22968/primary/acisf22968N002_evt2.fits.gz)
 
 ### ObsID 27243 · acisf27243N003_evt2.fits.gz · real/0
@@ -831,6 +853,8 @@ Frozen pointing target `NGC6204`, proposal 24200285, “ZAMS X-rays and Primordi
 The window includes 10 aperture photons and 7 annular photons. Before and after the window the aperture holds 1 photons in 11336 s and 2 in 5291 s. The trigger spans 10 frames and 10 detector pixels. Frozen classification **catalog_incomplete**.
 
 Most photons arrive toward the end of the selected hour and follow the changing detector footprint, with no corresponding CCD-wide flare. Gaia 5939655928892340352 lies 2.42 arcseconds away. Its stellar astrometry provides a possible counterpart, but the high chance-projection upper bound (0.46) limits identification. IRAS 16426-4703, 98 arcseconds away, provides no close association.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean incomplete, PS1 stack incomplete, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/27243/fbcee2e753d3f0862aee20d7e5e326afeb05cb7ef0c8ac8147c76f7c497b4b7e/real/0.json.gz), SHA-256 `e18d4035390db42e38757c300469c9d44e7f7af604dc40f24e37356098c5ef2f`.
 
 Input `acisf27243N003_evt2.fits.gz`, 1,612,057 bytes, SHA-256 `fbcee2e753d3f0862aee20d7e5e326afeb05cb7ef0c8ac8147c76f7c497b4b7e`. Detector plot SHA-256 `3ed5a2250878a47a781bd4d3e52a043615be07cff9be02dab77d83111175ca6a`, [Detector diagnostic](evidence/photometry/27243/acisf27243N003_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745414741) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/27243/primary/acisf27243N003_evt2.fits.gz)
 
@@ -844,6 +868,8 @@ The window includes 20 aperture photons and 47 annular photons. Before and after
 
 The source and background apertures cross the bright edge of a resolved Cas A filament. Forty-seven annular photons arrive during the minute, and recurrent short CCD-wide count-rate dips are visible. The source is present throughout the short observation. An isolated flare is not established.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/31389/b328b356c723419c4d04f1c8ff99d669a7175f0501fc294747a67d34e2c381fc/real/0.json.gz), SHA-256 `5e5f692e45d8a138ebe9c2680d0287f42c4d02d1e2167bf1505d62928ca79d5a`.
+
 Input `acisf31389N001_evt2.fits.gz`, 7,080,346 bytes, SHA-256 `b328b356c723419c4d04f1c8ff99d669a7175f0501fc294747a67d34e2c381fc`. Detector plot SHA-256 `7aaf2c7156220c0c7e76d5b85fca5c65829e931486edab6f57a79d5240228bfd`, [Detector diagnostic](evidence/photometry/31389/acisf31389N001_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746115352) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/31389/primary/acisf31389N001_evt2.fits.gz)
 
 ### ObsID 31389 · acisf31389N001_evt2.fits.gz · real/1
@@ -856,6 +882,8 @@ The window includes 18 aperture photons and 31 annular photons. Before and after
 
 Eighteen photons burst in one minute, but comparable peaks recur from a persistent bright knot on the Cas A rim. The NED galaxy 2MASX J23231253+5848072 at 5.27 arcseconds has a low local projection estimate (0.0097) and no redshift. A 2XMM source also lies 2.41 arcseconds away. These associations do not separate point-source activity from bright, spatially structured remnant emission.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/31389/b328b356c723419c4d04f1c8ff99d669a7175f0501fc294747a67d34e2c381fc/real/1.json.gz), SHA-256 `e5f8d3e57362df67682ed9ca833de78893e5677af6cefcd7416a5279bbf94c94`.
+
 Input `acisf31389N001_evt2.fits.gz`, 7,080,346 bytes, SHA-256 `b328b356c723419c4d04f1c8ff99d669a7175f0501fc294747a67d34e2c381fc`. Detector plot SHA-256 `9ce6eec456f3faaaa6225bd0a06f89ed03ba925fca19784fe6f896baa6b5ae84`, [Detector diagnostic](evidence/photometry/31389/acisf31389N001_evt2.fits.gz/real/1/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746115352) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/31389/primary/acisf31389N001_evt2.fits.gz)
 
 ### ObsID 24329 · acisf24329N002_evt2.fits.gz · real/0
@@ -866,7 +894,9 @@ Frozen pointing target `PLCKESZG342.31-34.90`, proposal 22800507, “Testing Par
 
 The window includes 8 aperture photons and 0 annular photons. Before and after the window the aperture holds 1 photons in 9871 s and 2 in 16238 s. The trigger spans 8 frames and 8 detector pixels. Frozen classification **ambiguous**.
 
-The sky source starts sharply and fades, with only three photons across both flanks, a quiet annulus and credible two-axis dither. The X-ray flare is credible. The G=18.01 star has well-constrained astrometry (RUWE 0.96). WISE and 2MASS positions agree within two arcsec. A coronal flare is the favored explanation.
+The sky source starts sharply and fades, with only three photons across both flanks, a quiet annulus and credible two-axis dither. The X-ray flare is credible. The G=18.01 star has well-constrained astrometry (RUWE 0.96). WISE and 2MASS positions agree within two arcsec. A coronal flare is the favored explanation. Gaia DR3 measures BP−RP = 3.19 mag for the same nearby star, supporting a cool stellar counterpart.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean incomplete, PS1 stack incomplete, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/24329/407521d4292ac356ffe0e934bd7edde94264673e7d5be78a100820912373b1f1/real/0.json.gz), SHA-256 `1c5fd7aa4adce901a911e44eaaa3e116489f311149553d8e7d55b220eed0e17a`.
 
 Input `acisf24329N002_evt2.fits.gz`, 3,192,187 bytes, SHA-256 `407521d4292ac356ffe0e934bd7edde94264673e7d5be78a100820912373b1f1`. Detector plot SHA-256 `a8ab342fc86c1a1d512b5d0eb9480203252ca9961dc4827892a5ec00f1326ce6`, [Detector diagnostic](evidence/photometry/24329/acisf24329N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745927956) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/24329/primary/acisf24329N002_evt2.fits.gz)
 
@@ -880,6 +910,8 @@ The window includes 9 aperture photons and 4 annular photons. Before and after t
 
 The aperture shows a sharp initial group and a later group within the hour, with little prior activity. Its photons move across the detector with the sky position. Four annular photons fall within the window. The aperture lies in the crowded Galactic-center pointing, but no individual catalog counterpart is secure.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/27234/9a108742dcc3639e58d97521254613aad2959faa40f8f6df704ff9bb3f374b6f/real/0.json.gz), SHA-256 `dc61011eef3140d6c0bb58d38d4291be75d95a8c762c42b027450c843eab5857`.
+
 Input `acisf27234N002_evt2.fits.gz`, 2,729,694 bytes, SHA-256 `9a108742dcc3639e58d97521254613aad2959faa40f8f6df704ff9bb3f374b6f`. Detector plot SHA-256 `ca985c620d2476a57dccc974f8d8c8a123fba09ddf9dfbc6207335c5533307f2`, [Detector diagnostic](evidence/photometry/27234/acisf27234N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745927956) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/27234/primary/acisf27234N002_evt2.fits.gz)
 
 ### ObsID 27234 · acisf27234N002_evt2.fits.gz · real/1
@@ -891,6 +923,8 @@ Frozen pointing target `XMMJ0.173-0.413`, proposal 24910062, “G0.17-0.41: Evid
 The window includes 10 aperture photons and 0 annular photons. Before and after the window the aperture holds 2 photons in 13698 s and 3 in 15409 s. The trigger spans 10 frames and 10 detector pixels. Frozen classification **catalog_incomplete**.
 
 A close group of sky photons follows the dither in both axes, with two temporal peaks and sparse flanks. The location is close to the end of a bright linear feature on the sky. A Galactic star or compact source remains possible. The candidate G=20.84 match lacks proper motion and parallax and the original NED gate is incomplete.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 1, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/27234/9a108742dcc3639e58d97521254613aad2959faa40f8f6df704ff9bb3f374b6f/real/1.json.gz), SHA-256 `07038ceed46637f5af07b46b01e71f23dc2f0a445645f9d5ab58a2ac6057bbbe`.
 
 Input `acisf27234N002_evt2.fits.gz`, 2,729,694 bytes, SHA-256 `9a108742dcc3639e58d97521254613aad2959faa40f8f6df704ff9bb3f374b6f`. Detector plot SHA-256 `17244b87b8f6f79ea595acb492d8061402276dc97674294393e2049aaa42309f`, [Detector diagnostic](evidence/photometry/27234/acisf27234N002_evt2.fits.gz/real/1/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745927956) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/27234/primary/acisf27234N002_evt2.fits.gz)
 
@@ -904,6 +938,8 @@ The window includes 18 aperture photons and 2 annular photons. Before and after 
 
 Eighteen photons brighten in several short groups over half an hour, concentrated on a compact sky position and tracing dither over multiple detector cycles. The astrometric counterpart Gaia 4293508660685641472 has a well-measured positive parallax. A second Gaia object is 1.56 arcseconds away. The high field density and untyped NED cone limit unique counterpart assignment, but the close, well-measured star provides a direct foreground alternative.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 1, PS1 stack 1, AllWISE 1. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/25141/5c5ef759324af55df5371b9638d60553faed1c8eb7e5e7207ec92bdd5b9e021f/real/0.json.gz), SHA-256 `318a1c7148ab9397f584ea17e14ca8ae9cc005f19ec5a0ce29eb3138dd373581`.
+
 Input `acisf25141N002_evt2.fits.gz`, 1,820,096 bytes, SHA-256 `5c5ef759324af55df5371b9638d60553faed1c8eb7e5e7207ec92bdd5b9e021f`. Detector plot SHA-256 `ea7bf2632e14699629540f7304c5d2489ed590cbe744e0e47904f9772119b17c`, [Detector diagnostic](evidence/photometry/25141/acisf25141N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746835613) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/1/25141/primary/acisf25141N002_evt2.fits.gz)
 
 ### ObsID 21886 · acisf21886N003_evt2.fits.gz · real/0
@@ -915,6 +951,8 @@ Frozen pointing target `LMCN132D`, proposal 20500554, “A Legacy Observation of
 The window includes 9 aperture photons and 3 annular photons. Before and after the window the aperture holds 1 photons in 5447 s and 13 in 36336 s. The trigger spans 9 frames and 9 detector pixels. Frozen classification **ambiguous**.
 
 The soft photons cluster in the sky aperture and track the dither in both detector coordinates. The source peaks early, then emits more sporadically over the long post-flare flank. No clear simultaneous CCD rise. The LMC N132D pointing contains several possible optical counterparts within 2 arcsec, including OGLE LMC-SC5 2495-0 (star). The local chance probabilities are large for Gaia. A flare from an LMC or foreground star remains plausible.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 4, PS1 mean incomplete, PS1 stack incomplete, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/21886/5fa010df818b5bd0d1f34234a1012478f237c44af2cac1566e6e90bd9707e8b8/real/0.json.gz), SHA-256 `3e082c56c98c2288b9c375c57c2cae9f84023b7959855becac3109fec05ddcca`.
 
 Input `acisf21886N003_evt2.fits.gz`, 24,823,794 bytes, SHA-256 `5fa010df818b5bd0d1f34234a1012478f237c44af2cac1566e6e90bd9707e8b8`. Detector plot SHA-256 `0798fcf235847fcb4a79974e44a896b7347888333200b5a02a669597b875a338`, [Detector diagnostic](evidence/photometry/21886/acisf21886N003_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746471994) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/6/21886/primary/acisf21886N003_evt2.fits.gz)
 
@@ -928,6 +966,8 @@ The window includes 14 aperture photons and 1 annular photons. Before and after 
 
 The source brightens and declines over several bins above a quiet baseline. Fourteen photons occupy different frames and pixels, with sky clustering and visible detector dither. The CCD shows smaller variations outside the peak. The pointing targets infrared dark cloud G034.77−00.56 to identify young stars. A pre-main-sequence flare is plausible at this latitude, though the observation alone gives no secure counterpart.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/27055/f74f3d54c01730f3e6f330f1e749ee880d905f304d9f8c7a80a3164f630df468/real/6.json.gz), SHA-256 `4e4d903af55c92b28fccb087a01ee73ff14d58fbdf55e3d08af50259bf1201d1`.
+
 Input `acisf27055N002_evt2.fits.gz`, 6,442,287 bytes, SHA-256 `f74f3d54c01730f3e6f330f1e749ee880d905f304d9f8c7a80a3164f630df468`. Detector plot SHA-256 `6e4e4d06e2ada9bbf3dcf8dfeb826d139a72c372355e2a3903dfe111515f7fd1`, [Detector diagnostic](evidence/photometry/27055/acisf27055N002_evt2.fits.gz/real/6/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746471994) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/5/27055/primary/acisf27055N002_evt2.fits.gz)
 
 ### ObsID 21367 · acisf21367N002_evt2.fits.gz · real/0
@@ -940,6 +980,8 @@ The window includes 18 aperture photons and 5 annular photons. Before and after 
 
 The aperture lies outside the bright resolved remnant. About an hour of enhanced emission is concentrated on a compact sky position with steady CCD background. 2CXO J171807.2-372735 lies 0.77 arcseconds away; Gaia 5973629807372214784 at 0.80 arcseconds has substantial motion and marginal parallax. The field is at Galactic latitude +0.14° and a stellar origin is plausible.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean incomplete, PS1 stack incomplete, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/21367/f8784bceafe8cdb814177da8b228dcb60261c6754cc03500d3170e126fe8843e/real/0.json.gz), SHA-256 `f58bc777041a7cc5cb903ad44bd2ef06bfca291d7b0b1893e7ca1b184bc60e97`.
+
 Input `acisf21367N002_evt2.fits.gz`, 9,603,324 bytes, SHA-256 `f8784bceafe8cdb814177da8b228dcb60261c6754cc03500d3170e126fe8843e`. Detector plot SHA-256 `93852a7661f6e702da6f9e92797bbfea4711ec0402e4f45533d1e21fc1655be5`, [Detector diagnostic](evidence/photometry/21367/acisf21367N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746116735) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/7/21367/primary/acisf21367N002_evt2.fits.gz)
 
 ### ObsID 32368 · acisf32368N001_evt2.fits.gz · real/0
@@ -950,7 +992,9 @@ Frozen pointing target `EP260302A`, proposal 27709097, “Constraining the late 
 
 The window includes 22 aperture photons and 13 annular photons. Before and after the window the aperture holds 0 photons in 5159 s and 11 in 11316 s. The trigger spans 22 frames and 22 detector pixels. Frozen classification **catalog_incomplete**.
 
-The aperture at (133.20360°, −65.93460°) lies more than six arcminutes from the frozen EP260302a target at (132.97375°, −65.98369°). The 22 photons follow the detector dither amid no pre-flare source counts; weaker emission continues afterward. Gaia 5272298786517415168 has proper motion (−8.36, +9.29) mas/yr and parallax 0.81 ± 0.24 mas. The source is a plausible foreground flare despite the extragalactic pointing.
+The aperture at (133.20360°, −65.93460°) lies more than six arcminutes from the frozen EP260302a target at (132.97375°, −65.98369°). The 22 photons follow the detector dither amid no pre-flare source counts; weaker emission continues afterward. Gaia 5272298786517415168 has proper motion (−8.36, +9.29) mas/yr and parallax 0.81 ± 0.24 mas. The source is a plausible foreground flare despite the extragalactic pointing. Gaia DR3 gives BP−RP = 1.66 mag for the moving optical source.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean incomplete, PS1 stack incomplete, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/32368/f5842943157a6c7c864880f39eed1de22a47b3e006ced537b0582affbc7222c5/real/0.json.gz), SHA-256 `0e5688f9906d914d866589dcd67db6498ed0ee1c0254be6c2d24acbfd8689d8c`.
 
 Input `acisf32368N001_evt2.fits.gz`, 2,929,067 bytes, SHA-256 `f5842943157a6c7c864880f39eed1de22a47b3e006ced537b0582affbc7222c5`. Detector plot SHA-256 `244e2271c938ec330603afda2e9c4d5206d6ed59c1a618e877081aeb6e303bc6`, [Detector diagnostic](evidence/photometry/32368/acisf32368N001_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746116735) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/32368/primary/acisf32368N001_evt2.fits.gz)
 
@@ -964,6 +1008,8 @@ The window includes 8 aperture photons and 0 annular photons. Before and after t
 
 Eight photons follow the sky dither strikingly closely in both axes across the 600 s window. The source declines after its early peak. The annulus is empty, and the wider CCD varies mildly without a comparable flare. The source is offset from the frozen pulsar target (305.27254°, +36.85127°). Its physical origin remains open in this Galactic-plane field; extinction and an uncataloged stellar counterpart are plausible.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/29503/3cd1b99bd961bdee58422f125681aea79f098cce1829c8eba4cd2def7fd7db89/real/0.json.gz), SHA-256 `4c1694e6bf667170986ddf30eb2c1d16f059e21baf54613352d5c81c4182679c`.
+
 Input `acisf29503N003_evt2.fits.gz`, 3,119,672 bytes, SHA-256 `3cd1b99bd961bdee58422f125681aea79f098cce1829c8eba4cd2def7fd7db89`. Detector plot SHA-256 `888fb9d6c3c782ed2a2792e5605badf58a321b834c41d673bd23a33e4381d941`, [Detector diagnostic](evidence/photometry/29503/acisf29503N003_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746701427) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/29503/primary/acisf29503N003_evt2.fits.gz)
 
 ### ObsID 24312 · acisf24312N002_evt2.fits.gz · real/0
@@ -975,6 +1021,8 @@ Frozen pointing target `ABELL644`, proposal 22800428, “Abell 644: a cool core 
 The window includes 8 aperture photons and 5 annular photons. Before and after the window the aperture holds 140 photons in 19300 s and 33 in 3716 s. The trigger spans 7 frames and 8 detector pixels. Frozen classification **no_counterpart**.
 
 The full-field image places the aperture on the bright cluster gradient. Photons spread across the source circle and the detector trace has large scatter. There are 173 flank photons, five annular photons during the minute and repeated shorter count excesses. The aperture peak is measurable, but an underlying compact emitter is indistinguishable from fluctuations in this diffuse region.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/24312/14155eda8a45c7788dd92dd825e5de33bceb6fa78caabf58ab37743f39a36834/real/0.json.gz), SHA-256 `e71b6a20b1aca7dc1a84e6779b61a178768eff5c70e3db01824f5bafa26712df`.
 
 Input `acisf24312N002_evt2.fits.gz`, 5,340,049 bytes, SHA-256 `14155eda8a45c7788dd92dd825e5de33bceb6fa78caabf58ab37743f39a36834`. Detector plot SHA-256 `4842aa8061e1048731235d50bd511969173c1f87e7aa62664316afb391b9f7b6`, [Detector diagnostic](evidence/photometry/24312/acisf24312N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746588546) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/2/24312/primary/acisf24312N002_evt2.fits.gz)
 
@@ -988,6 +1036,8 @@ The window includes 10 aperture photons and 6 annular photons. Before and after 
 
 The ten photons show a pronounced peak without a parallel CCD-wide increase and move in both detector coordinates with the sky. They span much of the aperture on a bright cluster surface-brightness gradient. Six annular photons in the window and 35 aperture photons in the flanks leave a diffuse-background fluctuation plausible.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/28479/7359e6736b2187bdaa7910cf306ee04ef3fe0badc81caa38cf8e78ebfc6c3787/real/0.json.gz), SHA-256 `3b9b3e85d8cfb45cf8fdc9655f19c65dc2d1856aafcf456dcd2103734ecb0e45`.
+
 Input `acisf28479N002_evt2.fits.gz`, 11,542,247 bytes, SHA-256 `7359e6736b2187bdaa7910cf306ee04ef3fe0badc81caa38cf8e78ebfc6c3787`. Detector plot SHA-256 `fb4d7b49c459314b312648189c7ff12ea578fe3b22c01aad19dd682cc2ae0fad`, [Detector diagnostic](evidence/photometry/28479/acisf28479N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746588546) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/28479/primary/acisf28479N002_evt2.fits.gz)
 
 ### ObsID 30883 · acisf30883N001_evt2.fits.gz · real/19
@@ -999,6 +1049,8 @@ Frozen pointing target `PERSEUSCLUSTER`, proposal 25808977, “The sounds of fee
 The window includes 13 aperture photons and 27 annular photons. Before and after the window the aperture holds 121 photons in 10709 s and 65 in 6188 s. The trigger spans 12 frames and 13 detector pixels. Frozen classification **ambiguous**.
 
 The aperture samples a steep surface-brightness gradient near the bright CCD corner. Multiple excursions precede the selected 180 s grouping. The detector positions have appreciable scatter, and the CCD rate also increases intermittently around the time of selection. The NED group entry at 4.43 arcsec has a high chance-projection estimate.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/30883/35065dc19de33c07ee27cdb71f4a68e68d5c07986c86b7a75c323a58aa53ef2b/real/19.json.gz), SHA-256 `fbce99d67f2490b8dd2de2f0fa21adeb9df4a8a4012ce7bff179196e830563b7`.
 
 Input `acisf30883N001_evt2.fits.gz`, 23,610,942 bytes, SHA-256 `35065dc19de33c07ee27cdb71f4a68e68d5c07986c86b7a75c323a58aa53ef2b`. Detector plot SHA-256 `7a31dd37eb00b948af03ba642847a3336203a948366e5d0980714ab8dbb4cc4e`, [Detector diagnostic](evidence/photometry/30883/acisf30883N001_evt2.fits.gz/real/19/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746588546) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/30883/primary/acisf30883N001_evt2.fits.gz)
 
@@ -1012,6 +1064,8 @@ The window includes 9 aperture photons and 3 annular photons. Before and after t
 
 Nine photons spread across the aperture on a strong field gradient. The light curve brightens early, then shows intermittent weaker activity. Detector positions track the field cleanly, and the CCD also rises briefly near the aperture peak. The broad-position MAXI entry at 106 arcsec has unit chance upper bound.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/30883/35065dc19de33c07ee27cdb71f4a68e68d5c07986c86b7a75c323a58aa53ef2b/real/41.json.gz), SHA-256 `2202ff7040787bb61bd44741288e26766131e9bc19319f9c343723ce9af98b1b`.
+
 Input `acisf30883N001_evt2.fits.gz`, 23,610,942 bytes, SHA-256 `35065dc19de33c07ee27cdb71f4a68e68d5c07986c86b7a75c323a58aa53ef2b`. Detector plot SHA-256 `77ecdd35bc215ce563e67a9c6f4a62383e25c30b7715997b77c8d185c3ff2221`, [Detector diagnostic](evidence/photometry/30883/acisf30883N001_evt2.fits.gz/real/41/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746588546) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/30883/primary/acisf30883N001_evt2.fits.gz)
 
 ### ObsID 30359 · acisf30359N001_evt2.fits.gz · real/53
@@ -1023,6 +1077,8 @@ Frozen pointing target `PERSEUSCLUSTERE`, proposal 25808977, “The sounds of fe
 The window includes 9 aperture photons and 8 annular photons. Before and after the window the aperture holds 219 photons in 11497 s and 126 in 7734 s. The trigger spans 8 frames and 9 detector pixels. Frozen classification **ambiguous**.
 
 Nine photons occupy a wide circle without a compact sky core. The detector scatter exceeds the short dither excursion during the minute, and the full aperture light curve varies continually over its bright baseline. The shared SIMBAD/NED Swift entry 98 arcsec away has a unit chance upper estimate.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/30359/2e4b869dcac4f6d838f53d2ac06eff7ad6793a4a05aca9314621fc052a71df79/real/53.json.gz), SHA-256 `4375e0774da68fea07bec4d32a5dc25f420929e2f6e817a6a69e1b558cf73702`.
 
 Input `acisf30359N001_evt2.fits.gz`, 23,088,206 bytes, SHA-256 `2e4b869dcac4f6d838f53d2ac06eff7ad6793a4a05aca9314621fc052a71df79`. Detector plot SHA-256 `7119ba1280a3aa326c5c5e3e0c104896d70e15b754cb683514ba53f4c02879af`, [Detector diagnostic](evidence/photometry/30359/acisf30359N001_evt2.fits.gz/real/53/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14747551597) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/30359/primary/acisf30359N001_evt2.fits.gz)
 
@@ -1036,6 +1092,8 @@ The window includes 10 aperture photons and 0 annular photons. Before and after 
 
 Ten photons cluster tightly on the sky and follow both detector coordinates, with activity beginning before the selected window. The SIMBAD, Gaia and 2MASS positions agree at 0.84–0.87 arcsec. The Galactic open-cluster pointing and this common stellar counterpart favor a stellar flare.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean incomplete, PS1 stack incomplete, AllWISE 0. Gaia DR3 marks 5970177714528265728 (0.84″) as variable. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/26499/0417b004b2b904579e9d7852113955523cffe166e247bf609708ab68b2b5a7db/real/0.json.gz), SHA-256 `50dbb9c8633e25e274bbb93d0c44efe4667086ebd624509b91fc9857dedab5b1`.
+
 Input `acisf26499N002_evt2.fits.gz`, 1,449,943 bytes, SHA-256 `0417b004b2b904579e9d7852113955523cffe166e247bf609708ab68b2b5a7db`. Detector plot SHA-256 `3bf1bcfaa43493fae632b020571d6693ce0dd32ffd6aa2c53a4fae2f7c9ef219`, [Detector diagnostic](evidence/photometry/26499/acisf26499N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746979110) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/26499/primary/acisf26499N002_evt2.fits.gz)
 
 ### ObsID 31964 · acisf31964N001_evt2.fits.gz · real/1
@@ -1047,6 +1105,8 @@ Frozen pointing target `PERSEUSCLUSTERE`, proposal 25808977, “The sounds of fe
 The window includes 11 aperture photons and 16 annular photons. Before and after the window the aperture holds 10 photons in 11569 s and 7 in 5296 s. The trigger spans 11 frames and 11 detector pixels. Frozen classification **ambiguous**.
 
 The 600 s interval is a clear aperture-rate excess, and the detector positions show broad motion with the sky. The aperture photons are spread across a wide circle on a strong gradient, and sixteen photons occur in the surrounding annulus. The whole CCD varies little. The catalog entry 22W 046 is 26 arcsec away with an almost unit chance upper bound.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/31964/65b5fe06c2b2a5fa40ddb562c904bbb9c4cf7c3b706a16aa17191919e2e841b5/real/1.json.gz), SHA-256 `0849130dbd4f83157cb24f9b49f1839f1fc20ead855052192f3a105b87f2ea8f`.
 
 Input `acisf31964N001_evt2.fits.gz`, 22,373,531 bytes, SHA-256 `65b5fe06c2b2a5fa40ddb562c904bbb9c4cf7c3b706a16aa17191919e2e841b5`. Detector plot SHA-256 `81e55a6864789a7060ee50c930738a02fb14dcd248ab43bfc3df6197baff46ec`, [Detector diagnostic](evidence/photometry/31964/acisf31964N001_evt2.fits.gz/real/1/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746979110) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/31964/primary/acisf31964N001_evt2.fits.gz)
 
@@ -1060,6 +1120,8 @@ The window includes 8 aperture photons and 7 annular photons. Before and after t
 
 The aperture and comparison annulus span a densely populated gradient. The detector positions move only over part of the dither cycle during this minute, with substantial row scatter. The cloud reported by SIMBAD is 14.91 arcsec away and has high chance probability. The persistent remnant explains the available spatial evidence.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/24420/2bcc5425b9be17a09553aafadaa6327467bba4b768b73f14d0d3abffb82f3fef/real/5.json.gz), SHA-256 `f29773a59a96112dfafc4945e088959c9a179b4b133a1881812d456d0fc1b01d`.
+
 Input `acisf24420N002_evt2.fits.gz`, 21,184,442 bytes, SHA-256 `2bcc5425b9be17a09553aafadaa6327467bba4b768b73f14d0d3abffb82f3fef`. Detector plot SHA-256 `e88439d5c1fb6db9ee1341851e49f23fa30c9c0eeb49fdb42f758dca64b2461d`, [Detector diagnostic](evidence/photometry/24420/acisf24420N002_evt2.fits.gz/real/5/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14747795420) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/0/24420/primary/acisf24420N002_evt2.fits.gz)
 
 ### ObsID 22992 · acisf22992N003_evt2.fits.gz · real/0
@@ -1071,6 +1133,8 @@ Frozen pointing target `SNRG032.4+00.1`, proposal 21500120, “G32.4+0.1: Nonthe
 The window includes 11 aperture photons and 17 annular photons. Before and after the window the aperture holds 1 photons in 7920 s and 2 in 17228 s. The trigger spans 11 frames and 11 detector pixels. Frozen classification **catalog_incomplete**.
 
 Several separated groups of photons fall inside the trial while the CCD background remains near its surrounding level. Their detector coordinates broadly follow the sky dither with scatter. The aperture includes eleven photons against seventeen in the larger annulus. The G=19.19 Gaia source has significant declination motion and marginal parallax 0.75 ± 0.41 mas. This Galactic counterpart is possible, but the position-only chance upper estimate is 0.31 and the NED classification is incomplete.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/22992/890e10e2acf6086b2b5a0d231fedec777b68b8a8d43186f2193c8574ea791e03/real/0.json.gz), SHA-256 `98160bd42c8c98188aa6d6d431b306556b5f4598221b06d7723683cb6f24383c`.
 
 Input `acisf22992N003_evt2.fits.gz`, 8,506,908 bytes, SHA-256 `890e10e2acf6086b2b5a0d231fedec777b68b8a8d43186f2193c8574ea791e03`. Detector plot SHA-256 `a83633f5b3ce990593569a49348463d71b6016079f2084ee8f73a27fe02c0780`, [Detector diagnostic](evidence/photometry/22992/acisf22992N003_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14747700379) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/2/22992/primary/acisf22992N003_evt2.fits.gz)
 
@@ -1084,6 +1148,8 @@ The window includes 8 aperture photons and 6 annular photons. Before and after t
 
 The aperture lies on diffuse emission from the central molecular-zone pointing. Eight photons span much of the aperture, with scatter around the short dither segment. Six annular photons fall during the trial and 57 aperture photons occur outside it. The full-visit baseline repeatedly produces peaks of comparable height.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/30854/c615c839bdc652c2018d9f3abcd35dbefb639c2ac12030d6e3d1ff6633751776/real/174.json.gz), SHA-256 `0bfc3a61009f098afdf98a74ae0d217972ae79067e898b0ee0430dc1f884373c`.
+
 Input `acisf30854N001_evt2.fits.gz`, 7,637,340 bytes, SHA-256 `c615c839bdc652c2018d9f3abcd35dbefb639c2ac12030d6e3d1ff6633751776`. Detector plot SHA-256 `859e91dfd8e2d1609830ca25dde2b914859e17629e6a75044fdcff94a55b231b`, [Detector diagnostic](evidence/photometry/30854/acisf30854N001_evt2.fits.gz/real/174/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14747414251) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/30854/primary/acisf30854N001_evt2.fits.gz)
 
 ### ObsID 32477 · acisf32477N001_evt2.fits.gz · real/33
@@ -1095,6 +1161,8 @@ Frozen pointing target `PERSEUSCLUSTERS`, proposal 25808977, “The sounds of fe
 The window includes 17 aperture photons and 40 annular photons. Before and after the window the aperture holds 27 photons in 4587 s and 85 in 13398 s. The trigger spans 17 frames and 17 detector pixels. Frozen classification **no_counterpart**.
 
 Seventeen photons are spread across the aperture. They follow the sky dither, as would the underlying cluster emission. The full-visit source curve shows several excursions comparable to this window and the CCD rate declines gently across it. No counterpart was found.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 1, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/32477/4f71094af8acc2d1359d6f1c92f6b82a10542bb5824db424a763a8e6320bcff9/real/33.json.gz), SHA-256 `b35cfb946e21290f61d4de1d243c089464882468fc1d75a418244801d0f07696`.
 
 Input `acisf32477N001_evt2.fits.gz`, 21,579,743 bytes, SHA-256 `4f71094af8acc2d1359d6f1c92f6b82a10542bb5824db424a763a8e6320bcff9`. Detector plot SHA-256 `f14eea4c2454096f1bd8b829a508d3e757498b6251494d2e20955e2e5a081341`, [Detector diagnostic](evidence/photometry/32477/acisf32477N001_evt2.fits.gz/real/33/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14747414251) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/7/32477/primary/acisf32477N001_evt2.fits.gz)
 
@@ -1108,6 +1176,8 @@ The window includes 16 aperture photons and 37 annular photons. Before and after
 
 The sixteen photons closely follow dither, but appear against structured diffuse emission close to the detector edge with 37 annular photons. The CCD rate is elevated through the trial (local probability 7.30×10⁻¹¹). The SN 1968A catalog position is 81 arcsec away with unit chance upper estimate; it supplies no evidence for an associated supernova.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/32477/4f71094af8acc2d1359d6f1c92f6b82a10542bb5824db424a763a8e6320bcff9/real/82.json.gz), SHA-256 `0bed3db2f75c5096d288a3d35aa23f405cc573b67d27268023c52c78d35b87e3`.
+
 Input `acisf32477N001_evt2.fits.gz`, 21,579,743 bytes, SHA-256 `4f71094af8acc2d1359d6f1c92f6b82a10542bb5824db424a763a8e6320bcff9`. Detector plot SHA-256 `058ee0e20a6557e183ca0f299ea15dc18f0a749c1e475f0dbcd020c7071daf4c`, [Detector diagnostic](evidence/photometry/32477/acisf32477N001_evt2.fits.gz/real/82/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14747414251) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/7/32477/primary/acisf32477N001_evt2.fits.gz)
 
 ### ObsID 32477 · acisf32477N001_evt2.fits.gz · real/86
@@ -1119,6 +1189,8 @@ Frozen pointing target `PERSEUSCLUSTERS`, proposal 25808977, “The sounds of fe
 The window includes 8 aperture photons and 8 annular photons. Before and after the window the aperture holds 41 photons in 8099 s and 30 in 8305 s. The trigger spans 8 frames and 7 detector pixels. Frozen classification **ambiguous**.
 
 The short light-curve peak stands out above the local background but the aperture is filled by diffuse photons, with comparable aperture excursions elsewhere and 71 flank photons. The detector trace samples a dither turnaround. The wide-localization MAXI entry 20 arcsec away has unit chance upper bound.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 1, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/32477/4f71094af8acc2d1359d6f1c92f6b82a10542bb5824db424a763a8e6320bcff9/real/86.json.gz), SHA-256 `c2eca248353fffae57c88f572c44484149a818d870daa884c03d4b256bff840e`.
 
 Input `acisf32477N001_evt2.fits.gz`, 21,579,743 bytes, SHA-256 `4f71094af8acc2d1359d6f1c92f6b82a10542bb5824db424a763a8e6320bcff9`. Detector plot SHA-256 `f4551523167836c989ee0ec97e4da4dceff3fb1d9491033f896b61e0a42df2f2`, [Detector diagnostic](evidence/photometry/32477/acisf32477N001_evt2.fits.gz/real/86/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14747414251) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/7/32477/primary/acisf32477N001_evt2.fits.gz)
 
@@ -1132,6 +1204,8 @@ The window includes 15 aperture photons and 35 annular photons. Before and after
 
 The aperture rises for about half an hour in a crowded molecular-cloud field. The after-flank retains 26 photons and the annulus supplies 35 during the trial. Its detector positions show partial dither with large scatter. The Gaia source has parallax 0.353 ± 0.058 mas and good RUWE. Diffuse emission and a foreground star both complicate a source association.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 3, PS1 stack 3, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/24374/5e7100759524e915da892802c702f6ef408aa5cb42bcbb8ae7da4a81f9fc9448/real/2.json.gz), SHA-256 `b722a22d79fd2543fd0cdeb03e70d284b9e70e146942bd15c76873ac51ad13ee`.
+
 Input `acisf24374N002_evt2.fits.gz`, 8,018,621 bytes, SHA-256 `5e7100759524e915da892802c702f6ef408aa5cb42bcbb8ae7da4a81f9fc9448`. Detector plot SHA-256 `617488f055bf98e2777173910a0933d0a3a87f6bcdeecabe58a308fe136d127a`, [Detector diagnostic](evidence/photometry/24374/acisf24374N002_evt2.fits.gz/real/2/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14747946851) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/24374/primary/acisf24374N002_evt2.fits.gz)
 
 ### ObsID 24389 · acisf24389N002_evt2.fits.gz · real/0
@@ -1142,7 +1216,9 @@ Frozen pointing target `2MASSJ04214586+2023446`, proposal 22200351, “Testing M
 
 The window includes 12 aperture photons and 1 annular photons. Before and after the window the aperture holds 17 photons in 2883 s and 48 in 11718 s. The trigger spans 12 frames and 11 detector pixels. Frozen classification **catalog_incomplete**.
 
-The compact source rises sharply, softens toward the end of the 180 s window, and remains visible on both sides. The detector footprint moves with the sky. The Hyades fast-rotator program targeted a different position (65.43875°, +20.39908°). Gaia identifies a separate nearby star, G=14.75, at the X-ray centroid. Its independent distance evidence remains clear despite incomplete NED typing.
+The compact source rises sharply, softens toward the end of the 180 s window, and remains visible on both sides. The detector footprint moves with the sky. The Hyades fast-rotator program targeted a different position (65.43875°, +20.39908°). Gaia identifies a separate nearby star, G=14.75, at the X-ray centroid. Its independent distance evidence remains clear despite incomplete NED typing. The independent Gaia query gives BP−RP = 3.19 mag, consistent with a cool stellar emitter.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 1, PS1 stack 1, AllWISE 1. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/24389/fb5d5812b9afaa1825a79f69332baee33138e9f72ed105fd0108cd391f94a7db/real/0.json.gz), SHA-256 `5aa1ff19834d5b39e2ab1e0a29125d2076d027616b056ad5ba25672d007738df`.
 
 Input `acisf24389N002_evt2.fits.gz`, 2,383,812 bytes, SHA-256 `fb5d5812b9afaa1825a79f69332baee33138e9f72ed105fd0108cd391f94a7db`. Detector plot SHA-256 `6d81ce0ce3490f457bcda995aa7fb46d92eddfc4ee34654a83ee3148f492218e`, [Detector diagnostic](evidence/photometry/24389/acisf24389N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14747946851) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/24389/primary/acisf24389N002_evt2.fits.gz)
 
@@ -1156,6 +1232,8 @@ The window includes 9 aperture photons and 8 annular photons. Before and after t
 
 Nine photons arrive over multiple bins and follow both axes of the dither; sky positions fill the circle rather than showing a sharp core. The whole-CCD rate rises across this interval, with local probability 6.24×10⁻⁸ under the frozen background statistic. The 2MAXI position 67 arcsec away carries unit chance upper bound.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/30353/3ea970dc8972967c88a8d5ac6bbb61edf4799dc8121f74c6fbf2ac86146930ed/real/78.json.gz), SHA-256 `240df0877a9598aad93707a5c0f1fbe18f363d0875ed3be20b09f3bbc40ff5df`.
+
 Input `acisf30353N001_evt2.fits.gz`, 21,325,389 bytes, SHA-256 `3ea970dc8972967c88a8d5ac6bbb61edf4799dc8121f74c6fbf2ac86146930ed`. Detector plot SHA-256 `841afda9e0994cdcb1e47fe053f83addaba8de4b1f89286b4b1a3a4e1ea7ba4c`, [Detector diagnostic](evidence/photometry/30353/acisf30353N001_evt2.fits.gz/real/78/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748240544) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/30353/primary/acisf30353N001_evt2.fits.gz)
 
 ### ObsID 30353 · acisf30353N001_evt2.fits.gz · real/83
@@ -1167,6 +1245,8 @@ Frozen pointing target `PERSEUSCLUSTERS`, proposal 25808977, “The sounds of fe
 The window includes 9 aperture photons and 7 annular photons. Before and after the window the aperture holds 5 photons in 3340 s and 63 in 15060 s. The trigger spans 7 frames and 9 detector pixels. Frozen classification **ambiguous**.
 
 The aperture photons move with the detector dither during a distinct roughly three-minute peak. A concentrated sky core is hard to distinguish against the diffuse field, and 63 photons occur afterward. The readout-strip statistic is elevated. NED lists galaxy PCC 4766 with no redshift in the cone return and chance upper estimate 0.17.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/30353/3ea970dc8972967c88a8d5ac6bbb61edf4799dc8121f74c6fbf2ac86146930ed/real/83.json.gz), SHA-256 `21ad118062e5bbf5385c5c9dd5f00eaa65da673b2ce0ddd57b7ef03ea7790839`.
 
 Input `acisf30353N001_evt2.fits.gz`, 21,325,389 bytes, SHA-256 `3ea970dc8972967c88a8d5ac6bbb61edf4799dc8121f74c6fbf2ac86146930ed`. Detector plot SHA-256 `b2e542852a61b9bfe77ba891f172fe7e32291abcc0bac7fa38e631d71e1f8e3e`, [Detector diagnostic](evidence/photometry/30353/acisf30353N001_evt2.fits.gz/real/83/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748240544) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/30353/primary/acisf30353N001_evt2.fits.gz)
 
@@ -1180,6 +1260,8 @@ The window includes 13 aperture photons and 10 annular photons. Before and after
 
 The full-field image places the aperture on a bright arc. The aperture and annulus contain structured emission across the rim. The thirteen photons broadly track the detector dither but span only eight frames; repeat fluctuations and 69 flank photons weaken an isolated-source interpretation. SIMBAD [AR95] 91 falls inside the aperture.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 1. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/31386/865d42ce21f411deb6342b1983872ac6abeb3c5f8a033d362fdd08d44f677203/real/1.json.gz), SHA-256 `e823badabde65cccc5e144fd65557e74fa03d0c5acd20fe6187962c1ac3120a7`.
+
 Input `acisf31386N001_evt2.fits.gz`, 7,348,269 bytes, SHA-256 `865d42ce21f411deb6342b1983872ac6abeb3c5f8a033d362fdd08d44f677203`. Detector plot SHA-256 `560c80a3ca46e8f9392ab8bff1e48af458cef99e3f7829406349facef5c5bf2d`, [Detector diagnostic](evidence/photometry/31386/acisf31386N001_evt2.fits.gz/real/1/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748240544) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/6/31386/primary/acisf31386N001_evt2.fits.gz)
 
 ### ObsID 32478 · acisf32478N001_evt2.fits.gz · real/24
@@ -1191,6 +1273,8 @@ Frozen pointing target `PERSEUSCLUSTERS`, proposal 25808977, “The sounds of fe
 The window includes 20 aperture photons and 61 annular photons. Before and after the window the aperture holds 334 photons in 12792 s and 131 in 5113 s. The trigger spans 18 frames and 20 detector pixels. Frozen classification **no_counterpart**.
 
 The annulus and aperture are densely populated, with no separable point source. Several large aperture peaks precede the selected one. Detector positions follow the broad drift with wide scatter, while the CCD-wide statistic is elevated at 2.16×10⁻⁸. This observation provides little evidence for an isolated flare.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/32478/74349eb0ba0a967c7f902d4f48ca2ced1846187d30ba16ed8462d032d01afa36/real/24.json.gz), SHA-256 `9a4b0492d3cd9144f08a97ed4d04224ca24598421cd0ce01ed0d926aca62ee81`.
 
 Input `acisf32478N001_evt2.fits.gz`, 21,204,449 bytes, SHA-256 `74349eb0ba0a967c7f902d4f48ca2ced1846187d30ba16ed8462d032d01afa36`. Detector plot SHA-256 `0b42b0407e130a2d0ed940d801e960130b60e6d185cd4a4bc6b5d2aca92f01de`, [Detector diagnostic](evidence/photometry/32478/acisf32478N001_evt2.fits.gz/real/24/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14747794363) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/32478/primary/acisf32478N001_evt2.fits.gz)
 
@@ -1204,6 +1288,8 @@ The window includes 14 aperture photons and 1 annular photons. Before and after 
 
 Fourteen photons arrive over half an hour and track the detector dither. The field has weaker emission before and after. SIMBAD identifies V2273 Ori 1.71 arcsec away; Gaia and 2MASS independently locate a counterpart at similar offsets. Gaia measures a positive parallax of 3.20 ± 0.90 mas. This known stellar variable in the NGC 1977 disk survey provides a plausible coronal-flare explanation.
 
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 1, PS1 stack 1, AllWISE 1. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/30704/fcb45819166ef6d2d588f246ba0134468d2123507ef2c7c089fd68c81e06bb52/real/0.json.gz), SHA-256 `400deb4658513c8e3f861bf6bcd19e2123432a6da8fc392e9f56746fb5a7a81a`.
+
 Input `acisf30704N001_evt2.fits.gz`, 1,649,319 bytes, SHA-256 `fcb45819166ef6d2d588f246ba0134468d2123507ef2c7c089fd68c81e06bb52`. Detector plot SHA-256 `908fedf343698e582ca1ea9c4aef090ef7c8857f95c810a2ddc2c9c456149845`, [Detector diagnostic](evidence/photometry/30704/acisf30704N001_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748267264) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/30704/primary/acisf30704N001_evt2.fits.gz)
 
 ### ObsID 23049 · acisf23049N003_evt2.fits.gz · real/1
@@ -1214,7 +1300,9 @@ Frozen pointing target `PSRJ2022+3842`, proposal 20500262, “PSR J2022+3842: AN
 
 The window includes 11 aperture photons and 15 annular photons. Before and after the window the aperture holds 3 photons in 7897 s and 18 in 40365 s. The trigger spans 11 frames and 11 detector pixels. Frozen classification **ambiguous**.
 
-The aperture source shows a sharp peak with weaker later events and long quiet intervals. Its detector positions follow the sky dither in both coordinates with no sharp CCD-wide peak. Gaia gives proper motion (−1.12, −2.31) mas/yr and RUWE 1.01 for the G=19.30 counterpart, but the crowded-field chance upper bound is 0.15.
+The aperture source shows a sharp peak with weaker later events and long quiet intervals. Its detector positions follow the sky dither in both coordinates with no sharp CCD-wide peak. Gaia gives proper motion (−1.12, −2.31) mas/yr and RUWE 1.01 for the G=19.30 counterpart, but the crowded-field chance upper bound is 0.15. The epoch-matched Gaia source has BP−RP = 2.09 mag. This red color is consistent with a cool or reddened stellar counterpart.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 1, PS1 stack 1, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/23049/2e5b093e0f66158e2505478dd6fc299568b9606fe28187eddcd176f46ee22485/real/1.json.gz), SHA-256 `f768262ff89781814b09507065fabb75778e549a87f48e16cf7253eb69222f36`.
 
 Input `acisf23049N003_evt2.fits.gz`, 22,339,930 bytes, SHA-256 `2e5b093e0f66158e2505478dd6fc299568b9606fe28187eddcd176f46ee22485`. Detector plot SHA-256 `271b7d16e559314c14195c3994e464b6e2811f81b9aceadd1fc4958b51f9a408`, [Detector diagnostic](evidence/photometry/23049/acisf23049N003_evt2.fits.gz/real/1/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748611270) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/23049/primary/acisf23049N003_evt2.fits.gz)
 
@@ -1226,7 +1314,9 @@ Frozen pointing target `IC10X-1`, proposal 22408813, “Determining the Mass of 
 
 The window includes 10 aperture photons and 0 annular photons. Before and after the window the aperture holds 0 photons in 16126 s and 1 in 12147 s. The trigger spans 9 frames and 10 detector pixels. Frozen classification **ambiguous**.
 
-Ten sky-clustered photons appear after 16.1 ks with no prior aperture photons; a single photon remains in the 12.1 ks post-flank. The detector coordinates follow dither with modest scatter and the wider CCD stays near its baseline. The flare is distinct from the pointed IC 10 X-1 position at (5.12121°, +59.28109°). A 2MASS source at 0.50 arcsec and the G=18.61 Gaia star occupy the X-ray r90. Gaia measures proper motion (+6.63, −5.64) mas/yr with RUWE 0.97, and the local Gaia chance upper bound is 0.081. Projection against the IC 10 field alone cannot establish galaxy membership.
+Ten sky-clustered photons appear after 16.1 ks with no prior aperture photons; a single photon remains in the 12.1 ks post-flank. The detector coordinates follow dither with modest scatter and the wider CCD stays near its baseline. The flare is distinct from the pointed IC 10 X-1 position at (5.12121°, +59.28109°). A 2MASS source at 0.50 arcsec and the G=18.61 Gaia star occupy the X-ray r90. Gaia measures proper motion (+6.63, −5.64) mas/yr with RUWE 0.97, and the local Gaia chance upper bound is 0.081. Projection against the IC 10 field alone cannot establish galaxy membership. The deeper optical query gives the 0.70″ Gaia star BP−RP = 2.03 mag, consistent with the cool stellar counterpart suggested by its parallax and motion.
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 1, PS1 stack 1, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/578b6d23cc378d6f4dd7f6ae14533c2e0f0a30be/results/chandra_acis_fxt/evidence/lead_optical/observations/26188/5720b634adb7592adc517b5d1ca05a24e0c934f6e6a11168af7b62541c16dbd7/real/0.json.gz), SHA-256 `569005143649a1993b21bf9bd16bf89f81a7041d842876fceff743fb60cbbb48`.
 
 Input `acisf26188N002_evt2.fits.gz`, 6,779,196 bytes, SHA-256 `5720b634adb7592adc517b5d1ca05a24e0c934f6e6a11168af7b62541c16dbd7`. Detector plot SHA-256 `45edd902945c51c8aa35db5d7af94497e658bc39426c8192bce347156a81cf79`, [Detector diagnostic](evidence/photometry/26188/acisf26188N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749215294) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/26188/primary/acisf26188N002_evt2.fits.gz)
 
@@ -1240,7 +1330,9 @@ The window includes 30 aperture photons and 10 annular photons. Before and after
 
 Thirty photons broadly follow the sky dither and occupy the off-axis aperture. Two count peaks occur within the trial; weaker emission persists after it, and the full CCD is comparatively stable. Gaia lists a G=19.60 object with no parallax at 0.83 arcsec and a G=15.21 star with parallax 0.702 ± 0.035 mas at 2.21 arcsec. SIMBAD VdBH 93a I is 2.19 arcsec away. The original NED classification is incomplete. Four aperture photons give a gross 60 s peak flux of 1.85×10⁻¹², but the scaled flux of the single annular photon is 4.41×10⁻¹¹ erg cm⁻² s⁻¹. The signed net estimate has no positive source-flux detection.
 
-Input `acisf23443N002_evt2.fits.gz`, 13,176,429 bytes, SHA-256 `5092ac344c0c9a9b226f73a85cbf589c5e700f84917c3863aacff069f70596f7`. Detector plot SHA-256 `32ac011061239d8f5b9b1ad03cd6bf5f45cc4446389370435a4bb682162ffa63`, worker artifact member `photometry/23443/acisf23443N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749150998) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/23443/primary/acisf23443N002_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean incomplete, PS1 stack incomplete, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/23443/5092ac344c0c9a9b226f73a85cbf589c5e700f84917c3863aacff069f70596f7/real/0.json.gz), SHA-256 `5334b18460c92bbd2f53b8cd842c11968a0535784a543d148abb9b02ff0b7ac8`.
+
+Input `acisf23443N002_evt2.fits.gz`, 13,176,429 bytes, SHA-256 `5092ac344c0c9a9b226f73a85cbf589c5e700f84917c3863aacff069f70596f7`. Detector plot SHA-256 `32ac011061239d8f5b9b1ad03cd6bf5f45cc4446389370435a4bb682162ffa63`, [Detector diagnostic](evidence/photometry/23443/acisf23443N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749150998) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/23443/primary/acisf23443N002_evt2.fits.gz)
 
 ### ObsID 24912 · acisf24912N002_evt2.fits.gz · real/0
 
@@ -1250,9 +1342,11 @@ Frozen pointing target `SN2020TCW`, proposal 21500443, “Source of Energy and p
 
 The window includes 14 aperture photons and 12 annular photons. Before and after the window the aperture holds 5 photons in 17293 s and 1 in 4212 s. The trigger spans 6 frames and 14 detector pixels. Frozen classification **no_counterpart**.
 
-The transient is well away from SN 2020tcw at (232.07125°, +39.94732°). The CCD-wide rate is stable and the aperture brightens above both flanks. The sky photons are loosely spread; detector positions form horizontal strings, including the amber peak group at nearly constant detector row. The time–energy plot shows repeated groups of soft photons arriving together. The sparse points do not delineate the sky dither as cleanly as independently timed source photons would. A frame-by-frame event-grade and detector-footprint review is needed. The six peak photons dominate the flux estimate, and the 972 s t90 spans several distinct groups. The CXC documents that S4 serial readout on CCD 8 can place several low-amplitude events along a common CHIPY row and node in one frame. [ACIS-S4 instrument note](https://cxc.cfa.harvard.edu/ciao/why/destreak.html)
+EXPNO 5820 contains all six peak events, at 0.52–1.21 keV across CHIPX 565–585. Four share CHIPY 799 and two share CHIPY 801 on node 2. Earlier EXPNO 5762 contributes four of the other eight trial events, split two each across adjacent rows 816 and 817 on the same node. The count peak and much of the nominal 972 s duration therefore depend on two 3.1 s exposures with line-like detector footprints. This resembles documented S4 serial-readout contamination. The level-2 data cannot settle the microscopic cause, and no same-row extension outside this aperture was found. The spatial-control counts do not resolve that ambiguity. [Original frame audit](evidence/frame_forensics/24912/7be4b001269694c0680f601ae3750a54be83a9fdac18f01fbbdcecf32b6966fd/real/0/45011722864-1/README.md) · [Peak CCD rows](evidence/frame_forensics/24912/7be4b001269694c0680f601ae3750a54be83a9fdac18f01fbbdcecf32b6966fd/real/0/45011722864-1/full_peak_ccd_frames.csv.gz) · [CXC instrument note](https://cxc.cfa.harvard.edu/ciao/why/destreak.html)
 
-Input `acisf24912N002_evt2.fits.gz`, 10,277,548 bytes, SHA-256 `7be4b001269694c0680f601ae3750a54be83a9fdac18f01fbbdcecf32b6966fd`. Detector plot SHA-256 `ee8379b0c6f03f2d3317ba5ceb2055031c52b4d7d1788669d1b8f343c5a6f194`, worker artifact member `photometry/24912/acisf24912N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749255727) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/2/24912/primary/acisf24912N002_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/24912/7be4b001269694c0680f601ae3750a54be83a9fdac18f01fbbdcecf32b6966fd/real/0.json.gz), SHA-256 `28b61ee0f5723f5c4614c0332c88c85ea1ce566ed59263ef4c3b746f46c5e7af`.
+
+Input `acisf24912N002_evt2.fits.gz`, 10,277,548 bytes, SHA-256 `7be4b001269694c0680f601ae3750a54be83a9fdac18f01fbbdcecf32b6966fd`. Detector plot SHA-256 `ee8379b0c6f03f2d3317ba5ceb2055031c52b4d7d1788669d1b8f343c5a6f194`, [Detector diagnostic](evidence/photometry/24912/acisf24912N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749255727) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/2/24912/primary/acisf24912N002_evt2.fits.gz)
 
 ### ObsID 30982 · acisf30982N001_evt2.fits.gz · real/0
 
@@ -1264,7 +1358,9 @@ The window includes 16 aperture photons and 0 annular photons. Before and after 
 
 Sixteen photons form a compact group on the sky and trace dither closely in both axes. Activity continues beyond the 1,800 s trial with 18 post-flank photons. Gaia measures proper motion (+4.09, −17.35) mas/yr and RUWE 0.94. SIMBAD lists CXOGCS J174340.5−291249 at 1.59 arcsec. Both the established field X-ray source and the close, well-measured Galactic star weigh against an unidentified extragalactic flare.
 
-Input `acisf30982N001_evt2.fits.gz`, 1,215,977 bytes, SHA-256 `fe848ede319899b6bdf5d963ef0c45734ccb3ca1b201cc7244113d8c5432b571`. Detector plot SHA-256 `d2b7e96544bdffe727635160b235f7e6c2933c2f4d0710da793e271731c14f21`, worker artifact member `photometry/30982/acisf30982N001_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749255727) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/2/30982/primary/acisf30982N001_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 1, PS1 stack 1, AllWISE 0. Gaia DR3 marks 4057100466575572480 (0.16″) as variable. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/30982/fe848ede319899b6bdf5d963ef0c45734ccb3ca1b201cc7244113d8c5432b571/real/0.json.gz), SHA-256 `79949ee3470a47ab96287c6d752fa25beec2f40279da10aa6745e14ee12431c6`.
+
+Input `acisf30982N001_evt2.fits.gz`, 1,215,977 bytes, SHA-256 `fe848ede319899b6bdf5d963ef0c45734ccb3ca1b201cc7244113d8c5432b571`. Detector plot SHA-256 `d2b7e96544bdffe727635160b235f7e6c2933c2f4d0710da793e271731c14f21`, [Detector diagnostic](evidence/photometry/30982/acisf30982N001_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749255727) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/2/30982/primary/acisf30982N001_evt2.fits.gz)
 
 ### ObsID 27439 · acisf27439N002_evt2.fits.gz · real/1
 
@@ -1276,7 +1372,9 @@ The window includes 10 aperture photons and 1 annular photons. Before and after 
 
 Ten photons track the field dither cleanly in two axes with one annular count. SIMBAD and NED both place a previously measured Chandra source within 1.7 arcsec, and a Gaia object with stellar astrometry lies 0.95 arcsec away. Crowding weakens a unique optical association, but the X-ray position itself is known.
 
-Input `acisf27439N002_evt2.fits.gz`, 9,884,887 bytes, SHA-256 `d84fabef61dda8412d545aaa1343f353b4ba788287465aac8455e54f76e0475d`. Detector plot SHA-256 `0ec3b260a3561809d0c4d4042306c4ed1e69454120bcd5979edc1d7658bb7ed8`, worker artifact member `photometry/27439/acisf27439N002_evt2.fits.gz/real/1/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749436890) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/27439/primary/acisf27439N002_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 1, PS1 stack 1, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/27439/d84fabef61dda8412d545aaa1343f353b4ba788287465aac8455e54f76e0475d/real/1.json.gz), SHA-256 `4c033617f1a47e365db4bcea404901bdd0e1e9580ddcd789de9d2772476b5739`.
+
+Input `acisf27439N002_evt2.fits.gz`, 9,884,887 bytes, SHA-256 `d84fabef61dda8412d545aaa1343f353b4ba788287465aac8455e54f76e0475d`. Detector plot SHA-256 `0ec3b260a3561809d0c4d4042306c4ed1e69454120bcd5979edc1d7658bb7ed8`, [Detector diagnostic](evidence/photometry/27439/acisf27439N002_evt2.fits.gz/real/1/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749436890) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/27439/primary/acisf27439N002_evt2.fits.gz)
 
 ### ObsID 23037 · acisf23037N003_evt2.fits.gz · real/0
 
@@ -1286,9 +1384,11 @@ Frozen pointing target `NGC4438`, proposal 20610185, “Non-thermal hard X-ray e
 
 The window includes 11 aperture photons and 5 annular photons. Before and after the window the aperture holds 7 photons in 13627 s and 3 in 5827 s. The trigger spans 5 frames and 11 detector pixels. Frozen classification **no_counterpart**.
 
-The serendipitous position lies well away from the NGC 4438 target. Several nearly simultaneous groups of predominantly very soft photons form the two dominant light-curve spikes on CCD 8. Detector points spread across columns and rows within these sparse groups, and the CCD rate fluctuates near the peak. The flare-like count contrast warrants original-event grade and footprint inspection alongside the similar CCD 8 trigger in ObsID 24912. The CXC documents that S4 serial readout on CCD 8 can place several low-amplitude events along a common CHIPY row and node in one frame. [ACIS-S4 instrument note](https://cxc.cfa.harvard.edu/ciao/why/destreak.html)
+The clearest serial streak precedes the peak. In EXPNO 4341, the three selected source events and two outside the aperture occupy node 2, CHIPY 563, extending across CHIPX 563–641. In the brightest minute, EXPNO 4488 contains five soft 0.515–0.641 keV selected events on the same node. Three other source-aperture events at 0.452–0.499 keV make additional same-row pairs inside that frame. Together these form two rectangular detector patterns across CHIPY 583/586 and 590/593. The sixth peak event, at 2.895 keV, is in EXPNO 4502. These CCD patterns provide a specific instrumental explanation for the apparent high-latitude burst, independent of the local controls. [Original frame audit](evidence/frame_forensics/23037/604c4a0a802ef09cf427a9da5fa4136b34fdb5de5e58806afae16911294812ed/real/0/45011722864-1/README.md) · [Peak CCD rows](evidence/frame_forensics/23037/604c4a0a802ef09cf427a9da5fa4136b34fdb5de5e58806afae16911294812ed/real/0/45011722864-1/full_peak_ccd_frames.csv.gz) · [CXC instrument note](https://cxc.cfa.harvard.edu/ciao/why/destreak.html)
 
-Input `acisf23037N003_evt2.fits.gz`, 10,339,313 bytes, SHA-256 `604c4a0a802ef09cf427a9da5fa4136b34fdb5de5e58806afae16911294812ed`. Detector plot SHA-256 `6058e43bc4cd00fb0e7254c8b790795b248d9a79cbb44887374420def22229cb`, worker artifact member `photometry/23037/acisf23037N003_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748899566) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/7/23037/primary/acisf23037N003_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack incomplete, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/23037/604c4a0a802ef09cf427a9da5fa4136b34fdb5de5e58806afae16911294812ed/real/0.json.gz), SHA-256 `c036135fa55fc1844a188284717298be9ea108d8eb77a95fceb996e2943ae190`.
+
+Input `acisf23037N003_evt2.fits.gz`, 10,339,313 bytes, SHA-256 `604c4a0a802ef09cf427a9da5fa4136b34fdb5de5e58806afae16911294812ed`. Detector plot SHA-256 `6058e43bc4cd00fb0e7254c8b790795b248d9a79cbb44887374420def22229cb`, [Detector diagnostic](evidence/photometry/23037/acisf23037N003_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748899566) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/7/23037/primary/acisf23037N003_evt2.fits.gz)
 
 ### ObsID 23739 · acisf23739N002_evt2.fits.gz · real/0
 
@@ -1300,7 +1400,9 @@ The window includes 363 aperture photons and 88 annular photons. Before and afte
 
 A bright compact source rises, peaks and declines over roughly 2 ks above persistent emission. Hundreds of photons trace both detector dither axes cleanly. The targeted Sgr A* position is within the X-ray centroid uncertainty, amid many central-cluster catalog entries. The observation measures a Galactic-center flare.
 
-Input `acisf23739N002_evt2.fits.gz`, 1,360,461 bytes, SHA-256 `b890ecd089f9eb7009c7cfb2f98dcefb7e3f72b88361828b746f9cc567d8fb61`. Detector plot SHA-256 `f43bfd06669f2a4f16d73d42845571a9da27a5773740de32cb998ebca0bf52b6`, worker artifact member `photometry/23739/acisf23739N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748899566) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/23739/primary/acisf23739N002_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 1, PS1 stack 1, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/23739/b890ecd089f9eb7009c7cfb2f98dcefb7e3f72b88361828b746f9cc567d8fb61/real/0.json.gz), SHA-256 `e6293265b2f999fd4c65142a80ae5895fc77332398974bdc4f96cbdf41f926ba`.
+
+Input `acisf23739N002_evt2.fits.gz`, 1,360,461 bytes, SHA-256 `b890ecd089f9eb7009c7cfb2f98dcefb7e3f72b88361828b746f9cc567d8fb61`. Detector plot SHA-256 `f43bfd06669f2a4f16d73d42845571a9da27a5773740de32cb998ebca0bf52b6`, [Detector diagnostic](evidence/photometry/23739/acisf23739N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748899566) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/23739/primary/acisf23739N002_evt2.fits.gz)
 
 ### ObsID 24404 · acisf24404N002_evt2.fits.gz · real/0
 
@@ -1312,7 +1414,9 @@ The window includes 10 aperture photons and 6 annular photons. Before and after 
 
 The aperture lies on a steep cluster gradient near other compact structure. Ten photons spread across the extraction circle and scatter around the partial detector dither trace. The 180 s peak is measurable, but steady extended emission supplies a substantial competing explanation. The wide MAXI, group and cluster entries have unit chance upper bounds.
 
-Input `acisf24404N002_evt2.fits.gz`, 12,924,434 bytes, SHA-256 `edb87f477962789bfb0dbca668eb1ea9a141c7ff8852fb2c05af2468dffe73cf`. Detector plot SHA-256 `1977a784ec6e9ab061d7d85bb73e0069608d90b333228dd535b188de107a688d`, worker artifact member `photometry/24404/acisf24404N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748899566) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/24404/primary/acisf24404N002_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/24404/edb87f477962789bfb0dbca668eb1ea9a141c7ff8852fb2c05af2468dffe73cf/real/0.json.gz), SHA-256 `7da478dd8581052071f091aeadaeec704d9c944a898c16040e52affc3d8add5f`.
+
+Input `acisf24404N002_evt2.fits.gz`, 12,924,434 bytes, SHA-256 `edb87f477962789bfb0dbca668eb1ea9a141c7ff8852fb2c05af2468dffe73cf`. Detector plot SHA-256 `1977a784ec6e9ab061d7d85bb73e0069608d90b333228dd535b188de107a688d`, [Detector diagnostic](evidence/photometry/24404/acisf24404N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748899566) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/24404/primary/acisf24404N002_evt2.fits.gz)
 
 ### ObsID 32270 · acisf32270N001_evt2.fits.gz · real/2
 
@@ -1324,7 +1428,9 @@ The window includes 9 aperture photons and 10 annular photons. Before and after 
 
 Nine photons spread across the extraction, with ten annular counts and persistent pre-window activity. The detector footprint moves with the sky with broad scatter. The strip statistic of 1.55×10⁻¹⁶ makes readout contamination an additional concern.
 
-Input `acisf32270N001_evt2.fits.gz`, 20,201,102 bytes, SHA-256 `f4d90c16f1af5fcd6eef9ddfe952d11ab6e0b8fa035f09ca29ca036433035cc9`. Detector plot SHA-256 `345414ec828483a133ef4e73ca1b0296bf3cd75dc71e7285555523f22eaa8142`, worker artifact member `photometry/32270/acisf32270N001_evt2.fits.gz/real/2/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748899566) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/0/32270/primary/acisf32270N001_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/32270/f4d90c16f1af5fcd6eef9ddfe952d11ab6e0b8fa035f09ca29ca036433035cc9/real/2.json.gz), SHA-256 `2dc6c676bf62658bb0851b97f870fe00fe45af3e4818c9849860592b058cbe17`.
+
+Input `acisf32270N001_evt2.fits.gz`, 20,201,102 bytes, SHA-256 `f4d90c16f1af5fcd6eef9ddfe952d11ab6e0b8fa035f09ca29ca036433035cc9`. Detector plot SHA-256 `345414ec828483a133ef4e73ca1b0296bf3cd75dc71e7285555523f22eaa8142`, [Detector diagnostic](evidence/photometry/32270/acisf32270N001_evt2.fits.gz/real/2/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748899566) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/0/32270/primary/acisf32270N001_evt2.fits.gz)
 
 ### ObsID 32270 · acisf32270N001_evt2.fits.gz · real/4
 
@@ -1336,7 +1442,9 @@ The window includes 9 aperture photons and 6 annular photons. Before and after t
 
 The nine photons cover much of the aperture and broadly track the detector dither. The full light curve has other smaller excursions. Diffuse cluster statistics compete with source variability. The broad MAXI entry 77 arcsec away has unit chance upper bound.
 
-Input `acisf32270N001_evt2.fits.gz`, 20,201,102 bytes, SHA-256 `f4d90c16f1af5fcd6eef9ddfe952d11ab6e0b8fa035f09ca29ca036433035cc9`. Detector plot SHA-256 `7600779cde385005fb48aed1bb7245a69bc68ff07c3bed10275ae73322ee1d60`, worker artifact member `photometry/32270/acisf32270N001_evt2.fits.gz/real/4/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748899566) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/0/32270/primary/acisf32270N001_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/32270/f4d90c16f1af5fcd6eef9ddfe952d11ab6e0b8fa035f09ca29ca036433035cc9/real/4.json.gz), SHA-256 `082cf0a94d9896d459c8057d0ccd54e11d0ae6fc8dd246c236ce7e4f1eb81818`.
+
+Input `acisf32270N001_evt2.fits.gz`, 20,201,102 bytes, SHA-256 `f4d90c16f1af5fcd6eef9ddfe952d11ab6e0b8fa035f09ca29ca036433035cc9`. Detector plot SHA-256 `7600779cde385005fb48aed1bb7245a69bc68ff07c3bed10275ae73322ee1d60`, [Detector diagnostic](evidence/photometry/32270/acisf32270N001_evt2.fits.gz/real/4/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14748899566) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/0/32270/primary/acisf32270N001_evt2.fits.gz)
 
 ### ObsID 23779 · acisf23779N002_evt2.fits.gz · real/0
 
@@ -1346,9 +1454,13 @@ Frozen pointing target `NSA103757`, proposal 22700333, “A CHANDRA LOOK AT VARI
 
 The window includes 9 aperture photons and 2 annular photons. Before and after the window the aperture holds 31 photons in 21659 s and 7 in 2392 s. The trigger spans 9 frames and 9 detector pixels. Frozen classification **ambiguous**.
 
-The source briefly brightens without a CCD-wide peak. Nine photons occupy nine frames and detector positions broadly follow dither with scatter. Full-visit photons concentrate near one edge of the aperture and 31 and seven photons remain in the two flanks. The selected centroid differs from the targeted low-mass AGN position. A broad ROSAT entry at 15.54 arcsec has a 0.96 chance upper estimate. Independent visits and optical imaging can test whether the same X-ray source persists.
+The source briefly brightens without a CCD-wide peak. Nine photons occupy nine frames and detector positions broadly follow dither with scatter. Full-visit photons concentrate near one edge of the aperture and 31 and seven photons remain in the two flanks. The selected centroid differs from the targeted low-mass AGN position. A broad ROSAT entry at 15.54 arcsec has a 0.96 chance upper estimate. The 15″ follow-up cone contains one Gaia source at 7.60″. The nearest PS1 stack object is 7.68″ away and the AllWISE object 7.82″ away. All fall outside the 2.68″ X-ray r90. Fainter optical counterparts remain possible.
 
-Input `acisf23779N002_evt2.fits.gz`, 13,491,620 bytes, SHA-256 `49987e33e7bc66ca583baa1b7aab2ea59c067b58889807ec78dd851fd752585b`. Detector plot SHA-256 `7ba0b13c534f625ba11d2c1cee1fa11eb12d9b452b503ad3cd9f3a6f0f889d88`, worker artifact member `photometry/23779/acisf23779N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749108711) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/23779/primary/acisf23779N002_evt2.fits.gz)
+CSC source 2CXO J125704.0+275119 lies 6.71″ from the trial centroid, inside the 8.27″ extraction aperture. ObsID 23779 itself has variability index 7, broad-band flux significance 7.91, and 114.19 net CSC source counts. The separation exceeds both the trigger r90 and the catalog ellipse's 1.67″ major radius. The full-visit image shows the neighbor near the aperture edge. A distinct flare at the trial centroid is possible, but the catalogued variable source's PSF can contribute strongly to the aperture. None of the 78 independent pointing-selected observations has confirmed aperture coverage. These observations supply no return-visit upper limit. [CSC detections](evidence/pointed_visits/45011722864-1/history/target-01/csc.json) · [Independent aperture coverage](evidence/pointed_visits/45011722864-1/history/history.json) · [Original-photon check](evidence/pointed_visits/45011722864-1/23779/photon_check.json)
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/23779/49987e33e7bc66ca583baa1b7aab2ea59c067b58889807ec78dd851fd752585b/real/0.json.gz), SHA-256 `ac36b087e158bc414e1ed2553ec023cf984ca254a2ce43a0637d97733c03529f`.
+
+Input `acisf23779N002_evt2.fits.gz`, 13,491,620 bytes, SHA-256 `49987e33e7bc66ca583baa1b7aab2ea59c067b58889807ec78dd851fd752585b`. Detector plot SHA-256 `7ba0b13c534f625ba11d2c1cee1fa11eb12d9b452b503ad3cd9f3a6f0f889d88`, [Detector diagnostic](evidence/photometry/23779/acisf23779N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749108711) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/23779/primary/acisf23779N002_evt2.fits.gz)
 
 ### ObsID 22929 · acisf22929N002_evt2.fits.gz · real/0
 
@@ -1358,9 +1470,13 @@ Frozen pointing target `SPIDERWEB`, proposal 20700463, “Mapping obscured AGN a
 
 The window includes 8 aperture photons and 7 annular photons. Before and after the window the aperture holds 11 photons in 41451 s and 2 in 8658 s. The trigger spans 8 frames and 8 detector pixels. Frozen classification **ambiguous**.
 
-The aperture brightens for about half an hour after a long quiet interval. The scattered events broadly follow the detector dither, with no correlated CCD brightening. The field is crowded with faint sources and seven annular photons occur in the window. Galaxies at 6.37–7.25 arcsec have chance upper estimates of 0.34–0.51. The pointing targets a complex at z=2.16, but the flare has no independently established redshift or host.
+The aperture brightens for about half an hour after a long quiet interval. The scattered events broadly follow the detector dither, with no correlated CCD brightening. The field is crowded with faint sources and seven annular photons occur in the window. Galaxies at 6.37–7.25 arcsec have chance upper estimates of 0.34–0.51. The pointing targets a complex at z=2.16, but the flare has no independently established redshift or host. The independent 15″ follow-up cone contains no Gaia source. The nearest PS1 mean/stack detection is 5.45″ away and the AllWISE detection is 10.05″ away, all outside the 2.78″ X-ray r90. This supports an optically unidentified flare while leaving fainter sources unconstrained.
 
-Input `acisf22929N002_evt2.fits.gz`, 13,493,587 bytes, SHA-256 `9a02d9ed96de9146bd86ca7a9bbfcb2e420d487e1a49f39b184daefd84fd6fbd`. Detector plot SHA-256 `8e2479c63c3771d7470b5a31d92a5b56ecb3325d2ac2ad70248741949983f0aa`, worker artifact member `photometry/22929/acisf22929N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749756165) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/22929/primary/acisf22929N002_evt2.fits.gz)
+Thirteen of 21 other pointing-selected products have verified aperture support. None shows a repeat excess after correcting across visits (minimum corrected p = 1). The other eight supply no sensitivity bound. CSC places 2CXO J114044.9−263004 at 10.33″ and gives no broad-band variability index for its weak detection in ObsID 22929. The separate 40.52″ comparison aperture has 27/1/5 photons before/during/after, versus 11/8/2 for the source. Its location was chosen using off-window photons, so the Fisher p = 0.001318 describes the comparison only. These measurements strengthen the case for a localized enhancement while leaving its class open. [CSC detections](evidence/pointed_visits/45011722864-1/history/target-00/csc.json) · [Independent aperture coverage](evidence/pointed_visits/45011722864-1/history/history.json) · [Original-photon check](evidence/pointed_visits/45011722864-1/22929/photon_check.json)
+
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/22929/9a02d9ed96de9146bd86ca7a9bbfcb2e420d487e1a49f39b184daefd84fd6fbd/real/0.json.gz), SHA-256 `55b8960e41b99907002a95ddef7ab69cba0589d042e7611dc39935c8581377b7`.
+
+Input `acisf22929N002_evt2.fits.gz`, 13,493,587 bytes, SHA-256 `9a02d9ed96de9146bd86ca7a9bbfcb2e420d487e1a49f39b184daefd84fd6fbd`. Detector plot SHA-256 `8e2479c63c3771d7470b5a31d92a5b56ecb3325d2ac2ad70248741949983f0aa`, [Detector diagnostic](evidence/photometry/22929/acisf22929N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749756165) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/22929/primary/acisf22929N002_evt2.fits.gz)
 
 ### ObsID 27476 · acisf27476N002_evt2.fits.gz · real/0
 
@@ -1372,7 +1488,9 @@ The window includes 108 aperture photons and 4 annular photons. Before and after
 
 The compact sky source rises and decays over ten minutes while detector positions trace both axes cleanly. The underlying source remains bright across the visit. The centroid is about 14 arcsec from the frozen LTT 1445A pointing, and the loose ROSAT position cannot identify an individual component. The targeted stellar system is the natural interpretation; exact component membership needs epoch-matched astrometry.
 
-Input `acisf27476N002_evt2.fits.gz`, 689,444 bytes, SHA-256 `8fc63dc69648a7b5dd086b91fbaa6b8d57881888ae1d216873de508bb87fe4d4`. Detector plot SHA-256 `c18fd0f329e1429f1e828b06d3d9854ab879be02aced0ea9da009115192a75b7`, worker artifact member `photometry/27476/acisf27476N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749756165) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/6/27476/primary/acisf27476N002_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 1, PS1 stack 1, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/27476/8fc63dc69648a7b5dd086b91fbaa6b8d57881888ae1d216873de508bb87fe4d4/real/0.json.gz), SHA-256 `fe02e005337b86bc9497204e5a5fcaf2c9920c51e020d172ad9619d511b0cf71`.
+
+Input `acisf27476N002_evt2.fits.gz`, 689,444 bytes, SHA-256 `8fc63dc69648a7b5dd086b91fbaa6b8d57881888ae1d216873de508bb87fe4d4`. Detector plot SHA-256 `c18fd0f329e1429f1e828b06d3d9854ab879be02aced0ea9da009115192a75b7`, [Detector diagnostic](evidence/photometry/27476/acisf27476N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749756165) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/6/27476/primary/acisf27476N002_evt2.fits.gz)
 
 ### ObsID 27319 · acisf27319N002_evt2.fits.gz · real/47
 
@@ -1384,7 +1502,9 @@ The window includes 13 aperture photons and 20 annular photons. Before and after
 
 The count grouping coincides with a resolved gradient on the remnant's outer boundary. The photons have broad detector-column scatter and the full-visit aperture and annulus remain persistently bright.
 
-Input `acisf27319N002_evt2.fits.gz`, 11,488,455 bytes, SHA-256 `ec85a6b45d5f225d250f906899b8668f4f376fcfba6f9eeaa93f01a16369abee`. Detector plot SHA-256 `110102cb047fd477d8f4bc23a297c7c951865b0530f8330df3422aeb43b34696`, worker artifact member `photometry/27319/acisf27319N002_evt2.fits.gz/real/47/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749912364) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/27319/primary/acisf27319N002_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 0, PS1 mean 0, PS1 stack 0, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/27319/ec85a6b45d5f225d250f906899b8668f4f376fcfba6f9eeaa93f01a16369abee/real/47.json.gz), SHA-256 `4d7bbcf4acfcda5a97cf17237620feffd2083e4743a5db4f1d95561a3866fc61`.
+
+Input `acisf27319N002_evt2.fits.gz`, 11,488,455 bytes, SHA-256 `ec85a6b45d5f225d250f906899b8668f4f376fcfba6f9eeaa93f01a16369abee`. Detector plot SHA-256 `110102cb047fd477d8f4bc23a297c7c951865b0530f8330df3422aeb43b34696`, [Detector diagnostic](evidence/photometry/27319/acisf27319N002_evt2.fits.gz/real/47/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749912364) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/27319/primary/acisf27319N002_evt2.fits.gz)
 
 ### ObsID 21313 · acisf21313N002_evt2.fits.gz · real/0
 
@@ -1396,7 +1516,9 @@ The window includes 29 aperture photons and 11 annular photons. Before and after
 
 The image and dither show a genuine compact flare with extended subsequent emission. The saved publication row identifies ObsID 21313 and flare class F. Independent confirmation of this prior event establishes the cause of the automated ambiguity in the primary run, whose NED response was untyped. A moving Gaia source also lies within 0.79 arcsec.
 
-Input `acisf21313N002_evt2.fits.gz`, 13,347,602 bytes, SHA-256 `fd2a0f7372ab8854120b5393d87cdb1c204dc0a16dc6a79f13e476c32cc918a3`. Detector plot SHA-256 `b297a975279e1477912da52b16184974292e118f67b0d4449f63aac1bc18b95b`, worker artifact member `photometry/21313/acisf21313N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749154006) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/21313/primary/acisf21313N002_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 1, PS1 stack 2, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/21313/fd2a0f7372ab8854120b5393d87cdb1c204dc0a16dc6a79f13e476c32cc918a3/real/0.json.gz), SHA-256 `62d81473c787da815c74897435f86eaa861d0aec4cd17281333242bd7c92828a`.
+
+Input `acisf21313N002_evt2.fits.gz`, 13,347,602 bytes, SHA-256 `fd2a0f7372ab8854120b5393d87cdb1c204dc0a16dc6a79f13e476c32cc918a3`. Detector plot SHA-256 `b297a975279e1477912da52b16184974292e118f67b0d4449f63aac1bc18b95b`, [Detector diagnostic](evidence/photometry/21313/acisf21313N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749154006) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/21313/primary/acisf21313N002_evt2.fits.gz)
 
 ### ObsID 23056 · acisf23056N003_evt2.fits.gz · real/0
 
@@ -1408,7 +1530,9 @@ The window includes 16 aperture photons and 2 annular photons. Before and after 
 
 The compact source brightens near the end of the visit and follows the dither. SIMBAD's candidate YSO matches at 1.16 arcsec, and the Gaia position at 1.29 arcsec is the same source ID 4066751150713659776 identified by the independent optical deposit for 22275 real/0. The NED catalog failure does not affect these measured stellar data.
 
-Input `acisf23056N003_evt2.fits.gz`, 6,787,368 bytes, SHA-256 `ab0d52c4d16c2a37f5732696428cd15989e116f1108c60c9302a06f8884c632f`. Detector plot SHA-256 `cf335345d253b5d5f7d099835dc51bc0c9fa8f7b01f178ca8f3da2349456403b`, worker artifact member `photometry/23056/acisf23056N003_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749154006) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/6/23056/primary/acisf23056N003_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 2, PS1 stack 2, AllWISE 0. Gaia DR3 marks 4066751150713659776 (1.29″) as variable. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/23056/ab0d52c4d16c2a37f5732696428cd15989e116f1108c60c9302a06f8884c632f/real/0.json.gz), SHA-256 `2ffadda6dd36a8b377afdd81e25d41d6d562a95932ae30161915ce99a2f8fbb4`.
+
+Input `acisf23056N003_evt2.fits.gz`, 6,787,368 bytes, SHA-256 `ab0d52c4d16c2a37f5732696428cd15989e116f1108c60c9302a06f8884c632f`. Detector plot SHA-256 `cf335345d253b5d5f7d099835dc51bc0c9fa8f7b01f178ca8f3da2349456403b`, [Detector diagnostic](evidence/photometry/23056/acisf23056N003_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749154006) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/6/23056/primary/acisf23056N003_evt2.fits.gz)
 
 ### ObsID 23056 · acisf23056N003_evt2.fits.gz · real/1
 
@@ -1420,7 +1544,9 @@ The window includes 15 aperture photons and 1 annular photons. Before and after 
 
 Fifteen photons form a compact sky concentration with clean dither in both axes, and there are few events in the flanks. The Gaia position is a close match and the astrometric fit has RUWE 0.97. A coronal flare is favored despite the original NED classification failure.
 
-Input `acisf23056N003_evt2.fits.gz`, 6,787,368 bytes, SHA-256 `ab0d52c4d16c2a37f5732696428cd15989e116f1108c60c9302a06f8884c632f`. Detector plot SHA-256 `84b8c52ff7053e3dcc8f1788a47f6c67ea15a6a31868238b9f00a591278eb6c4`, worker artifact member `photometry/23056/acisf23056N003_evt2.fits.gz/real/1/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749154006) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/6/23056/primary/acisf23056N003_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 1, PS1 stack 2, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/23056/ab0d52c4d16c2a37f5732696428cd15989e116f1108c60c9302a06f8884c632f/real/1.json.gz), SHA-256 `9ce8f1f794524dcd1a0fe31d9ca6f86e11ee7cd5dcceeef63f1a8091e03b7de7`.
+
+Input `acisf23056N003_evt2.fits.gz`, 6,787,368 bytes, SHA-256 `ab0d52c4d16c2a37f5732696428cd15989e116f1108c60c9302a06f8884c632f`. Detector plot SHA-256 `84b8c52ff7053e3dcc8f1788a47f6c67ea15a6a31868238b9f00a591278eb6c4`, [Detector diagnostic](evidence/photometry/23056/acisf23056N003_evt2.fits.gz/real/1/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749154006) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/6/23056/primary/acisf23056N003_evt2.fits.gz)
 
 ### ObsID 28762 · acisf28762N001_evt2.fits.gz · real/0
 
@@ -1432,7 +1558,9 @@ The window includes 35 aperture photons and 4 annular photons. Before and after 
 
 Thirty-five photons form a compact dither-tracking source with a sharp rise and later activity. The post-flank has nine counts in only 1.95 ks. The nearby Gaia solution and stellar-cluster pointing favor a stellar flare, with the relatively crowded field and elevated RUWE qualifying its precise distance.
 
-Input `acisf28762N001_evt2.fits.gz`, 643,213 bytes, SHA-256 `5f8a2b5df80f88a043ce6b857b8a244129a50b4eac92704afdc7805371dc063d`. Detector plot SHA-256 `b387c977e58331aeb78d744723f044fa6df45fbfac91d8828d28410378d7e840`, worker artifact member `photometry/28762/acisf28762N001_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749154006) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/2/28762/primary/acisf28762N001_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 2, PS1 stack 1, AllWISE 1. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/28762/5f8a2b5df80f88a043ce6b857b8a244129a50b4eac92704afdc7805371dc063d/real/0.json.gz), SHA-256 `672bd33dbd06440d73e40147a0012a6b1224ffc742114b85663897d50c070a43`.
+
+Input `acisf28762N001_evt2.fits.gz`, 643,213 bytes, SHA-256 `5f8a2b5df80f88a043ce6b857b8a244129a50b4eac92704afdc7805371dc063d`. Detector plot SHA-256 `b387c977e58331aeb78d744723f044fa6df45fbfac91d8828d28410378d7e840`, [Detector diagnostic](evidence/photometry/28762/acisf28762N001_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749154006) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/2/28762/primary/acisf28762N001_evt2.fits.gz)
 
 ### ObsID 30741 · acisf30741N001_evt2.fits.gz · real/0
 
@@ -1444,13 +1572,183 @@ The window includes 9 aperture photons and 0 annular photons. Before and after t
 
 The aperture encloses a compact source and the one-minute window is the highest of several fluctuations during hours of elevated emission. A Gaia star 1.71 arcsec away has good astrometry (RUWE 0.90). SIMBAD and NED identify V1325 Ori near the same location. This is consistent with activity from a known Orion variable in a stellar-flare program.
 
-Input `acisf30741N001_evt2.fits.gz`, 2,686,202 bytes, SHA-256 `c41f91bc23b4269ef54c2052d8f0ce4e1769e09783f94129940560ef4dd03fd6`. Detector plot SHA-256 `ccc540c119373f6ed1530eb172e4139ab2d4768f726f74f8a21a55e18322c8a1`, worker artifact member `photometry/30741/acisf30741N001_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749667796) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/1/30741/primary/acisf30741N001_evt2.fits.gz)
+Follow-up catalog row counts inside the X-ray r90 are Gaia DR3 1, PS1 mean 2, PS1 stack 1, AllWISE 0. [Photometry and query receipts](https://github.com/dovvnloading/Open-Space/blob/ca1bc47aa47f0b1dadfe507e5cdcaa133017f6d2/results/chandra_acis_fxt/evidence/lead_optical/observations/30741/c41f91bc23b4269ef54c2052d8f0ce4e1769e09783f94129940560ef4dd03fd6/real/0.json.gz), SHA-256 `725f1940e63664d71da7c084dae513f189d9d2ffc7fa1db04947c5d792566ed4`.
+
+Input `acisf30741N001_evt2.fits.gz`, 2,686,202 bytes, SHA-256 `c41f91bc23b4269ef54c2052d8f0ce4e1769e09783f94129940560ef4dd03fd6`. Detector plot SHA-256 `ccc540c119373f6ed1530eb172e4139ab2d4768f726f74f8a21a55e18322c8a1`, [Detector diagnostic](evidence/photometry/30741/acisf30741N001_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14749667796) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/1/30741/primary/acisf30741N001_evt2.fits.gz)
+
+### ObsID 29627 · acisf29627N001_evt2.fits.gz · real/1
+
+ICRS 49.9306547°, +41.5074160° (r90 1.41″). Peak MJD 60936.01497980 UTC. Photon t95−t05 156.5 s in a 180 s trial. Peak aperture flux 1.45e-12 ± 6.3e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `PERSEUSCLUSTER`, proposal 26800469, “AO-26 Observations of the Perseus Cluster” (CAL).
+
+The window includes 12 aperture photons and 10 annular photons. Before and after the window the aperture holds 29 photons in 4721 s and 38 in 5224 s. The trigger spans 11 frames and 11 detector pixels. Frozen classification **ambiguous**.
+
+The aperture rises at the trigger with smaller peaks elsewhere in the observation. The sky image lacks a distinct compact core against the steep cluster gradient. The detector footprint tracks the sky. SN 1968A, 65 arcsec away, and a broad MAXI source both have unit chance upper bounds.
+
+Input `acisf29627N001_evt2.fits.gz`, 9,655,151 bytes, SHA-256 `7f80293d6d5bfacf1c34fa6b20e09c204e35ae02c38156ad64a762c9d30fe8d0`. Detector plot SHA-256 `3f2cce3fc3addb67b819e496b18b3a1a6e5d074fa827d4ea5213161fd2a3ead5`, worker artifact member `photometry/29627/acisf29627N001_evt2.fits.gz/real/1/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750592341) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/7/29627/primary/acisf29627N001_evt2.fits.gz)
+
+### ObsID 30310 · acisf30310N001_evt2.fits.gz · real/8
+
+ICRS 49.8290693°, +41.5204305° (r90 2.18″). Peak MJD 60999.52738798 UTC. Photon t95−t05 358.1 s in a 600 s trial. Peak aperture flux 1.3e-12 ± 6.3e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `PERSEUSCLUSTER`, proposal 25808977, “The sounds of feedback: deep and wide imaging of the cool core of the Perseus cluster” (CLP).
+
+The window includes 17 aperture photons and 40 annular photons. Before and after the window the aperture holds 26 photons in 3877 s and 60 in 11184 s. The trigger spans 17 frames and 17 detector pixels. Frozen classification **ambiguous**.
+
+The aperture brightens relative to its annulus. The photons are spread broadly on the sky and around the detector dither curve. The readout axis crosses the brighter cluster area, and the strip statistic is 6.48×10⁻⁷. The group position at 76 arcsec offers no plausible individual host association.
+
+Input `acisf30310N001_evt2.fits.gz`, 19,032,890 bytes, SHA-256 `a76427df4e3108d22df511bcc377ed0d6f56273517054581625059e8f212d222`. Detector plot SHA-256 `d6a52cedc273cc655020f96069627cb727335323c099dc5e2495f6ea965edbef`, worker artifact member `photometry/30310/acisf30310N001_evt2.fits.gz/real/8/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750592341) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/0/30310/primary/acisf30310N001_evt2.fits.gz)
+
+### ObsID 30310 · acisf30310N001_evt2.fits.gz · real/106
+
+ICRS 49.8485573°, +41.4148040° (r90 2.52″). Peak MJD 60999.51655342 UTC. Photon t95−t05 398.9 s in a 600 s trial. Peak aperture flux 1.52e-12 ± 1.1e-12 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `PERSEUSCLUSTER`, proposal 25808977, “The sounds of feedback: deep and wide imaging of the cool core of the Perseus cluster” (CLP).
+
+The window includes 9 aperture photons and 10 annular photons. Before and after the window the aperture holds 5 photons in 2897 s and 21 in 12164 s. The trigger spans 9 frames and 9 detector pixels. Frozen classification **ambiguous**.
+
+The aperture rate rises above a populated local baseline, with ten annular photons and modest scatter around the detector dither track. A clear point source is difficult to isolate. SIMBAD lists [MCC2025] EDwC-0728 and NED lists PCC 4225, both near 7.1 arcsec, with chance upper estimates of 0.085 and 0.27. The data do not establish host membership.
+
+Input `acisf30310N001_evt2.fits.gz`, 19,032,890 bytes, SHA-256 `a76427df4e3108d22df511bcc377ed0d6f56273517054581625059e8f212d222`. Detector plot SHA-256 `5627c600134df91823aa4e54b71a54d7d1f8310235f00ad5293ff61cbb7b7b0f`, worker artifact member `photometry/30310/acisf30310N001_evt2.fits.gz/real/106/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750592341) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/0/30310/primary/acisf30310N001_evt2.fits.gz)
+
+### ObsID 22558 · acisf22558N002_evt2.fits.gz · real/0
+
+ICRS 289.5898843°, +49.6070343° (r90 1.30″). Peak MJD 58952.04818278 UTC. Photon t95−t05 161.4 s in a 180 s trial. Peak aperture flux 1.68e-12 ± 7.3e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `KIC11606854`, proposal 21700159, “X-RAY OBSERVATIONS OF A PECULIAR FLARING AGN OBSERVED BY KEPLER: A SUPERMASSIVE BLACK HOLE BINARY HYPOTHESIS” (GO).
+
+The window includes 15 aperture photons and 0 annular photons. Before and after the window the aperture holds 54 photons in 12393 s and 37 in 7500 s. The trigger spans 14 frames and 15 detector pixels. Frozen classification **catalog_incomplete**.
+
+Fifteen photons in three minutes trace dither closely, with no annular counts. The broader light curve contains more emission on either side of the selected peak and a fading tail. The source is over four arcminutes from the flaring AGN target KIC11606854. Gaia 2132638454321058176 at 0.73 arcsec lacks parallax and proper motion. The secure sky flare could come from a stellar counterpart; the primary NED cone lacks types. Additional visits and optical information can test competing interpretations.
+
+Input `acisf22558N002_evt2.fits.gz`, 4,580,894 bytes, SHA-256 `0dadf392e5987516e910002b7e5caf124893a2d65b3474625ed5a1b9d1828ed6`. Detector plot SHA-256 `ce06ccbdfd22f88e216f05c0863cd1f6918399a46cd028d062271f277ed3531c`, worker artifact member `photometry/22558/acisf22558N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750167042) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/22558/primary/acisf22558N002_evt2.fits.gz)
+
+### ObsID 30312 · acisf30312N001_evt2.fits.gz · real/133
+
+ICRS 49.9499683°, +41.5345534° (r90 1.42″). Peak MJD 61023.03354191 UTC. Photon t95−t05 152.7 s in a 180 s trial. Peak aperture flux 1.4e-12 ± 7.4e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `PERSEUSCLUSTER`, proposal 25808977, “The sounds of feedback: deep and wide imaging of the cool core of the Perseus cluster” (CLP).
+
+The window includes 9 aperture photons and 6 annular photons. Before and after the window the aperture holds 0 photons in 875 s and 34 in 14603 s. The trigger spans 9 frames and 9 detector pixels. Frozen classification **ambiguous**.
+
+The 180 s peak near the beginning of the visit occurs during one phase of the repeated modulation. A stable, isolated point source is difficult to separate from exposure changes across the diffuse Perseus gradient. The 875 s pre-flank provides limited evidence for quiescence. Two possible galaxies beyond six arcseconds have chance upper bounds of 0.22 and 0.48.
+
+Input `acisf30312N001_evt2.fits.gz`, 18,929,742 bytes, SHA-256 `8dbcdcfc264393bf9a25db05950d14af5308e6c94e6efd9e35e1a42d8c807c38`. Detector plot SHA-256 `55bce92edd30573a2f45c0b0e2c29e87b0e4f3534506804b300c27ce6baed382`, worker artifact member `photometry/30312/acisf30312N001_evt2.fits.gz/real/133/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750167042) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/2/30312/primary/acisf30312N001_evt2.fits.gz)
+
+### ObsID 25211 · acisf25211N002_evt2.fits.gz · real/0
+
+ICRS 281.6027836°, -2.9753674° (r90 1.49″). Peak MJD 60128.64784789 UTC. Photon t95−t05 50.6 s in a 60 s trial. Peak aperture flux 1.96e-12 ± 7.6e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `PSRJ1846-0258`, proposal 23500528, “Post-outburst evolution of the high-magnetic field pulsar PSR J1846-0258” (GO).
+
+The window includes 10 aperture photons and 12 annular photons. Before and after the window the aperture holds 226 photons in 10940 s and 153 in 9045 s. The trigger spans 9 frames and 10 detector pixels. Frozen classification **ambiguous**.
+
+The annulus crosses compact bright emission and the aperture remains persistently active throughout the visit. Several fluctuations match the selected peak. The cataloged pulsar lies 2.17 arcsec away; the nearby Swift source is 1.76 arcsec away. The field gradient and readout-strip excess further weaken an independent-transient interpretation.
+
+Input `acisf25211N002_evt2.fits.gz`, 3,473,209 bytes, SHA-256 `87d066d6bd5645bb3604252319c76522cfb63489447e6556c67e14d351e32fd4`. Detector plot SHA-256 `2d1f85eb81858f83ae2c207d5f123b3e7a40b326c17154790510c2d3e27419db`, worker artifact member `photometry/25211/acisf25211N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750402116) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/1/25211/primary/acisf25211N002_evt2.fits.gz)
+
+### ObsID 30523 · acisf30523N001_evt2.fits.gz · real/1
+
+ICRS 285.5922425°, -36.9285855° (r90 1.58″). Peak MJD 60776.49480166 UTC. Photon t95−t05 43.3 s in a 60 s trial. Peak aperture flux 5.65e-12 ± 2.4e-12 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `RCRA`, proposal 26200481, “Study of the CrA Dark Cloud” (GTO).
+
+The window includes 13 aperture photons and 1 annular photons. Before and after the window the aperture holds 985 photons in 41029 s and 216 in 5004 s. The trigger spans 10 frames and 13 detector pixels. Frozen classification **catalog_incomplete**.
+
+The source is persistently bright with two major episodes separated by tens of kiloseconds. This one-minute selection falls near the later episode. The same position was previously classified as flaring in ObsID 19709 by Dillmann et al. SIMBAD identifies 2MASS J19022213−3655409 as a T Tauri star. Here the NED typing failure leaves secure independent stellar and variability evidence intact.
+
+Input `acisf30523N001_evt2.fits.gz`, 3,427,870 bytes, SHA-256 `ed7090529bd22aaac1cc429a06c14d02a2e04f6d64d75c1ab3296005152a5d13`. Detector plot SHA-256 `d9e100ab7377b7b8da50b29a533b58e093931b584b5ef057cc6600ffa1f6f703`, worker artifact member `photometry/30523/acisf30523N001_evt2.fits.gz/real/1/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750402116) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/30523/primary/acisf30523N001_evt2.fits.gz)
+
+### ObsID 30523 · acisf30523N001_evt2.fits.gz · real/10
+
+ICRS 285.4202570°, -36.8762589° (r90 1.52″). Peak MJD 60776.52217547 UTC. Photon t95−t05 51.2 s in a 60 s trial. Peak aperture flux 5.51e-12 ± 1.3e-12 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `RCRA`, proposal 26200481, “Study of the CrA Dark Cloud” (GTO).
+
+The window includes 19 aperture photons and 0 annular photons. Before and after the window the aperture holds 2633 photons in 43395 s and 184 in 2639 s. The trigger spans 14 frames and 18 detector pixels. Frozen classification **ambiguous**.
+
+A longer flare is visible late in the observation, with the selected one-minute bin near its end. Over 2,800 aperture photons occupy the flanks. SIMBAD and NED agree on TY CrA inside one arcsecond. A Gaia source at 0.30 arcsec has elevated RUWE 8.16, so its formal parallax uncertainty understates the astrometric difficulty. The independently identified stellar position explains the flare.
+
+Input `acisf30523N001_evt2.fits.gz`, 3,427,870 bytes, SHA-256 `ed7090529bd22aaac1cc429a06c14d02a2e04f6d64d75c1ab3296005152a5d13`. Detector plot SHA-256 `d626409e1dcdfbf9fd6ab0ba582a3c7d2dadb2c181213088cb619ab6826ae2fc`, worker artifact member `photometry/30523/acisf30523N001_evt2.fits.gz/real/10/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14750402116) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/30523/primary/acisf30523N001_evt2.fits.gz)
+
+### ObsID 22991 · acisf22991N003_evt2.fits.gz · real/0
+
+ICRS 282.5878168°, -0.4576329° (r90 1.36″). Peak MJD 59061.47346568 UTC. Photon t95−t05 1609.8 s in a 1800 s trial. Peak aperture flux 6.36e-13 ± 4.5e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `SNRG032.4+00.1`, proposal 21500120, “G32.4+0.1: Nonthermal X-rays from an Old Supernova Remnant?” (GO).
+
+The window includes 11 aperture photons and 2 annular photons. Before and after the window the aperture holds 0 photons in 2398 s and 13 in 34635 s. The trigger spans 11 frames and 11 detector pixels. Frozen classification **catalog_incomplete**.
+
+Eleven photons trace the dither and decline into a long, sparse post-flank. The pre-flank covers only 2.4 ks. The G=18.47 Gaia star 0.88 arcsec away has parallax 1.46 ± 0.19 mas and RUWE 0.92, giving a concrete stellar-flare interpretation in this crowded field.
+
+Input `acisf22991N003_evt2.fits.gz`, 4,990,424 bytes, SHA-256 `94a6ee19e89372c66a67df028f272717d806060422545af71b82bd7ce40ef99f`. Detector plot SHA-256 `ee439cbf562e0ab6332a6f96a989f8997ac4d4f7457ad538247a268572c912aa`, worker artifact member `photometry/22991/acisf22991N003_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14751281499) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/1/22991/primary/acisf22991N003_evt2.fits.gz)
+
+### ObsID 30278 · acisf30278N001_evt2.fits.gz · real/129
+
+ICRS 49.9708024°, +41.4667801° (r90 2.81″). Peak MJD 60731.83969269 UTC. Photon t95−t05 54.7 s in a 60 s trial. Peak aperture flux 1.06e-12 ± 1.3e-12 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `PERSEUSCLUSTER`, proposal 25808977, “The sounds of feedback: deep and wide imaging of the cool core of the Perseus cluster” (CLP).
+
+The window includes 9 aperture photons and 4 annular photons. Before and after the window the aperture holds 147 photons in 13285 s and 32 in 1744 s. The trigger spans 8 frames and 9 detector pixels. Frozen classification **no_counterpart**.
+
+The aperture samples a bright cluster gradient and exhibits other fluctuations. The nine photons scatter much more broadly than the short segment of detector dither in both axes. No catalog counterpart supports an independent compact emitter.
+
+Input `acisf30278N001_evt2.fits.gz`, 18,696,224 bytes, SHA-256 `c628f45031fd7aaca1397ce2e9e0ccf9f732d9d17cbba6e1c320eed5fee6038f`. Detector plot SHA-256 `d5992d641adfe2ab19ba4dd8fdca411bbe50b4aa1133c716fe543b83dbf5473b`, worker artifact member `photometry/30278/acisf30278N001_evt2.fits.gz/real/129/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14751281499) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/30278/primary/acisf30278N001_evt2.fits.gz)
+
+### ObsID 24291 · acisf24291N002_evt2.fits.gz · real/0
+
+ICRS 284.9864423°, -24.8947265° (r90 2.06″). Peak MJD 59410.12054596 UTC. Photon t95−t05 420.0 s in a 600 s trial. Peak aperture flux 6.86e-13 ± 3.6e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `HETEJ1900.1-2455`, proposal 22400191, “The superfluid properties of dense neutron star cores” (GO).
+
+The window includes 8 aperture photons and 3 annular photons. Before and after the window the aperture holds 3 photons in 2755 s and 15 in 24734 s. The trigger spans 8 frames and 8 detector pixels. Frozen classification **ambiguous**.
+
+The compact sky concentration and dither support a source, with a few scattered photons and little increase from the CCD at the time. Gaia objects at 0.61 and 0.72 arcsec, 2MASS at 0.65 arcsec, and WISE at 1.30 arcsec carry no physical classifications in these responses. The field density and sparse photon count leave a Galactic flare or fluctuation viable.
+
+Input `acisf24291N002_evt2.fits.gz`, 4,346,704 bytes, SHA-256 `a3ddce717b4e681355dea5c3cdf896cfa77bceb6b7b713d70309ee72b0657322`. Detector plot SHA-256 `94ec2d227171c810d21e14196faf8e990865b9a936561a1acda72d479bc61da9`, worker artifact member `photometry/24291/acisf24291N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14751281663) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/1/24291/primary/acisf24291N002_evt2.fits.gz)
+
+### ObsID 28146 · acisf28146N001_evt2.fits.gz · real/0
+
+ICRS 129.1643777°, -49.8633121° (r90 1.37″). Peak MJD 60740.76981023 UTC. Photon t95−t05 124.1 s in a 180 s trial. Peak aperture flux 9.2e-13 ± 4.4e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `2MASXJ08370182-4954302`, proposal 25700046, “Multiple AGN Activity in Nearby Galaxies with Triples and Quads at <2 kpc” (GO).
+
+The window includes 9 aperture photons and 0 annular photons. Before and after the window the aperture holds 7 photons in 734 s and 53 in 22682 s. The trigger spans 9 frames and 9 detector pixels. Frozen classification **catalog_incomplete**.
+
+Nine photons in separate frames follow sky dither. The source is already active near the start of the visit and relaxes over several kiloseconds. The Gaia source lies 0.97 arcsec away and SIMBAD identifies the same star at 1.34 arcsec. Proper motion and parallax are significant with RUWE 0.99.
+
+Input `acisf28146N001_evt2.fits.gz`, 2,386,564 bytes, SHA-256 `4f6044e92bd7585ee1f119f983c76ff4effdd5a3acd08854073f44a2e7e42458`. Detector plot SHA-256 `0e66239949bf9a0ee434198b1c87bcc26a9673c1945ff7e252c5c65ff81f00d8`, worker artifact member `photometry/28146/acisf28146N001_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14751281663) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/6/28146/primary/acisf28146N001_evt2.fits.gz)
+
+### ObsID 28146 · acisf28146N001_evt2.fits.gz · real/1
+
+ICRS 129.2940344°, -49.8940937° (r90 1.27″). Peak MJD 60740.90440451 UTC. Photon t95−t05 2317.3 s in a 3600 s trial. Peak aperture flux 2.64e-13 ± 1.9e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `2MASXJ08370182-4954302`, proposal 25700046, “Multiple AGN Activity in Nearby Galaxies with Triples and Quads at <2 kpc” (GO).
+
+The window includes 16 aperture photons and 4 annular photons. Before and after the window the aperture holds 8 photons in 11950 s and 4 in 8047 s. The trigger spans 16 frames and 16 detector pixels. Frozen classification **ambiguous**.
+
+Photons trace the dither across distinct frames in multiple time bins, with little comparable annular enhancement. The Gaia position is inside the 1.27 arcsec X-ray error radius, RUWE 1.06. WISE also has a counterpart at 1.34 arcsec. A variable Galactic source accounts for this activity.
+
+Input `acisf28146N001_evt2.fits.gz`, 2,386,564 bytes, SHA-256 `4f6044e92bd7585ee1f119f983c76ff4effdd5a3acd08854073f44a2e7e42458`. Detector plot SHA-256 `e551efcbe07815154c68f7777d94fd0a62cb2515eb60c224d958e4c31ad977b3`, worker artifact member `photometry/28146/acisf28146N001_evt2.fits.gz/real/1/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14751281663) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/6/28146/primary/acisf28146N001_evt2.fits.gz)
+
+### ObsID 32015 · acisf32015N001_evt2.fits.gz · real/63
+
+ICRS 49.9152177°, +41.5059061° (r90 1.40″). Peak MJD 61004.34377520 UTC. Photon t95−t05 133.2 s in a 180 s trial. Peak aperture flux 1.23e-12 ± 5.9e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `PERSEUSCLUSTER`, proposal 25808977, “The sounds of feedback: deep and wide imaging of the cool core of the Perseus cluster” (CLP).
+
+The window includes 9 aperture photons and 11 annular photons. Before and after the window the aperture holds 1 photons in 912 s and 37 in 8995 s. The trigger spans 9 frames and 9 detector pixels. Frozen classification **ambiguous**.
+
+Nine arrival frames follow dither with several displaced photons. The time peak is real in the aperture, while 11 annular photons, frequent comparable peaks elsewhere in the visit and the bright cluster gradient limit interpretation. SIMBAD and NED identify the same ultracompact dwarf UCD02 at 4.35 arcsec, with chance upper estimates 0.040 and 0.125. Its z = 0.01897 applies to the dwarf. Other galaxies lie only 5–6 arcsec away. The nearby galaxy remains a tentative positional association.
+
+Input `acisf32015N001_evt2.fits.gz`, 12,637,869 bytes, SHA-256 `6afd259295605ef527eb31022a3d054fee7f2a72e10470c37316096f0d793093`. Detector plot SHA-256 `5531227890bc1647d771abe9ce807c68ddb48635e2c453eab04829d22f9c6421`, worker artifact member `photometry/32015/acisf32015N001_evt2.fits.gz/real/63/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14751281663) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/5/32015/primary/acisf32015N001_evt2.fits.gz)
 
 ## Instrument passes excluded by the primary foreground veto
 
 Each entry records the counterpart that met the frozen veto. A SIMBAD stellar class, supernova, stellar binary, remnant or stellar cluster can occur in another galaxy. A proper-motion-only match can also belong to a nearby external stellar population. The catalog's low chance-projection estimate describes alignment, not physical distance.
 
-The indexed odd shards contain 5 real instrument-pass foreground vetoes.
+The indexed odd shards contain 8 real instrument-pass foreground vetoes.
 
 - **ObsID 27145 real/0**, shard 29, 124.9231956°, +8.3694744°, 18 photons. Positive Gaia parallax meets the five-sigma criterion. Input `0913c57f6aaea85db97833b2d567e1c223d71f03ac1929153646e8cfd4c85b24`. gaia 3098103328152814976 (stellar_astrometry), 0.49″, P≤0.00613, ϖ=1.9824165305023749±0.20879191 mas, μ=(-7.9761995392939635, -2.2303810095002383) mas/yr, RUWE=0.97065.
 
@@ -1461,3 +1759,9 @@ The indexed odd shards contain 5 real instrument-pass foreground vetoes.
 - **ObsID 30704 real/1**, shard 77, 83.7607564°, -4.8249167°, 53 photons. Typed-only veto. The catalog class supplies no independent distance. Input `fcb45819166ef6d2d588f246ba0134468d2123507ef2c7c089fd68c81e06bb52`. simbad V* V1715 Ori (Or*), 1.26″, P≤0.00793. Other retained overlaps: ned V1715 Ori (V*), 1.20″, P≤0.0203 / gaia 3209575703925864576 (unclassified), 1.28″, P≤0.0113, ϖ=2.590841397470414±0.032147937 mas, μ=(1.377166280828514, -1.334405199941798) mas/yr, RUWE=1.7768083. SIMBAD and NED agree on the Orion variable V1715 Ori. The coincident Gaia counterpart is 1.28″ away and gives parallax 2.591 ± 0.032 mas. The elevated RUWE of 1.78 qualifies its formal uncertainties. This is a different known star from V2273 Ori at real/0.
 
 - **ObsID 23377 real/0**, shard 101, 45.4617454°, -16.5949532°, 135 photons. Positive Gaia parallax meets the five-sigma criterion. Input `444e6eb95388f9472c37500507dc0fc69f123b9e29489161da9b5d63416d1ec4`. gaia 5153091836072107136 (stellar_astrometry), 0.34″, P≤0.00256, ϖ=145.69218853775283±0.024446325 mas, μ=(-369.97184335074684, -267.931311928784) mas/yr, RUWE=1.0732157.
+
+- **ObsID 24798 real/0**, shard 113, 174.7838014°, -13.8643896°, 31 photons. Positive Gaia parallax meets the five-sigma criterion. Input `f661a160137140ba504ac1bbd74e4254a9e037bf8bf564c5e0867479223f61d1`. gaia 3584914991865528960 (stellar_astrometry), 0.15″, P≤0.00419, ϖ=0.7318914969026202±0.09093029 mas, μ=(-14.816527568538481, 5.111453097713773) mas/yr, RUWE=1.0269668.
+
+- **ObsID 30523 real/13**, shard 115, 285.4555473°, -37.0083170°, 8 photons. Positive Gaia parallax meets the five-sigma criterion. Input `ed7090529bd22aaac1cc429a06c14d02a2e04f6d64d75c1ab3296005152a5d13`. gaia 6731194723363917952 (stellar_astrometry), 0.81″, P≤0.00286, ϖ=6.5324657061017914±0.04762803 mas, μ=(5.949912957836163, -28.690611634720494) mas/yr, RUWE=1.0600927.
+
+- **ObsID 25762 real/0**, shard 125, 160.2413841°, +40.1143063°, 20 photons. Typed-only veto. The catalog class supplies no independent distance. Input `46bfc25197b41784678ddbb5c35941becddeb31ea34384cd66d4e5f9f43a0108`. simbad 2XMM J104057.8+400653 (PM*), 1.60″, P≤0.00555. Other retained overlaps: ned 2CXO J104057.9+400653 (unclassified), 1.54″, P≤0.0835 / ned WISEA J104057.84+400653.0 (*), 1.84″, P≤0.0645 / gaia 779262652684989312 (stellar_astrometry), 2.37″, P≤0.0125, ϖ=13.154688702973635±0.021747936 mas, μ=(-73.86845567685548, -3.705010537270701) mas/yr, RUWE=1.0625696.

@@ -50,6 +50,16 @@
     ]
   },
   {
+    "obsid": 22558,
+    "input_sha256": "0dadf392e5987516e910002b7e5caf124893a2d65b3474625ed5a1b9d1828ed6",
+    "trigger_key": "real/0",
+    "decision": "unresolved",
+    "reason": "An off-target, compact source shows a sharp rise and gradual decay across many independent detector frames. A G=18.06 Gaia counterpart inside the X-ray r90 lacks a distance measurement.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
     "obsid": 22689,
     "input_sha256": "05c76061b101f668e1cb621450bc1396d5f30cbbfb5b484b7c70534e2aea1247",
     "trigger_key": "real/0",
@@ -64,9 +74,12 @@
     "input_sha256": "9a02d9ed96de9146bd86ca7a9bbfcb2e420d487e1a49f39b184daefd84fd6fbd",
     "trigger_key": "real/0",
     "decision": "unresolved",
-    "reason": "An eight-photon, high-latitude excess spans eight frames in the Spiderweb field, with lower rates on both flanks. Nearby galaxies have high chance-alignment probabilities.",
+    "reason": "Eight trial photons span eight frames with quiet flanks and no supported counterpart inside r90. Thirteen independent covered visits have no excess after trials. Field complexity, sparse peak counts and an unconfirmed host leave physical origin unresolved.",
     "evidence": [
-      "PRIMARY_ODD_NOTES.md"
+      "PRIMARY_ODD_NOTES.md",
+      "evidence/pointed_visits/45011722864-1/history/target-00/csc.json",
+      "evidence/pointed_visits/45011722864-1/history/history.json",
+      "evidence/pointed_visits/45011722864-1/22929/photon_check.json"
     ]
   },
   {
@@ -75,6 +88,16 @@
     "trigger_key": "real/0",
     "decision": "unresolved",
     "reason": "A compact ten-photon flare follows sky dither in a Galactic remnant field. The low latitude and incomplete catalog identifications leave a foreground source viable.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 22991,
+    "input_sha256": "94a6ee19e89372c66a67df028f272717d806060422545af71b82bd7ce40ef99f",
+    "trigger_key": "real/0",
+    "decision": "unresolved",
+    "reason": "An early compact flare in a Galactic-plane remnant field has a plausible foreground counterpart, but the dense field gives the match a 0.30 chance upper bound.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md"
     ]
@@ -93,10 +116,11 @@
     "obsid": 23037,
     "input_sha256": "604c4a0a802ef09cf427a9da5fa4136b34fdb5de5e58806afae16911294812ed",
     "trigger_key": "real/0",
-    "decision": "unresolved",
-    "reason": "This high-latitude, counterpart-free signal is concentrated in only five ACIS frames. Five photons share one frame and the 60 s peak contains six. A particle origin is a serious alternative.",
+    "decision": "rejected",
+    "reason": "One trial frame has a CCD 8 row extending well beyond the source. Five of the six peak events share a different 3.1 s frame, with three additional, subthreshold same-row events. Detector-correlated groups dominate the count excess.",
     "evidence": [
-      "PRIMARY_ODD_NOTES.md"
+      "PRIMARY_ODD_NOTES.md",
+      "evidence/frame_forensics/23037/604c4a0a802ef09cf427a9da5fa4136b34fdb5de5e58806afae16911294812ed/real/0/45011722864-1/README.md"
     ]
   },
   {
@@ -215,9 +239,12 @@
     "input_sha256": "49987e33e7bc66ca583baa1b7aab2ea59c067b58889807ec78dd851fd752585b",
     "trigger_key": "real/0",
     "decision": "unresolved",
-    "reason": "A high-latitude, serendipitous ten-minute excess spans nine frames and has no convincing foreground match. Persistent off-axis structure and an elevated post-flare rate complicate interpretation.",
+    "reason": "A CSC source with same-observation variability index 7 sits 6.71 arcsec from the trial centroid inside the 8.27 arcsec extraction aperture. Blending or PSF wings can supply the peak. Independent exposure was unconfirmed in all 78 return pointings.",
     "evidence": [
-      "PRIMARY_ODD_NOTES.md"
+      "PRIMARY_ODD_NOTES.md",
+      "evidence/pointed_visits/45011722864-1/history/target-01/csc.json",
+      "evidence/pointed_visits/45011722864-1/history/history.json",
+      "evidence/pointed_visits/45011722864-1/23779/photon_check.json"
     ]
   },
   {
@@ -226,6 +253,16 @@
     "trigger_key": "real/0",
     "decision": "unresolved",
     "reason": "A credible sky brightening has quiet flanks but five ambiguous Gaia overlaps in a crowded LMC field; source identity and distance remain open.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 24291,
+    "input_sha256": "a3ddce717b4e681355dea5c3cdf896cfa77bceb6b7b713d70309ee72b0657322",
+    "trigger_key": "real/0",
+    "decision": "unresolved",
+    "reason": "Eight photons in separate frames define a short peak. Several unresolved optical counterparts lie within the X-ray aperture in a crowded neutron-star pointing.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md"
     ]
@@ -344,10 +381,11 @@
     "obsid": 24912,
     "input_sha256": "7be4b001269694c0680f601ae3750a54be83a9fdac18f01fbbdcecf32b6966fd",
     "trigger_key": "real/0",
-    "decision": "unresolved",
-    "reason": "A high-latitude, serendipitous, counterpart-free trigger has quiet flanks, but the 14 photons occupy only six ACIS frames. A single frame contains six photons, equal to the count in the reported 60 s peak. A detector particle event is a serious alternative.",
+    "decision": "rejected",
+    "reason": "The six brightest-minute detections occupy one 3.1 s ACIS-S4 exposure in two narrow detector rows; a second four-event frame repeats this pattern. The peak is dominated by detector-correlated events.",
     "evidence": [
-      "PRIMARY_ODD_NOTES.md"
+      "PRIMARY_ODD_NOTES.md",
+      "evidence/frame_forensics/24912/7be4b001269694c0680f601ae3750a54be83a9fdac18f01fbbdcecf32b6966fd/real/0/45011722864-1/README.md"
     ]
   },
   {
@@ -376,6 +414,16 @@
     "trigger_key": "real/0",
     "decision": "rejected",
     "reason": "The sky flare overlaps a Gaia object only 0.44 arcseconds away with parallax 1.429±0.075 mas and RUWE 1.00, strongly favoring a foreground star.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 25211,
+    "input_sha256": "87d066d6bd5645bb3604252319c76522cfb63489447e6556c67e14d351e32fd4",
+    "trigger_key": "real/0",
+    "decision": "rejected",
+    "reason": "This minute-long excess occurs near the bright, targeted Galactic pulsar PSR J1846−0258 and its structured nebula, with 379 flank photons.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md"
     ]
@@ -601,6 +649,26 @@
     ]
   },
   {
+    "obsid": 28146,
+    "input_sha256": "4f6044e92bd7585ee1f119f983c76ff4effdd5a3acd08854073f44a2e7e42458",
+    "trigger_key": "real/0",
+    "decision": "rejected",
+    "reason": "A compact flare coincides with the independently identified Gaia star 5322865674182434688, with parallax 3.035 ± 0.081 mas.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 28146,
+    "input_sha256": "4f6044e92bd7585ee1f119f983c76ff4effdd5a3acd08854073f44a2e7e42458",
+    "trigger_key": "real/1",
+    "decision": "rejected",
+    "reason": "The compact enhancement matches Gaia 5322862100769721856 at 0.68 arcsec with parallax 1.224 ± 0.029 mas and substantial proper motion.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
     "obsid": 28436,
     "input_sha256": "c1f05f214c3e517e21fe0ad3f73c569a2e37ed1323b8c62b0b6a75ce07d30138",
     "trigger_key": "real/0",
@@ -651,6 +719,16 @@
     ]
   },
   {
+    "obsid": 29627,
+    "input_sha256": "7f80293d6d5bfacf1c34fa6b20e09c204e35ae02c38156ad64a762c9d30fe8d0",
+    "trigger_key": "real/1",
+    "decision": "unresolved",
+    "reason": "Twelve photons give a brief dither-tracking excess on the bright Perseus core, but 67 flank photons and a populated annulus leave diffuse statistical fluctuations plausible.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
     "obsid": 29634,
     "input_sha256": "3eb9c742e366cf37f86eccac25aaac490acc85d238cfc88d60a0e758b01c56ad",
     "trigger_key": "real/106",
@@ -666,6 +744,16 @@
     "trigger_key": "real/0",
     "decision": "rejected",
     "reason": "The convincingly dithered sky flare overlaps SIMBAD star UCAC4 216-133818 at 0.63 arcseconds in NGC 6204, with low probability of chance alignment. NED remains incomplete.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 30278,
+    "input_sha256": "c628f45031fd7aaca1397ce2e9e0ccf9f732d9d17cbba6e1c320eed5fee6038f",
+    "trigger_key": "real/129",
+    "decision": "rejected",
+    "reason": "The minute-scale grouping lies on persistent, spatially graded Perseus emission with 179 flank photons and no distinct point source.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md"
     ]
@@ -726,6 +814,36 @@
     "trigger_key": "real/842",
     "decision": "unresolved",
     "reason": "A short local excess and repeated comparable fluctuations sit on diffuse cluster emission. Its physical origin remains open.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 30310,
+    "input_sha256": "a76427df4e3108d22df511bcc377ed0d6f56273517054581625059e8f212d222",
+    "trigger_key": "real/8",
+    "decision": "rejected",
+    "reason": "The diffuse cluster field produces 40 annular and 86 flank photons around this 600 s grouping. A strong readout-strip excess compounds the ambiguous sky morphology.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 30310,
+    "input_sha256": "a76427df4e3108d22df511bcc377ed0d6f56273517054581625059e8f212d222",
+    "trigger_key": "real/106",
+    "decision": "unresolved",
+    "reason": "Nine photons arrive during a short excess on the outer Perseus gradient. Two galaxy entries about seven arcseconds away have substantial chance-alignment probabilities.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 30312,
+    "input_sha256": "8dbcdcfc264393bf9a25db05950d14af5308e6c94e6efd9e35e1a42d8c807c38",
+    "trigger_key": "real/133",
+    "decision": "rejected",
+    "reason": "The aperture lies near the CCD boundary in a periodically modulated field. Source and annulus turn on and off together through the exposure.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md"
     ]
@@ -851,6 +969,26 @@
     ]
   },
   {
+    "obsid": 30523,
+    "input_sha256": "ed7090529bd22aaac1cc429a06c14d02a2e04f6d64d75c1ab3296005152a5d13",
+    "trigger_key": "real/1",
+    "decision": "rejected",
+    "reason": "The source is a known T Tauri star with Gaia parallax 6.478 ± 0.014 mas and a published flare in a different Chandra observation.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 30523,
+    "input_sha256": "ed7090529bd22aaac1cc429a06c14d02a2e04f6d64d75c1ab3296005152a5d13",
+    "trigger_key": "real/10",
+    "decision": "rejected",
+    "reason": "The compact source aligns with the known Herbig Ae star TY CrA and varies above a high persistent flux.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
     "obsid": 30704,
     "input_sha256": "fcb45819166ef6d2d588f246ba0134468d2123507ef2c7c089fd68c81e06bb52",
     "trigger_key": "real/0",
@@ -946,6 +1084,16 @@
     "trigger_key": "real/1",
     "decision": "unresolved",
     "reason": "Eleven photons brighten against persistent diffuse Perseus emission with no secure optical or galaxy association.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 32015,
+    "input_sha256": "6afd259295605ef527eb31022a3d054fee7f2a72e10470c37316096f0d793093",
+    "trigger_key": "real/63",
+    "decision": "unresolved",
+    "reason": "The nine-photon trial lies in structured diffuse Perseus emission. The nearest redshifted galaxy is 4.35 arcsec away, outside the 1.40 arcsec X-ray error radius.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md"
     ]

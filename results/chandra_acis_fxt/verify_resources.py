@@ -2,12 +2,14 @@
 import argparse
 from datetime import datetime, timezone
 import json
+import math
 import os
 from pathlib import Path
 import platform
 import shutil
 import subprocess
 import sys
+import tempfile
 
 HERE=Path(__file__).resolve().parent
 REPO=HERE.parents[1]
@@ -62,6 +64,43 @@ def machine():
             "utc":datetime.now(timezone.utc).isoformat(),"nproc_available":len(os.sched_getaffinity(0))}
 
 
+def reserve_for_tree(tree, before):
+    """Provision temporary swap only when the measured verifier footprint approaches runner capacity."""
+    gib = 1024**3
+    size = tree["by_tracked_path"]["all"]["bytes"]
+    # Run 45008126305 used 9,643,280 KiB for a 2,432,852,215-byte Git tree.
+    # Git's batch output and the per-path Python bytes coexist in the unmodified verifier.
+    expected = (size*9+1)//2 + gib
+    info = before["proc_meminfo"]
+    available = sum(int(info[key].split()[0])*1024 for key in ("MemAvailable","SwapFree"))
+    record = {"estimated_bytes_including_headroom":expected,"available_ram_and_swap_bytes":available,
+              "calibration_run":45008126305}
+    if available >= expected:
+        return {**record,"status":"sufficient"}
+    if (os.getenv("GITHUB_ACTIONS") != "true" or
+        os.getenv("GITHUB_WORKFLOW_REF","").split("@",1)[0] != "dovvnloading/Open-Space/.github/workflows/chandra-acis-fxt.yml" or
+        os.getenv("GITHUB_REF") != "refs/heads/research/chandra-acis-fast-transients" or not os.getenv("RUNNER_TEMP")):
+        return {**record,"status":"outside_research_runner"}
+    extra = min(24, math.ceil((expected-available)/gib)+2)*gib
+    if before["disk_free_bytes"] < extra+12*gib:
+        return {**record,"status":"insufficient_free_disk"}
+    fd, name = tempfile.mkstemp(prefix="chandra-verify-swap-",dir=os.environ["RUNNER_TEMP"])
+    os.close(fd)
+    try:
+        for cmd in (["fallocate","-l",str(extra),name],["sudo","-n","mkswap",name],
+                    ["sudo","-n","swapon",name]):
+            r = subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,check=False)
+            if r.returncode:
+                Path(name).unlink(missing_ok=True)
+                return {**record,"status":"unavailable","operation":cmd[-2] if cmd[0]=="sudo" else cmd[0],
+                        "returncode":r.returncode,"detail":r.stdout[-800:]}
+    except OSError as error:
+        Path(name).unlink(missing_ok=True)
+        return {**record,"status":"unavailable","detail":str(error)}
+    # The hosted VM is destroyed after the job. Keeping this file active also covers its test run.
+    return {**record,"status":"active_on_ephemeral_runner","additional_bytes":extra,"after":machine()}
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("operation",choices=COMMANDS)
@@ -74,10 +113,12 @@ def main():
         raise ValueError("Keep resource receipts in RUNNER_TEMP and upload an Actions artifact")
     output.mkdir(parents=True,exist_ok=True)
     before=machine()
+    tree=tree_size()
+    reserve=reserve_for_tree(tree,before) if a.operation in {"verify","tests"} else {"status":"unused"}
     receipt={"operation":a.operation,"command":COMMANDS[a.operation],"run_id":os.getenv("GITHUB_RUN_ID"),
              "attempt":os.getenv("GITHUB_RUN_ATTEMPT"),"checked_head":subprocess.check_output(
              ["git","rev-parse","HEAD"],cwd=REPO,text=True).strip(),"event_head":os.getenv("GITHUB_SHA"),
-             "platform":platform.platform(),"tree":tree_size(),"before":before}
+             "platform":platform.platform(),"tree":tree,"before":before,"memory_reserve":reserve}
     report=output/(a.operation+".json")
     report.write_text(json.dumps(receipt,indent=2)+"\n")
     timing=output/(a.operation+".time.txt")

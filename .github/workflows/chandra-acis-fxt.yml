@@ -83,7 +83,7 @@ jobs:
       - name: Check source artifact validation and exposure accounting before import
         env:
           PYTHONPATH: results/chandra_acis_fxt
-        run: python -m unittest test_ingest_primary test_progress
+        run: python -m unittest test_ingest_primary test_progress test_visit_workers
       - name: Synchronize the latest published catalog into the research branch
         run: |
           git config user.name 'github-actions[bot]'
@@ -94,6 +94,21 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python -u "$SURVEY/checkpoint.py" collect
+      - name: Count S4 frame-occupancy signatures in completed real and scrambled searches
+        if: contains(github.event.head_commit.message, '[checkpoint-color]')
+        id: s4_population
+        continue-on-error: true
+        env:
+          PYTHONPATH: results/chandra_acis_fxt
+        run: |
+          python -m unittest test_frame_population
+          python -u "$SURVEY/frame_population.py"
+      - name: Deposit matched S4 counts and the individual windows requiring row review
+        if: always() && contains(github.event.head_commit.message, '[checkpoint-color]') && steps.s4_population.outcome != 'skipped'
+        run: |
+          git add -- "$SURVEY/evidence/frame_forensics"
+          git diff --cached --quiet || git commit -qm "Compare ACIS-S4 frame occupancy in the real and 24 scrambled surveys"
+          git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
       - name: Restore the original GW170817-field notice texts and combine independent visit limits
         id: field_replay
         if: contains(github.event.head_commit.message, '[checkpoint-frame]')
@@ -180,6 +195,53 @@ jobs:
           git add -- "$SURVEY/evidence/pointed_visits"
           git diff --cached --quiet || git commit -qm "Deposit all-mission aperture measurements for two high-latitude serendipitous triggers"
           git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
+      - name: Compare the two serendipitous apertures with the nearby catalogued X-ray sources
+        id: deblend
+        if: contains(github.event.head_commit.message, '[checkpoint-color]')
+        continue-on-error: true
+        env:
+          PYTHONPATH: results/chandra_acis_fxt
+        run: |
+          python -m unittest test_deblend
+          python -u "$SURVEY/deblend.py" --evidence "$SURVEY/evidence"
+      - name: Deposit individual photon positions and their association with the CSC neighbors
+        if: always() && contains(github.event.head_commit.message, '[checkpoint-color]') && steps.deblend.outcome != 'skipped'
+        run: |
+          git add -- "$SURVEY/evidence/csc_deblend"
+          git diff --cached --quiet || git commit -qm "Compare original flare and CSC centers using disjoint apertures on exact photons"
+          git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
+      - name: Measure the 22558 flare across energy bands, quiescent flanks and independent visits
+        if: contains(github.event.head_commit.message, '[checkpoint-color]')
+        id: next_field
+        continue-on-error: true
+        timeout-minutes: 100
+        env:
+          PYTHONPATH: results/chandra_acis_fxt
+        run: |
+          python -m unittest test_pointed_visits
+          python -u "$SURVEY/pointed_visits.py" --cohort offtarget-22558
+      - name: Preserve the available fixed-bin and all-mission 22558 measurements
+        if: always() && contains(github.event.head_commit.message, '[checkpoint-color]') && steps.next_field.outcome != 'skipped'
+        run: |
+          git add -- "$SURVEY/evidence/pointed_visits"
+          git diff --cached --quiet || git commit -qm "Deposit the fixed energy-bin and all-mission visit checks for the 22558 flare"
+          git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
+      - name: Retrieve Gaia DR3 classification and stellar-parameter rows for the matched source IDs
+        if: contains(github.event.head_commit.message, '[checkpoint-color]')
+        id: gaia_properties
+        continue-on-error: true
+        env:
+          PYTHONPATH: results/chandra_acis_fxt
+        run: |
+          python -m unittest test_gaia_properties
+          python -u "$SURVEY/gaia_properties.py" --evidence "$SURVEY/evidence"
+          python -u "$SURVEY/gaia_properties.py" --evidence "$SURVEY/evidence" --replay
+      - name: Deposit source-level Gaia probabilities, limits and matched input receipts
+        if: always() && contains(github.event.head_commit.message, '[checkpoint-color]') && steps.gaia_properties.outcome != 'skipped'
+        run: |
+          git add -- "$SURVEY/evidence/gaia_dr3_properties"
+          git diff --cached --quiet || git commit -qm "Deposit exact-source Gaia classifications and physical parameter receipts"
+          git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
       - name: Reproduce a measured flare with its archived source and control arrays
         if: contains(github.event.head_commit.message, '[checkpoint-replay]')
         id: measured_replay
@@ -206,6 +268,9 @@ jobs:
           path: ${{ runner.temp }}/chandra-check-resources
           if-no-files-found: ignore
 
+      - name: Require the requested energy, Gaia and S4 diagnostic measurements to complete
+        if: always() && contains(github.event.head_commit.message, '[checkpoint-color]') && (steps.s4_population.outcome != 'success' || steps.next_field.outcome != 'success' || steps.gaia_properties.outcome != 'success' || steps.deblend.outcome != 'success')
+        run: exit 1
       - name: Check the result of the requested detector-frame comparison
         if: always() && contains(github.event.head_commit.message, '[checkpoint-frame]') && (steps.frame_audit.outcome != 'success' || steps.frame_second.outcome != 'success' || steps.pointed.outcome != 'success' || steps.field_replay.outcome != 'success')
         run: exit 1
@@ -1307,7 +1372,11 @@ jobs:
             alerts) folder=alerts ;;
             *) exit 2 ;;
           esac
-          python "$RUNNER_TEMP/final-tools/push.py" "Deposit Chandra $TASK evidence and phase receipts" "$SURVEY/evidence/$folder" "$SURVEY/evidence/finalization"
+          extra=()
+          if [[ "$TASK" == optical && -d "$SURVEY/evidence/gaia_dr3_properties" ]]; then
+            extra+=("$SURVEY/evidence/gaia_dr3_properties")
+          fi
+          python "$RUNNER_TEMP/final-tools/push.py" "Deposit Chandra $TASK evidence and phase receipts" "$SURVEY/evidence/$folder" "$SURVEY/evidence/finalization" "${extra[@]}"
       - name: Signal a context stage requiring a retry
         if: steps.science.outcome != 'success'
         run: exit 1
