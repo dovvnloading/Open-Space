@@ -1,0 +1,29 @@
+{
+  "star": "GJ3187",
+  "inputs": {
+    "work/epochs.csv.gz": "c07a11f209e41c1dd6c19cc979b59c4bd7f655d0b37ef9734085bb18bb1a22e8",
+    "other/epochs.csv.gz": "9cc7ff1a3bc9f0f32abd9b6037fc71a497802d0b00410d39efb9d753de8a08ca",
+    "results/harps-rvbank-survey/revised/holdout.csv": "d6227fcd829e7b1f72c9ecb8e71c927980ece12f74870430edc3e2e49b96207f",
+    "results/harps-rvbank-survey/revised/signals.csv": "21fa59ae426e38936aee433dbf4afc10b76afebd4c0f1edf234d966a3efa99f0",
+    "/home/runner/work/Open-Space/Open-Space/results/harps-rvbank-survey/deep_followup.py": "12bd05e3633cb9ade6c44e27f56c985d2289af098997cdbe272c00f5df8c6855"
+  },
+  "method": "Reciprocal unique exposure within two seconds, same fibre era and integer BJD night. Standard independent nightly weights with internal-scatter check and 1 m/s floor. Fixed periods, weighted linear sine/cosine and common slope. Months grouped into July\u2013June observing years. An intercept per era or per observing year/era. BIC assumes the stated independent Gaussian errors. Positive conditional chi-square, BIC and predictive gains favour the larger model. Leave-one-season-out uses only training velocities for coefficients. Seasonal scores concern within-season/era contrasts. Phase is time of cosine maximum after BJD 2455000 in cycles. Formal first-order covariance conditional on fixed periods, scaled by max(1,reduced chi2). Weak signals and nearly collinear harmonics have unreliable phase linearizations. Same spectra, post-selection epochs and periods, possible shared systematics and unmodelled correlated noise preclude an independent detection or fresh false-alarm probability.",
+  "eso_identity": "HD  17970",
+  "simbad_oid": 1188552,
+  "identity_sep_arcsec": 1.353912720140086e-07,
+  "primary_epochs": 74,
+  "eso_epochs": 74,
+  "matched_exposures": 68,
+  "periods_d": {
+    "candidate": 72.47988463236175,
+    "other": 362.13213783149774,
+    "other5": 72.42642756629955,
+    "year1": 365.25,
+    "year2": 182.625,
+    "year3": 121.75,
+    "year4": 91.3125,
+    "year5": 73.05
+  },
+  "paired_nights": 68,
+  "status": "completed"
+}
