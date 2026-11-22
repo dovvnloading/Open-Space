@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: false
 env:
   FOLDER: results/bat-maxi-blind-periods
-  CHECKPOINT_RUN: ${{ inputs.checkpoint_run || '45016207097' }}
+  CHECKPOINT_RUN: ${{ inputs.checkpoint_run || '45017427773' }}
   MODE: ${{ inputs.mode || 'resume' }}
   OPENBLAS_NUM_THREADS: '1'
   OMP_NUM_THREADS: '1'
@@ -171,6 +171,7 @@ jobs:
           retention-days: 4
   literature:
     needs: assess
+    if: always() && needs.assess.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 300
     steps:
@@ -188,7 +189,7 @@ jobs:
           path: evidence
       - if: env.MODE != 'acquire'
         run: |
-          python -m pip -q install -r "$FOLDER/requirements.txt"
+          python -m pip -q install --only-binary=:all: -r "$FOLDER/requirements.txt"
           if ! command -v pdftotext > /dev/null; then sudo apt-get -qq update && sudo apt-get -qq install poppler-utils; fi
           if [[ "$MODE" =~ ^(frozen|resume)$ && -d "$FOLDER/evidence/literature/responses" ]]; then
             mkdir -p evidence/literature
@@ -280,7 +281,11 @@ jobs:
           python -m pip -q install -r "$FOLDER/requirements.txt"
           if [[ "$MODE" == review ]]; then ln -s "$GITHUB_WORKSPACE/$FOLDER/evidence" inputs; fi
           mkdir -p packet/review
-          python "$FOLDER/orbit_product_check.py" --inventory inputs/inventory.json --candidates inputs/survivors.jsonl --out packet/review/orbit
+          if [[ "$MODE" == resume && -s "$FOLDER/attempts/$CHECKPOINT_RUN/review/orbit/summary.json" ]]; then
+            cp -a "$FOLDER/attempts/$CHECKPOINT_RUN/review/orbit" packet/review/
+          else
+            python "$FOLDER/orbit_product_check.py" --inventory inputs/inventory.json --candidates inputs/survivors.jsonl --out packet/review/orbit
+          fi
           echo "$GITHUB_SHA" > packet/orbit-revision.txt
       - uses: actions/upload-artifact@v4
         if: always()
@@ -360,6 +365,10 @@ jobs:
           mkdir -p packet/review
           python "$FOLDER/plot_folds.py" "$FOLDER/evidence" packet/review/folds
           python "$FOLDER/review_periods.py" --evidence "$FOLDER/evidence" --output packet/review --manual "$FOLDER/decisions.json"
+          python "$FOLDER/catalogue_units.py" --evidence "$FOLDER/evidence" --output packet/review/catalogue-units
+          python "$FOLDER/weight_dates.py" "$FOLDER/evidence" packet/review/weight-dates
+          python "$FOLDER/plot_sensitivity.py" "$FOLDER/evidence" packet/review/recovery.svg
+          python "$FOLDER/complete_fields.py" "$FOLDER/evidence" packet/review/fields
           python "$FOLDER/prior_aliases.py" "$FOLDER/evidence" packet/review
           python "$FOLDER/harmonic_check.py" "$FOLDER" packet/review
           python "$FOLDER/publication.py" "$FOLDER" packet/review

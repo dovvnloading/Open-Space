@@ -200,11 +200,30 @@ def asu_tables(raw):
         fields = [dict(name=f.get("name", ""), unit=f.get("unit", ""), ucd=f.get("ucd", ""),
                        desc=" ".join((f.findtext("DESCRIPTION") or "").split())) for f in table.findall("FIELD")]
         body = table.find("DATA/TABLEDATA")
-        if not fields or body is None:
+        csv_block = table.find("DATA/CSV")
+        if not fields:
+            continue
+        if body is not None:
+            cells = [[v.text or "" for v in tr.findall("TD")] for tr in body.findall("TR")]
+        elif csv_block is not None and csv_block.text:
+            # Harvard ASU-XML can use the Astrores DATA/CSV extension, one
+            # CDATA block with tab-separated rows and three marked header lines.
+            delimiter = csv_block.get("colsep", "\t")
+            if delimiter == r"\t":
+                delimiter = "\t"
+            count = int(csv_block.get("headlines", "0"))
+            records = list(csv.reader(io.StringIO(csv_block.text.lstrip("\r\n")), delimiter=delimiter))
+            header = [v.strip() for v in records[0]] if records else []
+            if count and header != [f["name"] for f in fields]:
+                raise ValueError("VizieR CSV header differs from VOTable fields")
+            cells = [r for r in records[count:] if any(v.strip() for v in r)]
+        else:
             continue
         rows = []
-        for tr in body.findall("TR"):
-            row = {field["name"]: (v.text or "").strip() for field, v in zip(fields, tr.findall("TD"))}
+        for values in cells:
+            if len(values)!=len(fields):
+                raise ValueError("VizieR table row has the wrong column count")
+            row = {f["name"]:v.strip() for f,v in zip(fields,values)}
             if any(row.values()):
                 rows.append(row)
         tables.append(dict(name=table.get("name", ""), fields=fields, rows=rows))
