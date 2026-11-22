@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       refresh:
-        description: Recompute the catalogue matches and local map photometry
+        description: Re-fetch the catalogues and recompute the maps, controls and counterpart searches
         type: boolean
         default: false
   push:
@@ -21,7 +21,32 @@ env:
   REFRESH: ${{ inputs.refresh || false }}
   OPENBLAS_NUM_THREADS: '1'
 jobs:
+  snapshot:
+    runs-on: ubuntu-24.04
+    outputs:
+      reuse: ${{ steps.validate.outputs.reuse }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/xmmsl2-erass1-rass
+      - id: validate
+        name: Verify the recorded science snapshot
+        env:
+          EVIDENCE: 1ccd03ad978a21be6c7c62bcf5406a4c7f662881
+        run: |
+          reuse=false
+          if [[ "$REFRESH" != true ]] && git fetch -q --no-tags --depth=1 --filter=blob:none origin "$EVIDENCE"; then
+            if git diff --quiet "$EVIDENCE" HEAD -- "$STUDY" \
+                ":(exclude)$STUDY/README.md" ":(exclude)$STUDY/decisions.py" ":(exclude)$STUDY/rass_hardness.py" ":(exclude)$STUDY/slew_images.py" ":(exclude)$STUDY/paper_context.py" ":(exclude)$OUT/rass_hardness" ":(exclude)$OUT/paper_context" ":(exclude)$OUT/slew_image_followup.json" \
+                ":(exclude)$STUDY/source_decisions.csv" ":(exclude)$STUDY/published_event_review.csv" \
+                ":(exclude)$OUT/final_summary.json" ":(exclude)$OUT/final_source_register.csv" ":(exclude)$OUT/candidates.csv"; then
+              reuse=true
+            fi
+          fi
+          echo "reuse=$reuse" >> "$GITHUB_OUTPUT"
   catalog:
+    needs: snapshot
+    if: needs.snapshot.outputs.reuse != 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
@@ -184,8 +209,49 @@ jobs:
             results/xmmsl2-erass1-rass/outputs/summary*
             results/xmmsl2-erass1-rass/outputs/survey-comparison.png
           if-no-files-found: warn
+  decisions:
+    needs: [snapshot, catalog, maps, associations, vet]
+    if: always() && !cancelled() && (needs.snapshot.outputs.reuse == 'true' || needs.vet.result == 'success')
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/xmmsl2-erass1-rass
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        if: needs.snapshot.outputs.reuse != 'true'
+        with:
+          pattern: '0[123]-*'
+          merge-multiple: true
+          path: results/xmmsl2-erass1-rass/outputs
+      - uses: actions/download-artifact@v4
+        if: needs.snapshot.outputs.reuse != 'true'
+        with:
+          name: 04-published-hosts
+          path: results/xmmsl2-erass1-rass/outputs/published_hosts
+      - name: Test ROSAT colours and record source decisions
+        run: |
+          pip install -r "$STUDY/requirements.txt"
+          python "$STUDY/rass_hardness.py" "$OUT"
+          python "$STUDY/paper_context.py" "$OUT"
+          python "$STUDY/slew_images.py" "$OUT"
+          python "$STUDY/decisions.py" "$OUT"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: 05-source-decisions
+          path: |
+            results/xmmsl2-erass1-rass/outputs/rass_hardness
+            results/xmmsl2-erass1-rass/outputs/paper_context
+            results/xmmsl2-erass1-rass/outputs/slew_image_followup.json
+            results/xmmsl2-erass1-rass/outputs/final*
+            results/xmmsl2-erass1-rass/outputs/candidates.csv
+          if-no-files-found: warn
   record:
-    needs: [catalog, maps, associations, vet]
+    needs: [snapshot, catalog, maps, associations, vet, decisions]
     if: always() && !cancelled() && github.ref == 'refs/heads/survey/xmmsl2-erass1-rass'
     runs-on: ubuntu-24.04
     permissions:
