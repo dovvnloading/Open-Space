@@ -1,0 +1,100 @@
+{
+  "gaia": {
+    "counts": {
+      "cds_component_rows": 4760920,
+      "cds_fields_with_components": 3760032,
+      "fields_2_to_8_components": 486570,
+      "science_fields": 174737,
+      "control_apertures_on_fpr_qso": 1051,
+      "control_fields": 173686,
+      "dr3_target_count": 77860,
+      "dr3_component_queries_complete": 77860,
+      "dr3_component_queries_unavailable": 0,
+      "unique_dr3_components": 75450
+    },
+    "geometry": {
+      "name": "wide",
+      "radius_arcsec": 5.2,
+      "other_radius_arcsec": 5.98,
+      "offset_arcsec": 5.7,
+      "seed": 20231010,
+      "max_image_separation_arcsec": 5.2
+    },
+    "field_outcomes": {
+      "control": {
+        "colour_mismatch": 1,
+        "differential_astrometry": 0,
+        "fewer_than_two_clean_fpr_components_in_aperture": 172058,
+        "inconsistent_with_zero_astrometry": 390,
+        "missing_or_low_quality_astrometry": 286,
+        "missing_or_low_quality_colour": 6,
+        "no_unique_dr3_match": 111,
+        "pair_geometry_or_fpr_flux_contrast": 829,
+        "passed_gaia": 5
+      },
+      "science": {
+        "colour_mismatch": 510,
+        "differential_astrometry": 34,
+        "fewer_than_two_clean_fpr_components_in_aperture": 127384,
+        "inconsistent_with_zero_astrometry": 23365,
+        "missing_or_low_quality_astrometry": 11423,
+        "missing_or_low_quality_colour": 373,
+        "no_unique_dr3_match": 1812,
+        "pair_geometry_or_fpr_flux_contrast": 9194,
+        "passed_gaia": 642
+      }
+    },
+    "controls": "Random offset in each eligible FPR field; reject a control containing any FPR input in its full selection footprint. Identical FPR/DR3 cuts apply. The random-position rate is conditional on selected FPR environments.",
+    "schema": "CDS I/361, frozen 2023 files; not a count of the live AIP mirror."
+  },
+  "benchmark": {
+    "total": 364,
+    "eligible": 235,
+    "gaia": 20,
+    "morphology": 2,
+    "anchored": 2
+  },
+  "cohorts": {
+    "science": {
+      "fields": 174737,
+      "gaia": 642,
+      "unique_image_sets": 608,
+      "prior": 161,
+      "lens_geometry": 640,
+      "light_and_geometry": 9,
+      "anchored_with_light_and_geometry": 7,
+      "dispositions": {
+        "no_independent_quasar_anchor": 383,
+        "previously_listed": 161,
+        "fails_light_or_geometry": 54,
+        "inconclusive_imaging": 25,
+        "stellar_or_redshift_conflict": 18,
+        "individual_review_required": 1
+      },
+      "imaging": {
+        "no_robust_extended_light": 333,
+        "inconclusive": 223,
+        "unavailable": 75,
+        "extended_light": 11
+      }
+    },
+    "control": {
+      "fields": 173686,
+      "gaia": 5,
+      "unique_image_sets": 5,
+      "prior": 0,
+      "lens_geometry": 5,
+      "light_and_geometry": 0,
+      "anchored_with_light_and_geometry": 0,
+      "dispositions": {
+        "no_independent_quasar_anchor": 5
+      },
+      "imaging": {
+        "inconclusive": 5
+      }
+    }
+  },
+  "git_commit": "31089dfa0e2844e01f50a81607ceb9bb77069888",
+  "run_id": "45014076367",
+  "imaging_code_sha256": "bdc64d41e870d820f0a842f8ed72111234fd5d5ea1757c0d1ace084e2d7cf11e"
+}
