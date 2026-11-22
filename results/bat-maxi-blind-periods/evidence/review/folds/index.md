@@ -25,3 +25,11 @@ Both instruments use the refined BAT period and MJD 55000 as phase zero. Each pa
 | LMC X-4 | 30.3583328 | [Both instruments](019-LMCX-4.svg) |
 | LMC X-4 | 3.44882334 | [Both instruments](020-LMCX-4.svg) |
 | XTE J1855-026 | 6.07421742 | [Both instruments](021-XTEJ1855-026.svg) |
+
+## Pairs rejected by the time-half checks
+
+These folds use the BAT grid period of the independent match.
+
+| Source | BAT grid period (days) | Fold |
+|---|---:|---|
+| SMC X-1 | 55.5555556 | [Both halves](failed-001-SMCX-1.svg) |
