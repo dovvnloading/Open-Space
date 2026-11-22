@@ -87,6 +87,30 @@ def run_catalog(name, lead, cache, replay):
     return out
 
 
+def verify_replay(original, replayed, cache):
+    if any(original.get(k) != replayed.get(k) for k in
+           ("lead","schema","implementation_sha256","prior_gaia_ids","complete","search_radius_arcsec")):
+        raise ValueError("Optical replay identity or completeness changed")
+    if original["catalogs"].keys() != replayed["catalogs"].keys():
+        raise ValueError("Optical service list changed")
+    for label, saved in original["catalogs"].items():
+        result = replayed["catalogs"][label]
+        # A failed online request and an offline replay can have different exception text.
+        for key in ("status","rows","receipts","columns","query","endpoint","table","missing_optional"):
+            if saved.get(key) != result.get(key):
+                raise ValueError(f"Optical replay differs for {label} {key}")
+        for receipt in saved["receipts"].values():
+            for attempt in receipt.get("attempts", []):
+                name = attempt.get("body_file")
+                if name is None:
+                    continue
+                if Path(name).name != name:
+                    raise ValueError("Invalid catalog response path")
+                body = (cache/name).read_bytes()
+                if len(body) != attempt["size_bytes"] or hashlib.sha256(body).hexdigest() != attempt["sha256"]:
+                    raise ValueError(f"Changed optical response {name}")
+
+
 def save_index(out, index, failed):
     path = out/"index.csv"
     temp = path.with_suffix(".tmp")
@@ -110,7 +134,10 @@ def run(evidence, out, selection, replay):
             os.getenv("GITHUB_EVENT_NAME") not in {"push", "workflow_dispatch"}):
         raise RuntimeError("Use the Chandra research workflow")
     cache = out/"source"
-    cache.mkdir(parents=True, exist_ok=True)
+    if not replay:
+        cache.mkdir(parents=True, exist_ok=True)
+    elif not cache.is_dir():
+        raise ValueError("Optical replay requires the saved response directory")
     source_code = identity()
     index = []
     failed = []
@@ -118,6 +145,9 @@ def run(evidence, out, selection, replay):
         oid, sha, key = (lead[n] for n in FIELDS[:3])
         path = out/"observations"/str(oid)/sha/(key+".json.gz")
         obj = campaign.read_obs(path) if path.is_file() else {}
+        saved = obj
+        if replay and not obj:
+            raise ValueError(f"Missing optical record for {oid}, {key}")
         if not (obj.get("lead") == lead and obj.get("prior_gaia_ids") == prior
                 and obj.get("implementation_sha256") == source_code and obj.get("complete") and not replay):
             obj = {"lead":lead, "prior_gaia_ids":prior, "epoch_coordinate_system":"ICRS",
@@ -128,8 +158,11 @@ def run(evidence, out, selection, replay):
                 obj["catalogs"][name] = catalog
                 if catalog["status"] == "incomplete":
                     obj["complete"] = False
-            path.parent.mkdir(parents=True, exist_ok=True)
-            campaign.save_obs(path, obj)
+            if replay:
+                verify_replay(saved, obj, cache)
+            else:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                campaign.save_obs(path, obj)
         catalogs = obj["catalogs"]
         if not obj["complete"]:
             failed.append({"obsid":oid,"input_sha256":sha,"trigger_key":key,
@@ -147,8 +180,12 @@ def run(evidence, out, selection, replay):
                       "allwise_rows_inside_r90":len(inside("allwise"))})
         if len(index) % 25 == 0:
             print(f"Reviewed {len(index)} fixed optical positions", flush=True)
-            save_index(out, index, failed)
-    save_index(out, index, failed)
+            if not replay:
+                save_index(out, index, failed)
+    if replay:
+        print(f"Verified {len(index)} optical records and their archived response bodies.")
+    else:
+        save_index(out, index, failed)
 
 
 if __name__ == "__main__":

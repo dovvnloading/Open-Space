@@ -34,3 +34,20 @@ class LeadCatalogAudit(unittest.TestCase):
             self.assertEqual(lead_optical.run_catalog("ps1_mean",{},None,True)["status"],"incomplete")
         with patch.object(lead_optical.optical,"ps1_service"):
             self.assertEqual(lead_optical.run_catalog("ps1_mean",{},None,True)["status"],"empty_validated_cone")
+
+    def test_failed_response_bodies_are_checksum_bound_during_replay(self):
+        import hashlib
+        from copy import deepcopy
+        with tempfile.TemporaryDirectory() as temp:
+            cache = Path(temp)
+            (cache/"error.bin").write_bytes(b"")
+            receipt = {"attempts":[{"body_file":"error.bin","size_bytes":0,
+                                    "sha256":hashlib.sha256(b"").hexdigest()}]}
+            saved = {"catalogs":{"ps1_mean":{"status":"incomplete","rows":[],
+                                             "receipts":{"query":receipt},"error":"HTTP response was empty"}}}
+            again = deepcopy(saved)
+            again["catalogs"]["ps1_mean"]["error"] = "saved request previously failed"
+            lead_optical.verify_replay(saved, again, cache)
+            (cache/"error.bin").write_bytes(b"changed")
+            with self.assertRaisesRegex(ValueError,"Changed optical response"):
+                lead_optical.verify_replay(saved, again, cache)

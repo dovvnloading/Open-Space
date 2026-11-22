@@ -416,6 +416,8 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
         candidate_rows.append({
             "cohort":r["group"]["name"], "obsid":oid, "trigger_key":trig,
             **{k: ev[k] for k in ("ra_deg","dec_deg","position_error_arcsec","event_mjd","duration_s","trial_duration_s")},
+            **{k: ev[k] for k in ("on_counts","annulus_counts","annulus_area_ratio","before_counts","before_s",
+                                   "after_counts","after_s")},
             "peak_flux_erg_cm2_s":f["peak_flux_erg_cm2_s"],
             "counting_sigma_erg_cm2_s":f["flux_counting_sigma_erg_cm2_s"],
             "host":(host or {}).get("name"), "host_redshift":(host or {}).get("redshift"),
@@ -431,10 +433,14 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
                  f"t95−t05 duration {ev['duration_s']} s in a {ev['trial_duration_s']} s search window. "
                  f"Observed peak 0.5–7 keV aperture flux {f['peak_flux_erg_cm2_s']} ± "
                  f"{f['flux_counting_sigma_erg_cm2_s']} erg cm⁻² s⁻¹ (counting uncertainty). {counterpart}", "",
+                 f"The aperture contained {ev['before_counts']} photons in {ev['before_s']:.1f} s of preceding good time, "
+                 f"{ev['on_counts']} in the search window and {ev['after_counts']} in {ev['after_s']:.1f} s afterward. "
+                 f"The surrounding annulus contained {ev['annulus_counts']} photons during the window.", "",
                  f"The automated survey FAP was {r['fap']:.3g} ({r['n']}/24 control maxima). The exact 95% interval "
                  f"for that exceedance probability is {r['lo']:.4g}–{r['hi']:.4g}. {reason} {refs}", "",
                  f"Input {source['bytes']} bytes, SHA-256 `{h}`. [{fmt(source['filename'])}]({source['url']})"])
     candidate_fields = ("cohort obsid trigger_key ra_deg dec_deg position_error_arcsec event_mjd duration_s trial_duration_s "
+                        "on_counts annulus_counts annulus_area_ratio before_counts before_s after_counts after_s "
                         "peak_flux_erg_cm2_s counting_sigma_erg_cm2_s host host_redshift host_offset_arcsec nearest_catalog "
                         "nearest_name nearest_offset_arcsec control_exceedances_of_24 survey_fap exceedance_lo95 exceedance_hi95 "
                         "event_filename event_url event_bytes event_sha256 decompressed_fits_sha256 review").split()

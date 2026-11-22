@@ -42,12 +42,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: chandra-acis-fxt-${{ github.ref }}${{ (inputs.primary_finalize == true || contains(github.event.head_commit.message, '[primary-finalize]')) && '-deposit' || (inputs.target_review == true || contains(github.event.head_commit.message, '[target-review]')) && '-target' || (inputs.primary_deposit == true || contains(github.event.head_commit.message, '[primary-deposit]')) && '-deposit' || '' }}
+  group: chandra-acis-fxt-${{ github.ref }}${{ (inputs.replay_obsid != '' || contains(github.event.head_commit.message, '[replay-obsid ')) && '-replay' || (inputs.primary_finalize == true || contains(github.event.head_commit.message, '[primary-finalize]')) && '-deposit' || (inputs.target_review == true || contains(github.event.head_commit.message, '[target-review]')) && '-target' || (inputs.primary_deposit == true || contains(github.event.head_commit.message, '[primary-deposit]')) && '-deposit' || '' }}
   cancel-in-progress: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[replace-run]') }}
 
 jobs:
   primary-deposit:
     if: >-
+      !contains(github.event.head_commit.message, '[replay-obsid ') &&
       inputs.primary_finalize != true && !contains(github.event.head_commit.message, '[primary-finalize]') &&
       github.ref == 'refs/heads/research/chandra-acis-fast-transients' &&
       (inputs.primary_deposit == true || (github.event_name == 'push' && contains(github.event.head_commit.message, '[primary-deposit]')))
@@ -91,12 +92,19 @@ jobs:
       - name: Verify the deposited repository and its survey regression fixtures
         run: |
           python "$SURVEY/scope_check.py"
-          python -m open_space.verify
-          python -m unittest discover -s tests
-          python -m unittest discover -s "$SURVEY" -p 'test_*.py'
+          python "$SURVEY/verify_resources.py" verify "$RUNNER_TEMP/chandra-check-resources"
+          python "$SURVEY/verify_resources.py" tests "$RUNNER_TEMP/chandra-check-resources"
+          python "$SURVEY/verify_resources.py" survey-tests "$RUNNER_TEMP/chandra-check-resources"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: chandra-check-resources-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/chandra-check-resources
+          if-no-files-found: ignore
 
   target-review:
     if: >-
+      !contains(github.event.head_commit.message, '[replay-obsid ') &&
       inputs.primary_finalize != true && !contains(github.event.head_commit.message, '[primary-finalize]') &&
       github.ref == 'refs/heads/research/chandra-acis-fast-transients' &&
       (inputs.target_review == true || (github.event_name == 'push' && contains(github.event.head_commit.message, '[target-review]')))
@@ -199,7 +207,8 @@ jobs:
       inputs.primary_finalize != true && !contains(github.event.head_commit.message, '[primary-finalize]') &&
       !cancelled() && github.ref == 'refs/heads/research/chandra-acis-fast-transients' &&
       ((needs.inventory.result == 'success' && needs.inventory.outputs.checkpoint != '') ||
-       (needs.inventory.result == 'skipped' && github.event_name == 'workflow_dispatch' && inputs.replay_obsid != ''))
+       (needs.inventory.result == 'skipped' && ((github.event_name == 'workflow_dispatch' && inputs.replay_obsid != '') ||
+         (github.event_name == 'push' && contains(github.event.head_commit.message, '[replay-obsid ')))))
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
@@ -214,10 +223,18 @@ jobs:
       - run: python -m unittest discover -s results/chandra_acis_fxt -p 'test_*.py'
       - run: python results/chandra_acis_fxt/alerts.py --self-test
       - run: python results/chandra_acis_fxt/archive_attestation.py
-      - run: python -m open_space.verify
-      - run: python -m unittest discover -s tests
+      - name: Verify the frozen checkout and measure resource use
+        run: python results/chandra_acis_fxt/verify_resources.py verify "$RUNNER_TEMP/chandra-verify-resources"
+      - name: Run the repository tests and measure resource use
+        run: python results/chandra_acis_fxt/verify_resources.py tests "$RUNNER_TEMP/chandra-verify-resources"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: chandra-verify-resources-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/chandra-verify-resources
+          if-no-files-found: ignore
       - name: Replay a checksummed pilot against its deposited controls and injections
-        if: inputs.replay_obsid == ''
+        if: inputs.replay_obsid == '' && !contains(github.event.head_commit.message, '[replay-obsid ')
         env:
           OPENBLAS_NUM_THREADS: '1'
           OMP_NUM_THREADS: '1'
@@ -228,7 +245,8 @@ jobs:
     if: >-
       inputs.primary_finalize != true && !contains(github.event.head_commit.message, '[primary-finalize]') &&
       !cancelled() && needs.verify.result == 'success' &&
-      github.event_name == 'workflow_dispatch' && inputs.replay_obsid != ''
+      ((github.event_name == 'workflow_dispatch' && inputs.replay_obsid != '') ||
+       (github.event_name == 'push' && contains(github.event.head_commit.message, '[replay-obsid ')))
     runs-on: ubuntu-24.04
     timeout-minutes: 350
     steps:
@@ -242,15 +260,26 @@ jobs:
       - run: python -m pip install -r results/chandra_acis_fxt/requirements.txt
       - name: Retrieve exact products and compare against the deposited search
         env:
-          OBSID: ${{ inputs.replay_obsid }}
+          OBSID_INPUT: ${{ inputs.replay_obsid }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
           OMP_NUM_THREADS: '1'
           OPENBLAS_NUM_THREADS: '1'
         run: |
           export CIAO_PREFIX="$RUNNER_TEMP/ciao" PATH="$PATH:$CONDA/bin"
-          python results/chandra_acis_fxt/reproduce.py "$OBSID"
+          python - <<'PYTHON'
+          import os, re, subprocess, sys
+          if os.environ["GITHUB_EVENT_NAME"] == "workflow_dispatch":
+              requested = [os.environ["OBSID_INPUT"]]
+          else:
+              requested = re.findall(r"\[replay-obsid ([1-9][0-9]{0,5})\]", os.environ["COMMIT_MESSAGE"])
+          if len(requested) != 1 or not re.fullmatch(r"[1-9][0-9]{0,5}", requested[0]):
+              raise ValueError("Specify exactly one numeric observation ID for replay")
+          subprocess.run([sys.executable, "-u", "results/chandra_acis_fxt/catalog_pack.py", "replay", requested[0]], check=True)
+          PYTHON
 
   catalog-check:
     if: >-
+      !contains(github.event.head_commit.message, '[replay-obsid ') &&
       inputs.primary_finalize != true && !contains(github.event.head_commit.message, '[primary-finalize]') &&
       github.ref == 'refs/heads/research/chandra-acis-fast-transients' && inputs.replay_obsid == '' &&
       inputs.target_review != true && !contains(github.event.head_commit.message, '[target-review]') &&
@@ -688,6 +717,7 @@ jobs:
 
   final-route:
     if: >-
+      !contains(github.event.head_commit.message, '[replay-obsid ') &&
       github.ref == 'refs/heads/research/chandra-acis-fast-transients' &&
       (inputs.primary_finalize == true || (github.event_name == 'push' && contains(github.event.head_commit.message,'[primary-finalize]'))) &&
       inputs.target_review != true && inputs.primary_deposit != true && inputs.replay_obsid == '' &&

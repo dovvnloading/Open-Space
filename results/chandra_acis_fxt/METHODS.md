@@ -43,11 +43,19 @@ The preflight queries Gaia, SIMBAD, NED, and three published Chandra transient l
 
 For retained leads the report job checks other visits in the release window and searches the GCN Circular archive for potentially related notices. Inspect the source and detector diagnostics, the photon time series, catalog matches, nearby galaxies, and target/proposal metadata for each event. A non-detection in another visit constrains the mean aperture count rate only for the time its source position was covered. The alert comparison records the notices and search coverage used for a novelty assessment.
 
-After a scientific deposit, substitute an integer ObsID from the coverage ledger for OBSID to repeat its event scan, controls, synthetic injections, catalog choices and measured peak photometry.
+An individual replay retrieves the event file by its recorded SHA-256, reconstructs the observation's catalog cache and checks every real trigger, all 24 scrambles, all injections and the calibrated peak fluxes. It compares the full search arrays and the catalog classifications against the deposited ledger. For example, ObsID 23324 exercises a real 78-photon flare with calibrated photometry. Run the following command inside the Chandra Actions job.
+
+```sh
+python results/chandra_acis_fxt/catalog_pack.py replay 23324
+```
+
+Before GitHub registers the workflow on the default branch, a maintainer can select that replay by changing a comment in the Chandra workflow file and pushing one commit on the research branch whose message includes `[replay-obsid 23324]`. The replay job reads the ObsID from the commit, runs on its immutable revision, and leaves the primary search running. Once the workflow is registered, substitute the desired ObsID in the dispatch command below.
 
 ```sh
 gh workflow run chandra-acis-fxt.yml --repo dovvnloading/Open-Space --ref research/chandra-acis-fast-transients -f replay_obsid=OBSID
 ```
+
+The original primary run is pinned to commit `4663ab98666b5d9b5b116478f61d6cae5d49e104`, with primary group assignments in commit `0655e5b54215a3d7bbac1f6b2561379bb50c81cf`. Checkpoint deposits verify each source artifact and report exposure at all five trial durations. The selective catalog repair preserves the original response bytes, records changed classifications and repeats affected photometry. The final report uses the recorded human disposition of each surviving trigger. [Source run](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443) · [Artifact intake and exposure](evidence/primary_ingest/44985879443-1/PROGRESS.md) · [Held-out selection](HELD_OUT.md)
 
 The verification job and the evidence-commit job both require these commands to pass.
 
