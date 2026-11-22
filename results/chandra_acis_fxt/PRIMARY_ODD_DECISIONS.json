@@ -1,10 +1,40 @@
 [
   {
+    "obsid": 22316,
+    "input_sha256": "39ec4251fddccdb9ecaca4863783645874a43389d9c60aec43e8ece19b26b518",
+    "trigger_key": "real/0",
+    "decision": "unresolved",
+    "reason": "A compact eight-photon burst with quiet flanks lies in the heavily populated Galactic Westerlund 1 field. Its host, distance and NED classifications are unresolved.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 22316,
+    "input_sha256": "39ec4251fddccdb9ecaca4863783645874a43389d9c60aec43e8ece19b26b518",
+    "trigger_key": "real/1",
+    "decision": "unresolved",
+    "reason": "A genuine-looking dithered nine-photon flare has quiet flanks. Its position in Westerlund 1 and incomplete NED information leave a plausible obscured Galactic counterpart.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
     "obsid": 22689,
     "input_sha256": "05c76061b101f668e1cb621450bc1396d5f30cbbfb5b484b7c70534e2aea1247",
     "trigger_key": "real/0",
-    "decision": "unresolved",
-    "reason": "The sky flare overlaps a candidate young stellar object and Gaia position in Collinder 197. A young-star flare is plausible; stellar classification and NED follow-up are incomplete.",
+    "decision": "rejected",
+    "reason": "CSC 2.2 independently reported variability index 10 for a unique same-ObsID match at 0.31 arcseconds. The measured flare overlaps a candidate young stellar object in Collinder 197. A new extragalactic event is unsupported; the stellar classification remains tentative.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 23044,
+    "input_sha256": "8422f7ab0926660ad5aaad0e78efc60e0c8abe4e3d1491a505b1006239f7abe8",
+    "trigger_key": "real/0",
+    "decision": "rejected",
+    "reason": "A persistent, structured N132D remnant knot is present throughout; the selected interval has recurrent comparable peaks and an anomalous readout-strip statistic.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md"
     ]
@@ -14,7 +44,7 @@
     "input_sha256": "507a5aaf26b492ef2b5120242d9d33e281803667c8c1edc125fa905e6a09bbd0",
     "trigger_key": "real/0",
     "decision": "unresolved",
-    "reason": "A serendipitous fast rise and extended decay are measured. A red Gaia/PS1 source lies near the localization, and a brighter parallax star lies inside the aperture. The red source could be a flaring star; no association establishes an extragalactic distance.",
+    "reason": "This serendipitous flare was already flagged in the same ObsID by CSC 2.2, unique match 0.64 arcseconds away with variability index 10. The fast rise and decay are measured. A red Gaia/PS1 source and a brighter parallax star compete within the aperture, leaving source distance and physical class unresolved.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md",
       "PRIORITY.md"
@@ -25,7 +55,7 @@
     "input_sha256": "507a5aaf26b492ef2b5120242d9d33e281803667c8c1edc125fa905e6a09bbd0",
     "trigger_key": "real/1",
     "decision": "rejected",
-    "reason": "The flare coincides with the targeted nearby star LHS2021 and Gaia parallax 59.806±0.075 mas. This is a separate position from real/0.",
+    "reason": "The targeted nearby star LHS2021 has Gaia parallax 59.806±0.075 mas. Its separate flare was flagged by CSC in the same exposure, variability index 9 at 0.93 arcseconds.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md"
     ]
@@ -94,8 +124,8 @@
     "obsid": 24363,
     "input_sha256": "06472e758aa92b55dea924d4fd7d692b86e9ca1860455bdd2065754a52ff0410",
     "trigger_key": "real/2",
-    "decision": "unresolved",
-    "reason": "The flare overlaps a cataloged Galactic-center X-ray source and a 2MASS object. Continued aperture activity and uncertain distance prevent classification.",
+    "decision": "rejected",
+    "reason": "CSC 2.2 flagged variability in this same ObsID for 2CXO J174543.8-284848 at 0.75 arcseconds with index 9 and a unique association in a crowded Galactic-center field. Earlier source activity is cataloged; the physical origin remains uncertain.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md"
     ]
@@ -116,6 +146,26 @@
     "trigger_key": "real/0",
     "decision": "rejected",
     "reason": "A typed star within 1.33 arcseconds has independent Gaia parallax near 5.0 mas with 0.15 mas uncertainty. A foreground stellar flare fits the measurement.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 25127,
+    "input_sha256": "94e78eacbb0a8e0fd0103d0289212b50032f0a111373b8a345b843e50a0d6d69",
+    "trigger_key": "real/0",
+    "decision": "unresolved",
+    "reason": "The measured flare closely overlaps a cataloged RR Lyrae variable in a crowded Galactic field, but the astrometry and incomplete NED check leave its emitting counterpart uncertain.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 25127,
+    "input_sha256": "94e78eacbb0a8e0fd0103d0289212b50032f0a111373b8a345b843e50a0d6d69",
+    "trigger_key": "real/5",
+    "decision": "unresolved",
+    "reason": "A moving Gaia object 0.29 arcseconds away offers a stellar explanation. Distance and association remain uncertain in this Galactic field, with an incomplete NED cone.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md"
     ]
@@ -156,6 +206,26 @@
     "trigger_key": "real/922",
     "decision": "rejected",
     "reason": "The bright shell edge, rising CCD-wide background and comparable flare-like excursions compromise this event.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 26732,
+    "input_sha256": "c5b00242a792e40aed6b6d131a03c83232c7f5a1a493cdfae709d5d71a6a3b6b",
+    "trigger_key": "real/0",
+    "decision": "rejected",
+    "reason": "The low-background sky flare overlaps a typed star with parallax 0.913±0.049 mas, much closer on the sky than the nearby galaxy.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 27070,
+    "input_sha256": "2335fce4df189d34863a49562e92c571a9eae7ff47d9df07b11a82085cf5deab",
+    "trigger_key": "real/0",
+    "decision": "rejected",
+    "reason": "The aperture covers a persistent extended or blended source with multiple short variable episodes, including a larger peak soon afterward. Quiet flanks around an isolated event are not established.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md"
     ]
@@ -236,6 +306,16 @@
     "trigger_key": "real/379",
     "decision": "unresolved",
     "reason": "The two short photon groups are spread across a diffuse Perseus aperture where the long-term baseline tracks the annulus. A compact isolated source remains unconfirmed.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 30304,
+    "input_sha256": "bed3ea7b3c3b9ad6e28cbb8be8e378d91734f44c9d00ffc54971f05676bc3841",
+    "trigger_key": "real/131",
+    "decision": "unresolved",
+    "reason": "A dither-tracking pulse falls on a bright Perseus gradient with anomalous chip background; the supernova and Swift source offsets are too large for association.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md"
     ]
@@ -346,6 +426,36 @@
     "trigger_key": "real/18",
     "decision": "unresolved",
     "reason": "Eight dithered photons on diffuse cluster emission could be a point-source flare or a statistical fluctuation. The nearest catalog galaxy has a high chance-projection bound.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 32087,
+    "input_sha256": "95014d951360d2e23e93d68f18472e1cc621d90c556406d724971e45b35d4942",
+    "trigger_key": "real/151",
+    "decision": "unresolved",
+    "reason": "A nine-photon local spike on a bright gradient has spatially dispersed events, a persistent background and no catalog counterpart.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 32087,
+    "input_sha256": "95014d951360d2e23e93d68f18472e1cc621d90c556406d724971e45b35d4942",
+    "trigger_key": "real/299",
+    "decision": "unresolved",
+    "reason": "The short ten-photon concentration lies on the Perseus diffuse gradient, with a weakly unusual CCD background, a broad sky distribution and noticeable recurring aperture fluctuations.",
+    "evidence": [
+      "PRIMARY_ODD_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 32087,
+    "input_sha256": "95014d951360d2e23e93d68f18472e1cc621d90c556406d724971e45b35d4942",
+    "trigger_key": "real/301",
+    "decision": "unresolved",
+    "reason": "The sky dither is apparent, but the flare sits in persistent bright cluster core emission; another aperture maximum nearly reaches it. A broad supernova listing cannot identify a host.",
     "evidence": [
       "PRIMARY_ODD_NOTES.md"
     ]

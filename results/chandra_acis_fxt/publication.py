@@ -308,7 +308,8 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
     elif label == "Null result":
         headline = f"No FXT candidate survived in {n:,} dated ObsIDs covering {x:.6f} Ms of eligible 60-second flare-start time."
     else:
-        headline = f"The dated search covered {n:,} ObsIDs and {x:.6f} Ms of 60-second start support, with {c['unresolved']} unresolved lead{'s' if c['unresolved']!=1 else ''}."
+        headline = (f"No new extragalactic FXT was established in {n:,} dated ObsIDs and {x:.6f} Ms of 60-second start support. "
+                    f"{c['unresolved']} lead{'s remain' if c['unresolved']!=1 else ' remains'} unresolved.")
     if combined["candidate"] > c["candidate"]:
         extra = combined["candidate"]-c["candidate"]
         headline += f" The separate release-date supplement contains {extra} candidate{'s' if extra!=1 else ''}."
@@ -393,7 +394,9 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
                       "scanned observations with unresolved release dates to the window gives "
                       f"{certain/1e6:.6f}–{possible/1e6:.6f} Ms of eligible 60-second start time. "
                       "This interval describes release-date uncertainty in measured coverage."])
-    lines.extend(["", "## Manual review"])
+    candidate_file = HERE/"evidence/fxt_candidates.csv"
+    candidate_rows = []
+    lines.extend(["", "## Manual review", "", link(candidate_file,"New FXT candidates with exact inputs and measurements")])
     if not leads:
         lines.extend(["","The automated selection retained no real trigger for manual review."])
     for ident in sorted(leads,key=lambda k:(("candidate","unresolved","rejected").index(decisions[k][0]),k)):
@@ -409,6 +412,19 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
                                      f"{fmt(matches[0]['separation_arcsec'])}″." if matches else
                                      "No catalog counterpart within the screening region."))
         f = ev["flux"]
+        near = matches[0] if matches else {}
+        candidate_rows.append({
+            "cohort":r["group"]["name"], "obsid":oid, "trigger_key":trig,
+            **{k: ev[k] for k in ("ra_deg","dec_deg","position_error_arcsec","event_mjd","duration_s","trial_duration_s")},
+            "peak_flux_erg_cm2_s":f["peak_flux_erg_cm2_s"],
+            "counting_sigma_erg_cm2_s":f["flux_counting_sigma_erg_cm2_s"],
+            "host":(host or {}).get("name"), "host_redshift":(host or {}).get("redshift"),
+            "host_offset_arcsec":(host or {}).get("separation_arcsec"),
+            "nearest_catalog":near.get("catalog"), "nearest_name":near.get("name"),
+            "nearest_offset_arcsec":near.get("separation_arcsec"), "control_exceedances_of_24":r["n"],
+            "survey_fap":r["fap"], "exceedance_lo95":r["lo"], "exceedance_hi95":r["hi"],
+            "event_filename":source["filename"],"event_url":source["url"],"event_bytes":source["bytes"],
+            "event_sha256":h,"decompressed_fits_sha256":source["fits_sha256"],"review":reason})
         lines.extend(["",f"### Candidate · ObsID {oid}, {trig}","",
                  f"{NAMES[r['group']['name']]}. ICRS position ({ev['ra_deg']}, {ev['dec_deg']})°, "
                  f"90% radius {ev['position_error_arcsec']}″. Peak MJD {ev['event_mjd']} UTC. Aperture-photon "
@@ -418,6 +434,12 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
                  f"The automated survey FAP was {r['fap']:.3g} ({r['n']}/24 control maxima). The exact 95% interval "
                  f"for that exceedance probability is {r['lo']:.4g}–{r['hi']:.4g}. {reason} {refs}", "",
                  f"Input {source['bytes']} bytes, SHA-256 `{h}`. [{fmt(source['filename'])}]({source['url']})"])
+    candidate_fields = ("cohort obsid trigger_key ra_deg dec_deg position_error_arcsec event_mjd duration_s trial_duration_s "
+                        "peak_flux_erg_cm2_s counting_sigma_erg_cm2_s host host_redshift host_offset_arcsec nearest_catalog "
+                        "nearest_name nearest_offset_arcsec control_exceedances_of_24 survey_fap exceedance_lo95 exceedance_hi95 "
+                        "event_filename event_url event_bytes event_sha256 decompressed_fits_sha256 review").split()
+    report.rows_to_csv(candidate_file, candidate_fields, candidate_rows)
+    need(len(candidate_rows)==combined["candidate"], "Candidate table and adjudication counts disagree")
     lines.extend(["","## Reproduction","",
                   "The archived EVT2 manifests bind the compressed and decompressed bytes to each observation. The full ledgers retain "
                   "all detector vetoes, catalog query receipts, eligible observing intervals and controls. "
@@ -434,7 +456,7 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
     if extra:
         lines.extend([" · ".join(extra),""])
     outcome = {"label":label, "headline":headline,"reviewed_inputs_sha256":sig,"input_sha256":raw_inputs,
-               "decisions_sha256":file_sha(manifest),"cited_local_evidence_sha256":manual_hashes,"dispositions":counts,
+               "decisions_sha256":file_sha(manifest),"candidate_table_sha256":hashlib.sha256(candidate_file.read_bytes()).hexdigest(),"cited_local_evidence_sha256":manual_hashes,"dispositions":counts,
                "conditional_upper95_detected_events_per_Ms":bounds,
                "instrument_pass_conservative_upper95_detected_events_per_Ms":instrument_bounds, "implementation_sha256":file_sha(Path(__file__))}
     # update_catalog checks the existing bullet and rewrites only line 9 and this entry.

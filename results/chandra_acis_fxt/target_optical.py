@@ -60,7 +60,7 @@ def tap_result(label, endpoint, query, fields, src, replay, receipts):
     return rows, meta
 
 
-def tap_service(name, lead, src, replay, out, known=None):
+def tap_service(name, lead, src, replay, out, known=None, prior_gaia_id=None):
     ra, dec = lead["ra_deg"], lead["dec_deg"]
     gaia = name.startswith("gaia")
     fields = GAIA_FIELDS if gaia else WISE_FIELDS
@@ -83,7 +83,7 @@ def tap_service(name, lead, src, replay, out, known=None):
         for row in rows:
             if gaia:
                 x, y = pm_position(row, Time(lead["event_mjd"], format="mjd", scale="utc").jyear)
-                derived = {"matches_prior_gaia_id": str(row["source_id"]) == TARGETS[int(lead["obsid"])][3],
+                derived = {"matches_prior_gaia_id": str(row["source_id"]) == prior_gaia_id if prior_gaia_id else None,
                            "offset_catalog_epoch_arcsec": separation(ra, dec, float(row["ra"]), float(row["dec"])),
                            "motion_propagated": all(number(row[x]) is not None for x in ("pmra", "pmdec")),
                            "offset_event_epoch_arcsec": separation(ra, dec, x, y)}
@@ -191,7 +191,7 @@ def main(args):
                 if name.startswith("ps1_"):
                     ps1_service(name[4:], lead, src, args.replay, out)
                 else:
-                    tap_service(name, lead, src, args.replay, out, known if name == "gaia_prior_id" else None)
+                    tap_service(name, lead, src, args.replay, out, known if name == "gaia_prior_id" else None, known)
                 out["rows"].sort(key=lambda x: x["offset_arcsec"] if x["offset_arcsec"] is not None else math.inf)
                 out["status"] = "rows_returned" if out["rows"] else "empty_validated_cone"
             except Exception as error:

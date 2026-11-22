@@ -3,8 +3,8 @@
     "obsid": 21642,
     "input_sha256": "361339e5d191923d9ffecf1a590cd3772912c19294da36ccece078bc1673dec6",
     "trigger_key": "real/0",
-    "decision": "unresolved",
-    "reason": "A nearby Gaia star and a second same-visit enhancement support a stellar alternative in the GLIMPSE C01 field.",
+    "decision": "rejected",
+    "reason": "CSC 2.2 already reports same-ObsID broad-band variability index 8 for 2CXO J184908.1-012806 only 0.73 arcsec away. The flare also has a nearby astrometric Gaia star and repeats later in this exposure.",
     "evidence": [
       "PRIMARY_EVEN_NOTES.md"
     ]
@@ -40,6 +40,16 @@
     ]
   },
   {
+    "obsid": 22985,
+    "input_sha256": "98998f2ca50135e943388de468a7fa41e64ba4fdffe644fb3d4a918957bed7ad",
+    "trigger_key": "real/0",
+    "decision": "rejected",
+    "reason": "The compact, soft flare lies within 0.60 arcsec of a SIMBAD star with a 1.175 ± 0.094 mas Gaia parallax and an independently cataloged X-ray source.",
+    "evidence": [
+      "PRIMARY_EVEN_NOTES.md"
+    ]
+  },
+  {
     "obsid": 23541,
     "input_sha256": "496565ab6ae51295777bceca3d2b77edbcc63ce4dc8bc14c3bea2f8dad2933e6",
     "trigger_key": "real/2",
@@ -63,8 +73,8 @@
     "obsid": 23541,
     "input_sha256": "496565ab6ae51295777bceca3d2b77edbcc63ce4dc8bc14c3bea2f8dad2933e6",
     "trigger_key": "real/35",
-    "decision": "unresolved",
-    "reason": "The compact sky source shows additional same-visit emission and has two close unclassified Gaia potential counterparts.",
+    "decision": "rejected",
+    "reason": "CSC 2.2 already reports same-ObsID variability index 9 for 2CXO J002703.7+640704, 0.31 arcsec away. The source shows additional activity and has two nearby Gaia alternatives.",
     "evidence": [
       "PRIMARY_EVEN_NOTES.md"
     ]
@@ -124,7 +134,7 @@
     "input_sha256": "3b66bb27b8918172475c47a1c08a52fc6be3c92624a9883efb6d18cd13f1e566",
     "trigger_key": "real/0",
     "decision": "unresolved",
-    "reason": "A compact flare in the crowded Galactic cluster Westerlund 1 has an unresolved distance and incompletely typed NED cone.",
+    "reason": "CSC 2.2 recorded same-ObsID variability index 8 at 2CXO J164701.4-455032, 0.68 arcsec away, with flux significance 3.06 and confidence code 263. The Westerlund 1 sightline and missing classification prevent an extragalactic identification.",
     "evidence": [
       "PRIMARY_EVEN_NOTES.md"
     ]
@@ -226,7 +236,7 @@
     "input_sha256": "1f2adc1eb966a4e4015a587a6639608de1216652ce23be95e3058c1dd8e78e7c",
     "trigger_key": "real/0",
     "decision": "rejected",
-    "reason": "A 6.417 ± 0.104 mas Gaia star lies 0.43 arcsec from this compact flare. NED also records stellar counterparts and SIMBAD a known X-ray binary at this position.",
+    "reason": "The close precise-parallax Gaia star and cataloged X-ray source coincide with the flare. CSC 2.2 had already recorded same-visit variability index 9 for 2CXO J140355.8+542058 at 0.64 arcsec and flags the master source for confusion.",
     "evidence": [
       "PRIMARY_EVEN_NOTES.md"
     ]
@@ -347,6 +357,16 @@
     "trigger_key": "real/673",
     "decision": "unresolved",
     "reason": "Eight photons in a structured cluster field may be a compact flare or a background fluctuation.",
+    "evidence": [
+      "PRIMARY_EVEN_NOTES.md"
+    ]
+  },
+  {
+    "obsid": 30369,
+    "input_sha256": "d867836284681a110da28a12fa9193424f98346dad6cc70436e5449b70d8740a",
+    "trigger_key": "real/130",
+    "decision": "unresolved",
+    "reason": "Nine photons fluctuate over the persistently bright Perseus cluster. The only catalog match is a supernova more than one arcminute away.",
     "evidence": [
       "PRIMARY_EVEN_NOTES.md"
     ]

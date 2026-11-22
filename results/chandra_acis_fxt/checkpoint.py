@@ -114,13 +114,19 @@ def csc():
     push([out],"Deposit same-observation CSC variability checks in real and scrambled triggers")
 
 
+def optical():
+    root = campaign.EVIDENCE
+    out = root/"lead_optical"
+    command(sys.executable, "-u", campaign.HERE/"lead_optical.py", "--from-ledgers",
+            "--evidence", root, "--out", out)
+    push([out], "Deposit optical and infrared counterpart measurements for retained real triggers")
+
+
 if __name__=="__main__":
     if (os.environ.get("GITHUB_ACTIONS")!="true" or os.environ.get("GITHUB_REPOSITORY")!=ingest.REPO
             or os.environ.get("GITHUB_REF")!="refs/heads/"+ingest.BRANCH):
         raise RuntimeError("Use the Chandra workflow")
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("operation",choices=("collect","csc"))
-    if parser.parse_args().operation=="collect":
-        collect()
-    else:
-        csc()
+    parser.add_argument("operation",choices=("collect","csc","optical"))
+    operations = {"collect": collect, "csc": csc, "optical": optical}
+    operations[parser.parse_args().operation]()
