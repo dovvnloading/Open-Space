@@ -4,7 +4,10 @@
     "heii_eligible": 3,
     "ew_eligible": 18,
     "eligible": 21,
-    "discovery_partial_or_unavailable": 21,
+    "discovery_no_desi_dr1_counterpart": 17,
+    "discovery_external_redshift": 2,
+    "followup_records": 4,
+    "discovery_external_spectrum": 2,
     "physical_groups": 20,
     "distinct_query_positions": 21
   },
@@ -13,6 +16,10 @@
   "rule": "Discovery table status is a crossmatch result. Only complete adjudications in vetted.jsonl.gz can revise the first-pass outcome. Stable per-release key: row_index, channel, stream, wave.hex().",
   "catalogs": [
     "NOIRLab SPARCL (DESI, BOSS, SDSS)",
-    "CDS V/161/zcatdr1 (DESI DR1 Redrock)"
-  ]
+    "CDS V/161/zcatdr1 (DESI DR1 Redrock)",
+    "DESI DR1 native iron Redrock files",
+    "CDS single-cone V/161/zcatdr1 ASU"
+  ],
+  "first_attempt": "first-attempt/",
+  "static_retry": "static-summary.json"
 }
