@@ -1,0 +1,203 @@
+{
+  "catalogues": {
+    "inputs": {
+      "xmmslewcln": 29393,
+      "xmmslewful": 72352,
+      "ero_main": 930203,
+      "ero_supp": 347274,
+      "rass": 135118
+    },
+    "clean_flagged": 29393,
+    "quality_slew": 21246,
+    "detection_rows": 72352,
+    "unique_source_designations": 64487,
+    "positive_soft_slew": 36189,
+    "catalogue_only_nominal_10x": 1857,
+    "control_unit": "XMMSL2 detection (includes repeat visits). Offset estimates are approximate and do not measure individual host probabilities."
+  },
+  "model": {
+    "gamma": 2.0,
+    "NH_cm-2": 3e+20,
+    "absorption": "Morrison & McCammon (1983) Table 2",
+    "common_band_keV": [
+      0.2,
+      2.0
+    ],
+    "ero_band_factor": 0.9237435594622463,
+    "rass_ecf": 1.0074608730476111e-11,
+    "rass_response": "https://heasarc.gsfc.nasa.gov/FTP/caldb/data/rosat/pspc/cpf/matrices/pspcc_gain1_256.rsp",
+    "rass_channels": [
+      11,
+      235
+    ],
+    "notes": "XMM catalogue flux is already 0.2\u20132 keV; native response assumptions are retained. eROSITA uses released 0.2\u20132.3 keV flux times the absorbed energy-flux band ratio. RASS uses an on-axis PSPC-C survey response. Point-source calibration and an illustrative grid do not cover arbitrary spectra, absorption, pile-up or spatial changes.",
+    "model_grid": {
+      "gamma": [
+        1.5,
+        2.0,
+        2.5,
+        3.0
+      ],
+      "nh": [
+        1e+20,
+        3e+20,
+        1e+21
+      ]
+    },
+    "xmm_relative": [
+      1.0,
+      1.0
+    ],
+    "ero_relative": [
+      0.9276377011149568,
+      1.0630719140037062
+    ],
+    "rass_relative": [
+      0.4027302437162883,
+      1.207228402660324
+    ]
+  },
+  "map_status": {
+    "ero": {
+      "outside_dr1": 33017,
+      "ok": 16396,
+      "catalogued_or_ambiguous": 20169,
+      "near_detected_source": 2770
+    },
+    "rass": {
+      "catalogued_or_ambiguous": 22808,
+      "ok": 49345,
+      "no_exposure_or_masked": 177,
+      "archive_error": 12,
+      "archive_unavailable": 10
+    }
+  },
+  "positive_comparisons": 50370,
+  "quality_comparisons": 30110,
+  "compared_slew_rows": 29830,
+  "quality_compared_slew_rows": 17225,
+  "nominal_tenfold": 3996,
+  "quality_nominal_tenfold": 1306,
+  "qualified_pairs": 176,
+  "photometric_lead_detections": 161,
+  "photometric_lead_source_designations": 135,
+  "model_stress_test_leads": 124,
+  "photometric_pairs": {
+    "xmm over ero upper_limit": 63,
+    "xmm over ero detection": 58,
+    "rass over ero detection": 25,
+    "xmm over rass detection": 10,
+    "ero over rass detection": 8,
+    "rass over xmm detection": 5,
+    "xmm over rass upper_limit": 4,
+    "rass over ero upper_limit": 3
+  },
+  "dispositions": {
+    "inconclusive": 140,
+    "known_or_stellar": 21
+  },
+  "service_completeness": {
+    "Gaia": {
+      "ok": 0,
+      "incomplete": 161
+    },
+    "Legacy": {
+      "ok": 161,
+      "incomplete": 0
+    },
+    "MPE": {
+      "ok": 0,
+      "incomplete": 161
+    },
+    "NED": {
+      "ok": 161,
+      "incomplete": 0
+    },
+    "SIMBAD": {
+      "ok": 0,
+      "incomplete": 161
+    },
+    "SIMBAD_bibliography": {
+      "ok": 0,
+      "incomplete": 161
+    },
+    "TNS": {
+      "ok": 0,
+      "incomplete": 161
+    },
+    "VSX": {
+      "ok": 0,
+      "incomplete": 161
+    },
+    "WISE": {
+      "ok": 0,
+      "incomplete": 161
+    },
+    "papers": {
+      "ok": 0,
+      "incomplete": 161
+    }
+  },
+  "candidate_detections": 0,
+  "candidate_source_designations": 0,
+  "xray_shifted": {
+    "ero": {
+      "observed": 20169,
+      "observed_unambiguous": 18171,
+      "mean_shifted": 985.25,
+      "estimated_random_fraction": 0.04884971986712281,
+      "outer_radius_arcsec": 40,
+      "adaptive_radius": "min(cap, 3.44 * hypot(position errors))"
+    },
+    "rass": {
+      "observed": 22808,
+      "observed_unambiguous": 19383,
+      "mean_shifted": 403.5,
+      "estimated_random_fraction": 0.017691160996141705,
+      "outer_radius_arcsec": 75,
+      "adaptive_radius": "min(cap, 3.44 * hypot(position errors))"
+    }
+  },
+  "host_shifted": {
+    "Gaia": {
+      "real_matches": 0,
+      "real_checked": 0,
+      "shifted_matches": 0,
+      "shifted_checked": 0,
+      "chance_per_position": null,
+      "approx_false_fraction": null
+    },
+    "Gaia_significant_astrometry": {
+      "real_matches": 0,
+      "real_checked": 0,
+      "shifted_matches": 0,
+      "shifted_checked": 0,
+      "chance_per_position": null,
+      "approx_false_fraction": null
+    },
+    "Legacy": {
+      "real_matches": 121,
+      "real_checked": 161,
+      "shifted_matches": 400,
+      "shifted_checked": 644,
+      "chance_per_position": 0.6211180124223602,
+      "approx_false_fraction": 0.8264462809917354
+    },
+    "Legacy_extended": {
+      "real_matches": 78,
+      "real_checked": 161,
+      "shifted_matches": 294,
+      "shifted_checked": 644,
+      "chance_per_position": 0.45652173913043476,
+      "approx_false_fraction": 0.9423076923076922
+    },
+    "WISE": {
+      "real_matches": 0,
+      "real_checked": 0,
+      "shifted_matches": 0,
+      "shifted_checked": 0,
+      "chance_per_position": null,
+      "approx_false_fraction": null
+    }
+  }
+}
