@@ -1,0 +1,37 @@
+[
+  [
+    "conda",
+    "run",
+    "--no-capture-output",
+    "-p",
+    "/home/runner/work/_temp/ciao",
+    "ciaover",
+    "-v"
+  ],
+  [
+    "conda",
+    "run",
+    "--no-capture-output",
+    "-p",
+    "/home/runner/work/_temp/ciao",
+    "dmcopy",
+    "/tmp/tmp348l1psi/acisf30354N001_evt2.fits.gz[EVENTS][ccd_id=2][energy=500:7000][grade=0,2,3,4,6][status=0][time=903123873.97974932:903123933.97974932][sky=circle(4353.989990234375,4315.392333984375,67.199999999999989)]",
+    "/home/runner/work/_temp/shard/photometry/30354/acisf30354N001_evt2.fits.gz/real/145/peak_events.fits",
+    "clobber=yes"
+  ],
+  [
+    "conda",
+    "run",
+    "--no-capture-output",
+    "-p",
+    "/home/runner/work/_temp/ciao",
+    "eff2evt",
+    "/home/runner/work/_temp/shard/photometry/30354/acisf30354N001_evt2.fits.gz/real/145/peak_events.fits",
+    "/home/runner/work/_temp/shard/photometry/30354/acisf30354N001_evt2.fits.gz/real/145/peak_weights.fits",
+    "energy=INDEF",
+    "dafile=CALDB",
+    "rmfimg=",
+    "verbose=2",
+    "clobber=yes"
+  ]
+]
