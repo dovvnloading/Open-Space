@@ -1,0 +1,52 @@
+name: HETDEX blind rare-emitter search
+on:
+  workflow_dispatch:
+  push:
+    branches: [science/hetdex-blind-emitter-search]
+    paths: [.github/workflows/hetdex-blind-emitters.yml]
+
+permissions:
+  contents: read
+
+env:
+  SURVEY: results/hetdex_blind_emitters
+
+jobs:
+  inventory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          filter: blob:none
+          sparse-checkout: results/hetdex_blind_emitters
+      - run: python "$SURVEY/archive_inventory.py"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive-inventory
+          path: results/hetdex_blind_emitters/evidence/
+          if-no-files-found: error
+
+  publish:
+    needs: inventory
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: science/hetdex-blind-emitter-search
+          filter: blob:none
+          sparse-checkout: results/hetdex_blind_emitters
+      - uses: actions/download-artifact@v4
+        with:
+          name: archive-inventory
+          path: results/hetdex_blind_emitters/evidence/
+      - name: Commit archive receipts
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$SURVEY/evidence"
+          git diff --cached --quiet || git commit -m 'Record HETDEX archive headers and access receipts'
+          git push origin HEAD:science/hetdex-blind-emitter-search
