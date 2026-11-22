@@ -11,6 +11,7 @@ import shutil
 import subprocess
 import tempfile
 import zipfile
+from xml.etree import ElementTree
 
 from astropy import units as u
 from astropy.coordinates import SkyCoord, search_around_sky
@@ -53,10 +54,10 @@ AUDIT = []
 HEADERS = {"User-Agent": "Open-Space-Gaia-FPR/1.0 (public astronomical catalog cross-match)"}
 
 
-def _download(cat, url, params=None, method="GET", files=None, timeout=55):
+def _download(cat, url, params=None, method="GET", files=None, timeout=55, headers=None):
     result = requests.request(method, url, params=params if method == "GET" else None,
                               data=params if method == "POST" else None, files=files,
-                              headers=HEADERS, timeout=(12, timeout))
+                              headers={**HEADERS, **(headers or {})}, timeout=(12, timeout))
     result.raise_for_status()
     raw = result.content
     AUDIT.append(dict(catalog=cat, url=result.url, query=str(params or ""),
@@ -406,27 +407,98 @@ def _milliquas(positions):
     return _public_remote(PUBLIC[0], positions)
 
 
+def _desi_noirlab(positions):
+    rows = []
+    for pos in range(0, len(positions), 35):
+        chunk = positions.iloc[pos:pos+35]
+        entries = ",".join(f"({int(r.row_id)},{r.ra:.10f},{r.dec:.10f})" for r in chunk.itertuples())
+        query = (f"SELECT p.row_id, z.targetid as name, z.target_ra as era, z.target_dec as edec, "
+                 f"z.spectype as classification, z.z, z.zerr as z_err, z.zwarn as warning "
+                 f"FROM (VALUES {entries}) AS p(row_id,ra,dec) JOIN desi_dr1.zpix z "
+                 f"ON q3c_radial_query(z.target_ra,z.target_dec,p.ra,p.dec,2.0/3600.0)")
+        # Public, fixed anonymous identifier from dl.authClient.ANON_TOKEN.
+        # https://datalab.noirlab.edu/docs/api/_modules/dl/authClient.html
+        raw = _download(PUBLIC[1], "https://datalab.noirlab.edu/query/query",
+                        {"sql":query, "ofmt":"csv", "async":"False", "out":"", "drop":"False",
+                         "profile":"default"}, timeout=95,
+                        headers={"X-DL-AuthToken":"anonymous.0.0.anon_access",
+                                 "X-DL-TimeoutRequest":"90", "Content-Type":"text/ascii"})
+        group = pd.read_csv(io.BytesIO(raw), dtype=str)
+        if not {"row_id","name","era","edec","classification","z","z_err","warning"}.issubset(group):
+            raise ValueError(f"DESI NOIRLab query error {raw[:300]!r}")
+        group["catalog"] = PUBLIC[1]
+        rows.append(group)
+    return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame(columns=PUBLIC_COLS)
+
+
+def _desi_vizier(positions):
+    """Crossmatch at the independent CfA mirror; verify a real control in each batch."""
+    url = "https://vizier.cfa.harvard.edu/viz-bin/votable"
+    columns = "TargetID,RAICRS,DEICRS,OType,z,e_z,ZWARN"
+    source = "V/161/zcatdr1"
+
+    def parse(raw, allow_limit=False):
+        root = ElementTree.fromstring(raw)
+        for info in root.findall(".//{*}INFO"):
+            value = str(info.get("value", "")).upper()
+            if value == "ERROR" or (value == "OVERFLOW" and not allow_limit) or str(info.get("name", "")).lower() == "error":
+                raise ValueError(f"DESI CfA VizieR: {value} {info.text}")
+        # Some other VizieR responses have only metadata or descriptions.
+        for table in root.findall(".//{*}TABLE"):
+            if table.get("name", "") != source:
+                continue
+            names = [field.get("name") for field in table.findall("{*}FIELD")]
+            if not set(columns.split(",")).issubset(names):
+                raise ValueError(f"DESI CfA VizieR missing fields: {names}")
+            data = table.find("{*}DATA/{*}TABLEDATA")
+            if data is None:
+                raise ValueError("DESI CfA VizieR response omitted TABLEDATA")
+            records = [[v.text or "" for v in row.findall("{*}TD")] for row in data.findall("{*}TR")]
+            return pd.DataFrame(records, columns=names)
+        raise ValueError("DESI CfA VizieR response omitted zcatdr1")
+
+    base = {"-source":source, "-out":columns, "-out.max":"2", "-out.form":"VOTable"}
+    reference = parse(_download(PUBLIC[1],url,base,timeout=45), allow_limit=True)
+    if reference.empty:
+        raise ValueError("Missing DESI CfA validation source")
+    seed = reference.iloc[0]
+    anchor = f"{float(seed.RAICRS):.9f}{float(seed.DEICRS):+.9f}"
+    frames = []
+    for start in range(0,len(positions),120):
+        chunk = positions.iloc[start:start+120]
+        sky = [f"{r.ra:.9f}{r.dec:+.9f}" for r in chunk.itertuples()] + [anchor]
+        # The VizieR CGI position-list request used by astroquery.vizier.
+        # A real final control position prevents a false empty result.
+        directives = [f"-source={source}",f"-out={columns}","-out.add=_q","-out.max=10000",
+                      "-c.rs=2","-oc.form=d","-c=<<====Positions", *sky,"====Positions"]
+        raw = _download(PUBLIC[1],url,"\n".join(directives),"POST",timeout=75)
+        rows = parse(raw)
+        query_ids = pd.to_numeric(rows["_q"], errors="raise").astype(int)
+        if not query_ids.between(1,len(sky)).all() or len(rows)>=10000:
+            raise ValueError("DESI CfA VizieR query identifiers or row limit invalid")
+        control = rows[query_ids==len(sky)]
+        if str(seed.TargetID).strip() not in set(control.TargetID.str.strip()):
+            raise ValueError("DESI CfA VizieR did not recover its positive control")
+        data = rows[query_ids < len(sky)].copy()
+        data["row_id"] = chunk.row_id.to_numpy()[query_ids[query_ids < len(sky)].to_numpy()-1]
+        data["catalog"] = PUBLIC[1]
+        frames.append(data.rename(columns=dict(TargetID="name",RAICRS="era",DEICRS="edec",
+                                               OType="classification",e_z="z_err",ZWARN="warning")))
+    return pd.concat(frames,ignore_index=True) if frames else pd.DataFrame(columns=PUBLIC_COLS)
+
+
 def _desi(positions):
-    # VizieR and NOIRLab independently publish DESI Redrock classifications.
-    try:
-        return _public_remote(PUBLIC[1], positions)
-    except Exception:
-        rows = []
-        for pos in range(0, len(positions), 35):
-            chunk = positions.iloc[pos:pos+35]
-            entries = ",".join(f"({int(r.row_id)},{r.ra:.10f},{r.dec:.10f})" for r in chunk.itertuples())
-            query = (f"SELECT p.row_id, z.targetid as name, z.target_ra as era, z.target_dec as edec, "
-                     f"z.spectype as classification, z.z, z.zerr as z_err, z.zwarn as warning "
-                     f"FROM (VALUES {entries}) AS p(row_id,ra,dec) JOIN desi_dr1.zpix z "
-                     f"ON q3c_radial_query(z.target_ra,z.target_dec,p.ra,p.dec,2.0/3600.0)")
-            raw = _download(PUBLIC[1], "https://datalab.noirlab.edu/query/query",
-                            {"sql":query, "ofmt":"csv", "async":"False"}, timeout=90)
-            group = pd.read_csv(io.BytesIO(raw), dtype=str)
-            if not {"row_id","name","era","edec","classification","warning"}.issubset(group):
-                raise ValueError(f"DESI NOIRLab query error {raw[:300]!r}")
-            group["catalog"] = PUBLIC[1]
-            rows.append(group)
-        return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame(columns=PUBLIC_COLS)
+    errors = []
+    for label, query in [("NOIRLab zpix",_desi_noirlab), ("CfA VizieR",_desi_vizier),
+                         ("Strasbourg VizieR",lambda pos: _public_remote(PUBLIC[1],pos))]:
+        try:
+            return query(positions)
+        except Exception as exc:
+            detail = f"{type(exc).__name__}: {str(exc).split('?')[0][:300]}"
+            errors.append(f"{label} {detail}")
+            AUDIT.append(dict(catalog=PUBLIC[1], service=label, retrieval_error=detail))
+            print("DESI redshift service failed",label,detail,flush=True)
+    raise ValueError(" | ".join(errors))
 
 
 def _public_remote(cat, positions):

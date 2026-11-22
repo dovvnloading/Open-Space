@@ -25,6 +25,10 @@ CENTRE_RADIUS = 0.5
 IMAGE_RADIUS = 0.4
 PS1 = 'https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/stack.csv'
 TAP = 'https://datalab.noirlab.edu/tap/sync'
+SQL = 'https://datalab.noirlab.edu/query/query'
+# Fixed public-access identity documented by NOIRLab's astro-datalab client.
+DATALAB_PUBLIC = {'X-DL-AuthToken':'anonymous.0.0.anon_access','X-DL-User':'anonymous',
+                  'X-DL-TimeoutRequest':'55'}
 PS1_COLUMNS = ['objID', 'raStack', 'decStack', 'raStackErr', 'decStackErr', 'raMean',
                'decMean', 'raMeanErr', 'decMeanErr', 'qualityFlag', 'primaryDetection',
                'bestDetection', 'nStackDetections']
@@ -95,13 +99,27 @@ def get_cone(survey, centre, out):
     receipt = dict(url=url, parameters=params, radius_arcsec=CONE, attempts=[])
     for attempt in range(2):
         try:
-            response = requests.get(url, params=params, timeout=(10, 35))
+            if attempt and survey != 'PS1_DR2_stack':
+                url = SQL
+                query = (f"SELECT * FROM {table} WHERE q3c_radial_query(ra,dec,"
+                         f"{ra:.10f},{dec:.10f},{CONE/3600:.12f}) LIMIT 201")
+                params = dict(sql=query,ofmt='csv',out='',drop='False',**{'async':'False'})
+            headers = DATALAB_PUBLIC if survey != 'PS1_DR2_stack' else {}
+            response = requests.get(url, params=params, headers=headers, timeout=(10, 45))
             receipt['attempts'].append(dict(status_code=response.status_code))
             response.raise_for_status()
-            data = parse(response.content)
-            path = out/(survey + ('.csv.gz' if survey == 'PS1_DR2_stack' else '.vot.gz'))
+            if url == SQL:
+                reader = csv.DictReader(io.StringIO(response.content.decode('utf-8-sig')))
+                if not reader.fieldnames or not {'ra','dec','type','brickname','objid'}<=set(reader.fieldnames):
+                    raise ValueError('Unexpected Tractor CSV schema')
+                data = list(reader)
+                if len(data)>=201:
+                    raise ValueError('Truncated Tractor SQL cone')
+            else:
+                data = parse(response.content)
+            path = out/(survey + ('.vot.gz' if url==TAP else '.csv.gz'))
             path.write_bytes(gzip.compress(response.content, mtime=0))
-            receipt.update(sha256=hashlib.sha256(response.content).hexdigest(),
+            receipt.update(url=url,parameters=params,sha256=hashlib.sha256(response.content).hexdigest(),
                            bytes=len(response.content), raw_file=path.name, returned_rows=len(data))
             return data, receipt
         except Exception as exc:
