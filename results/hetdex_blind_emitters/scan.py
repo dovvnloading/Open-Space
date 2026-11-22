@@ -148,25 +148,34 @@ def scan(cat, output, workers):
 
 def followup(cat, out, cache):
     from vetting import spatial, vet, blank_apertures
+    from vet_cubes import halo_summary
+    from positive_controls import positive_controls
+    from ew_rescue import rescue
+    from calibration import summarize
+
+    positive_controls(cat,out)
+    summarize(out)
     blanks=Counter()
     with gzip.open(out/'offsource.jsonl.gz','wt') as fh:
         for meta, flux, err in blank_apertures(cat,cache,n_cubes=8):
             counts, rows = screen_chunk(cat.wave,flux,err,np.full(len(flux),np.nan),0,'offsource') if len(flux) else (Counter(), [])
             blanks.update(counts)
             fh.write(dump(dict(input=meta,counts=counts,features=rows))+'\n')
+    halo_summary(out)
     (out/'offsource-summary.json').write_text(json.dumps(blanks,indent=2)+'\n')
-    records=[]
-    for row in jsonlines(out/'screen.jsonl.gz'):
-        idx=row['row_index']
-        meta=cat.metadata(idx)
-        compact={k:meta.get(k) for k in CAT_KEYS}
-        # The input dictionary is separate because the blind line may be a secondary line.
-        records.append({**compact, 'catalog': compact, **row})
+    from itertools import chain
     from repeats import repeat_search
-    records.extend(repeat_search(cat,out))
-    groups=spatial(cat)
-    print('Spatial prescreen',len(groups),'Spectral leads',len(records),flush=True)
-    vet(records+groups,cat,out)
+    from pair_search import pair_search
+    paired = pair_search(cat,out)
+    repeats = repeat_search(cat,out)
+    imaging = rescue(cat,out)
+    groups = spatial(cat)
+    print('Spatial prescreen',len(groups),'repeated-visit leads',len(repeats),
+          'imaging-led objects',len(imaging),flush=True)
+    # vet() retrieves complete metadata by row after blind pixel selection.
+    vet(chain(jsonlines(out/'screen.jsonl.gz'),repeats,imaging,groups,paired),cat,out)
+    from control_followup import control_followup
+    control_followup(cat,out)
 
 
 def main():

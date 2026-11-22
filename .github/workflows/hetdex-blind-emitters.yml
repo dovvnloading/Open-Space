@@ -5,7 +5,7 @@ on:
       stage:
         description: Research stage
         type: choice
-        default: scan
+        default: full
         options: [scan, vet, full]
   push:
     branches: [science/hetdex-blind-emitter-search]
@@ -20,7 +20,7 @@ concurrency:
 
 env:
   SURVEY: results/hetdex_blind_emitters
-  STAGE: ${{ inputs.stage || 'scan' }}
+  STAGE: ${{ inputs.stage || 'vet' }}
   OMP_NUM_THREADS: "1"
   OPENBLAS_NUM_THREADS: "1"
 
@@ -41,6 +41,23 @@ jobs:
           persist-credentials: false
           filter: blob:none
           sparse-checkout: results/hetdex_blind_emitters
+      - name: Read the published scan checkpoint
+        if: env.STAGE == 'vet'
+        uses: actions/checkout@v4
+        with:
+          ref: science/hetdex-blind-emitter-search
+          path: checkpoint
+          persist-credentials: false
+          filter: blob:none
+          sparse-checkout: results/hetdex_blind_emitters/evidence
+      - name: Freeze input evidence for this run
+        if: env.STAGE == 'vet'
+        run: |
+          src="checkpoint/$SURVEY/evidence/$RELEASE"
+          test -s "$src/scan-summary.json"
+          mkdir -p "$SURVEY/evidence/$RELEASE"
+          cp "$src"/{scan-summary.json,screen.jsonl.gz,shuffled.jsonl.gz,injections.jsonl.gz} "$SURVEY/evidence/$RELEASE/"
+          git -C checkpoint rev-parse HEAD > "$SURVEY/evidence/$RELEASE/scan-checkpoint-commit.txt"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -54,6 +71,16 @@ jobs:
         if: env.STAGE != 'scan'
         run: |
           python "$SURVEY/scan.py" "$RELEASE" vet --cache "$RUNNER_TEMP/hetdex" --output "$SURVEY/evidence/$RELEASE"
+      - name: Record execution revision and package versions
+        if: always()
+        run: |
+          mkdir -p "$SURVEY/evidence/$RELEASE"
+          {
+            git rev-parse HEAD
+            echo "https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            python --version
+            python -m pip freeze
+          } > "$SURVEY/evidence/$RELEASE/execution-$STAGE.txt"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -72,8 +99,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: science/hetdex-blind-emitter-search
-          filter: blob:none
-          sparse-checkout: results/hetdex_blind_emitters
       - uses: actions/download-artifact@v4
         with:
           pattern: research-*
@@ -91,4 +116,16 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add "$SURVEY/evidence"
           git diff --cached --quiet || git commit -m "Record HETDEX $STAGE evidence from run $GITHUB_RUN_ID"
+          git push origin HEAD:science/hetdex-blind-emitter-search
+
+      - name: Build claim and verify branch
+        if: env.STAGE != 'scan' && needs.research.result == 'success'
+        run: |
+          python "$SURVEY/report.py"
+          git add README.md "$SURVEY"
+          git diff --cached --quiet || git commit -m 'Report HETDEX results, sensitivity limits and catalog counts'
+          python -m open_space.verify > "$RUNNER_TEMP/verify.txt" || { tail -100 "$RUNNER_TEMP/verify.txt"; exit 1; }
+          python -m unittest discover -s tests > "$RUNNER_TEMP/unittest.txt" 2>&1 || { tail -100 "$RUNNER_TEMP/unittest.txt"; exit 1; }
+          tail -6 "$RUNNER_TEMP/verify.txt"
+          tail -4 "$RUNNER_TEMP/unittest.txt"
           git push origin HEAD:science/hetdex-blind-emitter-search

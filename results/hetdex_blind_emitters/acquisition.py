@@ -189,6 +189,8 @@ class Spectra:
         self.shot_ids = np.asarray(self.info["shotid"], dtype="int64")
         self.info_columns = {n.lower(): n for n in self.info.names}
         self.det_columns = {n.lower(): n for n in self.detinfo.names}
+        self._info_vectors = {}
+        self._det_vectors = {}
         return self
 
     def __exit__(self, typ, value, trace):
@@ -217,7 +219,7 @@ class Spectra:
         return rows[self.shot_ids[rows] != self.shot_ids[index]]
 
     def representative_detection(self, index):
-        key = self.info["detectid"][index]
+        key = self._info_vectors["detectid"][index] if self._info_vectors else self.info["detectid"][index]
         pos = np.searchsorted(self.sorted_det_ids, key)
         if pos < self.sorted_det_ids.size and self.sorted_det_ids[pos] == key:
             return int(self.det_order[pos])
@@ -227,11 +229,14 @@ class Spectra:
     def metadata(self, index):
         # Keep the joined detection columns coupled to the catalog primary line.
         # Do not confuse 'wave' with the wavelength found by the blind search.
+        if not self._info_vectors:
+            self._info_vectors = {k:self.info[n] for k,n in self.info_columns.items()}
+            self._det_vectors = {k:self.detinfo[n] for k,n in self.det_columns.items()}
         result = {"release": self.release, "row": int(index)}
         det = self.representative_detection(index)
         if det is not None:
-            result.update({k: plain(self.detinfo[n][det]) for k, n in self.det_columns.items()})
-        result.update({k: plain(self.info[n][index]) for k, n in self.info_columns.items()})
+            result.update({k: plain(column[det]) for k, column in self._det_vectors.items()})
+        result.update({k: plain(column[index]) for k, column in self._info_vectors.items()})
         if self.release == "sc1":
             for k in ("wave_group_a", "wave_group_b", "src_separation"):
                 if result.get(k) is not None:
