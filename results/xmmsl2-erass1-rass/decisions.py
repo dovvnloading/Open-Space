@@ -56,6 +56,34 @@ def annotate(out):
             if key in fields:
                 reg["high_field_"+key]=reg.detection_uid.map(fields[key])
                 field_cols.append("high_field_"+key)
+    broker=json.loads((out/"broker_cones.json").read_text())
+    cones={r["detection_uid"]:r for r in broker["fields"] if r.get("detection_uid")}
+    colours=pd.read_csv(out/"rass_hardness/source_diagnostics.csv",low_memory=False)
+    for i,r in reg.loc[reg.disposition.eq("candidate")].iterrows():
+        cone=cones.get(r.detection_uid,{})
+        loci=cone.get("loci",[])
+        gate=float(r.match_radius_arcsec)
+        in_gate=[a for a in loci if float(a["sep_arcsec"])<=gate]
+        core=json.loads(r.service_outcomes)
+        source_checks=("Gaia","Legacy","NED","SIMBAD","SIMBAD_bibliography","VSX","WISE","papers")
+        measured=colours.loc[colours.xmmsl2_name.eq(r["name"]) & colours.low_mission.eq(r.low)]
+        floor=pd.to_numeric(measured.min_rass_only_guarded_ratio,errors="coerce").max()
+        valid=(all(core.get(c)=="ok" for c in source_checks) and not r.stellar_evidence
+               and not r.named_in_li_slew_variability_table and float(r.robust_model_floor_ratio)>=10
+               and str(r.high_field_galaxy_support).startswith("published primary +")
+               and float(r.high_field_Gaia_astrometric_or_variable_in_high95)==0
+               and float(r.high_field_other_eROSITA_main_in_high95)==0 and floor>=10
+               and cone.get("status")=="ok" and in_gate and broker.get("controls_recovered")
+               and not any(l.get("association_marked") or l.get("tns_records") for l in loci))
+        if not valid:
+            raise ValueError(f"Independent candidate evidence has changed for {r.detection_uid}; review required")
+        reg.loc[i,"rass_colour_guarded_floor_fixed_faint_ecf"]=floor
+        reg.loc[i,"tns_broker_loci_in_35arcsec"]=len(loci)
+        reg.loc[i,"tns_broker_nearest_locus_arcsec"]=min(l["sep_arcsec"] for l in in_gate)
+        reg.loc[i,"tns_broker_associated_records"]=0
+        reg.loc[i,"novelty_scope"]="No report of this specific decline identified in reviewed sources. Complete official TNS census unavailable."
+    field_cols.extend(k for k in ("rass_colour_guarded_floor_fixed_faint_ecf","tns_broker_loci_in_35arcsec",
+                     "tns_broker_nearest_locus_arcsec","tns_broker_associated_records","novelty_scope") if k in reg)
     compact=pd.read_csv(out/"review_photometry.csv",keep_default_na=False,dtype=str)
     result=reg.set_index("detection_uid")
     for k in ["named_in_li_slew_variability_table","screening_disposition","disposition","rationale","prior_identifier","source_specific_evidence","primary_reference","decision_reference"]+field_cols:

@@ -37,7 +37,7 @@ jobs:
           reuse=false
           if [[ "$REFRESH" != true ]] && git fetch -q --no-tags --depth=1 --filter=blob:none origin "$EVIDENCE"; then
             if git diff --quiet "$EVIDENCE" HEAD -- "$STUDY" \
-                ":(exclude)$STUDY/README.md" ":(exclude)$STUDY/decisions.py" ":(exclude)$STUDY/rass_hardness.py" ":(exclude)$STUDY/slew_images.py" ":(exclude)$STUDY/paper_context.py" ":(exclude)$STUDY/broker_cones.py" ":(exclude)$OUT/rass_hardness" ":(exclude)$OUT/paper_context" ":(exclude)$OUT/slew_image_followup.json" ":(exclude)$OUT/broker_cones.json" \
+                ":(exclude)$STUDY/README.md" ":(exclude)$STUDY/decisions.py" ":(exclude)$STUDY/rass_hardness.py" ":(exclude)$STUDY/slew_images.py" ":(exclude)$STUDY/paper_context.py" ":(exclude)$STUDY/broker_cones.py" ":(exclude)$STUDY/seyfert_literature.py" ":(exclude)$OUT/rass_hardness" ":(exclude)$OUT/paper_context" ":(exclude)$OUT/slew_image_followup.json" ":(exclude)$OUT/broker_cones.json" ":(exclude)$OUT/seyfert_literature.json" \
                 ":(exclude)$STUDY/source_decisions.csv" ":(exclude)$STUDY/published_event_review.csv" \
                 ":(exclude)$OUT/final_summary.json" ":(exclude)$OUT/final_source_register.csv" ":(exclude)$OUT/candidates.csv"; then
               reuse=true
@@ -247,15 +247,24 @@ jobs:
             python "$STUDY/rass_hardness.py" "$OUT"
             python "$STUDY/paper_context.py" "$OUT"
           fi
-          python -m venv --system-site-packages "$RUNNER_TEMP/broker-env"
-          "$RUNNER_TEMP/broker-env/bin/python" -m pip install 'antares-client==2.0.2' || echo "Broker client unavailable; record its import status"
-          "$RUNNER_TEMP/broker-env/bin/python" "$STUDY/broker_cones.py" "$OUT"
-          if [[ "$REUSE" == true && -f "$OUT/slew_image_followup.json" &&
-                "$(git hash-object "$OUT/slew_image_followup.json")" == 9d4cd3324dfb8535571e71ef5cedebc27f8c6c23 ]]; then
-            python "$STUDY/slew_images.py" "$OUT" --remeasure
+          if [[ "$REUSE" == true &&
+                "$(git rev-parse "HEAD:$STUDY/broker_cones.py")" == 6bb9327a4409f99b4413c9b333ecff8a6bf186c1 &&
+                "$(git rev-parse "HEAD:$STUDY/slew_images.py")" == d95d3a9ea8cb6be1b89bd1f9f913c7a1bd15fcdf &&
+                "$(git rev-parse "HEAD:$OUT/broker_cones.json")" == 109a546f3b303320b42c12f003c091e9d72fc55c &&
+                "$(git rev-parse "HEAD:$OUT/slew_image_followup.json")" == 25597ca13dde04e299742923381ac65f7205c4f6 ]]; then
+            echo "Verified source-local broker controls and calibrated native image/event measurements"
           else
-            python "$STUDY/slew_images.py" "$OUT"
+            python -m venv --system-site-packages "$RUNNER_TEMP/broker-env"
+            "$RUNNER_TEMP/broker-env/bin/python" -m pip install 'antares-client==2.0.2' || echo "Broker client unavailable; record its import status"
+            "$RUNNER_TEMP/broker-env/bin/python" "$STUDY/broker_cones.py" "$OUT"
+            if [[ "$REUSE" == true && -f "$OUT/slew_image_followup.json" &&
+                  "$(git hash-object "$OUT/slew_image_followup.json")" == 9d4cd3324dfb8535571e71ef5cedebc27f8c6c23 ]]; then
+              python "$STUDY/slew_images.py" "$OUT" --remeasure
+            else
+              python "$STUDY/slew_images.py" "$OUT"
+            fi
           fi
+          python "$STUDY/seyfert_literature.py" "$OUT"
           python "$STUDY/decisions.py" "$OUT"
       - uses: actions/upload-artifact@v4
         if: always()
@@ -266,6 +275,7 @@ jobs:
             results/xmmsl2-erass1-rass/outputs/paper_context
             results/xmmsl2-erass1-rass/outputs/slew_image_followup.json
             results/xmmsl2-erass1-rass/outputs/broker_cones.json
+            results/xmmsl2-erass1-rass/outputs/seyfert_literature.json
             results/xmmsl2-erass1-rass/outputs/final*
             results/xmmsl2-erass1-rass/outputs/candidates.csv
           if-no-files-found: warn
