@@ -49,8 +49,6 @@ def vac_to_air(v):
 def _weighted_cont(y, e, minimum=8):
     """Robust centered sideband and its error, with a block-dispersion floor."""
     ok = np.isfinite(y) & np.isfinite(e) & (e > 0)
-    for low, high in BAD_AIR:
-        ok[:, (w >= low) & (w <= high)] = False
     if np.count_nonzero(ok) < minimum:
         return None
     # Contiguous 8-pixel blocks retain local spectral correlations. Compute
@@ -94,6 +92,8 @@ def _inputs(w, flux, err, density_unit):
     if y.shape != e.shape or y.shape[1] != len(w):
         raise ValueError("Matched flux, error, wavelength dimensions are required")
     ok = np.isfinite(y) & np.isfinite(e) & (e > 0)
+    for low, high in BAD_AIR:
+        ok[:, (w >= low) & (w <= high)] = False
     # Reject catalog masked bins with invalid variance, leaving real zero
     # flux with a positive variance as a valid measurement.
     return np.where(ok, y, 0), np.where(ok, e, np.inf), ok
@@ -346,6 +346,7 @@ def simulate(wave, flux, err, seed, n_inject=3, *, density_unit=1.0):
         row = {"family": family, "wave": center, "sigma_A": width, "target_snr": target,
                "was_blended": any(abs(p["wave"]-center) <= max(4, width) for p in before),
                "input_flux": None, "recovered": False, "selected_ew": False,
+               "selected_heii_precursor": False, "selected_heii_pair": False,
                "lya_recovered": None, "civ_detected": None, "status": "unusable"}
         if not measure:
             result.append(row)
@@ -370,7 +371,9 @@ def simulate(wave, flux, err, seed, n_inject=3, *, density_unit=1.0):
         row.update(status="injected", input_flux=area*1e-17, recovered=bool(matching))
         if matching:
             p = max(matching, key=lambda q:q["snr"])
-            row["selected_ew"] = p["ew_extreme"]
+            clean = not p["sky_near"] and not p["single_pixel"]
+            row["selected_ew"] = clean and p["ew_extreme"] and 1.88 <= p["z_lya"] <= 3.52
+            row["selected_heii_precursor"] = clean and (p["lya_pre_snr"] or 0) >= 4
             if family != "lya" and p["z_heii"] is not None:
                 z1 = 1+p["z_heii"]
                 errors = e*p["noise_scale"]
@@ -378,5 +381,7 @@ def simulate(wave, flux, err, seed, n_inject=3, *, density_unit=1.0):
                 civ = [_force(w, inj, errors, dx, UV[k]*z1, p["sigma_A"]) for k in ("civ1", "civ2")]
                 row["lya_recovered"] = lya.get("snr", 0) >= 5
                 row["civ_detected"] = any(line.get("snr", 0) >= 3 for line in civ)
+                row["selected_heii_pair"] = (row["selected_heii_precursor"] and
+                                              row["lya_recovered"] and not row["civ_detected"])
         result.append(row)
     return {"injections": result}

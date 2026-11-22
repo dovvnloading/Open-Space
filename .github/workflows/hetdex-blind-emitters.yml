@@ -45,6 +45,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: python -m pip install -r "$SURVEY/requirements.txt"
+      - run: python "$SURVEY/check_pipeline.py"
       - name: Search every spectrum and run controls
         if: env.STAGE != 'vet'
         run: |

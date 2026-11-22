@@ -33,7 +33,7 @@ REST = np.sort(np.array([
     5202, 5272, 5413, 5519, 5539, 5877, 6302, 6366, 6549.86, 6564.61, 6585.27]))
 CAT_KEYS = ('release','source_id','detectid','shotid','ra','dec','source_type','z_hetdex',
             'z_hetdex_src','z_hetdex_conf','det_type','wave','field','ifuslot','flag_best',
-            'flag_agn','linewidth','sn','p_conf','p_cnn','major','minor','gmag')
+            'agn_flag','sigma','ra_det','dec_det','cls_diagnose','plya_classification','fwhm','sn','p_conf','p_cnn','major','minor','gmag')
 
 
 def json_default(obj):
@@ -62,7 +62,7 @@ def channels(wave, flux, error, peak, z):
     zh = peak['z_heii']
     if zh is not None:
         anchored = z is not None and abs(z - zh) < 0.008
-        if anchored or (peak.get('lya_pre_snr') or 0) >= 3.5:
+        if anchored or (peak.get('lya_pre_snr') or 0) >= 4.0:
             found.append('heii')
     if z is not None and z >= 0 and peak['snr'] >= 9:
         red = 1 + z
@@ -151,7 +151,7 @@ def followup(cat, out, cache):
     blanks=Counter()
     with gzip.open(out/'offsource.jsonl.gz','wt') as fh:
         for meta, flux, err in blank_apertures(cat,cache,n_cubes=8):
-            counts, rows=screen_chunk(cat.wave,flux,err,np.full(len(flux),np.nan),0,'offsource')
+            counts, rows = screen_chunk(cat.wave,flux,err,np.full(len(flux),np.nan),0,'offsource') if len(flux) else (Counter(), [])
             blanks.update(counts)
             fh.write(dump(dict(input=meta,counts=counts,features=rows))+'\n')
     (out/'offsource-summary.json').write_text(json.dumps(blanks,indent=2)+'\n')
@@ -162,6 +162,8 @@ def followup(cat, out, cache):
         compact={k:meta.get(k) for k in CAT_KEYS}
         # The input dictionary is separate because the blind line may be a secondary line.
         records.append({**compact, 'catalog': compact, **row})
+    from repeats import repeat_search
+    records.extend(repeat_search(cat,out))
     groups=spatial(cat)
     print('Spatial prescreen',len(groups),'Spectral leads',len(records),flush=True)
     vet(records+groups,cat,out)
