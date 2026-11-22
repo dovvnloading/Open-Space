@@ -249,7 +249,7 @@ def read(path):
 
 def execute(work, out, old):
     primary_meta = json.loads((out/"ingest.json").read_text())
-    if primary_meta["source"] not in (PRIMARY, AUTHOR):
+    if primary_meta["source"] not in (PRIMARY, AUTHOR, PRIMARY+" (verified corrected subset)"):
         (out/"holdout.json").write_text(json.dumps({"status":"requires primary RVBank discovery run"})+"\n")
         return
     bank = read(out/"targets.csv").set_index("star",verify_integrity=True)
@@ -273,6 +273,7 @@ def execute(work, out, old):
     last = float(all_bjd[good].max())
     if not np.isfinite(last) or last < primary_meta["last_bjd"]-1.e-6:
         raise ValueError("Cannot verify release-wide date boundary")
+    last = max(last, float(primary_meta.get("full_release_last_bjd", last)))
     future = pd.read_csv(old,dtype={"star":str},low_memory=False)
     future = future[future.bjd.ge(np.floor(last)+1)].groupby("star",sort=False)
     train = train.groupby("star",sort=False)
