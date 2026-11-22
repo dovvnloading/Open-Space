@@ -33,8 +33,8 @@ def prepare(out):
         raise ValueError("Invalid map-to-source join")
     for mission in ("ero", "rass"):
         cols = ["detection_uid", "limit_flux_cgs", "status"]
-        if "model_max" in limits:
-            cols.append("model_max")
+        if "model_max_relative" in limits:
+            cols.append("model_max_relative")
         part = limits.loc[limits.mission.eq(mission), cols].copy()
         part = part.rename(columns={k: f"{mission}_ul_{k}" for k in cols[1:]})
         cat = cat.merge(part, how="left", on="detection_uid", validate="one_to_one")
@@ -56,13 +56,15 @@ def prepare(out):
             # Independent worst-case factors allow the spectrum to change at each epoch.
             # These factors describe only the finite set of alternative models in catalogs.py.
             hfactor = numeric(cat,high+"_model_min")
-            lfactor = numeric(cat,low+"_model_max").where(dl,numeric(cat,low+"_ul_model_max"))
+            lfactor = numeric(cat,low+"_model_max").where(dl,numeric(cat,low+"_ul_model_max_relative"))
             model = guarded * hfactor / lfactor
             good = truth(cat.clean) & truth(cat[high+"_quality"]) & (
                 (dl & truth(cat[low+"_quality"])) | use_limit)
             for m in (high,low):
                 if m!="xmm":
                     good &= ~truth(cat[m+"_ambiguous"])
+            if {high,low}=={"ero","rass"}:
+                good &= ~dl | truth(cat.ero_rass_consistent)
             idx = possible & ratio.ge(1)
             rows = pd.DataFrame({
                 "detection_uid": cat.detection_uid, "name": cat.name, "high": high, "low": low,

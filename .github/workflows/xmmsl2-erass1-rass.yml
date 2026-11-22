@@ -11,10 +11,13 @@ concurrency:
   cancel-in-progress: false
 env:
   STUDY: results/xmmsl2-erass1-rass
+  OUT: results/xmmsl2-erass1-rass/outputs
+  PYTHONUNBUFFERED: '1'
+  OPENBLAS_NUM_THREADS: '1'
 jobs:
-  inventory:
+  catalog:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
@@ -23,21 +26,101 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Prepare the FITS reader
-        run: pip install 'astropy>=6,<8' requests
-      - uses: actions/cache@v4
+      - uses: actions/cache/restore@v4
         with:
           path: work/downloads
           key: xmmsl2-dr1-rass-inputs-v1
-      - name: Freeze versioned survey files and inspect their original fields
-        run: python -u "$STUDY/release_check.py"
+      - name: Match the release catalogues and offset skies
+        run: |
+          pip install -r "$STUDY/requirements.txt"
+          mkdir -p "$OUT"
+          if [[ -f "$OUT/catalog.sha256" ]] && sha256sum -c "$OUT/catalog.sha256"; then
+            echo "Reusing verified catalogue comparison"
+          else
+            python "$STUDY/catalogs.py" --work work --out "$OUT"
+            sha256sum "$STUDY/catalogs.py" "$STUDY/requirements.txt" "$OUT/catalog_sources.csv.gz" "$OUT/spectral_model.json" > "$OUT/catalog.sha256"
+          fi
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: survey-release-headers
-          path: results/xmmsl2-erass1-rass/release
-          if-no-files-found: error
+          name: 01-catalog
+          path: |
+            results/xmmsl2-erass1-rass/outputs/catalog*
+            results/xmmsl2-erass1-rass/outputs/spectral_model.json
+            results/xmmsl2-erass1-rass/outputs/shifted_controls.json
+          if-no-files-found: warn
+  maps:
+    needs: catalog
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/xmmsl2-erass1-rass
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: 01-catalog
+          path: results/xmmsl2-erass1-rass/outputs
+      - name: Measure local limits and compare three epochs
+        run: |
+          pip install -r "$STUDY/requirements.txt"
+          if [[ -f "$OUT/maps.sha256" ]] && sha256sum -c "$OUT/maps.sha256"; then
+            echo "Reusing verified map measurements"
+          else
+            python "$STUDY/limits.py" --work work --out "$OUT"
+            sha256sum "$STUDY/limits.py" "$OUT/catalog.sha256" "$OUT/limits.csv" > "$OUT/maps.sha256"
+          fi
+          python "$STUDY/prepare.py" "$OUT"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: 02-maps
+          path: |
+            results/xmmsl2-erass1-rass/outputs/limit*
+            results/xmmsl2-erass1-rass/outputs/erass*
+            results/xmmsl2-erass1-rass/outputs/maps.sha256
+            results/xmmsl2-erass1-rass/outputs/comparisons.csv.gz
+            results/xmmsl2-erass1-rass/outputs/input.csv
+          if-no-files-found: warn
+  vet:
+    needs: maps
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/xmmsl2-erass1-rass
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: '0*'
+          merge-multiple: true
+          path: results/xmmsl2-erass1-rass/outputs
+      - name: Resolve counterparts and prior reports
+        run: |
+          pip install -r "$STUDY/requirements.txt"
+          python "$STUDY/vet.py" "$OUT/input.csv" "$OUT/vetting"
+          python "$STUDY/report.py" "$OUT"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: 03-vetting
+          path: |
+            results/xmmsl2-erass1-rass/outputs/vetting
+            results/xmmsl2-erass1-rass/outputs/review*
+            results/xmmsl2-erass1-rass/outputs/candidates*
+            results/xmmsl2-erass1-rass/outputs/summary*
+          if-no-files-found: warn
   record:
-    needs: inventory
+    needs: [catalog, maps, vet]
+    if: always() && !cancelled()
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -45,16 +128,25 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: survey/xmmsl2-erass1-rass
-          sparse-checkout: results/xmmsl2-erass1-rass
       - uses: actions/download-artifact@v4
         with:
-          name: survey-release-headers
-          path: results/xmmsl2-erass1-rass/release
-      - run: |
+          pattern: '0*'
+          path: products
+      - name: Record survey evidence on the research branch
+        run: |
+          mkdir -p "$OUT"
+          for bundle in products/*; do
+            [[ -d "$bundle" ]] || continue
+            cp -a "$bundle/." "$OUT/"
+          done
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- "$STUDY/release"
+          git add -- "$OUT"
           if ! git diff --cached --quiet; then
-            git commit -m "Record official release products, checksums and column definitions"
+            git commit -m "Record three-survey measurements and source-level dispositions (run $GITHUB_RUN_ID)"
             git push origin HEAD:survey/xmmsl2-erass1-rass
           fi
+      - name: Verify the branch
+        run: |
+          python -m open_space.verify
+          python -m unittest discover -s tests
