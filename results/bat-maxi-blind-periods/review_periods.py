@@ -26,7 +26,7 @@ WINDOWS = {"solar day":(1.,0.,128), "sidereal day":(.99726957,0.,128),
            "anomalistic Moon":(27.55455,.02,4), "draconic Moon":(27.21222,.02,4),
            "Swift precession":(53.,2.,4), "ISS precession":(70.,2.,4),
            "year":(365.256,.25,4)}
-HARMONICS = (.25,1/3,.5,1.,2.,3.,4.)
+HARMONICS = tuple(1/n for n in range(8,1,-1)) + tuple(float(n) for n in range(1,9))
 ATOM = "{http://www.w3.org/2005/Atom}"
 CLOCK = re.compile(r"orbit|superorb|period|spin|pulsat|recurr|modulat|precess|cycle|ephemer",re.I)
 VALUE = re.compile(r"(?<![\w.])(\d+(?:\.\d+)?)(?:\((\d+)\)|\s*(?:±|\+/-)\s*(\d+(?:\.\d+)?))?\s*"
@@ -247,6 +247,16 @@ def main():
     manual=json.loads(args.manual.read_text()) if args.manual else []
     if not isinstance(manual,list):
         raise ValueError("--manual expects a JSON list")
+    for m in manual:
+        if m.get("decision"):
+            m["disposition"] = m["decision"]
+            m["rationale"] = m["explanation"]
+        for ref in m.get("references",[]):
+            if "label" in ref and "title" not in ref:
+                ref["title"] = ref["label"]
+        periods = list(m.get("published",[]))
+        periods.extend(ref for ref in m.get("references",[]) if "period_days" in ref)
+        m["published"] = periods
     seen_manual=set()
     spans={r["roster_id"]:{k:b.get("span_days") for k,b in r.get("instruments",{}).items()}
            for path in root.glob("search-*.jsonl.gz") for r in lines(path)}
@@ -254,7 +264,7 @@ def main():
     controls=json.loads(controls_path.read_text()) if controls_path.is_file() else []
     heading=["# Published-period and alias review", "",
              "Every row is a lead for source-by-source review. The ledger preserves all matching catalogue and abstract values. A source name and a number in the same abstract may refer to different components, objects or timescales.", "",
-             "A match must overlap each instrument's refined frequency interval (one Rayleigh width plus its three-standard-error interval). Published frequencies use the larger of three reported standard errors and half the final printed digit. The test includes direct carriers, source harmonics 2–4, source subharmonics 1/2–1/4, solar and sidereal daily beats through order 128, and lunar, precession and annual sidebands through order 4. Each combination uses one window family at a time. Very wide published intervals or high-order sidebands readily generate chance matches. Coherent leakage strength needs the actual exposures and source spectrum.", ""]
+             "A match must overlap each instrument's refined frequency interval (one Rayleigh width plus its three-standard-error interval). Published frequencies use the larger of three reported standard errors and half the final printed digit. The test includes direct carriers, source harmonics 2–8, source subharmonics 1/2–1/8, solar and sidereal daily beats through order 128, and lunar, precession and annual sidebands through order 4. Each combination uses one window family at a time. Very wide published intervals or high-order sidebands readily generate chance matches. Coherent leakage strength needs the actual exposures and source spectrum.", ""]
     index=list(heading)
     cache={}
     with gzip.open(dest/"matches.jsonl.gz","wt") as records:

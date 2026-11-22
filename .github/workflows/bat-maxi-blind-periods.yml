@@ -4,9 +4,13 @@ on:
     inputs:
       mode:
         type: choice
-        options: [fresh, frozen, acquire, review]
+        options: [fresh, frozen, acquire, resume, review, report]
         default: fresh
         description: Refresh archives, search frozen inputs, acquire curves, or review the completed search
+      checkpoint_run:
+        type: string
+        required: false
+        description: Saved run number for resume mode
   push:
     branches: ['survey/bat-maxi-blind-periods']
     paths: ['.github/workflows/bat-maxi-blind-periods.yml']
@@ -17,7 +21,8 @@ concurrency:
   cancel-in-progress: false
 env:
   FOLDER: results/bat-maxi-blind-periods
-  MODE: ${{ inputs.mode || 'frozen' }}
+  CHECKPOINT_RUN: ${{ inputs.checkpoint_run || '45016207097' }}
+  MODE: ${{ inputs.mode || 'resume' }}
   OPENBLAS_NUM_THREADS: '1'
   OMP_NUM_THREADS: '1'
   MKL_NUM_THREADS: '1'
@@ -43,8 +48,12 @@ jobs:
           python -m pip -q install -r "$FOLDER/requirements.txt"
           python "$FOLDER/ingest.py" inventory --out roster
           python "$FOLDER/inventory_check.py" roster
-      - if: env.MODE == 'frozen' || env.MODE == 'review'
+      - if: env.MODE == 'frozen' || env.MODE == 'review' || env.MODE == 'report' || env.MODE == 'resume'
         run: |
+          if [[ "$MODE" == resume ]]; then
+            [[ "$CHECKPOINT_RUN" =~ ^[0-9]+$ ]]
+            test -f "$FOLDER/attempts/$CHECKPOINT_RUN/search-summary.json"
+          fi
           mkdir -p roster
           cp "$FOLDER/evidence/inventory.json" roster/
           python "$FOLDER/check_members.py" "$FOLDER/evidence" roster/archive-member-check.json
@@ -63,7 +72,7 @@ jobs:
           retention-days: 4
   shard:
     needs: inventory
-    if: needs.inventory.outputs.mode != 'review'
+    if: needs.inventory.outputs.mode != 'review' && needs.inventory.outputs.mode != 'report' && needs.inventory.outputs.mode != 'resume'
     runs-on: ubuntu-latest
     timeout-minutes: 300
     strategy:
@@ -102,7 +111,8 @@ jobs:
           if-no-files-found: warn
           retention-days: 4
   assess:
-    needs: shard
+    needs: [inventory, shard]
+    if: always() && needs.inventory.result == 'success' && (needs.shard.result == 'success' || needs.inventory.outputs.mode == 'resume')
     runs-on: ubuntu-latest
     timeout-minutes: 240
     steps:
@@ -118,7 +128,9 @@ jobs:
           pattern: bat-maxi-*
           path: evidence
           merge-multiple: true
-      - if: env.MODE != 'acquire'
+      - if: env.MODE == 'resume'
+        run: cp -a "$FOLDER/attempts/$CHECKPOINT_RUN"/. evidence/
+      - if: env.MODE != 'acquire' && env.MODE != 'resume'
         run: |
           python -m pip -q install -r "$FOLDER/requirements.txt"
           if [[ "$MODE" == frozen ]]; then
@@ -147,6 +159,16 @@ jobs:
             evidence/*.csv
             evidence/validation/
           retention-days: 4
+      - if: env.MODE == 'resume'
+        uses: actions/upload-artifact@v4
+        with:
+          name: bat-maxi-checkpoint
+          path: |
+            evidence/search-*.jsonl.gz
+            evidence/pulse-*.jsonl
+            evidence/pulse-timing-*.json
+          if-no-files-found: error
+          retention-days: 4
   literature:
     needs: assess
     runs-on: ubuntu-latest
@@ -156,6 +178,9 @@ jobs:
         with:
           sparse-checkout: results/bat-maxi-blind-periods
           persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - if: env.MODE != 'acquire'
         uses: actions/download-artifact@v4
         with:
@@ -165,7 +190,7 @@ jobs:
         run: |
           python -m pip -q install -r "$FOLDER/requirements.txt"
           if ! command -v pdftotext > /dev/null; then sudo apt-get -qq update && sudo apt-get -qq install poppler-utils; fi
-          if [[ "$MODE" == frozen && -d "$FOLDER/evidence/literature/responses" ]]; then
+          if [[ "$MODE" =~ ^(frozen|resume)$ && -d "$FOLDER/evidence/literature/responses" ]]; then
             mkdir -p evidence/literature
             cp -a "$FOLDER/evidence/literature/responses" evidence/literature/
             if [[ -f "$FOLDER/evidence/literature/queries.jsonl" ]]; then cp "$FOLDER/evidence/literature/queries.jsonl" evidence/literature/; fi
@@ -182,7 +207,7 @@ jobs:
   pulses:
     needs: [inventory, assess]
     if: >-
-      always() && needs.inventory.result == 'success' &&
+      always() && needs.inventory.result == 'success' && needs.inventory.outputs.mode != 'resume' &&
       (needs.inventory.outputs.mode == 'review' || (needs.inventory.outputs.mode != 'acquire' && needs.assess.result == 'success'))
     runs-on: ubuntu-latest
     timeout-minutes: 90
@@ -225,10 +250,48 @@ jobs:
           name: bat-maxi-pulses-${{ matrix.part }}
           path: pulse/
           retention-days: 4
+  orbit:
+    needs: [inventory, assess]
+    if: >-
+      always() && needs.inventory.result == 'success' &&
+      (needs.inventory.outputs.mode == 'review' || (needs.inventory.outputs.mode != 'acquire' && needs.assess.result == 'success'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/bat-maxi-blind-periods
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - if: env.MODE != 'review'
+        uses: actions/download-artifact@v4
+        with:
+          name: bat-maxi-assessment
+          path: inputs
+      - if: env.MODE != 'review'
+        uses: actions/download-artifact@v4
+        with:
+          name: bat-maxi-inventory
+          path: inputs
+      - run: |
+          set -euo pipefail
+          python -m pip -q install -r "$FOLDER/requirements.txt"
+          if [[ "$MODE" == review ]]; then ln -s "$GITHUB_WORKSPACE/$FOLDER/evidence" inputs; fi
+          mkdir -p packet/review
+          python "$FOLDER/orbit_product_check.py" --inventory inputs/inventory.json --candidates inputs/survivors.jsonl --out packet/review/orbit
+          echo "$GITHUB_SHA" > packet/orbit-revision.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bat-maxi-orbit
+          path: packet/
+          retention-days: 4
   review:
     needs: [inventory, literature, pulses]
     if: >-
-      always() && needs.inventory.result == 'success' && needs.pulses.result == 'success' &&
+      always() && needs.inventory.result == 'success' && (needs.pulses.result == 'success' || needs.inventory.outputs.mode == 'resume') &&
       (needs.inventory.outputs.mode == 'review' || (needs.inventory.outputs.mode != 'acquire' && needs.literature.result == 'success'))
     runs-on: ubuntu-latest
     timeout-minutes: 180
@@ -246,7 +309,8 @@ jobs:
           pattern: bat-maxi-*
           path: inputs
           merge-multiple: true
-      - uses: actions/download-artifact@v4
+      - if: env.MODE != 'resume'
+        uses: actions/download-artifact@v4
         with:
           pattern: bat-maxi-pulses-*
           path: pulses
@@ -256,6 +320,9 @@ jobs:
           python -m pip -q install -r "$FOLDER/requirements.txt"
           if [[ "$MODE" == review ]]; then
             cp -al "$FOLDER/evidence" inputs
+          elif [[ "$MODE" == resume ]]; then
+            cp -al "$FOLDER"/evidence/curves-*.tar.gz inputs/
+            ln -s "$GITHUB_WORKSPACE/$FOLDER/attempts/$CHECKPOINT_RUN" pulses
           elif [[ "$MODE" == frozen ]]; then
             cp -al "$FOLDER"/evidence/curves-*.tar.gz inputs/
           fi
@@ -266,7 +333,6 @@ jobs:
           python "$FOLDER/review_periods.py" --evidence inputs --output dossier/review
           python "$FOLDER/plot_folds.py" inputs dossier/review/folds
           python "$FOLDER/residuals.py" --evidence inputs --snapshot inputs --output dossier/review
-          python "$FOLDER/orbit_product_check.py" --inventory inputs/inventory.json --candidates inputs/survivors.jsonl --out dossier/review/orbit
       - if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -275,8 +341,36 @@ jobs:
             dossier/review/
             dossier/review-revision.txt
           retention-days: 4
+  publication:
+    needs: inventory
+    if: needs.inventory.outputs.mode == 'report'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/bat-maxi-blind-periods
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          set -euo pipefail
+          python -m pip -q install -r "$FOLDER/requirements.txt" matplotlib==3.10.3
+          mkdir -p packet/review
+          python "$FOLDER/plot_folds.py" "$FOLDER/evidence" packet/review/folds
+          python "$FOLDER/review_periods.py" --evidence "$FOLDER/evidence" --output packet/review --manual "$FOLDER/decisions.json"
+          python "$FOLDER/prior_aliases.py" "$FOLDER/evidence" packet/review
+          python "$FOLDER/harmonic_check.py" "$FOLDER" packet/review
+          python "$FOLDER/publication.py" "$FOLDER" packet/review
+          echo "$GITHUB_SHA" > packet/publication-revision.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bat-maxi-publication
+          path: packet/
+          retention-days: 4
   record:
-    needs: [inventory, shard, assess, literature, review]
+    needs: [inventory, shard, assess, literature, review, orbit, publication]
     if: always() && github.ref == 'refs/heads/survey/bat-maxi-blind-periods'
     permissions:
       contents: write
@@ -287,6 +381,10 @@ jobs:
         with:
           ref: survey/bat-maxi-blind-periods
           sparse-checkout: results/bat-maxi-blind-periods
+      - if: env.MODE == 'report'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - uses: actions/download-artifact@v4
         with:
           pattern: bat-maxi-*
@@ -298,11 +396,15 @@ jobs:
           ASSESS: ${{ needs.assess.result }}
           LIT: ${{ needs.literature.result }}
           REVIEW: ${{ needs.review.result }}
+          PUBLICATION: ${{ needs.publication.result }}
+          ORBIT: ${{ needs.orbit.result }}
         run: |
           set -euo pipefail
-          if [[ "$MODE/$INVENTORY/$REVIEW" == review/success/success ||
+          if [[ "$MODE/$INVENTORY/$ASSESS/$LIT/$REVIEW/$ORBIT" == resume/success/success/success/success/success ||
+                "$MODE/$INVENTORY/$PUBLICATION" == report/success/success ||
+                "$MODE/$INVENTORY/$REVIEW/$ORBIT" == review/success/success/success ||
                 "$MODE/$INVENTORY/$SHARDS/$ASSESS/$LIT" == acquire/success/success/success/success ||
-                "$INVENTORY/$SHARDS/$ASSESS/$LIT/$REVIEW" == success/success/success/success/success ]]; then
+                "$INVENTORY/$SHARDS/$ASSESS/$LIT/$REVIEW/$ORBIT" == success/success/success/success/success/success ]]; then
             target="$FOLDER/evidence"
           else
             target="$FOLDER/attempts/$GITHUB_RUN_ID"
@@ -322,7 +424,7 @@ jobs:
             (cd "$previous" && find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
             git add -f -- "$previous"
           fi
-          if [[ "$target" == "$FOLDER/evidence" ]]; then
+          if [[ "$target" == "$FOLDER/evidence" && "$MODE" != report ]]; then
             for component in review literature validation; do
               if [[ -d "packet/$component" && -d "$target/$component" ]]; then
                 git rm -rq --ignore-unmatch -- "$target/$component"
@@ -330,12 +432,18 @@ jobs:
             done
           fi
           cp -a packet/. "$target/"
-          echo "$MODE $GITHUB_SHA $INVENTORY/$SHARDS/$ASSESS/$LIT/$REVIEW" > "$target/run-$GITHUB_RUN_ID.txt"
+          echo "$MODE $GITHUB_SHA $INVENTORY/$SHARDS/$ASSESS/$LIT/$REVIEW/$PUBLICATION" > "$target/run-$GITHUB_RUN_ID.txt"
           (cd "$target" && find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -f -- "$target"
           if ! git diff --cached --quiet; then
             git commit -m "Record BAT/MAXI survey outputs from run $GITHUB_RUN_ID"
+            if [[ "$MODE" == report && "$PUBLICATION" == success ]]; then
+              git sparse-checkout disable
+              python -m pip -q install '.[archive]' numpy scipy pandas matplotlib
+              python -m open_space.verify
+              python -m unittest discover -s tests
+            fi
             git push origin HEAD:survey/bat-maxi-blind-periods
           fi
