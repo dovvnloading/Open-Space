@@ -1,17 +1,25 @@
 # Chandra ACIS fast X-ray transient search
 
-**No observational result is available.** The branch contains the survey implementation and synthetic regression fixtures. No completed search run, Chandra event-file receipt, searched exposure, false-alarm measurement or injection recovery has been deposited. A discovery count and an astrophysical rate limit are both undetermined.
+**No FXT survived in 3 scanned ObsIDs covering 0.034828 Ms of eligible 60-second flare-start live time.**
 
-## Population and decision rule
+The frozen release inventory contains 6,608 ObsIDs. All data products were scanned in 3. Catalog calls and needed photometry completed in 3. The release-date or mode ledger contains 14 exceptions.
 
-The observing unit is a public Chandra ACIS imaging observation. Select by first public availability from 2021-01-01 through 2026-11-21 inclusive, including earlier pointings released during the interval. Freeze the observation inventory before opening event lists. Search the sky and mission time in those fields without targeting catalog positions. Inspect instrumental diagnostics and counterpart catalogs only after triggering.
+Across 24 full-survey scrambles the mean number passing the same instrumental and counterpart screen was 0.000. The real fields produced 0 raw triggers. Of 30 executed injections, 24 passed instrumental selection. 6 additional draws lacked usable observing time or geometry.
 
-Record controls, injected events, competing identifications, failed downloads, unsupported exposures and incomplete catalog queries alongside the on-sky triggers. A repeated event in multiple products supplies one observational lead. A possible galaxy along the line of sight does not establish the distance to a flare. An empty search supports a count or rate bound only with stated positive exposure, a defined sensitivity and completed vetting.
+| Trial duration (s) | Eligible field-start live seconds |
+|---:|---:|
+| 60 | 34,827.7 |
+| 180 | 33,772.7 |
+| 600 | 30,080.0 |
+| 1800 | 19,529.6 |
+| 3600 | 4,727.3 |
 
-## Execution boundary
+The one-sided 95% Poisson upper bound is 86 detected events per Ms for this field mixture, using 60-second start support. Intrinsic sky rates require effective survey area and a source population model.
 
-Use the single manual Chandra Actions workflow on the research branch. GitHub requires initial workflow registration to dispatch a new workflow by branch. The first verification and unit-test logs, instrument measurements and input hashes must come from an executed run. The catalog entry and line 9 totals follow the run's scientific disposition.
+[Input checksums](evidence/provisional/44984928643-1/event_receipts.csv) · [Coverage](evidence/provisional/44984928643-1/obsid_coverage.csv) · [Scrambles](evidence/provisional/44984928643-1/control_trials.csv) · [Injection grid](evidence/provisional/44984928643-1/completeness.csv) · [All unresolved leads with positions, durations, fluxes, hosts and input hashes](evidence/provisional/44984928643-1/leads.json)
 
-[GitHub manual workflow requirements](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow)
+Each compressed ObsID ledger records all raw triggers, vetoes, controls, catalog receipts and injection outcomes. Leads require examination of the target and proposal, independent visits, the detector image, and contemporary notices before a claim of novelty.
 
-[Selection thresholds, control statistics, injection model and reproduction commands](METHODS.md)
+[Methods and reproduction](METHODS.md) · [Actions run](https://github.com/dovvnloading/Open-Space/actions/runs/44984928643)
+
+This pre-fan-out checkpoint measures only the three pilot observations selected by catalog event count before the scan. Every other ObsID, including pending observations and recovered shards, is outside this measurement.

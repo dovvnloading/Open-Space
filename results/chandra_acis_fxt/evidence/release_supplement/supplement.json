@@ -1,0 +1,264 @@
+{
+  "already_covered": [],
+  "eligible": [],
+  "end_inclusive": "2026-11-21",
+  "frozen_input_sha256": {
+    "inventory.json": "172b673a39b7c2bca8b82294563a62a7cb5807fdcc393a8da27d31e56f3c518e",
+    "inventory_exceptions.json": "81355ef0f8f4ac66ad4f3fb87b82b081b74f42a911e753d1383ea4030e0c8779",
+    "inventory_sources.json": "e19ad31c73e7e758de64c88bb48f7ddfd4dda2610a513654d610adce7eef9552"
+  },
+  "ineligible": [],
+  "mirror_receipt": {
+    "bytes": 3587,
+    "last_modified": null,
+    "post_body": "REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=10000&QUERY=SELECT+c.obsid%2C+c.public_date%2C+c.status%2C+c.detector%2C+c.grating%2C+c.data_mode%2C+c.exposure+FROM+chanmaster+c+WHERE+c.obsid+IN+%28%2726550%27%2C%2726552%27%2C%2726553%27%2C%2726556%27%2C%2726558%27%2C%2727066%27%2C%2727067%27%2C%2727074%27%2C%2727076%27%2C%2727079%27%2C%2728907%27%2C%2729207%27%2C%2729427%27%2C%2729464%27%29",
+    "query": "SELECT c.obsid, c.public_date, c.status, c.detector, c.grating, c.data_mode, c.exposure FROM chanmaster c WHERE c.obsid IN ('26550','26552','26553','26556','26558','27066','27067','27074','27076','27079','28907','29207','29427','29464')",
+    "resolved_url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+    "response_file": "heasarc_chanmaster.xml",
+    "retrieved_utc": "2026-11-22T04:31:41.310704+00:00",
+    "sha256": "e305c31b9200d5562ff33a292c8d7af266254cca994d5cb02f8193abc63bdb87",
+    "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync"
+  },
+  "source": "HEASARC CHANMASTER is a twice-weekly CXC mirror. Only a missing CXC release date is resolved.",
+  "start_inclusive": "2021-01-01",
+  "unknown": [
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_0046C",
+          "detector": "ACIS-I",
+          "exposure": "9970.0",
+          "grating": "NONE",
+          "obsid": "26550",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 26550,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    },
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_0046C",
+          "detector": "ACIS-I",
+          "exposure": "39970.0",
+          "grating": "NONE",
+          "obsid": "26552",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 26552,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    },
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_0046C",
+          "detector": "ACIS-I",
+          "exposure": "41970.0",
+          "grating": "NONE",
+          "obsid": "26553",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 26553,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    },
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_0046C",
+          "detector": "ACIS-I",
+          "exposure": "39970.0",
+          "grating": "NONE",
+          "obsid": "26556",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 26556,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    },
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_0046C",
+          "detector": "ACIS-I",
+          "exposure": "41970.0",
+          "grating": "NONE",
+          "obsid": "26558",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 26558,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    },
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_0046C",
+          "detector": "ACIS-I",
+          "exposure": "17640.0",
+          "grating": "NONE",
+          "obsid": "27066",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 27066,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    },
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_0046C",
+          "detector": "ACIS-I",
+          "exposure": "27970.0",
+          "grating": "NONE",
+          "obsid": "27067",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 27067,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    },
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_0046C",
+          "detector": "ACIS-I",
+          "exposure": "29970.0",
+          "grating": "NONE",
+          "obsid": "27074",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 27074,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    },
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_006E6",
+          "detector": "ACIS-I",
+          "exposure": "14990.0",
+          "grating": "NONE",
+          "obsid": "27076",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 27076,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    },
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_0046C",
+          "detector": "ACIS-I",
+          "exposure": "33970.0",
+          "grating": "NONE",
+          "obsid": "27079",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 27079,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    },
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_006E6",
+          "detector": "ACIS-I",
+          "exposure": "17510.0",
+          "grating": "NONE",
+          "obsid": "28907",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 28907,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    },
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_006E6",
+          "detector": "ACIS-I",
+          "exposure": "19910.0",
+          "grating": "NONE",
+          "obsid": "29207",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 29207,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    },
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_006E6",
+          "detector": "ACIS-I",
+          "exposure": "18910.0",
+          "grating": "NONE",
+          "obsid": "29427",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 29427,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    },
+    {
+      "mirror_rows": [
+        {
+          "data_mode": "TE_0046C",
+          "detector": "ACIS-I",
+          "exposure": "21970.0",
+          "grating": "NONE",
+          "obsid": "29464",
+          "public_date": "",
+          "status": "archived"
+        }
+      ],
+      "obsid": 29464,
+      "reason": "missing_or_conflicting_public_date",
+      "release_date": null,
+      "release_date_source": "HEASARC chanmaster.public_date"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<VOTABLE xmlns="http://www.ivoa.net/xml/VOTable/v1.3" xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/v1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.4">
+ <RESOURCE type="results">
+  <INFO name="QUERY_STATUS" value="OK">No errors detected in query preprocessing</INFO>
+  <TABLE>
+   <DESCRIPTION>Query result for:&#xA;SELECT c.obsid, c.public_date, c.status, c.detector, c.grating, c.data_mode, c.exposure FROM chanmaster c WHERE c.obsid IN (&apos;26550&apos;,&apos;26552&apos;,&apos;26553&apos;,&apos;26556&apos;,&apos;26558&apos;,&apos;27066&apos;,&apos;27067&apos;,&apos;27074&apos;,&apos;27076&apos;,&apos;27079&apos;,&apos;28907&apos;,&apos;29207&apos;,&apos;29427&apos;,&apos;29464&apos;)</DESCRIPTION>
+   <FIELD datatype="int" ucd="meta.id;obs" name="obsid" width="5" ID="DataLinkID">
+    <DESCRIPTION>Observation Identifier</DESCRIPTION>
+    <VALUES null="-2147483648"/>
+   </FIELD>
+   <FIELD unit="d" datatype="int" ucd="time.release" name="public_date">
+    <DESCRIPTION>Public Date</DESCRIPTION>
+    <VALUES null="-2147483648"/>
+   </FIELD>
+   <FIELD datatype="char" arraysize="*" ucd="meta.code.status;obs" name="status">
+    <DESCRIPTION>Status of Observation</DESCRIPTION>
+   </FIELD>
+   <FIELD datatype="char" arraysize="*" ucd="instr;instr.det" name="detector">
+    <DESCRIPTION>Detector</DESCRIPTION>
+   </FIELD>
+   <FIELD datatype="char" arraysize="*" ucd="instr;instr.det" name="grating">
+    <DESCRIPTION>Grating Setting</DESCRIPTION>
+   </FIELD>
+   <FIELD datatype="char" arraysize="*" ucd="instr.setup;instr.det" name="data_mode">
+    <DESCRIPTION>Operational Mode of the Detector</DESCRIPTION>
+   </FIELD>
+   <FIELD unit="s" datatype="double" ucd="time.duration;obs.exposure" precision="F0" name="exposure">
+    <DESCRIPTION>Actual Exposure Time If Observed, Otherwise the Approved Exposure (s)</DESCRIPTION>
+   </FIELD>
+   <DATA>
+    <BINARY>
+     <STREAM encoding="base64">
+AABnvIAAAAAAAAAIYXJjaGl2ZWQAAAAGQUNJUy1JAAAABE5PTkUAAAAIVEVfMDA0
+NkNA44RAAAAAAAAAaceAAAAAAAAACGFyY2hpdmVkAAAABkFDSVMtSQAAAARO
+T05FAAAACFRFXzAwNDZDQOCWQAAAAAAAAGe2gAAAAAAAAAhhcmNoaXZlZAAA
+AAZBQ0lTLUkAAAAETk9ORQAAAAhURV8wMDQ2Q0DDeQAAAAAAAABpu4AAAAAA
+AAAIYXJjaGl2ZWQAAAAGQUNJUy1JAAAABE5PTkUAAAAIVEVfMDA0NkNA21CA
+AAAAAAAAcxiAAAAAAAAACGFyY2hpdmVkAAAABkFDSVMtSQAAAAROT05FAAAA
+CFRFXzAwNDZDQNV0gAAAAAAAAGm6gAAAAAAAAAhhcmNoaXZlZAAAAAZBQ0lT
+LUkAAAAETk9ORQAAAAhURV8wMDQ2Q0DROgAAAAAAAABnuYAAAAAAAAAIYXJj
+aGl2ZWQAAAAGQUNJUy1JAAAABE5PTkUAAAAIVEVfMDA0NkNA5H5AAAAAAAAA
+acKAAAAAAAAACGFyY2hpdmVkAAAABkFDSVMtSQAAAAROT05FAAAACFRFXzAw
+NDZDQN1EgAAAAAAAAGe+gAAAAAAAAAhhcmNoaXZlZAAAAAZBQ0lTLUkAAAAE
+Tk9ORQAAAAhURV8wMDQ2Q0DkfkAAAAAAAABnuIAAAAAAAAAIYXJjaGl2ZWQA
+AAAGQUNJUy1JAAAABE5PTkUAAAAIVEVfMDA0NkNA44RAAAAAAAAAacSAAAAA
+AAAACGFyY2hpdmVkAAAABkFDSVMtSQAAAAROT05FAAAACFRFXzAwNkU2QM1H
+AAAAAAAAAHDrgAAAAAAAAAhhcmNoaXZlZAAAAAZBQ0lTLUkAAAAETk9ORQAA
+AAhURV8wMDZFNkDRGYAAAAAAAAByF4AAAAAAAAAIYXJjaGl2ZWQAAAAGQUNJ
+Uy1JAAAABE5PTkUAAAAIVEVfMDA2RTZA03GAAAAAAAAAcvOAAAAAAAAACGFy
+Y2hpdmVkAAAABkFDSVMtSQAAAAROT05FAAAACFRFXzAwNkU2QNJ3gAAAAAA=
+
+     </STREAM>
+    </BINARY>
+   </DATA>
+  </TABLE>
+ </RESOURCE>
+ <RESOURCE utype="adhoc:service" type="meta">
+  <PARAM datatype="char" arraysize="*" name="standardID" value="ivo://ivoa.net/std/DataLink#links-1.1"/>
+  <PARAM datatype="char" arraysize="*" name="accessURL" value="https://heasarc.gsfc.nasa.gov/xamin/vo/datalink/chanmaster?datalink_key&amp;"/>
+  <GROUP name="inputParams">
+   <PARAM ref="DataLinkID" datatype="char" arraysize="*" name="id" value=""/>
+  </GROUP>
+ </RESOURCE>
+</VOTABLE>
