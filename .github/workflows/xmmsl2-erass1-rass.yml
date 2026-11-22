@@ -14,18 +14,27 @@ env:
 jobs:
   inventory:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
           sparse-checkout: results/xmmsl2-erass1-rass
-      - name: Resolve archived XMMSL2 and survey map access
-        run: python "$STUDY/probe.py"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Prepare the FITS reader
+        run: pip install 'astropy>=6,<8' requests
+      - uses: actions/cache@v4
+        with:
+          path: work/downloads
+          key: xmmsl2-dr1-rass-inputs-v1
+      - name: Freeze versioned survey files and inspect their original fields
+        run: python -u "$STUDY/release_check.py"
       - uses: actions/upload-artifact@v4
         with:
-          name: survey-release-inventory
-          path: results/xmmsl2-erass1-rass/diagnostics
+          name: survey-release-headers
+          path: results/xmmsl2-erass1-rass/release
           if-no-files-found: error
   record:
     needs: inventory
@@ -39,13 +48,13 @@ jobs:
           sparse-checkout: results/xmmsl2-erass1-rass
       - uses: actions/download-artifact@v4
         with:
-          name: survey-release-inventory
-          path: results/xmmsl2-erass1-rass/diagnostics
+          name: survey-release-headers
+          path: results/xmmsl2-erass1-rass/release
       - run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- "$STUDY/diagnostics"
+          git add -- "$STUDY/release"
           if ! git diff --cached --quiet; then
-            git commit -m "Record official release endpoints and catalogue metadata"
+            git commit -m "Record official release products, checksums and column definitions"
             git push origin HEAD:survey/xmmsl2-erass1-rass
           fi
