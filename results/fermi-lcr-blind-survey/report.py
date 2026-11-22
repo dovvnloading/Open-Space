@@ -49,6 +49,8 @@ def describe(output):
         raise RuntimeError("No validated periodic search. A scientific null cannot be written.")
     roster = stats["roster"]
     ntested = len(eligible)
+    primary = Counter(r.get("primary_cadence", "monthly") for r in eligible)
+    state_modes = Counter(r["primary_cadence"] + "+" + r["confirmation_cadence"] for r in state_table if int(r["n_joint_splits"]) > 0)
     cut = stats["global_threshold"]
     state_count = coverage["state_sources"]
     if passed:
@@ -80,7 +82,7 @@ def describe(output):
     for cadence in ("3day", "weekly", "monthly"):
         rows = [r for r in valid if r["cadence"] == cadence]
         text.append(f"| {cadence} | {len(rows):,} | {sum(r['n_flux'] for r in rows):,} | {sum(r['n_ul'] for r in rows):,} |")
-    text += ["", f"The shortest and longest grid periods tested anywhere in the catalog were {min(float(r['pmin_days']) for r in eligible):.1f} and {max(float(r['pmax_days']) for r in eligible):.1f} days. Each source has its own range. The trial correction used the maximum over all {sum(int(r['n_frequencies']) for r in eligible):,} source–frequency combinations in each of {stats['replicates']:,} simulated catalogs. The critical normalized power was {cut:.4g}. [Source scores, p-values and exclusions](outputs/periods.csv) · [Catalog maxima](outputs/period-summary.json)", "",
+    text += ["", "Usable primary timing curves by cadence: " + ", ".join(f"{k} {v:,}" for k,v in sorted(primary.items())) + ". Each source entered the blind search once. Native weekly data could substitute only for a missing monthly file, and the three-day curve then supplied the phase check. The shortest and longest grid periods and recovery fractions are conditional on the available curves.", "", f"The shortest and longest grid periods tested anywhere in the catalog were {min(float(r['pmin_days']) for r in eligible):.1f} and {max(float(r['pmax_days']) for r in eligible):.1f} days. Each source has its own range. The trial correction used the maximum over all {sum(int(r['n_frequencies']) for r in eligible):,} source–frequency combinations in each of {stats['replicates']:,} simulated catalogs. The critical normalized power was {cut:.4g}. [Source scores, p-values and exclusions](outputs/periods.csv) · [Catalog maxima](outputs/period-summary.json)", "",
              "The table gives the fraction of injected signals recovered at the survey threshold with the correct frequency and stable halves. Amplitude is the fractional sinusoidal semi-amplitude multiplying the simulated flux. Counterpart, short-cadence and censored-flux tests can reduce final acceptance further. [Per-source injection counts](outputs/injections.csv)", "",
              "| Period (days) | Semi-amplitude | Recovered / injected | Recovery |", "|---:|---:|---:|---:|"]
     for r in recovered:
@@ -108,7 +110,7 @@ def describe(output):
         for rev in review:
             text.append(f"- {rev['name']} — {rev['status'].replace('_',' ')}. [Evidence](outputs/review/{rev['file']})")
         text += [""]
-    text += ["The state census tested adjacent year-long states across a monthly grid of split dates. Each half-year on the bright side had to exceed both half-years on the faint side by tenfold in monthly and weekly products. It used per-bin uncertainty and upper-limit bounds, with missing bins padded conservatively. At least 5 of 6 monthly and 21 of 26 weekly bins per half-year were required. A high or low state can reverse outside this two-year interval. These descriptive bounds do not assign a stochastic false-alarm probability to a flux change. [Per-source census](outputs/states.csv) · [Passing intervals](outputs/transitions.csv)", "",
+    text += ["Usable sources by state-census cadence pair: " + ", ".join(f"{k} {v:,}" for k,v in sorted(state_modes.items())) + ".", "", "The state census tested adjacent year-long states across a monthly grid of split dates. When a monthly file was unavailable, native weekly and three-day light curves supplied the two measurements. Each half-year on the bright side had to exceed both half-years on the faint side by tenfold in each of the two products. It used per-bin uncertainty and upper-limit bounds, with missing bins padded conservatively. At least 5 of 6 monthly, 21 of 26 weekly or 49 of 61 three-day bins per half-year were required, according to the cadence pair. A high or low state can reverse outside this two-year interval. These descriptive bounds do not assign a stochastic false-alarm probability to a flux change. [Per-source census](outputs/states.csv) · [Passing intervals](outputs/transitions.csv)", "",
         "## Timing model and limits", "", periods.METHOD.strip(), "",
         "## Inputs and reproduction", "",
         f"The SHA-256 of the original DR2 source-table response is `{meta['sha256']}`. The per-response receipt gives the URL, SHA-256 of the uncompressed response bytes, bin counts and any archive error. The normalized time, flux, error, upper-limit, test-statistic and fit arrays used for the search are deposited in 24 compressed shards. [File checksums](outputs/SHA256SUMS) · [Selection evidence](outputs/index/selection-evidence.json) · [Coverage](outputs/coverage.json)", "",

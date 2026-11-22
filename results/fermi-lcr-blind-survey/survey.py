@@ -59,7 +59,7 @@ def shard(args):
                 curve["time"], curve["upper"] = curve["t"], curve["ul"]
                 curves[cadence] = curve
         row, null, injection = periods.analyze(name, curves)
-        change = states.scan_state(curves.get("monthly", {}), curves.get("weekly", {}))
+        change = states.scan_state(curves.get("monthly"), curves.get("weekly"), curves.get("3day"))
         rows.append({"source": name, "row": row, "injection": injection, "state": change})
         nulls[name] = np.asarray(null, dtype=float) if null is not None else np.array([])
     with gzip.open(out / "calibration.json.gz", "wt") as stream:

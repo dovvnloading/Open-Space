@@ -1,4 +1,4 @@
-"""Blind LCR monthly-period scan and catalog-wide Monte Carlo calibration.
+"""Blind LCR periodicity scan and catalog-wide Monte Carlo calibration.
 
 Inputs are fixed-index photon flux detections, upper limits, and MJD times.
 Surrogates describe the measured flux distribution conditional on the window.
@@ -35,15 +35,16 @@ def _points(curve):
     return t[ok][order], flux[ok][order], ul[ok][order]
 
 
-def _grid(t):
-    """Infer missing integer bins from the nominal monthly sampling."""
+def _grid(t, cadence):
+    """Infer missing integer bins from the native archive sampling."""
     gaps = np.diff(t)
-    monthly = gaps[(gaps >= 26.) & (gaps <= 33.)]
-    if not monthly.size:
+    low, high, max_bins = (26., 33., 350) if cadence == "monthly" else (6.5, 7.5, 1500)
+    adjacent = gaps[(gaps >= low) & (gaps <= high)]
+    if not adjacent.size:
         return None
-    step = np.median(monthly)
+    step = np.median(adjacent)
     indices = np.r_[0, np.cumsum(np.rint(gaps / step).astype(int))]
-    if np.any(np.diff(indices) < 1) or indices[-1] > 350:
+    if np.any(np.diff(indices) < 1) or indices[-1] > max_bins:
         return None
     step, origin = np.polyfit(indices, t, 1)
     if np.max(np.abs(t - origin - indices * step)) > 0.20 * step:
@@ -189,19 +190,22 @@ def _coverage(t, flux, midpoint, span):
 
 def analyze(source, cadences):
     """Return JSON-safe source row, float32 null maxima, and injection batches."""
-    row = dict(source=str(source), status="monthly unavailable", passes=False,
-               period_days=None, p_global=None)
+    # Select solely by native product availability, before testing coverage or power.
+    primary = next((c for c in ("monthly", "weekly") if c in cadences), None)
+    row = dict(source=str(source), primary_cadence=primary, status="monthly and weekly unavailable",
+               passes=False, period_days=None, p_global=None)
     empty = (row, np.array([], dtype=np.float32), [])
-    if "monthly" not in cadences:
+    if primary is None:
         return empty
-    t, flux, ul = _points(cadences["monthly"])
-    row.update(monthly_input=len(t), monthly_detections=int(np.isfinite(flux).sum()))
+    t, flux, ul = _points(cadences[primary])
+    row[primary + "_input"] = len(t)
+    row[primary + "_detections"] = int(np.isfinite(flux).sum())
     if len(t) < 48:
-        row['status'] = "fewer than 48 monthly timestamps"
+        row['status'] = f"fewer than 48 {primary} timestamps"
         return empty
-    axis = _grid(t)
+    axis = _grid(t, primary)
     if axis is None:
-        row['status'] = "irregular or duplicate monthly grid"
+        row['status'] = f"irregular or duplicate {primary} grid"
         return empty
     idx, step, origin = axis
     n = int(idx[-1]) + 1
@@ -210,8 +214,9 @@ def analyze(source, cadences):
     values_raw = flux[np.isfinite(flux)]
     span = n * step
     midpoint = origin + (n - 1) * step / 2.
-    row.update(start_mjd=float(t[0]), end_mjd=float(t[-1]), monthly_step_days=step,
-               monthly_grid=n, detection_fraction=float(mask.mean()))
+    row.update(start_mjd=float(t[0]), end_mjd=float(t[-1]), detection_fraction=float(mask.mean()))
+    row[primary + "_step_days"] = step
+    row[primary + "_grid"] = n
     if len(values_raw) < 36 or min(mask[:(n+1)//2].mean(), mask[(n+1)//2:].mean()) < 0.20 or not _coverage(t, flux, midpoint, span):
         row['status'] = "sparse detections or quarter coverage"
         return empty
@@ -227,8 +232,9 @@ def analyze(source, cadences):
     spectrum, slope, white = _continuum(grid, mask)
     sampler = Surrogates(values, mask, spectrum, rng)
     # Frequencies are fixed before looking at powers. Four observed cycles
-    # minimum, six monthly bins per cycle minimum, fourfold oversampling.
-    bins = np.arange(16, int(4*n/6) + 1)
+    # minimum and a roughly half-year lower-period limit in both products.
+    minimum_bins = 6 if primary == "monthly" else 26
+    bins = np.arange(16, int(4*n/minimum_bins) + 1)
     if len(bins) < 8:
         row['status'] = "period range too short"
         return empty
@@ -262,7 +268,8 @@ def analyze(source, cadences):
     if direction is not None:
         for side in (t < midpoint, t >= midpoint):
             bounds.append(_censor_margin(t[side]-origin, flux[side], ul[side], frequency, direction))
-        for cadence in ("weekly", "3day"):
+        confirmations = ("weekly", "3day") if primary == "monthly" else ("3day",)
+        for cadence in confirmations:
             if cadence not in cadences:
                 continue
             ct, cf, cu = _points(cadences[cadence])
@@ -338,7 +345,8 @@ def finalize(records):
         summary['accepted'] += row['passes']
         for ip, a, scores in injected:
             recovered = int(np.sum(np.asarray(scores) > threshold))
-            injection_rows.append(dict(source=row['source'], period_days=ip, semi_amplitude=a,
+            injection_rows.append(dict(source=row['source'], primary_cadence=row['primary_cadence'],
+                                       period_days=ip, semi_amplitude=a,
                                        n=len(scores), recovered=recovered))
             totals = aggregate.setdefault((ip, a), [0, 0])
             totals[0] += recovered
@@ -349,10 +357,10 @@ def finalize(records):
     return rows, injection_rows, summary
 
 
-METHOD = """The blind primary used monthly fixed-index photon-flux detections. Each source needed at least 48 timestamps, 36 detections, 20% detection coverage in each half and three detections per time quarter. The regular monthly grid had to fit within 0.20 bin. The unweighted, mean-subtracted Fourier scan used four samples per independent Fourier interval and periods between six monthly bins and one-quarter of the baseline.
+METHOD = """The blind scan used native monthly fixed-index photon-flux detections whenever that product was available. Sources without an acquired monthly file used their native weekly product if available. This choice preceded all quality and power tests. Each source entered at most once. Each source needed at least 48 timestamps, 36 detections, 20% detection coverage in each half and three detections per time quarter. The native grid had to fit within 0.20 bin. The unweighted, mean-subtracted Fourier scan used four samples per independent Fourier interval and periods between six monthly bins (26 weekly bins for the fallback) and one-quarter of the baseline.
 
 We fit a red power law plus a white floor by profiled window-convolved Whittle likelihood over native harmonics. The stochastic process extended four spans, with its lowest nonzero frequency at one-quarter of the inverse observed span. Each realization used independent Gaussian Fourier coefficients, eight iterative spectral-amplitude/rank adjustments, a four-to-one crop, the exact detection mask and exact detected-flux ranks. A separate 96-surrogate pilot calibrated frequency-dependent score normalization. We retained ratios of observed to simulated median powers in five frequency bands and flagged any band outside the pilot range. These are plug-in inferences conditional on the fitted stationary spectrum, detected-flux distribution and sampling mask. The procedure covers measured flux variability and does not reconstruct the latent flux below detection thresholds.
 
-Each of 1,023 synthetic catalogs takes the maximum normalized power over every period and every tested source. The catalog simulation assumes independent source noise; shared exposure systematics and fitted continuum uncertainty are outside that calibration. The reported family-wise p is (exceedances+1)/1,024; discovery screening also requires its one-sided 95% binomial upper limit to be at most 0.05. Both nonoverlapping halves must independently peak within one half-span Fourier interval of the full-series peak and agree in phase within 60 degrees. The fitted harmonic in each half must retain positive projected amplitude for every assignment of individual upper-limit bins between zero and their reported bound. These individual bounds are sensitivity scenarios, not simultaneous confidence intervals. All usable short-cadence products must agree in fixed-period phase within 60 degrees, with at least one available. They share photons with the monthly data. Frequencies within one full-span Fourier interval of the annual or semiannual cycle are flagged.
+Each of 1,023 synthetic catalogs takes the maximum normalized power over every period and every tested source. The catalog simulation assumes independent source noise; shared exposure systematics and fitted continuum uncertainty are outside that calibration. The reported family-wise p is (exceedances+1)/1,024; discovery screening also requires its one-sided 95% binomial upper limit to be at most 0.05. Both nonoverlapping halves must independently peak within one half-span Fourier interval of the full-series peak and agree in phase within 60 degrees. The fitted harmonic in each half must retain positive projected amplitude for every assignment of individual upper-limit bins between zero and their reported bound. These individual bounds are sensitivity scenarios, not simultaneous confidence intervals. All usable short-cadence products must agree in fixed-period phase within 60 degrees, with at least one available. For weekly primaries, only the 3-day product can confirm the phase. These products share photons with the primary series. Frequencies within one full-span Fourier interval of the annual or semiannual cycle are flagged.
 
-Injection recovery used 16 independent source-specific realizations per supported source, period and amplitude with random phase. A sinusoid multiplied positive simulated fluxes at the observed detection epochs by 1+a*cos(phase). The recovered peak must clear the same survey threshold, match frequency within one full-span bin, pass the disjoint-half test and avoid the annual veto. Recovery measures the conditional monthly timing sensitivity. It holds the measured window and fitted continuum fixed and does not include censoring changes, short-cadence confirmation, counterpart identification or literature screening. Descriptive pooled fractions weight eligible sources equally at each injected period and amplitude."""
+Injection recovery used 16 independent source-specific realizations per supported source, period and amplitude with random phase. A sinusoid multiplied positive simulated fluxes at the observed detection epochs by 1+a*cos(phase). The recovered peak must clear the same survey threshold, match frequency within one full-span bin, pass the disjoint-half test and avoid the annual veto. Recovery measures the conditional primary-series timing sensitivity. It holds the measured window and fitted continuum fixed and does not include censoring changes, short-cadence confirmation, counterpart identification or literature screening. Descriptive pooled fractions weight eligible sources equally at each injected period and amplitude."""

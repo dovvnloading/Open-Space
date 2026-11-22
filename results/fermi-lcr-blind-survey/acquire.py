@@ -1,6 +1,8 @@
 """Read the public Fermi-LAT Light Curve Repository, inside GitHub Actions."""
 import argparse
 import concurrent.futures
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 import gzip
 import hashlib
 from html.parser import HTMLParser
@@ -34,20 +36,54 @@ def session():
     return THREAD.session
 
 
+class ArchiveDeferred(Exception):
+    """The published Retry-After exceeds this job's request budget."""
+
+
+def retry_after(response):
+    value = response.headers.get("Retry-After", "").strip()
+    if not value:
+        return None
+    try:
+        return max(0., float(value))
+    except ValueError:
+        try:
+            when = parsedate_to_datetime(value)
+            return max(0., (when - datetime.now(timezone.utc)).total_seconds())
+        except (TypeError, ValueError, OverflowError):
+            return None
+
+
 def get(url, **kwargs):
     for attempt in range(3):
+        # Keep one session per worker; don't rotate identities or substitute endpoints on denial.
+        wait = getattr(THREAD, "next_request", 0.) - time.monotonic()
+        if wait > 120:
+            raise ArchiveDeferred(f"Server requested another {wait:.0f}s before any request")
+        if wait > 0:
+            time.sleep(wait)
         try:
             r = session().get(url, timeout=(12, 65), **kwargs)
-            if r.status_code in (429, 502, 503, 504):
-                if attempt < 2:
-                    time.sleep(min(20, int(r.headers.get("Retry-After", 1) or 1)) + 2**attempt)
+            THREAD.next_request = time.monotonic() + 2.
+            retry = retry_after(r)
+            # Retry an explicit temporary refusal, including a rate-limited 403.
+            # Plain Forbidden is recorded and respected.
+            transient = r.status_code in (408, 425, 429, 500, 502, 503, 504)
+            if r.status_code == 403 and retry is not None:
+                transient = True
+            if transient:
+                delay = max(retry or 0., min(90, 10 * 3**attempt))
+                THREAD.next_request = time.monotonic() + delay
+                if attempt < 2 and delay <= 120:
                     continue
+            if r.status_code == 403:
+                THREAD.next_request = max(THREAD.next_request, time.monotonic() + 5.)
             r.raise_for_status()
             return r
         except (requests.ConnectionError, requests.Timeout):
+            THREAD.next_request = time.monotonic() + min(90, 10 * 3**attempt)
             if attempt == 2:
                 raise
-            time.sleep(2**attempt)
 
 
 def norm(k):
@@ -172,10 +208,10 @@ def index(out):
                 except (AttributeError, TypeError, ValueError):
                     pass
         else:
-            raise ValueError(f"LCR {cadence} did not return a validated bright-source series")
+            print(f"LCR {cadence}: control unavailable; retain per-source acquisition coverage.", flush=True)
         save_json(out / ("example-" + cadence + ".json"), example)
     save_json(out / "endpoints.json", capture)
-    print(f"Validated {len(roster)} sources selected by {origin['selection']} and three native cadences", flush=True)
+    print(f"Indexed {len(roster)} sources selected by {origin['selection']}", flush=True)
     return roster
 
 
@@ -291,9 +327,28 @@ def download(source, cadence, out, capture):
                    n_fit=int(np.isfinite(vals["fit"]).sum()),
                    n_failed_fit=int(np.sum(np.isfinite(vals["fit"]) & (vals["fit"] != 0))),
                    first_mjd=vals["t"][0], last_mjd=vals["t"][-1])
+    except requests.HTTPError as exc:
+        response = exc.response
+        rec.update(status="http_error", http_status=response.status_code, error=str(exc)[:500],
+                   response_sha256=sha(response.content), response_bytes=len(response.content),
+                   retry_after=response.headers.get("Retry-After"))
+    except ArchiveDeferred as exc:
+        rec.update(status="deferred", error=str(exc))
     except (requests.RequestException, ValueError, TypeError, KeyError, UnicodeError) as exc:
         rec["error"] = str(exc)[:500]
     return rec
+
+
+def control(index_path, out):
+    """Check the monthly product without making an accessible-source decision for the whole roster."""
+    out.mkdir(parents=True, exist_ok=True)
+    roster = json.loads(index_path.read_text())
+    sample = next(x for x in roster if x["name"] == "4FGL J2253.9+1609")
+    capture = json.loads((index_path.parent / "endpoints.json").read_text())
+    rec = download(sample, "monthly", out, capture)
+    save_json(out / "monthly-control.json", rec)
+    print(f"Monthly control for 3C 454.3: {rec['status']}, valid flux bins {rec.get('n_flux', 0)}", flush=True)
+
 
 
 def fetch(index_path, out, shard, shards, workers):
@@ -301,8 +356,9 @@ def fetch(index_path, out, shard, shards, workers):
         raise ValueError("invalid shard")
     roster = json.loads(index_path.read_text())[shard::shards]
     capture = json.loads((index_path.parent / "endpoints.json").read_text())
-    out.mkdir(parents=True, exist_ok=True)
-    jobs = [(src, cadence) for src in roster for cadence in CADENCES]
+    (out / "curves").mkdir(parents=True, exist_ok=True)
+    (out / "raw").mkdir(parents=True, exist_ok=True)
+    jobs = [(src, cadence) for src in roster for cadence in ("monthly", "weekly", "3day")]
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool, (out / "manifest.jsonl").open("w") as manifest:
         futures = [pool.submit(download, src, cadence, out, capture) for src, cadence in jobs]
         done = ok = 0
@@ -322,6 +378,9 @@ def main():
     sub = parser.add_subparsers(dest="cmd", required=True)
     ix = sub.add_parser("index")
     ix.add_argument("--out", required=True, type=Path)
+    diag = sub.add_parser("control")
+    diag.add_argument("--index", required=True, type=Path)
+    diag.add_argument("--out", required=True, type=Path)
     ft = sub.add_parser("fetch")
     ft.add_argument("--index", required=True, type=Path)
     ft.add_argument("--out", required=True, type=Path)
@@ -331,6 +390,8 @@ def main():
     args = parser.parse_args()
     if args.cmd == "index":
         index(args.out)
+    elif args.cmd == "control":
+        control(args.index, args.out)
     else:
         fetch(args.index, args.out, args.shard, args.shards, args.workers)
 
