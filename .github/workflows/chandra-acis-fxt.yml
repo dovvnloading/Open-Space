@@ -83,7 +83,7 @@ jobs:
       - name: Check source artifact validation and exposure accounting before import
         env:
           PYTHONPATH: results/chandra_acis_fxt
-        run: python -m unittest test_ingest_primary test_progress test_field_followup
+        run: python -m unittest test_ingest_primary test_progress
       - name: Synchronize the latest published catalog into the research branch
         run: |
           git config user.name 'github-actions[bot]'
@@ -94,6 +94,64 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python -u "$SURVEY/checkpoint.py" collect
+      - name: Restore the original GW170817-field notice texts and combine independent visit limits
+        id: field_replay
+        if: contains(github.event.head_commit.message, '[checkpoint-frame]')
+        continue-on-error: true
+        env:
+          PYTHONPATH: results/chandra_acis_fxt
+        run: |
+          python -m unittest test_field_followup
+          python -u "$SURVEY/field_followup.py" --backfill 45008126305-1
+      - name: Deposit the byte-checked circulars and separate before and after measurements
+        if: always() && contains(github.event.head_commit.message, '[checkpoint-frame]') && steps.field_replay.outcome != 'skipped'
+        run: |
+          git add -- "$SURVEY/evidence/field_followup/27089/45008126305-1"
+          git diff --cached --quiet || git commit -qm "Restore the identified circular members and bound mean X-rays across independent return visits"
+          git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
+      - name: Retrieve the original retained group 91 event-file artifact
+        if: contains(github.event.head_commit.message, '[checkpoint-frame]')
+        continue-on-error: true
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: chandra-event-inputs-91
+          run-id: '44985879443'
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/retained-group-91
+      - name: Retrieve the original retained group 97 event-file artifact
+        if: contains(github.event.head_commit.message, '[checkpoint-frame]')
+        continue-on-error: true
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: chandra-event-inputs-97
+          run-id: '44985879443'
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/retained-group-97
+      - name: Inspect coincident CCD events in the off-target ObsID 24912 peak
+        if: contains(github.event.head_commit.message, '[checkpoint-frame]')
+        id: frame_audit
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PYTHONPATH="$SURVEY" python -m unittest test_frame_forensics
+          python -u "$SURVEY/frame_forensics.py" --retained "$RUNNER_TEMP/retained-group-91"
+      - name: Inspect the second CCD 8 field with nearly the whole peak in one frame
+        id: frame_second
+        if: contains(github.event.head_commit.message, '[checkpoint-frame]')
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python -u "$SURVEY/frame_forensics.py" --group 97 --obsid 23037 \
+            --input-sha256 604c4a0a802ef09cf427a9da5fa4136b34fdb5de5e58806afae16911294812ed \
+            --trigger real/0 --retained "$RUNNER_TEMP/retained-group-97"
+      - name: Deposit detector coordinates and grade evidence for both CCD 8 peaks
+        if: always() && contains(github.event.head_commit.message, '[checkpoint-frame]') && steps.frame_audit.outcome != 'skipped'
+        run: |
+          git add -- "$SURVEY/evidence/frame_forensics"
+          git diff --cached --quiet || git commit -qm "Deposit the individual recorded CCD frames for the 24912 and 23037 flare checks"
+          git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
       - name: Check published CSC variability for real and scrambled instrument passes
         run: python -u "$SURVEY/checkpoint.py" csc
       - name: Characterize optical and infrared counterparts of all retained real triggers
@@ -109,6 +167,18 @@ jobs:
         run: |
           git add -- "$SURVEY/evidence/field_followup"
           git diff --cached --quiet || git commit -qm "Measure the short excess 4.4 arcminutes from the GW170817 target across independent Chandra visits"
+          git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
+      - name: Check independent observations of the Spiderweb and NSA 103757 field triggers
+        if: contains(github.event.head_commit.message, '[checkpoint-frame]')
+        id: pointed
+        continue-on-error: true
+        timeout-minutes: 90
+        run: python -u "$SURVEY/pointed_visits.py"
+      - name: Deposit independent visit and neighboring-aperture measurements for both fields
+        if: always() && contains(github.event.head_commit.message, '[checkpoint-frame]') && steps.pointed.outcome != 'skipped'
+        run: |
+          git add -- "$SURVEY/evidence/pointed_visits"
+          git diff --cached --quiet || git commit -qm "Deposit all-mission aperture measurements for two high-latitude serendipitous triggers"
           git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
       - name: Reproduce a measured flare with its archived source and control arrays
         if: contains(github.event.head_commit.message, '[checkpoint-replay]')
@@ -136,6 +206,9 @@ jobs:
           path: ${{ runner.temp }}/chandra-check-resources
           if-no-files-found: ignore
 
+      - name: Check the result of the requested detector-frame comparison
+        if: always() && contains(github.event.head_commit.message, '[checkpoint-frame]') && (steps.frame_audit.outcome != 'success' || steps.frame_second.outcome != 'success' || steps.pointed.outcome != 'success' || steps.field_replay.outcome != 'success')
+        run: exit 1
       - name: Require the requested measured-source replication to agree
         if: always() && contains(github.event.head_commit.message, '[checkpoint-replay]') && steps.measured_replay.outcome != 'success'
         run: exit 1
@@ -1218,7 +1291,11 @@ jobs:
         id: science
         timeout-minutes: 270
         continue-on-error: true
-        run: python -u "$SURVEY/finalize.py" context "$TASK"
+        run: |
+          if [[ "$TASK" == visits ]]; then
+            python -u "$SURVEY/visit_workers.py" run --workers 2 --budget-minutes 230
+          fi
+          python -u "$SURVEY/finalize.py" context "$TASK"
       - name: Preserve partial and complete context outputs
         if: always()
         run: |

@@ -3,7 +3,7 @@
 Inside the Chandra workflow run field_followup.py after checkpoint collection,
 CSC matching and optical matching. Selection does not change blind trial counts.
 """
-from argparse import Namespace
+from argparse import ArgumentParser, Namespace
 import os
 from pathlib import Path
 import shutil
@@ -11,6 +11,7 @@ from tempfile import TemporaryDirectory
 
 import alerts
 import campaign
+import field_replay
 import ingest_primary as ingest
 import priority
 import target_history
@@ -91,6 +92,7 @@ def run():
                 result = folder/"alerts/review.json"
                 if result.is_file():
                     shutil.copyfile(result, out/"gcn_review.json")
+                    field_replay.copy_members(folder/"alerts", out, campaign.read(result))
                 record["gcn_source_directory"] = saved.relative_to(root).as_posix()
 
     def visits():
@@ -116,4 +118,14 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    cli=ArgumentParser(description=__doc__)
+    cli.add_argument("--backfill",metavar="ORIGINAL_RUN",help="Restore notices and summarize the pinned field products offline")
+    args=cli.parse_args()
+    if args.backfill:
+        if (os.getenv("GITHUB_ACTIONS")!="true" or os.getenv("GITHUB_REF")!=CAMPAIGN_REF or
+                os.getenv("GITHUB_REPOSITORY")!=ingest.REPO or
+                os.getenv("GITHUB_WORKFLOW_REF","").split("@")[0]!=ingest.REPO+"/"+ingest.FLOW):
+            raise RuntimeError("Use the Chandra research workflow")
+        field_replay.backfill(campaign.EVIDENCE,args.backfill)
+    else:
+        run()

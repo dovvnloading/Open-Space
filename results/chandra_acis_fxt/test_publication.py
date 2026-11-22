@@ -51,6 +51,7 @@ def fixture_lead(evidence,receipt,candidate):
                on_counts=21,annulus_counts=4,annulus_area_ratio=12.,before_counts=1,before_s=1500.,
                after_counts=0,after_s=2400.,seed_score=9. if candidate else 8.,
                flux={"peak_flux_erg_cm2_s":2e-12,"flux_counting_sigma_erg_cm2_s":3e-13,
+                     "gross_flux_erg_cm2_s":2.3e-12,"scaled_background_flux_erg_cm2_s":.3e-12,
                      "event_sha256":h,"calibrated_fits_sha256":digest(weights.read_bytes())},
                diagnostics={"input_sha256":h,"files":{"diagnostics.json":digest(diag.read_bytes())}},
                vet={"status":"host_candidate" if candidate else "no_counterpart","errors":{},"host":host,
@@ -86,6 +87,14 @@ def build_supplement(supplement):
 
 
 class TestPublication(unittest.TestCase):
+    def test_negative_signed_flux_and_component_disagreement(self):
+        f = dict(peak_flux_erg_cm2_s=-4.22e-11, flux_counting_sigma_erg_cm2_s=4.41e-11,
+                 gross_flux_erg_cm2_s=1.9e-12, scaled_background_flux_erg_cm2_s=4.41e-11)
+        self.assertEqual(pub.flux_components(f), (1.9e-12,4.41e-11))
+        f["peak_flux_erg_cm2_s"] *= -1
+        with self.assertRaisesRegex(ValueError, "inconsistent aperture"):
+            pub.flux_components(f)
+
     def test_candidate_unresolved_separate_date_bounds_and_catalog_counts(self):
         with tempfile.TemporaryDirectory() as d:
             repo=Path(d)

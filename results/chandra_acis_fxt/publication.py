@@ -249,6 +249,17 @@ def load(supplement):
     return groups, leads, sig, files
 
 
+def flux_components(flux):
+    """Reconcile the signed estimator with both measured nonnegative components."""
+    net, sigma, gross, background = (float(flux.get(k, math.nan)) for k in
+        ("peak_flux_erg_cm2_s", "flux_counting_sigma_erg_cm2_s", "gross_flux_erg_cm2_s",
+         "scaled_background_flux_erg_cm2_s"))
+    need(all(math.isfinite(x) for x in (net, sigma, gross, background)) and sigma > 0 and
+         gross > 0 and background >= 0 and math.isclose(net, gross-background, rel_tol=1e-9, abs_tol=1e-30),
+         "Invalid signed peak photometry or inconsistent aperture and background components")
+    return gross, background
+
+
 def adjudicate(manifest, leads, sig):
     need(manifest.get("reviewed_inputs_sha256") == sig, "Adjudications refer to a different measured release")
     decisions, hashes = {}, {}
@@ -263,9 +274,8 @@ def adjudicate(manifest, leads, sig):
             ev = r["event"]
             flux = ev.get("flux",{})
             need(r["group"]["name"] != GROUPS[2] and ev["vet"].get("errors") == {} and ev["vet"]["status"] != "catalog_incomplete"
-                 and all(math.isfinite(float(flux.get(v,math.nan))) for v in ("peak_flux_erg_cm2_s","flux_counting_sigma_erg_cm2_s"))
-                 and flux["peak_flux_erg_cm2_s"] > 0 and flux["flux_counting_sigma_erg_cm2_s"] > 0
                  and ev.get("diagnostics",{}).get("files"), "Candidate lacks completed physical or catalog characterization")
+            flux_components(flux)
             directory = r["group"]["root"] / "photometry" / str(k[0]) / r["lead"]["input_name"] / k[2]
             need(flux.get("event_sha256") == k[1] and file_sha(directory/"peak_weights.fits.gz") == flux["calibrated_fits_sha256"]
                  and ev["diagnostics"].get("input_sha256") == k[1], "Candidate characterization byte identity changed")
@@ -405,6 +415,13 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
     candidate_file = HERE/"evidence/fxt_candidates.csv"
     candidate_rows = []
     lines.extend(["", "## Manual review", "", link(candidate_file,"New FXT candidates with exact inputs and measurements")])
+    signed = [v["event"]["flux"]["peak_flux_erg_cm2_s"] for v in leads.values()
+              if v["event"].get("flux",{}).get("peak_flux_erg_cm2_s") is not None]
+    if signed:
+        lines.extend(["",f"Of {len(signed):,} calibrated retained windows, {sum(f <= 0 for f in signed):,} had a "
+                      "nonpositive background-subtracted 60-second peak flux estimate. An annulus photon with a large "
+                      "response weight can dominate this estimate. The blind search tests photon counts. The quoted "
+                      "counting errors condition on the selected minute and omit response uncertainty."])
     if not leads:
         lines.extend(["","The automated selection retained no real trigger for manual review."])
     for ident in sorted(leads,key=lambda k:(("candidate","unresolved","rejected").index(decisions[k][0]),k)):
@@ -420,6 +437,9 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
                                      f"{fmt(matches[0]['separation_arcsec'])}″." if matches else
                                      "No catalog counterpart within the screening region."))
         f = ev["flux"]
+        gross, background = flux_components(f)
+        flux_note = (" The background subtraction leaves the source energy flux unconstrained in this minute."
+                     if f["peak_flux_erg_cm2_s"] <= 0 else "")
         near = matches[0] if matches else {}
         candidate_rows.append({
             "cohort":r["group"]["name"], "obsid":oid, "trigger_key":trig,
@@ -428,6 +448,7 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
                                    "after_counts","after_s")},
             "peak_flux_erg_cm2_s":f["peak_flux_erg_cm2_s"],
             "counting_sigma_erg_cm2_s":f["flux_counting_sigma_erg_cm2_s"],
+            "gross_peak_flux_erg_cm2_s":gross,"scaled_peak_background_erg_cm2_s":background,
             "host":(host or {}).get("name"), "host_redshift":(host or {}).get("redshift"),
             "host_offset_arcsec":(host or {}).get("separation_arcsec"),
             "nearest_catalog":near.get("catalog"), "nearest_name":near.get("name"),
@@ -439,8 +460,9 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
                  f"{NAMES[r['group']['name']]}. ICRS position ({ev['ra_deg']}, {ev['dec_deg']})°, "
                  f"90% radius {ev['position_error_arcsec']}″. Peak MJD {ev['event_mjd']} UTC. Aperture-photon "
                  f"t95−t05 duration {ev['duration_s']} s in a {ev['trial_duration_s']} s search window. "
-                 f"Observed peak 0.5–7 keV aperture flux {f['peak_flux_erg_cm2_s']} ± "
-                 f"{f['flux_counting_sigma_erg_cm2_s']} erg cm⁻² s⁻¹ (counting uncertainty). {counterpart}", "",
+                 f"Signed peak 0.5–7 keV aperture flux estimate {f['peak_flux_erg_cm2_s']} ± "
+                 f"{f['flux_counting_sigma_erg_cm2_s']} erg cm⁻² s⁻¹ (counting uncertainty). Gross aperture and scaled "
+                 f"background estimates are {gross} and {background} erg cm⁻² s⁻¹.{flux_note} {counterpart}", "",
                  f"The aperture contained {ev['before_counts']} photons in {ev['before_s']:.1f} s of preceding good time, "
                  f"{ev['on_counts']} in the search window and {ev['after_counts']} in {ev['after_s']:.1f} s afterward. "
                  f"The surrounding annulus contained {ev['annulus_counts']} photons during the window.", "",
@@ -449,7 +471,8 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
                  f"Input {source['bytes']} bytes, SHA-256 `{h}`. [{fmt(source['filename'])}]({source['url']})"])
     candidate_fields = ("cohort obsid trigger_key ra_deg dec_deg position_error_arcsec event_mjd duration_s trial_duration_s "
                         "on_counts annulus_counts annulus_area_ratio before_counts before_s after_counts after_s "
-                        "peak_flux_erg_cm2_s counting_sigma_erg_cm2_s host host_redshift host_offset_arcsec nearest_catalog "
+                        "peak_flux_erg_cm2_s counting_sigma_erg_cm2_s gross_peak_flux_erg_cm2_s scaled_peak_background_erg_cm2_s "
+                        "host host_redshift host_offset_arcsec nearest_catalog "
                         "nearest_name nearest_offset_arcsec control_exceedances_of_24 survey_fap exceedance_lo95 exceedance_hi95 "
                         "event_filename event_url event_bytes event_sha256 decompressed_fits_sha256 review").split()
     report.rows_to_csv(candidate_file, candidate_fields, candidate_rows)
