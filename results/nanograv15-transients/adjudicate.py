@@ -71,6 +71,8 @@ def audit(directory, singles, array):
         tallies.update({"full_sign": int(is_sign), "noise_subset_and_sign": int(subset),
                         "external_testable": int(bool(r.get("epta_p_holm"))), "external_holm": int(external),
                         "dm_testable": int(bool(free.get("p_fixed_one_sided"))), "dm_support": int(chrom),
+                        "dm_expected_snr_ge3": int(float(free.get("expected_snr_at_discovery_amplitude") or 0) >= 3),
+                        "matched_raw_support": int(probability(raw, "p_fixed_one_sided", .05)),
                         "wb_support": int(wideband), "all_support": int(all_support)})
         wb = "supports" if wideband else r["wideband_check"]
         lines.append(f"| {ordinal} | {number(event['epoch_mjd'], 9)} | {r['family']} {r['shape']} | "
@@ -96,7 +98,8 @@ def audit(directory, singles, array):
     (evidence / "EVENTS.md").write_text("\n".join(lines))
     (evidence / "event-review.json").write_text(json.dumps(review, indent=2, allow_nan=False) + "\n")
     summary = {key: tallies[key] for key in ("full_sign", "noise_subset_and_sign", "external_testable",
-               "external_holm", "dm_testable", "dm_support", "wb_support", "all_support")}
+               "external_holm", "dm_testable", "dm_support", "dm_expected_snr_ge3", "matched_raw_support",
+               "wb_support", "all_support")}
     summary.update(array_internal=len(survivors), individual=len(individual))
     (evidence / "review-summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     return summary

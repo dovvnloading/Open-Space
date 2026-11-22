@@ -497,9 +497,12 @@ def extract(work, row, out):
         cut_count += row["release_flagged_before_wb_parse"] + row["unpaired_wideband_toas"]
     elif row["dataset"] == "epta":
         clock_cuts = sum(item["n"] for item in row["epta_format"]["clock_cuts"].values())
-        raw_count += clock_cuts
-        cut_count += clock_cuts
+        window_cuts = sum(item.get("local_window_cuts", 0)
+                          for item in row["epta_format"]["tim_file_counts"].values())
+        raw_count += clock_cuts + window_cuts
+        cut_count += clock_cuts + window_cuts
     toas = toas[good]
+    row.update(raw_toas=raw_count, cut_count=cut_count, used_toas=len(toas))
     if not len(toas):
         raise ValueError("published quality and timing fit cuts leave zero TOAs")
     if row["dataset"] == "epta":
@@ -520,8 +523,7 @@ def extract(work, row, out):
     ratio = None if ref is None else rms / ref
     if not np.isfinite(rms):
         raise ValueError("post-fit residual RMS is nonfinite")
-    row.update(raw_toas=raw_count, cut_count=cut_count, used_toas=len(toas),
-               rms_postfit_us_before_restoring_dmx=rms, parfile_tres_us=ref,
+    row.update(rms_postfit_us_before_restoring_dmx=rms, parfile_tres_us=ref,
                wrms_to_tres_ratio=ratio,
                parfile_ntoa=ntoa)
     if ratio is None:

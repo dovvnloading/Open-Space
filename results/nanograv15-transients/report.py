@@ -122,6 +122,7 @@ def render(root, evidence):
     reported_limits = [r for r in limits if r.get("reported_upper_limit_us") is not None]
     coverage = [dict(pulsar=name, nb=cov["nb"][name]["status"], wb=cov["wb"][name]["status"],
                      epta=cov["epta"].get(name, {}).get("status", "outside_release"),
+                     epta_selection=cov["epta"].get(name, {}).get("release_selection", ""),
                      individual=singles.get(name, {}).get("status", "no_reduction"))
                 for name in sorted(cov["nb"])]
     n_wb = sum(r["wb"] == "ok" for r in coverage)
@@ -143,7 +144,7 @@ def render(root, evidence):
            ("GITHUB_SHA", "GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT", "GITHUB_REPOSITORY", "GITHUB_REF",
             "PRIMARY_RUN", "PRIMARY_SHA", "NG_RUN")}
     write_json(dest / "run.json", run)
-    table(dest / "coverage.csv", coverage, ("pulsar", "nb", "wb", "epta", "individual"))
+    table(dest / "coverage.csv", coverage, ("pulsar", "nb", "wb", "epta", "epta_selection", "individual"))
     write_json(dest / "surviving-fits.json", survivor_rows)
     disposition = []
     for p in sorted(ok, key=lambda item: item["pulsar"]):
@@ -163,20 +164,38 @@ def render(root, evidence):
           ("pulsar", "template", "width_d", "epoch_min_mjd", "epoch_max_mjd", "injections",
            "status", "reported_upper_limit_us", "exclusion_withheld", "efficiency_nearest_matching_template"))
     review = audit(dest, ok, array)
-    bullet = (f"Across {len(ok)} NANOGrav pulsars, {review['individual']} individual template fits passed "
-              "the wideband, independent EPTA and noise checks. "
-              f"Of {review['array_internal']} common-pattern fits that survived internal checks, "
-              f"{review['all_support']} had support across the sign, noise-subset, wideband, independent EPTA and dispersion checks.")
+    coherence = read(dest / "coherence/summary.json")
+    sign = coherence["observed_full_max_tail"]
+    selections = Counter(row["epta_selection"] for row in coverage if row["epta"] == "ok")
+    if review["individual"] == review["all_support"] == 0:
+        summary = (f"No transient passed every check in {len(ok)} NANOGrav pulsars. "
+                   f"The blind search found {review['array_internal']} internally significant common-pattern fits. "
+                   f"{review['full_sign']} passed the survey-wide pulsar-sign test.")
+    else:
+        summary = (f"In {len(ok)} NANOGrav pulsars, {review['individual']} individual fits and "
+                   f"{review['all_support']} of {review['array_internal']} common-pattern fits passed every check.")
+    bullet = summary + f" Signal injections give conditional amplitude limits for {len(reported_limits)} pulsar, waveform and width combinations."
     sums = {path.relative_to(dest).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
             for path in sorted(dest.rglob("*")) if path.is_file()}
     (dest / "SHA256SUMS").write_text("".join(f"{sha}  {name}\n" for name, sha in sums.items()))
     body = [
-        "# Blind pulsar timing transient search", "", f"**{bullet}**", "",
+        "# Blind pulsar timing transient search", "", f"**{summary}**", "",
+        f"The strongest array alignment had a survey-wide sign-randomization p-value of "
+        f"**{sign['p_sign_max_bank']:.4g}**. In {sign['exceedances']:,} of {coherence['draws']:,} trials, "
+        f"randomly reversing entire pulsar time series produced a peak at least as strong somewhere among "
+        f"the {array['n_trials']:,} array templates. This test preserves transient structure within each pulsar "
+        f"and assumes sign symmetry across pulsars. After restricting the bank to the "
+        f"{len(coherence['diagnostic_passing_pulsars'])} pulsars passing noise diagnostics, the strongest "
+        f"alignment had p = {coherence['observed_subset_max_tail']['p_sign_max_bank']:.3g}. "
+        "[Randomization results](evidence/coherence/summary.json)", "",
         f"The individual search produced {primary_count} primary template crossings. "
         "Nearby epochs, widths and physical templates can describe the same excursion. "
         "The number of fits is not the number of distinct astrophysical events.", "",
-        f"Wideband reductions succeeded for {n_wb} pulsars. EPTA DR2 reductions succeeded for {n_epta} overlapping pulsars. "
-        "The coverage table identifies untested targets. The individual records retain every primary crossing and its disposition. "
+        f"Wideband reductions succeeded for {n_wb} pulsars. Independent EPTA data were usable for {n_epta} of "
+        f"{len(cov['epta'])} overlapping pulsars ({selections['DR2full']} DR2full solutions and "
+        f"{selections['DR2new']} modern-backend DR2new solutions). For a failed full-release fit the same "
+        "phase and residual-quality checks were applied to the published modern-backend subset. "
+        "The coverage files retain both attempts. Catalog membership alone does not guarantee observations at a given epoch. "
         "[Coverage](evidence/coverage.csv) · [Per-pulsar dispositions](evidence/individual-dispositions.csv) · "
         "[Individual records](evidence/single) · [Surviving fits](evidence/surviving-fits.json)", "",
         "## Timing signatures and interpretation", "",
@@ -186,7 +205,10 @@ def render(root, evidence):
         f"{review['external_holm']} had multiplicity-adjusted support in EPTA "
         f"({review['external_testable']} had enough external sky coverage). "
         f"The independent-per-visit dispersion fit supported the original direction in {review['dm_support']} "
-        f"of {review['dm_testable']} testable fits. These controls probe different failure modes. "
+        f"of {review['dm_testable']} testable fits. On the same visits, {review['matched_raw_support']} "
+        f"had directional support before fitting an independent DM per visit. "
+        f"Only {review['dm_expected_snr_ge3']} dispersion-controlled fits had enough precision for an expected "
+        "signal-to-noise ratio of at least three at the discovery amplitude. "
         "[Every surviving fit, with MJD, amplitude and checks](evidence/EVENTS.md) · "
         "[Physical review by waveform and epoch](COHERENT_REVIEW.md) · [Post-discovery controls](ADJUDICATION.md)", "",
         "The surviving-fits table includes the fitted epoch, amplitude, significance and checks for every surviving template. "
@@ -194,12 +216,12 @@ def render(root, evidence):
         "Each array record separately reports wideband and EPTA support, inconclusive checks and missing epochs. "
         "A wideband recurrence tests the reduction of the same telescope observations. "
         "An EPTA comparison tests independent telescope data at the discovery epoch. "
-        "Publication history and any physical attribution require an event-by-event review. "
         "[Common-mode results and alternatives](evidence/array) · [Published event epochs](PRIOR_EVENTS.md)", "",
         "As a post-search comparison, fixed 60-day timing templates were evaluated at the two published "
         "J1713+0747 dips and the J1643−1224 profile event. The table distinguishes a fixed-epoch response "
         "from a blind trial that crossed the survey threshold. [Known-event controls](evidence/known-event-controls.csv)", "",
         "## Sensitivity and scope", "",
+        "![Survey-wide sign test and injected memory recovery](evidence/search-calibration.png)", "",
         f"The individual search reports {len(reported_limits)} pulsar, morphology and width combinations with a conditional amplitude limit. "
         "Blank limits mark combinations without a calibrated exclusion. The individual records give the injected amplitudes, units, "
         "recovery rule and assumptions. The coherent-search tables give injection counts and recovery fractions by signal family. "
@@ -208,6 +230,23 @@ def render(root, evidence):
         "## Inputs and reproduction", "",
         "| Release | DOI | Downloaded archive SHA-256 |", "| --- | --- | --- |",
     ]
+    external_rows = [r for r in read(dest / "event-review.json") if r["external_support_after_holm"]]
+    if external_rows:
+        lines = ["### Patterns with independent directional support", "",
+                 "EPTA tests the discovery direction at a frozen epoch. The sign test compares that discovery "
+                 "with the strongest coincidence anywhere in the NANOGrav bank. Each row links to the full "
+                 "record of participants and other checks. [Event ledger](evidence/EVENTS.md)", "",
+                 "| Pattern | MJD | NANOGrav amplitude ± SE | EPTA amplitude ± SE | Units | EPTA Holm p | NANOGrav sign-test p |",
+                 "| --- | ---: | ---: | ---: | --- | ---: | ---: |"]
+        for row in external_rows:
+            r = row["coherence"]
+            lines.append(f"| {row['family']} {row['shape']} | {row['epoch_mjd']:.0f} | "
+                         f"{float(r['discovery_direction_amplitude']):.3g} ± {float(r['discovery_direction_se']):.3g} | "
+                         f"{float(r['epta_direction_amplitude']):.3g} ± {float(r['epta_direction_se']):.3g} | "
+                         f"{row['units']} | {float(r['epta_p_holm']):.3g} | {float(r['p_sign_max_bank']):.3g} |")
+        lines.append("")
+        position = body.index("## Sensitivity and scope")
+        body[position:position] = lines
     thresholds = ["### Individual amplitude limits", "",
                   "| Timing signature | Width in days | Pulsars with limits | Median limit in µs | Range in µs |",
                   "| --- | ---: | ---: | ---: | ---: |"]

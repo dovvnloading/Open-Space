@@ -13,8 +13,12 @@ from pint.residuals import Residuals
 from pint.toa import _parse_TOA_line, _toa_format, get_TOAs_array
 
 
-TIM_COMMANDS = set("INCLUDE INFO FORMAT EFAC EQUAD EMIN EMAX FMIN FMAX MODE PHASE TIME JUMP".split())
-UNSUPPORTED_COMMANDS = set("EFLOOR ESET SIGMA GLOBAL_EFAC T2EFAC T2EQUAD".split())
+TIM_COMMANDS = {"INCLUDE", "FORMAT", "MODE"}
+# TEMPO2 readTimfile.C initializes these variables inside each recursive readTim.
+# INFO is static, JUMP carries an outer counter, and PHASE records an epoch in
+# the pulsar object. Do not map those across files with PINT's different rules.
+LOCAL_COMMANDS = set("TIME EFAC EQUAD SIGMA ESET EFLOOR EMIN EMAX FMIN FMAX".split())
+UNSUPPORTED_COMMANDS = set("GLOBAL_EFAC T2EFAC T2EQUAD INFO JUMP PHASE".split())
 
 
 def toa_columns(fields):
@@ -82,6 +86,7 @@ def stage_tim(src, work, record, model_tokens):
         counts["inferred_format1_header"] += 1
     skip = False
     profile_dir = None
+    local = {}
     for line_no, (line, fields) in enumerate(zip(lines, parsed), 1):
         if not fields or line.startswith("#"):
             transformed.append(line)
@@ -116,11 +121,29 @@ def stage_tim(src, work, record, model_tokens):
             counts["tempo2_I_deleted_toas"] += 1
             continue
         if word in TIM_COMMANDS and not toa_columns(fields):
+            if word == "MODE" and fields[1:] != ["1"]:
+                raise ValueError(f"{file_id}:{line_no}: unsupported TEMPO2 fit mode")
             transformed.append(line)
             continue
-        if word in UNSUPPORTED_COMMANDS:
-            raise ValueError(f"{file_id}:{line_no}: unsupported timing-error directive {word}")
+        if word in LOCAL_COMMANDS and not toa_columns(fields):
+            # Do not emit the directive into PINT's shared INCLUDE state.
+            if len(fields) < 2:
+                raise ValueError(f"{file_id}:{line_no}: missing {word} value")
+            value = Decimal(fields[1])
+            if not value.is_finite():
+                raise ValueError(f"{file_id}:{line_no}: nonfinite {word} value")
+            local[word] = local.get(word, Decimal(0)) + value if word == "TIME" else value
+            counts["directive_"+word] += 1
+            record.setdefault("local_directives", {}).setdefault(file_id, []).append({
+                "line":line_no, "command":word, "released_value":str(value),
+                "effective_value":str(local[word])})
+            continue
+        if word in UNSUPPORTED_COMMANDS and not toa_columns(fields):
+            counts["unsupported_directive_"+word] += 1
+            raise ValueError(f"{file_id}:{line_no}: unsupported TEMPO2 directive {word}")
         if not modern:
+            if local and _toa_format(line) not in ("Blank", "Unknown", "Comment", "Command"):
+                raise ValueError(f"{file_id}:{line_no}: per-file timing directives on legacy-format TOA")
             transformed.append(line)
             continue
         if not toa_columns(fields) or line.startswith("I"):
@@ -132,6 +155,27 @@ def stage_tim(src, work, record, model_tokens):
         try:
             mjd_value = Decimal(fields[2])
             pairs, offset = normalize_flags(fields[5:], counts, model_tokens)
+            if local.get("TIME", 0):
+                counts["local_TIME_shifted_toas"] += 1
+                offset += local["TIME"]
+            if local.keys() - {"TIME"}:
+                freq, error = float(fields[1]), float(fields[3])
+                # TEMPO2 native ordering in readTimfile.C: EQUAD, SIGMA,
+                # EFAC, ESET, EFLOOR, the error windows, and frequency windows.
+                error = np.hypot(error, float(local.get("EQUAD", 0)))
+                if local.get("SIGMA", 0) != 0:
+                    error = float(local["SIGMA"])
+                error *= float(local.get("EFAC", 1))
+                if local.get("ESET", -1) > -1:
+                    error = float(local["ESET"])
+                if local.get("EFLOOR", -1) != -1:
+                    error = max(error, float(local["EFLOOR"]))
+                if any(local.get(key, -1) != -1 and compare(val, float(local[key]))
+                       for key, val, compare in (("EMIN", error, np.less), ("EMAX", error, np.greater),
+                                                 ("FMIN", freq, np.less), ("FMAX", freq, np.greater))):
+                    counts["local_window_cuts"] += 1
+                    continue
+                fields[3] = repr(float(error))
             if offset:
                 with localcontext() as context:
                     context.prec = 45
@@ -251,6 +295,28 @@ def refit_epta(model, toas, row):
         # A cycle cannot be inferred from a badly smeared converted ephemeris.
         # Retain the phase connection from the supplied solution while refitting.
         if not np.isfinite(initial_rms) or initial_rms >= 0.05 * 1e6 / model.F0.value:
+            # Diagnose the full rejected selection, without choosing a
+            # reference backend, retuning pulse numbers, or retrying the fit.
+            phase = np.asarray(initial.phase_resids.value, float)
+            errors = model.scaled_toa_uncertainty(toas).to_value(u.us)
+            weights = 1/np.square(errors)
+            labels = np.array([flag.get("group") or flag.get("sys") or str(site)
+                               for flag, site in zip(toas.table["flags"], toas.table["obs"])])
+            mjd = np.asarray(toas.get_mjds().value, float)
+
+            def scatter(selected):
+                w, x = weights[selected], phase[selected]
+                center = np.angle(np.average(np.exp(2j*np.pi*x), weights=w))/(2*np.pi)
+                wrapped = (x-center+.5)%1-.5
+                return {"n":int(selected.sum()), "min_mjd":float(mjd[selected].min()),
+                        "max_mjd":float(mjd[selected].max()), "circular_center_cycles":float(center),
+                        "circular_wrms_cycles":float(np.sqrt(np.average(wrapped**2, weights=w))),
+                        "max_centered_abs_cycles":float(np.max(np.abs(wrapped)))}
+
+            if np.all(np.isfinite(phase)) and np.all(np.isfinite(weights)) and np.all(weights > 0):
+                record["whole_sample_circular_diagnostic"] = scatter(np.ones(len(toas), dtype=bool))
+                record["by_release_group_or_system_or_site"] = {
+                    name:scatter(labels == name) for name in sorted(set(labels))}
             raise ValueError("EPTA initial ephemeris is not sufficiently phase connected to refit")
         toas.compute_pulse_numbers(model)
         record["pulse_numbers"] = "nearest integer from the released converted model, fixed for all iterations"

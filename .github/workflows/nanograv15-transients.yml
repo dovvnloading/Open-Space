@@ -40,7 +40,7 @@ jobs:
       contents: read
     env:
       INPUT_RUN: ${{ github.event_name == 'push' && '44980795983' || inputs.input_run }}
-      SCAN_RUN: ${{ github.event_name == 'push' && '44983186753' || inputs.scan_run }}
+      SCAN_RUN: ${{ github.event_name == 'push' && '44984927588' || inputs.scan_run }}
     outputs:
       scan_run: ${{ steps.checkpoint.outputs.scan_run }}
       scan_sha: ${{ steps.checkpoint.outputs.scan_sha }}
@@ -141,6 +141,7 @@ jobs:
             fi
             python "$STUDY/prepare.py" reduce --dataset "$release" --work raw --out reduced --shard ${{ matrix.shard }} --shards 4
           done
+          python "$STUDY/epta_modern.py" --work raw --out reduced --shard ${{ matrix.shard }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -278,6 +279,7 @@ jobs:
           python "$STUDY/coherence_check.py" --data reduced --evidence evidence --out evidence/coherence
           python "$STUDY/dm_control.py" --data reduced --evidence evidence --out evidence/dm-control
           python "$STUDY/known_controls.py" --data reduced --evidence evidence
+          python "$STUDY/figure.py" --evidence evidence
       - name: Deposit measurements and checks in the result folder
         run: |
           cp receipts/inputs.json reduced/coverage-*.json reduced/runtime-*.json reduced/software-*.txt evidence/

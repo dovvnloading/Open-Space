@@ -35,7 +35,7 @@ done
 if git diff --quiet "$prior_sha" HEAD -- "$study"/{prepare.py,requirements.txt}; then
   echo "ng_run=$prior_run" >> "$GITHUB_OUTPUT"
 fi
-if ! git diff --quiet "$prior_sha" HEAD -- "$study"/{prepare.py,epta.py,search.py,array_search.py,requirements.txt,check_array.py,check_single.py}; then
+if ! git diff --quiet "$prior_sha" HEAD -- "$study"/{prepare.py,epta.py,epta_modern.py,check_epta.py,search.py,array_search.py,requirements.txt,check_array.py,check_single.py}; then
   echo "Primary or external analysis code differs; rerunning the affected stages."
   exit 0
 fi
