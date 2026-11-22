@@ -20,7 +20,8 @@ jobs:
         with:
           persist-credentials: false
           sparse-checkout: results/xmmsl2-erass1-rass
-      - run: python "$STUDY/probe.py"
+      - name: Resolve archived XMMSL2 and survey map access
+        run: python "$STUDY/probe.py"
       - uses: actions/upload-artifact@v4
         with:
           name: survey-release-inventory

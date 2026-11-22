@@ -40,7 +40,7 @@ class Page(HTMLParser):
 
 
 def tap(base, query):
-    return base + "?" + urlencode(dict(REQUEST="doQuery", LANG="ADQL", FORMAT="csv", QUERY=query))
+    return base + "?" + urlencode(dict(REQUEST="doQuery", LANG="ADQL", FORMAT="votable" if base==TAP else "csv", QUERY=query))
 
 
 def get(item):
@@ -51,7 +51,7 @@ def get(item):
             data = response.read(1_500_001)
             rec.update(status=response.status, final=response.url, bytes_read=len(data), sha256=hashlib.sha256(data).hexdigest())
         body = data.decode("utf8", "replace")
-        if "<html" in body.lower() or "<!doctype html" in body.lower():
+        if re.search(r"<(?:html|head|body)\b",body,re.I):
             p = Page()
             p.feed(body)
             rec.update(links=list(dict.fromkeys(urljoin(url, l) for l in p.links if l))[:260], text=" ".join(p.words)[:18000])
@@ -67,6 +67,18 @@ queries = {
     "erodat": ERO+"erodat/", "eroul": ERO+"erodat/upperlimit/", "erosky": ERO+"erodat/skyview/",
     "rass_archive": HEA+"FTP/rosat/data/pspc/processed_data/rass/", "rass_root": HEA+"FTP/rosat/data/pspc/processed_data/",
     "rass_maps": HEA+"FTP/rosat/data/pspc/rass/", "rass_images": HEA+"docs/rosat/survey/rass.html",
+    "ero_api": "https://erosita.mpe.mpg.de/erodat/apis/", "ero_ul_doc": ERO+"AllSkySurveyData_dr1/UpperLimitServer_dr1/",
+    "xmm_archive":HEA+"FTP/xmm/data/catalogues/","archive_xmm2":"https://www.cosmos.esa.int/web/xmm-newton/xsa",
+    "rass_release":HEA+"FTP/rosat/data/pspc/processed_data/rass/release/","rass_pspc":HEA+"FTP/rosat/data/pspc/",
+    "rass_mpe":"https://www.mpe.mpg.de/ROSAT/2RXS/", "rass_home":HEA+"FTP/rosat/",
+    "rass_metadata":"https://skyview.gsfc.nasa.gov/current/cgi/survey.pl?survey=RASS-Cnt%20Broad",
+    "rass_exposure":"https://skyview.gsfc.nasa.gov/current/cgi/survey.pl?survey=RASS-Exp%20Broad",
+    "xmm2_cds":"https://cdsarc.cds.unistra.fr/ftp/IX/53/", "rass_cds":"https://cdsarc.cds.unistra.fr/ftp/J/A+A/588/A103/",
+    "xmm2_user":"https://www.cosmos.esa.int/web/xmm-newton/xmmsl2-ug",
+    "xmm2_slew":"https://www.cosmos.esa.int/web/xmm-newton/epic-slew-catalogue",
+    "nxsa":"https://nxsa.esac.esa.int/catalogues/",
+    "rass_caldb":HEA+"FTP/caldb/data/rosat/pspc/cpf/matrices/",
+    "rass_indices":tap(TAP,"SELECT table_name,description FROM TAP_SCHEMA.tables WHERE table_name LIKE '%rass%' OR table_name LIKE 'rosmaster'"),
     "rass_info": "https://www.xray.mpe.mpg.de/rosat/survey/rass-3/",
     "skyview_cnt": "https://skyview.gsfc.nasa.gov/current/cgi/survey.pl?RASS-Cnt+Broad",
     "skyview_exp": "https://skyview.gsfc.nasa.gov/current/cgi/survey.pl?RASS-Exp+Broad",
@@ -88,9 +100,14 @@ with cf.ThreadPoolExecutor(max_workers=7) as pool:
             for link in row.get("links", []):
                 if link in seen or not link.startswith(ERO) or urlsplit(link).fragment:
                     continue
-                if re.search(r"upper|limit|sensitiv|skytile|exposure|[Mm]aps|catalog|download|[Aa]ccess|[Ff]lare", link) and not re.search(r"\.fits|\.gz|\.zip|\.pdf", link, re.I):
+                if re.search(r"upper|limit|sensitiv|skytile|exposure|maps|download|access", link, re.I) and not re.search(r"\.fits|\.gz|\.zip|\.pdf", link, re.I):
                     seen.add(link)
                     extra.append(("ero_link",link))
+        if depth == 0:
+            release = next((r for r in rows if r["label"]=="rass_release"),{})
+            samples = [l for l in release.get("links",[]) if re.search(r"/rs\d+[^/]*/$", l)]
+            if samples:
+                extra.insert(0, ("rass_field", samples[len(samples)//2]))
         if extra:
             rows.extend(pool.map(get, extra[:30]))
 for i, row in enumerate(rows):
