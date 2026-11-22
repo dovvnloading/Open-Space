@@ -157,6 +157,11 @@ jobs:
         run: |
           d="$SURVEY/evidence/$RELEASE"
           python "$SURVEY/ew_imaging_followup.py" "$d" "$d/ew-imaging" --release "$RELEASE" --cache "$RUNNER_TEMP/hetdex"
+      - name: Replay the native equivalent-width selection on the position-assigned shuffled spectra
+        if: env.STAGE == 'full' || env.STAGE == 'focus' || env.STAGE == 'finalize' || env.STAGE == 'audit' || env.STAGE == 'geometry'
+        run: |
+          d="$SURVEY/evidence/$RELEASE"
+          python "$SURVEY/ew_imaging_followup.py" "$d" "$d/ew-imaging" --release "$RELEASE" --cache "$RUNNER_TEMP/hetdex" --scout-control-only
       - name: Wait for the original evidence commit before publishing the supplement
         if: (env.STAGE == 'focus' || env.STAGE == 'finalize') && matrix.release == 'sc1'
         env:

@@ -311,6 +311,19 @@ def main():
         for tag,_ in native_dirs:
             base=f'evidence/{tag}/ew-imaging'
             sections.append(f'\n{tag.upper()} · [Every measured or inconclusive EW]({base}/outcomes.csv) · [Tightest bounds and confirmed rows]({base}/best.json) · [Native photometry and checksums]({base}/native.jsonl.gz).')
+        scout_dirs=[(t,d/'scout-control') for t,d in native_dirs if (d/'scout-control'/'summary.json').exists()]
+        if scout_dirs:
+            sections+=['', 'The dedicated imaging-scout control preserves each target position and independently permutes the input spectra across targets at each wavelength. The replay checks every preliminary mock flux and uncertainty against its frozen fit before testing the assigned sky position for corroboration and redward continuum.',
+                       '', '| Release | Eligible target rows | Shuffled spectra | Preliminary mock peaks | Independently supported | EW lower bound measured | Lower bound >240 Å | Confirmed |',
+                       '|---|---:|---:|---:|---:|---:|---:|---:|']
+            for t,d in scout_dirs:
+                ctr=read(d/'summary.json')['counts']
+                fields=('eligible_targets','shuffled_spectra','preliminary_science_peaks','independently_supported',
+                        'with_EW_lower','lower_above_240','disposition_candidate')
+                sections.append(f"| {t.upper()} | "+' | '.join(f"{ctr.get(k,0):,}" for k in fields)+' |')
+            for t,_ in scout_dirs:
+                base=f'evidence/{t}/ew-imaging/scout-control'
+                sections.append(f'\n{t.upper()} · [Mock draws and denominator]({base}/summary.json) · [Every preliminary mock line, its donor block and decision]({base}/assessments.jsonl.gz) · [Assigned-position photometry]({base}/native.jsonl.gz).')
         sections.append('')
     sections+=['Every unresolved narrow He II / Lyα pair meeting the flux-ratio and spectral cuts, and every unresolved EW lead with a qualifying lower bound in the frozen first-pass register, entered the supplementary positional search of independent spectral catalogs. The table distinguishes successful catalog queries from attempts. Full rechecks preserve the original ledger and each revised decision.',
                '', '| Release | Eligible source / line hypotheses | Distinct positions | Rechecked hypotheses |',

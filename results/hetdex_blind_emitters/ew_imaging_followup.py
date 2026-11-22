@@ -327,6 +327,60 @@ def trim(cache):
         used-=sz
 
 
+def decision(rec,v,cone,cache,cat,aux,counts,cached_bands=()):
+    """Apply the identical native continuum and external gates to data and controls."""
+    if "cube" not in v or not v["cube"].get("central_aperture"):
+        meta=cat.metadata(rec["row_index"])
+        try:
+            v["cube"]=cube_test({**meta,**rec},cache.fetch)
+        except Exception as exc:
+            v["cube"]={"status":"unavailable","error":str(exc)}
+    def get_band(band):
+        cube=v["cube"]
+        for line,measurement in cached_bands:
+            item=measurement.get(band) or {}
+            psf=item.get("psf") or {}
+            if (item.get("eligible") and cube.get("central_aperture") and
+                (cube.get("ra"),cube.get("dec"))==(rec["ra"],rec["dec"]) and
+                (item.get("ra"),item.get("dec"))==(rec["ra"],rec["dec"]) and
+                item.get("aperture_radius_arcsec")==cube.get("aperture_radius_arcsec")==1.5 and
+                psf.get("cube_seeing_arcsec")==cube.get("seeing_arcsec") and
+                psf.get("cube_moffat_beta")==cube.get("two_psf_beta")):
+                counts["archived_band_measurements_reused"]+=1
+                return {band:dict(item,reused_from_ew_imaging_native_line=line)}
+        return forced_photometry(rec,cone,cache,cube=cube,bands=(band,))
+    native=get_band("r")
+    img=measure(rec,v,cone,native)
+    if not (img["deep_native_r"] and number(img["ew0_lower_A"])>240):
+        native.update(get_band("z"))
+        img=measure(rec,v,cone,native)
+    lower=img["ew0_lower_A"]
+    upper=img["ew0_upper_A_two_band_model"]
+    counts["native_cones_queried"]+=cone.get("status")=="queried"
+    counts["aperture_r_eligible"]+=bool((native.get("r") or {}).get("eligible"))
+    counts["aperture_z_eligible"]+=bool((native.get("z") or {}).get("eligible"))
+    counts["with_EW_lower"]+=lower is not None
+    counts["lower_above_240"]+=number(lower)>240
+    counts["two_band_model_upper_below_240"]+=upper is not None and upper<240
+    if can_promote(rec,v,img):
+        v=full_check(rec,v,cone,img,cache,cat,aux)
+        counts["full_literature_agn_rechecks"]+=1
+    else:
+        v["imaging_EW"]=img
+        reasons=set(v.get("reasons") or [])
+        if not reasons:
+            reasons.add(EW_GAP)
+        if cone.get("status")=="queried":
+            reasons.discard(DIRECT_GAP)
+        if upper is not None and upper<240:
+            reasons.add("both matched red bands put the compact continuum-model rest EW below 240 A")
+        if number(lower)<=240:
+            reasons.add(EW_GAP)
+        v.update(disposition="unresolved",reasons=sorted(reasons))
+    v["imaging_EW"]=img
+    return v,native,img
+
+
 def run(indir,out,release,cache_root):
     out.mkdir(parents=True,exist_ok=True)
     cf=("sample","source_register","source_line","row_index","source_id","detectid","ra","dec","z_lya","wave",
@@ -366,41 +420,9 @@ def run(indir,out,release,cache_root):
                     if sample!="observed":
                         rec["shuffled_detail_complete"]=True
                     cone=cones[p["ra"],p["dec"]]
-                    if "cube" not in v or not v["cube"].get("central_aperture"):
-                        meta=cat.metadata(p["row_index"])
-                        try:
-                            v["cube"]=cube_test({**meta,**rec},cache.fetch)
-                        except Exception as exc:
-                            v["cube"]={"status":"unavailable","error":str(exc)}
-                    native=forced_photometry(rec,cone,cache,cube=v["cube"],bands=("r",))
-                    img=measure(rec,v,cone,native)
-                    if not (img["deep_native_r"] and number(img["ew0_lower_A"])>240):
-                        native.update(forced_photometry(rec,cone,cache,cube=v["cube"],bands=("z",)))
-                        img=measure(rec,v,cone,native)
+                    v,native,img=decision(rec,v,cone,cache,cat,aux,counts)
                     lower=img["ew0_lower_A"]
                     upper=img["ew0_upper_A_two_band_model"]
-                    counts["native_cones_queried"]+=cone.get("status")=="queried"
-                    counts["aperture_r_eligible"]+=bool((native.get("r") or {}).get("eligible"))
-                    counts["aperture_z_eligible"]+=bool((native.get("z") or {}).get("eligible"))
-                    counts["with_EW_lower"]+=lower is not None
-                    counts["lower_above_240"]+=number(lower)>240
-                    counts["two_band_model_upper_below_240"]+=upper is not None and upper<240
-                    if can_promote(rec,v,img):
-                        v=full_check(rec,v,cone,img,cache,cat,aux)
-                        counts["full_literature_agn_rechecks"]+=1
-                    else:
-                        v["imaging_EW"]=img
-                        reasons=set(v.get("reasons") or [])
-                        if not reasons:
-                            reasons.add(EW_GAP)
-                        if cone.get("status")=="queried":
-                            reasons.discard(DIRECT_GAP)
-                        if upper is not None and upper<240:
-                            reasons.add("both matched red bands put the compact continuum-model rest EW below 240 A")
-                        if number(lower)<=240:
-                            reasons.add(EW_GAP)
-                        v.update(disposition="unresolved",reasons=sorted(reasons))
-                    v["imaging_EW"]=img
                     # Permanent input references are written once in this ledger
                     # per assessed acquisition/PSF, never as lower-limit proxies.
                     native_line+=1
@@ -448,5 +470,10 @@ if __name__=="__main__":
     ap.add_argument("output",type=Path)
     ap.add_argument("--release",required=True,choices=("sc1","sc2"))
     ap.add_argument("--cache",required=True,type=Path)
+    ap.add_argument("--scout-control-only",action="store_true")
     args=ap.parse_args()
-    run(args.input,args.output,args.release,args.cache)
+    if args.scout_control_only:
+        from ew_scout_control import run_control
+        run_control(args.input,args.output,args.release,args.cache)
+    else:
+        run(args.input,args.output,args.release,args.cache)
