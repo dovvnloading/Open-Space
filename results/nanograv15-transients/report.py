@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+from collections import Counter
 from statistics import median
 
 FOLDER = "results/nanograv15-transients"
@@ -148,6 +149,20 @@ def render(root, evidence):
     write_json(dest / "run.json", run)
     table(dest / "coverage.csv", coverage, ("pulsar", "nb", "wb", "epta", "individual"))
     write_json(dest / "surviving-fits.json", survivor_rows)
+    disposition = []
+    for p in sorted(ok, key=lambda item: item["pulsar"]):
+        hits = p["primary_crossings"]
+        reasons = Counter(reason for hit in hits for reason in hit["unpassed"])
+        best = min(p["peaks"], key=lambda row: row["p_global"], default={})
+        disposition.append(dict(pulsar=p["pulsar"], trials=p["trials"],
+                                primary=len(hits), neighborhoods=len(p["peak_neighborhoods"]),
+                                surviving_templates=len(p["survivors"]), failed_checks=dict(reasons),
+                                best_shape=best.get("template"), best_epoch_mjd=best.get("epoch_mjd"),
+                                best_amplitude_us=best.get("amplitude_us"), best_global_p=best.get("p_global"),
+                                noise_diagnostics_pass=p["noise_diagnostics"]["passes"]))
+    table(dest / "individual-dispositions.csv", disposition,
+          ("pulsar", "trials", "primary", "neighborhoods", "surviving_templates", "failed_checks",
+           "best_shape", "best_epoch_mjd", "best_amplitude_us", "best_global_p", "noise_diagnostics_pass"))
     table(dest / "individual-sensitivity.csv", limits,
           ("pulsar", "template", "width_d", "epoch_min_mjd", "epoch_max_mjd", "injections",
            "status", "reported_upper_limit_us", "exclusion_withheld", "efficiency_nearest_matching_template"))
@@ -161,7 +176,8 @@ def render(root, evidence):
         "The number of fits is not the number of distinct astrophysical events.", "",
         f"Wideband reductions succeeded for {n_wb} pulsars. EPTA DR2 reductions succeeded for {n_epta} overlapping pulsars. "
         "The coverage table identifies untested targets. The individual records retain every primary crossing and its disposition. "
-        "[Coverage](evidence/coverage.csv) · [Individual records](evidence/single) · [Surviving fits](evidence/surviving-fits.json)", "",
+        "[Coverage](evidence/coverage.csv) · [Per-pulsar dispositions](evidence/individual-dispositions.csv) · "
+        "[Individual records](evidence/single) · [Surviving fits](evidence/surviving-fits.json)", "",
         "## Timing signatures and interpretation", "",
         "The surviving-fits table includes the fitted epoch, amplitude, significance and checks for every surviving template. "
         "Individual survivors require independent EPTA support. Array survivors pass the internal leave-one-pulsar-out check. "
@@ -169,7 +185,7 @@ def render(root, evidence):
         "A wideband recurrence tests the reduction of the same telescope observations. "
         "An EPTA comparison tests independent telescope data at the discovery epoch. "
         "Publication history and any physical attribution require an event-by-event review. "
-        "[Common-mode results and alternatives](evidence/array) · [Prior studies](PROTOCOL.md)", "",
+        "[Common-mode results and alternatives](evidence/array) · [Published event epochs](PRIOR_EVENTS.md)", "",
         "## Sensitivity and scope", "",
         f"The individual search reports {len(reported_limits)} pulsar, morphology and width combinations with a conditional amplitude limit. "
         "Blank limits mark combinations without a calibrated exclusion. The individual records give the injected amplitudes, units, "

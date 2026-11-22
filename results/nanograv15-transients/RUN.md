@@ -1,8 +1,8 @@
 # Run and reproduce
 
-The NANOGrav and EPTA archives are downloaded only by the manual workflow. It saves the versioned input checksums, reduces individual pulsars with PINT and fits the single-pulsar and common-signal models. Four reduction partitions share two concurrent runner slots. The individual search uses the same partitioning limit. The array fit runs once. Raw downloads, residual matrices and intermediate artifacts have finite retention. The report job commits the evidence used for the catalog entry to the research branch after both repository checks pass.
+The NANOGrav and EPTA archives are downloaded inside the study workflow. It saves input checksums, reduces the pulsars with PINT and fits the individual and common-signal models. Four reduction partitions share two concurrent runner slots. The individual search uses the same partitioning limit. The array fit runs once. The report job verifies its evidence commit and runs the repository tests before pushing the commit to the research branch.
 
-GitHub requires a manually triggered workflow to exist on the default branch before its first dispatch. A branch option selects which revision runs after registration. [GitHub documentation](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow)
+After registration on the default branch, use the dispatch command below. For the pre-review run the maintainer also enabled a push trigger restricted to the research branch and this workflow file. The first run downloaded both release archives. The corrected file selection can reuse those immutable Actions inputs until they expire, after which the workflow downloads the same checksummed releases. [Initial run](https://github.com/dovvnloading/Open-Space/actions/runs/44980795983) · [GitHub documentation](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow)
 
 ```sh
 gh workflow run nanograv15-transients.yml --repo dovvnloading/Open-Space --ref research/nanograv15-blind-transients
@@ -29,3 +29,9 @@ The workflow verifies its evidence commit with the repository's two requested co
 python -m open_space.verify
 python -m unittest discover -s tests
 ```
+
+## Timing-file compatibility
+
+The first pass found 68 pulsars in each NANOGrav reduction and could select a unique file pair for 62. Six sources have both combined and site-specific solutions in the archive. The revised selection uses the combined solution for J1600−3053, J1643−1224, J1713+0747, J1903+0327, J1909−3744 and B1937+21. The receipt identifies the specific files and SHA-256 values. Wideband processing applies the release flags before building a set of paired arrival-time and DM measurements. Its receipt counts removed and unpaired rows separately.
+
+The independent reduction interprets EPTA's TEMPO2 comment convention and records observatory clock coverage. It holds the pulse counts fixed when refitting the released parameters after PINT's TCB-to-TDB conversion. The receipt retains the initial and refitted WRMS and the original published TRES. The same acceptance window applies to that original TRES. A rejected reduction remains visible in the coverage table.

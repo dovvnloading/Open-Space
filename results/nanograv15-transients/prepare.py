@@ -26,6 +26,10 @@ RELEASES = {
 ALIASES = {"B1855+09": "J1857+0943", "B1937+21": "J1939+2134", "B1953+29": "J1955+2908"}
 CLOCK_REV = "99a698887521a3000c1f37d027284eac15d92d9e"  # IPTA, NG15 v2.1.0 release day
 PSR = re.compile(r"(?<![A-Za-z0-9])([JB]\d{4}[+-]\d{2,4})(?!\d)", re.I)
+ARCHIVE_SHA256 = {
+    "ng": "91476bf20d4c8baa9f5ad39c6e114b581478a5a7e269876489cafc8f62c5708f",
+    "epta": "2ae546940419ce12a508d0f24b54db91163b0a0d204b85f8bca626eed847b43c",
+}
 
 
 def save(path, obj):
@@ -97,15 +101,27 @@ def rank(path, dataset, suffix):
     full = str(path).lower()
     parts = {p.lower() for p in path.parts}
     name = path.name.lower()
+    if dataset in ("nb", "wb"):
+        # The release provides additional, observatory-only fits for some
+        # sources (e.g. J1713+0747ao_PINT vs J1713+0747_PINT). Use the
+        # unsuffixed source and the standard release par/tim directories.
+        # Alternate excise files can include observations rejected by the
+        # release and require additional cuts; the standard tim is the
+        # published selection paired with the all-site model.
+        primary_source = bool(PSR.fullmatch(re.split(r"[._]", name, 1)[0]))
+        primary_path = "alternate" not in parts
+        mode_rank = (primary_source, primary_path)
+    else:
+        mode_rank = ()
     if suffix == ".par":
         if any(tag in full for tag in ("predictive", "norednoise", "no_red_noise", "no-red-noise", "template")):
             return None
-        return ("full" in full if dataset == "epta" else True,
+        return mode_rank + ("full" in full if dataset == "epta" else True,
                 bool(PSR.fullmatch(path.stem)) if dataset == "epta" else True,
                 "pint" in full, "tempo2" not in full and ".t2." not in name,
                 "par" in parts, -len(path.parts))
     if suffix == ".tim":
-        return ("full" in full if dataset == "epta" else True,
+        return mode_rank + ("full" in full if dataset == "epta" else True,
                 "excise" in full, "all" in name or "combined" in name,
                 bool(PSR.fullmatch(path.stem)) if dataset == "epta" else True,
                 "tim" in parts, -len(path.parts))
@@ -211,6 +227,8 @@ def fetch_all(work, out, manifest):
             if digest(archive, "md5") != md5:
                 raise ValueError(f"{source} release MD5 mismatch")
             entry.update(sha256=digest(archive), bytes=archive.stat().st_size)
+            if entry["sha256"] != ARCHIVE_SHA256[source]:
+                raise ValueError(f"{source} release SHA-256 mismatch")
             checkpoint(f"extracting {source}")
             unpack(archive, work / source)
             archive.unlink()
@@ -277,6 +295,49 @@ def fetch_all(work, out, manifest):
         raise ValueError("EPTA archive contained no identified timing models")
 
 
+def reindex(work, out):
+    """Re-select model/TOA pairs from the immutable first-run input artifact."""
+    manifest = json.loads((work / "inputs.json").read_text())
+    if manifest.get("status") != "complete" or manifest["clocks"]["commit"] != CLOCK_REV:
+        raise ValueError("incomplete or unexpected source artifact")
+    for source, (record, filename, md5) in RELEASES.items():
+        archive = manifest["archives"][source]
+        expected = {"md5": md5, "sha256": ARCHIVE_SHA256[source],
+                    "doi": "10.5281/zenodo." + record,
+                    "url": f"https://zenodo.org/records/{record}/files/{filename}?download=1"}
+        if any(archive.get(k) != v for k, v in expected.items()):
+            raise ValueError(f"{source} artifact disagrees with the pinned release")
+    for filename, expected in manifest["clocks"]["files_sha256"].items():
+        if digest(work / "standards" / "clock" / filename) != expected:
+            raise ValueError(f"clock file hash differs: {filename}")
+    for name, kernel in manifest["ephemerides"].items():
+        if digest(work / "standards" / (name + ".bsp")) != kernel["sha256"]:
+            raise ValueError(f"kernel hash differs: {name}")
+    original = manifest["sources"]
+    previous = {(r["dataset"], r["pulsar"]): r for r in original}
+    selected = inventory(work)
+    if set(previous) != {(r["dataset"], r["pulsar"]) for r in selected}:
+        raise ValueError("pulsar inventory differs from fetched archive")
+    for row in selected:
+        earlier = previous[row["dataset"], row["pulsar"]]
+        for key in ("par", "tim"):
+            if key in earlier and row.get(key) == earlier[key] and row[key + "_sha256"] != earlier[key + "_sha256"]:
+                raise ValueError(f"retained {key} changed after original fetch")
+    manifest.update(sources=selected, reindexed_from_inputs_sha256=digest(work / "inputs.json"))
+    for ds in ("nb", "wb", "epta"):
+        rows = [r for r in selected if r["dataset"] == ds]
+        ready = [r for r in rows if "error" not in r]
+        print(f"{ds}: {len(ready)} usable pairs of {len(rows)}", flush=True)
+        if ds in ("nb", "wb") and len(ready) != 68:
+            for row in rows:
+                if "error" in row:
+                    print(row["pulsar"], row["error"], flush=True)
+            save(out / "inputs.json", manifest)
+            raise ValueError(f"incomplete {ds} all-site selection")
+    save(work / "inputs.json", manifest)
+    save(out / "inputs.json", manifest)
+
+
 def ecorr_blocks(model, toas):
     """PINT ECORR has disjoint selection masks and one-second anchor epochs."""
     import numpy as np
@@ -338,6 +399,36 @@ def compress(t, y, sigma, freq, backend, design, group, ecorr, dataset):
     return {k: np.asarray(v)[order] for k, v in result.items()}, order
 
 
+def read_wideband(par, tim, eph, bipm, row):
+    """Apply the release's cuts before constructing a paired wideband TOA set."""
+    import math
+    from pint.models import get_model
+    from pint.toa import get_TOAs_list, read_toa_file
+
+    model = get_model(str(par), allow_T2=True, allow_tcb=True, allow_name_mixing=True)
+    observed, commands = read_toa_file(str(tim))
+    uncut = [x for x in observed if "cut" not in x.flags]
+    paired = []
+    for toa in uncut:
+        flags = toa.flags
+        if "pp_dm" not in flags or "pp_dme" not in flags:
+            continue
+        dm, error = float(flags["pp_dm"]), float(flags["pp_dme"])
+        if math.isfinite(dm) and math.isfinite(error) and error > 0:
+            paired.append(toa)
+    row["input_wideband_toas"] = len(observed)
+    row["release_flagged_before_wb_parse"] = len(observed) - len(uncut)
+    row["unpaired_wideband_toas"] = len(uncut) - len(paired)
+    if not paired:
+        raise ValueError("no unflagged arrival times with a finite DM and positive DM error")
+    toas = get_TOAs_list(paired, ephem=eph, include_bipm=True, bipm_version=bipm,
+                         planets=bool("PLANET_SHAPIRO" in model and model.PLANET_SHAPIRO.value),
+                         commands=commands, filename=str(tim), limits="error")
+    if "AbsPhase" not in model.components:
+        model.add_tzr_toa(toas)
+    return model, toas
+
+
 def extract(work, row, out):
     import numpy as np
     import astropy.units as u
@@ -376,11 +467,17 @@ def extract(work, row, out):
     load_kernel(eph, path=str(kernel))
 
     with contextlib.chdir(tim.parent):
-        model, toas = get_model_and_toas(
-            str(par), str(tim), usepickle=False, allow_T2=True, allow_tcb=True,
-            ephem=eph, limits="error", allow_name_mixing=True,
-            include_bipm=True, bipm_version=bipm,
-        )
+        if row["dataset"] == "wb":
+            model, toas = read_wideband(par, tim, eph, bipm, row)
+        elif row["dataset"] == "epta":
+            from epta import load_epta
+            model, toas = load_epta(par, tim, work, row, eph, bipm)
+        else:
+            model, toas = get_model_and_toas(
+                str(par), str(tim), usepickle=False, allow_T2=True, allow_tcb=True,
+                ephem=eph, limits="error", allow_name_mixing=True,
+                include_bipm=True, bipm_version=bipm,
+            )
     original_name = str(model.PSR.value).upper()
     if PSR.fullmatch(original_name) and ALIASES.get(original_name, original_name) != row["pulsar"]:
         raise ValueError(f"model identifies {original_name}, expected {row['pulsar']}")
@@ -395,15 +492,29 @@ def extract(work, row, out):
         if enabled and param is not None and param.value is not None:
             good &= predicate(mjds, float(param.value))
     raw_count, cut_count = len(toas), int((~good).sum())
+    if row["dataset"] == "wb":
+        raw_count = row["input_wideband_toas"]
+        cut_count += row["release_flagged_before_wb_parse"] + row["unpaired_wideband_toas"]
+    elif row["dataset"] == "epta":
+        clock_cuts = sum(item["n"] for item in row["epta_format"]["clock_cuts"].values())
+        raw_count += clock_cuts
+        cut_count += clock_cuts
     toas = toas[good]
     if not len(toas):
         raise ValueError("published quality and timing fit cuts leave zero TOAs")
+    if row["dataset"] == "epta":
+        from epta import refit_epta
+        model = refit_epta(model, toas, row)
     residual = Residuals(toas, model)
     y = np.asarray(residual.time_resids.to_value(u.us), float)
     sigma = np.asarray(model.scaled_toa_uncertainty(toas).to_value(u.us), float)
     rms = float(residual.rms_weighted().to_value(u.us))
     tres = model.TRES.quantity
     ref = None if tres is None else float(tres.to_value(u.us))
+    ntoa = int(model.NTOA.value) if model.NTOA.value is not None else None
+    if row["dataset"] == "epta":
+        ref = row["epta_timing_refit"]["original_par_tres_us"]
+        ntoa = row["epta_timing_refit"]["original_par_ntoa"]
     if ref is not None and (not np.isfinite(ref) or ref <= 0):
         ref = None
     ratio = None if ref is None else rms / ref
@@ -412,7 +523,7 @@ def extract(work, row, out):
     row.update(raw_toas=raw_count, cut_count=cut_count, used_toas=len(toas),
                rms_postfit_us_before_restoring_dmx=rms, parfile_tres_us=ref,
                wrms_to_tres_ratio=ratio,
-               parfile_ntoa=int(model.NTOA.value) if model.NTOA.value is not None else None)
+               parfile_ntoa=ntoa)
     if ratio is None:
         row["tres_check"] = "not supplied"
     elif not 0.5 <= ratio <= 2.0:
@@ -499,9 +610,9 @@ def reduce(work, out, dataset, shard, shards):
     runtime = Path(runtimefile("."))
     receipt = {
         "packages": {p: version(p) for p in ("pint-pulsar", "astropy", "astropy-iers-data", "pyerfa")},
-        "pint_runtime_sha256": {str(p.relative_to(runtime)): digest(p)
+        "pint_runtime_sha256": {"pint/data/runtime/" + p.relative_to(runtime).as_posix(): digest(p)
                                 for p in sorted(runtime.rglob("*")) if p.is_file()},
-        "iers_sha256": {p.name: digest(p) for p in
+        "iers_sha256": {"astropy_iers_data/data/" + p.name: digest(p) for p in
                         sorted((Path(astropy_iers_data.__file__).parent / "data").iterdir())
                         if p.is_file()},
     }
@@ -528,7 +639,7 @@ def reduce(work, out, dataset, shard, shards):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["fetch", "reduce"])
+    parser.add_argument("command", choices=["fetch", "reindex", "reduce"])
     parser.add_argument("--work", required=True, type=Path)
     parser.add_argument("--out", required=True, type=Path)
     parser.add_argument("--dataset", choices=["nb", "wb", "epta"])
@@ -537,6 +648,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.command == "fetch":
         fetch(args.work.resolve(), args.out.resolve())
+    elif args.command == "reindex":
+        reindex(args.work.resolve(), args.out.resolve())
     else:
         if not args.dataset:
             parser.error("reduce requires --dataset")

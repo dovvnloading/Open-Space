@@ -229,19 +229,30 @@ def measurable(p, raw, norm):
 def fixed_check(p, event):
     epoch = event["epoch_mjd"]
     dates = np.unique(np.floor(p.t))
+    before = p.t[p.t < epoch]
+    after = p.t[p.t > epoch]
+    window = event["width_d"] or 30.
+    cadence = {
+        "nearest_before_mjd": float(before.max()) if len(before) else None,
+        "nearest_after_mjd": float(after.min()) if len(after) else None,
+        "local_window_days_each_side": window,
+        "distinct_days_before_in_window": len(np.unique(np.floor(before[before >= epoch-window]))),
+        "distinct_days_after_in_window": len(np.unique(np.floor(after[after <= epoch+window]))),
+    }
     if np.sum(dates < epoch) < 4 or np.sum(dates > epoch) < 4:
-        return {"status": "epoch_outside_supported_span"}
+        return {"status": "epoch_outside_supported_span", **cadence}
     raw = waveform(p, event["template"], epoch, event["width_d"])
     norm, _, t, amp, se = score(p, p.whiten(raw))
     if not measurable(p, raw, norm)[0]:
-        return {"status": "degenerate"}
+        return {"status": "degenerate", **cadence}
     same = bool(amp[0] * event["amplitude_us"] > 0)
     # Direction fixed by the independent discovery data for EPTA.
     signed_t = np.sign(event["amplitude_us"]) * t[0]
     return {"status": "tested", "same_sign": same, "amplitude_us": float(amp[0]),
+            "amplitude_difference_from_narrowband_us": float(amp[0] - event["amplitude_us"]),
             "se_us": float(se[0]), "t": float(t[0]),
             "directional_p": float(stats.t.sf(signed_t, p.dof - 1)),
-            "dm_restored": p.dm_restored, "dm_retained": p.dm_retained}
+            "dm_restored": p.dm_restored, "dm_retained": p.dm_retained, **cadence}
 
 
 def wideband_dm_check(p, event):
@@ -538,6 +549,13 @@ def analyze(data, path):
         for dataset, other in checks_data.items():
             checks[dataset] = fixed_check(other, event) if isinstance(other, Projection) else {
                 "status": other}
+        external = checks["epta"]
+        if external["status"] == "tested":
+            # Descriptive difference in independent measurement errors. The
+            # discovery amplitude was selected by the search.
+            external["amplitude_difference_in_combined_se"] = (
+                external["amplitude_difference_from_narrowband_us"]
+                / float(np.hypot(event["se_us"], external["se_us"])))
         reasons = []
         if soft_estimate * event["amplitude_us"] <= 0 or not p.noise.get("reml_converged", False):
             reasons.append("red_dm_reml_check")

@@ -7,6 +7,11 @@ on:
     branches: [research/nanograv15-blind-transients]
     paths: ['.github/workflows/nanograv15-transients.yml']
   workflow_dispatch:
+    inputs:
+      input_run:
+        description: 'Optional run ID with this study’s verified timing-inputs artifact (blank fetches the releases)'
+        type: string
+        required: false
 
 permissions:
   contents: read
@@ -26,6 +31,11 @@ jobs:
   fetch:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+    permissions:
+      actions: read
+      contents: read
+    env:
+      INPUT_RUN: ${{ github.event_name == 'push' && '44980795983' || inputs.input_run }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,7 +44,23 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Restore verified release files from the earlier science run
+        if: env.INPUT_RUN != ''
+        id: restore
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: timing-inputs
+          path: restored/
+          github-token: ${{ github.token }}
+          run-id: ${{ env.INPUT_RUN }}
+      - name: Rebuild the file-selection manifest from the verified releases
+        if: steps.restore.outcome == 'success'
+        run: |
+          mv restored raw
+          python "$STUDY/prepare.py" reindex --work raw --out receipts
       - name: Fetch versioned timing releases and record checksums
+        if: steps.restore.outcome != 'success'
         run: python "$STUDY/prepare.py" fetch --work raw --out receipts
       - uses: actions/upload-artifact@v4
         if: always()
@@ -81,6 +107,15 @@ jobs:
           for release in nb wb epta; do
             python "$STUDY/prepare.py" reduce --dataset "$release" --work raw --out reduced --shard ${{ matrix.shard }} --shards 4
           done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reduction-receipts-${{ matrix.shard }}
+          path: |
+            reduced/coverage-*.json
+            reduced/runtime-*.json
+          if-no-files-found: warn
+          retention-days: 30
       - uses: actions/upload-artifact@v4
         if: always()
         with:
