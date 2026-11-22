@@ -1,0 +1,40 @@
+{
+  "counts": {
+    "cds_component_rows": 4760920,
+    "cds_fields_with_components": 3760032,
+    "fields_2_to_8_components": 486570,
+    "science_fields": 174737,
+    "control_apertures_on_fpr_qso": 538,
+    "control_fields": 174199,
+    "dr3_target_count": 28231,
+    "dr3_component_queries_complete": 28231,
+    "dr3_component_queries_unavailable": 0,
+    "unique_dr3_components": 25308
+  },
+  "field_outcomes": {
+    "control": {
+      "colour_mismatch": 1,
+      "differential_astrometry": 0,
+      "fewer_than_two_clean_fpr_components_in_aperture": 173539,
+      "inconsistent_with_zero_astrometry": 138,
+      "missing_or_low_quality_astrometry": 120,
+      "missing_or_low_quality_colour": 5,
+      "no_unique_dr3_match": 39,
+      "pair_geometry_or_fpr_flux_contrast": 356,
+      "passed_gaia": 1
+    },
+    "science": {
+      "colour_mismatch": 87,
+      "differential_astrometry": 9,
+      "fewer_than_two_clean_fpr_components_in_aperture": 153805,
+      "inconsistent_with_zero_astrometry": 6718,
+      "missing_or_low_quality_astrometry": 4117,
+      "missing_or_low_quality_colour": 399,
+      "no_unique_dr3_match": 2055,
+      "pair_geometry_or_fpr_flux_contrast": 7399,
+      "passed_gaia": 148
+    }
+  },
+  "controls": "3.35 arcsec offset from each eligible parent in a seeded random bearing; exclude any FPR input within 2.6 arcsec. FPR and DR3 selection identical in both 2.6 arcsec apertures. The control samples blank positions in targeted fields; it does not estimate contamination conditional on hosting a confirmed QSO.",
+  "schema": "CDS I/361, frozen 2023 files; not a count of the live AIP mirror."
+}
