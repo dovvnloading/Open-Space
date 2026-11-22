@@ -12,6 +12,10 @@ on:
         description: 'Optional run ID with this study’s verified timing-inputs artifact (blank fetches the releases)'
         type: string
         required: false
+      scan_run:
+        description: 'Optional completed primary search from identical timing and search code'
+        type: string
+        required: false
 
 permissions:
   contents: read
@@ -36,6 +40,11 @@ jobs:
       contents: read
     env:
       INPUT_RUN: ${{ github.event_name == 'push' && '44980795983' || inputs.input_run }}
+      SCAN_RUN: ${{ github.event_name == 'push' && '44983186753' || inputs.scan_run }}
+    outputs:
+      scan_run: ${{ steps.checkpoint.outputs.scan_run }}
+      scan_sha: ${{ steps.checkpoint.outputs.scan_sha }}
+      ng_run: ${{ steps.checkpoint.outputs.ng_run }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -44,8 +53,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Check for reusable primary-search artifacts
+        id: checkpoint
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash "$STUDY/checkpoint.sh"
       - name: Restore verified release files from the earlier science run
-        if: env.INPUT_RUN != ''
+        if: steps.checkpoint.outputs.scan_run == '' && env.INPUT_RUN != ''
         id: restore
         continue-on-error: true
         uses: actions/download-artifact@v4
@@ -60,16 +74,17 @@ jobs:
           mv restored raw
           python "$STUDY/prepare.py" reindex --work raw --out receipts
       - name: Fetch versioned timing releases and record checksums
-        if: steps.restore.outcome != 'success'
+        if: steps.checkpoint.outputs.scan_run == '' && steps.restore.outcome != 'success'
         run: python "$STUDY/prepare.py" fetch --work raw --out receipts
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && steps.checkpoint.outputs.scan_run == ''
         with:
           name: input-receipts
           path: receipts/
           if-no-files-found: warn
           retention-days: 30
       - uses: actions/upload-artifact@v4
+        if: steps.checkpoint.outputs.scan_run == ''
         with:
           name: timing-inputs
           path: raw/
@@ -78,8 +93,12 @@ jobs:
 
   reduce:
     needs: fetch
+    if: needs.fetch.outputs.scan_run == ''
     runs-on: ubuntu-24.04
     timeout-minutes: 330
+    permissions:
+      actions: read
+      contents: read
     strategy:
       fail-fast: false
       max-parallel: 2
@@ -100,11 +119,26 @@ jobs:
         with:
           name: timing-inputs
           path: raw/
+      - name: Restore NANOGrav reductions computed with identical code
+        if: needs.fetch.outputs.ng_run != ''
+        uses: actions/download-artifact@v4
+        with:
+          name: residuals-${{ matrix.shard }}
+          run-id: ${{ needs.fetch.outputs.ng_run }}
+          github-token: ${{ github.token }}
+          path: previous/
       - name: Reduce each assigned pulsar through its published timing model
+        env:
+          NG_RUN: ${{ needs.fetch.outputs.ng_run }}
         run: |
           mkdir -p reduced
           python -m pip freeze > "reduced/software-${{ matrix.shard }}.txt"
+          python "$STUDY/check_epta.py"
           for release in nb wb epta; do
+            if [[ -n "$NG_RUN" && "$release" != epta ]]; then
+              python "$STUDY/reuse_ng.py" "$release" "${{ matrix.shard }}"
+              continue
+            fi
             python "$STUDY/prepare.py" reduce --dataset "$release" --work raw --out reduced --shard ${{ matrix.shard }} --shards 4
           done
       - uses: actions/upload-artifact@v4
@@ -194,11 +228,17 @@ jobs:
           if-no-files-found: error
 
   report:
-    needs: [individual, common]
+    needs: [fetch, individual, common]
+    if: ${{ !cancelled() && needs.fetch.result == 'success' && (needs.fetch.outputs.scan_run != '' || (needs.individual.result == 'success' && needs.common.result == 'success')) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     permissions:
       contents: write
+      actions: read
+    env:
+      PRIMARY_RUN: ${{ needs.fetch.outputs.scan_run || github.run_id }}
+      PRIMARY_SHA: ${{ needs.fetch.outputs.scan_sha || github.sha }}
+      NG_RUN: ${{ needs.fetch.outputs.ng_run || github.run_id }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -211,23 +251,39 @@ jobs:
         with:
           name: input-receipts
           path: receipts/
+          run-id: ${{ env.PRIMARY_RUN }}
+          github-token: ${{ github.token }}
       - uses: actions/download-artifact@v4
         with:
           pattern: residuals-*
           path: reduced
           merge-multiple: true
+          run-id: ${{ env.PRIMARY_RUN }}
+          github-token: ${{ github.token }}
       - uses: actions/download-artifact@v4
         with:
           pattern: individual-evidence-*
           path: evidence
           merge-multiple: true
+          run-id: ${{ env.PRIMARY_RUN }}
+          github-token: ${{ github.token }}
       - uses: actions/download-artifact@v4
         with:
           name: common-evidence
           path: evidence/array/
+          run-id: ${{ env.PRIMARY_RUN }}
+          github-token: ${{ github.token }}
+      - name: Check surviving fits against empirical coherence and observing-system controls
+        run: |
+          python "$STUDY/coherence_check.py" --data reduced --evidence evidence --out evidence/coherence
+          python "$STUDY/dm_control.py" --data reduced --evidence evidence --out evidence/dm-control
+          python "$STUDY/known_controls.py" --data reduced --evidence evidence
       - name: Deposit measurements and checks in the result folder
         run: |
           cp receipts/inputs.json reduced/coverage-*.json reduced/runtime-*.json reduced/software-*.txt evidence/
+          if compgen -G 'reduced/source-software-*.txt' > /dev/null; then
+            cp reduced/source-software-*.txt evidence/
+          fi
           python "$STUDY/report.py" --evidence evidence --root "$GITHUB_WORKSPACE"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

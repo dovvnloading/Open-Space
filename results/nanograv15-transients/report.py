@@ -10,6 +10,7 @@ import re
 import shutil
 from collections import Counter
 from statistics import median
+from adjudicate import audit
 
 FOLDER = "results/nanograv15-transients"
 SECTION = "### Neutron stars, black holes and cosmic explosions"
@@ -125,12 +126,6 @@ def render(root, evidence):
                 for name in sorted(cov["nb"])]
     n_wb = sum(r["wb"] == "ok" for r in coverage)
     n_epta = sum(r["epta"] == "ok" for r in coverage)
-    bullet = (f"An individual timing search analyzed {len(ok)} of 68 pulsars. "
-              f"The array search tested {array['n_pulsars']} pulsars. ")
-    if survivor_rows:
-        bullet += f"{len(survivor_rows)} template fits survived the specified checks."
-    else:
-        bullet += "No template fit survived the specified checks."
     coherent_limit = any(row.get("first_tested_amplitude_90pct") is not None
                          for row in array["sensitivity"])
     complete_null = (not primary_count and not array["threshold_clusters"]
@@ -145,7 +140,8 @@ def render(root, evidence):
         shutil.rmtree(dest)
     archive(evidence, dest)
     run = {key: os.environ.get(key) for key in
-           ("GITHUB_SHA", "GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT", "GITHUB_REPOSITORY", "GITHUB_REF")}
+           ("GITHUB_SHA", "GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT", "GITHUB_REPOSITORY", "GITHUB_REF",
+            "PRIMARY_RUN", "PRIMARY_SHA", "NG_RUN")}
     write_json(dest / "run.json", run)
     table(dest / "coverage.csv", coverage, ("pulsar", "nb", "wb", "epta", "individual"))
     write_json(dest / "surviving-fits.json", survivor_rows)
@@ -166,6 +162,11 @@ def render(root, evidence):
     table(dest / "individual-sensitivity.csv", limits,
           ("pulsar", "template", "width_d", "epoch_min_mjd", "epoch_max_mjd", "injections",
            "status", "reported_upper_limit_us", "exclusion_withheld", "efficiency_nearest_matching_template"))
+    review = audit(dest, ok, array)
+    bullet = (f"Across {len(ok)} NANOGrav pulsars, {review['individual']} individual template fits passed "
+              "the wideband, independent EPTA and noise checks. "
+              f"Of {review['array_internal']} common-pattern fits that survived internal checks, "
+              f"{review['all_support']} had support across the sign, noise-subset, wideband, independent EPTA and dispersion checks.")
     sums = {path.relative_to(dest).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
             for path in sorted(dest.rglob("*")) if path.is_file()}
     (dest / "SHA256SUMS").write_text("".join(f"{sha}  {name}\n" for name, sha in sums.items()))
@@ -179,6 +180,15 @@ def render(root, evidence):
         "[Coverage](evidence/coverage.csv) · [Per-pulsar dispositions](evidence/individual-dispositions.csv) · "
         "[Individual records](evidence/single) · [Surviving fits](evidence/surviving-fits.json)", "",
         "## Timing signatures and interpretation", "",
+        f"Of the {review['array_internal']} internally surviving clock, ephemeris or memory fits, "
+        f"{review['full_sign']} passed the whole-bank pulsar-sign control, "
+        f"{review['noise_subset_and_sign']} also passed the noise-screened repeat, and "
+        f"{review['external_holm']} had multiplicity-adjusted support in EPTA "
+        f"({review['external_testable']} had enough external sky coverage). "
+        f"The independent-per-visit dispersion fit supported the original direction in {review['dm_support']} "
+        f"of {review['dm_testable']} testable fits. These controls probe different failure modes. "
+        "[Every surviving fit, with MJD, amplitude and checks](evidence/EVENTS.md) · "
+        "[Physical review by waveform and epoch](COHERENT_REVIEW.md) · [Post-discovery controls](ADJUDICATION.md)", "",
         "The surviving-fits table includes the fitted epoch, amplitude, significance and checks for every surviving template. "
         "Individual survivors require independent EPTA support. Array survivors pass the internal leave-one-pulsar-out check. "
         "Each array record separately reports wideband and EPTA support, inconclusive checks and missing epochs. "
@@ -186,6 +196,9 @@ def render(root, evidence):
         "An EPTA comparison tests independent telescope data at the discovery epoch. "
         "Publication history and any physical attribution require an event-by-event review. "
         "[Common-mode results and alternatives](evidence/array) · [Published event epochs](PRIOR_EVENTS.md)", "",
+        "As a post-search comparison, fixed 60-day timing templates were evaluated at the two published "
+        "J1713+0747 dips and the J1643−1224 profile event. The table distinguishes a fixed-epoch response "
+        "from a blind trial that crossed the survey threshold. [Known-event controls](evidence/known-event-controls.csv)", "",
         "## Sensitivity and scope", "",
         f"The individual search reports {len(reported_limits)} pulsar, morphology and width combinations with a conditional amplitude limit. "
         "Blank limits mark combinations without a calibrated exclusion. The individual records give the injected amplitudes, units, "
