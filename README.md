@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 247 entries: 107 new measurements, 46 candidate discoveries, 20 forecasts of specific events, 25 corrections to published catalogs and papers, and 49 carefully recorded null or inconclusive checks. Entries below that carry none of these five labels (feasibility pilots, and analyses blocked because their data could not be retrieved) are listed for the record and are not counted.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 248 entries: 108 new measurements, 46 candidate discoveries, 20 forecasts of specific events, 25 corrections to published catalogs and papers, and 49 carefully recorded null or inconclusive checks. Entries below that carry none of these five labels (feasibility pilots, and analyses blocked because their data could not be retrieved) are listed for the record and are not counted.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -165,6 +165,8 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 - **A search for meteor flashes on Jupiter's night side found none.** Photon-by-photon data from the Juno spacecraft's ultraviolet instrument recover the flash published from 10 April 2020. A first frozen search of 2025 data found no trigger. Only three of the eight selected intervals held usable night-side photons, so this sets no impact rate. *Null result* · [Details](results/juno-uvs-impact-control/README.md)
 
 ### Planets around other stars
+
+- **The transit search measured sensitivity in 4,076 CHEOPS visits.** 99 signals remain unresolved. *Measured* · [Details](results/cheops-public-visits/README.md)
 
 - **No new planet or brown dwarf found in 18 years of public HARPS velocities.** A blind search of 1,775 target series in the HARPS-RVBank archive (2003–2022) fitted 2,192 signals; every one that passed the internal checks matched a published period, failed an external check or remained unresolved. The strongest open signal, 72.5 days at HD 17970, cannot yet be told apart from a harmonic of a yearly term. Injected test planets show the search finds 43% of 30-day orbits at 10 m/s. *Null result* · [Details](results/harps-rvbank-survey/README.md)
 - **No new Earth-mass rogue planet in 10,971 public bulge light curves.** Several short or large-source brightenings survived screening, but blends and competing lens models prevent a confirmed planetary discovery. Without a monitored-star count, the search cannot measure how common rogue planets are. *Null result* · [Details](results/ultrashort-bulge/README.md)
