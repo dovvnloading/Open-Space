@@ -6,7 +6,7 @@ on:
         description: Research stage
         type: choice
         default: full
-        options: [scan, vet, focus, full]
+        options: [scan, vet, focus, finalize, full]
   push:
     branches: [science/hetdex-blind-emitter-search]
     paths: [.github/workflows/hetdex-blind-emitters.yml]
@@ -15,13 +15,14 @@ permissions:
   contents: read
 
 concurrency:
-  group: hetdex-rare-emitters-${{ github.ref }}-${{ (inputs.stage || 'focus') == 'focus' && 'followup' || 'search' }}
+  group: hetdex-rare-emitters-${{ github.ref }}-${{ (inputs.stage || 'finalize') == 'focus' && 'followup' || (inputs.stage || 'finalize') == 'finalize' && 'finalize' || 'search' }}
   cancel-in-progress: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[replace-hetdex-run]') }}
 
 env:
   SURVEY: results/hetdex_blind_emitters
-  STAGE: ${{ inputs.stage || 'focus' }}
+  STAGE: ${{ inputs.stage || 'finalize' }}
   VET_RUN: "44995021247"
+  FOCUS_RUN: "44999164862"
   OMP_NUM_THREADS: "1"
   OPENBLAS_NUM_THREADS: "1"
 
@@ -35,7 +36,7 @@ jobs:
       actions: read
     strategy:
       fail-fast: false
-      max-parallel: ${{ (inputs.stage || 'focus') == 'focus' && 1 || 2 }}
+      max-parallel: ${{ contains(fromJSON('["focus","finalize"]'), inputs.stage || 'finalize') && 1 || 2 }}
       matrix:
         release: [sc2, sc1]
     env:
@@ -63,29 +64,35 @@ jobs:
           mkdir -p "$SURVEY/evidence/$RELEASE"
           cp "$src"/{scan-summary.json,screen.jsonl.gz,shuffled.jsonl.gz,injections.jsonl.gz} "$SURVEY/evidence/$RELEASE/"
           git -C checkpoint rev-parse HEAD > "$SURVEY/evidence/$RELEASE/scan-checkpoint-commit.txt"
-      - name: Restore completed release-level vetting before the supplement
-        if: env.STAGE == 'focus'
+      - name: Restore the preceding release checkpoint
+        if: env.STAGE == 'focus' || env.STAGE == 'finalize'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           out="$SURVEY/evidence/$RELEASE"
-          if test -s "$out/matched-shuffle-vet/vet-summary.json" && test -s "$out/vet-summary.json"; then
-            exit 0
+          run_id="$VET_RUN"
+          marker=matched-shuffle-vet/vet-summary.json
+          confirm=vet-summary.json
+          if test "$STAGE" = finalize; then
+            run_id="$FOCUS_RUN"
+            marker=repeat-blobs/summary.json
+            confirm=focus/vet-summary.json
           fi
+          if test -s "$out/$marker" && test -s "$out/$confirm"; then exit 0; fi
           for attempt in $(seq 1 450); do
-            names=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VET_RUN/artifacts?per_page=30" --jq '.artifacts[] | select(.expired==false) | .name')
+            names=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id/artifacts?per_page=30" --jq '.artifacts[] | select(.expired==false) | .name')
             if grep -Fxq "research-$RELEASE" <<< "$names"; then
               archive_dir=$(mktemp -d "$RUNNER_TEMP/hetdex-vet-XXXXXXXX")
-              gh run download "$VET_RUN" --repo "$GITHUB_REPOSITORY" --name "research-$RELEASE" --dir "$archive_dir"
+              gh run download "$run_id" --repo "$GITHUB_REPOSITORY" --name "research-$RELEASE" --dir "$archive_dir"
               mkdir -p "$out"
               cp -a "$archive_dir/." "$out/"
-              test -s "$out/matched-shuffle-vet/vet-summary.json"
-              test -s "$out/vet-summary.json"
-              echo "$VET_RUN" > "$out/vet-checkpoint-run.txt"
+              test -s "$out/$marker"
+              test -s "$out/$confirm"
+              echo "$run_id" > "$out/$STAGE-input-run.txt"
               exit 0
             fi
-            if test "$(gh run view "$VET_RUN" --repo "$GITHUB_REPOSITORY" --json status --jq .status)" = completed; then
-              echo 'The required vetting checkpoint was not produced.' >&2
+            if test "$(gh run view "$run_id" --repo "$GITHUB_REPOSITORY" --json status --jq .status)" = completed; then
+              echo 'The required research checkpoint was not produced.' >&2
               exit 1
             fi
             sleep 30
@@ -112,14 +119,33 @@ jobs:
         if: env.STAGE == 'focus' || env.STAGE == 'full'
         run: |
           python "$SURVEY/repeat_blobs.py" "$SURVEY/evidence/$RELEASE" "$SURVEY/evidence/$RELEASE/repeat-blobs" --release "$RELEASE" --cache "$RUNNER_TEMP/hetdex"
+      - name: Reconcile independent spectroscopy and repeated-shot decisions
+        if: env.STAGE == 'focus' || env.STAGE == 'full' || env.STAGE == 'finalize'
+        run: |
+          d="$SURVEY/evidence/$RELEASE"
+          test -s "$d/focus/vet-summary.json"
+          test -s "$d/repeat-blobs/summary.json"
+          python "$SURVEY/focus.py" "$d" "$d/focus" --replay-saved
+          if python -c 'import json,sys; sys.exit(not json.load(open(sys.argv[1]))["cached_visit_receipts"].get("source_visits_unavailable",0))' "$d/focus/saved-pair-summary.json"; then
+            PYTHONPATH="$SURVEY" python -c 'from acquisition import prepare; import sys; prepare(*sys.argv[1:])' "$RELEASE" "$RUNNER_TEMP/hetdex" "$d/focus/visit-inputs"
+            python "$SURVEY/focus.py" "$d" "$d/focus" --replay-saved
+          fi
+          python - "$d" <<'PY'
+          import json, sys
+          from pathlib import Path
+          d = Path(sys.argv[1])
+          for name in ("focus/summary", "focus/saved-pair-summary", "repeat-blobs/summary"):
+              print(d.name, name, json.loads((d / (name + ".json")).read_text())["counts"])
+          PY
       - name: Wait for the original evidence commit before publishing the supplement
-        if: env.STAGE == 'focus' && matrix.release == 'sc1'
+        if: (env.STAGE == 'focus' || env.STAGE == 'finalize') && matrix.release == 'sc1'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if test -f "$SURVEY/evidence/$RELEASE/vet-checkpoint-run.txt"; then
+          if test -f "$SURVEY/evidence/$RELEASE/$STAGE-input-run.txt"; then
+            run_id=$(cat "$SURVEY/evidence/$RELEASE/$STAGE-input-run.txt")
             for attempt in $(seq 1 40); do
-              if test "$(gh run view "$VET_RUN" --repo "$GITHUB_REPOSITORY" --json status --jq .status)" = completed; then exit 0; fi
+              if test "$(gh run view "$run_id" --repo "$GITHUB_REPOSITORY" --json status --jq .status)" = completed; then exit 0; fi
               sleep 15
             done
             exit 1
@@ -172,7 +198,7 @@ jobs:
           git push origin HEAD:science/hetdex-blind-emitter-search
 
       - name: Build claim and verify branch
-        if: (env.STAGE == 'focus' || env.STAGE == 'full') && needs.research.result == 'success'
+        if: (env.STAGE == 'focus' || env.STAGE == 'full' || env.STAGE == 'finalize') && needs.research.result == 'success'
         run: |
           python "$SURVEY/report.py"
           git add README.md "$SURVEY"
