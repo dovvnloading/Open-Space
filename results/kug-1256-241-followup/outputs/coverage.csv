@@ -1,11 +1,37 @@
 archive,state,detail
 6dF Galaxy Survey,unavailable,"HTTPSConnectionPool(host='vizier.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/votable?-source=VII%2F249%2F6dfgs&-c=194.714542+23.924111&-c.rs=10&-out.all=&-out.max=100 (Caused by ConnectTimeoutError(<HTTPSConnection(host='vizier.cds.unistra.fr', port=443) at 0x7fcc11f5f650>, 'Connection to vizier.cds.unistra.fr timed out. (connect timeout=45)'))"
+6dF Galaxy Survey US mirror,unavailable,"-- no connection
+ Report from: stdb_pg,     Status: STDB_ERR
+Postgres connect error
+
+ -- no connection
+ Report from: stdb_pg_conn,     Status: STDB_ERR
+Couldn't connect with server
+
+ -- no connection
+ Report from: stdb_conn_dbms,     Status: STDB_ERR
+No server is available for connection
+
+ -- no con"
 ADS full-text name search,unavailable,401 Client Error: UNAUTHORIZED for url: https://api.adsabs.harvard.edu/v1/search/query?q=%28full%3A%22KUG+1256%2B241%22+OR+full%3A%22RX+J1258.8%2B2355%22+OR+full%3A%222MASX+J12585149%2B2355268%22+OR+full%3A%22SDSS+J125851.45%2B235526.6%22+OR+full%3A%22RBS+1195
 ADS object bibliography,unavailable,0/15 linked ADS abstracts readable; title list also deposited
 ATel search,unavailable,Response did not recover ATel 3811 for its named comparison source
 AllWISE,measured,"41 rows within 3 arcsec, retained 0 W1 and 41 W2. allwise_p3as_mep"
 CADC optical spectra,unavailable,404 Client Error: Not Found for url: https://ws.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+150+obs_id%2Cs_ra%2Cs_dec%2Ct_min%2Ct_max%2Caccess_url%2Caccess_format+FROM+ivoa.obscore+WHERE+dataproduct_type%3D%27spectrum%27+AND+em_min%3C8e-7+AND+em_max%3E4e-7+AND+s_ra+BETWEEN+194.711503133+AND+194.717580867+AND+s_dec+BETWEEN+23.921333222+AND+23.926888778
 CRTS,unavailable,"HTTPSConnectionPool(host='nesssi.cacr.caltech.edu', port=443): Max retries exceeded with url: /cgi-bin/getcssconedb_release_img.cgi?RA=194.7 / HTTPSConnectionPool(host='nunuku.caltech.edu', port=443): Max retries exceeded with url: /cgi-bin/getcsscon"
+CRTS mirrors,unavailable,Original and mirror cone-service endpoints did not supply parseable photometry.
+CSC CDS mirror,measured,1 exact source aperture flux rows in IX/57A.
+CSC IX/57/csc2master,measured,Exact master source energy flux. Undated combination.
+CSC csc2,measured,Exact master source energy flux. Undated combination.
+CSC csc2,measured,Exact master source energy flux. Undated combination.
+CSC csc21,measured,Exact master source energy flux. Undated combination.
+CSC native per-observation rows,unavailable,"[('observation_source', '500 Server Error: Internal Server Error for url: https://cda.cfa.harvard.edu/csc21tap/sync/WrnUiT'), ('per_observation', '500 Server Error: Internal Server Error for url: https://cda.cfa.harvard.edu/csc21tap/sync/SijY4H'), ('obs_source', '500 Server Error: Internal Server Error for url: https://cda.cfa.harvard.edu/csc21tap/sync/j7eSog'), ('observation_source', '500 Server Error: Internal Serv"
+CfA VizieR J/A+A/416/35,retrieved,1 rows within 30 arcsec
+CfA VizieR J/A+A/484/897,unavailable,VizieR query error
+CfA VizieR J/AJ/119/2540,retrieved,1 rows within 30 arcsec
+CfA VizieR J/AJ/123/578,retrieved,2 rows within 30 arcsec
+CfA VizieR J/ApJS/267/19,retrieved,1 rows within 30 arcsec
+CfA VizieR J/MNRAS/327/673,unavailable,VizieR query error
 Chandra footprint,unavailable,HTTPError: 404 Client Error: Not Found for url: https://cda.cfa.harvard.edu/footprint/get_vo_table.pl?pos=194.714542%2C23.924111&size=0.0001
 Chandra master_source,unavailable,HTTPError: 500 Server Error: Internal Server Error for url: https://cda.cfa.harvard.edu/csc21tap/sync/7TlacC
 Chandra observation_source,unavailable,ValueError: No independent coordinates or compatible stack/region key
@@ -13,15 +39,25 @@ Chandra stack_source,unavailable,HTTPError: 500 Server Error: Internal Server Er
 DESI DR1,unavailable,"unexpected archive response: <?xml version=""1.0"" encoding=""UTF-8""?>
 <VOTABLE xmlns=""http://www.ivoa.net/xml/VOTable/v1.2"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" version=""1.2"">
   <RESOURCE type"
+DESI DR1 direct HEALPix,measured,"NSIDE 64 nested pixel(s) [28113, 28115]; 36 survey/program/pixel combinations; 8 catalogs with zero matches; 0 unreadable, 1 nuclear targets."
+EP VO Einstein Probe TAP Service,unavailable,"HTTPConnectionPool(host='39.105.187.183', port=8080): Max retries exceeded with url: /tap/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=1000&QUERY=SELECT+TOP+100+%2A+FROM+ivoa.obscore+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2C194.714542%2C"
 ESA observing footprints,unavailable,ValueError: 1:0: syntax error
 ESO optical spectra,no_match,0 nuclear 1D optical products by ObsCore center
 Einstein Probe HEASARC,unavailable,Mission tables with sky positions and counts in 3 arcmin: []. Source/alert-table census only.
 Einstein Probe Science Center,coverage_only,5 archive/navigation links. Portal availability alone supplies no position-specific exposure or upper limit.
 Einstein Probe VO registry,unavailable,"5 registered capabilities, no matching cone service. No WXT/FXT exposure limit established."
 FIRST,unavailable,VizieR query error
+FIRST image,measured,"upper_limit 1.041 mJy/beam; local rms 0.1501, date from FITS observation keyword when present."
+Full text 2001MNRAS.327..673V,retrieved,0 exact target-name lines in machine-readable text
+Full text 2008A&A...484..897K,unavailable,No readable full-text PDF from publisher or ADS
+Full text 2023ApJS..267...19I,unavailable,No readable full-text PDF from publisher or ADS
 GALEX MCAT,unavailable,"Request failed.  If this problem persists, please notify archive[at]stsci.edu."
 GALEX footprint,coverage_only,"2 footprint records, 4 distinct MCAT products, 0 matched band measurements."
+GALEX matched products,measured,"4 MCAT catalogs, 7 retained visit/coadd bands. Band limits require explicit sensitivity; a blank is unconstrained."
 Gaia DR3,no_epoch_product,"3956880840692699392 at 0.49 arcsec, has_epoch_photometry=false"
+HEASARC chanmaster direct,coverage_only,"2 rows within 22.00 arcmin; ['3002', '3003']"
+HEASARC rosmaster direct,no_match,0 rows within 60.00 arcmin; []
+HEASARC swiftmastr direct,coverage_only,"13 rows within 17.00 arcmin; ['00014290001', '00097547002', '00097547004', '00097547001', '00097547003', '00014290002', '00045968006', '00045968002', '00045968005', '00045968003', '00097547005', '00045968001', '00045968004']"
 HEASARC xmm4xmm,unavailable,"TAP query failed:  
  
   
@@ -29,6 +65,7 @@ HEASARC xmm4xmm,unavailable,"TAP query failed:
   
  
 "
+HEASARC xmmmaster direct,no_match,0 rows within 18.00 arcmin; []
 HEASARC xmmssc,unavailable,"TAP query failed:  
  
   
@@ -36,15 +73,37 @@ HEASARC xmmssc,unavailable,"TAP query failed:
   
  
 "
+HEASARC xmmssc direct,no_match,0 rows within 0.20 arcmin; []
 Historical paper 0106311,unavailable,[Errno 2] No such file or directory: 'pdftotext'
 Historical paper aa8552-07.pdf,unavailable,403 Client Error: Forbidden for url: https://www.aanda.org/articles/aa/pdf/2008/20/aa8552-07.pdf
+Independent eROSITA dates,unavailable,No time fields recovered. []
+LAMOST DR5 US mirror,unavailable,"-- no connection
+ Report from: stdb_pg,     Status: STDB_ERR
+Postgres connect error
+
+ -- no connection
+ Report from: stdb_pg_conn,     Status: STDB_ERR
+Couldn't connect with server
+
+ -- no connection
+ Report from: stdb_conn_dbms,     Status: STDB_ERR
+No server is available for connection
+Can't conne"
 LAMOST GAVO,unavailable,'raj2000'
+LAMOST GAVO VOTable,no_match,lamost5.data: 0 rows in 10 arcsec bounding box
+LAMOST GAVO VOTable,no_match,lamost6.ssa_lrs: 0 rows in 10 arcsec bounding box
+LAMOST GAVO VOTable,no_match,lamost6.ssa_mrs: 0 rows in 10 arcsec bounding box
 LAMOST VizieR DR5,unavailable,"HTTPSConnectionPool(host='vizier.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/votable?-source=V%2F164%2Fdr5&-c=194.714542+23.924111&-c.rs=10&-out.all=&-out.max=100 (Caused by ConnectTimeoutError(<HTTPSConnection(host='vizier.cds.unistra.fr', port=443) at 0x7fcc089c6e50>, 'Connection to vizier.cds.unistra.fr timed out. (connect timeout=45)'))"
 MAST optical spectra,coverage_only,8 nuclear 1D optical products by ObsCore center
 NED bibliography,unavailable,503 Server Error: Service Unavailable for url: https://ned.ipac.caltech.edu/cgi-bin/nph-refsearch?of=xml_main&objname=2MASX+J12585149%2B2355268&search_type=Reference&ref_extend=no&begin_year=1800&end_ / No identifiable bibliography table with bibcodes
 NED contributed spectra,no_match,"0 linked FITS, 0 analyzed. "
+NED reference lookup by historical names,unavailable,0 validated bibcodes in the returned NED reference tables.
 NEOWISE,measured,"293 rows within 3 arcsec, retained 10 W1 and 282 W2. neowiser_p1bs_psd"
+Object-linked ATels and abstracts,retrieved,"15 linked references, 0 ATel bibcodes; known comparison ATel recovered."
 Pan-STARRS1 DR2,measured,Nearest mean object 136701947144589613 at 0.48 arcsec; 46/53 PSF measurements retained.
+Published changing-look catalogues,searched,2 VizieR catalogues identified from their table descriptions and queried at the nucleus; scope and responses in literature-extra.json.
+ROSAT native timing,measured,142 aperture event times in RASS field 931333
+RapidXMM exposure and sensitivity,unavailable,Tables with usable coordinates and row counts at 12 arcsec: []
 SDSS Legacy/BOSS/eBOSS,measured,"2 SpecObjAll rows in 10 arcsec, 2 analyzed within 3 arcsec"
 SDSS independent VizieR/FITS cross-check,coverage_only,Catalog cone searches yielded no usable plate-MJD-fiber identifier
 SDSS independent VizieR/FITS cross-check,unavailable,"J/ApJS/267/19: HTTPSConnectionPool(host='vizier.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/votable?-source=J%2FApJS%2F267%2F19&-c=194.714542+23.924111&-c.rs=3&-out.all=&-out.max=100 (Caused by ConnectTimeoutError(<HTTPSConnection(host='vizier.cds.unistra.fr', port=443) at 0x7fcc20130350>, 'Connection to vizier.cds.unistra.fr timed out. (connect timeout=45)'))"
@@ -53,18 +112,24 @@ SDSS independent VizieR/FITS cross-check,unavailable,"V/147/sdss12: HTTPSConnect
 SIMBAD redshift,unavailable,"HTTPSConnectionPool(host='simbad.cds.unistra.fr', port=443): Max retries exceeded with url: /simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+10+main_id%2Cra%2Cdec%2Crvz_redshift+FROM+basic+WHERE+ra+BETWEEN+194.711503133+AND+194.717580867+AND+dec+BETWEEN+23.921333222+AND+23.926888778 (Caused by ConnectTimeoutError(<HTTPSConnection(host='simbad.cds.unistra.fr', port=443) at 0x7fcc08f2a510>, 'Connection to simbad.cds.unistra.fr timed out. (connect timeout=45)'))"
 Survey baseline,measured,"PR 218 detections, stacked Swift and later eROSITA linked by identifier."
 Swift UVOT fields,unavailable,"expected a CSV table: <?xml version=""1.0"" encoding=""UTF-8""?> <VOTABLE xmlns=""http://www.ivoa.net/xml/VOTable/v1.3"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.iv"
+Swift UVOT images,unavailable,404 Client Error: Not Found for url: https://heasarc.gsfc.nasa.gov/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+%2A+FROM+swiftmastr+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C194.714542%2C23.924111%2C0.21%29%29%3D1
 Swift UVOTSSC,no_match,"0 catalog rows within 3 arcsec, 0 retained bands. Serendipitous catalog has limited mission dates."
+Swift XRT 2SXPS epochs,measured,1 measured or upper-limit bins
 Swift XRT 2SXPS light curve,unavailable,"RuntimeError: An error occurred processing your request. Code 1. Message: ``bands` must be either an array, or 'all'.`"
 Swift XRT LSXPS,unavailable,"RuntimeError: An error occurred processing your request. Code 1. Message: ``bands` must be either an array, or 'all'.`"
+Swift XRT LSXPS epochs,measured,13 measured or upper-limit bins
 TNS official cone,unavailable,403 Client Error: Forbidden for url: https://www.wis-tns.org/search?ra=12%3A58%3A51.49&decl=%2B23%3A55%3A26.8&radius=35&coords_unit=arcsec&num_page=50
+UKSSDC position limits,unavailable,"RuntimeError: An error occurred processing your request. Code 1. Message: `(-1, -100) are not valid coordinates.`"
 VLASS,no_match,0 peak fluxes; VizieR J/ApJS/255/30 within 4 arcsec. Empty cone gives no flux limit. VLASS component catalog is epoch 1.
 VLASS CADC fields,coverage_only,5 distinct VLASS observation/time records; footprint intersection with CADC ObsCore.
+VLASS NRAO images,unavailable,404 Client Error: Not Found for url: https://archive-new.nrao.edu/vlass/quicklook/
 VizieR J/A+A/416/35,unavailable,"HTTPSConnectionPool(host='vizier.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/votable?-source=J%2FA%2BA%2F416%2F35&-c=194.714542+%2B23.924111&-c.rs=45&-out.all=1&-out.max=100&-out.add=_r (Caused by ConnectTimeoutError"
 VizieR J/A+A/484/897,unavailable,"HTTPSConnectionPool(host='vizier.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/votable?-source=J%2FA%2BA%2F484%2F897&-c=194.714542+%2B23.924111&-c.rs=45&-out.all=1&-out.max=100&-out.add=_r (Caused by ConnectTimeoutErro"
 VizieR J/AJ/119/2540,unavailable,"HTTPSConnectionPool(host='vizier.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/votable?-source=J%2FAJ%2F119%2F2540&-c=194.714542+%2B23.924111&-c.rs=45&-out.all=1&-out.max=100&-out.add=_r (Caused by ConnectTimeoutError("
 VizieR J/AJ/123/578,unavailable,"HTTPSConnectionPool(host='vizier.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/votable?-source=J%2FAJ%2F123%2F578&-c=194.714542+%2B23.924111&-c.rs=45&-out.all=1&-out.max=100&-out.add=_r (Caused by ConnectTimeoutError(<"
 VizieR J/ApJS/267/19,unavailable,"HTTPSConnectionPool(host='vizier.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/votable?-source=J%2FApJS%2F267%2F19&-c=194.714542+%2B23.924111&-c.rs=45&-out.all=1&-out.max=100&-out.add=_r (Caused by ConnectTimeoutError("
 VizieR J/MNRAS/327/673,unavailable,"HTTPSConnectionPool(host='vizier.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/votable?-source=J%2FMNRAS%2F327%2F673&-c=194.714542+%2B23.924111&-c.rs=45&-out.all=1&-out.max=100&-out.add=_r (Caused by ConnectTimeoutErro"
+WISE fixed aperture,measured,"26 quality-filtered W1/W2 single-exposure aperture measurements; bands, sampling and scatter tabulated in wise-fixed-aperture.csv."
 ZTF,measured,"2089 public DR rows, 1738 unique quality-filtered epochs in band; coordinate query."
 chanmaster,unavailable,"ValueError: TAP query failed:  
  
