@@ -38,6 +38,11 @@ def prepare(out):
         part = limits.loc[limits.mission.eq(mission), cols].copy()
         part = part.rename(columns={k: f"{mission}_ul_{k}" for k in cols[1:]})
         cat = cat.merge(part, how="left", on="detection_uid", validate="one_to_one")
+    supplemental=truth(cat["xmm_full_only_corroborated"]) if "xmm_full_only_corroborated" in cat else pd.Series(False,index=cat.index)
+    cat["selection_stratum"]=np.where(truth(cat.clean),"clean",np.where(supplemental,"corroborated full-only","other full-only"))
+    admissible=truth(cat.clean) | supplemental
+    quality={m:truth(cat[m+"_quality"]) for m in MISSIONS}
+    quality["xmm"] |= supplemental
     records = []
     for m1,m2 in PAIRS:
         for high,low in [(m1,m2),(m2,m1)]:
@@ -58,8 +63,8 @@ def prepare(out):
             hfactor = numeric(cat,high+"_model_min")
             lfactor = numeric(cat,low+"_model_max").where(dl,numeric(cat,low+"_ul_model_max_relative"))
             model = guarded * hfactor / lfactor
-            good = truth(cat.clean) & truth(cat[high+"_quality"]) & (
-                (dl & truth(cat[low+"_quality"])) | use_limit)
+            good = admissible & quality[high] & (
+                (dl & quality[low]) | use_limit)
             for m in (high,low):
                 if m!="xmm":
                     good &= ~truth(cat[m+"_ambiguous"])
@@ -68,6 +73,7 @@ def prepare(out):
             idx = possible & ratio.ge(1)
             rows = pd.DataFrame({
                 "detection_uid": cat.detection_uid, "name": cat.name, "high": high, "low": low,
+                "selection_stratum":cat.selection_stratum,
                 "low_kind": np.where(use_limit,"upper_limit","detection"),
                 "high_flux":hf,"high_error":he,"low_flux_or_limit":low_value,"low_error":le.where(dl),
                 "ratio":ratio,"guarded_ratio":guarded,"model_floor_ratio":model,
@@ -79,7 +85,8 @@ def prepare(out):
     pairs.to_csv(out/"comparisons.csv.gz",index=False)
     leads = pairs.loc[pairs.photometric_lead].sort_values("guarded_ratio",ascending=False)
     peaks = leads.drop_duplicates("detection_uid")
-    selected = peaks.merge(cat, on=["detection_uid","name"], validate="one_to_one")
+    cat=cat.rename(columns={"ratio":"catalog_only_ratio","ratio_lower":"catalog_only_ratio_lower","pair":"catalog_only_pair"})
+    selected = peaks.merge(cat, on=["detection_uid","name","selection_stratum"], validate="one_to_one")
     selected["id"] = selected.detection_uid
     selected["xmm_ra"], selected["xmm_dec"] = selected.ra, selected.dec
     # A good eROSITA match may provide a tighter location for counterpart checks.

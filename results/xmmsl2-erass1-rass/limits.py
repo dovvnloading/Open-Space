@@ -34,6 +34,7 @@ RASS_EEF = 0.5
 RASS_APERTURE = 180.0  # arcsec, point-source assumption
 THREAD = threading.local()
 INPUTS = {}
+MAP_HEADERS = {}
 INPUT_LOCK = threading.Lock()
 COLUMNS = [
     "detection_uid", "name", "ra", "dec", "mission", "status", "limit_flux_cgs",
@@ -149,6 +150,15 @@ def write_inputs(out):
         w.writerows((k, *v) for k, v in sorted(INPUTS.items()))
 
 
+def note_map_header(url, hdus):
+    # First observed header per archive product, including units and WCS for QA.
+    suffix = url.rsplit("/",1)[-1].split("_")[-1]
+    with INPUT_LOCK:
+        if suffix not in MAP_HEADERS:
+            keys = ["XTENSION","NAXIS","NAXIS1","NAXIS2","TELESCOP","INSTRUME","CONTENT","EXTNAME","HDUCLAS1","HDUCLAS2","HDUCLAS3","BUNIT","CTYPE1","CTYPE2","CUNIT1","CUNIT2","CDELT1","CDELT2","EQUINOX"]
+            MAP_HEADERS[suffix] = {"url":url, "headers":[{k:h.header[k] for k in keys if k in h.header} for h in hdus]}
+
+
 def image_hdu(hdus):
     for h in hdus:
         if h.data is not None and h.data.ndim == 2 and WCS(h.header).has_celestial:
@@ -167,8 +177,16 @@ def physical_native_limit(cnt, exp, wcs, coord, ecf):
     i, j = int(np.rint(x)), int(np.rint(y))
     if (i - half < 0 or j - half < 0 or
             i + half >= cnt.shape[1] or j + half >= cnt.shape[0]):
-        return {"status": "edge"}
-    ys, xs = slice(j-half, j+half+1), slice(i-half, i+half+1)
+        # A bounding *square* can cross a tile edge while the actual circular
+        # aperture is still fully covered. Check its perimeter in the native WCS.
+        # The 2" radial margin exceeds the 0.18" chord sagitta at 5° spacing.
+        from astropy import units as u
+        ring = coord.directional_offset_by(np.arange(0,360,5)*u.deg, (RASS_APERTURE+2)*u.arcsec)
+        rx, ry = wcs.world_to_pixel(ring)
+        if not np.all((rx >= -.5) & (ry >= -.5) & (rx <= cnt.shape[1]-.5) & (ry <= cnt.shape[0]-.5)):
+            return {"status":"edge"}
+    ys = slice(max(0,j-half), min(cnt.shape[0],j+half+1))
+    xs = slice(max(0,i-half), min(cnt.shape[1],i+half+1))
     yy, xx = np.mgrid[ys, xs]
     aperture = wcs.pixel_to_world(xx, yy).separation(coord).arcsec <= radius
     expvals = np.asarray(exp[ys, xs][aperture], dtype=float)
@@ -221,6 +239,14 @@ def native_rass(rows, work, model, workers):
     """
     from scipy.spatial import cKDTree
     base = "https://heasarc.gsfc.nasa.gov/FTP/rosat/data/pspc/processed_data/rass/release/"
+    field = "rs930101n00"
+    for doc in ("public_contents","public_contents_mpe"):
+        try:
+            url = f"{base}{field}/{field}.{doc}"
+            path, _ = fetch(url, work, maxbytes=64000)
+            MAP_HEADERS[doc] = {"url":url, "text":path.read_text(errors="replace")[:9000]}
+        except (OSError, ValueError) as exc:
+            MAP_HEADERS[doc] = {"error":str(exc)[:240]}
     directories = native_inventory(base, work)
     if not directories:
         return {}, ["RASS release index contained no identified field maps"]
@@ -233,6 +259,7 @@ def native_rass(rows, work, model, workers):
             return [], "missing map pair"
         countpath, cref = fetch(maps[0], work)
         with open_map(countpath) as cc:
+            note_map_header(maps[0],cc)
             ch = image_hdu(cc)
             wcs, shape = WCS(ch.header).celestial, ch.shape
             xmid, ymid = (shape[1] - 1)/2, (shape[0] - 1)/2
@@ -250,6 +277,7 @@ def native_rass(rows, work, model, workers):
                 try:
                     exppath, eref = fetch(candidate, work)
                     with open_map(exppath) as ee:
+                        note_map_header(candidate,ee)
                         eh = image_hdu(ee)
                         ewcs = WCS(eh.header).celestial
                         if ch.shape != eh.shape or not np.allclose(
@@ -339,6 +367,23 @@ def native_inventory(base, work):
     complete = group(urls)
     if complete:
         return complete
+    # The RASS field table gives the release directory names.
+    from astropy.table import Table
+    params = {"REQUEST":"doQuery","LANG":"ADQL","FORMAT":"votable","MAXREC":10000,
+              "QUERY":"SELECT ror,index_id FROM rassmaster"}
+    try:
+        table_path, _ = fetch("https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?" + urlencode(params), work)
+        table = Table.read(table_path, format="votable")
+        pairs = []
+        for row in table:
+            field = f"rs{str(row['ror']).strip()}{str(row['index_id']).strip().lower()}"
+            if re.fullmatch(r"rs9[0-9]{5}[a-z][0-9]{2}",field):
+                stem = base + field + "/" + field
+                pairs.append((stem+"_im1.fits.Z", (stem+"_mex.fits",stem+"_ime.fits.Z")))
+        if pairs:
+            return list(dict.fromkeys(pairs))
+    except (ValueError, OSError, KeyError):
+        pass
     options = list_urls(base, work)
     complete = group(options)
     if complete:
@@ -466,6 +511,7 @@ def main():
     (out/"limits_summary.json").write_text(json.dumps({
         "counts":{tag:{status:n for (m,status),n in counts.items() if m==tag} for tag in ("ero","rass")},
         "rass_native_map_errors": errors,
+        "rass_native_example_headers": MAP_HEADERS,
         "model_dependence":"model_max_relative applies only to the catalog spectral model grid. The eROSITA grid varies the bandpass ratio at fixed released ECF. The RASS grid includes the folded PSPC ECF. ROSAT throughput assumes ≥50% encircled energy for a point source within 3 arcmin. The limits do not constrain arbitrary spectra, extended emission, shorter flares or all-sky simultaneity.",
         "confidence":"One-sided: eROSITA release UL_B 99.87%; ROSAT background-unsubtracted Poisson 99.865%.",
     },indent=2)+"\n")

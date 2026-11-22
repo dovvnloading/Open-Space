@@ -29,9 +29,10 @@ F = {
 SCHEMA = {
     "xmm": dict(F, name="name srcname xmmsl2 sourcename iauname designation uniquesrcname",
                 obs="obsid observationid observationnumber revolution",
-                time="time starttime observationdate dateobs mjdstart mjdobs mjd",
+                time="dateobs time starttime observationdate mjdstart mjdobs mjd",
+                mjd_min="mjdstart", mjd_max="mjdstop",
                 id="sourcenum detid detectionid uniquedetectionid",
-                rate="rateb6", counts="sctsb6", exp="expmapb6",
+                rate="rateb6", counts="sctsb6", exp="expmapb6", background_rate="imagebgrate",
                 pos="radecerr poserr positionerror errorradius",
                 flux="fluxb6 fluxband6 b6flux softflux fluxsoft fluxsoftband fluxsb flux6",
                 error="fluxb6err fluxb6error fluxband6error b6fluxerr softfluxerror softfluxerr fluxsofterror fluxsofterr fluxsberr efluxb6 eflux6 flux6err",
@@ -44,6 +45,7 @@ SCHEMA = {
                 verbg="verhibgnd verhighbgnd", verfalse="verfalse", veredge="vernredg"),
     "ero": dict(F, name="name iauname erass1 srcname sourcename designation",
                 pos="radecerr poserr positionerror errorradius",
+                mjd="mjd", mjd_min="mjdmin", mjd_max="mjdmax",
                 flux="mlflux1 mlflux0 flux0 broadflux fluxb flux broadbandflux",
                 error="mlfluxerr1 mlfluxerr0 emlflux0 fluxerr0 eflux0 broadfluxerror broadfluxerr fluxerror fluxerr eflux",
                 ml="detlike0 detectionlikelihood broadbandlikelihood detlike likelihood",
@@ -54,7 +56,7 @@ SCHEMA = {
                  posy="yerr",
                  rate="crates count_rate countrate crate srccountrate rate ct",
                  errrate="crateserr countrateerror countrateerr countrateerr1 ecrate ecrates crateerr erate rateerr",
-                 ml="eximl existence_likelihood existlikelihood detectionlikelihood likelihood",
+                 ml="eximl existence_likelihood existlikelihood detectionlikelihood detlikelihood likelihood",
                  flag="sourcequalityflag sflag screeningflag spuriousflag suspectflag",
                  near="nearbysrcdetflag", region="extendedregionflag"),
 }
@@ -87,7 +89,6 @@ class Archive:
             BASE + "xmm/data/catalogues/xmmsl2_total.fits.gz": "xmm_full.fits.gz",
             MPE + "MerloniA_DR1/eRASS1_Main.v1.2.fits.tar.gz": "ero_main.tar.gz",
             MPE + "MerloniA_DR1/eRASS1_Supp.tar.gz": "ero_supp.tar.gz",
-            BASE + "heasarc/dbase/msc/heasarc_rass2rxs.fits.gz": "rass.fits.gz",
         }
         if url in frozen and (self.downloads / frozen[url]).is_file() and not dest.exists():
             dest.hardlink_to(self.downloads / frozen[url])
@@ -255,7 +256,8 @@ def get_fits(arc, url, tag, role):
         desc = {c.name: h.header.comments[f"TTYPE{i+1}"] for i, c in enumerate(h.columns)}
         mapping = select_columns(role, list(units), desc)
         if role == "ero":
-            mapping.update({n.lower(): n for n in units if n.upper().startswith("FLAG_SP_")})
+            mapping.update({n.lower(): n for n in units if n.upper().startswith("FLAG_SP_") or
+                            n.upper() in {"FLAG_OPT","FLAG_NO_RADEC_ERR","FLAG_NO_CTS_ERR"}})
         frame = {}
         for key, name in mapping.items():
             arr = np.array(h.data[name])
@@ -285,8 +287,7 @@ def get_catalog(arc, key):
         file = "eRASS1_Supp.tar.gz" if key == "ero_supp" else "eRASS1_Main.v1.2.fits.tar.gz"
         options.append((get_fits, (MPE + "MerloniA_DR1/" + file, file, role)))
     else:
-        options.extend([(get_fits, (BASE + "heasarc/dbase/msc/heasarc_rass2rxs.fits.gz", "rass.fits.gz", role)),
-                        (get_tap_table, (NASA, "rass2rxs", role)), (get_tdat, ("rass2rxs", role))])
+        options.extend([(get_tap_table, (NASA, "rass2rxs", role)), (get_tdat, ("rass2rxs", role))])
     # Probe additional archives only as needed.
     def try_options(opts):
         for fn, args in opts:
@@ -431,6 +432,9 @@ def prepare(table,role,meta,model):
         if c not in ("ra","dec"):
             table[c] = table[c].map(lambda v: v.strip("\0 ") if isinstance(v,str) else v)
     table["name"] = table.name.astype(str).str.strip()
+    for number in ("ml","rate","errrate","ext","extlike","counts","exp","mjd","mjd_min","mjd_max"):
+        if number in table:
+            table[number] = numeric(table,number)
     # Position floors allow for residual astrometric systematics. The match
     # radius caps bound contamination from low-count or pathological errors.
     floor, fallback = {"xmm":(6.,8.),"ero":(1.5,4.),"rass":(6.,20.)}[role]
@@ -481,8 +485,8 @@ def prepare(table,role,meta,model):
         elif "ext" in table:
             good &= numeric(table,"ext").fillna(0).le(0)
         for c in table.columns:
-            if c.startswith("flag_sp_"):
-                good &= ~truth(table[c])
+            if c.startswith("flag_sp_") or c in {"flag_opt","flag_no_radec_err","flag_no_cts_err"}:
+                good &= ~(truth(table[c]) | numeric(table,c).gt(0))
     else:
         good &= numeric(table,"ml").ge(10)
         if "flag" in table:
@@ -495,7 +499,7 @@ def prepare(table,role,meta,model):
     return table
 
 
-def join_mission(slew, target, mission):
+def join_mission(slew, target, mission, supplemental_states):
     src = SkyCoord(slew.ra.to_numpy()*u.deg,slew.dec.to_numpy()*u.deg)
     dst = SkyCoord(target.ra.to_numpy()*u.deg,target.dec.to_numpy()*u.deg)
     tree = cKDTree(dst.cartesian.xyz.value.T)
@@ -524,7 +528,7 @@ def join_mission(slew, target, mission):
         return best,dist,counts
     idx,dist,n = evaluate(src)
     observed = n>0
-    for field in ["name","ra","dec","flux","err","quality","stat_poserr","poserr","pos_sigma","ml","rate","errrate","release"]:
+    for field in ["name","ra","dec","flux","err","quality","stat_poserr","poserr","pos_sigma","ml","rate","errrate","release","mjd","mjd_min","mjd_max","flag_opt","flag_no_cts_err","flag_no_radec_err"]:
         if field in target:
             values = target[field].iloc[np.maximum(idx,0)].reset_index(drop=True)
             slew[mission+"_"+field] = values.where(observed,False if field=="quality" else np.nan)
@@ -533,24 +537,84 @@ def join_mission(slew, target, mission):
     slew[mission+"_nmatch"] = n
     # A ROSAT beam can contain distinct XMM entries. Identify mutually
     # competing slew positions while allowing repeated visits to one source.
-    matched = pd.DataFrame({"idx":idx[observed],"group":slew.loc[observed,"source_group"].values})
-    blends = matched.groupby("idx").group.nunique()
-    blended = np.isin(idx,blends[blends>1].index)
-    slew[mission+"_ambiguous"] |= blended
+    def ambiguous(indices, multiplicity):
+        keep = multiplicity>0
+        matches = pd.DataFrame({"idx":indices[keep],
+                                "group":slew.loc[keep,"source_group"].values})
+        blends = matches.groupby("idx").group.nunique()
+        return (multiplicity>1) | np.isin(indices,blends[blends>1].index)
+
+    def summarize(indices, multiplicity, confusion, separation, orientation):
+        safe_idx = np.maximum(indices,0)
+        fx,ex = slew.flux.to_numpy(),slew.err.to_numpy()
+        ft,et = target.flux.to_numpy()[safe_idx],target.err.to_numpy()[safe_idx]
+        reliable_target = (multiplicity==1) & ~confusion & target.quality.to_numpy()[safe_idx]
+        good = reliable_target & slew.quality.to_numpy()
+        valid = (fx>0)&(ft>0)&(ex>0)&(et>0)
+        with np.errstate(divide="ignore",invalid="ignore"):
+            nominal = np.maximum(fx/ft,ft/fx)
+            xbright = (fx-1.96*ex)/(ft+1.96*et)
+            tbright = (ft-1.96*et)/(fx+1.96*ex)
+        supplemental_states[orientation] = {
+            "secure":reliable_target & (numeric(target,"ml").to_numpy()[safe_idx]>=20) &
+                     (separation<=(10 if mission=="ero" else 15)),
+            "guarded":reliable_target&valid&((xbright>=10)|(tbright>=10))}
+        return {"n":len(slew),"matches":int((multiplicity>0).sum()),
+                "unique":int((multiplicity==1).sum()),
+                "unique_nominal_10x":int(((multiplicity==1)&valid&(nominal>=10)).sum()),
+                "quality_unique":int(good.sum()),"quality_unique_nominal_10x":int((good&valid&(nominal>=10)).sum()),
+                "guarded_10x":int((good&valid&((xbright>=10)|(tbright>=10))).sum()),
+                "guarded_10x_xmm_brighter":int((good&valid&(xbright>=10)).sum()),
+                "guarded_10x_comparison_brighter":int((good&valid&(tbright>=10)).sum())}
+
+    confusion = ambiguous(idx,n)
+    slew[mission+"_ambiguous"] = confusion
+    obs = summarize(idx,n,confusion,dist,"observed")
+    # Named calibration / persistent or known-variable targets. Recovery means
+    # only that the positional association machinery found the object.
+    benchmarks = []
+    for label,ra,dec in [("RX J1856.5-3754",284.1463,-37.9084),
+                         ("Vela X-1",135.5286,-40.5547),("LMC X-3",84.7355,-64.0843)]:
+        fixed = SkyCoord(ra*u.deg,dec*u.deg)
+        separation = src.separation(fixed).arcsec
+        k = int(np.argmin(separation))
+        entry = {"reference":label,"ra":ra,"dec":dec,"search_arcsec":30,
+                 "nearest_slew_sep":float(separation[k]),"slew_within_30arcsec":bool(separation[k]<=30)}
+        if separation[k]<=30:
+            entry.update(xmm_name=slew.name.iloc[k], positive_match=str(target.name.iloc[idx[k]]) if idx[k]>=0 else None,
+                         match_sep=float(dist[k]) if idx[k]>=0 else None,
+                         match_ambiguous=bool(confusion[k]), slew_row=k)
+        benchmarks.append(entry)
     controls = []
     for angle in range(0,360,45):
         shifted = src.directional_offset_by(angle*u.deg,20*u.arcmin)
-        si,_,sn = evaluate(shifted)
-        high = (np.maximum(slew.flux.to_numpy(),target.flux.to_numpy()[np.maximum(si,0)]) /
-                np.minimum(slew.flux.to_numpy(),target.flux.to_numpy()[np.maximum(si,0)]))
-        eligible = slew.quality.to_numpy() & target.quality.to_numpy()[np.maximum(si,0)] & (sn==1)
-        controls.append({"pa_deg":angle,"shift_arcmin":20,"n":len(slew),"matches":int((sn>0).sum()),
-                         "unique":int((sn==1).sum()),"unique_nominal_10x":int(((sn==1)&(high>=10)).sum()),
-                         "quality_unique":int(eligible.sum()), "quality_unique_nominal_10x":int((eligible&(high>=10)).sum())})
-    mean = float(np.mean([c["matches"] for c in controls]))
-    return {"observed":int(observed.sum()),"observed_unambiguous":int((observed&~slew[mission+"_ambiguous"]).sum()),
-            "mean_shifted":mean,"estimated_random_fraction":mean/int(observed.sum()) if observed.any() else None,
-            "offsets":controls,"outer_radius_arcsec":cap,"adaptive_radius":"min(cap, 3.44 * hypot(position errors))"}
+        si,sd,sn = evaluate(shifted)
+        conf = ambiguous(si,sn)
+        controls.append(dict(pa_deg=angle,shift_arcmin=20,**summarize(si,sn,conf,sd,angle)))
+        if angle==90:
+            for item in benchmarks:
+                if "slew_row" not in item:
+                    continue
+                k = item.pop("slew_row")
+                item["east_20arcmin_control"] = {
+                    "ra":float(shifted[k].ra.deg),"dec":float(shifted[k].dec.deg),
+                    "comparison_match":str(target.name.iloc[si[k]]) if si[k]>=0 else None,
+                    "sep":float(sd[k]) if si[k]>=0 else None,"ambiguous":bool(conf[k])}
+    def mean_shifted(k):
+        return float(np.mean([c[k] for c in controls]))
+    def fraction(k):
+        return mean_shifted(k)/obs[k] if obs[k] else None
+    return {"observed":obs["matches"],"observed_unambiguous":int((observed&~confusion).sum()),
+            "mean_shifted":mean_shifted("matches"),"estimated_random_fraction":fraction("matches"),
+            "observed_selection_counts":obs, "guarded_10x_mean_shifted":mean_shifted("guarded_10x"),
+            "guarded_10x_estimated_random_fraction":fraction("guarded_10x"),
+            "guarded_10x_shifted_range":[min(c["guarded_10x"] for c in controls),
+                                       max(c["guarded_10x"] for c in controls)],
+            "offset_dependence":"Offsets share the same sky and source sample. The eight-shift range describes empirical variation and is not a confidence interval.",
+            "control_selection":"Same clean point-source/likelihood, positive-error, mutual-confusion and (Fhi-1.96 sigma_hi)/(Flo+1.96 sigma_lo)>=10 cuts as observed XMM versus this catalogue. Does not cover the map or ERO-RASS pair selections.",
+            "benchmarks":benchmarks, "offsets":controls,"outer_radius_arcsec":cap,
+            "adaptive_radius":"min(cap, 3.44 * hypot(position errors))"}
+
 
 
 def catalogue_ratios(table):
@@ -589,7 +653,7 @@ def main():
             raise RuntimeError("A required catalogue is unavailable. See catalog_inputs.json: "+key)
         raw,meta[key] = result
         # Protect against changes to the rolling mission-service aliases.
-        expected = {"xmmslewcln":29393, "xmmslewful":72352, "ero_main":930203, "ero_supp":347274}
+        expected = {"xmmslewcln":29393, "xmmslewful":72352, "ero_main":930203, "ero_supp":347274, "rass":135118}
         if key in expected and len(raw)!=expected[key]:
             raise ValueError(f"Release count mismatch {key} ({len(raw)} versus {expected[key]})")
         role = "xmm" if key.startswith("xmm") else ("rass" if key=="rass" else "ero")
@@ -609,6 +673,18 @@ def main():
     full["clean"] = [k in clean_keys for k in keys(full)]
     if int(full.clean.sum())!=len(clean):
         raise ValueError("ambiguous clean/full join, inspect FITS detection identifiers")
+    full["native_quality"] = full.quality.copy()
+    flagcols = ["issue","veropt","verext","verhalo","verbg","verfalse","veredge"]
+    full["no_warnings"] = True
+    full["warning_fields"] = ""
+    for field in flagcols:
+        if field not in full:
+            raise ValueError("Required XMMSL2 warning column absent: " + field)
+        flagged = truth(full[field])
+        full.loc[flagged,"no_warnings"] = False
+        native = meta["xmmslewful"]["columns"][field]["field"]
+        full.loc[flagged,"warning_fields"] += native + "|"
+    full["warning_fields"] = full.warning_fields.str.rstrip("|")
     full["quality"] &= full.clean
     full["source_group"] = full.get("unique",full.name).astype(str).str.strip()
     full["source_group"] = full.source_group.where(full.source_group.ne(""),full.name)
@@ -616,9 +692,66 @@ def main():
     controls = {}
     comparisons = {"ero":pd.concat([data["ero_main"],data["ero_supp"]],ignore_index=True),
                    "rass":data["rass"]}
+    supplemental_states = {m:{} for m in comparisons}
     for mission,cat in comparisons.items():
-        controls[mission] = join_mission(full,cat,mission)
-    full.rename(columns={c:"xmm_"+c for c in ["rate","counts","exp","id","flux","err","quality","ml","obs","time","stat_poserr","poserr","pos_sigma",
+        controls[mission] = join_mission(full,cat,mission,supplemental_states[mission])
+    # An explicitly labelled, higher-risk full-only stratum. Independent
+    # visits use distinct OBSIDs, not repeated detections within one slewing exposure.
+    positive = full.flux.gt(0) & full.err.gt(0)
+    enough_counts = numeric(full,"counts").ge(5)
+    adequate_snr = (full.flux / full.err).ge(3)
+    strong = full.native_quality & enough_counts & adequate_snr
+    def other_visits(use):
+        keys = ["source_group","obs"]
+        visits = full.loc[use,keys].drop_duplicates()
+        n = full.source_group.map(visits.groupby("source_group").size()).fillna(0).astype(int)
+        own = pd.MultiIndex.from_frame(full[keys]).isin(pd.MultiIndex.from_frame(visits))
+        return n-own.astype(int)
+    full["other_positive_slew_obsids"] = other_visits(positive)
+    full["other_strong_slew_obsids"] = other_visits(strong)
+    for m,cap in (("ero",10),("rass",15)):
+        full["close_secure_"+m] = (full[m+"_quality"] & ~full[m+"_ambiguous"] &
+                                   full[m+"_ml"].ge(20) & full[m+"_sep"].le(cap))
+    both_secure = full.close_secure_ero & full.close_secure_rass
+    full["full_only_corroborated"] = (~full.clean & strong &
+                                      ((full.other_strong_slew_obsids>0) | both_secure))
+    for m in comparisons:
+        offset_counts = {}
+        for angle in ["observed", *range(0,360,45)]:
+            corroboration = (supplemental_states["ero"][angle]["secure"] &
+                             supplemental_states["rass"][angle]["secure"])
+            sample = (~full.clean & strong & (full.other_strong_slew_obsids.gt(0)|corroboration))
+            offset_counts[str(angle)] = int((sample & supplemental_states[m][angle]["guarded"]).sum())
+        mean = float(np.mean([offset_counts[str(a)] for a in range(0,360,45)]))
+        controls[m]["corroborated_full_only_guarded_10x"] = {"counts":offset_counts,
+            "mean_shifted":mean,"estimated_random_fraction":mean/offset_counts["observed"] if offset_counts["observed"] else None,
+            "selection":"Recompute BOTH close mission counterparts at each identical 20-arcmin XMM shift before applying the full-only corroboration and guarded-amplitude rules; repeat-slew evidence is intrinsic and fixed."}
+    full["full_only_reasons"] = ""
+    reasons = {"no_positive_soft_flux_or_error":~positive,
+               "soft_ml_below_10_or_missing":~numeric(full,"ml").ge(10),
+               "extension_gt_0.5_pixel":numeric(full,"ext").gt(.5),
+               "instrument_warning":~full.no_warnings,
+               "net_counts_below_5_or_missing":~enough_counts,
+               "flux_snr_below_3_or_missing":~adequate_snr,
+               "no_strong_independent_slew_or_two_close_missions":~(full.other_strong_slew_obsids.gt(0)|both_secure)}
+    for label,mask in reasons.items():
+        full.loc[~full.clean & mask,"full_only_reasons"] += label+"|"
+    full["full_only_reasons"] = full.full_only_reasons.str.rstrip("|")
+    off = ~full.clean
+    def count_off(mask):
+        return int((off & mask).sum())
+    full_only = {"rows":int(off.sum()), "positive_soft_flux":count_off(full.flux.gt(0)),
+                 "soft_likelihood_at_least_10":count_off(numeric(full,"ml").ge(10)),
+                 "soft_likelihood_at_least_15p5":count_off(numeric(full,"ml").ge(15.5)),
+                 "no_instrument_warnings":count_off(full.no_warnings),"native_quality":count_off(full.native_quality),
+                 "positive_with_distinct_positive_slew_obsid":count_off(positive & full.other_positive_slew_obsids.gt(0)),
+                 "strong_soft_photometry":count_off(strong),"strong_with_distinct_strong_slew_obsid":count_off(strong & full.other_strong_slew_obsids.gt(0)),
+                 "close_secure_ero":count_off(full.close_secure_ero), "close_secure_rass":count_off(full.close_secure_rass),
+                 "close_secure_both":count_off(both_secure),"corroborated_rows":int(full.full_only_corroborated.sum()),
+                 "corroborated_unique_slew_names":int(full.loc[full.full_only_corroborated,"source_group"].nunique()),
+                 "failure_counts_nonexclusive":{reason:count_off(mask) for reason,mask in reasons.items()},
+                 "corroboration":"Positive unflagged point source with soft ML≥10, ≥5 net counts and flux/error≥3 plus a distinct equally strong slew OBSID with same release name OR secure, unambiguous counterparts in BOTH ERO and 2RXS at ≤10/15 arcsec and detection likelihood≥20. These supplemental rows retain clean=False."}
+    full.rename(columns={c:"xmm_"+c for c in ["rate","counts","exp","id","background_rate","full_only_corroborated","native_quality","no_warnings","warning_fields","full_only_reasons","other_positive_slew_obsids","other_strong_slew_obsids","close_secure_ero","close_secure_rass","flux","err","quality","ml","obs","time","mjd_min","mjd_max","stat_poserr","poserr","pos_sigma",
                                               "ext","xtyp","counterpart","iddist","oldrass","altident","issue",
                                               "veropt","verext","verhalo","verbg","verfalse","veredge"] if c in full},inplace=True)
     for mission in ("xmm","ero","rass"):
@@ -635,7 +768,25 @@ def main():
     catalogue_ratios(full)
     full.to_csv(arc.out / "catalog_sources.csv.gz",index=False,compression={"method":"gzip","mtime":0},float_format="%.10g")
     (arc.out / "shifted_controls.json").write_text(json.dumps(controls,indent=2))
-    stats = {"inputs":{k:v["rows"] for k,v in meta.items()},
+    def distribution(source, flux, error, quality):
+        f,e = source[flux],source[error]
+        good = source[quality].fillna(False).astype(bool)
+        positive = f.gt(0)&e.gt(0)
+        def median(column,mask):
+            return float(column[mask].median()) if mask.any() else None
+        return {"rows":len(source),"positive_flux":int(f.gt(0).sum()),"positive_flux_error":int(positive.sum()),
+                "quality_rows":int(good.sum()),"median_positive_flux_cgs":median(f,positive),
+                "median_positive_error_cgs":median(e,positive),"median_quality_flux_cgs":median(f,good)}
+    qa = {"xmm_clean":distribution(clean,"flux","err","quality"),
+          "xmm_full":distribution(full,"xmm_flux","xmm_err","xmm_quality")}
+    for key in ("ero_main","ero_supp","rass"):
+        qa[key] = distribution(data[key],"flux","err","quality")
+    for mission in ("ero","rass"):
+        matched = full.loc[full.clean & full[mission+"_name"].notna()]
+        qa[mission+"_at_clean_slew"] = distribution(matched,mission+"_flux",mission+"_err",mission+"_quality")
+        qa[mission+"_at_clean_slew"]["unambiguous_matches"] = int((~matched[mission+"_ambiguous"]).sum())
+        qa[mission+"_at_clean_slew"]["distinct_counterpart_names"] = int(matched[mission+"_name"].nunique())
+    stats = {"inputs":{k:v["rows"] for k,v in meta.items()}, "quality_distribution":qa, "full_only_audit":full_only,
              "clean_flagged":int(full.clean.sum()), "quality_slew":int(full.xmm_quality.sum()),
              "detection_rows":len(full),"unique_source_designations":int(full.source_group.nunique()),
              "positive_soft_slew":int((full.xmm_flux>0).sum()),
