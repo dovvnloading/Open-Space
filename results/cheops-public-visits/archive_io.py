@@ -12,11 +12,11 @@ import io
 import json
 import math
 import re
-import shutil
 import tarfile
 import tempfile
 from datetime import datetime, timezone
 from importlib import metadata
+from functools import lru_cache
 from pathlib import Path
 from urllib.parse import quote, unquote, urlsplit
 
@@ -28,8 +28,10 @@ TABLE = 'observations.mv_cheops_obs_fdw'
 PORTALS = ('https://cheops.unige.ch/archive_browser/',
            'https://cheops-archive.ssdc.asi.it/archive_browser/')
 LIMIT = 100000
+PIPE_NAME = re.compile(r'(?:^|[/_ -])(?:pipe|psf)(?:$|[/_. -])|_(?:sa|im)\.fits(?:\.gz)?$', re.I)
 
 
+@lru_cache(maxsize=1)
 def dace_host():
     try:
         p = metadata.distribution('dace-query').locate_file('dace_query/config.ini')
@@ -90,7 +92,8 @@ def exchange(evidence, label, url, *, params=None, body=None, local=None):
                     row.update(sha256=h.hexdigest(), bytes=size)
                     if local is None:
                         return out.getvalue()
-                    return None
+                    return {'sha256': h.hexdigest(), 'disposition':
+                            response.headers.get('Content-Disposition', '')}
     except Exception as exc:
         row['error'] = f'{type(exc).__name__}: {str(exc)[:300]}'
         raise
@@ -158,6 +161,7 @@ def dace_inventory(evidence):
                           obs_id=str(val('obs_id')), ra=ra,
                           dec=dec, coords_hms_dms=val('obj_pos_coordinates_hms_dms'),
                           start_mjd=number(val('date_mjd_start')), pi=val('pi_name'),
+                          file_rootpath=val('file_rootpath'),
                           dace=True, links=[])
     log(evidence, operation='DACE listing summary', rows=len(keys), visits=len(best),
         public=sum(v is True for v in cols['status_published']))
@@ -182,7 +186,7 @@ def esa_inventory(evidence, visits):
         links = []
         for k,v in r.items():
             if v and urlsplit(v).scheme in ('http','https') and re.search(
-                    r'sci_cor_lc|lightcurve|_lc_|subarray|starcatalog|_pipe|psf',k+' '+v,re.I):
+                    r'sci_cor_lc|lightcurve|_lc_|subarray|starcatalog|_pipe|psf|_(sa|im)\.fits',k+' '+v,re.I):
                 links.append({'column':k,'url':v})
         stem = ids.get(oid) or canonical(' '.join(str(v) for v in r.values()))
         if not stem:
@@ -204,9 +208,9 @@ def safe_name(value):
     return re.sub(r'[^A-Za-z0-9_.+-]', '_', Path(unquote(value)).name)[:210] or 'product'
 
 
-def keep_fits(payload, dest, suggested, evidence):
+def keep_fits(payload, dest, suggested, evidence, transfer):
     """Accept FITS by signature, never by HTTP 200, and flatten tar members safely."""
-    files = []
+    files = {}
     with payload.open('rb') as f:
         magic = f.read(8)
     compressed = magic[:2] == b'\x1f\x8b'
@@ -214,13 +218,17 @@ def keep_fits(payload, dest, suggested, evidence):
         with gzip.open(payload,'rb') as f:
             magic = f.read(8)
     if magic == b'SIMPLE  ':
+        name = re.search(r'filename="?([^";]+)',transfer['disposition'],re.I)
+        if (name and name[1].lower().endswith(('.fits','.fits.gz')) and
+                re.search(r'sci_|ext_|pipe|psf|_(sa|im)\.fits',name[1],re.I)):
+            suggested = name[1]
         if not suggested.lower().endswith(('.fits','.fits.gz')):
             suggested += '.fits'
         path = dest/safe_name(suggested)
         if compressed and not path.name.endswith('.gz'):
             path = Path(str(path)+'.gz')
         payload.replace(path)
-        files.append(path)
+        files[path] = transfer['sha256']
     elif tarfile.is_tarfile(payload):
         with tarfile.open(payload,'r:*') as archive:
             for member in archive:
@@ -228,17 +236,20 @@ def keep_fits(payload, dest, suggested, evidence):
                     continue
                 path = dest/safe_name(member.name)
                 with archive.extractfile(member) as src, path.open('wb') as out:
-                    shutil.copyfileobj(src,out,1024*1024)
-                files.append(path)
+                    h = hashlib.sha256()
+                    for block in iter(lambda:src.read(1024 * 1024),b''):
+                        h.update(block)
+                        out.write(block)
+                files[path] = h.hexdigest()
     else:
         with payload.open('rb') as f:
             sample = f.read(400).decode(errors='replace')
         raise ValueError('response was neither FITS nor an archive: '+sample[:160])
     valid = []
-    for p in files:
+    for p,sha in files.items():
         with fits.open(p,memmap=False,lazy_load_hdus=True) as hdus:
             hdr = hdus[1].header if len(hdus)>1 else hdus[0].header
-            log(evidence,operation='FITS',file=p.name,sha256=digest(p),bytes=p.stat().st_size,
+            log(evidence,operation='FITS',file=p.name,sha256=sha,bytes=p.stat().st_size,
                 extname=hdr.get('EXTNAME'),object=hdr.get('OBJECT'),naxis2=hdr.get('NAXIS2'))
         valid.append(p)
     if not valid:
@@ -246,15 +257,22 @@ def keep_fits(payload, dest, suggested, evidence):
     return valid
 
 
-def download_product(record, dest, evidence, dtype):
+def download_product(record, dest, evidence, dtype, explicit_files=None, aperture=None):
     filters = {'file_key':{'equal':[record['file_key']]}}
+    body = {'fileType':dtype,'filters':filters,'aperture':aperture}
+    if explicit_files:
+        body = {'fileType':dtype,'files':explicit_files}
     ticket = json.loads(exchange(evidence,'DACE request '+dtype,dace_host()+'/download',
-                        body={'fileType':dtype,'filters':filters,'aperture':None}))['key']
+                        body=body))['key']
     payload = dest/'download.tmp'
-    exchange(evidence, 'DACE anonymous product '+dtype,
+    transfer = exchange(evidence, 'DACE anonymous product '+dtype,
              dace_host()+'/download/photometry/'+quote(str(ticket),safe=''),
              params={'compressed':'false'},local=payload)
-    return keep_fits(payload,dest,record['file_key']+'_'+dtype+'.fits',evidence)
+    postfix = '-'+aperture.upper() if aperture else ''
+    title = record['file_key']+'_'+dtype+postfix+'.fits'
+    if dtype=='files' and explicit_files and len(explicit_files)==1:
+        title = Path(explicit_files[0]).name
+    return keep_fits(payload,dest,title,evidence,transfer)
 
 
 def dace_timeseries(record,dest,evidence):
@@ -319,21 +337,29 @@ def fetch_visit(record,dest,include_field=False):
             (dest/'download.tmp').unlink(missing_ok=True)
     drp = []
     if record['dace']:
-        drp = attempt('DRP products',download_product,record,dest,evidence,'lightcurves')
+        for aperture in ('default','optimal'):
+            drp = attempt('DRP '+aperture,download_product,record,dest,evidence,'lightcurves',None,aperture)
+            if drp:
+                break
+        if not drp:
+            drp = attempt('DRP aperture bundle',download_product,record,dest,evidence,'lightcurves')
+        if not drp and record.get('file_rootpath'):
+            drp = attempt('DRP legacy file-list route',download_product,record,dest,evidence,
+                          'lightcurves',[record['file_rootpath']])
         files.extend(drp)
     for link in record['links']:
         name = link['column']+' '+link['url']
         is_field = bool(re.search('subarray|starcatalog',name,re.I))
-        is_pipe = bool(re.search(r'\bpipe\b|_pipe|_psf',name,re.I))
+        is_pipe = bool(PIPE_NAME.search(name))
         if (is_field and not include_field) or (not is_pipe and not is_field and drp):
             continue
         def get_link():
             payload = dest/'download.tmp'
-            exchange(evidence,'ESA '+link['column'],link['url'],local=payload)
+            transfer = exchange(evidence,'ESA '+link['column'],link['url'],local=payload)
             filename = Path(urlsplit(link['url']).path).name
             if '.fits' not in filename.lower():
                 filename = record['file_key']+'_'+link['column']+'.fits'
-            return keep_fits(payload,dest,filename,evidence)
+            return keep_fits(payload,dest,filename,evidence,transfer)
         found = attempt('ESA linked FITS',get_link)
         files.extend(found)
         if found and not is_field and not is_pipe:
@@ -341,19 +367,74 @@ def fetch_visit(record,dest,include_field=False):
     if not drp and record['dace']:
         files.extend(attempt('DACE vector fallback',dace_timeseries,record,dest,evidence))
     if include_field and record['dace']:
-        for product in ('EXT_PRE_StarCatalogue','SCI_COR_SubArray'):
-            if not any(product.casefold() in f.name.casefold() for f in files):
-                files.extend(attempt('field product '+product,download_product,record,dest,evidence,product))
+        listed = sample_products(evidence,record)
+        for name in listed:
+            if PIPE_NAME.search(name) and not any(f.name==Path(name).name for f in files):
+                files.extend(attempt('catalogued PIPE file',download_product,record,dest,evidence,
+                                     'files',[name]))
+        catalogues = [p for p in files if 'starcatalog' in p.name.lower()]
+        if not catalogues:
+            catalogues = attempt('field catalogue',download_product,record,dest,evidence,'EXT_PRE_StarCatalogue')
+            files.extend(catalogues)
+        usable = False
+        for cat in catalogues:
+            try:
+                with fits.open(cat,memmap=False) as hdus:
+                    usable |= any({'RA','DEC'}.issubset(h.columns.names or []) and h.header.get('NAXIS2',0)>1
+                                  for h in hdus if isinstance(h,fits.BinTableHDU))
+            except (ValueError,OSError) as exc:
+                log(evidence,operation='field catalogue validation',error=str(exc)[:350])
+        if usable and not any('sci_cor_subarray' in f.name.lower() for f in files):
+            files.extend(fetch_localization_images(record,dest))
+        elif not usable:
+            log(evidence,operation='corrected subarray',skip='no catalogue with multiple source coordinates')
     log(evidence,operation='visit product summary',visit_id=record['visit_id'],
         files=[f.name for f in files],
-        pipe_identified=any(re.search('pipe|_psf',f.name,re.I) is not None for f in files))
+        pipe_identified=any(PIPE_NAME.search(f.name) is not None for f in files))
     return list(dict.fromkeys(files))
+
+
+def fetch_localization_images(record,dest):
+    """Get a correction-stage cube when a viable catalogue or a target event needs it."""
+    dest = Path(dest)
+    evidence = dest/'manifest.jsonl'
+    existing = [p for p in dest.glob('*.fits*') if 'sci_cor_subarray' in p.name.lower()]
+    if existing or not record['dace']:
+        return existing
+    try:
+        return download_product(record,dest,evidence,'SCI_COR_SubArray')
+    except Exception as exc:
+        log(evidence,operation='corrected subarray',error=str(exc)[:350])
+        return []
+    finally:
+        (dest/'download.tmp').unlink(missing_ok=True)
+
+
+def fetch_validation_apertures(record,dest):
+    """Independent aperture sizes for a detected target event; never count as separate visits."""
+    dest = Path(dest)
+    evidence = dest/'manifest.jsonl'
+    result = []
+    if not record['dace']:
+        return result
+    for aperture in ('rinf','rsup'):
+        existing = sorted(p for p in dest.glob('*.fits*') if aperture in p.name.lower())
+        if existing:
+            result.extend(existing)
+            continue
+        try:
+            result.extend(download_product(record,dest,evidence,'lightcurves',aperture=aperture))
+        except Exception as exc:
+            log(evidence,operation='aperture validation '+aperture,error=str(exc)[:350])
+        finally:
+            (dest/'download.tmp').unlink(missing_ok=True)
+    return result
 
 
 def sample_products(evidence,record):
     """Inspect the archive product catalogue for the verified observation."""
     field = re.compile(r'subarray|starcatalog', re.I)
-    pipe = re.compile(r'(?:^|[/_ -])(?:pipe|psf)(?:$|[/_. -])', re.I)
+    names = []
     summary = dict(operation='sample product inventory', file_key=record['file_key'],
                    ESA_columns=[x['column'] for x in record['links']])
     if record['dace']:
@@ -364,10 +445,11 @@ def sample_products(evidence,record):
             names = [str(v) for v in cols['file']]
             summary.update(listed_files=len(names), field_product_examples=[
                 Path(n).name for n in names if field.search(n)][:10],
-                PIPE_name_matches=[Path(n).name for n in names if pipe.search(n)][:20])
+                PIPE_name_matches=[Path(n).name for n in names if PIPE_NAME.search(n)][:20])
         except Exception as exc:
             summary['listing_error'] = f'{type(exc).__name__}: {str(exc)[:350]}'
     log(evidence,**summary)
+    return names
 
 
 def inventory(out):

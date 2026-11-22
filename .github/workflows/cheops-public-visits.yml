@@ -14,7 +14,7 @@ env:
   OPENBLAS_NUM_THREADS: '1'
   OMP_NUM_THREADS: '1'
 jobs:
-  archive:
+  prepare:
     if: github.ref == 'refs/heads/research/cheops-public-visit-search' && github.run_number <= 3 && github.run_attempt == 1
     runs-on: ubuntu-24.04
     timeout-minutes: 45
@@ -26,18 +26,71 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Fetch visit listings and verify anonymous photometry access
+      - name: Seed published masks for the frozen inventory
         run: |
           python -m pip install -r "$STUDY/requirements.txt" > "$RUNNER_TEMP/install.log"
-          python "$STUDY/archive_io.py" inventory "$RUNNER_TEMP/evidence"
+          python - <<'PYTHON'
+          import hashlib, json, os
+          from pathlib import Path
+          folder = Path(os.environ["STUDY"])/"outputs"
+          status = json.loads((folder/"archive_status.json").read_text())
+          assert status["verified_lightcurve"] and status["status"]=="ready"
+          assert hashlib.sha256((folder/"inventory.jsonl").read_bytes()).hexdigest()==status["inventory_sha256"]
+          PYTHON
+          python "$STUDY/vetting.py" seed "$STUDY/outputs/inventory.jsonl" "$RUNNER_TEMP/seed"
       - uses: actions/upload-artifact@v4
         with:
-          name: cheops-archive
-          path: ${{ runner.temp }}/evidence/
+          name: cheops-mask-seed
+          path: |
+            ${{ runner.temp }}/seed/catalog-seed.json.gz
+            ${{ runner.temp }}/seed/catalog-receipts.json
           if-no-files-found: error
           retention-days: 7
+
+  survey:
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/cheops-public-visits
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: cheops-mask-seed
+          path: ${{ runner.temp }}/seed
+      - name: Search the assigned visits
+        env:
+          CHEOPS_CATALOG_SEED: ${{ runner.temp }}/seed/catalog-seed.json.gz
+          SHARD: ${{ matrix.shard }}
+        run: |
+          python -m pip install -r "$STUDY/requirements.txt" > "$RUNNER_TEMP/install.log"
+          timeout 340m python -u "$STUDY/worker.py" "$STUDY/outputs/inventory.jsonl" "$RUNNER_TEMP/evidence" "$RUNNER_TEMP/work" "$SHARD" 160
+      - name: Compress completed visit records
+        if: always()
+        run: |
+          for path in "$RUNNER_TEMP"/evidence/visits-*.jsonl; do
+            if test -f "$path"; then gzip -n "$path"; fi
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cheops-visits-${{ matrix.shard }}
+          path: ${{ runner.temp }}/evidence/
+          retention-days: 7
+          if-no-files-found: warn
   publish:
-    needs: archive
+    needs: [prepare, survey]
+    if: always() && !cancelled() && needs.prepare.result == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     permissions:
@@ -46,20 +99,31 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
+          fetch-depth: 12
       - uses: actions/download-artifact@v4
         with:
-          name: cheops-archive
+          pattern: cheops-visits-*
+          merge-multiple: true
           path: results/cheops-public-visits/outputs
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: cheops-mask-seed
+          path: results/cheops-public-visits/outputs/ephemerides
       - name: Record the result and input receipts
         run: |
-          python "$STUDY/publish.py"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch --no-tags --depth=10 origin main:refs/remotes/origin/main
+          if ! git merge-base --is-ancestor origin/main HEAD; then
+            git fetch --no-tags --deepen=64 origin main research/cheops-public-visit-search
+            git merge --no-edit origin/main
+          fi
+          python "$STUDY/science_report.py"
           git add -f -- "$STUDY/outputs" "$STUDY/README.md" README.md
-          git commit -m 'Record anonymous CHEOPS archive access and input receipts'
+          git commit -m 'Deposit CHEOPS transit search, calibration and coverage'
           git push origin HEAD:refs/heads/research/cheops-public-visit-search
       - name: Verify deposited repository
         run: |
