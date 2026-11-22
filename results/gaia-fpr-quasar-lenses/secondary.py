@@ -36,45 +36,6 @@ def number(value):
     return n if n is not None else None
 
 
-def desi(centre, folder):
-    columns=['targetid','survey','program','healpix','target_ra','target_dec',
-             'mean_fiber_ra','mean_fiber_dec','spectype','z','zerr','zwarn','deltachi2',
-             'zcat_primary','objtype','coadd_fiberstatus']
-    query=(f"SELECT {','.join(columns)} FROM desi_dr1.zpix WHERE q3c_radial_query("
-           f"mean_fiber_ra,mean_fiber_dec,{centre[0]:.10f},{centre[1]:.10f},7.0/3600.0)")
-    adql=(f"SELECT {','.join(columns)} FROM desi_dr1.zpix WHERE 1=CONTAINS("
-          f"POINT('ICRS',mean_fiber_ra,mean_fiber_dec),CIRCLE('ICRS',{centre[0]:.10f},{centre[1]:.10f},"
-          "0.0019444444444444444))")
-    routes=[(deflector.SQL,{'sql':query,'ofmt':'csv','out':'','drop':'False','async':'False'}),
-            (deflector.TAP,{'REQUEST':'doQuery','LANG':'ADQL','FORMAT':'csv','QUERY':adql,'MAXREC':1000})]
-    receipt=dict(errors=[])
-    for url,params in routes:
-        try:
-            resp=requests.get(url,params=params,headers=deflector.DATALAB_PUBLIC,timeout=(12,55))
-            resp.raise_for_status()
-            reader=csv.DictReader(io.StringIO(resp.content.decode('utf-8-sig')))
-            if not reader.fieldnames or set(columns)-set(reader.fieldnames):
-                raise ValueError('DESI result schema mismatch: '+resp.text[:200])
-            rows=[]
-            for rec in reader:
-                primary=rec['zcat_primary'].lower() in ('true','t','1')
-                robust=(primary and rec['objtype'].strip()=='TGT' and number(rec['zwarn'])==0 and
-                        number(rec['coadd_fiberstatus'])==0 and (number(rec['deltachi2']) or 0)>=25)
-                rows.append(dict(catalog='DESI DR1',identifier=rec['targetid'],classification=rec['spectype'].strip(),
-                            ra=number(rec['mean_fiber_ra']),dec=number(rec['mean_fiber_dec']),
-                            target_ra=number(rec['target_ra']),target_dec=number(rec['target_dec']),
-                            z=number(rec['z']),z_err=number(rec['zerr']),quality_pass=robust,
-                            fiber_radius_arcsec=.75,quality=rec))
-            if len(rows)>=1000:
-                raise ValueError('Unexpected or truncated DESI cone')
-            (folder/'desi.csv.gz').write_bytes(gzip.compress(resp.content,mtime=0))
-            receipt.update(url=url,parameters=params,sha256=hashlib.sha256(resp.content).hexdigest(),rows=len(rows),status='complete')
-            return rows,receipt
-        except Exception as exc:
-            receipt['errors'].append(dict(url=url,message=str(exc)[:500]))
-    return [],dict(receipt,status='unavailable')
-
-
 def sdss_centres(centres, evidence):
     """One reread of DR19 for all leads, at measured fiber coordinates."""
     if not centres:
@@ -249,7 +210,7 @@ def run(evidence_dir,output_dir):
             model=dict(physical_geometry=False,error=str(exc)[:500])
         deblends=deflector.assess([obj],out/'catalogue_deblends')
         fg_catalog=any(x['status']=='central_extended_object_and_distinct_catalogued_images' for x in deblends)
-        spectra,desi_receipt=desi(centre,folder)
+        spectra,desi_receipt=deflector.desi_spectra(centre,positions,folder,evidence)
         spectra.extend(sdss.get(ident,[]))
         matches,conflicts=assess_spectra(spectra,centre,positions)
         lens_ok=bool(model['physical_geometry'] and model['mass_to_measured_light_arcsec']<=.35)

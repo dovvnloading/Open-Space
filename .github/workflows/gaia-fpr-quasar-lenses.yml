@@ -20,6 +20,7 @@ concurrency:
 
 env:
   STUDY: results/gaia-fpr-quasar-lenses
+  FPR_PUBLISHED_SNAPSHOT: ${{ github.workspace }}/.fpr-published/results/gaia-fpr-quasar-lenses/evidence
   OPENBLAS_NUM_THREADS: '1'
   OMP_NUM_THREADS: '1'
   FRESH_PIXELS: ${{ inputs.fresh_pixels || contains(github.event.head_commit.message, '[fresh-fpr]') || 'false' }}
@@ -126,6 +127,20 @@ jobs:
         with:
           persist-credentials: false
           sparse-checkout: results/gaia-fpr-quasar-lenses
+      - name: Restore the complete literature and public-catalogue receipts
+        uses: actions/checkout@v4
+        with:
+          ref: 55f2b5c6be16c2794676fd8f93d82b0cf7b2ccdb
+          path: .fpr-published
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /results/gaia-fpr-quasar-lenses/evidence/known_lenses.csv
+            /results/gaia-fpr-quasar-lenses/evidence/catalog_status.csv
+            /results/gaia-fpr-quasar-lenses/evidence/catalog_input_checksums.csv
+            /results/gaia-fpr-quasar-lenses/evidence/external_matches.csv
+            /results/gaia-fpr-quasar-lenses/evidence/gaia_components.csv
+            /results/gaia-fpr-quasar-lenses/evidence/wide/gaia_components.csv
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -149,6 +164,20 @@ jobs:
         with:
           persist-credentials: false
           sparse-checkout: results/gaia-fpr-quasar-lenses
+      - name: Restore the complete literature and public-catalogue receipts
+        uses: actions/checkout@v4
+        with:
+          ref: 55f2b5c6be16c2794676fd8f93d82b0cf7b2ccdb
+          path: .fpr-published
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /results/gaia-fpr-quasar-lenses/evidence/known_lenses.csv
+            /results/gaia-fpr-quasar-lenses/evidence/catalog_status.csv
+            /results/gaia-fpr-quasar-lenses/evidence/catalog_input_checksums.csv
+            /results/gaia-fpr-quasar-lenses/evidence/external_matches.csv
+            /results/gaia-fpr-quasar-lenses/evidence/gaia_components.csv
+            /results/gaia-fpr-quasar-lenses/evidence/wide/gaia_components.csv
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -160,6 +189,7 @@ jobs:
       - name: Compare spectra, fit pixels and model lenses
         run: |
           pip install -r "$STUDY/requirements.txt"
+          export GAIA_LENS_EVIDENCE="$RUNNER_TEMP/science"
           python -u "$STUDY/study.py" inspect "$RUNNER_TEMP/science"
           python -u "$STUDY/study.py" summarize "$RUNNER_TEMP/science"
           python "$STUDY/audit.py" "$RUNNER_TEMP/science"
@@ -228,7 +258,7 @@ jobs:
           name: final-evidence
           path: ${{ runner.temp }}/persist
       - uses: actions/download-artifact@v4
-        if: needs.followup.result == 'success'
+        if: needs.followup.result != 'skipped'
         with:
           name: targeted-followup
           path: ${{ runner.temp }}/persist/secondary
@@ -257,5 +287,17 @@ jobs:
           python -m pip install '.[archive]' numpy pandas scipy matplotlib
           python "$STUDY/audit.py" "$STUDY/evidence"
           python "$STUDY/audit.py" "$STUDY/evidence/wide"
+          python - "$STUDY/evidence" <<'PYTHON'
+          import csv, json, sys
+          from pathlib import Path
+          evidence = Path(sys.argv[1])
+          statuses = list(csv.DictReader((evidence/"catalog_status.csv").open()))
+          failures = [r["catalog"] for r in statuses if r["ok"].lower() != "true"]
+          if len(statuses) != 24 or failures:
+              raise ValueError(f"Incomplete publication and spectrum checks: {failures}")
+          report = json.loads((evidence/"secondary"/"combined_summary.json").read_text())
+          if report["benchmark_either_aperture"]["total"] != 364:
+              raise ValueError("Incomplete known-lens benchmark")
+          PYTHON
           python -m open_space.verify
           python -m unittest discover -s tests

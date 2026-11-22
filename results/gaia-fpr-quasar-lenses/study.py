@@ -69,7 +69,7 @@ def pixel_evidence(systems, out):
             for line in (previous/"imaging"/"imaging.jsonl").read_text().splitlines():
                 measurement = json.loads(line)
                 key = old_keys.get(str(measurement["id"]))
-                if key and measurement.get("imaging_status") != "unavailable" and measurement.get("bands"):
+                if key and "imaging_status" in measurement and "lens_model" in measurement:
                     cache[key] = measurement
     dest = out/"imaging"
     dest.mkdir(exist_ok=True)

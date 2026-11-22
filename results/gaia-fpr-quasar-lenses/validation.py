@@ -66,7 +66,7 @@ def summarize(evidence, output):
                     morphology=bool(passing.full_morphology.any()),
                     anchored=bool(passing.plausible_before_novelty.any()),
                     fields=" ".join(nearby.system_id)))
-        frame=pd.DataFrame(checks)
+        frame=pd.DataFrame(checks,columns=["family","name","ra","dec","eligible","gaia","morphology","anchored","fields"])
         frame.to_csv(output/(arm+"_published_comparisons.csv"),index=False)
         result[arm+"_published_comparisons"]={name:dict(catalogue_entries=len(g),eligible=int(g.eligible.sum()),
                gaia=int(g.gaia.sum()),morphology=int(g.morphology.sum()),anchored=int(g.anchored.sum()))

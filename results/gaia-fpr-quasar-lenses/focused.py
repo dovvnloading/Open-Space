@@ -89,7 +89,7 @@ def run(evidence,out):
     receipts={}
     with ThreadPoolExecutor(3) as pool:
         epoch_job=pool.submit(epochs.assess,systems,out/'epochs')
-        deblend_job=pool.submit(deflector.assess,systems,out/'deflectors')
+        deblend_job=pool.submit(deflector.assess,systems,out/'deflectors',spectra_evidence=evidence)
         for table in TABLES:
             ids=parents if table.startswith('gaiafpr.') else classified
             queries[table],receipts[table]=lookup(table,ids,out)

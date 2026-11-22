@@ -1,9 +1,11 @@
 """Coordinate and redshift crosschecks. All archive calls are made by the Actions runner."""
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import ExitStack
 import gzip
 import hashlib
 import io
 import json
+import os
 from itertools import combinations
 from pathlib import Path
 import re
@@ -354,9 +356,68 @@ def _write_audit(out):
     combined.drop_duplicates().to_csv(path, index=False)
 
 
+PUBLISHED_COMMIT = "55f2b5c6be16c2794676fd8f93d82b0cf7b2ccdb"
+
+
+def published_snapshot():
+    path = os.environ.get("FPR_PUBLISHED_SNAPSHOT")
+    return Path(path) if path else None
+
+
+def restore_prior_lists(snapshot, out):
+    """Replay the complete literature harvest even when its live services are down."""
+    status = pd.read_csv(snapshot/"catalog_status.csv", keep_default_na=False)
+    status = status.loc[status.catalog.isin(LENS_URL)]
+    known = pd.read_csv(snapshot/"known_lenses.csv")
+    sizes = known.groupby("catalog").size().to_dict()
+    if (set(status.catalog) != set(LENS_URL) or not status.ok.astype(str).str.lower().eq("true").all()
+            or sizes != dict(zip(status.catalog, status.rows)) or sizes.get("GraL X") != 364):
+        raise ValueError("Frozen literature rows do not match the complete retrieval receipts")
+    shutil.copyfile(snapshot/"known_lenses.csv", out/"known_lenses.csv")
+    status.to_csv(out/"catalog_status.csv", index=False)
+    audit = pd.read_csv(snapshot/"catalog_input_checksums.csv",keep_default_na=False)
+    audit[audit.catalog.isin(LENS_URL)].to_csv(out/"catalog_input_checksums.csv",index=False)
+    files = ["catalog_status.csv","known_lenses.csv","catalog_input_checksums.csv",
+             "gaia_components.csv","wide/gaia_components.csv","external_matches.csv"]
+    manifest = {f:hashlib.sha256((snapshot/f).read_bytes()).hexdigest() for f in files}
+    (out/"published_snapshot.json").write_text(json.dumps(
+        dict(commit=PUBLISHED_COMMIT,input_sha256=manifest,normalized_rows=sizes),indent=2)+"\n")
+    print("Validated frozen catalogue rows", sizes, flush=True)
+    return known
+
+
+def verified_public_matches(cat, live, components, out):
+    snapshot = published_snapshot()
+    if snapshot is None:
+        return live(components)
+    signature = ["system_id","source_id","component_id","ra","dec"]
+    keep_id = {"system_id":str,"source_id":str}
+    old = pd.concat([pd.read_csv(snapshot/a/"gaia_components.csv",dtype=keep_id)
+                     for a in [".","wide"]],ignore_index=True)
+    if "component_id" not in old:
+        old["component_id"] = (old["image_id"] if "image_id" in old
+                               else old.groupby("system_id").cumcount()+1)
+    if not all(old[k].reset_index(drop=True).equals(components[k]) for k in signature):
+        return live(components)
+    status = pd.read_csv(snapshot/"catalog_status.csv").set_index("catalog")
+    if str(status.loc[cat,"ok"]).lower()!="true":
+        return live(components)
+    previous = pd.read_csv(snapshot/"external_matches.csv",dtype={"name":str})
+    selected = previous.loc[previous.catalog.eq(cat), PUBLIC_COLS].copy()
+    if len(selected) != status.loc[cat,"rows"]:
+        raise ValueError("Public catalogue snapshot count disagrees with receipt: "+cat)
+    raw = pd.read_csv(snapshot/"catalog_input_checksums.csv",keep_default_na=False)
+    AUDIT.extend(raw.loc[raw.catalog.eq(cat)].to_dict("records"))
+    print("Reused",cat,"at identical component positions",len(selected),flush=True)
+    return selected
+
+
 def load_lenses(outdir):
     out = Path(outdir)
     out.mkdir(parents=True, exist_ok=True)
+    snapshot = published_snapshot()
+    if snapshot is not None:
+        return restore_prior_lists(snapshot, out)
     frames, status = [], []
     with ThreadPoolExecutor(max_workers=4) as pool:
         submitted = [(cat, pool.submit(_load_one, cat, path)) for cat, path in LENS_URL.items()]
@@ -487,9 +548,179 @@ def _desi_vizier(positions):
     return pd.concat(frames,ignore_index=True) if frames else pd.DataFrame(columns=PUBLIC_COLS)
 
 
+def _desi_native(positions):
+    """Stream the official zall-pix FITS table if the query services cannot deliver."""
+    name = "zall-pix-iron.fits"
+    hosts = ["https://data.desi.lbl.gov/public/dr1",
+             "https://webdav-hdfs.pic.es/data/public/DESI/DR1"]
+    failures = []
+    for host in hosts:
+        base = host + "/spectro/redux/iron/zcatalog/v1/"
+        try:
+            manifest = _download(PUBLIC[1],base+"redux_iron_zcatalog_v1.sha256sum",timeout=45)
+            match = re.search(r"(?m)^([0-9a-fA-F]{64})\s+\*?(?:\./)?zall-pix-iron\.fits\s*$",
+                              manifest.decode("ascii"))
+            if not match:
+                raise ValueError("DESI manifest omitted zall-pix-iron.fits")
+            return _desi_stream(positions,base+name,match.group(1).lower())
+        except Exception as exc:
+            detail = f"{type(exc).__name__}: {exc}"[:350]
+            failures.append(f"{host} {detail}")
+            AUDIT.append(dict(catalog=PUBLIC[1],url=base+name,retrieval_error=detail))
+            print("DESI native file failed",host,detail,flush=True)
+    raise ValueError(" | ".join(failures))
+
+
+def _desi_stream(positions,url,expected_digest):
+    loc = SkyCoord(positions.ra.to_numpy()*u.deg, positions.dec.to_numpy()*u.deg)
+    digest = hashlib.sha256()
+    size, frames, nearby, selfcheck = 0, [], [], None
+    with ExitStack() as stack:
+        def open_at(offset):
+            headers = {**HEADERS,"Accept-Encoding":"identity"}
+            if offset:
+                headers["Range"] = f"bytes={offset}-"
+            reply = stack.enter_context(requests.get(url,headers=headers,stream=True,timeout=(15,150)))
+            reply.raise_for_status()
+            content_range = reply.headers.get("Content-Range","")
+            if offset and (reply.status_code!=206 or not content_range.startswith(f"bytes {offset}-")):
+                raise ValueError("DESI source did not honor the requested continuation range")
+            return reply
+
+        response = open_at(0)
+        expected_size = int(response.headers.get("Content-Length",0))
+        if response.status_code == 206:
+            expected_size = int(response.headers["Content-Range"].rsplit("/",1)[1])
+        resumes = 0
+        def read(n):
+            nonlocal size, response, resumes
+            while True:
+                try:
+                    chunk = response.raw.read(n)
+                    if len(chunk)<n and expected_size and size+len(chunk)<expected_size:
+                        raise OSError("Early end of DESI FITS stream")
+                    break
+                except Exception:
+                    if resumes>=2:
+                        raise
+                    resumes += 1
+                    print("Resuming DESI file at byte",size,flush=True)
+                    response.close()
+                    response = open_at(size)
+            digest.update(chunk)
+            size += len(chunk)
+            return chunk
+
+        def header():
+            blocks = bytearray()
+            for _ in range(1024):
+                block = read(2880)
+                if len(block)!=2880:
+                    raise ValueError("Truncated DESI FITS header")
+                blocks.extend(block)
+                if any(block[i:i+8] == b"END     " for i in range(0,2880,80)):
+                    return fits.Header.fromstring(blocks.decode("ascii"))
+            raise ValueError("Unrecognized DESI FITS header")
+
+        primary, h = header(), header()
+        if not primary.get("SIMPLE") or primary.get("NAXIS")!=0 or h.get("XTENSION")!="BINTABLE":
+            raise ValueError("Unexpected DESI file layout")
+        num, width = h["NAXIS2"],h["NAXIS1"]
+        if not (18_000_000 <= num <= 40_000_000 and 128 <= width <= 8192):
+            raise ValueError(f"Unrecognized DESI table shape {num} by {width}")
+        if num != 23_060_727:
+            print("Native NAXIS2",num,"differs from NOIRLab zpix (23,060,727); checking native release manifest",flush=True)
+        # Let Astropy translate all FITS column formats including vector and
+        # string sizes. Only the header of this temporary table is materialized.
+        minimal = h.copy()
+        minimal["NAXIS2"] = 0
+        minimal["PCOUNT"] = 0
+        with fits.open(io.BytesIO((primary.tostring()+minimal.tostring()).encode("ascii"))) as stub:
+            dtype = stub[1].columns.dtype.newbyteorder(">")
+        cols = ["TARGETID","TARGET_RA","TARGET_DEC","SPECTYPE","Z","ZERR","ZWARN"]
+        if dtype.itemsize != width or not set(cols).issubset(dtype.names):
+            raise ValueError("DESI row format or required FITS columns changed")
+        indices = dict((h[f"TTYPE{i}"],i) for i in range(1,h["TFIELDS"]+1))
+        def field(data,k):
+            vals = data[k]
+            index = indices[k]
+            scale, zero = h.get(f"TSCAL{index}",1),h.get(f"TZERO{index}",0)
+            return vals if (scale,zero)==(1,0) else vals*scale+zero
+
+        for start in range(0,num,24000):
+            n = min(num-start,24000)
+            block = read(n*width)
+            if len(block)!=n*width:
+                raise ValueError("Truncated zall-pix data rows")
+            data = np.frombuffer(block,dtype=dtype,count=n)
+            ra,dec=field(data,"TARGET_RA"),field(data,"TARGET_DEC")
+            valid = np.flatnonzero((ra>=0)&(ra<360)&(np.abs(dec)<=90))
+            if not len(valid):
+                continue
+            if selfcheck is None:
+                k = valid[0]
+                true_position = SkyCoord([ra[k]]*u.deg,[dec[k]]*u.deg)
+                _, found, distance, _ = search_around_sky(true_position,
+                    SkyCoord(ra[valid]*u.deg,dec[valid]*u.deg),2*u.arcsec)
+                if not np.any((valid[found]==k) & (distance.arcsec<1e-7)):
+                    raise ValueError("DESI native position self-match failed")
+                selfcheck = str(field(data[k:k+1],"TARGETID")[0])
+            if start % 2400000 == 0:
+                print("DESI native rows",start,"/",num,flush=True)
+            i,j,dist,_ = search_around_sky(loc,SkyCoord(ra[valid]*u.deg,dec[valid]*u.deg),8*u.arcsec)
+            if not len(i):
+                continue
+            j = valid[j]
+            rows = data[j]
+            spectra = pd.DataFrame(dict(name=field(rows,"TARGETID").astype(str),
+                era=ra[j].astype(float),edec=dec[j].astype(float),
+                classification=np.char.strip(field(rows,"SPECTYPE").astype(str)),
+                z=field(rows,"Z").astype(float),z_err=field(rows,"ZERR").astype(float),
+                warning=field(rows,"ZWARN").astype(int)))
+            neighborhood = spectra.copy()
+            for name in ["MEAN_FIBER_RA","MEAN_FIBER_DEC","DELTACHI2","ZCAT_PRIMARY","OBJTYPE",
+                         "COADD_FIBERSTATUS","SURVEY","PROGRAM","HEALPIX"]:
+                if name not in dtype.names:
+                    continue
+                values = field(rows,name)
+                if name == "ZCAT_PRIMARY":
+                    # FITS L values are ASCII T/F (84/70) before Astropy conversion.
+                    if values.dtype.kind in "iu":
+                        values = np.isin(values,[84,1])
+                    elif values.dtype.kind in "SU":
+                        values = np.char.upper(np.char.strip(values.astype(str)))=="T"
+                elif values.dtype.kind in "SU":
+                    values = np.char.strip(values.astype(str))
+                elif values.dtype.kind in "iuf":
+                    values = values.astype(values.dtype.newbyteorder("="))
+                neighborhood[name.lower()] = values
+            nearby.append(neighborhood.drop_duplicates())
+            keep = dist.arcsec<=2
+            selected = spectra.loc[keep].copy()
+            selected["row_id"] = positions.row_id.to_numpy()[i[keep]]
+            selected["catalog"] = PUBLIC[1]
+            frames.append(selected)
+        while read(4*1024*1024):
+            pass
+        if (expected_size and size!=expected_size) or size%2880 or not selfcheck:
+            raise ValueError("Incomplete DESI native FITS response")
+        if digest.hexdigest() != expected_digest:
+            raise ValueError("DESI native file disagrees with official SHA-256 manifest")
+        AUDIT.append(dict(catalog=PUBLIC[1],url=url,bytes=size,rows=num,sha256=digest.hexdigest(),
+                          checked_targetid=selfcheck,expected_sha256=expected_digest,
+                          noirlab_zpix_reference_rows=23_060_727,transfer_resumptions=resumes))
+    if os.environ.get("GAIA_LENS_EVIDENCE"):
+        target = Path(os.environ["GAIA_LENS_EVIDENCE"])/"desi_nearby_spectra.csv.gz"
+        rows = (pd.concat(nearby,ignore_index=True).drop_duplicates() if nearby else
+                pd.DataFrame(columns=["name","era","edec","classification","z","z_err","warning"]))
+        rows.to_csv(target,index=False)
+    return pd.concat(frames,ignore_index=True) if frames else pd.DataFrame(columns=PUBLIC_COLS)
+
+
 def _desi(positions):
     errors = []
-    for label, query in [("NOIRLab zpix",_desi_noirlab), ("CfA VizieR",_desi_vizier),
+    for label, query in [("Native DESI DR1 zall-pix",_desi_native),
+                         ("NOIRLab zpix",_desi_noirlab), ("CfA VizieR",_desi_vizier),
                          ("Strasbourg VizieR",lambda pos: _public_remote(PUBLIC[1],pos))]:
         try:
             return query(positions)
@@ -646,7 +877,9 @@ def annotate(components, outdir):
     pub_status = []
     if len(components):
         with ThreadPoolExecutor(max_workers=3) as pool:
-            tasks = [pool.submit(fn, components) for fn in [_milliquas, _desi, _public_sdss]]
+            tasks = [pool.submit(verified_public_matches,PUBLIC[0],_milliquas,components,out),
+                     pool.submit(_desi,components),
+                     pool.submit(verified_public_matches,PUBLIC[2],_public_sdss,components,out)]
             for cat, task in zip(PUBLIC, tasks):
                 try:
                     frame = task.result()

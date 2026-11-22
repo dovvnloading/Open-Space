@@ -54,6 +54,111 @@ def separation(a, b):
     return float(np.rad2deg(angular_separation(*np.deg2rad([*a, *b]))) * 3600)
 
 
+def _query_desi(centre, folder, target_ids=None):
+    columns=['targetid','survey','program','healpix','target_ra','target_dec',
+             'mean_fiber_ra','mean_fiber_dec','spectype','z','zerr','zwarn','deltachi2',
+             'zcat_primary','objtype','coadd_fiberstatus']
+    query=(f"SELECT {','.join(columns)} FROM desi_dr1.zpix WHERE q3c_radial_query("
+           f"mean_fiber_ra,mean_fiber_dec,{centre[0]:.10f},{centre[1]:.10f},7.0/3600.0)")
+    adql=(f"SELECT {','.join(columns)} FROM desi_dr1.zpix WHERE 1=CONTAINS("
+          f"POINT('ICRS',mean_fiber_ra,mean_fiber_dec),CIRCLE('ICRS',{centre[0]:.10f},{centre[1]:.10f},"
+          "0.0019444444444444444))")
+    if target_ids:
+        ids=sorted(set(target_ids))
+        if not all(i.isdecimal() for i in ids):
+            raise ValueError('Invalid native DESI target identifier')
+        query=adql=(f"SELECT {','.join(columns)} FROM desi_dr1.zpix WHERE targetid IN ({','.join(ids)})")
+    routes=[(SQL,{'sql':query,'ofmt':'csv','out':'','drop':'False','async':'False'}),
+            (TAP,{'REQUEST':'doQuery','LANG':'ADQL','FORMAT':'csv','QUERY':adql,'MAXREC':1000})]
+    receipt=dict(errors=[])
+    for url,params in routes:
+        try:
+            resp=requests.get(url,params=params,headers=DATALAB_PUBLIC,timeout=(12,55))
+            resp.raise_for_status()
+            reader=csv.DictReader(io.StringIO(resp.content.decode('utf-8-sig')))
+            if not reader.fieldnames or set(columns)-set(reader.fieldnames):
+                raise ValueError('DESI result schema mismatch: '+resp.text[:200])
+            rows=[]
+            for rec in reader:
+                primary=rec['zcat_primary'].lower() in ('true','t','1')
+                robust=(primary and rec['objtype'].strip()=='TGT' and numeric(rec['zwarn'])==0 and
+                        numeric(rec['coadd_fiberstatus'])==0 and (numeric(rec['deltachi2']) or 0)>=25)
+                rows.append(dict(catalog='DESI DR1',identifier=rec['targetid'],classification=rec['spectype'].strip(),
+                            ra=numeric(rec['mean_fiber_ra']),dec=numeric(rec['mean_fiber_dec']),
+                            target_ra=numeric(rec['target_ra']),target_dec=numeric(rec['target_dec']),
+                            z=numeric(rec['z']),z_err=numeric(rec['zerr']),quality_pass=robust,
+                            fiber_radius_arcsec=.75,quality=rec))
+            if target_ids and {r['identifier'] for r in rows} != set(target_ids):
+                raise ValueError('Missing source IDs in DESI quality enrichment')
+            if len(rows)>=1000:
+                raise ValueError('Unexpected or truncated DESI cone')
+            (folder/'desi.csv.gz').write_bytes(gzip.compress(resp.content,mtime=0))
+            receipt.update(url=url,parameters=params,sha256=hashlib.sha256(resp.content).hexdigest(),rows=len(rows),status='complete')
+            return rows,receipt
+        except Exception as exc:
+            receipt['errors'].append(dict(url=url,message=str(exc)[:500]))
+    return [],dict(receipt,status='unavailable')
+
+
+
+def desi_spectra(centre, images, folder, evidence):
+    """Reuse the checksum-verified native catalogue excerpt when available.
+
+    Older extracts only carry target coordinates. They can show an association,
+    but measured fiber positions and primary-fit quality are required before a
+    spectrum passes the foreground/background test.
+    """
+    path=Path(evidence)/'desi_nearby_spectra.csv.gz'
+    selected=[]
+    covered=min(separation(centre,xy) for xy in images)+0.65 <= 8
+    if path.is_file() and covered:
+        try:
+            required={'name','era','edec','classification','z','z_err','warning'}
+            extra={'mean_fiber_ra','mean_fiber_dec','deltachi2','zcat_primary','objtype','coadd_fiberstatus'}
+            with gzip.open(path,'rt',newline='') as stream:
+                reader=csv.DictReader(stream)
+                if not required<=set(reader.fieldnames or []):
+                    raise ValueError('Native DESI excerpt schema mismatch')
+                enriched=extra<=set(reader.fieldnames)
+                for r in reader:
+                    target=(numeric(r['era']),numeric(r['edec']))
+                    if None in target:
+                        continue
+                    d0=separation(target,centre)
+                    di=[separation(target,p) for p in images]
+                    if d0>7 and min(di)>.65:
+                        continue
+                    primary=str(r.get('zcat_primary','')).strip().lower() in ('true','t','1','84')
+                    quality=(enriched and primary and r.get('objtype','').strip()=='TGT'
+                             and numeric(r['warning'])==0 and numeric(r.get('coadd_fiberstatus'))==0
+                             and (numeric(r.get('deltachi2')) or 0)>=25)
+                    selected.append(dict(catalog='DESI DR1',identifier=str(r['name']),
+                        classification=r['classification'].strip(), ra=numeric(r.get('mean_fiber_ra')),
+                        dec=numeric(r.get('mean_fiber_dec')),target_ra=target[0],target_dec=target[1],
+                        z=numeric(r['z']),z_err=numeric(r['z_err']),quality_pass=bool(quality),
+                        fiber_radius_arcsec=.75,target_centre_distance_arcsec=d0,
+                        target_image_distances_arcsec=di,quality=r))
+            receipt=dict(status='complete_native_target_neighbourhood',source_file=path.name,
+                         sha256=hashlib.sha256(path.read_bytes()).hexdigest(),n_rows=len(selected),
+                         augmented_quality_columns=enriched,selection='8 arcsec of any Gaia image; all eligible target-centre associations within 0.65 arcsec covered')
+            if enriched or not selected:
+                return selected,receipt
+            # Preserve every native match when the independent service fails.
+            details,lookup=_query_desi(centre,folder,{r['identifier'] for r in selected})
+            receipt['exact_targetid_quality_enrichment']=lookup
+            receipt['status']='native_catalogue_and_quality_enrichment' if lookup['status']=='complete' else 'native_redshifts_only'
+            if lookup['status']=='complete':
+                return details,receipt
+            return selected,receipt
+        except Exception as exc:
+            error=str(exc)[:500]
+    else:
+        error='Native excerpt absent or target-centre aperture not fully covered by retained component neighbourhoods'
+    rows,receipt=_query_desi(centre,folder)
+    receipt['native_fallback_reason']=error
+    return rows,receipt
+
+
 def parse_tap(content):
     root = ElementTree.fromstring(content)
     statuses = [node.get('value', '').upper() for node in root.iter()
@@ -240,7 +345,7 @@ def summarize(objects, centre, images):
                 central=central,all_images_separately_catalogued=separated,objects=objects)
 
 
-def assess(systems,outdir):
+def assess(systems,outdir,*,spectra_evidence=None):
     """Assess systems containing id, components with ra/dec, and center_radec_deg."""
     out=Path(outdir)
     out.mkdir(parents=True,exist_ok=True)
@@ -272,6 +377,25 @@ def assess(systems,outdir):
                 object_id=near.get('object_id'),ra=near.get('ra'),dec=near.get('dec'),
                 centre_distance_arcsec=near.get('centre_distance_arcsec'),
                 nearest_image_distance_arcsec=min(near['image_distances_arcsec']) if near else None))
+        if spectra_evidence is not None:
+            spectra,receipt=desi_spectra(centre,images,folder,spectra_evidence)
+            for row in spectra:
+                target=(row['target_ra'],row['target_dec'])
+                if None not in target:
+                    row['target_centre_distance_arcsec']=separation(target,centre)
+                    row['target_image_distances_arcsec']=[separation(target,xy) for xy in images]
+                fiber=(row['ra'],row['dec'])
+                if None not in fiber:
+                    row['fiber_centre_distance_arcsec']=separation(fiber,centre)
+                    row['fiber_image_distances_arcsec']=[separation(fiber,xy) for xy in images]
+                row['isolated_central_galaxy']=bool(row['quality_pass'] and row['classification']=='GALAXY'
+                    and row.get('fiber_centre_distance_arcsec',999)<=.5
+                    and min(row.get('fiber_image_distances_arcsec',[0]))>1.4
+                    and row.get('target_centre_distance_arcsec',999)<=.65
+                    and row['z'] is not None and row['z']>0 and row['z_err'] is not None
+                    and 0<row['z_err']<.01*(1+row['z']))
+            (folder/'foreground_spectra.json').write_text(json.dumps(dict(records=spectra,receipt=receipt,
+                interpretation='Target-only redshifts lack independent fiber-isolation and primary-quality verification. An isolated central galaxy still needs a higher-redshift source.'),indent=2,allow_nan=False)+'\n')
         (folder/'catalogue_deblends.json').write_text(json.dumps(dict(centre_radec_deg=centre,
             image_source_ids=[str(row.get('source_id','')) for row in system['components']],
             surveys=evidence),indent=2,allow_nan=False)+'\n')
