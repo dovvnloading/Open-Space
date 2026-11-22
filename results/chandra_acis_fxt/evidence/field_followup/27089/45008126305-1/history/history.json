@@ -1,0 +1,1776 @@
+{
+  "code_sha256": {
+    "archive.py": "4623fb84527aa4952a2beab6d2405b6b6e0f5ddd0ffdfd69e1c96bfeacca0a7a",
+    "search.py": "17bdbb0ec1fa5c86bf1a3394b8df29d3b245e436dc0bb8ce2376a5c9e33a4f99",
+    "target_history.py": "fc8db4665c9d91637e1ead6a4b74614f472fc62e4405da8c273e3e1e90bbce26",
+    "vet.py": "76ddfd371cf8f02bd54c3653547f12c74a1a23d09fa7e0bbd2fa933ad5f79d8a",
+    "visits.py": "0bff9f1c2a532cb61724c26f043c3cf9662720c62957d32fc1cb1b2c656d2073"
+  },
+  "git_commit": "9e41512dcf6b9906a1bd8d28764666c30faa1889",
+  "limitations": "Observation-catalog target coordinates are a pointing proxy. The wide cone and independent detector geometry are required. Missing catalog coordinates, offset pointings, HRC, gratings and CC mode limit coverage. Aperture counts use only supported dither/GTI bins. The 95% limit applies to mean detected aperture rate in those bins, without a PSF, vignetting or bad-pixel correction. Raw single-visit excess probabilities include chance excesses and diffuse emission. CSC matches are positional alternatives. A CSC per-observation photometry row can be a weak or forced measurement.",
+  "pointing_radius_arcsec": 5400.0,
+  "release_cutoff_utc_inclusive": "2026-11-21",
+  "selected_leads": [
+    {
+      "dec_deg": -23.440303581336792,
+      "duration_s": 2214.7649586200714,
+      "event_mjd": 59968.431269370856,
+      "input_name": "acisf27089N002_evt2.fits.gz",
+      "input_sha256": "dfc736671520bc9f5d88db7df50d02bdb21434803ec8643925057c0315fa5f2f",
+      "input_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/27089/primary/acisf27089N002_evt2.fits.gz",
+      "obsid": 27089,
+      "position_error_arcsec": 2.636197308204837,
+      "ra_deg": 197.40344715572357,
+      "trial_duration_s": 3600,
+      "trigger_key": "real/0"
+    }
+  ],
+  "targets": {
+    "27089/dfc736671520bc9f5d88db7df50d02bdb21434803ec8643925057c0315fa5f2f/real/0": {
+      "folder": "target-00",
+      "gaps": [
+        {
+          "filename": "acisf17126N003_evt2.fits.gz",
+          "input_sha256": "833352a597a988c217ee711bcac98355fc6f0fdfecdbe602497e3be450baf30c",
+          "obsid": 17126,
+          "record": "visits/17126/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18988N002_evt2.fits.gz",
+          "input_sha256": "68847c702e9c580065d5103dc95e3e42cfbbf330815fdf4d447b18f5b336d6af",
+          "obsid": 18988,
+          "record": "visits/18988/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf26376N004_evt2.fits.gz",
+          "input_sha256": "3b0c5fb7ad3e5fa81e4947a1d4e625828956003fc217b2db6441654ff9b3112b",
+          "obsid": 26376,
+          "record": "visits/26376/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf27091N002_evt2.fits.gz",
+          "input_sha256": "7d5ce4e3e1b522fd507525098ce49264241124b6c9bbdf1de3f17468538fe842",
+          "obsid": 27091,
+          "record": "visits/27091/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf27731N002_evt2.fits.gz",
+          "input_sha256": "c71b19dd22bdf9c63775210e7b54603e15a6413a4cd9115cd510570b5548ed31",
+          "obsid": 27731,
+          "record": "visits/27731/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf28523N002_evt2.fits.gz",
+          "input_sha256": "cd82a9e6c5e1bd9072c82245a31f8b502bc66779f4b9e7482918433cf3dff84c",
+          "obsid": 28523,
+          "record": "visits/28523/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf28527N002_evt2.fits.gz",
+          "input_sha256": "c19e608baefa130069d1bece8650dce468f2ac5f5bb11c33ab1edd9649baef40",
+          "obsid": 28527,
+          "record": "visits/28527/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf29377N002_evt2.fits.gz",
+          "input_sha256": "17e80f0bbfbf5535f2ff31a90710421a2ba2ad71759999502c48d87fd08a3ae5",
+          "obsid": 29377,
+          "record": "visits/29377/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf29395N002_evt2.fits.gz",
+          "input_sha256": "940e80075809044c6e96003aab7a2222a1cd08684cbc1badf93a9d58dd3a5fc9",
+          "obsid": 29395,
+          "record": "visits/29395/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf29668N002_evt2.fits.gz",
+          "input_sha256": "c0037d50ae6224c0fe10564271db73cc8741f57495235bdcf2746d302fb1b1fe",
+          "obsid": 29668,
+          "record": "visits/29668/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf30112N001_evt2.fits.gz",
+          "input_sha256": "1c18c7df3a2bf2ad905db00d9fd82814e2adef86c6c6069d4dfc312aa3fdd3c2",
+          "obsid": 30112,
+          "record": "visits/30112/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf30114N001_evt2.fits.gz",
+          "input_sha256": "fff68ad49a564667ac4fd7afda58fb75744bc3347a40db4b9c250c7d8a505fff",
+          "obsid": 30114,
+          "record": "visits/30114/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf30678N002_evt2.fits.gz",
+          "input_sha256": "82a04b09c5af11f1193741595c8b48624a846234167abc3b500f870ad3bda814",
+          "obsid": 30678,
+          "record": "visits/30678/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf30679N002_evt2.fits.gz",
+          "input_sha256": "a44dc1b8b828cd2678a31f7c1ee911d356c0c067f63f2b0037094d5283d5fd80",
+          "obsid": 30679,
+          "record": "visits/30679/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf30680N001_evt2.fits.gz",
+          "input_sha256": "4a423e66422987c7c0a7616fe83c9dbbca02f4447842f60c69c2692daf57a9b7",
+          "obsid": 30680,
+          "record": "visits/30680/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf30903N001_evt2.fits.gz",
+          "input_sha256": "957bd6e1df4c9cd05a69d3a7e023661a0af6b4753e12680a1f39e520b27f7eff",
+          "obsid": 30903,
+          "record": "visits/30903/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf30904N001_evt2.fits.gz",
+          "input_sha256": "f794c5b6dd9dec5ff74f6452aabd8c3a9186896864be9d7dc90f5012ea7e12b8",
+          "obsid": 30904,
+          "record": "visits/30904/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf30916N001_evt2.fits.gz",
+          "input_sha256": "b3490a5196eb3fc0f4a0f5ab51001f777b810f474bb6dcd26f05da4413a837c2",
+          "obsid": 30916,
+          "record": "visits/30916/visit.json",
+          "status": "coverage_unconfirmed"
+        }
+      ],
+      "nearby_obsids": [
+        17126,
+        18955,
+        18988,
+        19294,
+        20728,
+        20860,
+        20861,
+        20936,
+        20937,
+        20938,
+        20939,
+        20945,
+        21080,
+        21090,
+        21322,
+        21323,
+        21371,
+        21372,
+        22157,
+        22158,
+        22677,
+        22736,
+        22737,
+        23183,
+        23184,
+        23185,
+        23869,
+        23870,
+        24336,
+        24337,
+        24887,
+        24888,
+        24889,
+        24923,
+        24924,
+        25527,
+        25528,
+        25733,
+        25734,
+        26223,
+        26376,
+        27088,
+        27090,
+        27091,
+        27731,
+        27752,
+        27753,
+        27754,
+        28358,
+        28359,
+        28523,
+        28524,
+        28525,
+        28526,
+        28527,
+        29370,
+        29377,
+        29395,
+        29397,
+        29398,
+        29399,
+        29668,
+        30111,
+        30112,
+        30113,
+        30114,
+        30115,
+        30678,
+        30679,
+        30680,
+        30867,
+        30903,
+        30904,
+        30916,
+        30920,
+        30965,
+        32026,
+        32038
+      ],
+      "pointing_query_status": "ok",
+      "supported": [
+        {
+          "accepted_live_s": 9744.31316462915,
+          "annulus_counts": 22,
+          "conditional_aperture_rate_upper95_ct_s": 0.00048683416042192846,
+          "filename": "acisf18955N004_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "d804f77012e5d047d6e8da72cdf484842cc9a2c0c418bac40f6ad184c66370e0",
+          "local_excess_p": 0.8413384999233846,
+          "net_aperture_rate_ct_s": -8.551996628743904e-05,
+          "obsid": 18955,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/18955/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2017-08-19T17:29:08.738",
+            "2017-08-20T00:25:02.338"
+          ]
+        },
+        {
+          "accepted_live_s": 18578.71891675682,
+          "annulus_counts": 24,
+          "conditional_aperture_rate_upper95_ct_s": 0.0002553386237041303,
+          "filename": "acisf19294N003_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "67ce568144d3e479ec63355e7d1f8566da18ddf4169de0646b07676dc00ea74b",
+          "local_excess_p": 0.8648091360293928,
+          "net_aperture_rate_ct_s": -5.3825024453008094e-05,
+          "obsid": 19294,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/19294/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2017-08-26T11:04:36.989",
+            "2017-08-27T00:58:57.660"
+          ]
+        },
+        {
+          "accepted_live_s": 16901.08493087737,
+          "annulus_counts": 32,
+          "conditional_aperture_rate_upper95_ct_s": 0.00017725088571568257,
+          "filename": "acisf20728N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "e52547604ce80e38d78db613cb5503ba5ad4db3e944463083975b57c7ecd12f5",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.00015778079795308352,
+          "obsid": 20728,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/20728/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2017-09-01T15:41:27.341",
+            "2017-09-02T04:49:56.441"
+          ]
+        },
+        {
+          "accepted_live_s": 74085.22421988074,
+          "annulus_counts": 199,
+          "conditional_aperture_rate_upper95_ct_s": 0.00022895549570558092,
+          "filename": "acisf20860N002_evt2.fits.gz",
+          "gross_counts": 10,
+          "input_sha256": "d2180f48c7e4c8410b90feb71774dc5b0ae7e8ae8c71cfdef2af9c45dbf85f87",
+          "local_excess_p": 0.9638804716222186,
+          "net_aperture_rate_ct_s": -8.886162392914372e-05,
+          "obsid": 20860,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/20860/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2017-12-03T01:58:09.542",
+            "2017-12-03T22:49:15.559"
+          ]
+        },
+        {
+          "accepted_live_s": 24741.196141890974,
+          "annulus_counts": 62,
+          "conditional_aperture_rate_upper95_ct_s": 0.0003699707554211228,
+          "filename": "acisf20861N002_evt2.fits.gz",
+          "gross_counts": 4,
+          "input_sha256": "b31549f755553664f424b4868e8780ecc9f235350863a3d2e590cebe0b558727",
+          "local_excess_p": 0.7568743543293477,
+          "net_aperture_rate_ct_s": -4.715482064714347e-05,
+          "obsid": 20861,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/20861/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2017-12-06T11:01:01.513",
+            "2017-12-06T17:58:50.251"
+          ]
+        },
+        {
+          "accepted_live_s": 1182.4354746087863,
+          "annulus_counts": 2,
+          "conditional_aperture_rate_upper95_ct_s": 0.0025335270616311137,
+          "filename": "acisf20936N003_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "7ed96120f35b129d4bfccf8ace7a7b1f4eba7622450b33e86294fb6588895333",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.0001409520183093365,
+          "obsid": 20936,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/20936/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2018-01-17T21:54:05.041",
+            "2018-01-18T06:50:13.742"
+          ]
+        },
+        {
+          "accepted_live_s": 236.69734374426926,
+          "annulus_counts": 0,
+          "conditional_aperture_rate_upper95_ct_s": 0.012656383152278277,
+          "filename": "acisf20937N003_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "ee94c14b99e53ea98a0e77079cabb3d05d49c0ef344a41c22c7538887a454313",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": 0.0,
+          "obsid": 20937,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/20937/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2018-01-23T08:01:30.907",
+            "2018-01-23T13:52:16.069"
+          ]
+        },
+        {
+          "accepted_live_s": 2070.916139212357,
+          "annulus_counts": 4,
+          "conditional_aperture_rate_upper95_ct_s": 0.003744070742952304,
+          "filename": "acisf20938N003_evt2.fits.gz",
+          "gross_counts": 3,
+          "input_sha256": "59c189f0205e4809e8092dcc8490721d68b6ea2d900d21269e8f2078fa98d5b3",
+          "local_excess_p": 0.012579564230976174,
+          "net_aperture_rate_ct_s": 0.001287674868225661,
+          "obsid": 20938,
+          "per_target_bonferroni_p": 0.7547738538585704,
+          "record": "visits/20938/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2018-01-21T13:44:03.867",
+            "2018-01-21T18:11:51.098"
+          ]
+        },
+        {
+          "accepted_live_s": 1005.8612435486209,
+          "annulus_counts": 1,
+          "conditional_aperture_rate_upper95_ct_s": 0.006259107468601523,
+          "filename": "acisf20939N003_evt2.fits.gz",
+          "gross_counts": 2,
+          "input_sha256": "229446881b2fb8a846435a1c3f4c0944c81313f99f779184cde9528628f1e85b",
+          "local_excess_p": 0.016841147018661816,
+          "net_aperture_rate_ct_s": 0.0019054980783480397,
+          "obsid": 20939,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/20939/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2018-01-24T08:17:35.715",
+            "2018-01-24T14:33:17.524"
+          ]
+        },
+        {
+          "accepted_live_s": 1533.8359123493933,
+          "annulus_counts": 2,
+          "conditional_aperture_rate_upper95_ct_s": 0.001953098274355432,
+          "filename": "acisf20945N003_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "4228509a0c81775a89945b1e877d837b3a3c161dc61cf37ea565e7c9330ce695",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.00010866003679062482,
+          "obsid": 20945,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/20945/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2018-01-28T04:28:44.694",
+            "2018-01-28T08:28:50.394"
+          ]
+        },
+        {
+          "accepted_live_s": 50778.37807012376,
+          "annulus_counts": 91,
+          "conditional_aperture_rate_upper95_ct_s": 0.00018026410796336928,
+          "filename": "acisf21080N004_evt2.fits.gz",
+          "gross_counts": 4,
+          "input_sha256": "2025c3195bb9761c80c394ed2cc27ddec5465ccdac4d5c6bfa349d2d10e8c177",
+          "local_excess_p": 0.9401765849638284,
+          "net_aperture_rate_ct_s": -7.056809353746653e-05,
+          "obsid": 21080,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/21080/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2018-05-03T10:40:11.354",
+            "2018-05-04T00:57:48.254"
+          ]
+        },
+        {
+          "accepted_live_s": 45823.820218039444,
+          "annulus_counts": 79,
+          "conditional_aperture_rate_upper95_ct_s": 0.00013739128671322619,
+          "filename": "acisf21090N003_evt2.fits.gz",
+          "gross_counts": 2,
+          "input_sha256": "7fb36b5e238fbf3feb8d470384e32f315c307e793d69776067f7e57910d956a0",
+          "local_excess_p": 0.9881540172603656,
+          "net_aperture_rate_ct_s": -0.00010002076019687714,
+          "obsid": 21090,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/21090/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2018-05-05T01:23:31.940",
+            "2018-05-05T14:20:22.413"
+          ]
+        },
+        {
+          "accepted_live_s": 35636.403639699725,
+          "annulus_counts": 86,
+          "conditional_aperture_rate_upper95_ct_s": 0.0004407071089693099,
+          "filename": "acisf21322N002_evt2.fits.gz",
+          "gross_counts": 9,
+          "input_sha256": "0f316461c21070e3cf7bb242c746abbbd8d36ab49afd8ef637073ee3b490efdb",
+          "local_excess_p": 0.3079163536841235,
+          "net_aperture_rate_ct_s": 5.144552048150448e-05,
+          "obsid": 21322,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/21322/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2019-03-21T07:42:39.354",
+            "2019-03-21T17:44:27.538"
+          ]
+        },
+        {
+          "accepted_live_s": 1654.5398366051159,
+          "annulus_counts": 3,
+          "conditional_aperture_rate_upper95_ct_s": 0.0018106135659452073,
+          "filename": "acisf21323N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "7b5087f638f3485466505cc01dc1be3c6c06e35b10d623b60866cd2dea09a29e",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.00015109941415068312,
+          "obsid": 21323,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/21323/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-03-09T22:28:04.744",
+            "2020-03-10T05:18:12.545"
+          ]
+        },
+        {
+          "accepted_live_s": 26567.12455567924,
+          "annulus_counts": 33,
+          "conditional_aperture_rate_upper95_ct_s": 0.00029185155178094844,
+          "filename": "acisf21371N002_evt2.fits.gz",
+          "gross_counts": 3,
+          "input_sha256": "9e8703ac660fbb0ba698e242e7d5c63100acc5537b39e003bf4e61d18aa9d887",
+          "local_excess_p": 0.5305936175111816,
+          "net_aperture_rate_ct_s": 9.41012639422273e-06,
+          "obsid": 21371,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/21371/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2018-08-10T18:19:18.727",
+            "2018-08-11T13:13:32.638"
+          ]
+        },
+        {
+          "accepted_live_s": 17691.374020564843,
+          "annulus_counts": 23,
+          "conditional_aperture_rate_upper95_ct_s": 0.0002681456235607367,
+          "filename": "acisf21372N003_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "9ddc519b3adf5a424095352b2573d0a012e2553bad2cd0717f079f76de660039",
+          "local_excess_p": 0.8535432306985089,
+          "net_aperture_rate_ct_s": -5.18143285875429e-05,
+          "obsid": 21372,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/21372/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2019-08-27T14:38:17.138",
+            "2019-08-28T01:53:43.438"
+          ]
+        },
+        {
+          "accepted_live_s": 37892.26209426914,
+          "annulus_counts": 94,
+          "conditional_aperture_rate_upper95_ct_s": 0.0003125280729600818,
+          "filename": "acisf22157N002_evt2.fits.gz",
+          "gross_counts": 6,
+          "input_sha256": "6b4d4afe92db1f36cd620dc632de31eed10d64f837f0ab526292ef7c44a65d0c",
+          "local_excess_p": 0.7899097223228688,
+          "net_aperture_rate_ct_s": -4.838278930860156e-05,
+          "obsid": 22157,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/22157/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2019-03-22T06:15:24.221",
+            "2019-03-22T17:00:18.080"
+          ]
+        },
+        {
+          "accepted_live_s": 24872.57951320132,
+          "annulus_counts": 77,
+          "conditional_aperture_rate_upper95_ct_s": 0.0005803438966808813,
+          "filename": "acisf22158N002_evt2.fits.gz",
+          "gross_counts": 8,
+          "input_sha256": "cbac291b1d1b4cdd69707c6b653f12f82c2d57b134ec87cfd5ede13a4bd0a337",
+          "local_excess_p": 0.33002746714152337,
+          "net_aperture_rate_ct_s": 6.365778557438991e-05,
+          "obsid": 22158,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/22158/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2019-03-23T23:51:01.679",
+            "2019-03-24T06:52:03.402"
+          ]
+        },
+        {
+          "accepted_live_s": 14547.664006223382,
+          "annulus_counts": 32,
+          "conditional_aperture_rate_upper95_ct_s": 0.00043277007354436387,
+          "filename": "acisf22677N002_evt2.fits.gz",
+          "gross_counts": 2,
+          "input_sha256": "f798530114e7a40113c0699e596fa4dbe98e8fbeedf3e069919650a44f166bfa",
+          "local_excess_p": 0.7478465162059088,
+          "net_aperture_rate_ct_s": -4.582637228777565e-05,
+          "obsid": 22677,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/22677/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-12-09T00:26:43.351",
+            "2020-12-09T08:48:16.161"
+          ]
+        },
+        {
+          "accepted_live_s": 19881.123674203638,
+          "annulus_counts": 31,
+          "conditional_aperture_rate_upper95_ct_s": 0.00015068224123775475,
+          "filename": "acisf22736N003_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "c3ca458d73934bbac81fda75c118ed8485ef20c440d43ac6647188beba1c3a67",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.00012993900021281428,
+          "obsid": 22736,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/22736/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2019-08-29T14:03:39.736",
+            "2019-08-29T23:31:13.236"
+          ]
+        },
+        {
+          "accepted_live_s": 12829.758944774478,
+          "annulus_counts": 21,
+          "conditional_aperture_rate_upper95_ct_s": 0.00036975476615036003,
+          "filename": "acisf22737N003_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "8b3cb4fc5f39686fc815e74132eab6784ff6c6fbae3bd3b2824aa1618dcd7520",
+          "local_excess_p": 0.8281167082503333,
+          "net_aperture_rate_ct_s": -5.845784034044324e-05,
+          "obsid": 22737,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/22737/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2019-08-30T12:07:10.700",
+            "2019-08-30T19:13:30.616"
+          ]
+        },
+        {
+          "accepted_live_s": 2959.3672735839964,
+          "annulus_counts": 4,
+          "conditional_aperture_rate_upper95_ct_s": 0.001602999587356196,
+          "filename": "acisf23183N002_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "ea9837a63eee5169f712bf0e15cce24ffe789c14ae0d9144373aebf0284ecfd7",
+          "local_excess_p": 0.3298230777310642,
+          "net_aperture_rate_ct_s": 0.00022527337942048937,
+          "obsid": 23183,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/23183/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-03-13T13:15:52.888",
+            "2020-03-13T17:50:44.889"
+          ]
+        },
+        {
+          "accepted_live_s": 5256.999090382026,
+          "annulus_counts": 15,
+          "conditional_aperture_rate_upper95_ct_s": 0.0009023902109988458,
+          "filename": "acisf23184N002_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "595aac1039dc14790139a80e6692dd78706e69cc301bff6855148c4d8fe93a10",
+          "local_excess_p": 0.7221526238697472,
+          "net_aperture_rate_ct_s": -4.7555648327462904e-05,
+          "obsid": 23184,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/23184/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-03-15T01:48:55.817",
+            "2020-03-15T07:24:05.209"
+          ]
+        },
+        {
+          "accepted_live_s": 10657.217406005833,
+          "annulus_counts": 28,
+          "conditional_aperture_rate_upper95_ct_s": 0.0007275498127272118,
+          "filename": "acisf23185N003_evt2.fits.gz",
+          "gross_counts": 3,
+          "input_sha256": "0df374b0ef6426f271b872b12644e8e90fed3c9d00de793c2461e65cf55c9567",
+          "local_excess_p": 0.4302540834029456,
+          "net_aperture_rate_ct_s": 6.255541585282563e-05,
+          "obsid": 23185,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/23185/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-03-15T22:31:29.317",
+            "2020-03-16T08:42:23.564"
+          ]
+        },
+        {
+          "accepted_live_s": 13787.931198432612,
+          "annulus_counts": 39,
+          "conditional_aperture_rate_upper95_ct_s": 0.00021727206427419213,
+          "filename": "acisf23869N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "f3b5320d67fbe97f339235a945c2865b5fcbafb3a5937704be71578c9e8fef07",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.0002357133897193695,
+          "obsid": 23869,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/23869/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2021-12-07T10:09:28.563",
+            "2021-12-07T18:11:21.426"
+          ]
+        },
+        {
+          "accepted_live_s": 9108.158580417285,
+          "annulus_counts": 30,
+          "conditional_aperture_rate_upper95_ct_s": 0.000520836838369281,
+          "filename": "acisf23870N002_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "127d322eb32f1547c2cbc38c5ea04c70dcc8a3758a09d929b09ee3a894a423e9",
+          "local_excess_p": 0.9163675718756616,
+          "net_aperture_rate_ct_s": -0.00016468751468875703,
+          "obsid": 23870,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/23870/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2021-01-18T09:58:41.436",
+            "2021-01-18T20:50:10.776"
+          ]
+        },
+        {
+          "accepted_live_s": 11415.808643108283,
+          "annulus_counts": 31,
+          "conditional_aperture_rate_upper95_ct_s": 0.0002624196294112298,
+          "filename": "acisf24336N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "226e21a83fea58af51d5ce13be44ae7520180e221a5946519111b5de748d919b",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.0002262943794956558,
+          "obsid": 24336,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/24336/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2021-12-10T12:30:50.318",
+            "2021-12-10T19:43:32.318"
+          ]
+        },
+        {
+          "accepted_live_s": 10292.959478328292,
+          "annulus_counts": 23,
+          "conditional_aperture_rate_upper95_ct_s": 0.0006116601969654801,
+          "filename": "acisf24337N002_evt2.fits.gz",
+          "gross_counts": 2,
+          "input_sha256": "4dbf4184ab250beeb0ab00880448daf7d0182af194ae2912dcee49bce2a3cd76",
+          "local_excess_p": 0.5831615027572952,
+          "net_aperture_rate_ct_s": 8.09614897530595e-06,
+          "obsid": 24337,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/24337/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2021-12-12T07:32:33.015",
+            "2021-12-12T13:07:21.015"
+          ]
+        },
+        {
+          "accepted_live_s": 12889.206626897636,
+          "annulus_counts": 37,
+          "conditional_aperture_rate_upper95_ct_s": 0.00036804938082774766,
+          "filename": "acisf24887N002_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "bdf570b2d300aea37c71f7ff7d3b29155d6e1d9803f37b2a0f2f32d56894355d",
+          "local_excess_p": 0.9522426783867244,
+          "net_aperture_rate_ct_s": -0.00016163394642039196,
+          "obsid": 24887,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/24887/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-12-11T15:54:41.463",
+            "2020-12-11T23:26:11.463"
+          ]
+        },
+        {
+          "accepted_live_s": 9870.047289409093,
+          "annulus_counts": 28,
+          "conditional_aperture_rate_upper95_ct_s": 0.0007855744051249553,
+          "filename": "acisf24888N002_evt2.fits.gz",
+          "gross_counts": 3,
+          "input_sha256": "21fcc74edcd3e1fdb9aa345fc905a06e569acfd2c5ede01ab2e2e82d16bea241",
+          "local_excess_p": 0.4302540834029456,
+          "net_aperture_rate_ct_s": 6.754442477515009e-05,
+          "obsid": 24888,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/24888/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-12-12T13:14:24.192",
+            "2020-12-12T18:15:57.192"
+          ]
+        },
+        {
+          "accepted_live_s": 9110.505132044509,
+          "annulus_counts": 23,
+          "conditional_aperture_rate_upper95_ct_s": 0.0006910477004977149,
+          "filename": "acisf24889N002_evt2.fits.gz",
+          "gross_counts": 2,
+          "input_sha256": "024fd179f2cef8393f59c0bfe28475ce56b4b6811c370a09c60f66568fada3ee",
+          "local_excess_p": 0.5831615027572952,
+          "net_aperture_rate_ct_s": 9.146949826110491e-06,
+          "obsid": 24889,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/24889/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-12-13T09:43:02.147",
+            "2020-12-13T14:27:53.147"
+          ]
+        },
+        {
+          "accepted_live_s": 2247.188077236584,
+          "annulus_counts": 3,
+          "conditional_aperture_rate_upper95_ct_s": 0.0013331026022699029,
+          "filename": "acisf24923N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "1ed3720716d743af2e02e4f6a506bdf3e1c86a9f95d6a5fecc37908e96db5367",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.000111250145251496,
+          "obsid": 24923,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/24923/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2021-01-26T09:39:12.281",
+            "2021-01-26T18:00:44.930"
+          ]
+        },
+        {
+          "accepted_live_s": 3962.193605753303,
+          "annulus_counts": 15,
+          "conditional_aperture_rate_upper95_ct_s": 0.0011972823618467934,
+          "filename": "acisf24924N002_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "3d7f037c339857a2204fac32f115683364aa01be168d73d27169af89edbf81f6",
+          "local_excess_p": 0.7221526238697472,
+          "net_aperture_rate_ct_s": -6.309636147940563e-05,
+          "obsid": 24924,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/24924/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2021-01-27T00:50:00.959",
+            "2021-01-27T09:11:33.959"
+          ]
+        },
+        {
+          "accepted_live_s": 24409.4623184395,
+          "annulus_counts": 39,
+          "conditional_aperture_rate_upper95_ct_s": 0.00012272831881638544,
+          "filename": "acisf25527N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "0857f996332aa58cb4e2eefe5503feeac1c96d2328ef1bfdb7615953030e15cf",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.0001331450876549981,
+          "obsid": 25527,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/25527/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2022-05-17T01:17:22.569",
+            "2022-05-17T11:35:27.730"
+          ]
+        },
+        {
+          "accepted_live_s": 4138.348304325059,
+          "annulus_counts": 5,
+          "conditional_aperture_rate_upper95_ct_s": 0.0011463183302944033,
+          "filename": "acisf25528N002_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "d7ce7a039e7612e77edae16bba02f3d4ed172a4d23f2ab868f8db3e33bb88fa1",
+          "local_excess_p": 0.3813751486748285,
+          "net_aperture_rate_ct_s": 0.00014095800798682933,
+          "obsid": 25528,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/25528/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2023-03-22T05:02:45.036",
+            "2023-03-22T08:32:29.919"
+          ]
+        },
+        {
+          "accepted_live_s": 6743.881156474596,
+          "annulus_counts": 17,
+          "conditional_aperture_rate_upper95_ct_s": 0.0004442148673806148,
+          "filename": "acisf25733N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "9ddda33d472a2c400e10f6afea071948559a063ae76f2f21145662965dcc924e",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.00021006696793678936,
+          "obsid": 25733,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/25733/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2022-03-14T05:48:06.961",
+            "2022-03-14T13:47:50.698"
+          ]
+        },
+        {
+          "accepted_live_s": 4785.673784227414,
+          "annulus_counts": 10,
+          "conditional_aperture_rate_upper95_ct_s": 0.0006259792055671033,
+          "filename": "acisf25734N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "35bb74a9eb102793c7cbf839d8e92f4d5afe7eb69a523bdc93f3c8a72b3333e2",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.00017413082690254125,
+          "obsid": 25734,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/25734/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2022-03-17T21:25:33.822",
+            "2022-03-18T06:08:36.517"
+          ]
+        },
+        {
+          "accepted_live_s": 12059.798082300607,
+          "annulus_counts": 27,
+          "conditional_aperture_rate_upper95_ct_s": 0.0006429341913536902,
+          "filename": "acisf26223N002_evt2.fits.gz",
+          "gross_counts": 3,
+          "input_sha256": "9fa2144a931cfb451197d5731ab93161083fd9477b3eb498d2e7b9b90d4eed98",
+          "local_excess_p": 0.40920078118414505,
+          "net_aperture_rate_ct_s": 6.219009596029032e-05,
+          "obsid": 26223,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/26223/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2021-12-08T22:31:59.197",
+            "2021-12-09T05:13:29.197"
+          ]
+        },
+        {
+          "accepted_live_s": 4971.9832688816405,
+          "annulus_counts": 10,
+          "conditional_aperture_rate_upper95_ct_s": 0.0006025225974317943,
+          "filename": "acisf27088N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "4c00af4a3531919d044f640aaa4720bd44f8ae62b237de5accae7ba61a2cb702",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.00016760582010582207,
+          "obsid": 27088,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/27088/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2023-01-18T08:54:54.719",
+            "2023-01-18T16:42:54.719"
+          ]
+        },
+        {
+          "accepted_live_s": 4137.2170477951795,
+          "annulus_counts": 1,
+          "conditional_aperture_rate_upper95_ct_s": 0.0007240935727920017,
+          "filename": "acisf27090N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "b634177b167c996dc4d0dc39fe6ab0ebfa59a2308af6cbe69c0cd4baea3c8c34",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -2.0142364389062843e-05,
+          "obsid": 27090,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/27090/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2023-02-07T20:27:04.192",
+            "2023-02-08T04:45:07.082"
+          ]
+        },
+        {
+          "accepted_live_s": 4487.628670020585,
+          "annulus_counts": 4,
+          "conditional_aperture_rate_upper95_ct_s": 0.0006675535107364951,
+          "filename": "acisf27752N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "3b948b19b76023785bae290d0d15b90001932405bcfc2891379af36cc69aad32",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -7.427827876226763e-05,
+          "obsid": 27752,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/27752/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2023-03-22T12:27:45.108",
+            "2023-03-22T15:57:09.295"
+          ]
+        },
+        {
+          "accepted_live_s": 4373.631311727383,
+          "annulus_counts": 8,
+          "conditional_aperture_rate_upper95_ct_s": 0.0006849530881858474,
+          "filename": "acisf27753N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "0adbfa3ce5e903b3773a09138808abac5a74325739629d0562f2c38c5acb809c",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.00015242863861868685,
+          "obsid": 27753,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/27753/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2023-03-22T19:52:03.387",
+            "2023-03-22T23:21:44.834"
+          ]
+        },
+        {
+          "accepted_live_s": 4196.506082216615,
+          "annulus_counts": 6,
+          "conditional_aperture_rate_upper95_ct_s": 0.0011304319415843297,
+          "filename": "acisf27754N002_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "9a30e3c851bf78ba426cd067f3e3571ea6684c0495ffcf13359a8af1b4e5b1ce",
+          "local_excess_p": 0.42896167569984167,
+          "net_aperture_rate_ct_s": 0.00011914673545186369,
+          "obsid": 27754,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/27754/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2023-03-23T03:16:38.974",
+            "2023-03-23T06:46:20.974"
+          ]
+        },
+        {
+          "accepted_live_s": 6325.977833681446,
+          "annulus_counts": 8,
+          "conditional_aperture_rate_upper95_ct_s": 0.0004735603494536121,
+          "filename": "acisf28358N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "e8a8c2ce19af8c11d43d5c9d37d7db1bf36eaf20d3eb31f6fc31fa258b79f6a5",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.0001053855521145093,
+          "obsid": 28358,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/28358/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2024-05-01T11:34:03.941",
+            "2024-05-01T14:29:47.041"
+          ]
+        },
+        {
+          "accepted_live_s": 11293.303457659067,
+          "annulus_counts": 13,
+          "conditional_aperture_rate_upper95_ct_s": 0.0004200599528894541,
+          "filename": "acisf28359N001_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "2335526acca53755af64c5d5a5051bce4ead02d629a0b35c07165ca42a72a565",
+          "local_excess_p": 0.6739152321804673,
+          "net_aperture_rate_ct_s": -7.379004172319214e-06,
+          "obsid": 28359,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/28359/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2025-12-04T21:55:09.773",
+            "2025-12-05T01:07:52.405"
+          ]
+        },
+        {
+          "accepted_live_s": 13514.82687077401,
+          "annulus_counts": 9,
+          "conditional_aperture_rate_upper95_ct_s": 0.0002216626451969059,
+          "filename": "acisf28524N001_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "e0f270b7766e330bd38240052fa089c3489ed1d236d45c1c9b7ee408f5622d18",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -5.549460656591057e-05,
+          "obsid": 28524,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/28524/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2025-05-05T02:21:23.485",
+            "2025-05-05T06:32:32.586"
+          ]
+        },
+        {
+          "accepted_live_s": 6563.437325347898,
+          "annulus_counts": 11,
+          "conditional_aperture_rate_upper95_ct_s": 0.0004564273451632601,
+          "filename": "acisf28525N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "ec9585c678e27319315f807e8e904278128972779066af0ca1d61d94e1ddd40e",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.00013966259160067142,
+          "obsid": 28525,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/28525/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2024-04-09T23:33:45.420",
+            "2024-04-10T02:21:30.783"
+          ]
+        },
+        {
+          "accepted_live_s": 14396.083886071556,
+          "annulus_counts": 14,
+          "conditional_aperture_rate_upper95_ct_s": 0.00020809355497382237,
+          "filename": "acisf28526N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "00f1b9c2cb5d83f29102ba016fc6583a6f1c05aa87e7dfac62a0d116109055be",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -8.104055768912514e-05,
+          "obsid": 28526,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/28526/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2024-05-04T22:04:49.032",
+            "2024-05-05T02:15:54.035"
+          ]
+        },
+        {
+          "accepted_live_s": 13011.961241739322,
+          "annulus_counts": 17,
+          "conditional_aperture_rate_upper95_ct_s": 0.0004838466319494219,
+          "filename": "acisf29370N002_evt2.fits.gz",
+          "gross_counts": 2,
+          "input_sha256": "58cacc64b7d58550667cdb205f68e8aa8fce94649f8eddd2a4df391499b2ba1c",
+          "local_excess_p": 0.4354525775851398,
+          "net_aperture_rate_ct_s": 4.483054648688444e-05,
+          "obsid": 29370,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/29370/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2024-04-10T07:09:32.502",
+            "2024-04-10T12:44:17.222"
+          ]
+        },
+        {
+          "accepted_live_s": 9324.285360239155,
+          "annulus_counts": 6,
+          "conditional_aperture_rate_upper95_ct_s": 0.00032128277479885636,
+          "filename": "acisf29397N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "a901e7911defee0065d7379a0331d53326df5da80a0e80803881611d138e5512",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -5.362341248500525e-05,
+          "obsid": 29397,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/29397/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2024-05-02T20:51:02.823",
+            "2024-05-03T00:12:26.823"
+          ]
+        },
+        {
+          "accepted_live_s": 19066.966310638807,
+          "annulus_counts": 15,
+          "conditional_aperture_rate_upper95_ct_s": 0.00024880017309012814,
+          "filename": "acisf29398N002_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "548da1155e3dc4152b7293fc570c2fc578b44ad4abb28bb61b9827940d521f85",
+          "local_excess_p": 0.7221526238697472,
+          "net_aperture_rate_ct_s": -1.3111682054030134e-05,
+          "obsid": 29398,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/29398/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2024-05-03T11:03:35.986",
+            "2024-05-03T17:11:40.764"
+          ]
+        },
+        {
+          "accepted_live_s": 21638.70880609118,
+          "annulus_counts": 16,
+          "conditional_aperture_rate_upper95_ct_s": 0.0002192304800115987,
+          "filename": "acisf29399N002_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "32daff6494154cd7db7ca1b19117628dd7cd5493f366d902a58ef4424e09b38a",
+          "local_excess_p": 0.7435254989566897,
+          "net_aperture_rate_ct_s": -1.5404492768972504e-05,
+          "obsid": 29399,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/29399/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2024-05-03T23:51:50.855",
+            "2024-05-04T06:22:23.855"
+          ]
+        },
+        {
+          "accepted_live_s": 14629.209780531826,
+          "annulus_counts": 13,
+          "conditional_aperture_rate_upper95_ct_s": 0.00020477744994405866,
+          "filename": "acisf30111N001_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "74c54289efe48e203a50958a72add5996de1e406dacc33732feb1e4c7a3bc6f6",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -7.405275811787218e-05,
+          "obsid": 30111,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/30111/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2025-12-08T15:28:20.003",
+            "2025-12-08T19:39:21.964"
+          ]
+        },
+        {
+          "accepted_live_s": 6802.279976429993,
+          "annulus_counts": 11,
+          "conditional_aperture_rate_upper95_ct_s": 0.0009255416777443757,
+          "filename": "acisf30113N001_evt2.fits.gz",
+          "gross_counts": 2,
+          "input_sha256": "6f5565623a2e930cdc486b8bd2d09c32fec26ec1f4a33c8bdda663a0a7062985",
+          "local_excess_p": 0.264044794851749,
+          "net_aperture_rate_ct_s": 0.0001592603269914059,
+          "obsid": 30113,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/30113/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2025-04-28T06:30:07.547",
+            "2025-04-28T09:17:56.347"
+          ]
+        },
+        {
+          "accepted_live_s": 14080.051850246684,
+          "annulus_counts": 22,
+          "conditional_aperture_rate_upper95_ct_s": 0.00021276429273245213,
+          "filename": "acisf30115N001_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "520837e3b693205ce9be0948538fb83b962669f1e68ddf410f0bfd14af2fa068",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -0.00013020785383693122,
+          "obsid": 30115,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/30115/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2025-12-19T02:55:36.836",
+            "2025-12-19T08:13:18.736"
+          ]
+        },
+        {
+          "accepted_live_s": 19510.249866784532,
+          "annulus_counts": 27,
+          "conditional_aperture_rate_upper95_ct_s": 0.0002431472969737219,
+          "filename": "acisf30867N001_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "5d2376479d6dffb9c4e77193587855ebc821295f86bfbad92306b305d442b2b8",
+          "local_excess_p": 0.8936687241960815,
+          "net_aperture_rate_ct_s": -6.406888730462022e-05,
+          "obsid": 30867,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/30867/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2025-03-26T13:59:24.685",
+            "2025-03-26T19:33:52.749"
+          ]
+        },
+        {
+          "accepted_live_s": 11946.993076598064,
+          "annulus_counts": 9,
+          "conditional_aperture_rate_upper95_ct_s": 0.00025075198875121736,
+          "filename": "acisf30920N001_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "f592a389ae8a7da225588dfa9d3b2cf744d0147fc8d3a82aaef228c79c071395",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": -6.277730263936542e-05,
+          "obsid": 30920,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/30920/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2025-05-06T06:47:31.518",
+            "2025-05-06T10:25:14.567"
+          ]
+        },
+        {
+          "accepted_live_s": 14736.506604438848,
+          "annulus_counts": 16,
+          "conditional_aperture_rate_upper95_ct_s": 0.0003219124210185375,
+          "filename": "acisf30965N001_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "4d1d16640db11e2dbd7759b8b700da1917f384d4018d54ebc2b2c2ec7fb58102",
+          "local_excess_p": 0.7435254989566897,
+          "net_aperture_rate_ct_s": -2.26195625788902e-05,
+          "obsid": 30965,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/30965/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2025-08-13T04:53:32.213",
+            "2025-08-13T13:01:15.831"
+          ]
+        },
+        {
+          "accepted_live_s": 16602.947851676658,
+          "annulus_counts": 16,
+          "conditional_aperture_rate_upper95_ct_s": 0.00028572423167079426,
+          "filename": "acisf32026N001_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "1e338f7d990039d7c605e750213d3fba89af276c2f069d101f2f35ab43db0e92",
+          "local_excess_p": 0.7435254989566897,
+          "net_aperture_rate_ct_s": -2.007675602616986e-05,
+          "obsid": 32026,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/32026/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2025-12-05T17:32:19.828",
+            "2025-12-05T22:16:42.047"
+          ]
+        },
+        {
+          "accepted_live_s": 14570.078088996355,
+          "annulus_counts": 25,
+          "conditional_aperture_rate_upper95_ct_s": 0.0003255895053831762,
+          "filename": "acisf32038N001_evt2.fits.gz",
+          "gross_counts": 1,
+          "input_sha256": "feb933777bb5d1d614f313ef83e23ac0997dd8d911c874e429fa00a45593a492",
+          "local_excess_p": 0.8752084332579011,
+          "net_aperture_rate_ct_s": -7.435329630467051e-05,
+          "obsid": 32038,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/32038/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2025-12-09T01:59:16.479",
+            "2025-12-09T06:10:18.291"
+          ]
+        }
+      ]
+    }
+  },
+  "visits": [
+    {
+      "obsid": 17126,
+      "record": "visits/17126/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18955,
+      "record": "visits/18955/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18988,
+      "record": "visits/18988/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 19294,
+      "record": "visits/19294/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20728,
+      "record": "visits/20728/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20860,
+      "record": "visits/20860/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20861,
+      "record": "visits/20861/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20936,
+      "record": "visits/20936/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20937,
+      "record": "visits/20937/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20938,
+      "record": "visits/20938/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20939,
+      "record": "visits/20939/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20945,
+      "record": "visits/20945/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 21080,
+      "record": "visits/21080/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 21090,
+      "record": "visits/21090/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 21322,
+      "record": "visits/21322/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 21323,
+      "record": "visits/21323/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 21371,
+      "record": "visits/21371/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 21372,
+      "record": "visits/21372/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22157,
+      "record": "visits/22157/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22158,
+      "record": "visits/22158/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22677,
+      "record": "visits/22677/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22736,
+      "record": "visits/22736/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22737,
+      "record": "visits/22737/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23183,
+      "record": "visits/23183/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23184,
+      "record": "visits/23184/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23185,
+      "record": "visits/23185/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23869,
+      "record": "visits/23869/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23870,
+      "record": "visits/23870/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 24336,
+      "record": "visits/24336/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 24337,
+      "record": "visits/24337/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 24887,
+      "record": "visits/24887/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 24888,
+      "record": "visits/24888/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 24889,
+      "record": "visits/24889/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 24923,
+      "record": "visits/24923/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 24924,
+      "record": "visits/24924/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 25527,
+      "record": "visits/25527/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 25528,
+      "record": "visits/25528/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 25733,
+      "record": "visits/25733/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 25734,
+      "record": "visits/25734/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 26223,
+      "record": "visits/26223/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 26376,
+      "record": "visits/26376/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 27088,
+      "record": "visits/27088/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 27090,
+      "record": "visits/27090/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 27091,
+      "record": "visits/27091/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 27731,
+      "record": "visits/27731/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 27752,
+      "record": "visits/27752/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 27753,
+      "record": "visits/27753/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 27754,
+      "record": "visits/27754/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 28358,
+      "record": "visits/28358/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 28359,
+      "record": "visits/28359/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 28523,
+      "record": "visits/28523/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 28524,
+      "record": "visits/28524/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 28525,
+      "record": "visits/28525/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 28526,
+      "record": "visits/28526/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 28527,
+      "record": "visits/28527/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 29370,
+      "record": "visits/29370/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 29377,
+      "record": "visits/29377/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 29395,
+      "record": "visits/29395/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 29397,
+      "record": "visits/29397/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 29398,
+      "record": "visits/29398/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 29399,
+      "record": "visits/29399/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 29668,
+      "record": "visits/29668/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30111,
+      "record": "visits/30111/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30112,
+      "record": "visits/30112/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30113,
+      "record": "visits/30113/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30114,
+      "record": "visits/30114/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30115,
+      "record": "visits/30115/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30678,
+      "record": "visits/30678/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30679,
+      "record": "visits/30679/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30680,
+      "record": "visits/30680/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30867,
+      "record": "visits/30867/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30903,
+      "record": "visits/30903/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30904,
+      "record": "visits/30904/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30916,
+      "record": "visits/30916/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30920,
+      "record": "visits/30920/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 30965,
+      "record": "visits/30965/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 32026,
+      "record": "visits/32026/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 32038,
+      "record": "visits/32038/visit.json",
+      "status": "acquired"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "archive_attempts": [
+    {
+      "downloaded": [
+        {
+          "bytes": 3230202,
+          "filename": "acisf32038N001_evt2.fits.gz",
+          "last_modified": "Tue, 09 Dec 2025 17:39:56 GMT",
+          "resolved_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/32038/primary/acisf32038N001_evt2.fits.gz",
+          "retrieved_utc": "2026-11-22T10:01:43.415635+00:00",
+          "sha256": "feb933777bb5d1d614f313ef83e23ac0997dd8d911c874e429fa00a45593a492",
+          "url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/32038/primary/acisf32038N001_evt2.fits.gz"
+        }
+      ],
+      "index": {
+        "bytes": 1049,
+        "last_modified": "Tue, 06 Jan 2026 19:22:39 GMT",
+        "resolved_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/32038/primary/",
+        "retrieved_utc": "2026-11-22T10:01:40.987763+00:00",
+        "sha256": "2578058fc44b0ed84f9d395e7f6a214339327b2d28aa3408ad462bedd50285b4",
+        "url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/32038/primary/"
+      },
+      "index_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/32038/primary/",
+      "selected_files": [
+        "acisf32038N001_evt2.fits.gz"
+      ]
+    }
+  ],
+  "lead_ids": [
+    "27089/dfc736671520bc9f5d88db7df50d02bdb21434803ec8643925057c0315fa5f2f/real/0"
+  ],
+  "obsid": 32038,
+  "products": [
+    {
+      "input": {
+        "ascdsver": "10.14.2",
+        "bytes": 3230202,
+        "caldbver": "4.12.2",
+        "cycle": "P",
+        "dec_nom_deg": -23.385911019172,
+        "dec_targ_deg": -23.381472,
+        "filename": "acisf32038N001_evt2.fits.gz",
+        "fits_sha256": "9ed41797cd22a2c6eb2e03e2b7b62c79bab1373115daeee5db3003a46d782990",
+        "grating": "NONE",
+        "index_sha256": "2578058fc44b0ed84f9d395e7f6a214339327b2d28aa3408ad462bedd50285b4",
+        "index_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/32038/primary/",
+        "last_modified": "Tue, 09 Dec 2025 17:39:56 GMT",
+        "obsid": 32038,
+        "ra_nom_deg": 197.45164181056,
+        "ra_targ_deg": 197.450417,
+        "readmode": "TIMED",
+        "resolved_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/32038/primary/acisf32038N001_evt2.fits.gz",
+        "retrieved_utc": "2026-11-22T10:01:43.415635+00:00",
+        "revision": 1,
+        "rows": 81553,
+        "sha256": "feb933777bb5d1d614f313ef83e23ac0997dd8d911c874e429fa00a45593a492",
+        "tstart": 881631558.22522,
+        "tstop": 881648588.08885,
+        "url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/32038/primary/acisf32038N001_evt2.fits.gz"
+      },
+      "measurements": {
+        "27089/dfc736671520bc9f5d88db7df50d02bdb21434803ec8643925057c0315fa5f2f/real/0": {
+          "accepted_live_s": 14570.078088996355,
+          "annulus_area_ratio": 12.0,
+          "annulus_counts": 25,
+          "conditional_aperture_rate_upper95_ct_s": 0.0003255895053831762,
+          "event_mjd_utc": 59968.431269370856,
+          "gross_counts": 1,
+          "gross_counts_upper95": 4.743864518390577,
+          "local_excess_p": 0.8752084332579011,
+          "net_aperture_rate_ct_s": -7.435329630467051e-05,
+          "radius_arcsec": 5.272394616409674,
+          "radius_px": 10.716249220344865,
+          "segments": [
+            {
+              "accepted_bins": [
+                [
+                  881632825.6627344,
+                  881634140.582883
+                ],
+                [
+                  881634200.3519807,
+                  881638025.5742311
+                ],
+                [
+                  881638085.3433288,
+                  881638862.3415984
+                ],
+                [
+                  881638922.1106961,
+                  881639579.5707704
+                ],
+                [
+                  881639639.3398681,
+                  881643105.9475325
+                ],
+                [
+                  881643165.7166302,
+                  881647887.4753456
+                ]
+              ],
+              "annulus_counts": 25,
+              "ccd_id": 7,
+              "duty": 0.9869342638107598,
+              "gross_counts": 1,
+              "gti_met_s": [
+                881632825.6627344,
+                881647887.4753456
+              ],
+              "neighborhood_quadrant_counts": [
+                58,
+                47,
+                48,
+                40
+              ],
+              "rejected_bins": {
+                "unsampled_dither": 5
+              }
+            }
+          ],
+          "sky_x": 4420.042100574984,
+          "sky_y": 3698.4513935367845,
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2025-12-09T01:59:16.479",
+            "2025-12-09T06:10:18.291"
+          ],
+          "visit_mjd_utc": [
+            61018.082829614985,
+            61018.25715614984
+          ]
+        }
+      },
+      "status": "measured_or_geometry_excluded"
+    }
+  ],
+  "status": "acquired"
+}
