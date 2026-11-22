@@ -1,5 +1,10 @@
 name: HARPS RVBank companion survey
 on:
+  # Runs once when this file changes on the research branch: a workflow_dispatch-only
+  # file cannot be dispatched until it exists on the default branch.
+  push:
+    branches: [survey/harps-rvbank-companions]
+    paths: ['.github/workflows/harps-rvbank-survey.yml']
   workflow_dispatch:
 
 permissions:
