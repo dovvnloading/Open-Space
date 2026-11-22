@@ -22,7 +22,7 @@ MARK="stage_manifest.json.gz"
 SEAL="stage_seal.json"
 SUP=ROOT/"supplemental_search"/f"{ingest.RUN}-{ingest.ATTEMPT}"
 TABLES=("summary.json","obsid_coverage.csv","event_receipts.csv","control_trials.csv","leads.json","completeness.csv")
-SCRIPTS=("finalize.py","final_assembly.py","followup.py","catalog_pack.py","heldout.py","publication.py","candidate_inputs.py")
+SCRIPTS=("finalize.py","final_assembly.py","followup.py","catalog_pack.py","heldout.py","heldout_original.py","publication.py","candidate_inputs.py")
 need=ingest.require
 sha=ingest.sha
 save=ingest.save
@@ -394,8 +394,8 @@ def context(task):
         elif task=="csc":
             files,errors=csc_context(out)
         elif task=="heldout":
-            use(HERE/"heldout.py","evaluate")
             area=ROOT/"held_out"
+            use(HERE/"heldout_original.py","verify" if (area/"original_result.json").is_file() else "evaluate")
             files=[p for p in area.rglob("*") if p.is_file()]
         elif task=="visits":
             import visits

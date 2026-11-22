@@ -28,6 +28,7 @@ def push(paths, message):
 def collect():
     root=campaign.EVIDENCE
     path=campaign.HERE/"ingest_primary.py"
+    command(sys.executable, campaign.HERE/"heldout_attest.py")
     command(sys.executable,path,"index")
     index=campaign.read(root/ingest.HISTORY/"source.json")
     current=index["artifacts"]

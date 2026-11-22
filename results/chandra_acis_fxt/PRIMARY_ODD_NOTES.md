@@ -1,6 +1,6 @@
 # Human review of odd-numbered primary shards
 
-Reviewed worker ledgers from 27 odd-numbered primary shards. The 878 ObsIDs represented contain 7970 raw real triggers and 60 real instrument passes with an unresolved catalog classification. The scope excludes the separately reported moderate-count cohort. [Actions run](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443)
+Reviewed worker ledgers from 28 odd-numbered primary shards. The 913 ObsIDs represented contain 8228 raw real triggers and 64 real instrument passes with an unresolved catalog classification. The scope excludes the separately reported moderate-count cohort. [Actions run](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443)
 
 Counts in this index describe the available worker records, including partially processed observations. The combined survey report defines which observations and distinct triggers enter inference.
 
@@ -33,6 +33,7 @@ Counts in this index describe the available worker records, including partially 
 | 51 | 35 | 35 | 32 | 15 | 2 | 14 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746471994) |
 | 53 | 35 | 35 | 34 | 4 | 2 | 1 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746116735) |
 | 55 | 34 | 34 | 31 | 33 | 1 | 9 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746701427) |
+| 57 | 35 | 35 | 34 | 258 | 4 | 1 | [Artifact](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746588546) |
 
 ## Retained real triggers
 
@@ -720,7 +721,7 @@ The window includes 10 aperture photons and 5 annular photons. Before and after 
 
 The source is spatially concentrated toward the edge of the HESS J1731−347 field, away from the bright diffuse patch. Both detector coordinates follow dither. The aperture peak is distinct, with two counts in each long flank and little annular variation. Its Galactic latitude is −0.77°. NED follow-up is incomplete, and the possible obscured stellar population limits physical interpretation.
 
-Input `acisf22968N002_evt2.fits.gz`, 7,103,130 bytes, SHA-256 `00079c6725f196813f68a549b1d6fe674bf3c0479bb31a4a89a7dae3d762c980`. Detector plot SHA-256 `3188a354caf421876f9a7ace02779463bc6a94db00b075349b7e94868e8a382a`, [Detector diagnostic](evidence/photometry/22968/acisf22968N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745414741) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/22968/primary/acisf22968N002_evt2.fits.gz)
+Input `acisf22968N002_evt2.fits.gz`, 7,103,130 bytes, SHA-256 `00079c6725f196813f68a549b1d6fe674bf3c0479bb31a4a89a7dae3d762c980`. Detector plot SHA-256 `3188a354caf421876f9a7ace02779463bc6a94db00b075349b7e94868e8a382a`, worker artifact member `photometry/22968/acisf22968N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745414741) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/22968/primary/acisf22968N002_evt2.fits.gz)
 
 ### ObsID 27243 · acisf27243N003_evt2.fits.gz · real/0
 
@@ -732,7 +733,7 @@ The window includes 10 aperture photons and 7 annular photons. Before and after 
 
 Most photons arrive toward the end of the selected hour and follow the changing detector footprint, with no corresponding CCD-wide flare. Gaia 5939655928892340352 lies 2.42 arcseconds away. Its stellar astrometry provides a possible counterpart, but the high chance-projection upper bound (0.46) limits identification. IRAS 16426-4703, 98 arcseconds away, provides no close association.
 
-Input `acisf27243N003_evt2.fits.gz`, 1,612,057 bytes, SHA-256 `fbcee2e753d3f0862aee20d7e5e326afeb05cb7ef0c8ac8147c76f7c497b4b7e`. Detector plot SHA-256 `3ed5a2250878a47a781bd4d3e52a043615be07cff9be02dab77d83111175ca6a`, [Detector diagnostic](evidence/photometry/27243/acisf27243N003_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745414741) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/27243/primary/acisf27243N003_evt2.fits.gz)
+Input `acisf27243N003_evt2.fits.gz`, 1,612,057 bytes, SHA-256 `fbcee2e753d3f0862aee20d7e5e326afeb05cb7ef0c8ac8147c76f7c497b4b7e`. Detector plot SHA-256 `3ed5a2250878a47a781bd4d3e52a043615be07cff9be02dab77d83111175ca6a`, worker artifact member `photometry/27243/acisf27243N003_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745414741) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/27243/primary/acisf27243N003_evt2.fits.gz)
 
 ### ObsID 31389 · acisf31389N001_evt2.fits.gz · real/0
 
@@ -744,7 +745,7 @@ The window includes 20 aperture photons and 47 annular photons. Before and after
 
 The source and background apertures cross the bright edge of a resolved Cas A filament. Forty-seven annular photons arrive during the minute, and recurrent short CCD-wide count-rate dips are visible. The source is present throughout the short observation. An isolated flare is not established.
 
-Input `acisf31389N001_evt2.fits.gz`, 7,080,346 bytes, SHA-256 `b328b356c723419c4d04f1c8ff99d669a7175f0501fc294747a67d34e2c381fc`. Detector plot SHA-256 `7aaf2c7156220c0c7e76d5b85fca5c65829e931486edab6f57a79d5240228bfd`, [Detector diagnostic](evidence/photometry/31389/acisf31389N001_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746115352) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/31389/primary/acisf31389N001_evt2.fits.gz)
+Input `acisf31389N001_evt2.fits.gz`, 7,080,346 bytes, SHA-256 `b328b356c723419c4d04f1c8ff99d669a7175f0501fc294747a67d34e2c381fc`. Detector plot SHA-256 `7aaf2c7156220c0c7e76d5b85fca5c65829e931486edab6f57a79d5240228bfd`, worker artifact member `photometry/31389/acisf31389N001_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746115352) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/31389/primary/acisf31389N001_evt2.fits.gz)
 
 ### ObsID 31389 · acisf31389N001_evt2.fits.gz · real/1
 
@@ -756,7 +757,7 @@ The window includes 18 aperture photons and 31 annular photons. Before and after
 
 Eighteen photons burst in one minute, but comparable peaks recur from a persistent bright knot on the Cas A rim. The NED galaxy 2MASX J23231253+5848072 at 5.27 arcseconds has a low local projection estimate (0.0097) and no redshift. A 2XMM source also lies 2.41 arcseconds away. These associations do not separate point-source activity from bright, spatially structured remnant emission.
 
-Input `acisf31389N001_evt2.fits.gz`, 7,080,346 bytes, SHA-256 `b328b356c723419c4d04f1c8ff99d669a7175f0501fc294747a67d34e2c381fc`. Detector plot SHA-256 `9ce6eec456f3faaaa6225bd0a06f89ed03ba925fca19784fe6f896baa6b5ae84`, [Detector diagnostic](evidence/photometry/31389/acisf31389N001_evt2.fits.gz/real/1/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746115352) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/31389/primary/acisf31389N001_evt2.fits.gz)
+Input `acisf31389N001_evt2.fits.gz`, 7,080,346 bytes, SHA-256 `b328b356c723419c4d04f1c8ff99d669a7175f0501fc294747a67d34e2c381fc`. Detector plot SHA-256 `9ce6eec456f3faaaa6225bd0a06f89ed03ba925fca19784fe6f896baa6b5ae84`, worker artifact member `photometry/31389/acisf31389N001_evt2.fits.gz/real/1/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746115352) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/31389/primary/acisf31389N001_evt2.fits.gz)
 
 ### ObsID 24329 · acisf24329N002_evt2.fits.gz · real/0
 
@@ -768,7 +769,7 @@ The window includes 8 aperture photons and 0 annular photons. Before and after t
 
 The sky source starts sharply and fades, with only three photons across both flanks, a quiet annulus and credible two-axis dither. The X-ray flare is credible. The G=18.01 star has well-constrained astrometry (RUWE 0.96). WISE and 2MASS positions agree within two arcsec. A coronal flare is the favored explanation.
 
-Input `acisf24329N002_evt2.fits.gz`, 3,192,187 bytes, SHA-256 `407521d4292ac356ffe0e934bd7edde94264673e7d5be78a100820912373b1f1`. Detector plot SHA-256 `a8ab342fc86c1a1d512b5d0eb9480203252ca9961dc4827892a5ec00f1326ce6`, [Detector diagnostic](evidence/photometry/24329/acisf24329N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745927956) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/24329/primary/acisf24329N002_evt2.fits.gz)
+Input `acisf24329N002_evt2.fits.gz`, 3,192,187 bytes, SHA-256 `407521d4292ac356ffe0e934bd7edde94264673e7d5be78a100820912373b1f1`. Detector plot SHA-256 `a8ab342fc86c1a1d512b5d0eb9480203252ca9961dc4827892a5ec00f1326ce6`, worker artifact member `photometry/24329/acisf24329N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745927956) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/24329/primary/acisf24329N002_evt2.fits.gz)
 
 ### ObsID 27234 · acisf27234N002_evt2.fits.gz · real/0
 
@@ -780,7 +781,7 @@ The window includes 9 aperture photons and 4 annular photons. Before and after t
 
 The aperture shows a sharp initial group and a later group within the hour, with little prior activity. Its photons move across the detector with the sky position. Four annular photons fall within the window. The aperture lies in the crowded Galactic-center pointing, but no individual catalog counterpart is secure.
 
-Input `acisf27234N002_evt2.fits.gz`, 2,729,694 bytes, SHA-256 `9a108742dcc3639e58d97521254613aad2959faa40f8f6df704ff9bb3f374b6f`. Detector plot SHA-256 `ca985c620d2476a57dccc974f8d8c8a123fba09ddf9dfbc6207335c5533307f2`, [Detector diagnostic](evidence/photometry/27234/acisf27234N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745927956) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/27234/primary/acisf27234N002_evt2.fits.gz)
+Input `acisf27234N002_evt2.fits.gz`, 2,729,694 bytes, SHA-256 `9a108742dcc3639e58d97521254613aad2959faa40f8f6df704ff9bb3f374b6f`. Detector plot SHA-256 `ca985c620d2476a57dccc974f8d8c8a123fba09ddf9dfbc6207335c5533307f2`, worker artifact member `photometry/27234/acisf27234N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745927956) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/27234/primary/acisf27234N002_evt2.fits.gz)
 
 ### ObsID 27234 · acisf27234N002_evt2.fits.gz · real/1
 
@@ -792,7 +793,7 @@ The window includes 10 aperture photons and 0 annular photons. Before and after 
 
 A close group of sky photons follows the dither in both axes, with two temporal peaks and sparse flanks. The location is close to the end of a bright linear feature on the sky. A Galactic star or compact source remains possible. The candidate G=20.84 match lacks proper motion and parallax and the original NED gate is incomplete.
 
-Input `acisf27234N002_evt2.fits.gz`, 2,729,694 bytes, SHA-256 `9a108742dcc3639e58d97521254613aad2959faa40f8f6df704ff9bb3f374b6f`. Detector plot SHA-256 `17244b87b8f6f79ea595acb492d8061402276dc97674294393e2049aaa42309f`, [Detector diagnostic](evidence/photometry/27234/acisf27234N002_evt2.fits.gz/real/1/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745927956) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/27234/primary/acisf27234N002_evt2.fits.gz)
+Input `acisf27234N002_evt2.fits.gz`, 2,729,694 bytes, SHA-256 `9a108742dcc3639e58d97521254613aad2959faa40f8f6df704ff9bb3f374b6f`. Detector plot SHA-256 `17244b87b8f6f79ea595acb492d8061402276dc97674294393e2049aaa42309f`, worker artifact member `photometry/27234/acisf27234N002_evt2.fits.gz/real/1/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14745927956) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/27234/primary/acisf27234N002_evt2.fits.gz)
 
 ### ObsID 25141 · acisf25141N002_evt2.fits.gz · real/0
 
@@ -804,7 +805,7 @@ The window includes 18 aperture photons and 2 annular photons. Before and after 
 
 Eighteen photons brighten in several short groups over half an hour, concentrated on a compact sky position and tracing dither over multiple detector cycles. The astrometric counterpart Gaia 4293508660685641472 has a well-measured positive parallax. A second Gaia object is 1.56 arcseconds away. The high field density and untyped NED cone limit unique counterpart assignment, but the close, well-measured star provides a direct foreground alternative.
 
-Input `acisf25141N002_evt2.fits.gz`, 1,820,096 bytes, SHA-256 `5c5ef759324af55df5371b9638d60553faed1c8eb7e5e7207ec92bdd5b9e021f`. Detector plot SHA-256 `ea7bf2632e14699629540f7304c5d2489ed590cbe744e0e47904f9772119b17c`, [Detector diagnostic](evidence/photometry/25141/acisf25141N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746835613) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/1/25141/primary/acisf25141N002_evt2.fits.gz)
+Input `acisf25141N002_evt2.fits.gz`, 1,820,096 bytes, SHA-256 `5c5ef759324af55df5371b9638d60553faed1c8eb7e5e7207ec92bdd5b9e021f`. Detector plot SHA-256 `ea7bf2632e14699629540f7304c5d2489ed590cbe744e0e47904f9772119b17c`, worker artifact member `photometry/25141/acisf25141N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746835613) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/1/25141/primary/acisf25141N002_evt2.fits.gz)
 
 ### ObsID 21886 · acisf21886N003_evt2.fits.gz · real/0
 
@@ -816,7 +817,7 @@ The window includes 9 aperture photons and 3 annular photons. Before and after t
 
 The soft photons cluster in the sky aperture and track the dither in both detector coordinates. The source peaks early, then emits more sporadically over the long post-flare flank. No clear simultaneous CCD rise. The LMC N132D pointing contains several possible optical counterparts within 2 arcsec, including OGLE LMC-SC5 2495-0 (star). The local chance probabilities are large for Gaia. A flare from an LMC or foreground star remains plausible.
 
-Input `acisf21886N003_evt2.fits.gz`, 24,823,794 bytes, SHA-256 `5fa010df818b5bd0d1f34234a1012478f237c44af2cac1566e6e90bd9707e8b8`. Detector plot SHA-256 `0798fcf235847fcb4a79974e44a896b7347888333200b5a02a669597b875a338`, [Detector diagnostic](evidence/photometry/21886/acisf21886N003_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746471994) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/6/21886/primary/acisf21886N003_evt2.fits.gz)
+Input `acisf21886N003_evt2.fits.gz`, 24,823,794 bytes, SHA-256 `5fa010df818b5bd0d1f34234a1012478f237c44af2cac1566e6e90bd9707e8b8`. Detector plot SHA-256 `0798fcf235847fcb4a79974e44a896b7347888333200b5a02a669597b875a338`, worker artifact member `photometry/21886/acisf21886N003_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746471994) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/6/21886/primary/acisf21886N003_evt2.fits.gz)
 
 ### ObsID 27055 · acisf27055N002_evt2.fits.gz · real/6
 
@@ -828,7 +829,7 @@ The window includes 14 aperture photons and 1 annular photons. Before and after 
 
 The source brightens and declines over several bins above a quiet baseline. Fourteen photons occupy different frames and pixels, with sky clustering and visible detector dither. The CCD shows smaller variations outside the peak. The pointing targets infrared dark cloud G034.77−00.56 to identify young stars. A pre-main-sequence flare is plausible at this latitude, though the observation alone gives no secure counterpart.
 
-Input `acisf27055N002_evt2.fits.gz`, 6,442,287 bytes, SHA-256 `f74f3d54c01730f3e6f330f1e749ee880d905f304d9f8c7a80a3164f630df468`. Detector plot SHA-256 `6e4e4d06e2ada9bbf3dcf8dfeb826d139a72c372355e2a3903dfe111515f7fd1`, [Detector diagnostic](evidence/photometry/27055/acisf27055N002_evt2.fits.gz/real/6/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746471994) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/5/27055/primary/acisf27055N002_evt2.fits.gz)
+Input `acisf27055N002_evt2.fits.gz`, 6,442,287 bytes, SHA-256 `f74f3d54c01730f3e6f330f1e749ee880d905f304d9f8c7a80a3164f630df468`. Detector plot SHA-256 `6e4e4d06e2ada9bbf3dcf8dfeb826d139a72c372355e2a3903dfe111515f7fd1`, worker artifact member `photometry/27055/acisf27055N002_evt2.fits.gz/real/6/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746471994) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/5/27055/primary/acisf27055N002_evt2.fits.gz)
 
 ### ObsID 21367 · acisf21367N002_evt2.fits.gz · real/0
 
@@ -840,7 +841,7 @@ The window includes 18 aperture photons and 5 annular photons. Before and after 
 
 The aperture lies outside the bright resolved remnant. About an hour of enhanced emission is concentrated on a compact sky position with steady CCD background. 2CXO J171807.2-372735 lies 0.77 arcseconds away; Gaia 5973629807372214784 at 0.80 arcseconds has substantial motion and marginal parallax. The field is at Galactic latitude +0.14° and a stellar origin is plausible.
 
-Input `acisf21367N002_evt2.fits.gz`, 9,603,324 bytes, SHA-256 `f8784bceafe8cdb814177da8b228dcb60261c6754cc03500d3170e126fe8843e`. Detector plot SHA-256 `93852a7661f6e702da6f9e92797bbfea4711ec0402e4f45533d1e21fc1655be5`, [Detector diagnostic](evidence/photometry/21367/acisf21367N002_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746116735) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/7/21367/primary/acisf21367N002_evt2.fits.gz)
+Input `acisf21367N002_evt2.fits.gz`, 9,603,324 bytes, SHA-256 `f8784bceafe8cdb814177da8b228dcb60261c6754cc03500d3170e126fe8843e`. Detector plot SHA-256 `93852a7661f6e702da6f9e92797bbfea4711ec0402e4f45533d1e21fc1655be5`, worker artifact member `photometry/21367/acisf21367N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746116735) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/7/21367/primary/acisf21367N002_evt2.fits.gz)
 
 ### ObsID 32368 · acisf32368N001_evt2.fits.gz · real/0
 
@@ -852,7 +853,7 @@ The window includes 22 aperture photons and 13 annular photons. Before and after
 
 The aperture at (133.20360°, −65.93460°) lies more than six arcminutes from the frozen EP260302a target at (132.97375°, −65.98369°). The 22 photons follow the detector dither amid no pre-flare source counts; weaker emission continues afterward. Gaia 5272298786517415168 has proper motion (−8.36, +9.29) mas/yr and parallax 0.81 ± 0.24 mas. The source is a plausible foreground flare despite the extragalactic pointing.
 
-Input `acisf32368N001_evt2.fits.gz`, 2,929,067 bytes, SHA-256 `f5842943157a6c7c864880f39eed1de22a47b3e006ced537b0582affbc7222c5`. Detector plot SHA-256 `244e2271c938ec330603afda2e9c4d5206d6ed59c1a618e877081aeb6e303bc6`, [Detector diagnostic](evidence/photometry/32368/acisf32368N001_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746116735) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/32368/primary/acisf32368N001_evt2.fits.gz)
+Input `acisf32368N001_evt2.fits.gz`, 2,929,067 bytes, SHA-256 `f5842943157a6c7c864880f39eed1de22a47b3e006ced537b0582affbc7222c5`. Detector plot SHA-256 `244e2271c938ec330603afda2e9c4d5206d6ed59c1a618e877081aeb6e303bc6`, worker artifact member `photometry/32368/acisf32368N001_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746116735) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/8/32368/primary/acisf32368N001_evt2.fits.gz)
 
 ### ObsID 29503 · acisf29503N003_evt2.fits.gz · real/0
 
@@ -864,7 +865,55 @@ The window includes 8 aperture photons and 0 annular photons. Before and after t
 
 Eight photons follow the sky dither strikingly closely in both axes across the 600 s window. The source declines after its early peak. The annulus is empty, and the wider CCD varies mildly without a comparable flare. The source is offset from the frozen pulsar target (305.27254°, +36.85127°). Its physical origin remains open in this Galactic-plane field; extinction and an uncataloged stellar counterpart are plausible.
 
-Input `acisf29503N003_evt2.fits.gz`, 3,119,672 bytes, SHA-256 `3cd1b99bd961bdee58422f125681aea79f098cce1829c8eba4cd2def7fd7db89`. Detector plot SHA-256 `888fb9d6c3c782ed2a2792e5605badf58a321b834c41d673bd23a33e4381d941`, [Detector diagnostic](evidence/photometry/29503/acisf29503N003_evt2.fits.gz/real/0/diagnostics.png).  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746701427) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/29503/primary/acisf29503N003_evt2.fits.gz)
+Input `acisf29503N003_evt2.fits.gz`, 3,119,672 bytes, SHA-256 `3cd1b99bd961bdee58422f125681aea79f098cce1829c8eba4cd2def7fd7db89`. Detector plot SHA-256 `888fb9d6c3c782ed2a2792e5605badf58a321b834c41d673bd23a33e4381d941`, worker artifact member `photometry/29503/acisf29503N003_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746701427) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/29503/primary/acisf29503N003_evt2.fits.gz)
+
+### ObsID 24312 · acisf24312N002_evt2.fits.gz · real/0
+
+ICRS 124.3371519°, -7.5238041° (r90 2.68″). Peak MJD 59244.11781604 UTC. Photon t95−t05 49.9 s in a 60 s trial. Peak aperture flux 1.84e-12 ± 9.1e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `ABELL644`, proposal 22800428, “Abell 644: a cool core in which heating won?” (GO).
+
+The window includes 8 aperture photons and 5 annular photons. Before and after the window the aperture holds 140 photons in 19300 s and 33 in 3716 s. The trigger spans 7 frames and 8 detector pixels. Frozen classification **no_counterpart**.
+
+The full-field image places the aperture on the bright cluster gradient. Photons spread across the source circle and the detector trace has large scatter. There are 173 flank photons, five annular photons during the minute and repeated shorter count excesses. The aperture peak is measurable, but an underlying compact emitter is indistinguishable from fluctuations in this diffuse region.
+
+Input `acisf24312N002_evt2.fits.gz`, 5,340,049 bytes, SHA-256 `14155eda8a45c7788dd92dd825e5de33bceb6fa78caabf58ab37743f39a36834`. Detector plot SHA-256 `4842aa8061e1048731235d50bd511969173c1f87e7aa62664316afb391b9f7b6`, worker artifact member `photometry/24312/acisf24312N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746588546) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/2/24312/primary/acisf24312N002_evt2.fits.gz)
+
+### ObsID 28479 · acisf28479N002_evt2.fits.gz · real/0
+
+ICRS 49.9236586°, +41.5399663° (r90 1.43″). Peak MJD 60573.10944168 UTC. Photon t95−t05 128.6 s in a 180 s trial. Peak aperture flux 1.33e-12 ± 6.6e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `PERSEUSCLUSTER`, proposal 25800489, “AO-25 Observations of the Perseus Cluster” (CAL).
+
+The window includes 10 aperture photons and 6 annular photons. Before and after the window the aperture holds 21 photons in 6143 s and 14 in 3622 s. The trigger spans 9 frames and 10 detector pixels. Frozen classification **no_counterpart**.
+
+The ten photons show a pronounced peak without a parallel CCD-wide increase and move in both detector coordinates with the sky. They span much of the aperture on a bright cluster surface-brightness gradient. Six annular photons in the window and 35 aperture photons in the flanks leave a diffuse-background fluctuation plausible.
+
+Input `acisf28479N002_evt2.fits.gz`, 11,542,247 bytes, SHA-256 `7359e6736b2187bdaa7910cf306ee04ef3fe0badc81caa38cf8e78ebfc6c3787`. Detector plot SHA-256 `fb4d7b49c459314b312648189c7ff12ea578fe3b22c01aad19dd682cc2ae0fad`, worker artifact member `photometry/28479/acisf28479N002_evt2.fits.gz/real/0/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746588546) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/28479/primary/acisf28479N002_evt2.fits.gz)
+
+### ObsID 30883 · acisf30883N001_evt2.fits.gz · real/19
+
+ICRS 49.9516518°, +41.4595194° (r90 2.40″). Peak MJD 60766.55460265 UTC. Photon t95−t05 156.4 s in a 180 s trial. Peak aperture flux 1.66e-12 ± 7.7e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `PERSEUSCLUSTER`, proposal 25808977, “The sounds of feedback: deep and wide imaging of the cool core of the Perseus cluster” (CLP).
+
+The window includes 13 aperture photons and 27 annular photons. Before and after the window the aperture holds 121 photons in 10709 s and 65 in 6188 s. The trigger spans 12 frames and 13 detector pixels. Frozen classification **ambiguous**.
+
+The aperture samples a steep surface-brightness gradient near the bright CCD corner. Multiple excursions precede the selected 180 s grouping. The detector positions have appreciable scatter, and the CCD rate also increases intermittently around the time of selection. The NED group entry at 4.43 arcsec has a high chance-projection estimate.
+
+Input `acisf30883N001_evt2.fits.gz`, 23,610,942 bytes, SHA-256 `35065dc19de33c07ee27cdb71f4a68e68d5c07986c86b7a75c323a58aa53ef2b`. Detector plot SHA-256 `7a31dd37eb00b948af03ba642847a3336203a948366e5d0980714ab8dbb4cc4e`, worker artifact member `photometry/30883/acisf30883N001_evt2.fits.gz/real/19/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746588546) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/30883/primary/acisf30883N001_evt2.fits.gz)
+
+### ObsID 30883 · acisf30883N001_evt2.fits.gz · real/41
+
+ICRS 49.8608064°, +41.5034543° (r90 1.49″). Peak MJD 60766.45502733 UTC. Photon t95−t05 464.9 s in a 600 s trial. Peak aperture flux 4.04e-13 ± 2.9e-13 erg cm⁻² s⁻¹ (0.5–7 keV, counting uncertainty only).
+
+Frozen pointing target `PERSEUSCLUSTER`, proposal 25808977, “The sounds of feedback: deep and wide imaging of the cool core of the Perseus cluster” (CLP).
+
+The window includes 9 aperture photons and 3 annular photons. Before and after the window the aperture holds 2 photons in 2034 s and 8 in 14443 s. The trigger spans 9 frames and 9 detector pixels. Frozen classification **ambiguous**.
+
+Nine photons spread across the aperture on a strong field gradient. The light curve brightens early, then shows intermittent weaker activity. Detector positions track the field cleanly, and the CCD also rises briefly near the aperture peak. The broad-position MAXI entry at 106 arcsec has unit chance upper bound.
+
+Input `acisf30883N001_evt2.fits.gz`, 23,610,942 bytes, SHA-256 `35065dc19de33c07ee27cdb71f4a68e68d5c07986c86b7a75c323a58aa53ef2b`. Detector plot SHA-256 `77ecdd35bc215ce563e67a9c6f4a62383e25c30b7715997b77c8d185c3ff2221`, worker artifact member `photometry/30883/acisf30883N001_evt2.fits.gz/real/41/diagnostics.png`.  [Worker archive](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14746588546) · [Archive event product](https://cxc.cfa.harvard.edu/cdaftp/byobsid/3/30883/primary/acisf30883N001_evt2.fits.gz)
 
 ## Instrument passes excluded by the primary foreground veto
 

@@ -46,8 +46,19 @@ def machine():
         p=Path("/sys/fs/cgroup")/n
         if p.is_file():
             limits[n]=p.read_text().strip()
+    legacy=Path("/sys/fs/cgroup/memory")
+    for name in ("memory.limit_in_bytes","memory.max_usage_in_bytes","memory.usage_in_bytes",
+                 "memory.memsw.limit_in_bytes","memory.failcnt"):
+        p=legacy/name
+        if p.is_file():
+            limits["v1/"+name]=p.read_text().strip()
+    meminfo={}
+    for line in Path("/proc/meminfo").read_text().splitlines():
+        key,value=line.split(":",1)
+        if key in {"MemTotal","MemAvailable","SwapTotal","SwapFree"}:
+            meminfo[key]=value.strip()
     volume=shutil.disk_usage(REPO)
-    return {"cgroup":limits,"disk_free_bytes":volume.free,"disk_total_bytes":volume.total,
+    return {"cgroup":limits,"proc_meminfo":meminfo,"disk_free_bytes":volume.free,"disk_total_bytes":volume.total,
             "utc":datetime.now(timezone.utc).isoformat(),"nproc_available":len(os.sched_getaffinity(0))}
 
 

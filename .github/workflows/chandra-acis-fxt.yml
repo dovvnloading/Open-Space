@@ -81,7 +81,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           python "$SURVEY/sync_catalog.py"
           git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
-      - name: Deposit newly completed data batches and their exact science coverage
+      - name: Freeze the registered sample and deposit completed evidence with its measured coverage
         env:
           GH_TOKEN: ${{ github.token }}
         run: python -u "$SURVEY/checkpoint.py" collect
@@ -89,6 +89,19 @@ jobs:
         run: python -u "$SURVEY/checkpoint.py" csc
       - name: Characterize optical and infrared counterparts of all retained real triggers
         run: python -u "$SURVEY/checkpoint.py" optical
+      - name: Reproduce a measured flare with its archived source and control arrays
+        if: contains(github.event.head_commit.message, '[checkpoint-replay]')
+        id: measured_replay
+        continue-on-error: true
+        run: |
+          export CIAO_PREFIX="$RUNNER_TEMP/ciao" PATH="$PATH:$CONDA/bin"
+          python -u "$SURVEY/replay_receipt.py" 23324
+      - name: Deposit exact replay outcome, including any disagreement
+        if: always() && steps.measured_replay.outcome != 'skipped' && contains(github.event.head_commit.message, '[checkpoint-replay]')
+        run: |
+          git add -- "$SURVEY/evidence/replays"
+          git diff --cached --quiet || git commit -m "Preserve the independent ObsID 23324 event replay outcome"
+          git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
       - name: Verify the deposited repository and its survey regression fixtures
         run: |
           python "$SURVEY/scope_check.py"
@@ -101,6 +114,10 @@ jobs:
           name: chandra-check-resources-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ runner.temp }}/chandra-check-resources
           if-no-files-found: ignore
+
+      - name: Require the requested measured-source replication to agree
+        if: always() && contains(github.event.head_commit.message, '[checkpoint-replay]') && steps.measured_replay.outcome != 'success'
+        run: exit 1
 
   target-review:
     if: >-
@@ -928,6 +945,7 @@ jobs:
               batch.append(group); size+=n
           if batch: deposit(batch)
           call(prog,"audit","--allow-partial")
+          call(campaign.HERE/"heldout_original.py","evaluate")
           call(writer,"Record complete accounting for every terminal Chandra worker",root.relative_to(campaign.HERE.parents[1]))
           PY
       - name: Record the checked branch tip
