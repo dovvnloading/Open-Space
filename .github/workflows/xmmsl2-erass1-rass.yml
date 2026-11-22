@@ -248,9 +248,14 @@ jobs:
             python "$STUDY/paper_context.py" "$OUT"
           fi
           python -m venv --system-site-packages "$RUNNER_TEMP/broker-env"
-          "$RUNNER_TEMP/broker-env/bin/python" -m pip install antares-client || echo "Broker client unavailable; record its import status"
+          "$RUNNER_TEMP/broker-env/bin/python" -m pip install 'antares-client==2.0.2' || echo "Broker client unavailable; record its import status"
           "$RUNNER_TEMP/broker-env/bin/python" "$STUDY/broker_cones.py" "$OUT"
-          python "$STUDY/slew_images.py" "$OUT"
+          if [[ "$REUSE" == true && -f "$OUT/slew_image_followup.json" &&
+                "$(git hash-object "$OUT/slew_image_followup.json")" == 9d4cd3324dfb8535571e71ef5cedebc27f8c6c23 ]]; then
+            python "$STUDY/slew_images.py" "$OUT" --remeasure
+          else
+            python "$STUDY/slew_images.py" "$OUT"
+          fi
           python "$STUDY/decisions.py" "$OUT"
       - uses: actions/upload-artifact@v4
         if: always()

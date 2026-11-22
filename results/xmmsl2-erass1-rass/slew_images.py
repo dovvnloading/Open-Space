@@ -26,7 +26,7 @@ from full_only_review import XSA, digest, plain
 TARGETS = ("XMMSL2-total-25537", "XMMSL2-total-10038", "XMMSL2-total-21146")
 
 
-def unpack(obs, image, work):
+def unpack(obs, image, work, pinned=None):
     params = {"obsno": obs, "level": "PPS", "name": image}
     receipt = {"url": XSA, "params": params, "selected_files": [], "members_seen": 0,
                "similar_images": [], "event_files_seen": [], "complete_listing": False}
@@ -45,6 +45,8 @@ def unpack(obs, image, work):
                     name = Path(m.name).name
                     canonical = re.sub(r"\.gz$", "", name,flags=re.I).upper()
                     receipt["members_seen"] += 1
+                    if pinned is not None and m.name not in pinned:
+                        continue
                     # The current pipeline's tile serials may differ from the
                     # catalogue even when the OBSID and instrument agree.
                     im=re.fullmatch(r"P"+obs+r"PN[A-Z0-9]{4}IMAGE_6([A-Z0-9]{3})\.(?:FTZ|FITS?)",canonical)
@@ -63,17 +65,34 @@ def unpack(obs, image, work):
                         raise ValueError("Truncated member "+canonical)
                     item={"name":canonical,"tile":tile,"role":role,"bytes":m.size,"sha256":digest(dest),
                           "release_image_basename":canonical==image.upper(),"tar_member":m.name}
+                    if pinned is not None:
+                        expected=pinned[m.name]
+                        if expected["bytes"]!=m.size or expected["sha256"]!=item["sha256"] or expected["name"]!=canonical:
+                            raise ValueError("Previously selected exact member failed integrity check "+m.name)
                     receipt["selected_files"].append(item)
                     matched[role].append((item,dest))
-                receipt["complete_listing"]=True
-        receipt["status"]="complete observation package enumerated"
+                    if pinned is not None and len(seen)==len(pinned):
+                        break
+                else:
+                    receipt["complete_listing"]=True
+        if pinned is not None and len(receipt["selected_files"])!=len(pinned):
+            raise ValueError("Selected exact tar members missing or truncated")
+        receipt["status"]="all selected exact members verified" if pinned is not None else "complete observation package enumerated"
     except Exception as exc:
         receipt.update(status="incomplete ESA archive transport or packaging",error=str(exc)[:440])
     return matched,receipt
 
 
+def icrs_position(direction):
+    # SkyCoord.icrs preserves extra SkyCoord frame attributes such as obstime
+    # and equinox from the FITS WCS. Reconstitute coordinate directions in a
+    # bare ICRS frame before invoking equal-frame tangent-plane operations.
+    position=direction.icrs
+    return SkyCoord(ra=position.ra,dec=position.dec,frame="icrs")
+
+
 def offsets(origin, grid):
-    x,y=origin.spherical_offsets_to(grid.icrs)
+    x,y=icrs_position(origin).spherical_offsets_to(icrs_position(grid))
     return x.arcsec,y.arcsec
 
 
@@ -120,7 +139,7 @@ def describe_image(path, pos, rivals):
                 a=np.column_stack((dx[mask],dy[mask]))
                 centre=np.average(a,axis=0,weights=w)
                 major,minor=np.sqrt(np.maximum(0,np.linalg.eigvalsh(((a-centre).T*w)@(a-centre)/n)))[::-1]
-                p=pos.spherical_offsets_by(centre[0]*u.arcsec,centre[1]*u.arcsec)
+                p=icrs_position(pos).spherical_offsets_by(centre[0]*u.arcsec,centre[1]*u.arcsec)
                 aperture.update(centroid_ra=p.ra.deg,centroid_dec=p.dec.deg,offset_east_north_arcsec=centre.tolist(),
                                 rms_major_minor_arcsec=[major,minor],optical_centroid_separations=[
                     {"host":r["host"],"sep_arcsec":p.separation(spot(r)).arcsec} for r in rivals
@@ -228,10 +247,10 @@ def image_footprint(path,pos,obs,row):
         if not np.all(np.isfinite([xc,yc])):
             raise ValueError("Nonfinite target pixel")
         cx,cy=(sx-1)/2,(sy-1)/2
-        center=grid.pixel_to_world(cx,cy).icrs
-        corners=grid.pixel_to_world(np.array([-.5,sx-.5,sx-.5,-.5]),np.array([-.5,-.5,sy-.5,sy-.5])).icrs
+        center=icrs_position(grid.pixel_to_world(cx,cy))
+        corners=icrs_position(grid.pixel_to_world(np.array([-.5,sx-.5,sx-.5,-.5]),np.array([-.5,-.5,sy-.5,sy-.5])))
         inside=-.5<=xc<=sx-.5 and -.5<=yc<=sy-.5
-        nearest=grid.pixel_to_world(np.clip(xc,-.5,sx-.5),np.clip(yc,-.5,sy-.5)).icrs
+        nearest=icrs_position(grid.pixel_to_world(np.clip(xc,-.5,sx-.5),np.clip(yc,-.5,sy-.5)))
         window=time_span(hdr)
         detected=str(hdr.get("OBS_ID",hdr.get("OBSID",""))).strip()
         return {"obsid_header":detected,"obsid_compatible":not detected or detected==obs,
@@ -463,6 +482,43 @@ def run_one(sid,src,previous,out,field,raw,baseline):
     return result
 
 
+def remeasure_one(source):
+    row=source["native_release_row"]
+    sel=source["product_selection"]
+    names={sel["selected_image"],sel["selected_events"]}
+    pinned={m["tar_member"]:m for m in source["archive"]["selected_files"] if m["name"] in names}
+    if len(names)!=2 or len(pinned)!=2 or any(not re.fullmatch(r"[0-9a-f]{64}",m["sha256"]) for m in pinned.values()):
+        raise ValueError("Invalid preserved member/checksum selection for "+source["name"])
+    pos=SkyCoord(source["xmm_ra"]*u.deg,source["xmm_dec"]*u.deg,frame="icrs")
+    with tempfile.TemporaryDirectory(prefix="slew-selected-") as work:
+        for attempt in range(2):
+            products,receipt=unpack(row["OBSID"],row["XIMNAME_B6"],Path(work),pinned)
+            if receipt["status"]=="all selected exact members verified":
+                break
+        else:
+            raise RuntimeError(source["name"]+" failed pinned member retrieval: "+repr(receipt)[-400:])
+        image=describe_image(products["images"][0][1],pos,source["local_rivals"])
+        image["status"]="native soft image with verified sky and epoch inspected"
+        events=analyze_events(products["events"][0][1],pos,row)
+    source.update(image=image,events=events,remeasurement_receipt=receipt)
+    return source
+
+
+def remeasure(out):
+    path=out/"slew_image_followup.json"
+    record=json.loads(path.read_text())
+    if {s["detection_uid"] for s in record["sources"]}!=set(TARGETS):
+        raise ValueError("Unexpected target list in preserved archive audit")
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        record["sources"]=list(pool.map(remeasure_one,record["sources"]))
+    record["remeasurement_scope"]="Only the six previously verified space/time-selected observation members were retained from the ESA streams. All six sizes, exact archive member names and SHA-256 checksums matched. The original all-tile coverage decisions remain in product_selection."
+    tmp=path.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(plain(record),indent=2,allow_nan=False)+"\n")
+    tmp.replace(path)
+    for s in record["sources"]:
+        print(s["name"],s["image"]["status"],s["events"]["counts_in_30as"],flush=True)
+
+
 def main(out):
     past=json.loads((out/"review_independent_epochs.json").read_text())
     imgs={x["detection_uid"]:x for x in past["slew_images"]}
@@ -483,4 +539,6 @@ def main(out):
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("out",type=Path)
-    main(p.parse_args().out)
+    p.add_argument("--remeasure",action="store_true",help="Remeasure the committed matching products by exact name and SHA-256")
+    args=p.parse_args()
+    (remeasure if args.remeasure else main)(args.out)

@@ -13,7 +13,7 @@ import sys
 import pandas as pd
 import requests
 from astropy import units as u
-from astropy.coordinates import SkyCoord
+from astropy.coordinates import Angle, SkyCoord
 from astropy.time import Time
 
 RADIUS = 35
@@ -47,7 +47,7 @@ def one(field):
     from antares_client.search import cone_search
     sky=SkyCoord(field["ra"]*u.deg,field["dec"]*u.deg)
     records=[]
-    cursor=cone_search(sky,RADIUS*u.arcsec)
+    cursor=cone_search(sky,Angle(RADIUS,unit=u.arcsec))
     for locus in cursor:
         ra,dec=float(locus.ra),float(locus.dec)
         offset=sky.separation(SkyCoord(ra*u.deg,dec*u.deg)).arcsec
