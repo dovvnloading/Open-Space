@@ -75,7 +75,10 @@ jobs:
           for attempt in $(seq 1 450); do
             names=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VET_RUN/artifacts?per_page=30" --jq '.artifacts[] | select(.expired==false) | .name')
             if grep -Fxq "research-$RELEASE" <<< "$names"; then
-              gh run download "$VET_RUN" --repo "$GITHUB_REPOSITORY" --name "research-$RELEASE" --dir "$out"
+              archive_dir=$(mktemp -d "$RUNNER_TEMP/hetdex-vet-XXXXXXXX")
+              gh run download "$VET_RUN" --repo "$GITHUB_REPOSITORY" --name "research-$RELEASE" --dir "$archive_dir"
+              mkdir -p "$out"
+              cp -a "$archive_dir/." "$out/"
               test -s "$out/matched-shuffle-vet/vet-summary.json"
               test -s "$out/vet-summary.json"
               echo "$VET_RUN" > "$out/vet-checkpoint-run.txt"
