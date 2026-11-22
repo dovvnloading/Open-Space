@@ -63,6 +63,18 @@ def sql_list(values):
     return ",".join("'" + str(v).replace("'", "''") + "'" for v in values)
 
 
+def tap_error(response):
+    """Keep service diagnostics (particularly TAP's QUERY_STATUS text on HTTP 400)."""
+    try:
+        root = ET.fromstring(response.content)
+        for item in root.iter():
+            if item.get("name", "").upper() == "QUERY_STATUS" and item.get("value", "").upper() == "ERROR":
+                return " ".join("".join(item.itertext()).split())[:600]
+    except ET.ParseError:
+        pass
+    return " ".join(re.sub(r"<[^>]+>", " ", response.text[:2500]).split())[:600]
+
+
 def possep(ra, dec, ra0, dec0):
     ra, dec, ra0, dec0 = np.radians([ra, dec, ra0, dec0])
     a = np.sin((dec - dec0) / 2)**2 + np.cos(dec) * np.cos(dec0) * np.sin((ra - ra0) / 2)**2
@@ -119,7 +131,10 @@ class Sources:
                         response = self.session.get(url, params=params, timeout=(12, 120))
                     else:
                         response = self.session.post(url, data=params, timeout=(12, 120))
-                    response.raise_for_status()
+                    if not response.ok:
+                        entry.update(bytes=len(response.content), sha256=hashlib.sha256(response.content).hexdigest(),
+                                     retrieved_utc=datetime.now(timezone.utc).isoformat())
+                        raise requests.HTTPError(f"HTTP {response.status_code}: {tap_error(response)}", response=response)
                     data = response.content
                 entry.update(bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
                 if fmt == "fits":
@@ -127,7 +142,7 @@ class Sources:
                         result = hdus[1].data.copy()
                 elif fmt == "csv":
                     result = pd.read_csv(io.BytesIO(data), dtype=str, keep_default_na=False)
-                    if len(result.columns) < 2 or len(result) >= params["MAXREC"]:
+                    if len(result.columns) < 2 or (query and len(result) >= params["MAXREC"]):
                         raise ValueError("unexpected or truncated TAP CSV")
                 else:
                     root = ET.fromstring(data)
@@ -148,7 +163,10 @@ class Sources:
                 record()
                 return result
             except (ValueError, OSError, ET.ParseError, requests.RequestException, IndexError) as exc:
-                entry.update(status="failed", detail=str(exc)[:500])
+                entry.update(status="failed", detail=str(exc)[:650])
+                if isinstance(exc, requests.HTTPError) and exc.response is not None:
+                    if 400 <= exc.response.status_code < 500 and exc.response.status_code not in (408, 425, 429):
+                        break
                 if attempt == 0:
                     time.sleep(1)
         self.failures[(label, url)] += 1
@@ -186,6 +204,83 @@ def batch_catalog(db, label, url, template, ids, key, size=100):
     return found, checked
 
 
+def exoplanet_eu(db):
+    fields = {"star_name", "target_name", "period", "publication_status", "ra", "dec"}
+    catalogue = db.get("exoplanet.eu", EU, "SELECT star_name,target_name,period,publication_status,ra,dec "
+                       "FROM exoplanet.epn_core")
+    if catalogue is not None and fields.issubset(catalogue) and not catalogue.empty:
+        catalogue["catalogue_route"] = "exoplanet.epn_core"
+        return catalogue
+    # Request every published catalogue status explicitly. The default web UI
+    # can limit the table to confirmed planets. Query and response hash stay
+    # in the ordinary catalogue receipts just like the TAP route.
+    statuses = ["confirmed", "candidate", "unconfirmed", "controversial", "retracted"]
+    expr = " or ".join(f'planet_status="{status}"' for status in statuses)
+    url = "https://exoplanet.eu/catalog/csv/?" + urlencode({"query_f": expr})
+    dump = db.get("exoplanet.eu all-status official export", url, fmt="csv")
+    if dump is None:
+        return None
+    dump.columns = dump.columns.str.replace(r"^[#\s]+", "", regex=True).str.strip().str.lower()
+    dump = dump.rename(columns={"name":"target_name", "orbital_period":"period"})
+    if not ({"star_name","target_name","period","planet_status","ra","dec"}.issubset(dump)
+            and not dump.empty and pd.to_numeric(dump.period, errors="coerce").gt(0).any()):
+        return None
+    # Reject a silently confirmed-only response to an all-status query.
+    present = set(dump.planet_status.str.strip().str.casefold())
+    if "confirmed" not in present or not ({"candidate", "unconfirmed", "controversial", "retracted"} & present):
+        return None
+    if "publication_status" not in dump:
+        dump["publication_status"] = ""
+    dump["catalogue_route"] = "official all-status CSV"
+    return dump
+
+
+def bibliography(db, oids):
+    words = ("planet","brown dwarf","companio","radial veloc","spectroscopic binar",
+             "astrometric orbit","rotational modulat","stellar rotation","doppler","harps")
+    papers, checked = defaultdict(list), set()
+    join = (" FROM has_ref JOIN ref ON has_ref.oidbibref=ref.oidbib "
+            "WHERE has_ref.oidref IN (")
+    # Older mirror schemas may lack DOI. The smaller projection remains
+    # sufficient for an object-indexed title search. No server-side LOWER.
+    doi_supported = True
+    for group in chunks(oids, 32):
+        ids = ",".join(group)
+        base = "SELECT has_ref.oidref,ref.bibcode,ref.title"
+        table = None
+        if doi_supported:
+            table = db.get("SIMBAD bibliography with DOI", SIMBAD, base+",ref.doi"+join+ids+")")
+        if table is None or not {"oidref","bibcode","title"}.issubset(table):
+            table = db.get("SIMBAD bibliography titles", SIMBAD, base+join+ids+")")
+            if table is not None and {"oidref","bibcode","title"}.issubset(table):
+                doi_supported = False
+        if table is None or not {"oidref","bibcode","title"}.issubset(table):
+            # Two single-table queries also work on mirrors that reject JOIN
+            # projections. Only mark objects complete if all their papers
+            # were returned, including those without titles.
+            links = db.get("SIMBAD reference links", SIMBAD,
+                "SELECT oidref,oidbibref FROM has_ref WHERE oidref IN ("+ids+")")
+            if links is None or not {"oidref","oidbibref"}.issubset(links):
+                continue
+            keys = set(links.oidbibref)
+            refs = []
+            for batch in chunks(keys, 200):
+                query = "SELECT oidbib,bibcode,title FROM ref WHERE oidbib IN ("+",".join(batch)+")"
+                piece = db.get("SIMBAD indexed reference titles", SIMBAD, query)
+                if piece is not None and {"oidbib","bibcode","title"}.issubset(piece):
+                    refs.append(piece)
+            ref = pd.concat(refs, ignore_index=True) if refs else pd.DataFrame(columns=["oidbib","bibcode","title"])
+            missing = set(links.loc[~links.oidbibref.isin(ref.oidbib), "oidref"])
+            group = [oid for oid in group if oid not in missing]
+            table = links[links.oidref.isin(group)].merge(ref, left_on="oidbibref", right_on="oidbib")
+        checked.update(group)
+        for row in table.to_dict("records"):
+            if any(term in row["title"].casefold() for term in words):
+                row.setdefault("doi", "")
+                papers[row["oidref"]].append(row)
+    return papers, checked
+
+
 def identify(db, targets):
     choices = {star: names(star) for star in targets.index}
     all_ids = set().union(*choices.values()) if choices else set()
@@ -204,7 +299,7 @@ def identify(db, targets):
             t = targets.loc[star]
             sep = possep(num(row["ra"]), num(row["dec"]), num(t.ra_deg), num(t.dec_deg))
             if np.isnan(sep) or sep < 30:
-                best[star] = row
+                best[star] = dict(row, identity_route="name")
     # Coordinate rescue is limited to one SIMBAD source in 3 arcsec.
     missing = targets.loc[~targets.index.isin(best)].copy()
     missing = missing[np.isfinite(pd.to_numeric(missing.ra_deg, errors="coerce")) &
@@ -221,7 +316,7 @@ def identify(db, targets):
             t = missing.loc[star]
             hits = [r for r in rows if possep(num(r["ra"]), num(r["dec"]), num(t.ra_deg), num(t.dec_deg)) <= 3]
             if len(hits) == 1:
-                best[star] = hits[0]
+                best[star] = dict(hits[0], identity_route="position")
     return best
 
 
@@ -453,8 +548,7 @@ def run(work, out):
                   "pl_orbper,st_rotp,st_mass,st_masserr1,st_masserr2,sy_snum,ra,dec FROM pscomppars", "csv")
     all_nasa = db.get("NASA all orbital solutions", NASA,
                       "SELECT DISTINCT hostname,pl_name,pl_orbper FROM ps WHERE pl_orbper IS NOT NULL", "csv")
-    eu = db.get("exoplanet.eu", EU, "SELECT star_name,target_name,period,publication_status,ra,dec "
-                "FROM exoplanet.epn_core")
+    eu = exoplanet_eu(db)
     spores = spores_prior_table(db, 6, ["HD", "Per", "Class", "BibCode"], 109)
     trend_catalog = spores_prior_table(db, 7, ["HD"], 74)
     reported_trends = {"hd25673":"previously reported by Open-Space"}
@@ -470,6 +564,15 @@ def run(work, out):
                           "MCC 150":[622.], "HD 207129":[1398.], "HD 125881":[41.]}.items():
         for p in periods:
             add_prior(name, p, "prior public HARPS search (rpinho/planet-hunt)")
+    for host, planet, period in [("HD 215456","b",192.), ("HD 215456","c",2268.),
+                                 ("HD 150433","b",1096.27), ("HD 157172","b",105.)]:
+        add_prior(host, period, f"{host} {planet}, Mayor et al. 2011 Table 3, arXiv:1109.2497")
+    for host in ("HD 5976", "TOI-261"):
+        for planet, period in [("b", 3.4), ("c", 10.2), ("d", 22.9)]:
+            add_prior(host, period, f"TOI-261 {planet}, Grziwa et al. 2026, doi:10.5194/epsc2026-891")
+    add_prior("HD 216770", 118.45, "HD 216770 b, Mayor et al. 2004")
+    add_prior("HD 126525", 960.41, "HD 126525 b, Barbato et al. 2018")
+    add_prior("HD 157338", 126*365.25, "HD 157338 B, Rickman et al. 2022, doi:10.1051/0004-6361/202244633")
     if spores is not None:
         for r in spores.to_dict("records"):
             add_prior(r["hd"], num(r["per"]), f"SPORES-HWO II {r['class']} {r['bibcode']}")
@@ -501,13 +604,7 @@ def run(work, out):
     masses, _ = batch_catalog(db, "Gaia FLAME", GAIA,
         "SELECT source_id,mass_flame,mass_flame_lower,mass_flame_upper,flags_flame "
         "FROM gaiadr3.astrophysical_parameters WHERE source_id IN ({ids})", gids,"source_id")
-    # Keep all associated archival bibliography matches for the stated title search.
-    words = ("planet","brown dwarf","companio","radial veloc","spectroscopic binar",
-             "astrometric orbit","rotational modulat","stellar rotation","doppler","harps")
-    predicate = " OR ".join("LOWER(r.title) LIKE '%"+w+"%'" for w in words)
-    papers, paper_checked = batch_catalog(db, "SIMBAD bibliography", SIMBAD,
-        "SELECT h.oidref,r.bibcode,r.title,r.doi FROM has_ref AS h JOIN ref AS r ON r.oidbib=h.oidbibref "
-        "WHERE h.oidref IN ({ids}) AND (" + predicate + ")", oids, "oidref", size=32)
+    papers, paper_checked = bibliography(db, oids)
     hgca = db.get("HGCA EDR3 (Brandt 2021)", HGCA, fmt="fits")
     by_gaia, by_hip = {}, {}
     if hgca is not None:
@@ -549,9 +646,19 @@ def run(work, out):
                 m = num(item["mass_flame"])
                 me = max(m-num(item["mass_flame_lower"]), num(item["mass_flame_upper"])-m)
                 msrc = "Gaia DR3 FLAME (00)"
+        verified_ids = {norm(x["id"]) for x in ids[oid]} | {norm(r.get("main_id",""))}
+        estimated_prot, estimated_prot_err, estimated_prot_source = np.nan, np.nan, ""
+        if "hd17970" in verified_ids:
+            estimated_prot, estimated_prot_err = 49.7, 4.5
+            estimated_prot_source = "mean logR'HK calibration, Lovis et al. 2011 Table 3, arXiv:1107.5325"
+        if not msrc and "hd17970" in verified_ids:
+            m, me = .754, .052
+            msrc = "Pinheiro et al. 2014 Table A1, https://academic.oup.com/view-large/78646877"
         binary_types = {x["otype"] for x in types[oid]} & {
             "**","**?","SB*","SB?","EB*","EB?","El*","Al*","bL*","WU*","Sy*","CV*"}
         binary = {("SIMBAD "+x) for x in binary_types}
+        if "hd157338" in keyset:
+            binary.add("known stellar companion HD 157338 B, Rickman et al. 2022, doi:10.1051/0004-6361/202244633")
         if any(num(x["sy_snum"])>1 for x in ns):
             binary.add("NASA multiple")
         if any(num(x["non_single_star"])>0 for x in gaia[gid]):
@@ -594,9 +701,12 @@ def run(work, out):
         for sig in g.itertuples(index=False):
             p = num(sig.period_d)
             baseline = num(stars.loc[star,"baseline_d"])
-            prior, alias_matches, rot_hits = set(), set(), set()
+            prior, alias_matches, rot_hits, adjacent = set(), set(), set(), set()
             reported = [(num(x["pl_orbper"]), x["pl_name"]) for x in ns+sols]
-            reported += [(num(x["period"]), "exoplanet.eu "+x["target_name"]) for x in eus]
+            eu_matches = [(num(x["period"]), f"exoplanet.eu {x['target_name']} "
+                           f"[{x.get('planet_status') or x.get('publication_status') or 'status unspecified'}]")
+                          for x in eus]
+            reported += eu_matches
             reported += [v for n in keyset for v in references[n]]
             for published, label in reported:
                 kind = match_period(p, published, baseline)
@@ -604,6 +714,9 @@ def run(work, out):
                     prior.add(f"{label} ({published:g} d)")
                 elif kind:
                     alias_matches.add(f"{label} ({kind} of {published:g} d)")
+                elif published > 0 and abs(p/published-1) < .15 and (
+                        "hd126525" in keyset or "hd216770" in keyset):
+                    adjacent.add(f"{label} ({published:g} d, outside direct-match window)")
             for prot, label in rotations:
                 if any(abs(p/(ratio*prot)-1)<.12 for ratio in [.333333,.5,1,2]):
                     rot_hits.add(f"{label} {prot:g} d")
@@ -615,6 +728,8 @@ def run(work, out):
                 reasons.append("unresolved identity or aliases")
             if nasa is None or all_nasa is None or eu is None or spores is None:
                 reasons.append("prior catalog incomplete")
+            if adjacent:
+                reasons.append("near period of a published companion; explicit orbital comparison required")
             if alias_matches:
                 reasons.append("possible published harmonic or alias")
             if ns and not matched:
@@ -642,8 +757,19 @@ def run(work, out):
                       "inconclusive" if reasons else "requires literature review")
             outrow = dict(star=star,signal_index=sig.signal_index,period_d=p,k_ms=sig.k_ms,
                           ecc=sig.ecc,fap=sig.fap,rv_status=sig.rv_status,identity=r.get("main_id",""),
+                          simbad_oid=oid, simbad_identity_route=r.get("identity_route", ""), simbad_ra_deg=num(r.get("ra")), simbad_dec_deg=num(r.get("dec")),
+                          source_ra_deg=ra, source_dec_deg=dec,
+                          published_host_periods=" | ".join(sorted({f"{label} ({pp:g} d)" for pp, label in
+                                                        reported if np.isfinite(pp)})),
+                          adjacent_published_periods=" | ".join(sorted(adjacent)),
+                          exoplanet_eu_check=("unavailable" if eu is None else
+                                              "associations found" if eus else "no identified host"),
+                          exoplanet_eu_entries=" | ".join(label for _,label in eu_matches),
                           aliases=" | ".join(sorted(choices)),gaia_dr3_id=gid,external_status=status,
                           reasons=" | ".join(reasons),rotation_check=rotation_check,
+                          activity_estimated_rotation_d=estimated_prot,
+                          activity_estimated_rotation_err_d=estimated_prot_err,
+                          activity_estimated_rotation_source=estimated_prot_source,
                           catalog_rotation_periods=" | ".join(f"{v:g} {s}" for v,s in sorted(set(rotations))),
                           binary_check=bstatus,ruwe=ruwe,host_mass_msun=m,host_mass_err_msun=me,
                           host_mass_source=msrc,minimum_mass_mjup=minimum,dynamical_mass_mjup=np.nan,
@@ -671,7 +797,8 @@ def run(work, out):
             vet.append(outrow)
     save(out, "vetting.csv", vet, ["star","signal_index","period_d","k_ms","ecc","fap","rv_status",
          "external_status","minimum_mass_mjup","dynamical_mass_mjup","reasons","identity",
-         "rotation_check","binary_check","nasa_check","literature_check","joint_status"])
+         "simbad_oid","simbad_identity_route","simbad_ra_deg","simbad_dec_deg","source_ra_deg","source_dec_deg",
+         "rotation_check","binary_check","nasa_check","exoplanet_eu_check","literature_check","joint_status"])
     save(out,"accelerations.csv",acc_rows,["star","slope_ms_yr","slope_err_ms_yr","astrometry_check",
          "trend_prior","pma_p","pma_chi2_4dof"])
     save(out,"literature.csv.gz",lit_rows,["star","bibcode","title","doi"])

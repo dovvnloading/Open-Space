@@ -118,20 +118,24 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: harps-input-receipts
-          path: evidence
+          path: revised
       - run: |
-          python "$SURVEY/report.py" combine --out evidence --shards shards --count 12
-          python "$SURVEY/enrich.py" --work work --out evidence
-          python "$SURVEY/vet.py" --work work --out evidence
+          python "$SURVEY/report.py" combine --out revised --shards shards --count 12
+          python "$SURVEY/enrich.py" --work work --out revised
+          python "$SURVEY/vet.py" --work work --out revised
           python "$SURVEY/ingest.py" --source eso --work previous --out previous
-          python "$SURVEY/holdout.py" --work work --out evidence --eso-epochs previous/epochs.csv.gz
-          cp previous/inputs.csv evidence/holdout-inputs.csv
-          python "$SURVEY/report.py" summarize --out evidence
+          python "$SURVEY/holdout.py" --work work --out revised --eso-epochs previous/epochs.csv.gz
+          python "$SURVEY/spectral_activity.py" --work work --out revised --eso-epochs previous/epochs.csv.gz
+          python "$SURVEY/alias_review.py" --work work --out revised
+          cp previous/inputs.csv revised/holdout-inputs.csv
+          python "$SURVEY/report.py" summarize --out revised
+          cat revised/survey.json
+          cat revised/holdout.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: harps-evidence
-          path: evidence
+          path: revised
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always()
@@ -193,9 +197,9 @@ jobs:
           test -s "$RUNNER_TEMP/harps-rvbank/vetting.csv"
           test -s "$RUNNER_TEMP/harps-rvbank/published-controls.csv"
           test -s "$RUNNER_TEMP/harps-rvbank/completeness-grid.csv"
-          mkdir -p "$SURVEY/evidence"
-          rsync -a --delete "$RUNNER_TEMP/harps-rvbank/" "$SURVEY/evidence/"
-          git add -f -- "$SURVEY/evidence"
+          mkdir -p "$SURVEY/revised"
+          rsync -a --delete "$RUNNER_TEMP/harps-rvbank/" "$SURVEY/revised/"
+          git add -f -- "$SURVEY/revised"
       - name: Commit the run
         run: |
           git config user.name 'github-actions[bot]'

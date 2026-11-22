@@ -60,44 +60,77 @@ def combine(out, shards, count):
         frame.to_csv(out / f"{name}.csv", index=False)
 
 
-def control_table(stars, signals, vetting):
-    hosts = defaultdict(set)
-    def index_name(star, name):
-        # Preserve component names. A component of a multiple system cannot
-        # supply a control attached to an unqualified identifier.
+def control_tables(stars, signals, vetting):
+    """A prespecified planet can be recovered once across independently fitted archive series."""
+    def hd(name):
         m = re.fullmatch(r"HD[\s_-]*0*(\d+)", str(name).strip(), re.I)
-        if m:
-            hosts["HD" + str(int(m[1]))].add(star)
+        return "HD" + str(int(m[1])) if m else ""
+
+    hosts = defaultdict(set)
+    object_ids = defaultdict(set)
     for star in stars.star:
-        index_name(star, star)
-    for row in vetting[["star", "identity", "aliases"]].drop_duplicates().itertuples(index=False):
-        index_name(row.star, row.identity)
-        for name in row.aliases.split("|"):
-            index_name(row.star, name)
-    rows = []
+        if hd(star) in CONTROLS:
+            hosts[hd(star)].add(star)
+    cols = ["star","identity","aliases"]
+    if "simbad_oid" in vetting.columns:
+        cols.append("simbad_oid")
+    for ref in vetting[cols].drop_duplicates().itertuples(index=False):
+        oid = str(getattr(ref, "simbad_oid", "")).strip() or str(ref.identity).strip()
+        if oid and ref.identity:
+            object_ids[ref.star].add(oid)
+            for name in [ref.identity,*str(ref.aliases).split("|")]:
+                if hd(name) in CONTROLS:
+                    hosts[hd(name)].add(ref.star)
+
+    inventory = stars.set_index("star",verify_integrity=True)
+    systems, series = [], []
     for host, periods in CONTROLS.items():
-        match = stars[stars.star.isin(hosts[host])]
+        names = sorted(hosts[host])
+        identified = set().union(*(object_ids[s] for s in names))
+        # A directly named HD series may have no fitted peaks and no SIMBAD row.
+        # Other series must be linked to that unqualified HD identifier; divergent
+        # OIDs make the entire assignment ambiguous, regardless of measured periods.
+        conflict = len(identified)>1
         for companion, period in periods.items():
-            row = {"host": host, "companion": companion, "reference_period_d": period,
-                   "matching_targets": " | ".join(sorted(hosts[host]))}
-            if len(match) != 1:
-                row["outcome"] = "ambiguous target identity" if len(match) else "host not identified"
-            elif match.iloc[0].eligibility != "searched":
-                row["outcome"] = match.iloc[0].eligibility
-            else:
-                hits = signals[signals.star == match.iloc[0].star].copy()
-                distance = (1 / hits.period_d - 1 / period).abs()
-                hits = hits[distance <= min(.05 / period, 1 / float(match.iloc[0].baseline_d))]
-                if hits.empty:
-                    row["outcome"] = "period missed"
+            base = dict(host=host,companion=companion,reference_period_d=period)
+            parts = []
+            for star in names:
+                r = dict(**base,star=star)
+                coverage = inventory.loc[star]
+                if conflict:
+                    r["outcome"] = "ambiguous target identity"
+                elif coverage.eligibility != "searched":
+                    r["outcome"] = coverage.eligibility
                 else:
-                    best = hits.loc[distance.loc[hits.index].idxmin()]
-                    row.update(fit_period_d=best.period_d, fit_k_ms=best.k_ms, fap=best.fap,
-                               rv_status=best.rv_status, flags=best["flags"],
-                               outcome=("period recovered above threshold" if best.fap <= .01
-                                        and best.delta_bic >= 10 else "period recovered below threshold"))
-            rows.append(row)
-    return pd.DataFrame(rows)
+                    hits = signals[signals.star.eq(star)].copy()
+                    hits["distance"] = (1/hits.period_d - 1/period).abs()
+                    hits = hits[hits.distance <= min(.05/period,1/float(coverage.baseline_d))]
+                    if hits.empty:
+                        r["outcome"] = "period missed"
+                    else:
+                        hits["significant"] = hits.fap.le(.01) & hits.delta_bic.ge(10)
+                        hit = hits.sort_values(["significant","distance","signal_index"],
+                                               ascending=[False,True,True]).iloc[0]
+                        r.update(signal_index=int(hit.signal_index), fit_period_d=hit.period_d,
+                                 fit_k_ms=hit.k_ms,fap=hit.fap,rv_status=hit.rv_status,
+                                 flags=hit["flags"],outcome=("period recovered above threshold"
+                                 if hit.significant else "period recovered below threshold"))
+                parts.append(r)
+            series.extend(parts)
+            system = dict(**base,matching_targets=" | ".join(names))
+            priorities = ["period recovered above threshold","period recovered below threshold",
+                          "period missed","ambiguous target identity"]
+            unique = {r["outcome"] for r in parts}
+            system["outcome"] = next((status for status in priorities if status in unique),
+                                     " | ".join(sorted(unique)) or "host not identified")
+            # Stable representative values for readers of the original seven-row
+            # table. The per-series ledger preserves all other fits and misses.
+            representative = next((r for r in parts if r["outcome"]==system["outcome"]),{})
+            system.update({k:v for k,v in representative.items() if k not in base})
+            systems.append(system)
+    fields = ["host","companion","reference_period_d","star","outcome","signal_index",
+              "fit_period_d","fit_k_ms","fap","rv_status","flags"]
+    return pd.DataFrame(systems), pd.DataFrame(series).reindex(columns=fields)
 
 
 def review_tables(out, signals, vetting):
@@ -135,6 +168,25 @@ def query_coverage(out):
     pd.DataFrame(rows, columns=["source", "queries_planned", "successful", "failed",
                                 "skipped", "successful_rows"]).to_csv(out / "source-coverage.csv", index=False)
     return int(receipt.status.eq("ok").sum()), len(receipt)
+
+
+def activity_coverage(out, signals):
+    from search import INDICATORS, REQUIRED
+    detail = signals.activity_json.map(json.loads)
+    flags = signals["flags"].map(lambda value: set(value.split("|")))
+    rows = []
+    all_required = pd.Series(True, index=signals.index)
+    for name in INDICATORS:
+        tested = detail.map(lambda row: row[name]["status"] == "tested")
+        flagged = flags.map(lambda row: bool({"activity_" + name, "rotation_proxy_" + name} & row))
+        if name in REQUIRED:
+            all_required &= tested
+        rows.append(dict(indicator=name, fits_tested=int(tested.sum()),
+                         target_series_tested=signals.loc[tested, "star"].nunique(),
+                         fits_missing_or_insufficient=int((~tested).sum()),
+                         fits_flagged=int(flagged.sum())))
+    pd.DataFrame(rows).to_csv(out / "activity-coverage.csv", index=False)
+    return int(all_required.sum()), signals.loc[all_required, "star"].nunique()
 
 
 def catalog_patch(out, efficiency):
@@ -176,7 +228,8 @@ def summarize(out):
     searched = stars[stars.eligibility.eq("searched")]
     if searched.empty:
         raise ValueError("No eligible targets. Inspect coverage before interpreting the run.")
-    controls = control_table(stars, signals, vetting)
+    controls, control_series = control_tables(stars, signals, vetting)
+    control_series.to_csv(out / "published-control-series.csv", index=False)
     rv_survivors, unresolved = review_tables(out, signals, vetting)
     source_ok, source_total = query_coverage(out)
     controls.to_csv(out / "published-controls.csv", index=False)
@@ -218,6 +271,7 @@ def summarize(out):
                                                               "external_status"].value_counts().items()},
         target_eligibility={k:int(v) for k,v in stars.eligibility.value_counts().items()},
     )
+    counts["all_six_activity_fits"], counts["all_six_activity_stars"] = activity_coverage(out, signals)
     (out / "survey.json").write_text(json.dumps(counts, indent=2) + "\n")
     body = f"""# HARPS radial-velocity companion survey
 
@@ -227,7 +281,7 @@ The input was {ingest['source']}. See [input checksums](inputs.csv), [exposure d
 
 {rv_survivors:,} fits passed all internal RV tests. The [RV survivors](rv-survivors.csv) include their catalog and literature dispositions. The [associated bibliography](survivor-literature.csv) contains indexed references. Another {unresolved:,} fits met the statistical thresholds and retained unresolved checks in both the RV and external ledgers. See [inconclusive periods](inconclusive-periods.csv). Of {source_total:,} planned external queries, {source_ok:,} returned usable responses. [Coverage by source](source-coverage.csv) · [Query receipts](catalog-inputs.csv)
 
-The initial period search recovered {counts['controls_above_threshold']} of {len(controls)} prespecified published control periods above the adopted FAP and model-improvement thresholds. The denominator includes every prespecified control, including misses and targets outside coverage. See [control recovery](published-controls.csv).
+The initial period search recovered {counts['controls_above_threshold']} of {len(controls)} prespecified published control periods above the adopted FAP and model-improvement thresholds. The denominator includes every prespecified control, including misses and targets outside coverage. Each planet counts once across its [independently fitted archive series](published-control-series.csv). See [control recovery](published-controls.csv).
 
 The [injection grid](completeness-grid.csv) summarizes {counts['injection_trials']:,} injected orbits in observed residuals. Its denominator varies with orbital period and available baseline. It measures recovery of the blind periodogram peak before external vetting. The [individual injection cells](injections.csv) retain both recoveries and misses.
 
