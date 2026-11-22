@@ -333,6 +333,14 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
                   "describe the control exceedance probability under the time-scramble model. Human review was applied to "
                   "the real leads. The measured injection efficiency covers the instrumental selection.", "",
                   "## Exposure, recovery and conditional limits"])
+    from completeness_figure import render
+    figure = HERE/"evidence/injection_recovery.png"
+    render(dated["reports"]/"completeness.csv", figure, dated["total"]["attempted"], dated["total"]["recovered"])
+    lines.extend(["", "![Measured instrumental recovery by injected photon count and flare duration]("
+                  + href(figure) + ")", "",
+                  "Cells show the recovered fraction and the number recovered out of those attempted. Each cell pools "
+                  "the three injected PSF widths in their measured proportions. The full grid below retains each width "
+                  "and its binomial interval. These efficiencies apply to injected event counts and sampled locations."])
     bounds = {}
     for g in groups:
         name, ctr = g["name"], counts[g["name"]]
@@ -462,7 +470,8 @@ def publish(groups, leads, decisions, raw_inputs, manual_hashes, sig, manifest, 
     if extra:
         lines.extend([" · ".join(extra),""])
     outcome = {"label":label, "headline":headline,"reviewed_inputs_sha256":sig,"input_sha256":raw_inputs,
-               "decisions_sha256":file_sha(manifest),"candidate_table_sha256":hashlib.sha256(candidate_file.read_bytes()).hexdigest(),"cited_local_evidence_sha256":manual_hashes,"dispositions":counts,
+               "decisions_sha256":file_sha(manifest),"candidate_table_sha256":hashlib.sha256(candidate_file.read_bytes()).hexdigest(),
+               "recovery_figure_sha256":hashlib.sha256(figure.read_bytes()).hexdigest(),"cited_local_evidence_sha256":manual_hashes,"dispositions":counts,
                "conditional_upper95_detected_events_per_Ms":bounds,
                "instrument_pass_conservative_upper95_detected_events_per_Ms":instrument_bounds, "implementation_sha256":file_sha(Path(__file__))}
     # update_catalog checks the existing bullet and rewrites only line 9 and this entry.

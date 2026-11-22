@@ -22,7 +22,7 @@ MARK="stage_manifest.json.gz"
 SEAL="stage_seal.json"
 SUP=ROOT/"supplemental_search"/f"{ingest.RUN}-{ingest.ATTEMPT}"
 TABLES=("summary.json","obsid_coverage.csv","event_receipts.csv","control_trials.csv","leads.json","completeness.csv")
-SCRIPTS=("finalize.py","final_assembly.py","followup.py","catalog_pack.py","heldout.py","heldout_original.py","publication.py","candidate_inputs.py")
+SCRIPTS=("finalize.py","final_assembly.py","followup.py","catalog_pack.py","heldout.py","heldout_original.py","upload_recovery.py","completeness_figure.py","publication.py","candidate_inputs.py")
 need=ingest.require
 sha=ingest.sha
 save=ingest.save
@@ -538,6 +538,7 @@ def verify_commit(receipt):
     doc=campaign.read(out/"decisions.json")
     pub=campaign.read(ROOT/"publication.json")
     need(sha(ROOT/"fxt_candidates.csv")==pub["candidate_table_sha256"],"Published candidate table changed")
+    need(sha(ROOT/"injection_recovery.png")==pub["recovery_figure_sha256"],"Published recovery figure changed")
     need(sha(out/"decisions.json")==release["decisions_sha256"]==pub["decisions_sha256"],"Final written decisions changed")
     sidecars=doc["review_source_sha256"]
     standard={p.relative_to(HERE).as_posix() for p in [*(HERE/n for n in final_assembly.DEFAULTS),

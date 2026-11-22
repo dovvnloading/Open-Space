@@ -8,6 +8,14 @@ on:
     paths: ['.github/workflows/chandra-acis-fxt.yml']
   workflow_dispatch:
     inputs:
+      recover_group:
+        description: 'Optional original matrix group with a failed evidence upload'
+        required: false
+        type: string
+      recover_job:
+        description: 'Original failed GitHub job ID for that group'
+        required: false
+        type: string
       primary_finalize:
         description: 'Finish the archived primary run and its written review'
         type: boolean
@@ -42,12 +50,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: chandra-acis-fxt-${{ github.ref }}${{ (inputs.replay_obsid != '' || contains(github.event.head_commit.message, '[replay-obsid ')) && '-replay' || (inputs.primary_finalize == true || contains(github.event.head_commit.message, '[primary-finalize]')) && '-deposit' || (inputs.target_review == true || contains(github.event.head_commit.message, '[target-review]')) && '-target' || (inputs.primary_deposit == true || contains(github.event.head_commit.message, '[primary-deposit]')) && '-deposit' || '' }}
+  group: chandra-acis-fxt-${{ github.ref }}${{ (inputs.recover_group != '' || contains(github.event.head_commit.message, '[recover-upload ')) && '-deposit' || (inputs.replay_obsid != '' || contains(github.event.head_commit.message, '[replay-obsid ')) && '-replay' || (inputs.primary_finalize == true || contains(github.event.head_commit.message, '[primary-finalize]')) && '-deposit' || (inputs.target_review == true || contains(github.event.head_commit.message, '[target-review]')) && '-target' || (inputs.primary_deposit == true || contains(github.event.head_commit.message, '[primary-deposit]')) && '-deposit' || '' }}
   cancel-in-progress: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[replace-run]') }}
 
 jobs:
   primary-deposit:
     if: >-
+      inputs.recover_group == '' && !contains(github.event.head_commit.message, '[recover-upload ') &&
       !contains(github.event.head_commit.message, '[replay-obsid ') &&
       inputs.primary_finalize != true && !contains(github.event.head_commit.message, '[primary-finalize]') &&
       github.ref == 'refs/heads/research/chandra-acis-fast-transients' &&
@@ -121,6 +130,7 @@ jobs:
 
   target-review:
     if: >-
+      inputs.recover_group == '' && !contains(github.event.head_commit.message, '[recover-upload ') &&
       !contains(github.event.head_commit.message, '[replay-obsid ') &&
       inputs.primary_finalize != true && !contains(github.event.head_commit.message, '[primary-finalize]') &&
       github.ref == 'refs/heads/research/chandra-acis-fast-transients' &&
@@ -221,6 +231,7 @@ jobs:
   verify:
     needs: inventory
     if: >-
+      inputs.recover_group == '' && !contains(github.event.head_commit.message, '[recover-upload ') &&
       inputs.primary_finalize != true && !contains(github.event.head_commit.message, '[primary-finalize]') &&
       !cancelled() && github.ref == 'refs/heads/research/chandra-acis-fast-transients' &&
       ((needs.inventory.result == 'success' && needs.inventory.outputs.checkpoint != '') ||
@@ -260,6 +271,7 @@ jobs:
   replay:
     needs: verify
     if: >-
+      inputs.recover_group == '' && !contains(github.event.head_commit.message, '[recover-upload ') &&
       inputs.primary_finalize != true && !contains(github.event.head_commit.message, '[primary-finalize]') &&
       !cancelled() && needs.verify.result == 'success' &&
       ((github.event_name == 'workflow_dispatch' && inputs.replay_obsid != '') ||
@@ -296,6 +308,7 @@ jobs:
 
   catalog-check:
     if: >-
+      inputs.recover_group == '' && !contains(github.event.head_commit.message, '[recover-upload ') &&
       !contains(github.event.head_commit.message, '[replay-obsid ') &&
       inputs.primary_finalize != true && !contains(github.event.head_commit.message, '[primary-finalize]') &&
       github.ref == 'refs/heads/research/chandra-acis-fast-transients' && inputs.replay_obsid == '' &&
@@ -734,6 +747,7 @@ jobs:
 
   final-route:
     if: >-
+      inputs.recover_group == '' && !contains(github.event.head_commit.message, '[recover-upload ') &&
       !contains(github.event.head_commit.message, '[replay-obsid ') &&
       github.ref == 'refs/heads/research/chandra-acis-fast-transients' &&
       (inputs.primary_finalize == true || (github.event_name == 'push' && contains(github.event.head_commit.message,'[primary-finalize]'))) &&
@@ -946,7 +960,19 @@ jobs:
           if batch: deposit(batch)
           call(prog,"audit","--allow-partial")
           call(campaign.HERE/"heldout_original.py","evaluate")
-          call(writer,"Record complete accounting for every terminal Chandra worker",root.relative_to(campaign.HERE.parents[1]))
+          scope=root.relative_to(campaign.HERE.parents[1])
+          call(writer,"Seal terminal source accounting and the preregistered original held-out result",scope)
+          recoveries=root/"upload_recovery"/f"{ing.RUN}-{ing.ATTEMPT}"
+          for folder in sorted(recoveries.glob("*")):
+              if not folder.is_dir() or not folder.name.isdecimal():
+                  continue
+              if ing.receipt_file(root,folder.name).is_file():
+                  continue
+              stages=sorted(folder.glob("*-*/stage"),key=lambda q:tuple(map(int,q.parent.name.split("-"))))
+              if not stages:
+                  continue
+              call(campaign.HERE/"upload_recovery.py","adopt","--stage",stages[0],"--evidence",root)
+              call(writer,"Adopt the first authenticated repeat for missing original group "+folder.name,scope)
           PY
       - name: Record the checked branch tip
         id: base
@@ -1431,3 +1457,119 @@ jobs:
           PY
           git push origin "HEAD:refs/heads/$BRANCH"
           test "$(git rev-parse HEAD)" = "$(git ls-remote origin "refs/heads/$BRANCH" | cut -f1)"
+
+  recover-upload:
+    if: >-
+      github.ref == 'refs/heads/research/chandra-acis-fast-transients' &&
+      (inputs.recover_group != '' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[recover-upload '))) &&
+      inputs.primary_finalize != true && inputs.target_review != true && inputs.primary_deposit != true && inputs.replay_obsid == ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    permissions:
+      actions: read
+      contents: read
+    env:
+      SURVEY: results/chandra_acis_fxt
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    outputs:
+      group: ${{ steps.select.outputs.group }}
+    steps:
+      - name: Select exactly one failed producer
+        id: select
+        env:
+          INPUT_GROUP: ${{ inputs.recover_group }}
+          INPUT_JOB: ${{ inputs.recover_job }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          python - <<'PY'
+          import os,re
+          source=os.environ
+          if source["GITHUB_EVENT_NAME"]=="workflow_dispatch":
+              candidates=[(source["INPUT_GROUP"],source["INPUT_JOB"])]
+          else:
+              candidates=re.findall(r"\[recover-upload (\d{1,3})/(\d{1,14})\]",source["COMMIT_MESSAGE"])
+          if len(candidates)!=1:
+              raise SystemExit("Specify one affected group and original GitHub job ID")
+          group,job=candidates[0]
+          if not re.fullmatch(r"\d{1,3}",group) or not 0<=int(group)<192 or not re.fullmatch(r"[1-9]\d{0,13}",job):
+              raise SystemExit("Invalid group or original producer ID")
+          with open(source["GITHUB_OUTPUT"],"a") as f:
+              print(f"group={int(group)}",file=f)
+              print(f"job={job}",file=f)
+          PY
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          filter: blob:none
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r "$SURVEY/requirements.txt" pandas==2.2.3
+      - name: Check recovery provenance fixtures
+        env:
+          PYTHONPATH: results/chandra_acis_fxt
+        run: python -m unittest test_upload_recovery
+      - name: Recover the missing observation evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GROUP: ${{ steps.select.outputs.group }}
+          SOURCE_JOB: ${{ steps.select.outputs.job }}
+        run: |
+          export CIAO_PREFIX="$RUNNER_TEMP/ciao" RETAIN_EVENTS="$RUNNER_TEMP/recovered-event-inputs" PATH="$PATH:$CONDA/bin"
+          python -u "$SURVEY/upload_recovery.py" recover --group "$GROUP" --job "$SOURCE_JOB" --output "$RUNNER_TEMP/recovery"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always() && steps.select.outcome == 'success'
+        with:
+          name: chandra-missing-upload-${{ steps.select.outputs.group }}
+          path: ${{ runner.temp }}/recovery
+          if-no-files-found: error
+          retention-days: 90
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always() && steps.select.outcome == 'success'
+        with:
+          name: chandra-missing-upload-inputs-${{ steps.select.outputs.group }}
+          path: ${{ runner.temp }}/recovered-event-inputs
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 90
+
+  deposit-upload-recovery:
+    needs: recover-upload
+    if: >-
+      !cancelled() && needs.recover-upload.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    permissions:
+      actions: read
+      contents: write
+    env:
+      SURVEY: results/chandra_acis_fxt
+      GH_TOKEN: ${{ github.token }}
+      GROUP: ${{ needs.recover-upload.outputs.group }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: research/chandra-acis-fast-transients
+          fetch-depth: 0
+          filter: blob:none
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r "$SURVEY/requirements.txt" pandas==2.2.3
+      - name: Authenticate the new producer and deposit its original-byte receipts
+        run: |
+          git merge-base --is-ancestor "$GITHUB_SHA" HEAD
+          git diff --quiet "$GITHUB_SHA" HEAD -- "$SURVEY/upload_recovery.py" "$SURVEY/campaign.py" "$SURVEY/search.py" "$SURVEY/vet.py"
+          python -u "$SURVEY/upload_recovery.py" import --group "$GROUP" --run "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" --sha "$GITHUB_SHA" --evidence "$SURVEY/evidence"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$SURVEY/evidence"
+          git diff --cached --quiet || git commit -m "Deposit independent recovery of Chandra evidence group $GROUP"
+          git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
+      - name: Check the final report on a synthetic candidate and an unresolved event
+        env:
+          PYTHONPATH: results/chandra_acis_fxt
+        run: python -m unittest test_publication test_completeness_figure
