@@ -505,7 +505,7 @@ def external_check(rec,result,cache):
     with ThreadPoolExecutor(max_workers=2) as pool:
         supplied=rec.get("rescue_audit") or {}
         f=pool.submit(lambda:supplied.get("HSC") or safe(hsc_photometry,rec))
-        ext=safe(external_lines,rec["ra"],rec["dec"],rec["wave"],rec["channel"],cache.root)
+        ext=supplied.get("SPARCL") or safe(external_lines,rec["ra"],rec["dec"],rec["wave"],rec["channel"],cache.root)
         hsc=f.result()
     result.update(SPARCL=ext,HSC=hsc)
     if supplied.get("Legacy_forced"):

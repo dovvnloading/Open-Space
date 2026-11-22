@@ -6,7 +6,7 @@ on:
         description: Research stage
         type: choice
         default: full
-        options: [scan, vet, full]
+        options: [scan, vet, focus, full]
   push:
     branches: [science/hetdex-blind-emitter-search]
     paths: [.github/workflows/hetdex-blind-emitters.yml]
@@ -15,12 +15,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: hetdex-rare-emitters-${{ github.ref }}
+  group: hetdex-rare-emitters-${{ github.ref }}-${{ (inputs.stage || 'focus') == 'focus' && 'followup' || 'search' }}
   cancel-in-progress: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[replace-hetdex-run]') }}
 
 env:
   SURVEY: results/hetdex_blind_emitters
-  STAGE: ${{ inputs.stage || 'vet' }}
+  STAGE: ${{ inputs.stage || 'focus' }}
+  VET_RUN: "44995021247"
   OMP_NUM_THREADS: "1"
   OPENBLAS_NUM_THREADS: "1"
 
@@ -29,10 +30,14 @@ jobs:
     if: github.ref == 'refs/heads/science/hetdex-blind-emitter-search'
     runs-on: ubuntu-24.04
     timeout-minutes: 330
+    permissions:
+      contents: read
+      actions: read
     strategy:
       fail-fast: false
+      max-parallel: ${{ (inputs.stage || 'focus') == 'focus' && 1 || 2 }}
       matrix:
-        release: [sc1, sc2]
+        release: [sc2, sc1]
     env:
       RELEASE: ${{ matrix.release }}
     steps:
@@ -58,19 +63,64 @@ jobs:
           mkdir -p "$SURVEY/evidence/$RELEASE"
           cp "$src"/{scan-summary.json,screen.jsonl.gz,shuffled.jsonl.gz,injections.jsonl.gz} "$SURVEY/evidence/$RELEASE/"
           git -C checkpoint rev-parse HEAD > "$SURVEY/evidence/$RELEASE/scan-checkpoint-commit.txt"
+      - name: Restore completed release-level vetting before the supplement
+        if: env.STAGE == 'focus'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          out="$SURVEY/evidence/$RELEASE"
+          if test -s "$out/matched-shuffle-vet/vet-summary.json" && test -s "$out/vet-summary.json"; then
+            exit 0
+          fi
+          for attempt in $(seq 1 450); do
+            names=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VET_RUN/artifacts?per_page=30" --jq '.artifacts[] | select(.expired==false) | .name')
+            if grep -Fxq "research-$RELEASE" <<< "$names"; then
+              gh run download "$VET_RUN" --repo "$GITHUB_REPOSITORY" --name "research-$RELEASE" --dir "$out"
+              test -s "$out/matched-shuffle-vet/vet-summary.json"
+              test -s "$out/vet-summary.json"
+              echo "$VET_RUN" > "$out/vet-checkpoint-run.txt"
+              exit 0
+            fi
+            if test "$(gh run view "$VET_RUN" --repo "$GITHUB_REPOSITORY" --json status --jq .status)" = completed; then
+              echo 'The required vetting checkpoint was not produced.' >&2
+              exit 1
+            fi
+            sleep 30
+          done
+          exit 1
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: python -m pip install -r "$SURVEY/requirements.txt"
       - run: python "$SURVEY/check_pipeline.py"
       - name: Search every spectrum and run controls
-        if: env.STAGE != 'vet'
+        if: env.STAGE == 'scan' || env.STAGE == 'full'
         run: |
           python "$SURVEY/scan.py" "$RELEASE" scan --cache "$RUNNER_TEMP/hetdex" --output "$SURVEY/evidence/$RELEASE" --workers 3
       - name: Adjudicate leads and measure off-source apertures
-        if: env.STAGE != 'scan'
+        if: env.STAGE == 'vet' || env.STAGE == 'full'
         run: |
           python "$SURVEY/scan.py" "$RELEASE" vet --cache "$RUNNER_TEMP/hetdex" --output "$SURVEY/evidence/$RELEASE"
+      - name: Check independent spectral archives for all viable line pairs and extreme EWs
+        if: env.STAGE == 'focus' || env.STAGE == 'full'
+        run: |
+          python "$SURVEY/focus.py" "$SURVEY/evidence/$RELEASE" "$SURVEY/evidence/$RELEASE/focus" --release "$RELEASE" --cache "$RUNNER_TEMP/hetdex" --vet
+      - name: Test recurrent knot geometries in independent datacubes
+        if: env.STAGE == 'focus' || env.STAGE == 'full'
+        run: |
+          python "$SURVEY/repeat_blobs.py" "$SURVEY/evidence/$RELEASE" "$SURVEY/evidence/$RELEASE/repeat-blobs" --release "$RELEASE" --cache "$RUNNER_TEMP/hetdex"
+      - name: Wait for the original evidence commit before publishing the supplement
+        if: env.STAGE == 'focus' && matrix.release == 'sc1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if test -f "$SURVEY/evidence/$RELEASE/vet-checkpoint-run.txt"; then
+            for attempt in $(seq 1 40); do
+              if test "$(gh run view "$VET_RUN" --repo "$GITHUB_REPOSITORY" --json status --jq .status)" = completed; then exit 0; fi
+              sleep 15
+            done
+            exit 1
+          fi
       - name: Record execution revision and package versions
         if: always()
         run: |
@@ -119,7 +169,7 @@ jobs:
           git push origin HEAD:science/hetdex-blind-emitter-search
 
       - name: Build claim and verify branch
-        if: env.STAGE != 'scan' && needs.research.result == 'success'
+        if: (env.STAGE == 'focus' || env.STAGE == 'full') && needs.research.result == 'success'
         run: |
           python "$SURVEY/report.py"
           git add README.md "$SURVEY"
