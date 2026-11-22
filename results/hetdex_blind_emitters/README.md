@@ -1,6 +1,6 @@
 # Rare emission lines in the two public HETDEX source catalogs
 
-**No new emitter passed all confirmation checks** in 1,340,413 source observations. The blind scan found 541,205 fitted peaks at signal-to-noise of at least 7. The follow-up ledger records external-check attempts for 287 line or spatial hypotheses. Across all stages, 12,306 hypotheses remained unresolved. The releases share targets and exposures. Counts describe observations or feature hypotheses and can include repeated measurements of a galaxy.
+**No new emitter passed all confirmation checks** in 1,340,413 source observations. The blind scan found 541,205 fitted peaks at signal-to-noise of at least 7. The follow-up ledger records external-check attempts for 577 line or spatial hypotheses. Across all stages, 12,512 hypotheses remained unresolved. The releases share targets and exposures. Counts describe observations or feature hypotheses and can include repeated measurements of a galaxy.
 
 ## Search coverage
 
@@ -16,7 +16,7 @@ The source search uses published PSF-weighted extractions and catalog emission k
 | Channel | Single-visit screen, SC1 / SC2 | Excluded | Already published | Unresolved | Passed | External follow-up, SC1 / SC2 |
 |---|---:|---:|---:|---:|---:|---:|
 | He II | 1689 / 5098 | 6,926 | 4 | 183 | 0 | 32 / 32 |
-| Extreme Lyα EW | 34 / 31 | 47 | 4 | 379 | 0 | 50 / 43 |
+| Extreme Lyα EW | 34 / 31 | 47 | 4 | 585 | 0 | 68 / 315 |
 | Extended Lyα | spatial / spatial | 103,827 | 677 | 4,725 | 0 | 34 / 32 |
 | Unassigned-line screen | 1879 / 5791 | 991 | 0 | 7,019 | 0 | 32 / 32 |
 
@@ -75,7 +75,25 @@ The raw wavelength-by-wavelength shuffle mixes bright and faint continua and des
 
 ## Inputs, evidence and reproduction
 
-Every unresolved narrow He II / Lyα pair meeting the flux-ratio and spectral cuts, and every unresolved EW lead with a qualifying lower bound, entered the supplementary positional search of independent spectral catalogs. The table distinguishes successful catalog queries from attempts. Full rechecks preserve the original ledger and each revised decision.
+
+### Native Legacy Surveys equivalent widths
+
+Independent line identification and corroboration select the native-imaging cohort. Tractor fluxes and PSF-matched coadds provide redward continuum measurements. Limits require calibrated band coverage and a valid flux uncertainty. The two-band upper bound refers to a compact source with continuum-dominated r and z photometry, under the stated continuum and aperture model. It does not constrain diffuse emission beyond those apertures.
+
+| Release / stream | EW rows in first register | Independently supported rows rechecked | Further supported rows outside the imaging scout | Rows with a lower bound | Lower bound >240 Å | Two-band model upper bound <240 Å | Confirmed |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| SC1 observed | 158 | 0 | 18 | 17 | 0 | 0 | 0 |
+| SC1 matched-shuffle-vet | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SC1 shuffle-vet | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SC2 observed | 272 | 116 | 188 | 206 | 0 | 0 | 0 |
+| SC2 matched-shuffle-vet | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SC2 shuffle-vet | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+SC1 · [Every measured or inconclusive EW](evidence/sc1/ew-imaging/outcomes.csv) · [Tightest bounds and confirmed rows](evidence/sc1/ew-imaging/best.json) · [Native photometry and checksums](evidence/sc1/ew-imaging/native.jsonl.gz).
+
+SC2 · [Every measured or inconclusive EW](evidence/sc2/ew-imaging/outcomes.csv) · [Tightest bounds and confirmed rows](evidence/sc2/ew-imaging/best.json) · [Native photometry and checksums](evidence/sc2/ew-imaging/native.jsonl.gz).
+
+Every unresolved narrow He II / Lyα pair meeting the flux-ratio and spectral cuts, and every unresolved EW lead with a qualifying lower bound in the frozen first-pass register, entered the supplementary positional search of independent spectral catalogs. The table distinguishes successful catalog queries from attempts. Full rechecks preserve the original ledger and each revised decision.
 
 | Release | Eligible source / line hypotheses | Distinct positions | Rechecked hypotheses |
 |---|---:|---:|---:|
@@ -106,7 +124,7 @@ The endpoint audits give the positions, trial identifications and dispositions o
 | Release / system | First knot RA, Dec (deg) | Second knot RA, Dec (deg) | Observed line (Å) | Trial Lyα z | Disposition | Evidence or remaining ambiguity |
 |---|---|---|---:|---:|---|---|
 | SC1 / 44 | 197.779510, 51.198437 | 197.779739, 51.199913 | 4765.4 | 2.92107 | unresolved | Legacy query unavailable at secondary knot; direct imaging checks unavailable; foreground interpretation unresolved; independent redshift unavailable |
-| SC1 / 78 | 11.112092, -0.050852 | 11.113163, -0.049214 | 5422.5 | 3.46173 | unresolved | Legacy query unavailable at secondary knot; direct imaging checks unavailable; foreground interpretation unresolved; independent redshift unavailable; persistent detector/fibre response not excluded at both knots; primary knot has a competing counterpart redshift; association unresolved; secondary counterpart redshift disagrees; association needs review; secondary knot has a competing counterpart redshift; association unresolved |
+| SC1 / 78 | 11.112092, -0.050852 | 11.113163, -0.049214 | 5422.5 | 3.46173 | unresolved | Legacy query unavailable at secondary knot; direct imaging checks unavailable; foreground interpretation unresolved; independent redshift unavailable; persistent detector/fibre response not excluded at both knots; primary knot has a competing counterpart redshift; association unresolved; secondary counterpart redshift disagrees; association needs review; secondary knot has a competing counterpart redshift; association unresolved; secondary knot wavelength agrees with a foreground transition at its HETDEX catalog redshift |
 
 | Check on ranked features | SC1 | SC2 |
 |---|---:|---:|
@@ -114,7 +132,7 @@ The endpoint audits give the positions, trial identifications and dispositions o
 | SIMBAD cone searches with a valid response | 148 | 139 |
 | Legacy Surveys cone searches with a valid response | 0 | 0 |
 | Direct HSC cutouts with measured photometry | 30 | 29 |
-| Cube opened and target narrowband window tested | 145 | 139 |
+| Cube opened and target narrowband window tested | 163 | 411 |
 
 SC1 could not retrieve the HETDEX-specific DESI follow-up catalog and the published HETDEX Lyα-nebula catalog during the initial source and control vetting. That limited novelty checks and the imaging shortlist for this release. The independent spectral and repeated-geometry results above report their own coverage.
 
@@ -140,24 +158,24 @@ SC1 · [Input checksums and mirrors](evidence/sc1/inputs-sc1.json) · [Ancillary
 
 SC2 · [Input checksums and mirrors](evidence/sc2/inputs-sc2.json) · [Ancillary and cube receipts](evidence/sc2/vet-inputs.json) · [Vetting ledger](evidence/sc2/vetted.jsonl.gz) · [Injections](evidence/sc2/injections.jsonl.gz) · [Completeness](evidence/sc2/completeness.csv) · [He II positive controls](evidence/sc2/positive-controls.json) · [Weaker paired lines](evidence/sc2/weak-heii-summary.json) · [Imaging-led EW measurements](evidence/sc2/ew-rescue-summary.json) · [Supplementary spectroscopy](evidence/sc2/focus/summary.json) · [Query receipts](evidence/sc2/focus/receipts.json.gz) · [Eligible spectroscopy ledger](evidence/sc2/focus/catalog.csv.gz) · [Repeated spatial systems](evidence/sc2/repeat-blobs/summary.json) · [Raw-shuffle follow-up](evidence/sc2/shuffle-vet/vet-summary.json) · [Continuum-preserving control](evidence/sc2/nuisance-summary.json) · [Matched control vetting](evidence/sc2/matched-shuffle-vet/vet-summary.json) · [Halo recovery](evidence/sc2/halo-injections-summary.json) · [Repeat controls](evidence/sc2/repeat-summary.json) · [Off-source spectra selection](evidence/sc2/offsource.jsonl.gz).
 
-The workflow pins Python dependencies, fetches both releases, checks the publisher MD5 values and hashes the received bytes. Run its **full** dispatch on the research branch, or use the same commands on a runner with network access and sufficient disk. Run from the repository root.
+The workflow downloads both releases, verifies the publisher MD5 values and computes an independent SHA-256. A full run starts with empty release output directories and records its Python environment. The final job commits the evidence, builds this report and runs both repository checks. [Exact workflow commands](../../.github/workflows/hetdex-blind-emitters.yml).
+
+Before the workflow is on the default branch, the following workflow-only commit launches a full reproduction on the research branch.
 
 ```sh
-D=results/hetdex_blind_emitters
-python -m pip install -r "$D/requirements.txt"
-python "$D/check_pipeline.py"
-for r in sc1 sc2; do
-  python "$D/scan.py" "$r" scan --output "$D/evidence/$r" --cache "/tmp/hetdex-$r" --workers 3
-  python "$D/scan.py" "$r" vet --output "$D/evidence/$r" --cache "/tmp/hetdex-$r"
-  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --release "$r" --cache "/tmp/hetdex-$r" --vet
-  python "$D/repeat_blobs.py" "$D/evidence/$r" "$D/evidence/$r/repeat-blobs" --release "$r" --cache "/tmp/hetdex-$r"
-  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --static-retry --vet --release "$r" --cache "/tmp/hetdex-$r"
-  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --replay-saved
-  python "$D/blobs_followup.py" "$D/evidence/$r" --cache "/tmp/hetdex-$r"
-done
-python "$D/report.py"
-python -m open_space.verify
-python -m unittest discover -s tests
+git switch science/hetdex-blind-emitter-search
+git pull --ff-only
+flow=.github/workflows/hetdex-blind-emitters.yml
+echo "# Reproduce the full HETDEX search." >> "$flow"
+git add "$flow"
+git commit -m "[full-hetdex] Reproduce both public releases"
+git push origin HEAD
+```
+
+Once GitHub lists the workflow on the default branch, its full dispatch is also available.
+
+```sh
+gh workflow run hetdex-blind-emitters.yml --ref science/hetdex-blind-emitter-search -f stage=full
 ```
 
 [Spectral method](SPECTRAL_METHODS.md) · [Spatial, imaging and literature checks](VETTING.md) · [HETDEX source catalog 1 and public data](https://doi.org/10.5281/zenodo.7448504) · [HETDEX source catalog 2 and public data](https://doi.org/10.5281/zenodo.19581262) · [HETDEX data products and associated catalogs](https://hetdex.org/data-results/) · [Prior HETDEX He II search](https://arxiv.org/abs/2609.16134).
