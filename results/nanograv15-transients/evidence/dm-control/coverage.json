@@ -1,0 +1,3367 @@
+{
+  "description": "Post-selection, same-data diagnostics evaluated at the narrowband discovery epoch, shape and signed response. Local one-sided p values are descriptive.",
+  "leverage_rule": "At each site-day require 1 - rho^2 >= 0.01 for GLS columns 1 and (1400 MHz/f)^2; maximum permitted intercept variance inflation is 100. ECORR groups stay intact.",
+  "comparison": "Both members of each raw/intercept pair use the identical participating set at each event, on identical site-days. Their residual degrees of freedom, red harmonic budgets and noise precision can differ. Amplitude changes alone do not identify a dispersive origin.",
+  "minimum_coherent_pulsars": 8,
+  "events": 77,
+  "control_fits": 462,
+  "per_pulsar": {
+    "J0023+0923": {
+      "pulsar": "J0023+0923",
+      "raw_rows": 1706,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 94,
+          "usable": 75
+        }
+      },
+      "minimum_accepted_leverage": 0.010321118554689312,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 75,
+          "mjd_min": 55789.34000355443,
+          "mjd_max": 59051.39614098719,
+          "dof": 32
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 75,
+          "mjd_min": 55789.34000355443,
+          "mjd_max": 59051.39614098719,
+          "dof": 32
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 1384,
+          "mjd_min": 55789.3200339508,
+          "mjd_max": 59051.414710490084,
+          "dof": 1284
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 1384,
+          "mjd_min": 55789.3200339508,
+          "mjd_max": 59051.414710490084,
+          "dof": 1284
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J0030+0451": {
+      "pulsar": "J0030+0451",
+      "raw_rows": 1461,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 300,
+          "usable": 289
+        }
+      },
+      "minimum_accepted_leverage": 0.011199377109526898,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 289,
+          "mjd_min": 53394.88468888553,
+          "mjd_max": 59067.33819794961,
+          "dof": 233
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 289,
+          "mjd_min": 53394.88468888553,
+          "mjd_max": 59067.33819794961,
+          "dof": 233
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 1429,
+          "mjd_min": 53394.85368637489,
+          "mjd_max": 59067.375308494535,
+          "dof": 1331
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 1429,
+          "mjd_min": 53394.85368637489,
+          "mjd_max": 59067.375308494535,
+          "dof": 1331
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J0340+4130": {
+      "pulsar": "J0340+4130",
+      "raw_rows": 454,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 198,
+          "usable": 196
+        }
+      },
+      "minimum_accepted_leverage": 0.013696468365147596,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 196,
+          "mjd_min": 55972.154918907494,
+          "mjd_max": 58942.92773139369,
+          "dof": 153
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 196,
+          "mjd_min": 55972.154918907494,
+          "mjd_max": 58942.92773139369,
+          "dof": 153
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 451,
+          "mjd_min": 55972.08141825516,
+          "mjd_max": 58942.9277318863,
+          "dof": 374
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 451,
+          "mjd_min": 55972.08141825516,
+          "mjd_max": 58942.9277318863,
+          "dof": 374
+        }
+      }
+    },
+    "J0406+3039": {
+      "pulsar": "J0406+3039",
+      "raw_rows": 145,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 39,
+          "usable": 39
+        }
+      },
+      "minimum_accepted_leverage": 0.02968872651526344,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 39,
+          "mjd_min": 57755.0666995788,
+          "mjd_max": 59056.49509925673,
+          "dof": 18
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 39,
+          "mjd_min": 57755.0666995788,
+          "mjd_max": 59056.49509925673,
+          "dof": 18
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 145,
+          "mjd_min": 57755.058806926354,
+          "mjd_max": 59056.51249580272,
+          "dof": 99
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 145,
+          "mjd_min": 57755.058806926354,
+          "mjd_max": 59056.51249580272,
+          "dof": 99
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J0437-4715": {
+      "pulsar": "J0437-4715",
+      "raw_rows": 218,
+      "site_days": {
+        "vla": {
+          "observed_site_days": 32,
+          "usable": 32
+        }
+      },
+      "minimum_accepted_leverage": 0.03889495448488156,
+      "controls": {
+        "dm_free_all": {
+          "status": "unavailable",
+          "reason": "only 11 residual degrees of freedom"
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 218,
+          "mjd_min": 57221.647785094574,
+          "mjd_max": 58957.92539828014,
+          "dof": 160
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J0509+0856": {
+      "pulsar": "J0509+0856",
+      "raw_rows": 134,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 39,
+          "usable": 39
+        }
+      },
+      "minimum_accepted_leverage": 0.01039905928437046,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 39,
+          "mjd_min": 57755.114541999304,
+          "mjd_max": 59056.55016437068,
+          "dof": 19
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 39,
+          "mjd_min": 57755.114541999304,
+          "mjd_max": 59056.55016437068,
+          "dof": 19
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 134,
+          "mjd_min": 57755.09770703033,
+          "mjd_max": 59056.550179264166,
+          "dof": 89
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 134,
+          "mjd_min": 57755.09770703033,
+          "mjd_max": 59056.550179264166,
+          "dof": 89
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J0557+1551": {
+      "pulsar": "J0557+1551",
+      "raw_rows": 106,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 41,
+          "usable": 36
+        }
+      },
+      "minimum_accepted_leverage": 0.010569232059753353,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 36,
+          "mjd_min": 57389.19369309924,
+          "mjd_max": 59056.5682005456,
+          "dof": 18
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 36,
+          "mjd_min": 57389.19369309924,
+          "mjd_max": 59056.5682005456,
+          "dof": 18
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 96,
+          "mjd_min": 57389.182774996,
+          "mjd_max": 59056.56820085271,
+          "dof": 43
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 96,
+          "mjd_min": 57389.182774996,
+          "mjd_max": 59056.56820085271,
+          "dof": 43
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J0605+3757": {
+      "pulsar": "J0605+3757",
+      "raw_rows": 88,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 44,
+          "usable": 25
+        }
+      },
+      "minimum_accepted_leverage": 0.011280302173935719,
+      "controls": {
+        "dm_free_all": {
+          "status": "unavailable",
+          "reason": "only 9 residual degrees of freedom"
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "only 9 residual degrees of freedom"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 50,
+          "mjd_min": 57714.30824801485,
+          "mjd_max": 58942.044651322576,
+          "dof": 16
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 50,
+          "mjd_min": 57714.30824801485,
+          "mjd_max": 58942.044651322576,
+          "dof": 16
+        }
+      }
+    },
+    "J0610-2100": {
+      "pulsar": "J0610-2100",
+      "raw_rows": 426,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 74,
+          "usable": 62
+        }
+      },
+      "minimum_accepted_leverage": 0.01022404634485341,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 62,
+          "mjd_min": 57713.32582686744,
+          "mjd_max": 58942.908609551625,
+          "dof": 30
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 62,
+          "mjd_min": 57713.32582686744,
+          "mjd_max": 58942.908609551625,
+          "dof": 30
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 363,
+          "mjd_min": 57713.31777195148,
+          "mjd_max": 58942.91557002428,
+          "dof": 318
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 363,
+          "mjd_min": 57713.31777195148,
+          "mjd_max": 58942.91557002428,
+          "dof": 318
+        }
+      }
+    },
+    "J0613-0200": {
+      "pulsar": "J0613-0200",
+      "raw_rows": 845,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 326,
+          "usable": 242
+        }
+      },
+      "minimum_accepted_leverage": 0.013690400972685368,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 242,
+          "mjd_min": 55275.13758182538,
+          "mjd_max": 58942.95083351473,
+          "dof": 182
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 242,
+          "mjd_min": 55275.13758182538,
+          "mjd_max": 58942.95083351473,
+          "dof": 182
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 572,
+          "mjd_min": 55275.13758173876,
+          "mjd_max": 58942.95083388851,
+          "dof": 470
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 572,
+          "mjd_min": 55275.13758173876,
+          "mjd_max": 58942.95083388851,
+          "dof": 470
+        }
+      }
+    },
+    "J0614-3329": {
+      "pulsar": "J0614-3329",
+      "raw_rows": 111,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 56,
+          "usable": 43
+        }
+      },
+      "minimum_accepted_leverage": 0.010443982326197698,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 43,
+          "mjd_min": 58061.41244528246,
+          "mjd_max": 58942.889598917245,
+          "dof": 20
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 43,
+          "mjd_min": 58061.41244528246,
+          "mjd_max": 58942.889598917245,
+          "dof": 20
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 86,
+          "mjd_min": 58061.41244507615,
+          "mjd_max": 58942.88959919593,
+          "dof": 51
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 86,
+          "mjd_min": 58061.41244507615,
+          "mjd_max": 58942.88959919593,
+          "dof": 51
+        }
+      }
+    },
+    "J0636+5128": {
+      "pulsar": "J0636+5128",
+      "raw_rows": 2407,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 140,
+          "usable": 108
+        }
+      },
+      "minimum_accepted_leverage": 0.010141608032563254,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 108,
+          "mjd_min": 56640.38097783997,
+          "mjd_max": 58939.94433521355,
+          "dof": 65
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 108,
+          "mjd_min": 56640.38097783997,
+          "mjd_max": 58939.94433521355,
+          "dof": 65
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 1937,
+          "mjd_min": 56640.378708527605,
+          "mjd_max": 58939.94954803658,
+          "dof": 1868
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 1937,
+          "mjd_min": 56640.378708527605,
+          "mjd_max": 58939.94954803658,
+          "dof": 1868
+        }
+      }
+    },
+    "J0645+5158": {
+      "pulsar": "J0645+5158",
+      "raw_rows": 568,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 192,
+          "usable": 112
+        }
+      },
+      "minimum_accepted_leverage": 0.01027147483912072,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 112,
+          "mjd_min": 55826.68669258025,
+          "mjd_max": 58881.96736157965,
+          "dof": 69
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 112,
+          "mjd_min": 55826.68669258025,
+          "mjd_max": 58881.96736157965,
+          "dof": 69
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 357,
+          "mjd_min": 55826.686692547475,
+          "mjd_max": 58881.96736176316,
+          "dof": 280
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 357,
+          "mjd_min": 55826.686692547475,
+          "mjd_max": 58881.96736176316,
+          "dof": 280
+        }
+      }
+    },
+    "J0709+0458": {
+      "pulsar": "J0709+0458",
+      "raw_rows": 188,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 51,
+          "usable": 51
+        }
+      },
+      "minimum_accepted_leverage": 0.018691793622221176,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 51,
+          "mjd_min": 57389.21874146231,
+          "mjd_max": 59056.6233376162,
+          "dof": 24
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 51,
+          "mjd_min": 57389.21874146231,
+          "mjd_max": 59056.6233376162,
+          "dof": 24
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 188,
+          "mjd_min": 57389.21785328761,
+          "mjd_max": 59056.62333897865,
+          "dof": 134
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 188,
+          "mjd_min": 57389.21785328761,
+          "mjd_max": 59056.62333897865,
+          "dof": 134
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J0740+6620": {
+      "pulsar": "J0740+6620",
+      "raw_rows": 711,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 226,
+          "usable": 170
+        }
+      },
+      "minimum_accepted_leverage": 0.010187154852773328,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 170,
+          "mjd_min": 56640.39102040331,
+          "mjd_max": 58944.44339331208,
+          "dof": 125
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 170,
+          "mjd_min": 56640.39102040331,
+          "mjd_max": 58944.44339331208,
+          "dof": 125
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 580,
+          "mjd_min": 56640.391020359304,
+          "mjd_max": 58944.443463278134,
+          "dof": 509
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 580,
+          "mjd_min": 56640.391020359304,
+          "mjd_max": 58944.443463278134,
+          "dof": 509
+        }
+      }
+    },
+    "J0931-1902": {
+      "pulsar": "J0931-1902",
+      "raw_rows": 381,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 167,
+          "usable": 120
+        }
+      },
+      "minimum_accepted_leverage": 0.010069751431296625,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 120,
+          "mjd_min": 56351.061902543945,
+          "mjd_max": 58942.48170625978,
+          "dof": 81
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 120,
+          "mjd_min": 56351.061902543945,
+          "mjd_max": 58942.48170625978,
+          "dof": 81
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 272,
+          "mjd_min": 56351.061902333044,
+          "mjd_max": 58942.97556315616,
+          "dof": 205
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 272,
+          "mjd_min": 56351.061902333044,
+          "mjd_max": 58942.97556315616,
+          "dof": 205
+        }
+      }
+    },
+    "J1012+5307": {
+      "pulsar": "J1012+5307",
+      "raw_rows": 1294,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 329,
+          "usable": 157
+        }
+      },
+      "minimum_accepted_leverage": 0.010434983468474712,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 157,
+          "mjd_min": 55275.18605560943,
+          "mjd_max": 58939.97644941401,
+          "dof": 96
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 157,
+          "mjd_min": 55275.18605560943,
+          "mjd_max": 58939.97644941401,
+          "dof": 96
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 660,
+          "mjd_min": 55275.18264807552,
+          "mjd_max": 58939.976449462694,
+          "dof": 558
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 660,
+          "mjd_min": 55275.18264807552,
+          "mjd_max": 58939.976449462694,
+          "dof": 558
+        }
+      }
+    },
+    "J1012-4235": {
+      "pulsar": "J1012-4235",
+      "raw_rows": 94,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 45,
+          "usable": 32
+        }
+      },
+      "minimum_accepted_leverage": 0.011214278651083709,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 32,
+          "mjd_min": 57714.51069051386,
+          "mjd_max": 58943.06034720111,
+          "dof": 16
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 32,
+          "mjd_min": 57714.51069051386,
+          "mjd_max": 58943.06034720111,
+          "dof": 16
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 70,
+          "mjd_min": 57714.50583671561,
+          "mjd_max": 58943.060347824685,
+          "dof": 28
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 70,
+          "mjd_min": 57714.50583671561,
+          "mjd_max": 58943.060347824685,
+          "dof": 28
+        }
+      }
+    },
+    "J1022+1001": {
+      "pulsar": "J1022+1001",
+      "raw_rows": 226,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 57,
+          "usable": 57
+        }
+      },
+      "minimum_accepted_leverage": 0.10316760812491566,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 57,
+          "mjd_min": 57028.31896121998,
+          "mjd_max": 59055.72654950149,
+          "dof": 24
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 57,
+          "mjd_min": 57028.31896121998,
+          "mjd_max": 59055.72654950149,
+          "dof": 24
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 226,
+          "mjd_min": 57028.302251462796,
+          "mjd_max": 59055.738804787565,
+          "dof": 157
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 226,
+          "mjd_min": 57028.302251462796,
+          "mjd_max": 59055.738804787565,
+          "dof": 157
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1024-0719": {
+      "pulsar": "J1024-0719",
+      "raw_rows": 581,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 240,
+          "usable": 150
+        }
+      },
+      "minimum_accepted_leverage": 0.010086572459613308,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 150,
+          "mjd_min": 55275.16491068554,
+          "mjd_max": 58942.02933501137,
+          "dof": 94
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 150,
+          "mjd_min": 55275.16491068554,
+          "mjd_max": 58942.02933501137,
+          "dof": 94
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 370,
+          "mjd_min": 55275.16491065332,
+          "mjd_max": 58942.02933504588,
+          "dof": 272
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 370,
+          "mjd_min": 55275.16491065332,
+          "mjd_max": 58942.02933504588,
+          "dof": 272
+        }
+      }
+    },
+    "J1125+7819": {
+      "pulsar": "J1125+7819",
+      "raw_rows": 410,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 140,
+          "usable": 126
+        }
+      },
+      "minimum_accepted_leverage": 0.010141105393272731,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 126,
+          "mjd_min": 56640.401846017354,
+          "mjd_max": 58939.93012858329,
+          "dof": 84
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 126,
+          "mjd_min": 56640.401846017354,
+          "mjd_max": 58939.93012858329,
+          "dof": 84
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 376,
+          "mjd_min": 56640.40184600744,
+          "mjd_max": 58939.93012869174,
+          "dof": 308
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 376,
+          "mjd_min": 56640.40184600744,
+          "mjd_max": 58939.93012869174,
+          "dof": 308
+        }
+      }
+    },
+    "J1312+0051": {
+      "pulsar": "J1312+0051",
+      "raw_rows": 159,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 49,
+          "usable": 45
+        }
+      },
+      "minimum_accepted_leverage": 0.01235397194844634,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 45,
+          "mjd_min": 57389.45530632099,
+          "mjd_max": 59055.890374355855,
+          "dof": 23
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 45,
+          "mjd_min": 57389.45530632099,
+          "mjd_max": 59055.890374355855,
+          "dof": 23
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 149,
+          "mjd_min": 57389.438506627775,
+          "mjd_max": 59055.890374442024,
+          "dof": 96
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 149,
+          "mjd_min": 57389.438506627775,
+          "mjd_max": 59055.890374442024,
+          "dof": 96
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1453+1902": {
+      "pulsar": "J1453+1902",
+      "raw_rows": 248,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 71,
+          "usable": 68
+        }
+      },
+      "minimum_accepted_leverage": 0.013184369669062557,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 68,
+          "mjd_min": 56497.97301087753,
+          "mjd_max": 59055.985061920066,
+          "dof": 36
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 68,
+          "mjd_min": 56497.97301087753,
+          "mjd_max": 59055.985061920066,
+          "dof": 36
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 242,
+          "mjd_min": 56497.97260335902,
+          "mjd_max": 59055.98506198365,
+          "dof": 174
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 242,
+          "mjd_min": 56497.97260335902,
+          "mjd_max": 59055.98506198365,
+          "dof": 174
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1455-3330": {
+      "pulsar": "J1455-3330",
+      "raw_rows": 725,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 292,
+          "usable": 181
+        }
+      },
+      "minimum_accepted_leverage": 0.010014367455042028,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 181,
+          "mjd_min": 53695.57718900663,
+          "mjd_max": 58940.28080459138,
+          "dof": 123
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 181,
+          "mjd_min": 53695.57718900663,
+          "mjd_max": 58940.28080459138,
+          "dof": 123
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 426,
+          "mjd_min": 53695.57626762314,
+          "mjd_max": 58940.28080476589,
+          "dof": 326
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 426,
+          "mjd_min": 53695.57626762314,
+          "mjd_max": 58940.28080476589,
+          "dof": 326
+        }
+      }
+    },
+    "J1600-3053": {
+      "pulsar": "J1600-3053",
+      "raw_rows": 967,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 292,
+          "usable": 249
+        },
+        "vla": {
+          "observed_site_days": 24,
+          "usable": 23
+        }
+      },
+      "minimum_accepted_leverage": 0.015693567109075768,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 272,
+          "mjd_min": 54428.60866517681,
+          "mjd_max": 58956.45509572955,
+          "dof": 208
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 249,
+          "mjd_min": 54428.60866517681,
+          "mjd_max": 58940.32572989974,
+          "dof": 186
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 859,
+          "mjd_min": 54428.60866504533,
+          "mjd_max": 58956.46715279544,
+          "dof": 753
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 703,
+          "mjd_min": 54428.60866504533,
+          "mjd_max": 58940.32573029371,
+          "dof": 598
+        }
+      }
+    },
+    "J1614-2230": {
+      "pulsar": "J1614-2230",
+      "raw_rows": 734,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 266,
+          "usable": 254
+        }
+      },
+      "minimum_accepted_leverage": 0.010476404690666574,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 254,
+          "mjd_min": 55265.362887777024,
+          "mjd_max": 58940.2986349427,
+          "dof": 195
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 254,
+          "mjd_min": 55265.362887777024,
+          "mjd_max": 58940.2986349427,
+          "dof": 195
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 702,
+          "mjd_min": 55265.35603184485,
+          "mjd_max": 58940.29863523642,
+          "dof": 601
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 702,
+          "mjd_min": 55265.35603184485,
+          "mjd_max": 58940.29863523642,
+          "dof": 601
+        }
+      }
+    },
+    "J1630+3734": {
+      "pulsar": "J1630+3734",
+      "raw_rows": 131,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 63,
+          "usable": 36
+        }
+      },
+      "minimum_accepted_leverage": 0.010949208622505258,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 36,
+          "mjd_min": 57681.825624522404,
+          "mjd_max": 58945.47898525749,
+          "dof": 16
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 36,
+          "mjd_min": 57681.825624522404,
+          "mjd_max": 58945.47898525749,
+          "dof": 16
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 72,
+          "mjd_min": 57681.82562446992,
+          "mjd_max": 58945.4789854013,
+          "dof": 22
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 72,
+          "mjd_min": 57681.82562446992,
+          "mjd_max": 58945.4789854013,
+          "dof": 22
+        }
+      }
+    },
+    "J1640+2224": {
+      "pulsar": "J1640+2224",
+      "raw_rows": 1226,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 290,
+          "usable": 271
+        }
+      },
+      "minimum_accepted_leverage": 0.0106308959141449,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 271,
+          "mjd_min": 53420.44145262646,
+          "mjd_max": 59070.963891387866,
+          "dof": 206
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 271,
+          "mjd_min": 53420.44145262646,
+          "mjd_max": 59070.963891387866,
+          "dof": 206
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 1152,
+          "mjd_min": 53420.41836223058,
+          "mjd_max": 59070.969740673376,
+          "dof": 1045
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 1152,
+          "mjd_min": 53420.41836223058,
+          "mjd_max": 59070.969740673376,
+          "dof": 1045
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1643-1224": {
+      "pulsar": "J1643-1224",
+      "raw_rows": 1003,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 324,
+          "usable": 246
+        },
+        "vla": {
+          "observed_site_days": 24,
+          "usable": 23
+        }
+      },
+      "minimum_accepted_leverage": 0.022262894134094435,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 269,
+          "mjd_min": 53918.34790294075,
+          "mjd_max": 58956.49094849818,
+          "dof": 204
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 246,
+          "mjd_min": 53918.34790294075,
+          "mjd_max": 58940.34366003431,
+          "dof": 182
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 780,
+          "mjd_min": 53918.008030896555,
+          "mjd_max": 58956.50391127211,
+          "dof": 673
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 598,
+          "mjd_min": 53918.008030896555,
+          "mjd_max": 58940.34366056802,
+          "dof": 492
+        }
+      }
+    },
+    "J1705-1903": {
+      "pulsar": "J1705-1903",
+      "raw_rows": 473,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 64,
+          "usable": 45
+        }
+      },
+      "minimum_accepted_leverage": 0.011014810106256934,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 45,
+          "mjd_min": 57579.190802989266,
+          "mjd_max": 58939.37787549146,
+          "dof": 18
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 45,
+          "mjd_min": 57579.190802989266,
+          "mjd_max": 58939.37787549146,
+          "dof": 18
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 352,
+          "mjd_min": 57579.184288405384,
+          "mjd_max": 58939.3846547838,
+          "dof": 300
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 352,
+          "mjd_min": 57579.184288405384,
+          "mjd_max": 58939.3846547838,
+          "dof": 300
+        }
+      }
+    },
+    "J1713+0747": {
+      "pulsar": "J1713+0747",
+      "raw_rows": 2963,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 314,
+          "usable": 296
+        },
+        "gbt": {
+          "observed_site_days": 550,
+          "usable": 468
+        },
+        "vla": {
+          "observed_site_days": 32,
+          "usable": 31
+        }
+      },
+      "minimum_accepted_leverage": 0.010291388193001683,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 795,
+          "mjd_min": 53420.50351938365,
+          "mjd_max": 59071.00791288035,
+          "dof": 725
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 296,
+          "mjd_min": 53420.50351938365,
+          "mjd_max": 59071.00791288035,
+          "dof": 232
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 468,
+          "mjd_min": 55072.86885378401,
+          "mjd_max": 58940.36145248571,
+          "dof": 404
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 2600,
+          "mjd_min": 53420.48666610855,
+          "mjd_max": 59071.00791290849,
+          "dof": 2488
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 1255,
+          "mjd_min": 53420.48666610855,
+          "mjd_max": 59071.00791290849,
+          "dof": 1149
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 1143,
+          "mjd_min": 55072.862647477115,
+          "mjd_max": 58940.361452545454,
+          "dof": 1037
+        }
+      }
+    },
+    "J1719-1438": {
+      "pulsar": "J1719-1438",
+      "raw_rows": 930,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 73,
+          "usable": 54
+        }
+      },
+      "minimum_accepted_leverage": 0.010056878116993073,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 54,
+          "mjd_min": 57682.85689214675,
+          "mjd_max": 58939.397231601506,
+          "dof": 27
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 54,
+          "mjd_min": 57682.85689214675,
+          "mjd_max": 58939.397231601506,
+          "dof": 27
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 706,
+          "mjd_min": 57682.84997638685,
+          "mjd_max": 58939.40641480982,
+          "dof": 664
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 706,
+          "mjd_min": 57682.84997638685,
+          "mjd_max": 58939.40641480982,
+          "dof": 664
+        }
+      }
+    },
+    "J1730-2304": {
+      "pulsar": "J1730-2304",
+      "raw_rows": 188,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 74,
+          "usable": 64
+        }
+      },
+      "minimum_accepted_leverage": 0.01003778841631453,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 64,
+          "mjd_min": 57682.877354599965,
+          "mjd_max": 58940.416056504386,
+          "dof": 39
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 64,
+          "mjd_min": 57682.877354599965,
+          "mjd_max": 58940.416056504386,
+          "dof": 39
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 166,
+          "mjd_min": 57682.87735449553,
+          "mjd_max": 58940.41605658595,
+          "dof": 128
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 166,
+          "mjd_min": 57682.87735449553,
+          "mjd_max": 58940.41605658595,
+          "dof": 128
+        }
+      }
+    },
+    "J1738+0333": {
+      "pulsar": "J1738+0333",
+      "raw_rows": 700,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 106,
+          "usable": 97
+        }
+      },
+      "minimum_accepted_leverage": 0.010096375350765796,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 97,
+          "mjd_min": 55135.814498661275,
+          "mjd_max": 59056.05868844055,
+          "dof": 47
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 97,
+          "mjd_min": 55135.814498661275,
+          "mjd_max": 59056.05868844055,
+          "dof": 47
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 658,
+          "mjd_min": 55135.795838312704,
+          "mjd_max": 59056.07852703682,
+          "dof": 558
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 658,
+          "mjd_min": 55135.795838312704,
+          "mjd_max": 59056.07852703682,
+          "dof": 558
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1741+1351": {
+      "pulsar": "J1741+1351",
+      "raw_rows": 460,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 114,
+          "usable": 110
+        }
+      },
+      "minimum_accepted_leverage": 0.013629052785037565,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 110,
+          "mjd_min": 55042.07511143083,
+          "mjd_max": 59065.032660547724,
+          "dof": 50
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 110,
+          "mjd_min": 55042.07511143083,
+          "mjd_max": 59065.032660547724,
+          "dof": 50
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 446,
+          "mjd_min": 55042.04701008258,
+          "mjd_max": 59065.033876205576,
+          "dof": 340
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 446,
+          "mjd_min": 55042.04701008258,
+          "mjd_max": 59065.033876205576,
+          "dof": 340
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1744-1134": {
+      "pulsar": "J1744-1134",
+      "raw_rows": 875,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 317,
+          "usable": 245
+        }
+      },
+      "minimum_accepted_leverage": 0.012083621709925607,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 245,
+          "mjd_min": 53694.6093956746,
+          "mjd_max": 58940.43419700496,
+          "dof": 190
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 245,
+          "mjd_min": 53694.6093956746,
+          "mjd_max": 58940.43419700496,
+          "dof": 190
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 626,
+          "mjd_min": 53694.60939567107,
+          "mjd_max": 58940.43419707058,
+          "dof": 529
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 626,
+          "mjd_min": 53694.60939567107,
+          "mjd_max": 58940.43419707058,
+          "dof": 529
+        }
+      }
+    },
+    "J1745+1017": {
+      "pulsar": "J1745+1017",
+      "raw_rows": 189,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 50,
+          "usable": 50
+        }
+      },
+      "minimum_accepted_leverage": 0.0159926665005089,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 50,
+          "mjd_min": 57390.61465791238,
+          "mjd_max": 59051.104094074784,
+          "dof": 25
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 50,
+          "mjd_min": 57390.61465791238,
+          "mjd_max": 59051.104094074784,
+          "dof": 25
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 189,
+          "mjd_min": 57390.598553149466,
+          "mjd_max": 59051.10414130514,
+          "dof": 135
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 189,
+          "mjd_min": 57390.598553149466,
+          "mjd_max": 59051.10414130514,
+          "dof": 135
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1747-4036": {
+      "pulsar": "J1747-4036",
+      "raw_rows": 438,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 183,
+          "usable": 183
+        }
+      },
+      "minimum_accepted_leverage": 0.05347486076942998,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 183,
+          "mjd_min": 55976.54894031375,
+          "mjd_max": 58942.49712851877,
+          "dof": 140
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 183,
+          "mjd_min": 55976.54894031375,
+          "mjd_max": 58942.49712851877,
+          "dof": 140
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 438,
+          "mjd_min": 55976.54893877557,
+          "mjd_max": 58942.497129318675,
+          "dof": 362
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 438,
+          "mjd_min": 55976.54893877557,
+          "mjd_max": 58942.497129318675,
+          "dof": 362
+        }
+      }
+    },
+    "J1751-2857": {
+      "pulsar": "J1751-2857",
+      "raw_rows": 143,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 64,
+          "usable": 44
+        }
+      },
+      "minimum_accepted_leverage": 0.010097493387800527,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 44,
+          "mjd_min": 57682.897841305836,
+          "mjd_max": 58944.504418594894,
+          "dof": 21
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 44,
+          "mjd_min": 57682.897841305836,
+          "mjd_max": 58944.504418594894,
+          "dof": 21
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 106,
+          "mjd_min": 57682.89784080134,
+          "mjd_max": 58944.50441874414,
+          "dof": 59
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 106,
+          "mjd_min": 57682.89784080134,
+          "mjd_max": 58944.50441874414,
+          "dof": 59
+        }
+      }
+    },
+    "J1802-2124": {
+      "pulsar": "J1802-2124",
+      "raw_rows": 250,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 69,
+          "usable": 69
+        }
+      },
+      "minimum_accepted_leverage": 0.02698532290608946,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 69,
+          "mjd_min": 57682.918415944565,
+          "mjd_max": 58945.53853077585,
+          "dof": 38
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 69,
+          "mjd_min": 57682.918415944565,
+          "mjd_max": 58945.53853077585,
+          "dof": 38
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 250,
+          "mjd_min": 57682.914466991184,
+          "mjd_max": 58945.54274508263,
+          "dof": 204
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 250,
+          "mjd_min": 57682.914466991184,
+          "mjd_max": 58945.54274508263,
+          "dof": 204
+        }
+      }
+    },
+    "J1811-2405": {
+      "pulsar": "J1811-2405",
+      "raw_rows": 206,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 76,
+          "usable": 76
+        }
+      },
+      "minimum_accepted_leverage": 0.014746224821263532,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 76,
+          "mjd_min": 57682.93896166898,
+          "mjd_max": 58945.558273717485,
+          "dof": 43
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 76,
+          "mjd_min": 57682.93896166898,
+          "mjd_max": 58945.558273717485,
+          "dof": 43
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 206,
+          "mjd_min": 57682.93896110869,
+          "mjd_max": 58945.558274237585,
+          "dof": 158
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 206,
+          "mjd_min": 57682.93896110869,
+          "mjd_max": 58945.558274237585,
+          "dof": 158
+        }
+      }
+    },
+    "J1832-0836": {
+      "pulsar": "J1832-0836",
+      "raw_rows": 405,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 172,
+          "usable": 163
+        }
+      },
+      "minimum_accepted_leverage": 0.010326090926010223,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 163,
+          "mjd_min": 56354.494316539356,
+          "mjd_max": 58911.666711796286,
+          "dof": 124
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 163,
+          "mjd_min": 56354.494316539356,
+          "mjd_max": 58911.666711796286,
+          "dof": 124
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 389,
+          "mjd_min": 56354.494316263306,
+          "mjd_max": 58911.66671197313,
+          "dof": 321
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 389,
+          "mjd_min": 56354.494316263306,
+          "mjd_max": 58911.66671197313,
+          "dof": 321
+        }
+      }
+    },
+    "J1843-1113": {
+      "pulsar": "J1843-1113",
+      "raw_rows": 206,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 79,
+          "usable": 78
+        }
+      },
+      "minimum_accepted_leverage": 0.010330357024810777,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 78,
+          "mjd_min": 57682.959843565855,
+          "mjd_max": 58945.57769165303,
+          "dof": 52
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 78,
+          "mjd_min": 57682.959843565855,
+          "mjd_max": 58945.57769165303,
+          "dof": 52
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 204,
+          "mjd_min": 57682.95984302718,
+          "mjd_max": 58945.57769217891,
+          "dof": 164
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 204,
+          "mjd_min": 57682.95984302718,
+          "mjd_max": 58945.57769217891,
+          "dof": 164
+        }
+      }
+    },
+    "J1853+1303": {
+      "pulsar": "J1853+1303",
+      "raw_rows": 377,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 100,
+          "usable": 94
+        }
+      },
+      "minimum_accepted_leverage": 0.015764721403498605,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 94,
+          "mjd_min": 55731.19974489788,
+          "mjd_max": 59051.12770254542,
+          "dof": 44
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 94,
+          "mjd_min": 55731.19974489788,
+          "mjd_max": 59051.12770254542,
+          "dof": 44
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 365,
+          "mjd_min": 55731.19898126136,
+          "mjd_max": 59051.13881713563,
+          "dof": 271
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 365,
+          "mjd_min": 55731.19898126136,
+          "mjd_max": 59051.13881713563,
+          "dof": 271
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1857+0943": {
+      "pulsar": "J1857+0943",
+      "raw_rows": 720,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 147,
+          "usable": 147
+        }
+      },
+      "minimum_accepted_leverage": 0.012057163849949926,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 147,
+          "mjd_min": 53358.73297997904,
+          "mjd_max": 59051.1701191295,
+          "dof": 85
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 147,
+          "mjd_min": 53358.73297997904,
+          "mjd_max": 59051.1701191295,
+          "dof": 85
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 720,
+          "mjd_min": 53358.723675379544,
+          "mjd_max": 59051.17056674373,
+          "dof": 616
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 720,
+          "mjd_min": 53358.723675379544,
+          "mjd_max": 59051.17056674373,
+          "dof": 616
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1903+0327": {
+      "pulsar": "J1903+0327",
+      "raw_rows": 452,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 109,
+          "usable": 108
+        },
+        "vla": {
+          "observed_site_days": 12,
+          "usable": 12
+        }
+      },
+      "minimum_accepted_leverage": 0.016211882005791267,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 120,
+          "mjd_min": 55135.88844269642,
+          "mjd_max": 59056.132178917935,
+          "dof": 56
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 108,
+          "mjd_min": 55135.88844269642,
+          "mjd_max": 59056.132178917935,
+          "dof": 51
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 448,
+          "mjd_min": 55135.87672718906,
+          "mjd_max": 59056.14862172307,
+          "dof": 342
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 400,
+          "mjd_min": 55135.87672718906,
+          "mjd_max": 59056.14862172307,
+          "dof": 295
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1909-3744": {
+      "pulsar": "J1909-3744",
+      "raw_rows": 1661,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 538,
+          "usable": 446
+        },
+        "vla": {
+          "observed_site_days": 33,
+          "usable": 31
+        }
+      },
+      "minimum_accepted_leverage": 0.010295379320316433,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 477,
+          "mjd_min": 55275.430260380504,
+          "mjd_max": 58950.595718367644,
+          "dof": 415
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 446,
+          "mjd_min": 55275.430260380504,
+          "mjd_max": 58942.515224439536,
+          "dof": 385
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 1331,
+          "mjd_min": 55275.42464629602,
+          "mjd_max": 58950.60946333726,
+          "dof": 1227
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 1150,
+          "mjd_min": 55275.42464629602,
+          "mjd_max": 58942.515224579285,
+          "dof": 1047
+        }
+      }
+    },
+    "J1910+1256": {
+      "pulsar": "J1910+1256",
+      "raw_rows": 426,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 116,
+          "usable": 112
+        }
+      },
+      "minimum_accepted_leverage": 0.021610424160063424,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 112,
+          "mjd_min": 54882.61108523948,
+          "mjd_max": 59056.11469191021,
+          "dof": 54
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 112,
+          "mjd_min": 54882.61108523948,
+          "mjd_max": 59056.11469191021,
+          "dof": 54
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 418,
+          "mjd_min": 54882.59953079861,
+          "mjd_max": 59056.1147836691,
+          "dof": 316
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 418,
+          "mjd_min": 54882.59953079861,
+          "mjd_max": 59056.1147836691,
+          "dof": 316
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1911+1347": {
+      "pulsar": "J1911+1347",
+      "raw_rows": 259,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 70,
+          "usable": 69
+        }
+      },
+      "minimum_accepted_leverage": 0.016390598692981206,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 69,
+          "mjd_min": 56498.181886931605,
+          "mjd_max": 59051.187300837824,
+          "dof": 37
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 69,
+          "mjd_min": 56498.181886931605,
+          "mjd_max": 59051.187300837824,
+          "dof": 37
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 257,
+          "mjd_min": 56498.16550696628,
+          "mjd_max": 59051.20291191192,
+          "dof": 188
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 257,
+          "mjd_min": 56498.16550696628,
+          "mjd_max": 59051.20291191192,
+          "dof": 188
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1918-0642": {
+      "pulsar": "J1918-0642",
+      "raw_rows": 954,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 317,
+          "usable": 241
+        }
+      },
+      "minimum_accepted_leverage": 0.010078788410808448,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 241,
+          "mjd_min": 55340.20292539139,
+          "mjd_max": 58945.617440030794,
+          "dof": 181
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 241,
+          "mjd_min": 55340.20292539139,
+          "mjd_max": 58945.617440030794,
+          "dof": 181
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 678,
+          "mjd_min": 55340.197676803036,
+          "mjd_max": 58945.61744025198,
+          "dof": 576
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 678,
+          "mjd_min": 55340.197676803036,
+          "mjd_max": 58945.61744025198,
+          "dof": 576
+        }
+      }
+    },
+    "J1923+2515": {
+      "pulsar": "J1923+2515",
+      "raw_rows": 332,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 90,
+          "usable": 90
+        }
+      },
+      "minimum_accepted_leverage": 0.010158109640902468,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 90,
+          "mjd_min": 55791.11121942462,
+          "mjd_max": 59065.10169116838,
+          "dof": 46
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 90,
+          "mjd_min": 55791.11121942462,
+          "mjd_max": 59065.10169116838,
+          "dof": 46
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 332,
+          "mjd_min": 55791.099526310274,
+          "mjd_max": 59065.111443086374,
+          "dof": 246
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 332,
+          "mjd_min": 55791.099526310274,
+          "mjd_max": 59065.111443086374,
+          "dof": 246
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1939+2134": {
+      "pulsar": "J1939+2134",
+      "raw_rows": 1259,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 323,
+          "usable": 237
+        },
+        "arecibo": {
+          "observed_site_days": 128,
+          "usable": 117
+        }
+      },
+      "minimum_accepted_leverage": 0.010649560305228789,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 354,
+          "mjd_min": 53420.62239052655,
+          "mjd_max": 59065.12597892588,
+          "dof": 294
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 117,
+          "mjd_min": 53420.62239052655,
+          "mjd_max": 59065.12597892588,
+          "dof": 60
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 237,
+          "mjd_min": 53858.24503732387,
+          "mjd_max": 58945.495737395686,
+          "dof": 181
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 949,
+          "mjd_min": 53420.603949132805,
+          "mjd_max": 59065.13408127626,
+          "dof": 847
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 432,
+          "mjd_min": 53420.603949132805,
+          "mjd_max": 59065.13408127626,
+          "dof": 334
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 517,
+          "mjd_min": 53858.24503728626,
+          "mjd_max": 58945.4957380118,
+          "dof": 419
+        }
+      }
+    },
+    "J1944+0907": {
+      "pulsar": "J1944+0907",
+      "raw_rows": 405,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 107,
+          "usable": 100
+        }
+      },
+      "minimum_accepted_leverage": 0.010528996408101121,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 100,
+          "mjd_min": 54505.61078454801,
+          "mjd_max": 59056.17342827711,
+          "dof": 50
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 100,
+          "mjd_min": 54505.61078454801,
+          "mjd_max": 59056.17342827711,
+          "dof": 50
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 386,
+          "mjd_min": 54505.59319550064,
+          "mjd_max": 59056.1817608736,
+          "dof": 290
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 386,
+          "mjd_min": 54505.59319550064,
+          "mjd_max": 59056.1817608736,
+          "dof": 290
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1946+3417": {
+      "pulsar": "J1946+3417",
+      "raw_rows": 265,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 72,
+          "usable": 70
+        }
+      },
+      "minimum_accepted_leverage": 0.011766968689387869,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 70,
+          "mjd_min": 56970.87280716064,
+          "mjd_max": 59065.1665818386,
+          "dof": 32
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 70,
+          "mjd_min": 56970.87280716064,
+          "mjd_max": 59065.1665818386,
+          "dof": 32
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 259,
+          "mjd_min": 56970.872806564876,
+          "mjd_max": 59065.16676005135,
+          "dof": 194
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 259,
+          "mjd_min": 56970.872806564876,
+          "mjd_max": 59065.16676005135,
+          "dof": 194
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J1955+2908": {
+      "pulsar": "J1955+2908",
+      "raw_rows": 364,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 101,
+          "usable": 98
+        }
+      },
+      "minimum_accepted_leverage": 0.020854760239348402,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 98,
+          "mjd_min": 54998.29725534639,
+          "mjd_max": 59065.18580896859,
+          "dof": 47
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 98,
+          "mjd_min": 54998.29725534639,
+          "mjd_max": 59065.18580896859,
+          "dof": 47
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 357,
+          "mjd_min": 54998.28775045179,
+          "mjd_max": 59065.20246485574,
+          "dof": 254
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 357,
+          "mjd_min": 54998.28775045179,
+          "mjd_max": 59065.20246485574,
+          "dof": 254
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J2010-1323": {
+      "pulsar": "J2010-1323",
+      "raw_rows": 709,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 243,
+          "usable": 229
+        }
+      },
+      "minimum_accepted_leverage": 0.010057975878048908,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 229,
+          "mjd_min": 55278.39251209358,
+          "mjd_max": 58942.53376642761,
+          "dof": 178
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 229,
+          "mjd_min": 55278.39251209358,
+          "mjd_max": 58942.53376642761,
+          "dof": 178
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 671,
+          "mjd_min": 55278.386310645794,
+          "mjd_max": 58942.53376652591,
+          "dof": 578
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 671,
+          "mjd_min": 55278.386310645794,
+          "mjd_max": 58942.53376652591,
+          "dof": 578
+        }
+      }
+    },
+    "J2017+0603": {
+      "pulsar": "J2017+0603",
+      "raw_rows": 320,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 94,
+          "usable": 82
+        }
+      },
+      "minimum_accepted_leverage": 0.010637755541570537,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 82,
+          "mjd_min": 55989.61697625142,
+          "mjd_max": 59030.30349133948,
+          "dof": 39
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 82,
+          "mjd_min": 55989.61697625142,
+          "mjd_max": 59030.30349133948,
+          "dof": 39
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 290,
+          "mjd_min": 55989.616976139194,
+          "mjd_max": 59030.307243312374,
+          "dof": 205
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 290,
+          "mjd_min": 55989.616976139194,
+          "mjd_max": 59030.307243312374,
+          "dof": 205
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J2033+1734": {
+      "pulsar": "J2033+1734",
+      "raw_rows": 265,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 68,
+          "usable": 68
+        }
+      },
+      "minimum_accepted_leverage": 0.011785215193833354,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 68,
+          "mjd_min": 56510.20414483248,
+          "mjd_max": 59056.20944428025,
+          "dof": 33
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 68,
+          "mjd_min": 56510.20414483248,
+          "mjd_max": 59056.20944428025,
+          "dof": 33
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 265,
+          "mjd_min": 56510.20414475064,
+          "mjd_max": 59056.215993023696,
+          "dof": 190
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 265,
+          "mjd_min": 56510.20414475064,
+          "mjd_max": 59056.215993023696,
+          "dof": 190
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J2043+1711": {
+      "pulsar": "J2043+1711",
+      "raw_rows": 945,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 229,
+          "usable": 215
+        }
+      },
+      "minimum_accepted_leverage": 0.010178303348454265,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 215,
+          "mjd_min": 55760.28166135115,
+          "mjd_max": 59066.20327775787,
+          "dof": 157
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 215,
+          "mjd_min": 55760.28166135115,
+          "mjd_max": 59066.20327775787,
+          "dof": 157
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 903,
+          "mjd_min": 55760.26679748368,
+          "mjd_max": 59066.20605820493,
+          "dof": 807
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 903,
+          "mjd_min": 55760.26679748368,
+          "mjd_max": 59066.20605820493,
+          "dof": 807
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J2124-3358": {
+      "pulsar": "J2124-3358",
+      "raw_rows": 204,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 74,
+          "usable": 58
+        }
+      },
+      "minimum_accepted_leverage": 0.010731871306815632,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 58,
+          "mjd_min": 57681.12012735671,
+          "mjd_max": 58945.65590762849,
+          "dof": 32
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 58,
+          "mjd_min": 57681.12012735671,
+          "mjd_max": 58945.65590762849,
+          "dof": 32
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 162,
+          "mjd_min": 57681.06316430475,
+          "mjd_max": 58945.6559076902,
+          "dof": 121
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 162,
+          "mjd_min": 57681.06316430475,
+          "mjd_max": 58945.6559076902,
+          "dof": 121
+        }
+      }
+    },
+    "J2145-0750": {
+      "pulsar": "J2145-0750",
+      "raw_rows": 798,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 282,
+          "usable": 251
+        }
+      },
+      "minimum_accepted_leverage": 0.010082541827290403,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 251,
+          "mjd_min": 53275.32076780167,
+          "mjd_max": 58942.55175680536,
+          "dof": 188
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 251,
+          "mjd_min": 53275.32076780167,
+          "mjd_max": 58942.55175680536,
+          "dof": 188
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 716,
+          "mjd_min": 53275.32076780161,
+          "mjd_max": 58942.551756807785,
+          "dof": 611
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 716,
+          "mjd_min": 53275.32076780161,
+          "mjd_max": 58942.551756807785,
+          "dof": 611
+        }
+      }
+    },
+    "J2214+3000": {
+      "pulsar": "J2214+3000",
+      "raw_rows": 575,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 97,
+          "usable": 79
+        }
+      },
+      "minimum_accepted_leverage": 0.01068517226307486,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 79,
+          "mjd_min": 55989.64800021932,
+          "mjd_max": 59065.27305888721,
+          "dof": 40
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 79,
+          "mjd_min": 55989.64800021932,
+          "mjd_max": 59065.27305888721,
+          "dof": 40
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 495,
+          "mjd_min": 55989.64507241985,
+          "mjd_max": 59065.27791455469,
+          "dof": 408
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 495,
+          "mjd_min": 55989.64507241985,
+          "mjd_max": 59065.27791455469,
+          "dof": 408
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J2229+2643": {
+      "pulsar": "J2229+2643",
+      "raw_rows": 299,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 76,
+          "usable": 72
+        }
+      },
+      "minimum_accepted_leverage": 0.01145472391346325,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 72,
+          "mjd_min": 56498.261542310625,
+          "mjd_max": 59065.30193996345,
+          "dof": 34
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 72,
+          "mjd_min": 56498.261542310625,
+          "mjd_max": 59065.30193996345,
+          "dof": 34
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 289,
+          "mjd_min": 56498.24595319826,
+          "mjd_max": 59065.30983776638,
+          "dof": 213
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 289,
+          "mjd_min": 56498.24595319826,
+          "mjd_max": 59065.30983776638,
+          "dof": 213
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J2234+0611": {
+      "pulsar": "J2234+0611",
+      "raw_rows": 274,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 67,
+          "usable": 66
+        }
+      },
+      "minimum_accepted_leverage": 0.014540692963021185,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 66,
+          "mjd_min": 56668.80282442716,
+          "mjd_max": 59056.26743180577,
+          "dof": 30
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 66,
+          "mjd_min": 56668.80282442716,
+          "mjd_max": 59056.26743180577,
+          "dof": 30
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 272,
+          "mjd_min": 56668.802661453876,
+          "mjd_max": 59056.28366106322,
+          "dof": 198
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 272,
+          "mjd_min": 56668.802661453876,
+          "mjd_max": 59056.28366106322,
+          "dof": 198
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J2234+0944": {
+      "pulsar": "J2234+0944",
+      "raw_rows": 478,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 74,
+          "usable": 61
+        }
+      },
+      "minimum_accepted_leverage": 0.01148355453558425,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 61,
+          "mjd_min": 56479.3292493278,
+          "mjd_max": 59007.42993444865,
+          "dof": 29
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 61,
+          "mjd_min": 56479.3292493278,
+          "mjd_max": 59007.42993444865,
+          "dof": 29
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 413,
+          "mjd_min": 56479.32722423743,
+          "mjd_max": 59007.434850123085,
+          "dof": 338
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 413,
+          "mjd_min": 56479.32722423743,
+          "mjd_max": 59007.434850123085,
+          "dof": 338
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J2302+4442": {
+      "pulsar": "J2302+4442",
+      "raw_rows": 478,
+      "site_days": {
+        "gbt": {
+          "observed_site_days": 194,
+          "usable": 190
+        }
+      },
+      "minimum_accepted_leverage": 0.010564656647413684,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 190,
+          "mjd_min": 55972.05970146103,
+          "mjd_max": 58942.86503172339,
+          "dof": 138
+        },
+        "dm_free_arecibo": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "dm_free_gbt": {
+          "status": "available",
+          "n_rows": 190,
+          "mjd_min": 55972.05970146103,
+          "mjd_max": 58942.86503172339,
+          "dof": 138
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 470,
+          "mjd_min": 55972.05970142115,
+          "mjd_max": 58942.865031826856,
+          "dof": 384
+        },
+        "matched_raw_arecibo": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        },
+        "matched_raw_gbt": {
+          "status": "available",
+          "n_rows": 470,
+          "mjd_min": 55972.05970142115,
+          "mjd_max": 58942.865031826856,
+          "dof": 384
+        }
+      }
+    },
+    "J2317+1439": {
+      "pulsar": "J2317+1439",
+      "raw_rows": 1393,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 307,
+          "usable": 298
+        }
+      },
+      "minimum_accepted_leverage": 0.014772494795295188,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 298,
+          "mjd_min": 53355.89621939369,
+          "mjd_max": 59070.29921125893,
+          "dof": 236
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 298,
+          "mjd_min": 53355.89621939369,
+          "mjd_max": 59070.29921125893,
+          "dof": 236
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 1363,
+          "mjd_min": 53355.88885246684,
+          "mjd_max": 59070.33162622849,
+          "dof": 1259
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 1363,
+          "mjd_min": 53355.88885246684,
+          "mjd_max": 59070.33162622849,
+          "dof": 1259
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    },
+    "J2322+2057": {
+      "pulsar": "J2322+2057",
+      "raw_rows": 258,
+      "site_days": {
+        "arecibo": {
+          "observed_site_days": 60,
+          "usable": 58
+        }
+      },
+      "minimum_accepted_leverage": 0.024838344549504177,
+      "controls": {
+        "dm_free_all": {
+          "status": "available",
+          "n_rows": 58,
+          "mjd_min": 57095.69761489141,
+          "mjd_max": 59065.334382768466,
+          "dof": 31
+        },
+        "dm_free_arecibo": {
+          "status": "available",
+          "n_rows": 58,
+          "mjd_min": 57095.69761489141,
+          "mjd_max": 59065.334382768466,
+          "dof": 31
+        },
+        "dm_free_gbt": {
+          "status": "unavailable",
+          "reason": "fewer than 16 useful site-days or zero span"
+        },
+        "matched_raw_all": {
+          "status": "available",
+          "n_rows": 253,
+          "mjd_min": 57095.67856936963,
+          "mjd_max": 59065.349168354616,
+          "dof": 200
+        },
+        "matched_raw_arecibo": {
+          "status": "available",
+          "n_rows": 253,
+          "mjd_min": 57095.67856936963,
+          "mjd_max": 59065.349168354616,
+          "dof": 200
+        },
+        "matched_raw_gbt": {
+          "status": "unavailable",
+          "reason": "insufficient time coverage"
+        }
+      }
+    }
+  }
+}

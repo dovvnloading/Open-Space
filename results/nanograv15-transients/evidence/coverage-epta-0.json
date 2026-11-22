@@ -1,0 +1,1420 @@
+[
+  {
+    "clock": "BIPM2021",
+    "components": [
+      "AbsPhase",
+      "AstrometryEcliptic",
+      "DispersionDM",
+      "PhaseJump",
+      "SolarSystemShapiro",
+      "SolarWindDispersion",
+      "Spindown",
+      "TroposphereDelay"
+    ],
+    "compressed_rows": 4000,
+    "cut_count": 65,
+    "dataset": "epta",
+    "dmx_restored": false,
+    "ephemeris": "de440",
+    "epta_format": {
+      "clock_cuts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.P217.1380.tim:effix:effix2gps.clk": {
+          "max_mjd": 59294.682828447185,
+          "min_mjd": 59294.682828409335,
+          "n": 2
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/LEAP.1396.tim:leap:leap2effix.clk": {
+          "max_mjd": 59230.712500124864,
+          "min_mjd": 56095.40828186233,
+          "n": 63
+        }
+      },
+      "clock_valid_mjd_by_site": {
+        "effix": {
+          "effix2gps.clk": [
+            55562.5,
+            59294.5
+          ]
+        },
+        "g": {
+          "eff2gps.clk": [
+            49320.0,
+            57195.5
+          ]
+        },
+        "jbroach": {
+          "jb2gps.clk": [
+            54021.3818981,
+            60621.02083628
+          ]
+        },
+        "leap": {
+          "effix2gps.clk": [
+            55562.5,
+            59293.5
+          ],
+          "leap2effix.clk": [
+            56229.999999,
+            56720.0
+          ]
+        },
+        "ncy": {},
+        "ncyobs": {
+          "ncyobs2obspm.clk": [
+            47299.57292,
+            60674.0
+          ],
+          "obspm2gps.clk": [
+            52974.0,
+            60244.0
+          ]
+        },
+        "wsrt": {
+          "wsrt2gps.clk": [
+            51179.5,
+            57202.1
+          ]
+        }
+      },
+      "ignored_line_locations": {},
+      "local_directives": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.EBPP.1360.tim": [
+          {
+            "command": "TIME",
+            "effective_value": "1",
+            "line": 19,
+            "released_value": "1"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0",
+            "line": 21,
+            "released_value": "-1"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "-1",
+            "line": 22,
+            "released_value": "-1"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0",
+            "line": 24,
+            "released_value": "1"
+          }
+        ],
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.EBPP.2639.tim": [
+          {
+            "command": "TIME",
+            "effective_value": "-1",
+            "line": 9,
+            "released_value": "-1"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0",
+            "line": 12,
+            "released_value": "1"
+          }
+        ],
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/WSRT.P2.1380.tim": [
+          {
+            "command": "TIME",
+            "effective_value": "10",
+            "line": 54,
+            "released_value": "10"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0",
+            "line": 62,
+            "released_value": "-10"
+          }
+        ]
+      },
+      "normalized_comments": 426,
+      "tim_file_counts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/J0030+0451_all.tim": {},
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.EBPP.1360.tim": {
+          "directive_TIME": 4,
+          "local_TIME_shifted_toas": 2,
+          "retained_format1_toas": 19,
+          "tempo2_comments": 28
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.EBPP.1410.tim": {
+          "retained_format1_toas": 10,
+          "tempo2_comments": 6
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.EBPP.2639.tim": {
+          "directive_TIME": 2,
+          "local_TIME_shifted_toas": 1,
+          "retained_format1_toas": 22,
+          "tempo2_comments": 27
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.P200.1380.tim": {
+          "retained_format1_toas": 53
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.P217.1380.tim": {
+          "outside_clock_range": 2,
+          "retained_format1_toas": 129,
+          "tempo2_comments": 11
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.S110.2487.tim": {
+          "retained_format1_toas": 60
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/JBO.ROACH.1520.tim": {
+          "retained_format1_toas": 100,
+          "tempo2_comments": 118
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/LEAP.1396.tim": {
+          "outside_clock_range": 63,
+          "retained_format1_toas": 11,
+          "tempo2_comments": 1
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/NRT.BON.1400.tim": {
+          "retained_format1_toas": 552,
+          "tempo2_comments": 31
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/NRT.BON.1600.tim": {
+          "retained_format1_toas": 29,
+          "tempo2_comments": 113
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/NRT.BON.2000.tim": {
+          "retained_format1_toas": 90,
+          "tempo2_comments": 10
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/NRT.NUPPI.1484.tim": {
+          "retained_format1_toas": 2736,
+          "tempo2_comments": 40
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/NRT.NUPPI.1854.tim": {
+          "retained_format1_toas": 149,
+          "tempo2_comments": 7
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/WSRT.P2.1380.tim": {
+          "directive_TIME": 2,
+          "local_TIME_shifted_toas": 5,
+          "retained_format1_toas": 44,
+          "tempo2_comments": 34
+        }
+      }
+    },
+    "epta_timing_refit": {
+      "empty_masks_frozen": [
+        "JUMP9"
+      ],
+      "fitter": "WLSFitter",
+      "initial_free_parameters": [
+        "PX",
+        "ELONG",
+        "ELAT",
+        "PMELONG",
+        "PMELAT",
+        "F0",
+        "F1",
+        "JUMP1",
+        "JUMP2",
+        "JUMP3",
+        "JUMP4",
+        "JUMP5",
+        "JUMP6",
+        "JUMP7",
+        "JUMP8",
+        "JUMP9",
+        "JUMP10",
+        "JUMP11",
+        "JUMP12",
+        "JUMP13",
+        "JUMP14",
+        "JUMP15",
+        "JUMP16",
+        "JUMP18",
+        "JUMP19",
+        "JUMP20",
+        "JUMP21",
+        "JUMP22",
+        "JUMP23",
+        "JUMP24",
+        "DM",
+        "DM1",
+        "DM2"
+      ],
+      "initial_track_mode": "nearest",
+      "iterations": 3,
+      "max_abs_postfit_cycles": 0.018291465548689847,
+      "original_par_ntoa": 4071,
+      "original_par_tres_us": 2.456,
+      "postfit_wrms_us": 2.503417195706796,
+      "prefit_wrms_us": 2.504953192289604,
+      "pulse_numbers": "nearest integer from the released converted model, fixed for all iterations"
+    },
+    "include_sha256": {
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.EBPP.1360.tim": "9001966fd4f9b0e55000ae92b7cb7e5c5d66081df02d5e6856675b909d1c867b",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.EBPP.1410.tim": "0697f27b44daace907a63c10dce39e1653fe741393615e53bb1c6d342f83ca9e",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.EBPP.2639.tim": "2343c20c20a58c9b01326d8c8c5132fd9a2144c32592cd53ba7dacbcff894147",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.P200.1380.tim": "42003630809c52c6337e4931c39c3fc1f15b276dbfa18fe9d2b242ab2f086c5b",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.P217.1380.tim": "233981876e971b7235aca226e3825b1ab64420bd5fbdacd7b829043a6c4dd831",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/EFF.S110.2487.tim": "78f03b42b33cf22ed185ac1a77d02f0c18f824ccf83b316ba428d03e9d74bb40",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/JBO.ROACH.1520.tim": "5d6c8e00fb7a2a0bd200fbe5287171b328dbfbcc15a65d0da9a6aba9342afe6a",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/LEAP.1396.tim": "52f03fdea426b658d98d9de4d405c9c918c07947c529498af238d863c3f82438",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/NRT.BON.1400.tim": "9b36167fa4acb57f89378b1252f6a2cda5204e5ba002445613104f581738c2f6",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/NRT.BON.1600.tim": "bf0114e51ea3708a4e36f5e4ee62252e677d2226d9563536597376980f1fdd87",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/NRT.BON.2000.tim": "018c6fa9b24e8df4755d850ec103fa865423158ce8956700af8209cc65ad4a4e",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/NRT.NUPPI.1484.tim": "b2aa2b685aeaebe0be547b065ebfcab43cbe828fb0929de865c035dc342e8bae",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/NRT.NUPPI.1854.tim": "ac111a228633fdf08562a75ae409f574192f8b6b331d7c57e27060aa89718c7d",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/tims/WSRT.P2.1380.tim": "a0a9cc7fa3e924d77a144acb6cd8f1cccfe2bad114373598933ae24208181c78"
+    },
+    "max_mjd_tdb": 59223.80383717595,
+    "min_mjd_tdb": 51275.53096415325,
+    "par": "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/J0030+0451.par",
+    "par_sha256": "dbd7e96c589637ebb7d26e26844df3b3bed91474c00e444552dd3987d696e84b",
+    "parfile_clock": "TT(BIPM2021)",
+    "parfile_ntoa": 4071,
+    "parfile_tres_us": 2.456,
+    "pint": "1.1.8",
+    "pulsar": "J0030+0451",
+    "raw_toas": 4069,
+    "release_selection": "DR2full",
+    "rms_postfit_us_before_restoring_dmx": 2.503417195706796,
+    "source_pulsar": "J0030+0451",
+    "spin_hz": 205.53069912525947,
+    "status": "ok",
+    "tim": "epta/EPTA-DR2/EPTA-DR2/DR2full/J0030+0451/J0030+0451_all.tim",
+    "tim_sha256": "fb1a1dac970dabff3086880ca7a608748312d84d3cc2dd7d9a6aa914190662da",
+    "toa_track_mode": "use_pulse_numbers",
+    "tres_check": "within 25 percent by ratio",
+    "used_toas": 4004,
+    "wrms_to_tres_ratio": 1.0193066757763827
+  },
+  {
+    "clock": "BIPM2021",
+    "components": [
+      "AbsPhase",
+      "AstrometryEquatorial",
+      "DispersionDM",
+      "PhaseJump",
+      "SolarSystemShapiro",
+      "SolarWindDispersion",
+      "Spindown",
+      "TroposphereDelay"
+    ],
+    "compressed_rows": 2457,
+    "cut_count": 53,
+    "dataset": "epta",
+    "dmx_restored": false,
+    "ephemeris": "de440",
+    "epta_format": {
+      "clock_cuts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.P217.1380.tim:effix:effix2gps.clk": {
+          "max_mjd": 59294.964732559216,
+          "min_mjd": 59294.964732528686,
+          "n": 2
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/LEAP.1396.tim:leap:leap2effix.clk": {
+          "max_mjd": 59230.09212982813,
+          "min_mjd": 55967.084955012186,
+          "n": 51
+        }
+      },
+      "clock_valid_mjd_by_site": {
+        "8": {
+          "jb2gps.clk": [
+            54021.3818981,
+            60621.02083628
+          ]
+        },
+        "effix": {
+          "effix2gps.clk": [
+            55562.5,
+            59294.5
+          ]
+        },
+        "g": {
+          "eff2gps.clk": [
+            49320.0,
+            57195.5
+          ]
+        },
+        "jb": {
+          "jb2gps.clk": [
+            54021.3818981,
+            60621.02083628
+          ]
+        },
+        "jbroach": {
+          "jb2gps.clk": [
+            54021.3818981,
+            60621.02083628
+          ]
+        },
+        "leap": {
+          "effix2gps.clk": [
+            55562.5,
+            59293.5
+          ],
+          "leap2effix.clk": [
+            56229.999999,
+            56720.0
+          ]
+        },
+        "ncy": {},
+        "ncyobs": {
+          "ncyobs2obspm.clk": [
+            47299.57292,
+            60674.0
+          ],
+          "obspm2gps.clk": [
+            52974.0,
+            60244.0
+          ]
+        },
+        "wsrt": {
+          "wsrt2gps.clk": [
+            51179.5,
+            57202.1
+          ]
+        }
+      },
+      "ignored_line_locations": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.EBPP.1410.tim": [
+          2
+        ]
+      },
+      "local_directives": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/LEAP.1396.tim": [
+          {
+            "command": "TIME",
+            "effective_value": "-0.0972843",
+            "line": 13,
+            "released_value": "-0.0972843"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0E-7",
+            "line": 15,
+            "released_value": "0.0972843"
+          }
+        ]
+      },
+      "normalized_comments": 515,
+      "tim_file_counts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/J1024-0719_all.tim": {},
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.EBPP.1360.tim": {
+          "retained_format1_toas": 21,
+          "tempo2_comments": 28
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.EBPP.1410.tim": {
+          "incomplete_nondirective_lines": 1,
+          "retained_format1_toas": 26
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.EBPP.2639.tim": {
+          "retained_format1_toas": 39,
+          "tempo2_comments": 26
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.P200.1380.tim": {
+          "retained_format1_toas": 40
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.P217.1380.tim": {
+          "outside_clock_range": 2,
+          "retained_format1_toas": 138,
+          "tempo2_comments": 16
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.S110.2487.tim": {
+          "retained_format1_toas": 48,
+          "tempo2_comments": 5
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/JBO.DFB.1400.tim": {
+          "retained_format1_toas": 31,
+          "tempo2_comments": 10
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/JBO.DFB.1520.tim": {
+          "retained_format1_toas": 57,
+          "tempo2_comments": 87
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/JBO.ROACH.1520.tim": {
+          "retained_format1_toas": 158,
+          "tempo2_comments": 143
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/LEAP.1396.tim": {
+          "directive_TIME": 2,
+          "local_TIME_shifted_toas": 1,
+          "outside_clock_range": 51,
+          "retained_format1_toas": 15
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/NRT.BON.1400.tim": {
+          "retained_format1_toas": 175,
+          "tempo2_comments": 30
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/NRT.BON.1600.tim": {
+          "retained_format1_toas": 13,
+          "tempo2_comments": 70
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/NRT.BON.2000.tim": {
+          "retained_format1_toas": 12,
+          "tempo2_comments": 1
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/NRT.NUPPI.1484.tim": {
+          "retained_format1_toas": 1513,
+          "tempo2_comments": 56
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/NRT.NUPPI.2539.tim": {
+          "retained_format1_toas": 88,
+          "tempo2_comments": 9
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/WSRT.P2.1380.tim": {
+          "retained_format1_toas": 95,
+          "tempo2_comments": 34
+        }
+      }
+    },
+    "epta_timing_refit": {
+      "empty_masks_frozen": [],
+      "fitter": "WLSFitter",
+      "initial_free_parameters": [
+        "PX",
+        "RAJ",
+        "DECJ",
+        "PMRA",
+        "PMDEC",
+        "F0",
+        "F1",
+        "F2",
+        "DM",
+        "DM1",
+        "DM2",
+        "JUMP1",
+        "JUMP2",
+        "JUMP3",
+        "JUMP4",
+        "JUMP5",
+        "JUMP6",
+        "JUMP7",
+        "JUMP8",
+        "JUMP9",
+        "JUMP10",
+        "JUMP11",
+        "JUMP12",
+        "JUMP13",
+        "JUMP14",
+        "JUMP15",
+        "JUMP16",
+        "JUMP17",
+        "JUMP18",
+        "JUMP20",
+        "JUMP21",
+        "JUMP22",
+        "JUMP23"
+      ],
+      "initial_track_mode": "nearest",
+      "iterations": 3,
+      "max_abs_postfit_cycles": 0.00924259350881398,
+      "original_par_ntoa": 2515,
+      "original_par_tres_us": 1.139,
+      "postfit_wrms_us": 1.141807190164318,
+      "prefit_wrms_us": 1.301822130380015,
+      "pulse_numbers": "nearest integer from the released converted model, fixed for all iterations"
+    },
+    "include_sha256": {
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.EBPP.1360.tim": "758c38908d132f855d11c2c42e1cd1302a35c44f546e038ab13fb213d6056cb5",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.EBPP.1410.tim": "87eabe2e4766f6dccf9efecb4702bb46b6e3a8d7df7ed877b6f8fc21d07bd10e",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.EBPP.2639.tim": "4625cf2aeb3f26654043b8e0f42feb87bb9b8636aa54577414444c78f673cd63",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.P200.1380.tim": "659783171229a004fb5aaa34fe65c13613fab7cfaa904d30b439d5610bbcb8e6",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.P217.1380.tim": "283adf0883a47ed4b3576f3c02638c22a9e5f5ff94d86915fcccdf31b5cf92c6",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/EFF.S110.2487.tim": "a4eb2b3bbd370efdc515b7eecb4f72a3da834bb7e1d87d9a14ca42ae05685bf1",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/JBO.DFB.1400.tim": "b148c2a2845bcd95b6ce09cace6a217b2807fb29950732bda2df76eb6cea8923",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/JBO.DFB.1520.tim": "6383dee8ff4d989fc88da21b6fb7bbe4be0b53adedb8ba6137f2256a89afb7dc",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/JBO.ROACH.1520.tim": "77a19fd34cfdbf389e1d268f778248987b51da60f2402df91619883234b52daa",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/LEAP.1396.tim": "9f7acccbe9a89e59b88d99f43899f00d89e97811cca1b2259462c2d04b7be39e",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/NRT.BON.1400.tim": "457836fe870df0e69acebb9d998e389e23d1f2fe54f4e82c9ae280974ff0742c",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/NRT.BON.1600.tim": "1e3e88c0d1173c078d00a8dda30140ab48099cf723153d281c365a2f41bf009c",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/NRT.BON.2000.tim": "ded34611c412bd299ff821050b8eaa2c70d143ebf73694de4eda4330c7b84563",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/NRT.NUPPI.1484.tim": "356d716f63986b8e9048178e212568b3ac53ab4d1736d5b3e2afcd7bef8f5825",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/NRT.NUPPI.2539.tim": "57e5b05148e53dea7790f02d975424356ce425bea213bf62573b00578ba59507",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/tims/WSRT.P2.1380.tim": "82883ee9db5b31fcf4345982897572dd8c3f4e9f5bec2a78fb804e16cb065b88"
+    },
+    "max_mjd_tdb": 59293.93432593568,
+    "min_mjd_tdb": 50841.953013683604,
+    "par": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/J1024-0719.par",
+    "par_sha256": "a988ed0fbfd5750b866961fa565cfb88e0b574d4ed38fd1b86562a0a4d52a4d6",
+    "parfile_clock": "TT(BIPM2021)",
+    "parfile_ntoa": 2515,
+    "parfile_tres_us": 1.139,
+    "pint": "1.1.8",
+    "pulsar": "J1024-0719",
+    "raw_toas": 2522,
+    "release_selection": "DR2full",
+    "rms_postfit_us_before_restoring_dmx": 1.141807190164318,
+    "source_pulsar": "J1024-0719",
+    "spin_hz": 193.7156864521489,
+    "status": "ok",
+    "tim": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1024-0719/J1024-0719_all.tim",
+    "tim_sha256": "b2ff88c23283925e7ce315894b6cb2b41e3564e540588045d414eddb7cea2cce",
+    "toa_track_mode": "use_pulse_numbers",
+    "tres_check": "within 25 percent by ratio",
+    "used_toas": 2469,
+    "wrms_to_tres_ratio": 1.0024646094506744
+  },
+  {
+    "clock": "BIPM2021",
+    "components": [
+      "AbsPhase",
+      "AstrometryEquatorial",
+      "BinaryDDK",
+      "DispersionDM",
+      "PhaseJump",
+      "SolarSystemShapiro",
+      "SolarWindDispersion",
+      "Spindown",
+      "TroposphereDelay"
+    ],
+    "compressed_rows": 4818,
+    "cut_count": 105,
+    "dataset": "epta",
+    "dmx_restored": false,
+    "ephemeris": "de440",
+    "epta_format": {
+      "clock_cuts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/LEAP.1396.tim:leap:leap2effix.clk": {
+          "max_mjd": 59230.2800340385,
+          "min_mjd": 55967.14244477299,
+          "n": 105
+        }
+      },
+      "clock_valid_mjd_by_site": {
+        "8": {
+          "jb2gps.clk": [
+            54021.3818981,
+            60621.02083628
+          ]
+        },
+        "effix": {
+          "effix2gps.clk": [
+            55562.5,
+            59294.5
+          ]
+        },
+        "g": {
+          "eff2gps.clk": [
+            49320.0,
+            57195.5
+          ]
+        },
+        "jbmk2roach": {
+          "jb2gps.clk": [
+            54021.3818981,
+            60621.02083628
+          ]
+        },
+        "jbroach": {
+          "jb2gps.clk": [
+            54021.3818981,
+            60621.02083628
+          ]
+        },
+        "leap": {
+          "effix2gps.clk": [
+            55562.5,
+            59293.5
+          ],
+          "leap2effix.clk": [
+            56229.999999,
+            56720.0
+          ]
+        },
+        "ncy": {},
+        "ncyobs": {
+          "ncyobs2obspm.clk": [
+            47299.57292,
+            60674.0
+          ],
+          "obspm2gps.clk": [
+            52974.0,
+            60244.0
+          ]
+        },
+        "wsrt": {
+          "wsrt2gps.clk": [
+            51179.5,
+            57202.1
+          ]
+        }
+      },
+      "ignored_line_locations": {},
+      "local_directives": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.EBPP.1410.tim": [
+          {
+            "command": "TIME",
+            "effective_value": "60",
+            "line": 41,
+            "released_value": "60"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0",
+            "line": 43,
+            "released_value": "-60"
+          }
+        ],
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P1.1380.2.tim": [
+          {
+            "command": "TIME",
+            "effective_value": "-0.00096518",
+            "line": 17,
+            "released_value": "-0.00096518"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0E-8",
+            "line": 20,
+            "released_value": "0.00096518"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "-0.00100000",
+            "line": 38,
+            "released_value": "-0.001"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0E-8",
+            "line": 40,
+            "released_value": "0.001"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "-0.00100000",
+            "line": 49,
+            "released_value": "-0.001"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0E-8",
+            "line": 86,
+            "released_value": "0.001"
+          }
+        ],
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P1.2273.tim": [
+          {
+            "command": "TIME",
+            "effective_value": "-0.001",
+            "line": 2,
+            "released_value": "-0.001"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "-0.002",
+            "line": 42,
+            "released_value": "-0.001"
+          }
+        ],
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P1.840.tim": [
+          {
+            "command": "TIME",
+            "effective_value": "-0.00096518",
+            "line": 20,
+            "released_value": "-0.00096518"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0E-8",
+            "line": 24,
+            "released_value": "0.00096518"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "-0.00100000",
+            "line": 38,
+            "released_value": "-0.001"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0E-8",
+            "line": 61,
+            "released_value": "0.001"
+          }
+        ],
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P2.1380.tim": [
+          {
+            "command": "TIME",
+            "effective_value": "10",
+            "line": 100,
+            "released_value": "10"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0",
+            "line": 107,
+            "released_value": "-10"
+          }
+        ],
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P2.2273.tim": [
+          {
+            "command": "TIME",
+            "effective_value": "10.0",
+            "line": 30,
+            "released_value": "10.0"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0.0",
+            "line": 32,
+            "released_value": "-10.0"
+          }
+        ],
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P2.350.tim": [
+          {
+            "command": "TIME",
+            "effective_value": "10.0",
+            "line": 60,
+            "released_value": "10.0"
+          },
+          {
+            "command": "TIME",
+            "effective_value": "0.0",
+            "line": 68,
+            "released_value": "-10.0"
+          }
+        ]
+      },
+      "normalized_comments": 510,
+      "tim_file_counts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/J1713+0747_all.tim": {},
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.EBPP.1360.tim": {
+          "retained_format1_toas": 26,
+          "tempo2_comments": 29
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.EBPP.1410.tim": {
+          "directive_TIME": 2,
+          "local_TIME_shifted_toas": 1,
+          "retained_format1_toas": 161,
+          "tempo2_comments": 3
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.EBPP.2639.tim": {
+          "retained_format1_toas": 53,
+          "tempo2_comments": 21
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.P200.1380.tim": {
+          "retained_format1_toas": 46
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.P217.1380.tim": {
+          "retained_format1_toas": 207,
+          "tempo2_comments": 13
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.S110.2487.tim": {
+          "retained_format1_toas": 58,
+          "tempo2_comments": 6
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.S60.4857.tim": {
+          "retained_format1_toas": 45,
+          "tempo2_comments": 2
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/JBO.DFB.1400.tim": {
+          "retained_format1_toas": 18,
+          "tempo2_comments": 2
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/JBO.DFB.1520.tim": {
+          "lines_after_local_end": 42,
+          "retained_format1_toas": 32,
+          "tempo2_comments": 2
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/JBO.MK2.1520.tim": {
+          "retained_format1_toas": 67,
+          "tempo2_comments": 62
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/JBO.ROACH.1520.tim": {
+          "retained_format1_toas": 820,
+          "tempo2_comments": 277
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/LEAP.1396.tim": {
+          "outside_clock_range": 105,
+          "retained_format1_toas": 25,
+          "tempo2_comments": 6
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/NRT.BON.1400.tim": {
+          "retained_format1_toas": 351,
+          "tempo2_comments": 15
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/NRT.BON.1600.tim": {
+          "lines_after_local_end": 145,
+          "retained_format1_toas": 35,
+          "tempo2_comments": 2
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/NRT.BON.2000.tim": {
+          "retained_format1_toas": 97,
+          "tempo2_comments": 21
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/NRT.NUPPI.1484.tim": {
+          "retained_format1_toas": 1980,
+          "tempo2_comments": 32
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/NRT.NUPPI.1854.tim": {
+          "retained_format1_toas": 114,
+          "tempo2_comments": 1
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/NRT.NUPPI.2539.tim": {
+          "retained_format1_toas": 339,
+          "tempo2_comments": 7
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P1.1380.1.tim": {
+          "retained_format1_toas": 22
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P1.1380.2.tim": {
+          "directive_TIME": 6,
+          "lines_after_local_end": 41,
+          "local_TIME_shifted_toas": 37,
+          "retained_format1_toas": 76,
+          "tempo2_comments": 2
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P1.2273.tim": {
+          "directive_TIME": 2,
+          "local_TIME_shifted_toas": 39,
+          "retained_format1_toas": 39
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P1.840.tim": {
+          "directive_TIME": 4,
+          "local_TIME_shifted_toas": 24,
+          "retained_format1_toas": 53,
+          "tempo2_comments": 2
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P2.1380.tim": {
+          "directive_TIME": 2,
+          "local_TIME_shifted_toas": 5,
+          "retained_format1_toas": 115,
+          "tempo2_comments": 5
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P2.2273.tim": {
+          "directive_TIME": 2,
+          "local_TIME_shifted_toas": 1,
+          "retained_format1_toas": 32
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P2.350.tim": {
+          "directive_TIME": 2,
+          "local_TIME_shifted_toas": 7,
+          "retained_format1_toas": 87
+        }
+      }
+    },
+    "epta_timing_refit": {
+      "empty_masks_frozen": [],
+      "fitter": "WLSFitter",
+      "initial_free_parameters": [
+        "PX",
+        "RAJ",
+        "DECJ",
+        "PMRA",
+        "PMDEC",
+        "F0",
+        "F1",
+        "DM",
+        "DM1",
+        "DM2",
+        "PB",
+        "PBDOT",
+        "A1",
+        "ECC",
+        "T0",
+        "OM",
+        "M2",
+        "KIN",
+        "KOM",
+        "JUMP1",
+        "JUMP2",
+        "JUMP3",
+        "JUMP4",
+        "JUMP5",
+        "JUMP6",
+        "JUMP7",
+        "JUMP8",
+        "JUMP9",
+        "JUMP10",
+        "JUMP11",
+        "JUMP12",
+        "JUMP13",
+        "JUMP14",
+        "JUMP15",
+        "JUMP16",
+        "JUMP17",
+        "JUMP18",
+        "JUMP19",
+        "JUMP20",
+        "JUMP21",
+        "JUMP22",
+        "JUMP23",
+        "JUMP24",
+        "JUMP25",
+        "JUMP27",
+        "JUMP28",
+        "JUMP29",
+        "JUMP30",
+        "JUMP31",
+        "JUMP32",
+        "JUMP33",
+        "JUMP34",
+        "JUMP35",
+        "JUMP36",
+        "JUMP37"
+      ],
+      "initial_track_mode": "nearest",
+      "iterations": 3,
+      "max_abs_postfit_cycles": 0.007250173138024591,
+      "original_par_ntoa": 4991,
+      "original_par_tres_us": 0.228,
+      "postfit_wrms_us": 0.2684309947531908,
+      "prefit_wrms_us": 0.274277614390592,
+      "pulse_numbers": "nearest integer from the released converted model, fixed for all iterations"
+    },
+    "include_sha256": {
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.EBPP.1360.tim": "a1c125d90f7642b6d426166da417d9348b7d1bc4fd12f5fd66fd04cc431d1126",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.EBPP.1410.tim": "e8cda903d01db33ba4e3de332e996556863a0e19b66159748d776e28e4c3e693",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.EBPP.2639.tim": "0ef749a4e59ad05b6483238b56465b55f387f962f09ddfbf4dc9ce94f6776d9e",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.P200.1380.tim": "848c61dda920a5e76d5ab1e089670e0e23053be80ff109d138918e2d01360a28",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.P217.1380.tim": "11753c2991c706ea6ca537277d640cfa14893ce2a9a2a0722b7b06066527a00d",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.S110.2487.tim": "1e12ca7c4be3fe37b42a6e4c7d9634b8e6cdae58897d93fe7427ef70d74820dc",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/EFF.S60.4857.tim": "7ea5a31d54bf009ab7273d796daae70b03a562df6fef63e772b72f0233c51da2",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/JBO.DFB.1400.tim": "641877e654f848ca6d3d28a20e81a1e2e86a337f3e0f969b1def787bd593d0bb",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/JBO.DFB.1520.tim": "0c5b59ac42d2862827ab94d904f1d441e6781ec88833252d02fda094cd7d382a",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/JBO.MK2.1520.tim": "bef59ecfe160722b029491c41063705bde3eb7b5e48a1ed1194b64399c97f7a5",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/JBO.ROACH.1520.tim": "d0521a1e8a0909eece1a10c90eda151eeff9f8ef6ec86b715c8d15b76c381088",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/LEAP.1396.tim": "2c402d168798ca89bdd1e1527f87dc6d48b31a8a0979251cb75bcac5304cf5d5",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/NRT.BON.1400.tim": "cbe8177ef832339d6c241e2f8e59f876c3081e4439c69ea8c60ff89a226cb341",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/NRT.BON.1600.tim": "f851e23d20c8a8479d1db69795104e95a8789d36ef31894fab962443e0b0363c",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/NRT.BON.2000.tim": "0e92ec61144338bd3b36f970301a5393ccf51157e71b811929a27bc7d2313f71",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/NRT.NUPPI.1484.tim": "5b5fefef936f9aabfd12137ec252e80ed903c3d878e9386b6747ba944d565333",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/NRT.NUPPI.1854.tim": "6a66d1219c684b6358b3cdffb3232829fd38ea26e0bfb6ea733e24336b679964",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/NRT.NUPPI.2539.tim": "2356a168fe51d4007b1c18952d79f19c9888649fdfe5438fe981f34648bfa240",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P1.1380.1.tim": "5bdcecc04f890150d3885498b6c30806b33da84d4b45602609e1e1eb18cfe609",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P1.1380.2.tim": "8a9572e2bc7f12d52a1278b2f73bb03d18d5bb0435ccd24ed360ad0debb32941",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P1.2273.tim": "c08e832a2e6d49fe5043e27cbd55fdb0d7f2c8370232b00f319c77b815c3ffd8",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P1.840.tim": "a6518f2333f98c78187524135e86c03bc693bdc34a17f0b15fdc75115227dd25",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P2.1380.tim": "e423eb94ceffdde9e7da96ebec04cd54947588442aa510d8ab15c7ec420158c4",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P2.2273.tim": "401e7099b477e5729d6a20ed8c96230e1f870661895f7a3af256303a1cc9b50e",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/tims/WSRT.P2.350.tim": "9b786d1f4ae7f239a7e317fb188d73373d8daa8391534a85816b62876a9674e2"
+    },
+    "max_mjd_tdb": 59295.98669615627,
+    "min_mjd_tdb": 50360.75808139136,
+    "par": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/J1713+0747.par",
+    "par_sha256": "ad3d5867db60b3068d29b3fb494599c83f42381fe0c4ca5823f2e23d7756caf7",
+    "parfile_clock": "TT(BIPM2021)",
+    "parfile_ntoa": 4991,
+    "parfile_tres_us": 0.228,
+    "pint": "1.1.8",
+    "pulsar": "J1713+0747",
+    "raw_toas": 5003,
+    "release_selection": "DR2full",
+    "rms_postfit_us_before_restoring_dmx": 0.2684309947531908,
+    "source_pulsar": "J1713+0747",
+    "spin_hz": 218.81184380988327,
+    "status": "ok",
+    "tim": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1713+0747/J1713+0747_all.tim",
+    "tim_sha256": "5e3e754c4605c17c8ae156c06622f9e775d13c2578664f9fb5b059bb7e0479b4",
+    "toa_track_mode": "use_pulse_numbers",
+    "tres_check": "within 25 percent by ratio",
+    "used_toas": 4898,
+    "wrms_to_tres_ratio": 1.1773289243561
+  },
+  {
+    "clock": "BIPM2021",
+    "components": [
+      "AbsPhase",
+      "AstrometryEquatorial",
+      "BinaryDD",
+      "DispersionDM",
+      "PhaseJump",
+      "SolarSystemShapiro",
+      "SolarWindDispersion",
+      "Spindown",
+      "TroposphereDelay"
+    ],
+    "compressed_rows": 398,
+    "cut_count": 0,
+    "dataset": "epta",
+    "dmx_restored": false,
+    "ephemeris": "de440",
+    "epta_format": {
+      "clock_cuts": {},
+      "clock_valid_mjd_by_site": {
+        "jb": {
+          "jb2gps.clk": [
+            54021.3818981,
+            60621.02083628
+          ]
+        },
+        "jbroach": {
+          "jb2gps.clk": [
+            54021.3818981,
+            60621.02083628
+          ]
+        },
+        "ncy": {},
+        "ncyobs": {
+          "ncyobs2obspm.clk": [
+            47299.57292,
+            60674.0
+          ],
+          "obspm2gps.clk": [
+            52974.0,
+            60244.0
+          ]
+        }
+      },
+      "ignored_line_locations": {},
+      "normalized_comments": 52,
+      "tim_file_counts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1751-2857/J1751-2857_all.tim": {},
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1751-2857/tims/JBO.DFB.1520.tim": {
+          "retained_format1_toas": 18,
+          "tempo2_comments": 25
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1751-2857/tims/JBO.ROACH.1520.tim": {
+          "retained_format1_toas": 82,
+          "tempo2_comments": 22
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1751-2857/tims/NRT.BON.1400.tim": {
+          "retained_format1_toas": 75,
+          "tempo2_comments": 3
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1751-2857/tims/NRT.NUPPI.1484.tim": {
+          "retained_format1_toas": 223,
+          "tempo2_comments": 2
+        }
+      }
+    },
+    "epta_timing_refit": {
+      "empty_masks_frozen": [],
+      "fitter": "WLSFitter",
+      "initial_free_parameters": [
+        "PX",
+        "RAJ",
+        "DECJ",
+        "PMRA",
+        "PMDEC",
+        "F0",
+        "F1",
+        "DM",
+        "DM1",
+        "DM2",
+        "PB",
+        "A1",
+        "A1DOT",
+        "ECC",
+        "T0",
+        "OM",
+        "JUMP1",
+        "JUMP2",
+        "JUMP3",
+        "JUMP5",
+        "JUMP6",
+        "JUMP7"
+      ],
+      "initial_track_mode": "nearest",
+      "iterations": 3,
+      "max_abs_postfit_cycles": 0.008959958259119995,
+      "original_par_ntoa": 398,
+      "original_par_tres_us": 3.192,
+      "postfit_wrms_us": 3.163017248019531,
+      "prefit_wrms_us": 3.1875239294840534,
+      "pulse_numbers": "nearest integer from the released converted model, fixed for all iterations"
+    },
+    "include_sha256": {
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1751-2857/tims/JBO.DFB.1520.tim": "da054218c9c759c81e43bf68e4b832d50069a7c7cd77ba8bcea142e43cf08912",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1751-2857/tims/JBO.ROACH.1520.tim": "c03e3c4888d8601616b40936aeadf534a717435fdb7f06dc587d5f4627b13762",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1751-2857/tims/NRT.BON.1400.tim": "d22b964037fe9b99c88ea93383252f8877c7a9269c26a18d0b3ec8fda0ebd20b",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1751-2857/tims/NRT.NUPPI.1484.tim": "d7e91d552004ec689b3cf8e3b5823d35b02d7a77953a510a1884e202a981a961"
+    },
+    "max_mjd_tdb": 59111.77038636945,
+    "min_mjd_tdb": 53746.42481330752,
+    "par": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1751-2857/J1751-2857.par",
+    "par_sha256": "b65ac4de5effe66cf420557c8748bb252c126c07e0056c6fcb37ba0b3bb7baac",
+    "parfile_clock": "TT(BIPM2021)",
+    "parfile_ntoa": 398,
+    "parfile_tres_us": 3.192,
+    "pint": "1.1.8",
+    "pulsar": "J1751-2857",
+    "raw_toas": 398,
+    "release_selection": "DR2full",
+    "rms_postfit_us_before_restoring_dmx": 3.163017248019531,
+    "source_pulsar": "J1751-2857",
+    "spin_hz": 255.43611484628494,
+    "status": "ok",
+    "tim": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1751-2857/J1751-2857_all.tim",
+    "tim_sha256": "e9bca6723415e38376ce02274c725e95f43f27f3bd8d4cec8723895848bb0c3b",
+    "toa_track_mode": "use_pulse_numbers",
+    "tres_check": "within 25 percent by ratio",
+    "used_toas": 398,
+    "wrms_to_tres_ratio": 0.9909201904823092
+  },
+  {
+    "clock": "BIPM2021",
+    "components": [
+      "AbsPhase",
+      "AstrometryEquatorial",
+      "BinaryDD",
+      "DispersionDM",
+      "PhaseJump",
+      "SolarSystemShapiro",
+      "SolarWindDispersion",
+      "Spindown",
+      "TroposphereDelay"
+    ],
+    "compressed_rows": 538,
+    "cut_count": 0,
+    "dataset": "epta",
+    "dmx_restored": false,
+    "ephemeris": "de440",
+    "epta_format": {
+      "clock_cuts": {},
+      "clock_valid_mjd_by_site": {
+        "jb": {
+          "jb2gps.clk": [
+            54021.3818981,
+            60621.02083628
+          ]
+        },
+        "jbroach": {
+          "jb2gps.clk": [
+            54021.3818981,
+            60621.02083628
+          ]
+        },
+        "ncy": {},
+        "ncyobs": {
+          "ncyobs2obspm.clk": [
+            47299.57292,
+            60674.0
+          ],
+          "obspm2gps.clk": [
+            52974.0,
+            60244.0
+          ]
+        }
+      },
+      "ignored_line_locations": {},
+      "normalized_comments": 66,
+      "tim_file_counts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1910+1256/J1910+1256_all.tim": {},
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1910+1256/tims/JBO.DFB.1520.tim": {
+          "retained_format1_toas": 26,
+          "tempo2_comments": 27
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1910+1256/tims/JBO.ROACH.1520.tim": {
+          "retained_format1_toas": 82,
+          "tempo2_comments": 26
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1910+1256/tims/NRT.BON.1400.tim": {
+          "retained_format1_toas": 52,
+          "tempo2_comments": 8
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1910+1256/tims/NRT.NUPPI.1484.tim": {
+          "retained_format1_toas": 378,
+          "tempo2_comments": 5
+        }
+      }
+    },
+    "epta_timing_refit": {
+      "empty_masks_frozen": [],
+      "fitter": "WLSFitter",
+      "initial_free_parameters": [
+        "RAJ",
+        "DECJ",
+        "PMRA",
+        "PMDEC",
+        "F0",
+        "F1",
+        "DM",
+        "DM1",
+        "DM2",
+        "PB",
+        "A1",
+        "A1DOT",
+        "ECC",
+        "T0",
+        "OM",
+        "JUMP1",
+        "JUMP2",
+        "JUMP3",
+        "JUMP5",
+        "JUMP6",
+        "JUMP7",
+        "JUMP8"
+      ],
+      "initial_track_mode": "nearest",
+      "iterations": 3,
+      "max_abs_postfit_cycles": 0.006637598850590622,
+      "original_par_ntoa": 538,
+      "original_par_tres_us": 2.054,
+      "postfit_wrms_us": 2.0271244954001277,
+      "prefit_wrms_us": 2.119085599781003,
+      "pulse_numbers": "nearest integer from the released converted model, fixed for all iterations"
+    },
+    "include_sha256": {
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1910+1256/tims/JBO.DFB.1520.tim": "f101b390b0876c83846f46a617c824ded02bda30d0fc405389eff143d1b43b01",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1910+1256/tims/JBO.ROACH.1520.tim": "2bfb92777fc22de2993e2d5b6a2f107f19a5a5d5e4a19a313e2d604bda730b55",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1910+1256/tims/NRT.BON.1400.tim": "03d119a54f4a816f146f9bef66cc2b0492e578aa89719b95a5d045eed85b77de",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J1910+1256/tims/NRT.NUPPI.1484.tim": "32843add60114f17fe9957e100a1f82624d1b4c24afdb29d8f68dcf7f1eaa112"
+    },
+    "max_mjd_tdb": 59282.59261240105,
+    "min_mjd_tdb": 53725.52831053259,
+    "par": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1910+1256/J1910+1256.par",
+    "par_sha256": "7aae24f31fd3ef22de4825a33968fa3a25cb683b3463f8c1bee94134d817676a",
+    "parfile_clock": "TT(BIPM2021)",
+    "parfile_ntoa": 538,
+    "parfile_tres_us": 2.054,
+    "pint": "1.1.8",
+    "pulsar": "J1910+1256",
+    "raw_toas": 538,
+    "release_selection": "DR2full",
+    "rms_postfit_us_before_restoring_dmx": 2.0271244954001277,
+    "source_pulsar": "J1910+1256",
+    "spin_hz": 200.6588053413723,
+    "status": "ok",
+    "tim": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1910+1256/J1910+1256_all.tim",
+    "tim_sha256": "e9bca6723415e38376ce02274c725e95f43f27f3bd8d4cec8723895848bb0c3b",
+    "toa_track_mode": "use_pulse_numbers",
+    "tres_check": "within 25 percent by ratio",
+    "used_toas": 538,
+    "wrms_to_tres_ratio": 0.9869155284323894
+  },
+  {
+    "clock": "BIPM2021",
+    "components": [
+      "AbsPhase",
+      "AstrometryEquatorial",
+      "DispersionDM",
+      "PhaseJump",
+      "SolarSystemShapiro",
+      "SolarWindDispersion",
+      "Spindown",
+      "TroposphereDelay"
+    ],
+    "compressed_rows": 804,
+    "cut_count": 0,
+    "dataset": "epta",
+    "dmx_restored": false,
+    "ephemeris": "de440",
+    "epta_format": {
+      "clock_cuts": {},
+      "clock_valid_mjd_by_site": {
+        "effix": {
+          "effix2gps.clk": [
+            55562.5,
+            59294.5
+          ]
+        },
+        "jb": {
+          "jb2gps.clk": [
+            54021.3818981,
+            60621.02083628
+          ]
+        },
+        "jbroach": {
+          "jb2gps.clk": [
+            54021.3818981,
+            60621.02083628
+          ]
+        },
+        "ncy": {},
+        "ncyobs": {
+          "ncyobs2obspm.clk": [
+            47299.57292,
+            60674.0
+          ],
+          "obspm2gps.clk": [
+            52974.0,
+            60244.0
+          ]
+        }
+      },
+      "ignored_line_locations": {},
+      "normalized_comments": 450,
+      "tim_file_counts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/J2322+2057_all.tim": {},
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/tims/EFF.P217.1380.tim": {
+          "retained_format1_toas": 28,
+          "tempo2_comments": 2
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/tims/JBO.DFB.1520.tim": {
+          "retained_format1_toas": 67,
+          "tempo2_comments": 88
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/tims/JBO.ROACH.1520.tim": {
+          "retained_format1_toas": 144,
+          "tempo2_comments": 195
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/tims/NRT.BON.1400.tim": {
+          "retained_format1_toas": 55,
+          "tempo2_comments": 22
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/tims/NRT.BON.1600.tim": {
+          "retained_format1_toas": 8,
+          "tempo2_comments": 58
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/tims/NRT.NUPPI.1484.tim": {
+          "retained_format1_toas": 502,
+          "tempo2_comments": 85
+        }
+      }
+    },
+    "epta_timing_refit": {
+      "empty_masks_frozen": [],
+      "fitter": "WLSFitter",
+      "initial_free_parameters": [
+        "RAJ",
+        "DECJ",
+        "PMRA",
+        "PMDEC",
+        "F0",
+        "F1",
+        "DM",
+        "DM1",
+        "DM2",
+        "JUMP1",
+        "JUMP2",
+        "JUMP3",
+        "JUMP4",
+        "JUMP5",
+        "JUMP6",
+        "JUMP8",
+        "JUMP9",
+        "JUMP10"
+      ],
+      "initial_track_mode": "nearest",
+      "iterations": 3,
+      "max_abs_postfit_cycles": 0.02100728457430812,
+      "original_par_ntoa": 804,
+      "original_par_tres_us": 4.239,
+      "postfit_wrms_us": 4.2449100631827905,
+      "prefit_wrms_us": 4.2625098881321595,
+      "pulse_numbers": "nearest integer from the released converted model, fixed for all iterations"
+    },
+    "include_sha256": {
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/tims/EFF.P217.1380.tim": "7601f719b97d4151bc61673c61246252198821caa1763c6174929f02b119e1c3",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/tims/JBO.DFB.1520.tim": "fac63edbfd6d61121eaf6f5ad1b88d361efc976a9795e782e8308bf3e3e2f3fb",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/tims/JBO.ROACH.1520.tim": "d4ec95760f55dc5463978886eb7f446b3855f406d5db2203520e880b08645b40",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/tims/NRT.BON.1400.tim": "e00a6d6f4413eccc08b21feedecf1a60300b907ccbc47b5476bf4d12089dc71b",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/tims/NRT.BON.1600.tim": "7cef48a1563b1c2c4e9ef3c02ede5518c66fc69f1b41f74aada4e98972829788",
+      "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/tims/NRT.NUPPI.1484.tim": "80a37bb65c4498caf97fa345aa78753ad6b2096da0080ae2ffa701d62212137d"
+    },
+    "max_mjd_tdb": 59268.72497060299,
+    "min_mjd_tdb": 53905.22274864962,
+    "par": "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/J2322+2057.par",
+    "par_sha256": "4d9481092494263f263ef9c0c50925735f6865d5c2075de2b139fad119e9e45b",
+    "parfile_clock": "TT(BIPM2021)",
+    "parfile_ntoa": 804,
+    "parfile_tres_us": 4.239,
+    "pint": "1.1.8",
+    "pulsar": "J2322+2057",
+    "raw_toas": 804,
+    "release_selection": "DR2full",
+    "rms_postfit_us_before_restoring_dmx": 4.2449100631827905,
+    "source_pulsar": "J2322+2057",
+    "spin_hz": 207.96816658295137,
+    "status": "ok",
+    "tim": "epta/EPTA-DR2/EPTA-DR2/DR2full/J2322+2057/J2322+2057_all.tim",
+    "tim_sha256": "94a7e4d5ebb595e014d129707858474438d039535e18a86142278cbff7114f2b",
+    "toa_track_mode": "use_pulse_numbers",
+    "tres_check": "within 25 percent by ratio",
+    "used_toas": 804,
+    "wrms_to_tres_ratio": 1.0013942116496322
+  }
+]

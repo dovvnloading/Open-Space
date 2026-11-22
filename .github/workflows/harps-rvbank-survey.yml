@@ -1,0 +1,399 @@
+name: HARPS RVBank companion survey
+on:
+  # Runs once when this file changes on the research branch: a workflow_dispatch-only
+  # file cannot be dispatched until it exists on the default branch.
+  push:
+    branches: [survey/harps-rvbank-companions]
+    paths: ['.github/workflows/harps-rvbank-survey.yml']
+  workflow_dispatch:
+    inputs:
+      scope:
+        type: choice
+        description: Survey stage to reproduce
+        default: full
+        options: [full, followup]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: harps-rvbank-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  SURVEY: results/harps-rvbank-survey
+  OPENBLAS_NUM_THREADS: "1"
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+
+jobs:
+  ingest:
+    if: >-
+      (github.event_name == 'push' && !startsWith(github.event.head_commit.message, '[harps-followup]')) ||
+      (github.event_name == 'workflow_dispatch' && inputs.scope != 'followup')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r "$SURVEY/requirements.txt"
+      - name: Validate synthetic orbit, instrument offset and mass scale
+        run: python "$SURVEY/quality_control.py"
+      - run: |
+          mkdir -p work receipts
+          python -m pip freeze > receipts/packages.txt
+          git rev-parse HEAD > receipts/revision.txt
+          python "$SURVEY/ingest.py" --work work --out receipts
+          python -c 'import json; assert not json.load(open("receipts/ingest.json"))["source"].startswith("ESO"), "RVBank source unavailable; the completed ESO survey is already preserved"'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: harps-input-receipts
+          path: receipts/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: harps-source-snapshot
+          path: |
+            work/
+            !work/epochs.csv.gz
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: harps-normalized
+          path: work/epochs.csv.gz
+          if-no-files-found: error
+          compression-level: 0
+
+  search:
+    needs: ingest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/harps-rvbank-survey
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r "$SURVEY/requirements.txt"
+      - uses: actions/download-artifact@v4
+        with:
+          name: harps-normalized
+          path: work
+      - uses: actions/download-artifact@v4
+        with:
+          name: harps-input-receipts
+          path: receipts
+      - run: |
+          python "$SURVEY/search.py" --epochs work/epochs.csv.gz --targets receipts/targets.csv \
+            --shard ${{ matrix.shard }} --shards 12 --out shard
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: harps-shard-${{ matrix.shard }}
+          path: shard/
+
+  review:
+    needs: search
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r "$SURVEY/requirements.txt"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: harps-shard-*
+          path: shards
+      - uses: actions/download-artifact@v4
+        with:
+          name: harps-normalized
+          path: work
+      - uses: actions/download-artifact@v4
+        with:
+          name: harps-input-receipts
+          path: revised
+      - run: |
+          python "$SURVEY/report.py" combine --out revised --shards shards --count 12
+          python "$SURVEY/enrich.py" --work work --out revised
+          python "$SURVEY/vet.py" --work work --out revised
+          python "$SURVEY/ingest.py" --source eso --work previous --out previous
+          python "$SURVEY/holdout.py" --work work --out revised --eso-epochs previous/epochs.csv.gz
+          python "$SURVEY/spectral_activity.py" --work work --out revised --eso-epochs previous/epochs.csv.gz
+          python "$SURVEY/alias_review.py" --work work --out revised
+          cp previous/inputs.csv revised/holdout-inputs.csv
+          python "$SURVEY/report.py" summarize --out revised
+          cat revised/survey.json
+          cat revised/holdout.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: harps-evidence
+          path: revised
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: harps-catalog-snapshot
+          path: work/catalog-cache
+          if-no-files-found: ignore
+
+  followup:
+    name: Complete activity coverage and test unresolved periods
+    if: >-
+      (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[harps-followup]')) ||
+      (github.event_name == 'workflow_dispatch' && inputs.scope == 'followup')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r "$SURVEY/requirements.txt"
+      - name: Locate or restore verified normalized inputs
+        id: archived
+        run: |
+          mkdir -p work other followup
+          if [[ -s "$SURVEY/followup/rvbank-epochs.csv.gz" && -s "$SURVEY/followup/eso-epochs.csv.gz" ]]; then
+            cp "$SURVEY/followup/rvbank-epochs.csv.gz" work/epochs.csv.gz
+            cp "$SURVEY/followup/eso-epochs.csv.gz" other/epochs.csv.gz
+            cp "$SURVEY/followup/eso-inputs.csv" other/inputs.csv
+            echo 'available=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'available=false' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/download-artifact@v4
+        if: steps.archived.outputs.available == 'false'
+        with:
+          name: harps-normalized
+          run-id: 44985728833
+          github-token: ${{ github.token }}
+          path: work
+      - name: Retrieve the same ESO input
+        if: steps.archived.outputs.available == 'false'
+        run: python "$SURVEY/ingest.py" --source eso --work other --out other
+      - name: Verify and archive the normalized survey inputs
+        run: |
+          python - <<'PYTHON'
+          import hashlib, json, pathlib, os
+          base = pathlib.Path(os.environ["SURVEY"])
+          hashes = json.loads((base/"revised/holdout.json").read_text())["input_sha256"]
+          paths = {"work/epochs.csv.gz": "work/epochs.csv.gz", "other/epochs.csv.gz": "previous/epochs.csv.gz"}
+          actual = {path:hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest() for path in paths}
+          for path, old in paths.items():
+              assert actual[path] == hashes[old], f"Input differs from full survey: {path}"
+          pathlib.Path("followup/input-sha256.json").write_text(json.dumps(actual,indent=2)+"\n")
+          PYTHON
+          cp other/inputs.csv followup/eso-inputs.csv
+          cp work/epochs.csv.gz followup/rvbank-epochs.csv.gz
+          cp other/epochs.csv.gz followup/eso-epochs.csv.gz
+      - name: Test the 72-day signal and the published orbits
+        run: |
+          python "$SURVEY/deep_followup.py" --primary work/epochs.csv.gz --eso other/epochs.csv.gz --evidence "$SURVEY/revised" --out followup
+          python "$SURVEY/prior_followup.py" --primary work/epochs.csv.gz --evidence "$SURVEY/revised" --out followup
+          python "$SURVEY/gaia_binaries.py" --evidence "$SURVEY/revised" --out followup --cache work/gaia-binaries
+          python "$SURVEY/all_activity.py" --primary work/epochs.csv.gz --evidence "$SURVEY/revised" --out followup
+          git rev-parse HEAD > followup/revision.txt
+          echo "$GITHUB_RUN_ID" > followup/actions-run.txt
+          (cd followup && sha256sum -- * > "$RUNNER_TEMP/harps-followup-sha" && cp "$RUNNER_TEMP/harps-followup-sha" SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: harps-period-followups
+          path: followup
+          if-no-files-found: error
+
+  corrected:
+    name: Search the retrievable corrected CDS velocities independently
+    needs: followup
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r "$SURVEY/requirements.txt"
+      - uses: actions/download-artifact@v4
+        with:
+          name: harps-period-followups
+          path: supplement
+      - name: Locate the three original VizieR pages
+        id: pages
+        run: |
+          mkdir -p raw corrected other
+          shopt -s nullglob
+          pages=("$SURVEY/corrected"/J-A+A-683-A125-table4.*.tsv.gz)
+          if (( ${#pages[@]} == 3 )); then
+            for page in "${pages[@]}"; do
+              dest=$(basename "$page" .gz)
+              gzip -dc "$page" > "raw/$dest"
+            done
+            echo 'local=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'local=false' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/download-artifact@v4
+        if: steps.pages.outputs.local == 'false'
+        with:
+          name: harps-source-snapshot
+          run-id: 44985728833
+          github-token: ${{ github.token }}
+          path: raw
+      - name: Fit corrected velocities and measure injection recovery
+        run: |
+          python "$SURVEY/corrected_subset.py" --snapshot raw --evidence "$SURVEY/revised" --work work-prefix --out corrected --followup supplement
+          git rev-parse HEAD > corrected/revision.txt
+          python -m pip freeze > corrected/packages.txt
+          python "$SURVEY/search.py" --epochs work-prefix/epochs.csv.gz --targets corrected/targets.csv --out prefix-shards/harps-shard-0
+          python "$SURVEY/report.py" combine --out corrected --shards prefix-shards --count 1
+          python "$SURVEY/vet.py" --work work-prefix --out corrected
+          cp supplement/eso-epochs.csv.gz other/epochs.csv.gz
+          cp supplement/eso-inputs.csv other/inputs.csv
+          cp "$SURVEY/eso/targets.csv" "$SURVEY/eso/ingest.json" other/
+          python "$SURVEY/holdout.py" --work work-prefix --out corrected --eso-epochs other/epochs.csv.gz
+          python "$SURVEY/alias_review.py" --work work-prefix --out corrected
+          python - <<'PYTHON'
+          import csv, gzip, pathlib, shutil
+          for row in csv.DictReader(open("corrected/inputs.csv")):
+              name = row["file"]
+              if not name.endswith(".tsv") or "683-A125-table4" not in name:
+                  continue
+              source, = pathlib.Path("raw").rglob(name)
+              with source.open("rb") as inp, (pathlib.Path("corrected")/(name+".gz")).open("wb") as dest:
+                  with gzip.GzipFile(filename="", mode="wb", fileobj=dest,mtime=0) as compressed:
+                      shutil.copyfileobj(inp, compressed)
+          PYTHON
+          python "$SURVEY/compare_releases.py" --full "$SURVEY/revised" --corrected corrected --supplement supplement
+          python "$SURVEY/report.py" summarize --out corrected
+          cat corrected/survey.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: harps-corrected-evidence
+          path: corrected
+          if-no-files-found: error
+
+  publish:
+    name: Commit survey evidence to the research branch
+    needs: [review, followup, corrected]
+    if: always() && !cancelled() && github.ref == 'refs/heads/survey/harps-rvbank-companions' && (needs.review.result == 'success' || needs.followup.result == 'success')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Check for the archived ESO search
+        id: eso
+        run: |
+          if [[ -f "$SURVEY/eso/survey.json" ]]; then
+            echo 'deposited=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'deposited=false' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Retrieve completed ESO fits and receipts
+        if: steps.eso.outputs.deposited == 'false'
+        uses: actions/download-artifact@v4
+        with:
+          name: harps-evidence
+          run-id: 44981252644
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/harps-eso
+      - name: Stage the verified ESO survey
+        if: steps.eso.outputs.deposited == 'false'
+        run: |
+          set -euo pipefail
+          (cd "$RUNNER_TEMP/harps-eso" && sha256sum --check --quiet SHA256SUMS)
+          test "$(cat "$RUNNER_TEMP/harps-eso/revision.txt")" = d17567a058c69b24bf292d9284e56a2fa23961e3
+          mkdir -p "$SURVEY/eso"
+          cp -a "$RUNNER_TEMP/harps-eso/." "$SURVEY/eso/"
+          git add -f -- "$SURVEY/eso"
+      - uses: actions/download-artifact@v4
+        if: needs.review.result == 'success'
+        with:
+          name: harps-evidence
+          path: ${{ runner.temp }}/harps-rvbank
+      - name: Verify and stage the RVBank evidence
+        if: needs.review.result == 'success'
+        run: |
+          set -euo pipefail
+          (cd "$RUNNER_TEMP/harps-rvbank" && sha256sum --check --quiet SHA256SUMS)
+          test -s "$RUNNER_TEMP/harps-rvbank/survey.json"
+          test -s "$RUNNER_TEMP/harps-rvbank/inputs.csv"
+          test -s "$RUNNER_TEMP/harps-rvbank/vetting.csv"
+          test -s "$RUNNER_TEMP/harps-rvbank/published-controls.csv"
+          test -s "$RUNNER_TEMP/harps-rvbank/completeness-grid.csv"
+          mkdir -p "$SURVEY/revised"
+          rsync -a --delete "$RUNNER_TEMP/harps-rvbank/" "$SURVEY/revised/"
+          git add -f -- "$SURVEY/revised"
+      - uses: actions/download-artifact@v4
+        if: needs.followup.result == 'success'
+        with:
+          name: harps-period-followups
+          path: ${{ runner.temp }}/harps-followup
+      - name: Verify and stage period comparisons
+        if: needs.followup.result == 'success'
+        run: |
+          (cd "$RUNNER_TEMP/harps-followup" && sha256sum --check --quiet SHA256SUMS)
+          test "$(cat "$RUNNER_TEMP/harps-followup/revision.txt")" = "$GITHUB_SHA"
+          mkdir -p "$SURVEY/followup"
+          rsync -a --delete "$RUNNER_TEMP/harps-followup/" "$SURVEY/followup/"
+          git add -f -- "$SURVEY/followup"
+      - uses: actions/download-artifact@v4
+        if: needs.corrected.result == 'success'
+        with:
+          name: harps-corrected-evidence
+          path: ${{ runner.temp }}/harps-corrected
+      - name: Verify and stage the corrected CDS search
+        if: needs.corrected.result == 'success'
+        run: |
+          (cd "$RUNNER_TEMP/harps-corrected" && sha256sum --check --quiet SHA256SUMS)
+          test "$(cat "$RUNNER_TEMP/harps-corrected/revision.txt")" = "$GITHUB_SHA"
+          mkdir -p "$SURVEY/corrected"
+          rsync -a --delete "$RUNNER_TEMP/harps-corrected/" "$SURVEY/corrected/"
+          git add -f -- "$SURVEY/corrected"
+      - name: Commit the run
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --cached --quiet; then
+            git commit -m "Deposit verified HARPS survey tables and input receipts (run $GITHUB_RUN_ID)"
+          fi
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r "$SURVEY/requirements.txt" matplotlib
+      - run: python -m open_space.verify
+      - run: python -m unittest discover -s tests
+      - name: Publish the verified commit
+        run: git push origin HEAD:refs/heads/survey/harps-rvbank-companions
