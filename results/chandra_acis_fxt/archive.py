@@ -9,6 +9,7 @@ The independent census is by public_avail_date. Observation start time, target
 class, pointing, exposure length and measured source counts are never cuts.
 """
 import argparse
+from collections import defaultdict
 import datetime as dt
 import gzip
 import hashlib
@@ -101,7 +102,7 @@ def download(url, dest, data=None):
 def tap(outdir, label, query):
     """Fetch CXC TABLEDATA; retain exact raw XML compressed losslessly."""
     body = urllib.parse.urlencode({
-        "REQUEST": "doQuery", "LANG": "ADQL", "FORMAT": "votable", "QUERY": query,
+        "REQUEST": "doQuery", "LANG": "ADQL", "FORMAT": "votable", "MAXREC": 50000, "QUERY": query,
     }).encode("ascii")
     xml_path = outdir / (label + ".xml")
     source = download(TAP, xml_path, data=body)
@@ -112,6 +113,7 @@ def tap(outdir, label, query):
     source.update({"query": query, "post_body": body.decode(), "raw_gzip": packed.name})
     root = ET.fromstring(raw)
     statuses = [i for i in root.findall(".//{*}INFO") if i.get("name", "").upper() == "QUERY_STATUS"]
+    source["overflow"] = any(s.get("value", "").upper() == "OVERFLOW" for s in statuses)
     for status in statuses:
         if status.get("value", "").upper() not in {"OK", "OVERFLOW"}:
             raise ValueError(f"TAP {label}: {status.text or status.attrib}")
@@ -129,63 +131,84 @@ def inventory(outdir, start, end):
     first, last = dt.date.fromisoformat(start), dt.date.fromisoformat(end)
     if last < first:
         raise ValueError("end precedes start")
-    # Paging by the integer primary key keeps coverage independent of TAP MAXREC
-    # and avoids differences between TAP implementations' timestamp literals.
     predicate = "o.instrument LIKE 'ACIS%'"
-    count_rows, count_source = tap(outdir, "census_count", (
-        "SELECT COUNT(*) AS n FROM cxc.observation o WHERE " + predicate
+    obs_table = "cxc.observation o"
+    joined = obs_table + " LEFT OUTER JOIN cxc.proposal p ON p.number = o.proposal_number"
+    count, native_source = tap(outdir, "census_count", (
+        f"SELECT COUNT(*) AS n, MIN(o.obsid) AS lo, MAX(o.obsid) AS hi FROM {obs_table} WHERE {predicate}"
     ))
-    expected = int(count_rows[0]["n"])
+    joined_count, joined_source = tap(outdir, "joined_count", f"SELECT COUNT(*) AS n FROM {joined} WHERE {predicate}")
+    expected, expected_joined = int(count[0]["n"]), int(joined_count[0]["n"])
     if expected < 1:
         raise ValueError("empty ACIS observation catalog")
-    sources = [count_source]
-    accepted = []
-    exceptions = []
-    inspected = page = 0
-    lastid = -1
-    while True:
-        columns = ", ".join("o." + field for field in FIELDS)
-        proposal_cols = ('p.type AS proposal_type, p.title AS proposal_title, '
-                         'p.category AS proposal_category, p."PI" AS proposal_pi')
-        query = (f"SELECT TOP 2000 {columns}, {proposal_cols} FROM cxc.observation o "
-                 "LEFT OUTER JOIN cxc.proposal p ON p.number = o.proposal_number "
-                 f"WHERE {predicate} AND o.obsid > {lastid} ORDER BY o.obsid")
-        rows, source = tap(outdir, f"census_{page:03d}", query)
-        sources.append(source)
-        page += 1
-        if not rows:
-            break
-        for row in rows:
+    lo, hi = int(count[0]["lo"]), int(count[0]["hi"])
+    sources = [native_source, joined_source]
+    accepted, exceptions = [], []
+    native_total = joined_total = 0
+    observed_ids = set()
+    columns = ", ".join("o." + field for field in FIELDS)
+    proposal_cols = ('p.type AS proposal_type, p.title AS proposal_title, '
+                     'p.category AS proposal_category, p."PI" AS proposal_pi')
+    # Numerical slabs cover the complete integer ID domain without depending
+    # on output order or the uniqueness of any single observation/proposal row.
+    # The native ID stream is independent of the many-to-one proposal join.
+    spans = [(low, min(hi, low + 799)) for low in range(lo, hi + 1, 800)]
+    while spans:
+        low, high = spans.pop()
+        clause = f"WHERE {predicate} AND o.obsid BETWEEN {low} AND {high}"
+        native, ids_source = tap(outdir, f"ids_{low}_{high}",
+                                 f"SELECT o.obsid FROM {obs_table} {clause}")
+        metadata, meta_source = tap(outdir, f"metadata_{low}_{high}",
+                                    f"SELECT {columns}, {proposal_cols} FROM {joined} {clause}")
+        sources.extend([ids_source, meta_source])
+        if ids_source.get("overflow") or meta_source.get("overflow"):
+            if low == high:
+                raise ValueError(f"TAP response overflow on individual ObsID {low}")
+            middle = (low + high) // 2
+            spans.extend([(low, middle), (middle + 1, high)])
+            continue
+        ids = {int(r["obsid"]) for r in native}
+        by_id = defaultdict(list)
+        for row in metadata:
             if set(row) != set(FIELDS + PROPOSAL_FIELDS):
                 raise ValueError(f"unexpected CXC fields: {list(row)}")
-            obsid = int(row["obsid"])
-            if obsid <= lastid:
-                raise ValueError(f"duplicate or out-of-order CXC ObsID {obsid}")
-            lastid = obsid
-            inspected += 1
-            status = row["status"].upper()
-            mode = row["exposure_mode"].upper()
-            grating = row["grating"].upper()
-            if grating in {"HETG", "LETG"} or mode in {"CC", "CONTINUOUS", "CONTINUOUS CLOCKING"}:
+            by_id[int(row["obsid"])].append(row)
+        if (any(not low <= i <= high for i in ids) or ids != by_id.keys()
+                or observed_ids.intersection(ids)):
+            raise ValueError(f"CXC native IDs and proposal metadata disagree in {low}..{high}")
+        observed_ids.update(ids)
+        native_total += len(native)
+        joined_total += len(metadata)
+        for obsid, all_rows in sorted(by_id.items()):
+            # A single ObsID may have several catalog rows. Group all of its
+            # timed/imaging configurations before applying the first-public cut.
+            imaging = [r for r in all_rows if r["grating"].upper() not in {"HETG", "LETG"}
+                       and r["exposure_mode"].upper() not in {"CC", "CONTINUOUS", "CONTINUOUS CLOCKING"}]
+            archived = [r for r in imaging if r["status"].upper() == "ARCHIVED"]
+            dates = sorted({r["public_avail_date"] for r in archived if r["public_avail_date"]})
+            if not imaging:
                 continue
-            release = row["public_avail_date"]
-            if not release:
-                # Retain catalog gaps affecting the interval. Observations predating
-                # the interval can become public during it, even years later.
-                if status == "ARCHIVED":
-                    exceptions.append({**row, "reason": "missing_public_date"})
+            if dates and dt.date.fromisoformat(dates[0][:10]) < first:
+                continue  # Even an unknown additional release cannot move the first release forward.
+            if all(r["start_date"] and dt.date.fromisoformat(r["start_date"][:10]) > last for r in imaging):
+                continue  # The observation happened after the entire first-release interval.
+            if any(not r["public_avail_date"] for r in archived):
+                exceptions.append({"obsid": str(obsid), "reason": "missing_public_date",
+                                   "known_release_dates": dates})
+            nonarchived_reports = [r for r in imaging if r["status"].upper() != "ARCHIVED"
+                                   and r["public_avail_date"]
+                                   and first <= dt.date.fromisoformat(r["public_avail_date"][:10]) <= last]
+            if not dates or dt.date.fromisoformat(dates[0][:10]) > last:
+                # No archived release validates those alternative metadata rows.
+                if nonarchived_reports:
+                    exceptions.append({"obsid": str(obsid), "reason": "not_marked_archived",
+                                       "reported_dates": sorted({r["public_avail_date"] for r in nonarchived_reports})})
                 continue
-            date = dt.date.fromisoformat(release[:10])
-            if not first <= date <= last:
-                continue
-            if status != "ARCHIVED":
-                exceptions.append({**row, "reason": "not_marked_archived"})
-                continue
-            if grating not in {"NONE", "", "NO GRATING"} or mode not in {
-                "TE", "TIMED", "TIMED EXPOSURE", "",
-            }:
-                # Do not discard unexpected labels. Confirm actual science
-                # configuration from READMODE/GRATING of the downloaded EVENTS.
+            # Stable tie-break on metadata, independent of service return order.
+            row = min((r for r in archived if r["public_avail_date"] == dates[0]),
+                      key=lambda r: tuple(r[k] for k in FIELDS + PROPOSAL_FIELDS))
+            grating, mode = row["grating"].upper(), row["exposure_mode"].upper()
+            if grating not in {"NONE", "", "NO GRATING"} or mode not in {"TE", "TIMED", "TIMED EXPOSURE", ""}:
                 exceptions.append({**row, "reason": "check_mode_from_FITS"})
             proposal_number = row["proposal_number"]
             proposal_link = None
@@ -204,17 +227,22 @@ def inventory(outdir, start, end):
                 "observation_url": f"https://cda.harvard.edu/chaser/startViewer.do?menuItem=details&obsid={obsid}",
                 "proposal_url": proposal_link,
                 "obsid": obsid, "instrument": row["instrument"], "grating": grating,
-                "release_date": release, "start_date": row["start_date"],
-                "exposure_mode": mode, "status": status,
+                "release_date": dates[0], "known_release_dates": dates,
+                "metadata_rows": len(all_rows), "start_date": row["start_date"],
+                "nonarchived_reports_in_window": len(nonarchived_reports),
+                "exposure_mode": mode, "status": row["status"].upper(),
                 "exposure_s": 1000 * float(row["exposure_time"]) if row["exposure_time"] else None,
                 "event_count": int(row["event_count"]) if row["event_count"] else None,
             })
-    if inspected != expected:
-        raise ValueError(f"CXC census changed or paginated incompletely: {inspected} of {expected}")
+    if (native_total, joined_total) != (expected, expected_joined):
+        raise ValueError(f"CXC census changed or paginated incompletely: native {native_total} of {expected}, "
+                         f"joined {joined_total} of {expected_joined}")
+    accepted.sort(key=lambda r: r["obsid"])
     if not accepted:
         raise ValueError("no archived ACIS imaging entries in interval; inspect census before interpreting")
     dump(outdir / "inventory_sources.json", {
-        "sources": sources, "catalog_rows": expected, "selected_obsids": len(accepted),
+        "sources": sources, "catalog_rows": expected, "joined_rows": joined_total,
+        "unique_native_acis_obsids": len(observed_ids), "selected_obsids": len(accepted),
         "start_inclusive": start, "end_inclusive": end,
         "source_sha256_definition": "Exact HTTP response entity, before local gzip compression",
     })

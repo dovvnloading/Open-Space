@@ -29,6 +29,17 @@ def fixture_download(content):
     return download
 
 
+def census_pages(rows, expected=None, ids=None):
+    ids = [int(row["obsid"]) for row in rows] if ids is None else ids
+    return [
+        ([{"n": str(len(ids) if expected is None else expected),
+           "lo": str(min(ids)), "hi": str(max(ids))}], {}),
+        ([{"n": str(len(rows))}], {}),
+        ([{"obsid": str(oid)} for oid in ids], {}),
+        (rows, {}),
+    ]
+
+
 class TestArchive(unittest.TestCase):
     def test_release_window_imaging_and_observing_intent(self):
         rows = [
@@ -40,7 +51,7 @@ class TestArchive(unittest.TestCase):
             make_row(16, public_avail_date=""), make_row(17, status="observed"),
             make_row(18, exposure_mode="UNSPECIFIED", proposal_number=""),
         ]
-        pages = [([{"n": str(len(rows))}], {}), (rows[:5], {}), (rows[5:], {}), ([], {})]
+        pages = census_pages(rows)
         with tempfile.TemporaryDirectory() as path, patch.object(archive, "tap", side_effect=pages) as tap:
             directory = Path(path)
             selected = archive.inventory(directory, "2021-01-01", "2026-11-21")
@@ -61,7 +72,39 @@ class TestArchive(unittest.TestCase):
             self.assertEqual({r["obsid"]: r["reason"] for r in exceptions}, {
                 "16": "missing_public_date", "17": "not_marked_archived", "18": "check_mode_from_FITS",
             })
-            self.assertIn("o.obsid > 14", tap.call_args_list[2].args[2])
+            self.assertIn("BETWEEN 10 AND 18", tap.call_args_list[2].args[2])
+            self.assertIn("LEFT OUTER JOIN", tap.call_args_list[3].args[2])
+
+    def test_unordered_rows_repeated_obsid_and_first_public_release(self):
+        rows = [
+            make_row(12, public_avail_date="2022-05-01"),
+            make_row(10, public_avail_date="2022-05-01", proposal_type="GO"),
+            make_row(12, public_avail_date="2020-12-31"),  # prior release of this same ObsID
+            make_row(10, public_avail_date="2021-02-03"),
+            make_row(10, public_avail_date="2021-02-03"),  # multiplicity from proposal join
+        ]
+        pages = census_pages(rows, ids=[12, 10, 12, 10])
+        with tempfile.TemporaryDirectory() as path, patch.object(archive, "tap", side_effect=pages):
+            out = Path(path)
+            found = archive.inventory(out, "2021-01-01", "2026-11-21")
+            self.assertEqual([r["obsid"] for r in found], [10])
+            self.assertEqual(found[0]["release_date"], "2021-02-03")
+            self.assertEqual(found[0]["metadata_rows"], 3)
+            receipt = json.loads((out / "inventory_sources.json").read_text())
+            self.assertEqual((receipt["catalog_rows"], receipt["joined_rows"],
+                              receipt["unique_native_acis_obsids"]), (4, 5, 2))
+
+    def test_missing_dates_do_not_invalidate_provably_excluded_or_verified_observations(self):
+        rows = [make_row(10, public_avail_date="2020-01-01"), make_row(10, public_avail_date=""),
+                make_row(11, public_avail_date="", start_date="2026-11-22T00:00:00"),
+                make_row(12), make_row(12, status="observed"), make_row(13, public_avail_date="")]
+        with tempfile.TemporaryDirectory() as path, patch.object(archive, "tap", side_effect=census_pages(rows)):
+            out = Path(path)
+            found = archive.inventory(out, "2021-01-01", "2026-11-21")
+            self.assertEqual([r["obsid"] for r in found], [12])
+            self.assertEqual(found[0]["nonarchived_reports_in_window"], 1)
+            exc = json.loads((out / "inventory_exceptions.json").read_text())
+            self.assertEqual([(r["obsid"], r["reason"]) for r in exc], [("13", "missing_public_date")])
 
     def test_latest_interleaved_streams_preserve_both_cycles(self):
         names = [
@@ -74,7 +117,7 @@ class TestArchive(unittest.TestCase):
         self.assertEqual(archive.product_names(html, 10), names[2:4])
 
     def test_partial_catalog_fails(self):
-        pages = [([{"n": "3"}], {}), ([make_row(10)], {}), ([], {})]
+        pages = census_pages([make_row(10)], expected=3)
         with tempfile.TemporaryDirectory() as path, patch.object(archive, "tap", side_effect=pages):
             with self.assertRaisesRegex(ValueError, "1 of 3"):
                 archive.inventory(Path(path), "2021-01-01", "2026-11-21")
