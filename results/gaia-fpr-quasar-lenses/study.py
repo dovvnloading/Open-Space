@@ -106,7 +106,7 @@ def inspect(out):
     prior_inputs = set(components.loc[components.input_lens_catalogue.map(flag),"system_id"])
     extra_ok = all(any(r.get("catalog")==tag and r.get("complete") for r in
                        json.loads((out/"supplemental_receipts.json").read_text()))
-                   for tag in ["Chen et al. 2026 MGQPC", "SuGOHI VI"])
+                   for tag in ["Chen et al. 2026 MGQPC", "SuGOHI VI", "SuGOHI current compilation"])
     flags["supplemental_prior"] = flags.system_id.isin(extra)
     flags["prior_input"] = flags.system_id.isin(prior_inputs)
     by_id = flags.set_index("system_id")

@@ -71,6 +71,55 @@ def summarize(evidence, output):
         result[arm+"_published_comparisons"]={name:dict(catalogue_entries=len(g),eligible=int(g.eligible.sum()),
                gaia=int(g.gaia.sum()),morphology=int(g.morphology.sum()),anchored=int(g.anchored.sum()))
                for name,g in frame.groupby("family")}
+    # For each unlisted quasar anchor, expose the velocity scale required if
+    # the example Einstein radius is interpreted with a spherical isothermal lens.
+    # Rows are alternative lens redshifts, not inferred distances.
+    from astropy.constants import c
+    from astropy.cosmology import FlatLambdaCDM
+    cosmos = FlatLambdaCDM(H0=70,Om0=0.3)
+    from astropy.coordinates import SkyCoord
+    scales = []
+    doubles = []
+    for line in (evidence/"review_packets.jsonl").read_text().splitlines():
+        packet=json.loads(line)
+        if packet["prior"] or not packet["imaging"]["imaging_model_pass"]:
+            continue
+        model=packet["imaging"]["lens_model"]
+        theta=model["theta_e_arcsec"]
+        comps=packet["components"]
+        if len(comps)==2:
+            a,b=comps
+            separation=SkyCoord(a["ra"],a["dec"],unit="deg").separation(
+                SkyCoord(b["ra"],b["dec"],unit="deg")).arcsec
+            lens_ra,lens_dec=model["center_radec_deg"]
+            doubles.append(dict(system_id=packet["system_id"],ra_a_deg=round(a["ra"],6),dec_a_deg=round(a["dec"],6),
+                ra_b_deg=round(b["ra"],6),dec_b_deg=round(b["dec"],6),gaia_g_a=round(a["g"],3),
+                gaia_g_b=round(b["g"],3),separation_arcsec=round(separation,3),
+                lens_ra_deg=round(lens_ra,6),lens_dec_deg=round(lens_dec,6),theta_e_arcsec=round(theta,3),
+                axis_ratio=round(model["q"],3),mass_pa_deg_east_to_north=round(model["mass_pa_deg_east_to_north"],1),
+                shear=round(model["shear"],4),shear_pa_deg_east_to_north=round(model["shear_pa_deg_east_to_north"],1),
+                survey_colour_difference_mag=round(packet["imaging"]["image_colour_spread_mag"],3),
+                quasar_evidence=packet["catalogue_flags"]["qso_evidence"]))
+        for spectrum in packet["spectra"]:
+            if (spectrum["classification"]!="QSO" or str(spectrum["isolated_fiber"]).lower()!="true"
+                    or float(spectrum["warning"])!=0):
+                continue
+            zs=float(spectrum["z"])
+            if zs <= 0:
+                continue
+            ds=cosmos.angular_diameter_distance(zs)
+            for zl in [0.0,0.05,0.10,0.15]:
+                if zl>=zs:
+                    continue
+                ratio=1.0 if zl==0 else (ds/cosmos.angular_diameter_distance_z1z2(zl,zs)).value
+                sigma=c.to_value("km/s")*np.sqrt(np.deg2rad(theta/3600)*ratio/(4*np.pi))
+                scales.append(dict(system_id=packet["system_id"],spectrum=spectrum["name"],source_z=zs,
+                    example_theta_e_arcsec=theta,hypothetical_lens_z=zl,sis_velocity_scale_km_s=sigma,
+                    interpretation="lower limiting scale" if zl==0 else "conditional spherical isothermal scale"))
+    pd.DataFrame(doubles).to_csv(output/"reviewed_double_measurements.csv",index=False)
+    pd.DataFrame(scales,columns=["system_id","spectrum","source_z","example_theta_e_arcsec",
+        "hypothetical_lens_z","sis_velocity_scale_km_s","interpretation"]).to_csv(
+        output/"isothermal_velocity_scales.csv",index=False)
     # Check zero triggering even in random fields for which quasar anchoring has no meaning.
     for arm,wide in [("primary",False),("wider",True)]:
         subset=decisions[(decisions.cohort=="control") & (decisions.system_id.str.startswith("RW")==wide)]

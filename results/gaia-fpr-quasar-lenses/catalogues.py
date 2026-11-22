@@ -379,7 +379,10 @@ def restore_prior_lists(snapshot, out):
     audit[audit.catalog.isin(LENS_URL)].to_csv(out/"catalog_input_checksums.csv",index=False)
     files = ["catalog_status.csv","known_lenses.csv","catalog_input_checksums.csv",
              "gaia_components.csv","wide/gaia_components.csv","external_matches.csv"]
-    manifest = {f:hashlib.sha256((snapshot/f).read_bytes()).hexdigest() for f in files}
+    stem = ("https://raw.githubusercontent.com/dovvnloading/Open-Space/"+PUBLISHED_COMMIT+
+            "/results/gaia-fpr-quasar-lenses/evidence/")
+    manifest = [dict(source_url=stem+f,upstream_sha256=hashlib.sha256((snapshot/f).read_bytes()).hexdigest())
+                for f in files]
     (out/"published_snapshot.json").write_text(json.dumps(
         dict(commit=PUBLISHED_COMMIT,input_sha256=manifest,normalized_rows=sizes),indent=2)+"\n")
     print("Validated frozen catalogue rows", sizes, flush=True)
@@ -388,6 +391,10 @@ def restore_prior_lists(snapshot, out):
 
 def verified_public_matches(cat, live, components, out):
     snapshot = published_snapshot()
+    if cat == PUBLIC[1]:
+        snapshot = Path(__file__).parent/"evidence"
+        if os.environ.get("FRESH_PIXELS","").lower()=="true" or not (snapshot/"desi_nearby_spectra.csv.gz").is_file():
+            return live(components)
     if snapshot is None:
         return live(components)
     signature = ["system_id","source_id","component_id","ra","dec"]
@@ -407,7 +414,18 @@ def verified_public_matches(cat, live, components, out):
     if len(selected) != status.loc[cat,"rows"]:
         raise ValueError("Public catalogue snapshot count disagrees with receipt: "+cat)
     raw = pd.read_csv(snapshot/"catalog_input_checksums.csv",keep_default_na=False)
-    AUDIT.extend(raw.loc[raw.catalog.eq(cat)].to_dict("records"))
+    receipts = raw.loc[raw.catalog.eq(cat)]
+    if cat == PUBLIC[1]:
+        valid = receipts.loc[receipts.url.str.endswith("/zall-pix-iron.fits",na=False)]
+        if "expected_sha256" not in valid or not ((valid.sha256.str.len()==64) & valid.sha256.eq(valid.expected_sha256)).any():
+            return live(components)
+        nearby = snapshot/"desi_nearby_spectra.csv.gz"
+        manifest = (snapshot.parent/"OUTPUTS.sha256").read_text().splitlines()
+        entry = hashlib.sha256(nearby.read_bytes()).hexdigest()+"  evidence/"+nearby.name
+        if entry not in manifest:
+            raise ValueError("Archived DESI neighborhood checksum mismatch")
+        shutil.copyfile(nearby,out/nearby.name)
+    AUDIT.extend(receipts.to_dict("records"))
     print("Reused",cat,"at identical component positions",len(selected),flush=True)
     return selected
 
@@ -878,7 +896,7 @@ def annotate(components, outdir):
     if len(components):
         with ThreadPoolExecutor(max_workers=3) as pool:
             tasks = [pool.submit(verified_public_matches,PUBLIC[0],_milliquas,components,out),
-                     pool.submit(_desi,components),
+                     pool.submit(verified_public_matches,PUBLIC[1],_desi,components,out),
                      pool.submit(verified_public_matches,PUBLIC[2],_public_sdss,components,out)]
             for cat, task in zip(PUBLIC, tasks):
                 try:

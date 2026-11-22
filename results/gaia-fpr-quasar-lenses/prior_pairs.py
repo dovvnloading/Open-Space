@@ -19,6 +19,85 @@ def vectors(ra, dec):
     return np.column_stack((np.cos(a)*np.cos(d), np.sin(a)*np.cos(d), np.sin(d)))
 
 
+def parse_sugohi(text):
+    """Retain every valid coordinate in the authors' full-list download."""
+    lines = text.lstrip("\ufeff").splitlines(keepends=True)
+    first = next((line for line in lines if line.strip() and not line.lstrip().startswith("#")), "")
+    # The current release starts directly with name, decimal RA and decimal Dec.
+    # Accommodate an explicitly column-labelled release as well.
+    delimiter = max([",", "\t", ";", "|"], key=first.count)
+    reader = csv.reader(lines, delimiter=delimiter, strict=True)
+    name_col, ra_col, dec_col = 0, 1, 2
+    positions, exceptions = [], []
+    previous, skipped, invalid, agreement = 0, 0, 0, 0
+    nonstandard, discrepant = 0, 0
+    parsed_to_end = True
+    compact = re.compile(r"(?<!\d)(\d{2})(\d{2})(\d{2}(?:\.\d+)?)([+-])"
+                         r"(\d{2})(\d{2})(\d{2}(?:\.\d+)?)(?!\d)")
+    try:
+        for row in reader:
+            start, end = previous+1, reader.line_num
+            raw = "".join(lines[previous:end]).rstrip("\r\n")
+            previous = end
+            if not raw.strip():
+                skipped += 1
+                continue
+            names = [re.sub("[^a-z0-9]", "", token.lower()) for token in row]
+            ra_head = next((i for i,n in enumerate(names) if n in {"ra","radeg","raj2000"}), None)
+            de_head = next((i for i,n in enumerate(names) if n in {"de","dec","decdeg","dej2000"}), None)
+            if not positions and not invalid and ra_head is not None and de_head is not None:
+                name_col = next((i for i,n in enumerate(names) if n in {"name","id","object","objectname"}),0)
+                ra_col, dec_col = ra_head, de_head
+                skipped += 1
+                continue
+            if raw.lstrip().startswith("#"):
+                skipped += 1
+                continue
+            try:
+                ra, dec = float(row[ra_col]), float(row[dec_col])
+                if not (0 <= ra < 360 and -90 <= dec <= 90):
+                    raise ValueError("coordinates outside valid range")
+            except (IndexError, ValueError) as exc:
+                invalid += 1
+                exceptions.append(dict(line=start, end_line=end, reason=str(exc), raw=raw))
+                continue
+            name = (row[name_col].strip() if name_col<len(row) else "") or f"SuGOHI row {start}"
+            positions.append(dict(name=name, ra=ra, dec=dec))
+            match = compact.search(name)
+            if match:
+                hh, mm, ss, sign, dd, dm, ds = match.groups()
+                id_ra = 15*(int(hh)+int(mm)/60+float(ss)/3600)
+                id_dec = (-1 if sign=="-" else 1)*(int(dd)+int(dm)/60+float(ds)/3600)
+                delta_ra = abs((ra-id_ra+180)%360-180)*3600
+                delta_dec = abs(dec-id_dec)*3600
+                # The name truncates RA to seconds of time and Dec to arcsec.
+                if (int(hh)<24 and int(mm)<60 and float(ss)<60 and int(dm)<60 and float(ds)<60
+                        and abs(id_dec)<=90 and delta_ra<=16 and delta_dec<=1.5):
+                    agreement += 1
+                    continue
+                reason = "name coordinates differ; included the decimal coordinate columns"
+                discrepant += 1
+            else:
+                reason = "nonstandard designation; included the decimal coordinate columns"
+                nonstandard += 1
+            exceptions.append(dict(line=start, end_line=end, reason=reason, raw=raw))
+    except csv.Error as exc:
+        parsed_to_end = False
+        exceptions.append(dict(line=previous+1, end_line=len(lines), reason=str(exc),
+                               raw="".join(lines[previous:]).rstrip("\r\n")))
+    assert len(positions)==agreement+nonstandard+discrepant
+    audit = dict(rows=len(positions), data_records=len(positions)+invalid if parsed_to_end else None,
+                 parsed_to_end=parsed_to_end, last_parsed_line=previous, physical_lines=len(lines),
+                 ignored_headers_comments_blank=skipped, invalid_records=invalid,
+                 numeric_with_compact_id_agreement=agreement, numeric_with_discrepant_id=discrepant,
+                 numeric_with_nonstandard_id=nonstandard, exceptions=exceptions,
+                 complete=(parsed_to_end and len(positions)>=2000 and invalid==0 and agreement>len(positions)/2),
+                 completeness_scope="Complete requires valid decimal coordinates for every data record in "
+                    "the checksummed author-provided full-list file and agreement with the compact sky name in a majority. "
+                    "The 2000-row minimum is a format/truncation guard. No external total is assumed.")
+    return pd.DataFrame(positions, columns=["name","ra","dec"]), audit
+
+
 def extra_catalogues(out):
     out = Path(out)
     rows, receipts = [], []
@@ -90,44 +169,12 @@ def extra_catalogues(out):
         index = BeautifulSoup(page.content, "html.parser")
         link = next(a["href"] for a in index.select("a[href]") if "download the full" in a.get_text(" ",strip=True).lower())
         data = get(urljoin(page.url, link))
-        records = None
-        lines = data.text.splitlines()
-        for delimiter in [",", ";", "\t", "|"]:
-            for i,line in enumerate(lines[:80]):
-                names = [re.sub("[^a-z0-9]", "", x.lower()) for x in next(csv.reader([line.lstrip("# ")],delimiter=delimiter))]
-                ra = next((x for x in ["ra","radeg","raj2000"] if x in names),None)
-                dec = next((x for x in ["dec","decdeg","de","dej2000"] if x in names),None)
-                if not (ra and dec):
-                    continue
-                body = list(csv.reader(lines[i+1:],delimiter=delimiter))
-                frame = pd.DataFrame([r[:len(names)] for r in body if len(r)>=len(names)],columns=names)
-                records = numeric(frame,ra,dec,"name" if "name" in names else None)
-                break
-            if records is not None and len(records)>=2000:
-                break
-        if records is None or len(records)<2000:
-            body = list(csv.reader(lines))
-            # The author's downloadable catalogue is also distributed without
-            # a header. First three columns are a truncated sky name, RA, Dec.
-            credible = [r for r in body if len(r)>=13 and re.fullmatch(r"\d{6}[+-]\d{6}",r[0].strip())]
-            if len(credible)>2000 and len(credible)==len([r for r in body if r]):
-                records = numeric(pd.DataFrame([r[:3] for r in credible],columns=["name","ra","dec"]),
-                                  "ra","dec","name")
-        if records is None or len(records)<2000:
-            # The authors also publish IAU coordinate designations in each row.
-            objs = re.findall(r"(?:HSC)?J(\d{2})(\d{2})(\d{2}(?:\.\d+)?)([+-])(\d{2})(\d{2})(\d{2}(?:\.\d+)?)",data.text)
-            parsed = []
-            for h,m,s,sign,d,dm,ds in set(objs):
-                ra = 15*(float(h)+float(m)/60+float(s)/3600)
-                dec = (1 if sign=="+" else -1)*(float(d)+float(dm)/60+float(ds)/3600)
-                if 0<=ra<360 and -90<=dec<=90:
-                    parsed.append(dict(name="J"+h+m+s+sign+d+dm+ds,ra=ra,dec=dec))
-            records = pd.DataFrame(parsed)
-        if records is None or len(records) < 2000:
-            raise ValueError("Live catalogue format or population not validated: " + str(lines[:3])[:300])
-        receipts.append(dict(catalog=tag, rows=len(records),complete=True))
-        records["catalog"] = tag
-        rows.append(records)
+        records, audit = parse_sugohi(data.text)
+        receipts.append(dict(catalog=tag, **audit))
+        # Even an incompletely parsed source can positively veto a known object.
+        if not records.empty:
+            records["catalog"] = tag
+            rows.append(records)
     except Exception as exc:
         receipts.append(dict(catalog=tag,error=str(exc),complete=False))
 

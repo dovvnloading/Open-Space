@@ -221,11 +221,16 @@ jobs:
       - name: Test one-band residuals against a foreground-galaxy spectrum
         run: |
           pip install -r "$STUDY/requirements.txt"
+          python -m pip install pypdf==5.9.0
           inputs="$STUDY/evidence"
           if [[ -s "$RUNNER_TEMP/followup-inputs/summary.json" ]]; then inputs="$RUNNER_TEMP/followup-inputs"; fi
           python "$STUDY/secondary.py" "$inputs" "$RUNNER_TEMP/followup"
           python "$STUDY/focused.py" "$inputs" "$RUNNER_TEMP/followup/focused"
+          python "$STUDY/host_models.py" "$inputs" "$RUNNER_TEMP/followup/host-models"
+          python "$STUDY/resolved_spectra.py" "$inputs" "$RUNNER_TEMP/followup"
           python "$STUDY/bibliography.py" "$inputs" "$RUNNER_TEMP/followup/literature"
+          python "$STUDY/object_history.py" "$inputs" "$RUNNER_TEMP/followup/object_history"
+          python "$STUDY/archival_imaging.py" "$inputs" "$RUNNER_TEMP/followup/hubble" "$RUNNER_TEMP/followup/object_history/object_history.json"
           python "$STUDY/validation.py" "$inputs" "$RUNNER_TEMP/followup"
       - uses: actions/upload-artifact@v4
         if: always()
