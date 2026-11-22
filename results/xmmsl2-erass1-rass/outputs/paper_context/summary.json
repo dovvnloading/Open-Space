@@ -1,0 +1,452 @@
+{
+  "position_degrees": {
+    "xmm": [
+      194.7140784,
+      23.92286967
+    ],
+    "ero": [
+      194.7148976,
+      23.92319947
+    ],
+    "rass": [
+      194.7144,
+      23.92602
+    ]
+  },
+  "documentation": {
+    "J/MNRAS/512/3858": {
+      "failed": [
+        [
+          "https://cdsarc.cds.unistra.fr/ftp/J/MNRAS/512/3858/ReadMe",
+          "HTTPSConnectionPool(host='cdsarc.cds.unistra.fr', port=443): Max retries exceeded with url: /ftp/J/MNRAS/512/3858/ReadMe (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.cds.unistra.fr', port=443) at 0x7f2c3573ca10>, 'Connection to cdsarc.cds.unistra.fr timed out. (co"
+        ],
+        [
+          "https://vizier.cfa.harvard.edu/viz-bin/ReadMe/J/MNRAS/512/3858?format=html",
+          "HTTPSConnectionPool(host='cdsarc.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/ReadMe/J/MNRAS/512/3858?format=html (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.cds.unistra.fr', port=443) at 0x7f2c2e2592d0>, 'Connection to cdsarc.cds.unistra.f"
+        ],
+        [
+          "https://cdsarc.u-strasbg.fr/ftp/J/MNRAS/512/3858/ReadMe",
+          "HTTPSConnectionPool(host='cdsarc.u-strasbg.fr', port=443): Max retries exceeded with url: /ftp/J/MNRAS/512/3858/ReadMe (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.u-strasbg.fr', port=443) at 0x7f2c26f1d810>, 'Connection to cdsarc.u-strasbg.fr timed out. (connect "
+        ]
+      ]
+    },
+    "J/A+A/712/A171": {
+      "failed": [
+        [
+          "https://cdsarc.cds.unistra.fr/ftp/J/A+A/712/A171/ReadMe",
+          "HTTPSConnectionPool(host='cdsarc.cds.unistra.fr', port=443): Max retries exceeded with url: /ftp/J/A+A/712/A171/ReadMe (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.cds.unistra.fr', port=443) at 0x7f2c2e3e3290>, 'Connection to cdsarc.cds.unistra.fr timed out. (conn"
+        ],
+        [
+          "https://vizier.cfa.harvard.edu/viz-bin/ReadMe/J/A+A/712/A171?format=html",
+          "HTTPSConnectionPool(host='cdsarc.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/ReadMe/J/A+A/712/A171?format=html (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.cds.unistra.fr', port=443) at 0x7f2c26f89150>, 'Connection to cdsarc.cds.unistra.fr "
+        ],
+        [
+          "https://cdsarc.u-strasbg.fr/ftp/J/A+A/712/A171/ReadMe",
+          "HTTPSConnectionPool(host='cdsarc.u-strasbg.fr', port=443): Max retries exceeded with url: /ftp/J/A+A/712/A171/ReadMe (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.u-strasbg.fr', port=443) at 0x7f2c2e41ac10>, 'Connection to cdsarc.u-strasbg.fr timed out. (connect ti"
+        ]
+      ]
+    }
+  },
+  "Li": {
+    "returned_rows": 265,
+    "published_population": 265,
+    "searched_leads": 161,
+    "matching_detection_uids": 63,
+    "matching_slew_source_groups": 56,
+    "matching_distinct_Li_rows": 56,
+    "rows_sha256": "9d76ecc1f8ec38914c84a2f0a4708c08b2aaa634e7439b35e376e5aeda4277e9",
+    "server": "vizier.cfa.harvard.edu",
+    "columns": {
+      "_RAJ2000": {
+        "description": "Right ascension (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)",
+        "unit": "deg"
+      },
+      "_DEJ2000": {
+        "description": "Declination (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)",
+        "unit": "deg"
+      },
+      "recno": {
+        "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+        "unit": ""
+      },
+      "XMMSL2": {
+        "description": "Official name for sources detected in the XMM-Newton slew survey (XMMSL2_unique_name)",
+        "unit": ""
+      },
+      "RAJ2000": {
+        "description": "Right ascension (J2000) (XMMSL2_RA)",
+        "unit": "deg"
+      },
+      "DEJ2000": {
+        "description": "Declination (J2000) (XMMSL2_DEC)",
+        "unit": "deg"
+      },
+      "FXMM": {
+        "description": "The 0.2-2 keV source soft band flux in the XMMSL2 (FLUX_XMMSL2) (1)",
+        "unit": "mW / m2"
+      },
+      "e_FXMM": {
+        "description": "The error on the XMMSL2 soft band flux FX (FLUX_XMMSL2_ERR)",
+        "unit": "mW / m2"
+      },
+      "Ext": {
+        "description": "The spatial extension of the source in the XMMSL2 soft band (EXT_XMMSL2)",
+        "unit": "pix"
+      },
+      "DetML": {
+        "description": "The detection likelihoods in the XMMSL2 soft band (DET_ML_XMMSL2)",
+        "unit": ""
+      },
+      "FXRASS": {
+        "description": "The 0.2-2 keV source soft band flux in the RASS at the XMMSL2 source position (FLUX_RASS)",
+        "unit": "mW / m2"
+      },
+      "e_FXRASS": {
+        "description": "The error on the RASS soft flux FXRASS, 0 means that FXRASS is an upper limit (FLUX_RASS_ERR)",
+        "unit": "mW / m2"
+      },
+      "FXMM/FXRASS": {
+        "description": "The flux ratio between FXMM and FXRASS (FLUX_RATIO)",
+        "unit": ""
+      },
+      "CrossID": {
+        "description": "The catalogue name of the best cross-match (IDENTIFIER)",
+        "unit": ""
+      },
+      "RACdeg": {
+        "description": "? Right ascension of the identifier (J2000) (IDENTIFIER_RA)",
+        "unit": "deg"
+      },
+      "DECdeg": {
+        "description": "? Declination (J2000) (IDENTIFIER_DEC)",
+        "unit": "deg"
+      },
+      "Type": {
+        "description": "Type of the identifier (ID_TYPE)",
+        "unit": ""
+      },
+      "f_Type": {
+        "description": "Flag for the type for each source (ID_FLAG) (2)",
+        "unit": ""
+      },
+      "z": {
+        "description": "? Redshift of the galaxies and AGN when available in SIMBAD/NED (z)",
+        "unit": ""
+      },
+      "t": {
+        "description": "? Time range when the fluxes of flaring galaxies declined by a factor of 10",
+        "unit": "yr"
+      },
+      "r_CrossID": {
+        "description": "The astronomical data base or catalogue from which the best match has been selected (ID_RESOURCE) (3)",
+        "unit": ""
+      },
+      "SimbadName": {
+        "description": "Simbad column added by the CDS",
+        "unit": ""
+      }
+    },
+    "focal_rows": [
+      {
+        "detection_uid": "XMMSL2-total-17748",
+        "source_group": "XMMSL2 J060636.5-694932",
+        "slew_name": "XMMSL2 J060636.5-694932",
+        "li_row": 61,
+        "li_ra": 91.6523118,
+        "li_dec": -69.82555163,
+        "sep_arcsec": 8.125,
+        "gate_arcsec": 8.47,
+        "original_fields": {
+          "_RAJ2000": "91.6523118",
+          "_DEJ2000": "-69.82555163",
+          "recno": "61",
+          "XMMSL2": "XMMSL2 J060636.5-694932",
+          "RAJ2000": "91.6523118",
+          "DEJ2000": "-69.82555163",
+          "FXMM": "3.98e-11",
+          "e_FXMM": "2.43e-12",
+          "Ext": "0.0",
+          "DetML": "1850.943",
+          "FXRASS": "8.23e-14",
+          "e_FXRASS": "0.0",
+          "FXMM/FXRASS": "483.7644102",
+          "CrossID": "XMMSL2 J060636.2-694933",
+          "RACdeg": "91.65229",
+          "DECdeg": "-69.82628",
+          "Type": "No*",
+          "f_Type": "4",
+          "r_CrossID": "simbad_mul",
+          "SimbadName": ""
+        }
+      },
+      {
+        "detection_uid": "XMMSL2-total-25333",
+        "source_group": "XMMSL2 J070542.7-381442",
+        "slew_name": "XMMSL2 J070542.7-381442",
+        "li_row": 86,
+        "li_ra": 106.4281508,
+        "li_dec": -38.2449238,
+        "sep_arcsec": 0.0,
+        "gate_arcsec": 14.8,
+        "original_fields": {
+          "_RAJ2000": "106.4281508",
+          "_DEJ2000": "-38.2449238",
+          "recno": "86",
+          "XMMSL2": "XMMSL2 J070542.7-381442",
+          "RAJ2000": "106.4281508",
+          "DEJ2000": "-38.2449238",
+          "FXMM": "9.39e-11",
+          "e_FXMM": "5.98e-12",
+          "Ext": "0.0",
+          "DetML": "1279.372",
+          "FXRASS": "2.43e-13",
+          "e_FXRASS": "0.0",
+          "FXMM/FXRASS": "386.7372874",
+          "CrossID": "NOVA Pup 2007 b",
+          "RACdeg": "106.4270825",
+          "DECdeg": "-38.24428823",
+          "Type": "No*",
+          "f_Type": "4",
+          "r_CrossID": "simbad",
+          "SimbadName": "NOVA Pup 2007 b"
+        }
+      },
+      {
+        "detection_uid": "XMMSL2-total-10038",
+        "source_group": "XMMSL2 J052443.6-613005",
+        "slew_name": "XMMSL2 J052443.6-613005",
+        "li_row": 42,
+        "li_ra": 81.18200539,
+        "li_dec": -61.50138688,
+        "sep_arcsec": 4.119,
+        "gate_arcsec": 9.02,
+        "original_fields": {
+          "_RAJ2000": "81.18200539",
+          "_DEJ2000": "-61.50138688",
+          "recno": "42",
+          "XMMSL2": "XMMSL2 J052443.6-613005",
+          "RAJ2000": "81.18200539",
+          "DEJ2000": "-61.50138688",
+          "FXMM": "1.54e-12",
+          "e_FXMM": "5.56e-13",
+          "Ext": "0.0",
+          "DetML": "35.61232",
+          "FXRASS": "7.73e-14",
+          "e_FXRASS": "0.0",
+          "FXMM/FXRASS": "19.99368586",
+          "CrossID": "WISEA J052443.74-613006.6",
+          "RACdeg": "81.182458",
+          "DECdeg": "-61.50175",
+          "Type": "AGN",
+          "f_Type": "2",
+          "z": "0.041",
+          "r_CrossID": "ned_mul_lc",
+          "SimbadName": ""
+        }
+      }
+    ]
+  },
+  "TNS": [
+    {
+      "bytes": 118,
+      "request_sha256": "dee36ace772e1ed71145ee73f01e32ff75f471341ab8aa67fb7efebb93796fe5",
+      "service": "TNS",
+      "sha256": "58bf2215b395dcac74c009aa98701854e43cbe54a1cd3a95fee6a647ca9910d4",
+      "status": 403,
+      "url": "https://www.wis-tns.org/system/files/tns_public_objects/tns_public_objects.csv.zip",
+      "utc": "2026-11-22T07:10:50.052813+00:00"
+    },
+    {
+      "error": "403 Client Error: Forbidden for url: https://www.wis-tns.org/system/files/tns_public_objects/tns_public_objects.csv.zip",
+      "service": "TNS",
+      "url": "https://www.wis-tns.org/system/files/tns_public_objects/tns_public_objects.csv.zip"
+    },
+    {
+      "bytes": 118,
+      "request_sha256": "dea00481885ef2c4557bd7fcf2333dbbc64aa7340497a9a527c70edffa66e5bf",
+      "service": "TNS-cone",
+      "sha256": "58bf2215b395dcac74c009aa98701854e43cbe54a1cd3a95fee6a647ca9910d4",
+      "status": 403,
+      "url": "https://www.wis-tns.org/search",
+      "utc": "2026-11-22T07:10:50.633908+00:00"
+    },
+    {
+      "error": "403 Client Error: Forbidden for url: https://www.wis-tns.org/search?ra=16%3A16%3A00.222&decl=%2B22%3A16%3A04.83&radius=35.0&coords_unit=arcsec&format=csv&num_page=100",
+      "service": "TNS-cone",
+      "url": "https://www.wis-tns.org/search"
+    },
+    {
+      "archive": "IRSA",
+      "service": "TNS-replica-audit",
+      "tables": []
+    },
+    {
+      "documentation_excerpt": "ANTARES We're sorry but antares-frontend doesn't work properly without JavaScript enabled. Please enable it to continue.",
+      "provider": "ANTARES external catalogues",
+      "service": "TNS-replica-audit",
+      "tns_links": [],
+      "url": "https://antares.noirlab.edu/catalogs/"
+    },
+    {
+      "error": "unverified official HTML search: 403 Client Error: Forbidden for url: https://www.wis-tns.org/search?num_page=50",
+      "service": "TNS-public-HTML-audit"
+    },
+    {
+      "bytes": 98049,
+      "request_sha256": "cf0282b4d9098b087e952848c32e0d0e65c458a019ca2065fe3f5994aa7c63d3",
+      "service": "TNS-mirror-inventory",
+      "sha256": "6194e48f853af75352124c7bd16713c5d024e880ba325f39fba46650f60ec36b",
+      "status": 200,
+      "url": "https://api.github.com/repos/astrolabsoftware/fink-science/git/trees/4587f2feeafe868bdca6877a979caad1fb191539",
+      "utc": "2026-11-22T07:10:51.741618+00:00"
+    },
+    {
+      "bytes": 22040,
+      "request_sha256": "dee36ace772e1ed71145ee73f01e32ff75f471341ab8aa67fb7efebb93796fe5",
+      "service": "TNS-mirror",
+      "sha256": "a6a28d9f232448d4f9832561b3318b33662ba53143117de1272457751cc912e4",
+      "status": 200,
+      "url": "https://raw.githubusercontent.com/astrolabsoftware/fink-science/4587f2feeafe868bdca6877a979caad1fb191539/fink_science/data/catalogs/tns_raw.parquet",
+      "utc": "2026-11-22T07:10:51.961785+00:00"
+    },
+    {
+      "archive_record_url": "https://api.antares.noirlab.edu/v1/catalogs/20",
+      "error": "404 Client Error: Not Found for url: https://api.antares.noirlab.edu/v1/catalogs/20",
+      "provider": "ANTARES catalogue inventory",
+      "service": "TNS-replica-audit"
+    },
+    {
+      "explicitly_linked_snapshots": [],
+      "provider": "ANTARES catalogue inventory",
+      "service": "TNS-replica-audit",
+      "structured_metadata_excerpt": "17\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"PS1StarGalaxyCatalog\"}, \"id\": \"19\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/19\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"tns_public_objects\"}, \"id\": \"20\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/20\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"milliquas\"}, \"id\": \"21\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/21\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"vii_274_bzcat5\"}, \"id\": \"22\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/22\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"linear_ll\"}, \"id\": \"23\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/23\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"sdss_dr7\"}, \"id\": \"24\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/24\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"vsx\"}, \"id\": \"25\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/25\"}}, {\"type\": \"catalog\", \"attrib",
+      "url": "https://api.antares.noirlab.edu/v1/catalogs"
+    },
+    {
+      "error": "HTTPSConnectionPool(host='xmatch.snad.space', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='xmatch.snad.space', port=443): Failed to resolve 'xmatch.snad.space' ([Errno -2] Name or service not known)\"))",
+      "provider": "SNAD crossmatch",
+      "service": "TNS-replica-audit",
+      "url": "https://xmatch.snad.space/"
+    },
+    {
+      "error": "404 Client Error: Not Found for url: https://lasair-ztf.lsst.ac.uk/schema/tns/",
+      "provider": "Lasair TNS schema",
+      "service": "TNS-replica-audit",
+      "url": "https://lasair-ztf.lsst.ac.uk/schema/tns/"
+    },
+    {
+      "bytes": 79166,
+      "request_sha256": "cf0282b4d9098b087e952848c32e0d0e65c458a019ca2065fe3f5994aa7c63d3",
+      "service": "TNS-mirror-inventory",
+      "sha256": "37c019a4efb00c98a597397ff715d5943d894f6f0d005081e91252bd47afff3b",
+      "status": 200,
+      "url": "https://api.github.com/repos/astrolabsoftware/fink-broker/git/trees/172e82cd5b39107c8617e0934deb6d249779d0cc",
+      "utc": "2026-11-22T07:10:52.544386+00:00"
+    },
+    {
+      "archive": "Zenodo",
+      "error": "400 Client Error: BAD REQUEST for url: https://zenodo.org/api/records?q=%22Transient+Name+Server%22&size=30",
+      "service": "TNS-replica-audit"
+    },
+    {
+      "archive": "GAVO",
+      "service": "TNS-replica-audit",
+      "tables": []
+    },
+    {
+      "archive": "NOIRLab",
+      "excluded_saved_query": "mydb.tns_obj_7660",
+      "reason": "user query result / subset rather than archive distribution",
+      "service": "TNS-replica-audit"
+    },
+    {
+      "archive": "NOIRLab",
+      "excluded_saved_query": "mydb.all_tns_tdes_simple_5681",
+      "reason": "user query result / subset rather than archive distribution",
+      "service": "TNS-replica-audit"
+    },
+    {
+      "archive": "NOIRLab",
+      "excluded_saved_query": "mydb.all_tns_tde_simple_5681",
+      "reason": "user query result / subset rather than archive distribution",
+      "service": "TNS-replica-audit"
+    },
+    {
+      "archive": "NOIRLab",
+      "service": "TNS-replica-audit",
+      "tables": []
+    },
+    {
+      "archive": "IVOA resource registry",
+      "distributions": [],
+      "service": "TNS-replica-audit"
+    },
+    {
+      "archive": "HEASARC",
+      "service": "TNS-replica-audit",
+      "tables": []
+    },
+    {
+      "candidate_distributions": 0,
+      "coverage_status": "partial or unavailable",
+      "fields_with_matches": 0,
+      "service": "TNS-replica-audit",
+      "tested_distributions": 0
+    }
+  ],
+  "Fink_snapshot_diagnostics": [
+    {
+      "url": "https://raw.githubusercontent.com/astrolabsoftware/fink-science/4587f2feeafe868bdca6877a979caad1fb191539/fink_science/data/catalogs/tns_raw.parquet",
+      "recorded_sha256": "a6a28d9f232448d4f9832561b3318b33662ba53143117de1272457751cc912e4",
+      "TNS_completeness_date": null,
+      "rows": 3,
+      "columns": [
+        "objid",
+        "name_prefix",
+        "name",
+        "ra",
+        "declination",
+        "redshift",
+        "typeid",
+        "type",
+        "reporting_groupid",
+        "reporting_group",
+        "source_groupid",
+        "source_group",
+        "discoverydate",
+        "discoverymag",
+        "discmagfilter",
+        "filter",
+        "reporters",
+        "time_received",
+        "internal_names",
+        "Discovery_ADS_bibcode",
+        "Class_ADS_bibcodes",
+        "creationdate",
+        "lastmodified",
+        "fullname",
+        "internalname"
+      ],
+      "sha256": "a6a28d9f232448d4f9832561b3318b33662ba53143117de1272457751cc912e4",
+      "named_control_occurrences": {
+        "2018cow": 0,
+        "2017gfo": 0,
+        "2016gkg": 0,
+        "2023ixf": 0
+      },
+      "event_or_record_date_ranges": {
+        "discoverydate": [
+          "2018-08-28 09:25:55.200000+00:00",
+          "2026-02-09 03:46:46.998000+00:00"
+        ],
+        "creationdate": [
+          "2021-10-27 14:07:33+00:00",
+          "2026-02-09 17:43:27+00:00"
+        ]
+      }
+    }
+  ],
+  "TNS_search_outcomes": {
+    "unverified official HTML search: 403 Client Error: Forbidden for url: https://www.wis-tns.org/search?num_page=50 | incomplete: no verified full current public TNS replica": 161
+  }
+}

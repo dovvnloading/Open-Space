@@ -1,0 +1,16 @@
+{
+  "label": "Gaia",
+  "url": "https://gea.esac.esa.int/tap-server/tap/sync",
+  "params": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "csv",
+    "QUERY": "SELECT TOP 1 source_id,ra,dec,parallax FROM gaiadr3.gaia_source"
+  },
+  "method": "GET",
+  "data": null,
+  "status": 200,
+  "sha256": "d22a4a40b926623f03382eb830f8a5868f916cb7ed46c779ce3df20843676474",
+  "final_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+1+source_id%2Cra%2Cdec%2Cparallax+FROM+gaiadr3.gaia_source",
+  "text": "source_id,ra,dec,parallax\n137333232852897664,44.977046318050085,35.29059034205752,\n"
+}

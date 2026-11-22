@@ -1,0 +1,89 @@
+{
+  "resources": {
+    "rosat-response-index.html": {
+      "url": "https://heasarc.gsfc.nasa.gov/FTP/caldb/data/rosat/pspc/cpf/matrices/",
+      "params": null,
+      "sha256": "4b5c8e87b441011847453c8cd4c60afdb2065d5cdce076c3af7e636e7ad1285f",
+      "bytes": 2447
+    },
+    "pspcc_gain1_256.rsp": {
+      "url": "https://heasarc.gsfc.nasa.gov/FTP/caldb/data/rosat/pspc/cpf/matrices/pspcc_gain1_256.rsp",
+      "params": null,
+      "sha256": "b421bbad8eaf93a0bedf6704c18ff2cdf3e77781382888245219cf609c33b1bd",
+      "bytes": 748800
+    },
+    "xmmsl2_clean.fits.gz": {
+      "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/catalogues/xmmsl2_clean.fits.gz",
+      "params": null,
+      "sha256": "2f015371362ce588d73ea149f8905859092e8adf008f1f5758995f0a812123ec",
+      "bytes": 8097149
+    },
+    "xmmsl2_total.fits.gz": {
+      "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/catalogues/xmmsl2_total.fits.gz",
+      "params": null,
+      "sha256": "9e82e23a9e4ae6f79e33e2314f5ec5c787a42bfbbc68c8cce1b0920ea963d819",
+      "bytes": 16337160
+    },
+    "eRASS1_Main.v1.2.fits.tar.gz": {
+      "url": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/MerloniA_DR1/eRASS1_Main.v1.2.fits.tar.gz",
+      "params": null,
+      "sha256": "a4af6173c93bd4367d8a37465bdf5061b6092f02b8f522fc68074afff0e59131",
+      "bytes": 643072855
+    },
+    "eRASS1_Supp.tar.gz": {
+      "url": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/MerloniA_DR1/eRASS1_Supp.tar.gz",
+      "params": null,
+      "sha256": "c320ae2311e76e54ac44e10992d29f562238819a01df068534e2b3a29cfa8e9a",
+      "bytes": 232241622
+    },
+    "00e7b02cd9c2a40ce588.csv": {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "QUERY": "SELECT column_name,unit,description FROM TAP_SCHEMA.columns WHERE table_name='rass2rxs' OR table_name='\"rass2rxs\"'",
+        "MAXREC": 2000000
+      },
+      "sha256": "b34d11c84f1fed8afd1a87e8b11e3dafd1703eab91129243857b3a46d580fd31",
+      "bytes": 26887
+    },
+    "b02d4eb5ac7ee4bc62b6.csv": {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "QUERY": "SELECT COUNT(*) AS n FROM \"rass2rxs\"",
+        "MAXREC": 2000000
+      },
+      "sha256": "d63eb5161b5e1921089044010e3072826f7c8d45c681287035ac22521189f7f1",
+      "bytes": 697
+    },
+    "86b3ee15a2a5119cbecb.csv": {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "QUERY": "SELECT \"ra\",\"dec\",\"name\",\"count_rate\",\"count_rate_error\",\"detection_likelihood\",\"source_quality_flag\",\"nearby_src_det_flag\",\"extended_region_flag\" FROM \"rass2rxs\" WHERE \"ra\">=0.000000000000 AND \"ra\"<180.000000000000",
+        "MAXREC": 2000000
+      },
+      "sha256": "b351bcc5d9222699c0b8b2bcef52f7e1e3ab4f72044ef4e8605d4ff6fead0b69",
+      "bytes": 6438975
+    },
+    "7e91f552ecf2c6442ad0.csv": {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "QUERY": "SELECT \"ra\",\"dec\",\"name\",\"count_rate\",\"count_rate_error\",\"detection_likelihood\",\"source_quality_flag\",\"nearby_src_det_flag\",\"extended_region_flag\" FROM \"rass2rxs\" WHERE \"ra\">=180.000000000000 AND \"ra\"<360.000000000000",
+        "MAXREC": 2000000
+      },
+      "sha256": "926babf19d2c4e17061191352030d51c978099ad8d62db934732c172cd4e891d",
+      "bytes": 6568330
+    }
+  },
+  "unsuccessful_routes": {}
+}

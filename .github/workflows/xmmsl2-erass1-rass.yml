@@ -1,0 +1,320 @@
+name: XMM slew transients across three surveys
+on:
+  workflow_dispatch:
+    inputs:
+      refresh:
+        description: Re-fetch the catalogues and recompute the maps, controls and counterpart searches
+        type: boolean
+        default: false
+  push:
+    branches: ['survey/xmmsl2-erass1-rass']
+    paths: ['.github/workflows/xmmsl2-erass1-rass.yml']
+permissions:
+  contents: read
+concurrency:
+  group: xmmsl2-erass1-rass-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  STUDY: results/xmmsl2-erass1-rass
+  OUT: results/xmmsl2-erass1-rass/outputs
+  PYTHONUNBUFFERED: '1'
+  REFRESH: ${{ inputs.refresh || false }}
+  OPENBLAS_NUM_THREADS: '1'
+jobs:
+  snapshot:
+    runs-on: ubuntu-24.04
+    outputs:
+      reuse: ${{ steps.validate.outputs.reuse }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/xmmsl2-erass1-rass
+      - id: validate
+        name: Verify the recorded science snapshot
+        env:
+          EVIDENCE: 1ccd03ad978a21be6c7c62bcf5406a4c7f662881
+        run: |
+          reuse=false
+          if [[ "$REFRESH" != true ]] && git fetch -q --no-tags --depth=1 --filter=blob:none origin "$EVIDENCE"; then
+            if git diff --quiet "$EVIDENCE" HEAD -- "$STUDY" \
+                ":(exclude)$STUDY/README.md" ":(exclude)$STUDY/decisions.py" ":(exclude)$STUDY/rass_hardness.py" ":(exclude)$STUDY/slew_images.py" ":(exclude)$STUDY/paper_context.py" ":(exclude)$STUDY/broker_cones.py" ":(exclude)$STUDY/seyfert_literature.py" ":(exclude)$OUT/rass_hardness" ":(exclude)$OUT/paper_context" ":(exclude)$OUT/slew_image_followup.json" ":(exclude)$OUT/broker_cones.json" ":(exclude)$OUT/seyfert_literature.json" \
+                ":(exclude)$STUDY/source_decisions.csv" ":(exclude)$STUDY/published_event_review.csv" \
+                ":(exclude)$OUT/final_summary.json" ":(exclude)$OUT/final_source_register.csv" ":(exclude)$OUT/candidates.csv"; then
+              reuse=true
+            fi
+          fi
+          echo "reuse=$reuse" >> "$GITHUB_OUTPUT"
+  catalog:
+    needs: snapshot
+    if: needs.snapshot.outputs.reuse != 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/xmmsl2-erass1-rass
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/cache/restore@v4
+        with:
+          path: work/downloads
+          key: xmmsl2-dr1-rass-inputs-v1
+      - name: Match the release catalogues and offset skies
+        run: |
+          pip install -r "$STUDY/requirements.txt"
+          mkdir -p "$OUT"
+          if [[ "$REFRESH" != true && -f "$OUT/catalog.sha256" ]] && sha256sum -c "$OUT/catalog.sha256"; then
+            echo "Reusing verified catalogue comparison"
+          else
+            python "$STUDY/catalogs.py" --work work --out "$OUT"
+            sha256sum "$STUDY/catalogs.py" "$STUDY/requirements.txt" "$OUT/catalog_sources.csv.gz" "$OUT/spectral_model.json" > "$OUT/catalog.sha256"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: 01-catalog
+          path: |
+            results/xmmsl2-erass1-rass/outputs/catalog*
+            results/xmmsl2-erass1-rass/outputs/spectral_model.json
+            results/xmmsl2-erass1-rass/outputs/shifted_controls.json
+          if-no-files-found: warn
+  associations:
+    needs: maps
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/xmmsl2-erass1-rass
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: 02-maps
+          path: results/xmmsl2-erass1-rass/outputs
+      - name: Read published optical and infrared identifications and the hard-band catalogue
+        run: |
+          pip install -r "$STUDY/requirements.txt"
+          python "$STUDY/counterparts.py" "$OUT"
+          python "$STUDY/local_hosts.py" "$OUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 04-published-hosts
+          path: results/xmmsl2-erass1-rass/outputs/published_hosts
+  maps:
+    permissions:
+      contents: read
+      actions: read
+    needs: catalog
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/xmmsl2-erass1-rass
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: 01-catalog
+          path: results/xmmsl2-erass1-rass/outputs
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: 02-maps
+          path: work/first-reduction
+          run-id: '44990857228'
+          github-token: ${{ github.token }}
+      - name: Measure local limits and compare three epochs
+        run: |
+          pip install -r "$STUDY/requirements.txt"
+          if [[ "$REFRESH" != true && -f "$OUT/maps.sha256" ]] && sha256sum -c "$OUT/maps.sha256"; then
+            echo "Reusing verified map measurements"
+          else
+            python "$STUDY/limits.py" --work work --out "$OUT"
+            sha256sum "$STUDY/limits.py" "$OUT/catalog.sha256" "$OUT/limits.csv" > "$OUT/maps.sha256"
+          fi
+          python "$STUDY/prepare.py" "$OUT"
+          python "$STUDY/map_qa.py" "$OUT" --earlier work/first-reduction
+          python "$STUDY/controls.py" "$OUT"
+          python "$STUDY/full_only_review.py" --out "$OUT" --work work
+          python "$STUDY/spectral_stress.py" --out "$OUT" --work work
+          python "$STUDY/rass_legacy.py" --work work --out "$OUT"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: 02-maps
+          path: |
+            results/xmmsl2-erass1-rass/outputs/limit*
+            results/xmmsl2-erass1-rass/outputs/ero_ul_queries.jsonl.gz
+            results/xmmsl2-erass1-rass/outputs/positive_controls.csv
+            results/xmmsl2-erass1-rass/outputs/full_only_review*
+            results/xmmsl2-erass1-rass/outputs/spectral_stress*
+            results/xmmsl2-erass1-rass/outputs/rass_legacy*
+            results/xmmsl2-erass1-rass/outputs/maps.sha256
+            results/xmmsl2-erass1-rass/outputs/comparisons.csv.gz
+            results/xmmsl2-erass1-rass/outputs/input.csv
+          if-no-files-found: warn
+  vet:
+    needs: [maps, associations]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/xmmsl2-erass1-rass
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: '0[12]-*'
+          merge-multiple: true
+          path: results/xmmsl2-erass1-rass/outputs
+      - uses: actions/download-artifact@v4
+        with:
+          name: 04-published-hosts
+          path: results/xmmsl2-erass1-rass/outputs/published_hosts
+      - name: Resolve counterparts and prior reports
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          pip install -r "$STUDY/requirements.txt"
+          python "$STUDY/vet.py" "$OUT/input.csv" "$OUT/vetting"
+          python "$STUDY/history.py" "$OUT"
+          python "$STUDY/casework.py" "$OUT"
+          python "$STUDY/casework.py" "$OUT" --historical
+          python "$STUDY/report.py" "$OUT"
+          python "$STUDY/host_adjudication.py" --out "$OUT" --work work
+          python "$STUDY/independent_epochs.py" "$OUT" --work work
+          python "$STUDY/survey_plot.py" "$OUT"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: 03-vetting
+          path: |
+            results/xmmsl2-erass1-rass/outputs/vetting
+            results/xmmsl2-erass1-rass/outputs/event_history
+            results/xmmsl2-erass1-rass/outputs/casework
+            results/xmmsl2-erass1-rass/outputs/review*
+            results/xmmsl2-erass1-rass/outputs/candidates*
+            results/xmmsl2-erass1-rass/outputs/host_adjudication*
+            results/xmmsl2-erass1-rass/outputs/summary*
+            results/xmmsl2-erass1-rass/outputs/survey-comparison.png
+          if-no-files-found: warn
+  decisions:
+    needs: [snapshot, catalog, maps, associations, vet]
+    if: always() && !cancelled() && (needs.snapshot.outputs.reuse == 'true' || needs.vet.result == 'success')
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/xmmsl2-erass1-rass
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        if: needs.snapshot.outputs.reuse != 'true'
+        with:
+          pattern: '0[123]-*'
+          merge-multiple: true
+          path: results/xmmsl2-erass1-rass/outputs
+      - uses: actions/download-artifact@v4
+        if: needs.snapshot.outputs.reuse != 'true'
+        with:
+          name: 04-published-hosts
+          path: results/xmmsl2-erass1-rass/outputs/published_hosts
+      - name: Test ROSAT colours and record source decisions
+        env:
+          REUSE: ${{ needs.snapshot.outputs.reuse }}
+        run: |
+          pip install -r "$STUDY/requirements.txt"
+          if [[ "$REUSE" == true &&
+                "$(git rev-parse "HEAD:$STUDY/rass_hardness.py")" == 8e0827eaf105db424dbf8b16cb0629316ab26e25 &&
+                "$(git rev-parse "HEAD:$OUT/rass_hardness")" == fb118d425312a6155f3b845d06abd7253967cac7 &&
+                "$(git rev-parse "HEAD:$STUDY/paper_context.py")" == ce5198d49d88ab0c5e2b595a04ed77600302848e &&
+                "$(git rev-parse "HEAD:$OUT/paper_context")" == 10b0510d37b85baa7253ef62d621252aa56c6254 ]]; then
+            echo "Verified the archived spectral fits, publication rows and input receipts"
+          else
+            python "$STUDY/rass_hardness.py" "$OUT"
+            python "$STUDY/paper_context.py" "$OUT"
+          fi
+          if [[ "$REUSE" == true &&
+                "$(git rev-parse "HEAD:$STUDY/broker_cones.py")" == 6bb9327a4409f99b4413c9b333ecff8a6bf186c1 &&
+                "$(git rev-parse "HEAD:$STUDY/slew_images.py")" == d95d3a9ea8cb6be1b89bd1f9f913c7a1bd15fcdf &&
+                "$(git rev-parse "HEAD:$OUT/broker_cones.json")" == 109a546f3b303320b42c12f003c091e9d72fc55c &&
+                "$(git rev-parse "HEAD:$OUT/slew_image_followup.json")" == 25597ca13dde04e299742923381ac65f7205c4f6 ]]; then
+            echo "Verified source-local broker controls and calibrated native image/event measurements"
+          else
+            python -m venv --system-site-packages "$RUNNER_TEMP/broker-env"
+            "$RUNNER_TEMP/broker-env/bin/python" -m pip install 'antares-client==2.0.2' || echo "Broker client unavailable; record its import status"
+            "$RUNNER_TEMP/broker-env/bin/python" "$STUDY/broker_cones.py" "$OUT"
+            if [[ "$REUSE" == true && -f "$OUT/slew_image_followup.json" &&
+                  "$(git hash-object "$OUT/slew_image_followup.json")" == 9d4cd3324dfb8535571e71ef5cedebc27f8c6c23 ]]; then
+              python "$STUDY/slew_images.py" "$OUT" --remeasure
+            else
+              python "$STUDY/slew_images.py" "$OUT"
+            fi
+          fi
+          python "$STUDY/seyfert_literature.py" "$OUT"
+          python "$STUDY/decisions.py" "$OUT"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: 05-source-decisions
+          path: |
+            results/xmmsl2-erass1-rass/outputs/rass_hardness
+            results/xmmsl2-erass1-rass/outputs/paper_context
+            results/xmmsl2-erass1-rass/outputs/slew_image_followup.json
+            results/xmmsl2-erass1-rass/outputs/broker_cones.json
+            results/xmmsl2-erass1-rass/outputs/seyfert_literature.json
+            results/xmmsl2-erass1-rass/outputs/final*
+            results/xmmsl2-erass1-rass/outputs/candidates.csv
+          if-no-files-found: warn
+  record:
+    needs: [snapshot, catalog, maps, associations, vet, decisions]
+    if: always() && !cancelled() && github.ref == 'refs/heads/survey/xmmsl2-erass1-rass'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: survey/xmmsl2-erass1-rass
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: '0*'
+          path: products
+      - name: Record survey evidence on the research branch
+        run: |
+          mkdir -p "$OUT"
+          for bundle in products/*; do
+            [[ -d "$bundle" ]] || continue
+            dest="$OUT"
+            if [[ "$bundle" == */04-published-hosts ]]; then dest="$OUT/published_hosts"; fi
+            mkdir -p "$dest"
+            cp -a "$bundle/." "$dest/"
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$OUT"
+          if ! git diff --cached --quiet; then
+            git commit -m "Record three-survey measurements and source-level dispositions (run $GITHUB_RUN_ID)"
+            git push origin HEAD:survey/xmmsl2-erass1-rass
+          fi
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify the branch
+        run: |
+          python -m pip install '.[archive]' numpy pandas scipy matplotlib
+          python -m open_space.verify
+          python -m unittest discover -s tests

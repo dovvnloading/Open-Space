@@ -1,0 +1,13 @@
+{
+  "label": "simbad_get_simbad.cds.unistra.fr",
+  "url": "https://simbad.cds.unistra.fr/simbad/sim-tap/sync",
+  "params": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "csv",
+    "QUERY": "SELECT TOP 1 main_id,ra,dec FROM basic WHERE main_id='Vega'"
+  },
+  "method": "GET",
+  "data": null,
+  "error": "404 Client Error: Not Found for url: https://simbad.cds.unistra.fr/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+1+main_id%2Cra%2Cdec+FROM+basic+WHERE+main_id%3D%27Vega%27"
+}

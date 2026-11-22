@@ -1,0 +1,42 @@
+{
+  "gamma": 2.0,
+  "NH_cm-2": 3e+20,
+  "absorption": "Morrison & McCammon (1983) Table 2",
+  "common_band_keV": [
+    0.2,
+    2.0
+  ],
+  "ero_band_factor": 0.9237435594622463,
+  "rass_ecf": 1.0074608730476111e-11,
+  "rass_response": "https://heasarc.gsfc.nasa.gov/FTP/caldb/data/rosat/pspc/cpf/matrices/pspcc_gain1_256.rsp",
+  "rass_channels": [
+    11,
+    235
+  ],
+  "notes": "XMM catalogue flux is already 0.2\u20132 keV; native response assumptions are retained. eROSITA uses released 0.2\u20132.3 keV flux times the absorbed energy-flux band ratio. RASS uses an on-axis PSPC-C survey response. Point-source calibration and an illustrative grid do not cover arbitrary spectra, absorption, pile-up or spatial changes.",
+  "model_grid": {
+    "gamma": [
+      1.5,
+      2.0,
+      2.5,
+      3.0
+    ],
+    "nh": [
+      1e+20,
+      3e+20,
+      1e+21
+    ]
+  },
+  "xmm_relative": [
+    1.0,
+    1.0
+  ],
+  "ero_relative": [
+    0.9276377011149568,
+    1.0630719140037062
+  ],
+  "rass_relative": [
+    0.4027302437162883,
+    1.207228402660324
+  ]
+}
