@@ -1,0 +1,52 @@
+name: Fermi LAT blind variability survey
+on:
+  workflow_dispatch:
+  push:
+    branches: ['research/fermi-lcr-blind-survey']
+    paths: ['.github/workflows/fermi-lcr-blind-survey.yml']
+permissions:
+  contents: read
+concurrency:
+  group: fermi-lcr-blind-survey
+  cancel-in-progress: false
+env:
+  STUDY: results/fermi-lcr-blind-survey
+jobs:
+  inspect:
+    if: github.ref == 'refs/heads/research/fermi-lcr-blind-survey'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/fermi-lcr-blind-survey
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q selenium beautifulsoup4 requests
+      - run: python "$STUDY/probe.py" schema
+      - uses: actions/upload-artifact@v4
+        with:
+          name: schema
+          path: schema
+  record:
+    needs: inspect
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/fermi-lcr-blind-survey
+          sparse-checkout: results/fermi-lcr-blind-survey
+      - uses: actions/download-artifact@v4
+        with:
+          name: schema
+          path: results/fermi-lcr-blind-survey/preflight
+      - run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$STUDY/preflight"
+          git diff --cached --quiet || git commit -m 'Record Fermi archive response schemas and input receipts'
+          git push origin HEAD:refs/heads/research/fermi-lcr-blind-survey
