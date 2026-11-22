@@ -1,0 +1,772 @@
+[
+  {
+    "release": "sc1",
+    "group": 44,
+    "first_pass_line": 5550,
+    "prior_disposition": "unresolved",
+    "disposition": "unresolved",
+    "prior_reasons": [
+      "Legacy query unavailable at secondary knot",
+      "direct imaging checks unavailable",
+      "foreground interpretation unresolved",
+      "independent redshift unavailable"
+    ],
+    "passed": [
+      "independent HETDEX shot",
+      "masked cube central line above 5 empirical sigma",
+      "bridge PSF excess above 5 empirical sigma"
+    ],
+    "reasons": [
+      "Legacy query unavailable at secondary knot",
+      "direct imaging checks unavailable",
+      "foreground interpretation unresolved",
+      "independent redshift unavailable"
+    ],
+    "archived_two_shot_bridge": [
+      {
+        "first_pass_line": 5550,
+        "shotid": 20180409008,
+        "cube": "dex_cube_20180409008_034.fits",
+        "seeing_arcsec": 1.6102091073989868,
+        "knot_separation_arcsec": 5.351163864135742,
+        "primary_line_window_air_A": [
+          4760.0,
+          4772.0
+        ],
+        "secondary_line_window_air_A": [
+          4758.0,
+          4770.0
+        ],
+        "primary_central": {
+          "value": 8.052318110596389,
+          "scatter": 1.4730242703753522,
+          "n": 35,
+          "sn": 5.4665210020908335,
+          "tail_fraction": 0.027777777777777776
+        },
+        "primary_bridge": {
+          "value": 9.82223658132875,
+          "scatter": 1.0968084763061194,
+          "n": 35,
+          "sn": 8.955288724981884,
+          "tail_fraction": 0.027777777777777776
+        },
+        "secondary_central": {
+          "value": 6.394130450673401,
+          "scatter": 1.0938278865287079,
+          "n": 35,
+          "sn": 5.845645854728888,
+          "tail_fraction": 0.027777777777777776
+        },
+        "secondary_bridge": {
+          "value": 9.850006777074288,
+          "scatter": 0.7228565637587767,
+          "n": 34,
+          "sn": 13.626502505359165,
+          "tail_fraction": 0.02857142857142857
+        },
+        "unit": "1e-17 erg/s/cm2"
+      },
+      {
+        "first_pass_line": 6569,
+        "shotid": 20180515011,
+        "cube": "dex_cube_20180515011_084.fits",
+        "seeing_arcsec": 1.5670568943023682,
+        "knot_separation_arcsec": 5.158212661743164,
+        "primary_line_window_air_A": [
+          4760.0,
+          4772.0
+        ],
+        "secondary_line_window_air_A": [
+          4760.0,
+          4772.0
+        ],
+        "primary_central": {
+          "value": 18.7766310692532,
+          "scatter": 1.2517114918638719,
+          "n": 32,
+          "sn": 15.000765904364826,
+          "tail_fraction": 0.030303030303030304
+        },
+        "primary_bridge": {
+          "value": 30.637481013019446,
+          "scatter": 0.9589507416646824,
+          "n": 32,
+          "sn": 31.948962216593703,
+          "tail_fraction": 0.030303030303030304
+        },
+        "secondary_central": {
+          "value": 13.54318043962121,
+          "scatter": 1.0404605009503662,
+          "n": 33,
+          "sn": 13.016525305142045,
+          "tail_fraction": 0.029411764705882353
+        },
+        "secondary_bridge": {
+          "value": 30.588930657964077,
+          "scatter": 0.9007432868370757,
+          "n": 30,
+          "sn": 33.959654326568334,
+          "tail_fraction": 0.03225806451612903
+        },
+        "unit": "1e-17 erg/s/cm2"
+      }
+    ],
+    "knots": [
+      {
+        "knot": "primary",
+        "ra": 197.77951049804688,
+        "dec": 51.19843673706055,
+        "wave_air_A": 4765.39013671875,
+        "trial_redshifts": {
+          "Ly_alpha": 2.921066030430482,
+          "NV": 2.8416217900565175,
+          "CIV": 2.076337050700898,
+          "HeII": 1.9057940852464776,
+          "CIII]": 1.4973268787728107,
+          "MgII": 0.7024374569883738,
+          "[OII]": 0.27846153357525316,
+          "[NeIII]": 0.2317558602430132,
+          "Hdelta": 0.16179637604713437,
+          "Hgamma": 0.09789821758398287
+        },
+        "catalog_detections": [
+          {
+            "detectid": 2100216695,
+            "shotid": 20180409008,
+            "source_id": 2140000057580,
+            "ra_det": 197.77951049804688,
+            "dec_det": 51.19843673706055,
+            "wave": 4765.39013671875,
+            "sn": 12.239999771118164,
+            "flux": 20.59453010559082,
+            "flux_err": 1.514732003211975,
+            "fiber_id": "20180409008_1_multi_304_034_003_LL_104",
+            "multiframe": "multi_304_034_003_LL",
+            "x_raw": 634,
+            "y_raw": 956,
+            "associated_row": 218835,
+            "source_type": "oii",
+            "z_hetdex": 2.919978141784668,
+            "z_hetdex_src": "elixer",
+            "z_hetdex_conf": 0.46881598234176636,
+            "agn_flag": -1.0,
+            "fwhm": 1.6102091073989868,
+            "extraction_offset_arcsec": 0.0,
+            "flux_cgs": 2.0594530105590823e-16,
+            "flux_err_cgs": 1.5147320032119753e-17
+          },
+          {
+            "detectid": 2100316523,
+            "shotid": 20180515011,
+            "source_id": 2140000057580,
+            "ra_det": 197.77926635742188,
+            "dec_det": 51.1983757019043,
+            "wave": 4765.64013671875,
+            "sn": 10.569999694824219,
+            "flux": 12.511783599853516,
+            "flux_err": 0.8819305300712585,
+            "fiber_id": "20180515011_2_multi_041_084_015_RL_079",
+            "multiframe": "multi_041_084_015_RL",
+            "x_raw": 640,
+            "y_raw": 718,
+            "associated_row": 218836,
+            "source_type": "oii",
+            "z_hetdex": 2.919978141784668,
+            "z_hetdex_src": "elixer",
+            "z_hetdex_conf": 0.46881598234176636,
+            "agn_flag": -1.0,
+            "fwhm": 1.5670568943023682,
+            "extraction_offset_arcsec": 5.150878786207455,
+            "flux_cgs": 1.2511783599853517e-16,
+            "flux_err_cgs": 8.819305300712586e-18
+          }
+        ],
+        "rest_EW_A": 7.996703387282161,
+        "rest_EW_lower_A": 6.095835849471534,
+        "cone_results": {
+          "NED": {
+            "status": "queried",
+            "nearby": [
+              {
+                "z": "2.919978",
+                "sep_arcsec": 2.524758532945854
+              }
+            ]
+          },
+          "SIMBAD": {
+            "status": "queried",
+            "nearby": []
+          },
+          "Legacy": {
+            "status": "unavailable",
+            "nearby": []
+          },
+          "HSC": {
+            "status": "unavailable",
+            "nearby": []
+          }
+        },
+        "published_redshifts": [],
+        "published_active_types": [],
+        "HETDEX_DESI_VAC": {
+          "status": "queried",
+          "matches": []
+        },
+        "independent_spectroscopy": {
+          "spectra": [],
+          "independent_lya_evidence": [],
+          "competing_redshifts": [],
+          "multi_line_foreground": [],
+          "external_active_or_star": [],
+          "external_uv_agn_disfavored": false
+        },
+        "external_cone_status": "no_desi_dr1_counterpart",
+        "DESI_static": {
+          "files": {
+            "no_product_in_directory": 16,
+            "searched": 2
+          },
+          "expected_HEALPix": [
+            11062
+          ],
+          "static_status": "searched",
+          "ASU_status": "unavailable",
+          "status": "no_desi_dr1_counterpart"
+        }
+      },
+      {
+        "knot": "secondary",
+        "ra": 197.7797393798828,
+        "dec": 51.199913024902344,
+        "wave_air_A": 4764.580078125,
+        "trial_redshifts": {
+          "Ly_alpha": 2.9203995064479153,
+          "NV": 2.840968770435029,
+          "CIV": 2.07581411831291,
+          "HeII": 1.9053001426729055,
+          "CIII]": 1.4969023696612345,
+          "MgII": 0.7021480674741201,
+          "[OII]": 0.2782442137784673,
+          "[NeIII]": 0.23154647972885,
+          "Hdelta": 0.16159888762396446,
+          "Hgamma": 0.09771159091491954
+        },
+        "catalog_detections": [
+          {
+            "detectid": 2100216696,
+            "shotid": 20180409008,
+            "source_id": 2140000057580,
+            "ra_det": 197.7797393798828,
+            "dec_det": 51.199913024902344,
+            "wave": 4764.580078125,
+            "sn": 7.630000114440918,
+            "flux": 10.860004425048828,
+            "flux_err": 1.4006720781326294,
+            "fiber_id": "20180409008_1_multi_304_034_003_LU_030",
+            "multiframe": "multi_304_034_003_LU",
+            "x_raw": 634,
+            "y_raw": 263,
+            "associated_row": 218835,
+            "source_type": "oii",
+            "z_hetdex": 2.919978141784668,
+            "z_hetdex_src": "elixer",
+            "z_hetdex_conf": 0.46881598234176636,
+            "agn_flag": -1.0,
+            "fwhm": 1.6102091073989868,
+            "extraction_offset_arcsec": 5.3396572283066295,
+            "flux_cgs": 1.0860004425048829e-16,
+            "flux_err_cgs": 1.4006720781326295e-17
+          },
+          {
+            "detectid": 2100316518,
+            "shotid": 20180515011,
+            "source_id": 2140000057580,
+            "ra_det": 197.77960205078125,
+            "dec_det": 51.199790954589844,
+            "wave": 4765.39990234375,
+            "sn": 25.43000030517578,
+            "flux": 38.222835540771484,
+            "flux_err": 1.3557630777359009,
+            "fiber_id": "20180515011_1_multi_041_084_015_RL_039",
+            "multiframe": "multi_041_084_015_RL",
+            "x_raw": 636,
+            "y_raw": 358,
+            "associated_row": 218836,
+            "source_type": "oii",
+            "z_hetdex": 2.919978141784668,
+            "z_hetdex_src": "elixer",
+            "z_hetdex_conf": 0.46881598234176636,
+            "agn_flag": -1.0,
+            "fwhm": 1.5670568943023682,
+            "extraction_offset_arcsec": 0.0,
+            "flux_cgs": 3.8222835540771487e-16,
+            "flux_err_cgs": 1.355763077735901e-17
+          }
+        ],
+        "rest_EW_A": null,
+        "rest_EW_lower_A": null,
+        "cone_results": {
+          "NED": {
+            "status": "queried",
+            "nearby": [
+              {
+                "z": "2.919978",
+                "sep_arcsec": 2.831689738597896
+              }
+            ]
+          },
+          "SIMBAD": {
+            "status": "queried",
+            "nearby": []
+          },
+          "Legacy": {
+            "status": "unavailable",
+            "nearby": []
+          },
+          "HSC": {
+            "status": "unavailable",
+            "nearby": []
+          }
+        },
+        "published_redshifts": [],
+        "published_active_types": [],
+        "HETDEX_DESI_VAC": {
+          "status": "queried",
+          "matches": []
+        },
+        "independent_spectroscopy": {
+          "spectra": [],
+          "independent_lya_evidence": [],
+          "competing_redshifts": [],
+          "multi_line_foreground": [],
+          "external_active_or_star": [],
+          "external_uv_agn_disfavored": false
+        },
+        "external_cone_status": "no_desi_dr1_counterpart",
+        "DESI_static": {
+          "files": {
+            "no_product_in_directory": 16,
+            "searched": 2
+          },
+          "expected_HEALPix": [
+            11062
+          ],
+          "static_status": "searched",
+          "ASU_status": "unavailable",
+          "status": "no_desi_dr1_counterpart"
+        }
+      }
+    ],
+    "LAN": {
+      "status": "queried",
+      "matches": []
+    },
+    "ordinary_AGN_screen": "narrow width and/or UV constraints inadequate to exclude ordinary AGN"
+  },
+  {
+    "release": "sc1",
+    "group": 78,
+    "first_pass_line": 7268,
+    "prior_disposition": "unresolved",
+    "disposition": "unresolved",
+    "prior_reasons": [
+      "Legacy query unavailable at secondary knot",
+      "direct imaging checks unavailable",
+      "foreground interpretation unresolved",
+      "independent redshift unavailable",
+      "persistent detector/fibre response not excluded at both knots",
+      "secondary counterpart redshift disagrees; association needs review"
+    ],
+    "passed": [
+      "independent HETDEX shot",
+      "masked cube central line above 5 empirical sigma",
+      "bridge PSF excess above 5 empirical sigma"
+    ],
+    "reasons": [
+      "Legacy query unavailable at secondary knot",
+      "direct imaging checks unavailable",
+      "foreground interpretation unresolved",
+      "independent redshift unavailable",
+      "persistent detector/fibre response not excluded at both knots",
+      "primary knot has a competing counterpart redshift; association unresolved",
+      "secondary counterpart redshift disagrees; association needs review",
+      "secondary knot has a competing counterpart redshift; association unresolved"
+    ],
+    "archived_two_shot_bridge": [
+      {
+        "first_pass_line": 7268,
+        "shotid": 20180911022,
+        "cube": "dex_cube_20180911022_043.fits",
+        "seeing_arcsec": 1.2213866710662842,
+        "knot_separation_arcsec": 7.043707847595215,
+        "primary_line_window_air_A": [
+          5416.0,
+          5428.0
+        ],
+        "secondary_line_window_air_A": [
+          5414.0,
+          5426.0
+        ],
+        "primary_central": {
+          "value": 38.70821046316996,
+          "scatter": 1.177181211428158,
+          "n": 18,
+          "sn": 32.88211711789819,
+          "tail_fraction": 0.05263157894736842
+        },
+        "primary_bridge": {
+          "value": 6.916071519972895,
+          "scatter": 0.5502711354960578,
+          "n": 17,
+          "sn": 12.568479561876714,
+          "tail_fraction": 0.05555555555555555
+        },
+        "secondary_central": {
+          "value": 11.627893134020269,
+          "scatter": 1.2624104679951444,
+          "n": 16,
+          "sn": 9.210865585174309,
+          "tail_fraction": 0.058823529411764705
+        },
+        "secondary_bridge": {
+          "value": 7.024936818675461,
+          "scatter": 0.9494966744592535,
+          "n": 15,
+          "sn": 7.398590229582661,
+          "tail_fraction": 0.0625
+        },
+        "unit": "1e-17 erg/s/cm2"
+      },
+      {
+        "first_pass_line": 25807,
+        "shotid": 20180910022,
+        "cube": "dex_cube_20180910022_043.fits",
+        "seeing_arcsec": 1.483477234840393,
+        "knot_separation_arcsec": 7.55175256729126,
+        "primary_line_window_air_A": [
+          5416.0,
+          5428.0
+        ],
+        "secondary_line_window_air_A": [
+          5414.0,
+          5426.0
+        ],
+        "primary_central": {
+          "value": 36.93178966641426,
+          "scatter": 0.7433481810674071,
+          "n": 19,
+          "sn": 49.683029577582666,
+          "tail_fraction": 0.05
+        },
+        "primary_bridge": {
+          "value": 5.9111857898350815,
+          "scatter": 1.1357057670853157,
+          "n": 19,
+          "sn": 5.2048567165469235,
+          "tail_fraction": 0.05
+        },
+        "secondary_central": {
+          "value": 11.218492710380815,
+          "scatter": 1.0610189439875772,
+          "n": 19,
+          "sn": 10.573319895890723,
+          "tail_fraction": 0.05
+        },
+        "secondary_bridge": {
+          "value": 5.071966116819486,
+          "scatter": 0.7623554810741808,
+          "n": 19,
+          "sn": 6.65301980865008,
+          "tail_fraction": 0.05
+        },
+        "unit": "1e-17 erg/s/cm2"
+      }
+    ],
+    "knots": [
+      {
+        "knot": "primary",
+        "ra": 11.112092018127441,
+        "dec": -0.05085200071334839,
+        "wave_air_A": 5422.47998046875,
+        "trial_redshifts": {
+          "Ly_alpha": 3.461726408441553,
+          "NV": 3.371327914122859,
+          "CIV": 2.5005210710191705,
+          "HeII": 2.306462606602446,
+          "CIII]": 1.841673463047568,
+          "MgII": 0.9371798642552285,
+          "[OII]": 0.4547435677595957,
+          "[NeIII]": 0.4015978327698635,
+          "Hdelta": 0.32199191036629893,
+          "Hgamma": 0.24928308606870697,
+          "Hbeta": 0.11543100570668186,
+          "[OIII]4959": 0.09348080892825616,
+          "[OIII]5007": 0.08301267293955261
+        },
+        "catalog_detections": [
+          {
+            "detectid": 2100448413,
+            "shotid": 20180911022,
+            "source_id": 2140000004452,
+            "ra_det": 11.112092018127441,
+            "dec_det": -0.05085200071334839,
+            "wave": 5422.47998046875,
+            "sn": 42.06999969482422,
+            "flux": 61.12123489379883,
+            "flux_err": 1.4239712953567505,
+            "fiber_id": "20180911022_2_multi_323_043_040_RU_053",
+            "multiframe": "multi_323_043_040_RU",
+            "x_raw": 984,
+            "y_raw": 481,
+            "associated_row": 124377,
+            "source_type": "oii",
+            "z_hetdex": 0.33714258670806885,
+            "z_hetdex_src": "elixer",
+            "z_hetdex_conf": 0.3956237733364105,
+            "agn_flag": -1.0,
+            "fwhm": 1.2213866710662842,
+            "extraction_offset_arcsec": 0.0,
+            "flux_cgs": 6.112123489379883e-16,
+            "flux_err_cgs": 1.4239712953567507e-17
+          },
+          {
+            "detectid": 2100440112,
+            "shotid": 20180910022,
+            "source_id": 2140000004452,
+            "ra_det": 11.112092971801758,
+            "dec_det": -0.05090299993753433,
+            "wave": 5422.4599609375,
+            "sn": 38.08000183105469,
+            "flux": 70.31222534179688,
+            "flux_err": 1.848510503768921,
+            "fiber_id": "20180910022_2_multi_323_043_040_RU_053",
+            "multiframe": "multi_323_043_040_RU",
+            "x_raw": 984,
+            "y_raw": 481,
+            "associated_row": 124378,
+            "source_type": "oii",
+            "z_hetdex": 0.33714258670806885,
+            "z_hetdex_src": "elixer",
+            "z_hetdex_conf": 0.3956237733364105,
+            "agn_flag": -1.0,
+            "fwhm": 1.483477234840393,
+            "extraction_offset_arcsec": 0.14762872591183757,
+            "flux_cgs": 7.031222534179688e-16,
+            "flux_err_cgs": 1.848510503768921e-17
+          }
+        ],
+        "rest_EW_A": 22.35269796709907,
+        "rest_EW_lower_A": 18.62739722032653,
+        "cone_results": {
+          "NED": {
+            "status": "queried",
+            "nearby": [
+              {
+                "z": "0.337142",
+                "sep_arcsec": 0.4771396081088068
+              }
+            ]
+          },
+          "SIMBAD": {
+            "status": "queried",
+            "nearby": []
+          },
+          "Legacy": {
+            "status": "unavailable",
+            "nearby": []
+          },
+          "HSC": {
+            "status": "unavailable",
+            "nearby": []
+          }
+        },
+        "published_redshifts": [
+          {
+            "service": "NED",
+            "z": 0.337142,
+            "sep_arcsec": 0.4771396081088068,
+            "reference": null
+          }
+        ],
+        "published_active_types": [],
+        "HETDEX_DESI_VAC": {
+          "status": "queried",
+          "matches": []
+        },
+        "independent_spectroscopy": {
+          "spectra": [],
+          "independent_lya_evidence": [],
+          "competing_redshifts": [],
+          "multi_line_foreground": [],
+          "external_active_or_star": [],
+          "external_uv_agn_disfavored": false
+        },
+        "external_cone_status": "no_desi_dr1_counterpart",
+        "DESI_static": {
+          "files": {
+            "no_product_in_directory": 15,
+            "searched": 3
+          },
+          "expected_HEALPix": [
+            18069
+          ],
+          "static_status": "searched",
+          "ASU_status": "unavailable",
+          "status": "no_desi_dr1_counterpart"
+        }
+      },
+      {
+        "knot": "secondary",
+        "ra": 11.113162994384766,
+        "dec": -0.04921400174498558,
+        "wave_air_A": 5420.330078125,
+        "trial_redshifts": {
+          "Ly_alpha": 3.4599574448184374,
+          "NV": 3.369594791255853,
+          "CIV": 2.4991332014212344,
+          "HeII": 2.3051516763622573,
+          "CIII]": 1.840546810150296,
+          "MgII": 0.9364118205883607,
+          "[OII]": 0.45416679809315896,
+          "[NeIII]": 0.40104213406639366,
+          "Hdelta": 0.32146777343242783,
+          "Hgamma": 0.24878777637646587,
+          "Hbeta": 0.114988765037362,
+          "[OIII]4959": 0.09304727096637899,
+          "[OIII]5007": 0.08258328533340542
+        },
+        "catalog_detections": [
+          {
+            "detectid": 2100448414,
+            "shotid": 20180911022,
+            "source_id": 2140000053850,
+            "ra_det": 11.113162994384766,
+            "dec_det": -0.04921400174498558,
+            "wave": 5420.330078125,
+            "sn": 14.850000381469727,
+            "flux": 19.94610595703125,
+            "flux_err": 1.0197006464004517,
+            "fiber_id": "20180911022_2_multi_323_043_040_RU_056",
+            "multiframe": "multi_323_043_040_RU",
+            "x_raw": 983,
+            "y_raw": 507,
+            "associated_row": 170107,
+            "source_type": "oii",
+            "z_hetdex": 0.4540292024612427,
+            "z_hetdex_src": "elixer",
+            "z_hetdex_conf": 0.42141756415367126,
+            "agn_flag": -1.0,
+            "fwhm": 1.2213866710662842,
+            "extraction_offset_arcsec": 0.0,
+            "flux_cgs": 1.9946105957031252e-16,
+            "flux_err_cgs": 1.0197006464004517e-17
+          },
+          {
+            "detectid": 2100440113,
+            "shotid": 20180910022,
+            "source_id": 2140000053850,
+            "ra_det": 11.113205909729004,
+            "dec_det": -0.04912500083446503,
+            "wave": 5420.919921875,
+            "sn": 16.0,
+            "flux": 20.897220611572266,
+            "flux_err": 1.0952215194702148,
+            "fiber_id": "20180910022_2_multi_323_043_040_RU_056",
+            "multiframe": "multi_323_043_040_RU",
+            "x_raw": 983,
+            "y_raw": 507,
+            "associated_row": 170109,
+            "source_type": "oii",
+            "z_hetdex": 0.4540292024612427,
+            "z_hetdex_src": "elixer",
+            "z_hetdex_conf": 0.42141756415367126,
+            "agn_flag": -1.0,
+            "fwhm": 1.483477234840393,
+            "extraction_offset_arcsec": 0.0,
+            "flux_cgs": 2.0897220611572268e-16,
+            "flux_err_cgs": 1.095221519470215e-17
+          }
+        ],
+        "rest_EW_A": null,
+        "rest_EW_lower_A": null,
+        "cone_results": {
+          "NED": {
+            "status": "queried",
+            "nearby": [
+              {
+                "z": "0.454029",
+                "sep_arcsec": 0.7536157799561857
+              }
+            ]
+          },
+          "SIMBAD": {
+            "status": "queried",
+            "nearby": [
+              {
+                "main_id": "WiggleZ R01J004427164-00025634",
+                "otype": "G",
+                "rvz_redshift": "0.45414",
+                "rvz_bibcode": "2018MNRAS.474.4151D",
+                "sep_arcsec": 0.7609515907162668
+              }
+            ]
+          },
+          "Legacy": {
+            "status": "unavailable",
+            "nearby": []
+          },
+          "HSC": {
+            "status": "unavailable",
+            "nearby": []
+          }
+        },
+        "published_redshifts": [
+          {
+            "service": "NED",
+            "z": 0.454029,
+            "sep_arcsec": 0.7536157799561857,
+            "reference": null
+          },
+          {
+            "service": "SIMBAD",
+            "z": 0.45414,
+            "sep_arcsec": 0.7609515907162668,
+            "reference": "2018MNRAS.474.4151D"
+          }
+        ],
+        "published_active_types": [],
+        "HETDEX_DESI_VAC": {
+          "status": "queried",
+          "matches": []
+        },
+        "independent_spectroscopy": {
+          "spectra": [],
+          "independent_lya_evidence": [],
+          "competing_redshifts": [],
+          "multi_line_foreground": [],
+          "external_active_or_star": [],
+          "external_uv_agn_disfavored": false
+        },
+        "external_cone_status": "no_desi_dr1_counterpart",
+        "DESI_static": {
+          "files": {
+            "no_product_in_directory": 15,
+            "searched": 3
+          },
+          "expected_HEALPix": [
+            18069
+          ],
+          "static_status": "searched",
+          "ASU_status": "unavailable",
+          "status": "no_desi_dr1_counterpart"
+        }
+      }
+    ],
+    "LAN": {
+      "status": "queried",
+      "matches": []
+    },
+    "ordinary_AGN_screen": "narrow width and/or UV constraints inadequate to exclude ordinary AGN"
+  }
+]
