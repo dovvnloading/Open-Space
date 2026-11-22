@@ -22,6 +22,7 @@ concurrency:
 env:
   FOLDER: results/bat-maxi-blind-periods
   CHECKPOINT_RUN: ${{ inputs.checkpoint_run || '45017427773' }}
+  RESTORE_REPORT: ${{ contains(github.event.head_commit.message, '[restore-report-packet]') }}
   MODE: ${{ inputs.mode || (contains(github.event.head_commit.message, '[period-report]') && 'report') || 'frozen' }}
   OPENBLAS_NUM_THREADS: '1'
   OMP_NUM_THREADS: '1'
@@ -349,6 +350,9 @@ jobs:
   publication:
     needs: inventory
     if: needs.inventory.outputs.mode == 'report'
+    permissions:
+      actions: read
+      contents: read
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -359,7 +363,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: |
+      - if: env.RESTORE_REPORT == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: bat-maxi-publication
+          path: packet
+          run-id: 45020443236
+          github-token: ${{ github.token }}
+      - if: env.RESTORE_REPORT == 'true'
+        run: test "$(cat packet/publication-revision.txt)" = 3ce3d675a2eb2c18dea0e51ece82d0c47cc49e87
+      - if: env.RESTORE_REPORT != 'true'
+        run: |
           set -euo pipefail
           python -m pip -q install --only-binary=:all: -r "$FOLDER/requirements.txt" matplotlib==3.10.3
           if ! command -v pdftotext > /dev/null; then sudo apt-get -qq update && sudo apt-get -qq install poppler-utils; fi
@@ -455,11 +469,12 @@ jobs:
           git add -f -- "$target"
           if ! git diff --cached --quiet; then
             git commit -m "Record BAT/MAXI survey outputs from run $GITHUB_RUN_ID"
+            git push origin HEAD:survey/bat-maxi-blind-periods
             if [[ "$MODE" == report && "$PUBLICATION" == success ]]; then
+              mv packet "$RUNNER_TEMP/bat-maxi-recorded-packet"
               git sparse-checkout disable
               python -m pip -q install '.[archive]' numpy scipy pandas matplotlib
               python -m open_space.verify
               python -m unittest discover -s tests
             fi
-            git push origin HEAD:survey/bat-maxi-blind-periods
           fi
