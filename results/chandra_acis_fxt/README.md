@@ -1,6 +1,6 @@
 # Chandra ACIS fast X-ray transient search
 
-**No observational result is available.** The branch contains the survey design. No completed search run, Chandra event-file receipt, searched exposure, false-alarm measurement or injection recovery has been deposited. A discovery count and an astrophysical rate limit are both undetermined.
+**No observational result is available.** The branch contains the survey implementation and synthetic regression fixtures. No completed search run, Chandra event-file receipt, searched exposure, false-alarm measurement or injection recovery has been deposited. A discovery count and an astrophysical rate limit are both undetermined.
 
 ## Population and decision rule
 
@@ -13,3 +13,5 @@ Record controls, injected events, competing identifications, failed downloads, u
 Use the single manual Chandra Actions workflow on the research branch. GitHub requires initial workflow registration to dispatch a new workflow by branch. The first verification and unit-test logs, instrument measurements and input hashes must come from an executed run. The catalog entry and line 9 totals follow the run's scientific disposition.
 
 [GitHub manual workflow requirements](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow)
+
+[Selection thresholds, control statistics, injection model and reproduction commands](METHODS.md)
