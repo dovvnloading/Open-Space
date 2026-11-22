@@ -1,0 +1,12 @@
+{
+  "endpoint": "https://cda.cfa.harvard.edu/csccli/getProperties",
+  "error": "TimeoutError: The read operation timed out",
+  "parameters": {
+    "coordFormat": "decimal",
+    "floatFormat": "native",
+    "outputFormat": "votable",
+    "query": "SELECT DISTINCT m.name,m.ra,m.dec,a.match_type,o.obsid,o.obi,o.region_id,o.gti_obs,o.gti_end,o.livetime,o.detector,o.flux_significance_b,o.src_cnts_aper_b,o.src_rate_aper_b,o.flux_aper_b,o.var_index_b,o.conf_code,o.streak_src_flag FROM master_source m, master_stack_assoc a, stack_source s, stack_observation_assoc b, observation_source o WHERE m.name=a.name AND s.detect_stack_id=a.detect_stack_id AND s.region_id=a.region_id AND s.detect_stack_id=b.detect_stack_id AND s.region_id=b.region_id AND o.obsid=b.obsid AND o.obi=b.obi AND o.region_id=b.region_id AND o.obsid=24371 AND (m.dec BETWEEN -29.011997654 AND -28.831065482) AND (m.ra BETWEEN 266.411956061 AND 266.579799405)",
+    "version": "rel2.2"
+  },
+  "status": "failed"
+}
