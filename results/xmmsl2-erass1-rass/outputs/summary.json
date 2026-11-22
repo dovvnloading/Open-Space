@@ -7,6 +7,101 @@
       "ero_supp": 347274,
       "rass": 135118
     },
+    "quality_distribution": {
+      "xmm_clean": {
+        "rows": 29393,
+        "positive_flux": 23006,
+        "positive_flux_error": 23006,
+        "quality_rows": 21246,
+        "median_positive_flux_cgs": 1.169396393954636e-12,
+        "median_positive_error_cgs": 4.90313031061701e-13,
+        "median_quality_flux_cgs": 1.1475062436719363e-12
+      },
+      "xmm_full": {
+        "rows": 72352,
+        "positive_flux": 36189,
+        "positive_flux_error": 36189,
+        "quality_rows": 21246,
+        "median_positive_flux_cgs": 9.8576333727729e-13,
+        "median_positive_error_cgs": 4.574033209484019e-13,
+        "median_quality_flux_cgs": 1.1475062436719363e-12
+      },
+      "ero_main": {
+        "rows": 930203,
+        "positive_flux": 930203,
+        "positive_flux_error": 926925,
+        "quality_rows": 427773,
+        "median_positive_flux_cgs": 4.1720848374367583e-14,
+        "median_positive_error_cgs": 1.8130509843016646e-14,
+        "median_quality_flux_cgs": 5.892078410460813e-14
+      },
+      "ero_supp": {
+        "rows": 347274,
+        "positive_flux": 347274,
+        "positive_flux_error": 345846,
+        "quality_rows": 0,
+        "median_positive_flux_cgs": 2.8414821358476935e-14,
+        "median_positive_error_cgs": 1.550055046882319e-14,
+        "median_quality_flux_cgs": null
+      },
+      "rass": {
+        "rows": 135118,
+        "positive_flux": 135118,
+        "positive_flux_error": 134974,
+        "quality_rows": 60647,
+        "median_positive_flux_cgs": 2.90148731437712e-13,
+        "median_positive_error_cgs": 1.08805774289142e-13,
+        "median_quality_flux_cgs": 4.322007145374252e-13
+      },
+      "ero_at_clean_slew": {
+        "rows": 13547,
+        "positive_flux": 13547,
+        "positive_flux_error": 13539,
+        "quality_rows": 12085,
+        "median_positive_flux_cgs": 5.80077869419271e-13,
+        "median_positive_error_cgs": 5.608485342269674e-14,
+        "median_quality_flux_cgs": 5.628619857526995e-13,
+        "unambiguous_matches": 12487,
+        "distinct_counterpart_names": 9769
+      },
+      "rass_at_clean_slew": {
+        "rows": 17545,
+        "positive_flux": 17545,
+        "positive_flux_error": 17542,
+        "quality_rows": 16143,
+        "median_positive_flux_cgs": 9.89326577332754e-13,
+        "median_positive_error_cgs": 1.7227580929114151e-13,
+        "median_quality_flux_cgs": 1.101154734241039e-12,
+        "unambiguous_matches": 15321,
+        "distinct_counterpart_names": 11659
+      }
+    },
+    "full_only_audit": {
+      "rows": 42959,
+      "positive_soft_flux": 13183,
+      "soft_likelihood_at_least_10": 7821,
+      "soft_likelihood_at_least_15p5": 1143,
+      "no_instrument_warnings": 39162,
+      "native_quality": 6205,
+      "positive_with_distinct_positive_slew_obsid": 904,
+      "strong_soft_photometry": 2,
+      "strong_with_distinct_strong_slew_obsid": 0,
+      "close_secure_ero": 2260,
+      "close_secure_rass": 1188,
+      "close_secure_both": 401,
+      "corroborated_rows": 0,
+      "corroborated_unique_slew_names": 0,
+      "failure_counts_nonexclusive": {
+        "no_positive_soft_flux_or_error": 29776,
+        "soft_ml_below_10_or_missing": 35138,
+        "extension_gt_0.5_pixel": 1304,
+        "instrument_warning": 3797,
+        "net_counts_below_5_or_missing": 40268,
+        "flux_snr_below_3_or_missing": 41864,
+        "no_strong_independent_slew_or_two_close_missions": 42365
+      },
+      "corroboration": "Positive unflagged point source with soft ML\u226510, \u22655 net counts and flux/error\u22653 plus a distinct equally strong slew OBSID with same release name OR secure, unambiguous counterparts in BOTH ERO and 2RXS at \u226410/15 arcsec and detection likelihood\u226520. These supplemental rows retain clean=False."
+    },
     "clean_flagged": 29393,
     "quality_slew": 21246,
     "detection_rows": 72352,
@@ -66,16 +161,16 @@
     },
     "rass": {
       "catalogued_or_ambiguous": 22808,
-      "ok": 49345,
-      "no_exposure_or_masked": 177,
+      "ok": 49348,
+      "no_exposure_or_masked": 178,
       "archive_error": 12,
-      "archive_unavailable": 10
+      "archive_unavailable": 6
     }
   },
   "positive_comparisons": 50370,
-  "quality_comparisons": 30110,
+  "quality_comparisons": 29957,
   "compared_slew_rows": 29830,
-  "quality_compared_slew_rows": 17225,
+  "quality_compared_slew_rows": 17178,
   "nominal_tenfold": 3996,
   "quality_nominal_tenfold": 1306,
   "qualified_pairs": 176,
@@ -93,45 +188,50 @@
     "rass over ero upper_limit": 3
   },
   "dispositions": {
-    "inconclusive": 140,
-    "known_or_stellar": 21
+    "inconclusive": 119,
+    "known_or_stellar": 34,
+    "previously_reported_flare": 8
   },
+  "selection_strata": {
+    "clean": 161
+  },
+  "legacy_1rxs_positional_warnings": 63,
   "service_completeness": {
     "Gaia": {
-      "ok": 0,
-      "incomplete": 161
+      "ok": 161,
+      "incomplete": 0
     },
     "Legacy": {
       "ok": 161,
       "incomplete": 0
     },
     "MPE": {
-      "ok": 0,
-      "incomplete": 161
+      "ok": 161,
+      "incomplete": 0
     },
     "NED": {
       "ok": 161,
       "incomplete": 0
     },
     "SIMBAD": {
-      "ok": 0,
-      "incomplete": 161
+      "ok": 161,
+      "incomplete": 0
     },
     "SIMBAD_bibliography": {
-      "ok": 0,
-      "incomplete": 161
+      "ok": 161,
+      "incomplete": 0
     },
     "TNS": {
       "ok": 0,
       "incomplete": 161
     },
     "VSX": {
-      "ok": 0,
-      "incomplete": 161
+      "ok": 158,
+      "incomplete": 3
     },
     "WISE": {
-      "ok": 0,
-      "incomplete": 161
+      "ok": 161,
+      "incomplete": 0
     },
     "papers": {
       "ok": 0,
@@ -146,34 +246,222 @@
       "observed_unambiguous": 18171,
       "mean_shifted": 985.25,
       "estimated_random_fraction": 0.04884971986712281,
+      "observed_selection_counts": {
+        "n": 72352,
+        "matches": 20169,
+        "unique": 19966,
+        "unique_nominal_10x": 1516,
+        "quality_unique": 9499,
+        "quality_unique_nominal_10x": 617,
+        "guarded_10x": 58,
+        "guarded_10x_xmm_brighter": 58,
+        "guarded_10x_comparison_brighter": 0
+      },
+      "guarded_10x_mean_shifted": 12.125,
+      "guarded_10x_estimated_random_fraction": 0.20905172413793102,
+      "guarded_10x_shifted_range": [
+        2,
+        21
+      ],
+      "offset_dependence": "Offsets share the same sky and source sample. The eight-shift range describes empirical variation and is not a confidence interval.",
+      "control_selection": "Same clean point-source/likelihood, positive-error, mutual-confusion and (Fhi-1.96 sigma_hi)/(Flo+1.96 sigma_lo)>=10 cuts as observed XMM versus this catalogue. Does not cover the map or ERO-RASS pair selections.",
+      "benchmarks": [
+        {
+          "reference": "RX J1856.5-3754",
+          "ra": 284.1463,
+          "dec": -37.9084,
+          "search_arcsec": 30,
+          "nearest_slew_sep": 10.948470336789885,
+          "slew_within_30arcsec": true,
+          "xmm_name": "XMMSL2 J185635.8-375432",
+          "positive_match": "1eRASS J185636.3-375437",
+          "match_sep": 6.317454038455229,
+          "match_ambiguous": false,
+          "east_20arcmin_control": {
+            "ra": 284.5725914378701,
+            "dec": -37.90809127386239,
+            "comparison_match": null,
+            "sep": null,
+            "ambiguous": false
+          }
+        },
+        {
+          "reference": "Vela X-1",
+          "ra": 135.5286,
+          "dec": -40.5547,
+          "search_arcsec": 30,
+          "nearest_slew_sep": 1.8685216700118157,
+          "slew_within_30arcsec": true,
+          "xmm_name": "XMMSL2 J090206.8-403319",
+          "positive_match": "1eRASS J090206.7-403316",
+          "match_sep": 2.552140800482174,
+          "match_ambiguous": true,
+          "east_20arcmin_control": {
+            "ra": 135.9671063073076,
+            "dec": -40.554363270466574,
+            "comparison_match": null,
+            "sep": null,
+            "ambiguous": false
+          }
+        },
+        {
+          "reference": "LMC X-3",
+          "ra": 84.7355,
+          "dec": -64.0843,
+          "search_arcsec": 30,
+          "nearest_slew_sep": 0.872495444886424,
+          "slew_within_30arcsec": true,
+          "xmm_name": "XMMSL2 J053856.4-640505",
+          "positive_match": "1eRASS J053856.1-640457",
+          "match_sep": 7.06686716146253,
+          "match_ambiguous": true,
+          "east_20arcmin_control": {
+            "ra": 85.49796330502052,
+            "dec": -64.08253084401335,
+            "comparison_match": null,
+            "sep": null,
+            "ambiguous": false
+          }
+        }
+      ],
       "outer_radius_arcsec": 40,
-      "adaptive_radius": "min(cap, 3.44 * hypot(position errors))"
+      "adaptive_radius": "min(cap, 3.44 * hypot(position errors))",
+      "corroborated_full_only_guarded_10x": {
+        "counts": {
+          "observed": 0,
+          "0": 0,
+          "45": 0,
+          "90": 0,
+          "135": 0,
+          "180": 0,
+          "225": 0,
+          "270": 0,
+          "315": 0
+        },
+        "mean_shifted": 0.0,
+        "estimated_random_fraction": null,
+        "selection": "Recompute BOTH close mission counterparts at each identical 20-arcmin XMM shift before applying the full-only corroboration and guarded-amplitude rules; repeat-slew evidence is intrinsic and fixed."
+      }
     },
     "rass": {
       "observed": 22808,
       "observed_unambiguous": 19383,
       "mean_shifted": 403.5,
       "estimated_random_fraction": 0.017691160996141705,
+      "observed_selection_counts": {
+        "n": 72352,
+        "matches": 22808,
+        "unique": 22738,
+        "unique_nominal_10x": 245,
+        "quality_unique": 12207,
+        "quality_unique_nominal_10x": 82,
+        "guarded_10x": 15,
+        "guarded_10x_xmm_brighter": 10,
+        "guarded_10x_comparison_brighter": 5
+      },
+      "guarded_10x_mean_shifted": 3.5,
+      "guarded_10x_estimated_random_fraction": 0.23333333333333334,
+      "guarded_10x_shifted_range": [
+        1,
+        9
+      ],
+      "offset_dependence": "Offsets share the same sky and source sample. The eight-shift range describes empirical variation and is not a confidence interval.",
+      "control_selection": "Same clean point-source/likelihood, positive-error, mutual-confusion and (Fhi-1.96 sigma_hi)/(Flo+1.96 sigma_lo)>=10 cuts as observed XMM versus this catalogue. Does not cover the map or ERO-RASS pair selections.",
+      "benchmarks": [
+        {
+          "reference": "RX J1856.5-3754",
+          "ra": 284.1463,
+          "dec": -37.9084,
+          "search_arcsec": 30,
+          "nearest_slew_sep": 10.948470336789885,
+          "slew_within_30arcsec": true,
+          "xmm_name": "XMMSL2 J185635.8-375432",
+          "positive_match": "2RXS J185635.1-375433",
+          "match_sep": 10.865547625057467,
+          "match_ambiguous": false,
+          "east_20arcmin_control": {
+            "ra": 284.5725914378701,
+            "dec": -37.90809127386239,
+            "comparison_match": null,
+            "sep": null,
+            "ambiguous": false
+          }
+        },
+        {
+          "reference": "Vela X-1",
+          "ra": 135.5286,
+          "dec": -40.5547,
+          "search_arcsec": 30,
+          "nearest_slew_sep": 1.8685216700118157,
+          "slew_within_30arcsec": true,
+          "xmm_name": "XMMSL2 J090206.8-403319",
+          "positive_match": "2RXS J090207.1-403308",
+          "match_sep": 10.394294444292937,
+          "match_ambiguous": true,
+          "east_20arcmin_control": {
+            "ra": 135.9671063073076,
+            "dec": -40.554363270466574,
+            "comparison_match": null,
+            "sep": null,
+            "ambiguous": false
+          }
+        },
+        {
+          "reference": "LMC X-3",
+          "ra": 84.7355,
+          "dec": -64.0843,
+          "search_arcsec": 30,
+          "nearest_slew_sep": 0.872495444886424,
+          "slew_within_30arcsec": true,
+          "xmm_name": "XMMSL2 J053856.4-640505",
+          "positive_match": "2RXS J053856.6-640458",
+          "match_sep": 5.790916623839145,
+          "match_ambiguous": true,
+          "east_20arcmin_control": {
+            "ra": 85.49796330502052,
+            "dec": -64.08253084401335,
+            "comparison_match": null,
+            "sep": null,
+            "ambiguous": false
+          }
+        }
+      ],
       "outer_radius_arcsec": 75,
-      "adaptive_radius": "min(cap, 3.44 * hypot(position errors))"
+      "adaptive_radius": "min(cap, 3.44 * hypot(position errors))",
+      "corroborated_full_only_guarded_10x": {
+        "counts": {
+          "observed": 0,
+          "0": 0,
+          "45": 0,
+          "90": 0,
+          "135": 0,
+          "180": 0,
+          "225": 0,
+          "270": 0,
+          "315": 0
+        },
+        "mean_shifted": 0.0,
+        "estimated_random_fraction": null,
+        "selection": "Recompute BOTH close mission counterparts at each identical 20-arcmin XMM shift before applying the full-only corroboration and guarded-amplitude rules; repeat-slew evidence is intrinsic and fixed."
+      }
     }
   },
   "host_shifted": {
     "Gaia": {
-      "real_matches": 0,
-      "real_checked": 0,
-      "shifted_matches": 0,
-      "shifted_checked": 0,
-      "chance_per_position": null,
-      "approx_false_fraction": null
+      "real_matches": 143,
+      "real_checked": 161,
+      "shifted_matches": 330,
+      "shifted_checked": 644,
+      "chance_per_position": 0.5124223602484472,
+      "approx_false_fraction": 0.576923076923077
     },
     "Gaia_significant_astrometry": {
-      "real_matches": 0,
-      "real_checked": 0,
-      "shifted_matches": 0,
-      "shifted_checked": 0,
-      "chance_per_position": null,
-      "approx_false_fraction": null
+      "real_matches": 66,
+      "real_checked": 161,
+      "shifted_matches": 210,
+      "shifted_checked": 644,
+      "chance_per_position": 0.32608695652173914,
+      "approx_false_fraction": 0.7954545454545455
     },
     "Legacy": {
       "real_matches": 121,
@@ -192,12 +480,16 @@
       "approx_false_fraction": 0.9423076923076922
     },
     "WISE": {
-      "real_matches": 0,
-      "real_checked": 0,
-      "shifted_matches": 0,
-      "shifted_checked": 0,
-      "chance_per_position": null,
-      "approx_false_fraction": null
+      "real_matches": 149,
+      "real_checked": 161,
+      "shifted_matches": 335,
+      "shifted_checked": 644,
+      "chance_per_position": 0.5201863354037267,
+      "approx_false_fraction": 0.5620805369127517
     }
+  },
+  "missing_check_combinations": {
+    "TNS,papers": 158,
+    "TNS,VSX,papers": 3
   }
 }

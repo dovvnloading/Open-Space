@@ -6,6 +6,101 @@
     "ero_supp": 347274,
     "rass": 135118
   },
+  "quality_distribution": {
+    "xmm_clean": {
+      "rows": 29393,
+      "positive_flux": 23006,
+      "positive_flux_error": 23006,
+      "quality_rows": 21246,
+      "median_positive_flux_cgs": 1.169396393954636e-12,
+      "median_positive_error_cgs": 4.90313031061701e-13,
+      "median_quality_flux_cgs": 1.1475062436719363e-12
+    },
+    "xmm_full": {
+      "rows": 72352,
+      "positive_flux": 36189,
+      "positive_flux_error": 36189,
+      "quality_rows": 21246,
+      "median_positive_flux_cgs": 9.8576333727729e-13,
+      "median_positive_error_cgs": 4.574033209484019e-13,
+      "median_quality_flux_cgs": 1.1475062436719363e-12
+    },
+    "ero_main": {
+      "rows": 930203,
+      "positive_flux": 930203,
+      "positive_flux_error": 926925,
+      "quality_rows": 427773,
+      "median_positive_flux_cgs": 4.1720848374367583e-14,
+      "median_positive_error_cgs": 1.8130509843016646e-14,
+      "median_quality_flux_cgs": 5.892078410460813e-14
+    },
+    "ero_supp": {
+      "rows": 347274,
+      "positive_flux": 347274,
+      "positive_flux_error": 345846,
+      "quality_rows": 0,
+      "median_positive_flux_cgs": 2.8414821358476935e-14,
+      "median_positive_error_cgs": 1.550055046882319e-14,
+      "median_quality_flux_cgs": null
+    },
+    "rass": {
+      "rows": 135118,
+      "positive_flux": 135118,
+      "positive_flux_error": 134974,
+      "quality_rows": 60647,
+      "median_positive_flux_cgs": 2.90148731437712e-13,
+      "median_positive_error_cgs": 1.08805774289142e-13,
+      "median_quality_flux_cgs": 4.322007145374252e-13
+    },
+    "ero_at_clean_slew": {
+      "rows": 13547,
+      "positive_flux": 13547,
+      "positive_flux_error": 13539,
+      "quality_rows": 12085,
+      "median_positive_flux_cgs": 5.80077869419271e-13,
+      "median_positive_error_cgs": 5.608485342269674e-14,
+      "median_quality_flux_cgs": 5.628619857526995e-13,
+      "unambiguous_matches": 12487,
+      "distinct_counterpart_names": 9769
+    },
+    "rass_at_clean_slew": {
+      "rows": 17545,
+      "positive_flux": 17545,
+      "positive_flux_error": 17542,
+      "quality_rows": 16143,
+      "median_positive_flux_cgs": 9.89326577332754e-13,
+      "median_positive_error_cgs": 1.7227580929114151e-13,
+      "median_quality_flux_cgs": 1.101154734241039e-12,
+      "unambiguous_matches": 15321,
+      "distinct_counterpart_names": 11659
+    }
+  },
+  "full_only_audit": {
+    "rows": 42959,
+    "positive_soft_flux": 13183,
+    "soft_likelihood_at_least_10": 7821,
+    "soft_likelihood_at_least_15p5": 1143,
+    "no_instrument_warnings": 39162,
+    "native_quality": 6205,
+    "positive_with_distinct_positive_slew_obsid": 904,
+    "strong_soft_photometry": 2,
+    "strong_with_distinct_strong_slew_obsid": 0,
+    "close_secure_ero": 2260,
+    "close_secure_rass": 1188,
+    "close_secure_both": 401,
+    "corroborated_rows": 0,
+    "corroborated_unique_slew_names": 0,
+    "failure_counts_nonexclusive": {
+      "no_positive_soft_flux_or_error": 29776,
+      "soft_ml_below_10_or_missing": 35138,
+      "extension_gt_0.5_pixel": 1304,
+      "instrument_warning": 3797,
+      "net_counts_below_5_or_missing": 40268,
+      "flux_snr_below_3_or_missing": 41864,
+      "no_strong_independent_slew_or_two_close_missions": 42365
+    },
+    "corroboration": "Positive unflagged point source with soft ML\u226510, \u22655 net counts and flux/error\u22653 plus a distinct equally strong slew OBSID with same release name OR secure, unambiguous counterparts in BOTH ERO and 2RXS at \u226410/15 arcsec and detection likelihood\u226520. These supplemental rows retain clean=False."
+  },
   "clean_flagged": 29393,
   "quality_slew": 21246,
   "detection_rows": 72352,

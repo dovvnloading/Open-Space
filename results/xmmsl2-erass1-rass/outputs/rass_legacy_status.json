@@ -12,15 +12,54 @@
         "ra": "ra",
         "dec": "dec",
         "name": "name",
+        "pos": "positional_error",
         "rate": "count_rate",
-        "errrate": "count_rate_error"
+        "errrate": "count_rate_error",
+        "ml": "detect_likelihood"
       },
       "units": {
         "ra": "degree",
         "dec": "degree",
         "name": "",
+        "pos": "arcsec",
         "rate": "ct/s",
-        "errrate": "ct/s"
+        "errrate": "ct/s",
+        "ml": ""
+      },
+      "legacy_schema": {
+        "name": "Source Name",
+        "ra": "Right Ascension J2000 coordinates",
+        "dec": "Declination J2000 coordinates",
+        "count_rate": "Source Count Rate",
+        "count_rate_error": "Source Count Rate Error",
+        "hardness_ratio_1": "Hardness Ratio 1",
+        "hardness_ratio_1_error": "Hardness Ratio 1 Error",
+        "background_count_rate": "Background Count Rate",
+        "positional_error": "Total Positional Error",
+        "extraction_radius": "Extraction Radius",
+        "hardness_ratio_2_error": "Hardness Ratio 2 Error",
+        "new_data_flag": "New Data Flags",
+        "sass_field_id": "SASS Field ID Number",
+        "date_included": "Date Source Included",
+        "vignetting_factor": "Vignetting Factor",
+        "lii": "Galactic Longitude",
+        "sass_source_number": "SASS Source Number",
+        "screen_flag": "Screening Flags",
+        "dec_b1950": "Declination 1950 coordinates",
+        "ra_b1950": "Right Ascension 1950 coordinates",
+        "date_modified": "Date Source Properties Changed",
+        "high_detect_range": "PHA Range with Highest Detection Likelihood",
+        "hardness_ratio_2": "Hardness Ratio 2",
+        "bii": "Galactic Latitude",
+        "priority_flags": "Priority Flags",
+        "source_extent": "Source Extent",
+        "detect_likelihood": "Likelihood of Detection Algorithm",
+        "exposure": "Exposure (seconds)",
+        "extent_likelihood": "Likelihood of Source Extent",
+        "__x_ra_dec": "System unit vector column",
+        "__y_ra_dec": "System unit vector column",
+        "__z_ra_dec": "System unit vector column",
+        "__row": "System index column"
       }
     },
     "rassfsc": {
@@ -35,17 +74,59 @@
         "ra": "ra",
         "dec": "dec",
         "name": "name",
+        "pos": "positional_error",
         "rate": "count_rate",
         "errrate": "count_rate_error",
+        "ml": "detect_likelihood",
         "flag": "screening_flag"
       },
       "units": {
         "ra": "degree",
         "dec": "degree",
         "name": "",
+        "pos": "arcsec",
         "rate": "ct/s",
         "errrate": "ct/s",
+        "ml": "",
         "flag": ""
+      },
+      "legacy_schema": {
+        "name": "Source Name",
+        "ra": "Right Ascension",
+        "dec": "Declination",
+        "count_rate": "Source Count Rate (cts/s)",
+        "count_rate_error": "Source Count Rate Error (cts/s)",
+        "hardness_ratio_1": "Hardness Ratio 1",
+        "hardness_ratio_1_error": "Hardness Ratio 1 Error",
+        "extraction_radius": "Extraction Radius (arcsec)",
+        "detect_likelihood": "Likelihood of Detection Algorithm",
+        "source_extent": "Source Extent (arcsec)",
+        "detect_reliability": "Reliability of Source Detection, range=0..99, 99=most reliable",
+        "screening_flag": "Screening Flags (npedm)",
+        "background_count_rate": "Background Count Rate (cts/s/arcmin^2)",
+        "sass_field_id": "SASS Field ID Number (MASOL Number)",
+        "end_time": "End Time of Observation",
+        "number_ids": "Number of Identification Candidates in the Correlation Catalog",
+        "proximity_flag": "Number of Nearby RASS Detections at Three Ranges of Distances",
+        "bii": "Galactic Latitude",
+        "high_detect_range": "PHA Range with Highest Detection Likelihood",
+        "date_included": "Date When Source Was Included",
+        "extent_likelihood": "Likelihood of Source Extent",
+        "priority_flags": "Priority Detection Flags (M-broad, L-broad, M-hard, L-hard, M-soft, L-soft)",
+        "date_modified": "Date When Source Properties Were Changed",
+        "lii": "Galactic Longitude",
+        "vignetting_factor": "Vignetting Factor",
+        "hardness_ratio_2": "Hardness Ratio 2",
+        "hardness_ratio_2_error": "Hardness Ratio 2 Error",
+        "exposure": "Exposure (seconds)",
+        "positional_error": "Total Positional Error (arcsec)",
+        "time": "Start Time of Observation",
+        "sass_source_number": "SASS Source Number",
+        "new_data_flag": "New Data Flags (riv.)",
+        "__x_ra_dec": "System unit vector column",
+        "__y_ra_dec": "System unit vector column",
+        "__z_ra_dec": "System unit vector column",
+        "__row": "System index column"
       }
     }
   },
@@ -86,17 +167,17 @@
       "sha256": "70fa246192e00ee8e906bade1b27e12ab4a4301d980a16861f5806010edf3260",
       "bytes": 696
     },
-    "8e781529fca360a5a800.csv": {
+    "0dd164f889580a5b40a1.csv": {
       "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
       "params": {
         "REQUEST": "doQuery",
         "LANG": "ADQL",
         "FORMAT": "votable",
-        "QUERY": "SELECT \"ra\",\"dec\",\"name\",\"count_rate\",\"count_rate_error\" FROM \"rassbsc\" WHERE \"ra\">=0.000000000000 AND \"ra\"<360.000000000000",
+        "QUERY": "SELECT \"ra\",\"dec\",\"name\",\"positional_error\",\"count_rate\",\"count_rate_error\",\"detect_likelihood\" FROM \"rassbsc\" WHERE \"ra\">=0.000000000000 AND \"ra\"<360.000000000000",
         "MAXREC": 2000000
       },
-      "sha256": "771be082f9927f28bab3c9c91de5fb26f3732d5cee1f66ed00d9dc44ff57ab6a",
-      "bytes": 1454459
+      "sha256": "41a209a85e424f0b1edd7a09dd802a54464d69ddd4812b5cdb7760fddf306b52",
+      "bytes": 1607702
     },
     "03424b76511483683d96.csv": {
       "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
@@ -122,29 +203,29 @@
       "sha256": "a51b8fddc7aa66090bca851574477c0593c22c8c103843059f5be59e398e10c5",
       "bytes": 696
     },
-    "3cbbb26974eb5825c204.csv": {
+    "5953258037e77a782875.csv": {
       "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
       "params": {
         "REQUEST": "doQuery",
         "LANG": "ADQL",
         "FORMAT": "votable",
-        "QUERY": "SELECT \"ra\",\"dec\",\"name\",\"count_rate\",\"count_rate_error\",\"screening_flag\" FROM \"rassfsc\" WHERE \"ra\">=0.000000000000 AND \"ra\"<180.000000000000",
+        "QUERY": "SELECT \"ra\",\"dec\",\"name\",\"positional_error\",\"count_rate\",\"count_rate_error\",\"detect_likelihood\",\"screening_flag\" FROM \"rassfsc\" WHERE \"ra\">=0.000000000000 AND \"ra\"<180.000000000000",
         "MAXREC": 2000000
       },
-      "sha256": "3b8e084267d0600d8bbab9f02818cfcae2d432d5f9d5cb8448e37c379008aab2",
-      "bytes": 4355250
+      "sha256": "387b53a050e751eed54cb292ec64eb04a3c121569f4ee72cc0cbe0012ac8df8c",
+      "bytes": 4751330
     },
-    "3eb024812ad48fef6cd1.csv": {
+    "cfa8c83d83592eefa1bd.csv": {
       "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
       "params": {
         "REQUEST": "doQuery",
         "LANG": "ADQL",
         "FORMAT": "votable",
-        "QUERY": "SELECT \"ra\",\"dec\",\"name\",\"count_rate\",\"count_rate_error\",\"screening_flag\" FROM \"rassfsc\" WHERE \"ra\">=180.000000000000 AND \"ra\"<360.000000000000",
+        "QUERY": "SELECT \"ra\",\"dec\",\"name\",\"positional_error\",\"count_rate\",\"count_rate_error\",\"detect_likelihood\",\"screening_flag\" FROM \"rassfsc\" WHERE \"ra\">=180.000000000000 AND \"ra\"<360.000000000000",
         "MAXREC": 2000000
       },
-      "sha256": "b93b5d2c0b71ebf89350201b4d2b6ddb3bb893f6d572d03073a6789a9e538d5e",
-      "bytes": 5123592
+      "sha256": "b03832c1100ddb1b139bf02ec059284c051ddf57a752753330720f4910301309",
+      "bytes": 5589521
     }
   },
   "unsuccessful_routes": {}

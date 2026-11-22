@@ -4,6 +4,84 @@
     "observed_unambiguous": 18171,
     "mean_shifted": 985.25,
     "estimated_random_fraction": 0.04884971986712281,
+    "observed_selection_counts": {
+      "n": 72352,
+      "matches": 20169,
+      "unique": 19966,
+      "unique_nominal_10x": 1516,
+      "quality_unique": 9499,
+      "quality_unique_nominal_10x": 617,
+      "guarded_10x": 58,
+      "guarded_10x_xmm_brighter": 58,
+      "guarded_10x_comparison_brighter": 0
+    },
+    "guarded_10x_mean_shifted": 12.125,
+    "guarded_10x_estimated_random_fraction": 0.20905172413793102,
+    "guarded_10x_shifted_range": [
+      2,
+      21
+    ],
+    "offset_dependence": "Offsets share the same sky and source sample. The eight-shift range describes empirical variation and is not a confidence interval.",
+    "control_selection": "Same clean point-source/likelihood, positive-error, mutual-confusion and (Fhi-1.96 sigma_hi)/(Flo+1.96 sigma_lo)>=10 cuts as observed XMM versus this catalogue. Does not cover the map or ERO-RASS pair selections.",
+    "benchmarks": [
+      {
+        "reference": "RX J1856.5-3754",
+        "ra": 284.1463,
+        "dec": -37.9084,
+        "search_arcsec": 30,
+        "nearest_slew_sep": 10.948470336789885,
+        "slew_within_30arcsec": true,
+        "xmm_name": "XMMSL2 J185635.8-375432",
+        "positive_match": "1eRASS J185636.3-375437",
+        "match_sep": 6.317454038455229,
+        "match_ambiguous": false,
+        "east_20arcmin_control": {
+          "ra": 284.5725914378701,
+          "dec": -37.90809127386239,
+          "comparison_match": null,
+          "sep": null,
+          "ambiguous": false
+        }
+      },
+      {
+        "reference": "Vela X-1",
+        "ra": 135.5286,
+        "dec": -40.5547,
+        "search_arcsec": 30,
+        "nearest_slew_sep": 1.8685216700118157,
+        "slew_within_30arcsec": true,
+        "xmm_name": "XMMSL2 J090206.8-403319",
+        "positive_match": "1eRASS J090206.7-403316",
+        "match_sep": 2.552140800482174,
+        "match_ambiguous": true,
+        "east_20arcmin_control": {
+          "ra": 135.9671063073076,
+          "dec": -40.554363270466574,
+          "comparison_match": null,
+          "sep": null,
+          "ambiguous": false
+        }
+      },
+      {
+        "reference": "LMC X-3",
+        "ra": 84.7355,
+        "dec": -64.0843,
+        "search_arcsec": 30,
+        "nearest_slew_sep": 0.872495444886424,
+        "slew_within_30arcsec": true,
+        "xmm_name": "XMMSL2 J053856.4-640505",
+        "positive_match": "1eRASS J053856.1-640457",
+        "match_sep": 7.06686716146253,
+        "match_ambiguous": true,
+        "east_20arcmin_control": {
+          "ra": 85.49796330502052,
+          "dec": -64.08253084401335,
+          "comparison_match": null,
+          "sep": null,
+          "ambiguous": false
+        }
+      }
+    ],
     "offsets": [
       {
         "pa_deg": 0,
@@ -12,8 +90,11 @@
         "matches": 957,
         "unique": 951,
         "unique_nominal_10x": 436,
-        "quality_unique": 64,
-        "quality_unique_nominal_10x": 51
+        "quality_unique": 57,
+        "quality_unique_nominal_10x": 45,
+        "guarded_10x": 2,
+        "guarded_10x_xmm_brighter": 2,
+        "guarded_10x_comparison_brighter": 0
       },
       {
         "pa_deg": 45,
@@ -21,9 +102,12 @@
         "n": 72352,
         "matches": 929,
         "unique": 925,
-        "unique_nominal_10x": 363,
+        "unique_nominal_10x": 359,
         "quality_unique": 62,
-        "quality_unique_nominal_10x": 52
+        "quality_unique_nominal_10x": 52,
+        "guarded_10x": 9,
+        "guarded_10x_xmm_brighter": 9,
+        "guarded_10x_comparison_brighter": 0
       },
       {
         "pa_deg": 90,
@@ -31,9 +115,12 @@
         "n": 72352,
         "matches": 967,
         "unique": 964,
-        "unique_nominal_10x": 440,
-        "quality_unique": 80,
-        "quality_unique_nominal_10x": 63
+        "unique_nominal_10x": 435,
+        "quality_unique": 79,
+        "quality_unique_nominal_10x": 62,
+        "guarded_10x": 8,
+        "guarded_10x_xmm_brighter": 8,
+        "guarded_10x_comparison_brighter": 0
       },
       {
         "pa_deg": 135,
@@ -41,9 +128,12 @@
         "n": 72352,
         "matches": 913,
         "unique": 908,
-        "unique_nominal_10x": 444,
-        "quality_unique": 73,
-        "quality_unique_nominal_10x": 67
+        "unique_nominal_10x": 438,
+        "quality_unique": 69,
+        "quality_unique_nominal_10x": 63,
+        "guarded_10x": 21,
+        "guarded_10x_xmm_brighter": 20,
+        "guarded_10x_comparison_brighter": 1
       },
       {
         "pa_deg": 180,
@@ -51,9 +141,12 @@
         "n": 72352,
         "matches": 1055,
         "unique": 1047,
-        "unique_nominal_10x": 481,
-        "quality_unique": 85,
-        "quality_unique_nominal_10x": 69
+        "unique_nominal_10x": 480,
+        "quality_unique": 83,
+        "quality_unique_nominal_10x": 67,
+        "guarded_10x": 10,
+        "guarded_10x_xmm_brighter": 10,
+        "guarded_10x_comparison_brighter": 0
       },
       {
         "pa_deg": 225,
@@ -61,9 +154,12 @@
         "n": 72352,
         "matches": 1018,
         "unique": 1013,
-        "unique_nominal_10x": 466,
-        "quality_unique": 77,
-        "quality_unique_nominal_10x": 68
+        "unique_nominal_10x": 465,
+        "quality_unique": 73,
+        "quality_unique_nominal_10x": 64,
+        "guarded_10x": 9,
+        "guarded_10x_xmm_brighter": 9,
+        "guarded_10x_comparison_brighter": 0
       },
       {
         "pa_deg": 270,
@@ -71,9 +167,12 @@
         "n": 72352,
         "matches": 1049,
         "unique": 1044,
-        "unique_nominal_10x": 507,
-        "quality_unique": 84,
-        "quality_unique_nominal_10x": 76
+        "unique_nominal_10x": 506,
+        "quality_unique": 76,
+        "quality_unique_nominal_10x": 68,
+        "guarded_10x": 17,
+        "guarded_10x_xmm_brighter": 17,
+        "guarded_10x_comparison_brighter": 0
       },
       {
         "pa_deg": 315,
@@ -82,18 +181,115 @@
         "matches": 994,
         "unique": 993,
         "unique_nominal_10x": 454,
-        "quality_unique": 102,
-        "quality_unique_nominal_10x": 96
+        "quality_unique": 97,
+        "quality_unique_nominal_10x": 91,
+        "guarded_10x": 21,
+        "guarded_10x_xmm_brighter": 21,
+        "guarded_10x_comparison_brighter": 0
       }
     ],
     "outer_radius_arcsec": 40,
-    "adaptive_radius": "min(cap, 3.44 * hypot(position errors))"
+    "adaptive_radius": "min(cap, 3.44 * hypot(position errors))",
+    "corroborated_full_only_guarded_10x": {
+      "counts": {
+        "observed": 0,
+        "0": 0,
+        "45": 0,
+        "90": 0,
+        "135": 0,
+        "180": 0,
+        "225": 0,
+        "270": 0,
+        "315": 0
+      },
+      "mean_shifted": 0.0,
+      "estimated_random_fraction": null,
+      "selection": "Recompute BOTH close mission counterparts at each identical 20-arcmin XMM shift before applying the full-only corroboration and guarded-amplitude rules; repeat-slew evidence is intrinsic and fixed."
+    }
   },
   "rass": {
     "observed": 22808,
     "observed_unambiguous": 19383,
     "mean_shifted": 403.5,
     "estimated_random_fraction": 0.017691160996141705,
+    "observed_selection_counts": {
+      "n": 72352,
+      "matches": 22808,
+      "unique": 22738,
+      "unique_nominal_10x": 245,
+      "quality_unique": 12207,
+      "quality_unique_nominal_10x": 82,
+      "guarded_10x": 15,
+      "guarded_10x_xmm_brighter": 10,
+      "guarded_10x_comparison_brighter": 5
+    },
+    "guarded_10x_mean_shifted": 3.5,
+    "guarded_10x_estimated_random_fraction": 0.23333333333333334,
+    "guarded_10x_shifted_range": [
+      1,
+      9
+    ],
+    "offset_dependence": "Offsets share the same sky and source sample. The eight-shift range describes empirical variation and is not a confidence interval.",
+    "control_selection": "Same clean point-source/likelihood, positive-error, mutual-confusion and (Fhi-1.96 sigma_hi)/(Flo+1.96 sigma_lo)>=10 cuts as observed XMM versus this catalogue. Does not cover the map or ERO-RASS pair selections.",
+    "benchmarks": [
+      {
+        "reference": "RX J1856.5-3754",
+        "ra": 284.1463,
+        "dec": -37.9084,
+        "search_arcsec": 30,
+        "nearest_slew_sep": 10.948470336789885,
+        "slew_within_30arcsec": true,
+        "xmm_name": "XMMSL2 J185635.8-375432",
+        "positive_match": "2RXS J185635.1-375433",
+        "match_sep": 10.865547625057467,
+        "match_ambiguous": false,
+        "east_20arcmin_control": {
+          "ra": 284.5725914378701,
+          "dec": -37.90809127386239,
+          "comparison_match": null,
+          "sep": null,
+          "ambiguous": false
+        }
+      },
+      {
+        "reference": "Vela X-1",
+        "ra": 135.5286,
+        "dec": -40.5547,
+        "search_arcsec": 30,
+        "nearest_slew_sep": 1.8685216700118157,
+        "slew_within_30arcsec": true,
+        "xmm_name": "XMMSL2 J090206.8-403319",
+        "positive_match": "2RXS J090207.1-403308",
+        "match_sep": 10.394294444292937,
+        "match_ambiguous": true,
+        "east_20arcmin_control": {
+          "ra": 135.9671063073076,
+          "dec": -40.554363270466574,
+          "comparison_match": null,
+          "sep": null,
+          "ambiguous": false
+        }
+      },
+      {
+        "reference": "LMC X-3",
+        "ra": 84.7355,
+        "dec": -64.0843,
+        "search_arcsec": 30,
+        "nearest_slew_sep": 0.872495444886424,
+        "slew_within_30arcsec": true,
+        "xmm_name": "XMMSL2 J053856.4-640505",
+        "positive_match": "2RXS J053856.6-640458",
+        "match_sep": 5.790916623839145,
+        "match_ambiguous": true,
+        "east_20arcmin_control": {
+          "ra": 85.49796330502052,
+          "dec": -64.08253084401335,
+          "comparison_match": null,
+          "sep": null,
+          "ambiguous": false
+        }
+      }
+    ],
     "offsets": [
       {
         "pa_deg": 0,
@@ -102,8 +298,11 @@
         "matches": 423,
         "unique": 422,
         "unique_nominal_10x": 57,
-        "quality_unique": 74,
-        "quality_unique_nominal_10x": 21
+        "quality_unique": 71,
+        "quality_unique_nominal_10x": 20,
+        "guarded_10x": 9,
+        "guarded_10x_xmm_brighter": 9,
+        "guarded_10x_comparison_brighter": 0
       },
       {
         "pa_deg": 45,
@@ -112,8 +311,11 @@
         "matches": 456,
         "unique": 454,
         "unique_nominal_10x": 50,
-        "quality_unique": 68,
-        "quality_unique_nominal_10x": 10
+        "quality_unique": 63,
+        "quality_unique_nominal_10x": 10,
+        "guarded_10x": 1,
+        "guarded_10x_xmm_brighter": 1,
+        "guarded_10x_comparison_brighter": 0
       },
       {
         "pa_deg": 90,
@@ -122,8 +324,11 @@
         "matches": 433,
         "unique": 431,
         "unique_nominal_10x": 56,
-        "quality_unique": 55,
-        "quality_unique_nominal_10x": 8
+        "quality_unique": 53,
+        "quality_unique_nominal_10x": 8,
+        "guarded_10x": 3,
+        "guarded_10x_xmm_brighter": 2,
+        "guarded_10x_comparison_brighter": 1
       },
       {
         "pa_deg": 135,
@@ -132,8 +337,11 @@
         "matches": 385,
         "unique": 383,
         "unique_nominal_10x": 36,
-        "quality_unique": 51,
-        "quality_unique_nominal_10x": 12
+        "quality_unique": 43,
+        "quality_unique_nominal_10x": 10,
+        "guarded_10x": 2,
+        "guarded_10x_xmm_brighter": 2,
+        "guarded_10x_comparison_brighter": 0
       },
       {
         "pa_deg": 180,
@@ -142,8 +350,11 @@
         "matches": 379,
         "unique": 377,
         "unique_nominal_10x": 32,
-        "quality_unique": 57,
-        "quality_unique_nominal_10x": 9
+        "quality_unique": 54,
+        "quality_unique_nominal_10x": 9,
+        "guarded_10x": 2,
+        "guarded_10x_xmm_brighter": 0,
+        "guarded_10x_comparison_brighter": 2
       },
       {
         "pa_deg": 225,
@@ -151,9 +362,12 @@
         "n": 72352,
         "matches": 413,
         "unique": 413,
-        "unique_nominal_10x": 36,
-        "quality_unique": 44,
-        "quality_unique_nominal_10x": 5
+        "unique_nominal_10x": 35,
+        "quality_unique": 39,
+        "quality_unique_nominal_10x": 4,
+        "guarded_10x": 2,
+        "guarded_10x_xmm_brighter": 2,
+        "guarded_10x_comparison_brighter": 0
       },
       {
         "pa_deg": 270,
@@ -162,8 +376,11 @@
         "matches": 401,
         "unique": 401,
         "unique_nominal_10x": 44,
-        "quality_unique": 76,
-        "quality_unique_nominal_10x": 22
+        "quality_unique": 65,
+        "quality_unique_nominal_10x": 15,
+        "guarded_10x": 8,
+        "guarded_10x_xmm_brighter": 8,
+        "guarded_10x_comparison_brighter": 0
       },
       {
         "pa_deg": 315,
@@ -172,11 +389,30 @@
         "matches": 338,
         "unique": 335,
         "unique_nominal_10x": 39,
-        "quality_unique": 43,
-        "quality_unique_nominal_10x": 6
+        "quality_unique": 40,
+        "quality_unique_nominal_10x": 5,
+        "guarded_10x": 1,
+        "guarded_10x_xmm_brighter": 1,
+        "guarded_10x_comparison_brighter": 0
       }
     ],
     "outer_radius_arcsec": 75,
-    "adaptive_radius": "min(cap, 3.44 * hypot(position errors))"
+    "adaptive_radius": "min(cap, 3.44 * hypot(position errors))",
+    "corroborated_full_only_guarded_10x": {
+      "counts": {
+        "observed": 0,
+        "0": 0,
+        "45": 0,
+        "90": 0,
+        "135": 0,
+        "180": 0,
+        "225": 0,
+        "270": 0,
+        "315": 0
+      },
+      "mean_shifted": 0.0,
+      "estimated_random_fraction": null,
+      "selection": "Recompute BOTH close mission counterparts at each identical 20-arcmin XMM shift before applying the full-only corroboration and guarded-amplitude rules; repeat-slew evidence is intrinsic and fixed."
+    }
   }
 }
