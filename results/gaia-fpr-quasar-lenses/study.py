@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -14,7 +15,9 @@ from prior_pairs import vectors
 
 
 def load_components(out):
-    return pd.read_csv(out/"gaia_components.csv", dtype={"system_id":str,"source_id":str,"field_id":str})
+    paths = [out/"gaia_components.csv", out/"wide"/"gaia_components.csv"]
+    return pd.concat([pd.read_csv(p, dtype={"system_id":str,"source_id":str,"field_id":str})
+                      for p in paths if p.is_file()],ignore_index=True)
 
 
 def catalogue_stage(out):
@@ -47,15 +50,55 @@ def system_groups(components):
     return systems,aliases
 
 
+def pixel_evidence(systems, out):
+    """Reuse only the same image coordinates, magnitudes and pixel-analysis revision."""
+    import imaging
+    digest = hashlib.sha256(Path(imaging.__file__).read_bytes()).hexdigest()
+    previous = Path(__file__).parent/"evidence"
+    historical = previous/"summary.json"
+    cache, todo = {}, []
+    def inputs(obj):
+        return tuple(sorted((str(c["source_id"]), float(c["ra"]), float(c["dec"]), float(c["g"]))
+                            for c in obj["components"]))
+    if historical.exists() and os.environ.get("FRESH_PIXELS","").lower() != "true":
+        metadata = json.loads(historical.read_text())
+        old_digest = metadata.get("imaging_code_sha256")
+        if old_digest == digest and (previous/"imaging"/"imaging.jsonl").exists():
+            old_systems, _ = system_groups(load_components(previous))
+            old_keys = {str(s["id"]):inputs(s) for s in old_systems}
+            for line in (previous/"imaging"/"imaging.jsonl").read_text().splitlines():
+                measurement = json.loads(line)
+                key = old_keys.get(str(measurement["id"]))
+                if key and measurement.get("imaging_status") != "unavailable" and measurement.get("bands"):
+                    cache[key] = measurement
+    dest = out/"imaging"
+    dest.mkdir(exist_ok=True)
+    reused = []
+    for obj in systems:
+        prior = cache.get(inputs(obj))
+        if prior is None:
+            todo.append(obj)
+            continue
+        prior = dict(prior, reused_from_id=prior["id"], id=obj["id"])
+        if prior.get("diagnostic_png"):
+            shutil.copy2(previous/"imaging"/prior["diagnostic_png"], dest/prior["diagnostic_png"])
+        reused.append(prior)
+    print("Independent image sets:",len(systems),"reused:",len(reused),"requested:",len(todo),flush=True)
+    new = imaging.assess(todo,dest,workers=6)
+    complete = sorted(reused + new,key=lambda r:r["id"])
+    with (dest/"imaging.jsonl").open("w") as f:
+        for row in complete:
+            f.write(json.dumps(row,allow_nan=False)+"\n")
+    return complete
+
 def inspect(out):
     import catalogues
-    import imaging
     from prior_pairs import matches
     components = load_components(out)
     systems, aliases = system_groups(components)
     with ThreadPoolExecutor(2) as pool:
         remote = pool.submit(catalogues.annotate,components,out)
-        images = pool.submit(imaging.assess,systems,out/"imaging",workers=6)
+        images = pool.submit(pixel_evidence,systems,out)
         extra = matches(components,out)
         flags = remote.result()
         flags.to_csv(out/"system_catalogue_flags.csv",index=False)
@@ -103,14 +146,22 @@ def inspect(out):
     short = set(shortlist.representative)
     if short:
         import epochs
-        epochs.assess([s for s in systems if s["id"] in short],out/"epochs")
+        from deflector import assess as check_deflector
+        followup = []
+        for obj in systems:
+            if obj["id"] in short:
+                followup.append(dict(obj,center_radec_deg=fits[obj["id"]]["lens_model"]["center_radec_deg"]))
+        epochs.assess(followup, out/"epochs")
+        check_deflector(followup, out/"deflectors")
     print("Prior to individual publication checks:",shortlist.to_string(index=False),flush=True)
 
 
-def summarize(out):
-    counts = json.loads((out/"gaia-counts.json").read_text())
-    fields = pd.read_csv(out/"gaia_fields.csv.gz",dtype={"field_id":str})
-    decisions = pd.read_csv(out/"system_dispositions.csv")
+def summarize_arm(out, label):
+    folder = out if label == "primary" else out/"wide"
+    counts = json.loads((folder/"gaia-counts.json").read_text())
+    fields = pd.read_csv(folder/"gaia_fields.csv.gz",dtype={"field_id":str})
+    all_decisions = pd.read_csv(out/"system_dispositions.csv")
+    decisions = all_decisions[all_decisions.system_id.isin(fields.system_id)]
     known = pd.read_csv(out/"known_lenses.csv")
     bench = known[known.benchmark.map(flag)].copy()
     science = fields[fields.cohort=="science"].reset_index(drop=True)
@@ -130,7 +181,7 @@ def summarize(out):
                               passed_with_quasar_anchor=bool(detail.plausible_before_novelty.map(flag).any())))
     bench = pd.DataFrame(benchmark,columns=["name","ra","dec","fields","in_eligible_parent","passed_gaia",
                                             "passed_light_and_model","passed_with_quasar_anchor"])
-    bench.to_csv(out/"known_recovery.csv",index=False)
+    bench.to_csv(folder/"known_recovery.csv",index=False)
     count = lambda col:int(bench[col].map(flag).sum())
     result = dict(gaia=counts, benchmark=dict(total=len(bench),eligible=count("in_eligible_parent"),
                   gaia=count("passed_gaia"),morphology=count("passed_light_and_model"),
@@ -145,8 +196,56 @@ def summarize(out):
                 imaging={str(k):int(v) for k,v in subset.imaging_status.value_counts().items()})
     result["git_commit"] = os.getenv("GITHUB_SHA")
     result["run_id"] = os.getenv("GITHUB_RUN_ID")
-    (out/"summary.json").write_text(json.dumps(result,indent=2)+"\n")
-    print(json.dumps(result, indent=2))
+    result["imaging_code_sha256"] = hashlib.sha256((Path(__file__).parent/"imaging.py").read_bytes()).hexdigest()
+    (folder/"summary.json").write_text(json.dumps(result,indent=2)+"\n")
+    print(label, json.dumps(result, indent=2))
+    return result
+
+
+def summarize(out):
+    from audit import audit
+    for arm in ("primary","wide"):
+        folder = out if arm=="primary" else out/"wide"
+        if not (folder/"gaia-counts.json").exists():
+            continue
+        summarize_arm(out,arm)
+        measured = audit(folder,out)
+        (folder/"audit.json").write_text(json.dumps(measured,sort_keys=True,indent=2)+"\n")
+    packet(out)
+
+
+def packet(out):
+    """Publish self-contained records for plausible survivors and near misses."""
+    components = load_components(out)
+    flags = pd.read_csv(out/"system_catalogue_flags.csv").set_index("system_id")
+    table = pd.read_csv(out/"system_dispositions.csv")
+    spectra = pd.read_csv(out/"external_matches.csv",dtype=str)
+    literature = pd.read_csv(out/"literature_matches.csv",dtype=str)
+    extra = pd.read_csv(out/"supplemental_matches.csv",dtype=str)
+    images = {r["id"]:r for r in (json.loads(line) for line in (out/"imaging"/"imaging.jsonl").read_text().splitlines())}
+    for_review = table[table.cohort.eq("science") & table.full_morphology.map(flag)]
+    result = []
+    for r in for_review.itertuples():
+        ident = r.system_id
+        result.append(dict(system_id=ident,disposition=r.disposition,prior=flag(r.prior),
+            components=components[components.system_id==ident].to_dict("records"), imaging=images[r.representative],
+            catalogue_flags=flags.loc[ident].to_dict(), spectra=spectra[spectra.system_id==ident].to_dict("records"),
+            lens_matches=literature[literature.system_id==ident].to_dict("records"),
+            additional_matches=extra[extra.system_id==ident].to_dict("records")))
+    with (out/"review_packets.jsonl").open("w") as handle:
+        for row in result:
+            # pandas JSON maps missing measurements to null, preserving text identifiers.
+            handle.write(pd.Series(row).to_json(double_precision=14,force_ascii=False)+"\n")
+    comp = components.groupby("system_id").source_id.apply(lambda x:" ".join(sorted(x.astype(str))))
+    table["dr3_images"] = table.system_id.map(comp)
+    table.to_csv(out/"system_dispositions.csv",index=False)
+    unique_sets = table.groupby("dr3_images")
+    counts = dict(gaia_unique_image_sets=len(unique_sets),records=len(table),
+                  both_apertures=sum(any(g.system_id.str.match(r"^[FR]W")) and
+                                     any(~g.system_id.str.match(r"^[FR]W")) for _,g in unique_sets),
+                  unique_science_sets=table[table.cohort.eq("science")].dr3_images.nunique(),
+                  unique_control_sets=table[table.cohort.eq("control")].dr3_images.nunique())
+    (out/"image_set_overlap.json").write_text(json.dumps(counts,indent=2)+"\n")
 
 
 if __name__ == "__main__":

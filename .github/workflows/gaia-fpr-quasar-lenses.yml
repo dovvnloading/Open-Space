@@ -2,6 +2,11 @@ name: Gaia FPR quasar lens search
 
 on:
   workflow_dispatch:
+    inputs:
+      fresh_pixels:
+        description: Fetch new stamp bytes even when identical prior fits are available
+        type: boolean
+        default: false
   push:
     branches: [research/gaia-fpr-quasar-lenses]
     paths: ['.github/workflows/gaia-fpr-quasar-lenses.yml']
@@ -17,6 +22,7 @@ env:
   STUDY: results/gaia-fpr-quasar-lenses
   OPENBLAS_NUM_THREADS: '1'
   OMP_NUM_THREADS: '1'
+  FRESH_PIXELS: ${{ github.event_name == 'workflow_dispatch' && inputs.fresh_pixels || 'false' }}
 
 jobs:
   selection:
@@ -47,7 +53,9 @@ jobs:
           path: ${{ runner.temp }}/gaia-fpr-inputs
           key: gaia-fpr-I361-v1
       - name: Apply identical colour and astrometric cuts in targeted and random apertures
-        run: python -u "$STUDY/gaia.py" "$RUNNER_TEMP/selection"
+        run: |
+          python -u "$STUDY/gaia.py" "$RUNNER_TEMP/selection"
+          GAIA_GEOMETRY=wide python -u "$STUDY/gaia.py" "$RUNNER_TEMP/selection/wide"
       - name: Include FPR input receipts
         if: always()
         run: |
@@ -103,6 +111,8 @@ jobs:
           pip install -r "$STUDY/requirements.txt"
           python -u "$STUDY/study.py" inspect "$RUNNER_TEMP/science"
           python -u "$STUDY/study.py" summarize "$RUNNER_TEMP/science"
+          python "$STUDY/audit.py" "$RUNNER_TEMP/science"
+          python "$STUDY/audit.py" "$RUNNER_TEMP/science/wide"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -123,16 +133,22 @@ jobs:
         with:
           pattern: gaia-*
           merge-multiple: true
-          path: results/gaia-fpr-quasar-lenses/evidence
+          path: ${{ runner.temp }}/persist
       - uses: actions/download-artifact@v4
         if: needs.adjudicate.result != 'skipped'
         with:
           name: final-evidence
-          path: results/gaia-fpr-quasar-lenses/evidence
+          path: ${{ runner.temp }}/persist
       - name: Commit study outputs
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          mkdir -p "$STUDY/evidence"
+          if [ "${{ needs.adjudicate.result }}" = success ]; then
+            rsync -a --delete "$RUNNER_TEMP/persist/" "$STUDY/evidence/"
+          else
+            rsync -a "$RUNNER_TEMP/persist/" "$STUDY/evidence/"
+          fi
           git add -f -- "$STUDY/evidence"
           if ! git diff --cached --quiet; then
             git commit -m "Record Gaia FPR evidence from run $GITHUB_RUN_ID"

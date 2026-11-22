@@ -7,6 +7,7 @@ through selection so the control and benchmark denominators remain explicit.
 from collections import Counter
 from itertools import combinations
 from pathlib import Path
+from typing import NamedTuple
 import gzip
 import hashlib
 import io
@@ -19,8 +20,20 @@ import requests
 from astropy.table import Table
 from scipy.spatial import cKDTree
 
-APERTURE = 2.6
-OFFSET = 3.35
+class Geometry(NamedTuple):
+    name: str
+    radius: float
+    offset: float
+    other_radius: float | None
+    id_suffix: str
+
+# Each field's assigned random bearing is identical between modes. The wide
+# science and random footprints rotate into each other about their midpoint.
+GEOMETRIES = {
+    'primary': Geometry('primary',2.6,3.35,None,''),
+    'wide': Geometry('wide',5.2,5.7,5.98,'W'),
+}
+MAX_IMAGE_SEPARATION = 5.2
 SEED = 20231010
 CHI2_LIMIT = 14.156   # 99.73% for three degrees of freedom
 NATIVE = {
@@ -39,6 +52,12 @@ OUTCOLS = ['system_id','cohort','image_id','source_id','ra','dec','g','bp_rp',
            'field_id','input_lens_catalogue','fpr_ra','fpr_dec','fpr_g','n_obs','match_arcsec',
            'zero_chi2', *list(NATIVE)[5:]]
 CHUNK = 2500
+NATIVE_TAPS = [
+    ('https://gea.esac.esa.int/tap-server/tap/sync','gaiadr3.gaia_source'),
+    ('https://gaia.aip.de/tap/sync','gaiadr3.gaia_source'),
+    ('https://irsa.ipac.caltech.edu/TAP/sync','gaia_dr3_source'),
+    ('https://datalab.noirlab.edu/tap/sync','gaia_dr3.gaia_source'),
+]
 
 
 def unit_vectors(ra, dec):
@@ -53,10 +72,10 @@ def separation(ra1, dec1, ra2, dec2):
     return np.degrees(2*np.arcsin(np.sqrt(np.clip(h, 0, 1))))*3600
 
 
-def offset_points(ra, dec):
+def offset_points(ra, dec, offset):
     rng = np.random.default_rng(SEED)
     pa = rng.uniform(0, 2*np.pi, len(ra))
-    dist = np.radians(OFFSET/3600)
+    dist = np.radians(offset/3600)
     ra, dec = np.radians(ra), np.radians(dec)
     d2 = np.arcsin(np.sin(dec)*np.cos(dist) + np.cos(dec)*np.sin(dist)*np.cos(pa))
     r2 = ra + np.arctan2(np.sin(pa)*np.sin(dist)*np.cos(dec),
@@ -64,7 +83,7 @@ def offset_points(ra, dec):
     return np.degrees(r2)%360, np.degrees(d2)
 
 
-def read_fpr(cache):
+def read_fpr(cache, geometry):
     """Read fixed byte ranges from the I/361 dictionary, checking both row counts."""
     def parents():
         with gzip.open(cache/'lenscatn.dat.gz','rb') as stream:
@@ -105,32 +124,53 @@ def read_fpr(cache):
     obs['rid'] = np.arange(len(obs),dtype='int64')
     counts['science_fields'] = len(parents)
     control = parents.copy()
-    control['ra'], control['dec'] = offset_points(parents.ra, parents.dec)
-    # Reject any overlapping catalogue seed, including another QSO in the same field.
+    control['ra'], control['dec'] = offset_points(parents.ra, parents.dec, geometry.offset)
+    # A seed outside the intersection cannot contaminate a wide control. Check
+    # all seeds in its first disk, because the nearest can lie outside disk two.
     tree = cKDTree(unit_vectors(cats['ra'],cats['dec']))
-    chord = tree.query(unit_vectors(control.ra, control.dec), k=1)[0]
-    good = chord > 2*np.sin(np.radians(APERTURE/3600)/2)
+    control_xyz = unit_vectors(control.ra, control.dec)
+    max_chord = 2*np.sin(np.radians(geometry.radius/3600)/2)
+    if geometry.other_radius is None:
+        good = tree.query(control_xyz, k=1)[0] > max_chord
+    else:
+        control['other_ra'], control['other_dec'] = parents.ra, parents.dec
+        parents['other_ra'], parents['other_dec'] = control.ra, control.dec
+        nearby = tree.query_ball_point(control_xyz, max_chord)
+        sizes = np.fromiter((len(group) for group in nearby),dtype=int,count=len(nearby))
+        owners = np.repeat(np.arange(len(nearby)),sizes)
+        indices = np.fromiter((j for group in nearby for j in group),dtype=int,count=len(owners))
+        inside = separation(parents.ra.to_numpy()[owners], parents.dec.to_numpy()[owners],
+                            cats['ra'][indices], cats['dec'][indices]) <= geometry.other_radius
+        good = np.ones(len(control),dtype=bool)
+        good[owners[inside]]=False
     counts['control_apertures_on_fpr_qso'] = int((~good).sum())
     control = control.loc[good].copy()
     counts['control_fields'] = len(control)
     parents['cohort'], control['cohort'] = 'science','control'
-    parents['system_id'] = 'F'+parents.field_id.astype(str)
-    control['system_id'] = 'R'+control.field_id.astype(str)
+    parents['system_id'] = 'F'+geometry.id_suffix+parents.field_id.astype(str)
+    control['system_id'] = 'R'+geometry.id_suffix+control.field_id.astype(str)
     fields = pd.concat([parents,control],ignore_index=True)
     fields['stage'] = 'fewer_than_two_clean_fpr_components_in_aperture'
     return fields, obs, counts
 
 
-def make_pairs(fields, obs):
+def make_pairs(fields, obs, geometry):
     clean = obs[(obs.n_obs>=5) & obs.flag.isin([0,10]) & (obs.fpr_g<=21.0)]
-    members = fields[['system_id','field_id','ra','dec']].merge(clean,on='field_id')
+    columns = ['system_id','field_id','ra','dec']
+    if geometry.other_radius is not None:
+        columns += ['other_ra','other_dec']
+    members = fields[columns].merge(clean,on='field_id')
     r = separation(members.ra,members.dec,members.fpr_ra,members.fpr_dec)
-    members = members.loc[r<=APERTURE, ['system_id','rid','fpr_ra','fpr_dec','fpr_g']]
+    inside = r <= geometry.radius
+    if geometry.other_radius is not None:
+        r_other = separation(members.other_ra,members.other_dec,members.fpr_ra,members.fpr_dec)
+        inside &= r_other <= geometry.other_radius
+    members = members.loc[inside, ['system_id','rid','fpr_ra','fpr_dec','fpr_g']]
     p = members.merge(members,on='system_id',suffixes=('_a','_b'))
     p = p.loc[p.rid_a<p.rid_b].copy()
     fields.loc[fields.system_id.isin(p.system_id),'stage'] = 'pair_geometry_or_fpr_flux_contrast'
     p['sep_arcsec'] = separation(p.fpr_ra_a,p.fpr_dec_a,p.fpr_ra_b,p.fpr_dec_b)
-    p = p.loc[p.sep_arcsec.between(0.70, 2*APERTURE) & ((p.fpr_g_a-p.fpr_g_b).abs()<=3.0)]
+    p = p.loc[p.sep_arcsec.between(0.70, MAX_IMAGE_SEPARATION) & ((p.fpr_g_a-p.fpr_g_b).abs()<=3.0)]
     p = p[['system_id','rid_a','rid_b','sep_arcsec']].copy()
     p['decision'] = 'no_unique_dr3_match'
     return p
@@ -179,10 +219,10 @@ def cds_match(sub, cache, receipts):
         for i in range(0,len(ids),700):
             block=ids[i:i+700]
             cols=', '.join(f'g.{v} AS {k}' for k,v in NATIVE.items())
-            query=("SELECT "+cols+" FROM gaiadr3.gaia_source AS g WHERE g.source_id IN ("+
-                   ','.join(block)+")")
             errors=[]
-            for tap in ['https://gea.esac.esa.int/tap-server/tap/sync','https://gaia.aip.de/tap/sync']:
+            for tap, table in NATIVE_TAPS:
+                query=("SELECT "+cols+f" FROM {table} AS g WHERE g.source_id IN ("+
+                       ','.join(block)+")")
                 try:
                     resp=requests.post(tap,data={'REQUEST':'doQuery','LANG':'ADQL','FORMAT':'csv',
                         'MAXREC':'2000','QUERY':query},timeout=(12,45))
@@ -220,9 +260,8 @@ def query_dr3(sub, cache, out, receipts, preferred):
     payload = io.BytesIO()
     Table.from_pandas(sub[['rid','fpr_ra','fpr_dec']]).write(payload, format='votable')
     upload = payload.getvalue()
-    endpoints = [('https://gea.esac.esa.int/tap-server/tap/sync','gaiadr3.gaia_source',NATIVE),
-                 ('https://gaia.aip.de/tap/sync','gaiadr3.gaia_source',NATIVE),
-                 ('https://tapvizier.cds.unistra.fr/TAPVizieR/tap/sync','"I/355/gaiadr3"',VIZIER)]
+    endpoints = [(url, table, NATIVE) for url, table in NATIVE_TAPS]
+    endpoints.append(('https://tapvizier.cds.unistra.fr/TAPVizieR/tap/sync','"I/355/gaiadr3"',VIZIER))
     endpoints.sort(key=lambda ep: ep[0]!=preferred[0])
     errors = []
     def try_cds():
@@ -246,6 +285,11 @@ def query_dr3(sub, cache, out, receipts, preferred):
         query = (f"SELECT p.rid AS rid, {columns} FROM TAP_UPLOAD.targets AS p JOIN {table} AS g "
                  f"ON 1=CONTAINS(POINT('ICRS',{col('ra')},{col('dec')}),"
                  "CIRCLE('ICRS',p.fpr_ra,p.fpr_dec,0.0000833333333333333))")
+        if table == 'gaia_dr3_source':
+            # IRSA TAP documents the cross-product form for uploaded table aliases.
+            query = (f"SELECT p.rid AS rid, {columns} FROM TAP_UPLOAD.targets AS p, {table} AS g "
+                     "WHERE CONTAINS(POINT(g.ra,g.dec),CIRCLE(p.fpr_ra,p.fpr_dec,"
+                     "0.0000833333333333333))=1")
         key = hashlib.sha256(upload+query.encode()+url.encode()).hexdigest()
         dest = cache/('dr3-'+key+'.csv.gz')
         meta = cache/('dr3-'+key+'.json')
@@ -329,15 +373,23 @@ def run(outdir):
     cache=Path(os.environ['GAIA_CACHE'])
     out=Path(outdir)
     out.mkdir(parents=True,exist_ok=True)
-    fields, obs, counts=read_fpr(cache)
-    pairs=make_pairs(fields,obs)
+    mode = os.environ.get('GAIA_GEOMETRY','primary')
+    if mode not in GEOMETRIES:
+        raise ValueError(f'Choose GAIA_GEOMETRY from {tuple(GEOMETRIES)}')
+    geometry = GEOMETRIES[mode]
+    fields, obs, counts=read_fpr(cache,geometry)
+    pairs=make_pairs(fields,obs,geometry)
+    metadata = dict(name=geometry.name, radius_arcsec=geometry.radius,
+                    other_radius_arcsec=geometry.other_radius, offset_arcsec=geometry.offset,
+                    seed=SEED, max_image_separation_arcsec=MAX_IMAGE_SEPARATION)
+
     wanted=set(pairs.rid_a)|set(pairs.rid_b)
     targets=obs[obs.rid.isin(wanted)].sort_values('rid')
     print('FPR counts:',dict(counts),'DR3 positions:',len(targets),flush=True)
     fields.loc[fields.system_id.isin(pairs.system_id),'stage']='awaiting_dr3'
     fields.to_csv(out/'gaia_fields.csv.gz',index=False,float_format='%.9f')
     counts['dr3_target_count']=len(targets)
-    (out/'gaia-fpr-selection.json').write_text(json.dumps(dict(counts=counts,
+    (out/'gaia-fpr-selection.json').write_text(json.dumps(dict(counts=counts,geometry=metadata,
         fpr_pair_counts=pairs.groupby(pairs.system_id.str[0]).size().to_dict(),
         field_outcomes=fields.groupby(['cohort','stage']).size().unstack(fill_value=0).to_dict(orient='index')),
         indent=2)+'\n')
@@ -450,8 +502,8 @@ def run(outdir):
     audited['zero_chi2']=audited.rid.map({k:v[2] for k,v in stats.items()})
     audited.to_csv(out/'gaia_dr3_audit.csv.gz',index=False,float_format='%.10g')
     totals=fields.groupby(['cohort','stage']).size().unstack(fill_value=0).to_dict(orient='index')
-    (out/'gaia-counts.json').write_text(json.dumps(dict(counts=counts,field_outcomes=totals,
-        controls='3.35 arcsec offset from each eligible parent in a seeded random bearing; exclude any FPR input within 2.6 arcsec. FPR and DR3 selection identical in both 2.6 arcsec apertures. The control samples blank positions in targeted fields; it does not estimate contamination conditional on hosting a confirmed QSO.',
+    (out/'gaia-counts.json').write_text(json.dumps(dict(counts=counts,geometry=metadata,field_outcomes=totals,
+        controls='Random offset in each eligible FPR field; reject a control containing any FPR input in its full selection footprint. Identical FPR/DR3 cuts apply. The random-position rate is conditional on selected FPR environments.', 
         schema='CDS I/361, frozen 2023 files; not a count of the live AIP mirror.'),indent=2)+'\n')
     return result, fields
 

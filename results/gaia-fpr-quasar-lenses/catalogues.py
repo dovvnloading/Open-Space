@@ -31,6 +31,7 @@ LENS_URL = {
     "Gaia FPR 381": "J/A+A/685/A130/table3",
     "Lemon IV": "J/MNRAS/520/3305/table1",
     "DESI Hsu spectroscopic pairs": "https://zenodo.org/api/records/17153224",
+    "DESI DR1 strong lens VAC": "https://data.desi.lbl.gov/public/dr1/vac/dr1/strong-lensing/v1.0/desi-sl-vac-v1.fits",
     "DESI He": "J/A+A/672/A123/table1",
     "Lenscat": "https://raw.githubusercontent.com/lenscat/lenscat/main/lenscat/data/catalog.csv",
     "DESI Jing quasar pairs": "https://api.github.com/repos/astroliang/DESI_DR1_QP",
@@ -76,8 +77,8 @@ def _column(frame, names, required=True):
 
 
 def _eq(frame):
-    a = _column(frame, "RAJ2000 RAICRS RAdeg RA _RA ra_center right_ascension rightascension")
-    b = _column(frame, "DEJ2000 DEICRS DEdeg DECdeg DEC _DE dec_center declination")
+    a = _column(frame, "RAJ2000 RAICRS RAdeg RA_obj RA _RA ra_center right_ascension rightascension")
+    b = _column(frame, "DEJ2000 DEICRS DEdeg DECdeg DEC_obj DEC _DE dec_center declination")
     ra = pd.to_numeric(a, errors="coerce")
     dec = pd.to_numeric(b, errors="coerce")
     for i in frame.index[(ra.isna() | dec.isna()) & a.notna() & b.notna()]:
@@ -166,11 +167,57 @@ def _gral_names(names):
     return pd.DataFrame(rows, columns=["Name", "RA", "Dec"])
 
 
+def _static_cds(cat, table):
+    """Read a byte-described CDS file from the official Harvard mirror.
+
+    Preserve fixed-width identifier columns and construct decimal coordinates from
+    the published sexagesimal parts only when that is the table's native encoding.
+    """
+    from astropy.table import Table
+    prefix, filename = table.rsplit("/", 1)
+    errors = []
+    for host in ["https://vizier.cfa.harvard.edu/ftp/cats/",
+                 "https://cdsarc.cds.unistra.fr/ftp/"]:
+        try:
+            root = host + prefix + "/"
+            readme = _download(cat, root+"ReadMe", timeout=20)
+            with tempfile.TemporaryDirectory() as tmp:
+                dictionary = Path(tmp)/"ReadMe"
+                dictionary.write_bytes(readme)
+                file = Path(tmp)/(filename+".dat")
+                try:
+                    data = _download(cat, root+file.name, timeout=30)
+                    if data[:100].lower().lstrip().startswith((b"<",b"<!")):
+                        raise ValueError("Received HTML instead of CDS data")
+                except (requests.RequestException, ValueError):
+                    data = gzip.decompress(_download(cat, root+file.name+".gz", timeout=40))
+                file.write_bytes(data)
+                tab = Table.read(file, format="ascii.cds", readme=str(dictionary))
+                df = tab.to_pandas()
+            if {"RAh","RAm","RAs","DE-","DEd","DEm","DEs"}.issubset(df):
+                df["RAJ2000"] = (df.RAh + df.RAm/60 + df.RAs/3600)*15
+                df["DEJ2000"] = (df.DEd + df.DEm/60 + df.DEs/3600) * np.where(df["DE-"]=="-", -1, 1)
+            elif cat == "DESI Dawes":
+                coordinates = df.Name.astype(str).str.extract(r"(\d{1,3}\.\d+)([+-]\d{1,2}\.\d+)")
+                df["RAJ2000"], df["DEJ2000"] = coordinates[0], coordinates[1]
+            if cat != "Gaia FPR 381":
+                _lens_rows(cat, df)
+            return df
+        except Exception as exc:
+            errors.append(str(exc))
+    raise ValueError("CDS static file unavailable: "+" / ".join(errors))
+
+
 def _load_one(cat, url):
     if url.startswith("J/"):
         try:
-            frame = _tap(cat, f'SELECT * FROM "{url}"')
+            frame = _static_cds(cat, url)
         except Exception:
+            try:
+                frame = _tap(cat, f'SELECT * FROM "{url}"')
+            except Exception:
+                frame = None
+        if frame is None:
             # Independent CfA VizieR mirror; request synthetic decimal coordinates
             # alongside source fields, avoiding dependence on TAP upload support.
             from astropy.table import Table
@@ -188,23 +235,49 @@ def _load_one(cat, url):
         raw = _download(cat, url)
         if cat.startswith("GLQ") or cat == "CASTLES":
             frame = _table_from_html(cat, raw)
+        elif cat == "DESI DR1 strong lens VAC":
+            publisher = _download(cat, url.rsplit("/",1)[0] + "/dr1_vac_dr1_strong-lensing_v1.0.sha256sum")
+            if hashlib.sha256(raw).hexdigest().encode() not in publisher:
+                raise ValueError("DESI release SHA256 mismatch")
+            with fits.open(io.BytesIO(raw)) as hdus:
+                tab = hdus["DESI_SL_CATALOG"].data
+                frame = pd.DataFrame(dict(Name=tab["TARGETID"].astype(str), RA=tab["TARGET_RA"].astype(float),
+                                          Dec=tab["TARGET_DEC"].astype(float), Class="DESI strong-lens target"))
         elif cat == "DESI Hsu spectroscopic pairs":
             rec = json.loads(raw)
             frames = []
             for f in rec["files"]:
                 filename = f["key"].lower()
-                if f["size"] > 25_000_000 or not filename.endswith((".csv", ".fits", ".txt", ".dat")):
+                if f["size"] > 25_000_000 or filename.endswith((".pdf", ".jpg", ".png")):
                     continue
                 contents = _download(cat, f["links"]["self"])
-                if filename.endswith(".csv"):
-                    source = pd.read_csv(io.BytesIO(contents), comment="#")
-                else:
-                    from astropy.table import Table
-                    source = Table.read(io.BytesIO(contents), format="fits" if filename.endswith(".fits") else "ascii").to_pandas()
+                members = [(filename, contents)]
+                if zipfile.is_zipfile(io.BytesIO(contents)):
+                    with zipfile.ZipFile(io.BytesIO(contents)) as archive:
+                        members = [(item.filename.lower(), archive.read(item)) for item in archive.infolist()
+                                   if not item.is_dir() and item.file_size < 25_000_000 and
+                                   not item.filename.startswith("__MACOSX")]
+                for entry_name, contents in members:
+                    if contents.startswith(b"\x1f\x8b"):
+                        contents = gzip.decompress(contents)
+                    ids = re.findall(rb"DESI[- ](\d{1,3}\.\d{4})([+-]\d{1,2}\.\d{4})", contents)
+                    if len(ids) > 3:
+                        frames.append(pd.DataFrame([(f"DESI-{a.decode()}{b.decode()}",float(a),float(b))
+                                                   for a,b in set(ids)], columns=["Name","RA","DEC"]))
+                if len(frames) and sum(len(t) for t in frames) >= 2364:
+                    break
+                try:
+                    if filename.endswith(".csv"):
+                        source = pd.read_csv(io.BytesIO(contents), comment="#")
+                    else:
+                        from astropy.table import Table
+                        source = Table.read(io.BytesIO(contents), format="fits" if filename.endswith(".fits") else "ascii.cds").to_pandas()
+                except Exception:
+                    continue
                 try:
                     names = _column(source, "Name Designation DESI System", required=False)
                     ra = _column(source, "RA_d RA_lens lensra radeg RA RAJ2000")
-                    dec = _column(source, "DEC_d DEC_lens lensdec DECdeg DEC DEJ2000")
+                    dec = _column(source, "DEC_d DEC_lens lensdec DEdeg DECdeg DEC DEJ2000")
                     part = pd.DataFrame(dict(Name=names, RA=ra, DEC=dec))
                 except ValueError:
                     # Hsu's DESI names encode decimal RA and signed Dec.
@@ -218,13 +291,14 @@ def _load_one(cat, url):
             frame = pd.concat(frames, ignore_index=True).drop_duplicates()
         elif cat == "DESI Jing quasar pairs":
             meta = json.loads(raw)
-            tree = json.loads(_download(cat, f"{url}/git/trees/{meta['default_branch']}", {"recursive":"1"}))
+            commit = json.loads(_download(cat, f"{url}/commits/{meta['default_branch']}"))
+            tree = json.loads(_download(cat, commit["commit"]["tree"]["url"], {"recursive":"1"}))
             rows = []
             for entry in tree["tree"]:
                 filename = entry["path"]
                 if not filename.lower().endswith((".csv", ".fits", ".fits.gz")) or entry["size"] > 35_000_000:
                     continue
-                contents = _download(cat, f"https://raw.githubusercontent.com/astroliang/DESI_DR1_QP/{tree['sha']}/{filename}")
+                contents = _download(cat, f"https://raw.githubusercontent.com/astroliang/DESI_DR1_QP/{commit['sha']}/{filename}")
                 if filename.lower().endswith(".csv"):
                     source = pd.read_csv(io.BytesIO(contents), dtype=str)
                 else:
@@ -242,7 +316,8 @@ def _load_one(cat, url):
         elif cat in {"GraL IX appendix", "GraL III shortlist", "GraL VIII radio census"}:
             if not raw.startswith(b"%PDF"):
                 raise ValueError("Response is not a PDF")
-            data = subprocess.run(["pdftotext", "-layout", "-", "-"], input=raw,
+            pages = ["-f", "12", "-l", "13"] if cat == "GraL IX appendix" else []
+            data = subprocess.run(["pdftotext", "-layout", *pages, "-", "-"], input=raw,
                                   check=True, capture_output=True).stdout.decode().replace("−", "-")
             if cat == "GraL IX appendix":
                 names = re.findall(r"DR3Gaia\d{6}\.\d{3}[+-]\d{6}\.\d{2}", data)
@@ -261,9 +336,9 @@ def _load_one(cat, url):
                     raw = z.read(item)
             frame = pd.read_csv(io.BytesIO(raw), low_memory=False)
     minrows = {"GLQ doubles": 160, "GLQ quads": 55, "GLQ binaries": 18,
-               "GLQ NIQs": 1, "CASTLES": 90, "GraL IX appendix": 34,
+               "GLQ NIQs": 1, "CASTLES": 90, "GraL IX appendix": 48,
                "Euclid Q1": 497, "Euclid DR1 ECLIPSE": 26662, "Lemon IV": 179,
-               "DESI Hsu spectroscopic pairs": 2046, "Lenscat": 32000, "DESI Jing quasar pairs": 2000,
+               "DESI Hsu spectroscopic pairs": 2364, "Lenscat": 32000, "DESI Jing quasar pairs": 2000,
                "GraL III shortlist": 32, "GraL VIII radio census": 10,
                "DESI He": 971, "DESI Dawes": 875, "DULAG": 5286}
     if len(frame) < minrows.get(cat, 1):
@@ -291,11 +366,67 @@ def load_lenses(outdir):
                 status.append([cat, True, len(df), ""])
             except Exception as exc:
                 status.append([cat, False, 0, str(exc)[:500]])
+            print("Publication catalogue", *status[-1], flush=True)
     combined = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame(columns=LENS_COLS)
     combined.to_csv(out/"known_lenses.csv", index=False)
     pd.DataFrame(status, columns=["catalog", "ok", "rows", "error"]).to_csv(out/"catalog_status.csv", index=False)
     _write_audit(out)
     return combined
+
+
+def _milliquas(positions):
+    urls = [
+        "https://vizier.cfa.harvard.edu/ftp/cats/VII/294/catalog.dat.gz",
+        "https://cdsarc.cds.unistra.fr/ftp/VII/294/catalog.dat.gz",
+    ]
+    for url in urls:
+        try:
+            raw = _download(PUBLIC[0], url, timeout=65)
+            # Native CDS VII/294 byte offsets. All 1,021,800 rows are required.
+            columns = ["era","edec","name","classification","z","redshift_ref"]
+            chunks = pd.read_fwf(gzip.GzipFile(fileobj=io.BytesIO(raw)), header=None,
+                                 colspecs=[(0,11),(12,23),(25,50),(51,55),(76,82),(90,96)],
+                                 names=columns, chunksize=50000, encoding="ascii")
+            loc = SkyCoord(positions.ra.to_numpy()*u.deg, positions.dec.to_numpy()*u.deg)
+            total, rows = 0, []
+            for chunk in chunks:
+                cat = SkyCoord(chunk.era.to_numpy()*u.deg, chunk.edec.to_numpy()*u.deg)
+                i, j, _, _ = search_around_sky(loc, cat, 2*u.arcsec)
+                if len(i):
+                    part = chunk.iloc[j].copy()
+                    part["row_id"] = positions.row_id.to_numpy()[i]
+                    part["catalog"] = PUBLIC[0]
+                    rows.append(part)
+                total += len(chunk)
+            if total != 1021800:
+                raise ValueError(f"Milliquas row count {total} != 1021800")
+            return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame(columns=PUBLIC_COLS)
+        except (ValueError,OSError,requests.RequestException):
+            continue
+    return _public_remote(PUBLIC[0], positions)
+
+
+def _desi(positions):
+    # VizieR and NOIRLab independently publish DESI Redrock classifications.
+    try:
+        return _public_remote(PUBLIC[1], positions)
+    except Exception:
+        rows = []
+        for pos in range(0, len(positions), 35):
+            chunk = positions.iloc[pos:pos+35]
+            entries = ",".join(f"({int(r.row_id)},{r.ra:.10f},{r.dec:.10f})" for r in chunk.itertuples())
+            query = (f"SELECT p.row_id, z.targetid as name, z.target_ra as era, z.target_dec as edec, "
+                     f"z.spectype as classification, z.z, z.zerr as z_err, z.zwarn as warning "
+                     f"FROM (VALUES {entries}) AS p(row_id,ra,dec) JOIN desi_dr1.zpix z "
+                     f"ON q3c_radial_query(z.target_ra,z.target_dec,p.ra,p.dec,2.0/3600.0)")
+            raw = _download(PUBLIC[1], "https://datalab.noirlab.edu/query/query",
+                            {"sql":query, "ofmt":"csv", "async":"False"}, timeout=90)
+            group = pd.read_csv(io.BytesIO(raw), dtype=str)
+            if not {"row_id","name","era","edec","classification","warning"}.issubset(group):
+                raise ValueError(f"DESI NOIRLab query error {raw[:300]!r}")
+            group["catalog"] = PUBLIC[1]
+            rows.append(group)
+        return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame(columns=PUBLIC_COLS)
 
 
 def _public_remote(cat, positions):
@@ -431,7 +562,8 @@ def annotate(components, outdir):
     components = components.copy().reset_index(drop=True)
     components["row_id"] = np.arange(len(components))
     if "component_id" not in components:
-        components["component_id"] = components.groupby("system_id").cumcount()
+        components["component_id"] = (components["image_id"] if "image_id" in components else
+                                      components.groupby("system_id").cumcount()+1)
     known = pd.read_csv(out/"known_lenses.csv") if (out/"known_lenses.csv").exists() else load_lenses(out)
     prior = _write_matches(components, known, out)
     status = pd.read_csv(out/"catalog_status.csv")
@@ -442,8 +574,7 @@ def annotate(components, outdir):
     pub_status = []
     if len(components):
         with ThreadPoolExecutor(max_workers=3) as pool:
-            tasks = [pool.submit(_public_remote, cat, components) for cat in PUBLIC[:2]]
-            tasks.append(pool.submit(_public_sdss, components))
+            tasks = [pool.submit(fn, components) for fn in [_milliquas, _desi, _public_sdss]]
             for cat, task in zip(PUBLIC, tasks):
                 try:
                     frame = task.result()
@@ -451,6 +582,7 @@ def annotate(components, outdir):
                     pub_status.append([cat, True, len(frame), ""])
                 except Exception as exc:
                     pub_status.append([cat, False, 0, str(exc)[:500]])
+                print("Public quasar catalogue", *pub_status[-1], flush=True)
     else:
         pub_status = [[cat, False, 0, "No surviving component positions to query"] for cat in PUBLIC]
     pub_ok = all(row[1] for row in pub_status)

@@ -11,6 +11,9 @@ import json
 import math
 import re
 import time
+from email.utils import parsedate_to_datetime
+from threading import Lock
+from urllib.parse import urlparse
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -30,7 +33,14 @@ from scipy.spatial.distance import cdist, pdist
 
 def sky_offsets(coords, origin):
     """Tangent offsets; exact spherical transformation handles RA wrap and poles."""
-    lon, lat = origin.spherical_offsets_to(coords)
+    # FITS readers may attach an observation time to an ICRS SkyCoord. Astropy
+    # rejects spherical_offsets_to across unequal optional metadata even when
+    # both sets of RA/Dec values are already fully transformed into ICRS.
+    src = coords.icrs
+    ref = origin.icrs
+    plain_src = SkyCoord(ra=src.ra, dec=src.dec, frame="icrs")
+    plain_ref = SkyCoord(ra=ref.ra, dec=ref.dec, frame="icrs")
+    lon, lat = plain_ref.spherical_offsets_to(plain_src)
     return np.column_stack((lon.arcsec, lat.arcsec))
 
 
@@ -157,14 +167,46 @@ def fit_lens(xy, origin, measured_center=None, g_magnitudes=None):
     return min(results, key=lambda r: (not r['physical_geometry'], r['regularized_objective']))
 
 
+PACE_LOCK = Lock()
+NEXT_REQUEST = {}
+COOLDOWN = {}
+
+
+def admit(host):
+    while True:
+        with PACE_LOCK:
+            now = time.monotonic()
+            denied = COOLDOWN.get(host,0)-now
+            if denied>8:
+                raise RuntimeError(f"{host}: cooperative backoff active for {denied:.0f}s")
+            delay = max(NEXT_REQUEST.get(host,0)-now, denied)
+            if delay<=0:
+                spacing = 1.6 if host.endswith("legacysurvey.org") else .35
+                NEXT_REQUEST[host] = now+spacing
+                return
+        time.sleep(delay)
+
+
 def retrieve(url, params, manifest):
+    host = urlparse(url).hostname
     for attempt in range(2):
         try:
+            admit(host)
             resp = requests.get(url, params=params, timeout=(6, 24),
                                 headers={"User-Agent":"Open-Space-Gaia-FPR-study/1"})
-            if resp.status_code in (429, 502, 503, 504) and attempt == 0:
-                time.sleep(1)
-                continue
+            if resp.status_code in (429, 502, 503, 504):
+                header = resp.headers.get("Retry-After", "")
+                try:
+                    wait = float(header)
+                except ValueError:
+                    try:
+                        wait = parsedate_to_datetime(header).timestamp() - time.time()
+                    except (ValueError, TypeError, OverflowError):
+                        wait = 20 if resp.status_code==429 else 3
+                with PACE_LOCK:
+                    COOLDOWN[host] = max(COOLDOWN.get(host,0),time.monotonic()+max(1,wait))
+                if attempt==0 and wait<=8:
+                    continue
             resp.raise_for_status()
             manifest.append(dict(url=resp.url, bytes=len(resp.content),
                                  sha256=hashlib.sha256(resp.content).hexdigest()))
@@ -176,9 +218,10 @@ def retrieve(url, params, manifest):
 
 def cutouts(origin, survey, manifest, errors, size=192):
     coords = dict(ra=round(float(origin.ra.deg), 8), dec=round(float(origin.dec.deg), 8))
-    if survey == "Legacy-DR10":
+    if survey in ("Legacy-DR10", "Legacy-DR9-North"):
+        layer = "ls-dr9-north" if survey=="Legacy-DR9-North" else "ls-dr10"
         payload = retrieve("https://www.legacysurvey.org/viewer/fits-cutout",
-                           dict(**coords, size=size, pixscale=.262, layer="ls-dr10", bands="rz"), manifest)
+                           dict(**coords, size=size, pixscale=.262, layer=layer, bands="rz"), manifest)
         with fits.open(io.BytesIO(payload), memmap=False) as hdus:
             hdu = hdus[0]
             arr = np.asarray(hdu.data, dtype=float)
@@ -188,7 +231,44 @@ def cutouts(origin, survey, manifest, errors, size=192):
             wcs = WCS(hdu.header, naxis=2)
             for band, image in zip(bands, arr):
                 yield band, image, wcs, 22.5
-    elif origin.dec.deg >= -31:
+    elif survey.startswith("NOIRLab"):
+        release = "ls_dr10" if survey.endswith("DR10") else "coadd/ls_dr9"
+        extent = size*.262/3600
+        params = dict(POS=f"{coords['ra']},{coords['dec']}",
+                      SIZE=f"{extent/max(.01,np.cos(origin.dec.radian))},{extent}",VERB=2)
+        payload = retrieve("https://datalab.noirlab.edu/sia/"+release, params, manifest)
+        rows = Table.read(io.BytesIO(payload), format="votable")
+        rows.convert_bytestring_to_unicode()
+        seen = set()
+        for row in rows:
+            bandpass = str(row["obs_bandpass"]).strip().lower()
+            if not bandpass:
+                continue
+            band = bandpass[0]
+            kind = str(row["prodtype"]).strip().lower()
+            if band not in "rz" or band in seen or kind!="image":
+                continue
+            if str(row["proctype"]).strip().lower() not in ("stack","coadd"):
+                continue
+            try:
+                url = str(row["access_url"]).replace("http://","https://",1)
+                stamp = retrieve(url, {}, manifest)
+                with fits.open(io.BytesIO(stamp),memmap=False) as hdus:
+                    hdu = next(h for h in hdus if h.data is not None and h.data.ndim==2)
+                    wcs = WCS(hdu.header).celestial
+                    if max(hdu.data.shape)>2*size or min(hdu.data.shape)<.65*size:
+                        raise ValueError(f"unexpected SIA cutout size {hdu.data.shape}")
+                    # Coadd BUNIT and MAGZERO are checked rather than assuming
+                    # a calibration for arbitrary images returned by the SIA.
+                    unit = str(hdu.header.get("BUNIT","")).lower()
+                    zp = 22.5 if "nanomag" in unit else None
+                    yield band, np.asarray(hdu.data,dtype=float),wcs,zp
+                    seen.add(band)
+            except Exception as exc:
+                errors.append(f"{survey}/{band}: {type(exc).__name__}: {exc}")
+        if not seen:
+            raise ValueError("no usable r/z Legacy coadded science image in SIA response")
+    elif survey=="PS1" and origin.dec.deg >= -31:
         listing = retrieve("https://ps1images.stsci.edu/cgi-bin/ps1filenames.py",
                            dict(**coords, filters="iz", type="stack"), manifest)
         table = Table.read(listing.decode("ascii").splitlines(), format="ascii")
@@ -290,10 +370,14 @@ def band_fit(image, wcs, coords, origin, zeropoint):
             arr = b + bx*xx + by*yy
             for flux,(x,y) in zip(p[:n],positions):
                 arr += flux*moffat((xx-x-dx)**2+(yy-y-dy)**2, f)
-            if kind:
-                flux,gx,gy = p[n+6:n+9]
+            if kind is not None:
+                if isinstance(kind,int):
+                    flux = p[n+6]
+                    gx,gy = positions[kind] + [dx,dy]
+                else:
+                    flux,gx,gy = p[n+6:n+9]
                 g = moffat((xx-gx)**2+(yy-gy)**2, f)
-                if kind == "extended":
+                if kind=="extended" or isinstance(kind,int):
                     g = gaussian_filter(g, p[-1], mode="constant", truncate=3.5)
                 arr += flux*g
             return arr
@@ -350,6 +434,15 @@ def band_fit(image, wcs, coords, origin, zeropoint):
     evidence = bool(legible and gal_snr >= 5 and improvement >= 14 and third_vs_extended >= 8
                     and near >= max(.35,.35*p[n+2]*scale) and size_arcsec >= .27
                     and size_arcsec < 1.95 and center_offset <= .45*sep*scale)
+    host_scores = []
+    if evidence:
+        # A physical quasar pair can have extended host light at either image.
+        # Compare with the same PSF and convolved profile, locking only the
+        # extended component's centroid to one shifted Gaia image in each fit.
+        for i in range(n):
+            host, _ = solve(i,np.r_[p[:n+7],p[-1]],low+[0,.12/scale],high+[4*broad,2./scale])
+            score = 2*(host.cost-extended.cost)/variance_inflation - 2*penalty
+            host_scores.append(float(score))
     mags = [(float(zeropoint-2.5*np.log10(flux*noise)) if zeropoint is not None and flux>0 else None)
             for flux in p[:n]]
     diag = dict(psf_search_width_arcsec=image.shape[1]*scale, field_psf_objects=num_stars, empirical_fwhm_arcsec=None if field_width is None
@@ -362,6 +455,8 @@ def band_fit(image, wcs, coords, origin, zeropoint):
                 galaxy_snr=gal_snr, galaxy_radec_deg=[float(gal.ra.deg), float(gal.dec.deg)],
                 galaxy_offset_arcsec=sky_offsets(SkyCoord([gal]), origin)[0].tolist(),
                 galaxy_intrinsic_gaussian_sigma_arcsec=size_arcsec, nearest_image_arcsec=near,
+                bic_single_host_minus_free_galaxy=host_scores,
+                resolved_from_every_single_host=bool(host_scores and min(host_scores)>=8),
                 usable_morphology=legible, extended_light=evidence)
     return diag, [patch, patch-base_img, patch-ext_img]
 
@@ -394,7 +489,10 @@ def assess_one(system, output_dir):
     pairs = [dict(i=i,j=j,arcsec=float(coords[i].separation(coords[j]).arcsec))
              for i,j in itertools.combinations(range(len(coords)),2)]
     records, errors, stamps, manifest = {}, [], {}, []
-    for survey in ("Legacy-DR10","PS1"):
+    north = origin.dec.deg >= 32.375 and origin.galactic.b.deg > 0
+    viewer = "Legacy-DR9-North" if north else "Legacy-DR10"
+    alternatives = ("NOIRLab-DR9",) if north else ("NOIRLab-DR10","NOIRLab-DR9")
+    for survey in (viewer,"PS1",*alternatives):
         try:
             for band, img, wcs, zp in cutouts(origin, survey, manifest, errors):
                 key = survey+"/"+band
@@ -419,11 +517,20 @@ def assess_one(system, output_dir):
                             errors.append(f"{key} wide: {type(exc).__name__}: {exc}")
             except Exception as exc:
                 errors.append(f"{survey} wide: {type(exc).__name__}: {exc}")
-        if sum(x["usable_morphology"] for x in records.values()) >= 2:
+        if len({k.split("/")[-1] for k,x in records.items() if x["usable_morphology"]}) >= 2:
             break
 
     good = sorted([k for k,x in records.items() if x["extended_light"]])
     usable = [k for k,x in records.items() if x["usable_morphology"]]
+    photometric_tests = []
+    for a,b in itertools.combinations(usable,2):
+        if a.split("/")[-1]==b.split("/")[-1]:
+            continue
+        f1 = np.asarray(records[a]["point_flux_in_native_units"])
+        f2 = np.asarray(records[b]["point_flux_in_native_units"])
+        spread = float(np.ptp(-2.5*np.log10(f1/f2)))
+        photometric_tests.append(dict(bands=[a,b], colour_spread_mag=spread,
+                                      within_055mag=spread<=.55))
     selected, chromaticity = None, None
     for a,b in itertools.combinations(good, 2):
         if a.split("/")[-1]==b.split("/")[-1]:
@@ -456,6 +563,10 @@ def assess_one(system, output_dir):
     result = dict(id=ident, imaging_status=status, imaging_model_pass=bool(selected and fit["physical_geometry"]),
                   pair_separations=pairs, bands=records, matched_bands=selected,
                   image_colour_spread_mag=chromaticity, lens_model=fit, imaging_inputs=manifest,
+                  two_band_photometry=photometric_tests,
+                  consistent_two_band_photometry=any(t["within_055mag"] for t in photometric_tests),
+                  free_centroid_preferred_to_each_single_host_in_both_bands=bool(selected and all(
+                      records[k]["resolved_from_every_single_host"] for k in selected)),
                   failures=errors)
     if selected or good:
         filename = re.sub(r"[^A-Za-z0-9_.-]", "_", ident)[:60]+"-"+hashlib.sha256(ident.encode()).hexdigest()[:8]+".png"

@@ -1,4 +1,5 @@
 """Supplemental vetoes for previously discussed quasar pairs and HSC lenses."""
+import csv
 import hashlib
 import io
 import json
@@ -72,14 +73,32 @@ def extra_catalogues(out):
         link = next(a["href"] for a in index.select("a[href]") if "download the full" in a.get_text(" ",strip=True).lower())
         data = get(urljoin(page.url, link))
         records = None
-        for sep in [",", r"\s+"]:
-            frame = pd.read_csv(io.BytesIO(data.content), sep=sep, engine="python",dtype=str)
-            frame.columns = [re.sub("[^a-z0-9]","",str(c).lower()) for c in frame.columns]
-            if {"ra","dec"}.issubset(frame.columns):
-                records = numeric(frame, "ra", "dec", "name" if "name" in frame else None)
+        lines = data.text.splitlines()
+        for delimiter in [",", ";", "\t", "|"]:
+            for i,line in enumerate(lines[:80]):
+                names = [re.sub("[^a-z0-9]", "", x.lower()) for x in next(csv.reader([line.lstrip("# ")],delimiter=delimiter))]
+                ra = next((x for x in ["ra","radeg","raj2000"] if x in names),None)
+                dec = next((x for x in ["dec","decdeg","de","dej2000"] if x in names),None)
+                if not (ra and dec):
+                    continue
+                body = list(csv.reader(lines[i+1:],delimiter=delimiter))
+                frame = pd.DataFrame([r[:len(names)] for r in body if len(r)>=len(names)],columns=names)
+                records = numeric(frame,ra,dec,"name" if "name" in names else None)
                 break
+            if records is not None and len(records)>=2000:
+                break
+        if records is None or len(records)<2000:
+            # The authors also publish IAU coordinate designations in each row.
+            objs = re.findall(r"(?:HSC)?J(\d{2})(\d{2})(\d{2}(?:\.\d+)?)([+-])(\d{2})(\d{2})(\d{2}(?:\.\d+)?)",data.text)
+            parsed = []
+            for h,m,s,sign,d,dm,ds in set(objs):
+                ra = 15*(float(h)+float(m)/60+float(s)/3600)
+                dec = (1 if sign=="+" else -1)*(float(d)+float(dm)/60+float(ds)/3600)
+                if 0<=ra<360 and -90<=dec<=90:
+                    parsed.append(dict(name="J"+h+m+s+sign+d+dm+ds,ra=ra,dec=dec))
+            records = pd.DataFrame(parsed)
         if records is None or len(records) < 2000:
-            raise ValueError("Live catalogue format or population not validated")
+            raise ValueError("Live catalogue format or population not validated: " + str(lines[:3])[:300])
         receipts.append(dict(catalog=tag, rows=len(records),complete=True))
         records["catalog"] = tag
         rows.append(records)
