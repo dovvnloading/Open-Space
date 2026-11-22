@@ -1,6 +1,6 @@
-# KUG 1256+241 is a candidate changing-look active galaxy
+# KUG 1256+241: measured broad Hα weakening
 
-**The broad Hα profile seen by BOSS in 2012–2013 was roughly four times weaker on both DESI nights in May 2021.** A weaker broad component remained. The adjacent narrow [N II] line stayed similar in strength, and the optical continuum changed less. This broad-line change qualifies KUG 1256+241 as a changing-look AGN candidate. The spectra do not date the transition to the December 2019 X-ray low or establish whether absorption or intrinsic variability drove the 63-fold soft X-ray fade. [Line fits and uncertainties](outputs/fixed-width-balmer.csv) · [Free-width fits and continua](outputs/free-profile-balmer.csv)
+**The fixed-width broad Hα template measured in two BOSS spectra from 2012–2013 was about four times weaker on both independent May 2021 DESI nights.** The adjacent narrow [N II] λ6585 line stayed within roughly five percent across those epochs. Broad Hα remains visible, and any disappearance of broad Hβ is unconfirmed. This is a *Measured* broad-line fade, **not an established changing-look AGN transition or a supported changing-look candidate under a broad-line disappearance criterion**. The spectra do not establish that the optical and December 2019 X-ray changes were simultaneous. The cause of the roughly 63-fold soft X-ray fade—variable absorption or intrinsic luminosity change—remains unresolved. [Line fits and uncertainties](outputs/fixed-width-balmer.csv) · [Free-width fits and continua](outputs/free-profile-balmer.csv)
 
 ![Continuum-normalized Hβ and Hα spectral regions in the BOSS and DESI data](outputs/balmer-comparison.png)
 

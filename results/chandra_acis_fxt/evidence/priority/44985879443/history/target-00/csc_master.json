@@ -1,0 +1,40 @@
+{
+  "endpoint": "https://cda.cfa.harvard.edu/csccli/getProperties",
+  "parameters": {
+    "coordFormat": "decimal",
+    "floatFormat": "native",
+    "outputFormat": "votable",
+    "query": "SELECT m.name,m.ra,m.dec,m.err_ellipse_r0,m.err_ellipse_r1,m.err_ellipse_ang,m.significance,m.likelihood_class,m.conf_flag,m.sat_src_flag,m.streak_src_flag,m.acis_num,m.hrc_num,m.flux_aper_b FROM master_source m WHERE (m.dec BETWEEN 9.701217534 AND 9.709551067) AND (m.ra BETWEEN 127.764803001 AND 127.773257536) AND dbo.cone_distance(m.ra,m.dec,127.7690302684,9.7053843008) <= 0.250000000000",
+    "version": "rel2.2"
+  },
+  "response": {
+    "bytes": 3581,
+    "gzip_sha256": "eb4eb06998429aacb54cb68d4ab85435ce582c6a836f880291442a257898359f",
+    "last_modified": null,
+    "raw_entity_gzip": "csc_master.xml.gz",
+    "resolved_url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+9.701217534+AND+9.709551067%29+AND+%28m.ra+BETWEEN+127.764803001+AND+127.773257536%29+AND+dbo.cone_distance%28m.ra%2Cm.dec%2C127.7690302684%2C9.7053843008%29+%3C%3D+0.250000000000&coordFormat=decimal&floatFormat=native&outputFormat=votable",
+    "retrieved_utc": "2026-11-22T07:25:04.733037+00:00",
+    "sha256": "bf98737c2a1ccb3fc4074723785fe0e51607725488a96e9920a9aa454908fd70",
+    "url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+9.701217534+AND+9.709551067%29+AND+%28m.ra+BETWEEN+127.764803001+AND+127.773257536%29+AND+dbo.cone_distance%28m.ra%2Cm.dec%2C127.7690302684%2C9.7053843008%29+%3C%3D+0.250000000000&coordFormat=decimal&floatFormat=native&outputFormat=votable"
+  },
+  "row_count": 1,
+  "rows": [
+    {
+      "acis_num": "1",
+      "conf_flag": "F",
+      "dec": "9.705449934948794",
+      "err_ellipse_ang": "102.14082753999487",
+      "err_ellipse_r0": "1.421476474103445",
+      "err_ellipse_r1": "0.7098065540144315",
+      "flux_aper_b": "0.0",
+      "hrc_num": "0",
+      "likelihood_class": "TRUE",
+      "name": "2CXO J083104.6+094219",
+      "ra": "127.76919659160109",
+      "sat_src_flag": "F",
+      "significance": "8.936237247299317",
+      "streak_src_flag": "F"
+    }
+  ],
+  "status": "ok"
+}

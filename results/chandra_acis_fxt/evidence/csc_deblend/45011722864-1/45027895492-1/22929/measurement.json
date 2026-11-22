@@ -1,0 +1,512 @@
+{
+  "comparison": {
+    "all_recorded": {
+      "fisher_two_sided_descriptive_p": 0.03508771929824561,
+      "flank_trial_fraction": {
+        "cp95": [
+          0.15198367508112207,
+          0.6456539056979218
+        ],
+        "fraction": 0.375,
+        "k": 6,
+        "n": 16
+      },
+      "trigger_then_pooled_flanks_by_trial_and_csc": [
+        [
+          5,
+          0
+        ],
+        [
+          6,
+          10
+        ]
+      ],
+      "trigger_trial_fraction": {
+        "cp95": [
+          0.4781762498950185,
+          1.0
+        ],
+        "fraction": 1.0,
+        "k": 5,
+        "n": 5
+      }
+    },
+    "common_geometry_supported": {
+      "fisher_two_sided_descriptive_p": null,
+      "flank_trial_fraction": {
+        "cp95": [
+          0.0,
+          0.975
+        ],
+        "fraction": 0.0,
+        "k": 0,
+        "n": 1
+      },
+      "trigger_then_pooled_flanks_by_trial_and_csc": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "trigger_trial_fraction": {
+        "cp95": [
+          null,
+          null
+        ],
+        "fraction": null,
+        "k": 0,
+        "n": 0
+      }
+    }
+  },
+  "csc_master": {
+    "acis_num": "22",
+    "conf_flag": "F",
+    "dec": "-26.501247812581617",
+    "err_ellipse_ang": "53.00807569674072",
+    "err_ellipse_r0": "0.2955632455783342",
+    "err_ellipse_r1": "0.2815176193991466",
+    "flux_aper_b": "0.0",
+    "hrc_num": "0",
+    "likelihood_class": "TRUE",
+    "name": "2CXO J114044.9-263004",
+    "ra": "175.18709525530755",
+    "sat_src_flag": "F",
+    "significance": "3.6969696969698393",
+    "streak_src_flag": "F"
+  },
+  "csc_receipts": {
+    "detections": {
+      "archived_body": "pointed_visits/45011722864-1/history/target-00/csc_detections.xml.gz",
+      "bytes": 14178,
+      "git_blob": "cd16a56dc6db330bd582d8dfb1a43201130bb48f",
+      "gzip_sha256": "20d7f69fde73271cf5533393f16d987ff0ac605844c84712e295699995d32cf3",
+      "last_modified": null,
+      "raw_entity_gzip": "csc_detections.xml.gz",
+      "receipt": "pointed_visits/45011722864-1/history/target-00/csc_detections.json",
+      "receipt_sha256": "7099322d9d9d9f9e8bfb28ad9f4287ee0c100aeef973888055ed85f4a7919834",
+      "resolved_url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+DISTINCT+m.name%2Cm.ra%2Cm.dec%2Ca.match_type%2Co.obsid%2Co.obi%2Co.region_id%2Co.gti_obs%2Co.gti_end%2Co.livetime%2Co.detector%2Co.flux_significance_b%2Co.src_cnts_aper_b%2Co.src_rate_aper_b%2Co.flux_aper_b%2Co.var_index_b%2Co.conf_code%2Co.streak_src_flag+FROM+master_source+m%2C+master_stack_assoc+a%2C+stack_source+s%2C+stack_observation_assoc+b%2C+observation_source+o+WHERE+m.name%3Da.name+AND+s.detect_stack_id%3Da.detect_stack_id+AND+s.region_id%3Da.region_id+AND+s.detect_stack_id%3Db.detect_stack_id+AND+s.region_id%3Db.region_id+AND+o.obsid%3Db.obsid+AND+o.obi%3Db.obi+AND+o.region_id%3Db.region_id+AND+%28m.dec+BETWEEN+-26.507966185+AND+-26.499632652%29+AND+%28m.ra+BETWEEN+175.180975332+AND+175.190287509%29+AND+dbo.cone_distance%28m.ra%2Cm.dec%2C175.1856314204%2C-26.5037994183%29+%3C%3D+0.250000000000&coordFormat=decimal&floatFormat=native&outputFormat=votable",
+      "retrieved_utc": "2026-11-22T10:44:24.350679+00:00",
+      "sha256": "1e8f98f4720cf6c3358884adb822e7dc2e4d3272e916efbe6b0c61d6c653f225",
+      "url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+DISTINCT+m.name%2Cm.ra%2Cm.dec%2Ca.match_type%2Co.obsid%2Co.obi%2Co.region_id%2Co.gti_obs%2Co.gti_end%2Co.livetime%2Co.detector%2Co.flux_significance_b%2Co.src_cnts_aper_b%2Co.src_rate_aper_b%2Co.flux_aper_b%2Co.var_index_b%2Co.conf_code%2Co.streak_src_flag+FROM+master_source+m%2C+master_stack_assoc+a%2C+stack_source+s%2C+stack_observation_assoc+b%2C+observation_source+o+WHERE+m.name%3Da.name+AND+s.detect_stack_id%3Da.detect_stack_id+AND+s.region_id%3Da.region_id+AND+s.detect_stack_id%3Db.detect_stack_id+AND+s.region_id%3Db.region_id+AND+o.obsid%3Db.obsid+AND+o.obi%3Db.obi+AND+o.region_id%3Db.region_id+AND+%28m.dec+BETWEEN+-26.507966185+AND+-26.499632652%29+AND+%28m.ra+BETWEEN+175.180975332+AND+175.190287509%29+AND+dbo.cone_distance%28m.ra%2Cm.dec%2C175.1856314204%2C-26.5037994183%29+%3C%3D+0.250000000000&coordFormat=decimal&floatFormat=native&outputFormat=votable"
+    },
+    "master": {
+      "archived_body": "pointed_visits/45011722864-1/history/target-00/csc_master.xml.gz",
+      "bytes": 3585,
+      "git_blob": "55a7e569670ea81b471a097e02715023aaabc04e",
+      "gzip_sha256": "81858c78eef4d6a9f6823f2acfd6d9cf960e988b3aa1e8efc0fd909c154328a1",
+      "last_modified": null,
+      "raw_entity_gzip": "csc_master.xml.gz",
+      "receipt": "pointed_visits/45011722864-1/history/target-00/csc_master.json",
+      "receipt_sha256": "55b2cf98196b987b5d19b7ce3fe7a95f9f61ded3d10958ddbd8666e95b14d5ac",
+      "resolved_url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+-26.507966185+AND+-26.499632652%29+AND+%28m.ra+BETWEEN+175.180975332+AND+175.190287509%29+AND+dbo.cone_distance%28m.ra%2Cm.dec%2C175.1856314204%2C-26.5037994183%29+%3C%3D+0.250000000000&coordFormat=decimal&floatFormat=native&outputFormat=votable",
+      "retrieved_utc": "2026-11-22T10:44:23.565032+00:00",
+      "sha256": "0a88c9eedeb6d7edf6c30e1761c66bd4f34e218851be5427bd793d70ae10b357",
+      "url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+-26.507966185+AND+-26.499632652%29+AND+%28m.ra+BETWEEN+175.180975332+AND+175.190287509%29+AND+dbo.cone_distance%28m.ra%2Cm.dec%2C175.1856314204%2C-26.5037994183%29+%3C%3D+0.250000000000&coordFormat=decimal&floatFormat=native&outputFormat=votable"
+    }
+  },
+  "geometry": {
+    "annulus_px": [
+      30.715447213412045,
+      50.4610918506055
+    ],
+    "arcsec_per_sky_px_range": [
+      0.4919999400815121,
+      0.4919999735235845
+    ],
+    "core_radius_px": 9.872822318596729,
+    "csc_xy": [
+      4222.1373248951495,
+      4147.123494883772
+    ],
+    "event_wcs_header": "TCRPX11 =               4096.5 / Pixel coordinate of reference point            \nTCRPX12 =               4096.5 / Pixel coordinate of reference point            \nTCDLT11 = -0.00013666666666667 / [deg] Coordinate increment at reference point  \nTCDLT12 =  0.00013666666666667 / [deg] Coordinate increment at reference point  \nTCUNI11 = 'deg'                / Units of coordinate increment and value        \nTCUNI12 = 'deg'                / Units of coordinate increment and value        \nTCTYP11 = 'RA---TAN'           / Right ascension, gnomonic projection           \nTCTYP12 = 'DEC--TAN'           / Declination, gnomonic projection               \nTCRVL11 =      175.20628171301 / [deg] Coordinate value at reference point      \nTCRVL12 =     -26.508167639681 / [deg] Coordinate value at reference point      \nLONP11  =                180.0 / [deg] Native longitude of celestial pole       \nLATP11  =     -26.508167639681 / [deg] Native latitude of celestial pole        \nMJDREF  =                  0.0 / [d] MJD of fiducial time                       \nRADE11  = 'ICRS'               / Equatorial coordinate system                   ",
+    "extraction_circle": {
+      "center_icrs_deg": [
+        175.18574806695258,
+        -26.503993165718473
+      ],
+      "center_in_csc_ellipse": false,
+      "csc_center_in_circle": false,
+      "csc_ellipse_intersects_circle": false,
+      "distance_to_filled_csc_ellipse_arcsec": 10.502030742181148,
+      "ellipse_intersection_over_scale_range": [
+        false,
+        false
+      ],
+      "radius_arcsec": 8.265598993369402,
+      "radius_range_arcsec": [
+        8.265598993369402,
+        8.265599555196218
+      ],
+      "separation_arcsec": 10.794285155616315
+    },
+    "localization_circle": {
+      "center_icrs_deg": [
+        175.18563142042063,
+        -26.50379941831277
+      ],
+      "center_in_csc_ellipse": false,
+      "csc_center_in_circle": false,
+      "csc_ellipse_intersects_circle": false,
+      "distance_to_filled_csc_ellipse_arcsec": 10.032728006862348,
+      "radius_arcsec": 2.779914752094924,
+      "separation_arcsec": 10.32567053841999
+    },
+    "midpoint_xy": [
+      4226.546567721012,
+      4137.078837285636
+    ],
+    "original_radius_px": 16.799999999999997,
+    "separation_px": 21.939605152437174,
+    "trial_xy": [
+      4230.955810546875,
+      4127.0341796875
+    ],
+    "wcs_origin": 1
+  },
+  "heldout_selection_changed": false,
+  "input": {
+    "ascdsver": "10.9.2",
+    "bytes": 13493587,
+    "caldbver": "4.9.3",
+    "cycle": "P",
+    "dec_nom_deg": -26.508167639681,
+    "dec_targ_deg": -26.485722,
+    "filename": "acisf22929N002_evt2.fits.gz",
+    "fits_sha256": "ea66af858a0c74379604a8996021e6e50febee30917b96d72979032f84a01084",
+    "grating": "NONE",
+    "index_sha256": "1d48073b57537dd1854f47115d2cfaaa37b9c8a8cfb6763fccbc319d040bea4e",
+    "index_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/22929/primary/",
+    "last_modified": "Wed, 04 Nov 2020 21:41:17 GMT",
+    "obsid": 22929,
+    "ra_nom_deg": 175.20628171301,
+    "ra_targ_deg": 175.20125,
+    "readmode": "TIMED",
+    "resolved_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/22929/primary/acisf22929N002_evt2.fits.gz",
+    "retrieved_utc": "2026-11-22T09:50:12.008622+00:00",
+    "revision": 2,
+    "rows": 346232,
+    "sha256": "9a02d9ed96de9146bd86ca7a9bbfcb2e420d487e1a49f39b184daefd84fd6fbd",
+    "tstart": 704058518.42629,
+    "tstop": 704112231.50455,
+    "url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/22929/primary/acisf22929N002_evt2.fits.gz"
+  },
+  "inventory_sha256": "172b673a39b7c2bca8b82294563a62a7cb5807fdcc393a8da27d31e56f3c518e",
+  "live_fraction": 0.9869342638107098,
+  "obsid": 22929,
+  "original_trigger_vet_status": "ambiguous",
+  "phases": {
+    "after": {
+      "common_geometry": {
+        "accepted_bins": [
+          [
+            704105366.5512782,
+            704105426.2620995
+          ],
+          [
+            704106381.635241,
+            704106441.3460624
+          ],
+          [
+            704109367.1763084,
+            704109426.8871297
+          ],
+          [
+            704110382.2602712,
+            704110441.9710926
+          ]
+        ],
+        "csc_core": 0,
+        "neighborhood_quadrant_counts": [
+          61,
+          71,
+          80,
+          58
+        ],
+        "reason": null,
+        "rejected_bins": {
+          "node_boundary": 141
+        },
+        "shared_annulus": 0,
+        "supported_live_s": 235.72262196558626,
+        "trial_core": 0
+      },
+      "csc_core": 0,
+      "gt_live_s": 8544.945048429057,
+      "met_s": [
+        704102918.407603,
+        704111576.4766982
+      ],
+      "nominal_background_per_core": 1.3986486486486491,
+      "original_aperture": 2,
+      "original_distances_to_csc": {
+        "max_px": 31.08153495036185,
+        "median_px": 28.278132905965307,
+        "min_px": 25.474730861568762
+      },
+      "original_distances_to_trial": {
+        "max_px": 15.407425487390128,
+        "median_px": 10.224285140660575,
+        "min_px": 5.041144793931021
+      },
+      "original_photons_in_csc_core": 0,
+      "original_photons_in_trial_core": 1,
+      "original_photons_nearer_csc": 0,
+      "original_photons_outside_both_cores": 1,
+      "shared_annulus": 23,
+      "trial_core": 1,
+      "trial_fraction_among_both_cores": {
+        "cp95": [
+          0.025,
+          1.0
+        ],
+        "fraction": 1.0,
+        "k": 1,
+        "n": 1
+      }
+    },
+    "before": {
+      "common_geometry": {
+        "accepted_bins": [
+          [
+            704060267.439599,
+            704060507.3865477
+          ],
+          [
+            704061287.2141308,
+            704061527.1610794
+          ],
+          [
+            704062306.9886624,
+            704062486.9488739
+          ],
+          [
+            704063326.7631941,
+            704063506.7234055
+          ],
+          [
+            704064286.5509886,
+            704064466.5112001
+          ],
+          [
+            704065306.3255203,
+            704065486.2857317
+          ],
+          [
+            704066326.1000519,
+            704066446.0735263
+          ],
+          [
+            704067345.8745836,
+            704067465.8480579
+          ],
+          [
+            704068305.6623781,
+            704068485.6225896
+          ],
+          [
+            704069325.4369098,
+            704069445.410384
+          ],
+          [
+            704070345.2114414,
+            704070465.1849158
+          ],
+          [
+            704071364.9859731,
+            704071424.9727103
+          ],
+          [
+            704072384.7605047,
+            704072444.747242
+          ],
+          [
+            704073344.5482993,
+            704073464.5217736
+          ],
+          [
+            704074364.3228309,
+            704074424.3095682
+          ],
+          [
+            704075384.0973626,
+            704075444.0840998
+          ],
+          [
+            704077363.6596888,
+            704077423.646426
+          ],
+          [
+            704078383.4342204,
+            704078443.4209577
+          ],
+          [
+            704080362.9965466,
+            704080422.9832839
+          ]
+        ],
+        "csc_core": 1,
+        "neighborhood_quadrant_counts": [
+          303,
+          307,
+          377,
+          355
+        ],
+        "reason": null,
+        "rejected_bins": {
+          "node_boundary": 651
+        },
+        "shared_annulus": 3,
+        "supported_live_s": 2368.118651288109,
+        "trial_core": 0
+      },
+      "csc_core": 10,
+      "gt_live_s": 40909.249695704806,
+      "met_s": [
+        704059667.5722275,
+        704101118.407603
+      ],
+      "nominal_background_per_core": 5.777027027027029,
+      "original_aperture": 11,
+      "original_distances_to_csc": {
+        "max_px": 32.422886740992546,
+        "median_px": 17.92776690577572,
+        "min_px": 7.243299269214607
+      },
+      "original_distances_to_trial": {
+        "max_px": 16.452952220114597,
+        "median_px": 11.066253879196985,
+        "min_px": 4.465641574548564
+      },
+      "original_photons_in_csc_core": 2,
+      "original_photons_in_trial_core": 5,
+      "original_photons_nearer_csc": 2,
+      "original_photons_outside_both_cores": 4,
+      "shared_annulus": 95,
+      "trial_core": 5,
+      "trial_fraction_among_both_cores": {
+        "cp95": [
+          0.11824110336688091,
+          0.6161962674588458
+        ],
+        "fraction": 0.3333333333333333,
+        "k": 5,
+        "n": 15
+      }
+    },
+    "trigger": {
+      "common_geometry": {
+        "accepted_bins": [],
+        "csc_core": 0,
+        "neighborhood_quadrant_counts": [
+          15,
+          14,
+          16,
+          16
+        ],
+        "reason": "no bins with supported on-chip aperture and annulus",
+        "rejected_bins": {
+          "node_boundary": 30
+        },
+        "shared_annulus": 0,
+        "supported_live_s": 0,
+        "trial_core": 0
+      },
+      "csc_core": 0,
+      "gt_live_s": 1776.4816748592777,
+      "met_s": [
+        704101118.407603,
+        704102918.407603
+      ],
+      "nominal_background_per_core": 0.2432432432432433,
+      "original_aperture": 8,
+      "original_distances_to_csc": {
+        "max_px": 30.032108671788464,
+        "median_px": 20.66484718242588,
+        "min_px": 14.598357104883037
+      },
+      "original_distances_to_trial": {
+        "max_px": 13.95014178646662,
+        "median_px": 9.006459651575103,
+        "min_px": 3.9176070634931506
+      },
+      "original_photons_in_csc_core": 0,
+      "original_photons_in_trial_core": 5,
+      "original_photons_nearer_csc": 0,
+      "original_photons_outside_both_cores": 3,
+      "shared_annulus": 4,
+      "trial_core": 5,
+      "trial_fraction_among_both_cores": {
+        "cp95": [
+          0.4781762498950185,
+          1.0
+        ],
+        "fraction": 1.0,
+        "k": 5,
+        "n": 5
+      }
+    }
+  },
+  "primary_control_replicas": 24,
+  "same_observation_csc_rows": [
+    {
+      "conf_code": "0",
+      "dec": "-26.501247812581617",
+      "detector": "ACIS-7",
+      "flux_aper_b": "5.8985469402743E-16",
+      "flux_significance_b": "1.333333333333",
+      "gti_end": "2020-04-24T10:32:56",
+      "gti_obs": "2020-04-23T20:07:48",
+      "livetime": "51230.67641899",
+      "match_type": "u",
+      "name": "2CXO J114044.9-263004",
+      "obi": "0",
+      "obsid": "22929",
+      "ra": "175.18709525530755",
+      "region_id": "25",
+      "src_cnts_aper_b": "2.905873934664",
+      "src_rate_aper_b": "5.6721365747704E-5",
+      "streak_src_flag": "F",
+      "var_index_b": ""
+    }
+  ],
+  "source_artifact": 14749756165,
+  "source_ledger_member": {
+    "bytes": 6944,
+    "destination": "observations/22929.json.gz",
+    "sha256": "f3d9536f26b46c11dbf9185de05ddad5a2e0456fd8ad9ee500c75a0fe8b12be0",
+    "source": "observations/22929.json.gz"
+  },
+  "source_row_member": {
+    "bytes": 10356,
+    "destination": "photometry/22929/acisf22929N002_evt2.fits.gz/real/0/event_rows.csv.gz",
+    "sha256": "2c53b39a5b16b06925e548d8f6cc1868777dd6eaf7d0ba18ed603f76d3b982da",
+    "source": "photometry/22929/acisf22929N002_evt2.fits.gz/real/0/event_rows.csv.gz"
+  },
+  "source_stage": {
+    "code_commit": "4663ab98666b5d9b5b116478f61d6cae5d49e104",
+    "group": 101,
+    "plan_commit": "0655e5b54215a3d7bbac1f6b2561379bb50c81cf",
+    "run": 44985879443
+  },
+  "source_zip_digest": "sha256:308142f7de2f527e919756e964b567cad11abf60ed3af15a44af6e1880e91696",
+  "tagged_photon_count": 151,
+  "tagged_photons_sha256": "8efd0f014df07bc661de76c9c7ca827316c9e6a3a6e25f6fd3e037bef5722ea8",
+  "targeting": {
+    "catalog_dec_deg": -26.485722222222222,
+    "catalog_ra_deg": 175.20125,
+    "csc_offset_from_pointing_reference_arcsec": 72.13751568155368,
+    "observation_url": "https://cda.harvard.edu/chaser/startViewer.do?menuItem=details&obsid=22929",
+    "proposal_number": "20700463",
+    "proposal_title": "Mapping obscured AGN activity and feedback processes in the Spiderweb Galaxy complex at z=2.16",
+    "proposal_url": "https://cda.cfa.harvard.edu/cxctap/sync?REQUEST=doQuery&FORMAT=text&LANG=ADQL&QUERY=SELECT+%2A+FROM+cxc.proposal+p+WHERE+p.number+%3D+%2720700463%27",
+    "target_name": "SPIDERWEB",
+    "trial_offset_from_pointing_reference_arcsec": 82.58925886609757
+  },
+  "trigger_ccd_id": 7,
+  "trigger_key": "real/0"
+}

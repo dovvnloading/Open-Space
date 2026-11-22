@@ -1,0 +1,88 @@
+{
+  "endpoint": "https://cda.cfa.harvard.edu/csccli/getProperties",
+  "parameters": {
+    "coordFormat": "decimal",
+    "floatFormat": "native",
+    "outputFormat": "votable",
+    "query": "SELECT m.name,m.ra,m.dec,m.err_ellipse_r0,m.err_ellipse_r1,m.err_ellipse_ang,m.significance,m.likelihood_class,m.conf_flag,m.sat_src_flag,m.streak_src_flag,m.acis_num,m.hrc_num,m.flux_aper_b FROM master_source m WHERE (m.dec BETWEEN -45.815637888 AND -45.807304355) AND (m.ra BETWEEN 251.760953344 AND 251.772909176)",
+    "version": "rel2.2"
+  },
+  "response": {
+    "bytes": 4690,
+    "gzip_sha256": "3f474e7f37ee84b792ee8c4525d597db9597116db9534591ae5957091cf88892",
+    "last_modified": null,
+    "raw_entity_gzip": "7f1c9b8b98a5899bf661b99756afbf887e6d042ccd5005295e296126785a0c79.xml.gz",
+    "resolved_url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+-45.815637888+AND+-45.807304355%29+AND+%28m.ra+BETWEEN+251.760953344+AND+251.772909176%29&coordFormat=decimal&floatFormat=native&outputFormat=votable",
+    "retrieved_utc": "2026-11-22T08:43:39.266470+00:00",
+    "sha256": "b051bf05834d9e91d2ba9db78929c347a455019152d88b5a34ba5308d589b44a",
+    "url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+-45.815637888+AND+-45.807304355%29+AND+%28m.ra+BETWEEN+251.760953344+AND+251.772909176%29&coordFormat=decimal&floatFormat=native&outputFormat=votable"
+  },
+  "row_count": 4,
+  "rows": [
+    {
+      "acis_num": "39",
+      "conf_flag": "F",
+      "dec": "-45.811286370215775",
+      "err_ellipse_ang": "67.0441924968575",
+      "err_ellipse_r0": "0.931226310183738",
+      "err_ellipse_r1": "0.5780154669659113",
+      "flux_aper_b": "0.0",
+      "hrc_num": "0",
+      "likelihood_class": "MARGINAL",
+      "name": "2CXO J164702.9-454840",
+      "ra": "251.76228370156127",
+      "sat_src_flag": "F",
+      "significance": "2.1132075471698535",
+      "streak_src_flag": "F"
+    },
+    {
+      "acis_num": "38",
+      "conf_flag": "F",
+      "dec": "-45.81212839120796",
+      "err_ellipse_ang": "166.51408278000713",
+      "err_ellipse_r0": "0.46983850482769196",
+      "err_ellipse_r1": "0.4193298661551048",
+      "flux_aper_b": "1.0056716378878E-15",
+      "hrc_num": "0",
+      "likelihood_class": "TRUE",
+      "name": "2CXO J164703.9-454843",
+      "ra": "251.7663005864947",
+      "sat_src_flag": "F",
+      "significance": "2.7027027027027937",
+      "streak_src_flag": "F"
+    },
+    {
+      "acis_num": "38",
+      "conf_flag": "F",
+      "dec": "-45.81163389027896",
+      "err_ellipse_ang": "103.97823488573441",
+      "err_ellipse_r0": "0.3135539279796351",
+      "err_ellipse_r1": "0.2890020421583001",
+      "flux_aper_b": "3.8552885276803E-16",
+      "hrc_num": "0",
+      "likelihood_class": "TRUE",
+      "name": "2CXO J164704.0-454841",
+      "ra": "251.76705764286578",
+      "sat_src_flag": "F",
+      "significance": "5.1612903225807445",
+      "streak_src_flag": "F"
+    },
+    {
+      "acis_num": "38",
+      "conf_flag": "F",
+      "dec": "-45.81314496257615",
+      "err_ellipse_ang": "152.89357893818953",
+      "err_ellipse_r0": "0.3164629035199145",
+      "err_ellipse_r1": "0.277512609950578",
+      "flux_aper_b": "1.141777434264E-14",
+      "hrc_num": "0",
+      "likelihood_class": "TRUE",
+      "name": "2CXO J164704.3-454847",
+      "ra": "251.7683171028782",
+      "sat_src_flag": "F",
+      "significance": "6.711678289433384",
+      "streak_src_flag": "F"
+    }
+  ],
+  "status": "ok"
+}

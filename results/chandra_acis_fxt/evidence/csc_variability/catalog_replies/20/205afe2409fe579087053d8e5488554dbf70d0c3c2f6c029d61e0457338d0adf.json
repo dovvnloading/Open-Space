@@ -1,0 +1,72 @@
+{
+  "endpoint": "https://cda.cfa.harvard.edu/csccli/getProperties",
+  "parameters": {
+    "coordFormat": "decimal",
+    "floatFormat": "native",
+    "outputFormat": "votable",
+    "query": "SELECT m.name,m.ra,m.dec,m.err_ellipse_r0,m.err_ellipse_r1,m.err_ellipse_ang,m.significance,m.likelihood_class,m.conf_flag,m.sat_src_flag,m.streak_src_flag,m.acis_num,m.hrc_num,m.flux_aper_b FROM master_source m WHERE (m.dec BETWEEN -27.159191694 AND -27.150858161) AND (m.ra BETWEEN 267.195577096 AND 267.204942961)",
+    "version": "rel2.2"
+  },
+  "response": {
+    "bytes": 4325,
+    "gzip_sha256": "2b9e69556fd6a6e64c5c5ef3d963a75d79bf0e87f1f9b111ee0afedf42e226fe",
+    "last_modified": null,
+    "raw_entity_gzip": "205afe2409fe579087053d8e5488554dbf70d0c3c2f6c029d61e0457338d0adf.xml.gz",
+    "resolved_url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+-27.159191694+AND+-27.150858161%29+AND+%28m.ra+BETWEEN+267.195577096+AND+267.204942961%29&coordFormat=decimal&floatFormat=native&outputFormat=votable",
+    "retrieved_utc": "2026-11-22T13:40:26.513633+00:00",
+    "sha256": "aa5a0eacb51afe797d89b06f22024961489a65be8d50b93249d2b81143fe6246",
+    "url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+-27.159191694+AND+-27.150858161%29+AND+%28m.ra+BETWEEN+267.195577096+AND+267.204942961%29&coordFormat=decimal&floatFormat=native&outputFormat=votable"
+  },
+  "row_count": 3,
+  "rows": [
+    {
+      "acis_num": "39",
+      "conf_flag": "F",
+      "dec": "-27.157848831227138",
+      "err_ellipse_ang": "0.0",
+      "err_ellipse_r0": "0.23146366116942532",
+      "err_ellipse_r1": "0.23146366116942532",
+      "flux_aper_b": "7.7533955553244E-16",
+      "hrc_num": "0",
+      "likelihood_class": "TRUE",
+      "name": "2CXO J174847.7-270928",
+      "ra": "267.1989813620778",
+      "sat_src_flag": "F",
+      "significance": "18.28114044836892",
+      "streak_src_flag": "F"
+    },
+    {
+      "acis_num": "39",
+      "conf_flag": "F",
+      "dec": "-27.155094664201453",
+      "err_ellipse_ang": "124.01128410084459",
+      "err_ellipse_r0": "0.26004423605395044",
+      "err_ellipse_r1": "0.24981653630692693",
+      "flux_aper_b": "4.6506360216386E-17",
+      "hrc_num": "0",
+      "likelihood_class": "TRUE",
+      "name": "2CXO J174848.0-270918",
+      "ra": "267.20021828238066",
+      "sat_src_flag": "F",
+      "significance": "6.285714285715223",
+      "streak_src_flag": "F"
+    },
+    {
+      "acis_num": "39",
+      "conf_flag": "F",
+      "dec": "-27.15149266047589",
+      "err_ellipse_ang": "56.88709812493016",
+      "err_ellipse_r0": "0.2830904114094495",
+      "err_ellipse_r1": "0.25351399594849994",
+      "flux_aper_b": "5.7309854421963E-17",
+      "hrc_num": "0",
+      "likelihood_class": "TRUE",
+      "name": "2CXO J174848.9-270905",
+      "ra": "267.2039395062794",
+      "sat_src_flag": "F",
+      "significance": "4.258064516129065",
+      "streak_src_flag": "F"
+    }
+  ],
+  "status": "ok"
+}

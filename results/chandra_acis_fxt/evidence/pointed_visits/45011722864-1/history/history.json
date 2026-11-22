@@ -1,0 +1,1507 @@
+{
+  "code_sha256": {
+    "archive.py": "4623fb84527aa4952a2beab6d2405b6b6e0f5ddd0ffdfd69e1c96bfeacca0a7a",
+    "search.py": "17bdbb0ec1fa5c86bf1a3394b8df29d3b245e436dc0bb8ce2376a5c9e33a4f99",
+    "target_history.py": "fc8db4665c9d91637e1ead6a4b74614f472fc62e4405da8c273e3e1e90bbce26",
+    "vet.py": "76ddfd371cf8f02bd54c3653547f12c74a1a23d09fa7e0bbd2fa933ad5f79d8a",
+    "visits.py": "0bff9f1c2a532cb61724c26f043c3cf9662720c62957d32fc1cb1b2c656d2073"
+  },
+  "git_commit": "bd2f76d757d72ab885b478b8a6c07739a04931b5",
+  "limitations": "Observation-catalog target coordinates are a pointing proxy. The wide cone and independent detector geometry are required. Missing catalog coordinates, offset pointings, HRC, gratings and CC mode limit coverage. Aperture counts use only supported dither/GTI bins. The 95% limit applies to mean detected aperture rate in those bins, without a PSF, vignetting or bad-pixel correction. Raw single-visit excess probabilities include chance excesses and diffuse emission. CSC matches are positional alternatives. A CSC per-observation photometry row can be a weak or forced measurement.",
+  "pointing_radius_arcsec": 5400.0,
+  "release_cutoff_utc_inclusive": "2026-11-21",
+  "selected_leads": [
+    {
+      "dec_deg": -26.50379941831277,
+      "duration_s": 1560.0116752386093,
+      "event_mjd": 58963.31769934726,
+      "input_name": "acisf22929N002_evt2.fits.gz",
+      "input_sha256": "9a02d9ed96de9146bd86ca7a9bbfcb2e420d487e1a49f39b184daefd84fd6fbd",
+      "input_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/22929/primary/acisf22929N002_evt2.fits.gz",
+      "obsid": 22929,
+      "position_error_arcsec": 2.779914752094924,
+      "ra_deg": 175.18563142042063,
+      "trial_duration_s": 1800,
+      "trigger_key": "real/0"
+    },
+    {
+      "dec_deg": 27.85589597221555,
+      "duration_s": 539.6245579719543,
+      "event_mjd": 59764.475185204785,
+      "input_name": "acisf23779N002_evt2.fits.gz",
+      "input_sha256": "49987e33e7bc66ca583baa1b7aab2ea59c067b58889807ec78dd851fd752585b",
+      "input_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/23779/primary/acisf23779N002_evt2.fits.gz",
+      "obsid": 23779,
+      "position_error_arcsec": 2.6805031863960767,
+      "ra_deg": 194.26904915692327,
+      "trial_duration_s": 600,
+      "trigger_key": "real/0"
+    }
+  ],
+  "targets": {
+    "22929/9a02d9ed96de9146bd86ca7a9bbfcb2e420d487e1a49f39b184daefd84fd6fbd/real/0": {
+      "folder": "target-00",
+      "gaps": [
+        {
+          "filename": "acisf21481N003_evt2.fits.gz",
+          "input_sha256": "c2a6336360e48cf995e62486c7451b3764ca8d6b243080280f86205cd0239f5b",
+          "obsid": 21481,
+          "record": "visits/21481/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf22905N002_evt2.fits.gz",
+          "input_sha256": "0b989fe6005ee34a2eefcda622c68e5d861e4cb9e373f41e162e197e85704380",
+          "obsid": 22905,
+          "record": "visits/22905/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf22923N002_evt2.fits.gz",
+          "input_sha256": "ddabe78c4d90c7dc54b9d3b601ac22d9a3726dfddab687f759e5ba14a0eaceeb",
+          "obsid": 22923,
+          "record": "visits/22923/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf22924N002_evt2.fits.gz",
+          "input_sha256": "da44d125298681d8f00b1dc2e76e071246956f44263c3539fc488163319631f5",
+          "obsid": 22924,
+          "record": "visits/22924/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf22925N002_evt2.fits.gz",
+          "input_sha256": "6a16655c3377acd8fed8ff5f62035f9e309a9c4f17c71b3cf2acba0a826a371b",
+          "obsid": 22925,
+          "record": "visits/22925/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf22926N002_evt2.fits.gz",
+          "input_sha256": "7e1c9c9019baade66b17ee489d669e3c4275419f4b31944daad779b38cba7a3a",
+          "obsid": 22926,
+          "record": "visits/22926/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf23175N003_evt2.fits.gz",
+          "input_sha256": "d07c4acf6dd9acc965a3127d0cdf59a030e8033f810e5640255d5a32d7aecc2c",
+          "obsid": 23175,
+          "record": "visits/23175/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf23186N002_evt2.fits.gz",
+          "input_sha256": "f9ec1af662de1a831925965bda31bf5f499824cedebefdaeef056ba62dd0e421",
+          "obsid": 23186,
+          "record": "visits/23186/visit.json",
+          "status": "coverage_unconfirmed"
+        }
+      ],
+      "nearby_obsids": [
+        898,
+        21481,
+        21482,
+        21483,
+        21484,
+        22905,
+        22921,
+        22922,
+        22923,
+        22924,
+        22925,
+        22926,
+        22927,
+        22928,
+        23069,
+        23175,
+        23186,
+        23190,
+        23201,
+        23205,
+        23215
+      ],
+      "pointing_query_status": "ok",
+      "supported": [
+        {
+          "accepted_live_s": 12012.06699126635,
+          "annulus_counts": 55,
+          "conditional_aperture_rate_upper95_ct_s": 0.0009858749256918542,
+          "filename": "acisf00898N005_evt2.fits.gz",
+          "gross_counts": 6,
+          "input_sha256": "5ae15460d7d636d00eba4377038526d53ff1296d1ce76cbc20026dd803e15c4a",
+          "local_excess_p": 0.3279426393365062,
+          "net_aperture_rate_ct_s": 0.00011793696019982964,
+          "obsid": 898,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/898/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2000-06-06T04:30:46.714",
+            "2000-06-06T15:37:01.114"
+          ]
+        },
+        {
+          "accepted_live_s": 34609.02148219631,
+          "annulus_counts": 84,
+          "conditional_aperture_rate_upper95_ct_s": 0.000453789669557534,
+          "filename": "acisf21482N002_evt2.fits.gz",
+          "gross_counts": 9,
+          "input_sha256": "e2084c9b9bce47c1acf8b9efbfac9cd59433c751d90bd20475595b5b6aa1dafb",
+          "local_excess_p": 0.28650602756490284,
+          "net_aperture_rate_ct_s": 5.7788400663938065e-05,
+          "obsid": 21482,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/21482/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-04-02T03:56:54.441",
+            "2020-04-02T13:41:21.641"
+          ]
+        },
+        {
+          "accepted_live_s": 49410.86429781621,
+          "annulus_counts": 108,
+          "conditional_aperture_rate_upper95_ct_s": 0.0004183000918813552,
+          "filename": "acisf21483N002_evt2.fits.gz",
+          "gross_counts": 13,
+          "input_sha256": "121e6c043e5c96cc614413f5a16fd544397e4573e5c191551cf5dc7fff8d9ef1",
+          "local_excess_p": 0.13901517172685382,
+          "net_aperture_rate_ct_s": 8.095385613760224e-05,
+          "obsid": 21483,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/21483/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2019-11-18T23:18:26.347",
+            "2019-11-19T13:12:51.347"
+          ]
+        },
+        {
+          "accepted_live_s": 59.20019155139084,
+          "annulus_counts": 0,
+          "conditional_aperture_rate_upper95_ct_s": 0.05060342196618464,
+          "filename": "acisf21484N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "205c5ba275d8f38c423c1080ac39bab17397f0d9db84a178ce0cfbf4b8799367",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": 0.0,
+          "obsid": 21484,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/21484/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-04-22T22:57:49.230",
+            "2020-04-23T12:05:36.563"
+          ]
+        },
+        {
+          "accepted_live_s": 236.75565476649712,
+          "annulus_counts": 0,
+          "conditional_aperture_rate_upper95_ct_s": 0.012653265986438903,
+          "filename": "acisf22921N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "0a771fd68f3d3866db1e254fc0b632f601480a78fd216f6fb159ab31ac1c596d",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": 0.0,
+          "obsid": 22921,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/22921/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-03-17T05:36:27.303",
+            "2020-03-17T12:34:15.808"
+          ]
+        },
+        {
+          "accepted_live_s": 177.49965582174138,
+          "annulus_counts": 0,
+          "conditional_aperture_rate_upper95_ct_s": 0.016877397647252518,
+          "filename": "acisf22922N002_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "8ba27b9729a8e5eb200bfd39a26e4f0d5e8f1e09353be9cad77f6a9c133c4bf9",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": 0.0,
+          "obsid": 22922,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/22922/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2020-07-22T12:41:44.374",
+            "2020-07-22T17:54:28.674"
+          ]
+        },
+        {
+          "accepted_live_s": 32632.586910288457,
+          "annulus_counts": 78,
+          "conditional_aperture_rate_upper95_ct_s": 0.00036290091511827395,
+          "filename": "acisf22927N002_evt2.fits.gz",
+          "gross_counts": 6,
+          "input_sha256": "d1945c92bb5f268698b5ace96205e9d3aa937712e42e34cbf5e7f4df2547edd0",
+          "local_excess_p": 0.6339631859595314,
+          "net_aperture_rate_ct_s": -1.5322107357733235e-05,
+          "obsid": 22927,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/22927/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-04-02T19:53:55.995",
+            "2020-04-03T05:05:00.595"
+          ]
+        },
+        {
+          "accepted_live_s": 29670.994548666557,
+          "annulus_counts": 59,
+          "conditional_aperture_rate_upper95_ct_s": 0.00039912365030421595,
+          "filename": "acisf22928N002_evt2.fits.gz",
+          "gross_counts": 6,
+          "input_sha256": "6cc5204074c6ef9c3e360e504fd4ba3e5e5f29a7187f8de0d94836f02c1478ca",
+          "local_excess_p": 0.3839456515252685,
+          "net_aperture_rate_ct_s": 3.651152749721425e-05,
+          "obsid": 22928,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/22928/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-04-10T11:16:38.947",
+            "2020-04-10T19:37:42.747"
+          ]
+        },
+        {
+          "accepted_live_s": 19648.084862025626,
+          "annulus_counts": 50,
+          "conditional_aperture_rate_upper95_ct_s": 0.0004658733454642606,
+          "filename": "acisf23069N002_evt2.fits.gz",
+          "gross_counts": 4,
+          "input_sha256": "911c7900c5900d0636491258337f72f55ca479e40aa44786c0056b8b62d2d7f0",
+          "local_excess_p": 0.6046870313167101,
+          "net_aperture_rate_ct_s": -8.482590941409667e-06,
+          "obsid": 23069,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/23069/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-03-23T14:47:56.716",
+            "2020-03-23T20:19:44.916"
+          ]
+        },
+        {
+          "accepted_live_s": 1361.0732621122206,
+          "annulus_counts": 0,
+          "conditional_aperture_rate_upper95_ct_s": 0.0022010073645153945,
+          "filename": "acisf23190N003_evt2.fits.gz",
+          "gross_counts": 0,
+          "input_sha256": "2d8b7d2c247530c49b58e3e9007fc7e70db6550acf241ddbe1d02b7d8782da7e",
+          "local_excess_p": 1.0,
+          "net_aperture_rate_ct_s": 0.0,
+          "obsid": 23190,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/23190/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-03-17T22:06:55.486",
+            "2020-03-18T05:04:38.986"
+          ]
+        },
+        {
+          "accepted_live_s": 27734.333427896654,
+          "annulus_counts": 64,
+          "conditional_aperture_rate_upper95_ct_s": 0.000566273440930018,
+          "filename": "acisf23201N002_evt2.fits.gz",
+          "gross_counts": 9,
+          "input_sha256": "a13c54da58c0176101b050e73aad12bbdeaf210c88cbe27f6a4a4f3ffc4a3cc9",
+          "local_excess_p": 0.10708665465344233,
+          "net_aperture_rate_ct_s": 0.00013220677093968086,
+          "obsid": 23201,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/23201/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-03-26T15:10:12.994",
+            "2020-03-26T22:58:34.495"
+          ]
+        },
+        {
+          "accepted_live_s": 23711.09587052961,
+          "annulus_counts": 64,
+          "conditional_aperture_rate_upper95_ct_s": 0.0005545131222202949,
+          "filename": "acisf23205N002_evt2.fits.gz",
+          "gross_counts": 7,
+          "input_sha256": "3be6a20ec42be860a9686754063e475fb50ad31ebbdf14d607c30bd55942198e",
+          "local_excess_p": 0.3043992940866855,
+          "net_aperture_rate_ct_s": 7.029057938811498e-05,
+          "obsid": 23205,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/23205/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-04-03T14:51:30.399",
+            "2020-04-03T21:31:55.399"
+          ]
+        },
+        {
+          "accepted_live_s": 19802.87075744772,
+          "annulus_counts": 46,
+          "conditional_aperture_rate_upper95_ct_s": 0.0004622319227728636,
+          "filename": "acisf23215N002_evt2.fits.gz",
+          "gross_counts": 4,
+          "input_sha256": "a617ddb41e8be68997a2e85d7daf04011cbd8e923b79e5c8429dd934f9e6e630",
+          "local_excess_p": 0.5427896093518624,
+          "net_aperture_rate_ct_s": 8.416288158825879e-06,
+          "obsid": 23215,
+          "per_target_bonferroni_p": 1.0,
+          "record": "visits/23215/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2020-04-13T04:36:40.826",
+            "2020-04-13T10:11:05.862"
+          ]
+        }
+      ]
+    },
+    "23779/49987e33e7bc66ca583baa1b7aab2ea59c067b58889807ec78dd851fd752585b/real/0": {
+      "folder": "target-01",
+      "gaps": [
+        {
+          "filename": "acisf00555N005_evt2.fits.gz",
+          "input_sha256": "01f645cb29fea456ac99efdd6afe0302914982090545320341699e6548abc48f",
+          "obsid": 555,
+          "record": "visits/555/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf00556N005_evt2.fits.gz",
+          "input_sha256": "e73277dfa69ce18d63991c17e99f971f75c12252bbed78a1d619c38a35b96c52",
+          "obsid": 556,
+          "record": "visits/556/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf01086N005_evt2.fits.gz",
+          "input_sha256": "7e7e8f1fa4e454e8835f7a53e30fa3dedc64b7dbced2b73a06e7f4fe8fc52dcc",
+          "obsid": 1086,
+          "record": "visits/1086/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf01112N006_evt2.fits.gz",
+          "input_sha256": "33ceecc939365781067f7c0adea14cf439c409e44653ad8c9d6df8cc350c29b8",
+          "obsid": 1112,
+          "record": "visits/1112/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf01113N006_evt2.fits.gz",
+          "input_sha256": "79158eac1ef6340d05106b4ddb9187535b7c57509b0de1f0b7f5580bed7f75bd",
+          "obsid": 1113,
+          "record": "visits/1113/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf01114N006_evt2.fits.gz",
+          "input_sha256": "128bd39061a2d6fb537bd9918691d525139ba4d9d242daa4d5faa86a7ad57ac2",
+          "obsid": 1114,
+          "record": "visits/1114/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf02941N004_evt2.fits.gz",
+          "input_sha256": "2bc263c4d748e17b2cdb341d7fabc23945f351c95190f7708e7ac072ec1ab70d",
+          "obsid": 2941,
+          "record": "visits/2941/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf04724N006_evt2.fits.gz",
+          "input_sha256": "0dc8f0fed325a082a1bb6d7f4cf38a43016d8cf7dce233171da5a69f5eb2ccfa",
+          "obsid": 4724,
+          "record": "visits/4724/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf04774N004_evt2.fits.gz",
+          "input_sha256": "efd3de6a2bd40ccbdb2fd528780be9302a248d7baf2a49b643b6c7873f483a62",
+          "obsid": 4774,
+          "record": "visits/4774/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf08188N004_evt2.fits.gz",
+          "input_sha256": "27e3a407dbcbcedcfdf5232444ef6bbc074b8def8c147fb779f46232a64d72f9",
+          "obsid": 8188,
+          "record": "visits/8188/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf09544N004_evt2.fits.gz",
+          "input_sha256": "3c65af31eeb5cc97172c09f3f24f84af70760032a477e242a8737e12be457933",
+          "obsid": 9544,
+          "record": "visits/9544/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf09714N003_evt2.fits.gz",
+          "input_sha256": "88f46e5cb16f439db19c25edf980522a032982937d5131533056f11e0a24c0ea",
+          "obsid": 9714,
+          "record": "visits/9714/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf10672N003_evt2.fits.gz",
+          "input_sha256": "fed03885ef9629f2d9dabf30c3854f1e62a2eb764dc41f6667e63261b75c2e10",
+          "obsid": 10672,
+          "record": "visits/10672/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf10921N003_evt2.fits.gz",
+          "input_sha256": "88fccafc04cb143149cbdb216cafab4234c81aff94ca9a718a0bf8e10ffc3ed7",
+          "obsid": 10921,
+          "record": "visits/10921/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf11391N003_evt2.fits.gz",
+          "input_sha256": "3f404fbb87fb5a3ef82ddbfbbdf878d1bfc58ef808d90cf932fb3dddf4b4d2aa",
+          "obsid": 11391,
+          "record": "visits/11391/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf12887N004_evt2.fits.gz",
+          "input_sha256": "f8e75e891c9c81279995b2d934a0bac162a3cfb5c09f7c25b53db37baeebdc70",
+          "obsid": 12887,
+          "record": "visits/12887/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf13993N003_evt2.fits.gz",
+          "input_sha256": "4257624851a8b06a6974500849e2f8cf720eca7a5dfa172b75ab652fcc0b908c",
+          "obsid": 13993,
+          "record": "visits/13993/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf13994N002_evt2.fits.gz",
+          "input_sha256": "69176517b9b9a8215a4e05f5c211b73ce9b6f47962a14b8a21ae0472657a7987",
+          "obsid": 13994,
+          "record": "visits/13994/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf13995N002_evt2.fits.gz",
+          "input_sha256": "7f588499b225521cc5d91fc286268a91c4572d86383d150c9920fde56202daba",
+          "obsid": 13995,
+          "record": "visits/13995/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf13996N003_evt2.fits.gz",
+          "input_sha256": "2fd4ede7ee9985527020eea5fb081b89a6de2aaec920e73f28741a8edb27b8b4",
+          "obsid": 13996,
+          "record": "visits/13996/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf14406N002_evt2.fits.gz",
+          "input_sha256": "55ab33dd106d13b7a525c542d4c221867cfc981308e6675ce76833da6e1cded7",
+          "obsid": 14406,
+          "record": "visits/14406/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf14410N002_evt2.fits.gz",
+          "input_sha256": "e41e3b36fdd67168f160c4d7866f27e3c1d9f39e5d21c44f57d69fe28a8f14ec",
+          "obsid": 14410,
+          "record": "visits/14410/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf14411N002_evt2.fits.gz",
+          "input_sha256": "011599783ef3fd155651a0883b60111f9ed8d6ecc20377cfb1817bc57e1f0ded",
+          "obsid": 14411,
+          "record": "visits/14411/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf14415N002_evt2.fits.gz",
+          "input_sha256": "6c68cd32fa74f2b992e3aeeacb6c70dc0798a4bca257a54d128fc9272320b98a",
+          "obsid": 14415,
+          "record": "visits/14415/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf15023N003_evt2.fits.gz",
+          "input_sha256": "404cc7af87eca3eeea718da69ea54e69c0ef347e4352a374c2a16443bfc5c020",
+          "obsid": 15023,
+          "record": "visits/15023/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf15024N003_evt2.fits.gz",
+          "input_sha256": "33862f11bc665f773f84fa07a2f04cad2d7c2c1aebdd8548ef3ab44fac8853e1",
+          "obsid": 15024,
+          "record": "visits/15024/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf16599N003_evt2.fits.gz",
+          "input_sha256": "7ff5fdf5434d0669e9d60694d1816ac143f1dca3d031bbafa134c983f4885c46",
+          "obsid": 16599,
+          "record": "visits/16599/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf16600N003_evt2.fits.gz",
+          "input_sha256": "2b2989e5d8941b57289627dd19951ce88c1c09434b7dc6147b47f18b69c90d3c",
+          "obsid": 16600,
+          "record": "visits/16600/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18234N003_evt2.fits.gz",
+          "input_sha256": "39a6d7200da6bf912e96a40483b55eb6c633b73f1503d2a13abc8dfd5c47b5d1",
+          "obsid": 18234,
+          "record": "visits/18234/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18235N003_evt2.fits.gz",
+          "input_sha256": "06d186b52186c0d678a5ab779e8ec9c9cb9c25bb4a2ede116f8d50dbff776dc5",
+          "obsid": 18235,
+          "record": "visits/18235/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18236N002_evt2.fits.gz",
+          "input_sha256": "44db96710d3e26aa4f11b0496f5850d157011b9405b280563ad7c7b1c8da559e",
+          "obsid": 18236,
+          "record": "visits/18236/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18237N002_evt2.fits.gz",
+          "input_sha256": "d6ce91761c791d760979370d9fdce53131e9fc3813a7ad10257e077c5445ef9f",
+          "obsid": 18237,
+          "record": "visits/18237/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18271N003_evt2.fits.gz",
+          "input_sha256": "76ec714e13e3be718b54f5df4b7ae91d2b142ca6b314fe473570f667aba1acb9",
+          "obsid": 18271,
+          "record": "visits/18271/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18272N003_evt2.fits.gz",
+          "input_sha256": "767b44a641f4b42eccb258d30fdfef7cdd1a398004a32aa0b60f9578d0d2105d",
+          "obsid": 18272,
+          "record": "visits/18272/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18273N003_evt2.fits.gz",
+          "input_sha256": "dab53213982a7b8f369cd5af440bc1045dc3f3a1f0295fc155156687204fd435",
+          "obsid": 18273,
+          "record": "visits/18273/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18274N002_evt2.fits.gz",
+          "input_sha256": "dfa5356054c5b2661d3fba25fed5d419a45bd5376e690ccfa1e23aae554424c0",
+          "obsid": 18274,
+          "record": "visits/18274/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18275N003_evt2.fits.gz",
+          "input_sha256": "80f4c3ead2abcbe380ad7fdbe061dd1e84da26158bcf173a8c2c119e494c8aae",
+          "obsid": 18275,
+          "record": "visits/18275/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18276N003_evt2.fits.gz",
+          "input_sha256": "2ed723e94de24c077a4f17b8ad5e641f5d71592b753c1eb3a00e7a63154e0d1c",
+          "obsid": 18276,
+          "record": "visits/18276/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18761N003_evt2.fits.gz",
+          "input_sha256": "066d4791b82e6e4475dffad0e63a76049bf244b0a6568a95cea5527b16cca782",
+          "obsid": 18761,
+          "record": "visits/18761/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18791N003_evt2.fits.gz",
+          "input_sha256": "5ec813ba6f91aefc3bed3b3234d26151dbf0df0bca0e2f7960686734ea9d35b9",
+          "obsid": 18791,
+          "record": "visits/18791/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18792N003_evt2.fits.gz",
+          "input_sha256": "3c0f0a94e2c541d8a0321e4371c37332d73424ab5f14f88e06831a6a5f58867f",
+          "obsid": 18792,
+          "record": "visits/18792/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18793N003_evt2.fits.gz",
+          "input_sha256": "ee72d1013cde923b9d5f634a18fc49edc6c3c8cc0b95ad82f49add51e56668f4",
+          "obsid": 18793,
+          "record": "visits/18793/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18794N003_evt2.fits.gz",
+          "input_sha256": "c4f5b6ebc9f8a26789230f0e6d8e411bef74abe259991bfe81fe02569b471bbb",
+          "obsid": 18794,
+          "record": "visits/18794/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18795N003_evt2.fits.gz",
+          "input_sha256": "77e512cb83401543211560e1630a09def90909bece4b30cb038f255812fd174e",
+          "obsid": 18795,
+          "record": "visits/18795/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18796N003_evt2.fits.gz",
+          "input_sha256": "b49415ec02f21faba5334244188f9eb9c8c243e47cc58f50d46c287533e93f6d",
+          "obsid": 18796,
+          "record": "visits/18796/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18797N003_evt2.fits.gz",
+          "input_sha256": "69f4ffbe27ca5bbb0ce02cf5648944f7a06b19f94253437d73945dd2d7f98be8",
+          "obsid": 18797,
+          "record": "visits/18797/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf18798N003_evt2.fits.gz",
+          "input_sha256": "05bf51cccc95242eed6c90d4d0db7ebf7ae0804c5f336337c4f8d174a966f5b7",
+          "obsid": 18798,
+          "record": "visits/18798/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf19909N002_evt2.fits.gz",
+          "input_sha256": "d12c5ee33037694573ddaa3f04f5ebb3cb65aa2d177f6416759d5dc1ea89154a",
+          "obsid": 19909,
+          "record": "visits/19909/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf19910N002_evt2.fits.gz",
+          "input_sha256": "81860e8215c8e20d74a907d7379b7f3946e4fc6b4427d7af1aeb3be219d68781",
+          "obsid": 19910,
+          "record": "visits/19910/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf19911N002_evt2.fits.gz",
+          "input_sha256": "9079e8183c1ba33229e2102b39881a425223a9d0d442f41f6db8fb5ddd0f324e",
+          "obsid": 19911,
+          "record": "visits/19911/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf19912N002_evt2.fits.gz",
+          "input_sha256": "e995b05363595db2473590e036ca6db6ae040b1e6e203d465fd9716dc85ebd41",
+          "obsid": 19912,
+          "record": "visits/19912/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf19998N003_evt2.fits.gz",
+          "input_sha256": "7ff6921a6f3deb49d4a2afd8ba7595017fb341981e1b9d7b4ec010a5043bfaec",
+          "obsid": 19998,
+          "record": "visits/19998/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20010N003_evt2.fits.gz",
+          "input_sha256": "782aae3ecc110ee6829d204554bb725fffc601a10656c6d60bff3f7ac230ced0",
+          "obsid": 20010,
+          "record": "visits/20010/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20011N003_evt2.fits.gz",
+          "input_sha256": "e28e0d53815e964186449575e1f3ac57b39f530c15cf5a614c968e2bfae84cfd",
+          "obsid": 20011,
+          "record": "visits/20011/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20027N003_evt2.fits.gz",
+          "input_sha256": "9a370881767fc40b01a419e14557ace9ca48b53ceb65f16409d2876e7891fb41",
+          "obsid": 20027,
+          "record": "visits/20027/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20028N003_evt2.fits.gz",
+          "input_sha256": "839fffeb18ef1fb6e32569650cfacabdfc6ba06b8ebb4d4b9a2ac39d3867bad6",
+          "obsid": 20028,
+          "record": "visits/20028/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20029N003_evt2.fits.gz",
+          "input_sha256": "51960b5ce4d02ac5f7886ccf3cdd0111da2dff156568620a701cf1faee4927ed",
+          "obsid": 20029,
+          "record": "visits/20029/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20030N003_evt2.fits.gz",
+          "input_sha256": "871afcd68859116afa67616206f0b3235cd6a878b60946bdb53acb60a2779f6a",
+          "obsid": 20030,
+          "record": "visits/20030/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20031N003_evt2.fits.gz",
+          "input_sha256": "f7ff31fe0543611b07807b2be5300be252165c6093b7b4d5f8986e327be1af3d",
+          "obsid": 20031,
+          "record": "visits/20031/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20037N003_evt2.fits.gz",
+          "input_sha256": "73c139c654dd411ed91c276edb94b6b81d0e880b72fcc539ca341312cf455869",
+          "obsid": 20037,
+          "record": "visits/20037/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20038N003_evt2.fits.gz",
+          "input_sha256": "e3891811d01d2632399f3e3f18c74f0b8e48c9b5bec706119d348e441ca6dba2",
+          "obsid": 20038,
+          "record": "visits/20038/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20039N003_evt2.fits.gz",
+          "input_sha256": "ed9b63539ae8ab19da3a3aebcb3ffc81d6c88914cade6752d0f2453594a8d91c",
+          "obsid": 20039,
+          "record": "visits/20039/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20049N003_evt2.fits.gz",
+          "input_sha256": "458dd8585321156c8bc1cd84b5b251af8a1ca5a8f46a6db7863c17c1ac607c6b",
+          "obsid": 20049,
+          "record": "visits/20049/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20050N003_evt2.fits.gz",
+          "input_sha256": "cbdb62ee220c85dfb2cdabc4f63862396c1e7acdf3ad69fb8141576feaf3ae63",
+          "obsid": 20050,
+          "record": "visits/20050/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20051N003_evt2.fits.gz",
+          "input_sha256": "e71cd49132bc6dfd44c6817e474235d8734b7d8a5e9dc11f4bacb7b3da718ff0",
+          "obsid": 20051,
+          "record": "visits/20051/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20052N002_evt2.fits.gz",
+          "input_sha256": "ccd4dc4f2948190eee78240e091f71dfaf351bcd76738b69fa7ed6af485743d9",
+          "obsid": 20052,
+          "record": "visits/20052/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20612N004_evt2.fits.gz",
+          "input_sha256": "487191dabc26e686694488dbff08da1994caaa4092231c46d4bc4589fe8546c7",
+          "obsid": 20612,
+          "record": "visits/20612/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf21068N005_evt2.fits.gz",
+          "input_sha256": "2cbbf2aea6c5ca1b3f01db8a80f8223984294270be4f0360cc3a5c3fd356e912",
+          "obsid": 21068,
+          "record": "visits/21068/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf21069N005_evt2.fits.gz",
+          "input_sha256": "ec0a2944435e1511081f6b200da4cb2c8a033eb2e1a5f27771e411f41c97d304",
+          "obsid": 21069,
+          "record": "visits/21069/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf22648N002_evt2.fits.gz",
+          "input_sha256": "c90eedff90ea94b2327848ca240b76f126f1cb02df2cd72e8d13200dd244b4d0",
+          "obsid": 22648,
+          "record": "visits/22648/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf22649N003_evt2.fits.gz",
+          "input_sha256": "066729d8d8db7684341edd70fdfff75596454093f954e18195f52cd52617db16",
+          "obsid": 22649,
+          "record": "visits/22649/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf22930N003_evt2.fits.gz",
+          "input_sha256": "6220fefb0ed3131b88637728ac46c9de1793b12f61dd9c3306b8ff4c59676036",
+          "obsid": 22930,
+          "record": "visits/22930/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf23182N002_evt2.fits.gz",
+          "input_sha256": "6301b3746a3c443991be34bd76343523fe81a3196996aa089367b3327d15466c",
+          "obsid": 23182,
+          "record": "visits/23182/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf23361N002_evt2.fits.gz",
+          "input_sha256": "945eedc2a0cfbbf26923456a97b84a536ab754491211d432c1e5e4e043dcab69",
+          "obsid": 23361,
+          "record": "visits/23361/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf24853N002_evt2.fits.gz",
+          "input_sha256": "f2b7ed4bfb4253ae4276023c7b1544f97d96d03f92928919856e33524d3b977c",
+          "obsid": 24853,
+          "record": "visits/24853/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf24854N003_evt2.fits.gz",
+          "input_sha256": "6ab406ce0d29e1fe85a9088a79ec00627a524da1e78c0ff53b663415bcda6acd",
+          "obsid": 24854,
+          "record": "visits/24854/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf28255N001_evt2.fits.gz",
+          "input_sha256": "b8b3476cf20e1d97031836553b1493331ec0108b38b5e6c12aeedac041b013e4",
+          "obsid": 28255,
+          "record": "visits/28255/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf28262N001_evt2.fits.gz",
+          "input_sha256": "f385551e18614085504bdbbe166fc1402012692efa6b91c030cb668fa8693865",
+          "obsid": 28262,
+          "record": "visits/28262/visit.json",
+          "status": "coverage_unconfirmed"
+        }
+      ],
+      "nearby_obsids": [
+        555,
+        556,
+        1086,
+        1112,
+        1113,
+        1114,
+        2941,
+        4724,
+        4774,
+        8188,
+        9544,
+        9714,
+        10672,
+        10921,
+        11391,
+        12887,
+        13993,
+        13994,
+        13995,
+        13996,
+        14406,
+        14410,
+        14411,
+        14415,
+        15023,
+        15024,
+        16599,
+        16600,
+        18234,
+        18235,
+        18236,
+        18237,
+        18271,
+        18272,
+        18273,
+        18274,
+        18275,
+        18276,
+        18761,
+        18791,
+        18792,
+        18793,
+        18794,
+        18795,
+        18796,
+        18797,
+        18798,
+        19909,
+        19910,
+        19911,
+        19912,
+        19998,
+        20010,
+        20011,
+        20027,
+        20028,
+        20029,
+        20030,
+        20031,
+        20037,
+        20038,
+        20039,
+        20049,
+        20050,
+        20051,
+        20052,
+        20612,
+        21068,
+        21069,
+        22648,
+        22649,
+        22930,
+        23182,
+        23361,
+        24853,
+        24854,
+        28255,
+        28262
+      ],
+      "pointing_query_status": "ok",
+      "supported": []
+    }
+  },
+  "visits": [
+    {
+      "obsid": 555,
+      "record": "visits/555/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 556,
+      "record": "visits/556/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 898,
+      "record": "visits/898/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 1086,
+      "record": "visits/1086/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 1112,
+      "record": "visits/1112/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 1113,
+      "record": "visits/1113/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 1114,
+      "record": "visits/1114/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 2941,
+      "record": "visits/2941/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 4724,
+      "record": "visits/4724/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 4774,
+      "record": "visits/4774/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 8188,
+      "record": "visits/8188/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 9544,
+      "record": "visits/9544/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 9714,
+      "record": "visits/9714/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 10672,
+      "record": "visits/10672/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 10921,
+      "record": "visits/10921/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 11391,
+      "record": "visits/11391/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 12887,
+      "record": "visits/12887/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 13993,
+      "record": "visits/13993/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 13994,
+      "record": "visits/13994/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 13995,
+      "record": "visits/13995/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 13996,
+      "record": "visits/13996/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 14406,
+      "record": "visits/14406/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 14410,
+      "record": "visits/14410/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 14411,
+      "record": "visits/14411/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 14415,
+      "record": "visits/14415/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 15023,
+      "record": "visits/15023/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 15024,
+      "record": "visits/15024/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 16599,
+      "record": "visits/16599/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 16600,
+      "record": "visits/16600/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18234,
+      "record": "visits/18234/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18235,
+      "record": "visits/18235/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18236,
+      "record": "visits/18236/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18237,
+      "record": "visits/18237/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18271,
+      "record": "visits/18271/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18272,
+      "record": "visits/18272/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18273,
+      "record": "visits/18273/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18274,
+      "record": "visits/18274/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18275,
+      "record": "visits/18275/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18276,
+      "record": "visits/18276/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18761,
+      "record": "visits/18761/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18791,
+      "record": "visits/18791/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18792,
+      "record": "visits/18792/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18793,
+      "record": "visits/18793/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18794,
+      "record": "visits/18794/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18795,
+      "record": "visits/18795/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18796,
+      "record": "visits/18796/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18797,
+      "record": "visits/18797/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 18798,
+      "record": "visits/18798/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 19909,
+      "record": "visits/19909/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 19910,
+      "record": "visits/19910/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 19911,
+      "record": "visits/19911/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 19912,
+      "record": "visits/19912/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 19998,
+      "record": "visits/19998/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20010,
+      "record": "visits/20010/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20011,
+      "record": "visits/20011/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20027,
+      "record": "visits/20027/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20028,
+      "record": "visits/20028/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20029,
+      "record": "visits/20029/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20030,
+      "record": "visits/20030/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20031,
+      "record": "visits/20031/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20037,
+      "record": "visits/20037/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20038,
+      "record": "visits/20038/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20039,
+      "record": "visits/20039/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20049,
+      "record": "visits/20049/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20050,
+      "record": "visits/20050/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20051,
+      "record": "visits/20051/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20052,
+      "record": "visits/20052/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20612,
+      "record": "visits/20612/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 21068,
+      "record": "visits/21068/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 21069,
+      "record": "visits/21069/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 21481,
+      "record": "visits/21481/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 21482,
+      "record": "visits/21482/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 21483,
+      "record": "visits/21483/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 21484,
+      "record": "visits/21484/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22648,
+      "record": "visits/22648/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22649,
+      "record": "visits/22649/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22905,
+      "record": "visits/22905/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22921,
+      "record": "visits/22921/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22922,
+      "record": "visits/22922/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22923,
+      "record": "visits/22923/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22924,
+      "record": "visits/22924/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22925,
+      "record": "visits/22925/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22926,
+      "record": "visits/22926/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22927,
+      "record": "visits/22927/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22928,
+      "record": "visits/22928/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 22930,
+      "record": "visits/22930/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23069,
+      "record": "visits/23069/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23175,
+      "record": "visits/23175/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23182,
+      "record": "visits/23182/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23186,
+      "record": "visits/23186/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23190,
+      "record": "visits/23190/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23201,
+      "record": "visits/23201/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23205,
+      "record": "visits/23205/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23215,
+      "record": "visits/23215/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 23361,
+      "record": "visits/23361/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 24853,
+      "record": "visits/24853/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 24854,
+      "record": "visits/24854/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 28255,
+      "record": "visits/28255/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 28262,
+      "record": "visits/28262/visit.json",
+      "status": "acquired"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE version="1.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.ivoa.net/xml/VOTable/v1.3"
+  xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/v1.3">
+ <DESCRIPTION>
+   VizieR Astronomical Server vizier.idia.ac.za
+    Date: 2026-11-22T03:58:46 [V7.6.1]
+   Explanations and Statistics of UCDs:			See LINK below
+   In case of problem, please report to:	cds-question@unistra.fr
+ </DESCRIPTION>
+<!-- VOTable description at http://www.ivoa.net/Documents/latest/VOT.html -->
+<INFO name="service_protocol" value="ASU">  IVOID of the protocol through which the data was retrieved</INFO>
+<INFO name="request_date" value="2026-11-22T03:58:47">  Query execution date</INFO>
+<INFO name="request" value="https://vizier.idia.ac.za/viz-bin/votable?-source=J%2FA%2BA%2F675%2FA44%2Ftable3&amp;-out=XRT%2CRAdeg%2CDEdeg%2CObsID%2CePos&amp;-out.max=25000">  Full request URL</INFO>
+<INFO name="contact" value="cds-question@unistra.fr">  Email or URL to contact publisher</INFO>
+<INFO name="server_software" value="VizieR/7.6.1">  Software version</INFO>
+<INFO name="publisher" value="CDS">  Data centre that produced the VOTable</INFO>
+
+<!--
+Execution Reports
+ -->
+
+<RESOURCE ID="yCat_36750044" name="J/A+A/675/A44" type="results">
+  <DESCRIPTION>Extragalactic fast X-ray transient cand. (Quirola-Vasquez+, 2023)</DESCRIPTION>  <INFO name="ivoid" value="ivo://cds.vizier/j/a+a/675/a44">    IVOID of underlying data collection  </INFO>
+  <INFO name="data_ivoid" value="ivo://cds.vizier/j/a+a/675/a44">    IVOID of underlying data collection  </INFO>
+  <INFO name="creator" value="Quirola-Vasquez J.">    First author or institution  </INFO>
+  <INFO name="cites" value="bibcode:2023A&amp;A...675A..44Q">    Article or Data origin sources  </INFO>
+  <INFO name="journal" value="A&amp;A">    Journal name  </INFO>
+  <INFO name="original_date" value="2023">    Year of the article publication  </INFO>
+  <INFO name="reference_url" value="https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/675/A44">    Dataset landing page  </INFO>
+  <INFO name="citation" value="doi:10.26093/cds/vizier.36750044">    Dataset identifier that can be used for citation  </INFO>
+  <INFO name="publication_date" value="2024-11-06">    Date of first publication in the data centre  </INFO>
+  <INFO name="rights_uri" value="https://cds.unistra.fr/vizier-org/licences_vizier.html">    Licence URI  </INFO>
+
+  <COOSYS ID="J2000" system="eq_FK5" equinox="J2000"/>
+  <TABLE ID="J_A_A_675_A44_table3" name="J/A+A/675/A44/table3">
+    <DESCRIPTION>Properties of the extragalactic FXT candidates detected and/or discussed in this work, ordered by date.</DESCRIPTION>
+    <!-- Definitions of GROUPs and FIELDs -->
+
+<!-- +++No column could be found to attach a LINK in table: J/A+A/675/A44/table3 -->
+    <FIELD name="XRT" ucd="meta.id;meta.main" datatype="char" arraysize="10"><!-- ucd="ID_MAIN" -->
+      <DESCRIPTION>X-ray transient identifier (XRT date), plus previous name when available</DESCRIPTION>
+    </FIELD>
+    <FIELD name="ObsID" ucd="meta.id;obs" datatype="int" width="5"><!-- ucd="OBS_ID" -->
+      <DESCRIPTION>Chandra observation ID</DESCRIPTION>
+    </FIELD>
+    <FIELD name="ePos" ucd="stat.error;pos" datatype="float" width="5" precision="2" unit="arcsec"><!-- ucd="ERROR" -->
+      <DESCRIPTION>Estimated 2{sigma} X-ray positional uncertainty (see Sect. 2.5).</DESCRIPTION>
+    </FIELD>
+<DATA><TABLEDATA>
+<TR><TD>XRT 140507</TD><TD>16093</TD><TD>0.80</TD></TR>
+<TR><TD>XRT 150322</TD><TD>16453</TD><TD>0.32</TD></TR>
+<TR><TD>XRT 151121</TD><TD>18715</TD><TD>2.00</TD></TR>
+<TR><TD>XRT 161125</TD><TD>19310</TD><TD>5.00</TD></TR>
+<TR><TD>XRT 170901</TD><TD>20635</TD><TD>0.14</TD></TR>
+<TR><TD>XRT 191127</TD><TD>21831</TD><TD>1.20</TD></TR>
+<TR><TD>XRT 191223</TD><TD>23103</TD><TD>0.44</TD></TR>
+<TR><TD>XRT 210423</TD><TD>24604</TD><TD>0.60</TD></TR>
+</TABLEDATA></DATA>
+</TABLE>
+<INFO name="matches" value="8">matching records</INFO>
+
+<INFO name="Warning" value="Column 'RAdeg' unknown in 'J/A+A/675/A44/table3'"/>
+<INFO name="Warning" value="Column 'DEdeg' unknown in 'J/A+A/675/A44/table3'"/>
+</RESOURCE>
+</VOTABLE>

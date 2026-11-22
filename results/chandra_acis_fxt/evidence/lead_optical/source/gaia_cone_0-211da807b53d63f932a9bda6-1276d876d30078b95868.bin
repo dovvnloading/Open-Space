@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE version="1.4" xmlns="http://www.ivoa.net/xml/VOTable/v1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/votable-1.4.xsd">
+<RESOURCE type="results">
+
+<INFO name="JOBID" value="5ad0d00d-e65a-11f1-88af-bc97e148b76b-O" ucd="meta.id;meta.query"/>
+<INFO name="JOBNAME" value=""/>
+<INFO name="QUERY_STATUS" value="OK"/>
+<INFO name="QUERY" value="SELECT source_id,ra,dec,ra_error,dec_error,ref_epoch,astrometric_params_solved,parallax,parallax_error,pmra,pmra_error,pmdec,pmdec_error,ruwe,duplicated_source,astrometric_excess_noise,phot_g_mean_mag,phot_bp_mean_mag,phot_rp_mean_mag,phot_g_mean_flux_over_error,phot_bp_mean_flux_over_error,phot_rp_mean_flux_over_error,bp_rp,phot_bp_rp_excess_factor,phot_variable_flag FROM gaiadr3.gaia_source WHERE 1=CONTAINS(POINT(&#039;ICRS&#039;,ra,dec),CIRCLE(&#039;ICRS&#039;,253.862985517937,-39.489437813462,0.004166666667))" ucd="meta.query"/>
+
+<PARAM name="CITATION" ucd="meta.bib" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/credits">
+<DESCRIPTION>How to cite and acknowledge Gaia:</DESCRIPTION>
+</PARAM>
+<PARAM name="RELEASE" ucd="meta.version" datatype="char" arraysize="*" value="Gaia DR3">
+<DESCRIPTION>Gaia data release</DESCRIPTION>
+</PARAM>
+<PARAM name="HELP" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/archive">
+<DESCRIPTION>Tutorials, documentation, and help:</DESCRIPTION>
+</PARAM>
+<PARAM name="ISSUES" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/known-issues">
+<DESCRIPTION>Known issues in the data:</DESCRIPTION>
+</PARAM>
+<PARAM name="DATA" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia/data-access">
+<DESCRIPTION>Gaia data:</DESCRIPTION>
+</PARAM>
+<PARAM name="TERMS" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/esdc/terms-and-conditions">
+<DESCRIPTION>Terms and conditions for use of Gaia data:</DESCRIPTION>
+</PARAM>
+<PARAM name="HOME" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia">
+<DESCRIPTION>Gaia mission home:</DESCRIPTION>
+</PARAM>
+<PARAM name="PUBLISHER" ucd="meta.id;meta.curation" datatype="char" arraysize="*" value="ESA/Gaia/DPAC">
+<DESCRIPTION>Dataset publisher</DESCRIPTION>
+</PARAM>
+<PARAM name="CREATOR" ucd="meta.ref" datatype="char" arraysize="*" value="Gaia Collaboration">
+<DESCRIPTION>Dataset creator</DESCRIPTION>
+</PARAM>
+
+<COOSYS ID="GAIADR3" epoch="J2016.0" system="ICRS" />
+
+<RESOURCE>
+  <COOSYS ID="t1000518-coosys-1" epoch="J2016.0" system="ICRS"/>
+</RESOURCE>
+<TABLE>
+<FIELD ID="SOURCE_ID" datatype="long" name="source_id" ucd="meta.id">
+<DESCRIPTION>Unique source identifier (unique within a particular Data Release)</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="ra" ref="t1000518-coosys-1" ucd="pos.eq.ra;meta.main" unit="deg" utype="stc:AstroCoords.Position3D.Value3.C1">
+<DESCRIPTION>Right ascension</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="dec" ref="t1000518-coosys-1" ucd="pos.eq.dec;meta.main" unit="deg" utype="stc:AstroCoords.Position3D.Value3.C2">
+<DESCRIPTION>Declination</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="ra_error" ucd="stat.error;pos.eq.ra" unit="mas" utype="stc:AstroCoords.Position3D.Error3.C1">
+<DESCRIPTION>Standard error of right ascension</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="dec_error" ucd="stat.error;pos.eq.dec" unit="mas" utype="stc:AstroCoords.Position3D.Error3.C2">
+<DESCRIPTION>Standard error of declination</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="ref_epoch" ucd="meta.ref;time.epoch" unit="yr" utype="stc:AstroCoords.Time.TimeInstant">
+<DESCRIPTION>Reference epoch</DESCRIPTION>
+</FIELD>
+<FIELD datatype="short" name="astrometric_params_solved" ucd="meta.number">
+<DESCRIPTION>Which parameters have been solved for?</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="parallax" ucd="pos.parallax.trig" unit="mas">
+<DESCRIPTION>Parallax</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="parallax_error" ucd="stat.error;pos.parallax.trig" unit="mas">
+<DESCRIPTION>Standard error of parallax</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="pmra" ucd="pos.pm;pos.eq.ra" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Value3.C1">
+<DESCRIPTION>Proper motion in right ascension direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="pmra_error" ucd="stat.error;pos.pm;pos.eq.ra" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Error3.C1">
+<DESCRIPTION>Standard error of proper motion in right ascension direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="pmdec" ucd="pos.pm;pos.eq.dec" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Value3.C2">
+<DESCRIPTION>Proper motion in declination direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="pmdec_error" ucd="stat.error;pos.pm;pos.eq.dec" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Error3.C2">
+<DESCRIPTION>Standard error of proper motion in declination direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="ruwe" ucd="stat.error">
+<DESCRIPTION>Renormalised unit weight error</DESCRIPTION>
+</FIELD>
+<FIELD datatype="boolean" name="duplicated_source" ucd="meta.code.status">
+<DESCRIPTION>Source with multiple source identifiers</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="astrometric_excess_noise" ucd="stat.value" unit="mas">
+<DESCRIPTION>Excess noise of the source</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="phot_g_mean_mag" ucd="phot.mag;em.opt" unit="mag">
+<DESCRIPTION>G-band mean magnitude</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="phot_bp_mean_mag" ucd="phot.mag;em.opt.B" unit="mag">
+<DESCRIPTION>Integrated BP mean magnitude</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="phot_rp_mean_mag" ucd="phot.mag;em.opt.R" unit="mag">
+<DESCRIPTION>Integrated RP mean magnitude</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="phot_g_mean_flux_over_error" ucd="stat.snr;phot.flux;em.opt">
+<DESCRIPTION>G-band mean flux divided by its error</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="phot_bp_mean_flux_over_error" ucd="stat.snr;phot.flux;em.opt.B">
+<DESCRIPTION>Integrated BP mean flux divided by its error</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="phot_rp_mean_flux_over_error" ucd="stat.snr;phot.flux;em.opt.R">
+<DESCRIPTION>Integrated RP mean flux divided by its error</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="bp_rp" ucd="phot.color;em.opt.B;em.opt.R" unit="mag">
+<DESCRIPTION>BP - RP colour</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="phot_bp_rp_excess_factor" ucd="arith.factor;phot.flux;em.opt">
+<DESCRIPTION>BP/RP excess factor</DESCRIPTION>
+</FIELD>
+<FIELD arraysize="*" datatype="char" name="phot_variable_flag" ucd="meta.code;src.var">
+<DESCRIPTION>Photometric variability flag</DESCRIPTION>
+</FIELD>
+<DATA>
+<BINARY2>
+<STREAM encoding='base64'>
+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
+</STREAM>
+</BINARY2>
+</DATA>
+</TABLE>
+</RESOURCE>
+<RESOURCE type="meta" utype="adhoc:service" name="ancillary">
+    <DESCRIPTION>Retrieve DataLink file containing ancillary data for source</DESCRIPTION>
+    <PARAM name="standardID" datatype="char" arraysize="*" value="ivo://ivoa.net/std/DataLink#links-1.0"/>
+    <PARAM name="accessURL" datatype="char" arraysize="*" value="https://gea.esac.esa.int/data-server/datalink/links"/>
+    <PARAM name="contentType" datatype="char" arraysize="*" value="application/x-votable+xml;content=datalink"/>
+    <GROUP name="inputParams">
+        <PARAM name="ID"  datatype="long"  value="" ref="SOURCE_ID"/>
+        <PARAM name="RELEASE" datatype="char" arraysize="*" value="Gaia DR3"/>
+    </GROUP>
+</RESOURCE>
+</VOTABLE>

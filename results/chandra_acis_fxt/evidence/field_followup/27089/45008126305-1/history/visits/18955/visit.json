@@ -1,0 +1,255 @@
+{
+  "archive_attempts": [
+    {
+      "downloaded": [
+        {
+          "bytes": 10701805,
+          "filename": "acisf18955N004_evt2.fits.gz",
+          "last_modified": "Sat, 16 Oct 2021 04:32:50 GMT",
+          "resolved_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/5/18955/primary/acisf18955N004_evt2.fits.gz",
+          "retrieved_utc": "2026-11-22T09:59:05.594266+00:00",
+          "sha256": "d804f77012e5d047d6e8da72cdf484842cc9a2c0c418bac40f6ad184c66370e0",
+          "url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/5/18955/primary/acisf18955N004_evt2.fits.gz"
+        }
+      ],
+      "index": {
+        "bytes": 1049,
+        "last_modified": "Sat, 16 Oct 2021 04:58:28 GMT",
+        "resolved_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/5/18955/primary/",
+        "retrieved_utc": "2026-11-22T09:59:04.282013+00:00",
+        "sha256": "f92b2116b0db07256f83e0757d75d0d3f57ae9a59f09b3ca2435a85fe0b40db0",
+        "url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/5/18955/primary/"
+      },
+      "index_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/5/18955/primary/",
+      "selected_files": [
+        "acisf18955N004_evt2.fits.gz"
+      ]
+    }
+  ],
+  "lead_ids": [
+    "27089/dfc736671520bc9f5d88db7df50d02bdb21434803ec8643925057c0315fa5f2f/real/0"
+  ],
+  "obsid": 18955,
+  "products": [
+    {
+      "input": {
+        "ascdsver": "10.10.1",
+        "bytes": 10701805,
+        "caldbver": "4.9.6",
+        "cycle": "P",
+        "dec_nom_deg": -23.37955762243,
+        "dec_targ_deg": -23.381486,
+        "filename": "acisf18955N004_evt2.fits.gz",
+        "fits_sha256": "53b07eb287a755a15fc92ab09e19984c98f0e1c67662b86bd32b37211d43be16",
+        "grating": "NONE",
+        "index_sha256": "f92b2116b0db07256f83e0757d75d0d3f57ae9a59f09b3ca2435a85fe0b40db0",
+        "index_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/5/18955/primary/",
+        "last_modified": "Sat, 16 Oct 2021 04:32:50 GMT",
+        "obsid": 18955,
+        "ra_nom_deg": 197.44939544673,
+        "ra_targ_deg": 197.450375,
+        "readmode": "TIMED",
+        "resolved_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/5/18955/primary/acisf18955N004_evt2.fits.gz",
+        "retrieved_utc": "2026-11-22T09:59:05.594266+00:00",
+        "revision": 4,
+        "rows": 276459,
+        "sha256": "d804f77012e5d047d6e8da72cdf484842cc9a2c0c418bac40f6ad184c66370e0",
+        "tstart": 619549809.92195,
+        "tstop": 619577005.73604,
+        "url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/5/18955/primary/acisf18955N004_evt2.fits.gz"
+      },
+      "measurements": {
+        "27089/dfc736671520bc9f5d88db7df50d02bdb21434803ec8643925057c0315fa5f2f/real/0": {
+          "accepted_live_s": 9744.31316462915,
+          "annulus_area_ratio": 12.0,
+          "annulus_counts": 22,
+          "conditional_aperture_rate_upper95_ct_s": 0.00048683416042192846,
+          "event_mjd_utc": 59968.431269370856,
+          "gross_counts": 1,
+          "gross_counts_upper95": 4.743864518390577,
+          "local_excess_p": 0.8413384999233846,
+          "net_aperture_rate_ct_s": -8.551996628743904e-05,
+          "radius_arcsec": 5.272394616409674,
+          "radius_px": 10.716249220344865,
+          "segments": [
+            {
+              "accepted_bins": [],
+              "annulus_counts": 0,
+              "ccd_id": 7,
+              "duty": 0.9873373978722684,
+              "gross_counts": 0,
+              "gti_met_s": [
+                619551017.921968,
+                619575971.5223398
+              ],
+              "neighborhood_quadrant_counts": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "reason": "insufficient local footprint witnesses",
+              "rejected_bins": {}
+            },
+            {
+              "accepted_bins": [
+                [
+                  619551135.2589903,
+                  619551545.9385686
+                ],
+                [
+                  619552132.6236805,
+                  619552543.3032587
+                ]
+              ],
+              "annulus_counts": 2,
+              "ccd_id": 6,
+              "duty": 0.9873373978722783,
+              "gross_counts": 0,
+              "gti_met_s": [
+                619551017.921968,
+                619552719.3087922
+              ],
+              "neighborhood_quadrant_counts": [
+                9,
+                6,
+                4,
+                3
+              ],
+              "rejected_bins": {
+                "node_boundary": 15
+              }
+            },
+            {
+              "accepted_bins": [
+                [
+                  619553141.990167,
+                  619553501.5103587
+                ],
+                [
+                  619554100.7106782,
+                  619554520.1509018
+                ],
+                [
+                  619555119.3512213,
+                  619555538.791445
+                ],
+                [
+                  619556137.9917644,
+                  619556497.5119562
+                ],
+                [
+                  619557096.7122756,
+                  619557516.1524993
+                ],
+                [
+                  619558115.3528188,
+                  619558534.7930424
+                ],
+                [
+                  619559133.993362,
+                  619559493.5135536
+                ],
+                [
+                  619560152.633905,
+                  619560512.1540968
+                ],
+                [
+                  619561111.3544163,
+                  619561530.79464
+                ],
+                [
+                  619562129.9949595,
+                  619562549.435183
+                ],
+                [
+                  619563088.7154707,
+                  619563508.1556942
+                ],
+                [
+                  619564107.3560138,
+                  619564526.7962375
+                ],
+                [
+                  619565125.9965569,
+                  619565545.4367806
+                ],
+                [
+                  619566144.6371001,
+                  619566504.1572918
+                ],
+                [
+                  619567103.3576113,
+                  619567522.7978349
+                ],
+                [
+                  619568121.9981544,
+                  619568541.4383781
+                ],
+                [
+                  619569140.6386975,
+                  619569500.1588893
+                ],
+                [
+                  619570159.2792407,
+                  619570518.7994324
+                ],
+                [
+                  619571117.9997519,
+                  619571537.4399755
+                ],
+                [
+                  619572136.640295,
+                  619572496.1604867
+                ],
+                [
+                  619573155.2808381,
+                  619573514.8010299
+                ],
+                [
+                  619574114.0013493,
+                  619574533.441573
+                ],
+                [
+                  619575132.6418926,
+                  619575492.1620842
+                ]
+              ],
+              "annulus_counts": 20,
+              "ccd_id": 6,
+              "duty": 0.9873373978722783,
+              "gross_counts": 1,
+              "gti_met_s": [
+                619552722.5499433,
+                619575971.5223398
+              ],
+              "neighborhood_quadrant_counts": [
+                84,
+                121,
+                87,
+                101
+              ],
+              "rejected_bins": {
+                "node_boundary": 237
+              }
+            }
+          ],
+          "sky_x": 4404.961758952645,
+          "sky_y": 3651.9680060910337,
+          "status": "measured_aperture",
+          "temporal_relation": "before",
+          "visit_iso_utc": [
+            "2017-08-19T17:29:08.738",
+            "2017-08-20T00:25:02.338"
+          ],
+          "visit_mjd_utc": [
+            57984.728573356115,
+            57985.017388175234
+          ]
+        }
+      },
+      "status": "measured_or_geometry_excluded"
+    }
+  ],
+  "status": "acquired"
+}
