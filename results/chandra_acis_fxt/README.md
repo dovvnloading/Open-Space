@@ -1,25 +1,13 @@
 # Chandra ACIS fast X-ray transient search
 
-**The scan covered 1.591199 Ms of eligible 60-second flare-start live time in 128 ObsIDs and retained 2 unresolved leads.**
+**Interim Chandra ACIS search covered 1,042 of 6,608 dated ObsIDs and 16.351395 Ms of eligible 60-second flare-start time.**
 
-The frozen release inventory contains 6,608 ObsIDs. All data products were scanned in 128. Catalog calls and needed photometry completed in 124. The release-date or mode ledger contains 14 exceptions.
+The deposited scans produced 12,108 real trigger rows. 74 passed the instrumental screen before counterpart review and cross-product deduplication. Required catalog checks and photometry finished in 991 observations. Worker completion depends on field complexity, catalog response times and calibration. A global discovery count awaits the full search and review.
 
-Across 24 full-survey scrambles the mean number passing the same instrumental and counterpart screen was 0.167. The real fields produced 18 raw triggers. Of 1,297 executed injections, 939 passed instrumental selection. 239 additional draws lacked usable observing time or geometry.
+[Current exposure by duration, coverage and input checksums](evidence/primary_ingest/44985879443-1/PROGRESS.md) · [Measured priority flares](PRIORITY.md) · [Selection and reproduction commands](METHODS.md)
 
-| Trial duration (s) | Eligible field-start live seconds |
-|---:|---:|
-| 60 | 1,591,198.7 |
-| 180 | 1,546,140.0 |
-| 600 | 1,392,053.9 |
-| 1800 | 1,022,433.4 |
-| 3600 | 572,183.3 |
+The prespecified 128-observation cohort contributed 1.5912 Ms of eligible 60-second start time. Two of 18 real trigger rows passed the instrument cuts. Both had one equal-or-larger instrument-stage maximum in 24 time scrambles (permutation estimate 0.08). Of 1,297 attempted synthetic flares, 939 were recovered. [Frozen cohort results](evidence/provisional/moderate-count-v1/44985879443-1/summary.json) · [Counterpart review](early_notes.md)
 
-[Input checksums](evidence/provisional/moderate-count-v1/44985879443-1/event_receipts.csv) · [Coverage](evidence/provisional/moderate-count-v1/44985879443-1/obsid_coverage.csv) · [Scrambles](evidence/provisional/moderate-count-v1/44985879443-1/control_trials.csv) · [Injection grid](evidence/provisional/moderate-count-v1/44985879443-1/completeness.csv) · [All unresolved leads with positions, durations, fluxes, hosts and input hashes](evidence/provisional/moderate-count-v1/44985879443-1/leads.json)
+The separate sample of 14 observations with unknown release dates contained 175 real trigger rows, zero retained events, and 369.4 ks of eligible 60-second start time. One control event remained across 24 scrambles, and 139 of 165 attempted injections were recovered. [Undated exposure and evidence](evidence/supplemental_search/44985879443-1/README.md)
 
-Each compressed ObsID ledger records all raw triggers, vetoes, controls, catalog receipts and injection outcomes. Leads require examination of the target and proposal, independent visits, the detector image, and contemporary notices before a claim of novelty.
-
-[Methods and reproduction](METHODS.md) · [Actions run](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443)
-
-The early cohort selected 128 distinct observations in four catalog event-count strata before opening their event lists. It excludes observations above 200,000 catalog counts and observations without a count estimate. The denominator includes only completed product scans, and all pending observations remain assigned in the full survey.
-
-[Selected ObsIDs and selection rule](evidence/provisional/moderate-count-v1/44985879443-1/selection.json) · [Per-observation ledgers](evidence/observations) · [Field notes](FIELD_NOTES.md)
+[Prospectively registered held-out test](HELD_OUT.md) · [Catalog reply extraction](CATALOG_STORAGE.md)
