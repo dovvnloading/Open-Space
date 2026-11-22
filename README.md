@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 239 entries: 107 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 43 carefully recorded null or inconclusive checks. Entries below that carry none of these five labels (feasibility pilots, and analyses blocked because their data could not be retrieved) are listed for the record and are not counted.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 239 entries: 106 new measurements, 45 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 44 carefully recorded null or inconclusive checks. Entries below that carry none of these five labels (feasibility pilots, and analyses blocked because their data could not be retrieved) are listed for the record and are not counted.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -273,7 +273,6 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Neutron stars, black holes and cosmic explosions
 
-- **NANOGrav timing transients.** Independent EPTA timing supported the direction of 275 template fits in 3 pulsars. All 91 fits that reached the final noise check failed. The strongest common pattern had survey-wide p = 0.02026. Injections calibrated amplitude limits for 368 pulsar, waveform and width combinations. *Measured* · [Details](results/nanograv15-transients/README.md)
 **Cosmic rays**
 
 - **New catalogues narrow—but do not identify—the engines of LHAASO's most extreme gamma rays.** Of 25 sources without an originally listed TeV counterpart in a 90-source transcription, 19 lie near a Fermi gamma-ray catalogue object, versus about 9.5 in latitude-matched shifted skies. The 2026 HAWC catalogue overlaps 13. Crowding and incomplete X-ray and radio coverage prevent a firm accelerator identification. *Measured* (catalogue screen only) · [Details](results/lhaaso-dark-counterparts/README.md)
@@ -281,6 +280,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 **Pulsars and magnetars**
 
+- **No short-lived timing event found in 15 years of NANOGrav pulsar timing.** A blind search of all 68 pulsars for glitches, passing masses and gravitational-wave bursts found nothing that survived its checks; the strongest pattern shared by several pulsars had a survey-wide chance probability of 2%. Injected test signals set 368 upper limits, the tightest 27.85 microseconds for a 60-day dip in J1600−3053. Both arrays recovered the known 2016 J1713+0747 dip. *Null result* · [Details](results/nanograv15-transients/README.md)
 - **An eROSITA search recovered seven known isolated neutron-star controls but confirmed no new one.** A fixed screen of 930,203 eRASS1 sources retained 1,330 very soft leads; 1,056 have high-probability published optical/infrared associations. Optical depth, X-ray spectral and timing checks are incomplete, so the remaining sources are not discoveries or a calibrated all-sky null. *Null result* (bounded screen) · [Details](results/erass1-xdins-search/README.md)
 - **Six already-known neutron stars hide among 35 eROSITA sources without secure optical matches.** Direct infrared images, limited optical images and a radio-pulsar check identify four familiar X-ray-dim neutron stars and two ordinary known pulsars. The other 29 remain unclassified: even with archival X-ray matches, no new neutron star passes the optical-depth, spectrum, variability and prior-discovery tests. *Null result* (inconclusive follow-up) · [Details](results/erass1-xdins-35-referee/README.md)
 - **A magnetar catalog's clock was 69.184 seconds early.** The two famous microsecond bursts are also only weakly tied to their magnetars. *Correction* · [Details](results/nicer-magnetar-microbursts/README.md)
