@@ -1,0 +1,44 @@
+{
+  "endpoint": "https://cda.cfa.harvard.edu/csccli/getProperties",
+  "parameters": {
+    "coordFormat": "decimal",
+    "floatFormat": "native",
+    "outputFormat": "votable",
+    "query": "SELECT DISTINCT m.name,m.ra,m.dec,a.match_type,o.obsid,o.obi,o.region_id,o.gti_obs,o.gti_end,o.livetime,o.detector,o.flux_significance_b,o.src_cnts_aper_b,o.src_rate_aper_b,o.flux_aper_b,o.var_index_b,o.conf_code,o.streak_src_flag FROM master_source m, master_stack_assoc a, stack_source s, stack_observation_assoc b, observation_source o WHERE m.name=a.name AND s.detect_stack_id=a.detect_stack_id AND s.region_id=a.region_id AND s.detect_stack_id=b.detect_stack_id AND s.region_id=b.region_id AND o.obsid=b.obsid AND o.obi=b.obi AND o.region_id=b.region_id AND o.obsid=22990 AND (m.dec BETWEEN -45.939236242 AND -45.930902709) AND (m.ra BETWEEN 251.842401296 AND 251.854383746)",
+    "version": "rel2.2"
+  },
+  "response": {
+    "bytes": 4835,
+    "gzip_sha256": "537fc8932ca99a947f35b2e8da10f4151a9d6b7930d7786f496d2d79f54f789c",
+    "last_modified": null,
+    "raw_entity_gzip": "94fbea9948815ba850e90622c9820c972622b5d68d428541afff664d4b5f8da3.xml.gz",
+    "resolved_url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+DISTINCT+m.name%2Cm.ra%2Cm.dec%2Ca.match_type%2Co.obsid%2Co.obi%2Co.region_id%2Co.gti_obs%2Co.gti_end%2Co.livetime%2Co.detector%2Co.flux_significance_b%2Co.src_cnts_aper_b%2Co.src_rate_aper_b%2Co.flux_aper_b%2Co.var_index_b%2Co.conf_code%2Co.streak_src_flag+FROM+master_source+m%2C+master_stack_assoc+a%2C+stack_source+s%2C+stack_observation_assoc+b%2C+observation_source+o+WHERE+m.name%3Da.name+AND+s.detect_stack_id%3Da.detect_stack_id+AND+s.region_id%3Da.region_id+AND+s.detect_stack_id%3Db.detect_stack_id+AND+s.region_id%3Db.region_id+AND+o.obsid%3Db.obsid+AND+o.obi%3Db.obi+AND+o.region_id%3Db.region_id+AND+o.obsid%3D22990+AND+%28m.dec+BETWEEN+-45.939236242+AND+-45.930902709%29+AND+%28m.ra+BETWEEN+251.842401296+AND+251.854383746%29&coordFormat=decimal&floatFormat=native&outputFormat=votable",
+    "retrieved_utc": "2026-11-22T13:40:17.398994+00:00",
+    "sha256": "62d1853b6b32b1b30d4fa5d729398f0f44b2654634b4cafd4cceec2e0df1ee61",
+    "url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+DISTINCT+m.name%2Cm.ra%2Cm.dec%2Ca.match_type%2Co.obsid%2Co.obi%2Co.region_id%2Co.gti_obs%2Co.gti_end%2Co.livetime%2Co.detector%2Co.flux_significance_b%2Co.src_cnts_aper_b%2Co.src_rate_aper_b%2Co.flux_aper_b%2Co.var_index_b%2Co.conf_code%2Co.streak_src_flag+FROM+master_source+m%2C+master_stack_assoc+a%2C+stack_source+s%2C+stack_observation_assoc+b%2C+observation_source+o+WHERE+m.name%3Da.name+AND+s.detect_stack_id%3Da.detect_stack_id+AND+s.region_id%3Da.region_id+AND+s.detect_stack_id%3Db.detect_stack_id+AND+s.region_id%3Db.region_id+AND+o.obsid%3Db.obsid+AND+o.obi%3Db.obi+AND+o.region_id%3Db.region_id+AND+o.obsid%3D22990+AND+%28m.dec+BETWEEN+-45.939236242+AND+-45.930902709%29+AND+%28m.ra+BETWEEN+251.842401296+AND+251.854383746%29&coordFormat=decimal&floatFormat=native&outputFormat=votable"
+  },
+  "row_count": 1,
+  "rows": [
+    {
+      "conf_code": "1",
+      "dec": "-45.93496548784462",
+      "detector": "ACIS-2",
+      "flux_aper_b": "5.0629447922972E-15",
+      "flux_significance_b": "3.2941176470589224",
+      "gti_end": "2020-07-18T00:26:58",
+      "gti_obs": "2020-07-17T17:28:59",
+      "livetime": "24751.324592587",
+      "match_type": "u",
+      "name": "2CXO J164723.5-455605",
+      "obi": "0",
+      "obsid": "22990",
+      "ra": "251.8483104678777",
+      "region_id": "3",
+      "src_cnts_aper_b": "17.483948498162",
+      "src_rate_aper_b": "7.0638435663256E-4",
+      "streak_src_flag": "F",
+      "var_index_b": "8"
+    }
+  ],
+  "status": "ok"
+}

@@ -1,0 +1,23 @@
+{
+  "endpoint": "https://cda.cfa.harvard.edu/csccli/getProperties",
+  "parameters": {
+    "coordFormat": "decimal",
+    "floatFormat": "native",
+    "outputFormat": "votable",
+    "query": "SELECT m.name,m.ra,m.dec,m.err_ellipse_r0,m.err_ellipse_r1,m.err_ellipse_ang,m.significance,m.likelihood_class,m.conf_flag,m.sat_src_flag,m.streak_src_flag,m.acis_num,m.hrc_num,m.flux_aper_b FROM master_source m WHERE (m.dec BETWEEN -13.050149765 AND -13.041816232) AND (m.ra BETWEEN 276.551409168 AND 276.559963490)",
+    "version": "rel2.2"
+  },
+  "response": {
+    "bytes": 3232,
+    "gzip_sha256": "dfd0cba7718dd5e1a5c8263183a14ec794e6c4ebc9f479408bbbca4cd7a77bfb",
+    "last_modified": null,
+    "raw_entity_gzip": "81108de7628040a5f28d37ed601d382ac4ce63206cc7bb912d33e5c42593a9f6.xml.gz",
+    "resolved_url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+-13.050149765+AND+-13.041816232%29+AND+%28m.ra+BETWEEN+276.551409168+AND+276.559963490%29&coordFormat=decimal&floatFormat=native&outputFormat=votable",
+    "retrieved_utc": "2026-11-22T13:48:49.902240+00:00",
+    "sha256": "d8e5fd60c9581add57cfb2f3b883a547cb991b89b3e4da6a9054d4d7b4f984f9",
+    "url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+-13.050149765+AND+-13.041816232%29+AND+%28m.ra+BETWEEN+276.551409168+AND+276.559963490%29&coordFormat=decimal&floatFormat=native&outputFormat=votable"
+  },
+  "row_count": 0,
+  "rows": [],
+  "status": "ok"
+}
