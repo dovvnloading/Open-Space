@@ -16,7 +16,7 @@ permissions:
 
 concurrency:
   group: hetdex-rare-emitters-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[replace-hetdex-run]') }}
 
 env:
   SURVEY: results/hetdex_blind_emitters

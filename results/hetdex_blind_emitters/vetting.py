@@ -743,7 +743,15 @@ def enrich(rec,catalog):
         from repeats import stack_for_rows
         f,e=stack_for_rows(catalog,rec["repeat_rows"])
     else:
-        f,e=catalog.read(i,i+1)
+        if rec.get('stream')=='shuffled':
+            from scan import BATCH
+            from spectral import shuffle_fibres
+            start=i//BATCH*BATCH
+            f,e=catalog.read(start,min(start+BATCH,catalog.size))
+            f,e=shuffle_fibres(f,e,410087+start)
+            f,e=f[i-start],e[i-start]
+        else:
+            f,e=catalog.read(i,i+1)
     f,e=np.asarray(f).ravel(),np.asarray(e).ravel()
     if "noise_scale" not in rec or "wave_vac" not in rec:
         # Catalog knots are not necessarily at the center of the representative
@@ -790,6 +798,10 @@ def vet(records,catalog,output_dir):
              "counterpart_catalog_name","counterpart_dist","counterpart_filter_name")}
         for k in ("catalog","low_z","heii_family","lya_family"):
             projection.pop(k,None)
+        if rec.get("heii_family"):
+            projection["heii_metal_components"]={k:{field:v for field,v in rec["heii_family"][k].items()
+                 if field in ("status","flux","flux_err","snr","limit3")} for k in
+                 ("civ1","civ2","oiii_uv1","oiii_uv2","ciii1","ciii2")}
         if "SPARCL" in result:
             for key in ("low_z","heii_family","lya_family"):
                 if key in rec:
@@ -820,6 +832,11 @@ def vet(records,catalog,output_dir):
                         m=catalog.metadata(rep["row_index"])
                         rep["repeat_cube_meta"]={k:m.get(k) for k in ("shotid","ifuslot","fwhm")}
                 evidence=("independent HETDEX shot" in res["passed"]) + 2*("DESI" in res)
+                if ch=="heii":
+                    partner=number((rec.get("lya_velocity_best") or {}).get("snr"),0.0)
+                    # The final He II gate requires a real hydrogen companion.
+                    # Put objects that can pass it ahead of chance alignments.
+                    evidence += 6*int(partner>=5) + 2*int("independent DESI visual redshift" in res["passed"])
                 # Among equally corroborated rows, rank by the specific selection observable.
                 rank=(number(rec.get("secondary_snr",rec.get("snr"))) if ch=="blob" else
                       number(rec.get("imaging_rank_A",rec.get("ew0_lower"))) if ch=="ew" else number(rec.get("snr")))

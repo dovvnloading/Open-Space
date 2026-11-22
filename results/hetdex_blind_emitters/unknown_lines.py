@@ -201,7 +201,9 @@ def reassess_unknown(rec,audit,cache=None):
     table,manifest=atlas()
     anchors=[]
     desi=audit.get("DESI") or {}
-    if desi.get("vi_quality") is not None and float(desi["vi_quality"])>=3 and desi.get("vi_z") is not None:
+    if (desi.get("dex_flag")==1 and desi.get("target_sep_arcsec") is not None and
+        float(desi["target_sep_arcsec"])<=1.25 and desi.get("vi_quality") is not None and
+        float(desi["vi_quality"])>=3 and desi.get("vi_z") is not None):
         anchors.append(("DESI HETDEX visual VAC",float(desi["vi_z"])))
     for m in (audit.get("SPARCL") or {}).get("matches",[]):
         try:

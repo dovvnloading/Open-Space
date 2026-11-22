@@ -32,6 +32,8 @@ def stage_counts(cat, aux, stats):
     pair = cat.sorted_src_ids[:-1] == cat.sorted_src_ids[1:]
     repeated[cat.src_order[:-1][pair]] = True
     repeated[cat.src_order[1:][pair]] = True
+    if getattr(cat,"confirmed_repeat_rows",None):
+        repeated[list(cat.confirmed_repeat_rows)]=True
     repeated &= is_lae & (z>=1.88) & (z<=3.52)
     stats["repeat_LAE_source_observations"] = int(repeated.sum())
     priors = {int(i):(float(z[i]), "repeat") for i in np.flatnonzero(repeated)
@@ -221,7 +223,7 @@ def rescue(cat,out):
                                              default=atom,allow_nan=False)+"\n")
             summary={"counts":dict(stats),"source_catalog_errors":aux.errors,
                      "inputs":cache.inputs,
-                     "scope":"All repeat-LAE observations with shared source ID and good matched DESI "
+                     "scope":"All repeat-LAE observations with same-source IDs or isolated positional repeats and good matched DESI "
                              "VI z=1.88-3.52 considered in this release. At most 120 unique objects per "
                              "population receive direct Tractor checks, prioritized in thirds by LAN "
                              "optical priority, lower line flux and fixed-seed sampling. Up to 12 with "

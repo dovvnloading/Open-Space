@@ -133,6 +133,7 @@ def repeat_search(cat, out):
     counts = Counter()
     result = []
     groups = safe_groups(cat, counts)
+    cat.confirmed_repeat_rows = {}
     dx = float(np.median(np.diff(cat.wave)))
 
     with gzip.open(out/"repeat-leads.jsonl.gz", "wt", compresslevel=3) as output:
@@ -140,6 +141,8 @@ def repeat_search(cat, out):
             block = []
             for association, indices in groups:
                 rows = [int(i) for i in indices]
+                for i in rows:
+                    cat.confirmed_repeat_rows[i] = tuple(j for j in rows if j!=i)
                 counts["physical_groups"] += 1
                 counts["observed_visits"] += len(rows)
                 counts["association_"+association] += 1

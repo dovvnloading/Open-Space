@@ -212,6 +212,8 @@ class Spectra:
 
     def repeat_rows(self, index):
         """Exact shared source identifier in a different shot, within this release."""
+        if hasattr(self,"confirmed_repeat_rows"):
+            return self.confirmed_repeat_rows.get(int(index), ())
         key = self.src_ids[index]
         lo = np.searchsorted(self.sorted_src_ids, key, side="left")
         hi = np.searchsorted(self.sorted_src_ids, key, side="right")

@@ -126,7 +126,7 @@ def main():
     nunres=sum(n for (k,c),n in counts.items() if c=='unresolved')
     label='Candidate' if new else 'Null result'
     claim=(f'**{len(groups)} candidate source/channel associations passed the stated tests**'
-           if new else '**No new source passed every required test**')
+           if new else '**No new emitter passed all confirmation checks**')
     sections=['# Rare emission lines in the two public HETDEX source catalogs','',
       f'{claim} in {number(nobs)} source observations. The blind scan found {number(npeaks)} fitted peaks at signal-to-noise of at least 7. '
       f'The follow-up ledger records {len(followed):,} ranked line or spatial features with external checks and {nunres:,} unresolved entries across all stages. '
@@ -154,7 +154,7 @@ def main():
         rem=' / '.join(str(allstats[t][1]['remote_assessed'].get(ch,0)) for t in RELEASES)
         sections.append(f"| {NAMES[ch]} | {ss} | {counts[ch,'excluded']:,} | {counts[ch,'published']:,} | {counts[ch,'unresolved']:,} | {counts[ch,'candidate']:,} | {rem} |")
     sections+=['','Spatial proposals, subthreshold helium–hydrogen line pairs, imaging-led EW measurements and independent-visit stacks enter after the single-visit screen. A hypothesis can appear in more than one channel. Ranked follow-up gives priority to independent visits or DESI counterparts. Rows outside external follow-up retain an unresolved disposition.',
-      '', 'An isolated line anywhere on this wavelength grid admits a Lyα redshift. The unassigned-line channel retains strong features displaced from common transitions at the catalog redshift. The search supplies no evidence for a new atomic transition. For He II, much of the requested redshift range puts C III] beyond VIRUS. The evidence distinguishes an out-of-band component from a measured upper limit. A candidate galaxy spectrum cannot on its own determine a Population III or direct-collapse origin.',
+      '', 'An isolated line anywhere on this wavelength grid admits a Lyα redshift. The unassigned-line channel retains strong features displaced from common transitions at the catalog redshift. The search supplies no evidence for a new atomic transition. The 5540 Å air red edge cuts off He II at about z = 2.378. Both C III] components fall within VIRUS only below about z = 1.903 in the requested interval. At higher redshift the metal test needs a redder spectrum. The evidence distinguishes an out-of-band component from a measured upper limit. A candidate galaxy spectrum cannot on its own determine a Population III or direct-collapse origin.',
       '', '[All external follow-ups](evidence/followup.csv) · [Rows passing every gate](evidence/candidates.csv). Each release’s compressed vetting ledger contains IDs, comparisons, rejected alternatives, and pending checks. Fluxes are in erg s⁻¹ cm⁻², spectral densities per Å, wavelengths in observed air Å and EWs in rest-frame Å. Each trial redshift depends on the named identification.',
       '', '## Controls and recovery','',
       f'{nrec:,} of {ninj:,} successfully injected, unblended primary lines were recovered ({100*nrec/ninj:.1f}%) over the specified mix of amplitudes and widths. This is a spectral recovery fraction conditional on an extracted source. It does not include the probability of entering the public catalog, sky coverage, spatial completeness, or success in external follow-up.',
@@ -168,12 +168,13 @@ def main():
         known=read(d/'positive-controls.json')
         blank=read(d/'halo-injections-summary.json')
         null=read(d/'shuffle-vet'/'vet-summary.json')
+        mc=read(d/'matched-shuffle-vet'/'vet-summary.json')
         weak=read(d/'weak-heii-summary.json')
         k=sum(c.get('candidate',0) for c in null['status_counts'].values())
         n=sum(null['shortlist_counts'].values())
         b=blank['usable_position_wavelength_pairs']
         ctr=allstats[tag][3]['counts']
-        controls.append(f"{tag.upper()} recovered {known['target_heii_screen_recoveries']} of {known['position_or_id_matches']} matched positions in the eight-object published He II sample at the single-line threshold. The weaker paired-line search found {weak['observed_clean_pairs']:,} spectral leads against {weak['expected_displaced_pairs_at_true_exposure']:.1f} expected from displaced matches, before source vetting. The matched wrong-position comparison produced {ctr.get('control_groups',0):,} independent-visit control stacks. Of {n:,} shuffled single-visit feature hypotheses, {k} passed full follow-up. Halo injection tests had {b} usable blank position/wavelength pairs.")
+        controls.append(f"{tag.upper()} recovered {known['target_heii_screen_recoveries']} of {known['position_or_id_matches']} matched positions in the eight-object published He II sample at the single-line threshold. The weaker paired-line search found {weak['observed_clean_pairs']:,} spectral leads against {weak['expected_displaced_pairs_at_true_exposure']:.1f} expected from displaced matches, before source vetting. The matched wrong-position comparison produced {ctr.get('control_groups',0):,} independent-visit control stacks. In the bounded raw-shuffle follow-up, {k} passed among {n:,} feature hypotheses. The continuum-preserving control yielded {sum(mc['shortlist_counts'].values()):,} feature hypotheses before source vetting. Halo injection tests had {b} usable blank position/wavelength pairs.")
     sections+=['',' '.join(controls),'',
                '| Release | Nominal injected S/N | Clean trials | Primary line recovered |',
                '|---|---:|---:|---:|']
@@ -184,7 +185,7 @@ def main():
             yes=sum(a['recovered'] for a in bins)
             if n:
                 sections.append(f"| {t.upper()} | {sn} | {n} | {yes} ({100*yes/n:.1f}%) |")
-    sections+=['','Wavelength-by-wavelength shuffling preserves pairing of flux and error and common observer-frame residuals while disrupting spectral covariance. Off-source apertures preserve cube interpolation and spatial noise. Empty sky has no catalog redshift, so its off-list test is undefined. The per-release tables break recovery down by input flux, S/N, wavelength, profile width and input rest EW. Wilson intervals describe binomial trial uncertainty conditional on the injected backgrounds. The paired-visit controls substitute unrelated sources observed in the same shots.',
+    sections+=['','The raw wavelength-by-wavelength shuffle mixes bright and faint continua and destroys adjacent-pixel covariance. Its very large positive counts make it a stress test. A separate same-shot block shuffle preserves source continua and supplies the matched control. Off-source apertures preserve cube interpolation and spatial noise. Empty sky has no catalog redshift, so its off-list test is undefined. The per-release tables break recovery down by input flux, S/N, wavelength, profile width and input rest EW. Wilson intervals describe binomial trial uncertainty conditional on the injected backgrounds. The paired-visit controls substitute unrelated sources observed in the same shots.',
                '', '## Inputs, evidence and reproduction','']
     sections+=['| Release input | Bytes | SHA-256 |','|---|---:|---|']
     for t in RELEASES:
@@ -192,7 +193,7 @@ def main():
             sections.append(f"| {item['file']} | {item['bytes']:,} | `{item['sha256']}` |")
     for t in RELEASES:
         a=f'evidence/{t}'
-        sections+=['',f'{t.upper()} · [Input checksums and mirrors]({a}/inputs-{t}.json) · [Ancillary and cube receipts]({a}/vet-inputs.json) · [Vetting ledger]({a}/vetted.jsonl.gz) · [Injections]({a}/injections.jsonl.gz) · [Completeness]({a}/completeness.csv) · [He II positive controls]({a}/positive-controls.json) · [Weaker paired lines]({a}/weak-heii-summary.json) · [Imaging-led EW measurements]({a}/ew-rescue-summary.json) · [Full shuffled vetting]({a}/shuffle-vet/vet-summary.json) · [Halo recovery]({a}/halo-injections-summary.json) · [Repeat controls]({a}/repeat-summary.json) · [Off-source spectra selection]({a}/offsource.jsonl.gz).']
+        sections+=['',f'{t.upper()} · [Input checksums and mirrors]({a}/inputs-{t}.json) · [Ancillary and cube receipts]({a}/vet-inputs.json) · [Vetting ledger]({a}/vetted.jsonl.gz) · [Injections]({a}/injections.jsonl.gz) · [Completeness]({a}/completeness.csv) · [He II positive controls]({a}/positive-controls.json) · [Weaker paired lines]({a}/weak-heii-summary.json) · [Imaging-led EW measurements]({a}/ew-rescue-summary.json) · [Raw-shuffle follow-up]({a}/shuffle-vet/vet-summary.json) · [Continuum-preserving control]({a}/nuisance-summary.json) · [Matched control vetting]({a}/matched-shuffle-vet/vet-summary.json) · [Halo recovery]({a}/halo-injections-summary.json) · [Repeat controls]({a}/repeat-summary.json) · [Off-source spectra selection]({a}/offsource.jsonl.gz).']
     sections+=['','The workflow pins Python dependencies, fetches both releases, checks the publisher MD5 values and hashes the received bytes. Run its **full** dispatch on the research branch, or use the same commands on a runner with network access and sufficient disk. Run from the repository root.',
                '', '```sh','D=results/hetdex_blind_emitters','python -m pip install -r "$D/requirements.txt"','python "$D/check_pipeline.py"',
                'for r in sc1 sc2; do','  python "$D/scan.py" "$r" scan --output "$D/evidence/$r" --cache "/tmp/hetdex-$r" --workers 3',
