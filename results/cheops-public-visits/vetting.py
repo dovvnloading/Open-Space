@@ -5,6 +5,7 @@ decision have a URL (or archive query) and a SHA-256 digest. Time is BJD_TDB.
 """
 import argparse
 import csv
+import copy
 import gzip
 import os
 import hashlib
@@ -12,6 +13,8 @@ import io
 import json
 import math
 import re
+from urllib.parse import urlsplit
+from collections import Counter
 import tempfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -24,6 +27,26 @@ VIZIER = "https://tapvizier.cds.unistra.fr/TAPVizieR/tap/sync"
 SIMBAD = "https://simbad.cds.unistra.fr/simbad/sim-tap/sync"
 GAIA = "https://gea.esac.esa.int/tap-server/tap/sync"
 ARXIV = "https://export.arxiv.org/api/query"
+
+
+# The run-2 US runner timed out connecting to the Strasbourg hosts. HTTP
+# absence of evidence is always recorded separately from a successful empty cone.
+ASU_MIRRORS = ("vizier.cfa.harvard.edu","vizier.nao.ac.jp","vizier.iucaa.in","vizier.cds.unistra.fr")
+SIMBAD_MIRRORS = ("https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",SIMBAD)
+OUTAGES = Counter()
+
+
+def _route(key, operation):
+    if OUTAGES[key] >= 2:
+        raise ConnectionError(f"route unavailable after two previous failures: {key}")
+    try:
+        result = operation()
+    except (requests.ConnectionError, requests.Timeout, requests.HTTPError) as exc:
+        if not isinstance(exc,requests.HTTPError) or exc.response.status_code in (403,429,500,502,503,504):
+            OUTAGES[key] += 1
+        raise
+    OUTAGES[key] = 0
+    return result
 
 
 def _hash(data):
@@ -41,9 +64,12 @@ def _get(cache, url, params):
     folder.mkdir(parents=True, exist_ok=True)
     name = folder / _hash(query.encode())
     if not name.exists():
-        reply = requests.get(url, params=params, timeout=(10, 90),
-                             headers={"User-Agent": "Open-Space-CHEOPS/1.0"})
-        reply.raise_for_status()
+        def request():
+            reply = requests.get(url, params=params, timeout=(4, 32),
+                                 headers={"User-Agent": "Open-Space-CHEOPS/1.0"})
+            reply.raise_for_status()
+            return reply
+        reply = _route(urlsplit(url).netloc, request)
         with tempfile.NamedTemporaryFile(dir=folder, delete=False) as temp:
             temp.write(reply.content)
         Path(temp.name).replace(name)
@@ -340,29 +366,93 @@ VSX_RADIUS = 300
 VSX_COLS = ["RAJ2000","DEJ2000","Name","Type","Period","Epoch"]
 
 
+def _votable_rows(raw, columns, limit):
+    from astropy.table import Table
+    xml=ET.fromstring(raw)
+    for e in xml.iter():
+        if e.tag.rsplit("}",1)[-1]=="INFO" and (e.attrib.get("value","").upper() in ("ERROR","OVERFLOW")
+                or e.attrib.get("name","").lower()=="error"):
+            raise ValueError("VizieR reported an error or overflow: "+str(e.text)[:150])
+    tabs=[e for e in xml.iter() if e.tag.rsplit("}",1)[-1]=="TABLE"]
+    if not tabs:
+        raise ValueError("VizieR returned no data-table schema")
+    table=Table.read(io.BytesIO(raw),format="votable",use_names_over_ids=True)
+    if len(table)>=limit or not set(columns)<=set(table.colnames):
+        raise ValueError("incomplete VizieR table response: "+str(table.colnames))
+    return [{k:None if np.ma.is_masked(row[k]) else str(row[k]) for k in table.colnames}
+            for row in table]
+
+
 def _vsx_fallback(batch):
-    # VizieR ASU accepts lists of positions and has a separate interface from TAP.
     from astropy import units as u
     from astropy.coordinates import SkyCoord
-    from astropy.table import Table
     from astroquery.vizier import Vizier
-    cat = Vizier(columns=VSX_COLS,row_limit=25000)
-    coord = SkyCoord([p[0] for p in batch],[p[1] for p in batch],unit="deg")
-    res = cat.query_region_async(coord,radius=VSX_RADIUS*u.arcsec,catalog="B/vsx/vsx",
-                                 cache=False)
-    res.raise_for_status()
-    raw = res.content
-    xml = ET.fromstring(raw)
-    if any(e.attrib.get("value") in ("ERROR","OVERFLOW") for e in xml.iter()
-           if e.attrib.get("name")=="QUERY_STATUS"):
-        raise ValueError("VizieR ASU reported an error or result overflow")
-    tabs = [e for e in xml.iter() if e.tag.rsplit("}",1)[-1]=="TABLE"]
-    table = Table.read(io.BytesIO(raw),format="votable",use_names_over_ids=True) if tabs else []
-    if len(table)>=25000 or (len(table) and not set(VSX_COLS)<=set(table.colnames)):
-        raise ValueError("incomplete ASU result")
-    rows = [{k:None if np.ma.is_masked(r[k]) else str(r[k]) for k in VSX_COLS} for r in table]
-    return rows,{"url":res.url,"method":"VizieR.query_region_async(list of ICRS centers)",
-                 "sha256":_hash(raw),"bytes":len(raw)}
+    coord=SkyCoord([p[0] for p in batch],[p[1] for p in batch],unit="deg")
+    failures=[]
+    for host in ASU_MIRRORS:
+        try:
+            cat=Vizier(columns=VSX_COLS,row_limit=25000,vizier_server=host)
+            cat.TIMEOUT=16
+            def query():
+                res=cat.query_region_async(coord,radius=VSX_RADIUS*u.arcsec,catalog="B/vsx/vsx",cache=False)
+                res.raise_for_status()
+                return res
+            res=_route(host,query)
+            rows=_votable_rows(res.content,VSX_COLS,25000)
+            return rows,{"url":res.url,"method":"VizieR.query_region_async(list of ICRS centers)",
+                         "sha256":_hash(res.content),"bytes":len(res.content),"mirror_errors":failures}
+        except Exception as exc:
+            failures.append(f"{host}: {str(exc)[:220]}")
+    raise RuntimeError(" | ".join(failures))
+
+
+def _eb_bulk(cache):
+    errors=[]
+    for host in ASU_MIRRORS:
+        try:
+            raw,source=_get(cache,f"https://{host}/viz-bin/votable",{
+                "-source":"J/ApJS/258/16/tess-ebs","-out.all":"1","-out.add":"_RAJ2000,_DEJ2000","-out.max":"20000"})
+            rows=_votable_rows(raw,["TIC","BJD0","Per"],20000)
+            if len(rows)!=4584:
+                raise ValueError(f"TESS-EB published sample has 4584 entries; got {len(rows)}")
+            for r in rows:
+                r["ra"]=r.get("RAdeg") or r.get("_RAJ2000") or r.get("RAJ2000")
+                r["dec"]=r.get("DEdeg") or r.get("_DEJ2000") or r.get("DEJ2000")
+                if _number(r["ra"]) is None or _number(r["dec"]) is None:
+                    raise ValueError("TESS-EB coordinates missing")
+            return rows,dict(source,rows=len(rows),mirror_errors=errors)
+        except Exception as exc:
+            errors.append(f"{host}: {str(exc)[:240]}")
+    # Published CDS fixed-width tables can also be retrieved independently
+    # of ASU/TAP. The ReadMe supplies the units, column layout and row count.
+    from astropy.io import ascii
+    for base in ("https://cdsarc.cds.unistra.fr/ftp/J/ApJS/258/16",
+                 "https://vizier.cfa.harvard.edu/ftp/cats/J/ApJS/258/16"):
+        try:
+            meta,mreceipt=_get(cache,base+"/ReadMe",{})
+            for suffix in (".gz",""):
+                try:
+                    byt,source=_get(cache,base+"/tess-ebs.dat"+suffix,{})
+                    payload=gzip.decompress(byt) if byt.startswith(b"\x1f\x8b") else byt
+                    break
+                except Exception as exc:
+                    errors.append(str(exc)[:220])
+            else:
+                continue
+            with tempfile.TemporaryDirectory() as d:
+                folder=Path(d)
+                (folder/"ReadMe").write_bytes(meta)
+                (folder/"tess-ebs.dat").write_bytes(payload)
+                table=ascii.read(folder/"tess-ebs.dat",format="cds",readme=str(folder/"ReadMe"))
+            rows=[{k:None if np.ma.is_masked(r[k]) else str(r[k]) for k in table.colnames} for r in table]
+            if len(rows)!=4584:
+                raise ValueError("incomplete published EB table")
+            for r in rows:
+                r.update(ra=r["RAdeg"],dec=r["DEdeg"])
+            return rows,dict(source,rows=len(rows),readme=mreceipt,mirror_errors=errors)
+        except Exception as exc:
+            errors.append(f"{base}: {str(exc)[:240]}")
+    raise RuntimeError(" | ".join(errors))
 
 
 def _vsx_seed(inventory,cache):
@@ -376,7 +466,11 @@ def _vsx_seed(inventory,cache):
             import astropy.units as u
             try:
                 raw = str(row["coords_hms_dms"]).strip().replace(","," ")
-                pos = SkyCoord(raw, unit=(u.hourangle, u.deg))
+                parts=raw.split("/")
+                if len(parts)==2 and all(_number(v) is not None for v in parts):
+                    pos=SkyCoord(float(parts[0]),float(parts[1]),unit="deg")
+                else:
+                    pos = SkyCoord(raw.replace("/"," "), unit=(u.hourangle, u.deg))
                 ra, dec = float(pos.ra.deg), float(pos.dec.deg)
             except (ValueError, TypeError):
                 pass
@@ -406,6 +500,12 @@ def _vsx_seed(inventory,cache):
             sql = 'SELECT TOP 25001 '+",".join('"'+c+'"' for c in VSX_COLS)+' FROM "B/vsx/vsx" WHERE '
             sql += " OR ".join(_cone(ra,dec,VSX_RADIUS,'"RAJ2000"','"DEJ2000"') for ra,dec in batch)
             try:
+                # Try the US/Japanese ASU services first; Strasbourg TAP
+                # timed out on the run-2 runner. A failed multi-route probe
+                # falls through to the independent Strasbourg TAP interface.
+                rows,receipt=_vsx_fallback(batch)
+            except Exception as exc:
+                entry["asu_error"]=str(exc)[:1200]
                 # Use VOTable to preserve the service's QUERY_STATUS=OVERFLOW
                 # signal, which would be lost in plain CSV output.
                 from astropy.table import Table
@@ -419,9 +519,6 @@ def _vsx_seed(inventory,cache):
                 if len(table)>=25001 or not set(VSX_COLS)<=set(table.colnames):
                     raise ValueError("truncated or invalid VSX TAP response")
                 rows = [{k:None if np.ma.is_masked(r[k]) else str(r[k]) for k in VSX_COLS} for r in table]
-            except Exception as exc:
-                entry["tap_error"] = str(exc)[:500]
-                rows, receipt = _vsx_fallback(batch)
             for r in rows:
                 if _number(r.get("RAJ2000")) is None or _number(r.get("DEJ2000")) is None:
                     raise ValueError("missing VSX coordinates")
@@ -437,16 +534,34 @@ def _vsx_seed(inventory,cache):
             "radius_arcsec":VSX_RADIUS,"visits_missing_coordinates":missing}
 
 
-def seed_catalogs(inventory,cache_dir):
+def seed_catalogs(inventory,cache_dir,previous_seed=None):
     directory = Path(cache_dir)
     directory.mkdir(parents=True,exist_ok=True)
-    cats = Catalogs(directory)
+    if previous_seed:
+        with gzip.open(previous_seed,"rt") as src:
+            snapshot=json.load(src)
+        nasa={"pscomppars","toi"}
+        if not nasa.issubset(snapshot["sources"]) or not all(any(r[0]==key for r in snapshot["rows"]) for key in nasa):
+            raise ValueError("previous seed lacks verified NASA tables")
+        if "tess_eb" not in snapshot["sources"]:
+            try:
+                rows,source=_eb_bulk(directory)
+                snapshot["rows"]=[r for r in snapshot["rows"] if r[0]!="tess_eb"]
+                snapshot["rows"].extend(("tess_eb",r,_norm("TIC"+str(r["TIC"]))) for r in rows)
+                snapshot["sources"]["tess_eb"]=source
+                snapshot["errors"].pop("tess_eb",None)
+            except Exception as exc:
+                snapshot["errors"]["tess_eb"]=str(exc)[:2400]
+    else:
+        cats=Catalogs(directory)
+        snapshot=dict(sources=cats.sources,errors=cats.errors,rows=cats.rows)
     vsx = _vsx_seed(inventory,directory)
-    snapshot = dict(sources=cats.sources,errors=cats.errors,rows=cats.rows,vsx=vsx)
+    snapshot["vsx"]=vsx
     encoded = json.dumps(snapshot,separators=(",",":"),allow_nan=False).encode()
     compressed = gzip.compress(encoded,mtime=0)
     (directory/"catalog-seed.json.gz").write_bytes(compressed)
-    summary = dict(sources=cats.sources,errors=cats.errors,mask_rows=len(cats.rows),
+    summary = dict(sources=snapshot["sources"],errors=snapshot["errors"],mask_rows=len(snapshot["rows"]),
+        previous_seed_sha256=_filehash(previous_seed) if previous_seed else None,
         inventory_sha256=_filehash(inventory),seed_sha256=_hash(compressed),
         vsx={k:v for k,v in vsx.items() if k not in ("centers","rows")},
         vsx_stars=len(vsx["rows"]),vsx_successful_pointings=len(vsx["centers"]))
@@ -484,12 +599,31 @@ def _gaia(event, cache):
                 summed_catalog_flux_fraction=maxflux/(1+maxflux))
 
 
+def _simbad(cache, query):
+    errors=[]
+    for url in SIMBAD_MIRRORS:
+        try:
+            return _tap(cache,url,query)
+        except Exception as exc:
+            errors.append(f"{url}: {str(exc)[:180]}")
+    raise RuntimeError(" | ".join(errors))
+
+
 def _literature(event, cache):
     ra, dec = event["ra_deg"],event["dec_deg"]
     cone = _cone(ra,dec,3,"b.ra","b.dec")
-    ids, source_ids = _tap(cache,SIMBAD, "SELECT TOP 501 b.main_id,i.id FROM basic b "
+    sources,errors=[],{}
+    def lookup(name,query):
+        try:
+            rows,source=_simbad(cache,query)
+            sources.append(source)
+            return rows
+        except Exception as exc:
+            errors[name]=str(exc)[:500]
+            return []
+    ids=lookup("SIMBAD identifiers","SELECT TOP 501 b.main_id,i.id FROM basic b "
         "JOIN ident i ON i.oidref=b.oid WHERE "+cone)
-    refs, source_refs = _tap(cache,SIMBAD, "SELECT DISTINCT TOP 1001 r.bibcode,r.title FROM basic b "
+    refs=lookup("SIMBAD bibliography","SELECT DISTINCT TOP 1001 r.bibcode,r.title FROM basic b "
         "JOIN has_ref h ON h.oidref=b.oid JOIN ref r ON r.oidbib=h.oidbibref WHERE "+cone)
     aliases = {str(event["star"])}
     aliases.update(str(r["main_id"]) for r in ids)
@@ -500,19 +634,35 @@ def _literature(event, cache):
     query_aliases=sorted(aliases, key=lambda n:(n!=str(event["star"]),len(n),n))[:10]
     match = " OR ".join('all:"'+re.sub(r'["\r\n]'," ",a)+'"' for a in query_aliases)
     query = "("+match+") AND (all:transit OR all:eclipse OR all:CHEOPS OR all:occultation)"
-    xml, source_arxiv = _get(cache,ARXIV,dict(search_query=query,start=0,max_results=100))
-    root=ET.fromstring(xml)
-    ns={"a":"http://www.w3.org/2005/Atom","os":"http://a9.com/-/spec/opensearch/1.1/"}
-    if root.tag != "{"+ns["a"]+"}feed":
-        raise ValueError("arXiv did not return an Atom feed")
-    papers=[dict(id=e.findtext("a:id",namespaces=ns),title=e.findtext("a:title",namespaces=ns),
-                 abstract=e.findtext("a:summary",namespaces=ns)) for e in root.findall("a:entry",ns)]
-    if any("/api/errors" in str(p["id"]) for p in papers):
-        raise ValueError("arXiv query error")
-    return dict(sources=[source_ids,source_refs,source_arxiv],aliases=query_aliases,
-                associated_references=refs,arxiv_records=papers,arxiv_total=root.findtext("os:totalResults",namespaces=ns),
-                truncated=len(refs)==1001 or len(ids)==501 or int(root.findtext("os:totalResults","0",ns))>100,
-                status="requires publication and event epoch review")
+    total,papers=0,[]
+    try:
+        xml, source_arxiv = _get(cache,ARXIV,dict(search_query=query,start=0,max_results=100))
+        root=ET.fromstring(xml)
+        ns={"a":"http://www.w3.org/2005/Atom","os":"http://a9.com/-/spec/opensearch/1.1/"}
+        if root.tag != "{"+ns["a"]+"}feed":
+            raise ValueError("arXiv did not return an Atom feed")
+        papers=[dict(id=e.findtext("a:id",namespaces=ns),title=e.findtext("a:title",namespaces=ns),
+                     abstract=e.findtext("a:summary",namespaces=ns)) for e in root.findall("a:entry",ns)]
+        if any("/api/errors" in str(p["id"]) for p in papers):
+            raise ValueError("arXiv query error")
+        total=int(root.findtext("os:totalResults","0",ns))
+        sources.append(source_arxiv)
+    except Exception as exc:
+        errors["arXiv"]=str(exc)[:400]
+    if errors:
+        try:
+            raw,source=_get(cache,"https://api.crossref.org/works",{"query.bibliographic":
+                " ".join(query_aliases[:3])+" transit eclipse CHEOPS","rows":20,"select":"DOI,title"})
+            items=json.loads(raw)["message"]["items"]
+            sources.append(source)
+            refs=refs+[{"doi":v.get("DOI"),"title":" ".join(v.get("title") or []),
+                         "match":"Crossref keyword result; verify source and coordinates"} for v in items]
+        except Exception as exc:
+            errors["Crossref"]=str(exc)[:250]
+    return dict(sources=sources,aliases=query_aliases,associated_references=refs,
+                arxiv_records=papers,arxiv_total=total,search_errors=errors,
+                truncated=len(refs)>=1001 or len(ids)==501 or total>100,
+                status="incomplete" if errors else "requires publication and event epoch review")
 
 
 def _sector_period_search(time, flux, event):
@@ -584,7 +734,10 @@ def _difference_image(t, cube, x, y, epoch, dur, period=None):
             "spatial_mad":float(noise),"in_cadences":int(inside.sum()),"out_cadences":int(outside.sum())}
 
 
-def _compare_flux(time, flux, event):
+SECTOR_SCREENS = {}
+
+
+def _compare_flux(time, flux, event, product_id):
     duration, epoch=event["duration_days"],event["epoch_bjd"]
     good=np.isfinite(time)&np.isfinite(flux)
     t, f=np.asarray(time)[good], np.asarray(flux)[good]
@@ -592,8 +745,16 @@ def _compare_flux(time, flux, event):
         return dict(status="no valid cadences")
     dt=np.abs(t-epoch)
     inside, outside=dt<duration/2, (dt>duration*.7)&(dt<duration*2)
+    if product_id not in SECTOR_SCREENS:
+        if len(SECTOR_SCREENS)>512:
+            SECTOR_SCREENS.clear()
+        SECTOR_SCREENS[product_id]=_sector_period_search(t,f,event)
+    screen=dict(SECTOR_SCREENS[product_id])
+    if "period_days" in screen:
+        per=screen["period_days"]
+        screen["cheops_phase_offset_days"]=float((epoch-screen["epoch_bjd"]+per/2)%per-per/2)
     out=dict(start_bjd=float(t.min()),end_bjd=float(t.max()),n=len(t),in_event=int(inside.sum()),
-             periodic_screen=_sector_period_search(t,f,event))
+             periodic_screen=screen)
     if inside.sum()<3 or outside.sum()<8 or not np.any(t[outside]<epoch) or not np.any(t[outside]>epoch):
         return dict(out,status="no usable simultaneous baseline")
     base=float(np.median(f[outside]))
@@ -607,6 +768,34 @@ def _compare_flux(time, flux, event):
                 out_of_event_scatter=float(noise),in_event_median_uncertainty_white=float(1.253*noise/math.sqrt(inside.sum())))
 
 
+def _sector_order(event,sectors,cache):
+    # Mission Guest Investigator office schedule, checked against product BJD
+    # ranges whenever comparing an actual sector.
+    url="https://raw.githubusercontent.com/tessgi/tesswcs/main/src/tesswcs/data/pointings.csv"
+    raw,receipt=_get(cache,url,{})
+    rows=csv.DictReader(io.StringIO(raw.decode("utf-8-sig")))
+    ranges={int(r["Sector"]):(float(r["Start"]),float(r["End"])) for r in rows if r.get("Sector")}
+    missing=sorted(set(sectors)-ranges.keys())
+    if missing:
+        # Supplement newly observed sectors using the mission's orbit schedule.
+        from astropy.time import Time
+        extra,extra_src=_get(cache,"https://tess.mit.edu/public/files/TESS_orbit_times.csv",{})
+        times={}
+        for r in csv.DictReader(l for l in extra.decode("utf-8-sig").splitlines() if not l.startswith("#")):
+            sec=_number(r.get("Sector"))
+            if sec not in missing:
+                continue
+            pair=[float(Time(r[k].strip().replace("T"," "),scale="utc").tdb.jd)
+                  for k in ("Start of Orbit","End of Orbit")]
+            times.setdefault(int(sec),[]).extend(pair)
+        ranges.update({sec:(min(pair),max(pair)) for sec,pair in times.items()})
+        receipt["supplement"]=extra_src
+    epoch=event["epoch_bjd"]
+    unknown=sorted(set(sectors)-ranges.keys())
+    order=sorted((s for s in sectors if s in ranges),key=lambda s:max(ranges[s][0]-epoch,epoch-ranges[s][1],0))
+    return order+unknown,receipt,unknown
+
+
 def _tess(event, cache):
     from astropy import units as u
     from astropy.coordinates import SkyCoord
@@ -614,21 +803,41 @@ def _tess(event, cache):
     from astroquery.mast import Catalogs as MastCatalogs, Observations, Tesscut
 
     pos=SkyCoord(event["ra_deg"],event["dec_deg"],unit="deg")
-    stars=MastCatalogs.query_region(pos,radius=3*u.arcsec,catalog="TIC")
-    sectors=Tesscut.get_sectors(coordinates=pos)
+    for client in (MastCatalogs,Observations,Tesscut):
+        client.TIMEOUT=35
+    sectors=_route("MAST sector footprints",lambda:Tesscut.get_sectors(coordinates=pos))
     sector_ids=sorted(set(int(s) for s in sectors["sector"])) if len(sectors) else []
-    out=dict(sectors_on_silicon=sector_ids,products=[],errors=[])
+    out=dict(sectors_on_silicon=sector_ids,sectors_examined=[],products=[],errors=[])
     if not sector_ids:
         return dict(out,status="no TESS sector footprint")
+    order,receipt,unknown=_sector_order(event,sector_ids,cache)
+    out.update(sector_schedule=receipt,undated_sectors=unknown,
+               sector_policy="Nearest usable sector by date, overlapping sector first")
     tesspath=Path(cache)/"tess"
     tesspath.mkdir(parents=True,exist_ok=True)
-    covered=set()
-    if len(stars)==1:
-        tic=str(stars[0]["ID"])
+    try:
+        stars=_route("MAST TIC match",lambda:MastCatalogs.query_region(pos,radius=3*u.arcsec,catalog="TIC"))
+        tic=str(stars[0]["ID"]) if len(stars)==1 else None
+    except Exception as exc:
+        tic=None
+        out["tic_lookup_error"]=str(exc)[:350]
+    if tic:
         out["tic_id"]=tic
-        sel=Observations.query_criteria(target_name=tic,obs_collection="TESS",dataproduct_type="timeseries")
+    for sec in order:
+        out["sectors_examined"].append(sec)
+        sel=[]
+        if tic:
+            try:
+                sel=_route("MAST target light curves",lambda:Observations.query_criteria(
+                      target_name=tic,obs_collection="TESS",dataproduct_type="timeseries",sequence_number=sec))
+            except Exception as exc:
+                out["errors"].append(f"SPOC sector {sec}: {str(exc)[:200]}")
         if len(sel):
-            plist=Observations.get_product_list(sel)
+            try:
+                plist=_route("MAST product lists",lambda:Observations.get_product_list(sel))
+            except Exception as exc:
+                plist=[]
+                out["errors"].append(f"SPOC product list, sector {sec}: {str(exc)[:160]}")
             for r in plist:
                 fname=str(r["productFilename"])
                 if not fname.endswith("-s_lc.fits") and not fname.endswith("-a_fast-lc.fits"):
@@ -637,7 +846,7 @@ def _tess(event, cache):
                 path=tesspath/Path(fname).name
                 try:
                     if not path.exists():
-                        status,msg,_=Observations.download_file(uri,local_path=str(path))
+                        status,msg,_=_route("MAST data file",lambda:Observations.download_file(uri,local_path=str(path)))
                         if status!="COMPLETE":
                             raise ValueError(str(msg))
                     with fits.open(path) as h:
@@ -646,19 +855,25 @@ def _tess(event, cache):
                             raise ValueError("TIC identifier mismatch")
                         ok=np.asarray(tab["QUALITY"])==0
                         t=np.asarray(tab["TIME"][ok])+hdr["BJDREFI"]+hdr.get("BJDREFF",0.)
-                        ans=_compare_flux(t,tab["PDCSAP_FLUX"][ok],event)
+                        ans=_compare_flux(t,tab["PDCSAP_FLUX"][ok],event,uri)
                         sector=int(h[0].header["SECTOR"])
+                        if sector!=sec:
+                            continue
                         out["products"].append(dict(uri=uri,sha256=_filehash(path),sector=sector,
                                                     dilution=hdr.get("CROWDSAP"),**ans))
-                        if ans.get("n",0):
-                            covered.add(sector)
+                        if ans.get("n",0)>=60:
+                            return dict(out,status="incomplete" if unknown else "compared")
                 except Exception as exc:
                     out["errors"].append(f"{uri}: {exc}"[:400])
-    # FFI fallback yields a consistent centered aperture and local sky; it is
-    # deliberately described as blended aperture photometry.
-    for sec in sorted(set(sector_ids)-covered):
+        # Share one local cutout per star/sector across multiple dip epochs.
         try:
-            manifest=Tesscut.download_cutouts(coordinates=pos,size=9,sector=sec,path=str(tesspath))
+            from astropy.table import Table
+            folder=tesspath/f"ffi-{pos.ra.deg:.7f}-{pos.dec.deg:.7f}-{sec}"
+            folder.mkdir(exist_ok=True)
+            files=list(folder.glob("*.fits"))
+            manifest=(Table({"Local Path":[str(p) for p in files]}) if files else
+                      _route("MAST FFI download",lambda:Tesscut.download_cutouts(
+                      coordinates=pos,size=9,sector=sec,path=str(folder))))
             if not len(manifest):
                 raise ValueError("empty cutout response")
             for row in manifest:
@@ -679,7 +894,7 @@ def _tess(event, cache):
                         raise ValueError("insufficient aperture/sky pixels")
                     f=np.sum(cube[:,aperture],axis=1)-aperture.sum()*np.nanmedian(cube[:,sky],axis=1)
                     t=np.asarray(tab["TIME"][quality])+hdr["BJDREFI"]+hdr.get("BJDREFF",0.)
-                    ans=_compare_flux(t,f,event)
+                    ans=_compare_flux(t,f,event,str(path))
                     ans["cheops_epoch_difference_image"]=_difference_image(t,cube,x,y,event["epoch_bjd"],event["duration_days"])
                     repeated=ans.get("periodic_screen",{})
                     if repeated.get("status")=="periodic dip found":
@@ -687,19 +902,14 @@ def _tess(event, cache):
                                 repeated["duration_days"],repeated["period_days"])
                     out["products"].append(dict(file=path.name,source="MAST TESSCut",sha256=_filehash(path),
                                                 sector=sec,**ans))
+                    if ans.get("n",0)>=60:
+                        return dict(out,status="incomplete" if unknown else "compared")
         except Exception as exc:
             out["errors"].append(f"FFI sector {sec}: {exc}"[:400])
-    return dict(out,status="incomplete" if out["errors"] or not out["products"] else "compared")
+    return dict(out,status="incomplete")
 
 
-def vet_event(event, match, cache_dir):
-    event={**{k:match.get(k) for k in ("ra_deg","dec_deg","star")}, **event}
-    checks={}
-    for key,action in (("field",_gaia),("tess",_tess),("literature",_literature)):
-        try:
-            checks[key]=action(event,cache_dir)
-        except Exception as exc:
-            checks[key]={"status":"incomplete","error":str(exc)[:500]}
+def known_overlaps(event,match):
     overlaps=[]
     for ep in match["ephemerides"]:
         p=ep["period_days"]
@@ -707,6 +917,36 @@ def vet_event(event, match, cache_dir):
         span=.5*(event["duration_days"]+ep["duration_days"])+3*(ep["epoch_error_days"]+abs(n)*ep["period_error_days"])
         if abs(event["epoch_bjd"]-ep["epoch_bjd"]-n*(p or 0))<=span:
             overlaps.append(ep["label"]+" "+ep["kind"])
+    return overlaps
+
+
+LITERATURE_CACHE={}
+
+
+def vet_event(event,match,cache_dir,previous=None):
+    event={**{k:match.get(k) for k in ("ra_deg","dec_deg","star")},**event}
+    checks={}
+    old=(previous or {}).get("checks",{})
+    for key,action in (("field",_gaia),("tess",_tess),("literature",_literature)):
+        frozen=old.get(key,{})
+        if frozen.get("status") in ("screened","compared","no TESS sector footprint",
+                                    "requires publication and event epoch review"):
+            checks[key]=frozen
+            continue
+        try:
+            if key=="literature":
+                cache_key=(event["star"],event["ra_deg"],event["dec_deg"])
+                if cache_key not in LITERATURE_CACHE:
+                    if len(LITERATURE_CACHE)>96:
+                        LITERATURE_CACHE.clear()
+                    LITERATURE_CACHE[cache_key]=action(event,cache_dir)
+                # The caller moves references out of individual event records.
+                checks[key]=copy.deepcopy(LITERATURE_CACHE[cache_key])
+            else:
+                checks[key]=action(event,cache_dir)
+        except Exception as exc:
+            checks[key]={"status":"incomplete","error":str(exc)[:800]}
+    overlaps=known_overlaps(event,match)
     return dict(disposition="catalog ephemeris overlap" if overlaps else "requires review",
                 known_ephemeris_overlaps=overlaps, known_objects=match["known_objects"],
                 catalog_errors=match["errors"],unresolved=match["unresolved"],
@@ -717,8 +957,11 @@ def vet_event(event, match, cache_dir):
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("operation",choices=("seed",))
+    parser.add_argument("operation",choices=("seed","repair"))
     parser.add_argument("inventory",type=Path)
     parser.add_argument("cache_dir",type=Path)
+    parser.add_argument("--previous-seed",type=Path)
     args=parser.parse_args()
-    seed_catalogs(args.inventory,args.cache_dir)
+    if (args.operation=="repair") != bool(args.previous_seed):
+        parser.error("repair requires --previous-seed; seed does not take it")
+    seed_catalogs(args.inventory,args.cache_dir,args.previous_seed)

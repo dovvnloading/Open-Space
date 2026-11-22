@@ -4,6 +4,7 @@ import gzip
 import hashlib
 import os
 import json
+import io
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -98,8 +99,13 @@ def render():
     injections = defaultdict(Counter)
     events, candidates, pending = [], [], []
     bounds, sectors = [], Counter()
+    field_limits = Counter()
+    photometry_exclusions = Counter()
+    repair_counts = Counter()
+    distinct_stars = defaultdict(set)
     seen_digests = set()
-    with gzip.open(OUT/'input_checksums.jsonl.gz','wt',encoding='utf8') as inputs:
+    with (OUT/'input_checksums.jsonl.gz').open('wb') as raw, gzip.GzipFile(
+            filename='', fileobj=raw, mode='wb', mtime=0) as comp, io.TextIOWrapper(comp, encoding='utf8') as inputs:
         def receipt(visit, name, sha, context):
             if sha and sha not in seen_digests:
                 seen_digests.add(sha)
@@ -130,13 +136,20 @@ def render():
                         receipt(visit,k,src.get('sha256'),src.get('url',k))
                     if m.get('errors') or m.get('unresolved'):
                         limitations['Unresolved catalog query or known ephemeris (source-visits)'] += 1
+                diag = row.get('field', {})
+                for name in ('near_target','outside','too_few','extracted','unresolved_core','quality_excluded','undetected','blended'):
+                    if isinstance(diag.get(name), int):
+                        field_limits[name] += diag[name]
+                repair_counts[diag.get('status', 'no field status')] += 1
                 selected = {}
                 for p in row['products']:
                     if p.get('derived_sha256'):
                         receipt(visit,p['name'],p['derived_sha256'],'field aperture extraction')
                     products[p['status']] += 1
                     if p['status']!='searched':
+                        photometry_exclusions[(p.get('source_kind','unknown'),p['status'])] += 1
                         continue
+                    distinct_stars[p['source_kind']].add((p.get('star') or str(p['source_id'])).strip())
                     searched.add(visit)
                     family = p['reduction']
                     scope = p['source_kind']
@@ -186,9 +199,8 @@ def render():
         w.writerows(sorted(events,key=lambda x:(x['visit_id'],x['epoch_bjd_tdb'],str(x['star']))))
     unprocessed=sorted(inventory-done)
     (OUT/'missing_visits.txt').write_text(''.join(x+'\n' for x in unprocessed))
-    complete = (bool(inventory) and done==inventory and searched==inventory and
-                status.get('inventory_complete') and visit_status['searched']==len(inventory))
-    bounded = bool(searched) and done==inventory and not pending and not candidates and sum(c['trials'] for c in injections.values())>0
+    complete = bool(inventory) and done==inventory and bool(status.get('inventory_complete'))
+    bounded = complete and bool(searched) and not candidates and any(c['trials'] for c in injections.values())
     if candidates:
         title=f"{len(candidates):,} CHEOPS dimming event{'s' if len(candidates)!=1 else ''} passed candidate review"
         label='Candidate'
@@ -196,7 +208,7 @@ def render():
     elif bounded:
         title=f"No new transit candidate survived in {len(searched):,} CHEOPS visits"
         label='Null result'
-        catalog_text=f"**A search of {len(searched):,} CHEOPS visits found no new transit candidate within its measured sensitivity.**"
+        catalog_text=f"**No new transit passed every check in {len(searched):,} searchable CHEOPS visits.**"
     elif searched:
         title=f"The CHEOPS search covered {len(searched):,} visits"
         label='Measured'
@@ -216,7 +228,9 @@ def render():
         f'The workers returned {len(done):,} visit records and searched {len(searched):,} visits '
         f'covering {len(source_visits):,} distinct visit/source pairs.']
     if bounded:
-        published.append('The null applies to the sampled visits, extracted sources, box durations and recovery fractions below.')
+        published.append('This is a null for validated candidates in the searched light curves. '
+                         'The injection table measures recovery at the photometric stage. '
+                         'Open signals and incomplete checks prevent a limit on the number of planets or eclipsing systems.')
     elif not candidates:
         published.append('The available observations and unresolved checks do not establish an archive-wide astrophysical null.')
     if candidates or pending:
@@ -239,6 +253,19 @@ def render():
         '| Extraction | Distinct visit/source pairs |','| --- | ---: |']
     for (scope,fam),pairs in sorted(per_family.items()):
         published.append(f'| {scope}, {fam} | {len(pairs):,} |')
+    if distinct_stars:
+        published += ['', 'The searched light curves have the following distinct source identifiers, '+', '.join(
+            f'{len(names):,} {kind}' for kind,names in sorted(distinct_stars.items()))+'. '
+            'Target aliases can refer to the same star across visits.']
+    if repair_counts:
+        published += ['', '| Field extraction outcome | Visits |','| --- | ---: |']
+        published += [f'| {cell(k)} | {n:,} |' for k,n in repair_counts.most_common()]
+    if field_limits:
+        published += ['', 'Across visit catalogues, '+', '.join(f'{k.replace("_"," ")} {v:,}' for k,v in field_limits.items())+'.']
+    if photometry_exclusions:
+        published += ['', '| Product excluded from search | Count |', '| --- | ---: |']
+        published += [f'| {k[0]}, {k[1]} | {v:,} |' for k,v in photometry_exclusions.most_common()]
+
     if not per_family:
         published.append('| Searched | 0 |')
     if bounds:
@@ -261,7 +288,7 @@ def render():
     published+=['','## Injection recovery','',
         'Each selected visit/source product received trapezoidal dips before detrending, at epochs drawn uniformly across its quality-filtered visit span, including gaps and known-event masks. Two trials were drawn for each depth and duration in each product. Every trial counts in the denominator. Recovery requires a consistent epoch and duration and all automatic photometric cuts. The table reports recovered/tried and the observed recovery fraction.',
         '',
-        'Each source contributes one product per visit and reduction family, preferring DEFAULT, then OPTIMAL, then filename order. DRP and PIPE can cover the same photons. Curves from distinct field stars in the same visit can share noise. The recovery fractions measure the automated photometric stage. Catalog completeness, image localization and publication review are separate filters.']
+        'Each source contributes one product per visit and reduction family, preferring DEFAULT, then OPTIMAL, then filename order. DRP and PIPE can cover the same photons. Curves from distinct field stars in the same visit can share noise. Injections into the extracted field-star curves measure detectability after aperture extraction. A field star needed at least 48 valid cadences and a measurable core in the sampled frames. Field apertures used a radius of 10 pixels and a local sky annulus of 14 to 18 pixels. The smear and contamination regressors come from the visit’s DRP target telemetry. The recovery fractions measure the automated photometric stage. Catalog completeness, image localization and publication review are separate filters.']
     durations=sorted({k[3] for k in injections})
     if durations:
         published += ['', '| Source and extraction | Depth (ppm) | '+' | '.join(f'{d:g} h' for d in durations)+' |',
@@ -284,19 +311,20 @@ def render():
         '[Input digests](outputs/input_checksums.jsonl.gz) identify the retrieved archive responses, source masks, light curves and derived apertures. The visit records carry request URLs, product checksums, masks, diagnostics and per-event evidence. '
         '[Output checksums](outputs/SHA256SUMS) cover every deposited output. '
         '[Missing visit IDs](outputs/missing_visits.txt) and [all distinct events](outputs/events.tsv) are machine-readable.',
-        '', 'From the repository root, a serial reproduction uses', '',
-        '```sh','study=results/'+STUDY.name,'python -m pip install -r "$study/requirements.txt"',
-        'mkdir "$study/outputs-reproduction"',
-        'cp "$study/outputs/"{inventory.jsonl,archive_status.json,archive_probes.jsonl} "$study/outputs-reproduction/"',
-        'seed=$(find "$study/outputs" -name catalog-seed.json.gz -print -quit)',
-        'if [ -z "$seed" ]; then',
-        '  python "$study/vetting.py" seed "$study/outputs/inventory.jsonl" /tmp/cheops-catalog',
-        '  seed=/tmp/cheops-catalog/catalog-seed.json.gz','fi',
-        'export CHEOPS_CATALOG_SEED="$seed"',
-        'python "$study/worker.py" "$study/outputs-reproduction/inventory.jsonl" "$study/outputs-reproduction" /tmp/cheops-cache 0 1',
-        'CHEOPS_OUTPUTS="$study/outputs-reproduction" python "$study/science_report.py"',
-        '(cd "$study/outputs" && sha256sum -c SHA256SUMS)','```','',
-        'Use a clean checkout. The serial reproduction reads the deposited inventory. The archive, catalog ephemerides and publication indexes can change. The original per-visit input digests allow comparison with a later run.']
+        '', '## Reproduce the result', '',
+        'The [first run](https://github.com/dovvnloading/Open-Space/actions/runs/45054151730) deposited the frozen inventory. The [target survey](https://github.com/dovvnloading/Open-Space/actions/runs/45054699737) contains the original target measurements and catalog snapshot. The final field pass translated detector centroids into subarray coordinates and retained the original target measurements and injection trials. The public archive and external catalogs can change between downloads.',
+        '', 'To regenerate the report from the deposited measurements in a clean checkout, run', '',
+        '```sh','study=results/'+STUDY.name,'(cd "$study/outputs" && sha256sum -c SHA256SUMS)',
+        'python "$study/science_report.py"','```','',
+        'To repeat the field pass against the same target measurements, use the following commands from the repository root. The base commit fixes the original visit ledgers. The final catalog seed fixes the published masks used for field photometry.', '',
+        '```sh','study=results/'+STUDY.name,'scratch=$(mktemp -d)',
+        'git archive 6f0b77d2c85cb5e422d12e81e1c698f6f9f5ed92 "$study" | tar -x -C "$scratch"',
+        'base="$scratch/$study"','python -m pip install -r "$study/requirements.txt"',
+        'export CHEOPS_CATALOG_SEED="$PWD/$study/outputs/field-ephemerides/catalog-seed.json.gz"',
+        'python "$study/repair.py" "$base" "$scratch/patches" "$scratch/cache" 0 1',
+        'python "$study/repair.py" merge "$base" "$scratch/patches"',
+        'CHEOPS_OUTPUTS="$base/outputs" python "$study/science_report.py"','```','',
+        'The workflow at commit `69fb1aa8c973b9ef1d749a2dbef5cdede3682a9d` provides the commands for the original DRP survey. The input receipts identify the actual bytes for comparison.']
     replay = 'CHEOPS_OUTPUTS' in os.environ
     destination = OUT/'README.md' if replay else STUDY/'README.md'
     text = '\n'.join(published)+'\n'

@@ -26,7 +26,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Seed published masks for the frozen inventory
+      - name: Recover published eclipsing-binary masks for the frozen fields
         run: |
           python -m pip install -r "$STUDY/requirements.txt" > "$RUNNER_TEMP/install.log"
           python - <<'PYTHON'
@@ -37,7 +37,7 @@ jobs:
           assert status["verified_lightcurve"] and status["status"]=="ready"
           assert hashlib.sha256((folder/"inventory.jsonl").read_bytes()).hexdigest()==status["inventory_sha256"]
           PYTHON
-          python "$STUDY/vetting.py" seed "$STUDY/outputs/inventory.jsonl" "$RUNNER_TEMP/seed"
+          python "$STUDY/vetting.py" repair "$STUDY/outputs/inventory.jsonl" "$RUNNER_TEMP/seed" --previous-seed "$STUDY/outputs/ephemerides/catalog-seed.json.gz"
       - uses: actions/upload-artifact@v4
         with:
           name: cheops-mask-seed
@@ -68,23 +68,23 @@ jobs:
         with:
           name: cheops-mask-seed
           path: ${{ runner.temp }}/seed
-      - name: Search the assigned visits
+      - name: Recover field-star photometry at the frozen visit positions
         env:
           CHEOPS_CATALOG_SEED: ${{ runner.temp }}/seed/catalog-seed.json.gz
           SHARD: ${{ matrix.shard }}
         run: |
           python -m pip install -r "$STUDY/requirements.txt" > "$RUNNER_TEMP/install.log"
-          timeout 340m python -u "$STUDY/worker.py" "$STUDY/outputs/inventory.jsonl" "$RUNNER_TEMP/evidence" "$RUNNER_TEMP/work" "$SHARD" 160
+          timeout 340m python -u "$STUDY/repair.py" "$STUDY" "$RUNNER_TEMP/evidence" "$RUNNER_TEMP/work" "$SHARD" 160
       - name: Compress completed visit records
         if: always()
         run: |
-          for path in "$RUNNER_TEMP"/evidence/visits-*.jsonl; do
+          for path in "$RUNNER_TEMP"/evidence/repair-*.jsonl; do
             if test -f "$path"; then gzip -n "$path"; fi
           done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cheops-visits-${{ matrix.shard }}
+          name: cheops-field-${{ matrix.shard }}
           path: ${{ runner.temp }}/evidence/
           retention-days: 7
           if-no-files-found: warn
@@ -92,7 +92,7 @@ jobs:
     needs: [prepare, survey]
     if: always() && !cancelled() && needs.prepare.result == 'success'
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 75
     permissions:
       contents: write
     steps:
@@ -102,16 +102,16 @@ jobs:
           fetch-depth: 12
       - uses: actions/download-artifact@v4
         with:
-          pattern: cheops-visits-*
+          pattern: cheops-field-*
           merge-multiple: true
-          path: results/cheops-public-visits/outputs
+          path: ${{ runner.temp }}/patches
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - uses: actions/download-artifact@v4
         with:
           name: cheops-mask-seed
-          path: results/cheops-public-visits/outputs/ephemerides
+          path: results/cheops-public-visits/outputs/field-ephemerides
       - name: Record the result and input receipts
         run: |
           git config user.name 'github-actions[bot]'
@@ -119,11 +119,18 @@ jobs:
           git fetch --no-tags --depth=10 origin main:refs/remotes/origin/main
           if ! git merge-base --is-ancestor origin/main HEAD; then
             git fetch --no-tags --deepen=64 origin main research/cheops-public-visit-search
-            git merge --no-edit origin/main
+            if ! git merge --no-edit origin/main; then
+              unresolved=$(git diff --name-only --diff-filter=U)
+              test "$unresolved" = README.md
+              git checkout --theirs -- README.md
+              git add -- README.md
+              git commit --no-edit
+            fi
           fi
+          python "$STUDY/repair.py" merge "$STUDY" "$RUNNER_TEMP/patches"
           python "$STUDY/science_report.py"
           git add -f -- "$STUDY/outputs" "$STUDY/README.md" README.md
-          git commit -m 'Deposit CHEOPS transit search, calibration and coverage'
+          git commit -m 'Deposit corrected CHEOPS field photometry and final search bounds'
           git push origin HEAD:refs/heads/research/cheops-public-visit-search
       - name: Verify deposited repository
         run: |
@@ -132,5 +139,5 @@ jobs:
       - name: Run repository tests
         if: success() || failure()
         run: |
-          python -m pip install -r "$STUDY/requirements.txt" scipy pandas > "$RUNNER_TEMP/test-deps.log"
+          python -m pip install -r "$STUDY/requirements.txt" pandas matplotlib==3.10.7 > "$RUNNER_TEMP/test-deps.log"
           python -m unittest discover -s tests

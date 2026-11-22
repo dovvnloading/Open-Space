@@ -16,7 +16,7 @@ AUX = {
     'smear': ('SMEARING_LC', 'SMEARING', 'SMEAR', 'SMEAR_LC'),
     'contamination': ('CONTA_LC', 'CONTAM_LC', 'CONTAMINATION', 'CONTAM', 'CONTAMINATION_LC'),
 }
-FLUX_COLS = ('FLUX', 'PSF_FLUX', 'SAP_FLUX')
+FLUX_COLS = ('FLUX', 'PSF_FLUX', 'FLUX_PSF', 'SAP_FLUX')
 TIME_COLS = ('BJD_TIME', 'BJD_TDB', 'BJD', 'BTJD', 'TIME')
 QUALITY_COLS = ('EVENT', 'QUALITY', 'FLAG', 'FLAGS', 'SAP_QUALITY')
 
@@ -82,7 +82,9 @@ def _read(path):
         if not len(finite):
             raise ValueError('No finite times')
         col_index = table.columns.names.index(time_col) + 1
-        scale = str(head.get(f'TCTYP{col_index}', head.get('TIMESYS', 'TDB'))).strip().upper()
+        column_scale = str(head.get(f'TCTYP{col_index}', '')).strip().upper()
+        scale = (column_scale if column_scale in ('TDB','TT','UTC','TCB','TAI') else
+                 str(head.get('TIMESYS', 'TDB')).strip().upper())
         if scale not in ('TDB', 'BJD_TDB', 'TT'):
             raise ValueError('Unsupported barycentric time scale: ' + scale)
         tunit = str(table.columns[time_col].unit or 'd').strip().lower()

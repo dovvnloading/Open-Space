@@ -551,3 +551,80 @@ if __name__ == '__main__':
     parser.add_argument('directory',type=Path)
     args=parser.parse_args()
     inventory(args.directory)
+
+
+def fetch_repair_inputs(visit, old_record, dest):
+    """Restore the three hash-pinned FITS products used in the original image attempt.
+
+    The archived DACE download ticket can be reused while live. If it has
+    expired, obtain a fresh ticket for the same visit, type and aperture.
+    """
+    dest = Path(dest)
+    dest.mkdir(parents=True,exist_ok=True)
+    evidence = dest/'manifest.jsonl'
+    observation = old_record['visit_id']
+    if observation != visit['visit_id']:
+        raise ValueError('Visit and original receipts disagree')
+    latest = None
+    found = {}
+    primary = next((p.get('name') for p in old_record.get('products',[])
+                    if p.get('source_kind')=='target' and p.get('reduction')=='DRP'),None)
+    if primary is None:
+        primary = next((p.get('name') for p in old_record.get('products',[]) if p.get('reduction')=='DRP'),None)
+    for row in old_record.get('receipts',[]):
+        if row.get('operation','').startswith('DACE anonymous product'):
+            latest = row
+        if row.get('operation')!='FITS' or not row.get('sha256'):
+            continue
+        name=row['file']
+        if name==primary:
+            kind='lightcurves'
+        elif 'starcatalog' in name.lower():
+            kind='EXT_PRE_StarCatalogue'
+        elif 'sci_cor_subarray' in name.lower():
+            kind='SCI_COR_SubArray'
+        else:
+            continue
+        if kind not in found:
+            found[kind]=(name,row['sha256'],latest)
+    types=('lightcurves','EXT_PRE_StarCatalogue','SCI_COR_SubArray')
+    if set(found)!=set(types):
+        raise ValueError('Missing original hash-pinned input(s): '+', '.join(k for k in types if k not in found))
+    paths=[]
+    for kind in types:
+        name,expected,ticket=found[kind]
+        payload=dest/'download.tmp'
+        url=ticket.get('url','') if ticket else ''
+        # Use precisely the published download URL and never attach auth.
+        allowed=(urlsplit(url).scheme=='https' and urlsplit(url).hostname==
+                 urlsplit(dace_host()).hostname and '/download/photometry/' in urlsplit(url).path)
+        retrieved=[]
+        receipt_start=evidence.stat().st_size if evidence.exists() else 0
+        if allowed:
+            try:
+                transfer=exchange(evidence,'restore original '+kind,url,params=ticket.get('query'),local=payload)
+                retrieved=keep_fits(payload,dest,name,evidence,transfer)
+            except Exception as exc:
+                log(evidence,operation='original ticket unavailable',file=name,error=str(exc)[:350])
+            finally:
+                payload.unlink(missing_ok=True)
+        if not retrieved:
+            aperture=None
+            if kind=='lightcurves':
+                match=re.search(r'-(DEFAULT|OPTIMAL|RINF|RSUP)[_.]',name,re.I)
+                aperture=match[1].lower() if match else None
+            try:
+                retrieved=download_product(visit,dest,evidence,kind,aperture=aperture)
+            finally:
+                payload.unlink(missing_ok=True)
+        # Reuse stream/extraction checksums rather than re-reading large cubes.
+        with evidence.open('rb') as src:
+            src.seek(receipt_start)
+            verified={r['file'] for raw in src for r in (json.loads(raw),)
+                      if r.get('operation')=='FITS' and r.get('sha256')==expected}
+        match=next((p for p in retrieved if p.name in verified),None)
+        if match is None:
+            raise ValueError('Unable to reproduce original FITS checksum: '+name)
+        log(evidence,operation='original input checksum verified',file=name,sha256=expected)
+        paths.append(match)
+    return paths, paths[0]
