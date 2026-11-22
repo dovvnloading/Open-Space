@@ -1,5 +1,5 @@
 """Auditable release-level tallies from completed HETDEX search ledgers (stdlib only)."""
-from collections import Counter, defaultdict
+from collections import Counter, defaultdict, deque
 import gzip
 import hashlib
 import json
@@ -34,41 +34,137 @@ def stable_key(p):
     return p["row_index"],p["channel"],p.get("stream") or "",float(p["wave"]).hex()
 
 
-def adjudications(d):
-    """Replace exactly the matching first-pass row, retaining both original ledgers."""
-    focus=d/'focus'
-    revised={}
-    if (focus/'vet-summary.json').exists():
-        expected=read(focus/'summary.json')['input_sha256']
-        with (d/'vetted.jsonl.gz').open('rb') as src:
-            assert hashlib.file_digest(src,"sha256").hexdigest()==expected
-        for n,row in ledger(focus/'vetted.jsonl.gz'):
-            key=tuple(row['key'])
-            assert key not in revised
-            revised[key]=(n,row)
-    morph={}
-    spatial=d/'repeat-blobs'
-    if (spatial/'summary.json').exists():
-        with (d/'vetted.jsonl.gz').open('rb') as src:
-            assert hashlib.file_digest(src,"sha256").hexdigest()==read(spatial/'summary.json')['input_sha256']
-        for ix,row in ledger(spatial/'vetted.jsonl.gz'):
-            orig=row['first_pass_line']
-            assert orig not in morph
-            morph[orig]=(ix,row)
-    for n,entry in ledger(d/'vetted.jsonl.gz'):
-        p=entry['peak']
-        key=stable_key(p)
-        if n in morph:
-            idx,row=morph.pop(n)
-            assert p['channel']=='blob' and key not in revised
-            yield idx,row,'repeat-blobs/vetted.jsonl.gz',entry['vet']['disposition']
-        elif key in revised:
-            n2,row=revised.pop(key)
-            yield n2,row,'focus/vetted.jsonl.gz',entry['vet']['disposition']
+def measurement_id(p):
+    """Immutable observed quantities; source and partner IDs distinguish blended lines."""
+    fields = ("shotid", "source_id", "detectid", "ra", "dec", "flux", "flux_err", "snr",
+              "knot_detectid", "secondary_detectid", "secondary_ra", "secondary_dec",
+              "secondary_wave", "repeat_rows", "imaging_rank_A")
+    partner = p.get("pair_lya") or {}
+    values = [p.get(k) for k in fields] + [partner.get(k) for k in ("wave","flux","flux_err","snr")]
+    return stable_key(p), json.dumps(values,separators=(",",":"),allow_nan=False)
+
+
+def frozen_digest(peak, vet):
+    raw = json.dumps([peak,vet],sort_keys=True,separators=(",",":"),allow_nan=False)
+    return hashlib.sha256(raw.encode()).digest()
+
+
+def checked_line(row):
+    n = row["first_pass_line"]
+    if type(n) is not int or n < 1:
+        raise ValueError("Invalid first-pass line in supplementary ledger")
+    return n
+
+
+def legacy_focus(focus, revisions):
+    """Recover exact original snapshots saved before the line-number field existed."""
+    by_measurement = defaultdict(list)
+    for _,r in ledger(focus/"followup.jsonl.gz"):
+        if r.get("first_pass_line") is not None:
+            continue
+        ident = (measurement_id(r["peak"]),r["group"],r["first"]["disposition"],r["first_pass_external"])
+        # Historical focus.adjudicate processed this stable sort of the immutable
+        # input list. Replay within each equal measurement group only. Distinct
+        # Ly-alpha anchors and distinct source/visit geometries never share a queue.
+        order = (r["first_pass_external"],not r["independent_redshift_agrees"],
+                 not bool(r["same_visit_two_line_repeats"]),r["group"])
+        digest = frozen_digest(r["peak"],r["first"])
+        by_measurement[ident].append((order,digest))
+    ordered = {k:deque(h for _,h in sorted(v,key=lambda pair:pair[0]))
+               for k,v in by_measurement.items()}
+    by_snapshot = defaultdict(lambda:defaultdict(deque))
+    for line,row,path in revisions:
+        p = row["peak"]
+        ident = (measurement_id(p),row["group"],row["first_pass_disposition"],row["first_pass_external"])
+        if not ordered.get(ident):
+            raise ValueError(f"Legacy focus row {line} has no matching frozen measurement and companion")
+        digest = ordered[ident].popleft()
+        by_snapshot[stable_key(p)][digest].append((line,row,path))
+    if any(ordered.values()):
+        raise ValueError("The frozen focus selection and completed legacy decisions differ in multiplicity")
+    return by_snapshot
+
+
+def adjudications(d, *, include_pair_replay=True):
+    """Yield exactly one effective decision per original ledger row, in original order."""
+    d=Path(d)
+    focus=d/"focus"
+    spatial=d/"repeat-blobs"
+    register=d/"vetted.jsonl.gz"
+    exact={}
+    expected_hashes=set()
+    old=[]
+    if (focus/"vet-summary.json").exists():
+        expected_hashes.add(read(focus/"summary.json")["input_sha256"])
+        counts=Counter()
+        for line,row in ledger(focus/"vetted.jsonl.gz"):
+            if tuple(row["key"]) != stable_key(row["peak"]):
+                raise ValueError(f"Focus identity disagrees with measured peak on supplemental line {line}")
+            counts[row["vet"]["disposition"]]+=1
+            item=(line,row,"focus/vetted.jsonl.gz")
+            if row.get("first_pass_line") is None:
+                old.append(item)
+            else:
+                n=checked_line(row)
+                if n in exact:
+                    raise ValueError(f"Multiple focus decisions claim first-pass line {n}")
+                exact[n]=item
+        summary=read(focus/"vet-summary.json")
+        if sum(counts.values())!=summary["rows"] or counts!=Counter(summary["counts"]):
+            raise ValueError("Focus vetting counts disagree with completed ledger")
+    if (spatial/"summary.json").exists():
+        expected_hashes.add(read(spatial/"summary.json")["input_sha256"])
+        for line,row in ledger(spatial/"vetted.jsonl.gz"):
+            n=checked_line(row)
+            if n in exact or row["peak"]["channel"]!="blob":
+                raise ValueError(f"Invalid spatial revision for first-pass line {n}")
+            exact[n]=(line,row,"repeat-blobs/vetted.jsonl.gz")
+    replay={}
+    saved=focus/"saved-pair-decisions.jsonl.gz"
+    if include_pair_replay and saved.exists():
+        manifest=focus/"saved-pair-summary.json"
+        expected_hashes.add(read(manifest)["input_sha256"])
+        for line,row in ledger(saved):
+            n=checked_line(row)
+            if n in replay or tuple(row["key"])!=stable_key(row["peak"]):
+                raise ValueError(f"Invalid saved pair decision for first-pass line {n}")
+            replay[n]=(line,row,"focus/saved-pair-decisions.jsonl.gz")
+    if expected_hashes:
+        with register.open("rb") as source:
+            if expected_hashes!={hashlib.file_digest(source,"sha256").hexdigest()}:
+                raise ValueError("A supplemental product belongs to a different frozen first-pass ledger")
+    legacy=legacy_focus(focus,old) if old else {}
+    for n,entry in ledger(register):
+        peak=entry["peak"]
+        key=stable_key(peak)
+        original=entry["vet"]["disposition"]
+        item=exact.pop(n,None)
+        if item is None and key in legacy:
+            digest=frozen_digest(peak,entry["vet"])
+            choices=legacy[key].get(digest)
+            if choices:
+                item=choices.popleft()
+                if not choices:
+                    del legacy[key][digest]
+                if not legacy[key]:
+                    del legacy[key]
+        if item is not None:
+            line,row,path=item
+            if (measurement_id(peak)!=measurement_id(row["peak"]) or
+                row.get("first_pass_disposition",original)!=original):
+                raise ValueError(f"Supplemental measurement differs from first-pass line {n}")
         else:
-            yield n,entry,'vetted.jsonl.gz',entry['vet']['disposition']
-    assert not morph
-    assert not revised, "Supplement contains rows outside the first-pass register"
+            line,row,path=n,entry,"vetted.jsonl.gz"
+        if n in replay:
+            newer=replay.pop(n)
+            prev=newer[1]
+            if ((prev["previous_ledger"],prev["previous_ledger_line"],prev["previous_disposition"])!=
+                (path,line,row["vet"]["disposition"]) or measurement_id(row["peak"])!=measurement_id(prev["peak"])):
+                raise ValueError(f"Replayed pair does not match the effective decision on first-pass line {n}")
+            line,row,path=newer
+        yield line,row,path,original
+    if exact or legacy or replay:
+        raise ValueError("A supplementary decision lacks an identical original ledger record")
 
 
 def keep(obj, keys):

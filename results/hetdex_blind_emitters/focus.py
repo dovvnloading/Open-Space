@@ -1,6 +1,7 @@
 """Uncapped second-pass spectroscopy of eligible, previously unresolved HETDEX hypotheses."""
 import argparse
-from collections import Counter, defaultdict
+from collections import Counter, defaultdict, deque
+from contextlib import ExitStack
 from concurrent.futures import ThreadPoolExecutor
 import csv
 import gzip
@@ -95,14 +96,14 @@ def eligible(p,v):
 def select(indir):
     found=[]
     counters=Counter()
-    for row in lines(indir/"vetted.jsonl.gz"):
+    for line,row in enumerate(lines(indir/"vetted.jsonl.gz"),1):
         p,v=row["peak"],row["vet"]
         counters["ledger_rows"]+=1
         criteria=eligible(p,v)
         if criteria is None:
             continue
         counters[p["channel"]+"_eligible"]+=1
-        found.append(dict(peak=p,first=v,criteria=criteria,
+        found.append(dict(first_pass_line=line,peak=p,first=v,criteria=criteria,
                      first_pass_external="SPARCL" in v,same_visit_two_line_repeats=strong_repeat(p,v)))
     if not found:
         return found,counters
@@ -435,7 +436,7 @@ def focus(indir,out,cache):
     bypoint,tap_receipts=batched_matches(found)
     spec_receipts=trace_spectra(found,bypoint,cache/"focus-spectra")
     fields=("row_index","channel","stream","wave","detectid","source_id","shotid","ra","dec")
-    header=fields+("wave_hex","trial_redshift","group_id","first_pass_external","confirmed_repeat_shots",
+    header=fields+("first_pass_line","wave_hex","trial_redshift","group_id","first_pass_external","confirmed_repeat_shots",
                    "SPARCL_query","CDS_query","matches","measured_spectral_entries","external_redshift_agrees",
                    "prior_VAC_agrees","external_fixed_uv_pair","followup_status","spectroscopic_ids","eligibility")
     with gzip.open(out/"catalog.csv.gz","wt",newline="") as f, gzip.open(out/"followup.jsonl.gz","wt") as g:
@@ -448,7 +449,7 @@ def focus(indir,out,cache):
             total["eligible"]+=1
             total["discovery_"+status]+=1
             m=ext["matches"]
-            writer.writerow(dict({k:p.get(k) for k in fields},wave_hex=r["key"][-1],trial_redshift=row_z(p),
+            writer.writerow(dict({k:p.get(k) for k in fields},first_pass_line=r["first_pass_line"],wave_hex=r["key"][-1],trial_redshift=row_z(p),
                             group_id=r["group"],first_pass_external=r["first_pass_external"],
                             confirmed_repeat_shots=dump(r["same_visit_two_line_repeats"]),
                             SPARCL_query=ext["services"]["SPARCL"]["status"],
@@ -474,7 +475,29 @@ def focus(indir,out,cache):
     return summary
 
 
-def adjudicate(cat,out,cache_root):
+def restore_legacy_line_numbers(records,original):
+    """Match complete frozen peak and original decision; duplicate identical records keep ordinal order."""
+    pending=defaultdict(deque)
+    def token(p,v):
+        raw=json.dumps([p,v],sort_keys=True,separators=(",",":"),allow_nan=False)
+        return sha256(raw.encode()).digest()
+    for r in records:
+        if not r.get("first_pass_line"):
+            pending[token(r["peak"],r["first"])].append(r)
+    if not pending:
+        return
+    for n,base in enumerate(lines(original),1):
+        key=token(base["peak"],base["vet"])
+        if key in pending:
+            pending[key].popleft()["first_pass_line"]=n
+            if not pending[key]:
+                del pending[key]
+            if not pending:
+                return
+    raise ValueError("Saved follow-up rows did not match the original ledger exactly")
+
+
+def adjudicate(cat,out,cache_root,indir=None):
     """Run the full original veto chain on every matched or repeat-supported row, with no rank cap."""
     from vetting import Ancillary, Cache, enrich, external_check, tap_batch, validate_local
     cache=Cache(cache_root)
@@ -493,6 +516,7 @@ def adjudicate(cat,out,cache_root):
             v["LAN_catalog_unavailable"]=True
         return p,v
     records=list(lines(out/"followup.jsonl.gz"))
+    restore_legacy_line_numbers(records,(indir or out.parent)/"vetted.jsonl.gz")
     # The frozen first pass checked separation and uniqueness of positional
     # repeat visits as well as shared source IDs. Restore those same row pairs.
     cat.confirmed_repeat_rows={}
@@ -536,7 +560,7 @@ def adjudicate(cat,out,cache_root):
                     counts[v["disposition"]]+=1
                     p.pop("catalog",None)
                     p.pop("rescue_audit",None)
-                    f.write(dump(dict(peak=p,vet=v,key=r["key"],group=r["group"],
+                    f.write(dump(dict(peak=p,vet=v,key=r["key"],first_pass_line=r["first_pass_line"],group=r["group"],
                             first_pass_disposition=r["first"]["disposition"],
                             first_pass_external=r["first_pass_external"]))+"\n")
                     f.flush()
@@ -547,6 +571,150 @@ def adjudicate(cat,out,cache_root):
     (out/"vet-inputs.json").write_text(dump(cache.inputs)+"\n")
 
 
+ID_REASONS={
+    "heii":{"independent line identification unavailable"},
+    "ew":{"external redshift unavailable for low-z and AGN discrimination",
+          "independent Ly-alpha identification required for imaging-led EW"},
+    "blob":{"independent redshift unavailable"}}
+
+
+def replay_pair_decision(p,v,restore_visits):
+    """Revisit only identification-dependent gates in already fully vetted real rows."""
+    from vetting import AGN_GAP, AGN_PASSED, PAIR_EXTERNAL, PAIR_REPEAT, fixed_external_pairs
+    from vetting import ordinary_agn_disfavored, stack_pair_shots
+    ch=p["channel"]
+    if (ch not in ID_REASONS or v.get("pair_evidence_version")==2 or "SPARCL" not in v or
+        v["disposition"] not in ("candidate","unresolved")):
+        return None
+    old=set(v.get("reasons",[]))
+    passed=list(v.get("passed",[]))
+    pairs=fixed_external_pairs(p,v)
+    stack=p.get("stream")=="repeat_stack"
+    primary=(PAIR_EXTERNAL in passed or "independent instrument confirms line" in passed or
+             "independent HETDEX shot" in passed)
+    anchor=bool({"independent DESI visual redshift","independent survey redshift agrees"} & set(passed))
+    relevant=ID_REASONS[ch] | {"foreground interpretation unresolved"}
+    reviewed=(ch=="ew" and p.get("stream")=="imaging_rescue")
+    lowwave=ch in ("ew","blob") and p["wave"]<3714 and "HETDEX Ly-alpha redshift agrees" in passed
+    benefited_from_stack=stack and not anchor and not pairs and (
+        PAIR_REPEAT in passed or (lowwave and not (old & relevant) and primary))
+    if not (pairs and old & relevant or benefited_from_stack):
+        return None
+    v=dict(v)
+    reasons=set(old)
+    if pairs:
+        passed=list(dict.fromkeys(passed+[PAIR_EXTERNAL]))
+        v["external_fixed_uv_pairs"]=pairs
+        reasons.difference_update(relevant)
+    if benefited_from_stack:
+        shots=stack_pair_shots(p,v)
+        if len(shots)<2:
+            recovered=restore_visits(p,v)
+            if recovered is not None:
+                v["secondary_visit_measurements"]=recovered
+                shots=stack_pair_shots(p,v)
+        v["stack_pair_shots"]=shots
+        if len(shots)<2:
+            passed=[text for text in passed if text!=PAIR_REPEAT]
+            if ch=="heii":
+                reasons.add("independent line identification unavailable")
+            elif ch=="ew":
+                reasons.add("external redshift unavailable for low-z and AGN discrimination")
+                if reviewed:
+                    reasons.add("independent Ly-alpha identification required for imaging-led EW")
+            else:
+                reasons.add("independent redshift unavailable")
+            if v.get("catalog_conflict") or v.get("low_z_families"):
+                reasons.add("foreground interpretation unresolved")
+    # In the original pipeline the AGN gate ran only after all other gates
+    # cleared. A newly identified source must still pass it. Preserve all
+    # existing independent imaging, morphology, foreground and novelty vetoes.
+    if not reasons:
+        if ordinary_agn_disfavored(p,v,row_z(p)):
+            passed=list(dict.fromkeys(passed+[AGN_PASSED]))
+        else:
+            reasons.add(AGN_GAP)
+    outcome="unresolved" if reasons else "candidate"
+    if reasons==old and outcome==v["disposition"]:
+        return None
+    return dict(v,disposition=outcome,reasons=sorted(reasons),passed=passed,pair_evidence_version=2)
+
+
+def cached_secondary_visits(indir,cache,stack,receipts):
+    """Optional missing reference-visit flux; never fetch absent files."""
+    from acquisition import Spectra,checksums
+    from vetting import repeat_line
+    release=indir.name
+    opened=[]
+    def restore(p,v):
+        if not opened:
+            cat=None
+            manifest=indir/("inputs-"+release+".json")
+            if cache is not None and manifest.is_file():
+                known=json.loads(manifest.read_text())
+                files=[(cache/r["file"],r["sha256"]) for r in known]
+                if len(files)==2 and all(q.is_file() for q,_ in files):
+                    for path,expected in files:
+                        if checksums(path)["sha256"]!=expected:
+                            raise ValueError("Cached HETDEX input disagrees with original release SHA-256")
+                    spec=next(q for q,_ in files if "_spec_" in q.name)
+                    cat=stack.enter_context(Spectra(spec,release))
+                    receipts["verified_cached_files"]={q.name:h for q,h in files}
+            opened.append(cat)
+        if opened[0] is None:
+            receipts["source_visits_unavailable"]+=1
+            return None
+        if p["channel"]=="heii":
+            other=p.get("lya_velocity_best") or {}
+        else:
+            fam=p.get("lya_family") or {}
+            other=max((x for k,x in fam.items() if k in ("heii","oiii_uv1","oiii_uv2","ciii1","ciii2")),
+                      key=lambda x:number(x.get("snr")),default={})
+        rows=p.get("repeat_rows") or []
+        if not rows or number(other.get("snr"))<5 or number(other.get("air_wave"))<=0:
+            receipts["precise_secondary_or_visits_unavailable"]+=1
+            return None
+        receipts["remeasured_stack_secondary"]+=1
+        return repeat_line(opened[0],int(p["row_index"]),{**p,"wave":other["air_wave"]},rows=rows)
+    return restore
+
+
+def replay_saved(indir,out,cache=None):
+    """Generate an immutable, original-line-addressed overlay; performs no network requests."""
+    from evidence_summary import adjudications
+    out.mkdir(parents=True,exist_ok=True)
+    paths=["vetted.jsonl.gz","focus/vetted.jsonl.gz","repeat-blobs/vetted.jsonl.gz"]
+    def digest(path):
+        with path.open("rb") as f:
+            from hashlib import file_digest
+            return file_digest(f,"sha256").hexdigest()
+    hashes={name:digest(indir/name) for name in paths if (indir/name).is_file()}
+    count=Counter()
+    receipts=Counter()
+    target=out/"saved-pair-decisions.jsonl.gz"
+    tmp=target.with_suffix(".tmp")
+    with ExitStack() as stack:
+        restore=cached_secondary_visits(indir,cache,stack,receipts)
+        with gzip.open(tmp,"wt") as f:
+            for ordinal,(line,record,source,_) in enumerate(adjudications(indir,include_pair_replay=False),1):
+                p,v=record["peak"],record["vet"]
+                count["effective_rows_examined"]+=1
+                current=replay_pair_decision(p,v,restore)
+                if current is None:
+                    continue
+                count["revised_rows"]+=1
+                count[v["disposition"]+"_to_"+current["disposition"]]+=1
+                f.write(dump(dict(peak=p,vet=current,key=row_key(p),first_pass_line=ordinal,
+                             previous_ledger=source,previous_ledger_line=line,previous_disposition=v["disposition"]))+"\n")
+    tmp.replace(target)
+    summary=dict(input_sha256=hashes["vetted.jsonl.gz"],source_ledgers=hashes,
+                 counts=dict(count),cached_visit_receipts=dict(receipts),
+                 method="Fixed Ly-alpha ≥5σ and HeII ≥4σ in one separate external spectrum, and two distinct "
+                 "individual primary/secondary visits for stack-only pair confirmation. All unrelated vetoes "
+                 "are preserved. Missing member spectra leave the repeat criterion unresolved.")
+    (out/"saved-pair-summary.json").write_text(json.dumps(summary,indent=2)+"\n")
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("input",type=Path)
@@ -555,7 +723,11 @@ def main():
     p.add_argument("--release",choices=("sc1","sc2"))
     p.add_argument("--vet",action="store_true")
     p.add_argument("--reuse-matches",action="store_true",help="Use checksummed focus outputs already present.")
+    p.add_argument("--replay-saved",action="store_true",help="Recheck earlier adjudications from saved evidence without network access.")
     args=p.parse_args()
+    if args.replay_saved:
+        replay_saved(args.input,args.output,args.cache)
+        return
     if not args.reuse_matches:
         current=focus(args.input,args.output,args.cache)
     else:
@@ -575,7 +747,7 @@ def main():
         from acquisition import Spectra,prepare
         path=prepare(release,args.cache,args.output)
         with Spectra(path,release) as cat:
-            adjudicate(cat,args.output,args.cache)
+            adjudicate(cat,args.output,args.cache,args.input)
 
 
 if __name__=="__main__":

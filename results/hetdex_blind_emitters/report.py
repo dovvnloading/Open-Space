@@ -18,8 +18,10 @@ RELEASES=('sc1','sc2')
 CHANNELS=('heii','ew','blob','unknown')
 NAMES={'heii':'He II','ew':'Extreme Lyα EW','blob':'Extended Lyα','unknown':'Unassigned-line screen'}
 FIELDS=['release','source_id','detectid','shotid','ra_deg','dec_deg','channel','stream','wave_air_A',
-        'trial_redshift','observed_EW_A','flux_cgs','flux_err_cgs','snr','rest_EW_A','rest_EW_lower_A','catalog_class',
-        'catalog_redshift','disposition','independent_shot_max_snr','checks_passed','reasons']
+        'secondary_ra_deg','secondary_dec_deg','secondary_wave_air_A','morphology',
+        'trial_redshift','observed_EW_A','flux_cgs','flux_err_cgs','snr','rest_EW_A','spectral_rest_EW_lower_A',
+        'imaging_rest_EW_lower_A','catalog_class','catalog_redshift','disposition',
+        'independent_shot_max_snr','checks_passed','reasons','evidence_ledger','jsonl_line']
 
 
 def read(path):
@@ -31,13 +33,30 @@ def number(x):
 
 
 def separation(a,b):
-    x,y=map(math.radians,(a['dec_deg'],b['dec_deg']))
-    d=math.radians(a['ra_deg']-b['ra_deg'])
+    x,y=map(math.radians,(a[1],b[1]))
+    d=math.radians(a[0]-b[0])
     return math.degrees(2*math.asin(min(1,math.sqrt(math.sin((x-y)/2)**2+
                                             math.cos(x)*math.cos(y)*math.sin(d/2)**2))))*3600
 
 
-def compact(release,p,v):
+def same_source(a,b):
+    if a['channel']!=b['channel']:
+        return False
+    def endpoints(row):
+        points=[(row['ra_deg'],row['dec_deg'],row['wave_air_A'])]
+        if row['channel']=='blob' and row['secondary_ra_deg'] is not None:
+            points.append((row['secondary_ra_deg'],row['secondary_dec_deg'],row['secondary_wave_air_A']))
+        return points
+    pa,pb=endpoints(a),endpoints(b)
+    if len(pa)!=len(pb):
+        return False
+    def same(x,y):
+        return (None not in x and None not in y and abs(x[2]-y[2])<5 and separation(x,y)<=1.25)
+    return (all(same(x,y) for x,y in zip(pa,pb)) or
+            (len(pa)==2 and all(same(x,y) for x,y in zip(pa,reversed(pb)))))
+
+
+def compact(release,p,v,path,line):
     channel=p['channel']
     z=p.get('z_heii') if channel=='heii' else p.get('z_lya') if channel!='unknown' else None
     ew_obs=(p['ew0']*(1+p['z_lya']) if p.get('ew0') is not None else
@@ -49,13 +68,39 @@ def compact(release,p,v):
         ew_obs=p['heii_rest_ew_A']*(1+z) if p.get('heii_rest_ew_A') is not None else None
     return dict(release=release,source_id=p.get('source_id'),detectid=p.get('detectid'),shotid=p.get('shotid'),
                 ra_deg=p.get('ra'),dec_deg=p.get('dec'),channel=channel,stream=p.get('stream','spatial'),
+                secondary_ra_deg=p.get('secondary_ra'),secondary_dec_deg=p.get('secondary_dec'),
+                secondary_wave_air_A=p.get('secondary_wave'),morphology=p.get('morphology'),
                 wave_air_A=p.get('wave'),trial_redshift=z,observed_EW_A=ew_obs,flux_cgs=p.get('flux'),flux_err_cgs=p.get('flux_err'),
                 snr=p.get('snr'),rest_EW_A=ew_obs/(1+z) if z is not None and ew_obs is not None else None,
-                rest_EW_lower_A=low_obs/(1+z) if z is not None and low_obs is not None else None,
+                spectral_rest_EW_lower_A=low_obs/(1+z) if z is not None and low_obs is not None else None,
+                imaging_rest_EW_lower_A=(v.get('imaging_EW') or {}).get('ew0_lower_A'),
                 catalog_class=p.get('source_type'),catalog_redshift=p.get('z_hetdex'),
                 disposition=v['disposition'],independent_shot_max_snr=max(
                     (r['snr'] for r in v.get('repeats',[]) if r.get('snr') is not None),default=None),
-                checks_passed=' | '.join(v.get('passed',[])),reasons=' | '.join(v.get('reasons',[])))
+                checks_passed=' | '.join(v.get('passed',[])),reasons=' | '.join(v.get('reasons',[])),
+                evidence_ledger=f'{release}/{path}',jsonl_line=line)
+
+
+def external_yield(directory):
+    """Count eligible hypothesis rows and distinct successfully retrieved spectrum arrays."""
+    with gzip.open(directory/'receipts.json.gz','rt') as file:
+        receipts=json.load(file)
+    successful_batches=Counter()
+    batches=Counter()
+    for row in receipts['catalog']:
+        service=row['service']
+        batches[service]+=1
+        successful_batches[service]+=any(a.get('status')=='complete' for a in row['attempts'])
+    arrays={r['array_sha256'] for r in receipts['spectra'].values()
+            if r.get('status')=='measured' and r.get('array_sha256')}
+    rows=Counter()
+    with gzip.open(directory/'catalog.csv.gz','rt') as file:
+        for r in csv.DictReader(file):
+            rows['eligible']+=1
+            rows['spectral_fit']+=int(r['measured_spectral_entries'])>0
+            rows['agree']+=r['external_redshift_agrees'].lower()=='true'
+            rows['prior_agree']+=r['prior_VAC_agrees'].lower()=='true'
+    return batches,successful_batches,len(arrays),rows
 
 
 def root_catalog(line,label):
@@ -87,12 +132,17 @@ def main():
     if os.environ.get("STAGE")=="vet" and not all((EVIDENCE/t/'focus'/'vet-summary.json').exists() for t in RELEASES):
         print("The first-pass vetting is checkpointed. The independent-spectroscopy and repeated-geometry jobs will publish the combined claim.")
         return
+    if os.environ.get("STAGE")=="focus" and not all((EVIDENCE/t/'focus'/'saved-pair-summary.json').exists() for t in RELEASES):
+        print("Both supplements are checkpointed. The finalization stage will reconcile individual visits and independent spectroscopy before cataloging the result.")
+        return
+    assert all((EVIDENCE/t/'focus'/'saved-pair-summary.json').exists() for t in RELEASES)
     allstats={}
     new=[]
     followed=[]
     counts=Counter()
     calib={}
     evidence_details={}
+    unknown_atlases={}
     for tag in RELEASES:
         d=EVIDENCE/tag
         scan=read(d/'scan-summary.json')
@@ -108,15 +158,25 @@ def main():
         tallied=Counter()
         raw_counts=Counter()
         effective_remote=Counter()
-        for _,entry,ledger,initial in adjudications(d):
+        unknown=Counter()
+        for line,entry,ledger,initial in adjudications(d):
             p,v=entry['peak'],entry['vet']
             raw_counts[(p['channel'],initial)]+=1
             tallied[(p['channel'],v['disposition'])]+=1
             if 'NED' in v:
-                followed.append(compact(tag,p,v))
+                followed.append(compact(tag,p,v,ledger,line))
                 effective_remote[p['channel']]+=1
             if v['disposition']=='candidate':
-                new.append(compact(tag,p,v))
+                new.append(compact(tag,p,v,ledger,line))
+            audit=v.get('unassigned_line_audit') or {}
+            if audit:
+                unknown['audited']+=1
+                unknown['anchored']+=bool(audit.get('anchor_tests'))
+                if audit.get('status')=='unmatched at independent redshift':
+                    unknown['unmatched']+=1
+                    atlases={a.get('repo') for a in audit.get('atlas_receipts',[]) if a.get('parsed_entries',0)>0}
+                    unknown['unmatched_with_both']+= {'sdss/mangadap','linetools/linetools'}<=atlases
+        unknown_atlases[tag]=unknown
         for ch,t in vet['status_counts'].items():
             for status,n in t.items():
                 assert raw_counts[ch,status]==n
@@ -126,8 +186,7 @@ def main():
     write_table(EVIDENCE/'followup.csv',followed,FIELDS)
     groups=[]
     for row in new:
-        if not any(row['channel']==other['channel'] and abs(row['wave_air_A']-other['wave_air_A'])<5
-                   and separation(row,other)<=1.25 for other in groups):
+        if not any(same_source(row,other) for other in groups):
             groups.append(row)
     nobs=sum(v[0]['observed']['spectra'] for v in allstats.values())
     npeaks=sum(v[0]['observed'].get('peaks',0) for v in allstats.values())
@@ -140,23 +199,23 @@ def main():
            if new else '**No new emitter passed all confirmation checks**')
     sections=['# Rare emission lines in the two public HETDEX source catalogs','',
       f'{claim} in {number(nobs)} source observations. The blind scan found {number(npeaks)} fitted peaks at signal-to-noise of at least 7. '
-      f'The follow-up ledger records {len(followed):,} ranked line or spatial features with external checks and {nunres:,} unresolved entries across all stages. '
+      f'The follow-up ledger records external-check attempts for {len(followed):,} line or spatial hypotheses. Across all stages, {nunres:,} hypotheses remained unresolved. '
       'The releases share targets and exposures. Counts describe observations or feature hypotheses and can include repeated measurements of a galaxy.',
       '', '## Search coverage','',
-      '| Release | Source observations scanned | Distinct release source IDs | Fitted peaks | Shuffled spectra | Off-source apertures | Independent-position stacks |',
+      '| Release | Source observations scanned | Distinct release source IDs | Fitted peaks | Raw shuffled spectra | Off-source apertures | Same-position stacks from distinct shots |',
       '|---|---:|---:|---:|---:|---:|---:|']
     for tag,(s,v,b,r) in allstats.items():
         sections.append(f"| {tag.upper()} | {s['input_rows']:,} | {s['distinct_release_source_ids']:,} | {s['observed'].get('peaks',0):,} | {s['shuffled']['spectra']:,} | {b.get('spectra',0):,} | {r['counts'].get('physical_groups',0):,} |")
     if new:
         sections+=['','### Sources passing the checks','',
-                   '| Channel | Release / detection ID | RA, Dec (deg) | Trial z | Flux ± 1σ (cgs) | Rest EW (Å) |',
-                   '|---|---|---|---:|---:|---:|']
+                   '| Channel | Release / detection ID | RA, Dec (deg) | Trial z | Flux ± 1σ (cgs) | Spectral rest EW (Å) | Spectral EW lower bound (Å) | Imaging EW lower bound (Å) |',
+                   '|---|---|---|---:|---:|---:|---:|---:|']
         for q in new:
-            ee=q['rest_EW_A']
-            ew=f"{ee:.1f}" if ee is not None else 'continuum unconstrained'
+            vals=[q[k] for k in ('rest_EW_A','spectral_rest_EW_lower_A','imaging_rest_EW_lower_A')]
+            ew=' | '.join(f'{v:.1f}' if v is not None else '—' for v in vals)
             z=f"{q['trial_redshift']:.5f}" if q['trial_redshift'] is not None else 'unassigned'
             sections.append(f"| {NAMES[q['channel']]} | {q['release'].upper()} / {q['detectid']} | {q['ra_deg']:.6f}, {q['dec_deg']:.6f} | {z} | {q['flux_cgs']:.3g} ± {q['flux_err_cgs']:.2g} | {ew} |")
-    sections+=['','The input is the published PSF-weighted extraction at every released source observation. A diffuse source with no catalog detection can enter only through the sampled cube measurements. The public spectra combine fibres and dithers. A same-shot map checks spatial morphology but provides no independent exposure.',
+    sections+=['','The source search uses published PSF-weighted extractions and catalog emission knots. Diffuse sources absent from these inputs are outside the candidate search. Off-source cube apertures serve as controls. Each public 1D spectrum combines fibres and dithers from one shot. A map from that shot tests spatial morphology.',
               '', '## Leads and dispositions','',
               '| Channel | Single-visit screen, SC1 / SC2 | Excluded | Already published | Unresolved | Passed | External follow-up, SC1 / SC2 |',
               '|---|---:|---:|---:|---:|---:|---:|']
@@ -165,7 +224,12 @@ def main():
         rem=' / '.join(str(allstats[t][1]['remote_assessed'].get(ch,0)) for t in RELEASES)
         sections.append(f"| {NAMES[ch]} | {ss} | {counts[ch,'excluded']:,} | {counts[ch,'published']:,} | {counts[ch,'unresolved']:,} | {counts[ch,'candidate']:,} | {rem} |")
     sections+=['','Spatial proposals, subthreshold helium–hydrogen line pairs, imaging-led EW measurements and independent-visit stacks enter after the single-visit screen. A hypothesis can appear in more than one channel. Ranked follow-up gives priority to independent visits or DESI counterparts. Rows outside external follow-up retain an unresolved disposition.',
-      '', 'An isolated line anywhere on this wavelength grid admits a Lyα redshift. The unassigned-line channel retains strong features displaced from common transitions at the catalog redshift. The search supplies no evidence for a new atomic transition. The 5540 Å air red edge cuts off He II at about z = 2.378. Both C III] components fall within VIRUS only below about z = 1.903 in the requested interval. At higher redshift the metal test needs a redder spectrum. The evidence distinguishes an out-of-band component from a measured upper limit. A candidate galaxy spectrum cannot on its own determine a Population III or direct-collapse origin.',
+      '', 'An isolated line anywhere on this wavelength grid admits a Lyα redshift. The unassigned-line channel retains strong features displaced from common transitions at the catalog redshift. An unmatched line at an independent host redshift means no coincidence in the retrieved lists within the adopted velocity window. Wavelength coverage and completeness vary across those lists. A projected source can also contribute a line. The 5540 Å air red edge cuts off He II at about z = 2.378. Both C III] components fall within VIRUS only below about z = 1.903 in the requested interval. At higher redshift the metal test needs a redder spectrum. The evidence distinguishes an out-of-band component from a measured upper limit. A candidate galaxy spectrum cannot on its own determine a Population III or direct-collapse origin.',
+      '', '| Unassigned-line follow-up | Audited hypotheses | With external redshift | Unmatched at that redshift in retrieved lists | Of unmatched, both external atlases returned transitions |',
+      '|---|---:|---:|---:|---:|']
+    for tag,u in unknown_atlases.items():
+        sections.append(f"| {tag.upper()} | {u['audited']} | {u['anchored']} | {u['unmatched']} | {u['unmatched_with_both']} |")
+    sections+=[
       '', '[All external follow-ups](evidence/followup.csv) · [Rows passing every gate](evidence/candidates.csv). Each release’s compressed vetting ledger contains IDs, comparisons, rejected alternatives, and pending checks. Fluxes are in erg s⁻¹ cm⁻², spectral densities per Å, wavelengths in observed air Å and EWs in rest-frame Å. Each trial redshift depends on the named identification.',
       '', '## Controls and recovery','',
       f'{nrec:,} of {ninj:,} successfully injected, unblended primary lines were recovered ({100*nrec/ninj:.1f}%) over the specified mix of amplitudes and widths. This is a spectral recovery fraction conditional on an extracted source. It does not include the probability of entering the public catalog, sky coverage, spatial completeness, or success in external follow-up.',
@@ -173,20 +237,45 @@ def main():
     for tag,(s,v,b,r) in allstats.items():
         for key,a in [('observed',s['observed']),('shuffled',s['shuffled']),('off-source',b)]:
             sections.append('| '+tag.upper()+' '+key+' | '+' | '.join(f'{a.get(k,0):,}' for k in ['spectra','peaks','heii','ew','unknown'])+' |')
-    controls=[]
+    sections+=['','| Release | Matched real spectra / mock spectra | Real / mock leads per 1,000 spectra | Matched mock passes / leads | Raw-shuffle sample spectra | Raw mock passes / leads |',
+               '|---|---:|---:|---:|---:|---:|']
+    for tag in RELEASES:
+        d=EVIDENCE/tag
+        matched=read(d/'nuisance-summary.json')
+        raw=read(d/'raw-shuffle-vet-sample.json')
+        def vet_yield(kind):
+            v=read(d/kind/'vet-summary.json')
+            return sum(c.get('candidate',0) for c in v['status_counts'].values()),sum(v['shortlist_counts'].values())
+        mk,mn=vet_yield('matched-shuffle-vet')
+        rk,rn=vet_yield('shuffle-vet')
+        sample=[matched[key] for key in ('observed','mock')]
+        den=[arm.get('spectra',0) for arm in sample]
+        rates=[]
+        for n,arm in zip(den,sample):
+            h=sum(arm.get(ch,0) for ch in ('heii','ew','unknown'))
+            rates.append(f'{1000*h/n:,.1f}' if n else '—')
+        sections.append(f"| {tag.upper()} | {den[0]:,} / {den[1]:,} | {' / '.join(rates)} | {mk:,} / {mn:,} | {raw['selected_spectra']:,} | {rk:,} / {rn:,} |")
+    sections+=['','Each lead is a channel hypothesis. A peak can qualify for multiple channels. Passes count hypotheses that completed confirmation. External follow-up of control leads used the same ranked first-pass rules. The control rate is conditional on its construction and the matched population.',
+               '', '| Published He II positive controls | Matched of eight | Single-line screen recovered | Weaker paired-line screen recovered | Recovered by both | Recovered by either |',
+               '|---|---:|---:|---:|---:|---:|']
+    additional=[]
     for tag in RELEASES:
         d=EVIDENCE/tag
         known=read(d/'positive-controls.json')
-        blank=read(d/'halo-injections-summary.json')
-        null=read(d/'shuffle-vet'/'vet-summary.json')
-        mc=read(d/'matched-shuffle-vet'/'vet-summary.json')
+        weaker=read(d/'weak-heii-known-eight.json')
         weak=read(d/'weak-heii-summary.json')
-        k=sum(c.get('candidate',0) for c in null['status_counts'].values())
-        n=sum(null['shortlist_counts'].values())
-        b=blank['usable_position_wavelength_pairs']
+        first={r['published_detectid'] for r in known['controls'] if r['recovered_heii_screen']}
+        second={r['prior_detectid'] for r in weaker if any(o['weak_pair_blind_recovery'] for o in r['observations'])}
+        matched=({r['published_detectid'] for r in known['controls'] if r['matched']} |
+                 {r['prior_detectid'] for r in weaker if r['observations']})
+        sections.append(f"| {tag.upper()} | {len(matched)} / {known['targets']} | {len(first)} | {len(second)} | {len(first & second)} | {len(first | second)} |")
+        blank=read(d/'halo-injections-summary.json')
         ctr=allstats[tag][3]['counts']
-        controls.append(f"{tag.upper()} recovered {known['target_heii_screen_recoveries']} of {known['position_or_id_matches']} matched positions in the eight-object published He II sample at the single-line threshold. The weaker paired-line search found {weak['observed_clean_pairs']:,} spectral leads against {weak['expected_displaced_pairs_at_true_exposure']:.1f} expected from displaced matches, before source vetting. The matched wrong-position comparison produced {ctr.get('control_groups',0):,} independent-visit control stacks. In the bounded raw-shuffle follow-up, {k} passed among {n:,} feature hypotheses. The continuum-preserving control yielded {sum(mc['shortlist_counts'].values()):,} feature hypotheses before source vetting. Halo injection tests had {b} usable blank position/wavelength pairs.")
-    sections+=['',' '.join(controls),'',
+        additional.append(f"{tag.upper()} produced {weak['observed_clean_pairs']:,} weaker spectral pairs against "
+                          f"{weak['expected_displaced_pairs_at_true_exposure']:.1f} expected from displaced-wavelength controls before vetting. "
+                          f"It also tested {ctr.get('control_groups',0):,} wrong-position, distinct-shot stacks and "
+                          f"{blank['usable_position_wavelength_pairs']} usable blank position/wavelength pairs for halo injection.")
+    sections+=['','Recovery counts use unique published objects within each release. Each screen used its own S/N and pair cuts. '+ ' '.join(additional),'',
                '| Release | Nominal injected S/N | Clean trials | Primary line recovered |',
                '|---|---:|---:|---:|']
     for t in RELEASES:
@@ -196,14 +285,21 @@ def main():
             yes=sum(a['recovered'] for a in bins)
             if n:
                 sections.append(f"| {t.upper()} | {sn} | {n} | {yes} ({100*yes/n:.1f}%) |")
-    sections+=['','The raw wavelength-by-wavelength shuffle mixes bright and faint continua and destroys adjacent-pixel covariance. Its very large positive counts make it a stress test. After observing this excess, we added a same-shot block shuffle that preserves source continua. Its rates apply to the matched population. Off-source apertures preserve cube interpolation and spatial noise. Empty sky has no catalog redshift, so its off-list test is undefined. The per-release tables break recovery down by input flux, S/N, wavelength, profile width and input rest EW. Wilson intervals describe binomial trial uncertainty conditional on the injected backgrounds. The paired-visit controls substitute unrelated sources observed in the same shots.',
+    sections+=['','The raw wavelength-by-wavelength shuffle mixes bright and faint continua and destroys adjacent-pixel covariance. Its very large positive counts make it a stress test. After observing this excess, we added a same-shot block shuffle that preserves source continua. Its rates apply to the matched population. Off-source apertures preserve cube interpolation and spatial noise. Empty sky has no catalog redshift, so its off-list test is undefined. The per-release tables break recovery down by input flux, S/N, wavelength, profile width and input rest EW. Wilson intervals are nominal per-trial binomial intervals. Six trials share each injected background, and the intervals omit that clustering. The paired-visit controls substitute unrelated sources observed in the same shots.',
                '', '## Inputs, evidence and reproduction','']
-    sections+=['Every unresolved narrow He II / Lyα pair meeting the flux-ratio and spectral cuts, and every unresolved EW lead with a qualifying lower bound, also received a positional search of independent spectral catalogs. This step includes eligible objects outside the initial ranked sample. Full rechecks preserve the original ledger and each revised decision.',
+    sections+=['Every unresolved narrow He II / Lyα pair meeting the flux-ratio and spectral cuts, and every unresolved EW lead with a qualifying lower bound, entered the supplementary positional search of independent spectral catalogs. The table distinguishes successful catalog queries from attempts. Full rechecks preserve the original ledger and each revised decision.',
                '', '| Release | Eligible source / line hypotheses | Distinct positions | Rechecked hypotheses |',
                '|---|---:|---:|---:|']
     for t in RELEASES:
         f=read(EVIDENCE/t/'focus'/'summary.json')['counts']
         sections.append(f"| {t.upper()} | {f.get('eligible',0)} | {f.get('distinct_query_positions',0)} | {f.get('followup_records',0)} |")
+    sections+=['','| Supplementary spectroscopy | SPARCL batches with valid response / attempted | CDS DESI batches with valid response / attempted | Distinct retrieved spectrum files by checksum | Eligible hypotheses with an external line fit | With an agreeing warning-free redshift | With an earlier agreeing DESI visual redshift |',
+               '|---|---:|---:|---:|---:|---:|---:|']
+    for t in RELEASES:
+        batches,good,narrays,rows=external_yield(EVIDENCE/t/'focus')
+        sections.append(f"| {t.upper()} | {good['SPARCL']} / {batches['SPARCL']} | {good['CDS_DESI_DR1']} / {batches['CDS_DESI_DR1']} | {narrays} | {rows['spectral_fit']} | {rows['agree']} | {rows['prior_agree']} |")
+    sections.append('')
+    sections.append('For supplementary redshifts, agreement requires |Δz| < 0.006. A single spectrum or position can contribute to several eligible hypotheses. Independent line fits and catalog redshift agreement are recorded separately.')
     sections.append('')
     for t in RELEASES:
         spatial=read(EVIDENCE/t/'repeat-blobs'/'summary.json')['counts']
@@ -213,14 +309,14 @@ def main():
                '|---|---:|---:|']
     for key,name in [('NED','NED cone searches with a valid response'),('SIMBAD','SIMBAD cone searches with a valid response'),
                      ('Legacy','Legacy Surveys cone searches with a valid response'),('HSC','Direct HSC cutouts with measured photometry'),
-                     ('cube','Masked cube measurements')]:
+                     ('cube','Cube opened and target narrowband window tested')]:
         values=[]
         for t in RELEASES:
             a=evidence_details[t]['archive_checks'][key]
             values.append(str(a.get('matched',0)+a.get('empty_cone',0)+a.get('measured',0)))
         sections.append('| '+name+' | '+' | '.join(values)+' |')
-    sections+=['','Cube extent is a separate test from line detection. The numerator below counts excess emission above the fitted point-source wings at ≥5 empirical standard deviations. The denominator counts line windows with a measurable extension statistic.','',
-               '| Spatial search | SC1 excess / measured | SC2 excess / measured |',
+    sections+=['','For each tested cube, the extension statistic subtracts the median from disjoint offset-wavelength windows and divides by 1.4826 times their median absolute deviation (MAD). The numerator counts source-row hypotheses with an excess ≥5 times this scaled MAD. The denominator counts source rows with a measurable extension statistic in their primary cube. Multiple source rows can refer to the same physical system.','',
+               '| Spatial test on source rows | SC1 excess / measurable source rows | SC2 excess / measurable source rows |',
                '|---|---:|---:|']
     for key,name in [('two_knots','Emission between two knots'),('single_center','Diffuse emission around one center')]:
         values=[]
@@ -236,13 +332,14 @@ def main():
             sections.append(f"| {item['file']} | {item['bytes']:,} | `{item['sha256']}` |")
     for t in RELEASES:
         a=f'evidence/{t}'
-        sections+=['',f'{t.upper()} · [Input checksums and mirrors]({a}/inputs-{t}.json) · [Ancillary and cube receipts]({a}/vet-inputs.json) · [Vetting ledger]({a}/vetted.jsonl.gz) · [Injections]({a}/injections.jsonl.gz) · [Completeness]({a}/completeness.csv) · [He II positive controls]({a}/positive-controls.json) · [Weaker paired lines]({a}/weak-heii-summary.json) · [Imaging-led EW measurements]({a}/ew-rescue-summary.json) · [Supplementary spectroscopy]({a}/focus/summary.json) · [Repeated spatial systems]({a}/repeat-blobs/summary.json) · [Raw-shuffle follow-up]({a}/shuffle-vet/vet-summary.json) · [Continuum-preserving control]({a}/nuisance-summary.json) · [Matched control vetting]({a}/matched-shuffle-vet/vet-summary.json) · [Halo recovery]({a}/halo-injections-summary.json) · [Repeat controls]({a}/repeat-summary.json) · [Off-source spectra selection]({a}/offsource.jsonl.gz).']
+        sections+=['',f'{t.upper()} · [Input checksums and mirrors]({a}/inputs-{t}.json) · [Ancillary and cube receipts]({a}/vet-inputs.json) · [Vetting ledger]({a}/vetted.jsonl.gz) · [Injections]({a}/injections.jsonl.gz) · [Completeness]({a}/completeness.csv) · [He II positive controls]({a}/positive-controls.json) · [Weaker paired lines]({a}/weak-heii-summary.json) · [Imaging-led EW measurements]({a}/ew-rescue-summary.json) · [Supplementary spectroscopy]({a}/focus/summary.json) · [Query receipts]({a}/focus/receipts.json.gz) · [Eligible spectroscopy ledger]({a}/focus/catalog.csv.gz) · [Repeated spatial systems]({a}/repeat-blobs/summary.json) · [Raw-shuffle follow-up]({a}/shuffle-vet/vet-summary.json) · [Continuum-preserving control]({a}/nuisance-summary.json) · [Matched control vetting]({a}/matched-shuffle-vet/vet-summary.json) · [Halo recovery]({a}/halo-injections-summary.json) · [Repeat controls]({a}/repeat-summary.json) · [Off-source spectra selection]({a}/offsource.jsonl.gz).']
     sections+=['','The workflow pins Python dependencies, fetches both releases, checks the publisher MD5 values and hashes the received bytes. Run its **full** dispatch on the research branch, or use the same commands on a runner with network access and sufficient disk. Run from the repository root.',
                '', '```sh','D=results/hetdex_blind_emitters','python -m pip install -r "$D/requirements.txt"','python "$D/check_pipeline.py"',
                'for r in sc1 sc2; do','  python "$D/scan.py" "$r" scan --output "$D/evidence/$r" --cache "/tmp/hetdex-$r" --workers 3',
                '  python "$D/scan.py" "$r" vet --output "$D/evidence/$r" --cache "/tmp/hetdex-$r"',
                '  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --release "$r" --cache "/tmp/hetdex-$r" --vet',
-               '  python "$D/repeat_blobs.py" "$D/evidence/$r" "$D/evidence/$r/repeat-blobs" --release "$r" --cache "/tmp/hetdex-$r"','done',
+               '  python "$D/repeat_blobs.py" "$D/evidence/$r" "$D/evidence/$r/repeat-blobs" --release "$r" --cache "/tmp/hetdex-$r"',
+               '  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --replay-saved','done',
                'python "$D/report.py"','python -m open_space.verify','python -m unittest discover -s tests','```',
                '', '[Spectral method](SPECTRAL_METHODS.md) · [Spatial, imaging and literature checks](VETTING.md) · [HETDEX source catalog 1 and public data](https://doi.org/10.5281/zenodo.7448504) · [HETDEX source catalog 2 and public data](https://doi.org/10.5281/zenodo.19581262) · [HETDEX data products and associated catalogs](https://hetdex.org/data-results/) · [Prior HETDEX He II search](https://arxiv.org/abs/2609.16134).',
                '', 'These measurements use the public source catalogs of Mentuch Cooper et al. (2023, ApJ 943, 177) and Mentuch Cooper et al. (2026, ApJS 284, 67), obtained with VIRUS on the Hobby–Eberly Telescope. The release records list the HETDEX collaboration, telescope partners, funding and requested acknowledgements.']

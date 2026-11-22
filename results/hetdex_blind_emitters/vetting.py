@@ -259,14 +259,14 @@ class Ancillary:
             h.close()
 
 
-def repeat_line(catalog,i,rec):
+def repeat_line(catalog,i,rec,rows=None):
     measurements=[]
     cen=rec["wave"]
     sigma = np.clip(number(rec.get("sigma_A"),2.5),1.9,8.)
     w=np.asarray(catalog.wave)
     core=np.abs(w-cen)<=3*sigma
     side=(np.abs(w-cen)>4*sigma)&(np.abs(w-cen)<max(30.,7*sigma))
-    for j in catalog.repeat_rows(i):
+    for j in (catalog.repeat_rows(i) if rows is None else rows):
         j=int(j)
         f,e=catalog.read(j,j+1)
         f,e=np.asarray(f).ravel(),np.asarray(e).ravel()
@@ -488,10 +488,69 @@ def validate_local(rec, cat, aux):
             (v for k,v in (rec.get("lya_family") or {}).items() if k in
              ("heii","oiii_uv1","oiii_uv2","ciii1","ciii2")),key=lambda d:number(d.get("snr")),default=None)
         if pair and number(pair.get("snr"))>=5 and number(pair.get("air_wave"))>0:
-            result["secondary_repeats"]=repeat_line(cat,int(rec["row_index"]),{**rec,"wave":pair["air_wave"]})
+            probe={**rec,"wave":pair["air_wave"]}
+            if rec.get("stream")=="repeat_stack" and rec.get("repeat_rows"):
+                visits=repeat_line(cat,int(rec["row_index"]),probe,rows=rec["repeat_rows"])
+                result["secondary_visit_measurements"]=visits
+                result["secondary_repeats"]=[r for r in visits if r["shotid"]!=rec["shotid"]]
+            else:
+                result["secondary_repeats"]=repeat_line(cat,int(rec["row_index"]),probe)
     if st=="lae" and abs(cz-number(z)) < .012:
         result["passed"].append("HETDEX Ly-alpha redshift agrees")
     return result
+
+
+def fixed_external_pairs(rec,result):
+    """Both UV lines must recur at fixed centers in the same external fibre spectrum."""
+    if rec["channel"] not in ("heii","ew","blob"):
+        return []
+    z=number(rec.get("z_heii" if rec["channel"]=="heii" else "z_lya"))
+    candidates=[]
+    vac=result.get("DESI") or {}
+    if number(vac.get("dex_flag"))==1 and number(vac.get("target_sep_arcsec"),math.inf)<=1.25:
+        candidates.append(("DESI_HETDEX_VAC",vac.get("targetid"),result.get("DESI_lines") or {}))
+    for m in (result.get("SPARCL") or {}).get("matches",[]):
+        if number(m.get("sep_arcsec"),math.inf)<=1.25 and m.get("diagnostics"):
+            candidates.append((m.get("data_release"),m.get("spectrum_key") or m.get("sparcl_id") or m.get("specid"),
+                               m["diagnostics"]))
+    out=[]
+    for source,ident,d in candidates:
+        if abs(number(d.get("z_topocentric"),-99)-z)>.0003:
+            continue
+        lines=d.get("lines") or {}
+        l,h=lines.get("lya",{}),lines.get("heii",{})
+        if (l.get("coverage")=="ok" and h.get("coverage")=="ok" and
+            number(l.get("snr"))>=5 and number(h.get("snr"))>=4):
+            out.append(dict(source=source,identifier=ident,lya_snr=l["snr"],heii_snr=h["snr"],
+                            lya_wave_vac=l.get("wave_vac"),heii_wave_vac=h.get("wave_vac")))
+    return out
+
+
+def stack_pair_shots(rec,result):
+    """Distinct individual visits with primary ≥3σ and secondary ≥4σ in the same extraction."""
+    primary=rec.get("repeat_measurements") or result.get("repeats") or []
+    secondary=result.get("secondary_visit_measurements",result.get("secondary_repeats",[]))
+    def detections(rows,threshold):
+        return {(r["row_index"],r["shotid"]) for r in rows if r.get("row_index") is not None and
+                r.get("shotid") is not None and number(r.get("snr"))>=threshold}
+    return sorted({shot for _,shot in detections(primary,3) & detections(secondary,4)})
+
+
+def ordinary_agn_disfavored(rec,result,z):
+    ch=rec["channel"]
+    ext=result.get("SPARCL") or {}
+    galaxy=any(str(m.get("spectype","")).upper()=="GALAXY" and number(m.get("redshift_warning"))==0
+               and abs(number(m.get("redshift"))-z)<.006 for m in ext.get("matches",[]))
+    fam=rec.get("heii_family" if ch=="heii" else "lya_family") or {}
+    narrow=2.355*number(rec.get("sigma_A"),math.inf)/rec["wave"]*299792.<900
+    limits=[number(fam.get(k,{}).get("limit3"),math.inf)/rec["flux"] for k in ("nv1","civ1")]
+    return narrow and (max(limits)<(.3 if ch=="heii" else .15) or (galaxy and min(limits)<.15))
+
+
+PAIR_EXTERNAL="fixed Ly-alpha and He II recur in one independent instrument spectrum"
+PAIR_REPEAT="both source lines recur in independent HETDEX shots"
+AGN_PASSED="ordinary broad/UV-line AGN disfavored; obscured or weak-line AGN remains possible"
+AGN_GAP="ordinary AGN insufficiently constrained by width and UV limits"
 
 
 def external_check(rec,result,cache):
@@ -648,14 +707,22 @@ def external_check(rec,result,cache):
             other=max(eligible,key=lambda d:d["snr"])
     if other and result.get("secondary_repeats"):
         two_line=any(number(m.get("snr"))>=4 for m in result["secondary_repeats"])
-    id_supported=external_redshift or (independent_primary and two_line)
+    if rec.get("stream")=="repeat_stack":
+        result["stack_pair_shots"]=stack_pair_shots(rec,result)
+        two_line=other is not None and len(result["stack_pair_shots"])>=2
+    pairs=fixed_external_pairs(rec,result)
+    if pairs:
+        result["external_fixed_uv_pairs"]=pairs
+        refs.append(PAIR_EXTERNAL)
+    id_supported=external_redshift or bool(pairs) or (independent_primary and two_line)
     if not id_supported and ch in ("ew","blob") and rec["wave"]<3714 and independent_primary:
         # Ly-alpha is below all optical OII/Balmer/OIII assignments. Require a
         # second high-z line and the survey classification to discriminate UV IDs.
-        id_supported=(other is not None and not result.get("low_z_families") and
+        id_supported=(other is not None and (rec.get("stream")!="repeat_stack" or two_line)
+                      and not result.get("low_z_families") and
                       "HETDEX Ly-alpha redshift agrees" in refs)
     if two_line:
-        refs.append("both source lines recur in independent HETDEX shots")
+        refs.append(PAIR_REPEAT)
     if ch=="unknown":
         from unknown_lines import reassess_unknown
         audit=reassess_unknown(rec,result,cache)
@@ -718,18 +785,11 @@ def external_check(rec,result,cache):
     if (result.get("catalog_conflict") or result.get("low_z_families")) and not id_supported:
         gaps.append("foreground interpretation unresolved")
     if not hard and not gaps:
-        # Absence of an AGN match alone never establishes a non-AGN origin.
-        active_evidence = any(str(m.get("spectype","")).upper()=="GALAXY" and
-                number(m.get("redshift_warning"))==0 and abs(number(m.get("redshift"))-z)<.006
-                for m in ext.get("matches",[]))
-        fam=rec.get("heii_family" if ch=="heii" else "lya_family") or {}
-        narrow=(2.355*number(rec.get("sigma_A"),math.inf)/rec["wave"]*299792.<900)
-        limits=[number(fam.get(k,{}).get("limit3"),math.inf)/rec["flux"] for k in ("nv1","civ1")]
-        uv_agn_screen=narrow and max(limits)<(.3 if ch=="heii" else .15)
-        if not (uv_agn_screen or (active_evidence and narrow and min(limits)<.15)):
-            gaps.append("ordinary AGN insufficiently constrained by width and UV limits")
+        if ordinary_agn_disfavored(rec,result,z):
+            refs.append(AGN_PASSED)
         else:
-            refs.append("ordinary broad/UV-line AGN disfavored; obscured or weak-line AGN remains possible")
+            gaps.append(AGN_GAP)
+    result["pair_evidence_version"]=2
     return dict(result,disposition="excluded" if hard else "unresolved" if gaps else "candidate",
                 reasons=sorted(set(hard+gaps)))
 
