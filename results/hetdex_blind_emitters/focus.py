@@ -12,6 +12,8 @@ import math
 import os
 from pathlib import Path
 import re
+import shutil
+import tempfile
 import time
 
 import numpy as np
@@ -288,19 +290,27 @@ def fetch_spectrum(m,cache):
                     time.sleep(.5)
         else:
             url=coadd_url(m)
-            with RangeFile(url) as rf:
-                with fits.open(rf,memmap=False) as hd:
-                    ids=hd["FIBERMAP"].data["TARGETID"]
-                    row=np.flatnonzero(ids==int(m["specid"]))
-                    if len(row)!=1:
-                        raise ValueError("DESI FIBERMAP did not identify exactly one target")
-                    idx=int(row[0])
-                    parts=[]
-                    for band in "BRZ":
-                        wave=hd[band+"_WAVELENGTH"].data
-                        vals,ivar,mask=[hd[band+"_"+name].section[idx,:] for name in ("FLUX","IVAR","MASK")]
-                        parts.append((np.array(wave),np.array(vals),np.array(ivar),np.array(mask)))
-                log["attempts"].append(dict(status="read",url=url,ranges=rf.receipts,targetid=m["specid"]))
+            mirror=url.replace("https://data.desi.lbl.gov/","https://portal.nersc.gov/cfs/desi/")
+            for endpoint in (url,mirror):
+                try:
+                    with RangeFile(endpoint) as rf:
+                        with fits.open(rf,memmap=False) as hd:
+                            ids=hd["FIBERMAP"].data["TARGETID"]
+                            row=np.flatnonzero(ids==int(m["specid"]))
+                            if len(row)!=1:
+                                raise ValueError("DESI FIBERMAP did not identify exactly one target")
+                            idx=int(row[0])
+                            parts=[]
+                            for band in "BRZ":
+                                wave=hd[band+"_WAVELENGTH"].data
+                                vals,ivar,mask=[hd[band+"_"+name].section[idx,:] for name in ("FLUX","IVAR","MASK")]
+                                parts.append((np.array(wave),np.array(vals),np.array(ivar),np.array(mask)))
+                        log["attempts"].append(dict(status="read",url=endpoint,ranges=rf.receipts,targetid=m["specid"]))
+                    break
+                except (OSError,KeyError,ValueError,IndexError) as exc:
+                    log["attempts"].append(dict(url=endpoint,status="failed",error=str(exc)[:200]))
+                    if endpoint==mirror:
+                        raise
             wc,fc,ic,mc=[np.concatenate([p[k] for p in parts]) for k in range(4)]
             # DESI's camera-arm overlap shares a calibrated 0.8 Å sampling
             # grid. Combine only identical wavelengths with independent IVAR.
@@ -414,19 +424,24 @@ def trace_spectra(found,bypoint,cache):
                 ext["matches"].append(obj)
         ext["status"]=("matched" if ext["matches"] else "no_counterpart"
                        if all(q["status"]=="queried" for q in svc.values()) else "partial_or_unavailable")
-        z=row_z(p)
-        anchored=[m for m in ext["matches"] if number(m["redshift_warning"])==0 and
-                  number(m["redshift"])>=0 and abs(number(m["redshift"])-z)<.006]
-        r["independent_redshift_agrees"]=bool(anchored)
-        r["external_fixed_uv_pair"]=any(m.get("same_spectrum_uv_pair") for m in ext["matches"])
-        r["first_VAC_agrees"]="independent DESI visual redshift" in r["first"].get("passed",[])
-        r["measured_spectra"]=sum("diagnostics" in m for m in ext["matches"])
-        r["selection_reason"]=("external_redshift" if anchored else "both_uv_lines_in_external_spectrum" if r["external_fixed_uv_pair"]
-                               else "external_spectrum" if r["measured_spectra"]
-                               else "independent_two_line_repeat" if r["same_visit_two_line_repeats"]
-                               else "earlier_DESI_visual_redshift" if r["first_VAC_agrees"]
-                               else "catalog_match_only" if ext["matches"] else ext["status"])
+        classify_matches(r)
     return {k:receipt for k,(_,receipt) in spectra.items()}
+
+
+def classify_matches(r):
+    p,ext=r["peak"],r["external"]
+    z=row_z(p)
+    anchored=[m for m in ext["matches"] if number(m["redshift_warning"])==0 and
+              number(m["redshift"])>=0 and abs(number(m["redshift"])-z)<.006]
+    r["independent_redshift_agrees"]=bool(anchored)
+    r["external_fixed_uv_pair"]=any(m.get("same_spectrum_uv_pair") for m in ext["matches"])
+    r["first_VAC_agrees"]="independent DESI visual redshift" in r["first"].get("passed",[])
+    r["measured_spectra"]=sum("diagnostics" in m for m in ext["matches"])
+    r["selection_reason"]=("external_redshift" if anchored else "both_uv_lines_in_external_spectrum" if r["external_fixed_uv_pair"]
+                           else "external_spectrum" if r["measured_spectra"]
+                           else "independent_two_line_repeat" if r["same_visit_two_line_repeats"]
+                           else "earlier_DESI_visual_redshift" if r["first_VAC_agrees"]
+                           else "catalog_match_only" if ext["matches"] else ext["status"])
 
 
 def focus(indir,out,cache):
@@ -435,10 +450,14 @@ def focus(indir,out,cache):
     found,total=select(indir)
     bypoint,tap_receipts=batched_matches(found)
     spec_receipts=trace_spectra(found,bypoint,cache/"focus-spectra")
+    return write_catalog(indir,out,found,total,tap_receipts,spec_receipts)
+
+
+def write_catalog(indir,out,found,total,tap_receipts,spec_receipts):
     fields=("row_index","channel","stream","wave","detectid","source_id","shotid","ra","dec")
     header=fields+("first_pass_line","wave_hex","trial_redshift","group_id","first_pass_external","confirmed_repeat_shots",
                    "SPARCL_query","CDS_query","matches","measured_spectral_entries","external_redshift_agrees",
-                   "prior_VAC_agrees","external_fixed_uv_pair","followup_status","spectroscopic_ids","eligibility")
+                   "prior_VAC_agrees","external_fixed_uv_pair","followup_status","spectroscopic_ids","eligibility","static_DESI","ASU_DESI")
     with gzip.open(out/"catalog.csv.gz","wt",newline="") as f, gzip.open(out/"followup.jsonl.gz","wt") as g:
         writer=csv.DictWriter(f,header)
         writer.writeheader()
@@ -456,12 +475,14 @@ def focus(indir,out,cache):
                             CDS_query=ext["services"]["CDS_DESI_DR1"]["status"],matches=len(m),
                             measured_spectral_entries=r["measured_spectra"],external_redshift_agrees=r["independent_redshift_agrees"],
                             prior_VAC_agrees=r["first_VAC_agrees"],external_fixed_uv_pair=r["external_fixed_uv_pair"],followup_status=status,
-                            spectroscopic_ids=dump([x["spectrum_key"] for x in m]),eligibility=dump(r["criteria"])))
+                            spectroscopic_ids=dump([x["spectrum_key"] for x in m]),eligibility=dump(r["criteria"]),
+                           static_DESI=ext["services"].get("DESI_DR1_static",{}).get("status"),
+                           ASU_DESI=ext["services"].get("CDS_ASU_DESI_DR1",{}).get("status")))
             if m or r["same_visit_two_line_repeats"] or r["first_VAC_agrees"]:
                 g.write(dump(r)+"\n")
                 total["followup_records"]+=1
     total["physical_groups"]=len({r["group"] for r in found})
-    total["distinct_query_positions"]=len(bypoint)
+    total["distinct_query_positions"]=len({(r["peak"]["ra"],r["peak"]["dec"]) for r in found})
     summary=dict(counts=dict(total),input_sha256=sha256((indir/"vetted.jsonl.gz").read_bytes()).hexdigest(),
         scope="All unresolved HeII lines with Lyα ≥5σ, observed HeII/Lyα ≥0.1, FWHM <900 km/s, "
         "no reported ≥3σ metal component; unknown coverage retained. All unresolved spectral "
@@ -473,6 +494,152 @@ def focus(indir,out,cache):
     with gzip.open(out/"receipts.json.gz","wt") as f:
         f.write(dump(dict(catalog=tap_receipts,spectra=spec_receipts)))
     return summary
+
+
+def static_retry(indir,out,release,cache,vet):
+    """Retry failed positions with independent public DESI files; leave successful requests intact."""
+    from desi_static import search as static_search
+    from evidence_summary import measurement_id
+    from acquisition import Spectra,prepare
+    keep=("catalog.csv.gz","followup.jsonl.gz","summary.json","receipts.json.gz","vetted.jsonl.gz",
+          "vet-summary.json","vet-inputs.json","inputs-"+release+".json")
+    archive=out/"first-attempt"
+    if not archive.exists():
+        with tempfile.TemporaryDirectory(dir=out) as temp:
+            snapshot=Path(temp)/"first-attempt"
+            snapshot.mkdir()
+            for name in keep:
+                if (out/name).is_file():
+                    shutil.copy2(out/name,snapshot/name)
+            for name in keep[:6]:
+                if not (snapshot/name).is_file():
+                    raise ValueError("Missing first-attempt evidence: "+name)
+            snapshot.rename(archive)
+    original=json.loads((archive/"summary.json").read_text())
+    digest=sha256((indir/"vetted.jsonl.gz").read_bytes()).hexdigest()
+    if digest!=original["input_sha256"]:
+        raise ValueError("Saved focus products belong to a different HETDEX ledger")
+    done=out/"static-summary.json"
+    if done.exists():
+        meta=json.loads(done.read_text())
+        if meta["input_sha256"]!=digest:
+            raise ValueError("Previous static retry belongs to different inputs")
+        if not meta["position_status"].get("partial_or_unavailable") and (not vet or meta["requested_vet"]):
+            print("Previously completed static retry",meta["position_status"],flush=True)
+            return
+    base,total=select(indir)
+    with gzip.open(archive/"catalog.csv.gz","rt") as stream:
+        prior_csv=list(csv.DictReader(stream))
+    if len(base)!=len(prior_csv):
+        raise ValueError("Previously eligible catalog differs from frozen selection")
+    old=list(lines(archive/"followup.jsonl.gz"))
+    restore_legacy_line_numbers(old,indir/"vetted.jsonl.gz")
+    carried={r["first_pass_line"]:r for r in old}
+    old_vet=list(lines(archive/"vetted.jsonl.gz"))
+    # Historical full vetting used this stable order. Validate the unchanged
+    # measured primary plus partner identity, group, and exact original decision.
+    sortkey=lambda r:(r["first_pass_external"],not r["independent_redshift_agrees"],
+                      not bool(r["same_visit_two_line_repeats"]),r["group"])
+    if len(old)!=len(old_vet):
+        raise ValueError("First-attempt follow-up and adjudication counts disagree")
+    old_order=iter(sorted(old,key=sortkey))
+    decisions={}
+    for item in old_vet:
+        parent=next(old_order)
+        if (measurement_id(item["peak"])!=measurement_id(parent["peak"]) or
+            item["group"]!=parent["group"] or
+            item.get("first_pass_line",parent["first_pass_line"])!=parent["first_pass_line"]):
+            raise ValueError("Historical focus decision does not map uniquely to the original source row")
+        item["first_pass_line"]=parent["first_pass_line"]
+        decisions[item["first_pass_line"]]=item
+    challenged=[]
+    for r,csvrow in zip(base,prior_csv,strict=True):
+        p=r["peak"]
+        if (row_key(p)!=(int(csvrow["row_index"]),csvrow["channel"],csvrow["stream"],csvrow["wave_hex"]) or
+            (p["ra"],p["dec"])!=(float(csvrow["ra"]),float(csvrow["dec"]))):
+            raise ValueError("First-attempt catalog order disagrees with frozen source measurements")
+        if r["first_pass_line"] in carried:
+            prior=carried[r["first_pass_line"]]
+            r["external"]=prior["external"]
+        else:
+            r["external"]=dict(radius_arcsec=RADIUS,matches=[],status=csvrow["followup_status"],
+                       services={s:dict(status=csvrow[c]) for s,c in (("SPARCL","SPARCL_query"),("CDS_DESI_DR1","CDS_query"))})
+        if (csvrow["SPARCL_query"]!="queried" or csvrow["CDS_query"]!="queried" or
+            int(csvrow["matches"]) and not int(csvrow["measured_spectral_entries"])):
+            challenged.append(r)
+        classify_matches(r)
+    coords=[(r["peak"]["ra"],r["peak"]["dec"]) for r in challenged]
+    cone,log=static_search(coords)
+    bypoint={p:{"static_retry":dict(status=c["status"],matches=c["matches"])} for p,c in cone.items()}
+    fresh=[dict(r) for r in challenged]
+    new_spectra=trace_spectra(fresh,bypoint,cache/"focus-spectra")
+    revet=[]
+    for r,new in zip(challenged,fresh,strict=True):
+        p=r["peak"]
+        c=cone[(p["ra"],p["dec"])]
+        ext=r["external"]
+        ext["services"].update(DESI_DR1_static=dict(status=c["static_status"],files=c["files"],
+                    healpixels=c["expected_HEALPix"]),CDS_ASU_DESI_DR1=dict(status=c["ASU_status"]))
+        prior={m["spectrum_key"]:m for m in ext["matches"]}
+        changed=False
+        for m in new["external"]["matches"]:
+            key=m["spectrum_key"]
+            if key not in prior or (not prior[key].get("diagnostics") and m.get("diagnostics")):
+                prior[key]=m
+                changed=True
+        ext["matches"]=list(prior.values())
+        ext["status"]="matched" if prior else c["status"]
+        if not prior and c["status"]=="partial_or_unavailable" and ext["services"]["CDS_DESI_DR1"]["status"]=="queried":
+            ext["status"]="no_desi_dr1_counterpart"
+        classify_matches(r)
+        if changed:
+            revet.append(r)
+    status=Counter(c["status"] for c in cone.values())
+    with tempfile.TemporaryDirectory(dir=out) as temp:
+        stage=Path(temp)
+        with gzip.open(archive/"receipts.json.gz","rt") as f:
+            original_receipts=json.load(f)
+        summary=write_catalog(indir,stage,base,total,original_receipts["catalog"],
+                              {**original_receipts["spectra"],**new_spectra})
+        summary["catalogs"].extend(["DESI DR1 native iron Redrock files","CDS single-cone V/161/zcatdr1 ASU"])
+        summary["first_attempt"]="first-attempt/"
+        summary["static_retry"]="static-summary.json"
+        (stage/"summary.json").write_text(json.dumps(summary,indent=2)+"\n")
+        with gzip.open(stage/"static-receipts.json.gz","wt") as f:
+            f.write(dump(log))
+        if vet and revet:
+            sub=stage/"new"
+            sub.mkdir()
+            with gzip.open(sub/"followup.jsonl.gz","wt") as f:
+                for r in revet:
+                    f.write(dump(r)+"\n")
+            path=prepare(release,cache,sub)
+            with Spectra(path,release) as cat:
+                adjudicate(cat,sub,cache,indir)
+            for rr in lines(sub/"vetted.jsonl.gz"):
+                decisions[rr["first_pass_line"]]=rr
+            shutil.copy2(sub/"vet-inputs.json",stage/"static-vet-inputs.json")
+            shutil.copy2(sub/("inputs-"+release+".json"),stage/("static-inputs-"+release+".json"))
+        with gzip.open(stage/"vetted.jsonl.gz","wt") as f:
+            for n in sorted(decisions):
+                f.write(dump(decisions[n])+"\n")
+        counts=Counter(r["vet"]["disposition"] for r in decisions.values())
+        (stage/"vet-summary.json").write_text(json.dumps(dict(rows=len(decisions),counts=dict(counts),
+                new_counterpart_adjudications=len(revet) if vet else 0),indent=2)+"\n")
+        stat=dict(input_sha256=digest,requested_vet=vet,eligible_rows=len(base),retried_rows=len(challenged),
+                  searched_positions=len(cone),position_status=dict(status),new_matches_for_vetting=len(revet),
+                  new_adjudications=len(revet) if vet else 0,coadd_receipts=len(new_spectra),
+                  archive_file_status=dict(Counter(r["status"] for r in log["redrock"])),
+                  static_position_status=dict(Counter(x["static_status"] for x in cone.values())),
+                  single_cone_status=dict(Counter(x["ASU_status"] for x in cone.values())),
+                  scope="Static empty cones apply only to DESI DR1 released products. Unavailable SDSS/BOSS "
+                  "remains untested. No published HEALPix products, successful target-cone searches and "
+                  "request failures are distinct in catalog.csv.gz.")
+        for f in stage.iterdir():
+            if f.is_file():
+                f.replace(out/f.name)
+        done.write_text(json.dumps(stat,indent=2)+"\n")
+    print("DESI static fallback",json.dumps(stat,sort_keys=True),flush=True)
 
 
 def restore_legacy_line_numbers(records,original):
@@ -723,8 +890,12 @@ def main():
     p.add_argument("--release",choices=("sc1","sc2"))
     p.add_argument("--vet",action="store_true")
     p.add_argument("--reuse-matches",action="store_true",help="Use checksummed focus outputs already present.")
+    p.add_argument("--static-retry",action="store_true",help="Retry unavailable first-pass spectroscopic cones in the public DESI DR1 HEALPix products.")
     p.add_argument("--replay-saved",action="store_true",help="Recheck earlier adjudications from saved evidence without network access.")
     args=p.parse_args()
+    if args.static_retry:
+        static_retry(args.input,args.output,args.release or args.input.name,args.cache,args.vet)
+        return
     if args.replay_saved:
         replay_saved(args.input,args.output,args.cache)
         return

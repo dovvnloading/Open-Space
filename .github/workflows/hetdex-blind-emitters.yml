@@ -125,6 +125,7 @@ jobs:
           d="$SURVEY/evidence/$RELEASE"
           test -s "$d/focus/vet-summary.json"
           test -s "$d/repeat-blobs/summary.json"
+          python "$SURVEY/focus.py" "$d" "$d/focus" --static-retry --vet --release "$RELEASE" --cache "$RUNNER_TEMP/hetdex"
           python "$SURVEY/focus.py" "$d" "$d/focus" --replay-saved
           if python -c 'import json,sys; sys.exit(not json.load(open(sys.argv[1]))["cached_visit_receipts"].get("source_visits_unavailable",0))' "$d/focus/saved-pair-summary.json"; then
             PYTHONPATH="$SURVEY" python -c 'from acquisition import prepare; import sys; prepare(*sys.argv[1:])' "$RELEASE" "$RUNNER_TEMP/hetdex" "$d/focus/visit-inputs"

@@ -300,6 +300,14 @@ def main():
         sections.append(f"| {t.upper()} | {good['SPARCL']} / {batches['SPARCL']} | {good['CDS_DESI_DR1']} / {batches['CDS_DESI_DR1']} | {narrays} | {rows['spectral_fit']} | {rows['agree']} | {rows['prior_agree']} |")
     sections.append('')
     sections.append('For supplementary redshifts, agreement requires |Δz| < 0.006. A single spectrum or position can contribute to several eligible hypotheses. Independent line fits and catalog redshift agreement are recorded separately.')
+    sections+=['','| Native DESI DR1 files and single-cone catalog retry | Positions rechecked | Matched | No DESI DR1 counterpart | Partial or unavailable | Source hypotheses with new evidence re-evaluated |',
+               '|---|---:|---:|---:|---:|---:|']
+    for t in RELEASES:
+        retry=read(EVIDENCE/t/'focus'/'static-summary.json')
+        status=retry['position_status']
+        sections.append(f"| {t.upper()} | {retry['searched_positions']} | {status.get('matched',0)} | {status.get('no_desi_dr1_counterpart',0)} | {status.get('partial_or_unavailable',0)} | {retry['new_adjudications']} |")
+    sections+=['','The retry includes failed spectroscopic catalog queries and unresolved spectrum retrievals. The receipts distinguish files searched, sky pixels with no published product, empty target cones and failed requests. A completed DESI DR1 lookup constrains that survey only.',
+               '', '[SC1 static catalog audit](evidence/sc1/focus/static-summary.json) · [SC2 static catalog audit](evidence/sc2/focus/static-summary.json).']
     sections.append('')
     for t in RELEASES:
         spatial=read(EVIDENCE/t/'repeat-blobs'/'summary.json')['counts']
@@ -339,6 +347,7 @@ def main():
                '  python "$D/scan.py" "$r" vet --output "$D/evidence/$r" --cache "/tmp/hetdex-$r"',
                '  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --release "$r" --cache "/tmp/hetdex-$r" --vet',
                '  python "$D/repeat_blobs.py" "$D/evidence/$r" "$D/evidence/$r/repeat-blobs" --release "$r" --cache "/tmp/hetdex-$r"',
+               '  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --static-retry --vet --release "$r" --cache "/tmp/hetdex-$r"',
                '  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --replay-saved','done',
                'python "$D/report.py"','python -m open_space.verify','python -m unittest discover -s tests','```',
                '', '[Spectral method](SPECTRAL_METHODS.md) · [Spatial, imaging and literature checks](VETTING.md) · [HETDEX source catalog 1 and public data](https://doi.org/10.5281/zenodo.7448504) · [HETDEX source catalog 2 and public data](https://doi.org/10.5281/zenodo.19581262) · [HETDEX data products and associated catalogs](https://hetdex.org/data-results/) · [Prior HETDEX He II search](https://arxiv.org/abs/2609.16134).',
