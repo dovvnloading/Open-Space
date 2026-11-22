@@ -1,0 +1,53 @@
+# Individual-pulsar search protocol
+
+The primary statistic uses NANOGrav narrowband timing residuals. Wideband timing measures the same observations with a different reduction. EPTA DR2 provides separate observations. Only narrowband data select epochs, signs, widths and shapes. Each JSON records all primary crossings, including rows that fail subsequent checks. For display, the strongest remaining crossing gathers all remaining rows within 30 days, repeating until all rows are assigned. These neighborhoods retain the indices of every primary crossing and all survivors. Neighboring rows can describe one event. A surviving row identifies a reproducible timing feature. Assigning an astrophysical origin requires additional evidence.
+
+## Residual and noise model
+
+For each retained row, the input supplies its observing epoch, effective radio frequency, backend, residual, independent standard error and linearized PINT timing design. The release EFAC/EQUAD error and ECORR block amplitudes specify the relative measurement covariance. The search first divides by the independent errors. Within each correlated block it then applies the symmetric inverse square root of the identity plus the ECORR vector outer product. One unknown pulsar-wide scale multiplies this covariance.
+
+The timing projection includes the supplied timing columns, backend offsets, linear and quadratic spin terms, and constant and linear dispersion terms. A second projection allows arbitrary sine and cosine coefficients in separate achromatic and dispersive processes. Dispersion scales as inverse radio frequency squared. The harmonic count for each process is the smaller of 20, the number of complete 180-day intervals (at least one), and the number allowed by the degrees-of-freedom budget. Each harmonic has frequency k divided by the observing span. This protects significance against any coefficients in these two fixed spaces, including correlated coefficients. Long, smooth events lose power through this projection. Unmodeled higher-frequency red, dispersive, or instrumental fluctuations can still imitate events.
+
+A parallel model fits the same timing terms with Gaussian Fourier coefficients. Restricted maximum likelihood profiles the white scale and fits a separate fundamental amplitude and power spectral slope for the achromatic and dispersive coefficients. Slopes range from 0 to 7. The fitted waveform amplitude must preserve its sign. Significance and injection limits use the fixed Fourier projection so this amplitude fit cannot select an unusually favorable noise spectrum.
+
+The guard assumes Gaussian errors with the specified relative covariance after projecting the nuisance processes. For each pulsar, 256 projected Gaussian replicates calibrate two diagnostics, maximum leverage-adjusted outlier size and the largest absolute inter-day autocorrelation at lags 1–3 observing days. Either Monte Carlo p below 0.005 withholds model-based exclusions. A survivor undergoes the same diagnostics after fitting its candidate. Passing these screens leaves the stated noise assumptions in force.
+
+## Trial bank and amplitude conventions
+
+Trials use midpoints between consecutive occupied barycentric MJD-day bins, omitting the first and last three midpoints. At most 256 centers sample the ordered list at evenly spaced indices. At least 12 observing days are required. The epoch is a template center, and the grid spacing and cadence limit its precision. Positive and negative amplitudes are searched. The variable d is the signed offset in days from the template center, x = d/w, and q = (1400 MHz / radio frequency)². Trial widths w are 14, 60 and 240 days.
+
+| Template | Timing residual for coefficient A in microseconds |
+| --- | --- |
+| Phase step | A times the indicator d ≥ 0 |
+| Spin frequency step or pulsar response to memory | A max(d,0)/365.25 |
+| Step in spin frequency derivative | A [max(d,0)/365.25]² |
+| DM step | A q times the indicator d ≥ 0 |
+| Achromatic pulse or DM pulse | A exp(−x²/2), multiplied by q for DM |
+| Dispersive or profile-like tail | A exp(−x) after the epoch, multiplied by q or q² |
+| Shapiro flyby | −A log(1+x²) |
+| Doppler flyby | A [cos θ (√(1+x²) − 1) − sin θ asinh(x)] at θ = 0°, 45°, 90°, 135° |
+
+The flyby columns use straight-line point-mass timing shapes up to additive timing-model terms. The coefficients and angle are phenomenological. Inferring a compact-object mass, encounter velocity or population abundance requires a separate geometric and population model. For an intrinsic frequency step the fractional change is −A × 10⁻⁶ divided by one year in seconds. The single-pulsar memory and frequency-step responses are degenerate. The frequency-dependent tail is a timing proxy for a profile or scattering change. The timing files offer no direct pulse-shape measurement. The fitted counterpart with achromatic, inverse-frequency-squared and inverse-frequency-fourth coefficients helps identify degeneracy for each crossing. A partial two-sided p below 0.01 with matching sign marks support for the original spectrum conditional on those alternatives. Template labels alone do not identify the cause. [Dror et al., Physical Review D 100, 023003](https://doi.org/10.1103/PhysRevD.100.023003) · [NANOGrav 15-year search for new physics](https://doi.org/10.3847/2041-8213/acdc91)
+
+## Survey-wide significance and validation
+
+Let z be the projected, whitened waveform and r the projected, whitened residual. The inferred coefficient is (zᵀr)/(zᵀz). The test uses the exact Gaussian Student t statistic with n − nuisance rank − 1 degrees of freedom and a variance estimate from the model containing the waveform. All 31 shape/width combinations at all selected centers count, including unidentifiable ones. The reported survey-wide two-sided p bound is min(1, 2 × 68 × number of trials on this pulsar × local p). A primary crossing requires this bound to be at most 0.01. The first factor of two reserves half the error budget for the simultaneous array search. Bonferroni permits dependence among epochs, shapes and pulsars. The search uses no distributional extrapolation of simulated extreme values.
+
+Each primary crossing retains the following checks.
+
+- Removing the observing day with largest absolute contribution to its matched score, including correlated observations that straddle midnight, must preserve its sign and the survey-wide threshold. Nuisance terms are refit by a block deletion identity. Cases where the deletion loses nuisance rank remain inconclusive.
+- Wideband timing at the fixed epoch and shape must preserve the sign with directional p ≤ 0.05. The wideband p is a consistency diagnostic on related data.
+- EPTA must independently support the fixed sign and template, with directional p ≤ 0.05 divided by the number of primary crossings on this pulsar. Both validation sets need at least four observing days on each side. Missing coverage and degeneracies are retained as explicit outcomes. The reported validation p uses each release's own timing and noise projection.
+- A dispersive interpretation requires confirmed retention of dispersion information in every reduction, either through release-DMX restoration or because the model contains no fitted DMX. It also requires a same-sign wideband direct DM measurement with directional p ≤ 0.05. This check uses one narrowest-error DM measurement per observing day, its release-scaled DM uncertainty, and the fixed primary epoch and width. It removes the secular release DM model and receiver offsets while restoring any fitted DMX term, then fits backend offsets, linear and quadratic variation and a low-frequency Fourier basis. Direct wideband DMs share the primary observing sessions. Chromatic ambiguity is recorded explicitly. The post-event diagnostics and the restricted-likelihood sign check must also pass.
+
+## Injection recovery and conditional limits
+
+Every pulsar, template and width receives 256 synthetic events of equiprobable sign and uniformly random continuous epoch between its first and last searched centers, including observation gaps. The code generates Gaussian noise realizations on the actual release-whitened rows, projects nuisance terms, injects the sampled waveform and evaluates the same fitted-scale t statistic. The primary template nearest the injection epoch must cross the original global threshold with the correct sign. Other templates in the full scan can also detect the event, so this rule yields a conservative primary-search efficiency. The four nominal amplitudes and the certified amplitude are tabulated with their integer recovery counts. The simulated noise scale is the one-sided 99.5% upper confidence bound derived from the primary residual sum of squares under the guard model. A signal in those residuals can increase this bound.
+
+For a unit projected bank template u and projected injection v, define c = uᵀv and v⊥ = v − cu. For projected noise r let b be the signed uᵀr, and r⊥ its orthogonal remainder. With k equal to the survey threshold divided by the square root of the test degrees of freedom, the triangle inequality guarantees recovery at all amplitudes above
+
+    max(0, k ||r⊥|| − b) / (c − k ||v⊥||).
+
+A nonpositive denominator yields an infinite certificate. The upper order statistic at rank 1 + BinomialQuantile(0.995, 256, 0.96) bounds the 96th percentile of the required amplitude at one-sided confidence 99.5%. A primary non-detection above the resulting threshold has pointwise total error bounded by 0.04 + 0.005 + 0.005 = 0.05 under this model. The three terms cover the residual probability of a missed random event, the noise-scale bound and injection sampling error. The bounds use all larger amplitudes and remain defined when some epochs are untestable, provided the certified quantile is finite. Deterministic seeds make the Monte Carlo reproducible.
+
+The reported limit covers one event with this waveform, width, sign distribution and uniform epoch in this pulsar's stated window. It is a coefficient limit for the primary search, with no requirement to pass narrowband-to-wideband or independent replication. A primary crossing of this family and width, failed residual diagnostic, unverified DM retention for a DM template, or infinite injection certificate withholds the corresponding exclusion. Pointwise limits over different widths or pulsars do not form a simultaneous confidence region. Recovery depends on the release sampling, retained timing design, compression, Gaussian noise model and fixed Fourier space. These limits give no all-epoch guarantee, intrinsic population rate or physical mass bound.

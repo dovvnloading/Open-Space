@@ -1,0 +1,210 @@
+name: NANOGrav individual and common timing transients
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nanograv15-transients-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  STUDY: results/nanograv15-transients
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  fetch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/nanograv15-transients
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch versioned timing releases and record checksums
+        run: python "$STUDY/prepare.py" fetch --work raw --out receipts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: input-receipts
+          path: receipts/
+          if-no-files-found: warn
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: timing-inputs
+          path: raw/
+          retention-days: 4
+          if-no-files-found: error
+
+  reduce:
+    needs: fetch
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/nanograv15-transients
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: results/nanograv15-transients/requirements.txt
+      - run: python -m pip install -r "$STUDY/requirements.txt"
+      - uses: actions/download-artifact@v4
+        with:
+          name: timing-inputs
+          path: raw/
+      - name: Reduce each assigned pulsar through its published timing model
+        run: |
+          mkdir -p reduced
+          python -m pip freeze > "reduced/software-${{ matrix.shard }}.txt"
+          for release in nb wb epta; do
+            python "$STUDY/prepare.py" reduce --dataset "$release" --work raw --out reduced --shard ${{ matrix.shard }} --shards 4
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: residuals-${{ matrix.shard }}
+          path: reduced/
+          retention-days: 4
+          if-no-files-found: error
+
+  individual:
+    needs: reduce
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/nanograv15-transients
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: results/nanograv15-transients/requirements.txt
+      - run: python -m pip install -r "$STUDY/requirements.txt"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: residuals-*
+          path: reduced
+          merge-multiple: true
+      - name: Scan, inject and check each assigned pulsar
+        run: |
+          python "$STUDY/check_single.py"
+          python "$STUDY/search.py" --data reduced --out evidence --shard ${{ matrix.shard }} --shards 4
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: individual-evidence-${{ matrix.shard }}
+          path: evidence/
+          retention-days: 30
+          if-no-files-found: error
+
+  common:
+    needs: reduce
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/nanograv15-transients
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: results/nanograv15-transients/requirements.txt
+      - run: python -m pip install -r "$STUDY/requirements.txt"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: residuals-*
+          path: reduced
+          merge-multiple: true
+      - name: Scan coherent angular responses and measure recovery
+        run: |
+          python "$STUDY/check_array.py"
+          python "$STUDY/array_search.py" --input reduced --output evidence/array
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: common-evidence
+          path: evidence/array/
+          retention-days: 30
+          if-no-files-found: error
+
+  report:
+    needs: [individual, common]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: results/nanograv15-transients/requirements.txt
+      - run: python -m pip install -r "$STUDY/requirements.txt" pandas matplotlib
+      - uses: actions/download-artifact@v4
+        with:
+          name: input-receipts
+          path: receipts/
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: residuals-*
+          path: reduced
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: individual-evidence-*
+          path: evidence
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: common-evidence
+          path: evidence/array/
+      - name: Deposit measurements and checks in the result folder
+        run: |
+          cp receipts/inputs.json reduced/coverage-*.json reduced/runtime-*.json reduced/software-*.txt evidence/
+          python "$STUDY/report.py" --evidence evidence --root "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- README.md "$STUDY"
+          git commit -m 'Deposit NANOGrav search measurements and calibration [skip ci]'
+      - name: Verify the committed tree and run the repository tests
+        run: |
+          python -m open_space.verify
+          python -m unittest discover -s tests
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: research-report
+          path: |
+            results/nanograv15-transients/
+            evidence/
+          retention-days: 30
+      - name: Publish tested evidence to the research branch
+        if: github.ref == 'refs/heads/research/nanograv15-blind-transients'
+        run: git push origin "HEAD:$GITHUB_REF"
