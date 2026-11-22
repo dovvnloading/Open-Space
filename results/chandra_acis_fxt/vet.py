@@ -27,6 +27,7 @@ import io
 import json
 import math
 import os
+import re
 import tempfile
 import time
 import xml.etree.ElementTree as ET
@@ -49,6 +50,7 @@ VIZIER = "https://vizier.cfa.harvard.edu/viz-bin/votable"
 MIRRORS = {
     "gaia": ("gaia_aip", "https://gaia.aip.de/tap/sync"),
     "simbad": ("simbad_idia", "https://simbad.idia.ac.za/simbad/sim-tap/sync"),
+    "ned": ("ned_vo", "https://vo.ned.ipac.caltech.edu/tap/sync"),
     "quirola2023": ("quirola2023_idia", "https://vizier.idia.ac.za/viz-bin/votable"),
     "dillmann2025": ("dillmann2025_idia", "https://vizier.idia.ac.za/viz-bin/votable"),
 }
@@ -87,7 +89,7 @@ def read_input(label, url, root, replay, records, params=None):
                 raise ValueError(f"altered catalog response {memo['body_file']}")
             records[label] = memo
             return body
-        if replay:
+        if replay or memo.get("permanent_error"):
             records[label] = memo
             raise ValueError(f"{label} previously failed")
     if replay:
@@ -121,10 +123,14 @@ def read_input(label, url, root, replay, records, params=None):
         memo["attempts"].append(entry)
         if status == 200 and body:
             memo.update(ok=True, body_file=path, sha256=sha, size_bytes=len(body))
+        elif status and 400 <= status < 500 and status not in {408, 425, 429}:
+            memo["permanent_error"] = True
         save_bytes(manifest, (json.dumps(memo, indent=2) + "\n").encode())
         records[label] = memo
         if memo["ok"]:
             return body
+        if memo.get("permanent_error"):
+            break
         if attempt < 2:
             time.sleep(2 ** (attempt + 1))
     raise ValueError(f"{label} retrieval failed")
@@ -133,28 +139,70 @@ def read_input(label, url, root, replay, records, params=None):
 def catalog_rows(label, endpoint, query, required, root, replay, records, receipt_label=None):
     # Small published lists are cached whole and checked against the CDS ReadMe.
     fixed = {
-        "quirola2023": ("J/A+A/675/A44/table3", "XRT,RAdeg,DEdeg,ObsID,ePos", 8),
+        "quirola2023": ("J/A+A/675/A44/table3", "**", 8),
         "dillmann2025": ("J/MNRAS/537/931/catalog", "CSCName,RACdeg,DECdeg,CSCobsId,TransType", 3559),
     }.get(label)
     params = {"REQUEST": "doQuery", "LANG": "ADQL", "FORMAT": "votable", "MAXREC": MAX_ROWS, "QUERY": query}
     if fixed:
         params = {"-source": fixed[0], "-out": fixed[1], "-out.max": MAX_ROWS}
+    if label == "quirola2023":
+        params.update({"-out.add": "_RAJ2000,_DEJ2000", "-oc.form": "d"})
     receipt_label = receipt_label or label
     raw = read_input(receipt_label, endpoint, root, replay, records, params)
     decode = decode_published_table if fixed else decode_table
-    rows = decode(raw, tuple(required), fixed[2] if fixed else None)
+    rows = decode(raw, tuple(required), fixed[2] if fixed else None, label)
     records[receipt_label]["row_count"] = len(rows)
     return rows
 
 
-def decode_table(raw, required, expected_count):
+def catalog_angle(value, unit, is_ra):
+    text = str(value).strip()
+    if unit in {"deg", "degree", "degrees"}:
+        v = float(text)
+    elif unit in ({"h:m:s", "hms"} if is_ra else {"d:m:s", "dms"}):
+        parts = re.split(r"[:\s]+", text)
+        if len(parts) != 3:
+            raise ValueError("Incomplete sexagesimal coordinate")
+        h, m, s = map(float, parts)
+        if not (0 <= m < 60 and 0 <= s < 60):
+            raise ValueError("Invalid sexagesimal coordinate")
+        v = (abs(h) + m / 60 + s / 3600) * (-1 if text.startswith("-") else 1) * (15 if is_ra else 1)
+    else:
+        raise ValueError(f"Unexpected coordinate unit {unit!r}")
+    if not (0 <= v < 360 if is_ra else -90 <= v <= 90):
+        raise ValueError("Invalid catalog coordinate")
+    return v
+
+
+def decode_table(raw, required, expected_count, label=None):
     doc = ET.fromstring(raw)
     states = [el for el in doc.iter() if el.tag.rsplit("}", 1)[-1] == "INFO"
               and el.get("name", "").upper() == "QUERY_STATUS"]
     if (not states and expected_count is None) or any(el.get("value", "").upper() != "OK" for el in states):
         raise ValueError("TAP status missing/overflow/error " + " ".join(str(el.text)[:200] for el in states))
-    table = parse_single_table(io.BytesIO(raw)).to_table(use_names_over_ids=True)
+    vo = parse_single_table(io.BytesIO(raw))
+    table = vo.to_table(use_names_over_ids=True)
     columns = {str(n).lower(): n for n in table.colnames}
+    fields = {str(field.name).lower(): field for field in vo.fields}
+    if label == "ned":
+        types = [k for k in ("preftype", "prefobjtype", "pref_objtype", "pref_obj_type", "preferred_type", "pretype",
+                              "objtype", "obj_type", "object_type", "type") if k in columns]
+        if not types:
+            types = [k for k, f in fields.items() if (f.ucd or "").lower().split(";")[0] == "src.class"
+                     or "preferred object type" in (f.description or "").lower()]
+        if len(types) != 1:
+            raise ValueError(f"NED object-type field is missing or ambiguous: {sorted(columns)}")
+        columns["pretype"] = columns[types[0]]
+    if label == "quirola2023":
+        pairs = [("_raj2000","_dej2000"), ("_ra.icrs","_de.icrs"), ("_ra.icrs","_dec.icrs"),
+                 ("radeg","dedeg"), ("raj2000","dej2000"), ("raicrs","deicrs")]
+        pair = next((p for p in pairs if all(k in columns for k in p)), None)
+        if pair is None:
+            raise ValueError(f"VizieR coordinate pair missing: {sorted(columns)}")
+        columns.update(radeg=columns[pair[0]], dedeg=columns[pair[1]])
+        xml_units = {e.get("name", "").lower(): e.get("unit", "").strip().lower() for e in doc.iter()
+                     if e.tag.rsplit("}", 1)[-1] == "FIELD"}
+        units = {key: xml_units[key] for key in pair}
     if (not set(required) <= columns.keys() or len(table) >= MAX_ROWS or
             (expected_count is not None and len(table) != expected_count)):
         raise ValueError("Incomplete schema or unexpected catalog row count")
@@ -164,7 +212,14 @@ def decode_table(raw, required, expected_count):
         if isinstance(x, bytes):
             return x.decode("utf8").strip()
         return str(x).strip()
-    return [{k: scalar(row[n]) for k, n in columns.items()} for row in table]
+    rows = [{k: scalar(row[columns[k]]) for k in required} for row in table]
+    if label == "ned" and rows and not any(row["pretype"] for row in rows):
+        raise ValueError("No reported object types in a nonempty NED cone")
+    if label == "quirola2023":
+        for row in rows:
+            row["radeg"] = catalog_angle(row["radeg"], units[pair[0]], True)
+            row["dedeg"] = catalog_angle(row["dedeg"], units[pair[1]], False)
+    return rows
 
 
 decode_published_table = lru_cache(maxsize=2)(decode_table)
@@ -278,7 +333,7 @@ def vet_trigger(trigger, output_dir, *, replay=False):
                    "LEFT OUTER JOIN otypedef AS t ON b.otype=t.otype WHERE " +
                    cone(grid_ra,grid_dec,grid_field,"b.ra","b.dec"),
                    ["main_id","ra","dec","otype","rvz_redshift","path","is_candidate","coo_err_maj"]),
-        "ned": (NED, "SELECT prefname,ra,dec,pretype,z,uncmaja FROM objdir WHERE " +
+        "ned": (NED, "SELECT * FROM objdir WHERE " +
                 cone(grid_ra,grid_dec,grid_field,frame="J2000"), ["prefname","ra","dec","pretype","z","uncmaja"]),
         "quirola2023": (VIZIER, None, ["xrt","radeg","dedeg","obsid","epos"]),
         "dillmann2025": (VIZIER, None, ["cscname","racdeg","decdeg","cscobsid","transtype"]),
@@ -400,11 +455,52 @@ def vet_trigger(trigger, output_dir, *, replay=False):
             "extragalactic origin. Galaxy redshifts refer to the galaxy. Large or offset hosts can be missed."}
 
 
+def contract_probe(output_dir):
+    """Exercise real services before fan-out using a frozen, instrument-vetoed trigger."""
+    run = os.environ["GITHUB_RUN_ID"] + "-" + os.environ["GITHUB_RUN_ATTEMPT"]
+    root = Path(output_dir)
+    cache = root / run
+    cache.mkdir(parents=True, exist_ok=True)
+    source = {"obsid": 31579, "trigger_key": "real/0", "ra_deg": 350.89949962074587,
+              "dec_deg": 58.80101615192483, "event_mjd": 61352.65428720553,
+              "position_error_arcsec": 1.3394525120377347,
+              "input_sha256": "aa401202b7c0ce30c70880f60964fe1584bc5604a77931817fe05b0d0782f865"}
+    report = {"run": run, "cache": run, "source": source, "status": "incomplete"}
+    try:
+        result = vet_trigger(source, cache)
+        report.update(queries=result["queries"], errors=result["errors"])
+        if result["errors"]:
+            raise ValueError("Service validation failed: " + json.dumps(result["errors"]))
+        required = {"gaia": None, "simbad": None, "ned": None, "quirola2023": 8, "dillmann2025": 3559}
+        for name, count in required.items():
+            routes = [name] + ([MIRRORS[name][0]] if name in MIRRORS else [])
+            if not any(isinstance((r := result["queries"].get(route, {})).get("row_count"), int)
+                       and r.get("ok") and r.get("sha256") and (count is None or r["row_count"] == count)
+                       for route in routes):
+                raise ValueError("Missing validated " + name + " receipt")
+        csv = result["queries"].get("cudidi2026", {})
+        if not (csv.get("ok") and csv.get("sha256")):
+            raise ValueError("Missing validated CuDiDi receipt")
+        report["status"] = "validated"
+    except Exception as exc:
+        report["error"] = f"{type(exc).__name__}: {exc}"
+        raise
+    finally:
+        save_bytes(root / "contract.json", (json.dumps(report, indent=2) + "\n").encode())
+    print("Validated Gaia, SIMBAD, NED and three published Chandra transient lists.", flush=True)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("trigger_json", type=Path)
-    parser.add_argument("output_dir", type=Path)
+    parser.add_argument("trigger_json", type=Path, nargs="?")
+    parser.add_argument("output_dir", type=Path, nargs="?")
+    parser.add_argument("--probe", type=Path, metavar="DIR", help="run the real-catalog contract and retain its inputs")
     parser.add_argument("--replay", action="store_true", help="require all saved inputs; no network")
     args = parser.parse_args()
-    print(json.dumps(vet_trigger(json.loads(args.trigger_json.read_text()), args.output_dir,
-                                 replay=args.replay), indent=2, allow_nan=False))
+    if args.probe is not None:
+        contract_probe(args.probe)
+    elif args.trigger_json and args.output_dir:
+        print(json.dumps(vet_trigger(json.loads(args.trigger_json.read_text()), args.output_dir,
+                                     replay=args.replay), indent=2, allow_nan=False))
+    else:
+        parser.error("provide trigger_json and output_dir, or --probe DIR")

@@ -1,11 +1,13 @@
 """Offline fixtures for catalog classification and exact-response replay."""
 import hashlib
 import io
+import json
 import os
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+from urllib.error import HTTPError
 from xml.sax.saxutils import escape
 
 import vet
@@ -16,8 +18,10 @@ TRIGGER = {"ra_deg": 192.0, "dec_deg": 27.0, "epoch_year": 2024.5,
 CUDIDI_HEADER = b"CANDIDATE,OBSID,RA,DEC\n"
 
 
-def votable(columns, row=(), repetitions=0, trailing_status=""):
-    fields = "".join(f'<FIELD name="{col}" datatype="char" arraysize="*"/>' for col in columns)
+def votable(columns, row=(), repetitions=0, trailing_status="", units=None):
+    units = units or {}
+    fields = "".join(f'<FIELD name="{col}" datatype="char" arraysize="*" ' +
+                     (f'unit="{units[col]}"' if col in units else "") + "/>" for col in columns)
     cells = "".join(f"<TD>{escape(str(v))}</TD>" for v in row)
     rows = f"<TR>{cells}</TR>" * repetitions
     trailer = f'<INFO name="QUERY_STATUS" value="{trailing_status}"/>' if trailing_status else ""
@@ -33,10 +37,11 @@ class TestVet(unittest.TestCase):
             "gaia": votable("source_id ra dec ref_epoch pmra pmdec pmra_error pmdec_error "
                             "ra_error dec_error parallax parallax_error ruwe phot_g_mean_mag".split()),
             "simbad": votable("main_id ra dec otype rvz_redshift path is_candidate coo_err_maj".split()),
-            "ned": votable("prefname ra dec pretype z uncmaja".split()),
+            "ned": votable("prefname ra dec preftype z uncmaja".split()),
             # Published whole tables have fixed sizes. All fixture positions are far away.
-            "quirola2023": votable("XRT RAdeg DEdeg ObsID ePos".split(),
-                                   ["distant-fixture", 0, 0, 10, 1], repetitions=8),
+            "quirola2023": votable("XRT _RAJ2000 _DEJ2000 ObsID ePos".split(),
+                                   ["distant-fixture", 0, 0, 10, 1], repetitions=8,
+                                   units={"_RAJ2000": "deg", "_DEJ2000": "deg"}),
             "dillmann2025": votable("CSCName RACdeg DECdeg CSCobsId TransType".split(),
                                     ["distant-fixture", 0, 0, 11, "F"], repetitions=3559),
             "cudidi2026": CUDIDI_HEADER + b"far-fixture,12,0.0,0.0\n",
@@ -68,10 +73,43 @@ class TestVet(unittest.TestCase):
         self.assertEqual(empty["queries"]["ned"]["row_count"], 0)
 
         truncated = votable("prefname ra dec pretype z uncmaja".split(), trailing_status="OVERFLOW")
-        incomplete = self.screen(replacements={"ned": truncated})
+        incomplete = self.screen(replacements={"ned": truncated, "ned_vo": truncated})
         self.assertEqual(incomplete["status"], "catalog_incomplete")
         self.assertIn("ned", incomplete["errors"])
         self.assertEqual(incomplete["queries"]["ned"]["sha256"], hashlib.sha256(truncated).hexdigest())
+
+    def test_publisher_coordinates_use_reported_units(self):
+        required = ("xrt", "radeg", "dedeg", "obsid", "epos")
+        cols = "XRT RAJ2000 DEJ2000 ObsID ePos".split()
+        raw = votable(cols, ["fixture", "12 30 00", "-00 30 00", 1, 0.5], 1,
+                      units={"RAJ2000": "h:m:s", "DEJ2000": "d:m:s"})
+        row, = vet.decode_table(raw, required, 1, "quirola2023")
+        self.assertEqual((row["radeg"], row["dedeg"]), (187.5, -0.5))
+        missing = votable("XRT ObsID ePos".split(), ["fixture", 1, 0.5], 1)
+        with self.assertRaisesRegex(ValueError, "coordinate pair missing"):
+            vet.decode_table(missing, required, 1, "quirola2023")
+
+    def test_400_is_cached_without_backoff(self):
+        url = "https://catalog.example.invalid/bad-field"
+        error = HTTPError(url, 400, "Bad request", {}, io.BytesIO(b"unknown column"))
+        env = {"GITHUB_ACTIONS": "true", "GITHUB_EVENT_NAME": "push", "GITHUB_REF": vet.CAMPAIGN_REF}
+        with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, env), \
+                patch.object(vet, "urlopen", side_effect=error) as http, patch.object(vet.time, "sleep") as wait:
+            records = {}
+            for _ in range(2):
+                with self.assertRaises(ValueError):
+                    vet.read_input("ned", url, Path(tmp), False, records)
+            self.assertEqual(http.call_count, 1)
+            wait.assert_not_called()
+            self.assertTrue(records["ned"]["permanent_error"])
+
+    def test_contract_records_failure_before_raising(self):
+        failure = {"queries": {}, "errors": {"ned": "invalid schema"}}
+        with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, {"GITHUB_RUN_ID":"1", "GITHUB_RUN_ATTEMPT":"1"}), \
+                patch.object(vet, "vet_trigger", return_value=failure):
+            with self.assertRaisesRegex(ValueError, "invalid schema"):
+                vet.contract_probe(Path(tmp))
+            self.assertEqual(json.loads((Path(tmp) / "contract.json").read_text())["status"], "incomplete")
 
     def test_published_position_in_same_and_different_visit(self):
         fixture = {"cudidi2026": CUDIDI_HEADER + b"XT fixture,19000,192.0,27.0\n"}

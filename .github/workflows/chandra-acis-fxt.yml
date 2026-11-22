@@ -18,7 +18,7 @@ permissions:
 
 concurrency:
   group: chandra-acis-fxt-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[replace-run]') }}
 
 jobs:
   verify:
@@ -34,6 +34,7 @@ jobs:
           python-version: '3.11'
       - run: python -m pip install -r results/chandra_acis_fxt/requirements.txt pandas==2.2.3
       - run: python -m unittest discover -s results/chandra_acis_fxt -p 'test_*.py'
+      - run: python results/chandra_acis_fxt/alerts.py --self-test
       - run: python -m open_space.verify
       - run: python -m unittest discover -s tests
 
@@ -60,12 +61,37 @@ jobs:
           export CIAO_PREFIX="$RUNNER_TEMP/ciao" PATH="$PATH:$CONDA/bin"
           python results/chandra_acis_fxt/reproduce.py "$OBSID"
 
+  catalog-check:
+    if: github.ref == 'refs/heads/research/chandra-acis-fast-transients' && inputs.replay_obsid == ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          sparse-checkout: results/chandra_acis_fxt
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r results/chandra_acis_fxt/requirements.txt
+      - name: Validate real counterpart services against their documented catalog fields
+        run: python -u results/chandra_acis_fxt/vet.py --probe "$RUNNER_TEMP/catalog-probe"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: chandra-catalog-probe
+          path: ${{ runner.temp }}/catalog-probe
+          if-no-files-found: warn
+          overwrite: true
+
   inventory:
+    needs: catalog-check
     if: github.ref == 'refs/heads/research/chandra-acis-fast-transients' && inputs.replay_obsid == ''
     runs-on: ubuntu-24.04
     timeout-minutes: 155
     permissions:
       contents: write
+      actions: read
     outputs:
       matrix: ${{ steps.plan.outputs.matrix }}
       checkpoint: ${{ steps.deposit.outputs.sha }}
@@ -78,8 +104,38 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install -r results/chandra_acis_fxt/requirements.txt
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: chandra-catalog-probe
+          path: results/chandra_acis_fxt/evidence/catalog_probe/${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Retrieve completed shards from the original frozen search
+        if: hashFiles('results/chandra_acis_fxt/evidence/history/44981778618/migration.json') == ''
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: chandra-evidence-*
+          run-id: '44981778618'
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/prior-evidence
+          merge-multiple: false
+      - name: Reuse frozen scans and queue corrected counterpart classifications
+        run: |
+          mkdir -p "$RUNNER_TEMP/prior-evidence"
+          python results/chandra_acis_fxt/migrate.py "$RUNNER_TEMP/prior-evidence" \
+            --reviewed vet.py=76ddfd371cf8f02bd54c3653547f12c74a1a23d09fa7e0bbd2fa933ad5f79d8a
       - name: Reconcile the native ACIS rows and released ObsIDs
         run: python results/chandra_acis_fxt/campaign.py plan
+      - name: Look up missing first-public dates in the HEASARC mirror
+        run: |
+          survey=results/chandra_acis_fxt
+          mkdir -p "$survey/evidence/release_supplement"
+          python "$survey/exceptions.py" "$survey/evidence/inventory" "$survey/evidence/release_supplement"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: chandra-release-supplement
+          path: results/chandra_acis_fxt/evidence/release_supplement
+          if-no-files-found: warn
+          overwrite: true
       - name: Exercise the complete search on three archive observations
         id: pilot
         continue-on-error: true
@@ -89,12 +145,65 @@ jobs:
           python -u results/chandra_acis_fxt/pilot.py
       - id: plan
         run: python results/chandra_acis_fxt/campaign.py plan
+      - name: Publish the prespecified three-ObsID pilot measurement
+        if: steps.pilot.outcome == 'success'
+        env:
+          PYTHONPATH: results/chandra_acis_fxt
+        run: |
+          python - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+          import shutil
+          from tempfile import TemporaryDirectory
+          import report
+          from campaign import EVIDENCE, HERE, dump, read, read_obs
+
+          pilot = read(EVIDENCE / "pilot.json")
+          ids = [int(row["obsid"]) for row in pilot["selected"]]
+          if len(ids) != 3 or len(set(ids)) != 3:
+              raise ValueError("Expected the three original count-stratified pilot observations")
+          rel = Path("provisional") / (os.environ["GITHUB_RUN_ID"] + "-" + os.environ["GITHUB_RUN_ATTEMPT"])
+          destination = EVIDENCE / rel
+          destination.mkdir(parents=True, exist_ok=True)
+          with TemporaryDirectory(dir=os.environ["RUNNER_TEMP"]) as work:
+              view = Path(work)
+              (view / "inventory").symlink_to(EVIDENCE / "inventory", target_is_directory=True)
+              (view / "observations").mkdir()
+              for oid in ids:
+                  target = EVIDENCE / "observations" / f"{oid}.json.gz"
+                  if read_obs(target)["status"] != "complete":
+                      raise ValueError(f"Incomplete fixed pilot ObsID {oid}")
+                  shutil.copyfile(target, view / "observations" / target.name)
+              report.EVIDENCE = view
+              report.run()
+              for item in view.iterdir():
+                  if item.name == "inventory":
+                      continue
+                  if item.is_dir():
+                      shutil.copytree(item, destination / item.name, dirs_exist_ok=True)
+                  else:
+                      shutil.copyfile(item, destination / item.name)
+          summary = read(destination / "summary.json")
+          dump(destination / "scope.json", {"pilot_obsids": ids, "selection": pilot["selection"],
+                                           "inventory_sha256": pilot["inventory_sha256"]})
+          text = (HERE / "README.md").read_text().replace("(evidence/", f"(evidence/{rel}/")
+          note = ("This pre-fan-out checkpoint measures only the three pilot observations selected "
+                  "by catalog event count before the scan. Every other ObsID, including pending "
+                  "observations and recovered shards, is outside this measurement.")
+          (HERE / "README.md").write_text(text + "\n" + note + "\n")
+          (destination / "README.md").write_text(text.replace(f"(evidence/{rel}/", "(")
+                                                .replace("(METHODS.md)", "(../../../METHODS.md)") + "\n" + note + "\n")
+          headline = text.splitlines()[2].strip("*")
+          report.update_catalog("Three-ObsID pilot checkpoint. " + headline, summary["label"])
+          PYTHON
+          git diff --check -- README.md results/chandra_acis_fxt/README.md
       - name: Deposit inventory and early observation evidence on the branch
         id: deposit
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- results/chandra_acis_fxt/evidence
+          git add -- README.md results/chandra_acis_fxt/README.md results/chandra_acis_fxt/evidence
           git diff --cached --quiet || git commit -m "Checkpoint the Chandra release census and first observation ledgers"
           git push origin HEAD:refs/heads/research/chandra-acis-fast-transients
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
@@ -124,7 +233,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 355
     strategy:
-      max-parallel: 4
+      max-parallel: 8
       fail-fast: false
       matrix:
         group: ${{ fromJSON(needs.inventory.outputs.matrix) }}
@@ -173,7 +282,7 @@ jobs:
     if: always() && needs.inventory.result == 'success'
     needs: [inventory, observation]
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 230
     permissions:
       contents: write
     steps:
@@ -195,6 +304,45 @@ jobs:
           merge-multiple: true
       - name: Build the coverage ledger and report
         run: python results/chandra_acis_fxt/report.py
+      - name: Inspect other Chandra visits to unresolved sky positions
+        id: visits
+        continue-on-error: true
+        timeout-minutes: 75
+        run: |
+          survey=results/chandra_acis_fxt
+          mkdir -p "$survey/evidence/independent_visits"
+          python -u "$survey/visits.py" --evidence "$survey/evidence" \
+            >"$survey/evidence/independent_visits/command.log" 2>&1
+      - name: Compare unresolved leads to contemporaneous GCN circulars
+        id: alerts
+        continue-on-error: true
+        timeout-minutes: 35
+        run: |
+          survey=results/chandra_acis_fxt
+          mkdir -p "$survey/evidence/alerts"
+          python -u "$survey/alerts.py" --evidence "$survey/evidence" \
+            >"$survey/evidence/alerts/command.log" 2>&1
+      - name: Assemble per-lead evidence for written review
+        id: review
+        continue-on-error: true
+        run: |
+          survey=results/chandra_acis_fxt
+          python -u "$survey/review.py" --evidence "$survey/evidence" \
+            >"$survey/evidence/lead-review-command.log" 2>&1
+      - name: Record independent follow-up outcomes
+        env:
+          VISIT_OUTCOME: ${{ steps.visits.outcome }}
+          ALERT_OUTCOME: ${{ steps.alerts.outcome }}
+          REVIEW_OUTCOME: ${{ steps.review.outcome }}
+        run: |
+          python - <<'PYTHON'
+          import json, os
+          from pathlib import Path
+          evidence = Path("results/chandra_acis_fxt/evidence")
+          record = {"run_id": os.environ["GITHUB_RUN_ID"], "independent_visits": os.environ["VISIT_OUTCOME"],
+                    "alerts": os.environ["ALERT_OUTCOME"], "review": os.environ["REVIEW_OUTCOME"]}
+          (evidence / "followup_execution.json").write_text(json.dumps(record, indent=2) + "\n")
+          PYTHON
       - name: Verify the exact proposed commit before updating the research branch
         run: |
           git config user.name 'github-actions[bot]'
@@ -207,3 +355,6 @@ jobs:
           git push origin "HEAD:refs/heads/research/chandra-acis-fast-transients"
       - name: Check for unfinished observations
         run: python results/chandra_acis_fxt/report.py --check-coverage
+      - name: Check follow-up commands after evidence deposit
+        if: steps.visits.outcome != 'success' || steps.alerts.outcome != 'success' || steps.review.outcome != 'success'
+        run: exit 1

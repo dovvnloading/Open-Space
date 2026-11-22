@@ -30,12 +30,16 @@ A trial of length D in a good-time interval of length L has max(0, L−3D) secon
 
 ## Run and replay
 
-The maintainer enabled pushes that change the Chandra workflow file on the research branch. The Actions run link in each deposited summary identifies the exact revision. After default-branch registration, the same workflow also accepts the manual commands below. All archive retrieval, catalog queries, calibration, control generation, injections and repository checks execute in that workflow. The first three moderate-volume observations are selected using event counts and exposure only. Their complete evidence is checkpointed before the remaining inventory is assigned. At most four matrix workers share the queue. Run artifacts preserve partial jobs. A subsequent manual dispatch resumes from deposited ObsID ledgers and pins previously acquired data. Repository writes are confined to the research branch.
+The maintainer enabled pushes that change the Chandra workflow file on the research branch. The Actions run link in each deposited summary identifies the exact revision. After default-branch registration, the same workflow also accepts the manual commands below. All archive retrieval, catalog queries, calibration, control generation, injections and repository checks execute in that workflow. The first three moderate-volume observations are selected using event counts and exposure only. Their complete evidence is checkpointed before the remaining inventory is assigned. At most eight matrix workers share the queue. Run artifacts preserve partial jobs. A subsequent manual dispatch resumes from deposited ObsID ledgers and pins previously acquired data. Repository writes are confined to the research branch.
 
 ```sh
 gh workflow run chandra-acis-fxt.yml --repo dovvnloading/Open-Space --ref research/chandra-acis-fast-transients
 gh run list --repo dovvnloading/Open-Space --workflow chandra-acis-fxt.yml --branch research/chandra-acis-fast-transients
 ```
+
+The preflight queries Gaia, SIMBAD, NED, and three published Chandra transient lists at the deposited position of an instrument-vetoed detection in ObsID 31579. Evidence from the initial run lives in `evidence/history/44981778618/`. The catalog correction preserves its original decisions and search arrays. The migration checks the event-product hashes, control and injection indices, inventory checksum and implementation hashes before reusing a scan. Workers apply the corrected catalog checks to every archived trigger, including all scrambled triggers. The HEASARC release-date cross-check for incomplete CXC metadata has its own input and outcome receipts under `evidence/release_supplement/`.
+
+For retained leads the report job checks other visits in the release window and searches the GCN Circular archive for potentially related notices. Inspect the source and detector diagnostics, the photon time series, catalog matches, nearby galaxies, and target/proposal metadata for each event. A non-detection in another visit constrains the mean aperture count rate only for the time its source position was covered. The alert comparison records the notices and search coverage used for a novelty assessment.
 
 After a scientific deposit, substitute an integer ObsID from the coverage ledger for OBSID to repeat its event scan, controls, synthetic injections, catalog choices and measured peak photometry.
 
