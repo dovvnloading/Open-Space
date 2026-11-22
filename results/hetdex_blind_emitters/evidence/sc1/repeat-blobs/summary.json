@@ -1,0 +1,36 @@
+{
+  "release": "sc1",
+  "input": "../vetted.jsonl.gz",
+  "input_sha256": "e59662f88b2bece1bc6ad3e9b1d294bba80aefc71749701d5b3c2715399f8c70",
+  "counts": {
+    "original_two_knot_proposals": 21337,
+    "cross_shot_midpoint_coincidences": 999,
+    "displaced_minus50A_geometric_edges": 1,
+    "displaced_plus50A_geometric_edges": 0,
+    "geometry_consistent_edges": 303,
+    "geometry_components": 162,
+    "geometry_matched_rows": 382,
+    "systems_requiring_two_shot_cube_check": 31,
+    "bridge_measured": 56,
+    "systems_with_measurable_bridge_in_distinct_shots": 22,
+    "clean_primary_and_bridge": 5,
+    "systems_with_primary_and_bridge_confirmed_twice": 2,
+    "systems_with_both_knots_and_bridge_confirmed_twice": 2
+  },
+  "system_statuses": {
+    "no clean independent geometry after spectral and resolution cuts": 131,
+    "incomplete independent cube coverage or sky measurements": 12,
+    "source_vetting_unresolved": 2,
+    "measured bridge below joint central, sky and two-shot threshold": 17
+  },
+  "ancillary_catalog_errors": {},
+  "failed_remote_inputs": {},
+  "scope": "Cohorts are connected components of directly matching catalog knot pairs in different shots of the same release. Each accepted pair has both endpoints within 1.25 arcsec and both centroids within 3.5 air Angstrom, permitting reversed brightness order. A prior resolved LAN association excludes that system from novelty follow-up. Every distinct retained geometry is tested; no rank cap. Incomplete cube or archive coverage remains unresolved.",
+  "geometric_control": "Hold both sky coordinates fixed and shift both knot wavelengths in the second shot by -50 or +50 A. These counts are positional/line coincidences before source or cube vetting.",
+  "spatial_tests": "Each independent shot needs a positive central aperture and two-Moffat-subtracted bridge at five empirical sigma, clean outer background, and the same requirements centered at the secondary knot. A nominal PSF residual is conditional on the observed seeing and adopted PSF. The experiment does not select single-center diffuse halos or objects missing from catalog knots.",
+  "products": [
+    "systems.jsonl.gz",
+    "vetted.jsonl.gz",
+    "inputs.json"
+  ]
+}

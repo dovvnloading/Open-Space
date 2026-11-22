@@ -1,0 +1,102 @@
+{
+  "counts": {
+    "repeat_LAE_source_observations": 1479,
+    "eligible_source_observations": 1479,
+    "DESI_counterpart_observations": 0,
+    "spectra_measured": 1479,
+    "no_clean_peak_at_redshift": 519,
+    "science_peak_for_imaging": 867,
+    "spectral_continuum_rules_out_extreme_EW": 92,
+    "already_in_primary_spectral_EW_arm": 1,
+    "distinct_possible_after_deduplication": 504,
+    "bounded_imaging_positions": 120,
+    "paired_aperture_attempts": 12,
+    "eligible_imaging_EWs": 0,
+    "imaging_EW_above_240": 0
+  },
+  "source_catalog_errors": {
+    "LAN": "HTTPSConnectionPool(host='web.corral.tacc.utexas.edu', port=443): Max retries exceeded with url: /hetdex/HETDEX/catalogs/HETDEX_LAN/hetdex_lan_v0.3.fits (Caused by ConnectTimeoutError(<HTTPSConnection(host='web.corral.tacc.utexas.edu', port=443) at 0x7fd643201310>, 'Connection to web.corral.tacc.utexas.edu timed out. (connect timeout=8)'))",
+    "DESI": "HTTPSConnectionPool(host='web.corral.tacc.utexas.edu', port=443): Max retries exceeded with url: /hetdex/HETDEX/catalogs/HETDEX_DESI/DESI_HETDEX_SPEC_v1.6.fits (Caused by ConnectTimeoutError(<HTTPSConnection(host='web.corral.tacc.utexas.edu', port=443) at 0x7fd643200b90>, 'Connection to web.corral.tacc.utexas.edu timed out. (connect timeout=8)')); 404 Client Error: Not Found for url: https://data.desi.lbl.gov/public/dr1/vac/dr1/hetdex/DESI_HETDEX_SPEC_v1.6.fits"
+  },
+  "inputs": {
+    "hetdex_lan_v0.3.fits": {
+      "urls": [
+        "https://web.corral.tacc.utexas.edu/hetdex/HETDEX/catalogs/HETDEX_LAN/hetdex_lan_v0.3.fits"
+      ],
+      "error": [
+        "HTTPSConnectionPool(host='web.corral.tacc.utexas.edu', port=443): Max retries exceeded with url: /hetdex/HETDEX/catalogs/HETDEX_LAN/hetdex_lan_v0.3.fits (Caused by ConnectTimeoutError(<HTTPSConnection(host='web.corral.tacc.utexas.edu', port=443) at 0x7fd643201310>, 'Connection to web.corral.tacc.utexas.edu timed out. (connect timeout=8)'))"
+      ]
+    },
+    "DESI_HETDEX_SPEC_v1.6.fits": {
+      "urls": [
+        "https://web.corral.tacc.utexas.edu/hetdex/HETDEX/catalogs/HETDEX_DESI/DESI_HETDEX_SPEC_v1.6.fits",
+        "https://data.desi.lbl.gov/public/dr1/vac/dr1/hetdex/DESI_HETDEX_SPEC_v1.6.fits"
+      ],
+      "error": [
+        "HTTPSConnectionPool(host='web.corral.tacc.utexas.edu', port=443): Max retries exceeded with url: /hetdex/HETDEX/catalogs/HETDEX_DESI/DESI_HETDEX_SPEC_v1.6.fits (Caused by ConnectTimeoutError(<HTTPSConnection(host='web.corral.tacc.utexas.edu', port=443) at 0x7fd643200b90>, 'Connection to web.corral.tacc.utexas.edu timed out. (connect timeout=8)'))",
+        "404 Client Error: Not Found for url: https://data.desi.lbl.gov/public/dr1/vac/dr1/hetdex/DESI_HETDEX_SPEC_v1.6.fits"
+      ]
+    },
+    "dex_cube_20190307026_027.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20190307026/dex_cube_20190307026_027.fits",
+      "bytes": 18973440,
+      "sha256": "55574386a641f59db595706e12374a342fddde38955c7219e9c7517c6a18987b"
+    },
+    "dex_cube_20180415016_024.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20180415016/dex_cube_20180415016_024.fits",
+      "bytes": 18743040,
+      "sha256": "69687f02c7ad5f5c92bb9e4be2c7f98ed97164581114532133acba03e06fa987"
+    },
+    "dex_cube_20190927026_027.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20190927026/dex_cube_20190927026_027.fits",
+      "bytes": 22055040,
+      "sha256": "8ddc0231b37dd6cc93c98ff0ddde7de46a612ed066b78a45391bcf958bca7fe9"
+    },
+    "dex_cube_20190725008_098.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20190725008/dex_cube_20190725008_098.fits",
+      "bytes": 18057600,
+      "sha256": "8abdb366267884c653d3c67fbb80808387e36927e6c727fdc1a3a17e421be0bf"
+    },
+    "dex_cube_20190927018_023.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20190927018/dex_cube_20190927018_023.fits",
+      "bytes": 17841600,
+      "sha256": "4a15114e9d10d24b1cb384e96105969b2e03cf03945f8d8385beb4370f0dd0f7"
+    },
+    "dex_cube_20190408025_098.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20190408025/dex_cube_20190408025_098.fits",
+      "bytes": 19008000,
+      "sha256": "f2a7950da786044c4d98d10de44e8f98ae6c42d8dd14ebd1a30cc1169937c418"
+    },
+    "dex_cube_20200324015_047.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20200324015/dex_cube_20200324015_047.fits",
+      "bytes": 18184320,
+      "sha256": "2b9b6fbb5385c16e56ceabd91fc141763d15993737b034449c021614f399ecaf"
+    },
+    "dex_cube_20180411009_033.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20180411009/dex_cube_20180411009_033.fits",
+      "bytes": 19342080,
+      "sha256": "82e7afe40afd2c204e21b6efdeffc1babe9a1feaf2644172d5c95d661f2ea60f"
+    },
+    "dex_cube_20181214019_087.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20181214019/dex_cube_20181214019_087.fits",
+      "bytes": 18754560,
+      "sha256": "ab0b9d31362eb628907463c223d3d77a9101b53880b627753422a2ccb0eb695a"
+    },
+    "dex_cube_20181005012_047.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20181005012/dex_cube_20181005012_047.fits",
+      "bytes": 18967680,
+      "sha256": "b3a361489f2a96065840bc5b95935f73813fde7ddf9a2ce9e8f77ad99423ceef"
+    },
+    "dex_cube_20180515019_047.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20180515019/dex_cube_20180515019_047.fits",
+      "bytes": 18717120,
+      "sha256": "fbea0a89fc476c4ac08343244f2b5f44eb586aa1b7ec162929e651738fbcaaaf"
+    },
+    "dex_cube_20181203015_034.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20181203015/dex_cube_20181203015_034.fits",
+      "bytes": 18296640,
+      "sha256": "60a0e6411b80c85d19064f26d4ce88ba8470eeb37eedbf01cb2005654d3f0ddb"
+    }
+  },
+  "scope": "All repeat-LAE observations with same-source IDs or isolated positional repeats and good matched DESI VI z=1.88-3.52 considered in this release. At most 120 unique objects per population receive direct Tractor checks, prioritized in thirds by LAN optical priority, lower line flux and fixed-seed sampling. Up to 12 with missing/zero imaging bound per population get paired-aperture attempts before final external vetting. No source is promoted by a missing flux."
+}

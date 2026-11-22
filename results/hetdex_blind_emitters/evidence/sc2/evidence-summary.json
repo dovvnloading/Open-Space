@@ -1,0 +1,1610 @@
+{
+  "release": "sc2",
+  "count_unit": "vetted observed hypothesis rows within this release unless specified; rows and releases can overlap",
+  "archive_checks": {
+    "NED": {
+      "not_recorded": 98962,
+      "matched": 102,
+      "empty_cone": 37
+    },
+    "SIMBAD": {
+      "not_recorded": 98962,
+      "empty_cone": 123,
+      "matched": 16
+    },
+    "Legacy": {
+      "not_recorded": 98962,
+      "error": 139
+    },
+    "HSC": {
+      "not_recorded": 98962,
+      "error": 110,
+      "measured": 29
+    },
+    "Legacy_forced": {
+      "not_recorded": 99060,
+      "measured": 35,
+      "error": 6
+    },
+    "SPARCL": {
+      "not_recorded": 98962,
+      "error": 136,
+      "matched": 3
+    },
+    "cube": {
+      "not_recorded": 98690,
+      "measured": 411
+    },
+    "DESI": {
+      "not_recorded": 98789,
+      "matched": 312
+    },
+    "DESI_lines": {
+      "not_recorded": 98789,
+      "spectral_diagnostics_recorded": 312
+    },
+    "LAN": {
+      "not_recorded": 97540,
+      "matched": 1561
+    },
+    "HETDEX_HSC": {
+      "not_recorded": 98999,
+      "matched": 102
+    },
+    "SPARCL_individual_spectra": {
+      "measured": 4
+    }
+  },
+  "archive_note": "Counts are final per-row responses. Missing records can reflect a skipped query; empty_cone requires a successful cone search. Forced cutout measurements may have either sign.",
+  "spatial_arms": {
+    "single_center": {
+      "vetted_rows": 1201,
+      "cube_attempted": 16,
+      "cube_opened_and_line_window_tested": 16,
+      "spatial_statistic_measurable": 8,
+      "central_5sigma": 10,
+      "psf_excess_5sigma": 0,
+      "central_and_excess_and_clean_background": 0,
+      "different_shot_cube_attempted": 14,
+      "different_shot_excess_measurable": 8,
+      "first_excess_and_measurable_repeat": 0,
+      "both_shots_excess_5sigma": 0,
+      "both_shots_central_and_excess_and_clean_background": 0,
+      "excess_rate_when_measurable": {
+        "numerator": 0,
+        "denominator": 8,
+        "fraction": 0.0
+      },
+      "repeat_excess_rate_for_first_excess_with_repeat_measurement": {
+        "numerator": 0,
+        "denominator": 0,
+        "fraction": null
+      }
+    },
+    "two_knots": {
+      "vetted_rows": 86106,
+      "cube_attempted": 16,
+      "cube_opened_and_line_window_tested": 16,
+      "spatial_statistic_measurable": 13,
+      "central_5sigma": 15,
+      "psf_excess_5sigma": 0,
+      "central_and_excess_and_clean_background": 0,
+      "different_shot_cube_attempted": 16,
+      "different_shot_excess_measurable": 11,
+      "first_excess_and_measurable_repeat": 0,
+      "both_shots_excess_5sigma": 0,
+      "both_shots_central_and_excess_and_clean_background": 0,
+      "excess_rate_when_measurable": {
+        "numerator": 0,
+        "denominator": 13,
+        "fraction": 0.0
+      },
+      "repeat_excess_rate_for_first_excess_with_repeat_measurement": {
+        "numerator": 0,
+        "denominator": 0,
+        "fraction": null
+      }
+    }
+  },
+  "repeat_support": {
+    "forced_per_vetted_row": {
+      "heii": {
+        "all_vetted_rows": 5326,
+        "repeat_lookup_recorded": 154,
+        "repeat_measurement_available": 15,
+        "primary_repeats_ge4": 15,
+        "both_lines_ge4_in_same_independent_shot": 0
+      },
+      "unknown": {
+        "all_vetted_rows": 6008,
+        "repeat_lookup_recorded": 5205,
+        "repeat_measurement_available": 419,
+        "primary_repeats_ge4": 337,
+        "both_lines_ge4_in_same_independent_shot": 0
+      },
+      "ew": {
+        "all_vetted_rows": 460,
+        "repeat_lookup_recorded": 434,
+        "repeat_measurement_available": 126,
+        "primary_repeats_ge4": 125,
+        "both_lines_ge4_in_same_independent_shot": 0
+      },
+      "blob": {
+        "all_vetted_rows": 87307,
+        "repeat_lookup_recorded": 2450,
+        "repeat_measurement_available": 187,
+        "primary_repeats_ge4": 185,
+        "both_lines_ge4_in_same_independent_shot": 0
+      }
+    },
+    "blind_stacks": {
+      "repeat_stack": {
+        "groups_searched": 18791,
+        "distinct_groups_with_a_lead": 398,
+        "distinct_supported_peaks": 405,
+        "peaks_with_2_shots_ge4": 395,
+        "hypothesis_rows_by_channel": {
+          "unknown": 217,
+          "heii": 190,
+          "ew": 1
+        }
+      },
+      "wrong_sky": {
+        "groups_searched": 18791,
+        "distinct_groups_with_a_lead": 32,
+        "distinct_supported_peaks": 32,
+        "peaks_with_2_shots_ge4": 6,
+        "hypothesis_rows_by_channel": {
+          "unknown": 27,
+          "heii": 5
+        }
+      }
+    },
+    "definition": "Peaks meeting the spectral channel screen in stacks and independently reaching 3 sigma in at least two distinct shots. Each distinct group and air wavelength is counted once across channel labels. Wrong-sky contains real spectra at different positions.",
+    "source": "repeat-leads.jsonl.gz and repeat-summary.json"
+  },
+  "open_reasons": {
+    "unknown": {
+      "outside ranked external follow-up; retained for review": 5170,
+      "candidate lacks a secure identification across plausible redshifts": 29,
+      "direct imaging checks unavailable": 22,
+      "no independently noise-calibrated central cube line": 12,
+      "foreground interpretation unresolved": 9,
+      "duplicate position and wavelength in ranked follow-up": 3,
+      "independent-visit line confirmation absent": 1
+    },
+    "heii": {
+      "outside ranked external follow-up; retained for review": 121,
+      "joint CIV, OIII] and CIII] limits below half He II unavailable": 30,
+      "independent line identification unavailable": 30,
+      "direct imaging checks unavailable": 24,
+      "independent-visit line confirmation absent": 21,
+      "no independently noise-calibrated central cube line": 18,
+      "foreground interpretation unresolved": 17,
+      "Ly-alpha counterpart below 5 sigma": 7,
+      "SIMBAD published counterpart redshift disagrees; association needs review": 3,
+      "duplicate position and wavelength in ranked follow-up": 1
+    },
+    "ew": {
+      "redward imaging does not independently constrain EW above 240 A": 315,
+      "outside ranked external follow-up; retained for review": 201,
+      "no independently noise-calibrated central cube line": 14,
+      "independent-visit line confirmation absent": 11,
+      "external redshift unavailable for low-z and AGN discrimination": 11,
+      "direct imaging checks unavailable": 9,
+      "duplicate position and wavelength in ranked follow-up": 2,
+      "foreground interpretation unresolved": 1
+    },
+    "blob": {
+      "outside ranked external follow-up; retained for review": 2411,
+      "extended emission above the fitted seeing profile unconfirmed": 30,
+      "independent redshift unavailable": 28,
+      "direct imaging checks unavailable": 19,
+      "bridge PSF excess unconfirmed in separate shot": 16,
+      "foreground interpretation unresolved": 16,
+      "annular PSF excess unconfirmed in separate shot": 14,
+      "duplicate position and wavelength in ranked follow-up": 7,
+      "no independently noise-calibrated central cube line": 6,
+      "SIMBAD published counterpart redshift disagrees; association needs review": 3
+    }
+  },
+  "near_misses": [
+    {
+      "ledger": "evidence/sc2/vetted.jsonl.gz",
+      "jsonl_line": 98911,
+      "release": "sc2",
+      "row_index": 906876,
+      "source_id": 5020000442760,
+      "detectid": 3003798206,
+      "shotid": 20190724017,
+      "ra": 271.1795349121094,
+      "dec": 64.91490173339844,
+      "channel": "ew",
+      "stream": "observed",
+      "classification": "unresolved",
+      "air_wavelength_A": 4631.65290159883,
+      "flux_cgs": 8.976298389380072e-16,
+      "flux_err_cgs": 2.6117347932767052e-17,
+      "snr": 34.36910367962105,
+      "redshift_hypothesis": 2.811025777449142,
+      "rest_EW_A": null,
+      "rest_EW_lower_A": 377.5657391728591,
+      "imaging_EW_lower_A": null,
+      "passed": [
+        "HETDEX Ly-alpha redshift agrees",
+        "masked cube central line above 5 empirical sigma"
+      ],
+      "open_reasons": [
+        "direct imaging checks unavailable",
+        "external redshift unavailable for low-z and AGN discrimination",
+        "independent-visit line confirmation absent",
+        "redward imaging does not independently constrain EW above 240 A"
+      ],
+      "ranked_external_checks_recorded": true,
+      "observation": {
+        "spectral_lower_A": 377.5657391728591,
+        "imaging_lower_A": null
+      },
+      "maximum_independent_shot_snr": null
+    }
+  ],
+  "near_miss_description": "Externally reviewed unresolved examples with actual positive measurements, at most one per distinct spatial arm, EW, or unmatched-at-host channel. Each remains blocked by the listed reasons.",
+  "heii_chemistry": {
+    "selection": "All observed vetted He II hypotheses. Rank only unresolved, unflagged 1.9\u20132.4 He II peaks with S/N >=4.5, FWHM <900 km/s, Ly-alpha S/N >=5 and He II / Ly-alpha >=0.1. No measured metal component may reach 3 sigma; both components of C IV or O III] must have usable limits. For each ion the HETDEX limit sums the stored positive-flux-plus-3-sigma component bounds. Redshift, chemistry, and physical origin remain unconfirmed.",
+    "stages_rows": {
+      "all_heii_rows_reviewed": 5326,
+      "unresolved": 152,
+      "clean_narrow_heii": 152,
+      "paired_lya_and_flux_ratio": 23,
+      "no_component_ge3_and_at_least_one_civ_or_oiii_doublet_measured": 23,
+      "ions_with_ratio_upper_le_0p5_0": 18,
+      "ions_with_ratio_upper_le_0p5_2": 2,
+      "ions_with_ratio_upper_le_0p5_1": 3
+    },
+    "selected_release_source_ids": 23,
+    "ranked_unresolved": [
+      {
+        "ledger": "evidence/sc2/vetted.jsonl.gz",
+        "jsonl_line": 98789,
+        "release": "sc2",
+        "row_index": 120443,
+        "source_id": 5020002644795,
+        "detectid": 5000477917,
+        "shotid": 20231020014,
+        "ra": 8.504342079162598,
+        "dec": -2.178831100463867,
+        "channel": "heii",
+        "stream": "observed",
+        "classification": "unresolved",
+        "air_wavelength_A": 5087.948877421352,
+        "flux_cgs": 3.8672454217210284e-16,
+        "flux_err_cgs": 2.2023457972360513e-17,
+        "snr": 17.559664910816593,
+        "redshift_hypothesis": 2.102478104743228,
+        "rest_EW_A": 426.7286797861935,
+        "rest_EW_lower_A": 102.16676139895294,
+        "imaging_EW_lower_A": null,
+        "passed": [
+          "HETDEX Ly-alpha redshift agrees"
+        ],
+        "open_reasons": [
+          "direct imaging checks unavailable",
+          "independent line identification unavailable",
+          "independent-visit line confirmation absent",
+          "joint CIV, OIII] and CIII] limits below half He II unavailable",
+          "no independently noise-calibrated central cube line"
+        ],
+        "ranked_external_checks_recorded": true,
+        "partner_measurement": "lya_velocity_best",
+        "lya": {
+          "air_wave": 3770.51858295576,
+          "flux": 1.3077756471097379e-16,
+          "flux_err": 2.452566718555878e-17,
+          "snr": 5.332273479923039,
+          "offset_km_s": 0
+        },
+        "heii_to_lya": 2.957116865012643,
+        "heii_fwhm_kms": 249.77063647425453,
+        "metal_doublets": {
+          "civ": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 0.2466893976010027
+          },
+          "oiii": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 0.2485513836336413
+          },
+          "ciii": {
+            "component_status": [
+              "outside_band",
+              "outside_band"
+            ],
+            "hetdex_ratio_upper": null
+          }
+        },
+        "best_ratio_limits": {
+          "civ": {
+            "source": "HETDEX",
+            "ratio_upper": 0.2466893976010027
+          },
+          "oiii": {
+            "source": "HETDEX",
+            "ratio_upper": 0.2485513836336413
+          }
+        },
+        "ions_with_ratio_upper_le_0p5": 2,
+        "low_z_companion_patterns": [],
+        "single_line_catalog_conflict": false,
+        "independently_reobserved_primary": false
+      },
+      {
+        "ledger": "evidence/sc2/vetted.jsonl.gz",
+        "jsonl_line": 98791,
+        "release": "sc2",
+        "row_index": 128495,
+        "source_id": 5020002620683,
+        "detectid": 5000276589,
+        "shotid": 20231009018,
+        "ra": 10.615447998046875,
+        "dec": -1.6518640518188477,
+        "channel": "heii",
+        "stream": "observed",
+        "classification": "unresolved",
+        "air_wavelength_A": 5482.986818640331,
+        "flux_cgs": 3.322681353632767e-16,
+        "flux_err_cgs": 2.4662535268665285e-17,
+        "snr": 13.472586323492719,
+        "redshift_hypothesis": 2.3433574217496975,
+        "rest_EW_A": null,
+        "rest_EW_lower_A": null,
+        "imaging_EW_lower_A": null,
+        "passed": [],
+        "open_reasons": [
+          "direct imaging checks unavailable",
+          "independent line identification unavailable",
+          "independent-visit line confirmation absent",
+          "joint CIV, OIII] and CIII] limits below half He II unavailable",
+          "no independently noise-calibrated central cube line"
+        ],
+        "ranked_external_checks_recorded": true,
+        "partner_measurement": "lya_velocity_best",
+        "lya": {
+          "air_wave": 4063.2720632146934,
+          "flux": 2.5931447016967195e-16,
+          "flux_err": 3.4329411857698933e-17,
+          "snr": 7.5537114135416354,
+          "offset_km_s": 0
+        },
+        "heii_to_lya": 1.2813327969930506,
+        "heii_fwhm_kms": 231.7751750089265,
+        "metal_doublets": {
+          "civ": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 0.3916923123897112
+          },
+          "oiii": {
+            "component_status": [
+              "outside_band",
+              "outside_band"
+            ],
+            "hetdex_ratio_upper": null
+          },
+          "ciii": {
+            "component_status": [
+              "outside_band",
+              "outside_band"
+            ],
+            "hetdex_ratio_upper": null
+          }
+        },
+        "best_ratio_limits": {
+          "civ": {
+            "source": "HETDEX",
+            "ratio_upper": 0.3916923123897112
+          }
+        },
+        "ions_with_ratio_upper_le_0p5": 1,
+        "low_z_companion_patterns": [],
+        "single_line_catalog_conflict": false,
+        "independently_reobserved_primary": false
+      },
+      {
+        "ledger": "evidence/sc2/vetted.jsonl.gz",
+        "jsonl_line": 98784,
+        "release": "sc2",
+        "row_index": 145922,
+        "source_id": 5023000233268,
+        "detectid": 4029379679,
+        "shotid": 20230819013,
+        "ra": 15.101116180419922,
+        "dec": 1.7182350158691406,
+        "channel": "heii",
+        "stream": "observed",
+        "classification": "unresolved",
+        "air_wavelength_A": 5069.93432895828,
+        "flux_cgs": 2.1838132800712058e-16,
+        "flux_err_cgs": 2.3825465639136178e-17,
+        "snr": 9.16587869948712,
+        "redshift_hypothesis": 2.0914935148819995,
+        "rest_EW_A": 148.80946794928434,
+        "rest_EW_lower_A": 41.169599720721166,
+        "imaging_EW_lower_A": null,
+        "passed": [
+          "HETDEX Ly-alpha redshift agrees"
+        ],
+        "open_reasons": [
+          "independent line identification unavailable",
+          "independent-visit line confirmation absent",
+          "joint CIV, OIII] and CIII] limits below half He II unavailable",
+          "no independently noise-calibrated central cube line"
+        ],
+        "ranked_external_checks_recorded": true,
+        "partner_measurement": "lya_velocity_best",
+        "lya": {
+          "air_wave": 3757.168409381866,
+          "flux": 1.9778142725551297e-16,
+          "flux_err": 3.515684098258153e-17,
+          "snr": 5.6256882509297075,
+          "offset_km_s": 0
+        },
+        "heii_to_lya": 1.104154879643955,
+        "heii_fwhm_kms": 334.2108324634165,
+        "metal_doublets": {
+          "civ": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 0.5500905236781924
+          },
+          "oiii": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 0.5540525325098535
+          },
+          "ciii": {
+            "component_status": [
+              "outside_band",
+              "outside_band"
+            ],
+            "hetdex_ratio_upper": null
+          }
+        },
+        "best_ratio_limits": {
+          "civ": {
+            "source": "HETDEX",
+            "ratio_upper": 0.5500905236781924
+          },
+          "oiii": {
+            "source": "HETDEX",
+            "ratio_upper": 0.5540525325098535
+          }
+        },
+        "ions_with_ratio_upper_le_0p5": 0,
+        "low_z_companion_patterns": [],
+        "single_line_catalog_conflict": false,
+        "independently_reobserved_primary": false
+      },
+      {
+        "ledger": "evidence/sc2/vetted.jsonl.gz",
+        "jsonl_line": 98790,
+        "release": "sc2",
+        "row_index": 123084,
+        "source_id": 5020002636722,
+        "detectid": 5000413016,
+        "shotid": 20231017015,
+        "ra": 26.927719116210938,
+        "dec": 1.1577320098876953,
+        "channel": "heii",
+        "stream": "observed",
+        "classification": "unresolved",
+        "air_wavelength_A": 4766.908705763145,
+        "flux_cgs": 4.141862813223378e-16,
+        "flux_err_cgs": 3.968540631637727e-17,
+        "snr": 10.436740347834427,
+        "redshift_hypothesis": 1.9067200502456227,
+        "rest_EW_A": 137.5650420090084,
+        "rest_EW_lower_A": 48.949096857132226,
+        "imaging_EW_lower_A": null,
+        "passed": [
+          "masked cube central line above 5 empirical sigma"
+        ],
+        "open_reasons": [
+          "direct imaging checks unavailable",
+          "independent line identification unavailable",
+          "independent-visit line confirmation absent",
+          "joint CIV, OIII] and CIII] limits below half He II unavailable"
+        ],
+        "ranked_external_checks_recorded": true,
+        "partner_measurement": "lya_velocity_best",
+        "lya": {
+          "air_wave": 3529.0677049656692,
+          "flux": 4.1189072827253813e-16,
+          "flux_err": 8.006508179856809e-17,
+          "snr": 5.14444897850469,
+          "offset_km_s": -300
+        },
+        "heii_to_lya": 1.0055732088445575,
+        "heii_fwhm_kms": 518.3735388255994,
+        "metal_doublets": {
+          "civ": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 0.6967761457425214
+          },
+          "oiii": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 0.6358711261103942
+          },
+          "ciii": {
+            "component_status": [
+              "outside_band",
+              "outside_band"
+            ],
+            "hetdex_ratio_upper": null
+          }
+        },
+        "best_ratio_limits": {
+          "civ": {
+            "source": "HETDEX",
+            "ratio_upper": 0.6967761457425214
+          },
+          "oiii": {
+            "source": "HETDEX",
+            "ratio_upper": 0.6358711261103942
+          }
+        },
+        "ions_with_ratio_upper_le_0p5": 0,
+        "low_z_companion_patterns": [],
+        "single_line_catalog_conflict": false,
+        "independently_reobserved_primary": false
+      },
+      {
+        "ledger": "evidence/sc2/vetted.jsonl.gz",
+        "jsonl_line": 98792,
+        "release": "sc2",
+        "row_index": 557665,
+        "source_id": 5020001371199,
+        "detectid": 3011801582,
+        "shotid": 20210220027,
+        "ra": 244.7478485107422,
+        "dec": 52.11772537231445,
+        "channel": "heii",
+        "stream": "weak_heii_pair",
+        "classification": "unresolved",
+        "air_wavelength_A": 5278.020725404844,
+        "flux_cgs": 7.355902398607475e-17,
+        "flux_err_cgs": 1.4814290307055986e-17,
+        "snr": 4.965409915791841,
+        "redshift_hypothesis": 2.218376757283705,
+        "rest_EW_A": 55.64455485899954,
+        "rest_EW_lower_A": 8.707230019947946,
+        "imaging_EW_lower_A": null,
+        "passed": [
+          "HETDEX Ly-alpha redshift agrees"
+        ],
+        "open_reasons": [
+          "direct imaging checks unavailable",
+          "independent line identification unavailable",
+          "independent-visit line confirmation absent",
+          "joint CIV, OIII] and CIII] limits below half He II unavailable",
+          "no independently noise-calibrated central cube line"
+        ],
+        "ranked_external_checks_recorded": true,
+        "partner_measurement": "pair_lya",
+        "lya": {
+          "wave": 3908.592252790928,
+          "flux": 2.4523189582322087e-16,
+          "flux_err": 2.7495203148445563e-17,
+          "snr": 8.919079248086407
+        },
+        "heii_to_lya": 0.29995700085889676,
+        "heii_fwhm_kms": 321.0345432067304,
+        "metal_doublets": {
+          "civ": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.0994902122056014
+          },
+          "oiii": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.3117717570981289
+          },
+          "ciii": {
+            "component_status": [
+              "outside_band",
+              "outside_band"
+            ],
+            "hetdex_ratio_upper": null
+          }
+        },
+        "best_ratio_limits": {
+          "civ": {
+            "source": "HETDEX",
+            "ratio_upper": 1.0994902122056014
+          },
+          "oiii": {
+            "source": "HETDEX",
+            "ratio_upper": 1.3117717570981289
+          }
+        },
+        "ions_with_ratio_upper_le_0p5": 0,
+        "low_z_companion_patterns": [],
+        "single_line_catalog_conflict": false,
+        "independently_reobserved_primary": false
+      },
+      {
+        "ledger": "evidence/sc2/vetted.jsonl.gz",
+        "jsonl_line": 98785,
+        "release": "sc2",
+        "row_index": 302997,
+        "source_id": 5020002114326,
+        "detectid": 4022619097,
+        "shotid": 20220625008,
+        "ra": 195.62892150878906,
+        "dec": 50.63571548461914,
+        "channel": "heii",
+        "stream": "weak_heii_pair",
+        "classification": "unresolved",
+        "air_wavelength_A": 4832.313754320145,
+        "flux_cgs": 1.1744003237687766e-16,
+        "flux_err_cgs": 2.3060182412451607e-17,
+        "snr": 5.0927625062265145,
+        "redshift_hypothesis": 1.9466015380897743,
+        "rest_EW_A": null,
+        "rest_EW_lower_A": 17.2294825642245,
+        "imaging_EW_lower_A": null,
+        "passed": [],
+        "open_reasons": [
+          "direct imaging checks unavailable",
+          "independent line identification unavailable",
+          "independent-visit line confirmation absent",
+          "joint CIV, OIII] and CIII] limits below half He II unavailable",
+          "no independently noise-calibrated central cube line"
+        ],
+        "ranked_external_checks_recorded": true,
+        "partner_measurement": "pair_lya",
+        "lya": {
+          "wave": 3578.1202908456326,
+          "flux": 3.682409065390191e-16,
+          "flux_err": 4.052049629761011e-17,
+          "snr": 9.087768911673914
+        },
+        "heii_to_lya": 0.31892174468246814,
+        "heii_fwhm_kms": 511.35738710175053,
+        "metal_doublets": {
+          "civ": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.2669462299713088
+          },
+          "oiii": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.4521702384698794
+          },
+          "ciii": {
+            "component_status": [
+              "outside_band",
+              "outside_band"
+            ],
+            "hetdex_ratio_upper": null
+          }
+        },
+        "best_ratio_limits": {
+          "civ": {
+            "source": "HETDEX",
+            "ratio_upper": 1.2669462299713088
+          },
+          "oiii": {
+            "source": "HETDEX",
+            "ratio_upper": 1.4521702384698794
+          }
+        },
+        "ions_with_ratio_upper_le_0p5": 0,
+        "low_z_companion_patterns": [],
+        "single_line_catalog_conflict": false,
+        "independently_reobserved_primary": false
+      },
+      {
+        "ledger": "evidence/sc2/vetted.jsonl.gz",
+        "jsonl_line": 98779,
+        "release": "sc2",
+        "row_index": 522170,
+        "source_id": 5020001472057,
+        "detectid": 3012650661,
+        "shotid": 20210510014,
+        "ra": 230.84671020507812,
+        "dec": 52.39485549926758,
+        "channel": "heii",
+        "stream": "weak_heii_pair",
+        "classification": "unresolved",
+        "air_wavelength_A": 5218.290865123272,
+        "flux_cgs": 5.914377671983706e-17,
+        "flux_err_cgs": 1.309366086518506e-17,
+        "snr": 4.516977897075018,
+        "redshift_hypothesis": 2.1819557322879146,
+        "rest_EW_A": 44.1031278104623,
+        "rest_EW_lower_A": 7.309935380066107,
+        "imaging_EW_lower_A": null,
+        "passed": [
+          "HETDEX Ly-alpha redshift agrees"
+        ],
+        "open_reasons": [
+          "direct imaging checks unavailable",
+          "independent line identification unavailable",
+          "independent-visit line confirmation absent",
+          "joint CIV, OIII] and CIII] limits below half He II unavailable",
+          "no independently noise-calibrated central cube line"
+        ],
+        "ranked_external_checks_recorded": true,
+        "partner_measurement": "pair_lya",
+        "lya": {
+          "wave": 3870.9743081331253,
+          "flux": 2.9947043871765664e-16,
+          "flux_err": 2.750190333490622e-17,
+          "snr": 10.889080478206758
+        },
+        "heii_to_lya": 0.1974945406067219,
+        "heii_fwhm_kms": 243.5318885644331,
+        "metal_doublets": {
+          "civ": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.543594999372183
+          },
+          "oiii": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.5087652258814226
+          },
+          "ciii": {
+            "component_status": [
+              "outside_band",
+              "outside_band"
+            ],
+            "hetdex_ratio_upper": null
+          }
+        },
+        "best_ratio_limits": {
+          "civ": {
+            "source": "HETDEX",
+            "ratio_upper": 1.543594999372183
+          },
+          "oiii": {
+            "source": "HETDEX",
+            "ratio_upper": 1.5087652258814226
+          }
+        },
+        "ions_with_ratio_upper_le_0p5": 0,
+        "low_z_companion_patterns": [],
+        "single_line_catalog_conflict": false,
+        "independently_reobserved_primary": false
+      },
+      {
+        "ledger": "evidence/sc2/vetted.jsonl.gz",
+        "jsonl_line": 98783,
+        "release": "sc2",
+        "row_index": 536282,
+        "source_id": 5020001431483,
+        "detectid": 3012302097,
+        "shotid": 20210409015,
+        "ra": 235.4125213623047,
+        "dec": 53.47715759277344,
+        "channel": "heii",
+        "stream": "weak_heii_pair",
+        "classification": "unresolved",
+        "air_wavelength_A": 5359.929906763136,
+        "flux_cgs": 5.855749651882934e-17,
+        "flux_err_cgs": 1.1887431075672369e-17,
+        "snr": 4.9260009287176665,
+        "redshift_hypothesis": 2.268321907980073,
+        "rest_EW_A": null,
+        "rest_EW_lower_A": 11.622206484692759,
+        "imaging_EW_lower_A": null,
+        "passed": [
+          "HETDEX Ly-alpha redshift agrees"
+        ],
+        "open_reasons": [
+          "direct imaging checks unavailable",
+          "independent line identification unavailable",
+          "independent-visit line confirmation absent",
+          "joint CIV, OIII] and CIII] limits below half He II unavailable",
+          "no independently noise-calibrated central cube line"
+        ],
+        "ranked_external_checks_recorded": true,
+        "partner_measurement": "pair_lya",
+        "lya": {
+          "wave": 3971.5416865050793,
+          "flux": 2.6582083835269853e-16,
+          "flux_err": 2.2858461667452963e-17,
+          "snr": 11.628990708993674
+        },
+        "heii_to_lya": 0.2202893380432937,
+        "heii_fwhm_kms": 237.09642692500222,
+        "metal_doublets": {
+          "civ": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.4590383687860793
+          },
+          "oiii": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.6319308980932503
+          },
+          "ciii": {
+            "component_status": [
+              "outside_band",
+              "outside_band"
+            ],
+            "hetdex_ratio_upper": null
+          }
+        },
+        "best_ratio_limits": {
+          "civ": {
+            "source": "HETDEX",
+            "ratio_upper": 1.4590383687860793
+          },
+          "oiii": {
+            "source": "HETDEX",
+            "ratio_upper": 1.6319308980932503
+          }
+        },
+        "ions_with_ratio_upper_le_0p5": 0,
+        "low_z_companion_patterns": [],
+        "single_line_catalog_conflict": false,
+        "independently_reobserved_primary": false
+      },
+      {
+        "ledger": "evidence/sc2/vetted.jsonl.gz",
+        "jsonl_line": 98799,
+        "release": "sc2",
+        "row_index": 933036,
+        "source_id": 5020000386028,
+        "detectid": 3003301307,
+        "shotid": 20190504027,
+        "ra": 210.35267639160156,
+        "dec": 51.84332275390625,
+        "channel": "heii",
+        "stream": "weak_heii_pair",
+        "classification": "unresolved",
+        "air_wavelength_A": 5278.151025265455,
+        "flux_cgs": 3.992110215887267e-17,
+        "flux_err_cgs": 8.449392077115087e-18,
+        "snr": 4.724730701868803,
+        "redshift_hypothesis": 2.218456209249964,
+        "rest_EW_A": 14.750534157564168,
+        "rest_EW_lower_A": 4.862845363516096,
+        "imaging_EW_lower_A": null,
+        "passed": [
+          "HETDEX Ly-alpha redshift agrees"
+        ],
+        "open_reasons": [
+          "direct imaging checks unavailable",
+          "independent line identification unavailable",
+          "independent-visit line confirmation absent",
+          "joint CIV, OIII] and CIII] limits below half He II unavailable",
+          "no independently noise-calibrated central cube line"
+        ],
+        "ranked_external_checks_recorded": true,
+        "partner_measurement": "pair_lya",
+        "lya": {
+          "wave": 3914.9840403199196,
+          "flux": 1.497834970277909e-16,
+          "flux_err": 1.9430292225783342e-17,
+          "snr": 7.708761931487229
+        },
+        "heii_to_lya": 0.2665253712928447,
+        "heii_fwhm_kms": 240.76996345478506,
+        "metal_doublets": {
+          "civ": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.422855316147824
+          },
+          "oiii": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.6766499923255815
+          },
+          "ciii": {
+            "component_status": [
+              "outside_band",
+              "outside_band"
+            ],
+            "hetdex_ratio_upper": null
+          }
+        },
+        "best_ratio_limits": {
+          "civ": {
+            "source": "HETDEX",
+            "ratio_upper": 1.422855316147824
+          },
+          "oiii": {
+            "source": "HETDEX",
+            "ratio_upper": 1.6766499923255815
+          }
+        },
+        "ions_with_ratio_upper_le_0p5": 0,
+        "low_z_companion_patterns": [],
+        "single_line_catalog_conflict": false,
+        "independently_reobserved_primary": false
+      },
+      {
+        "ledger": "evidence/sc2/vetted.jsonl.gz",
+        "jsonl_line": 98794,
+        "release": "sc2",
+        "row_index": 24408,
+        "source_id": 5020002951654,
+        "detectid": 5003278744,
+        "shotid": 20240605007,
+        "ra": 173.3337860107422,
+        "dec": 49.44382095336914,
+        "channel": "heii",
+        "stream": "weak_heii_pair",
+        "classification": "unresolved",
+        "air_wavelength_A": 5086.897783219814,
+        "flux_cgs": 1.755459893830932e-16,
+        "flux_err_cgs": 3.599785261453005e-17,
+        "snr": 4.87656836819862,
+        "redshift_hypothesis": 2.1018371872639716,
+        "rest_EW_A": 43.330077270464315,
+        "rest_EW_lower_A": 11.620081195683621,
+        "imaging_EW_lower_A": null,
+        "passed": [
+          "HETDEX Ly-alpha redshift agrees"
+        ],
+        "open_reasons": [
+          "direct imaging checks unavailable",
+          "independent line identification unavailable",
+          "independent-visit line confirmation absent",
+          "joint CIV, OIII] and CIII] limits below half He II unavailable",
+          "no independently noise-calibrated central cube line"
+        ],
+        "ranked_external_checks_recorded": true,
+        "partner_measurement": "pair_lya",
+        "lya": {
+          "wave": 3775.446949005127,
+          "flux": 2.8928201135877334e-16,
+          "flux_err": 3.7473243446242073e-17,
+          "snr": 7.719695034505571
+        },
+        "heii_to_lya": 0.6068334099259893,
+        "heii_fwhm_kms": 693.9506833800792,
+        "metal_doublets": {
+          "civ": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.8210563821569752
+          },
+          "oiii": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.3032638374203802
+          },
+          "ciii": {
+            "component_status": [
+              "outside_band",
+              "outside_band"
+            ],
+            "hetdex_ratio_upper": null
+          }
+        },
+        "best_ratio_limits": {
+          "civ": {
+            "source": "HETDEX",
+            "ratio_upper": 1.8210563821569752
+          },
+          "oiii": {
+            "source": "HETDEX",
+            "ratio_upper": 1.3032638374203802
+          }
+        },
+        "ions_with_ratio_upper_le_0p5": 0,
+        "low_z_companion_patterns": [],
+        "single_line_catalog_conflict": false,
+        "independently_reobserved_primary": false
+      },
+      {
+        "ledger": "evidence/sc2/vetted.jsonl.gz",
+        "jsonl_line": 98782,
+        "release": "sc2",
+        "row_index": 754299,
+        "source_id": 5023000085189,
+        "detectid": 3007202969,
+        "shotid": 20200422016,
+        "ra": 207.3432159423828,
+        "dec": 55.675384521484375,
+        "channel": "heii",
+        "stream": "weak_heii_pair",
+        "classification": "unresolved",
+        "air_wavelength_A": 5069.4255029559135,
+        "flux_cgs": 4.7404553360451244e-17,
+        "flux_err_cgs": 1.017023454034335e-17,
+        "snr": 4.661107192012786,
+        "redshift_hypothesis": 2.091183252051443,
+        "rest_EW_A": 11.37586999016448,
+        "rest_EW_lower_A": 3.8696370334997723,
+        "imaging_EW_lower_A": null,
+        "passed": [
+          "HETDEX Ly-alpha redshift agrees"
+        ],
+        "open_reasons": [
+          "direct imaging checks unavailable",
+          "independent line identification unavailable",
+          "independent-visit line confirmation absent",
+          "joint CIV, OIII] and CIII] limits below half He II unavailable",
+          "no independently noise-calibrated central cube line"
+        ],
+        "ranked_external_checks_recorded": true,
+        "partner_measurement": "pair_lya",
+        "lya": {
+          "wave": 3756.8919439315796,
+          "flux": 1.8261039833328095e-16,
+          "flux_err": 2.5952192870744535e-17,
+          "snr": 7.036414966657194
+        },
+        "heii_to_lya": 0.25959394313314804,
+        "heii_fwhm_kms": 250.68328328742612,
+        "metal_doublets": {
+          "civ": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.2221934282719626
+          },
+          "oiii": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.9221752300291763
+          },
+          "ciii": {
+            "component_status": [
+              "outside_band",
+              "outside_band"
+            ],
+            "hetdex_ratio_upper": null
+          }
+        },
+        "best_ratio_limits": {
+          "civ": {
+            "source": "HETDEX",
+            "ratio_upper": 1.2221934282719626
+          },
+          "oiii": {
+            "source": "HETDEX",
+            "ratio_upper": 1.9221752300291763
+          }
+        },
+        "ions_with_ratio_upper_le_0p5": 0,
+        "low_z_companion_patterns": [],
+        "single_line_catalog_conflict": false,
+        "independently_reobserved_primary": false
+      },
+      {
+        "ledger": "evidence/sc2/vetted.jsonl.gz",
+        "jsonl_line": 98786,
+        "release": "sc2",
+        "row_index": 603647,
+        "source_id": 5020001237363,
+        "detectid": 3010602639,
+        "shotid": 20201118016,
+        "ra": 32.696937561035156,
+        "dec": -1.6902689933776855,
+        "channel": "heii",
+        "stream": "weak_heii_pair",
+        "classification": "unresolved",
+        "air_wavelength_A": 5173.070732533932,
+        "flux_cgs": 4.9310354515083656e-17,
+        "flux_err_cgs": 1.0712751634183296e-17,
+        "snr": 4.60295881010994,
+        "redshift_hypothesis": 2.154382197955501,
+        "rest_EW_A": null,
+        "rest_EW_lower_A": 9.434216820764185,
+        "imaging_EW_lower_A": null,
+        "passed": [
+          "HETDEX Ly-alpha redshift agrees"
+        ],
+        "open_reasons": [
+          "independent line identification unavailable",
+          "independent-visit line confirmation absent",
+          "joint CIV, OIII] and CIII] limits below half He II unavailable",
+          "no independently noise-calibrated central cube line"
+        ],
+        "ranked_external_checks_recorded": true,
+        "partner_measurement": "pair_lya",
+        "lya": {
+          "wave": 3834.344357788563,
+          "flux": 2.181832717961701e-16,
+          "flux_err": 2.211778845330573e-17,
+          "snr": 9.864606140744616
+        },
+        "heii_to_lya": 0.22600428579671356,
+        "heii_fwhm_kms": 245.6607100826384,
+        "metal_doublets": {
+          "civ": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 2.108010063421994
+          },
+          "oiii": {
+            "component_status": [
+              "measured",
+              "measured"
+            ],
+            "hetdex_ratio_upper": 1.6051778494638735
+          },
+          "ciii": {
+            "component_status": [
+              "outside_band",
+              "outside_band"
+            ],
+            "hetdex_ratio_upper": null
+          }
+        },
+        "best_ratio_limits": {
+          "civ": {
+            "source": "HETDEX",
+            "ratio_upper": 2.108010063421994
+          },
+          "oiii": {
+            "source": "HETDEX",
+            "ratio_upper": 1.6051778494638735
+          }
+        },
+        "ions_with_ratio_upper_le_0p5": 0,
+        "low_z_companion_patterns": [],
+        "single_line_catalog_conflict": false,
+        "independently_reobserved_primary": false
+      }
+    ]
+  },
+  "controls": {
+    "positive_controls": {
+      "targets": 8,
+      "position_or_id_matches": 7,
+      "target_blind_heii_peaks": 0,
+      "target_heii_screen_recoveries": 0,
+      "per_published_source": [
+        {
+          "published_detectid": 3005020033,
+          "matched": true,
+          "detected_near_heii": false,
+          "recovered_heii_screen": false
+        },
+        {
+          "published_detectid": 3007998098,
+          "matched": true,
+          "detected_near_heii": false,
+          "recovered_heii_screen": false
+        },
+        {
+          "published_detectid": 3009751099,
+          "matched": false,
+          "detected_near_heii": false,
+          "recovered_heii_screen": false
+        },
+        {
+          "published_detectid": 3010547400,
+          "matched": true,
+          "detected_near_heii": false,
+          "recovered_heii_screen": false
+        },
+        {
+          "published_detectid": 4019081078,
+          "matched": true,
+          "detected_near_heii": false,
+          "recovered_heii_screen": false
+        },
+        {
+          "published_detectid": 4028177445,
+          "matched": true,
+          "detected_near_heii": false,
+          "recovered_heii_screen": false
+        },
+        {
+          "published_detectid": 4028632963,
+          "matched": true,
+          "detected_near_heii": false,
+          "recovered_heii_screen": false
+        },
+        {
+          "published_detectid": 5001528748,
+          "matched": true,
+          "detected_near_heii": false,
+          "recovered_heii_screen": false
+        }
+      ]
+    },
+    "weak_pairs_ledger_rows": {
+      "displaced": 447,
+      "shuffled": 602,
+      "observed": 38
+    },
+    "weak_pair_calibration": {
+      "observed_clean_pairs": 38,
+      "unique_sources": 38,
+      "expected_displaced_pairs_at_true_exposure": 223.5,
+      "known_eight_with_rows": 7,
+      "known_eight_blind_recovered": 3,
+      "injection_bins": {
+        "4.5": {
+          "attempts": 185,
+          "in_band_with_valid_profiles": 159,
+          "recovered": 38,
+          "preexisting": 0
+        },
+        "5.5": {
+          "attempts": 193,
+          "in_band_with_valid_profiles": 165,
+          "recovered": 82,
+          "preexisting": 0
+        },
+        "6.5": {
+          "attempts": 167,
+          "in_band_with_valid_profiles": 150,
+          "recovered": 68,
+          "preexisting": 0
+        },
+        "8.0": {
+          "attempts": 177,
+          "in_band_with_valid_profiles": 150,
+          "recovered": 8,
+          "preexisting": 0
+        }
+      }
+    },
+    "injections_by_family": {
+      "lya": {
+        "attempts": 1082,
+        "unblended_trials": 1041,
+        "recovered_blind_primary": 721,
+        "input_ew_gt240": 582,
+        "input_ew_gt240_and_selected": 0,
+        "unusable": 39,
+        "preexisting_blend": 2
+      },
+      "heii_lya_civ": {
+        "attempts": 1082,
+        "unblended_trials": 1020,
+        "recovered_blind_primary": 694,
+        "selected_heii_precursor_and_lya_no_civ": 23,
+        "unusable": 59,
+        "preexisting_blend": 3
+      },
+      "heii_lya": {
+        "attempts": 1082,
+        "unblended_trials": 1024,
+        "recovered_blind_primary": 728,
+        "selected_heii_precursor_and_lya_no_civ": 699,
+        "unusable": 58
+      }
+    },
+    "offsource": {
+      "cubes_attempted": 8,
+      "cubes_with_blank_apertures": 8,
+      "cubes_with_error": 0,
+      "blank_apertures": 482,
+      "heii_spectral_preselection_rows": 0,
+      "ew_spectral_preselection_rows": 0,
+      "unknown_spectral_preselection_rows": 0
+    },
+    "halo": {
+      "cube_attempts": 8,
+      "usable_position_wavelength_pairs": 15,
+      "bins": [
+        {
+          "intrinsic_sigma_arcsec": 0.0,
+          "nominal_point_aperture_snr": 0.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            0.0,
+            0.0
+          ],
+          "minmax_annular_surface_brightness": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 0.0,
+          "nominal_point_aperture_snr": 5.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            6.748231473322932e-17,
+            2.663931493968311e-16
+          ],
+          "minmax_annular_surface_brightness": [
+            9.173855684977763e-20,
+            4.45076519230075e-19
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 0.0,
+          "nominal_point_aperture_snr": 10.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            1.3496462946645864e-16,
+            5.327862987936622e-16
+          ],
+          "minmax_annular_surface_brightness": [
+            1.8347711369955525e-19,
+            8.9015303846015e-19
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 0.0,
+          "nominal_point_aperture_snr": 20.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            2.699292589329173e-16,
+            1.0655725975873243e-15
+          ],
+          "minmax_annular_surface_brightness": [
+            3.669542273991105e-19,
+            1.7803060769203e-18
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 0.0,
+          "nominal_point_aperture_snr": 40.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            5.398585178658346e-16,
+            2.1311451951746487e-15
+          ],
+          "minmax_annular_surface_brightness": [
+            7.33908454798221e-19,
+            3.5606121538406e-18
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 1.5,
+          "nominal_point_aperture_snr": 5.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            6.748231473322932e-17,
+            2.663931493968311e-16
+          ],
+          "minmax_annular_surface_brightness": [
+            1.5914996203103736e-19,
+            1.2741954285506933e-18
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 1.5,
+          "nominal_point_aperture_snr": 10.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            1.3496462946645864e-16,
+            5.327862987936622e-16
+          ],
+          "minmax_annular_surface_brightness": [
+            3.182999240620747e-19,
+            2.5483908571013865e-18
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 1.5,
+          "nominal_point_aperture_snr": 20.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            2.699292589329173e-16,
+            1.0655725975873243e-15
+          ],
+          "minmax_annular_surface_brightness": [
+            6.365998481241494e-19,
+            5.096781714202773e-18
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 1.5,
+          "nominal_point_aperture_snr": 40.0,
+          "n": 15,
+          "annular_pass": 3,
+          "central_and_annular_pass": 3,
+          "minmax_total_flux": [
+            5.398585178658346e-16,
+            2.1311451951746487e-15
+          ],
+          "minmax_annular_surface_brightness": [
+            1.2731996962482989e-18,
+            1.0193563428405546e-17
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 3.0,
+          "nominal_point_aperture_snr": 5.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            6.748231473322932e-17,
+            2.663931493968311e-16
+          ],
+          "minmax_annular_surface_brightness": [
+            2.839013395945379e-19,
+            1.261630597467366e-18
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 3.0,
+          "nominal_point_aperture_snr": 10.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            1.3496462946645864e-16,
+            5.327862987936622e-16
+          ],
+          "minmax_annular_surface_brightness": [
+            5.678026791890758e-19,
+            2.523261194934732e-18
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 3.0,
+          "nominal_point_aperture_snr": 20.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            2.699292589329173e-16,
+            1.0655725975873243e-15
+          ],
+          "minmax_annular_surface_brightness": [
+            1.1356053583781517e-18,
+            5.046522389869464e-18
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 3.0,
+          "nominal_point_aperture_snr": 40.0,
+          "n": 15,
+          "annular_pass": 9,
+          "central_and_annular_pass": 9,
+          "minmax_total_flux": [
+            5.398585178658346e-16,
+            2.1311451951746487e-15
+          ],
+          "minmax_annular_surface_brightness": [
+            2.2712107167563033e-18,
+            1.0093044779738928e-17
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 5.0,
+          "nominal_point_aperture_snr": 5.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            6.748231473322932e-17,
+            2.663931493968311e-16
+          ],
+          "minmax_annular_surface_brightness": [
+            2.5172419924843046e-19,
+            7.623377563023887e-19
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 5.0,
+          "nominal_point_aperture_snr": 10.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            1.3496462946645864e-16,
+            5.327862987936622e-16
+          ],
+          "minmax_annular_surface_brightness": [
+            5.034483984968609e-19,
+            1.5246755126047775e-18
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 5.0,
+          "nominal_point_aperture_snr": 20.0,
+          "n": 15,
+          "annular_pass": 0,
+          "central_and_annular_pass": 0,
+          "minmax_total_flux": [
+            2.699292589329173e-16,
+            1.0655725975873243e-15
+          ],
+          "minmax_annular_surface_brightness": [
+            1.0068967969937218e-18,
+            3.049351025209555e-18
+          ]
+        },
+        {
+          "intrinsic_sigma_arcsec": 5.0,
+          "nominal_point_aperture_snr": 40.0,
+          "n": 15,
+          "annular_pass": 1,
+          "central_and_annular_pass": 1,
+          "minmax_total_flux": [
+            5.398585178658346e-16,
+            2.1311451951746487e-15
+          ],
+          "minmax_annular_surface_brightness": [
+            2.0137935939874437e-18,
+            6.09870205041911e-18
+          ]
+        }
+      ]
+    },
+    "interpretation": "Spectral injection recoveries are conditional on the input extractions. Halo trials share blank positions and are not independent sky realizations.",
+    "sources": [
+      "positive-controls.json",
+      "weak-heii-summary.json",
+      "weak-heii-pairs.jsonl.gz",
+      "injections.jsonl.gz",
+      "offsource.jsonl.gz",
+      "halo-injections-summary.json"
+    ]
+  }
+}

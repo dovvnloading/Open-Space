@@ -1,0 +1,111 @@
+{
+  "total": {
+    "observation_rows": 1107763,
+    "ly_pre_peaks": 939954,
+    "ly_pre_rows": 176623
+  },
+  "stages": {
+    "0": {
+      "anchor_opportunities": 939954,
+      "pairs_prescreened": 336790,
+      "lya_below_7": 314435,
+      "heii_outside_4p5_to_7": 6349,
+      "no_profile": 15832,
+      "passed": 38,
+      "heii_to_lya_below_0p1": 43,
+      "single_pixel_sky_or_badcal": 8,
+      "metal_at_or_above_3sigma": 22,
+      "heii_EW_below_3A_measured_continuum": 5,
+      "redshift_or_velocity": 31,
+      "width_above_900_kms": 27
+    },
+    "-76.0": {
+      "anchor_opportunities": 939954,
+      "pairs_prescreened": 369278,
+      "lya_below_7": 329591,
+      "heii_outside_4p5_to_7": 10730,
+      "no_profile": 26235,
+      "heii_EW_below_3A_measured_continuum": 1742,
+      "heii_to_lya_below_0p1": 232,
+      "single_pixel_sky_or_badcal": 272,
+      "passed": 429,
+      "redshift_or_velocity": 32,
+      "metal_at_or_above_3sigma": 9,
+      "width_above_900_kms": 6
+    },
+    "76.0": {
+      "anchor_opportunities": 939954,
+      "pairs_prescreened": 305018,
+      "lya_below_7": 295541,
+      "no_profile": 7789,
+      "heii_outside_4p5_to_7": 1579,
+      "heii_EW_below_3A_measured_continuum": 36,
+      "redshift_or_velocity": 40,
+      "passed": 18,
+      "heii_to_lya_below_0p1": 7,
+      "single_pixel_sky_or_badcal": 3,
+      "width_above_900_kms": 5
+    }
+  },
+  "rate_per_anchor": {
+    "0": 4.042751028241808e-05,
+    "-76.0": 0.00045640531345150933,
+    "76.0": 1.914987329167172e-05
+  },
+  "expected_displaced_pairs_at_true_exposure": 223.5,
+  "shuffled_fibre_control": {
+    "total": {
+      "observation_rows": 69632,
+      "ly_pre_peaks": 739848,
+      "ly_pre_rows": 69626
+    },
+    "stages": {
+      "anchor_opportunities": 739848,
+      "pairs_prescreened": 550817,
+      "no_profile": 19614,
+      "lya_below_7": 318512,
+      "heii_outside_4p5_to_7": 142082,
+      "single_pixel_sky_or_badcal": 48927,
+      "redshift_or_velocity": 20367,
+      "passed": 602,
+      "metal_at_or_above_3sigma": 573,
+      "heii_to_lya_below_0p1": 132,
+      "width_above_900_kms": 8
+    },
+    "stratification": "One seeded random 512-row block per 16 blocks; independently permute spectrum indices in each wavelength bin while moving the flux and error together."
+  },
+  "observed_clean_pairs": 38,
+  "unique_sources": 38,
+  "known_eight_with_rows": 7,
+  "known_eight_blind_recovered": 3,
+  "injection_seed": 482319,
+  "injection_bins": {
+    "4.5": {
+      "attempts": 185,
+      "in_band_with_valid_profiles": 159,
+      "recovered": 38,
+      "preexisting": 0
+    },
+    "5.5": {
+      "attempts": 193,
+      "in_band_with_valid_profiles": 165,
+      "recovered": 82,
+      "preexisting": 0
+    },
+    "6.5": {
+      "attempts": 167,
+      "in_band_with_valid_profiles": 150,
+      "recovered": 68,
+      "preexisting": 0
+    },
+    "8.0": {
+      "attempts": 177,
+      "in_band_with_valid_profiles": 150,
+      "recovered": 8,
+      "preexisting": 0
+    }
+  },
+  "domain": "All catalog observations. z_HeII 1.9\u20132.4 truncated at spectral coverage. Ly\u03b1 \u22657\u03c3, HeII 4.5\u2264S/N<7 with observed flux ratio \u22650.1. Both <900 km/s FWHM, clean multi-pixel profiles. HeII EW0 \u22653 \u00c5 when continuum \u22653\u03c3. Any \u22653\u03c3 C IV, C III], O III] component vetoes. Undetected or out-of-band metals still require deep external spectroscopy.",
+  "control": "\u00b176 vacuum-Angstrom cyclic displacement of the HeII prediction over identical anchor range. Same anchor, masks, fit, velocity \u2212300 to +600 km/s, profile, ratio and metal cuts. Rates are spectral preselection chance-alignment diagnostics; offsets are not independently vetted.",
+  "injections": "Random z uniform 1.9\u20132.4, source spectra including real noise, calibration masks and lines; Gaussian widths 2, 3, 4 \u00c5, uniform velocity \u2212300..600 km/s. Matched nominal HeII S/N 4.5, 5.5, 6.5, 8 and Ly\u03b1 S/N 9, 14, 22. Recovery requires both centroids within 7 \u00c5, full spectral preselection, and absence of a pre-existing pair. Additional blank-sky fibres are separately measured by the principal search. No injection success implies astrophysical completeness."
+}
