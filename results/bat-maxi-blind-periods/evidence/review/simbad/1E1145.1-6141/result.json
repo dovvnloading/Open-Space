@@ -1,0 +1,139 @@
+{
+  "source_id": "1E1145.1-6141",
+  "lookup_status": "identified",
+  "method": "identifier TAP",
+  "record": {
+    "oid": "3267829",
+    "main_id": "1E 1145.1-6141",
+    "ra": "176.86899927398",
+    "dec": "-61.95372972154",
+    "otype": "HXB",
+    "query_id": "V* V830 Cen",
+    "offset_arcmin": 0.016216720534434275,
+    "exact_target_alias": true
+  },
+  "original_simbad_response": {
+    "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?request=doQuery&lang=adql&format=csv&maxrec=128&query=SELECT+DISTINCT+b.oid%2Cb.main_id%2Cb.ra%2Cb.dec+FROM+basic+AS+b++JOIN+ident+AS+i+ON+i.oidref%3Db.oid+WHERE+i.id+IN+%28%271E+1145.1-6141%27%2C%271E1145.1-6141%27%2C%27J1147-619%27%2C%27Swift+J1147.2-6156B%27%29",
+    "utc": "2026-11-22T11:47:33Z",
+    "status": 200,
+    "sha256": "cff0aeca89cce857817b202d20d4e9095e90ceceb696f3f4032560f86b086e31",
+    "nbytes": 127
+  },
+  "original_ambiguity_context": [
+    {
+      "oid": "3267829",
+      "main_id": "1E 1145.1-6141",
+      "ra": "176.86899927398",
+      "dec": "-61.95372972154",
+      "offset_arcmin": 0.016216720534434275
+    },
+    {
+      "oid": "3268460",
+      "main_id": "HD 102567",
+      "ra": "177.00008936005",
+      "dec": "-62.2069173291",
+      "offset_arcmin": 15.615525677966907
+    }
+  ],
+  "attached_identifiers": [
+    "TIC 324122933",
+    "Gaia DR3 5334851450481641088",
+    "1WGA J1147.4-6156",
+    "2SXPS J114727.9-615715",
+    "4XMM J114728.5-615713",
+    "SRGA J114728.3-615715",
+    "[KRL2007b] 102",
+    "SBC9 689",
+    "2E  2531",
+    "1E 1145.0-6140",
+    "2E 1145.0-6140",
+    "3A 1145-616",
+    "AAVSO 1141-62",
+    "INTEGRAL1   9",
+    "INTREF   462",
+    "V* V830 Cen",
+    "[BM83] X1145-616",
+    "2MASS J11472856-6157134",
+    "ALS 19791",
+    "SSTGLMC G295.4897-00.0097",
+    "1E 1145.1-6141",
+    "1E 1145-61.6",
+    "1RXS J114726.5-615710",
+    "PBC J1147.5-6157",
+    "SWIFT J1147.2-6156",
+    "SWIFT J1147.4-6156",
+    "SWIFT J1147.2-6156A",
+    "WEB 10333",
+    "Gaia DR2 5334851450481641088"
+  ],
+  "input_position_deg": [
+    176.869,
+    -61.954
+  ],
+  "queried_identifiers": [
+    "1E 1145.1-6141",
+    "V* V830 Cen",
+    "V830 Cen",
+    "1E 1145.1-6141.0",
+    "SWIFT J1147.2-6156B",
+    "1E1145.1-6141",
+    "J1147-619",
+    "Swift J1147.2-6156B"
+  ],
+  "record_url": "https://simbad.cds.unistra.fr/simbad/sim-id?Ident=1E+1145.1-6141",
+  "bibliography": {
+    "reported_count": 158,
+    "count_basis": "attached reference rows",
+    "recent_records": [],
+    "recent_limit": 20,
+    "full_bibliography_query": "https://simbad.cds.unistra.fr/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+r.bibcode%2Cr.title+FROM+has_ref+AS+h+JOIN+ref+AS+r+ON+r.oidbib%3Dh.oidbibref+WHERE+h.oidref%3D3267829+AND+%272026-11-22T12%27%3D%272026-11-22T12%27+ORDER+BY+r.bibcode+DESC"
+  },
+  "checks": [
+    {
+      "method": "identifier TAP",
+      "url": "https://simbad.cds.unistra.fr/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=128&QUERY=SELECT+DISTINCT+b.oid%2Cb.main_id%2Cb.ra%2Cb.dec%2Cb.otype%2Ci.id+AS+query_id+FROM+basic+AS+b+JOIN+ident+AS+i+ON+i.oidref%3Db.oid+WHERE+i.id+IN+%28%271E+1145.1-6141%27%2C%27V%2A+V830+Cen%27%2C%27V830+Cen%27%2C%271E+1145.1-6141.0%27%2C%27SWIFT+J1147.2-6156B%27%2C%271E1145.1-6141%27%2C%27J1147-619%27%2C%27Swift+J1147.2-6156B%27%29+AND+%272026-11-22T12%27%3D%272026-11-22T12%27",
+      "error": "HTTPSConnectionPool(host='simbad.cds.unistra.fr', port=443): Max retries exceeded with url: /simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=128&QUERY=SELECT+DISTINCT+b.oid%2Cb.main_id%2Cb.ra%2Cb.dec%2Cb.otype%2Ci.id+AS+query_id+FROM+basic+AS+b+JOIN+ident+AS+i+ON+i.oidref%3Db.oid+WHERE+i.id+IN+%28%271E+1145.1-6141%27%2C%27V%2A+V830+Cen%27%2C%27V830+Cen%27%2C%271E+1145.1-6141.0%27%2C%27SWIFT+J1147.2-6156B%27%2C%271E1145.1-6141%27%2"
+    },
+    {
+      "method": "identifier TAP",
+      "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=128&QUERY=SELECT+DISTINCT+b.oid%2Cb.main_id%2Cb.ra%2Cb.dec%2Cb.otype%2Ci.id+AS+query_id+FROM+basic+AS+b+JOIN+ident+AS+i+ON+i.oidref%3Db.oid+WHERE+i.id+IN+%28%271E+1145.1-6141%27%2C%27V%2A+V830+Cen%27%2C%27V830+Cen%27%2C%271E+1145.1-6141.0%27%2C%27SWIFT+J1147.2-6156B%27%2C%271E1145.1-6141%27%2C%27J1147-619%27%2C%27Swift+J1147.2-6156B%27%29+AND+%272026-11-22T12%27%3D%272026-11-22T12%27",
+      "sha256": "336826a93fae1fcc59d97d3628fce12a5da1a15013b52727c0f23081a7544406",
+      "returned_rows": 3
+    },
+    {
+      "method": "canonical object cross-identifiers",
+      "url": "https://simbad.cds.unistra.fr/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=3000&QUERY=SELECT+id+FROM+ident+WHERE+oidref%3D3267829+AND+%272026-11-22T12%27%3D%272026-11-22T12%27",
+      "error": "HTTPSConnectionPool(host='simbad.cds.unistra.fr', port=443): Max retries exceeded with url: /simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=3000&QUERY=SELECT+id+FROM+ident+WHERE+oidref%3D3267829+AND+%272026-11-22T12%27%3D%272026-11-22T12%27 (Caused by ConnectTimeoutError(<HTTPSConnection(host='simbad.cds.unistra.fr', port=443) at 0x7a9828e08e00>, 'Connection to simbad.cds.unistra.fr timed out. (connect timeout=7)'))"
+    },
+    {
+      "method": "canonical object cross-identifiers",
+      "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=3000&QUERY=SELECT+id+FROM+ident+WHERE+oidref%3D3267829+AND+%272026-11-22T12%27%3D%272026-11-22T12%27",
+      "sha256": "2bbece88df1a6a1852d40a571da62b5fbb8a66070e2263843de272b21819eda7",
+      "returned_rows": 29
+    },
+    {
+      "method": "attached references count",
+      "url": "https://simbad.cds.unistra.fr/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=1&QUERY=SELECT+COUNT%28%2A%29+AS+nref+FROM+has_ref+AS+h+WHERE+h.oidref%3D3267829+AND+%272026-11-22T12%27%3D%272026-11-22T12%27",
+      "error": "HTTPSConnectionPool(host='simbad.cds.unistra.fr', port=443): Max retries exceeded with url: /simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=1&QUERY=SELECT+COUNT%28%2A%29+AS+nref+FROM+has_ref+AS+h+WHERE+h.oidref%3D3267829+AND+%272026-11-22T12%27%3D%272026-11-22T12%27 (Caused by ConnectTimeoutError(<HTTPSConnection(host='simbad.cds.unistra.fr', port=443) at 0x7a9828e0ade0>, 'Connection to simbad.cds.unistra.fr timed out. (connect t"
+    },
+    {
+      "method": "attached references count",
+      "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=1&QUERY=SELECT+COUNT%28%2A%29+AS+nref+FROM+has_ref+AS+h+WHERE+h.oidref%3D3267829+AND+%272026-11-22T12%27%3D%272026-11-22T12%27",
+      "sha256": "33990474490ac30438489fcb574b1593f2977f4902482a51911696a3d6b32da1",
+      "returned_rows": 1
+    },
+    {
+      "method": "recent attached bibliography",
+      "url": "https://simbad.cds.unistra.fr/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=20&QUERY=SELECT+TOP+20+r.bibcode%2Cr.title+FROM+has_ref+AS+h+JOIN+ref+AS+r+ON+r.oidbib%3Dh.oidbibref+WHERE+h.oidref%3D3267829+AND+%272026-11-22T12%27%3D%272026-11-22T12%27+ORDER+BY+r.bibcode+DESC",
+      "error": "HTTPSConnectionPool(host='simbad.cds.unistra.fr', port=443): Max retries exceeded with url: /simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=20&QUERY=SELECT+TOP+20+r.bibcode%2Cr.title+FROM+has_ref+AS+h+JOIN+ref+AS+r+ON+r.oidbib%3Dh.oidbibref+WHERE+h.oidref%3D3267829+AND+%272026-11-22T12%27%3D%272026-11-22T12%27+ORDER+BY+r.bibcode+DESC (Caused by ConnectTimeoutError(<HTTPSConnection(host='simbad.cds.unistra.fr', port=443) at 0x7a98"
+    },
+    {
+      "method": "recent attached bibliography",
+      "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=20&QUERY=SELECT+TOP+20+r.bibcode%2Cr.title+FROM+has_ref+AS+h+JOIN+ref+AS+r+ON+r.oidbib%3Dh.oidbibref+WHERE+h.oidref%3D3267829+AND+%272026-11-22T12%27%3D%272026-11-22T12%27+ORDER+BY+r.bibcode+DESC",
+      "error": "400 Client Error: 400 for url: https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=20&QUERY=SELECT+TOP+20+r.bibcode%2Cr.title+FROM+has_ref+AS+h+JOIN+ref+AS+r+ON+r.oidbib%3Dh.oidbibref+WHERE+h.oidref%3D3267829+AND+%272026-11-22T12%27%3D%272026-11-22T12%27+ORDER+BY+r.bibcode+DESC"
+    }
+  ],
+  "evidence_relative_to_survey_evidence": "literature/candidate-0edd952975ea4c167250.json",
+  "original_evidence_sha256": "4a231169871045b400103be5e283156018855bd4ba20dc56768a6e08ef41f6b3",
+  "retrievals_relative_to_output": "1E1145.1-6141/queries.jsonl"
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "open-space/claims/1",
+  "let": {
+    "sources": "table('evidence/sources.csv')",
+    "stable": "table('evidence/stable-periods.csv')",
+    "pairs": "table('evidence/review/independent-pairs.csv')",
+    "pulses": "table('evidence/review/pulses/pulse-sensitivity.csv')",
+    "jointpulses": "pulses[pulses['instrument'] == 'joint']",
+    "medium": "jointpulses[jointpulses['peak_to_baseline_rms'] == 3]",
+    "catalogue": "table('evidence/review/catalogue-units/source-comparison.csv')"
+  },
+  "claims": [
+    {"id": "bat-sources-searched", "printed": "1,056", "compute": "len(sources[sources['bat_status'] == 'searched'])"},
+    {"id": "two-monitor-sources", "printed": "335", "compute": "len(sources[sources['status'] == 'dual_search'])"},
+    {"id": "single-monitor-sources", "printed": "721", "compute": "len(sources[sources['status'] == 'single_instrument_search'])"},
+    {"id": "independent-period-pairs", "printed": "22", "compute": "len(pairs)"},
+    {"id": "stable-peaks", "printed": "21", "compute": "len(stable)"},
+    {"id": "systems-with-stable-peaks", "printed": "17", "compute": "nunique(stable['source_id'])"},
+    {"id": "outbursts-recovered-42-days", "printed": "618", "compute": "sum(medium[medium['period_days'] == 41.81]['fundamentals_recovered'])"},
+    {"id": "outbursts-recovered-7-days", "printed": "154", "compute": "sum(medium[medium['period_days'] == 7.37]['fundamentals_recovered'])"},
+    {"id": "catalogue-name-and-position-matches", "printed": "241", "compute": "len(catalogue)"},
+    {"id": "catalogue-comparable-periods", "printed": "98", "compute": "len(catalogue[catalogue['ratio_bin'] != 'unavailable'])"},
+    {"id": "catalogue-periods-near-hours-days-ratio", "printed": "87", "compute": "len(catalogue[catalogue['ratio_bin'] == 'near 24'])"}
+  ]
+}

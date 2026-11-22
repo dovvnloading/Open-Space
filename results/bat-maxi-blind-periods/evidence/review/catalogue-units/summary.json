@@ -1,0 +1,212 @@
+{
+  "status": "measured",
+  "fortin": {
+    "table": "J/A+A/684/A124/lmxbcat",
+    "doi": "10.1051/0004-6361/202347908",
+    "title": "LMXB catalogue",
+    "query": {
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-xml?-source=J%2FA%2BA%2F684%2FA124&-out.all=1&-out.max=50000&-out.add=_RAJ%2C_DEJ&-out.form=VOTable",
+      "utc": "2026-11-22T11:03:47Z",
+      "status": 200,
+      "sha256": "c56a1d87a45b291cd7475663d38b89575e1c74b186c9e1946337fa65d0f25b2b",
+      "nbytes": 587352
+    },
+    "field_attributes": {
+      "name": "Period",
+      "ucd": "time.period",
+      "datatype": "double",
+      "width": "17",
+      "precision": "10",
+      "unit": "d"
+    },
+    "description": "? Orbital period of the binary (Period)",
+    "identity_fields": {
+      "Period": {
+        "attributes": {
+          "name": "Period",
+          "ucd": "time.period",
+          "datatype": "double",
+          "width": "17",
+          "precision": "10",
+          "unit": "d"
+        },
+        "description": "? Orbital period of the binary (Period)"
+      },
+      "MainID": {
+        "attributes": {
+          "name": "MainID",
+          "ucd": "meta.id;meta.main",
+          "datatype": "char",
+          "arraysize": "29*"
+        },
+        "description": "Simbad main identifier (Main_ID)"
+      },
+      "PopularID": {
+        "attributes": {
+          "name": "PopularID",
+          "ucd": "meta.id",
+          "datatype": "char",
+          "arraysize": "24*"
+        },
+        "description": "? Most popular identifier according to ADS (Popular_ID)"
+      },
+      "_RAJ2000": {
+        "attributes": {
+          "name": "_RAJ2000",
+          "ucd": "pos.eq.ra",
+          "ref": "J2000",
+          "datatype": "double",
+          "width": "17",
+          "precision": "13",
+          "unit": "deg"
+        },
+        "description": "Right ascension (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)"
+      },
+      "_DEJ2000": {
+        "attributes": {
+          "name": "_DEJ2000",
+          "ucd": "pos.eq.dec",
+          "ref": "J2000",
+          "datatype": "double",
+          "width": "17",
+          "precision": "13",
+          "unit": "deg"
+        },
+        "description": "Declination (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)"
+      }
+    },
+    "n_catalogue_rows": 339
+  },
+  "avakyan": {
+    "table": "J/A+A/675/A199/lmxbcat",
+    "doi": "10.1051/0004-6361/202346522",
+    "title": "Low-mass X-ray binaries catalogue",
+    "query": {
+      "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-xml?-source=J%2FA%2BA%2F675%2FA199&-out.all=1&-out.max=50000&-out.add=_RAJ%2C_DEJ&-out.form=VOTable",
+      "utc": "2026-11-22T11:04:21Z",
+      "status": 200,
+      "sha256": "6055f0b07f772a9c35b7c071a8aa7b94bd67ca6dd39a9a08d12c0e75877eb78d",
+      "nbytes": 333657
+    },
+    "field_attributes": {
+      "name": "Porb",
+      "ucd": "time.period",
+      "datatype": "double",
+      "width": "11",
+      "precision": "6",
+      "unit": "d"
+    },
+    "description": "? Orbital period of the binary",
+    "identity_fields": {
+      "Porb": {
+        "attributes": {
+          "name": "Porb",
+          "ucd": "time.period",
+          "datatype": "double",
+          "width": "11",
+          "precision": "6",
+          "unit": "d"
+        },
+        "description": "? Orbital period of the binary"
+      },
+      "Name": {
+        "attributes": {
+          "name": "Name",
+          "ucd": "meta.id;meta.main",
+          "datatype": "char",
+          "arraysize": "23*"
+        },
+        "description": "Object's most common name"
+      },
+      "AName": {
+        "attributes": {
+          "name": "AName",
+          "ucd": "meta.id",
+          "datatype": "char",
+          "arraysize": "29*"
+        },
+        "description": "Most frequently used alternative name"
+      },
+      "_RAJ2000": {
+        "attributes": {
+          "name": "_RAJ2000",
+          "ucd": "pos.eq.ra",
+          "ref": "J2000",
+          "datatype": "double",
+          "width": "17",
+          "precision": "13",
+          "unit": "deg"
+        },
+        "description": "Right ascension (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)"
+      },
+      "_DEJ2000": {
+        "attributes": {
+          "name": "_DEJ2000",
+          "ucd": "pos.eq.dec",
+          "ref": "J2000",
+          "datatype": "double",
+          "width": "17",
+          "precision": "13",
+          "unit": "deg"
+        },
+        "description": "Declination (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)"
+      }
+    },
+    "n_catalogue_rows": 349
+  },
+  "official_readmes": {
+    "J/A+A/684/A124": {
+      "status": "unresolved",
+      "attempts": [
+        "HTTPSConnectionPool(host='cdsarc.cds.unistra.fr', port=443): Max retries exceeded with url: /ftp/J/A+A/684/A124/ReadMe (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.cds.unistra.fr', port=443) at 0x741963c84440>, 'Connection to cdsarc.cds.unistra.fr timed out. (connect timeout=7)'))",
+        "HTTPSConnectionPool(host='cdsarc.u-strasbg.fr', port=443): Max retries exceeded with url: /ftp/J/A+A/684/A124/ReadMe (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.u-strasbg.fr', port=443) at 0x741963c86ba0>, 'Connection to cdsarc.u-strasbg.fr timed out. (connect timeout=7)'))",
+        "HTTPSConnectionPool(host='cdsarc.cds.unistra.fr', port=443): Max retries exceeded with url: /ftp/cats/J/A+A/684/A124/ReadMe (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.cds.unistra.fr', port=443) at 0x741963c87170>, 'Connection to cdsarc.cds.unistra.fr timed out. (connect timeout=7)'))",
+        "HTTPSConnectionPool(host='cdsarc.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/ReadMe/J/A+A/684/A124?format=html&tex=false (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.cds.unistra.fr', port=443) at 0x74196b2148c0>, 'Connection to cdsarc.cds.unistra.fr timed out. (connect timeout=7)'))",
+        "HTTPSConnectionPool(host='cdsarc.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/ReadMe/J/A+A/684/A124?format=html&tex=false (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.cds.unistra.fr', port=443) at 0x741963c87170>, 'Connection to cdsarc.cds.unistra.fr timed out. (connect timeout=7)'))"
+      ]
+    },
+    "J/A+A/675/A199": {
+      "status": "unresolved",
+      "attempts": [
+        "HTTPSConnectionPool(host='cdsarc.cds.unistra.fr', port=443): Max retries exceeded with url: /ftp/J/A+A/675/A199/ReadMe (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.cds.unistra.fr', port=443) at 0x741963c86c90>, 'Connection to cdsarc.cds.unistra.fr timed out. (connect timeout=7)'))",
+        "HTTPSConnectionPool(host='cdsarc.u-strasbg.fr', port=443): Max retries exceeded with url: /ftp/J/A+A/675/A199/ReadMe (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.u-strasbg.fr', port=443) at 0x741963c860f0>, 'Connection to cdsarc.u-strasbg.fr timed out. (connect timeout=7)'))",
+        "HTTPSConnectionPool(host='cdsarc.cds.unistra.fr', port=443): Max retries exceeded with url: /ftp/cats/J/A+A/675/A199/ReadMe (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.cds.unistra.fr', port=443) at 0x741963c36660>, 'Connection to cdsarc.cds.unistra.fr timed out. (connect timeout=7)'))",
+        "HTTPSConnectionPool(host='cdsarc.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/ReadMe/J/A+A/675/A199?format=html&tex=false (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.cds.unistra.fr', port=443) at 0x741963c37050>, 'Connection to cdsarc.cds.unistra.fr timed out. (connect timeout=7)'))",
+        "HTTPSConnectionPool(host='cdsarc.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/ReadMe/J/A+A/675/A199?format=html&tex=false (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsarc.cds.unistra.fr', port=443) at 0x741963c84830>, 'Connection to cdsarc.cds.unistra.fr timed out. (connect timeout=7)'))"
+      ]
+    }
+  },
+  "reciprocal_matches": 241,
+  "both_positive_numeric": 98,
+  "counts": {
+    "near 24": 87,
+    "unavailable": 143,
+    "other": 10,
+    "near 1": 1
+  },
+  "median_ratio_all": 23.999998628237833,
+  "max_separation_arcsec": 60.0,
+  "relative_bin_half_width": 0.05,
+  "common_primary_bibcode": 27,
+  "common_primary_bibcode_counts": {
+    "near 24": 26,
+    "other": 1
+  },
+  "tolerance_sensitivity": [
+    {
+      "relative_half_width": 0.01,
+      "near_24": 83,
+      "near_one": 1
+    },
+    {
+      "relative_half_width": 0.05,
+      "near_24": 87,
+      "near_one": 1
+    },
+    {
+      "relative_half_width": 0.1,
+      "near_24": 87,
+      "near_one": 1
+    }
+  ]
+}
