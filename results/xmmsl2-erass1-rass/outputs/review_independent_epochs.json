@@ -1,0 +1,858 @@
+{
+  "selection": "Grouped strong-galaxy follow-up: galaxy/AGN in host register, original model floor at least 10, local galaxy chance probability <=0.01, no decisive stellar veto. Cone centres are refined X-ray positions.",
+  "radius_arcsec": 90.0,
+  "sources": [
+    {
+      "name": "XMMSL2 J125851.2+235522",
+      "detection_uid": "XMMSL2-total-69754",
+      "ra": 194.7148976,
+      "dec": 23.92319947
+    },
+    {
+      "name": "XMMSL2 J052443.6-613005",
+      "detection_uid": "XMMSL2-total-10038",
+      "ra": 81.18391463,
+      "dec": -61.50069468
+    },
+    {
+      "name": "XMMSL2 J120135.4+300305",
+      "detection_uid": "XMMSL2-total-40751",
+      "ra": 180.3982386,
+      "dec": 30.05146695
+    },
+    {
+      "name": "XMMSL2 J200453.7-745359",
+      "detection_uid": "XMMSL2-total-25537",
+      "ra": 301.2239663,
+      "dec": -74.8996315
+    },
+    {
+      "name": "XMMSL2 J141922.0-263842",
+      "detection_uid": "XMMSL2-total-21146",
+      "ra": 214.8426567,
+      "dec": -26.64471438
+    }
+  ],
+  "archive_tables": {
+    "xmmssc": {
+      "columns": [
+        {
+          "column_name": "name",
+          "unit": "",
+          "description": "Source Designation (IAU)"
+        },
+        {
+          "column_name": "ra",
+          "unit": "degree",
+          "description": "Corrected Right Ascension of the Source"
+        },
+        {
+          "column_name": "dec",
+          "unit": "degree",
+          "description": "Corrected Declination of the Source"
+        },
+        {
+          "column_name": "ep_flux",
+          "unit": "erg/cm^2/s",
+          "description": "EPIC Total Band Flux (erg/cm^2/s)"
+        },
+        {
+          "column_name": "ep_flux_error",
+          "unit": "erg/cm^2/s",
+          "description": "Uncertainty in EPIC Total Band Flux (erg/cm^2/s)"
+        },
+        {
+          "column_name": "end_time",
+          "unit": "mjd",
+          "description": "Date of Latest Observation Containing a Detection of a Unique Source"
+        },
+        {
+          "column_name": "ep_rate",
+          "unit": "ct/s",
+          "description": "EPIC Total Band Count Rate (ct/s)"
+        },
+        {
+          "column_name": "ep_rate_error",
+          "unit": "ct/s",
+          "description": "Uncertainty in EPIC Total Band Count Rate (ct/s)"
+        },
+        {
+          "column_name": "ep_2_flux",
+          "unit": "erg/cm^2/s",
+          "description": "EPIC Band 2 Flux (erg/cm^2/s)"
+        },
+        {
+          "column_name": "ep_5_flux",
+          "unit": "erg/cm^2/s",
+          "description": "EPIC Band 5 Flux (erg/cm^2/s)"
+        },
+        {
+          "column_name": "extent",
+          "unit": "arcsec",
+          "description": "Extent Radius (arcsec)"
+        },
+        {
+          "column_name": "var_flag",
+          "unit": "",
+          "description": "Flag [T/F] Indicates Source Was Detected as Variable in at Least One Exposure"
+        },
+        {
+          "column_name": "ep_3_flux_error",
+          "unit": "erg/cm^2/s",
+          "description": "Uncertainty in EPIC Band 3 Flux (erg/cm^2/s)"
+        },
+        {
+          "column_name": "ep_3_flux",
+          "unit": "erg/cm^2/s",
+          "description": "EPIC Band 3 Flux (erg/cm^2/s)"
+        },
+        {
+          "column_name": "ep_hr4_error",
+          "unit": "",
+          "description": "Uncertainty in EPIC Hardness Ratio for Bands 4 and 5"
+        },
+        {
+          "column_name": "ep_hr1_error",
+          "unit": "",
+          "description": "Uncertainty in EPIC Hardness Ratio for Bands 1 and 2"
+        },
+        {
+          "column_name": "ep_4_flux",
+          "unit": "erg/cm^2/s",
+          "description": "EPIC Band 4 Flux (erg/cm^2/s)"
+        },
+        {
+          "column_name": "ep_1_flux_error",
+          "unit": "erg/cm^2/s",
+          "description": "Uncertainty in EPIC Band 1 Flux (erg/cm^2/s)"
+        },
+        {
+          "column_name": "obsid",
+          "unit": "",
+          "description": "Unique Observation Identifier"
+        },
+        {
+          "column_name": "ep_2_flux_error",
+          "unit": "erg/cm^2/s",
+          "description": "Uncertainty in EPIC Band 2 Flux (erg/cm^2/s)"
+        },
+        {
+          "column_name": "ep_hr3_error",
+          "unit": "",
+          "description": "Uncertainty in EPIC Hardness Ratio for Bands 3 and 4"
+        },
+        {
+          "column_name": "ep_5_flux_error",
+          "unit": "erg/cm^2/s",
+          "description": "Uncertainty in EPIC Band 5 Flux (erg/cm^2/s)"
+        },
+        {
+          "column_name": "ep_cts_error",
+          "unit": "ct",
+          "description": "Uncertainty in EPIC Total Band Source Counts"
+        },
+        {
+          "column_name": "ep_4_flux_error",
+          "unit": "erg/cm^2/s",
+          "description": "Uncertainty in EPIC Band 4 Flux (erg/cm^2/s)"
+        },
+        {
+          "column_name": "ep_1_flux",
+          "unit": "erg/cm^2/s",
+          "description": "EPIC Band 1 Flux (erg/cm^2/s)"
+        },
+        {
+          "column_name": "ep_flag",
+          "unit": "",
+          "description": "EPIC Detection Quality Flags Combining PN, MOS1, and MOS2 Flags"
+        },
+        {
+          "column_name": "ep_hr2_error",
+          "unit": "",
+          "description": "Uncertainty in EPIC Hardness Ratio for Bands 2 and 3"
+        }
+      ],
+      "cones": {
+        "XMMSL2-total-69754": {
+          "status": "ok",
+          "rows": 0
+        },
+        "XMMSL2-total-10038": {
+          "status": "ok",
+          "rows": 0
+        },
+        "XMMSL2-total-40751": {
+          "status": "ok",
+          "rows": 3
+        },
+        "XMMSL2-total-25537": {
+          "status": "ok",
+          "rows": 0
+        },
+        "XMMSL2-total-21146": {
+          "status": "ok",
+          "rows": 5
+        }
+      }
+    },
+    "swift2sxps": {
+      "columns": [
+        {
+          "column_name": "name",
+          "unit": "",
+          "description": "IAU-Style Source Designation (2SXPS JHHMMSS.s+DDMM.m)"
+        },
+        {
+          "column_name": "ra",
+          "unit": "degree",
+          "description": "Right Ascension"
+        },
+        {
+          "column_name": "dec",
+          "unit": "degree",
+          "description": "Declination"
+        },
+        {
+          "column_name": "exposure",
+          "unit": "s",
+          "description": "Total Exposure Time"
+        },
+        {
+          "column_name": "source_number",
+          "unit": "",
+          "description": "Unique Numerical Identifier for Each Source in This Catalog"
+        },
+        {
+          "column_name": "end_time",
+          "unit": "mjd",
+          "description": "End Time of the Last Observation of Source in 2SXPS"
+        }
+      ],
+      "cones": {
+        "XMMSL2-total-69754": {
+          "status": "ok",
+          "rows": 1
+        },
+        "XMMSL2-total-10038": {
+          "status": "ok",
+          "rows": 0
+        },
+        "XMMSL2-total-40751": {
+          "status": "ok",
+          "rows": 1
+        },
+        "XMMSL2-total-25537": {
+          "status": "ok",
+          "rows": 0
+        },
+        "XMMSL2-total-21146": {
+          "status": "ok",
+          "rows": 0
+        }
+      }
+    },
+    "swift1sxps": {
+      "status": "table unavailable or unrecognized",
+      "columns": []
+    }
+  },
+  "pointed_detections": [
+    {
+      "name": "5XMM J120136.0+300305",
+      "ra": 180.400082871381,
+      "dec": 30.0514572134899,
+      "ep_flux": 3.71166e-14,
+      "ep_flux_error": 1.58315e-15,
+      "end_time": 55553.2195601852,
+      "ep_rate": 0.0439826,
+      "ep_rate_error": 0.00135956,
+      "ep_2_flux": 9.66461e-15,
+      "ep_5_flux": 1.32582e-16,
+      "extent": 0.0,
+      "var_flag": "F",
+      "ep_3_flux_error": 3.32023e-16,
+      "ep_3_flux": 2.13346e-15,
+      "ep_hr4_error": 0.356142,
+      "ep_hr1_error": 0.0274758,
+      "ep_4_flux": 9.88319e-16,
+      "ep_1_flux_error": 8.36867e-16,
+      "obsid": "",
+      "ep_2_flux_error": 5.77534e-16,
+      "ep_hr3_error": 0.101278,
+      "ep_5_flux_error": 9.84108e-16,
+      "ep_cts_error": 85.0004,
+      "ep_4_flux_error": 4.60773e-16,
+      "ep_1_flux": 2.29734e-14,
+      "ep_flag": "FFFFFFFFFFF",
+      "ep_hr2_error": 0.0432001,
+      "table": "xmmssc",
+      "detection_uid": "XMMSL2-total-40751",
+      "separation_arcsec": 5.74699200864887
+    },
+    {
+      "name": "5XMM J120140.9+300345",
+      "ra": 180.420457462953,
+      "dec": 30.0627022795427,
+      "ep_flux": 3.01908e-14,
+      "ep_flux_error": 3.64262e-15,
+      "end_time": 55553.2195601852,
+      "ep_rate": 0.0173695,
+      "ep_rate_error": 0.000994584,
+      "ep_2_flux": 4.8172e-15,
+      "ep_5_flux": 1.15603e-14,
+      "extent": 0.0,
+      "var_flag": "F",
+      "ep_3_flux_error": 4.4824e-16,
+      "ep_3_flux": 3.98308e-15,
+      "ep_hr4_error": 0.135003,
+      "ep_hr1_error": 0.0718928,
+      "ep_4_flux": 6.23243e-15,
+      "ep_1_flux_error": 3.71367e-16,
+      "obsid": "",
+      "ep_2_flux_error": 4.53264e-16,
+      "ep_hr3_error": 0.0881462,
+      "ep_5_flux_error": 3.39967e-15,
+      "ep_cts_error": 31.2399,
+      "ep_4_flux_error": 9.88314e-16,
+      "ep_1_flux": 3.2333e-15,
+      "ep_flag": "FFFFFFFFFFF",
+      "ep_hr2_error": 0.0697396,
+      "table": "xmmssc",
+      "detection_uid": "XMMSL2-total-40751",
+      "separation_arcsec": 80.18104580049621
+    },
+    {
+      "name": "5XMM J120134.4+300340",
+      "ra": 180.393332854159,
+      "dec": 30.0611058647508,
+      "ep_flux": 1.93209e-15,
+      "ep_flux_error": 1.43548e-15,
+      "end_time": 55553.2195601852,
+      "ep_rate": 0.0011867,
+      "ep_rate_error": 0.000384936,
+      "ep_2_flux": 2.05463e-16,
+      "ep_5_flux": 5.44501e-16,
+      "extent": 0.0,
+      "var_flag": "F",
+      "ep_3_flux_error": 1.52411e-16,
+      "ep_3_flux": 1.84788e-16,
+      "ep_hr4_error": 0.872247,
+      "ep_hr1_error": 0.370561,
+      "ep_4_flux": 1.88563e-16,
+      "ep_1_flux_error": 1.55028e-16,
+      "obsid": "",
+      "ep_2_flux_error": 1.39257e-16,
+      "ep_hr3_error": 0.609155,
+      "ep_5_flux_error": 1.29604e-15,
+      "ep_cts_error": 15.6951,
+      "ep_4_flux_error": 3.5139e-16,
+      "ep_1_flux": 2.84932e-16,
+      "ep_flag": "FFFFFFFFTFF",
+      "ep_hr2_error": 0.392948,
+      "table": "xmmssc",
+      "detection_uid": "XMMSL2-total-40751",
+      "separation_arcsec": 37.91775048720091
+    },
+    {
+      "name": "5XMM J141922.4-263841",
+      "ra": 214.843369737026,
+      "dec": -26.6448317506255,
+      "ep_flux": 1.16117e-11,
+      "ep_flux_error": 2.03649e-14,
+      "end_time": 58704.7501851852,
+      "ep_rate": 5.60702,
+      "ep_rate_error": 0.00589663,
+      "ep_2_flux": 1.33845e-12,
+      "ep_5_flux": 4.91487e-12,
+      "extent": 0.0,
+      "var_flag": "T",
+      "ep_3_flux_error": 3.29168e-15,
+      "ep_3_flux": 1.77474e-12,
+      "ep_hr4_error": 0.00185807,
+      "ep_hr1_error": 0.00152637,
+      "ep_4_flux": 2.87686e-12,
+      "ep_1_flux_error": 1.90037e-15,
+      "obsid": "",
+      "ep_2_flux_error": 2.72798e-15,
+      "ep_hr3_error": 0.0013929,
+      "ep_5_flux_error": 1.85336e-14,
+      "ep_cts_error": 1740.63,
+      "ep_4_flux_error": 6.88386e-15,
+      "ep_1_flux": 7.35579e-13,
+      "ep_flag": "FFTFFFFFFFF",
+      "ep_hr2_error": 0.0013523,
+      "table": "xmmssc",
+      "detection_uid": "XMMSL2-total-21146",
+      "separation_arcsec": 2.332918818970357
+    },
+    {
+      "name": "5XMM J141919.5-263854",
+      "ra": 214.831488802344,
+      "dec": -26.6484538407105,
+      "ep_flux": 1.36966e-12,
+      "ep_flux_error": 3.88686e-14,
+      "end_time": 58704.7501851852,
+      "ep_rate": 0.638703,
+      "ep_rate_error": 0.00918518,
+      "ep_2_flux": 1.78023e-13,
+      "ep_5_flux": 7.17857e-13,
+      "extent": 69.9605,
+      "var_flag": "T",
+      "ep_3_flux_error": 4.69757e-15,
+      "ep_3_flux": 1.75693e-13,
+      "ep_hr4_error": 0.0328801,
+      "ep_hr1_error": 0.0197106,
+      "ep_4_flux": 2.33298e-13,
+      "ep_1_flux_error": 2.79097e-15,
+      "obsid": "",
+      "ep_2_flux_error": 3.56025e-15,
+      "ep_hr3_error": 0.0215879,
+      "ep_5_flux_error": 3.68025e-14,
+      "ep_cts_error": 2085.82,
+      "ep_4_flux_error": 1.05413e-14,
+      "ep_1_flux": 6.35042e-14,
+      "ep_flag": "TFTFFFFFFFT",
+      "ep_hr2_error": 0.0164035,
+      "table": "xmmssc",
+      "detection_uid": "XMMSL2-total-21146",
+      "separation_arcsec": 38.37319353794385
+    },
+    {
+      "name": "5XMM J141921.2-263925",
+      "ra": 214.838394229678,
+      "dec": -26.6572043641403,
+      "ep_flux": 3.64577e-14,
+      "ep_flux_error": 3.83185e-15,
+      "end_time": 58704.7501851852,
+      "ep_rate": 0.0186895,
+      "ep_rate_error": 0.00106068,
+      "ep_2_flux": 3.55533e-15,
+      "ep_5_flux": 1.54461e-14,
+      "extent": 6.46295,
+      "var_flag": "F",
+      "ep_3_flux_error": 6.2918e-16,
+      "ep_3_flux": 7.17497e-15,
+      "ep_hr4_error": 0.0999056,
+      "ep_hr1_error": 0.0715404,
+      "ep_4_flux": 4.32404e-15,
+      "ep_1_flux_error": 3.72476e-16,
+      "obsid": "",
+      "ep_2_flux_error": 4.58353e-16,
+      "ep_hr3_error": 0.0617001,
+      "ep_5_flux_error": 3.57617e-15,
+      "ep_cts_error": 286.661,
+      "ep_4_flux_error": 9.39226e-16,
+      "ep_1_flux": 2.56605e-15,
+      "ep_flag": "FFTFFFFFFFT",
+      "ep_hr2_error": 0.0621889,
+      "table": "xmmssc",
+      "detection_uid": "XMMSL2-total-21146",
+      "separation_arcsec": 47.008999113374685
+    },
+    {
+      "name": "5XMM J141921.7-263953",
+      "ra": 214.840661024637,
+      "dec": -26.6649811771044,
+      "ep_flux": 3.68511e-15,
+      "ep_flux_error": 1.47503e-15,
+      "end_time": 58704.7501851852,
+      "ep_rate": 0.00170687,
+      "ep_rate_error": 0.000446291,
+      "ep_2_flux": 4.91196e-16,
+      "ep_5_flux": 1.99685e-15,
+      "extent": 0.0,
+      "var_flag": "F",
+      "ep_3_flux_error": 1.9498e-16,
+      "ep_3_flux": 3.96789e-16,
+      "ep_hr4_error": 0.646056,
+      "ep_hr1_error": 0.225681,
+      "ep_4_flux": 2.60217e-16,
+      "ep_1_flux_error": 1.56216e-16,
+      "obsid": "",
+      "ep_2_flux_error": 1.78001e-16,
+      "ep_hr3_error": 0.41136,
+      "ep_5_flux_error": 1.3992e-15,
+      "ep_cts_error": null,
+      "ep_4_flux_error": 3.49928e-16,
+      "ep_1_flux": 5.35083e-16,
+      "ep_flag": "TFFFFFFFFFT",
+      "ep_hr2_error": 0.284907,
+      "table": "xmmssc",
+      "detection_uid": "XMMSL2-total-21146",
+      "separation_arcsec": 73.24246152685647
+    },
+    {
+      "name": "5XMM J141927.8-263849",
+      "ra": 214.866159957166,
+      "dec": -26.6469548940763,
+      "ep_flux": 2.88471e-15,
+      "ep_flux_error": 1.70073e-15,
+      "end_time": 58704.7501851852,
+      "ep_rate": 0.000816171,
+      "ep_rate_error": 0.000230038,
+      "ep_2_flux": 4.97247e-16,
+      "ep_5_flux": 1.63716e-15,
+      "extent": 0.0,
+      "var_flag": "F",
+      "ep_3_flux_error": 2.05179e-16,
+      "ep_3_flux": 3.82956e-16,
+      "ep_hr4_error": 0.689973,
+      "ep_hr1_error": 0.281395,
+      "ep_4_flux": 3.39058e-16,
+      "ep_1_flux_error": 6.71161e-17,
+      "obsid": "",
+      "ep_2_flux_error": 1.77884e-16,
+      "ep_hr3_error": 0.402298,
+      "ep_5_flux_error": 1.64218e-15,
+      "ep_cts_error": null,
+      "ep_4_flux_error": 3.42784e-16,
+      "ep_1_flux": 2.82828e-17,
+      "ep_flag": "FFFFFFFFFFT",
+      "ep_hr2_error": 0.295948,
+      "table": "xmmssc",
+      "detection_uid": "XMMSL2-total-21146",
+      "separation_arcsec": 76.05451702196876
+    },
+    {
+      "name": "2SXPS J125851.4+235529",
+      "ra": 194.71441,
+      "dec": 23.92494,
+      "exposure": 1385,
+      "source_number": 189879,
+      "end_time": 57980.5171064815,
+      "table": "swift2sxps",
+      "detection_uid": "XMMSL2-total-69754",
+      "separation_arcsec": 6.46808864188957
+    },
+    {
+      "name": "2SXPS J120136.1+300303",
+      "ra": 180.40047,
+      "dec": 30.05106,
+      "exposure": 27526,
+      "source_number": 73471,
+      "end_time": 58051.916400463,
+      "table": "swift2sxps",
+      "detection_uid": "XMMSL2-total-40751",
+      "separation_arcsec": 7.105881778416706
+    }
+  ],
+  "slew_images": [
+    {
+      "name": "XMMSL2 J052443.6-613005",
+      "detection_uid": "XMMSL2-total-10038",
+      "xmm_ra": 81.18200539,
+      "xmm_dec": -61.50138688,
+      "net_soft_counts": 7.919387817,
+      "exposure_s": 7.36256218,
+      "band6_detection_likelihood": 35.61231995,
+      "instrument_checks": {
+        "status": "unresolved; official subimage unavailable or unsuitable",
+        "release_row": {
+          "OBSID": "9091600002",
+          "SOURCENUM": "30",
+          "XIMNAME_B6": "P9091600002PNS003IMAGE_603a.FTZ",
+          "SRCNAME_B6": "xs0916_9091600002_05:24:43.3-61:30:07",
+          "VAL_FLAG": "CLEAN_SAMPLE",
+          "FLAG_COMMENT": "",
+          "MODE_ID": "FF",
+          "IDENT": "IRAS F05241-6132",
+          "ALTIDENT": "",
+          "ID_RESOURCE": "SIMBAD",
+          "ID_CATEGORY": "IR",
+          "FILT_CNTS": "11",
+          "UNFILT_CNTS": "12",
+          "MJD_START": "53348.23765991",
+          "MJD_STOP": "53348.23818074"
+        },
+        "failed_routes": [
+          {
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/9091600002/PPS/P9091600002PNS003IMAGE_603a.FTZ",
+            "params": null,
+            "error": "404 Client Error: Not Found for url: https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/9091600002/PPS/P9091600002PNS003IMAGE_603a.FTZ"
+          },
+          {
+            "url": "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio",
+            "params": {
+              "obsno": "9091600002",
+              "level": "PPS",
+              "name": "P9091600002PNS003IMAGE_603a.FTZ"
+            },
+            "error": "Archive returned more than a targeted single product"
+          }
+        ]
+      }
+    },
+    {
+      "name": "XMMSL2 J120135.4+300305",
+      "detection_uid": "XMMSL2-total-40751",
+      "xmm_ra": 180.3982386,
+      "xmm_dec": 30.05146695,
+      "net_soft_counts": 16.15834045,
+      "exposure_s": 8.567016602,
+      "band6_detection_likelihood": 88.2379837,
+      "instrument_checks": {
+        "status": "unresolved; official subimage unavailable or unsuitable",
+        "release_row": {
+          "OBSID": "9192300005",
+          "SOURCENUM": "4",
+          "XIMNAME_B6": "P9192300005PNS003IMAGE_6017.FTZ",
+          "SRCNAME_B6": "xs1923_9192300005_12:01:35.7+30:03:05",
+          "VAL_FLAG": "CLEAN_SAMPLE",
+          "FLAG_COMMENT": "",
+          "MODE_ID": "LW",
+          "IDENT": "XMMSL1 J120135.7+300306",
+          "ALTIDENT": "",
+          "ID_RESOURCE": "SIMBAD",
+          "ID_CATEGORY": "X",
+          "FILT_CNTS": "17",
+          "UNFILT_CNTS": "26",
+          "MJD_START": "55357.27675713",
+          "MJD_STOP": "55357.27727796"
+        },
+        "failed_routes": [
+          {
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/9192300005/PPS/P9192300005PNS003IMAGE_6017.FTZ",
+            "params": null,
+            "error": "No complete local background annulus at the source position"
+          },
+          {
+            "url": "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio",
+            "params": {
+              "obsno": "9192300005",
+              "level": "PPS",
+              "name": "P9192300005PNS003IMAGE_6017.FTZ"
+            },
+            "error": "Archive returned more than a targeted single product"
+          }
+        ]
+      }
+    },
+    {
+      "name": "XMMSL2 J200453.7-745359",
+      "detection_uid": "XMMSL2-total-25537",
+      "xmm_ra": 301.2239663,
+      "xmm_dec": -74.8996315,
+      "net_soft_counts": 7.876239777,
+      "exposure_s": 4.430247784,
+      "band6_detection_likelihood": 36.74079132,
+      "instrument_checks": {
+        "status": "unresolved; official subimage unavailable or unsuitable",
+        "release_row": {
+          "OBSID": "9143800002",
+          "SOURCENUM": "75",
+          "XIMNAME_B6": "P9143800002PNS003IMAGE_603e.FTZ",
+          "SRCNAME_B6": "xs1438_9143800002_20:04:53.7-74:53:59",
+          "VAL_FLAG": "CLEAN_SAMPLE",
+          "FLAG_COMMENT": "",
+          "MODE_ID": "FF",
+          "IDENT": "GALEXASC J200452.71-745401.0",
+          "ALTIDENT": "",
+          "ID_RESOURCE": "NED",
+          "ID_CATEGORY": "UvS",
+          "FILT_CNTS": "7",
+          "UNFILT_CNTS": "13",
+          "MJD_START": "54389.60776407",
+          "MJD_STOP": "54389.60828491"
+        },
+        "failed_routes": [
+          {
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/9143800002/PPS/P9143800002PNS003IMAGE_603e.FTZ",
+            "params": null,
+            "error": "404 Client Error: Not Found for url: https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/9143800002/PPS/P9143800002PNS003IMAGE_603e.FTZ"
+          },
+          {
+            "url": "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio",
+            "params": {
+              "obsno": "9143800002",
+              "level": "PPS",
+              "name": "P9143800002PNS003IMAGE_603e.FTZ"
+            },
+            "error": "Archive returned more than a targeted single product"
+          }
+        ]
+      }
+    },
+    {
+      "name": "XMMSL2 J141922.0-263842",
+      "detection_uid": "XMMSL2-total-21146",
+      "xmm_ra": 214.8425322,
+      "xmm_dec": -26.64509441,
+      "net_soft_counts": 146.5018005,
+      "exposure_s": 5.614262104,
+      "band6_detection_likelihood": 943.6569824,
+      "instrument_checks": {
+        "status": "unresolved; official subimage unavailable or unsuitable",
+        "release_row": {
+          "OBSID": "9130500003",
+          "SOURCENUM": "53",
+          "XIMNAME_B6": "P9130500003PNS003IMAGE_604c.FTZ",
+          "SRCNAME_B6": "xs1305_9130500003_14:19:22.0-26:38:42",
+          "VAL_FLAG": "CLEAN_SAMPLE",
+          "FLAG_COMMENT": "",
+          "MODE_ID": "FF",
+          "IDENT": "ESO 511-30",
+          "ALTIDENT": "",
+          "ID_RESOURCE": "SIMBAD",
+          "ID_CATEGORY": "Seyfert_1",
+          "FILT_CNTS": "157",
+          "UNFILT_CNTS": "186",
+          "MJD_START": "54124.90991685",
+          "MJD_STOP": "54124.91043769"
+        },
+        "failed_routes": [
+          {
+            "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/9130500003/PPS/P9130500003PNS003IMAGE_604c.FTZ",
+            "params": null,
+            "error": "404 Client Error: Not Found for url: https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/9130500003/PPS/P9130500003PNS003IMAGE_604c.FTZ"
+          },
+          {
+            "url": "https://nxsa.esac.esa.int/nxsa-sl/servlet/data-action-aio",
+            "params": {
+              "obsno": "9130500003",
+              "level": "PPS",
+              "name": "P9130500003PNS003IMAGE_604c.FTZ"
+            },
+            "error": "Archive returned more than a targeted single product"
+          }
+        ]
+      }
+    }
+  ],
+  "interpretation": "Every row inside the wide search cone is retained as a possible neighbour. Catalogue flux columns keep their original bands, flags, and units. Empty cones provide no flux limit. Earlier high/low detections alone do not establish prior publication of the change.",
+  "input_receipts": [
+    {
+      "endpoint": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "query": "SELECT column_name, unit, description FROM TAP_SCHEMA.columns WHERE table_name='xmmssc' OR table_name='\"xmmssc\"'",
+      "http": 200,
+      "sha256": "63ec61e0e6c6d3bdfa3ea7e6e634b40bfe37b1dc37fec1a5c229fc3cae1e62f9",
+      "bytes": 40756,
+      "rows": 425
+    },
+    {
+      "endpoint": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "query": "SELECT \"name\",\"ra\",\"dec\",\"ep_flux\",\"ep_flux_error\",\"end_time\",\"ep_rate\",\"ep_rate_error\",\"ep_2_flux\",\"ep_5_flux\",\"extent\",\"var_flag\",\"ep_3_flux_error\",\"ep_3_flux\",\"ep_hr4_error\",\"ep_hr1_error\",\"ep_4_flux\",\"ep_1_flux_error\",\"obsid\",\"ep_2_flux_error\",\"ep_hr3_error\",\"ep_5_flux_error\",\"ep_cts_error\",\"ep_4_flux_error\",\"ep_1_flux\",\"ep_flag\",\"ep_hr2_error\" FROM \"xmmssc\" WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',194.71489760,23.92319947,0.02500000))",
+      "http": 200,
+      "sha256": "92fe57af0d1553ac44da9b028f20df232d08b299dea05d88600fe08741e3dab9",
+      "bytes": 2640,
+      "rows": 0
+    },
+    {
+      "endpoint": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "query": "SELECT \"name\",\"ra\",\"dec\",\"ep_flux\",\"ep_flux_error\",\"end_time\",\"ep_rate\",\"ep_rate_error\",\"ep_2_flux\",\"ep_5_flux\",\"extent\",\"var_flag\",\"ep_3_flux_error\",\"ep_3_flux\",\"ep_hr4_error\",\"ep_hr1_error\",\"ep_4_flux\",\"ep_1_flux_error\",\"obsid\",\"ep_2_flux_error\",\"ep_hr3_error\",\"ep_5_flux_error\",\"ep_cts_error\",\"ep_4_flux_error\",\"ep_1_flux\",\"ep_flag\",\"ep_hr2_error\" FROM \"xmmssc\" WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',81.18391463,-61.50069468,0.02500000))",
+      "http": 200,
+      "sha256": "9468e3ba669519ee901860ba8e02f9227f2b00daab87a29f610715d82ba1f991",
+      "bytes": 2640,
+      "rows": 0
+    },
+    {
+      "endpoint": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "query": "SELECT \"name\",\"ra\",\"dec\",\"ep_flux\",\"ep_flux_error\",\"end_time\",\"ep_rate\",\"ep_rate_error\",\"ep_2_flux\",\"ep_5_flux\",\"extent\",\"var_flag\",\"ep_3_flux_error\",\"ep_3_flux\",\"ep_hr4_error\",\"ep_hr1_error\",\"ep_4_flux\",\"ep_1_flux_error\",\"obsid\",\"ep_2_flux_error\",\"ep_hr3_error\",\"ep_5_flux_error\",\"ep_cts_error\",\"ep_4_flux_error\",\"ep_1_flux\",\"ep_flag\",\"ep_hr2_error\" FROM \"xmmssc\" WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',180.39823860,30.05146695,0.02500000))",
+      "http": 200,
+      "sha256": "2e4ff9197576d11e4f1a1cea4b266019c4679502453be39faa06d4a308edd024",
+      "bytes": 3587,
+      "rows": 3
+    },
+    {
+      "endpoint": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "query": "SELECT \"name\",\"ra\",\"dec\",\"ep_flux\",\"ep_flux_error\",\"end_time\",\"ep_rate\",\"ep_rate_error\",\"ep_2_flux\",\"ep_5_flux\",\"extent\",\"var_flag\",\"ep_3_flux_error\",\"ep_3_flux\",\"ep_hr4_error\",\"ep_hr1_error\",\"ep_4_flux\",\"ep_1_flux_error\",\"obsid\",\"ep_2_flux_error\",\"ep_hr3_error\",\"ep_5_flux_error\",\"ep_cts_error\",\"ep_4_flux_error\",\"ep_1_flux\",\"ep_flag\",\"ep_hr2_error\" FROM \"xmmssc\" WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',301.22396630,-74.89963150,0.02500000))",
+      "http": 200,
+      "sha256": "af739df26eb074b6a652bf64f1373a380817b22a00956498458b615347f133c9",
+      "bytes": 2641,
+      "rows": 0
+    },
+    {
+      "endpoint": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "query": "SELECT \"name\",\"ra\",\"dec\",\"ep_flux\",\"ep_flux_error\",\"end_time\",\"ep_rate\",\"ep_rate_error\",\"ep_2_flux\",\"ep_5_flux\",\"extent\",\"var_flag\",\"ep_3_flux_error\",\"ep_3_flux\",\"ep_hr4_error\",\"ep_hr1_error\",\"ep_4_flux\",\"ep_1_flux_error\",\"obsid\",\"ep_2_flux_error\",\"ep_hr3_error\",\"ep_5_flux_error\",\"ep_cts_error\",\"ep_4_flux_error\",\"ep_1_flux\",\"ep_flag\",\"ep_hr2_error\" FROM \"xmmssc\" WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',214.84265670,-26.64471438,0.02500000))",
+      "http": 200,
+      "sha256": "067903e8c617bf5ff2fb55782251e62d3f9291e6c7dd26ad4e6dee604194e160",
+      "bytes": 4222,
+      "rows": 5
+    },
+    {
+      "endpoint": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "query": "SELECT column_name, unit, description FROM TAP_SCHEMA.columns WHERE table_name='swift2sxps' OR table_name='\"swift2sxps\"'",
+      "http": 200,
+      "sha256": "f3b3d5080f87af9f5b439a3a68f7387a55a7aa56456400293707c7f11b7b69de",
+      "bytes": 27893,
+      "rows": 234
+    },
+    {
+      "endpoint": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "query": "SELECT \"name\",\"ra\",\"dec\",\"exposure\",\"source_number\",\"end_time\" FROM \"swift2sxps\" WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',194.71489760,23.92319947,0.02500000))",
+      "http": 200,
+      "sha256": "cc347a1615fc7201a0880aa52e7b0d12eee63507be79cdba4b39296e56cff6a8",
+      "bytes": 1250,
+      "rows": 1
+    },
+    {
+      "endpoint": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "query": "SELECT \"name\",\"ra\",\"dec\",\"exposure\",\"source_number\",\"end_time\" FROM \"swift2sxps\" WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',81.18391463,-61.50069468,0.02500000))",
+      "http": 200,
+      "sha256": "8a4535b3586fbe3b3093c1d27a977b062d97bd78b4012689360bf9a87a4115cb",
+      "bytes": 1169,
+      "rows": 0
+    },
+    {
+      "endpoint": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "query": "SELECT \"name\",\"ra\",\"dec\",\"exposure\",\"source_number\",\"end_time\" FROM \"swift2sxps\" WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',180.39823860,30.05146695,0.02500000))",
+      "http": 200,
+      "sha256": "215dfdda21aaf1528a0600d73f9b6385fe07f41caf01651593fbd44eaf53e985",
+      "bytes": 1250,
+      "rows": 1
+    },
+    {
+      "endpoint": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "query": "SELECT \"name\",\"ra\",\"dec\",\"exposure\",\"source_number\",\"end_time\" FROM \"swift2sxps\" WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',301.22396630,-74.89963150,0.02500000))",
+      "http": 200,
+      "sha256": "cf97cdeb93fa7e2a80d262d8d4c3f972dd183584523b5260a9d56ba8886109ae",
+      "bytes": 1170,
+      "rows": 0
+    },
+    {
+      "endpoint": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "query": "SELECT \"name\",\"ra\",\"dec\",\"exposure\",\"source_number\",\"end_time\" FROM \"swift2sxps\" WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',214.84265670,-26.64471438,0.02500000))",
+      "http": 200,
+      "sha256": "fb4f4e4df15ad6ca413d3cbfe9563ae03a4b72391bf6294b722a11fb0b3a5111",
+      "bytes": 1170,
+      "rows": 0
+    },
+    {
+      "endpoint": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "query": "SELECT column_name, unit, description FROM TAP_SCHEMA.columns WHERE table_name='swift1sxps' OR table_name='\"swift1sxps\"'",
+      "http": 200,
+      "sha256": "f017f57b41c691334101d97f925c6c97ed3b732f3f3a65a6d2e6a759fcec9abd",
+      "bytes": 875,
+      "rows": 0
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/catalogues/xmmsl2_total.fits.gz",
+      "params": null,
+      "bytes": 16337160,
+      "sha256": "9e82e23a9e4ae6f79e33e2314f5ec5c787a42bfbbc68c8cce1b0920ea963d819"
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/catalogues/xmmsl2_total.fits.gz",
+      "params": null,
+      "bytes": 16337160,
+      "sha256": "9e82e23a9e4ae6f79e33e2314f5ec5c787a42bfbbc68c8cce1b0920ea963d819"
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0/9192300005/PPS/P9192300005PNS003IMAGE_6017.FTZ",
+      "params": null,
+      "bytes": 5893,
+      "sha256": "0ecebd807f4bfbb0b33681a5088b20400b99ce8b90d623b8aadc8e8880e52e1e"
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/catalogues/xmmsl2_total.fits.gz",
+      "params": null,
+      "bytes": 16337160,
+      "sha256": "9e82e23a9e4ae6f79e33e2314f5ec5c787a42bfbbc68c8cce1b0920ea963d819"
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/catalogues/xmmsl2_total.fits.gz",
+      "params": null,
+      "bytes": 16337160,
+      "sha256": "9e82e23a9e4ae6f79e33e2314f5ec5c787a42bfbbc68c8cce1b0920ea963d819"
+    }
+  ]
+}

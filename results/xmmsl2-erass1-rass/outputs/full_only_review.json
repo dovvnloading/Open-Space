@@ -1,0 +1,330 @@
+{
+  "sources": [
+    {
+      "detection_uid": "XMMSL2-total-5181",
+      "name": "XMMSL2 J171731.9-665703",
+      "ra": 259.3826451,
+      "dec": -66.9509456,
+      "obsid": "9069200002",
+      "source_number": 10,
+      "net_soft_counts": 29.25951004,
+      "position_sigma_arcsec": 6.421959079,
+      "exposure_s": 7.181530952,
+      "snr": 3.870483445855777,
+      "extent_pixels": 0.0,
+      "warning_flags": {
+        "xmm_issue": false,
+        "xmm_veropt": false,
+        "xmm_verext": false,
+        "xmm_verhalo": false,
+        "xmm_verbg": false,
+        "xmm_verfalse": false,
+        "xmm_veredge": false
+      },
+      "warning_fields": null,
+      "release_validation_flag": "XXXXXXXXXXXX",
+      "image_background_rate_cps": 14.19999981,
+      "native_B6_flux_per_cps": 1.4359999459986983e-12,
+      "full_only_reasons": "no_strong_independent_slew_or_two_close_missions",
+      "other_strong_obsids": 0,
+      "close_secure_ero": false,
+      "close_secure_rass": false,
+      "epochs": {
+        "xmm": {
+          "flux": 5.850654596e-12,
+          "err": 1.511608221e-12,
+          "ml": 12.83829021,
+          "time": "2003-09-19T11:35:56",
+          "mjd": null,
+          "mjd_min": 52901.51654,
+          "mjd_max": 52901.51706,
+          "sep": null,
+          "ambiguous": null,
+          "quality": false,
+          "poserr": 6.421959079,
+          "name": "XMMSL2 J171731.9-665703"
+        },
+        "ero": {
+          "flux": null,
+          "err": null,
+          "ml": null,
+          "time": null,
+          "mjd": null,
+          "mjd_min": null,
+          "mjd_max": null,
+          "sep": null,
+          "ambiguous": false,
+          "quality": false,
+          "poserr": null,
+          "name": null,
+          "limit": {
+            "status": "near_detected_source",
+            "limit_flux_cgs": null,
+            "confidence": null,
+            "exp_s": null,
+            "method": null,
+            "map_ref": "b70d1fb2d04b26845b61f42d39027cba8871383332aab132ee5a3aa563040df1"
+          }
+        },
+        "rass": {
+          "flux": 5.10258783e-11,
+          "err": 1.958503937e-12,
+          "ml": 2658.85,
+          "time": null,
+          "mjd": null,
+          "mjd_min": null,
+          "mjd_max": null,
+          "sep": 37.00902455,
+          "ambiguous": true,
+          "quality": true,
+          "poserr": 20.88061302,
+          "name": "2RXS J171725.5-665702",
+          "limit": {
+            "status": "catalogued_or_ambiguous",
+            "limit_flux_cgs": null,
+            "confidence": null,
+            "exp_s": null,
+            "method": null,
+            "map_ref": null
+          }
+        }
+      },
+      "photometric_comparisons": [
+        {
+          "high": "rass",
+          "low": "xmm",
+          "low_kind": "detection",
+          "high_flux": 5.10258783e-11,
+          "high_error": 1.958503937e-12,
+          "low_flux_or_limit": 5.850654596e-12,
+          "low_error": 1.511608221e-12,
+          "ratio": 8.721396463036047,
+          "guarded_ratio": 5.354026217176285,
+          "model_floor_ratio": 2.1562282832195945,
+          "all_photometric_gates_except_slew_corroboration": false
+        }
+      ],
+      "optical": {
+        "detection_uid": "XMMSL2-total-5181",
+        "ra": 259.3826451,
+        "dec": -66.9509456,
+        "gate_arcsec": 15.73379974355,
+        "query": "SELECT ls_id,type,ra,dec,flux_z,flux_r FROM ls_dr10.tractor WHERE q3c_radial_query(ra,dec,259.382645100,-66.950945600,0.058333333) AND flux_z>0",
+        "sha256": "9c475a6d3b07f23ddeaed63958f13f0f55d9a37a59e46cbc7d2d788a64e2cd0a",
+        "bytes": 32,
+        "url": "https://datalab.noirlab.edu/query/query?sql=SELECT+ls_id%2Ctype%2Cra%2Cdec%2Cflux_z%2Cflux_r+FROM+ls_dr10.tractor+WHERE+q3c_radial_query%28ra%2Cdec%2C259.382645100%2C-66.950945600%2C0.058333333%29+AND+flux_z%3E0&ofmt=csv&async=False",
+        "status": "empty field or outside imaging footprint",
+        "legacy_alternatives": [],
+        "release_identification": "HD 155555C",
+        "release_alternative": null,
+        "release_class": "pMS*",
+        "release_id_separation_arcsec": 4.348171234
+      },
+      "slew_product": {
+        "status": "not triggered; no eligible nominal tenfold pair"
+      },
+      "candidate": false,
+      "eligible_for_source_authenticity_followup": false,
+      "boundary": "No admissible nominal tenfold comparison in available epochs/limits."
+    },
+    {
+      "detection_uid": "XMMSL2-total-35974",
+      "name": "XMMSL2 J051937.2-323911",
+      "ra": 79.90526514,
+      "dec": -32.65305229,
+      "obsid": "9179700004",
+      "source_number": 22,
+      "net_soft_counts": 14.91110039,
+      "position_sigma_arcsec": 6.996152064,
+      "exposure_s": 7.040400982,
+      "snr": 3.119081418843697,
+      "extent_pixels": 0.0,
+      "warning_flags": {
+        "xmm_issue": false,
+        "xmm_veropt": false,
+        "xmm_verext": false,
+        "xmm_verhalo": false,
+        "xmm_verbg": false,
+        "xmm_verfalse": false,
+        "xmm_veredge": false
+      },
+      "warning_fields": null,
+      "release_validation_flag": "XXXXXXXXXXXX",
+      "image_background_rate_cps": 15.5,
+      "native_B6_flux_per_cps": 1.4359999233875682e-12,
+      "full_only_reasons": "no_strong_independent_slew_or_two_close_missions",
+      "other_strong_obsids": 0,
+      "close_secure_ero": false,
+      "close_secure_rass": false,
+      "epochs": {
+        "xmm": {
+          "flux": 3.041351676e-12,
+          "err": 9.750792838e-13,
+          "ml": 12.95287991,
+          "time": "2009-10-01T19:13:35",
+          "mjd": null,
+          "mjd_min": 55105.85992,
+          "mjd_max": 55105.86044,
+          "sep": null,
+          "ambiguous": null,
+          "quality": false,
+          "poserr": 6.996152064,
+          "name": "XMMSL2 J051937.2-323911"
+        },
+        "ero": {
+          "flux": null,
+          "err": null,
+          "ml": null,
+          "time": null,
+          "mjd": null,
+          "mjd_min": null,
+          "mjd_max": null,
+          "sep": null,
+          "ambiguous": false,
+          "quality": false,
+          "poserr": null,
+          "name": null,
+          "limit": {
+            "status": "near_detected_source",
+            "limit_flux_cgs": null,
+            "confidence": null,
+            "exp_s": null,
+            "method": null,
+            "map_ref": "1c6fb365bb77df76f8f98e1c489f8cdd8d74bd5baeaaed7eb626e2893941b6c0"
+          }
+        },
+        "rass": {
+          "flux": 8.654088899e-13,
+          "err": 1.873877224e-13,
+          "ml": 26.48,
+          "time": null,
+          "mjd": null,
+          "mjd_min": null,
+          "mjd_max": null,
+          "sep": 14.57262261,
+          "ambiguous": true,
+          "quality": true,
+          "poserr": 20.88061302,
+          "name": "2RXS J051937.0-323925",
+          "limit": {
+            "status": "catalogued_or_ambiguous",
+            "limit_flux_cgs": null,
+            "confidence": null,
+            "exp_s": null,
+            "method": null,
+            "map_ref": null
+          }
+        }
+      },
+      "photometric_comparisons": [
+        {
+          "high": "xmm",
+          "low": "rass",
+          "low_kind": "detection",
+          "high_flux": 3.041351676e-12,
+          "high_error": 9.750792838e-13,
+          "low_flux_or_limit": 8.654088899e-13,
+          "low_error": 1.873877224e-13,
+          "ratio": 3.5143522460826984,
+          "guarded_ratio": 0.9168544859769042,
+          "model_floor_ratio": 0.7594706053125427,
+          "all_photometric_gates_except_slew_corroboration": false
+        }
+      ],
+      "optical": {
+        "detection_uid": "XMMSL2-total-35974",
+        "ra": 79.90526514,
+        "dec": -32.65305229,
+        "gate_arcsec": 17.140572556800002,
+        "query": "SELECT ls_id,type,ra,dec,flux_z,flux_r FROM ls_dr10.tractor WHERE q3c_radial_query(ra,dec,79.905265140,-32.653052290,0.058333333) AND flux_z>0",
+        "sha256": "4c298fd11edfffbd006842d7906f3261f48012d9856d5af2931cbbf8081f2fb9",
+        "bytes": 138396,
+        "url": "https://datalab.noirlab.edu/query/query?sql=SELECT+ls_id%2Ctype%2Cra%2Cdec%2Cflux_z%2Cflux_r+FROM+ls_dr10.tractor+WHERE+q3c_radial_query%28ra%2Cdec%2C79.905265140%2C-32.653052290%2C0.058333333%29+AND+flux_z%3E0&ofmt=csv&async=False",
+        "field_rows": 1734,
+        "annulus_galaxies": 1069,
+        "sector_counts": [
+          245,
+          188,
+          176,
+          195,
+          251,
+          190,
+          199,
+          230
+        ],
+        "status": "ok",
+        "control_positions": 120,
+        "legacy_alternatives": [
+          {
+            "detection_uid": "XMMSL2-total-35974",
+            "rank": 1,
+            "ls_id": "10995275639296538",
+            "type": "SER",
+            "host_ra": "79.90131973919252",
+            "host_dec": "-32.65597648357967",
+            "sep_arcsec": 15.931855281339471,
+            "sigma_arcsec": 6.996152064,
+            "flux_z_nanomaggies": 524.32855,
+            "field_galaxies_as_bright": 1,
+            "pcc": 0.011992818510785598,
+            "shifted_at_least_as_good": 2,
+            "shifted_total": 120,
+            "empirical_fraction": 0.024793388429752067,
+            "number_of_galaxy_alternatives": 2
+          },
+          {
+            "detection_uid": "XMMSL2-total-35974",
+            "rank": 2,
+            "ls_id": "10995275639296652",
+            "type": "REX",
+            "host_ra": "79.90407655048328",
+            "host_dec": "-32.65041905816226",
+            "sep_arcsec": 10.141151671888029,
+            "sigma_arcsec": 6.996152064,
+            "flux_z_nanomaggies": 1.1728489,
+            "field_galaxies_as_bright": 297,
+            "pcc": 0.5487236227825135,
+            "shifted_at_least_as_good": 72,
+            "shifted_total": 120,
+            "empirical_fraction": 0.6033057851239669,
+            "number_of_galaxy_alternatives": 2
+          }
+        ],
+        "release_identification": null,
+        "release_alternative": null,
+        "release_class": null,
+        "release_id_separation_arcsec": null
+      },
+      "slew_product": {
+        "status": "not triggered; no eligible nominal tenfold pair"
+      },
+      "candidate": false,
+      "eligible_for_source_authenticity_followup": false,
+      "boundary": "No admissible nominal tenfold comparison in available epochs/limits."
+    }
+  ],
+  "external_inputs": [
+    {
+      "url": "https://www.cosmos.esa.int/web/xmm-newton/xmmsl2-ug",
+      "params": null,
+      "bytes": 154165,
+      "sha256": "a97089d3f8cc71216126b5843ee13b7340d196adfb13ccfa6c7e6373884d7d2f"
+    }
+  ],
+  "native_xmm_release_calibration": {
+    "url": "https://www.cosmos.esa.int/web/xmm-newton/xmmsl2-ug",
+    "sha256": "a97089d3f8cc71216126b5843ee13b7340d196adfb13ccfa6c7e6373884d7d2f",
+    "status": "ESA release guide section 11 located",
+    "section_title": "Flux conversion",
+    "photon_index_if_explicit": 1.7,
+    "column_or_absorption_context": "Nh = 3.0 * 10 ^20 cm2 and slope",
+    "section_excerpt": "11 Flux Conversion Source fluxes have been calculated from count rates based on energy conversion factors assuming a spectral model of an absorbed power-law with Nh = 3.0 * 10 ^20 cm2 and slope = 1.7 (see XMM science survey centre memo, SSC-LUX TN-0059 for a general description of the technique) The energy conversion factors used here are: Band Conv factor Total 3.159 Hard 9.144 Soft 1.436 and convert between the source count rate (c/s) to flux in these energy bands in units of 10E-12 ergs/s/cm2",
+    "section_words": 86,
+    "ecf_unit_check": "The catalogue reader independently checks each release's median FLUX_B6/RATE_B6 after scaling.",
+    "measured_median_B6_flux_CGS_per_cps": 1.4359999941870348e-12,
+    "positive_B6_flux_and_rate_rows": 36189
+  },
+  "selection": "Full-only, native instrument & point-source quality, \u22655 net soft counts, flux/error\u22653, absent independent corroboration.",
+  "common_flux_units": "observed 0.2\u20132.0 keV erg cm^-2 s^-1",
+  "source_followup": "Independent repeat or secure external positions are still required for promotion. No selected-epoch stacking."
+}

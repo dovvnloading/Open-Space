@@ -14,6 +14,12 @@
   {
     "service": "TNS-replica-audit",
     "provider": "ANTARES catalogue inventory",
+    "archive_record_url": "https://api.antares.noirlab.edu/v1/catalogs/20",
+    "error": "404 Client Error: Not Found for url: https://api.antares.noirlab.edu/v1/catalogs/20"
+  },
+  {
+    "service": "TNS-replica-audit",
+    "provider": "ANTARES catalogue inventory",
     "url": "https://api.antares.noirlab.edu/v1/catalogs",
     "structured_metadata_excerpt": "17\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"PS1StarGalaxyCatalog\"}, \"id\": \"19\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/19\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"tns_public_objects\"}, \"id\": \"20\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/20\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"milliquas\"}, \"id\": \"21\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/21\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"vii_274_bzcat5\"}, \"id\": \"22\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/22\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"linear_ll\"}, \"id\": \"23\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/23\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"sdss_dr7\"}, \"id\": \"24\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/24\"}}, {\"type\": \"catalog\", \"attributes\": {\"name\": \"vsx\"}, \"id\": \"25\", \"links\": {\"self\": \"http://api.antares.noirlab.edu/v1/catalogs/25\"}}, {\"type\": \"catalog\", \"attrib",
     "explicitly_linked_snapshots": []
@@ -26,19 +32,42 @@
   },
   {
     "service": "TNS-replica-audit",
+    "provider": "Lasair TNS schema",
+    "url": "https://lasair-ztf.lsst.ac.uk/schema/tns/",
+    "error": "404 Client Error: Not Found for url: https://lasair-ztf.lsst.ac.uk/schema/tns/"
+  },
+  {
+    "service": "TNS-replica-audit",
+    "archive": "Zenodo",
+    "error": "400 Client Error: BAD REQUEST for url: https://zenodo.org/api/records?q=%22Transient+Name+Server%22&size=30"
+  },
+  {
+    "service": "TNS-replica-audit",
     "archive": "GAVO",
     "tables": []
   },
   {
     "service": "TNS-replica-audit",
-    "archive": "Zenodo",
-    "error": "400 Client Error: BAD REQUEST for url: https://zenodo.org/api/records?q=metadata.title%3A%22Transient+Name+Server%22+OR+metadata.title%3A%22TNS+public+objects%22&size=30&sort=mostrecent"
+    "archive": "NOIRLab",
+    "excluded_saved_query": "mydb.tns_obj_7660",
+    "reason": "user query result / subset rather than archive distribution"
   },
   {
     "service": "TNS-replica-audit",
-    "provider": "Lasair TNS schema",
-    "url": "https://lasair-ztf.lsst.ac.uk/schema/tns/",
-    "error": "404 Client Error: Not Found for url: https://lasair-ztf.lsst.ac.uk/schema/tns/"
+    "archive": "NOIRLab",
+    "excluded_saved_query": "mydb.all_tns_tdes_simple_5681",
+    "reason": "user query result / subset rather than archive distribution"
+  },
+  {
+    "service": "TNS-replica-audit",
+    "archive": "NOIRLab",
+    "excluded_saved_query": "mydb.all_tns_tde_simple_5681",
+    "reason": "user query result / subset rather than archive distribution"
+  },
+  {
+    "service": "TNS-replica-audit",
+    "archive": "NOIRLab",
+    "tables": []
   },
   {
     "service": "TNS-replica-audit",
@@ -52,41 +81,8 @@
   },
   {
     "service": "TNS-replica-audit",
-    "archive": "NOIRLab",
-    "tables": [
-      [
-        "mydb.tns_obj_7660",
-        "SELECT \n TOP 100 \n count(*)\n  FROM ls_dr10.tractor AS d,\n       "
-      ],
-      [
-        "mydb.all_tns_tdes_simple_5681",
-        "SELECT TOP 100 s.ra, s.dec, s.redshift, s.redshift_err, s.sparcl"
-      ],
-      [
-        "mydb.all_tns_tde_simple_5681",
-        "SELECT TOP 100 s.ra, s.dec, s.redshift, s.redshift_err, s.sparcl"
-      ]
-    ]
-  },
-  {
-    "service": "TNS-replica-audit",
-    "catalogue": "NOIRLab:mydb.tns_obj_7660",
-    "error": "ERROR: IllegalArgumentException: Table [ \"mydb\".\"tns_obj_7660\" ] is not found in TapSchema"
-  },
-  {
-    "service": "TNS-replica-audit",
-    "catalogue": "NOIRLab:mydb.all_tns_tdes_simple_5681",
-    "error": "missing TNS name and coordinates in ['name ra dec']"
-  },
-  {
-    "service": "TNS-replica-audit",
-    "catalogue": "NOIRLab:mydb.all_tns_tde_simple_5681",
-    "error": "missing TNS name and coordinates in ['name ra dec']"
-  },
-  {
-    "service": "TNS-replica-audit",
-    "candidate_distributions": 3,
-    "tested_distributions": 3,
+    "candidate_distributions": 0,
+    "tested_distributions": 0,
     "fields_with_matches": 0,
     "coverage_status": "partial or unavailable"
   }
