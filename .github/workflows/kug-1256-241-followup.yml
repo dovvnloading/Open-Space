@@ -1,0 +1,103 @@
+name: KUG 1256+241 multiwavelength follow-up
+on:
+  workflow_dispatch:
+    inputs:
+      refresh:
+        description: Re-fetch the first-pass public inputs before running the targeted checks
+        type: boolean
+        default: false
+  push:
+    branches: ['followup/kug-1256-241']
+    paths: ['.github/workflows/kug-1256-241-followup.yml']
+
+permissions:
+  contents: read
+concurrency:
+  group: kug-1256-241-followup
+  cancel-in-progress: false
+env:
+  STUDY: results/kug-1256-241-followup
+  OPENBLAS_NUM_THREADS: '1'
+  MPLBACKEND: Agg
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  collect:
+    if: github.ref == 'refs/heads/followup/kug-1256-241'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            results/kug-1256-241-followup
+            results/xmmsl2-erass1-rass
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install archive readers
+        run: python -m pip install -r "$STUDY/requirements.txt" > "$RUNNER_TEMP/pip.log"
+      - name: Restore or refresh the first-pass observations
+        env:
+          REFRESH: ${{ inputs.refresh || false }}
+        run: |
+          if [[ "$REFRESH" == true ]]; then
+            rm -rf -- "$STUDY/outputs"
+            python "$STUDY/collect.py"
+            python "$STUDY/snapshot.py"
+          else
+            git fetch --no-tags --depth=1 --filter=blob:none origin 62e019e47bff14aaae59b2e04a9d5f699eb0083d
+            git restore --source=62e019e47bff14aaae59b2e04a9d5f699eb0083d --worktree -- "$STUDY/outputs"
+            python "$STUDY/replay.py"
+          fi
+      - name: Check missing products and compare observing epochs
+        run: |
+          python "$STUDY/supplement.py"
+          python "$STUDY/compare_epochs.py"
+          python "$STUDY/timeline_plot.py"
+          python "$STUDY/snapshot.py"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kug-evidence
+          path: results/kug-1256-241-followup/outputs/
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    needs: collect
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Prepare output directory on the ephemeral checkout
+        run: rm -rf -- "$STUDY/outputs"
+      - uses: actions/download-artifact@v4
+        with:
+          name: kug-evidence
+          path: results/kug-1256-241-followup/outputs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Commit the input receipts and measurements
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- "$STUDY/outputs"
+          git diff --cached --quiet || git commit -m 'Record KUG 1256+241 archive evidence'
+          git push origin HEAD:refs/heads/followup/kug-1256-241
+      - name: Check the deposited timeline and verify repository claims
+        run: |
+          python "$STUDY/replay.py"
+          python -m open_space.verify > "$RUNNER_TEMP/verify.log" || { tail -80 "$RUNNER_TEMP/verify.log"; exit 1; }
+          tail -6 "$RUNNER_TEMP/verify.log"
+      - name: Run repository unit tests
+        if: success() || failure()
+        run: |
+          python -m pip install -r "$STUDY/requirements.txt" > "$RUNNER_TEMP/test-deps.log"
+          python -m unittest discover -s tests
+          python "$STUDY/spec_extra.py" --replay
