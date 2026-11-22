@@ -93,6 +93,17 @@ SC1 · [Every measured or inconclusive EW](evidence/sc1/ew-imaging/outcomes.csv)
 
 SC2 · [Every measured or inconclusive EW](evidence/sc2/ew-imaging/outcomes.csv) · [Tightest bounds and confirmed rows](evidence/sc2/ew-imaging/best.json) · [Native photometry and checksums](evidence/sc2/ew-imaging/native.jsonl.gz).
 
+The dedicated imaging-scout control preserves each target position and independently permutes the input spectra across targets at each wavelength. The replay checks every preliminary mock flux and uncertainty against its frozen fit before testing the assigned sky position for corroboration and redward continuum.
+
+| Release | Eligible target rows | Shuffled spectra | Preliminary mock peaks | Independently supported | EW lower bound measured | Lower bound >240 Å | Confirmed |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| SC1 | 1,479 | 1,479 | 70 | 4 | 4 | 0 | 0 |
+| SC2 | 5,102 | 5,102 | 2 | 2 | 0 | 0 | 0 |
+
+SC1 · [Mock draws and denominator](evidence/sc1/ew-imaging/scout-control/summary.json) · [Every preliminary mock line, its donor block and decision](evidence/sc1/ew-imaging/scout-control/assessments.jsonl.gz) · [Assigned-position photometry](evidence/sc1/ew-imaging/scout-control/native.jsonl.gz).
+
+SC2 · [Mock draws and denominator](evidence/sc2/ew-imaging/scout-control/summary.json) · [Every preliminary mock line, its donor block and decision](evidence/sc2/ew-imaging/scout-control/assessments.jsonl.gz) · [Assigned-position photometry](evidence/sc2/ew-imaging/scout-control/native.jsonl.gz).
+
 Every unresolved narrow He II / Lyα pair meeting the flux-ratio and spectral cuts, and every unresolved EW lead with a qualifying lower bound in the frozen first-pass register, entered the supplementary positional search of independent spectral catalogs. The table distinguishes successful catalog queries from attempts. Full rechecks preserve the original ledger and each revised decision.
 
 | Release | Eligible source / line hypotheses | Distinct positions | Rechecked hypotheses |
@@ -123,14 +134,14 @@ The endpoint audits give the positions, trial identifications and dispositions o
 
 | Release / system | First knot RA, Dec (deg) | Second knot RA, Dec (deg) | Observed line (Å) | Trial Lyα z | Disposition | Evidence or remaining ambiguity |
 |---|---|---|---:|---:|---|---|
-| SC1 / 44 | 197.779510, 51.198437 | 197.779739, 51.199913 | 4765.4 | 2.92107 | unresolved | Legacy query unavailable at secondary knot; direct imaging checks unavailable; foreground interpretation unresolved; independent redshift unavailable |
-| SC1 / 78 | 11.112092, -0.050852 | 11.113163, -0.049214 | 5422.5 | 3.46173 | unresolved | Legacy query unavailable at secondary knot; direct imaging checks unavailable; foreground interpretation unresolved; independent redshift unavailable; persistent detector/fibre response not excluded at both knots; primary knot has a competing counterpart redshift; association unresolved; secondary counterpart redshift disagrees; association needs review; secondary knot has a competing counterpart redshift; association unresolved; secondary knot wavelength agrees with a foreground transition at its HETDEX catalog redshift |
+| SC1 / 44 | 197.779510, 51.198437 | 197.779739, 51.199913 | 4765.4 | 2.92107 | unresolved | foreground interpretation unresolved; independent redshift unavailable |
+| SC1 / 78 | 11.112092, -0.050852 | 11.113163, -0.049214 | 5422.5 | 3.46173 | unresolved | foreground interpretation unresolved; independent redshift unavailable; persistent detector/fibre response not excluded at both knots; primary knot has a competing counterpart redshift; association unresolved; secondary counterpart redshift disagrees; association needs review; secondary knot has a competing counterpart redshift; association unresolved; secondary knot wavelength agrees with a foreground transition at its HETDEX catalog redshift |
 
 | Check on ranked features | SC1 | SC2 |
 |---|---:|---:|
 | NED cone searches with a valid response | 148 | 139 |
 | SIMBAD cone searches with a valid response | 148 | 139 |
-| Legacy Surveys cone searches with a valid response | 0 | 0 |
+| Legacy Surveys cone searches with a valid response | 2 | 0 |
 | Direct HSC cutouts with measured photometry | 30 | 29 |
 | Cube opened and target narrowband window tested | 163 | 411 |
 
