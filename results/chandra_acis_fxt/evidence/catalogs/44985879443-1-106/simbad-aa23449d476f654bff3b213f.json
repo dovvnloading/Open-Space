@@ -1,0 +1,17 @@
+{
+  "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=25000&QUERY=SELECT+b.main_id%2Cb.ra%2Cb.dec%2Cb.otype%2Cb.rvz_redshift%2Cb.coo_err_maj%2Ct.path%2Ct.is_candidate+FROM+basic+AS+b+LEFT+OUTER+JOIN+otypedef+AS+t+ON+b.otype%3Dt.otype+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C350.8916666667%2C58.7750000000%2C0.0394444444%29%29%3D1",
+  "attempts": [
+    {
+      "time_utc": "2026-11-22T10:07:47.130695+00:00",
+      "final_url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=25000&QUERY=SELECT+b.main_id%2Cb.ra%2Cb.dec%2Cb.otype%2Cb.rvz_redshift%2Cb.coo_err_maj%2Ct.path%2Ct.is_candidate+FROM+basic+AS+b+LEFT+OUTER+JOIN+otypedef+AS+t+ON+b.otype%3Dt.otype+WHERE+CONTAINS%28POINT%28%27ICRS%27%2Cb.ra%2Cb.dec%29%2CCIRCLE%28%27ICRS%27%2C350.8916666667%2C58.7750000000%2C0.0394444444%29%29%3D1",
+      "http_status": 200,
+      "body_file": "simbad-aa23449d476f654bff3b213f-bf7ff15960e7fad51f1b.bin",
+      "sha256": "bf7ff15960e7fad51f1b51bd32eef33509aaffaa780232cfd671c13a5399bc2d",
+      "size_bytes": 11986
+    }
+  ],
+  "ok": true,
+  "body_file": "simbad-aa23449d476f654bff3b213f-bf7ff15960e7fad51f1b.bin",
+  "sha256": "bf7ff15960e7fad51f1b51bd32eef33509aaffaa780232cfd671c13a5399bc2d",
+  "size_bytes": 11986
+}
