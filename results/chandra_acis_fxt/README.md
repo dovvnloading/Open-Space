@@ -1,8 +1,8 @@
 # Chandra ACIS fast X-ray transient search
 
-**Interim Chandra ACIS search covered 2,947 of 6,608 dated ObsIDs and 47.116454 Ms of eligible 60-second flare-start time.**
+**Interim Chandra ACIS search covered 3,680 of 6,608 dated ObsIDs and 59.174125 Ms of eligible 60-second flare-start time.**
 
-The deposited scans produced 20,755 real trigger rows. 176 passed the instrumental screen before counterpart review and cross-product deduplication. Required catalog checks and photometry finished in 2,779 observations. Worker completion depends on field complexity, catalog response times and calibration. A global discovery count awaits the full search and review.
+The deposited scans produced 23,579 real trigger rows. 221 passed the instrumental screen before counterpart review and cross-product deduplication. Required catalog checks and photometry finished in 3,468 observations. Worker completion depends on field complexity, catalog response times and calibration. A global discovery count awaits the full search and review.
 
 [Current exposure by duration, coverage and input checksums](evidence/primary_ingest/44985879443-1/PROGRESS.md) · [Measured priority flares](PRIORITY.md) · [Selection and reproduction commands](METHODS.md)
 
