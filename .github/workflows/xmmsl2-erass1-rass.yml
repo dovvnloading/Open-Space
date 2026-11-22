@@ -37,7 +37,7 @@ jobs:
           reuse=false
           if [[ "$REFRESH" != true ]] && git fetch -q --no-tags --depth=1 --filter=blob:none origin "$EVIDENCE"; then
             if git diff --quiet "$EVIDENCE" HEAD -- "$STUDY" \
-                ":(exclude)$STUDY/README.md" ":(exclude)$STUDY/decisions.py" ":(exclude)$STUDY/rass_hardness.py" ":(exclude)$STUDY/slew_images.py" ":(exclude)$STUDY/paper_context.py" ":(exclude)$OUT/rass_hardness" ":(exclude)$OUT/paper_context" ":(exclude)$OUT/slew_image_followup.json" \
+                ":(exclude)$STUDY/README.md" ":(exclude)$STUDY/decisions.py" ":(exclude)$STUDY/rass_hardness.py" ":(exclude)$STUDY/slew_images.py" ":(exclude)$STUDY/paper_context.py" ":(exclude)$STUDY/broker_cones.py" ":(exclude)$OUT/rass_hardness" ":(exclude)$OUT/paper_context" ":(exclude)$OUT/slew_image_followup.json" ":(exclude)$OUT/broker_cones.json" \
                 ":(exclude)$STUDY/source_decisions.csv" ":(exclude)$STUDY/published_event_review.csv" \
                 ":(exclude)$OUT/final_summary.json" ":(exclude)$OUT/final_source_register.csv" ":(exclude)$OUT/candidates.csv"; then
               reuse=true
@@ -233,10 +233,23 @@ jobs:
           name: 04-published-hosts
           path: results/xmmsl2-erass1-rass/outputs/published_hosts
       - name: Test ROSAT colours and record source decisions
+        env:
+          REUSE: ${{ needs.snapshot.outputs.reuse }}
         run: |
           pip install -r "$STUDY/requirements.txt"
-          python "$STUDY/rass_hardness.py" "$OUT"
-          python "$STUDY/paper_context.py" "$OUT"
+          if [[ "$REUSE" == true &&
+                "$(git rev-parse "HEAD:$STUDY/rass_hardness.py")" == 8e0827eaf105db424dbf8b16cb0629316ab26e25 &&
+                "$(git rev-parse "HEAD:$OUT/rass_hardness")" == fb118d425312a6155f3b845d06abd7253967cac7 &&
+                "$(git rev-parse "HEAD:$STUDY/paper_context.py")" == ce5198d49d88ab0c5e2b595a04ed77600302848e &&
+                "$(git rev-parse "HEAD:$OUT/paper_context")" == 10b0510d37b85baa7253ef62d621252aa56c6254 ]]; then
+            echo "Verified the archived spectral fits, publication rows and input receipts"
+          else
+            python "$STUDY/rass_hardness.py" "$OUT"
+            python "$STUDY/paper_context.py" "$OUT"
+          fi
+          python -m venv --system-site-packages "$RUNNER_TEMP/broker-env"
+          "$RUNNER_TEMP/broker-env/bin/python" -m pip install antares-client || echo "Broker client unavailable; record its import status"
+          "$RUNNER_TEMP/broker-env/bin/python" "$STUDY/broker_cones.py" "$OUT"
           python "$STUDY/slew_images.py" "$OUT"
           python "$STUDY/decisions.py" "$OUT"
       - uses: actions/upload-artifact@v4
@@ -247,6 +260,7 @@ jobs:
             results/xmmsl2-erass1-rass/outputs/rass_hardness
             results/xmmsl2-erass1-rass/outputs/paper_context
             results/xmmsl2-erass1-rass/outputs/slew_image_followup.json
+            results/xmmsl2-erass1-rass/outputs/broker_cones.json
             results/xmmsl2-erass1-rass/outputs/final*
             results/xmmsl2-erass1-rass/outputs/candidates.csv
           if-no-files-found: warn
