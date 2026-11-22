@@ -1,0 +1,84 @@
+{
+  "map_distributions": [
+    {
+      "mission": "ero",
+      "method": "eRODat DR1_eRASS1 band 024 UL_B",
+      "n": 16396,
+      "percentiles": [
+        0,
+        0.05,
+        0.5,
+        0.95,
+        1
+      ],
+      "flux_limit": [
+        2.936535775566536e-15,
+        1.8336154989197012e-14,
+        6.498928685825225e-14,
+        1.288561961999448e-13,
+        3.640550816027438e-13
+      ],
+      "exposure_s": [
+        53.88419342041016,
+        78.10818481445312,
+        144.73080444335938,
+        633.1665344238281,
+        11212.5244140625
+      ],
+      "counts": [
+        0.0,
+        0.0,
+        1.0,
+        5.0,
+        71.0
+      ]
+    },
+    {
+      "mission": "rass",
+      "method": "RASS native broad count and exposure maps; unsubtracted aperture",
+      "n": 49348,
+      "percentiles": [
+        0,
+        0.05,
+        0.5,
+        0.95,
+        1
+      ],
+      "flux_limit": [
+        5.490408304147842e-13,
+        1.3675943103968409e-12,
+        2.4135415835434892e-12,
+        2.8882828827856686e-11,
+        5.796096949831552e-09
+      ],
+      "exposure_s": [
+        0.038032978773117,
+        118.73671493530274,
+        396.8586730957031,
+        1371.3380004882806,
+        33192.48828125
+      ],
+      "counts": [
+        0.0,
+        8.0,
+        26.0,
+        610.6499999999942,
+        130685.0
+      ]
+    }
+  ],
+  "comparison_to_first_reduction": {
+    "ero": {
+      "valid_both_runs": 16396,
+      "newly_valid": 0,
+      "relative_difference_over_0p01": 0,
+      "max_relative_difference": 0.0
+    },
+    "rass": {
+      "valid_both_runs": 49345,
+      "newly_valid": 3,
+      "relative_difference_over_0p01": 88,
+      "max_relative_difference": 0.28045870080181823
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "label": "IRSA",
+  "url": "https://irsa.ipac.caltech.edu/TAP/sync",
+  "params": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "csv",
+    "QUERY": "SELECT TOP 1 designation,ra,dec FROM allwise_p3as_psd"
+  },
+  "method": "GET",
+  "data": null,
+  "status": 200,
+  "sha256": "8770af2cd1858e4fc3af75cf45faaef48c81c796d3a7b0e5fe62d96cba8ec809",
+  "final_url": "https://irsa.ipac.caltech.edu/TAP/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+1+designation%2Cra%2Cdec+FROM+allwise_p3as_psd",
+  "text": "designation,ra,dec\nJ172423.36-243336.6,261.0973435,-24.5601708\n"
+}
