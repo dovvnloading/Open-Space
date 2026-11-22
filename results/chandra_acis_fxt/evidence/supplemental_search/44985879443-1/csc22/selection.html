@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Chandra Source Catalog - CSC</title>
+<meta name="keywords" content="chandra, axaf, x-ray, astronomy, astrophysics, catalog">
+<meta name="description" content="The Chandra X-ray Observatory Source Catalog">
+<link rel="stylesheet" title="Stylesheet for CSC pages" href="/csc2.2/csc.css">
+<link rel="stylesheet" title="Stylesheet for CSC pages" media="print" href="/csc2.2/csc.print.css">
+<link rel="canonical" href="https://cxc.cfa.harvard.edu/csc/">
+<style>
+div.skyimage {
+  text-align: center;
+}
+
+      td.colname , td.colexample , td.coltype , td.colfitstype
+      {
+      font-family: Consolas, Monaco, Lucida Console,
+      Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
+      Courier New, monospace;
+      }
+
+      dl.advantages dt { font-variant: small-caps; font-weight: bold; }
+
+      /*
+      table.csctable { font-size: larger; }
+      */
+
+      table.csctable caption {
+        font-size: larger;
+        font-weight: bold;
+        /* font-variant: small-caps; */
+        color: #003366;
+        margin-top: 1em;
+        margin-bottom: 1em;
+      }
+
+      .obsolete { color: red; }
+
+      hr.sep { margin: 1em 5em; }
+
+/* for now try a three-column approach; how best to make it responsive? */
+/*  grid-template-columns: 1fr 1fr 1fr; */
+div.questions {
+  display: grid;
+  /* https://medium.com/samsung-internet-dev/common-responsive-layouts-with-css-grid-and-some-without-245a862f48df */
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+}
+
+/* separate out from questions just for now */
+div.sticky-questions {
+  display: flex;
+  position: sticky;
+  top: 0.5em;
+  margin-top: 1em;
+  padding: 1em 0.5em;
+  background: rgb(153 204 102 / 0.2);  /* green: 99CC66 with transparancy */
+  border-color: rgb(153 204 102 / 0.6);
+  border-radius: 0.7em;
+  border-style: solid;
+  border-width: 1px;
+  flex-flow: row wrap;
+}
+
+@media print {
+  div.sticky-questions {
+    display: none;
+  }
+}
+
+p.question {
+  /* float: left; */
+  font-family: sans-serif;
+  /* font-size: larger; */
+  font-variant: small-caps;  /* do we want this? */
+  margin-bottom: 0em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0em;
+  /* 
+  padding-bottom: 0.5em;
+  padding-right: 0.5em;
+  */
+  /* width: auto; */
+  /* width: 15em; */
+  text-align: center;
+}
+
+/*
+ * try colors from
+ *  http://contrast-finder.tanaguru.com/result.html?foreground=%23FFFFFF&background=%23FFB900&algo=HSV&ratio=4.5&isBackgroundTested=true&distanceSort=asc
+ */
+
+.question a {
+  background-color: #99CC66;
+  /* background-color: #9B645E; */
+  /* background-color: #CF6053; */
+  /* background-color: #996F2D; */
+  border-radius: 0.8em;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.75);
+  color: rgba(0, 0, 0, 0.8);
+  display: inline-block;
+  /* text-decoration: none;   - make it more obvious it is a link */
+  padding: 0.7em;
+}
+
+.question a:hover {
+
+  color: rgba(0, 0, 0, 1.0);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.75);
+}
+
+/* clearfix: see https://developer.mozilla.org/en-US/docs/Web/CSS/clear */
+div.questions::after {
+  clear: both;
+  content: " ";
+  display: block;
+}
+
+/* tweak the figure display */
+
+div.figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: smaller;
+}
+
+div.figure > div.caption {
+  margin-bottom: 0em;
+  margin-top: 0em;
+}
+
+div.figure > div.caption {
+  order: 1;
+  align-self: flex-start;
+}
+
+div.figure > div.caption {
+  border-width: 0 0 0 1em;
+  border-color: #99CC66;
+  border-style: solid;
+}
+
+
+/* temporary, only needed for AAS231 banner */
+.handout {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 400px;
+}
+
+/* can I label the screen blocks? */
+
+/***
+div.screen::before {
+  content: "Python";
+  position: relative;
+  left: 2em;
+  top: 0.8em;
+  padding: 0.2em 0.5em;
+  background: rgb(204 204 204);
+  border: 1px dashed black;
+  font-variant: small-caps;
+}
+***/
+
+div.screen::before {
+  display: block;
+  grid-column: 2;
+  grid-row: 1 / -1;
+  content: "Python";
+  text-align: center;
+  font-variant: small-caps;
+  writing-mode: vertical-lr;
+  background: #99CC66;
+  /* how can I map to the size of the wrapped highlight block?
+     for now use an obviously-different size */
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+div.screen {
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  grid-column: 1
+}
+    </style>
+<link rel="icon" href="/csc2.2/favicon.ico">
+<meta name="title" content="Chandra Source Catalog - CSC">
+<meta name="creator" content="SAO-HEA">
+<meta name="date" content="2026-09-24">
+<meta name="subject" content="The Chandra Source Catalog">
+<meta name="keywords" content="SI,Smithsonian,Smithsonian Institute">
+<meta name="keywords" content="CfA,SAO,Harvard-Smithsonian,Center for Astrophysics">
+<meta name="keywords" content="HEA,HEAD,High Energy Astrophysics Division">
+<style>html { display: none; }</style>
+<script>
+if (self == top) {
+  document.documentElement.style.display = 'block';
+} else {
+  top.location = self.location;
+}
+</script>
+</head>
+<body class="withnavbar"> 
+ 
+<!-- THIS FILE IS CREATED AUTOMATICALLY - DO NOT EDIT MANUALLY --> 
+<!-- SEE: /data/da/Docs/cscweb/csc2.2/index.xml --> 
+ 
+<header><nav> 
+<!-- START OF SmartSource Data Collector TAG -->
+<!-- Copyright (c) 1996-2013 Webtrends Inc.  All rights reserved. -->
+<!-- Version: 9.4.0 -->
+<!-- Tag Builder Version: 4.1  -->
+<!-- Created: 5/31/2013 5:43:55 PM -->
+<script src="/scripts/webtrends.js" type="text/javascript"></script>
+<!-- ----------------------------------------------------------------------------------- -->
+<!-- Warning: The two script blocks below must remain inline. Moving them to an external -->
+<!-- JavaScript include file can cause serious problems with cross-domain tracking.      -->
+<!-- ----------------------------------------------------------------------------------- -->
+<script type="text/javascript">
+//<![CDATA[
+var _tag=new WebTrends();
+_tag.dcsGetId();
+//]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+_tag.dcsCustom=function(){
+// Add custom parameters here.
+//_tag.DCSext.param_name=param_value;
+}
+_tag.dcsCollect();
+//]]>
+</script>
+<noscript>
+<div><img alt="DCSIMG" id="DCSIMG" width="1" height="1" src="//logs1.smithsonian.museum/dcscdsyh8bdzpxna72mrneyep_4s6j/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=9.4.0&amp;dcssip=www.cxc.cfa.harvard.edu"/></div>
+</noscript>
+<!-- END OF SmartSource Data Collector TAG -->
+
+<div id="cxcheader">
+	
+  <div id="cxcheaderleft">
+       <a href="/index.html"> <img style="min-width: 100%" id="spacecraft"
+	src="/incl/withoutrays.png" alt="Chandra X-Ray Observatory
+	(CXC)"></a>
+  </div>
+  <div id="cxcheaderright">
+	  <ul>
+   	      <li><a href="/ciao/">Data Analysis</a></li>   
+	      <li><a  href="/cda/">Archive</a></li>          
+	      <li><a  href="/proposer/">Proposer</a></li>    
+	      <li><a href="/index.html">CXC Home</a></li>  
+	  </ul>              
+
+	  <ul>
+               <li><a href="https://chandra.harvard.edu/">For the Public</a></li>
+	       <li><a href="/cal/">Instruments & Calibration</a></li>
+	  </ul>        
+
+  </div>
+</div>
+
+
+ 
+</nav><div class="hideme"><a href="#navtext" accesskey="s" title="Skip to the navigation links">Skip to the navigation links</a></div>
+<div class="topbarcontainer withnavbar">
+<div class="topbar"> 
+<div class="searchbar">
+<script>
+  (function() {
+    var cx = '010635440115680569175:vwutsmn8ip8';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+<span class="searchbar">
+  Search http://cxc.harvard.edu/csc2.2/
+</span>
+<gcse:searchbox-only></gcse:searchbox-only>
+<span class="searchbar">
+  <a href="/help/">Contact the CXC HelpDesk</a>
+</span>
+
+</div>
+ 
+</div>
+<div class="topbar">
+<div class="lastmodbar">Last modified: 24 September 2026</div>
+<br class="hideme"><div class="urlbar">URL: https://cxc.cfa.harvard.edu/csc/index.html</div>
+</div>
+</div></header><main id="content"><div class="wrap">
+
+    <div class="pagetitle">
+      <h1>
+<em>Chandra</em> Source Catalog Release 2 (CSC 2.2)</h1>
+      <div class="qlinkbar">
+	<a href="news.html">What's New?</a> |
+	<a href="caveats.html">Watch Out</a> 
+      </div>
+    </div>
+
+    
+    
+    <hr class="sep">
+
+    <div class="sectionlist">
+<section class="section"><h2 id="intro">Introduction</h2>
+<p>
+	  The Chandra Source Catalog version 2.2 (<abbr title="Chandra    Source Catalog">CSC</abbr> 2.2) was released in October 2026
+	  (for information previous versions of the catalog, see the
+	  <a href="versions.html">Catalog Version
+	  History</a>).  It includes measured properties for
+	  <strong>432,713 unique compact and extended X-ray
+	  sources</strong> and more than <strong>1.4 million
+	  individual detections</strong> observed with either
+	  <a title="Dictionary: ACIS: Advanced Camera for Imaging and Spectroscopy" href="/ciao/dictionary/acis.html">ACIS</a> or
+	  <a title="Dictionary: HRC: High Resolution Camera" href="/ciao/dictionary/hrc.html">HRC-I</a>
+	  observations released publicly through the end of 2023.  The
+	  total sky coverage is approximately 786 square degrees.
+	</p>
+<p>
+	  CSC 2.2 consists of two types of data products: database
+	  tables (e.g. positions, significance, fluxes, hardness
+	  ratios, and variability indices) and file-based data
+	  products (e.g., images, PHA spectra, light curves, and
+	  sensitivity maps).  <a href="#comparison">Figure
+	  1</a> shows the location of the observations in CSC
+	  2.2.
+	</p>
+<p>
+	  The
+	  <a href="https://www.doi.org/the-identifier/what-is-a-doi/">DOI</a>
+	  for the catalog is: <span class="doi">doi:10.25574/csc2</span>
+	</p>
+<div id="comparison" class="figure">
+<div class="caption screenmedia"><h3>Figure 1: Detections in CSC 2.2</h3></div>
+<div class="thumbnail">
+<div class="screenmedia">
+<a href="imgs/skyplot.csc22.png"><img alt="[Thumbnail image: Aitoff projection of the sky in equatorial coordinates showing the location of stacks in CSC 2.1 as circles. The source color indicates the number of observations in each stack, and ranges from blue through yellow to red. Most stacks are blue, indicating 1 to 4 observations, although a few stacks are red, with more than 30 observations in the stack. The size of the circle indicates the number of detections in each stack, and most have 100 or less detections, but a few have 1000 or more (most of these are around the center of the image, indicating the galactic center).]" src="imgs/skyplot.csc22.thumb.png"></a><p class="figures">[Version: <a href="imgs/skyplot.csc22.png">full-size</a>]</p>
+</div>
+<div class="printmedia"><img alt="[Print media version: Aitoff projection of the sky in equatorial coordinates showing the location of stacks in CSC 2.1 as circles. The source color indicates the number of observations in each stack, and ranges from blue through yellow to red. Most stacks are blue, indicating 1 to 4 observations, although a few stacks are red, with more than 30 observations in the stack. The size of the circle indicates the number of detections in each stack, and most have 100 or less detections, but a few have 1000 or more (most of these are around the center of the image, indicating the galactic center).]" src="imgs/skyplot.csc22.png"></div>
+</div>
+<h3 class="caption printmedia">Figure 1: Detections in CSC 2.2</h3>
+<div class="caption">
+	    <p>
+	      CSC 2.2 detections shown in galactic coordinates, so the
+	      center of the image shows the Galactic plane.  Each circle
+	      represents an <a title="Dictionary: Stack" href="dictionary/entries.html#stack">observation
+	      stack</a>, with the size of the circle indicating
+	      the total number of observations included in the stack and
+	      the color the number of
+	      <a href="organization.html#detections">detections</a>
+	      in each stack.
+	    </p>
+	  </div>
+</div>
+<div class="clearfloat"></div>
+<hr></section><section class="section"><h2 id="layout">Structure of CSC 2.2</h2>
+<p>
+	  CSC 2.2 is hierarchical. Source/detection properties are
+	  provided at three different levels: <a href="#structure-master">master level</a>, <a href="#structure-stack">stack level</a>, and <a href="#structure-obs">per-observation level</a>.  This
+	  hierarchy results from the fact that source detection is
+	  performed upon <a title="Dictionary: Stack" href="dictionary/entries.html#stack">stacking</a>
+	  individual <em>Chandra</em> observations to improve the signal-to-noise
+	  ratio. The detected source position and the associated source
+	  region are used to compute the <a href="columns/fluxes.html">photometric</a>, <a href="columns/spectral_properties.html">spectral</a>, and
+	  <a href="columns/variability.html">variability</a>
+	  properties of the source, both in the stack detection and in the
+	  individual observations contributing to the stack. However,
+	  observations are stacked together only if they have pointings
+	  within 1 arcminute of each other. Consequently, a single source can
+	  be detected in more than one stack. The master level properties
+	  are the best possible estimate of source properties, given the
+	  information contained in all contributing stacks. A full
+	  description of the catalog organization can be found in the
+	  <a href="organization.html">Catalog Organization</a>
+	  page.
+	</p>
+<div id="structure-master" class="figure">
+<div class="caption screenmedia"><h3>Figure 2: Master Level</h3></div>
+<div class="nothumbnail">
+<div class="screenmedia"><img alt="[There is a dotted outline to represent the covered region of the sky. There are four sources, labelled 1 (green), 2 (yellow), 3 (red), and 4 (blue).]" src="imgs/hierarchy-master.png"></div>
+<div class="printmedia"><img alt="[Print media version: There is a dotted outline to represent the covered region of the sky. There are four sources, labelled 1 (green), 2 (yellow), 3 (red), and 4 (blue).]" src="imgs/hierarchy-master.png"></div>
+</div>
+<h3 class="caption printmedia">Figure 2: Master Level</h3>
+<div class="caption">
+	    <p>
+	      The master level properties are the best-possible estimate
+	      of source properties given the information contained in all
+	      contributing stacks.
+	    </p>
+	  </div>
+</div>
+<div id="structure-stack" class="figure">
+<div class="caption screenmedia"><h3>Figure 3: Stack Level</h3></div>
+<div class="nothumbnail">
+<div class="screenmedia"><img alt='[There are two areas of overlapping sky, labelled "stack 1" and "stack 2". Sources 1, 2, and 4 are only present in one of the stacks (source 1 is in stack 2 and sources 2 and 4 are in stack 1). Source 3 is found in both stacks and so there are two separate stack detections.]' src="imgs/hierarchy-stack.png"></div>
+<div class="printmedia"><img alt='[Print media version: There are two areas of overlapping sky, labelled "stack 1" and "stack 2". Sources 1, 2, and 4 are only present in one of the stacks (source 1 is in stack 2 and sources 2 and 4 are in stack 1). Source 3 is found in both stacks and so there are two separate stack detections.]' src="imgs/hierarchy-stack.png"></div>
+</div>
+<h3 class="caption printmedia">Figure 3: Stack Level</h3>
+<div class="caption">
+	    <p>
+	      Overlapping observations are stacked if their pointing
+	      is within 1 arcminute of each other.
+	    </p>
+	    <p>
+	      A source may be detected in multiple stacks.
+	    </p>
+	  </div>
+</div>
+<div id="structure-obs" class="figure">
+<div class="caption screenmedia"><h3>Figure 4: Observation Level</h3></div>
+<div class="nothumbnail">
+<div class="screenmedia"><img alt="[There are three separate observations (obs 1, obs 2, and obs 3) where obs 1 and obs 2 are part of stack 1 and obs 3 is in stack 2. There are now per-observation detections for source 3 (as it is found in both stacks) and per-observation detections for sources 2 and 4, as they are observed in observations 1 and 2.]" src="imgs/hierarchy-obs.png"></div>
+<div class="printmedia"><img alt="[Print media version: There are three separate observations (obs 1, obs 2, and obs 3) where obs 1 and obs 2 are part of stack 1 and obs 3 is in stack 2. There are now per-observation detections for source 3 (as it is found in both stacks) and per-observation detections for sources 2 and 4, as they are observed in observations 1 and 2.]" src="imgs/hierarchy-obs.png"></div>
+</div>
+<h3 class="caption printmedia">Figure 4: Observation Level</h3>
+<div class="caption">
+	    <p>
+	      A source may be detected in multiple <em>Chandra</em>
+	      observations.
+	    </p>
+	  </div>
+</div></section>
+</div>
+    
+  </div></main><aside id="navbar"><div id="navtext" class="wrap"> 
+<!-- THIS FILE IS CREATED AUTOMATICALLY - DO NOT EDIT MANUALLY -->
+<!-- SEE: /data/da/Docs/cscweb/csc2.2/navbar.xml -->
+
+<!--htdig_noindex-->
+<div>
+<p class="navimage"><a href="/csc2.2/"><img src="imgs/csc_logo_navbar.jpg" alt="[Chandra Source Catalog logo]"></a></p>
+    <div class="navlink_rel2">
+      <span class="site">CSC</span>
+       
+      <a href="/csc2.2/index.html" class="site">2.2</a>
+       
+      <a href="/csc2.1/index.html" class="site">2.1</a>
+       
+      <a href="/csc2.0/index.html" class="site">2.0</a>
+       
+      <a href="/csc1/index.html" class="site">1.1</a>
+    </div>
+  <hr>
+<div class="navbar-sticky">
+    <div class="navlink_special">
+      <ul>
+	<li>
+	  <a href="news.html">What is new in CSC 2.2</a>
+	</li>
+	<li>
+	  <a href="data_products/index.html">CSC 2.2 Data Products</a>
+	</li>
+	<li>
+	  <a href="download/index.html">How to access CSC 2.2</a>
+	</li>
+	<li>
+	  <a href="caveats.html">Caveats and Limitations</a>
+	</li>
+	<li>
+	  <a href="cite.html">Acknowledge &amp; Cite CSC</a>
+	</li>
+      </ul>
+    </div>
+  </div>
+<ul id="navlist">
+<li><span class="navheader" onclick="void(0)"><a class="selectedheading" href="index.html">CSC Homepage</a></span></li>
+<li>
+<span class="navheader" onclick="void(0)"><span class="heading">About the Catalog</span><span class="hassubmenu">➤</span></span><ul>      
+	<li><a href="about.html">Overview</a></li>
+	<li><a href="organization.html">Catalog
+	Organization</a></li>
+        <li><a href="releases_dbaccess.html">Catalog Release Views
+        and Database Access Views</a></li>
+
+        <li><a href="char.html">Catalog Statistical Characterization</a></li>
+	<li>
+	  <a href="caveats.html">Caveats and Limitations</a>
+	</li>
+	<li><a href="versions.html">Version History</a></li>
+      </ul>
+</li>
+<li>
+<span class="navheader" onclick="void(0)"><span class="heading">Creating the Catalog</span><span class="hassubmenu">➤</span></span><ul>
+	<li><a href="proc/index.html">Catalog Processing</a></li>
+	<li><a href="data_products/index.html">Data Products</a></li>
+	<li><a href="/cda/index.html">Chandra Data Archive</a></li>
+      </ul>
+</li>
+<li>
+<span class="navheader" onclick="void(0)"><span class="heading">Using the Catalog</span><span class="hassubmenu">➤</span></span><ul>
+        <li><a href="download.html">Data Access</a></li>
+        <li><a href="threads">Threads</a></li>
+
+        <li><a href="gui/intro.html">CSCview GUI</a></li>
+        <li><a href="cli/index.html">CSC CLI</a></li>
+	<li><a href="csc_crossmatches.html">CSC crossmatches</a></li>
+      </ul>
+</li>
+<li>
+<span class="navheader" onclick="void(0)"><span class="heading">Catalog Columns</span><span class="hassubmenu">➤</span></span><ul>
+	<li>
+	  Master Sources Table: <br>
+	  <a href="columns/master_alpha.html">alphabetical</a> |
+	  <a href="columns/master.html">by context</a>	  
+	</li>
+
+	<li>
+	  Stacked Observation Detections Table: <br>
+	  <a href="columns/stack_alpha.html">alphabetical</a> |
+	  <a href="columns/stack.html">by context</a>	  
+	</li>
+
+	<li>
+	  Per-Observation Detections Table: <br>
+	  <a href="columns/persrc_alpha.html">alphabetical</a> | 
+	  <a href="columns/persrc.html">by context</a> 
+	</li>
+
+	<li>
+	  <a href="columns/limsens.html">Limiting Sensitivity Properties</a>
+	</li>
+	<li>
+	  <a href="columns/chs_properties.html">Convex-Hull Source Properties</a>
+	</li>
+      </ul>
+</li>
+<li>
+<span class="navheader" onclick="void(0)"><span class="heading">Column Descriptions</span><span class="hassubmenu">➤</span></span><ul>
+        <li><a href="columns/positions.html">Position and
+      Position Errors</a></li>
+        <li><a href="columns/flags.html">Source Flags</a></li>
+        <li><a href="columns/srcextent.html">Source Extent and Errors</a></li>
+	<li><a href="columns/ebands.html">Energy Bands</a></li>
+        <li><a href="columns/fluxes.html">Source Fluxes</a></li>         
+        <li><a href="columns/significance.html">Source Significance</a></li>
+        <li><a href="columns/spectral_properties.html">Spectral Properties</a></li>
+	<li><a href="columns/variability.html">Source Variability</a></li>
+        
+      </ul>
+</li>
+<li>
+<span class="navheader" onclick="void(0)"><span class="heading">References</span><span class="hassubmenu">➤</span></span><ul>
+	<li>
+<a title="CSC Dictionary" href="dictionary/index.html">Dictionary</a>
+</li>
+        <li><a href="faq">FAQs</a></li>
+        <li><a title="CSC How and Why Topic" href="why/index.html">How and Why Topics</a></li>
+
+	<li><a href="memos/index.html">Memos</a></li>
+	<li><a href="publications/index.html">Publications</a></li>
+      </ul>
+</li>
+<li>
+<span class="navheader" onclick="void(0)"><span class="heading">Useful Links: Chandra</span><span class="hassubmenu">➤</span></span><ul>
+	
+         <li><a href="http://cda.harvard.edu/chaser">ChaSeR</a></li>
+         <li><a href="/ciao">Chandra Interactive Analysis of Observations (CIAO)</a></li>
+	 <li><a href="http://tgcat.mit.edu/">Transmission Grating Catalog and Archive (TGCat)</a></li>
+      </ul>
+</li>
+<li>
+<span class="navheader" onclick="void(0)"><span class="heading">Useful Links: High Energy</span><span class="hassubmenu">➤</span></span><ul>
+	
+        <li><a href="http://xmm-catalog.irap.omp.eu/">XMM-Newton Catalog</a></li>
+        <li><a href="http://heasarc.gsfc.nasa.gov/cgi-bin/W3Browse/w3browse.pl">HEASARC Browse</a></li>
+        
+      </ul>
+</li>
+<li>
+<span class="navheader" onclick="void(0)"><span class="heading">Useful Links: Databases</span><span class="hassubmenu">➤</span></span><ul>
+	
+        <li><a href="http://simbad.u-strasbg.fr/simbad/">Simbad Astronomical Database</a></li>
+        <li><a href="http://nedwww.ipac.caltech.edu/">NASA/IPAC Extragalactic Database (NED)</a></li>
+        <li><a href="http://www.sdss.org/">Sloan Digital Sky Survey (SDSS)</a></li>
+      </ul>
+</li>
+<li>
+<span class="navheader" onclick="void(0)"><span class="heading">Useful Links: Data Access</span><span class="hassubmenu">➤</span></span><ul>
+	
+        <li><a href="http://vizier.u-strasbg.fr/viz-bin/VizieR">Vizier</a></li>
+	<li><a href="https://sky.esa.int">ESA Sky</a></li>
+      </ul>
+</li>
+</ul>
+    <div class="navlink_rel2">
+      <span class="site">CSC</span>
+       
+      <a href="/csc2.2/index.html" class="site">2.2</a>
+       
+      <a href="/csc2.1/index.html" class="site">2.1</a>
+       
+      <a href="/csc2.0/index.html" class="site">2.0</a>
+       
+      <a href="/csc1/index.html" class="site">1.1</a>
+    </div>
+  <hr>
+<div class="navbar-not-sticky">
+    <div class="navlink_special">
+      <ul>
+	<li>
+	  <a href="news.html">What is new in CSC 2.2</a>
+	</li>
+	<li>
+	  <a href="data_products/index.html">CSC 2.2 Data Products</a>
+	</li>
+	<li>
+	  <a href="download/index.html">How to access CSC 2.2</a>
+	</li>
+	<li>
+	  <a href="caveats.html">Caveats and Limitations</a>
+	</li>
+	<li>
+	  <a href="cite.html">Acknowledge &amp; Cite CSC</a>
+	</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!--/htdig_noindex-->
+
+ 
+ 
+</div></aside><footer><div class="bottombar withnavbar"><div class="lastmodbar">Last modified: 24 September 2026</div></div> 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16357924-8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16357924-8');
+</script>
+ 
+ 
+<div id="cxcfooter">
+	<div id="cxcfooterleft">
+<!--	<img src="/incl/cxcfooterCXCicon.png" alt="CXC logo" >
+                <a href="http://www.si.edu"><img src="/incl/cxc_saologo.png" alt = "Smithsonian Institute"></a>-->
+
+	
+ <a href="/index.html"><img src="/incl/cxcfooterCXCicon.png" alt = "Smithsonian Institute"></a>
+ <a href="http://www.si.edu"><img src="/incl/smithsonian.png" alt = "Smithsonian Institute"></a>
+	</div>
+
+	<div id="cxcfooterright">
+
+        <ul>
+          <li><a href="/index.html">CXC Home</a></li>
+<!--          <li><a href="/cdo/cxcstaff/cxcstaff.php">CXC Scientists</a></li>-->
+	  <li><a href="/cdo/observatory_links.html#NASA">NASA Archives
+	  and Centers</a></li> 
+          <li><a href="/cdo/observatory_links.html">Astronomy Links</a></li>
+          <li><a href="http://icxc.harvard.edu/">iCXC (CXC only)</a></li>
+          <li><a href="http://cxc.harvard.edu/help/">Helpdesk</a></li>
+        </ul>
+<p><em>The Chandra X-Ray Center (CXC) is operated for NASA by
+          the Smithsonian Astrophysical Observatory.</em> 60 Garden
+          Street, Cambridge, MA 02138 USA.&nbsp;&nbsp; Email: &nbsp;
+          <a style="color:white;"
+          href="mailto:cxchelp@head.cfa.harvard.edu">cxchelp@head.cfa.harvard.edu</a>
+          Smithsonian Institution, Copyright &copy; 1998-2026.  All
+	  rights reserved.
+</p>
+
+        </div> 
+<!--
+<div style="float:right;width: 8%;">
+<a href="http://si.edu"><img src="/incl/smithsonian.png" alt="SI logo"
+style="float:right"></a>
+
+</div>
+-->
+</div>
+
+
+ 
+</footer>
+</body>
+</html>

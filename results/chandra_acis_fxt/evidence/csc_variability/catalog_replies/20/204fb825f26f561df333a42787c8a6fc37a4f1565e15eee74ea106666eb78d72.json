@@ -1,0 +1,88 @@
+{
+  "endpoint": "https://cda.cfa.harvard.edu/csccli/getProperties",
+  "parameters": {
+    "coordFormat": "decimal",
+    "floatFormat": "native",
+    "outputFormat": "votable",
+    "query": "SELECT m.name,m.ra,m.dec,m.err_ellipse_r0,m.err_ellipse_r1,m.err_ellipse_ang,m.significance,m.likelihood_class,m.conf_flag,m.sat_src_flag,m.streak_src_flag,m.acis_num,m.hrc_num,m.flux_aper_b FROM master_source m WHERE (m.dec BETWEEN -28.929921376 AND -28.921587843) AND (m.ra BETWEEN 266.466543707 AND 266.476065027)",
+    "version": "rel2.2"
+  },
+  "response": {
+    "bytes": 4692,
+    "gzip_sha256": "8ffd74bd418498cb689e7b31012e287da6aac3ae714c68b8da43ca250e42384d",
+    "last_modified": null,
+    "raw_entity_gzip": "204fb825f26f561df333a42787c8a6fc37a4f1565e15eee74ea106666eb78d72.xml.gz",
+    "resolved_url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+-28.929921376+AND+-28.921587843%29+AND+%28m.ra+BETWEEN+266.466543707+AND+266.476065027%29&coordFormat=decimal&floatFormat=native&outputFormat=votable",
+    "retrieved_utc": "2026-11-22T08:45:10.178373+00:00",
+    "sha256": "00508f643b914f0affdac68b64c887afd2232a68ed9a1d97ee91e0b8c73ec2e2",
+    "url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+-28.929921376+AND+-28.921587843%29+AND+%28m.ra+BETWEEN+266.466543707+AND+266.476065027%29&coordFormat=decimal&floatFormat=native&outputFormat=votable"
+  },
+  "row_count": 4,
+  "rows": [
+    {
+      "acis_num": "72",
+      "conf_flag": "F",
+      "dec": "-28.925591620935325",
+      "err_ellipse_ang": "83.11332610284478",
+      "err_ellipse_r0": "1.310559550804742",
+      "err_ellipse_r1": "0.6473323624623261",
+      "flux_aper_b": "4.5129566875156E-15",
+      "hrc_num": "5",
+      "likelihood_class": "MARGINAL",
+      "name": "2CXO J174552.1-285532",
+      "ra": "266.46700667431105",
+      "sat_src_flag": "F",
+      "significance": "3.696969696969773",
+      "streak_src_flag": "F"
+    },
+    {
+      "acis_num": "117",
+      "conf_flag": "T",
+      "dec": "-28.92336943195719",
+      "err_ellipse_ang": "69.08799942925276",
+      "err_ellipse_r0": "0.2714204064620137",
+      "err_ellipse_r1": "0.2531783985300449",
+      "flux_aper_b": "1.2350257453178E-15",
+      "hrc_num": "5",
+      "likelihood_class": "TRUE",
+      "name": "2CXO J174552.2-285523",
+      "ra": "266.46752676548715",
+      "sat_src_flag": "F",
+      "significance": "13.696105899897034",
+      "streak_src_flag": "F"
+    },
+    {
+      "acis_num": "121",
+      "conf_flag": "F",
+      "dec": "-28.92689674775089",
+      "err_ellipse_ang": "73.88225020977211",
+      "err_ellipse_r0": "0.3802833782502202",
+      "err_ellipse_r1": "0.29766529241203554",
+      "flux_aper_b": "2.7277391014007E-15",
+      "hrc_num": "5",
+      "likelihood_class": "TRUE",
+      "name": "2CXO J174553.0-285536",
+      "ra": "266.4707957784656",
+      "sat_src_flag": "F",
+      "significance": "5.575757575757569",
+      "streak_src_flag": "F"
+    },
+    {
+      "acis_num": "121",
+      "conf_flag": "F",
+      "dec": "-28.92641331937246",
+      "err_ellipse_ang": "83.4054535915215",
+      "err_ellipse_r0": "0.59706875111469",
+      "err_ellipse_r1": "0.3879809572068009",
+      "flux_aper_b": "0.0",
+      "hrc_num": "5",
+      "likelihood_class": "MARGINAL",
+      "name": "2CXO J174554.0-285535",
+      "ra": "266.475173201527",
+      "sat_src_flag": "F",
+      "significance": "5.1764705882355075",
+      "streak_src_flag": "F"
+    }
+  ],
+  "status": "ok"
+}

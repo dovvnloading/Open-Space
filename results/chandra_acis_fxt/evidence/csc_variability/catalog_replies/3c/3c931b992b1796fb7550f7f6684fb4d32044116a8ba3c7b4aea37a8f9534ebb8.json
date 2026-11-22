@@ -1,0 +1,40 @@
+{
+  "endpoint": "https://cda.cfa.harvard.edu/csccli/getProperties",
+  "parameters": {
+    "coordFormat": "decimal",
+    "floatFormat": "native",
+    "outputFormat": "votable",
+    "query": "SELECT m.name,m.ra,m.dec,m.err_ellipse_r0,m.err_ellipse_r1,m.err_ellipse_ang,m.significance,m.likelihood_class,m.conf_flag,m.sat_src_flag,m.streak_src_flag,m.acis_num,m.hrc_num,m.flux_aper_b FROM master_source m WHERE (m.dec BETWEEN -50.938679643 AND -50.930346110) AND (m.ra BETWEEN 196.310149237 AND 196.323372580)",
+    "version": "rel2.2"
+  },
+  "response": {
+    "bytes": 3583,
+    "gzip_sha256": "3781bd7ac57c2a018ecb28e139aafe8f6c859d827dbdaf54d40e44e2e4d164da",
+    "last_modified": null,
+    "raw_entity_gzip": "3c931b992b1796fb7550f7f6684fb4d32044116a8ba3c7b4aea37a8f9534ebb8.xml.gz",
+    "resolved_url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+-50.938679643+AND+-50.930346110%29+AND+%28m.ra+BETWEEN+196.310149237+AND+196.323372580%29&coordFormat=decimal&floatFormat=native&outputFormat=votable",
+    "retrieved_utc": "2026-11-22T13:47:56.323246+00:00",
+    "sha256": "3cf6ccbff952c968d7eb20c051018d2862ca448df81a09f61c729d0d22b25d86",
+    "url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+-50.938679643+AND+-50.930346110%29+AND+%28m.ra+BETWEEN+196.310149237+AND+196.323372580%29&coordFormat=decimal&floatFormat=native&outputFormat=votable"
+  },
+  "row_count": 1,
+  "rows": [
+    {
+      "acis_num": "1",
+      "conf_flag": "F",
+      "dec": "-50.934550015061994",
+      "err_ellipse_ang": "145.3768264010831",
+      "err_ellipse_r0": "1.8776591720707558",
+      "err_ellipse_r1": "0.8053977938548256",
+      "flux_aper_b": "0.0",
+      "hrc_num": "0",
+      "likelihood_class": "TRUE",
+      "name": "2CXO J130515.9-505604",
+      "ra": "196.31640655084402",
+      "sat_src_flag": "F",
+      "significance": "2.756756756756738",
+      "streak_src_flag": "F"
+    }
+  ],
+  "status": "ok"
+}

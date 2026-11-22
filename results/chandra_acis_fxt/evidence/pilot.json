@@ -1,0 +1,85 @@
+{
+  "count_targets": [
+    10000,
+    30000,
+    60000
+  ],
+  "git_commit": "4663ab98666b5d9b5b116478f61d6cae5d49e104",
+  "inventory_sha256": "172b673a39b7c2bca8b82294563a62a7cb5807fdcc393a8da27d31e56f3c518e",
+  "observations": [
+    {
+      "errors": [],
+      "obsid": 25268,
+      "reused": true,
+      "scored_products": [
+        {
+          "control_trials": 24,
+          "exposure_60s_start_support_s": 9961.395158326475,
+          "filename": "acisf25268N002_evt2.fits.gz",
+          "followup_processed": true,
+          "injection_trials": 12,
+          "real_triggers": 0,
+          "sha256": "7516a22300d11f2dabb446b55171600f08008d0d5b8a61f7a7178e524bcb459d"
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "errors": [],
+      "obsid": 26074,
+      "reused": true,
+      "scored_products": [
+        {
+          "control_trials": 24,
+          "exposure_60s_start_support_s": 15208.55843034799,
+          "filename": "acisf26074N002_evt2.fits.gz",
+          "followup_processed": true,
+          "injection_trials": 12,
+          "real_triggers": 0,
+          "sha256": "73f24f03df1b8f03ac2a7aea4f4ef4e1efb954841a76e5c9a2aff9b4451bb84a"
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "errors": [],
+      "obsid": 26557,
+      "reused": true,
+      "scored_products": [
+        {
+          "control_trials": 24,
+          "exposure_60s_start_support_s": 9657.739637587396,
+          "filename": "acisf26557N002_evt2.fits.gz",
+          "followup_processed": true,
+          "injection_trials": 12,
+          "real_triggers": 0,
+          "sha256": "20d810d9a9125b6821ee8e7cf4233ac0c88e1ecac91b25a2dba9b8d09fca668d"
+        }
+      ],
+      "status": "complete"
+    }
+  ],
+  "run_attempt": "1",
+  "run_id": "44985879443",
+  "selected": [
+    {
+      "catalog_event_count": 10001,
+      "catalog_exposure_s": 10133.545120071,
+      "count_target": 10000,
+      "obsid": 25268
+    },
+    {
+      "catalog_event_count": 30014,
+      "catalog_exposure_s": 15386.206597834,
+      "count_target": 30000,
+      "obsid": 26074
+    },
+    {
+      "catalog_event_count": 60000,
+      "catalog_exposure_s": 9835.4603692044,
+      "count_target": 60000,
+      "obsid": 26557
+    }
+  ],
+  "selection": "Distinct positive-count entries with catalog exposure >5000 s; nearest count to each target in order, then lowest ObsID."
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VOTABLE version="1.3" xmlns="http://www.ivoa.net/xml/VOTable/v1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/votable-1.3.xsd">
+<RESOURCE type="results">
+<INFO name="QUERY_STATUS" value="OK"/>
+<INFO name="PROVIDER" value="CDS">SIMBAD TAP Service</INFO>
+<INFO name="QUERY" value="SELECT b.main_id,b.ra,b.dec,b.otype,b.rvz_redshift,b.coo_err_maj,t.path,t.is_candidate FROM basic AS b LEFT OUTER JOIN otypedef AS t ON b.otype=t.otype WHERE CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',313.6416666667,44.3333333333,0.0394444444))=1"/>
+<TABLE name="result_S1795340665441">
+<FIELD arraysize="*" datatype="char" name="main_id" ucd="meta.id;meta.main" utype="mango:MangoObject.identifier">
+<DESCRIPTION>Main identifier for an object</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="ra" ucd="pos.eq.ra;meta.main" unit="deg" utype="mango:EpochPosition.longitude[CS.spaceSys=ICRS CT.epoch=J2000]">
+<DESCRIPTION>Right ascension</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="dec" ucd="pos.eq.dec;meta.main" unit="deg" utype="mango:EpochPosition.latitude[CS.spaceSys=ICRS CT.epoch=J2000]">
+<DESCRIPTION>Declination</DESCRIPTION>
+</FIELD>
+<FIELD arraysize="*" datatype="char" name="otype" ucd="src.class" utype="mango:Label.text[CT.vocabulary=https://www.ivoa.net/rdf/uat#classification]">
+<DESCRIPTION>Object type</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="rvz_redshift" ucd="src.redshift">
+<DESCRIPTION>redshift</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="coo_err_maj" ucd="phys.angSize.smajAxis;pos.errorEllipse;pos.eq" unit="mas" utype="mango:EpochPosition.errors.position/mango:error.PErrorEllipse.semiMajorAxis[CS.spaceSys=ICRS CT.epoch=J2000]">
+<DESCRIPTION>Coordinate error major axis</DESCRIPTION>
+</FIELD>
+<FIELD arraysize="*" datatype="char" name="path">
+<DESCRIPTION>Otype path in the hierarchical classification</DESCRIPTION>
+</FIELD>
+<FIELD datatype="short" name="is_candidate">
+<DESCRIPTION>True if the object type is a candidate (non-confirmed)</DESCRIPTION>
+<VALUES null='-32768'/>
+</FIELD>
+<DATA>
+<BINARY>
+<STREAM encoding='base64'>
+AAAAFzJNQVNTIEoyMDU0MjE3Nys0NDIwNTEwQHOZc8GpPQRARix8BnoOVwAAAANP
+cip/+AAAAAAAAD5QyykAAAANKiA+IFkqTyA+IE9yKgAAAAAAFzJNQVNTIEoyMDU0
+MzE3MSs0NDIwNTEwQHOaHTw2ETNARix7VcnXfwAAAANZKk9/+AAAAAAAAEK0AAAA
+AAAHKiA+IFkqTwAAAAAAFzJNQVNTIEoyMDU0NDI5OSs0NDE5MzYwQHOa3dl/YrZA
+RinQZTd6YQAAAANZKk9/+AAAAAAAAEKgAAAAAAAHKiA+IFkqTwAAAAAAFzJNQVNT
+IEoyMDU0MjgwMSs0NDIxMzQ5QHOZ3h9nFSlARi4LYLYLYQAAAANZKj9/+AAAAAAA
+AEKgAAAAAAAHKiA+IFkqTwABAAAAFzJNQVNTIEoyMDU0NDEzNCs0NDIwMTQ5QHOa
+wafMqdhARiszBJi8PAAAAANZKj9/+AAAAAAAAEJwAAAAAAAHKiA+IFkqTwABAAAA
+FzJNQVNTIEoyMDU0NDA5OSs0NDIxNTQ4QHOau9tt3X1ARi7ApbupogAAAANPcip/
++AAAAAAAAD4EMsoAAAANKiA+IFkqTyA+IE9yKgAAAAAAFzJNQVNTIEoyMDU0MjE5
+MCs0NDIwMTI4QHOZdddGpLJARisiGhtMnwAAAANZKj9/+AAAAAAAAD+OscQAAAAH
+KiA+IFkqTwABAAAAFzJNQVNTIEoyMDU0NDcwNys0NDE5NDgxQHObI2nBZu5ARio+
+5NDIRwAAAANMUD9/+AAAAAAAAD2j1woAAAANKiA+IEV2KiA+IExQKgABAAAAFzJN
+QVNTIEoyMDU0MjMwMis0NDE5MTU0QHOZiPggrZ5ARikUgSjqNwAAAANPcio/Adsd
+5hGAADzsv7EAAAANKiA+IFkqTyA+IE9yKgAAAAAAB0ZISyA1MTlAc5ohgc+ugUBG
+Kzo9dHIiAAAAA1kqT3/4AAAAAAAAPYQYkwAAAAcqID4gWSpPAAAAAAAcR2FpYSBE
+UjMgMjE2Mjk2MTYxMDYyNDA0NTU2OEBzmkfEuopaQEYq7QjEqqwAAAADWSo/f/gA
+AAAAAAA9je0pAAAAByogPiBZKk8AAQ==
+</STREAM>
+</BINARY>
+</DATA>
+</TABLE>
+</RESOURCE>
+</VOTABLE>

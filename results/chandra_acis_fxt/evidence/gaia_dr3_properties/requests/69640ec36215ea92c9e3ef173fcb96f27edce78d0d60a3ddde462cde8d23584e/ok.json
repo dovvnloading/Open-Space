@@ -1,0 +1,40 @@
+{
+  "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+  "fields": [
+    "source_id",
+    "solution_id",
+    "classifier_name",
+    "best_class_name",
+    "best_class_score"
+  ],
+  "http": {
+    "attempts": [
+      {
+        "body_file": "gaia-0c3c38bbf497b4cd889f05cd-268aa0781cddb1a0fa3a.bin",
+        "final_url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=2000&QUERY=SELECT+source_id%2Csolution_id%2Cclassifier_name%2Cbest_class_name%2Cbest_class_score+FROM+gaiadr3.vari_classifier_result+WHERE+source_id+IN+%285940106763006643968%2C5940106763014970624%2C5940200462002525952%2C5943107776926975744%2C5969990733184488448%2C5970177886323870848%2C5976051099485714432%2C6081253956869136512%29",
+        "http_status": 200,
+        "sha256": "268aa0781cddb1a0fa3a81aefc72411033d866116833174209ded41a85a5d4cd",
+        "size_bytes": 4089,
+        "time_utc": "2026-11-22T14:21:39.597985+00:00"
+      }
+    ],
+    "body_file": "gaia-0c3c38bbf497b4cd889f05cd-268aa0781cddb1a0fa3a.bin",
+    "ok": true,
+    "sha256": "268aa0781cddb1a0fa3a81aefc72411033d866116833174209ded41a85a5d4cd",
+    "size_bytes": 4089,
+    "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=2000&QUERY=SELECT+source_id%2Csolution_id%2Cclassifier_name%2Cbest_class_name%2Cbest_class_score+FROM+gaiadr3.vari_classifier_result+WHERE+source_id+IN+%285940106763006643968%2C5940106763014970624%2C5940200462002525952%2C5943107776926975744%2C5969990733184488448%2C5970177886323870848%2C5976051099485714432%2C6081253956869136512%29"
+  },
+  "ids": [
+    "5940106763006643968",
+    "5940106763014970624",
+    "5940200462002525952",
+    "5943107776926975744",
+    "5969990733184488448",
+    "5970177886323870848",
+    "5976051099485714432",
+    "6081253956869136512"
+  ],
+  "query": "SELECT source_id,solution_id,classifier_name,best_class_name,best_class_score FROM gaiadr3.vari_classifier_result WHERE source_id IN (5940106763006643968,5940106763014970624,5940200462002525952,5943107776926975744,5969990733184488448,5970177886323870848,5976051099485714432,6081253956869136512)",
+  "run_attempt": "45027895492-1",
+  "table": "gaiadr3.vari_classifier_result"
+}

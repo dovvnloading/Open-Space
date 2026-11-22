@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VOTABLE version="1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.ivoa.net/xml/VOTable/v1.3" xmlns:stc="http://www.ivoa.net/xml/STC/v1.30" xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/STC/v1.30 http://www.ivoa.net/xml/STC/v1.30">
+  <RESOURCE type="results">
+    <INFO name="QUERY_STATUS" value="OK"/>
+    <TABLE>
+      <FIELD name="designation" datatype="char" arraysize="*" ID="col_0" ucd="meta.id;meta.main">
+        <DESCRIPTION>WISE source designation</DESCRIPTION>
+      </FIELD>
+      <FIELD name="ra" datatype="double" ID="col_1" irsa_format="11.7f" precision="F7" ucd="pos.eq.ra;meta.main" unit="deg">
+        <DESCRIPTION>right ascension (J2000)</DESCRIPTION>
+      </FIELD>
+      <FIELD name="dec" datatype="double" ID="col_2" irsa_format="11.7f" precision="F7" ucd="pos.eq.dec;meta.main" unit="deg">
+        <DESCRIPTION>declination (J2000)</DESCRIPTION>
+      </FIELD>
+      <FIELD name="sigra" datatype="double" ID="col_3" irsa_format="8.4f" precision="F4" ucd="pos.errorEllipse" unit="arcsec">
+        <DESCRIPTION>uncertainty in RA</DESCRIPTION>
+      </FIELD>
+      <FIELD name="sigdec" datatype="double" ID="col_4" irsa_format="8.4f" precision="F4" ucd="pos.errorEllipse" unit="arcsec">
+        <DESCRIPTION>uncertainty in DEC</DESCRIPTION>
+      </FIELD>
+      <FIELD name="w1mpro" datatype="float" ID="col_5" irsa_format="7.3f" precision="F3" ucd="phot.mag" unit="mag">
+        <DESCRIPTION>instrumental profile-fit photometry magnitude, band 1</DESCRIPTION>
+      </FIELD>
+      <FIELD name="w1sigmpro" datatype="float" ID="col_6" irsa_format="5.3f" precision="F3" ucd="stat.error" unit="mag">
+        <DESCRIPTION>instrumental profile-fit photometry flux uncertainty in mag units, band 1</DESCRIPTION>
+      </FIELD>
+      <FIELD name="w2mpro" datatype="float" ID="col_7" irsa_format="7.3f" precision="F3" ucd="phot.mag" unit="mag">
+        <DESCRIPTION>instrumental profile-fit photometry magnitude, band 2</DESCRIPTION>
+      </FIELD>
+      <FIELD name="w2sigmpro" datatype="float" ID="col_8" irsa_format="5.3f" precision="F3" ucd="stat.error" unit="mag">
+        <DESCRIPTION>instrumental profile-fit photometry flux uncertainty in mag units, band 2</DESCRIPTION>
+      </FIELD>
+      <FIELD name="w3mpro" datatype="float" ID="col_9" irsa_format="7.3f" precision="F3" ucd="phot.mag" unit="mag">
+        <DESCRIPTION>instrumental profile-fit photometry magnitude, band 3</DESCRIPTION>
+      </FIELD>
+      <FIELD name="w3sigmpro" datatype="float" ID="col_10" irsa_format="5.3f" precision="F3" ucd="stat.error" unit="mag">
+        <DESCRIPTION>instrumental profile-fit photometry flux uncertainty in mag units, band 3</DESCRIPTION>
+      </FIELD>
+      <FIELD name="w4mpro" datatype="float" ID="col_11" irsa_format="7.3f" precision="F3" ucd="phot.mag" unit="mag">
+        <DESCRIPTION>instrumental profile-fit photometry magnitude, band 4</DESCRIPTION>
+      </FIELD>
+      <FIELD name="w4sigmpro" datatype="float" ID="col_12" irsa_format="5.3f" precision="F3" ucd="stat.error" unit="mag">
+        <DESCRIPTION>instrumental profile-fit photometry flux uncertainty in mag units, band 4</DESCRIPTION>
+      </FIELD>
+      <FIELD name="w1snr" datatype="double" ID="col_13" irsa_format="8.1f" precision="F1" ucd="stat.snr">
+        <DESCRIPTION>instrumental profile-fit photometry S/N ratio, band 1</DESCRIPTION>
+      </FIELD>
+      <FIELD name="w2snr" datatype="double" ID="col_14" irsa_format="8.1f" precision="F1" ucd="stat.snr">
+        <DESCRIPTION>instrumental profile-fit photometry S/N ratio, band 2</DESCRIPTION>
+      </FIELD>
+      <FIELD name="w3snr" datatype="double" ID="col_15" irsa_format="8.1f" precision="F1" ucd="stat.snr">
+        <DESCRIPTION>instrumental profile-fit photometry S/N ratio, band 3</DESCRIPTION>
+      </FIELD>
+      <FIELD name="w4snr" datatype="double" ID="col_16" irsa_format="8.1f" precision="F1" ucd="stat.snr">
+        <DESCRIPTION>instrumental profile-fit photometry S/N ratio, band 4</DESCRIPTION>
+      </FIELD>
+      <FIELD name="ph_qual" datatype="char" arraysize="*" ID="col_17" ucd="meta.code.qual">
+        <DESCRIPTION>photometric quality of each band (A=highest, U=upper limit)</DESCRIPTION>
+      </FIELD>
+      <FIELD name="cc_flags" datatype="char" arraysize="*" ID="col_18" ucd="meta.code">
+        <DESCRIPTION>prioritized artifacts affecting the source in each band</DESCRIPTION>
+      </FIELD>
+      <FIELD name="ext_flg" datatype="long" ID="col_19" ucd="stat.probability">
+        <DESCRIPTION>probability that source morphology is not consistent with single PSF</DESCRIPTION>
+      </FIELD>
+      <FIELD name="nb" datatype="long" ID="col_20" ucd="meta.number;stat.fit.param">
+        <DESCRIPTION>number of blend components used in each fit</DESCRIPTION>
+      </FIELD>
+      <FIELD name="na" datatype="long" ID="col_21" ucd="meta.code">
+        <DESCRIPTION>active deblend flag (=1 if actively deblended)</DESCRIPTION>
+      </FIELD>
+      <FIELD name="var_flg" datatype="char" arraysize="*" ID="col_22" ucd="stat.probabillity">
+        <DESCRIPTION>probability that flux varied in any band greater than amount expected from unc.s</DESCRIPTION>
+      </FIELD>
+      <DATA>
+        <TABLEDATA>
+          <TR>
+            <TD>J190222.13-365541.0</TD>
+            <TD>285.5922403</TD>
+            <TD>-36.9280778</TD>
+            <TD>0.0469</TD>
+            <TD>0.0387</TD>
+            <TD>9.033</TD>
+            <TD>0.025</TD>
+            <TD>8.975</TD>
+            <TD>0.024</TD>
+            <TD>8.855</TD>
+            <TD>0.045</TD>
+            <TD>7.316</TD>
+            <TD></TD>
+            <TD>43.0</TD>
+            <TD>44.7</TD>
+            <TD>23.9</TD>
+            <TD>1.9</TD>
+            <TD>AAAU</TD>
+            <TD>hhhH</TD>
+            <TD>0</TD>
+            <TD>2</TD>
+            <TD>1</TD>
+            <TD>nnnn</TD>
+          </TR>
+          <TR>
+            <TD>J190222.45-365538.5</TD>
+            <TD>285.5935739</TD>
+            <TD>-36.9273667</TD>
+            <TD>0.1479</TD>
+            <TD>0.1359</TD>
+            <TD>11.101</TD>
+            <TD>0.103</TD>
+            <TD>10.897</TD>
+            <TD>0.099</TD>
+            <TD>10.467</TD>
+            <TD>0.174</TD>
+            <TD>8.035</TD>
+            <TD></TD>
+            <TD>10.6</TD>
+            <TD>11.0</TD>
+            <TD>6.2</TD>
+            <TD>-1.1</TD>
+            <TD>AABU</TD>
+            <TD>dHHH</TD>
+            <TD>0</TD>
+            <TD>2</TD>
+            <TD>1</TD>
+            <TD>nnnn</TD>
+          </TR>
+        </TABLEDATA>
+      </DATA>
+    </TABLE>
+  </RESOURCE>
+</VOTABLE>

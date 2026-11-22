@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE version="1.4" xmlns="http://www.ivoa.net/xml/VOTable/v1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/votable-1.4.xsd">
+<RESOURCE type="results">
+
+<INFO name="JOBID" value="39818576-e65d-11f1-88af-bc97e148b76b-O" ucd="meta.id;meta.query"/>
+<INFO name="JOBNAME" value=""/>
+<INFO name="QUERY_STATUS" value="OK"/>
+<INFO name="QUERY" value="SELECT source_id,ra,dec,ref_epoch,pmra,pmdec,pmra_error,pmdec_error,ra_error,dec_error,parallax,parallax_error,ruwe,phot_g_mean_mag FROM gaiadr3.gaia_source WHERE CONTAINS(POINT(&#039;ICRS&#039;,ra,dec),CIRCLE(&#039;ICRS&#039;,194.2166666667,23.5000000000,0.0644444444))=1" ucd="meta.query"/>
+
+<PARAM name="CITATION" ucd="meta.bib" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/credits">
+<DESCRIPTION>How to cite and acknowledge Gaia:</DESCRIPTION>
+</PARAM>
+<PARAM name="RELEASE" ucd="meta.version" datatype="char" arraysize="*" value="Gaia DR3">
+<DESCRIPTION>Gaia data release</DESCRIPTION>
+</PARAM>
+<PARAM name="HELP" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/archive">
+<DESCRIPTION>Tutorials, documentation, and help:</DESCRIPTION>
+</PARAM>
+<PARAM name="ISSUES" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/known-issues">
+<DESCRIPTION>Known issues in the data:</DESCRIPTION>
+</PARAM>
+<PARAM name="DATA" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia/data-access">
+<DESCRIPTION>Gaia data:</DESCRIPTION>
+</PARAM>
+<PARAM name="TERMS" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/esdc/terms-and-conditions">
+<DESCRIPTION>Terms and conditions for use of Gaia data:</DESCRIPTION>
+</PARAM>
+<PARAM name="HOME" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia">
+<DESCRIPTION>Gaia mission home:</DESCRIPTION>
+</PARAM>
+<PARAM name="PUBLISHER" ucd="meta.id;meta.curation" datatype="char" arraysize="*" value="ESA/Gaia/DPAC">
+<DESCRIPTION>Dataset publisher</DESCRIPTION>
+</PARAM>
+<PARAM name="CREATOR" ucd="meta.ref" datatype="char" arraysize="*" value="Gaia Collaboration">
+<DESCRIPTION>Dataset creator</DESCRIPTION>
+</PARAM>
+
+<COOSYS ID="GAIADR3" epoch="J2016.0" system="ICRS" />
+
+<RESOURCE>
+  <COOSYS ID="t1004264-coosys-1" epoch="J2016.0" system="ICRS"/>
+</RESOURCE>
+<TABLE>
+<FIELD ID="SOURCE_ID" datatype="long" name="source_id" ucd="meta.id">
+<DESCRIPTION>Unique source identifier (unique within a particular Data Release)</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="ra" ref="t1004264-coosys-1" ucd="pos.eq.ra;meta.main" unit="deg" utype="stc:AstroCoords.Position3D.Value3.C1">
+<DESCRIPTION>Right ascension</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="dec" ref="t1004264-coosys-1" ucd="pos.eq.dec;meta.main" unit="deg" utype="stc:AstroCoords.Position3D.Value3.C2">
+<DESCRIPTION>Declination</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="ref_epoch" ucd="meta.ref;time.epoch" unit="yr" utype="stc:AstroCoords.Time.TimeInstant">
+<DESCRIPTION>Reference epoch</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="pmra" ucd="pos.pm;pos.eq.ra" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Value3.C1">
+<DESCRIPTION>Proper motion in right ascension direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="pmdec" ucd="pos.pm;pos.eq.dec" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Value3.C2">
+<DESCRIPTION>Proper motion in declination direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="pmra_error" ucd="stat.error;pos.pm;pos.eq.ra" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Error3.C1">
+<DESCRIPTION>Standard error of proper motion in right ascension direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="pmdec_error" ucd="stat.error;pos.pm;pos.eq.dec" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Error3.C2">
+<DESCRIPTION>Standard error of proper motion in declination direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="ra_error" ucd="stat.error;pos.eq.ra" unit="mas" utype="stc:AstroCoords.Position3D.Error3.C1">
+<DESCRIPTION>Standard error of right ascension</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="dec_error" ucd="stat.error;pos.eq.dec" unit="mas" utype="stc:AstroCoords.Position3D.Error3.C2">
+<DESCRIPTION>Standard error of declination</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="parallax" ucd="pos.parallax.trig" unit="mas">
+<DESCRIPTION>Parallax</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="parallax_error" ucd="stat.error;pos.parallax.trig" unit="mas">
+<DESCRIPTION>Standard error of parallax</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="ruwe" ucd="stat.error">
+<DESCRIPTION>Renormalised unit weight error</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="phot_g_mean_mag" ucd="phot.mag;em.opt" unit="mag">
+<DESCRIPTION>G-band mean magnitude</DESCRIPTION>
+</FIELD>
+<DATA>
+<BINARY2>
+<STREAM encoding='base64'>
+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
+N/h9BRK7PLl8QD+Ax2RBY3/M
+</STREAM>
+</BINARY2>
+</DATA>
+</TABLE>
+</RESOURCE>
+<RESOURCE type="meta" utype="adhoc:service" name="ancillary">
+    <DESCRIPTION>Retrieve DataLink file containing ancillary data for source</DESCRIPTION>
+    <PARAM name="standardID" datatype="char" arraysize="*" value="ivo://ivoa.net/std/DataLink#links-1.0"/>
+    <PARAM name="accessURL" datatype="char" arraysize="*" value="https://gea.esac.esa.int/data-server/datalink/links"/>
+    <PARAM name="contentType" datatype="char" arraysize="*" value="application/x-votable+xml;content=datalink"/>
+    <GROUP name="inputParams">
+        <PARAM name="ID"  datatype="long"  value="" ref="SOURCE_ID"/>
+        <PARAM name="RELEASE" datatype="char" arraysize="*" value="Gaia DR3"/>
+    </GROUP>
+</RESOURCE>
+</VOTABLE>

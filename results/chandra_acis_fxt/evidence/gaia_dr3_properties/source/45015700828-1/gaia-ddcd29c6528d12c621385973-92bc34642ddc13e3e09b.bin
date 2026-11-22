@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE version="1.4" xmlns="http://www.ivoa.net/xml/VOTable/v1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/votable-1.4.xsd">
+<RESOURCE type="results">
+
+<INFO name="JOBID" value="a719627e-e66a-11f1-88af-bc97e148b76b-O" ucd="meta.id;meta.query"/>
+<INFO name="JOBNAME" value=""/>
+<INFO name="QUERY_STATUS" value="OK"/>
+<INFO name="QUERY" value="SELECT source_id,solution_id,phot_g_mean_mag,bp_rp,parallax,parallax_error,pmra,pmra_error,pmdec,pmdec_error,astrometric_params_solved,ruwe,visibility_periods_used,astrometric_excess_noise,duplicated_source,phot_variable_flag,has_epoch_photometry,has_xp_continuous,has_xp_sampled,has_rvs,has_mcmc_gspphot,in_qso_candidates,in_galaxy_candidates,libname_gspphot,classprob_dsc_combmod_star,classprob_dsc_combmod_galaxy,classprob_dsc_combmod_quasar,teff_gspphot,teff_gspphot_lower,teff_gspphot_upper,logg_gspphot,logg_gspphot_lower,logg_gspphot_upper,mh_gspphot,mh_gspphot_lower,mh_gspphot_upper,distance_gspphot,distance_gspphot_lower,distance_gspphot_upper,azero_gspphot,azero_gspphot_lower,azero_gspphot_upper,ag_gspphot,ag_gspphot_lower,ag_gspphot_upper,ebpminrp_gspphot,ebpminrp_gspphot_lower,ebpminrp_gspphot_upper FROM gaiadr3.gaia_source WHERE source_id IN (3165956153504568960,3209535365593047424,3344245331204187776,3956837478702863744,4055739679280253056,4055739683558787840,4056444947198280064,4056444947245130112,4056444947245168384,4056444951538337920,4057100466575572480,4057308274300878592,4057476087230626048,4057476843149555584,4057478561139817600,4057482856100148992,4057489036557798272,4060923051914326912,4060923051921489920,4060923056235823232,4060923056235824512,4066751150713659776,4066751666109935744,4074366235100770944,4074366235103068288,4074366235116065024,4094785639210429056,4094785643500292352,4260018498589134464,4260019426285756672,4260022656101341568,4266145522852989568,4266164661210924160,4293508660685641472,4293508660685641728,4516427084096755584,4657982261299408896,4657982261299674112,4657982261300895872,4657982261300900096)" ucd="meta.query"/>
+
+<PARAM name="CITATION" ucd="meta.bib" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/credits">
+<DESCRIPTION>How to cite and acknowledge Gaia:</DESCRIPTION>
+</PARAM>
+<PARAM name="RELEASE" ucd="meta.version" datatype="char" arraysize="*" value="Gaia DR3">
+<DESCRIPTION>Gaia data release</DESCRIPTION>
+</PARAM>
+<PARAM name="HELP" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/archive">
+<DESCRIPTION>Tutorials, documentation, and help:</DESCRIPTION>
+</PARAM>
+<PARAM name="ISSUES" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/known-issues">
+<DESCRIPTION>Known issues in the data:</DESCRIPTION>
+</PARAM>
+<PARAM name="DATA" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia/data-access">
+<DESCRIPTION>Gaia data:</DESCRIPTION>
+</PARAM>
+<PARAM name="TERMS" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/esdc/terms-and-conditions">
+<DESCRIPTION>Terms and conditions for use of Gaia data:</DESCRIPTION>
+</PARAM>
+<PARAM name="HOME" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia">
+<DESCRIPTION>Gaia mission home:</DESCRIPTION>
+</PARAM>
+<PARAM name="PUBLISHER" ucd="meta.id;meta.curation" datatype="char" arraysize="*" value="ESA/Gaia/DPAC">
+<DESCRIPTION>Dataset publisher</DESCRIPTION>
+</PARAM>
+<PARAM name="CREATOR" ucd="meta.ref" datatype="char" arraysize="*" value="Gaia Collaboration">
+<DESCRIPTION>Dataset creator</DESCRIPTION>
+</PARAM>
+
+
+<TABLE>
+<FIELD ID="SOURCE_ID" datatype="long" name="source_id" ucd="meta.id">
+<DESCRIPTION>Unique source identifier (unique within a particular Data Release)</DESCRIPTION>
+</FIELD>
+<FIELD datatype="long" name="solution_id" ucd="meta.version">
+<DESCRIPTION>Solution Identifier</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="phot_g_mean_mag" ucd="phot.mag;em.opt" unit="mag">
+<DESCRIPTION>G-band mean magnitude</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="bp_rp" ucd="phot.color;em.opt.B;em.opt.R" unit="mag">
+<DESCRIPTION>BP - RP colour</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="parallax" ucd="pos.parallax.trig" unit="mas">
+<DESCRIPTION>Parallax</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="parallax_error" ucd="stat.error;pos.parallax.trig" unit="mas">
+<DESCRIPTION>Standard error of parallax</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="pmra" ucd="pos.pm;pos.eq.ra" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Value3.C1">
+<DESCRIPTION>Proper motion in right ascension direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="pmra_error" ucd="stat.error;pos.pm;pos.eq.ra" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Error3.C1">
+<DESCRIPTION>Standard error of proper motion in right ascension direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="pmdec" ucd="pos.pm;pos.eq.dec" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Value3.C2">
+<DESCRIPTION>Proper motion in declination direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="pmdec_error" ucd="stat.error;pos.pm;pos.eq.dec" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Error3.C2">
+<DESCRIPTION>Standard error of proper motion in declination direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="short" name="astrometric_params_solved" ucd="meta.number">
+<DESCRIPTION>Which parameters have been solved for?</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="ruwe" ucd="stat.error">
+<DESCRIPTION>Renormalised unit weight error</DESCRIPTION>
+</FIELD>
+<FIELD datatype="short" name="visibility_periods_used" ucd="meta.number">
+<DESCRIPTION>Number of visibility periods used in Astrometric solution</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="astrometric_excess_noise" ucd="stat.value" unit="mas">
+<DESCRIPTION>Excess noise of the source</DESCRIPTION>
+</FIELD>
+<FIELD datatype="boolean" name="duplicated_source" ucd="meta.code.status">
+<DESCRIPTION>Source with multiple source identifiers</DESCRIPTION>
+</FIELD>
+<FIELD arraysize="*" datatype="char" name="phot_variable_flag" ucd="meta.code;src.var">
+<DESCRIPTION>Photometric variability flag</DESCRIPTION>
+</FIELD>
+<FIELD datatype="boolean" name="has_epoch_photometry" ucd="meta.code.status">
+<DESCRIPTION>Flag indicating the availability of epoch photometry for this source</DESCRIPTION>
+</FIELD>
+<FIELD datatype="boolean" name="has_xp_continuous" ucd="meta.code.status">
+<DESCRIPTION>Flag indicating the availability of mean BP/RP spectrum in continuous representation for this source</DESCRIPTION>
+</FIELD>
+<FIELD datatype="boolean" name="has_xp_sampled" ucd="meta.code.status">
+<DESCRIPTION>Flag indicating the availability of mean BP/RP spectrum in sampled form for this source</DESCRIPTION>
+</FIELD>
+<FIELD datatype="boolean" name="has_rvs" ucd="meta.code.status">
+<DESCRIPTION>Flag indicating the availability of mean RVS spectrum for this source</DESCRIPTION>
+</FIELD>
+<FIELD datatype="boolean" name="has_mcmc_gspphot" ucd="meta.code.status">
+<DESCRIPTION>Flag indicating the availability of GSP-Phot MCMC samples for this source</DESCRIPTION>
+</FIELD>
+<FIELD datatype="boolean" name="in_qso_candidates" ucd="meta.code.status">
+<DESCRIPTION>Flag indicating the availability of additional information in the QSO candidates table</DESCRIPTION>
+</FIELD>
+<FIELD datatype="boolean" name="in_galaxy_candidates" ucd="meta.code.status">
+<DESCRIPTION>Flag indicating the availability of additional information in the galaxy candidates table</DESCRIPTION>
+</FIELD>
+<FIELD arraysize="*" datatype="char" name="libname_gspphot" ucd="meta.note">
+<DESCRIPTION>Name of library that achieves the highest mean log-posterior in MCMC samples and was used to derive GSP-Phot parameters in this table</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="classprob_dsc_combmod_star" ucd="stat.probability">
+<DESCRIPTION>Probability from DSC-Combmod of being a single star (but not a white dwarf) (data used: BP/RP spectrum, photometry, astrometry)</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="classprob_dsc_combmod_galaxy" ucd="stat.probability">
+<DESCRIPTION>Probability from DSC-Combmod of being a galaxy (data used: BP/RP spectrum, photometry, astrometry)</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="classprob_dsc_combmod_quasar" ucd="stat.probability">
+<DESCRIPTION>Probability from DSC-Combmod of being a quasar (data used: BP/RP spectrum, photometry, astrometry)</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="teff_gspphot" ucd="phys.temperature.effective" unit="K">
+<DESCRIPTION>Effective temperature from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="teff_gspphot_lower" ucd="phys.temperature.effective;stat.min" unit="K">
+<DESCRIPTION>Lower confidence level (16%) of effective temperature from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="teff_gspphot_upper" ucd="phys.temperature.effective;stat.max" unit="K">
+<DESCRIPTION>Upper confidence level (84%) of effective temperature from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="logg_gspphot" ucd="phys.gravity" unit="log(cm.s**-2)">
+<DESCRIPTION>Surface gravity from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="logg_gspphot_lower" ucd="phys.gravity;stat.min" unit="log(cm.s**-2)">
+<DESCRIPTION>Lower confidence level (16%) of surface gravity from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="logg_gspphot_upper" ucd="phys.gravity;stat.max" unit="log(cm.s**-2)">
+<DESCRIPTION>Upper confidence level (84%) of surface gravity from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="mh_gspphot" ucd="phys.abund.Z" unit="'dex'">
+<DESCRIPTION>Iron abundance from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="mh_gspphot_lower" ucd="phys.abund.Z;stat.min" unit="'dex'">
+<DESCRIPTION>Lower confidence level (16%) of iron abundance from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="mh_gspphot_upper" ucd="phys.abund.Z;stat.max" unit="'dex'">
+<DESCRIPTION>Upper confidence level (84%) of iron abundance from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="distance_gspphot" ucd="pos.distance;pos.eq" unit="pc">
+<DESCRIPTION>Distance from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="distance_gspphot_lower" ucd="pos.distance;pos.eq" unit="pc">
+<DESCRIPTION>Lower confidence level (16%) of distance from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="distance_gspphot_upper" ucd="pos.distance;pos.eq" unit="pc">
+<DESCRIPTION>Upper confidence level (84%) of distance from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="azero_gspphot" ucd="phys.absorption;em.opt" unit="mag">
+<DESCRIPTION>Monochromatic extinction $A_0$ at 547.7nm from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="azero_gspphot_lower" ucd="phys.absorption;em.opt" unit="mag">
+<DESCRIPTION>Lower confidence level (16%) of monochromatic extinction $A_0$ at 547.7nm from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="azero_gspphot_upper" ucd="phys.absorption;em.opt" unit="mag">
+<DESCRIPTION>Upper confidence level (84%) of monochromatic extinction $A_0$ at 547.7nm from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="ag_gspphot" ucd="phys.absorption;em.opt" unit="mag">
+<DESCRIPTION>Extinction in G band from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="ag_gspphot_lower" ucd="phys.absorption;em.opt" unit="mag">
+<DESCRIPTION>Lower confidence level (16%) of extinction in G band from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="ag_gspphot_upper" ucd="phys.absorption;em.opt" unit="mag">
+<DESCRIPTION>Upper confidence level (84%) of extinction in G band from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="ebpminrp_gspphot" ucd="phot.color.excess" unit="mag">
+<DESCRIPTION>Reddening $E(G_{\rm BP} - G_{\rm RP})$ from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="ebpminrp_gspphot_lower" ucd="phot.color.excess;stat.min" unit="mag">
+<DESCRIPTION>Lower confidence level (16%) of reddening  $E(G_{\rm BP} - G_{\rm RP})$ from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="ebpminrp_gspphot_upper" ucd="phot.color.excess;stat.max" unit="mag">
+<DESCRIPTION>Upper confidence level (84%) of reddening  $E(G_{\rm BP} - G_{\rm RP})$ from GSP-Phot Aeneas best library using BP/RP spectra</DESCRIPTION>
+</FIELD>
+<DATA>
+<BINARY2>
+<STREAM encoding='base64'>
+AAABH///NumCuQAJVYAWtMQAAAAAAEFKcphAKfOUQEJC0Qu6PSc8/8nsQFK5EgZZ
+LM89J+RMQCEd17Kkp389OVARAB8/t9OaAA8+RNwdRgAAAA1OT1RfQVZBSUxBQkxF
+RlRUVEZGRgAAAAA/f2ceKzCQ5SoNZUd/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/
+wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/
+wAAAf8AAAH/AAAAAAAEf//84cAEYADXwgBa0xAAAAAAAQZpCH0BSpphAF4Uzd67S
+dD85SUfAKBR/+st6LT7xQUfAHzp/YNRB1T6kFLAAXz93g2kADAAAAABGAAAADU5P
+VF9BVkFJTEFCTEVGRkZGRkZGAAAAAD9//3kr26ihL/sNyH/AAAB/wAAAf8AAAH/A
+AAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/A
+AAB/wAAAf8AAAH/AAAB/wAAAf8AAABAAAR///zhbTAAB+cAAFrTEAAAAAABBnpp8
+f8AAAL/gvNWgCeqNPxWRVsAVpUSTcOZMP2Vkc8Ak/JxP5QhcPsRglABfP4cbrQAM
+P6qvdEYAAAANTk9UX0FWQUlMQUJMRUZGRkZGRkYAAAAAP3//BTVTIDExYO10f8AA
+AH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAAAAAAAAAOFtMAQMhQIAW
+tMQAAAAAAEGUjzVATMOQP9lAz/On8VQ+WmIUwAoVg8OXej4+oJ9owAtdqDwDaMQ+
+HqyVAF8/i9d9ABA/VgjfRgAAAA1OT1RfQVZBSUxBQkxFRkZGRlRGRgAAAAdQSE9F
+TklYP3///SsPcPcp6FXkRW9QmUVtfk9FcSJ2QIJLXkCBztlAgx0Vv0YXwr9LNnq/
+Ovt/RAhVhEQEr3VEC5OFQJsImkCY/5dAnR0VQEcspUBEU49AShLXP+CWvD/dpRI/
+447zEAAB////OE8NsQBNd4AWtMQAAAAAAEGjms9/wAAAP9PcFbP1uX0/Zxnkv9qH
+83mJrcI/kmB8v/fnQZz2bu4/QujWAF8/iF6WABBAEYxpRgAAAA1OT1RfQVZBSUxB
+QkxFRkZGRkZGRgAAAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/A
+AAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/A
+AAB/wAAAf8AAAH/AAAAAAAEf//84TxMpABY3ABa0xAAAAAAAQaEPlEAooEi/4WSK
+XixV+T9juT4/30MZx9LOtD+gAPG/3pB+eRCvtj9fz9wAXz+GHlgAED+u6f9GAAAA
+DU5PVF9BVkFJTEFCTEVGRkZGRkZGAAAAAD9//z8unUZ8LmZQx3/AAAB/wAAAf8AA
+AH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAB/QAf///0CkejAG6SCAFrTEAAAAAABB
+oEjXf8AAAH/4AAAAAAAAf8AAAH/4AAAAAAAAf8AAAH/4AAAAAAAAf8AAAAADf8AA
+AAAEPvkt/kYAAAANTk9UX0FWQUlMQUJMRUZGRkZGRkYAAAAAf8AAAH/AAAB/wAAA
+f8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAA
+f8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAAAAAAAAALmklaQAv
+JoAWtMQAAAAAAEFg1eI/btKQP/QPCE6x9pQ8pLJxv/Y7JEIUVnE8tSTtwBJgPW2C
+FMU8lBoLAB8/iCP+ABE8raBjRgAAAA1OT1RfQVZBSUxBQkxFRkZGRlRGRgAAAAVN
+QVJDUz9//NUrECACKebVTUW3tsZFtlyvRbjv4kCJysFAiWyLQIokC78rULG/NXp4
+vyFOPEQ+z4VEO7OzREH9Ej7dPDY+z8UFPujopz65ML4+rcXWPsMspT5JUYM+PO2R
+PlQSBgAAAAAAADhNt2EATv4AFrTEAAAAAABBgbiqP7WIyD/xLzGGl1l0PVEtaEAQ
+WE64gifSPXCYmcAxWmJVBpX5PQNhdwAfP2/G4gASAAAAAEYAAAAIVkFSSUFCTEVU
+VEZGVEZGAAAABU1BUkNTP3/+RyxVxBUp5lUvRZqk/kWZkb5Fm7AxQI5x3kCNyR1A
+jyLRvyz6rb857sy/H1wpRF93j0RXYCZEZ3eRP2UlRj9d4A0/bMY/PzKceD8sv7E/
+OMfjPsEgXD661Cw+x64UAAAAAAAAK++8WQAaFoAWtMQAAAAAAEGCHLJAKPaIQBSQ
+vTJCCz49SvzUwBfMfnspUqk9aR2yQB2mPQhjzzg9OguAAB8/jAX9ABE+FxixRgAA
+AA1OT1RfQVZBSUxBQkxFRlRGRlRGRgAAAAVNQVJDUz9/Zx4rN55xKg1lVEVUZvpF
+U+DuRVW2okCPhE1AjqFiQJI4hr8NB8i/FpRGvtQfIUM/pU1DPciaQ0F8cT9SaAo/
+TU/fP1figj8IcrA/BRgrPwwIMT6t0vI+qa1DPrJhfAAAAR///ziLDoEAKgCAFrTE
+AAAAAABBou1fP1tb4D/3/Ox/VrbEP1v6V7/Uh//Pb9AvP6KMkcALBPJadUzhP4cB
+EABfP4PpxQAMP5CJTEYAAAANTk9UX0FWQUlMQUJMRUZGRkZGRkYAAAAAP3//KzJ1
+Y803EZVpf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/A
+AAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAAAABH///
+LIqPaQA6IYAWtMQAAAAAAEGjv29AL1cwQAmiBVj7l04/Zt7CP/8onIXdo7c/Qz/m
+v/4XL7YVcsQ/NBaMAF8/hmVIABNAFl3ZRgAAAA1OT1RfQVZBSUxBQkxFRkZGRkZG
+RgAAAAA/f//uK7s83SqLRHF/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AH/AAAAf0AH///84S2MwA3lhgBa0xAAAAAAAQZHiwH/AAAB/+AAAAAAAAH/AAAB/
++AAAAAAAAH/AAAB/+AAAAAAAAH/AAAAAA3/AAAAACD9RTGlGAAAADU5PVF9BVkFJ
+TEFCTEVGRkZGRkZGAAAAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAA
+f8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAA
+f8AAAH/AAAB/wAAAf8AAABAAAf///zhLYzADefcAFrTEAAAAAABBj8gMf8AAAD/r
+ROGLOLYSPko11b/41WlehtU9PqiEwsAJEX/Ga4qwPjoGXwBfP5tYIAANPyXD80YA
+AAANTk9UX0FWQUlMQUJMRUZGRkZGRkYAAAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/
+wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/
+wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAEAABH///OFtMAQMhRYAWtMQAAAAA
+AEGWMYl/wAAAv9w2kfKs5vs+au5Iv+nMannLPyo+rCIMv9/K+nmWAbo+NhQNAF8/
+hXVyAA8/LztHRgAAAA1OT1RfQVZBSUxBQkxFRkZGRkZGRgAAAAA/f/xsMRMQKDUF
+sy9/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/A
+AAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAAAAAEf//84S2Mx
+A16IgBa0xAAAAAAAQY1W50BHWeC/1fI45wS0mT4lX1rABiLOsfH0fz5SzW/AHyfA
+SsqVij3uOzEAXz+kHa4AET8+9wNGAAAADU5PVF9BVkFJTEFCTEVGRkZGRkZGAAAA
+AD9//9MrEjWlKjDI/X/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AAAAAAAAADhPD0EAgHyAFrTEAAAAAABBhKGYP/exaD/WmechJu3VPW4jncAC8fZR
+eRJRPZUt3MASYh60lPrVPThA0gAfP3eWpgATAAAAAEYAAAANTk9UX0FWQUlMQUJM
+RUZURkZURkYAAAAHUEhPRU5JWD9///crD3LbKeW/B0XgML9F3wEgReBwLEBuJN1A
+bfihQG4usr6PTw6+j2lEvo8NhEUwo8VFMFkoRTF5PkBiB19AYLDyQGJumEAyR0VA
+MSVGQDKV6j/EBOo/wsCDP8RdZAAAAR///zhPGMgAEcuAFrTEAAAAAABBioTYQBqD
+cD/bCP5YU8WBPbVmNT/4XFgKCWoAPgEZHL/hU1G0V9qrPZIWwAAfP4HC9QARPW5h
+rkYAAAANTk9UX0FWQUlMQUJMRUZURkZGRkYAAAAAP3//9CsPc74p5cHPf8AAAH/A
+AAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/A
+AAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAAAAAAAAAOzRkwAHGioAWtMQA
+AAAAAEGTx6ZAP/cIP/dY9upgr8k+RcXrQBLBemKhFVo+QDP8QAWlicjJuIY+KkPs
+AB8/a9PMABEAAAAARgAAAA1OT1RfQVZBSUxBQkxFRkZGRkZGRgAAAAVNQVJDUz9/
++GgrFWxILN0lREVeDFRFXdMYRV54r0CLr7hAiqSpQIxnOL3DLKW+SLQ5vKjBVUQz
+QBBELuGVRDiSxT/+p/A/+FHsQAMQyz+i13M/nsInP6e7MD9NKI0/SJN1P1KIzgAA
+AR///zhLYzAAroGAFrTEAAAAAABBjpFQQD+mSL/C/tn05aTWPiI9jcAPf2k45Frn
+Pkq+LsAdRfwcQso8PeWNgQBfP4gvdQARPyNi1EYAAAANTk9UX0FWQUlMQUJMRUZG
+RkZGRkYAAAAAP3//uTCInjwtuKTgf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AH/AAAB/wAAAAAABH///QKR6MAbScAAWtMQAAAAAAEGVa3o/krkQv+Kxg50jPEI+
+dwtJP8lNOi9rOGw+nagJwAfMyeEoTTk+mrcPAF9AAFBdABtAEo0TRgAAAA1OT1Rf
+QVZBSUxBQkxFRkZGRkZGRgAAAAA/f2UyOxkhXze0ATh/wAAAf8AAAH/AAAB/wAAA
+f8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAA
+f8AAAH/AAAB/wAAAf8AAAH/AAAAAAAEf//84Tw0BAAX5ABa0xAAAAAAAQZqfQUBD
+oag/6+s90YEd3T7OZEa//T3SeH09Vz7wVYS//qIT1yRRCD6P6VsAXz+N9LQAED+W
+nx9GAAAADU5PVF9BVkFJTEFCTEVGRkZGRkZGAAAAAD9//xgrD6LeKguLIn/AAAB/
+wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/
+wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAB/QAf///zjTmdgAgiqAFrTE
+AAAAAABBoqpgf8AAAH/4AAAAAAAAf8AAAH/4AAAAAAAAf8AAAH/4AAAAAAAAf8AA
+AAADf8AAAAAHQBcZCkYAAAANTk9UX0FWQUlMQUJMRUZGRkZGRkYAAAAAf8AAAH/A
+AAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/A
+AAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAAAABH///
+OIsOgQAG8oAWtMQAAAAAAEGMRj8/nwhwP/LnH0JZExM+GhB5P/bE4z0g23k+KFnt
+wAb3KCRNFeA+CkMkAF8/v2woABE/R9O8RgAAAA1OT1RfQVZBSUxBQkxFRkZGRkZG
+RgAAAAA/f/61N2ESizMqk0N/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AH/AAAAAAAEf//84SOHBA/oLABa0xAAAAAAAQXNLzz/WnXg/5nLJ4aCzNz0RXb2/
+7FllsAcdZD1D59PAAaqcW/tvcDzp8foAHz9yEOkAEQAAAABGAAAADU5PVF9BVkFJ
+TEFCTEVGVEZGRkZGAAAAAD9//qsxFXMzL7K6q3/AAAB/wAAAf8AAAH/AAAB/wAAA
+f8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAA
+f8AAAH/AAAB/wAAAf8AAAAAAAAAAADuVm2EAOxcAFrTEAAAAAABBh1wsP/zMgD/2
+3hi9bqLuPZkwBL/07nvdECxBPabRsMAQiZeidSZ6PYkcVwAfP3/4JAARAAAAAEYA
+AAANTk9UX0FWQUlMQUJMRUZURkZGRkYAAAAHUEhPRU5JWD9/+jAwLmQOKessv0WC
+rQRFgUMWRYXfVECVxDNAlTC+QJY2475iGWW+jYRNvgIMSkP4x/BD8OtHRANstD+F
+q58/eNT+P5Yhlj8/VZs/Mb2lP1enhz7O2Rc+wJ1JPuhLXhAAAf///0CkejAG1nwA
+FrTEAAAAAABBnpa2f8AAAD/mANvkKiGgPsU2T0AD++mCuut+PvflZj/+oyfJyLjO
+PyJ4ogBfP4CSEwASAAAAAEYAAAANTk9UX0FWQUlMQUJMRUZGRkZGRkYAAAAAf8AA
+AH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAH9AB
+////OEjhwAT0yIAWtMQAAAAAAEGcydd/wAAAf/gAAAAAAAB/wAAAf/gAAAAAAAB/
+wAAAf/gAAAAAAAB/wAAAAAN/wAAAAAYAAAAARgAAAA1OT1RfQVZBSUxBQkxFRkZG
+RkZGRgAAAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAA
+f8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAA
+f8AAAH/AAAAAAAEf//8405nZADRJABa0xAAAAAAAQZmImkBp8hA/vk+r06GAZD8d
+2BHADVjh1dhr+D8ScbLAF/9HyO/vsj7aipQAXz/sP3kADkAlbmRGAAAADU5PVF9B
+VkFJTEFCTEVGRkZGRkZGAAAAAD9//3krD5MGKe4vJX/AAAB/wAAAf8AAAH/AAAB/
+wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/
+wAAAf8AAAH/AAAB/wAAAf8AAAAAAAR///zsepAkACVmAFrTEAAAAAABBoFqjQBAV
+kEAEx5civbEQPzl1hT//JVZacLCCPy9NUMAgO3e8DEZsPyP53ABfP4LX6wAOP+C6
+aUYAAAANTk9UX0FWQUlMQUJMRUZGRkZGRkYAAAAAP3//eS+0ocwqjTB4f8AAAH/A
+AAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/A
+AAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAH9AB////OIsOgQDwUQAWtMQA
+AAAAAEGTkPx/wAAAf/gAAAAAAAB/wAAAf/gAAAAAAAB/wAAAf/gAAAAAAAB/wAAA
+AAN/wAAAAAcAAAAARgAAAA1OT1RfQVZBSUxBQkxFRkZGRkZGRgAAAAB/wAAAf8AA
+AH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAAAAAAAAAA4
+cACgADLhgBa0xAAAAAAAQYgJn0BGFABABt5/k1nU9T4GFH2/6WwFRXEg1z3dAm7A
+HElweRSBaz2hMK8AHz+SMywADz6VbyVGAAAACFZBUklBQkxFVFRGRkZGRgAAAAVN
+QVJDUz9/8Q0rzEFfKiCokEVV4JRFVaIYRVYqPUCDysFAg1MmQIQwVb7AGje+xx3n
+vra7mUOyfXRDsF2EQ7WsUD/zWoY/8GwiP/ZZSz+Y24w/lv0iP5rHET9If8w/RllL
+P0q59QAAAR///zs0digAzUSAFrTEAAAAAABBmYrnQDb5OD/n+5eSZWogPtD/xL/j
+VyPxNRhuPsVvJ8ADfbVsSHH2PsPrCgBfP5efkAAPP7HD5UYAAAANTk9UX0FWQUlM
+QUJMRUZGRkZGRkYAAAAAP3//1i5+B9YvikyYf8AAAH/AAAB/wAAAf8AAAH/AAAB/
+wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/
+wAAAf8AAAH/AAAB/wAAAD9ABH///OE50YQH0/wAWtMQAAAAAAEGmsGg/5fkwf/gA
+AAAAAAB/wAAAf/gAAAAAAAB/wAAAf/gAAAAAAAB/wAAAAAN/wAAAAAcAAAAARgAA
+AA1OT1RfQVZBSUxBQkxFRkZGRkZGRgAAAAA/f7ijNtCX/jlAzMd/wAAAf8AAAH/A
+AAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/A
+AAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAAAAAAAAAA4W0wAAYxzgBa0xAAAAAAA
+QZD2iUAaCnA/8YJ5FCdnBT4W/dfAB3wNBdis6D5gXHzAEJdaeTFq5D3ZLCMAXz+C
+H1QAED7N9FZGAAAADU5PVF9BVkFJTEFCTEVGRkZGVEZGAAAABU1BUkNTP3/9mC9y
+BicrvP1MRYznikWLKFdFjgEyQJGaa0CP/l1Ak2ETv4YeT7+Sj1y/fQ5WRCmDNkQc
+EZtENrfcQEPt+kA/MZBARqSpQAqfvkAG5I9ADLrHP5hfBz+UGJM/muFIEAAB////
+O5WbYQA7GAAWtMQAAAAAAEGXXhx/wAAAP9ptNA3wuqs+jiC1P/+VLcqjVQA+o2jd
+wA1JN1zUwlk+m++6AF8/khO/AA8/aZwuRgAAAA1OT1RfQVZBSUxBQkxFRkZGRkZG
+RgAAAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AA
+AH/AAAAAAAEf//87HqBBAP+OgBa0xAAAAAAAQZ3N0D/0XgBABMagEcYVbj77bgi/
+/fCaf4j4rz7xeR3AIMIJB98S7D7ku/oAXz+EpvoADz851gZGAAAADU5PVF9BVkFJ
+TEFCTEVGRkZGRkZGAAAAAD9//sowune0LBRMu3/AAAB/wAAAf8AAAH/AAAB/wAAA
+f8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAA
+f8AAAH/AAAB/wAAAf8AAAAAAAAAAAD6tkoEBileAFrTEAAAAAABBbmn4QAnFCEAU
+7vSizhJEPQ7/lkAJpjgHi74PPQSqBj/4ZH4f5zpcPQp6VgAfP+oA9gAWPnLioEYA
+AAANTk9UX0FWQUlMQUJMRUZUVEZURkYAAAAFTUFSQ1M/fjLjLbDJ6ypC4ctFlxQY
+RZab9UWXqRJAkw/5QJLYRUCTQsS/zMY/v9OFH7/F4A1DPfhFQzzG1kM/Kw9AKtKJ
+QCnk90Ar754/+nHeP/jyfD/8OVg/in76P4mp/D+LhR8AAAEf//87HqEZAAahABa0
+xAAAAAAAQZlFV0A59xBABbzOVWZ3Qj6kbgVAH8N10lSq0T6ib/bANS3gR25UzD6X
+7KEAXz9/kCwADz5jZ91GAAAADU5PVF9BVkFJTEFCTEVGRkZGRkZGAAAAAD9//zk0
+aaZeM/+ksn/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/
+wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAH/AAAB/wAAAf8AAAAAAAAAA
+AECkejAG6TEAFrTEAAAAAABBinz8QBZnQEAFbDwfisSpPYs0bkAhIJFjYM/VPbXJ
+9kA0YCSFHZeUPa989wBfP4cw/gAbPtvTAEYAAAANTk9UX0FWQUlMQUJMRUZURkZU
+RkYAAAAFTUFSQ1M/f/exMjvH3jLbIatFVUCaRU+wLkVWoqVAjj1xQILvNUCP4bG/
+BUYLv4DH477IjOdDtEhvQ55/nkO7dCI/ObpePyGwij9E0BQ+8bcXPtItDj8ANG4+
+mgJ1PoWu5j6jBVM=
+</STREAM>
+</BINARY2>
+</DATA>
+</TABLE>
+</RESOURCE>
+<RESOURCE type="meta" utype="adhoc:service" name="ancillary">
+    <DESCRIPTION>Retrieve DataLink file containing ancillary data for source</DESCRIPTION>
+    <PARAM name="standardID" datatype="char" arraysize="*" value="ivo://ivoa.net/std/DataLink#links-1.0"/>
+    <PARAM name="accessURL" datatype="char" arraysize="*" value="https://gea.esac.esa.int/data-server/datalink/links"/>
+    <PARAM name="contentType" datatype="char" arraysize="*" value="application/x-votable+xml;content=datalink"/>
+    <GROUP name="inputParams">
+        <PARAM name="ID"  datatype="long"  value="" ref="SOURCE_ID"/>
+        <PARAM name="RELEASE" datatype="char" arraysize="*" value="Gaia DR3"/>
+    </GROUP>
+</RESOURCE>
+</VOTABLE>

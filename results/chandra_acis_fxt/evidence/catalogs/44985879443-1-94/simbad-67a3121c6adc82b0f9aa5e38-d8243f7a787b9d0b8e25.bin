@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VOTABLE version="1.3" xmlns="http://www.ivoa.net/xml/VOTable/v1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/votable-1.3.xsd">
+<RESOURCE type="results">
+<INFO name="QUERY_STATUS" value="OK"/>
+<INFO name="PROVIDER" value="CDS">SIMBAD TAP Service</INFO>
+<INFO name="QUERY" value="SELECT b.main_id,b.ra,b.dec,b.otype,b.rvz_redshift,b.coo_err_maj,t.path,t.is_candidate FROM basic AS b LEFT OUTER JOIN otypedef AS t ON b.otype=t.otype WHERE CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',166.2750000000,-61.2666666667,0.0394444444))=1"/>
+<TABLE name="result_S1795340747434">
+<FIELD arraysize="*" datatype="char" name="main_id" ucd="meta.id;meta.main" utype="mango:MangoObject.identifier">
+<DESCRIPTION>Main identifier for an object</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="ra" ucd="pos.eq.ra;meta.main" unit="deg" utype="mango:EpochPosition.longitude[CS.spaceSys=ICRS CT.epoch=J2000]">
+<DESCRIPTION>Right ascension</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="dec" ucd="pos.eq.dec;meta.main" unit="deg" utype="mango:EpochPosition.latitude[CS.spaceSys=ICRS CT.epoch=J2000]">
+<DESCRIPTION>Declination</DESCRIPTION>
+</FIELD>
+<FIELD arraysize="*" datatype="char" name="otype" ucd="src.class" utype="mango:Label.text[CT.vocabulary=https://www.ivoa.net/rdf/uat#classification]">
+<DESCRIPTION>Object type</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="rvz_redshift" ucd="src.redshift">
+<DESCRIPTION>redshift</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="coo_err_maj" ucd="phys.angSize.smajAxis;pos.errorEllipse;pos.eq" unit="mas" utype="mango:EpochPosition.errors.position/mango:error.PErrorEllipse.semiMajorAxis[CS.spaceSys=ICRS CT.epoch=J2000]">
+<DESCRIPTION>Coordinate error major axis</DESCRIPTION>
+</FIELD>
+<FIELD arraysize="*" datatype="char" name="path">
+<DESCRIPTION>Otype path in the hierarchical classification</DESCRIPTION>
+</FIELD>
+<FIELD datatype="short" name="is_candidate">
+<DESCRIPTION>True if the object type is a candidate (non-confirmed)</DESCRIPTION>
+<VALUES null='-32768'/>
+</FIELD>
+<DATA>
+<BINARY>
+<STREAM encoding='base64'>
+AAAAEE9HTEUgR0QtRUNMLTY3OTlAZMak3S8an8BOopPpPpPpAAAAA0VCKn/4AAAA
+AAAAQ2YAAAAAAAwqID4gKiogPiBFQioAAAAAABBPR0xFIEdELUVDTC02ODM5QGTH
+4UeuFHvATp3SCKWpEwAAAANFQip/+AAAAAAAAENmAAAAAAAMKiA+ICoqID4gRUIq
+AAAAAAAPVFlDIDg5NTgtMTQwMS0xQGTKPMTRiKPATqHE1fUcfAAAAAEqf/gAAAAA
+AAA8GF8HAAAAASoAAAAAABcyTUFTUyBKMTEwNTI0NTUtNjExNTIzMUBky0XByrY3
+wE6g0qiIEI4AAAADTFA/f/gAAAAAAAA+FbV0AAAADSogPiBFdiogPiBMUCoAAQAA
+AAtWKiBWODA3IENhckBkyaf4Wqh8wE6d52yLQ5UAAAADRUIqf/gAAAAAAABDDAAA
+AAAADCogPiAqKiA+IEVCKgAAAAAADVtTVFAyMDA0XSAxMzFAZMsTbJNCDcBOou/c
+ITsoAAAAASp/+AAAAAAAADwVGCsAAAABKgAAAAAACUFMUyAxOTcxOEBkyyIiIiIj
+wE6hNXm+AkcAAAABKn/4AAAAAAAAf8AAAAAAAAEqAAAAAAAcR2FpYSBEUjMgNTMz
+NzE4NjY0MTM2MzY0NzIzMkBkyXs96gI1wE6ga6n13hIAAAABKn/4AAAAAAAAPNG3
+FwAAAAEqAAAAAAAcR2FpYSBEUjMgNTMzNzE4NzM1ODYwNDUyOTkyMEBkx+Jdi5vC
+wE6f6f9y84EAAAABKn/4AAAAAAAAPM9B8gAAAAEqAAAAAAAcR2FpYSBEUjMgNTMz
+NzE4NjQ5OTYwNDA4MDc2OEBkyU1k12CswE6jAjurU7wAAAADRUIqf/gAAAAAAAA9
+tT99AAAADCogPiAqKiA+IEVCKgAAAAAAHEdhaWEgRFIzIDUzMzcxODY1MDM5MjQ2
+MTM1MDRAZMiVCYhgYsBOombyTc/bAAAAA0VCKn/4AAAAAAAAPU7ZFwAAAAwqID4g
+KiogPiBFQioAAAAAABBPR0xFIEdELUVDTC02ODQyQGTIHXBd9J3ATqNg1rfvtQAA
+AANFQip/+AAAAAAAADx0HyEAAAAMKiA+ICoqID4gRUIqAAAAAAAQT0dMRSBHRC1F
+Q0wtNjg2N0BkyRf62b7lwE6ipY1WInUAAAADRUIqf/gAAAAAAAA+BIFvAAAADCog
+PiAqKiA+IEVCKgAAAAAAEE9HTEUgR0QtRUNMLTY4ODhAZMmwdD++FMBOowbMcbj4
+AAAAA0VCKn/4AAAAAAAAPwiM5wAAAAwqID4gKiogPiBFQioAAAAAABcyTUFTUyBK
+MTEwNDU2ODgtNjExNzQ0NUBkx5VSbGEMwE6l2N0GOFYAAAADTFA/f/gAAAAAAAA+
+qQLeAAAADSogPiBFdiogPiBMUCoAAQAAABlISUdBTEJNIEcyOTAuNTA4Mi0wMC45
+OTE4QGTIxO+IuXjATqLLW7OE/AAAAANzbW1/+AAAAAAAAH/AAAAAAAAJUmFkID4g
+c21tAAAAAAAcR2FpYSBEUjMgNTMzNzE4NjM2NjQ4NTcyNjQ2NEBkysEtzkY4wE6i
+w2NnDXoAAAADRUIqf/gAAAAAAAA8XtKJAAAADCogPiAqKiA+IEVCKgAAAAAAHEdh
+aWEgRFIzIDUzMzcxODY5MTYyNDE0MDIxMTJAZMY/J6WTfsBOohUA5nvhAAAAASp/
++AAAAAAAADwsCDEAAAABKgAA
+</STREAM>
+</BINARY>
+</DATA>
+</TABLE>
+</RESOURCE>
+</VOTABLE>

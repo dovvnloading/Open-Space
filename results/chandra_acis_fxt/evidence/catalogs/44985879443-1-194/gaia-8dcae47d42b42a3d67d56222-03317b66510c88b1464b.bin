@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE version="1.4" xmlns="http://www.ivoa.net/xml/VOTable/v1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/votable-1.4.xsd">
+<RESOURCE type="results">
+
+<INFO name="JOBID" value="8defa941-e62f-11f1-88af-bc97e148b76b-O" ucd="meta.id;meta.query"/>
+<INFO name="JOBNAME" value=""/>
+<INFO name="QUERY_STATUS" value="OK"/>
+<INFO name="QUERY" value="SELECT source_id,ra,dec,ref_epoch,pmra,pmdec,pmra_error,pmdec_error,ra_error,dec_error,parallax,parallax_error,ruwe,phot_g_mean_mag FROM gaiadr3.gaia_source WHERE CONTAINS(POINT(&#039;ICRS&#039;,ra,dec),CIRCLE(&#039;ICRS&#039;,207.2333333333,26.6000000000,0.0644444444))=1" ucd="meta.query"/>
+
+<PARAM name="CITATION" ucd="meta.bib" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/credits">
+<DESCRIPTION>How to cite and acknowledge Gaia:</DESCRIPTION>
+</PARAM>
+<PARAM name="RELEASE" ucd="meta.version" datatype="char" arraysize="*" value="Gaia DR3">
+<DESCRIPTION>Gaia data release</DESCRIPTION>
+</PARAM>
+<PARAM name="HELP" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/archive">
+<DESCRIPTION>Tutorials, documentation, and help:</DESCRIPTION>
+</PARAM>
+<PARAM name="ISSUES" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/known-issues">
+<DESCRIPTION>Known issues in the data:</DESCRIPTION>
+</PARAM>
+<PARAM name="DATA" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia/data-access">
+<DESCRIPTION>Gaia data:</DESCRIPTION>
+</PARAM>
+<PARAM name="TERMS" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/esdc/terms-and-conditions">
+<DESCRIPTION>Terms and conditions for use of Gaia data:</DESCRIPTION>
+</PARAM>
+<PARAM name="HOME" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia">
+<DESCRIPTION>Gaia mission home:</DESCRIPTION>
+</PARAM>
+<PARAM name="PUBLISHER" ucd="meta.id;meta.curation" datatype="char" arraysize="*" value="ESA/Gaia/DPAC">
+<DESCRIPTION>Dataset publisher</DESCRIPTION>
+</PARAM>
+<PARAM name="CREATOR" ucd="meta.ref" datatype="char" arraysize="*" value="Gaia Collaboration">
+<DESCRIPTION>Dataset creator</DESCRIPTION>
+</PARAM>
+
+<COOSYS ID="GAIADR3" epoch="J2016.0" system="ICRS" />
+
+<RESOURCE>
+  <COOSYS ID="t940499-coosys-1" epoch="J2016.0" system="ICRS"/>
+</RESOURCE>
+<TABLE>
+<FIELD ID="SOURCE_ID" datatype="long" name="source_id" ucd="meta.id">
+<DESCRIPTION>Unique source identifier (unique within a particular Data Release)</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="ra" ref="t940499-coosys-1" ucd="pos.eq.ra;meta.main" unit="deg" utype="stc:AstroCoords.Position3D.Value3.C1">
+<DESCRIPTION>Right ascension</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="dec" ref="t940499-coosys-1" ucd="pos.eq.dec;meta.main" unit="deg" utype="stc:AstroCoords.Position3D.Value3.C2">
+<DESCRIPTION>Declination</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="ref_epoch" ucd="meta.ref;time.epoch" unit="yr" utype="stc:AstroCoords.Time.TimeInstant">
+<DESCRIPTION>Reference epoch</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="pmra" ucd="pos.pm;pos.eq.ra" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Value3.C1">
+<DESCRIPTION>Proper motion in right ascension direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="pmdec" ucd="pos.pm;pos.eq.dec" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Value3.C2">
+<DESCRIPTION>Proper motion in declination direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="pmra_error" ucd="stat.error;pos.pm;pos.eq.ra" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Error3.C1">
+<DESCRIPTION>Standard error of proper motion in right ascension direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="pmdec_error" ucd="stat.error;pos.pm;pos.eq.dec" unit="mas.yr**-1" utype="stc:AstroCoords.Velocity3D.Error3.C2">
+<DESCRIPTION>Standard error of proper motion in declination direction</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="ra_error" ucd="stat.error;pos.eq.ra" unit="mas" utype="stc:AstroCoords.Position3D.Error3.C1">
+<DESCRIPTION>Standard error of right ascension</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="dec_error" ucd="stat.error;pos.eq.dec" unit="mas" utype="stc:AstroCoords.Position3D.Error3.C2">
+<DESCRIPTION>Standard error of declination</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="parallax" ucd="pos.parallax.trig" unit="mas">
+<DESCRIPTION>Parallax</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="parallax_error" ucd="stat.error;pos.parallax.trig" unit="mas">
+<DESCRIPTION>Standard error of parallax</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="ruwe" ucd="stat.error">
+<DESCRIPTION>Renormalised unit weight error</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="phot_g_mean_mag" ucd="phot.mag;em.opt" unit="mag">
+<DESCRIPTION>G-band mean magnitude</DESCRIPTION>
+</FIELD>
+<DATA>
+<BINARY2>
+<STREAM encoding='base64'>
+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
+5exa8j3uRg4/d9qAQY0SuA==
+</STREAM>
+</BINARY2>
+</DATA>
+</TABLE>
+</RESOURCE>
+<RESOURCE type="meta" utype="adhoc:service" name="ancillary">
+    <DESCRIPTION>Retrieve DataLink file containing ancillary data for source</DESCRIPTION>
+    <PARAM name="standardID" datatype="char" arraysize="*" value="ivo://ivoa.net/std/DataLink#links-1.0"/>
+    <PARAM name="accessURL" datatype="char" arraysize="*" value="https://gea.esac.esa.int/data-server/datalink/links"/>
+    <PARAM name="contentType" datatype="char" arraysize="*" value="application/x-votable+xml;content=datalink"/>
+    <GROUP name="inputParams">
+        <PARAM name="ID"  datatype="long"  value="" ref="SOURCE_ID"/>
+        <PARAM name="RELEASE" datatype="char" arraysize="*" value="Gaia DR3"/>
+    </GROUP>
+</RESOURCE>
+</VOTABLE>

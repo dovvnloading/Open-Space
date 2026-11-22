@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VOTABLE version="1.3" xmlns="http://www.ivoa.net/xml/VOTable/v1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/votable-1.3.xsd">
+<RESOURCE type="results">
+<INFO name="QUERY_STATUS" value="OK"/>
+<INFO name="PROVIDER" value="CDS">SIMBAD TAP Service</INFO>
+<INFO name="QUERY" value="SELECT b.main_id,b.ra,b.dec,b.otype,b.rvz_redshift,b.coo_err_maj,t.path,t.is_candidate FROM basic AS b LEFT OUTER JOIN otypedef AS t ON b.otype=t.otype WHERE CONTAINS(POINT('ICRS',b.ra,b.dec),CIRCLE('ICRS',282.5916666667,-0.4583333333,0.0394444444))=1"/>
+<TABLE name="result_S1795344146749">
+<FIELD arraysize="*" datatype="char" name="main_id" ucd="meta.id;meta.main" utype="mango:MangoObject.identifier">
+<DESCRIPTION>Main identifier for an object</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="ra" ucd="pos.eq.ra;meta.main" unit="deg" utype="mango:EpochPosition.longitude[CS.spaceSys=ICRS CT.epoch=J2000]">
+<DESCRIPTION>Right ascension</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="dec" ucd="pos.eq.dec;meta.main" unit="deg" utype="mango:EpochPosition.latitude[CS.spaceSys=ICRS CT.epoch=J2000]">
+<DESCRIPTION>Declination</DESCRIPTION>
+</FIELD>
+<FIELD arraysize="*" datatype="char" name="otype" ucd="src.class" utype="mango:Label.text[CT.vocabulary=https://www.ivoa.net/rdf/uat#classification]">
+<DESCRIPTION>Object type</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="rvz_redshift" ucd="src.redshift">
+<DESCRIPTION>redshift</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="coo_err_maj" ucd="phys.angSize.smajAxis;pos.errorEllipse;pos.eq" unit="mas" utype="mango:EpochPosition.errors.position/mango:error.PErrorEllipse.semiMajorAxis[CS.spaceSys=ICRS CT.epoch=J2000]">
+<DESCRIPTION>Coordinate error major axis</DESCRIPTION>
+</FIELD>
+<FIELD arraysize="*" datatype="char" name="path">
+<DESCRIPTION>Otype path in the hierarchical classification</DESCRIPTION>
+</FIELD>
+<FIELD datatype="short" name="is_candidate">
+<DESCRIPTION>True if the object type is a candidate (non-confirmed)</DESCRIPTION>
+<VALUES null='-32768'/>
+</FIELD>
+<DATA>
+<BINARY>
+<STREAM encoding='base64'>
+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
+</STREAM>
+</BINARY>
+</DATA>
+</TABLE>
+</RESOURCE>
+</VOTABLE>

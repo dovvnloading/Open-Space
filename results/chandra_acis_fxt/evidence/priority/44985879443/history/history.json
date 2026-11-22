@@ -1,0 +1,182 @@
+{
+  "code_sha256": {
+    "archive.py": "4623fb84527aa4952a2beab6d2405b6b6e0f5ddd0ffdfd69e1c96bfeacca0a7a",
+    "search.py": "17bdbb0ec1fa5c86bf1a3394b8df29d3b245e436dc0bb8ce2376a5c9e33a4f99",
+    "target_history.py": "fc8db4665c9d91637e1ead6a4b74614f472fc62e4405da8c273e3e1e90bbce26",
+    "vet.py": "76ddfd371cf8f02bd54c3653547f12c74a1a23d09fa7e0bbd2fa933ad5f79d8a",
+    "visits.py": "0bff9f1c2a532cb61724c26f043c3cf9662720c62957d32fc1cb1b2c656d2073"
+  },
+  "git_commit": "9a0ae2589b4d56b9f74b58e219089dc442ff1491",
+  "limitations": "Observation-catalog target coordinates are a pointing proxy. The wide cone and independent detector geometry are required. Missing catalog coordinates, offset pointings, HRC, gratings and CC mode limit coverage. Aperture counts use only supported dither/GTI bins. The 95% limit applies to mean detected aperture rate in those bins, without a PSF, vignetting or bad-pixel correction. Raw single-visit excess probabilities include chance excesses and diffuse emission. CSC matches are positional alternatives. A CSC per-observation photometry row can be a weak or forced measurement.",
+  "pointing_radius_arcsec": 5400.0,
+  "release_cutoff_utc_inclusive": "2026-11-21",
+  "selected_leads": [
+    {
+      "counting_sigma": 6.580747101914382e-13,
+      "dec_deg": 9.70538430082033,
+      "duration_s": 2880.8157954216003,
+      "event_mjd": 59569.55084868455,
+      "gaia_source_ids": [
+        "599875677054390784"
+      ],
+      "input_name": "acisf23324N003_evt2.fits.gz",
+      "input_sha256": "507a5aaf26b492ef2b5120242d9d33e281803667c8c1edc125fa905e6a09bbd0",
+      "input_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/4/23324/primary/acisf23324N003_evt2.fits.gz",
+      "obsid": 23324,
+      "original_artifact_id": 14744596670,
+      "original_ledger_sha256": "6f3ef2ffb1b1ad4641ead4e90b788a520b9647f067b74a935ac7e8be1929b939",
+      "original_shard": 31,
+      "peak_flux_erg_cm2_s": 1.4840125958649578e-12,
+      "position_error_arcsec": 1.4341649781337367,
+      "ra_deg": 127.76903026837093,
+      "status": "ambiguous",
+      "trial_duration_s": 3600,
+      "trigger_key": "real/0"
+    },
+    {
+      "counting_sigma": 1.119279678352433e-12,
+      "dec_deg": -14.359688117051375,
+      "duration_s": 162.39026474952698,
+      "event_mjd": 61199.79665103431,
+      "gaia_source_ids": [],
+      "input_name": "acisf32380N001_evt2.fits.gz",
+      "input_sha256": "3c5f46567187114d7deb741d2a709bbc4e3566801a90a9cdb3f23a7c66a944cf",
+      "input_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/0/32380/primary/acisf32380N001_evt2.fits.gz",
+      "obsid": 32380,
+      "original_artifact_id": 14743042773,
+      "original_ledger_sha256": "b4726c42e71eba270aeb35588c73a6bab1da211419b77ddf5def8d5ed350419c",
+      "original_shard": 19,
+      "peak_flux_erg_cm2_s": 4.041198375684035e-12,
+      "position_error_arcsec": 1.2354408651589657,
+      "ra_deg": 243.548594555635,
+      "status": "ambiguous",
+      "trial_duration_s": 180,
+      "trigger_key": "real/0"
+    }
+  ],
+  "targets": {
+    "23324/507a5aaf26b492ef2b5120242d9d33e281803667c8c1edc125fa905e6a09bbd0/real/0": {
+      "folder": "target-00",
+      "gaps": [
+        {
+          "filename": "acisf04804N004_evt2.fits.gz",
+          "input_sha256": "df4102e059b66e29b58db46f8fec42463b24722b6d2f9e52cec56ca3d47b465b",
+          "obsid": 4804,
+          "record": "visits/4804/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf20401N003_evt2.fits.gz",
+          "input_sha256": "cc9f4a570dffa051f54341af23054167c16a5846bc897f8c5ed021883a97eb4d",
+          "obsid": 20401,
+          "record": "visits/20401/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf25381N002_evt2.fits.gz",
+          "input_sha256": "9c9e2eea8f97df7624703b3ce652d24f800e12358f3ccd7e62d9bb1fea068d42",
+          "obsid": 25381,
+          "record": "visits/25381/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf25810N002_evt2.fits.gz",
+          "input_sha256": "5f47cac1ed29bff73259a3188010e54daaf4fa3b2e668591ab8b8b2b35a162bd",
+          "obsid": 25810,
+          "record": "visits/25810/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf25811N002_evt2.fits.gz",
+          "input_sha256": "e78d9c5d8dbd89da46dfef2f8d21ca5e5d5f7a6948c88703858cc04fdebb2f7a",
+          "obsid": 25811,
+          "record": "visits/25811/visit.json",
+          "status": "coverage_unconfirmed"
+        },
+        {
+          "filename": "acisf26257N002_evt2.fits.gz",
+          "input_sha256": "c9067f0968955e8ecbada227f81fa4f25ba9541127d368d3af6849b3f78718a9",
+          "obsid": 26257,
+          "record": "visits/26257/visit.json",
+          "status": "coverage_unconfirmed"
+        }
+      ],
+      "nearby_obsids": [
+        4804,
+        20401,
+        25381,
+        25810,
+        25811,
+        26257
+      ],
+      "pointing_query_status": "ok",
+      "supported": []
+    },
+    "32380/3c5f46567187114d7deb741d2a709bbc4e3566801a90a9cdb3f23a7c66a944cf/real/0": {
+      "folder": "target-01",
+      "gaps": [],
+      "nearby_obsids": [
+        32390
+      ],
+      "pointing_query_status": "ok",
+      "supported": [
+        {
+          "accepted_live_s": 9949.8855654645,
+          "annulus_counts": 13,
+          "conditional_aperture_rate_upper95_ct_s": 0.0038582254364086855,
+          "filename": "acisf32390N001_evt2.fits.gz",
+          "gross_counts": 28,
+          "input_sha256": "acb13af5ce1397527b07ad0212a39e92a295d4d9c18e076cef3e4d369338029c",
+          "local_excess_p": 4.170146439553146e-22,
+          "net_aperture_rate_ct_s": 0.002705223742481313,
+          "obsid": 32390,
+          "per_target_bonferroni_p": 4.170146439553146e-22,
+          "record": "visits/32390/visit.json",
+          "status": "measured_aperture",
+          "temporal_relation": "after",
+          "visit_iso_utc": [
+            "2026-06-09T06:36:05.811",
+            "2026-06-09T09:24:11.811"
+          ]
+        }
+      ]
+    }
+  },
+  "visits": [
+    {
+      "obsid": 4804,
+      "record": "visits/4804/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 20401,
+      "record": "visits/20401/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 25381,
+      "record": "visits/25381/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 25810,
+      "record": "visits/25810/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 25811,
+      "record": "visits/25811/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 26257,
+      "record": "visits/26257/visit.json",
+      "status": "acquired"
+    },
+    {
+      "obsid": 32390,
+      "record": "visits/32390/visit.json",
+      "status": "acquired"
+    }
+  ]
+}

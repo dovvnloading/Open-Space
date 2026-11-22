@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE version="1.4" xmlns="http://www.ivoa.net/xml/VOTable/v1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/votable-1.4.xsd">
+<RESOURCE type="results">
+
+<INFO name="JOBID" value="a8e76bd2-e66a-11f1-88af-bc97e148b76b-O" ucd="meta.id;meta.query"/>
+<INFO name="JOBNAME" value=""/>
+<INFO name="QUERY_STATUS" value="OK"/>
+<INFO name="QUERY" value="SELECT source_id,solution_id,classifier_name,best_class_name,best_class_score FROM gaiadr3.vari_classifier_result WHERE source_id IN (49124190961270656,188779759877789824,239421100788953856,239422780117661184,239425258316471424,243317220238317568,243317220242073216,428244596319991552,431133185156390016,431133288242371584,431159813961213824,466806839918227584,466898477343050752,466903700027286400,599875677054390784,599891555546067072,1463673349229204736,1469320891923168896,1548998853159303040,1609251132584785920,2010480307292961408,2010480311589663232,2057573425409214080,2061185007560841216,2061191643294995072,2061197377068445696,2126835889083616768,2132638454321058176,2255504519334561024,3017266309864085376,3017359527845298048,3017360558637552512,3017361108392950016,3017364299541935744,3017364303851923456,3047854448476762112,3047861011188212224,3047866160846449792,3098105084795787008,3118734495618388992)" ucd="meta.query"/>
+
+<PARAM name="CITATION" ucd="meta.bib" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/credits">
+<DESCRIPTION>How to cite and acknowledge Gaia:</DESCRIPTION>
+</PARAM>
+<PARAM name="RELEASE" ucd="meta.version" datatype="char" arraysize="*" value="Gaia DR3">
+<DESCRIPTION>Gaia data release</DESCRIPTION>
+</PARAM>
+<PARAM name="HELP" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/archive">
+<DESCRIPTION>Tutorials, documentation, and help:</DESCRIPTION>
+</PARAM>
+<PARAM name="ISSUES" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia-users/known-issues">
+<DESCRIPTION>Known issues in the data:</DESCRIPTION>
+</PARAM>
+<PARAM name="DATA" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia/data-access">
+<DESCRIPTION>Gaia data:</DESCRIPTION>
+</PARAM>
+<PARAM name="TERMS" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/esdc/terms-and-conditions">
+<DESCRIPTION>Terms and conditions for use of Gaia data:</DESCRIPTION>
+</PARAM>
+<PARAM name="HOME" ucd="meta.ref.url" datatype="char" arraysize="*" value="https://www.cosmos.esa.int/web/gaia">
+<DESCRIPTION>Gaia mission home:</DESCRIPTION>
+</PARAM>
+<PARAM name="PUBLISHER" ucd="meta.id;meta.curation" datatype="char" arraysize="*" value="ESA/Gaia/DPAC">
+<DESCRIPTION>Dataset publisher</DESCRIPTION>
+</PARAM>
+<PARAM name="CREATOR" ucd="meta.ref" datatype="char" arraysize="*" value="Gaia Collaboration">
+<DESCRIPTION>Dataset creator</DESCRIPTION>
+</PARAM>
+
+
+<TABLE>
+<FIELD ID="SOURCE_ID" datatype="long" name="source_id" ucd="meta.id;meta.main">
+<DESCRIPTION>Unique source identifier</DESCRIPTION>
+</FIELD>
+<FIELD datatype="long" name="solution_id" ucd="meta.version">
+<DESCRIPTION>Solution Identifier</DESCRIPTION>
+</FIELD>
+<FIELD arraysize="*" datatype="char" name="classifier_name" ucd="meta.title">
+<DESCRIPTION>Classifier name used to produce this result, use for lookup in \texttt{VariClassifierDefinition} table</DESCRIPTION>
+</FIELD>
+<FIELD arraysize="*" datatype="char" name="best_class_name" ucd="meta.code.class">
+<DESCRIPTION>Name of best class, see table \texttt{VariClassifierClassDefinition} for details of the class</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="best_class_score" ucd="meta.code.qual">
+<DESCRIPTION>Score of the best class</DESCRIPTION>
+</FIELD>
+<DATA>
+<BINARY2>
+<STREAM encoding='base64'>
+AB9NKWkAOYUABTVkghgADwwAAAAMblRyYW5zaXRzOjUrAAAAClNPTEFSX0xJS0U/
+Iyp9ACr+rikAFZcABTVkghgADwwAAAAMblRyYW5zaXRzOjUrAAAAAlJTPOCNvAAV
+fyZAAAw3gAU1ZIIYAA8MAAAADG5UcmFuc2l0czo1KwAAAANBR04+0QJFAANSnAEA
+NZyABTVkghgADwwAAAAMblRyYW5zaXRzOjUrAAAAAlJTPt62bAAqTCd5AI0wAAU1
+ZIIYAA8MAAAADG5UcmFuc2l0czo1KwAAAAJSUz3QqBs=
+</STREAM>
+</BINARY2>
+</DATA>
+</TABLE>
+</RESOURCE>
+<RESOURCE type="meta" utype="adhoc:service" name="ancillary">
+    <DESCRIPTION>Retrieve DataLink file containing ancillary data for source</DESCRIPTION>
+    <PARAM name="standardID" datatype="char" arraysize="*" value="ivo://ivoa.net/std/DataLink#links-1.0"/>
+    <PARAM name="accessURL" datatype="char" arraysize="*" value="https://gea.esac.esa.int/data-server/datalink/links"/>
+    <PARAM name="contentType" datatype="char" arraysize="*" value="application/x-votable+xml;content=datalink"/>
+    <GROUP name="inputParams">
+        <PARAM name="ID"  datatype="long"  value="" ref="SOURCE_ID"/>
+        <PARAM name="RELEASE" datatype="char" arraysize="*" value="Gaia DR3"/>
+    </GROUP>
+</RESOURCE>
+</VOTABLE>
