@@ -9,7 +9,7 @@ from pathlib import Path
 import re
 
 from calibration import summarize, write_table
-from evidence_summary import summarize_evidence, adjudications
+from evidence_summary import summarize_evidence, adjudications, additional_ew
 
 DIR=Path(__file__).resolve().parent
 ROOT=DIR.parents[1]
@@ -163,7 +163,7 @@ def main():
             p,v=entry['peak'],entry['vet']
             raw_counts[(p['channel'],initial)]+=1
             tallied[(p['channel'],v['disposition'])]+=1
-            if 'NED' in v:
+            if 'NED' in v or 'native_ew_photometry' in v:
                 followed.append(compact(tag,p,v,ledger,line))
                 effective_remote[p['channel']]+=1
             if v['disposition']=='candidate':
@@ -180,6 +180,14 @@ def main():
         for ch,t in vet['status_counts'].items():
             for status,n in t.items():
                 assert raw_counts[ch,status]==n
+        for line,entry,path in additional_ew(d):
+            p,v=entry['peak'],entry['vet']
+            tallied[('ew',v['disposition'])]+=1
+            effective_remote['ew']+=1
+            row=compact(tag,p,v,path,line)
+            followed.append(row)
+            if v['disposition']=='candidate':
+                new.append(row)
         vet['remote_assessed']=dict(effective_remote)
         counts.update(tallied)
     write_table(EVIDENCE/'candidates.csv',new,FIELDS)
@@ -287,7 +295,24 @@ def main():
                 sections.append(f"| {t.upper()} | {sn} | {n} | {yes} ({100*yes/n:.1f}%) |")
     sections+=['','The raw wavelength-by-wavelength shuffle mixes bright and faint continua and destroys adjacent-pixel covariance. Its very large positive counts make it a stress test. After observing this excess, we added a same-shot block shuffle that preserves source continua. Its rates apply to the matched population. Off-source apertures preserve cube interpolation and spatial noise. Empty sky has no catalog redshift, so its off-list test is undefined. The per-release tables break recovery down by input flux, S/N, wavelength, profile width and input rest EW. Wilson intervals are nominal per-trial binomial intervals. Six trials share each injected background, and the intervals omit that clustering. The paired-visit controls substitute unrelated sources observed in the same shots.',
                '', '## Inputs, evidence and reproduction','']
-    sections+=['Every unresolved narrow He II / Lyα pair meeting the flux-ratio and spectral cuts, and every unresolved EW lead with a qualifying lower bound, entered the supplementary positional search of independent spectral catalogs. The table distinguishes successful catalog queries from attempts. Full rechecks preserve the original ledger and each revised decision.',
+    native_dirs=[(t,EVIDENCE/t/'ew-imaging') for t in RELEASES if (EVIDENCE/t/'ew-imaging'/'summary.json').exists()]
+    if native_dirs:
+        sections+=['','### Native Legacy Surveys equivalent widths','',
+                   'Independent line identification and corroboration select the native-imaging cohort. Tractor fluxes and PSF-matched coadds provide redward continuum measurements. Limits require calibrated band coverage and a valid flux uncertainty. The two-band upper bound refers to a compact source with continuum-dominated r and z photometry, under the stated continuum and aperture model. It does not constrain diffuse emission beyond those apertures.',
+                   '', '| Release / stream | EW rows in first register | Independently supported rows rechecked | Further supported rows outside the imaging scout | Rows with a lower bound | Lower bound >240 Å | Two-band model upper bound <240 Å | Confirmed |',
+                   '|---|---:|---:|---:|---:|---:|---:|---:|']
+        for tag,directory in native_dirs:
+            summary=read(directory/'summary.json')
+            for name,row in summary['counts'].items():
+                vals=[row.get(k,0) for k in ('ew_rows_in_register','independently_corroborated_eligible',
+                      'outside_scout_with_independent_support','with_EW_lower','lower_above_240',
+                      'two_band_model_upper_below_240','disposition_candidate')]
+                sections.append(f"| {tag.upper()} {name} | "+' | '.join(f'{x:,}' for x in vals)+' |')
+        for tag,_ in native_dirs:
+            base=f'evidence/{tag}/ew-imaging'
+            sections.append(f'\n{tag.upper()} · [Every measured or inconclusive EW]({base}/outcomes.csv) · [Tightest bounds and confirmed rows]({base}/best.json) · [Native photometry and checksums]({base}/native.jsonl.gz).')
+        sections.append('')
+    sections+=['Every unresolved narrow He II / Lyα pair meeting the flux-ratio and spectral cuts, and every unresolved EW lead with a qualifying lower bound in the frozen first-pass register, entered the supplementary positional search of independent spectral catalogs. The table distinguishes successful catalog queries from attempts. Full rechecks preserve the original ledger and each revised decision.',
                '', '| Release | Eligible source / line hypotheses | Distinct positions | Rechecked hypotheses |',
                '|---|---:|---:|---:|']
     for t in RELEASES:
@@ -356,16 +381,14 @@ def main():
     for t in RELEASES:
         a=f'evidence/{t}'
         sections+=['',f'{t.upper()} · [Input checksums and mirrors]({a}/inputs-{t}.json) · [Ancillary and cube receipts]({a}/vet-inputs.json) · [Vetting ledger]({a}/vetted.jsonl.gz) · [Injections]({a}/injections.jsonl.gz) · [Completeness]({a}/completeness.csv) · [He II positive controls]({a}/positive-controls.json) · [Weaker paired lines]({a}/weak-heii-summary.json) · [Imaging-led EW measurements]({a}/ew-rescue-summary.json) · [Supplementary spectroscopy]({a}/focus/summary.json) · [Query receipts]({a}/focus/receipts.json.gz) · [Eligible spectroscopy ledger]({a}/focus/catalog.csv.gz) · [Repeated spatial systems]({a}/repeat-blobs/summary.json) · [Raw-shuffle follow-up]({a}/shuffle-vet/vet-summary.json) · [Continuum-preserving control]({a}/nuisance-summary.json) · [Matched control vetting]({a}/matched-shuffle-vet/vet-summary.json) · [Halo recovery]({a}/halo-injections-summary.json) · [Repeat controls]({a}/repeat-summary.json) · [Off-source spectra selection]({a}/offsource.jsonl.gz).']
-    sections+=['','The workflow pins Python dependencies, fetches both releases, checks the publisher MD5 values and hashes the received bytes. Run its **full** dispatch on the research branch, or use the same commands on a runner with network access and sufficient disk. Run from the repository root.',
-               '', '```sh','D=results/hetdex_blind_emitters','python -m pip install -r "$D/requirements.txt"','python "$D/check_pipeline.py"',
-               'for r in sc1 sc2; do','  python "$D/scan.py" "$r" scan --output "$D/evidence/$r" --cache "/tmp/hetdex-$r" --workers 3',
-               '  python "$D/scan.py" "$r" vet --output "$D/evidence/$r" --cache "/tmp/hetdex-$r"',
-               '  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --release "$r" --cache "/tmp/hetdex-$r" --vet',
-               '  python "$D/repeat_blobs.py" "$D/evidence/$r" "$D/evidence/$r/repeat-blobs" --release "$r" --cache "/tmp/hetdex-$r"',
-               '  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --static-retry --vet --release "$r" --cache "/tmp/hetdex-$r"',
-               '  python "$D/focus.py" "$D/evidence/$r" "$D/evidence/$r/focus" --replay-saved',
-               '  python "$D/blobs_followup.py" "$D/evidence/$r" --cache "/tmp/hetdex-$r"','done',
-               'python "$D/report.py"','python -m open_space.verify','python -m unittest discover -s tests','```',
+    sections+=['','The workflow downloads both releases, verifies the publisher MD5 values and computes an independent SHA-256. A full run starts with empty release output directories and records its Python environment. The final job commits the evidence, builds this report and runs both repository checks. [Exact workflow commands](../../.github/workflows/hetdex-blind-emitters.yml).',
+               '', 'Before the workflow is on the default branch, the following workflow-only commit launches a full reproduction on the research branch.',
+               '', '```sh','git switch science/hetdex-blind-emitter-search','git pull --ff-only',
+               'flow=.github/workflows/hetdex-blind-emitters.yml',
+               'echo "# Reproduce the full HETDEX search." >> "$flow"','git add "$flow"',
+               'git commit -m "[full-hetdex] Reproduce both public releases"','git push origin HEAD','```',
+               '', 'Once GitHub lists the workflow on the default branch, its full dispatch is also available.',
+               '', '```sh','gh workflow run hetdex-blind-emitters.yml --ref science/hetdex-blind-emitter-search -f stage=full','```',
                '', '[Spectral method](SPECTRAL_METHODS.md) · [Spatial, imaging and literature checks](VETTING.md) · [HETDEX source catalog 1 and public data](https://doi.org/10.5281/zenodo.7448504) · [HETDEX source catalog 2 and public data](https://doi.org/10.5281/zenodo.19581262) · [HETDEX data products and associated catalogs](https://hetdex.org/data-results/) · [Prior HETDEX He II search](https://arxiv.org/abs/2609.16134).',
                '', 'These measurements use the public source catalogs of Mentuch Cooper et al. (2023, ApJ 943, 177) and Mentuch Cooper et al. (2026, ApJS 284, 67), obtained with VIRUS on the Hobby–Eberly Telescope. The release records list the HETDEX collaboration, telescope partners, funding and requested acknowledgements.']
     (DIR/'README.md').write_text('\n'.join(sections)+'\n')

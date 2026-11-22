@@ -20,7 +20,7 @@ concurrency:
 
 env:
   SURVEY: results/hetdex_blind_emitters
-  STAGE: ${{ inputs.stage || 'audit' }}
+  STAGE: ${{ inputs.stage || (contains(github.event.head_commit.message, '[full-hetdex]') && 'full') || 'audit' }}
   VET_RUN: "44995021247"
   FOCUS_RUN: "44999164862"
   OMP_NUM_THREADS: "1"
@@ -47,6 +47,11 @@ jobs:
           persist-credentials: false
           filter: blob:none
           sparse-checkout: results/hetdex_blind_emitters
+      - name: Start a full reproduction with an empty release output directory
+        if: env.STAGE == 'full'
+        run: |
+          out="$SURVEY/evidence/$RELEASE"
+          if test -d "$out"; then mv "$out" "$RUNNER_TEMP/previous-evidence-$RELEASE"; fi
       - name: Read the published scan checkpoint
         if: env.STAGE == 'vet'
         uses: actions/checkout@v4
@@ -138,13 +143,18 @@ jobs:
           for name in ("focus/summary", "focus/saved-pair-summary", "repeat-blobs/summary"):
               print(d.name, name, json.loads((d / (name + ".json")).read_text())["counts"])
           PY
-      - name: Check both endpoints of every recurrent spatial excess against independent archives
+      - name: Check knots and bridge centers in native imaging and independent spectra
         if: env.STAGE == 'full' || env.STAGE == 'focus' || env.STAGE == 'finalize' || env.STAGE == 'audit'
         run: |
           d="$SURVEY/evidence/$RELEASE"
           test -s "$d/focus/static-summary.json"
           test -s "$d/focus/saved-pair-summary.json"
           python "$SURVEY/blobs_followup.py" "$d" --cache "$RUNNER_TEMP/hetdex"
+      - name: Measure native optical continua for independently identified Ly-alpha lines
+        if: env.STAGE == 'full' || env.STAGE == 'focus' || env.STAGE == 'finalize' || env.STAGE == 'audit'
+        run: |
+          d="$SURVEY/evidence/$RELEASE"
+          python "$SURVEY/ew_imaging_followup.py" "$d" "$d/ew-imaging" --release "$RELEASE" --cache "$RUNNER_TEMP/hetdex"
       - name: Wait for the original evidence commit before publishing the supplement
         if: (env.STAGE == 'focus' || env.STAGE == 'finalize') && matrix.release == 'sc1'
         env:
@@ -222,5 +232,5 @@ jobs:
           python -m open_space.verify > "$RUNNER_TEMP/verify.txt" || { tail -100 "$RUNNER_TEMP/verify.txt"; exit 1; }
           python -m unittest discover -s tests > "$RUNNER_TEMP/unittest.txt" 2>&1 || { tail -100 "$RUNNER_TEMP/unittest.txt"; exit 1; }
           tail -6 "$RUNNER_TEMP/verify.txt"
-          tail -4 "$RUNNER_TEMP/unittest.txt"
+          grep -E '^Ran [0-9]+ tests? in |^OK($| )' "$RUNNER_TEMP/unittest.txt"
           git push origin HEAD:science/hetdex-blind-emitter-search

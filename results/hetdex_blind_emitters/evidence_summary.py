@@ -3,6 +3,7 @@ from collections import Counter, defaultdict, deque
 import gzip
 import hashlib
 import json
+from itertools import chain
 import math
 from pathlib import Path
 
@@ -85,7 +86,7 @@ def legacy_focus(focus, revisions):
     return by_snapshot
 
 
-def adjudications(d, *, include_pair_replay=True, include_blob_followup=True):
+def _previous_adjudications(d, *, include_pair_replay=True, include_blob_followup=True):
     """Yield exactly one effective decision per original ledger row, in original order."""
     d=Path(d)
     focus=d/"focus"
@@ -182,6 +183,67 @@ def adjudications(d, *, include_pair_replay=True, include_blob_followup=True):
         yield line,row,path,original
     if exact or legacy or replay or blob:
         raise ValueError("A supplementary decision lacks an identical original ledger record")
+
+
+def adjudications(d, *, include_pair_replay=True, include_blob_followup=True, include_ew_imaging=True):
+    """Apply native EW imaging only to its exact previously adjudicated source row."""
+    d=Path(d)
+    root=d/"ew-imaging"
+    revised={}
+    if include_pair_replay and include_blob_followup and include_ew_imaging and (root/"summary.json").exists():
+        with (d/"vetted.jsonl.gz").open("rb") as src:
+            if hashlib.file_digest(src,"sha256").hexdigest()!=read(root/"summary.json")["input_sha256"]:
+                raise ValueError("Native imaging inputs differ from the frozen source ledger")
+        for i,r in ledger(root/"vetted.jsonl.gz"):
+            n=checked_line(r)
+            if n in revised or r["peak"]["channel"]!="ew" or tuple(r["key"])!=stable_key(r["peak"]):
+                raise ValueError(f"Invalid or repeated EW overlay for first-pass line {n}")
+            revised[n]=(i,r)
+    prev=_previous_adjudications(d,include_pair_replay=include_pair_replay,include_blob_followup=include_blob_followup)
+    for n,(line,rec,path,initial) in enumerate(prev,1):
+        if n in revised:
+            i,r=revised.pop(n)
+            if ((r["previous_ledger"],r["previous_ledger_line"],r["previous_disposition"])!=
+                (path,line,rec["vet"]["disposition"]) or measurement_id(r["peak"])!=measurement_id(rec["peak"]) or
+                r["previous_snapshot_sha256"]!=frozen_digest(rec["peak"],rec["vet"]).hex()):
+                raise ValueError(f"Native EW evidence does not match predecessor on first-pass line {n}")
+            yield i,r,"ew-imaging/vetted.jsonl.gz",initial
+        else:
+            yield line,rec,path,initial
+    if revised:
+        raise ValueError("Native EW overlay refers to nonexistent source rows")
+
+
+def additional_ew(d):
+    """Independent, previously unadjudicated spectra, bound to their original scout rows."""
+    d=Path(d)
+    out=d/"ew-imaging"
+    if not (out/"summary.json").exists():
+        return
+    decl=read(out/"summary.json")
+    path=d/"ew-rescue-spectra.jsonl.gz"
+    with path.open("rb") as src:
+        if hashlib.file_digest(src,"sha256").hexdigest()!=decl["additional_input_sha256"]:
+            raise ValueError("Additional EW hypotheses use a different prescreen input")
+    added={}
+    for i,r in ledger(out/"additional.jsonl.gz"):
+        n=r["source_line"]
+        if n in added or r["source_ledger"]!=path.name or tuple(r["key"])!=stable_key(r["peak"]):
+            raise ValueError("Duplicate or invalid additional EW row")
+        added[n]=(i,r)
+    if not added:
+        return
+    for n,original in ledger(path):
+        if n not in added:
+            continue
+        i,r=added.pop(n)
+        p=r["peak"]
+        if (original["status"]!="science_peak_for_imaging" or
+            any(p[k]!=original[k] for k in ("row_index","shotid","source_id","detectid","wave","flux","flux_err"))):
+            raise ValueError(f"Additional EW does not match original prescreen line {n}")
+        yield i,r,"ew-imaging/additional.jsonl.gz"
+    if added:
+        raise ValueError("Additional EW rows outside original prescreen")
 
 
 def keep(obj, keys):
@@ -399,7 +461,8 @@ def summarize_evidence(d):
     rep = defaultdict(Counter)
     reasons = defaultdict(Counter)
     chem_stages, near, chemicals = Counter(), {}, {}
-    for n, entry, path, initial in adjudications(d):
+    all_observed=chain(adjudications(d),((n,row,path,None) for n,row,path in additional_ew(d)))
+    for n, entry, path, initial in all_observed:
         p, v = entry["peak"], entry["vet"]
         ch = p["channel"]
         archives(v,archive)
