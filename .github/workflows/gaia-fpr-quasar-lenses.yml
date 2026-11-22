@@ -1,0 +1,69 @@
+name: Gaia FPR quasar lens search
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/gaia-fpr-quasar-lenses]
+    paths: ['.github/workflows/gaia-fpr-quasar-lenses.yml']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gaia-fpr-quasar-lenses
+  cancel-in-progress: false
+
+env:
+  STUDY: results/gaia-fpr-quasar-lenses
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 200
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/gaia-fpr-quasar-lenses
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Locate the input cache
+        run: echo "GAIA_CACHE=$RUNNER_TEMP/gaia-fpr-inputs" >> "$GITHUB_ENV"
+      - uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/gaia-fpr-inputs
+          key: gaia-fpr-I361-v1
+      - name: Acquire both FPR tables and the release dictionary
+        run: python "$STUDY/fetch_fpr.py"
+      - name: Preserve evidence and failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lens-search-evidence
+          path: results/gaia-fpr-quasar-lenses/evidence/
+          if-no-files-found: error
+  publish:
+    needs: search
+    if: ${{ always() && !cancelled() && github.ref == 'refs/heads/research/gaia-fpr-quasar-lenses' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/gaia-fpr-quasar-lenses
+          sparse-checkout: results/gaia-fpr-quasar-lenses
+      - uses: actions/download-artifact@v4
+        with:
+          name: lens-search-evidence
+          path: results/gaia-fpr-quasar-lenses/evidence
+      - name: Commit study outputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$STUDY/evidence"
+          if ! git diff --cached --quiet; then
+            git commit -m "Record Gaia FPR evidence from run $GITHUB_RUN_ID"
+            git push origin HEAD:refs/heads/research/gaia-fpr-quasar-lenses
+          fi
