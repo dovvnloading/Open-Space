@@ -1,0 +1,36 @@
+# Review of the moderate-count Chandra cohort
+
+Two unresolved leads survived among 18 raw real triggers in 128 scanned ObsIDs. One is coincident with a cataloged high-mass X-ray binary. The other lies 1.13″ from a Gaia source with significant stellar motion in a Galactic-plane field. Neither has a secure host association. Both retained their frozen classifications. [Deposited cohort summary](evidence/provisional/moderate-count-v1/44985879443-1/summary.json) · [Distinct leads](evidence/provisional/moderate-count-v1/44985879443-1/leads.json)
+
+The cohort accumulated 1.591199 Ms of eligible field-start live time for 60 s flares and 0.572183 Ms for 3,600 s flares. Across the injection grid, 939 of 1,297 attempted injections were recovered, from 1,536 scheduled. For each lead, one of 24 scrambled realizations reached its score at the instrument-pass stage. The cohort false-alarm estimate is 0.08 for each, with a 95% binomial interval of 0.0011–0.2112 for the underlying exceedance probability. Four incomplete catalog classifications account for the use of the instrument-pass maximum. [Control trials](evidence/provisional/moderate-count-v1/44985879443-1/control_trials.csv) · [Injection grid](evidence/provisional/moderate-count-v1/44985879443-1/completeness.csv)
+
+## ObsID 25782, real/0
+
+At ICRS 190.489259°, +32.533999° (r90 1.29″), the source brightened across a 3,600 s window in the NGC 4631 pointing. The plot shows a compact source on the sky. The 24 aperture photons occupy 23 detector pixels and 24 frames, and the chip-wide background stays near its surrounding level. The extraction annulus contains zero photons in the window. Before and after it there are 11 aperture photons in 8,221 s and 15 in 19,262 s. The signal is a broad increase above measured baseline emission. The photon t95−t05 duration is 2,939 s and the peak begins at MJD 59973.797411 UTC. The 60 s peak contains two photons, giving an aperture flux of (4.29 ± 3.04) × 10⁻¹³ erg cm⁻² s⁻¹ in 0.5–7 keV, with counting uncertainty only. [Detector image and light curves](evidence/photometry/25782/acisf25782N002_evt2.fits.gz/real/0/diagnostics.png) · [Flux receipt](evidence/photometry/25782/acisf25782N002_evt2.fits.gz/real/0/flux.json)
+
+SIMBAD identifies CXO J124157.4+323202 as a high-mass X-ray binary at 0.59″ separation. NED lists 2CXO J124157.4+323202 0.39″ away. The SIMBAD match has a chance-projection upper estimate of 0.0122, just above the automated veto threshold of 0.01. Variability of the cataloged binary is a plausible explanation for the positional coincidence and elevated baseline. The frozen disposition is **ambiguous**. Input `acisf25782N002_evt2.fits.gz` is 4,515,702 bytes, SHA-256 `11546a4d74df16c09a8730a53202e06d97ddb1b667108faf9e84b9091593ec88`. [Observation ledger](evidence/observations/25782.json.gz) · [Archived event bytes](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14740506737)
+
+## ObsID 27049, real/0
+
+At ICRS 108.661306°, −10.176909° (r90 1.51″), nine photons in nine detector pixels and nine frames form a compact sky concentration. The detector-coordinate plots follow the field-derived dither trace. Four photons fall in the first 60 s, the remaining window has separated arrivals, and the annulus records two photons over the full 600 s. The source aperture recorded two photons over 9,230 s before and three over 1,130 s after. The shorter post-trigger coverage limits the quiescence test. The photon t95−t05 duration is 531 s and the peak begins at MJD 60279.141646 UTC. The 0.5–7 keV peak aperture flux is (1.11 ± 0.57) × 10⁻¹² erg cm⁻² s⁻¹, with counting uncertainty only. [Detector image and light curves](evidence/photometry/27049/acisf27049N002_evt2.fits.gz/real/0/diagnostics.png) · [Flux receipt](evidence/photometry/27049/acisf27049N002_evt2.fits.gz/real/0/flux.json)
+
+The NGC 2353 pointing places this source at Galactic latitude +0.46°. Gaia DR3 source 3047861011188212224 is 1.13″ from the X-ray position after epoch propagation. Its declination proper motion is 1.635 ± 0.326 mas yr⁻¹, and its chance-projection upper estimate is 0.080. A stellar flare is plausible. The field is crowded enough that the positional association remains uncertain. Both NED routes reported objects without preferred types, giving the frozen disposition **catalog_incomplete**. Input `acisf27049N002_evt2.fits.gz` is 1,199,286 bytes, SHA-256 `7f19c8708a1b39d6a52dd8dd2892d0a1e058e0aadaa84c0813610104625509c0`. [Observation ledger](evidence/observations/27049.json.gz) · [Archived event bytes](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14740506737)
+
+## Worker receipts and incomplete checks
+
+| Worker | Scanned ObsIDs | Raw real triggers | Instrument passes | Incomplete catalog checks, real and control | Archived ledgers |
+|---|---:|---:|---:|---:|---|
+| 0 | 16 | 0 | 0 | 0 | [Group 0](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14739612185) |
+| 1 | 16 | 5 | 0 | 0 | [Group 1](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14740590380) |
+| 2 | 16 | 4 | 0 | 1 | [Group 2](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14740406265) |
+| 3 | 16 | 0 | 0 | 0 | [Group 3](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14739454924) |
+| 4 | 16 | 1 | 0 | 0 | [Group 4](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14740131739) |
+| 5 | 16 | 1 | 0 | 1 | [Group 5](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14740475368) |
+| 6 | 16 | 3 | 2 | 2 | [Group 6](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14740660870) |
+| 7 | 16 | 4 | 0 | 0 | [Group 7](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14739542443) |
+
+**ObsID 27060, real/0.** The detector-edge or truncated-annulus veto rejects this trigger. Both NED endpoints returned a valid object-type column and 524 objects in the cached query cone. Every preferred object type was blank. The frozen vetter recorded an incomplete catalog classification. [Group 2 ledger and exact NED responses](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14740406265)
+
+**ObsID 29091, real/0.** The active or unconstrained flank veto rejects this trigger. Both NED endpoints returned 177 objects with no reported preferred type. The frozen vetter again recorded an incomplete classification. The number of rows in the search cone alone cannot identify a counterpart for either trigger. [Group 5 ledger and exact NED responses](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14740475368)
+
+**ObsID 29080, real/0.** The active or unconstrained flank veto rejects this trigger. NED also returned an entirely untyped cone. All four incomplete checks in this cohort affected real triggers. Both primary and fallback NED endpoints returned the expected `prefphytype` field. The frozen parser conservatively treated the absence of any populated type as an incomplete query. [Group 6 ledgers and exact NED responses](https://github.com/dovvnloading/Open-Space/actions/runs/44985879443/artifacts/14740660870)
