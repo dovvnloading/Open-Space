@@ -167,19 +167,34 @@ def render(root, evidence):
     coherence = read(dest / "coherence/summary.json")
     sign = coherence["observed_full_max_tail"]
     selections = Counter(row["epta_selection"] for row in coverage if row["epta"] == "ok")
+    independent = Counter(p["pulsar"] for p in ok for r in p["primary_crossings"]
+                          if "independent_archive_check" not in r["unpassed"])
+    noise_rejections = sum(r["unpassed"] == ["post_event_noise_diagnostic"]
+                           for p in ok for r in p["primary_crossings"])
     if review["individual"] == review["all_support"] == 0:
         summary = (f"No transient passed every check in {len(ok)} NANOGrav pulsars. "
-                   f"The blind search found {review['array_internal']} internally significant common-pattern fits. "
+                   f"Of {review['array_internal']} common-pattern fits that passed the internal checks, "
                    f"{review['full_sign']} passed the survey-wide pulsar-sign test.")
     else:
         summary = (f"In {len(ok)} NANOGrav pulsars, {review['individual']} individual fits and "
                    f"{review['all_support']} of {review['array_internal']} common-pattern fits passed every check.")
-    bullet = summary + f" Signal injections give conditional amplitude limits for {len(reported_limits)} pulsar, waveform and width combinations."
+    if review["individual"] == review["all_support"] == 0:
+        bullet = (f"Independent EPTA timing supported the direction of {sum(independent.values())} template fits "
+                  f"in {len(independent)} pulsars. All {noise_rejections} fits that reached the final noise check failed. "
+                  f"The strongest common pattern had survey-wide p = {sign['p_sign_max_bank']:.4g}. "
+                  f"Injections calibrated amplitude limits for {len(reported_limits)} pulsar, waveform and width combinations.")
+    else:
+        bullet = summary + f" Signal injections give conditional amplitude limits for {len(reported_limits)} pulsar, waveform and width combinations."
     sums = {path.relative_to(dest).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
             for path in sorted(dest.rglob("*")) if path.is_file()}
     (dest / "SHA256SUMS").write_text("".join(f"{sha}  {name}\n" for name, sha in sums.items()))
     body = [
         "# Blind pulsar timing transient search", "", f"**{summary}**", "",
+        (f"Independent European telescopes supported the fitted direction in {sum(independent.values())} "
+         f"individual templates across {len(independent)} pulsars. Of those, {noise_rejections} passed the "
+         "wideband and visit-deletion tests and were rejected only because residual noise remained after "
+         "subtracting the event. The individual review compares amplitudes in all three reductions and "
+         "examines two published timing dips. [Individual timing features seen by both arrays](INDIVIDUAL_REVIEW.md)"), "",
         f"The strongest array alignment had a survey-wide sign-randomization p-value of "
         f"**{sign['p_sign_max_bank']:.4g}**. In {sign['exceedances']:,} of {coherence['draws']:,} trials, "
         f"randomly reversing entire pulsar time series produced a peak at least as strong somewhere among "
@@ -188,12 +203,12 @@ def render(root, evidence):
         f"{len(coherence['diagnostic_passing_pulsars'])} pulsars passing noise diagnostics, the strongest "
         f"alignment had p = {coherence['observed_subset_max_tail']['p_sign_max_bank']:.3g}. "
         "[Randomization results](evidence/coherence/summary.json)", "",
-        f"The individual search produced {primary_count} primary template crossings. "
+        f"The individual search produced {primary_count:,} primary template crossings. "
         "Nearby epochs, widths and physical templates can describe the same excursion. "
         "The number of fits is not the number of distinct astrophysical events.", "",
         f"Wideband reductions succeeded for {n_wb} pulsars. Independent EPTA data were usable for {n_epta} of "
-        f"{len(cov['epta'])} overlapping pulsars ({selections['DR2full']} DR2full solutions and "
-        f"{selections['DR2new']} modern-backend DR2new solutions). For a failed full-release fit the same "
+        f"{len(cov['epta'])} overlapping pulsars ({selections['DR2full']} with DR2full and "
+        f"{selections['DR2new']} with modern-backend DR2new). For a failed full-release fit the same "
         "phase and residual-quality checks were applied to the published modern-backend subset. "
         "The coverage files retain both attempts. Catalog membership alone does not guarantee observations at a given epoch. "
         "[Coverage](evidence/coverage.csv) · [Per-pulsar dispositions](evidence/individual-dispositions.csv) · "
@@ -230,6 +245,16 @@ def render(root, evidence):
         "## Inputs and reproduction", "",
         "| Release | DOI | Downloaded archive SHA-256 |", "| --- | --- | --- |",
     ]
+    shapiro60 = [r for r in reported_limits if r["template"] == "shapiro_log" and r["width_d"] == 60.]
+    if shapiro60:
+        best = min(shapiro60, key=lambda r: r["reported_upper_limit_us"])
+        position = next(i for i, s in enumerate(body) if s.startswith("The strongest array alignment"))
+        body[position:position] = [
+            f"The tightest 60-day Shapiro-template limit was **{best['reported_upper_limit_us']:.2f} µs** "
+            f"for {best['pulsar']}. This pointwise 95% limit covers the logarithmic timing coefficient "
+            f"for one event with either sign and a uniformly random epoch from MJD {best['epoch_min_mjd']:g} "
+            f"to {best['epoch_max_mjd']:g}, under the fitted noise model. "
+            "[Injection results and coverage](evidence/individual-sensitivity.csv)", ""]
     external_rows = [r for r in read(dest / "event-review.json") if r["external_support_after_holm"]]
     if external_rows:
         lines = ["### Patterns with independent directional support", "",

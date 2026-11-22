@@ -1,12 +1,16 @@
 # Blind pulsar timing transient search
 
-**No transient passed every check in 68 NANOGrav pulsars. The blind search found 77 internally significant common-pattern fits. 0 passed the survey-wide pulsar-sign test.**
+**No transient passed every check in 68 NANOGrav pulsars. Of 77 common-pattern fits that passed the internal checks, 0 passed the survey-wide pulsar-sign test.**
+
+Independent European telescopes supported the fitted direction in 275 individual templates across 3 pulsars. Of those, 91 passed the wideband and visit-deletion tests and were rejected only because residual noise remained after subtracting the event. The individual review compares amplitudes in all three reductions and examines two published timing dips. [Individual timing features seen by both arrays](INDIVIDUAL_REVIEW.md)
+
+The tightest 60-day Shapiro-template limit was **27.85 µs** for J1600-3053. This pointwise 95% limit covers the logarithmic timing coefficient for one event with either sign and a uniformly random epoch from MJD 54446 to 58919.5, under the fitted noise model. [Injection results and coverage](evidence/individual-sensitivity.csv)
 
 The strongest array alignment had a survey-wide sign-randomization p-value of **0.02026**. In 82 of 4,095 trials, randomly reversing entire pulsar time series produced a peak at least as strong somewhere among the 9,688 array templates. This test preserves transient structure within each pulsar and assumes sign symmetry across pulsars. After restricting the bank to the 42 pulsars passing noise diagnostics, the strongest alignment had p = 0.245. [Randomization results](evidence/coherence/summary.json)
 
-The individual search produced 5394 primary template crossings. Nearby epochs, widths and physical templates can describe the same excursion. The number of fits is not the number of distinct astrophysical events.
+The individual search produced 5,394 primary template crossings. Nearby epochs, widths and physical templates can describe the same excursion. The number of fits is not the number of distinct astrophysical events.
 
-Wideband reductions succeeded for 68 pulsars. Independent EPTA data were usable for 21 of 21 overlapping pulsars (20 DR2full solutions and 1 modern-backend DR2new solutions). For a failed full-release fit the same phase and residual-quality checks were applied to the published modern-backend subset. The coverage files retain both attempts. Catalog membership alone does not guarantee observations at a given epoch. [Coverage](evidence/coverage.csv) · [Per-pulsar dispositions](evidence/individual-dispositions.csv) · [Individual records](evidence/single) · [Surviving fits](evidence/surviving-fits.json)
+Wideband reductions succeeded for 68 pulsars. Independent EPTA data were usable for 21 of 21 overlapping pulsars (20 with DR2full and 1 with modern-backend DR2new). For a failed full-release fit the same phase and residual-quality checks were applied to the published modern-backend subset. The coverage files retain both attempts. Catalog membership alone does not guarantee observations at a given epoch. [Coverage](evidence/coverage.csv) · [Per-pulsar dispositions](evidence/individual-dispositions.csv) · [Individual records](evidence/single) · [Surviving fits](evidence/surviving-fits.json)
 
 ## Timing signatures and interpretation
 

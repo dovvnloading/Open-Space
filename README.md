@@ -273,7 +273,7 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Neutron stars, black holes and cosmic explosions
 
-- **NANOGrav timing transients.** No transient passed every check in 68 NANOGrav pulsars. The blind search found 77 internally significant common-pattern fits. 0 passed the survey-wide pulsar-sign test. Signal injections give conditional amplitude limits for 368 pulsar, waveform and width combinations. *Measured* · [Details](results/nanograv15-transients/README.md)
+- **NANOGrav timing transients.** Independent EPTA timing supported the direction of 275 template fits in 3 pulsars. All 91 fits that reached the final noise check failed. The strongest common pattern had survey-wide p = 0.02026. Injections calibrated amplitude limits for 368 pulsar, waveform and width combinations. *Measured* · [Details](results/nanograv15-transients/README.md)
 **Cosmic rays**
 
 - **New catalogues narrow—but do not identify—the engines of LHAASO's most extreme gamma rays.** Of 25 sources without an originally listed TeV counterpart in a 90-source transcription, 19 lie near a Fermi gamma-ray catalogue object, versus about 9.5 in latitude-matched shifted skies. The 2026 HAWC catalogue overlaps 13. Crowding and incomplete X-ray and radio coverage prevent a firm accelerator identification. *Measured* (catalogue screen only) · [Details](results/lhaaso-dark-counterparts/README.md)
