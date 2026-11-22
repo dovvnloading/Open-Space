@@ -189,6 +189,9 @@
             "status": "queried",
             "nearby": [
               {
+                "ra": "197.779525",
+                "dec": "51.199138",
+                "prefname": "HETDEX J131107.09+511156.9",
                 "z": "2.919978",
                 "sep_arcsec": 2.524758532945854
               }
@@ -205,10 +208,17 @@
           "HSC": {
             "status": "unavailable",
             "nearby": []
+          },
+          "optical_coverage": {
+            "status": "unverified",
+            "nearby": [],
+            "basis": "no calibrated aperture, exact on-position exposure or exposed r counterpart"
           }
         },
         "published_redshifts": [],
         "published_active_types": [],
+        "WISE": null,
+        "HETDEX_foreground_alternatives": [],
         "HETDEX_DESI_VAC": {
           "status": "queried",
           "matches": []
@@ -224,8 +234,8 @@
         "external_cone_status": "no_desi_dr1_counterpart",
         "DESI_static": {
           "files": {
-            "no_product_in_directory": 16,
-            "searched": 2
+            "no_product_in_directory": 17,
+            "searched": 1
           },
           "expected_HEALPix": [
             11062
@@ -311,6 +321,9 @@
             "status": "queried",
             "nearby": [
               {
+                "ra": "197.779525",
+                "dec": "51.199138",
+                "prefname": "HETDEX J131107.09+511156.9",
                 "z": "2.919978",
                 "sep_arcsec": 2.831689738597896
               }
@@ -327,10 +340,17 @@
           "HSC": {
             "status": "unavailable",
             "nearby": []
+          },
+          "optical_coverage": {
+            "status": "unverified",
+            "nearby": [],
+            "basis": "no calibrated aperture, exact on-position exposure or exposed r counterpart"
           }
         },
         "published_redshifts": [],
         "published_active_types": [],
+        "WISE": null,
+        "HETDEX_foreground_alternatives": [],
         "HETDEX_DESI_VAC": {
           "status": "queried",
           "matches": []
@@ -346,8 +366,8 @@
         "external_cone_status": "no_desi_dr1_counterpart",
         "DESI_static": {
           "files": {
-            "no_product_in_directory": 16,
-            "searched": 2
+            "no_product_in_directory": 17,
+            "searched": 1
           },
           "expected_HEALPix": [
             11062
@@ -356,6 +376,130 @@
           "ASU_status": "unavailable",
           "status": "no_desi_dr1_counterpart"
         }
+      }
+    ],
+    "between_knots": [
+      {
+        "ra": 197.77962493713116,
+        "dec": 51.199174881037266,
+        "origins": [
+          "geometric midpoint"
+        ],
+        "published_counterparts": [],
+        "query_radius_arcsec": 1.25,
+        "air_wave_A": 4764.985107421875,
+        "trial_z_Lya": 2.9207327684389566,
+        "requested_position_masks": [
+          {
+            "shotid": 20180409008,
+            "along_arcsec": 2.6698286108867793,
+            "cross_arcsec": 1.727873493813287e-05,
+            "distances_arcsec": [
+              2.6698286109426923,
+              2.6698286109299825
+            ],
+            "seeing_arcsec": 1.6102091073989868,
+            "inside": true
+          },
+          {
+            "shotid": 20180515011,
+            "along_arcsec": 2.1861746771816715,
+            "cross_arcsec": 0.3771337167870643,
+            "distances_arcsec": [
+              2.2184655867261074,
+              2.988595030617365
+            ],
+            "seeing_arcsec": 1.5670568943023682,
+            "inside": true
+          }
+        ],
+        "external_status": "no_desi_dr1_counterpart",
+        "native_DESI": {
+          "files": {
+            "no_product_in_directory": 17,
+            "searched": 1
+          },
+          "expected_HEALPix": [
+            11062
+          ],
+          "static_status": "searched",
+          "ASU_status": "unavailable",
+          "status": "no_desi_dr1_counterpart"
+        },
+        "SDSS_status": "queried",
+        "HETDEX_DESI_VAC": {
+          "status": "queried",
+          "matches": []
+        },
+        "spectral_tests": [],
+        "attribution": "A redshift association needs an on-bridge fibre and a same-wavelength line detection; a central aperture can still include compact-galaxy emission."
+      },
+      {
+        "ra": 197.779525,
+        "dec": 51.199138,
+        "origins": [
+          "NED"
+        ],
+        "published_counterparts": [
+          {
+            "service": "NED",
+            "z": 2.919978,
+            "sep_arcsec": 0.0,
+            "reference": null,
+            "published_object": "HETDEX J131107.09+511156.9",
+            "predicted_OII_air_A": 14611.487328144105,
+            "observed_minus_OII_A": -9846.097191425355,
+            "OII_offset_kms": -202018.15273375242,
+            "within_400_kms": false
+          }
+        ],
+        "query_radius_arcsec": 1.25,
+        "air_wave_A": 4764.985107421875,
+        "trial_z_Lya": 2.9207327684389566,
+        "requested_position_masks": [
+          {
+            "shotid": 20180409008,
+            "along_arcsec": 2.5158804215367105,
+            "cross_arcsec": 0.21154512251302338,
+            "distances_arcsec": [
+              2.5247585299055406,
+              2.831689735183416
+            ],
+            "seeing_arcsec": 1.6102091073989868,
+            "inside": true
+          },
+          {
+            "shotid": 20180515011,
+            "along_arcsec": 2.350647427648155,
+            "cross_arcsec": 0.17366357713767178,
+            "distances_arcsec": [
+              2.3570537471880315,
+              2.8056112817309042
+            ],
+            "seeing_arcsec": 1.5670568943023682,
+            "inside": true
+          }
+        ],
+        "external_status": "no_desi_dr1_counterpart",
+        "native_DESI": {
+          "files": {
+            "no_product_in_directory": 17,
+            "searched": 1
+          },
+          "expected_HEALPix": [
+            11062
+          ],
+          "static_status": "searched",
+          "ASU_status": "unavailable",
+          "status": "no_desi_dr1_counterpart"
+        },
+        "SDSS_status": "queried",
+        "HETDEX_DESI_VAC": {
+          "status": "queried",
+          "matches": []
+        },
+        "spectral_tests": [],
+        "attribution": "A redshift association needs an on-bridge fibre and a same-wavelength line detection; a central aperture can still include compact-galaxy emission."
       }
     ],
     "LAN": {
@@ -391,7 +535,8 @@
       "persistent detector/fibre response not excluded at both knots",
       "primary knot has a competing counterpart redshift; association unresolved",
       "secondary counterpart redshift disagrees; association needs review",
-      "secondary knot has a competing counterpart redshift; association unresolved"
+      "secondary knot has a competing counterpart redshift; association unresolved",
+      "secondary knot wavelength agrees with a foreground transition at its HETDEX catalog redshift"
     ],
     "archived_two_shot_bridge": [
       {
@@ -563,6 +708,9 @@
             "status": "queried",
             "nearby": [
               {
+                "ra": "11.112100113599999",
+                "dec": "-0.05071970940000001",
+                "prefname": "WISEA J004426.87-000302.3",
                 "z": "0.337142",
                 "sep_arcsec": 0.4771396081088068
               }
@@ -579,6 +727,11 @@
           "HSC": {
             "status": "unavailable",
             "nearby": []
+          },
+          "optical_coverage": {
+            "status": "unverified",
+            "nearby": [],
+            "basis": "no calibrated aperture, exact on-position exposure or exposed r counterpart"
           }
         },
         "published_redshifts": [
@@ -586,10 +739,17 @@
             "service": "NED",
             "z": 0.337142,
             "sep_arcsec": 0.4771396081088068,
-            "reference": null
+            "reference": null,
+            "published_object": "WISEA J004426.87-000302.3",
+            "predicted_OII_air_A": 4984.126334519839,
+            "observed_minus_OII_A": 438.35364594891143,
+            "OII_offset_kms": 26366.730731143525,
+            "within_400_kms": false
           }
         ],
         "published_active_types": [],
+        "WISE": null,
+        "HETDEX_foreground_alternatives": [],
         "HETDEX_DESI_VAC": {
           "status": "queried",
           "matches": []
@@ -605,8 +765,8 @@
         "external_cone_status": "no_desi_dr1_counterpart",
         "DESI_static": {
           "files": {
-            "no_product_in_directory": 15,
-            "searched": 3
+            "no_product_in_directory": 16,
+            "searched": 2
           },
           "expected_HEALPix": [
             18069
@@ -695,6 +855,9 @@
             "status": "queried",
             "nearby": [
               {
+                "ra": "11.113189764000001",
+                "dec": "-0.0490063827",
+                "prefname": "SDSS J004427.16-000256.4",
                 "z": "0.454029",
                 "sep_arcsec": 0.7536157799561857
               }
@@ -706,6 +869,8 @@
               {
                 "main_id": "WiggleZ R01J004427164-00025634",
                 "otype": "G",
+                "ra": "11.1132219",
+                "dec": "-0.049011",
                 "rvz_redshift": "0.45414",
                 "rvz_bibcode": "2018MNRAS.474.4151D",
                 "sep_arcsec": 0.7609515907162668
@@ -719,6 +884,11 @@
           "HSC": {
             "status": "unavailable",
             "nearby": []
+          },
+          "optical_coverage": {
+            "status": "unverified",
+            "nearby": [],
+            "basis": "no calibrated aperture, exact on-position exposure or exposed r counterpart"
           }
         },
         "published_redshifts": [
@@ -726,16 +896,49 @@
             "service": "NED",
             "z": 0.454029,
             "sep_arcsec": 0.7536157799561857,
-            "reference": null
+            "reference": null,
+            "published_object": "SDSS J004427.16-000256.4",
+            "predicted_OII_air_A": 5419.816442997286,
+            "observed_minus_OII_A": 0.5136351277142239,
+            "OII_offset_kms": 28.411282756980174,
+            "within_400_kms": true
           },
           {
             "service": "SIMBAD",
             "z": 0.45414,
             "sep_arcsec": 0.7609515907162668,
-            "reference": "2018MNRAS.474.4151D"
+            "reference": "2018MNRAS.474.4151D",
+            "published_object": "WiggleZ R01J004427164-00025634",
+            "predicted_OII_air_A": 5420.23018964551,
+            "observed_minus_OII_A": 0.09988847948989132,
+            "OII_offset_kms": 5.524823069192541,
+            "within_400_kms": true
           }
         ],
         "published_active_types": [],
+        "WISE": null,
+        "HETDEX_foreground_alternatives": [
+          {
+            "detectid": 2100448414,
+            "candidate_ids": [
+              "[OII]"
+            ],
+            "z": 0.4540292024612427,
+            "source_type": "oii",
+            "z_method": "elixer",
+            "confidence": 0.42141756415367126
+          },
+          {
+            "detectid": 2100440113,
+            "candidate_ids": [
+              "[OII]"
+            ],
+            "z": 0.4540292024612427,
+            "source_type": "oii",
+            "z_method": "elixer",
+            "confidence": 0.42141756415367126
+          }
+        ],
         "HETDEX_DESI_VAC": {
           "status": "queried",
           "matches": []
@@ -751,8 +954,8 @@
         "external_cone_status": "no_desi_dr1_counterpart",
         "DESI_static": {
           "files": {
-            "no_product_in_directory": 15,
-            "searched": 3
+            "no_product_in_directory": 16,
+            "searched": 2
           },
           "expected_HEALPix": [
             18069
@@ -761,6 +964,130 @@
           "ASU_status": "unavailable",
           "status": "no_desi_dr1_counterpart"
         }
+      }
+    ],
+    "between_knots": [
+      {
+        "ra": 11.112627506262788,
+        "dec": -0.050033001231352146,
+        "origins": [
+          "geometric midpoint"
+        ],
+        "published_counterparts": [],
+        "query_radius_arcsec": 1.25,
+        "air_wave_A": 5421.405029296875,
+        "trial_z_Lya": 3.4608419266288983,
+        "requested_position_masks": [
+          {
+            "shotid": 20180911022,
+            "along_arcsec": 3.5226831834143537,
+            "cross_arcsec": 3.0080970168612313e-05,
+            "distances_arcsec": [
+              3.5226831835427883,
+              3.52268318354183
+            ],
+            "seeing_arcsec": 1.2213866710662842,
+            "inside": true
+          },
+          {
+            "shotid": 20180910022,
+            "along_arcsec": 3.6757959960805833,
+            "cross_arcsec": 0.030639843675264934,
+            "distances_arcsec": [
+              3.6759236940968303,
+              3.875672184480593
+            ],
+            "seeing_arcsec": 1.483477234840393,
+            "inside": true
+          }
+        ],
+        "external_status": "no_desi_dr1_counterpart",
+        "native_DESI": {
+          "files": {
+            "no_product_in_directory": 16,
+            "searched": 2
+          },
+          "expected_HEALPix": [
+            18069
+          ],
+          "static_status": "searched",
+          "ASU_status": "unavailable",
+          "status": "no_desi_dr1_counterpart"
+        },
+        "SDSS_status": "queried",
+        "HETDEX_DESI_VAC": {
+          "status": "queried",
+          "matches": []
+        },
+        "spectral_tests": [],
+        "attribution": "A redshift association needs an on-bridge fibre and a same-wavelength line detection; a central aperture can still include compact-galaxy emission."
+      },
+      {
+        "ra": 11.112100113599999,
+        "dec": -0.05071970940000001,
+        "origins": [
+          "NED"
+        ],
+        "published_counterparts": [
+          {
+            "service": "NED",
+            "z": 0.337142,
+            "sep_arcsec": 0.0,
+            "reference": null,
+            "published_object": "WISEA J004426.87-000302.3",
+            "predicted_OII_air_A": 4984.126334519839,
+            "observed_minus_OII_A": 438.35364594891143,
+            "OII_offset_kms": 26366.730731143525,
+            "within_400_kms": false
+          }
+        ],
+        "query_radius_arcsec": 1.25,
+        "air_wave_A": 5421.405029296875,
+        "trial_z_Lya": 3.4608419266288983,
+        "requested_position_masks": [
+          {
+            "shotid": 20180911022,
+            "along_arcsec": 0.4145569490807169,
+            "cross_arcsec": 0.23623027123879178,
+            "distances_arcsec": [
+              0.4771396075371077,
+              6.63501607198749
+            ],
+            "seeing_arcsec": 1.2213866710662842,
+            "inside": false
+          },
+          {
+            "shotid": 20180910022,
+            "along_arcsec": 0.5729508341735717,
+            "cross_arcsec": 0.3283062999855574,
+            "distances_arcsec": [
+              0.660346640023555,
+              6.986114726351083
+            ],
+            "seeing_arcsec": 1.483477234840393,
+            "inside": false
+          }
+        ],
+        "external_status": "no_desi_dr1_counterpart",
+        "native_DESI": {
+          "files": {
+            "no_product_in_directory": 16,
+            "searched": 2
+          },
+          "expected_HEALPix": [
+            18069
+          ],
+          "static_status": "searched",
+          "ASU_status": "unavailable",
+          "status": "no_desi_dr1_counterpart"
+        },
+        "SDSS_status": "queried",
+        "HETDEX_DESI_VAC": {
+          "status": "queried",
+          "matches": []
+        },
+        "spectral_tests": [],
+        "attribution": "A redshift association needs an on-bridge fibre and a same-wavelength line detection; a central aperture can still include compact-galaxy emission."
       }
     ],
     "LAN": {
