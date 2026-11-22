@@ -1,0 +1,27 @@
+name: Chandra ACIS blind fast-transient survey
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chandra-acis-fxt-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/research/chandra-acis-fast-transients'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r results/chandra_acis_fxt/requirements.txt
+      - run: python -m open_space.verify
+      - run: python -m unittest discover -s tests
