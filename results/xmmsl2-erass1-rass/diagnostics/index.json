@@ -1,5 +1,5 @@
 {
-  "run": "44990295673",
+  "run": "44990442794",
   "documents": [
     [
       "ero",
@@ -62,6 +62,108 @@
       "HTTP Error 404: Not Found"
     ],
     [
+      "ero_api",
+      "https://erosita.mpe.mpg.de/erodat/apis/",
+      200,
+      null
+    ],
+    [
+      "ero_ul_doc",
+      "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/UpperLimitServer_dr1/",
+      200,
+      null
+    ],
+    [
+      "xmm_archive",
+      "https://heasarc.gsfc.nasa.gov/FTP/xmm/data/catalogues/",
+      200,
+      null
+    ],
+    [
+      "archive_xmm2",
+      "https://www.cosmos.esa.int/web/xmm-newton/xsa",
+      200,
+      null
+    ],
+    [
+      "rass_release",
+      "https://heasarc.gsfc.nasa.gov/FTP/rosat/data/pspc/processed_data/rass/release/",
+      null,
+      "The read operation timed out"
+    ],
+    [
+      "rass_pspc",
+      "https://heasarc.gsfc.nasa.gov/FTP/rosat/data/pspc/",
+      200,
+      null
+    ],
+    [
+      "rass_mpe",
+      "https://www.mpe.mpg.de/ROSAT/2RXS/",
+      200,
+      null
+    ],
+    [
+      "rass_home",
+      "https://heasarc.gsfc.nasa.gov/FTP/rosat/",
+      200,
+      null
+    ],
+    [
+      "rass_metadata",
+      "https://skyview.gsfc.nasa.gov/current/cgi/survey.pl?survey=RASS-Cnt%20Broad",
+      200,
+      null
+    ],
+    [
+      "rass_exposure",
+      "https://skyview.gsfc.nasa.gov/current/cgi/survey.pl?survey=RASS-Exp%20Broad",
+      200,
+      null
+    ],
+    [
+      "xmm2_cds",
+      "https://cdsarc.cds.unistra.fr/ftp/IX/53/",
+      null,
+      "HTTP Error 404: Not Found"
+    ],
+    [
+      "rass_cds",
+      "https://cdsarc.cds.unistra.fr/ftp/J/A+A/588/A103/",
+      null,
+      "HTTP Error 404: Not Found"
+    ],
+    [
+      "xmm2_user",
+      "https://www.cosmos.esa.int/web/xmm-newton/xmmsl2-ug",
+      200,
+      null
+    ],
+    [
+      "xmm2_slew",
+      "https://www.cosmos.esa.int/web/xmm-newton/epic-slew-catalogue",
+      null,
+      "HTTP Error 404: "
+    ],
+    [
+      "nxsa",
+      "https://nxsa.esac.esa.int/catalogues/",
+      null,
+      "HTTP Error 404: "
+    ],
+    [
+      "rass_caldb",
+      "https://heasarc.gsfc.nasa.gov/FTP/caldb/data/rosat/pspc/cpf/matrices/",
+      200,
+      null
+    ],
+    [
+      "rass_indices",
+      "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&QUERY=SELECT+table_name%2Cdescription+FROM+TAP_SCHEMA.tables+WHERE+table_name+LIKE+%27%25rass%25%27+OR+table_name+LIKE+%27rosmaster%27",
+      200,
+      null
+    ],
+    [
       "rass_info",
       "https://www.xray.mpe.mpg.de/rosat/survey/rass-3/",
       null,
@@ -87,13 +189,13 @@
     ],
     [
       "hea_tables",
-      "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+table_name%2Cdescription+FROM+TAP_SCHEMA.tables+WHERE+table_name+LIKE+%27%25erass%25%27+OR+table_name+LIKE+%27%252rxs%25%27+OR+table_name+LIKE+%27%25slew%25%27",
+      "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&QUERY=SELECT+table_name%2Cdescription+FROM+TAP_SCHEMA.tables+WHERE+table_name+LIKE+%27%25erass%25%27+OR+table_name+LIKE+%27%252rxs%25%27+OR+table_name+LIKE+%27%25slew%25%27",
       200,
       null
     ],
     [
       "hea_slew",
-      "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+column_name%2Cunit%2Cdescription+FROM+TAP_SCHEMA.columns+WHERE+table_name%3D%27xmmslewcln%27",
+      "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&QUERY=SELECT+column_name%2Cunit%2Cdescription+FROM+TAP_SCHEMA.columns+WHERE+table_name%3D%27xmmslewcln%27",
       200,
       null
     ],
@@ -112,8 +214,8 @@
     [
       "tns",
       "https://www.wis-tns.org/search?format=csv&ra=15&decl=0&radius=30&coords_unit=arcsec",
-      200,
-      null
+      null,
+      "HTTP Error 403: Forbidden"
     ],
     [
       "slew_doc",
@@ -135,19 +237,7 @@
     ],
     [
       "ero_link",
-      "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/HaemmerichS_DR1/BlazEr1_catalog.html",
-      200,
-      null
-    ],
-    [
-      "ero_link",
-      "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/HaemmerichS_DR1/BLAZE_catalog.html",
-      200,
-      null
-    ],
-    [
-      "ero_link",
-      "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/KaltenbrunnerD_DR1/dr1_catalogs.html",
+      "https://erosita.mpe.mpg.de/dr1/eSASS4DR1/eSASS4DR1_ProductsDescription/skytile.html",
       200,
       null
     ]
