@@ -218,12 +218,19 @@ jobs:
         with:
           name: final-evidence
           path: ${{ runner.temp }}/followup-inputs
-      - name: Test one-band residuals against a foreground-galaxy spectrum
+      - name: Verify near misses against spectra, imaging and published systems
+        env:
+          RECHECK_ARCHIVED_TABLES: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[archived-prior]') }}
         run: |
           pip install -r "$STUDY/requirements.txt"
           python -m pip install pypdf==5.9.0
           inputs="$STUDY/evidence"
           if [[ -s "$RUNNER_TEMP/followup-inputs/summary.json" ]]; then inputs="$RUNNER_TEMP/followup-inputs"; fi
+          if [[ "$RECHECK_ARCHIVED_TABLES" == true && "$inputs" == "$STUDY/evidence" ]]; then
+            cp -a "$inputs/secondary" "$RUNNER_TEMP/followup"
+            python "$STUDY/object_history.py" "$inputs" "$RUNNER_TEMP/followup/object_history" --repair-archived-tables
+            exit 0
+          fi
           python "$STUDY/secondary.py" "$inputs" "$RUNNER_TEMP/followup"
           python "$STUDY/focused.py" "$inputs" "$RUNNER_TEMP/followup/focused"
           python "$STUDY/host_models.py" "$inputs" "$RUNNER_TEMP/followup/host-models"

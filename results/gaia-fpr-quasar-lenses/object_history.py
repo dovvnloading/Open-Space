@@ -29,6 +29,8 @@ def get(url, params, dest):
     res = requests.get(url, params=params, timeout=(6, 30))
     res.raise_for_status()
     packed=gzip.compress(res.content,mtime=0)
+    if dest.exists() and dest.read_bytes()!=packed:
+        dest=dest.with_name(dest.stem+"-"+hashlib.sha256(packed).hexdigest()[:16]+dest.suffix)
     dest.write_bytes(packed)
     return res.content, dict(url=res.url,upstream_bytes=len(res.content),file=dest.name,
                              upstream_sha256=hashlib.sha256(res.content).hexdigest(),
@@ -50,7 +52,9 @@ def votable(data):
                 return ''
             return v.decode('utf-8','replace').strip() if isinstance(v,bytes) else str(v).strip()
         rows = [dict(zip(cols,(string(x) for x in row))) for row in arr]
-        output.append(dict(columns=cols, rows=rows))
+        output.append(dict(columns=cols, rows=rows,
+                           fields=[dict(name=f.name or f.ID,ucd=f.ucd or '',unit=str(f.unit or ''))
+                                   for f in table.fields]))
     return output
 
 
@@ -61,11 +65,26 @@ def distance(ra,dec,other_ra,other_dec):
     return 7200*math.degrees(math.asin(min(1,math.sqrt(a))))
 
 
-def match_table(table, packets, out):
+def coordinate_columns(t, expected):
+    def get(axis, standard, known):
+        direct = [f['name'] for f in t['fields'] if f['name']==expected[axis]]
+        primary = [f['name'] for f in t['fields'] if standard in f['ucd'].lower().split(';')
+                   and 'meta.main' in f['ucd'].lower().split(';') and f['unit'].lower() in ('deg','degree')]
+        common = [k for k in t['columns'] if k.lower() in known]
+        for opts in (direct, primary, common):
+            if len(opts)==1:
+                return opts[0]
+    return (get(0, 'pos.eq.ra', {'ra_icrs','radeg','raj2000','_raj2000'}),
+            get(1, 'pos.eq.dec', {'de_icrs','dedeg','dej2000','_dej2000'}))
+
+
+def match_table(table, packets, out, cached=None):
     bib, count, ra_key, dec_key = TABLES[table]
     result = dict(table=table, bibcode=bib, expected_rows=count, attempts=[], matches=[])
     endpoints=[('static','https://vizier.cfa.harvard.edu/ftp/cats/'),('vo','https://vizier.cfa.harvard.edu'),
                ('vo','https://vizier.cds.unistra.fr'),('vo','https://vizier.idia.ac.za')]
+    if cached:
+        endpoints=[('cached',cached)]
     for kind,host in endpoints:
         try:
             if kind=='static':
@@ -97,14 +116,29 @@ def match_table(table, packets, out):
                 valid=[[{ra_key:line[spans['RAdeg']].strip(),dec_key:line[spans['DEdeg']].strip(),
                          'published_row':line,'row_number':i} for i,line in enumerate(lines,1)]]
             else:
-                data, receipt = get(host+'/viz-bin/votable',
-                                    {'-source':table, '-out.all':1, '-out.max':'unlimited'},
-                                    out/(table.replace('/','_')+'.xml.gz'))
+                if kind=='cached':
+                    file,original=host
+                    packed=file.read_bytes()
+                    digest=hashlib.sha256(packed).hexdigest()
+                    receipt=next(r for r in original['attempts'] if r.get('sha256')==digest)
+                    data=gzip.decompress(packed)
+                    if hashlib.sha256(data).hexdigest()!=receipt['upstream_sha256']:
+                        raise ValueError('Cached response checksum mismatch')
+                else:
+                    data, receipt = get(host+'/viz-bin/votable',
+                                        {'-source':table, '-out.all':1, '-out.max':'unlimited'},
+                                        out/(table.replace('/','_')+'.xml.gz'))
                 result['attempts'].append(receipt)
                 tables = votable(data)
-                valid = [t['rows'] for t in tables if {ra_key,dec_key} <= set(t['columns'])]
-                if len(valid)!=1 or len(valid[0])!=count:
-                    raise ValueError('unexpected rows by returned table '+str([len(t['rows']) for t in tables]))
+                valid=[]
+                for t in tables:
+                    cols=coordinate_columns(t,(ra_key,dec_key))
+                    if all(cols) and len(t['rows'])==count:
+                        valid.append(t['rows'])
+                        ra_key,dec_key=cols
+                if len(valid)!=1:
+                    raise ValueError('unexpected VO schemas '+str([(len(t['rows']),t['columns']) for t in tables]))
+                result['coordinate_columns']=[ra_key,dec_key]
             matches = []
             for row in valid[0]:
                 ra, dec = float(row[ra_key]),float(row[dec_key])
@@ -117,7 +151,7 @@ def match_table(table, packets, out):
             result.update(status='complete', matches=matches, rows=count)
             break
         except Exception as exc:
-            result['attempts'].append(dict(host=host,error=str(exc)[:200]))
+            result['attempts'].append(dict(host='committed response' if kind=='cached' else host,error=repr(exc)[:320]))
     result.setdefault('status','unavailable')
     return result
 
@@ -282,10 +316,35 @@ def mast(packet,out):
         return dict(status='unavailable',error=str(exc)[:220])
 
 
-def run(evidence,out):
+def run(evidence,out,recheck=False):
     out.mkdir(parents=True,exist_ok=True)
     packets = [json.loads(x) for x in (evidence/'review_packets.jsonl').read_text().splitlines() if x.strip()]
     selected=[p for p in packets if not p['prior'] and p['imaging']['imaging_model_pass']]
+    if recheck:
+        # This path reads only locally committed responses and never opens a network connection.
+        source=evidence/'secondary'/'object_history'
+        original=json.loads((source/'object_history.json').read_text())
+        for i,t in enumerate(original['tables']):
+            if t['status']=='complete' or t['table'] not in ('J/A+A/692/A154/golden','J/A+A/692/A154/superset'):
+                continue
+            name=t['table']
+            packet=source/(name.replace('/','_')+'.xml.gz')
+            result=match_table(name,selected,out,cached=(packet,t))
+            if result['status']!='complete':
+                raise ValueError('Prior-pair catalogue repair incomplete: '+str(result['attempts']))
+            # Earlier mirrors returned separate valid byte streams. Only the final mirror's
+            # compressed copy survived the original run. Keep all original hashes and URLs
+            # while explicitly identifying which receipt describes the deposited file.
+            for attempt in t["attempts"]:
+                if attempt.get("file")==packet.name and attempt.get("sha256")!=result["attempts"][-1]["sha256"]:
+                    attempt.pop("file")
+                    attempt["prior_download_gzip_sha256"]=attempt.pop("sha256")
+                    attempt["retention"]="Superseded during the original acquisition; upstream digest and response URL retained"
+            result['attempts']=t['attempts']+[dict(result['attempts'][-1],mode='offline archived table',
+                                                     coordinate_columns=result['coordinate_columns'])]
+            original['tables'][i]=dict(t,**result)
+        (out/'object_history.json').write_text(json.dumps(original,indent=2)+'\n')
+        return
     with ThreadPoolExecutor(3) as pool:
         tables=list(pool.map(lambda t: match_table(t,selected,out),TABLES)) if selected else []
     objects=[]
@@ -305,4 +364,4 @@ def run(evidence,out):
 
 
 if __name__=='__main__':
-    run(Path(sys.argv[1]),Path(sys.argv[2]))
+    run(Path(sys.argv[1]),Path(sys.argv[2]),'--repair-archived-tables' in sys.argv[3:])
