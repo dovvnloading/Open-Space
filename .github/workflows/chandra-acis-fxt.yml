@@ -1187,6 +1187,8 @@ jobs:
       SURVEY: results/chandra_acis_fxt
       GROUP: ${{ matrix.group }}
       PLAN_SHA: ${{ needs.final-plan.outputs.plan_sha }}
+      # Importlib loads the reviewed vet source from a checksum-sealed plan: do not mutate it with bytecode caches.
+      PYTHONDONTWRITEBYTECODE: '1'
       OPENBLAS_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
     steps:
