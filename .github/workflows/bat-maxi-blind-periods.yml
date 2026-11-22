@@ -1,31 +1,133 @@
 name: BAT and MAXI blind period survey
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [fresh, frozen, acquire]
+        default: fresh
+        description: Fetch and search the archives, search the committed inputs, or freeze inputs only
   push:
     branches: ['survey/bat-maxi-blind-periods']
     paths: ['.github/workflows/bat-maxi-blind-periods.yml']
 permissions:
   contents: read
+concurrency:
+  group: bat-maxi-survey-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  FOLDER: results/bat-maxi-blind-periods
+  MODE: ${{ inputs.mode || 'acquire' }}
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
 jobs:
-  inventory-layout:
+  inventory:
+    if: github.ref == 'refs/heads/survey/bat-maxi-blind-periods'
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: results/bat-maxi-blind-periods
           persist-credentials: false
-      - run: python -m pip -q install requests beautifulsoup4
-      - run: python results/bat-maxi-blind-periods/probe.py
-      - uses: actions/upload-artifact@v4
+      - uses: actions/setup-python@v5
         with:
-          name: archive-layout
-          path: results/bat-maxi-blind-periods/archive-layout.json
-  record:
-    needs: inventory-layout
+          python-version: '3.12'
+      - if: env.MODE != 'frozen'
+        run: |
+          python -m pip -q install -r "$FOLDER/requirements.txt"
+          python "$FOLDER/ingest.py" inventory --out roster
+          python "$FOLDER/inventory_check.py" roster
+      - if: env.MODE == 'frozen'
+        run: |
+          mkdir -p roster
+          cp "$FOLDER/evidence/inventory.json" roster/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bat-maxi-inventory
+          path: |
+            roster/*
+            !roster/pilot/
+          if-no-files-found: warn
+          retention-days: 4
+  shard:
+    needs: inventory
     runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        part: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    env:
+      PART: ${{ matrix.part }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/bat-maxi-blind-periods
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip -q install -r "$FOLDER/requirements.txt"
+      - uses: actions/download-artifact@v4
+        with:
+          name: bat-maxi-inventory
+          path: roster
+      - if: env.MODE != 'frozen'
+        run: |
+          python "$FOLDER/ingest.py" curves --inventory roster/inventory.json --out work --shard "$PART" --shards 16 --workers 2
+          python "$FOLDER/freeze.py" work packet "$PART"
+      - if: env.MODE == 'fresh'
+        run: python "$FOLDER/run_shard.py" --inventory roster/inventory.json --work work --out packet --shard "$PART" --shards 16
+      - if: env.MODE == 'frozen'
+        run: python "$FOLDER/replay.py" "$PART" packet
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bat-maxi-part-${{ matrix.part }}
+          path: packet/
+          if-no-files-found: warn
+          retention-days: 4
+  assess:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/bat-maxi-blind-periods
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: bat-maxi-*
+          path: evidence
+          merge-multiple: true
+      - if: env.MODE != 'acquire'
+        run: |
+          python -m pip -q install -r "$FOLDER/requirements.txt"
+          python "$FOLDER/collect.py" evidence
+          python "$FOLDER/literature.py" --candidates evidence/survivors.jsonl --output evidence/literature
+      - uses: actions/upload-artifact@v4
+        if: always() && env.MODE != 'acquire'
+        with:
+          name: bat-maxi-assessment
+          path: |
+            evidence/coverage.json
+            evidence/survivors.jsonl
+            evidence/literature/
+          retention-days: 4
+  record:
+    needs: [inventory, shard, assess]
+    if: always() && github.ref == 'refs/heads/survey/bat-maxi-blind-periods'
     permissions:
       contents: write
-    if: github.ref == 'refs/heads/survey/bat-maxi-blind-periods'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,13 +135,28 @@ jobs:
           sparse-checkout: results/bat-maxi-blind-periods
       - uses: actions/download-artifact@v4
         with:
-          name: archive-layout
-          path: results/bat-maxi-blind-periods
-      - run: |
+          pattern: bat-maxi-*
+          path: packet
+          merge-multiple: true
+      - env:
+          INVENTORY: ${{ needs.inventory.result }}
+          SHARDS: ${{ needs.shard.result }}
+          ASSESS: ${{ needs.assess.result }}
+        run: |
+          set -euo pipefail
+          if [[ "$INVENTORY/$SHARDS/$ASSESS" == success/success/success ]]; then
+            target="$FOLDER/evidence"
+          else
+            target="$FOLDER/attempts/$GITHUB_RUN_ID"
+          fi
+          mkdir -p "$target"
+          cp -a packet/. "$target/"
+          echo "$MODE $GITHUB_SHA $INVENTORY/$SHARDS/$ASSESS" > "$target/run-$GITHUB_RUN_ID.txt"
+          (cd "$target" && find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add results/bat-maxi-blind-periods/archive-layout.json
+          git add -f -- "$target"
           if ! git diff --cached --quiet; then
-            git commit -m 'Record archive layout and product checksums'
+            git commit -m "Record BAT/MAXI survey outputs from run $GITHUB_RUN_ID"
             git push origin HEAD:survey/bat-maxi-blind-periods
           fi
