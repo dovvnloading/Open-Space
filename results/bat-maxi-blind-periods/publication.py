@@ -1,6 +1,7 @@
 """Join the signed-off source-by-source reading of primary papers to the measurements."""
 import argparse
 import csv
+import gzip
 import json
 import math
 from pathlib import Path
@@ -8,6 +9,30 @@ from pathlib import Path
 
 def join(folder,destination):
     evidence=folder/"evidence"
+    destination.mkdir(exist_ok=True,parents=True)
+    rejected=[]
+    all_pairs=[]
+    for path in sorted(evidence.glob("search-*.jsonl.gz")):
+        with gzip.open(path,"rt") as stream:
+            for line in stream:
+                rec=json.loads(line)
+                for pair in rec.get("pairs",[]):
+                    row=dict(source_id=rec["roster_id"],bat_grid_period_days=pair["bat_grid_period_days"],
+                             maxi_grid_period_days=pair["maxi_grid_period_days"],both_halves_pass=pair["pass"])
+                    for b in ("bat","maxi"):
+                        halves=pair[b+"_stability"]
+                        row[b+"_halves_pass"]=halves["pass"]
+                        row[b+"_phase_drift_cycles"]=halves.get("phase_drift_cycles")
+                        row[b+"_reason"]=halves.get("reason","")
+                    all_pairs.append(row)
+                    if not pair["pass"]:
+                        rejected.append(dict(source_id=rec["roster_id"],**pair))
+    (destination/"failed-half-tests.json").write_text(json.dumps(rejected,indent=2)+"\n")
+    if all_pairs:
+        with (destination/"independent-pairs.csv").open("w",newline="") as stream:
+            w=csv.DictWriter(stream,fieldnames=list(all_pairs[0]))
+            w.writeheader()
+            w.writerows(all_pairs)
     decisions=json.loads((folder/"decisions.json").read_text())
     with (evidence/"stable-periods.csv").open() as stream:
         periods=list(csv.DictReader(stream))
@@ -33,7 +58,8 @@ def join(folder,destination):
             writer.writeheader()
             writer.writerows(published)
     doc=["# Review of independent BAT and MAXI periods","",
-         "BAT and MAXI each passed the blind red-noise and window checks. Each row also passed the period and phase stability checks in the two halves of each light curve. The decision below states what the period can be attributed to after examination of the source, nearby objects, aliases and published periods.",""]
+         "BAT and MAXI each passed the blind red-noise and window checks. Each row also passed the period and phase stability checks in the two halves of each light curve. The decision below states what the period can be attributed to after examination of the source, nearby objects, aliases and published periods.","",
+         "The [original source dossiers](../literature/triage.jsonl) preserve the first catalogue and SIMBAD queries, including incomplete responses. The [Neumann HMXB follow-up](neumann/summary.json) records retrieval and matching for all 21 periods. The [SIMBAD follow-up](simbad/) separates two identifications that required additional checking.",""]
     for row in published:
         match=next(x for x in decisions if x["source_id"]==row["source_id"] and math.isclose(float(x["period_days"]),float(row["period_days"]),rel_tol=1e-7))
         doc.extend([f'## {row["source"]} · {float(row["period_days"]):.8g} days',"",

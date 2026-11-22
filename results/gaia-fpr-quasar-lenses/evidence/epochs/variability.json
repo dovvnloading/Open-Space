@@ -1,0 +1,54 @@
+{
+  "systems": [
+    {
+      "id": "FW916413362313609472",
+      "field_id": "916413362313609472",
+      "input": {
+        "service": "https://gea.esac.esa.int/tap-server/tap/sync",
+        "query": "SELECT source_id, component_id, epoch_obs, g_mag_obs, g_flux_obs, g_flux_obs_error FROM gaiafpr.lens_observation WHERE source_id = 916413362313609472",
+        "url": "https://gea.esac.esa.int/tap-server/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&MAXREC=20000&QUERY=SELECT+source_id%2C+component_id%2C+epoch_obs%2C+g_mag_obs%2C+g_flux_obs%2C+g_flux_obs_error+FROM+gaiafpr.lens_observation+WHERE+source_id+%3D+916413362313609472",
+        "bytes": 6954,
+        "file": "field-916413362313609472.csv",
+        "sha256": "ee5a4bf2f719c7ff990a61db0deda87dd5dbfb2bb68c567263d30d3289a13421",
+        "previous_errors": []
+      },
+      "components": {
+        "1": {
+          "n": 44,
+          "first_epoch_days": 1715.5637302312189,
+          "last_epoch_days": 2694.7286264404565,
+          "span_days": 979.1648962092377,
+          "median_g_mag": 16.9921875,
+          "mag_p90_minus_p10": 0.2609375000000007,
+          "robust_mag_scatter": 0.069496875
+        },
+        "2": {
+          "n": 46,
+          "first_epoch_days": 1715.5637298430756,
+          "last_epoch_days": 2694.7286258855675,
+          "span_days": 979.1648960424918,
+          "median_g_mag": 18.375,
+          "mag_p90_minus_p10": 0.515625,
+          "robust_mag_scatter": 0.13899375
+        }
+      },
+      "pairs": [
+        {
+          "component_ids": [
+            1,
+            2
+          ],
+          "n_near_simultaneous": 43,
+          "median_delta_g_mag": -1.375,
+          "p90_minus_p10_delta_g_mag": 0.3968750000000001,
+          "maximum_epoch_difference_s": 0.04794736742042005,
+          "zero_lag_spearman_rho_descriptive": 0.39755091065753595
+        }
+      ],
+      "status": "measured"
+    }
+  ],
+  "time": "BJD in TCB minus 2455197.5 days",
+  "magnitude": "onboard Gaia G",
+  "interpretation": "Mutual nearest epochs within 30 seconds. Onboard splitting and scan-angle dependent blending can correlate or anticorrelate these fluxes. Lensing time delays can suppress zero-lag agreement. No delay search, significance, or promotion."
+}

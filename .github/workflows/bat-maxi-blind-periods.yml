@@ -22,7 +22,7 @@ concurrency:
 env:
   FOLDER: results/bat-maxi-blind-periods
   CHECKPOINT_RUN: ${{ inputs.checkpoint_run || '45017427773' }}
-  MODE: ${{ inputs.mode || 'resume' }}
+  MODE: ${{ inputs.mode || (contains(github.event.head_commit.message, '[period-report]') && 'report') || 'frozen' }}
   OPENBLAS_NUM_THREADS: '1'
   OMP_NUM_THREADS: '1'
   MKL_NUM_THREADS: '1'
@@ -142,7 +142,7 @@ jobs:
           python "$FOLDER/collect.py" evidence
           python "$FOLDER/summarize.py" evidence
           if [[ "$MODE" == frozen ]]; then python "$FOLDER/compare_passes.py" "$FOLDER/evidence" evidence; fi
-          python "$FOLDER/field_checks.py" --evidence evidence --snapshot "$FOLDER/evidence" --output evidence/validation
+          python "$FOLDER/field_checks.py" --evidence evidence --snapshot evidence --output evidence/validation
           python -c 'import json,pathlib; [print(r["source"],r["period_days"],r["uncertainty_days"]) for r in (json.loads(l) for l in pathlib.Path("evidence/survivors.jsonl").read_text().splitlines())]'
       - uses: actions/upload-artifact@v4
         if: always() && env.MODE != 'acquire'
@@ -361,11 +361,16 @@ jobs:
           python-version: '3.12'
       - run: |
           set -euo pipefail
-          python -m pip -q install -r "$FOLDER/requirements.txt" matplotlib==3.10.3
+          python -m pip -q install --only-binary=:all: -r "$FOLDER/requirements.txt" matplotlib==3.10.3
+          if ! command -v pdftotext > /dev/null; then sudo apt-get -qq update && sudo apt-get -qq install poppler-utils; fi
           mkdir -p packet/review
+          python "$FOLDER/numerical_check.py" packet/numerical-check.json
+          python "$FOLDER/replay.py" 0 "$RUNNER_TEMP/survey-replay" --verify --receipt packet/review/replay-check.json
           python "$FOLDER/plot_folds.py" "$FOLDER/evidence" packet/review/folds
           python "$FOLDER/review_periods.py" --evidence "$FOLDER/evidence" --output packet/review --manual "$FOLDER/decisions.json"
           python "$FOLDER/catalogue_units.py" --evidence "$FOLDER/evidence" --output packet/review/catalogue-units
+          python "$FOLDER/neumann_supplement.py" "$FOLDER/evidence" packet/review/neumann
+          python "$FOLDER/simbad_supplement.py" "$FOLDER/evidence" packet/review/simbad
           python "$FOLDER/weight_dates.py" "$FOLDER/evidence" packet/review/weight-dates
           python "$FOLDER/plot_sensitivity.py" "$FOLDER/evidence" packet/review/recovery.svg
           python "$FOLDER/complete_fields.py" "$FOLDER/evidence" packet/review/fields
@@ -374,9 +379,11 @@ jobs:
           python "$FOLDER/publication.py" "$FOLDER" packet/review
           echo "$GITHUB_SHA" > packet/publication-revision.txt
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: bat-maxi-publication
           path: packet/
+          if-no-files-found: warn
           retention-days: 4
   record:
     needs: [inventory, shard, assess, literature, review, orbit, publication]

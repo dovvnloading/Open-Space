@@ -9,12 +9,13 @@ from pathlib import Path
 # Printed reference values are rounded. Each source evolves on its own ephemeris.
 # The candidate key below only selects the intended daily-survey record.
 FALANGA = "Falanga et al. (2015)", "https://ui.adsabs.harvard.edu/abs/2015A%26A...577A.130F/abstract"
-HER = "Staubert et al. (2009)", "https://ui.adsabs.harvard.edu/abs/2009A%26A...494.1025S/abstract"
+HER = "Staubert, Klochkov & Wilms (2009)", "https://arxiv.org/abs/0904.2307"
+HEMPHILL = "Hemphill et al. (2019)", "https://ui.adsabs.harvard.edu/abs/2019ApJ...873...62H/abstract"
 PRIORS = [
-    ("H1538-522", "H 1538−522", 2.1572, 3.7284, 2, FALANGA),
-    ("SMCX-1", "SMC X-1", 2.05723, 3.89192, 2, FALANGA),
+    ("H1538-522", "H 1538−522", 2.1572, 3.72831, 2, HEMPHILL),
+    ("SMCX-1", "SMC X-1", 2.05723, 3.891923160, 2, FALANGA),
     ("HerX-1", "Her X-1", 2.42823, 1.7001676, 1, HER),
-    ("LMCX-4", "LMC X-4", 3.44882, 1.408376, 1, FALANGA),
+    ("LMCX-4", "LMC X-4", 3.44882, 1.4083790, 1, FALANGA),
 ]
 
 
@@ -41,6 +42,7 @@ def compare(details, period, prior, harmonic):
     # Do not transfer an unrelated alternative's window diagnostics to this one.
     strongest = details["best_one_day_alias"]
     same = math.isclose(strongest["predicted_frequency"], carrier_centre, abs_tol=1e-11, rel_tol=0.)
+    is_orbit = math.isclose(strongest["predicted_frequency"], carrier_centre/harmonic, abs_tol=1e-11, rel_tol=0.)
     return {
         "status":"compared", "native_rows":details["n"], "span_days":span,
         "daily_fit_period_days":target["period_days"], "daily_gain":target["delta_chi2"],
@@ -51,6 +53,7 @@ def compare(details, period, prior, harmonic):
         "carrier_fit_offset_from_prior_rayleigh":abs(carrier["frequency"] - harmonic/prior)*span,
         "strongest_alias_period_days":strongest["period_days"], "carrier_is_strongest_alias":same,
         "carrier_window":details.get("winner_window") if same else None,
+        "orbital_window":details.get("winner_window") if is_orbit else None,
         "runtime_seconds":details.get("runtime_seconds")
     }
 
@@ -102,7 +105,7 @@ def build(evidence):
 def write(outputs, dest):
     text = ["# Published orbital periods and one-day aliases", "",
             "For each daily-survey period, the proposed carrier is the published orbital frequency or its second harmonic. Once-per-day sampling folds this carrier onto the lower frequency $|1 - f_{\\rm carrier}|$. The orbit-product fits use their native sampling, quoted flux errors and piecewise means. The daily-frequency and carrier gains reduce the same weighted chi-square, with identical local frequency refinement. A positive difference favors the carrier in that interval. These are descriptive fits to the same underlying monitor observations used in selection.", "",
-            "Offsets use the epoch's Rayleigh width, 1 divided by its span. The frequency predicted from the printed orbital period can evolve across the baseline. An offset larger than one resolution element is reported explicitly. The output JSON includes conditional gains and sampling correlations only when the carrier was the stored winner. Near-unit correlations make the corresponding sinusoidal components difficult to distinguish.", ""]
+            "Offsets use the epoch's Rayleigh width, 1 divided by its span. The frequency predicted from the printed orbital period can evolve across the baseline. An offset larger than one resolution element is reported explicitly. The output JSON includes conditional gains and sampling correlations when the carrier or its orbital fundamental was the stored winner. Near-unit correlations make the corresponding sinusoidal components difficult to distinguish.", ""]
     for r in outputs:
         name = r["source"]
         ref, url = r["reference"]
@@ -128,6 +131,10 @@ def write(outputs, dest):
                 w = s["carrier_window"]
                 c = w["canonical_correlations"]
                 text.append(f"{band.upper()} full-span target/carrier sampling correlations are {c[0]:.3f} and {c[1]:.3f}. Adding the carrier to the daily fit gains {w['alias_gain_given_target']:.5g}, and adding the daily term to the carrier fit gains {w['target_gain_given_alias']:.5g}.")
+            elif s["orbital_window"]:
+                w = s["orbital_window"]
+                c = w["canonical_correlations"]
+                text.append(f"{band.upper()} favors the orbital fundamental at {s['orbital_fit_period_days']:.8g} d over its reflected harmonic and the daily period. The daily/fundamental sampling correlations are {c[0]:.3f} and {c[1]:.3f}. Adding the orbital fundamental to the daily fit gains {w['alias_gain_given_target']:.5g}, and adding the daily term to the orbital fit gains {w['target_gain_given_alias']:.5g}. The specific harmonic's conditional gains were not stored.")
             else:
                 text.append(f"{band.upper()} has a stronger fitted alias at {s['strongest_alias_period_days']:.8g} d. Conditional and window comparisons for the specific published carrier were not stored.")
             if s["carrier_centre_offset_from_prior_rayleigh"]>1:

@@ -13,7 +13,6 @@ import gzip
 import hashlib
 import json
 import math
-import os
 import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -92,8 +91,10 @@ def values(item, directory, cache, manual):
                 sigma = abs(float(es))*unit
             except (TypeError,ValueError):
                 sigma = 0.
+            kind = ("catalogue value with unit under review" if
+                    table["vizier"]=="J/A+A/684/A124" and f=="Period" else "catalogue")
             yield dict(period_days=number, uncertainty_days=sigma, rounding_days=half_digit(p["value"])*unit,
-                       kind="catalogue", title=table["family"]+" / "+table["table"]+" / "+f,
+                       kind=kind, title=table["family"]+" / "+table["table"]+" / "+f,
                        url="https://vizier.cds.unistra.fr/viz-bin/VizieR?-source="+quote(table["table"],safe=""),
                        context=p["description"], association="identifier" if table["matched_identifiers"] else "coordinate only")
     aliases = [norm(v) for v in item["candidate"].get("aliases",[])+[item["candidate"]["source"]]]
@@ -144,8 +145,8 @@ def values(item, directory, cache, manual):
                 raise ValueError("Manual published period needs a primary reference and numerical value")
             yield dict(kind="curated publication",association="manual primary-paper identification",
                        title=p["title"],url=p["url"],period_days=float(p["period_days"]),
-                       rounding_days=float(p.get("rounding_days",0)),
-                       uncertainty_days=float(p.get("uncertainty_days",0)),context=p.get("context",""))
+                       rounding_days=float(p.get("rounding_days",0) or 0),
+                       uncertainty_days=float(p.get("uncertainty_days",0) or 0),context=p.get("context",""))
 
 
 
@@ -307,7 +308,7 @@ def main():
                 for m in compare(p,bands,f):
                     matches.append(dict(publication=p,match=m))
             cat_order={"direct":0,"harmonic":1,"window alias":2}
-            matches.sort(key=lambda v:(cat_order[v["match"]["category"]],v["publication"]["kind"] in ("abstract lead","manuscript lead"),
+            matches.sort(key=lambda v:(cat_order[v["match"]["category"]],v["publication"]["kind"]=="catalogue value with unit under review",v["publication"]["kind"] in ("abstract lead","manuscript lead"),
                          v["match"]["width_over_candidate_frequency"]>.1,
                          v["match"]["carrier_harmonic"]!=1,abs(v["match"]["window_harmonic"]),
                          v["match"]["difference_per_day"]))
@@ -322,7 +323,7 @@ def main():
                     short.append(row)
                     used.add(key)
             rec=dict(candidate={k:cand[k] for k in ("source","source_id","period_days","uncertainty_days")},
-                     detail_link=os.path.relpath(lit/item["detail"],dest),manual_decision=decisions[0] if decisions else None,
+                     detail_link=str(Path("..")/"literature"/item["detail"]),manual_decision=decisions[0] if decisions else None,
                      incomplete_checks=detail.get("incomplete",[]),band_frequency_intervals_per_day=dict(zip(("bat","maxi"),bands)),
                      numeric_values_considered=len(refs),publications=list(refs.values()),reported_matches=short,matches=matches)
             records.write(json.dumps(rec,allow_nan=False)+"\n")

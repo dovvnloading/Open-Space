@@ -1,0 +1,55 @@
+{
+  "records": [
+    {
+      "catalog": "DESI DR1",
+      "identifier": "39633148258026924",
+      "classification": "QSO",
+      "ra": 125.79693569226754,
+      "dec": 43.88848475751875,
+      "target_ra": 125.7969336475405,
+      "target_dec": 43.88845478935492,
+      "z": 0.18259628532942135,
+      "z_err": 4.120569840082392e-06,
+      "quality_pass": true,
+      "fiber_radius_arcsec": 0.75,
+      "target_centre_distance_arcsec": 1.2675944710854985,
+      "target_image_distances_arcsec": [
+        0.00017471153692828664,
+        3.4246661125186497
+      ],
+      "quality": {
+        "name": "39633148258026924",
+        "era": "125.7969336475405",
+        "edec": "43.88845478935492",
+        "classification": "QSO",
+        "z": "0.18259628532942135",
+        "z_err": "4.120569840082392e-06",
+        "warning": "0",
+        "mean_fiber_ra": "125.79693569226754",
+        "mean_fiber_dec": "43.88848475751875",
+        "deltachi2": "477039.8649403453",
+        "zcat_primary": "True",
+        "objtype": "TGT",
+        "coadd_fiberstatus": "0",
+        "survey": "main",
+        "program": "dark",
+        "healpix": "6511"
+      },
+      "fiber_centre_distance_arcsec": 1.2653888897881427,
+      "fiber_image_distances_arcsec": [
+        0.10796645879142504,
+        3.483980710969835
+      ],
+      "isolated_central_galaxy": false
+    }
+  ],
+  "receipt": {
+    "status": "complete_native_target_neighbourhood",
+    "source_file": "desi_nearby_spectra.csv.gz",
+    "sha256": "cc8644e421b20db2250caae37233e0d447e63c19acf3614055fc9f0da82e739f",
+    "n_rows": 1,
+    "augmented_quality_columns": true,
+    "selection": "8 arcsec of any Gaia image; all eligible target-centre associations within 0.65 arcsec covered"
+  },
+  "interpretation": "Target-only redshifts lack independent fiber-isolation and primary-quality verification. An isolated central galaxy still needs a higher-redshift source."
+}

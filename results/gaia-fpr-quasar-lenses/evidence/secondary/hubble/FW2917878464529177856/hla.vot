@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE VOTABLE SYSTEM "http://cdsweb.u-strasbg.fr/xml/VOTable.dtd">
+<VOTABLE version="1.1">
+<DESCRIPTION>STScI Hubble Legacy Archive SIAP</DESCRIPTION>
+  <PARAM datatype="char" arraysize="*" name="SORTORDER" value="Detector PropID"></PARAM>
+  <RESOURCE type="results">
+    <INFO name="QUERY_STATUS" value="OK"></INFO>
+    <PARAM datatype="char" name="INPUT:POS" value="90.042155,-21.259709" arraysize="*" unit="deg"></PARAM>
+    <PARAM datatype="double" name="INPUT:SIZE" value="0.002000" unit="deg"></PARAM>
+    <PARAM datatype="char" name="INPUT:FORMAT" value="image/fits" arraysize="*"></PARAM>
+    <PARAM datatype="char" name="INPUT:imagetype" value="best" arraysize="*"></PARAM>
+    <PARAM datatype="char" name="INPUT:inst" value="acs,wfpc2,nicgrism,acsgrism,stis,fos,ghrs,nicmos,wfc3,cos" arraysize="*"></PARAM>
+    <PARAM datatype="int" name="INPUT:hrcmatch" value="0"></PARAM>
+    <PARAM datatype="double" name="INPUT:zoom" value="1.000000"></PARAM>
+    <PARAM datatype="double" name="INPUT:autoscale" value="99.500000" unit="%"></PARAM>
+    <PARAM datatype="int" name="INPUT:asinh" value="1"></PARAM>
+    <PARAM datatype="char" arraysize="*" name="refframe" ucd="VOX:STC_CoordRefFrame" value="ICRS"></PARAM>
+    <PARAM datatype="char" arraysize="3" name="projection" ucd="VOX:WCS_CoordProjection" value="TAN"></PARAM>
+    <TABLE>
+      <FIELD ID="URL" name="URL" datatype="char" ucd="VOX:Image_AccessReference" arraysize="*">
+      <DESCRIPTION>Link to data</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="RA" name="RA" datatype="double" unit="deg" ucd="POS_EQ_RA_MAIN">
+      <DESCRIPTION>RA (J2000)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="DEC" name="DEC" datatype="double" unit="deg" ucd="POS_EQ_DEC_MAIN">
+      <DESCRIPTION>Dec (J2000)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Level" name="Level" datatype="int" ucd="PRODUCT_LEVEL">
+      <DESCRIPTION>Processing level: 1=exposure 2=combined 3=mosaic 4=color 5=HLSP</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Target" name="Target" datatype="char" ucd="TARGET_NAME" arraysize="*">
+      <DESCRIPTION>Proposal target name</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Detector" name="Detector" datatype="char" ucd="INST_ID" arraysize="*">
+      <DESCRIPTION>Detector</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Aperture" name="Aperture" datatype="char" ucd="INST_APERT" arraysize="*">
+      <DESCRIPTION>Instrument aperture or slit</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Spectral_Elt" name="Spectral_Elt" datatype="char" ucd="MAIN_FILTER" arraysize="*">
+      <DESCRIPTION>Filter or spectral element name</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="NExposures" name="NExposures" datatype="int" ucd="NUM_EXPOSURES">
+      <DESCRIPTION>Number of exposures combined in this image</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="ExpTime" name="ExpTime" datatype="double" unit="s" ucd="EXPOSURE_TIME">
+      <DESCRIPTION>Total exposure time</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="StartTime" name="StartTime" datatype="char" arraysize="*" ucd="TIME_EPOCH">
+      <DESCRIPTION>Start time of first exposure</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Dataset" name="Dataset" datatype="char" arraysize="*" ucd="ID_MAIN">
+      <DESCRIPTION>Name of image: HST_propid_visit_detector_spectralelt_exposure</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="PropID" name="PropID" datatype="char" arraysize="*" ucd="ID_SET">
+      <DESCRIPTION>HST proposal number (or "multi" for combined images)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="VisitNum" name="VisitNum" datatype="char" arraysize="*" ucd="ID_SET">
+      <DESCRIPTION>Visit number within proposal</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="PI_Name" name="PI_Name" datatype="char" arraysize="*" ucd="NAME_PI">
+      <DESCRIPTION>PI last name</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="DAOCat" name="DAOCat" datatype="char" arraysize="*">
+      <DESCRIPTION>Processing status for DAOphot catalog</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="SEXCat" name="SEXCat" datatype="char" arraysize="*">
+      <DESCRIPTION>Processing status for SExtractor catalog</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Mode" name="Mode" datatype="char" arraysize="*">
+      <DESCRIPTION>Data collection mode</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="DBCreationDate" name="DBCreationDate" datatype="char" arraysize="*" ucd="TIME_EPOCH">
+      <DESCRIPTION>Date when this dataset was added to database</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Source" name="Source" datatype="char" arraysize="*">
+      <DESCRIPTION>Source for this dataset (one of HLA, ECF, CADC, DADS, HLSP, HSTCACHE)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Wavelength" name="Wavelength" datatype="double" unit="0.1nm" ucd="INST_WAVELENGTH">
+      <DESCRIPTION>Characteristic wavelength for bandpass</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Format" name="Format" datatype="char" ucd="VOX:Image_Format" arraysize="*">
+      <DESCRIPTION>Format of image</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="ReleaseDate" name="ReleaseDate" datatype="char" ucd="TIME_EPOCH" arraysize="*">
+      <DESCRIPTION>Date when these data are made public (GMT)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="NReleaseDate" name="NReleaseDate" datatype="long" ucd="TIME_EPOCH">
+      <DESCRIPTION>Date when these data are made public (seconds since 1970)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="Title" name="Title" datatype="char" ucd="VOX:Image_Title" arraysize="*">
+      <DESCRIPTION>Summary title</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="naxis" name="naxis" datatype="int" ucd="VOX:Image_Naxis" arraysize="*">
+      <DESCRIPTION>Image size (pixels)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="scale" name="scale" datatype="double" unit="deg/pix" ucd="VOX:Image_Scale" arraysize="*">
+      <DESCRIPTION>Pixel scale</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="naxes" name="naxes" datatype="int" ucd="VOX:Image_Naxes">
+      <DESCRIPTION>WCS info</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="crpix" name="crpix" datatype="double" unit="pix" ucd="VOX:WCS_CoordRefPixel" arraysize="*">
+      <DESCRIPTION>WCS info</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="crval" name="crval" datatype="double" unit="deg" ucd="VOX:WCS_CoordRefValue" arraysize="*">
+      <DESCRIPTION>WCS info</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="cd_matrix" name="cd_matrix" datatype="double" unit="deg/pix" ucd="VOX:WCS_CDMatrix" arraysize="*">
+      <DESCRIPTION>WCS info</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="filename" name="filename" datatype="char" arraysize="*">
+      <DESCRIPTION>Filename (comma-separated list for color)</DESCRIPTION>
+      </FIELD>
+      <FIELD ID="regionSTCS" name="regionSTCS" datatype="char" arraysize="*">
+      <DESCRIPTION>STC/S footprint region description</DESCRIPTION>
+      </FIELD>
+      <DATA>
+        <TABLEDATA>
+        </TABLEDATA>
+      </DATA>
+    </TABLE>
+  </RESOURCE>
+</VOTABLE>
+

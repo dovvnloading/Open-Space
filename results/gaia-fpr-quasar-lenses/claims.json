@@ -1,0 +1,29 @@
+{
+  "schema": "open-space/claims/1",
+  "claims": [
+    {
+      "id": "distinct-gaia-configurations",
+      "printed": "675",
+      "statement": "Distinct configurations passing the Gaia field and component cuts across either aperture.",
+      "compute": "len(table('evidence/secondary/unique_science_configurations.csv'))"
+    },
+    {
+      "id": "reviewed-unlisted-configurations",
+      "printed": "2",
+      "statement": "Unlisted double configurations passing the two-filter light and lens-model tests.",
+      "compute": "len(table('evidence/secondary/reviewed_double_measurements.csv'))"
+    },
+    {
+      "id": "vetted-new-candidates",
+      "printed": "0",
+      "statement": "Number promoted after individual inspection.",
+      "compute": "sum(table('individual_review.csv')['promoted'])"
+    },
+    {
+      "id": "known-lenses-in-benchmark",
+      "printed": "364",
+      "statement": "Distinct confirmed lenses carried into the union recovery test.",
+      "compute": "len(table('evidence/secondary/known_recovery_either_aperture.csv'))"
+    }
+  ]
+}

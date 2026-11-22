@@ -1,0 +1,315 @@
+name: Gaia FPR quasar lens search
+
+on:
+  workflow_dispatch:
+    inputs:
+      fresh_pixels:
+        description: Fetch new stamp bytes even when identical prior fits are available
+        type: boolean
+        default: false
+  push:
+    branches: [research/gaia-fpr-quasar-lenses]
+    paths: ['.github/workflows/gaia-fpr-quasar-lenses.yml']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gaia-fpr-quasar-lenses
+  cancel-in-progress: false
+
+env:
+  STUDY: results/gaia-fpr-quasar-lenses
+  FPR_PUBLISHED_SNAPSHOT: ${{ github.workspace }}/.fpr-published/results/gaia-fpr-quasar-lenses/evidence
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  FRESH_PIXELS: ${{ inputs.fresh_pixels || contains(github.event.head_commit.message, '[fresh-fpr]') || 'false' }}
+
+jobs:
+  scope:
+    runs-on: ubuntu-latest
+    outputs:
+      compute: ${{ steps.scope.outputs.compute }}
+      reuse_gaia: ${{ steps.scope.outputs.reuse_gaia }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/gaia-fpr-quasar-lenses
+      - name: Check the recorded science revision
+        id: scope
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          decision=true
+          reuse_gaia=false
+          report="$STUDY/evidence/summary.json"
+          if [[ "$GITHUB_EVENT_NAME" == push && "$FRESH_PIXELS" != true && -s "$report" && -s "$STUDY/evidence/wide/audit.json" ]]; then
+            rev=$(jq -er .git_commit "$report")
+            gh api "repos/$GITHUB_REPOSITORY/contents/$STUDY?ref=$rev" > "$RUNNER_TEMP/previous-code.json"
+            decision=false
+            reuse_gaia=true
+            for name in gaia.py fetch_fpr.py requirements.txt; do
+              previous=$(jq -r --arg n "$name" '.[] | select(.name == $n) | .sha' "$RUNNER_TEMP/previous-code.json")
+              if [[ "$(git hash-object "$STUDY/$name")" != "$previous" ]]; then reuse_gaia=false; break; fi
+            done
+            for name in gaia.py fetch_fpr.py catalogues.py prior_pairs.py imaging.py epochs.py deflector.py study.py audit.py requirements.txt; do
+              file="$STUDY/$name"
+              previous=$(jq -r --arg n "$(basename "$file")" '.[] | select(.name == $n) | .sha' "$RUNNER_TEMP/previous-code.json")
+              if [[ "$(git hash-object "$file")" != "$previous" ]]; then decision=true; break; fi
+            done
+          fi
+          echo "compute=$decision" >> "$GITHUB_OUTPUT"
+          echo "reuse_gaia=$reuse_gaia" >> "$GITHUB_OUTPUT"
+  selection:
+    needs: scope
+    if: needs.scope.outputs.compute == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 225
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/gaia-fpr-quasar-lenses
+      - name: Restore the verified Gaia field and component tables
+        if: needs.scope.outputs.reuse_gaia == 'true'
+        run: |
+          for arm in . wide; do
+            mkdir -p "$RUNNER_TEMP/selection/$arm"
+            cp "$STUDY/evidence/$arm"/gaia_*.csv* "$STUDY/evidence/$arm"/gaia-*.json "$RUNNER_TEMP/selection/$arm/"
+          done
+      - uses: actions/setup-python@v5
+        if: needs.scope.outputs.reuse_gaia != 'true'
+        with:
+          python-version: '3.12'
+      - name: Set up the Gaia runner
+        if: needs.scope.outputs.reuse_gaia != 'true'
+        run: |
+          echo "GAIA_CACHE=$RUNNER_TEMP/gaia-fpr-inputs" >> "$GITHUB_ENV"
+          pip install -r "$STUDY/requirements.txt"
+      - uses: actions/cache/restore@v4
+        if: needs.scope.outputs.reuse_gaia != 'true'
+        id: input-cache
+        with:
+          path: ${{ runner.temp }}/gaia-fpr-inputs
+          key: gaia-fpr-I361-v1
+      - name: Retrieve immutable FPR catalogue
+        if: needs.scope.outputs.reuse_gaia != 'true'
+        run: python "$STUDY/fetch_fpr.py"
+      - uses: actions/cache/save@v4
+        if: needs.scope.outputs.reuse_gaia != 'true' && steps.input-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ runner.temp }}/gaia-fpr-inputs
+          key: gaia-fpr-I361-v1
+      - name: Apply identical colour and astrometric cuts in targeted and random apertures
+        if: needs.scope.outputs.reuse_gaia != 'true'
+        run: |
+          python -u "$STUDY/gaia.py" "$RUNNER_TEMP/selection"
+          GAIA_GEOMETRY=wide python -u "$STUDY/gaia.py" "$RUNNER_TEMP/selection/wide"
+      - name: Include FPR input receipts
+        if: always()
+        run: |
+          mkdir -p "$RUNNER_TEMP/selection"
+          cp "$STUDY/evidence/fpr-downloads.json" "$RUNNER_TEMP/selection/"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gaia-selection
+          path: ${{ runner.temp }}/selection
+          if-no-files-found: error
+  catalogues:
+    needs: scope
+    if: needs.scope.outputs.compute == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/gaia-fpr-quasar-lenses
+      - name: Restore the complete literature and public-catalogue receipts
+        uses: actions/checkout@v4
+        with:
+          ref: 55f2b5c6be16c2794676fd8f93d82b0cf7b2ccdb
+          path: .fpr-published
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /results/gaia-fpr-quasar-lenses/evidence/known_lenses.csv
+            /results/gaia-fpr-quasar-lenses/evidence/catalog_status.csv
+            /results/gaia-fpr-quasar-lenses/evidence/catalog_input_checksums.csv
+            /results/gaia-fpr-quasar-lenses/evidence/external_matches.csv
+            /results/gaia-fpr-quasar-lenses/evidence/gaia_components.csv
+            /results/gaia-fpr-quasar-lenses/evidence/wide/gaia_components.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare the publication and known-lens control lists
+        run: |
+          pip install -r "$STUDY/requirements.txt"
+          command -v pdftotext || (sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils)
+          python -u "$STUDY/study.py" catalogues "$RUNNER_TEMP/catalogues"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gaia-catalogues
+          path: ${{ runner.temp }}/catalogues
+          if-no-files-found: error
+  adjudicate:
+    needs: [selection, catalogues]
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/gaia-fpr-quasar-lenses
+      - name: Restore the complete literature and public-catalogue receipts
+        uses: actions/checkout@v4
+        with:
+          ref: 55f2b5c6be16c2794676fd8f93d82b0cf7b2ccdb
+          path: .fpr-published
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /results/gaia-fpr-quasar-lenses/evidence/known_lenses.csv
+            /results/gaia-fpr-quasar-lenses/evidence/catalog_status.csv
+            /results/gaia-fpr-quasar-lenses/evidence/catalog_input_checksums.csv
+            /results/gaia-fpr-quasar-lenses/evidence/external_matches.csv
+            /results/gaia-fpr-quasar-lenses/evidence/gaia_components.csv
+            /results/gaia-fpr-quasar-lenses/evidence/wide/gaia_components.csv
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: gaia-*
+          merge-multiple: true
+          path: ${{ runner.temp }}/science
+      - name: Compare spectra, fit pixels and model lenses
+        run: |
+          pip install -r "$STUDY/requirements.txt"
+          export GAIA_LENS_EVIDENCE="$RUNNER_TEMP/science"
+          python -u "$STUDY/study.py" inspect "$RUNNER_TEMP/science"
+          python -u "$STUDY/study.py" summarize "$RUNNER_TEMP/science"
+          python "$STUDY/audit.py" "$RUNNER_TEMP/science"
+          python "$STUDY/audit.py" "$RUNNER_TEMP/science/wide"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: final-evidence
+          path: ${{ runner.temp }}/science
+          if-no-files-found: error
+  followup:
+    needs: [scope, adjudicate]
+    if: ${{ always() && !cancelled() && needs.scope.result == 'success' && (needs.scope.outputs.compute == 'false' || needs.adjudicate.result == 'success') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: results/gaia-fpr-quasar-lenses
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        if: needs.adjudicate.result == 'success'
+        with:
+          name: final-evidence
+          path: ${{ runner.temp }}/followup-inputs
+      - name: Verify near misses against spectra, imaging and published systems
+        env:
+          RECHECK_ARCHIVED_TABLES: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[archived-prior]') }}
+        run: |
+          pip install -r "$STUDY/requirements.txt"
+          python -m pip install pypdf==5.9.0
+          inputs="$STUDY/evidence"
+          if [[ -s "$RUNNER_TEMP/followup-inputs/summary.json" ]]; then inputs="$RUNNER_TEMP/followup-inputs"; fi
+          if [[ "$RECHECK_ARCHIVED_TABLES" == true && "$inputs" == "$STUDY/evidence" ]]; then
+            cp -a "$inputs/secondary" "$RUNNER_TEMP/followup"
+            python "$STUDY/object_history.py" "$inputs" "$RUNNER_TEMP/followup/object_history" --repair-archived-tables
+            exit 0
+          fi
+          python "$STUDY/secondary.py" "$inputs" "$RUNNER_TEMP/followup"
+          python "$STUDY/focused.py" "$inputs" "$RUNNER_TEMP/followup/focused"
+          python "$STUDY/host_models.py" "$inputs" "$RUNNER_TEMP/followup/host-models"
+          python "$STUDY/resolved_spectra.py" "$inputs" "$RUNNER_TEMP/followup"
+          python "$STUDY/bibliography.py" "$inputs" "$RUNNER_TEMP/followup/literature"
+          python "$STUDY/object_history.py" "$inputs" "$RUNNER_TEMP/followup/object_history"
+          python "$STUDY/archival_imaging.py" "$inputs" "$RUNNER_TEMP/followup/hubble" "$RUNNER_TEMP/followup/object_history/object_history.json"
+          python "$STUDY/validation.py" "$inputs" "$RUNNER_TEMP/followup"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: targeted-followup
+          path: ${{ runner.temp }}/followup
+          if-no-files-found: error
+  publish:
+    needs: [scope, selection, catalogues, adjudicate, followup]
+    if: ${{ always() && !cancelled() && github.ref == 'refs/heads/research/gaia-fpr-quasar-lenses' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/gaia-fpr-quasar-lenses
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        if: needs.scope.outputs.compute == 'true'
+        with:
+          pattern: gaia-*
+          merge-multiple: true
+          path: ${{ runner.temp }}/persist
+      - uses: actions/download-artifact@v4
+        if: needs.adjudicate.result != 'skipped'
+        with:
+          name: final-evidence
+          path: ${{ runner.temp }}/persist
+      - uses: actions/download-artifact@v4
+        if: needs.followup.result != 'skipped'
+        with:
+          name: targeted-followup
+          path: ${{ runner.temp }}/persist/secondary
+      - name: Commit study outputs
+        if: needs.scope.outputs.compute == 'true' || needs.followup.result == 'success'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          mkdir -p "$STUDY/evidence"
+          if [ "${{ needs.adjudicate.result }}" = success ]; then
+            rsync -a --delete "$RUNNER_TEMP/persist/" "$STUDY/evidence/"
+          elif [ "${{ needs.scope.outputs.compute }}" = false ]; then
+            mkdir -p "$STUDY/evidence/secondary"
+            rsync -a --delete "$RUNNER_TEMP/persist/secondary/" "$STUDY/evidence/secondary/"
+          else
+            rsync -a "$RUNNER_TEMP/persist/" "$STUDY/evidence/"
+          fi
+          (cd "$STUDY" && find evidence -type f -print0 | sort -z | xargs -0 sha256sum > OUTPUTS.sha256)
+          git add -f -- "$STUDY/evidence" "$STUDY/OUTPUTS.sha256"
+          if ! git diff --cached --quiet; then
+            git commit -m "Record Gaia FPR evidence from run $GITHUB_RUN_ID"
+            git push origin HEAD:refs/heads/research/gaia-fpr-quasar-lenses
+          fi
+      - name: Verify the resulting branch
+        run: |
+          python -m pip install '.[archive]' numpy pandas scipy matplotlib
+          python "$STUDY/audit.py" "$STUDY/evidence"
+          python "$STUDY/audit.py" "$STUDY/evidence/wide"
+          python - "$STUDY/evidence" <<'PYTHON'
+          import csv, json, sys
+          from pathlib import Path
+          evidence = Path(sys.argv[1])
+          statuses = list(csv.DictReader((evidence/"catalog_status.csv").open()))
+          failures = [r["catalog"] for r in statuses if r["ok"].lower() != "true"]
+          if len(statuses) != 24 or failures:
+              raise ValueError(f"Incomplete publication and spectrum checks: {failures}")
+          report = json.loads((evidence/"secondary"/"combined_summary.json").read_text())
+          if report["benchmark_either_aperture"]["total"] != 364:
+              raise ValueError("Incomplete known-lens benchmark")
+          PYTHON
+          python -m open_space.verify
+          python -m unittest discover -s tests

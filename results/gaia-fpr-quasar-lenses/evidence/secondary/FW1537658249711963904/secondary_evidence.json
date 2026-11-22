@@ -1,0 +1,183 @@
+{
+  "chosen_band": "Legacy-DR9-North/z",
+  "measured_centre_radec_deg": [
+    181.62401923347244,
+    43.53874966329477
+  ],
+  "image_source_ids": [
+    "1537658249711963904",
+    "1537658352791579776"
+  ],
+  "band_evidence": {
+    "psf_search_width_arcsec": 50.304000000000016,
+    "field_psf_objects": 1,
+    "empirical_fwhm_arcsec": 1.7437127552440268,
+    "fitted_fwhm_arcsec": 1.482155841957423,
+    "point_magnitudes_AB": [
+      18.607540273413584,
+      18.547102151137246
+    ],
+    "point_snr": [
+      37.875464045035315,
+      28.998779114181307
+    ],
+    "point_flux_in_native_units": [
+      36.05652682594941,
+      38.12054838232421
+    ],
+    "pixel_scale_arcsec": 0.26200000000000007,
+    "background_sky_per_pixel": 0.0003860544820781797,
+    "sky_rms_per_pixel": 0.00979804205269902,
+    "variance_inflation": 3.5834449718586505,
+    "bic_points_minus_extended": 433.2662588473057,
+    "bic_third_point_minus_extended": 28.75738380377112,
+    "galaxy_snr": 5.753697771661931,
+    "galaxy_radec_deg": [
+      181.62401923347244,
+      43.53874966329477
+    ],
+    "galaxy_offset_arcsec": [
+      1.1562779408617139,
+      0.400611790227458
+    ],
+    "galaxy_intrinsic_gaussian_sigma_arcsec": 0.5345375143707877,
+    "nearest_image_arcsec": 1.5974658857684636,
+    "bic_single_host_minus_free_galaxy": [
+      444.77179265275873,
+      380.4068850707216
+    ],
+    "resolved_from_every_single_host": true,
+    "usable_morphology": true,
+    "extended_light": true
+  },
+  "color_evidence": [
+    {
+      "bands": [
+        "Legacy-DR9-North/z",
+        "PS1/i"
+      ],
+      "colour_spread_mag": 0.16898665766066046,
+      "within_055mag": true
+    }
+  ],
+  "lens_model": {
+    "physical_geometry": false,
+    "n_images_model": 4,
+    "observed_to_predicted": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "maximum_image_residual_arcsec": 0.012256003752220296,
+    "tolerance_arcsec": 0.10601714566382801,
+    "missing_bright_predictions": [
+      1,
+      2
+    ],
+    "theta_e_arcsec": 1.9150921807362629,
+    "q": 0.7430910782757879,
+    "mass_pa_deg_east_to_north": 141.24869530287063,
+    "shear1": -0.00114563920803518,
+    "shear2": 0.04050224668075453,
+    "shear": 0.040518446112649466,
+    "shear_pa_deg_east_to_north": 45.81011300914033,
+    "center_radec_deg": [
+      181.62401312818366,
+      43.53872652703451
+    ],
+    "source_radec_deg": [
+      181.62402077751815,
+      43.53869439301042
+    ],
+    "source_offset_from_mass_center_arcsec": [
+      0.019962257628464264,
+      -0.1156824872601604
+    ],
+    "predicted_radec_deg": [
+      [
+        181.62357626442838,
+        43.5382165047644
+      ],
+      [
+        181.6246127475599,
+        43.53846677988441
+      ],
+      [
+        181.62462443318475,
+        43.53906622110639
+      ],
+      [
+        181.62358195316418,
+        43.5390610384388
+      ]
+    ],
+    "signed_magnifications": [
+      3.8427866689181203,
+      -3.9224091475297307,
+      5.031919008602407,
+      -2.5473387636031717
+    ],
+    "regularized_objective": 0.9797799560143867,
+    "light_center_constrained": true,
+    "center_prior_basis": "measured one-filter extended-light centroid",
+    "positional_dof_without_priors": -5,
+    "interpretation": "One regularized solution; q and shear are prior-sensitive. Coincident source positions alone do not establish lensing.",
+    "mass_to_measured_light_arcsec": 0.08480075257132358
+  },
+  "independent_catalogues": [
+    {
+      "system_id": "FW1537658249711963904",
+      "survey": "Legacy_DR10",
+      "status": "extended_object_offset_or_on_image",
+      "object_id": "9907735888268037",
+      "ra": 181.6235804372212,
+      "dec": 43.539059094402035,
+      "centre_distance_arcsec": 1.5975506956546466,
+      "nearest_image_distance_arcsec": 8.656033267902253e-05
+    },
+    {
+      "system_id": "FW1537658249711963904",
+      "survey": "Legacy_DR9",
+      "status": "extended_object_offset_or_on_image",
+      "object_id": "9907735888268037",
+      "ra": 181.6235804372212,
+      "dec": 43.539059094402035,
+      "centre_distance_arcsec": 1.5975506956546466,
+      "nearest_image_distance_arcsec": 8.656033267902253e-05
+    },
+    {
+      "system_id": "FW1537658249711963904",
+      "survey": "PS1_DR2_stack",
+      "status": "extended_object_offset_or_on_image",
+      "object_id": "160241816235977489",
+      "ra": 181.62360634,
+      "dec": 43.53906039,
+      "centre_distance_arcsec": 1.55317006324705,
+      "nearest_image_distance_arcsec": 0.0677144751557031
+    }
+  ],
+  "spectra": [],
+  "foreground_source_pairs": [],
+  "desi_receipt": {
+    "status": "complete_native_target_neighbourhood",
+    "source_file": "desi_nearby_spectra.csv.gz",
+    "sha256": "cc8644e421b20db2250caae37233e0d447e63c19acf3614055fc9f0da82e739f",
+    "n_rows": 0,
+    "augmented_quality_columns": true,
+    "selection": "8 arcsec of any Gaia image; all eligible target-centre associations within 0.65 arcsec covered"
+  },
+  "result": {
+    "centroid_model_pass": false,
+    "catalogued_central_deblend": false,
+    "secure_foreground_and_source_spectra": false,
+    "new_spectral_conflict": false,
+    "warrants_individual_review": false,
+    "desi_lookup": "complete_native_target_neighbourhood",
+    "sdss_lookup": "complete"
+  }
+}

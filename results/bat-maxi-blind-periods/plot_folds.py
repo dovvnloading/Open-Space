@@ -1,5 +1,6 @@
 """Fold both instruments at one measured ephemeris for direct comparison of the halves."""
 import argparse
+import json
 from pathlib import Path
 import re
 
@@ -43,7 +44,15 @@ def draw(source, period, curves, path):
 def main(folder, out):
     out.mkdir(exist_ok=True,parents=True)
     candidates=list(read_rows(folder/"survivors.jsonl"))
-    ids={r["source_id"] for r in candidates}
+    names={r["id"]:r["name"] for r in json.loads((folder/"inventory.json").read_text())["sources"]}
+    rejected=[]
+    for path in sorted(folder.glob("search-*.jsonl.gz")):
+        for r in read_rows(path):
+            for pair in r.get("pairs",[]):
+                if not pair["pass"]:
+                    rejected.append({"source_id":r["roster_id"],"source":names[r["roster_id"]],
+                                     "period_days":pair["bat_grid_period_days"]})
+    ids={r["source_id"] for r in candidates+rejected}
     curves=load_archives(sorted(folder.glob("curves-*.tar.gz")),{sid+"."+b for sid in ids for b in ("bat","maxi")})
     index=["# Phase folds of the independent numerical survivors","",
            "Both instruments use the refined BAT period and MJD 55000 as phase zero. Each panel divides its own observations at the time midpoint. Bin means use the bounded analysis weights. Error bars propagate the original quoted uncertainties through those weights; the period decision also uses a correlated-noise model. The two panels have independent rate scales.","",
@@ -53,6 +62,15 @@ def main(folder, out):
         name=f'{i+1:03d}-{re.sub(r"[^A-Za-z0-9.+_-]","_",sid)}.svg'
         draw(r["source"],r["period_days"],{b:curves[sid+"."+b] for b in ("bat","maxi")},out/name)
         index.append(f'| {r["source"]} | {r["period_days"]:.9g} | [Both instruments]({name}) |')
+    if rejected:
+        index.extend(["","## Pairs rejected by the time-half checks","",
+                      "These folds use the BAT grid period of the independent match.","",
+                      "| Source | BAT grid period (days) | Fold |","|---|---:|---|"])
+        for i,r in enumerate(rejected):
+            sid=r["source_id"]
+            name=f'failed-{i+1:03d}-{re.sub(r"[^A-Za-z0-9.+_-]","_",sid)}.svg'
+            draw(r["source"],r["period_days"],{b:curves[sid+"."+b] for b in ("bat","maxi")},out/name)
+            index.append(f'| {r["source"]} | {r["period_days"]:.9g} | [Both halves]({name}) |')
     (out/"index.md").write_text("\n".join(index)+"\n")
 
 
