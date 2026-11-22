@@ -17,9 +17,10 @@ concurrency:
   cancel-in-progress: false
 env:
   FOLDER: results/bat-maxi-blind-periods
-  MODE: ${{ inputs.mode || 'acquire' }}
+  MODE: ${{ inputs.mode || 'frozen' }}
   OPENBLAS_NUM_THREADS: '1'
   OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
 jobs:
   inventory:
     if: github.ref == 'refs/heads/survey/bat-maxi-blind-periods'
@@ -42,6 +43,10 @@ jobs:
         run: |
           mkdir -p roster
           cp "$FOLDER/evidence/inventory.json" roster/
+      - if: env.MODE != 'acquire'
+        run: |
+          python -m pip -q install -r "$FOLDER/requirements.txt"
+          python "$FOLDER/numerical_check.py" roster/numerical-check.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -110,19 +115,57 @@ jobs:
       - if: env.MODE != 'acquire'
         run: |
           python -m pip -q install -r "$FOLDER/requirements.txt"
+          if [[ "$MODE" == frozen ]]; then
+            cp -al "$FOLDER"/evidence/curves-*.tar.gz "$FOLDER"/evidence/ingest-*.jsonl evidence/
+          fi
+          python "$FOLDER/product_metadata.py" evidence
+          python "$FOLDER/audit_ingest.py" evidence
           python "$FOLDER/collect.py" evidence
-          python "$FOLDER/literature.py" --candidates evidence/survivors.jsonl --output evidence/literature
+          python "$FOLDER/summarize.py" evidence
+          python "$FOLDER/field_checks.py" --evidence evidence --snapshot "$FOLDER/evidence" --output evidence/validation
+          python -c 'import json,pathlib; [print(r["source"],r["period_days"],r["uncertainty_days"]) for r in (json.loads(l) for l in pathlib.Path("evidence/survivors.jsonl").read_text().splitlines())]'
       - uses: actions/upload-artifact@v4
         if: always() && env.MODE != 'acquire'
         with:
           name: bat-maxi-assessment
           path: |
+            evidence/bat-product-metadata.json
+            evidence/ingest-audit.json
             evidence/coverage.json
             evidence/survivors.jsonl
+            evidence/search-summary.json
+            evidence/*.csv
+            evidence/validation/
+          retention-days: 4
+  literature:
+    needs: assess
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/bat-maxi-blind-periods
+          persist-credentials: false
+      - if: env.MODE != 'acquire'
+        uses: actions/download-artifact@v4
+        with:
+          name: bat-maxi-assessment
+          path: evidence
+      - if: env.MODE != 'acquire'
+        run: |
+          python -m pip -q install requests
+          if ! command -v pdftotext > /dev/null; then sudo apt-get -qq update && sudo apt-get -qq install poppler-utils; fi
+          python "$FOLDER/literature.py" --candidates evidence/survivors.jsonl --output evidence/literature
+      - uses: actions/upload-artifact@v4
+        if: always() && env.MODE != 'acquire'
+        with:
+          name: bat-maxi-bibliography
+          path: |
             evidence/literature/
+            evidence/survivors.jsonl
           retention-days: 4
   record:
-    needs: [inventory, shard, assess]
+    needs: [inventory, shard, assess, literature]
     if: always() && github.ref == 'refs/heads/survey/bat-maxi-blind-periods'
     permissions:
       contents: write
@@ -142,16 +185,17 @@ jobs:
           INVENTORY: ${{ needs.inventory.result }}
           SHARDS: ${{ needs.shard.result }}
           ASSESS: ${{ needs.assess.result }}
+          LIT: ${{ needs.literature.result }}
         run: |
           set -euo pipefail
-          if [[ "$INVENTORY/$SHARDS/$ASSESS" == success/success/success ]]; then
+          if [[ "$INVENTORY/$SHARDS/$ASSESS/$LIT" == success/success/success/success ]]; then
             target="$FOLDER/evidence"
           else
             target="$FOLDER/attempts/$GITHUB_RUN_ID"
           fi
           mkdir -p "$target"
           cp -a packet/. "$target/"
-          echo "$MODE $GITHUB_SHA $INVENTORY/$SHARDS/$ASSESS" > "$target/run-$GITHUB_RUN_ID.txt"
+          echo "$MODE $GITHUB_SHA $INVENTORY/$SHARDS/$ASSESS/$LIT" > "$target/run-$GITHUB_RUN_ID.txt"
           (cd "$target" && find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS)
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
