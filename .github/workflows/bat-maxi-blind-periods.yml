@@ -1,0 +1,45 @@
+name: BAT and MAXI blind period survey
+on:
+  workflow_dispatch:
+  push:
+    branches: ['survey/bat-maxi-blind-periods']
+    paths: ['.github/workflows/bat-maxi-blind-periods.yml']
+permissions:
+  contents: read
+jobs:
+  inventory-layout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: results/bat-maxi-blind-periods
+          persist-credentials: false
+      - run: python -m pip -q install requests beautifulsoup4
+      - run: python results/bat-maxi-blind-periods/probe.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive-layout
+          path: results/bat-maxi-blind-periods/archive-layout.json
+  record:
+    needs: inventory-layout
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: github.ref == 'refs/heads/survey/bat-maxi-blind-periods'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: survey/bat-maxi-blind-periods
+          sparse-checkout: results/bat-maxi-blind-periods
+      - uses: actions/download-artifact@v4
+        with:
+          name: archive-layout
+          path: results/bat-maxi-blind-periods
+      - run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/bat-maxi-blind-periods/archive-layout.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record archive layout and product checksums'
+            git push origin HEAD:survey/bat-maxi-blind-periods
+          fi
