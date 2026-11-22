@@ -11,6 +11,14 @@
     "dr3_component_queries_unavailable": 0,
     "unique_dr3_components": 25308
   },
+  "geometry": {
+    "name": "primary",
+    "radius_arcsec": 2.6,
+    "other_radius_arcsec": null,
+    "offset_arcsec": 3.35,
+    "seed": 20231010,
+    "max_image_separation_arcsec": 5.2
+  },
   "field_outcomes": {
     "control": {
       "colour_mismatch": 1,
@@ -35,6 +43,6 @@
       "passed_gaia": 148
     }
   },
-  "controls": "3.35 arcsec offset from each eligible parent in a seeded random bearing; exclude any FPR input within 2.6 arcsec. FPR and DR3 selection identical in both 2.6 arcsec apertures. The control samples blank positions in targeted fields; it does not estimate contamination conditional on hosting a confirmed QSO.",
+  "controls": "Random offset in each eligible FPR field; reject a control containing any FPR input in its full selection footprint. Identical FPR/DR3 cuts apply. The random-position rate is conditional on selected FPR environments.",
   "schema": "CDS I/361, frozen 2023 files; not a count of the live AIP mirror."
 }

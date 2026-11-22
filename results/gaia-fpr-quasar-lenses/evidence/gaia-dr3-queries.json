@@ -3,14 +3,14 @@
     "url": "https://gaia.aip.de/tap/sync",
     "query": "SELECT p.rid AS rid, g.source_id AS source_id, g.ra AS ra, g.dec AS dec, g.phot_g_mean_mag AS g, g.bp_rp AS bp_rp, g.phot_bp_mean_flux_over_error AS bp_snr, g.phot_rp_mean_flux_over_error AS rp_snr, g.ruwe AS ruwe, g.parallax AS parallax, g.pmra AS pmra, g.pmdec AS pmdec, g.parallax_error AS parallax_error, g.pmra_error AS pmra_error, g.pmdec_error AS pmdec_error, g.parallax_pmra_corr AS parallax_pmra_corr, g.parallax_pmdec_corr AS parallax_pmdec_corr, g.pmra_pmdec_corr AS pmra_pmdec_corr FROM TAP_UPLOAD.targets AS p JOIN gaiadr3.gaia_source AS g ON 1=CONTAINS(POINT('ICRS',g.ra,g.dec),CIRCLE('ICRS',p.fpr_ra,p.fpr_dec,0.0000833333333333333))",
     "upload_sha256": "3546553a8b2ac92204549395c578f116f76de997fc3fa1a12ea338b83c09b139",
-    "response_sha256": "d46704c44e4bb7b1820d485b2e3abc6e2026c24b03006f3e7f40df2a40c3aa4f",
-    "cached_csv_gz_sha256": "d7bec926b2e52323600e691568b4e02ff053f1d28c7ef43ec437b446298201cf",
+    "response_sha256": "503e53a0ec106a70aacd8a52b9137b268157e946f6b288646429d6b4c182a5e2",
+    "cached_csv_gz_sha256": "13b73e29ac559615d371a24472d4602fd78e6f92f349c290b1ab51f863e1beb8",
     "n_upload": 2500,
     "n_returned": 2152,
     "errors": [
       {
         "url": "CDS XMatch / DR3 by ID",
-        "error": "HTTPSConnectionPool(host='cdsxmatch.cds.unistra.fr', port=443): Max retries exceeded with url: /xmatch/api/v1/sync (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsxmatch.cds.unistra.fr', port=443) at 0x7f2b6d392270>, 'Connection to cdsxmatch.cds.unistra.fr timed out. (connect timeout=12)'))"
+        "error": "HTTPSConnectionPool(host='cdsxmatch.cds.unistra.fr', port=443): Max retries exceeded with url: /xmatch/api/v1/sync (Caused by ConnectTimeoutError(<HTTPSConnection(host='cdsxmatch.cds.unistra.fr', port=443) at 0x70f19ba1fc50>, 'Connection to cdsxmatch.cds.unistra.fr timed out. (connect timeout=12)'))"
       },
       {
         "url": "https://gea.esac.esa.int/tap-server/tap/sync",
@@ -22,8 +22,8 @@
     "url": "https://gaia.aip.de/tap/sync",
     "query": "SELECT p.rid AS rid, g.source_id AS source_id, g.ra AS ra, g.dec AS dec, g.phot_g_mean_mag AS g, g.bp_rp AS bp_rp, g.phot_bp_mean_flux_over_error AS bp_snr, g.phot_rp_mean_flux_over_error AS rp_snr, g.ruwe AS ruwe, g.parallax AS parallax, g.pmra AS pmra, g.pmdec AS pmdec, g.parallax_error AS parallax_error, g.pmra_error AS pmra_error, g.pmdec_error AS pmdec_error, g.parallax_pmra_corr AS parallax_pmra_corr, g.parallax_pmdec_corr AS parallax_pmdec_corr, g.pmra_pmdec_corr AS pmra_pmdec_corr FROM TAP_UPLOAD.targets AS p JOIN gaiadr3.gaia_source AS g ON 1=CONTAINS(POINT('ICRS',g.ra,g.dec),CIRCLE('ICRS',p.fpr_ra,p.fpr_dec,0.0000833333333333333))",
     "upload_sha256": "8d28ceb02e9b3a11676051f3c554ffb0a4b42e550b249ad4025acd197c5e0f1a",
-    "response_sha256": "88df91aa20366db3766ef291dd49f9235afc1f97e484e86cf70e08dc62c4ae34",
-    "cached_csv_gz_sha256": "608af2db276d1ed5d2513edb2523d038ddb603e38be7c7d02b71334cb2a7dc08",
+    "response_sha256": "a5fcba5a02b3a76054d0dbcf46dbd4930a8acae48b26c2076a42131221f44a31",
+    "cached_csv_gz_sha256": "f630485c2aa0d055def7e5726181311a1cddcc6ead27b93b24c393d0e57da20b",
     "n_upload": 2500,
     "n_returned": 2033,
     "errors": []
@@ -32,8 +32,8 @@
     "url": "https://gaia.aip.de/tap/sync",
     "query": "SELECT p.rid AS rid, g.source_id AS source_id, g.ra AS ra, g.dec AS dec, g.phot_g_mean_mag AS g, g.bp_rp AS bp_rp, g.phot_bp_mean_flux_over_error AS bp_snr, g.phot_rp_mean_flux_over_error AS rp_snr, g.ruwe AS ruwe, g.parallax AS parallax, g.pmra AS pmra, g.pmdec AS pmdec, g.parallax_error AS parallax_error, g.pmra_error AS pmra_error, g.pmdec_error AS pmdec_error, g.parallax_pmra_corr AS parallax_pmra_corr, g.parallax_pmdec_corr AS parallax_pmdec_corr, g.pmra_pmdec_corr AS pmra_pmdec_corr FROM TAP_UPLOAD.targets AS p JOIN gaiadr3.gaia_source AS g ON 1=CONTAINS(POINT('ICRS',g.ra,g.dec),CIRCLE('ICRS',p.fpr_ra,p.fpr_dec,0.0000833333333333333))",
     "upload_sha256": "cde14435c2aa29cf0448243a4cd6f65c11bad8d3b62e0a52364eacfe150d65e2",
-    "response_sha256": "c89e9540a0e4b7977829d24a2a911ba469d5935bd293251cec6e0e46c6aa6eba",
-    "cached_csv_gz_sha256": "64fc6474c457aced91459480889bb8968db9181a4829ccded404a37d87086927",
+    "response_sha256": "bb9dd56de91df1b422e32e41ab1ecb1b105589ec7ea3e31c844494137af39d1d",
+    "cached_csv_gz_sha256": "421a42f32cb5b52c44ea79f997b4a28ca3e487bb8920cbda608e23cc93959861",
     "n_upload": 2500,
     "n_returned": 2310,
     "errors": []
@@ -42,8 +42,8 @@
     "url": "https://gaia.aip.de/tap/sync",
     "query": "SELECT p.rid AS rid, g.source_id AS source_id, g.ra AS ra, g.dec AS dec, g.phot_g_mean_mag AS g, g.bp_rp AS bp_rp, g.phot_bp_mean_flux_over_error AS bp_snr, g.phot_rp_mean_flux_over_error AS rp_snr, g.ruwe AS ruwe, g.parallax AS parallax, g.pmra AS pmra, g.pmdec AS pmdec, g.parallax_error AS parallax_error, g.pmra_error AS pmra_error, g.pmdec_error AS pmdec_error, g.parallax_pmra_corr AS parallax_pmra_corr, g.parallax_pmdec_corr AS parallax_pmdec_corr, g.pmra_pmdec_corr AS pmra_pmdec_corr FROM TAP_UPLOAD.targets AS p JOIN gaiadr3.gaia_source AS g ON 1=CONTAINS(POINT('ICRS',g.ra,g.dec),CIRCLE('ICRS',p.fpr_ra,p.fpr_dec,0.0000833333333333333))",
     "upload_sha256": "3f8c329cc8210b6c2f658a643b2787a94d0d0068de651f00900069327658c32d",
-    "response_sha256": "f744ee4d16a13e925b4d580fadd6f55d222fda8d97efc6e88500ba5fbfbec90f",
-    "cached_csv_gz_sha256": "10e9f85808c1d6d3f984c4e44b28d7b4bb66c8d11904e23539d20a4f0a3bf432",
+    "response_sha256": "0d39ca981836c1509087a4fbd63363986364530b9ac532e824a228f3e90c1fcb",
+    "cached_csv_gz_sha256": "87de15837e827820d8a5f12ffbcb08091e6745749334fa2d4f6285c3bbbc415e",
     "n_upload": 2500,
     "n_returned": 2250,
     "errors": []
@@ -52,8 +52,8 @@
     "url": "https://gaia.aip.de/tap/sync",
     "query": "SELECT p.rid AS rid, g.source_id AS source_id, g.ra AS ra, g.dec AS dec, g.phot_g_mean_mag AS g, g.bp_rp AS bp_rp, g.phot_bp_mean_flux_over_error AS bp_snr, g.phot_rp_mean_flux_over_error AS rp_snr, g.ruwe AS ruwe, g.parallax AS parallax, g.pmra AS pmra, g.pmdec AS pmdec, g.parallax_error AS parallax_error, g.pmra_error AS pmra_error, g.pmdec_error AS pmdec_error, g.parallax_pmra_corr AS parallax_pmra_corr, g.parallax_pmdec_corr AS parallax_pmdec_corr, g.pmra_pmdec_corr AS pmra_pmdec_corr FROM TAP_UPLOAD.targets AS p JOIN gaiadr3.gaia_source AS g ON 1=CONTAINS(POINT('ICRS',g.ra,g.dec),CIRCLE('ICRS',p.fpr_ra,p.fpr_dec,0.0000833333333333333))",
     "upload_sha256": "cef92a239c15336fad75e6ae9e5fbbfad76180334dd64e0b31f716a6bb724e79",
-    "response_sha256": "982c1c6e85742b5da9416f92e814678b553abf12c050f9ebd6df6e0878719457",
-    "cached_csv_gz_sha256": "10a16f41bcc5facd3f412e31fa80c5207f25f79d97fd22cc6a5407158f500d84",
+    "response_sha256": "0421422a6ecaf87401154e6df5ce37bfbc3cedd94c6af627c3a14c8bdf00eb80",
+    "cached_csv_gz_sha256": "e86fd66e9cb65f0736f6a00515c6a23a6994eaf779da481668245e1e6d25bbee",
     "n_upload": 2500,
     "n_returned": 2295,
     "errors": []
@@ -62,8 +62,8 @@
     "url": "https://gaia.aip.de/tap/sync",
     "query": "SELECT p.rid AS rid, g.source_id AS source_id, g.ra AS ra, g.dec AS dec, g.phot_g_mean_mag AS g, g.bp_rp AS bp_rp, g.phot_bp_mean_flux_over_error AS bp_snr, g.phot_rp_mean_flux_over_error AS rp_snr, g.ruwe AS ruwe, g.parallax AS parallax, g.pmra AS pmra, g.pmdec AS pmdec, g.parallax_error AS parallax_error, g.pmra_error AS pmra_error, g.pmdec_error AS pmdec_error, g.parallax_pmra_corr AS parallax_pmra_corr, g.parallax_pmdec_corr AS parallax_pmdec_corr, g.pmra_pmdec_corr AS pmra_pmdec_corr FROM TAP_UPLOAD.targets AS p JOIN gaiadr3.gaia_source AS g ON 1=CONTAINS(POINT('ICRS',g.ra,g.dec),CIRCLE('ICRS',p.fpr_ra,p.fpr_dec,0.0000833333333333333))",
     "upload_sha256": "aa418b69a5775b16d930b1ce6623f727bbaa6a1935b4c93aaa07dc5ed13d4789",
-    "response_sha256": "d3d68e0c917b9110dbfcc022bf883dd2f360dd2af57981dd6842d01e7e203b89",
-    "cached_csv_gz_sha256": "49bee89379263b08081bb51cb49f61a9fb8d3f6a34217c823e6fdb23068a5d23",
+    "response_sha256": "c1db0f89ce01bc964eed60b3f041a8afa77d037c33b3682f05ba859cab8794da",
+    "cached_csv_gz_sha256": "1bf19d2c88b1bc575cced53440b2b857573e0c131658af13f58b3d0318106288",
     "n_upload": 2500,
     "n_returned": 2332,
     "errors": []
@@ -72,8 +72,8 @@
     "url": "https://gaia.aip.de/tap/sync",
     "query": "SELECT p.rid AS rid, g.source_id AS source_id, g.ra AS ra, g.dec AS dec, g.phot_g_mean_mag AS g, g.bp_rp AS bp_rp, g.phot_bp_mean_flux_over_error AS bp_snr, g.phot_rp_mean_flux_over_error AS rp_snr, g.ruwe AS ruwe, g.parallax AS parallax, g.pmra AS pmra, g.pmdec AS pmdec, g.parallax_error AS parallax_error, g.pmra_error AS pmra_error, g.pmdec_error AS pmdec_error, g.parallax_pmra_corr AS parallax_pmra_corr, g.parallax_pmdec_corr AS parallax_pmdec_corr, g.pmra_pmdec_corr AS pmra_pmdec_corr FROM TAP_UPLOAD.targets AS p JOIN gaiadr3.gaia_source AS g ON 1=CONTAINS(POINT('ICRS',g.ra,g.dec),CIRCLE('ICRS',p.fpr_ra,p.fpr_dec,0.0000833333333333333))",
     "upload_sha256": "fce497bf5b23705354e1330e52f6182254037d46068337c09698c4c041690ae5",
-    "response_sha256": "89a2be2a68dc0b84f7e2cbde79ebd71efa721b1d81e74a0a2f1eb02e7882c495",
-    "cached_csv_gz_sha256": "e1b0c78c0b2caa7a886e972ba934ef38393808b55f5796a85aac729181e6b1df",
+    "response_sha256": "d4233d83da0866fd3568bbe5068fea89efb1636af36c9d8a4eb91e7930282eb3",
+    "cached_csv_gz_sha256": "4d6527c51323af6fe7323c432dd64dd01787c3e0e2852701a949a3295cbcce2e",
     "n_upload": 2500,
     "n_returned": 2120,
     "errors": []
@@ -82,8 +82,8 @@
     "url": "https://gaia.aip.de/tap/sync",
     "query": "SELECT p.rid AS rid, g.source_id AS source_id, g.ra AS ra, g.dec AS dec, g.phot_g_mean_mag AS g, g.bp_rp AS bp_rp, g.phot_bp_mean_flux_over_error AS bp_snr, g.phot_rp_mean_flux_over_error AS rp_snr, g.ruwe AS ruwe, g.parallax AS parallax, g.pmra AS pmra, g.pmdec AS pmdec, g.parallax_error AS parallax_error, g.pmra_error AS pmra_error, g.pmdec_error AS pmdec_error, g.parallax_pmra_corr AS parallax_pmra_corr, g.parallax_pmdec_corr AS parallax_pmdec_corr, g.pmra_pmdec_corr AS pmra_pmdec_corr FROM TAP_UPLOAD.targets AS p JOIN gaiadr3.gaia_source AS g ON 1=CONTAINS(POINT('ICRS',g.ra,g.dec),CIRCLE('ICRS',p.fpr_ra,p.fpr_dec,0.0000833333333333333))",
     "upload_sha256": "022148105d24ff1c09cdcca58bc760464bfa54c56a860c53e60c1d6868d9b21d",
-    "response_sha256": "0dfc93ec11fb8d44e2dabd24b3c7095365147cf67b1221dc8dd7ac5e6b859496",
-    "cached_csv_gz_sha256": "6c3a7b6d419b3b171f30b2ee2ded90c6bea2813e0b4f91ba601c8d948b925b79",
+    "response_sha256": "e08e098a38e5e14d47f70dd10afbafbd8780959b36234d1d6c65724cf8f3d552",
+    "cached_csv_gz_sha256": "fe8170d1309926283f2ad81de84579962aee7e2ec6752be8870ba8bb2538642c",
     "n_upload": 2500,
     "n_returned": 2307,
     "errors": []
@@ -92,8 +92,8 @@
     "url": "https://gaia.aip.de/tap/sync",
     "query": "SELECT p.rid AS rid, g.source_id AS source_id, g.ra AS ra, g.dec AS dec, g.phot_g_mean_mag AS g, g.bp_rp AS bp_rp, g.phot_bp_mean_flux_over_error AS bp_snr, g.phot_rp_mean_flux_over_error AS rp_snr, g.ruwe AS ruwe, g.parallax AS parallax, g.pmra AS pmra, g.pmdec AS pmdec, g.parallax_error AS parallax_error, g.pmra_error AS pmra_error, g.pmdec_error AS pmdec_error, g.parallax_pmra_corr AS parallax_pmra_corr, g.parallax_pmdec_corr AS parallax_pmdec_corr, g.pmra_pmdec_corr AS pmra_pmdec_corr FROM TAP_UPLOAD.targets AS p JOIN gaiadr3.gaia_source AS g ON 1=CONTAINS(POINT('ICRS',g.ra,g.dec),CIRCLE('ICRS',p.fpr_ra,p.fpr_dec,0.0000833333333333333))",
     "upload_sha256": "1b73cacdb77d4738925b22418d3a35460d74136ad99a6f0a1725a851f2aa02fd",
-    "response_sha256": "3fce3c32cbfac3ef6a6eff579a9b03c1d0563d93097fab38441d0f258d99ba66",
-    "cached_csv_gz_sha256": "b7930b5f3618273b07e526df5ecfc2ad3a8ae10326a7d031702ef161c64264d6",
+    "response_sha256": "ba97fec2bd95820581c5d67b53c61ae028302911496aec4cb029ee484f371455",
+    "cached_csv_gz_sha256": "17a5c64a26950e87763af0ffa7c3a16bc16486abbc5c60942499bb111adff80e",
     "n_upload": 2500,
     "n_returned": 2323,
     "errors": []
@@ -102,8 +102,8 @@
     "url": "https://gaia.aip.de/tap/sync",
     "query": "SELECT p.rid AS rid, g.source_id AS source_id, g.ra AS ra, g.dec AS dec, g.phot_g_mean_mag AS g, g.bp_rp AS bp_rp, g.phot_bp_mean_flux_over_error AS bp_snr, g.phot_rp_mean_flux_over_error AS rp_snr, g.ruwe AS ruwe, g.parallax AS parallax, g.pmra AS pmra, g.pmdec AS pmdec, g.parallax_error AS parallax_error, g.pmra_error AS pmra_error, g.pmdec_error AS pmdec_error, g.parallax_pmra_corr AS parallax_pmra_corr, g.parallax_pmdec_corr AS parallax_pmdec_corr, g.pmra_pmdec_corr AS pmra_pmdec_corr FROM TAP_UPLOAD.targets AS p JOIN gaiadr3.gaia_source AS g ON 1=CONTAINS(POINT('ICRS',g.ra,g.dec),CIRCLE('ICRS',p.fpr_ra,p.fpr_dec,0.0000833333333333333))",
     "upload_sha256": "b306140c5273bb4efc0589752382331863ded6c7af61ab2f4eb03270a84e43a0",
-    "response_sha256": "67ae078d9c75f2b847bd5c35c516177bde5e85300633da66b5d5280fe6e88998",
-    "cached_csv_gz_sha256": "89b41be64238dfeadd13ca1314fc23710afcc6c9986e7960299c6a364a821a79",
+    "response_sha256": "fdde95f00da2d7b491deaf4efd658540afc51917048e9b1e5a18330843ce56dc",
+    "cached_csv_gz_sha256": "15e54eee3a20aa0ff9c6cec0f7a92344b6553128377adb56863cb2065f5900ce",
     "n_upload": 2500,
     "n_returned": 2272,
     "errors": []
@@ -112,8 +112,8 @@
     "url": "https://gaia.aip.de/tap/sync",
     "query": "SELECT p.rid AS rid, g.source_id AS source_id, g.ra AS ra, g.dec AS dec, g.phot_g_mean_mag AS g, g.bp_rp AS bp_rp, g.phot_bp_mean_flux_over_error AS bp_snr, g.phot_rp_mean_flux_over_error AS rp_snr, g.ruwe AS ruwe, g.parallax AS parallax, g.pmra AS pmra, g.pmdec AS pmdec, g.parallax_error AS parallax_error, g.pmra_error AS pmra_error, g.pmdec_error AS pmdec_error, g.parallax_pmra_corr AS parallax_pmra_corr, g.parallax_pmdec_corr AS parallax_pmdec_corr, g.pmra_pmdec_corr AS pmra_pmdec_corr FROM TAP_UPLOAD.targets AS p JOIN gaiadr3.gaia_source AS g ON 1=CONTAINS(POINT('ICRS',g.ra,g.dec),CIRCLE('ICRS',p.fpr_ra,p.fpr_dec,0.0000833333333333333))",
     "upload_sha256": "a58b289f5111889a97628e4391f5ca9de45011001d99d8d9390d1cf9955303bd",
-    "response_sha256": "fed8810bfeb4e98ce4aba7a87b582e1402496ff5d544c6b602def336e94c6dd8",
-    "cached_csv_gz_sha256": "3adac5e86f7c011bd4e985300255b1335f612bd7c15cfb74e458d123d9330204",
+    "response_sha256": "1d1d4b7e678d721e70ad7317210dc4ea342ac16ef466a03eb13a56191846c8d2",
+    "cached_csv_gz_sha256": "374776077cf85d32934fa38e3e9e99cda9ac5ca5cc707031ca70dc5e4e13caea",
     "n_upload": 2500,
     "n_returned": 2270,
     "errors": []
@@ -122,8 +122,8 @@
     "url": "https://gaia.aip.de/tap/sync",
     "query": "SELECT p.rid AS rid, g.source_id AS source_id, g.ra AS ra, g.dec AS dec, g.phot_g_mean_mag AS g, g.bp_rp AS bp_rp, g.phot_bp_mean_flux_over_error AS bp_snr, g.phot_rp_mean_flux_over_error AS rp_snr, g.ruwe AS ruwe, g.parallax AS parallax, g.pmra AS pmra, g.pmdec AS pmdec, g.parallax_error AS parallax_error, g.pmra_error AS pmra_error, g.pmdec_error AS pmdec_error, g.parallax_pmra_corr AS parallax_pmra_corr, g.parallax_pmdec_corr AS parallax_pmdec_corr, g.pmra_pmdec_corr AS pmra_pmdec_corr FROM TAP_UPLOAD.targets AS p JOIN gaiadr3.gaia_source AS g ON 1=CONTAINS(POINT('ICRS',g.ra,g.dec),CIRCLE('ICRS',p.fpr_ra,p.fpr_dec,0.0000833333333333333))",
     "upload_sha256": "65d3e5017b31726a9f6a2f9a547f76e19ace6736ca5a0360dc54a71ad6e63092",
-    "response_sha256": "e37f0c872210d9d9d23d0f6fbe0353114d87bd2a3acb2362e63ff21f912e90a1",
-    "cached_csv_gz_sha256": "f2d9989cd33b074d33b4ec1734c79ce769b0812c123bfed07363a8a6deb5ce3a",
+    "response_sha256": "074a5b81ddf14cb5a97ce9b42045fca019a7f6c0580e68699151a7ff8aea98b4",
+    "cached_csv_gz_sha256": "bbdd96063ecc456cca9e1849df2c5f41a7061507d688797a1a2bd68b39e2268d",
     "n_upload": 731,
     "n_returned": 650,
     "errors": []

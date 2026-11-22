@@ -2,28 +2,32 @@
   {
     "table": "J/A+A/707/A30/mgqpc",
     "host": "vizier.cds.unistra.fr",
-    "error": "HTTPSConnectionPool(host='vizier.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/asu-tsv?-source=J%2FA%2BA%2F707%2FA30%2Fmgqpc&-out.max=unlimited&-out=%2A%2A&-out.add=_RAJ2000%2C_DEJ2000&-oc.form=d (Caused by ConnectTimeoutError(<HTTPSConnection(host='vizier.cds.unistra.fr', port=443) at 0x738fd5b3f980>, 'Connection to vizier.cds.unistra.fr timed out. (connect timeout=8)'))"
+    "error": "HTTPSConnectionPool(host='vizier.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/asu-tsv?-source=J%2FA%2BA%2F707%2FA30%2Fmgqpc&-out.max=unlimited&-out=%2A%2A&-out.add=_RAJ2000%2C_DEJ2000&-oc.form=d (Caused by ConnectTimeoutError(<HTTPSConnection(host='vizier.cds.unistra.fr', port=443) at 0x75e94c623950>, 'Connection to vizier.cds.unistra.fr timed out. (connect timeout=8)'))"
   },
   {
     "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F707%2FA30%2Fmgqpc&-out.max=unlimited&-out=%2A%2A&-out.add=_RAJ2000%2C_DEJ2000&-oc.form=d",
-    "size": 1651038,
-    "sha256": "42502979e70c370aacb1ef66e6da8baaef44969720c8d3de595e2c34fca2568c"
+    "size": 1327,
+    "sha256": "9e3609e92cd46ac1137cca1c452fcd268594d01a0dabe00e1e1817b8f75d53a2"
+  },
+  {
+    "table": "J/A+A/707/A30/mgqpc",
+    "host": "vizier.cfa.harvard.edu",
+    "error": "No coordinate columns in ['Content-Type: application/x-votable+xml']"
   },
   {
     "catalog": "Chen et al. 2026 MGQPC",
-    "rows": 4112,
-    "expected": 4112,
-    "complete": true
+    "error": "No readable coordinate table",
+    "complete": false
   },
   {
     "table": "J/A+A/642/A148/sugohi",
     "host": "vizier.cds.unistra.fr",
-    "error": "HTTPSConnectionPool(host='vizier.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/asu-tsv?-source=J%2FA%2BA%2F642%2FA148%2Fsugohi&-out.max=unlimited&-out=%2A%2A&-out.add=_RAJ2000%2C_DEJ2000&-oc.form=d (Caused by ConnectTimeoutError(<HTTPSConnection(host='vizier.cds.unistra.fr', port=443) at 0x738fc08ba420>, 'Connection to vizier.cds.unistra.fr timed out. (connect timeout=8)'))"
+    "error": "HTTPSConnectionPool(host='vizier.cds.unistra.fr', port=443): Max retries exceeded with url: /viz-bin/asu-tsv?-source=J%2FA%2BA%2F642%2FA148%2Fsugohi&-out.max=unlimited&-out=%2A%2A&-out.add=_RAJ2000%2C_DEJ2000&-oc.form=d (Caused by ConnectTimeoutError(<HTTPSConnection(host='vizier.cds.unistra.fr', port=443) at 0x75e939c0dfd0>, 'Connection to vizier.cds.unistra.fr timed out. (connect timeout=8)'))"
   },
   {
     "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J%2FA%2BA%2F642%2FA148%2Fsugohi&-out.max=unlimited&-out=%2A%2A&-out.add=_RAJ2000%2C_DEJ2000&-oc.form=d",
     "size": 205648,
-    "sha256": "7242d044a2e62ed522f987cc0af537884a00f0b6e7f49f60c9ff757100a6f301"
+    "sha256": "6c659dd4c0c01287c2829174af8b730d0d3d383b0b878787c7ec87fb2fe3d50b"
   },
   {
     "catalog": "SuGOHI VI",
@@ -43,7 +47,7 @@
   },
   {
     "catalog": "SuGOHI current compilation",
-    "error": "Expected 2 fields in line 14, saw 4. Error could possibly be due to quotes being ignored when a multi-char delimiter is used.",
+    "error": "Live catalogue format or population not validated: ['000008+022658,0.035240,2.449440,-99.000,-99.000,-99.00,-99.00,-99.00,-99.00,-99.00,GG,CNN,,SuGOHI10', '000018+001617,0.078839,0.271578,-99.000,-99.000,0.63,-99.00,-99.00,19.91,-99.00,GG,,B,HOLISMOKES8', '000020-002051,0.086810,-0.347502,-99.000,-99.000,0.48,-99.00,2.26,20.56,-99.00,GG,committee,B,",
     "complete": false
   }
 ]
