@@ -323,6 +323,12 @@ def main():
             a=evidence_details[t]['archive_checks'][key]
             values.append(str(a.get('matched',0)+a.get('empty_cone',0)+a.get('measured',0)))
         sections.append('| '+name+' | '+' | '.join(values)+' |')
+    for t in RELEASES:
+        missing=allstats[t][1].get('catalog_errors') or {}
+        if missing:
+            labels={'LAN':'the published HETDEX Lyα-nebula catalog','DESI':'the HETDEX-specific DESI follow-up catalog'}
+            detail=' and '.join(labels.get(k,k) for k in sorted(missing))
+            sections+=['',f'{t.upper()} could not retrieve {detail} during the initial source and control vetting. That limited novelty checks and the imaging shortlist for this release. The independent spectral and repeated-geometry results above report their own coverage.']
     sections+=['','For each tested cube, the extension statistic subtracts the median from disjoint offset-wavelength windows and divides by 1.4826 times their median absolute deviation (MAD). The numerator counts source-row hypotheses with an excess ≥5 times this scaled MAD. The denominator counts source rows with a measurable extension statistic in their primary cube. Multiple source rows can refer to the same physical system.','',
                '| Spatial test on source rows | SC1 excess / measurable source rows | SC2 excess / measurable source rows |',
                '|---|---:|---:|']
