@@ -13,7 +13,7 @@ from pathlib import Path
 
 import numpy as np
 
-from search import Continuum
+from search import Continuum, bounded_uncertainties
 
 
 # Times are rounded literature periods for positive controls. The wider Her X-1
@@ -26,7 +26,7 @@ CONTROLS = [
     ("Vela X-1", "orbital", 8.96436, .0001, ECLIPSING),
     ("Cen X-3", "orbital", 2.08714, .0001, ECLIPSING),
     ("SMC X-1", "orbital", 3.89192, .0001, ECLIPSING),
-    ("4U 1538-522", "orbital", 3.7284, .0001, ECLIPSING),
+    ("H 1538-522", "orbital", 3.7284, .0001, ECLIPSING),
     ("OAO 1657-415", "orbital", 10.4473, .0001, ECLIPSING),
     ("Her X-1", "superorbital", 34.85, .025, HER),
 ]
@@ -175,6 +175,7 @@ def fixed_fit(curve, period, start, stop):
     t,y,e = t[m],y[m],e[m]
     if len(t)<40 or np.ptp(t)<3*period:
         return {"status":"insufficient common coverage","rows":len(t)}
+    e, weight_rules = bounded_uncertainties(t,e)
     w = (e.min()/e)**2
     w /= w.sum()
     if 1/(w@w) < 20:
@@ -193,7 +194,7 @@ def fixed_fit(curve, period, start, stop):
     cov = (h@model.bilinear(v)@h)[1:,1:]
     amp = float(np.hypot(*beta[1:]))
     p = math.exp(-.5*max(0.,float(beta[1:]@np.linalg.pinv(cov)@beta[1:])))
-    return dict(status="fitted", rows=len(t), start_mjd=float(t[0]), stop_mjd=float(t[-1]),
+    return dict(status="fitted", rows=len(t), weight_rules=weight_rules, start_mjd=float(t[0]), stop_mjd=float(t[-1]),
                 semiamplitude=amp, center=float(beta[0]), phase_cycles=float(np.arctan2(beta[2],beta[1])/(2*np.pi)%1),
                 conservative_95_upper_semiamplitude=amp+math.sqrt(5.992*max(0.,float(np.linalg.eigvalsh(cov).max()))),
                 frequency_local_red_model_p=p)

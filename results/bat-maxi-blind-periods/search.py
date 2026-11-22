@@ -10,6 +10,7 @@ P_MAX = 2000.
 MC = 255
 TRAIN = 64
 ALPHA = .05
+SURVEY_PASSES = 2
 SYSTEMS = {
     "solar-day": (1., .00002), "sidereal-day": (.9972696, .00002),
     "Swift-precession": (53., 2.), "ISS-precession": (70., 2.),
@@ -27,8 +28,40 @@ def rng_for(source, purpose):
     return np.random.default_rng(int.from_bytes(seed, "little"))
 
 
-def finite(x):
-    return float(x) if np.isfinite(x) else None
+def survey_trials(n_grid, n_sources):
+    return SURVEY_PASSES * int(n_grid) * int(n_sources)
+
+
+def kish(errors):
+    if not len(errors):
+        return 0.
+    w = (errors.min()/errors)**2
+    return float(w.sum()**2/(w@w))
+
+
+def bounded_uncertainties(t, e):
+    """Limit design leverage using only observation times and declared errors."""
+    if not len(e):
+        return e, {"original_effective_samples":0., "effective_samples":0.,
+                   "error_floor":None, "errors_raised":0, "weight_halves":[]}
+    left = t <= (np.min(t)+np.max(t))/2
+    groups = [e[left],e[~left]]
+    floors = []
+    for group in groups:
+        if len(group):
+            # At least ten equally precise observations (when present) and
+            # at least one tenth of each half share the maximum possible weight.
+            count = min(len(group),max(10,int(np.ceil(.10*len(group)))))
+            floors.append(float(np.partition(group,count-1)[count-1]))
+        else:
+            floors.append(None)
+    floor = max(x for x in floors if x is not None)
+    corrected = np.maximum(e,floor)
+    details = [{"samples":len(group),"order_statistic_error":f,
+                "raw_kish":kish(group),"adjusted_kish":kish(np.maximum(group,floor))}
+               for group,f in zip(groups,floors)]
+    return corrected, {"original_effective_samples":kish(e),"effective_samples":kish(corrected),
+                       "error_floor":floor,"errors_raised":int((e<floor).sum()),"weight_halves":details}
 
 
 def prepare(curve):
@@ -43,14 +76,14 @@ def prepare(curve):
     # Exact duplicate epochs cannot be counted as independent evidence.
     keep = np.r_[True, np.diff(t) > 0] if len(t) else np.zeros(0, bool)
     t, y, e = t[keep], y[keep], e[keep]
-    w = (e.min()/e)**2 if len(e) else np.empty(0)
-    effective = w.sum()**2 / (w@w) if len(w) else 0.
+    e, weights = bounded_uncertainties(t,e)
     span = np.ptp(t) if len(t) else 0.
-    meta = {"samples": len(t), "span_days": float(span), "effective_samples": float(effective)}
+    meta = {"samples":len(t),"span_days":float(span),**weights}
     if len(t):
-        meta.update(mjd_first=float(t[0]), mjd_last=float(t[-1]))
-    if len(t) < 40 or effective < 20 or span < 60:
-        return None, dict(meta, status="insufficient_sampling")
+        meta.update(mjd_first=float(t[0]),mjd_last=float(t[-1]))
+    # A curve can be scanned even if later two-half confirmation is impossible.
+    if len(t)<16 or weights["effective_samples"]<6 or span<5*P_MIN:
+        return None, dict(meta,status="insufficient_sampling")
     return (t, y, e), meta
 
 
@@ -255,27 +288,38 @@ class Search:
         sampling = np.abs(fine.sums(np.full(len(t), 1/len(t)), win_idx))**2
         win = np.maximum(ex, sampling)
         win_peaks, _ = signal.find_peaks(win, height=.01, distance=max(1, int(.7/self.span/self.df)))
-        # The second-broadest central lobe and its immediate structure are resolution, not clocks.
-        win_peaks = win_peaks[win_idx[win_peaks]*self.df > 3/self.span]
-        self.windows = [(k, 1/p, dp/p**2) for k, (p, dp) in SYSTEMS.items()]
-        self.clock_beats = []
-        for i, (label, f1, d1) in enumerate(self.windows):
-            for other, f2, d2 in self.windows[i+1:]:
-                for side in (abs(f1-f2), f1+f2):
-                    if self.freq[0] <= side <= self.freq[-1]:
-                        self.clock_beats.append((label+" x "+other, side, d1+d2))
-        self.windows += [("observed-window", float(win_idx[k]*self.df), 0.) for k in win_peaks]
-        self.direct = np.zeros(len(self.freq), bool)
-        for _, fbeat, dbeat in self.clock_beats:
-            self.direct |= np.abs(self.freq-fbeat) < 1/self.span+dbeat
-        for label, fw, width in self.windows:
-            # Named lines: include first four harmonics. Empirical window peaks are measured directly.
-            for h in (range(1, 5) if label != "observed-window" else (1,)):
-                self.direct |= np.abs(self.freq-h*fw) < 1/self.span+h*width
+        # Include the finite-baseline sidelobes just beyond one resolution element.
+        win_peaks = win_peaks[win_idx[win_peaks]*self.df > 1.1/self.span]
+        self.measured_window_f = win_idx[win_peaks]*self.df
+        self.measured_window_p = win[win_peaks]
+        self.spacecraft = "Swift-precession" if band=="bat" else "ISS-precession"
+        other_spacecraft = "ISS-precession" if band=="bat" else "Swift-precession"
+        all_windows = [(k,1/p,dp/p**2) for k,(p,dp) in SYSTEMS.items()]
+        self.windows = [item for item in all_windows if item[0]!=other_spacecraft]
+        self.advisories = []
+        for label,fw,width in all_windows:
+            if label==other_spacecraft:
+                for h in range(1,5):
+                    self.advisories.append((f"{h} x {label} (other spacecraft)",h*fw,h*width))
+        for i,(label,f1,d1) in enumerate(all_windows):
+            for other,f2,d2 in all_windows[i+1:]:
+                for side in (abs(f1-f2),f1+f2):
+                    if self.freq[0]-1/self.span <= side <= self.freq[-1]+1/self.span:
+                        self.advisories.append((label+" x "+other,side,d1+d2))
+        self.windows += [("observed-window",float(fw),0.) for fw in self.measured_window_f]
+        self.direct = np.zeros(len(self.freq),bool)
+        for label,fw,width in self.windows:
+            # A theoretical combination by itself is advisory. Any actual
+            # window line in its tolerance range is vetoed at its measured
+            # frequency, not throughout the nominal range of the combination.
+            for h in (range(1,5) if label!="observed-window" else (1,)):
+                self.direct |= np.abs(self.freq-h*fw) < 1/self.span + h*width
 
         edges = np.geomspace(self.freq[0], self.freq[-1]*(1+1e-8), 12)
         regions = [(self.freq >= low)&(self.freq < high) for low, high in zip(edges[:-1], edges[1:])]
         regions = [r for r in regions if r.sum() >= 8]
+        if not regions:
+            regions = [np.ones(len(self.freq),dtype=bool)]
         self.base = self.transforms(self.y)[0]
         self.noise.fit_spectrum(self.w, self.freq, self.power(self.base), regions)
         # Use independent draws for fitting the score normalization and its null distribution.
@@ -296,7 +340,7 @@ class Search:
         low, high = np.quantile(bands, [.01, .99], axis=0)
         observed_bands = np.array([np.median(self.observed[r]) for r in regions])
         bad = (observed_bands < .5*low) | (observed_bands > 2*high)
-        self.model_ok = bool(self.noise.enough and bad.sum() < 2)
+        self.model_ok = bool(self.noise.enough and len(regions)>=2 and bad.sum()<2)
         self.alias_offsets = []
         for label, fw, width in self.windows:
             for h in (range(1, 5) if label != "observed-window" else (1,)):
@@ -309,6 +353,8 @@ class Search:
                          max_period_days=float(1/self.freq[0]), frequencies=len(self.freq),
                          grid_spacing_per_day=float(self.df), weighted_rms=self.scale,
                          sampling_window_lines=len(win_peaks), model_ok=self.model_ok,
+                         survey_passes=SURVEY_PASSES, survey_trial_factor=survey_trials(len(self.freq),n_sources),
+                         native_precession=self.spacecraft,
                          red_fit_method=self.noise.method, red_timescale_days=self.noise.timescales.tolist(),
                          red_variances=self.noise.variances.tolist(),
                          continuum_diagnostics=[{"period_days": [float(1/self.freq[r][-1]),float(1/self.freq[r][0])],
@@ -341,7 +387,14 @@ class Search:
         v, inv = self.precision(int(k))
         z = v.T@y
         logp = float(-.5*(z@inv@z))
-        return logp, min(1., float(np.exp(max(-745., logp+np.log(len(self.idx)*self.n_sources)))))
+        return logp, min(1., float(np.exp(max(-745., logp+np.log(survey_trials(len(self.idx),self.n_sources))))))
+
+    def clock_advisories(self,k):
+        frequency = self.freq[k]
+        near = np.abs(self.measured_window_f-frequency) < 1/self.span
+        peak = float(np.max(self.measured_window_p[near])) if near.any() else None
+        return [{"clock":label,"predicted_frequency":float(fw),"measured_window_power":peak}
+                for label,fw,width in self.advisories if abs(frequency-fw)<1/self.span+width]
 
     def window_reason(self, k, parents):
         f, res = self.freq[k], 1/self.span
@@ -371,7 +424,7 @@ class Search:
         rows = []
         for k in selected:
             if self.direct[k]:
-                reason = "direct instrumental/sampling line, harmonic or clock beat"
+                reason = "direct native clock/harmonic or measured sampling line"
             elif blocked[k]:
                 reason = self.window_reason(k, [blocked[k]-1]) or "sideband of stronger peak"
             else:
@@ -406,7 +459,8 @@ class Search:
             rows.append({"index": k, "period_days": float(1/self.freq[k]), "score": float(scores[k]),
                 "source_global_mc_fap": mc_p(self.maxima, scores[k]),
                 "single_grid_log_p": logp, "survey_fap_bound": bound,
-                "window_reason": reason, "model_ok": self.model_ok})
+                "window_reason": reason, "model_ok": self.model_ok,
+                "advisory_clock_proximity": self.clock_advisories(k)})
         return rows, counts
 
     def halves(self, frequency, y):

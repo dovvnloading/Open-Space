@@ -26,9 +26,13 @@ from urllib.parse import urlencode
 
 import requests
 
+import catalogue_archive as cds
+
 
 VIZIERS = ("https://vizier.cds.unistra.fr/viz-bin/asu-xml",
-           "https://vizier.cfa.harvard.edu/viz-bin/asu-xml")
+           "https://vizier.cfa.harvard.edu/viz-bin/asu-xml",
+           "https://vizier.nao.ac.jp/viz-bin/asu-xml",
+           "https://vizier.hia.nrc.ca/viz-bin/asu-xml")
 SIMBADS = ("https://simbad.cds.unistra.fr/simbad/sim-tap/sync",
            "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync")
 CROSSREF = "https://api.crossref.org/works"
@@ -39,7 +43,7 @@ ATOMS = {"a": "http://www.w3.org/2005/Atom",
 CATALOGUES = {
     "Ritter-Kolb": ([], [], ["B/cb"]),
     "Fortin HMXB": (["Fortin"], ["high", "mass"], ["J/A+A/671/A149"]),
-    "Fortin LMXB": (["Fortin"], ["low", "mass"], []),
+    "Fortin LMXB": (["Fortin"], ["low", "mass"], ["J/A+A/684/A124"]),
     "Neumann HMXB": (["Neumann"], ["high", "mass"], ["J/A+A/677/A134"]),
     "Avakyan-Neumann LMXB": (["Avakyan", "Neumann"], ["low", "mass"], ["J/A+A/675/A199"]),
 }
@@ -205,7 +209,12 @@ def asu_tables(raw):
                 rows.append(row)
         tables.append(dict(name=table.get("name", ""), fields=fields, rows=rows))
     if not any(t["rows"] for t in tables):
+        tables = cds.binary_tables(raw)
+    if not any(t["rows"] for t in tables):
         raise ValueError("no populated catalogue tables")
+    if not any(any(re.search(r"orbital period|orb[.]?per|p_?orb",f["name"]+" "+f["desc"],re.I)
+                   for f in t["fields"]) for t in tables):
+        raise ValueError("no orbital-period-bearing source table")
     return tables
 
 
@@ -242,6 +251,14 @@ def catalogues(archive):
                         audit["papers"].append(dict(title=title, doi=w.get("DOI"), vizier=vid))
             except (ValueError, KeyError) as exc:
                 audit["discovery_error"] = str(exc)
+        def identifies(title):
+            title = re.sub(r"[^a-z0-9 ]", " ", title.lower())
+            if family == "Ritter-Kolb":
+                return bool(re.search(r"\b(ritter|kolb)\b", title) and
+                            re.search(r"cataclysmic|lmxb|low.mass", title))
+            population = "high" if "HMXB" in family else "low"
+            return (any(re.search(r"\b"+a.lower()+r"\b", title) for a in authors)
+                    and bool(re.search(population+r"\s*mass|\b"+population[0]+r"mxbs?\b", title)))
         for vid in uniq(ids + fallback):
             errors = []
             for service in VIZIERS:
@@ -259,30 +276,30 @@ def catalogues(archive):
                                 if child.tag.split("}")[-1] == "DESCRIPTION":
                                     title_lines.append(" ".join(" ".join(child.itertext()).split()))
                     identity = " ".join(title_lines)
-                    def identifies(title):
-                        title = re.sub(r"[^a-z0-9 ]", " ", title.lower())
-                        if family == "Ritter-Kolb":
-                            return bool(re.search(r"\b(ritter|kolb)\b", title) and
-                                        re.search(r"cataclysmic|lmxb|low.mass", title))
-                        population = "high" if "HMXB" in family else "low"
-                        return (any(re.search(r"\b"+a.lower()+r"\b", title) for a in authors)
-                                and bool(re.search(population+r"\s*mass|\b"+population[0]+r"mxbs?\b", title)))
                     readme = None
                     if not identifies(identity):
-                        raw_title, readme = archive.fetch("https://cdsarc.cds.unistra.fr/ftp/"+vid+"/ReadMe")
-                        header = raw_title.decode(errors="replace").split("Description:")[0].split("File Summary:")[0]
-                        identity = " ".join(header.split()[:250])
+                        official, readme, _ = cds.readme(archive,vid)
+                        identity = cds.readme_title(official)
                     if not identifies(identity):
                         raise ValueError("catalogue author or population did not match its official title")
                     tables.extend((family, vid, t) for t in parsed)
                     audit["downloads"].append(dict(vizier=vid, query=meta, official_title=identity, readme=readme,
                         tables=[dict(name=t["name"], rows=len(t["rows"]), fields=t["fields"]) for t in parsed]))
                     break
-                except (ValueError, ET.ParseError) as exc:
+                except (ValueError,KeyError,TypeError,OSError,ET.ParseError) as exc:
                     errors.append(str(exc))
             else:
+                try:
+                    parsed, readme, title, sources, missing = cds.cds_tables(archive,vid,identifies)
+                    tables.extend((family,vid,t) for t in parsed)
+                    audit["downloads"].append(dict(vizier=vid,readme=readme,official_title=title,
+                        static_files=sources,missing_files=missing,
+                        tables=[dict(name=t["name"],rows=len(t["rows"]),fields=t["fields"]) for t in parsed]))
+                except (ValueError,KeyError,TypeError,OSError) as exc:
+                    errors.append(str(exc))
                 audit.setdefault("download_errors", {})[vid] = errors
-        audit["status"] = "downloaded" if audit["downloads"] else "unresolved"
+        partial = any(t.get("missing_files") for t in audit["downloads"])
+        audit["status"] = "partial" if partial else "downloaded" if audit["downloads"] else "unresolved"
         inventory[family] = audit
     return inventory, tables
 

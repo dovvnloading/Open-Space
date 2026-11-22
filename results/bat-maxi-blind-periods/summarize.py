@@ -35,7 +35,7 @@ def main(folder):
                     failures.append([sid,s.get("traceback")])
                 for band in ("bat","maxi"):
                     b = s.get("instruments", {}).get(band, {})
-                    for k in ("status","samples","span_days","min_period_days","max_period_days","model_ok",
+                    for k in ("status","samples","original_effective_samples","effective_samples","error_floor","errors_raised","span_days","min_period_days","max_period_days","model_ok",
                               "local_maxima","above_mc_threshold","weighted_rms"):
                         d[band+"_"+k] = b.get(k)
                     for p in b.get("peaks",[]):

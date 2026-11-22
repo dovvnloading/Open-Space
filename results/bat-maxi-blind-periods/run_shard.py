@@ -30,13 +30,21 @@ def main():
     args = parser.parse_args()
     rows = json.loads(args.inventory.read_text())["sources"]
     subset = rows[args.shard::args.shards]
+    receipt_file = args.work / f"ingest-{args.shard}.jsonl"
+    receipts = {r["id"]:r for r in (json.loads(line) for line in receipt_file.read_text().splitlines())}
+    if set(receipts) != {r["id"] for r in subset}:
+        raise ValueError("The shard assignment does not match its frozen acquisition receipts.")
     args.out.mkdir(exist_ok=True, parents=True)
     with gzip.open(args.out / f"search-{args.shard:02}.jsonl.gz", "wt", encoding="utf8") as stream:
         for index, row in enumerate(subset):
             source = row["id"]
             try:
-                result = analyze(source, read_curve(args.work, source, "bat"),
-                                 read_curve(args.work, source, "maxi"), n_sources=len(rows))
+                curves = {b:read_curve(args.work,source,b) for b in ("bat","maxi")}
+                for band,curve in curves.items():
+                    expected = receipts[source][band]
+                    if expected["status"]=="ok" and (curve is None or len(curve[0])!=expected["rows_used"]):
+                        raise ValueError(f"{source} {band} does not match its frozen acquisition receipt")
+                result = analyze(source, curves["bat"], curves["maxi"], n_sources=len(rows))
             except Exception:
                 result = {"status": "analysis_error", "traceback": traceback.format_exc()}
             result["roster_id"] = source
