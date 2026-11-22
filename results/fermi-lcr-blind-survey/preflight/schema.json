@@ -1,0 +1,1774 @@
+[
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/",
+    "nbytes": 301164,
+    "sha256": "bdd32247b085fe5c54faf2bf5ba1999b15448eb1e79308715a5267ed130b52c7",
+    "excerpts": [
+      "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"./js/d3.min.js\"></script>",
+      "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"./js/d3.geo.projection.min.js\"></script>",
+      "<!-- <script type=\"text/javascript\" src=\"./js/celestial.min.js\"></script> -->",
+      "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"./js/celestial.js\"></script>",
+      "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"./js/astro.js\"></script>",
+      "<!-- <script language=\"javascript\" type=\"text/javascript\" src=\"./js/astro.dates.js\"></script> -->",
+      "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"./js/astro.coords.js\"></script>",
+      "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"./js/ephemeris.js\"></script>",
+      "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"./js/jquery-1.12.0.min.js\"></script>",
+      "<!-- <script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js\"></script> -->",
+      "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js\"></script>",
+      "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\" integrity=\"sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa\" crossorigin=\"anonymous\"></script>",
+      "<!-- <script src=\"https://code.highcharts.com/highcharts.src.js\"></script> -->",
+      "<script src=\"https://code.highcharts.com/stock/highstock.js\"></script>",
+      "<script src=\"https://code.highcharts.com/stock/modules/data.js\"></script>",
+      "<script src=\"https://code.highcharts.com/stock/modules/exporting.js\"></script>",
+      "<script src=\"https://code.highcharts.com/stock/modules/export-data.js\"></script>",
+      "<script src=\"https://code.highcharts.com/highcharts-more.js\"></script>",
+      "<!-- <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css\"/> -->",
+      "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js\"></script>",
+      "<script charset=\"UTF-8\" src=\"./js/moment.js\"></script>",
+      "data: 'stars.6.json' // Data source for stellar data",
+      "//data: 'stars.8.json' // Alternative deeper data source for stellar data",
+      "data: 'dsos.bright.json',  // Data source for DSOs",
+      "//data: 'dsos.6.json'  // Alternative broader data source for DSOs",
+      "//data: 'dsos.14.json' // Alternative deeper data source for DSOs",
+      "if (sourceRecord['Source_Name'].toLowerCase().includes(search_keyword) || sourceRecord['CLASS1'].toLowerCase().includes(search_keyword) || sourceRecord['ASSOC1'].toLowerCase().includes(search_keyword) || sourceRecord['SpectrumType'].toLowerCase().includes(search_keyword)) {",
+      "if (data_sky_activity.hasOwnProperty(source.Source_Name)) {",
+      "var r = Math.pow(parseInt(data_sky_activity[source.Source_Name]) * 1, 0.4);",
+      "//     r = Math.pow(parseInt(data_sky_activity[source.Source_Name]) * 0.2, 0.4);",
+      "//     TSs.push(data_sky_activity[source.Source_Name])",
+      "Celestial.context.fillText(source.Source_Name, point[0] + r + 7.5, point[1] + r - 7.5);",
+      "URL = \"queryDB.php?typeOfRequest=SourceList&catalog=3FGL\";",
+      "// Perform an ajax request",
+      "$.ajax({url: URL, success: function(responseText){",
+      "// URL = \"queryDB.php?typeOfRequest=SourceList&catalog=4FGL&magicWord=\" + magicWord;",
+      "URL = \"queryDB.php?typeOfRequest=SourceList&catalog=4FGL\";",
+      "// Perform an ajax request",
+      "$.ajax({url: URL, success: function(responseText){",
+      "URL = \"http://localhost/~kocevski/FAVADataPortal/queryDB_2FAV_sqlite.php?typeOfRequest=MapData\";",
+      "URL = \"https://fermi.gsfc.nasa.gov/ssc/data/access/lat/FAVA/queryDB_2FAV.php?typeOfRequest=MapData\"",
+      "// Perform an ajax request",
+      "$.ajax({url: URL, success: function(responseText){",
+      "URL = \"queryDB.php?typeOfRequest=SourceList&catalog=2FLGC&magicWord=\" + magicWord;",
+      "// Perform an ajax request",
+      "$.ajax({url: URL, success: function(responseText){",
+      "URL = \"queryDB.php?typeOfRequest=SourceList&catalog=IceCube&magicWord=\" + magicWord;",
+      "// Perform an ajax request",
+      "$.ajax({url: URL, success: function(responseText){",
+      "// URL = \"queryDB.php?typeOfRequest=SourceList&catalog=4FGL&magicWord=\" + magicWord;",
+      "URL = \"queryDB.php?typeOfRequest=SourceList&catalog=3PC\";",
+      "// Perform an ajax request",
+      "$.ajax({url: URL, success: function(responseText){",
+      "URL = \"queryDB.php?typeOfRequest=skyActivity&met=\" + MET + \"&cadence=daily\";",
+      "// Perform an ajax request",
+      "$.ajax({url: URL, success: function(responseText){",
+      "URL = \"queryDB.php?typeOfRequest=skyActivity&latest\";",
+      "// Perform an ajax request",
+      "$.ajax({url: URL, success: function(responseText){",
+      "table_columns = ['Source_Name', 'RAJ2000', 'DEJ2000', 'GLON', 'GLAT', 'ASSOC1', 'CLASS1', 'Variability_Index', 'Flux1000', 'Energy_Flux100', 'Signif_Avg', 'SpectrumType', 'Spectral_Index']",
+      "if (key === 'Source_Name') {",
+      "var source_name = source[key].replace(' ','_')",
+      "row[++j] = '<a href=\"./source.html?source_name=' + source_name + '\" target=\"_blank\">' + source[key] + '</a>';",
+      "var link = 'https://fermi.gsfc.nasa.gov/ssc/data/access/lat/FAVA/SourceReport.php?week=' + week_number + '&flare=' + flare_number",
+      "// table_columns = ['assoc_new', 'RAJ2000', 'DEJ2000', 'GLON', 'GLAT', 'Source_Name', 'class_new', 'Variability_Index', 'Signif_Avg']",
+      "// Define the latest available MET for the daily cadence",
+      "var Source_Name = point.Source_Name",
+      "var data_subdirectory = point.Source_Name.substring(6,8)",
+      "var catalog_source_name = point.Source_Name.replace('-','m').replace('.','d').replace(' ','_').replace('+','p')",
+      "var source_name_url = point.Source_Name.replace(' ','_')",
+      "var link_spectrum_4FGL = \"./data/4FGL/4FGL-DR2_spec_v23/\" + data_subdirectory + '/' + catalog_source_name + '_spec.pdf'",
+      "var link_lightcurve_4FGL = \"./data/4FGL/4FGL-DR2_flux_v23/\" + data_subdirectory + '/' + catalog_source_name + '_lc.pdf'",
+      "var link_lightcurves_LCR = \"./source.html?source_name=\" + source_name_url",
+      "var link_lightcurves_FAVA = \"https://fermi.gsfc.nasa.gov/ssc/data/access/lat/FAVA/LightCurve.php?ra=\" + RAJ2000 + '&dec=' + DEJ2000",
+      "var innerHTML =  point.Source_Name",
+      "var link = \"https://fermi.gsfc.nasa.gov/ssc/data/access/lat/FAVA/SourceReport.php?week=\" + week_number + \"&flare=\" + flare_number",
+      "// Set the width of the sundate bar to represent the duration over which the sky activity is measured (only really precentable for 30 day cadence)",
+      "var point_source_name;",
+      "point_source_name = point.Source_Name",
+      "point_source_name = 'Week ' + week_number + ' Flare ' + flare_number",
+      "point_source_name = String(parseInt(point.GCNNAME))",
+      "point_source_name = '0' + point_source_name",
+      "point_source_name = 'GRB ' + point_source_name",
+      "point_source_name = 'GRB ' + point.GCNNAME",
+      "point_source_name = point.EVENT_NUM",
+      "point_source_name = 'PSR ' + point.PSRJ",
+      "if (point_source_name.includes(sourceName)) {",
+      "var Source_Name = point.Source_Name",
+      "var data_subdirectory = point.Source_Name.substring(6,8)",
+      "var catalog_source_name = point.Source_Name.replace('-','m').replace('.','d').replace(' ','_').replace('+','p')",
+      "var link_spectrum_4FGL = \"./data/4FGL/4FGL-DR2_spec_v23/\" + data_subdirectory + '/' + catalog_source_name + '_spec.pdf'",
+      "var link_lightcurve_4FGL = \"./data/4FGL/4FGL-DR2_flux_v23/\" + data_subdirectory + '/' + catalog_source_name + '_lc.pdf'",
+      "var link_lightcurves_LCR = \"./source.html\"",
+      "var link_lightcurves_FAVA = \"https://fermi.gsfc.nasa.gov/ssc/data/access/lat/FAVA/LightCurve.php?ra=\" + RAJ2000 + '&dec=' + DEJ2000",
+      "var innerHTML =  point.Source_Name",
+      "var innerHTML =  point_source_name",
+      "var link = \"https://fermi.gsfc.nasa.gov/ssc/data/access/lat/FAVA/SourceReport.php?week=\" + week_number + \"&flare=\" + flare_number",
+      "// queryDB('TriggerList', magic_word_submitted)",
+      "FAVA Flare Catalog (<a href=\"https://fermi.gsfc.nasa.gov/ssc/data/access/lat/FAVA/CatalogView_2FAV.php\">2FAV</a>)<BR><small><a href=\"https://fermi.gsfc.nasa.gov/ssc/data/access/lat/fava_catalog/\">Abdollahi et al. 2017</a> - 4309 Flares</small>"
+    ]
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/js/celestial.js",
+    "nbytes": 171387,
+    "sha256": "935969a58fdacc4a08e5e8d7569afb6805cf1327f7b6f07b92f879291019ac2d",
+    "excerpts": [
+      "d3.json(path + \"mw.json\", function(error, json) {",
+      "var filename = \"constellations\" + extConstellations + \".json\";",
+      "d3.json(path + filename, function(error, json) {",
+      "filename = \"constellations.bounds\" + extConstellations + \".json\";",
+      "d3.json(path + filename, function(error, json) {",
+      "filename = \"constellations.lines\" + extConstellations + \".json\";",
+      "d3.json(path + filename, function(error, json) {",
+      "d3.json(path + cfg.stars.data, function(error, json) {",
+      "filename = \"starnames\" + extStars + \".json\";",
+      "d3.json(path + filename, function(error, json) {",
+      "d3.json(path + cfg.dsos.data, function(error, json) {",
+      "d3.json(path + \"planets.json\", function(error, json) {",
+      "if (has(d, \"file\")) d3.json(d.file, d.callback);",
+      "designationType: \"desig\",  // Which kind of name is displayed as designation (fieldname in starnames.json)",
+      "propernameType: \"name\", // Field in starnames.json that contains proper name; may vary with culture setting",
+      "data: \"stars.6.json\" // Data source for stellar data",
+      "data: \"dsos.bright.json\",  // Data source for DSOs"
+    ]
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/js/astro.js",
+    "nbytes": 6884,
+    "sha256": "c1fdfe84a81b3bbf99f844c6fcc8ebf9b4cfabe3158b38edbc43688ba5396e94",
+    "excerpts": []
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/js/astro.coords.js",
+    "nbytes": 10766,
+    "sha256": "5d670985b96380b563212e7a4a4e7fe187c10d795f35f2f7e9a13b2905b6bed7",
+    "excerpts": []
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/js/ephemeris.js",
+    "nbytes": 18534,
+    "sha256": "66435882142ffd585bd6ef9c028127e9e88326ca8b9a6b3437d706db14a1b3b6",
+    "excerpts": []
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/js/moment.js",
+    "nbytes": 150940,
+    "sha256": "b6f57336451b2107602dad9ef2bf8856d90357c9d9bb70d006acbf097687d3e4",
+    "excerpts": [
+      "// from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html"
+    ]
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/source.html?source_name=4FGL%20J1555.7%2B1111",
+    "nbytes": 131498,
+    "sha256": "fe413075e47ab16b7986d53d3745a2b1bcf72a4987f20c8c5f77f56e8b58ed0b",
+    "excerpts": [
+      "<script type=\"text/javascript\" src=\"./js/jquery-1.12.0.min.js\"></script>",
+      "<!-- <script src=\"http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js\"></script> -->",
+      "<!-- <script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js\"></script> -->",
+      "<script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js\"></script>",
+      "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\" integrity=\"sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa\" crossorigin=\"anonymous\"></script>",
+      "<script src=\"https://code.highcharts.com/10.3.3/highcharts.src.js\"></script>",
+      "<script src=\"https://code.highcharts.com/stock/10.3.3/modules/data.js\"></script>",
+      "<script src=\"https://code.highcharts.com/stock/10.3.3/modules/exporting.js\"></script>",
+      "<script src=\"https://code.highcharts.com/stock/10.3.3/modules/export-data.js\"></script>",
+      "<script src=\"https://code.highcharts.com/10.3.3/highcharts-more.js\"></script>",
+      "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">",
+      "<!-- <script type=\"text/javascript\" src=\"./data/photon_flux_error.json\"></script> -->",
+      "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"./js/ephemeris.js\"></script>",
+      "<script type=\"text/javascript\" src=\"./js/dat.gui.js\"></script>",
+      "var cadence = 'weekly'",
+      "var filename = GetUrlValue('source_name') + '_' + cadence + '_' + new Date().toLocaleDateString() + '.csv';",
+      "var source_name = GetUrlValue('source_name')",
+      "var source_name = source_name.replace('_',' ')",
+      "var source_name_urlEncoded = encodeURIComponent(source_name);",
+      "var URL = \"queryDB.php?typeOfRequest=sourceData&source_name=\" + source_name_urlEncoded",
+      "$.ajax({url: URL, success: function(responseText){",
+      "var source_name = GetUrlValue('source_name')",
+      "var source_name = source_name.replace('_',' ')",
+      "var source_name_urlEncoded = encodeURIComponent(source_name);",
+      "URL_light_curve_data = \"queryDB.php?typeOfRequest=lightCurveData&source_name=\" + source_name_urlEncoded + '&cadence=' + cadence + '&flux_type=' + flux_type + '&index_type=' + index_type + '&ts_min=' + ts_min;",
+      "$.ajax({url: URL_light_curve_data, success: function(responseText){",
+      "var source_name = GetUrlValue('source_name')",
+      "var log_link = 'https://s3df.slac.stanford.edu/data/fermi/LCR/logs/' + source_name + '/' + cadence + '/' + log_filename",
+      "queryDB('SourceList', magic_word_submitted, catalog);",
+      "$('#cadence_selector1 button').click(function() {",
+      "cadence = $(this).attr(\"id\");",
+      "<label for=\"name\">Data Cadence:</label>",
+      "<div id=\"cadence_selector1\" class=\"btn-group\">",
+      "<tr><td>Catalog Name: </td><td id=\"Source_Name\" align=\"right\" style=\"padding-right:5px\"></td></tr>"
+    ]
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/js/dat.gui.js",
+    "nbytes": 45411,
+    "sha256": "06be15e0f469d16952d5f6479a4afa8a9028ae91c7738126222fa97c6c3ecf68",
+    "excerpts": []
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/data/starnames.json",
+    "nbytes": 601845,
+    "sha256": "4d12efdbe374925fc915a3c48a0291ca5460ef60294d616e309f4c8158fdcbc0",
+    "schema": {
+      "63": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "CG",
+        "gl": "",
+        "hd": "HD\u2009224801",
+        "hip": "HIP\u200963",
+        "c": "And",
+        "desig": "CG"
+      },
+      "88": {
+        "name": "",
+        "bayer": "\u03c4",
+        "flam": "",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009224834",
+        "hip": "HIP\u200988",
+        "c": "Phe",
+        "desig": "\u03c4"
+      },
+      "122": {
+        "name": "",
+        "bayer": "\u03b8",
+        "flam": "",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009224889",
+        "hip": "HIP\u2009122",
+        "c": "Oct",
+        "desig": "\u03b8"
+      },
+      "145": {
+        "name": "",
+        "bayer": "",
+        "flam": "29",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009224926",
+        "hip": "HIP\u2009145",
+        "c": "Psc",
+        "desig": "29"
+      },
+      "154": {
+        "name": "",
+        "bayer": "",
+        "flam": "30",
+        "var": "YY",
+        "gl": "",
+        "hd": "HD\u2009224935",
+        "hip": "HIP\u2009154",
+        "c": "Psc",
+        "desig": "30"
+      },
+      "159": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "BU",
+        "gl": "",
+        "hd": "HD\u2009224945",
+        "hip": "HIP\u2009159",
+        "c": "Psc",
+        "desig": "BU"
+      },
+      "171": {
+        "name": "",
+        "bayer": "",
+        "flam": "85",
+        "var": "",
+        "gl": "GJ 914A",
+        "hd": "HD\u2009224930",
+        "hip": "HIP\u2009171",
+        "c": "Peg",
+        "desig": "85",
+        "gliese": "GJ914A"
+      },
+      "181": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "V0822",
+        "gl": "",
+        "hd": "HD\u2009224980",
+        "hip": "HIP\u2009181",
+        "c": "Cas",
+        "desig": "V0822"
+      },
+      "183": {
+        "name": "",
+        "bayer": "\u03b6",
+        "flam": "",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009224990",
+        "hip": "HIP\u2009183",
+        "c": "Scl",
+        "desig": "\u03b6"
+      },
+      "186": {
+        "name": "",
+        "bayer": "",
+        "flam": "31",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009224995",
+        "hip": "HIP\u2009186",
+        "c": "Psc",
+        "desig": "31"
+      },
+      "194": {
+        "name": "",
+        "bayer": "c",
+        "flam": "32",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009225003",
+        "hip": "HIP\u2009194",
+        "c": "Psc",
+        "desig": "c"
+      },
+      "274": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "V0639",
+        "gl": "",
+        "hd": "HD\u2009225094",
+        "hip": "HIP\u2009274",
+        "c": "Cas",
+        "desig": "V0639"
+      },
+      "301": {
+        "name": "",
+        "bayer": "",
+        "flam": "2",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009225132",
+        "hip": "HIP\u2009301",
+        "c": "Cet",
+        "desig": "2"
+      },
+      "302": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "V0398",
+        "gl": "",
+        "hd": "HD\u2009225136",
+        "hip": "HIP\u2009302",
+        "c": "Cep",
+        "desig": "V0398"
+      },
+      "330": {
+        "name": "",
+        "bayer": "",
+        "flam": "9",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009225180",
+        "hip": "HIP\u2009330",
+        "c": "Cas",
+        "desig": "9"
+      },
+      "355": {
+        "name": "",
+        "bayer": "",
+        "flam": "3",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009225212",
+        "hip": "HIP\u2009355",
+        "c": "Cet",
+        "desig": "3"
+      },
+      "394": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "",
+        "gl": "NN 3002",
+        "hd": "HD\u2009225239",
+        "hip": "HIP\u2009394",
+        "desig": "HD\u2009225239"
+      },
+      "418": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "V0567",
+        "gl": "",
+        "hd": "HD\u2009225289",
+        "hip": "HIP\u2009418",
+        "c": "Cas",
+        "desig": "V0567"
+      },
+      "443": {
+        "name": "",
+        "bayer": "",
+        "flam": "33",
+        "var": "BC",
+        "gl": "",
+        "hd": "HD\u200928",
+        "hip": "HIP\u2009443",
+        "c": "Psc",
+        "desig": "33"
+      },
+      "476": {
+        "name": "",
+        "bayer": "",
+        "flam": "86",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u200987",
+        "hip": "HIP\u2009476",
+        "c": "Peg",
+        "desig": "86"
+      },
+      "518": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "V0640",
+        "gl": "GJ 4.1A",
+        "hd": "HD\u2009123",
+        "hip": "HIP\u2009518",
+        "c": "Cas",
+        "desig": "V0640",
+        "gliese": "GJ4.1A"
+      },
+      "522": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "",
+        "gl": "GJ 4.2A",
+        "hd": "HD\u2009142",
+        "hip": "HIP\u2009522",
+        "gliese": "GJ4.2A",
+        "desig": "GJ4.2A"
+      },
+      "531": {
+        "name": "",
+        "bayer": "",
+        "flam": "10",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009144",
+        "hip": "HIP\u2009531",
+        "c": "Cas",
+        "desig": "10"
+      },
+      "544": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "V0439",
+        "gl": "GJ 5",
+        "hd": "HD\u2009166",
+        "hip": "HIP\u2009544",
+        "c": "And",
+        "desig": "V0439",
+        "gliese": "GJ5"
+      },
+      "635": {
+        "name": "",
+        "bayer": "",
+        "flam": "4",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009315",
+        "hip": "HIP\u2009635",
+        "c": "Cet",
+        "desig": "4"
+      },
+      "664": {
+        "name": "",
+        "bayer": "",
+        "flam": "5",
+        "var": "AP",
+        "gl": "",
+        "hd": "HD\u2009352",
+        "hip": "HIP\u2009664",
+        "c": "Psc",
+        "desig": "5"
+      },
+      "677": {
+        "name": "Alpheratz",
+        "bayer": "\u03b1",
+        "flam": "21",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009358",
+        "hip": "HIP\u2009677",
+        "c": "And",
+        "desig": "\u03b1"
+      },
+      "696": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "CF",
+        "gl": "",
+        "hd": "HD\u2009402",
+        "hip": "HIP\u2009696",
+        "c": "Cet",
+        "desig": "CF"
+      },
+      "699": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "",
+        "gl": "GJ 6",
+        "hd": "HD\u2009400",
+        "hip": "HIP\u2009699",
+        "gliese": "GJ6",
+        "desig": "GJ6"
+      },
+      "729": {
+        "name": "",
+        "bayer": "",
+        "flam": "87",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009448",
+        "hip": "HIP\u2009729",
+        "c": "Peg",
+        "desig": "87"
+      },
+      "746": {
+        "name": "Caph",
+        "bayer": "\u03b2",
+        "flam": "11",
+        "var": "",
+        "gl": "GJ 8",
+        "hd": "HD\u2009432",
+        "hip": "HIP\u2009746",
+        "c": "Cas",
+        "desig": "\u03b2",
+        "gliese": "GJ8"
+      },
+      "761": {
+        "name": "",
+        "bayer": "\u03ba1",
+        "flam": "",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009493",
+        "hip": "HIP\u2009761",
+        "c": "Scl",
+        "desig": "\u03ba1"
+      },
+      "765": {
+        "name": "",
+        "bayer": "\u03b5",
+        "flam": "",
+        "var": "",
+        "gl": "GJ 9.1",
+        "hd": "HD\u2009496",
+        "hip": "HIP\u2009765",
+        "c": "Phe",
+        "desig": "\u03b5",
+        "gliese": "GJ9.1"
+      },
+      "813": {
+        "name": "",
+        "bayer": "",
+        "flam": "34",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009560",
+        "hip": "HIP\u2009813",
+        "c": "Psc",
+        "desig": "34"
+      },
+      "814": {
+        "name": "",
+        "bayer": "\u03b33",
+        "flam": "",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009636",
+        "hip": "HIP\u2009814",
+        "c": "Oct",
+        "desig": "\u03b33"
+      },
+      "841": {
+        "name": "",
+        "bayer": "",
+        "flam": "22",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009571",
+        "hip": "HIP\u2009841",
+        "c": "And",
+        "desig": "22"
+      },
+      "910": {
+        "name": "",
+        "bayer": "",
+        "flam": "6",
+        "var": "",
+        "gl": "GJ 10",
+        "hd": "HD\u2009693",
+        "hip": "HIP\u2009910",
+        "c": "Cet",
+        "desig": "6",
+        "gliese": "GJ10"
+      },
+      "930": {
+        "name": "",
+        "bayer": "\u03ba2",
+        "flam": "",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009720",
+        "hip": "HIP\u2009930",
+        "c": "Scl",
+        "desig": "\u03ba2"
+      },
+      "950": {
+        "name": "",
+        "bayer": "\u03b8",
+        "flam": "",
+        "var": "",
+        "gl": "NN 3013",
+        "hd": "HD\u2009739",
+        "hip": "HIP\u2009950",
+        "c": "Scl",
+        "desig": "\u03b8"
+      },
+      "1067": {
+        "name": "Algenib",
+        "bayer": "\u03b3",
+        "flam": "88",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009886",
+        "hip": "HIP\u20091067",
+        "c": "Peg",
+        "desig": "\u03b3"
+      },
+      "1086": {
+        "name": "",
+        "bayer": "",
+        "flam": "23",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u2009905",
+        "hip": "HIP\u20091086",
+        "c": "And",
+        "desig": "23"
+      },
+      "1146": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "CR",
+        "gl": "",
+        "hd": "HD\u20091022",
+        "hip": "HIP\u20091146",
+        "c": "Tuc",
+        "desig": "CR"
+      },
+      "1158": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "AD",
+        "gl": "",
+        "hd": "HD\u20091014",
+        "hip": "HIP\u20091158",
+        "c": "Cet",
+        "desig": "AD"
+      },
+      "1168": {
+        "name": "",
+        "bayer": "\u03c7",
+        "flam": "89",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20091013",
+        "hip": "HIP\u20091168",
+        "c": "Peg",
+        "desig": "\u03c7"
+      },
+      "1170": {
+        "name": "",
+        "bayer": "",
+        "flam": "7",
+        "var": "AE",
+        "gl": "",
+        "hd": "HD\u20091038",
+        "hip": "HIP\u20091170",
+        "c": "Cet",
+        "desig": "7"
+      },
+      "1196": {
+        "name": "",
+        "bayer": "",
+        "flam": "35",
+        "var": "UU",
+        "gl": "",
+        "hd": "HD\u20091061",
+        "hip": "HIP\u20091196",
+        "c": "Psc",
+        "desig": "35"
+      },
+      "1233": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "V0348",
+        "gl": "",
+        "hd": "HD\u20091082",
+        "hip": "HIP\u20091233",
+        "c": "And",
+        "desig": "V0348"
+      },
+      "1292": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "",
+        "gl": "NN 3021",
+        "hd": "HD\u20091237",
+        "hip": "HIP\u20091292",
+        "desig": "HD\u20091237"
+      },
+      "1319": {
+        "name": "",
+        "bayer": "",
+        "flam": "36",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20091227",
+        "hip": "HIP\u20091319",
+        "c": "Psc",
+        "desig": "36"
+      },
+      "1325": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "BV",
+        "gl": "",
+        "hd": "HD\u20091228",
+        "hip": "HIP\u20091325",
+        "c": "Psc",
+        "desig": "BV"
+      },
+      "1349": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "",
+        "gl": "GJ 13",
+        "hd": "HD\u20091273",
+        "hip": "HIP\u20091349",
+        "gliese": "GJ13",
+        "desig": "GJ13"
+      },
+      "1366": {
+        "name": "",
+        "bayer": "\u03b8",
+        "flam": "24",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20091280",
+        "hip": "HIP\u20091366",
+        "c": "And",
+        "desig": "\u03b8"
+      },
+      "1392": {
+        "name": "",
+        "bayer": "",
+        "flam": "38",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20091317",
+        "hip": "HIP\u20091392",
+        "c": "Psc",
+        "desig": "38"
+      },
+      "1415": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "AO",
+        "gl": "",
+        "hd": "HD\u20091337",
+        "hip": "HIP\u20091415",
+        "c": "Cas",
+        "desig": "AO"
+      },
+      "1429": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "BW",
+        "gl": "",
+        "hd": "HD\u20091364",
+        "hip": "HIP\u20091429",
+        "c": "Psc",
+        "desig": "BW"
+      },
+      "1444": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "",
+        "gl": "Wo 9008",
+        "hd": "HD\u20091388",
+        "hip": "HIP\u20091444",
+        "gliese": "Wo9008",
+        "desig": "Wo9008"
+      },
+      "1473": {
+        "name": "",
+        "bayer": "\u03c3",
+        "flam": "25",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20091404",
+        "hip": "HIP\u20091473",
+        "c": "And",
+        "desig": "\u03c3"
+      },
+      "1499": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "",
+        "gl": "GJ 16.1",
+        "hd": "HD\u20091461",
+        "hip": "HIP\u20091499",
+        "gliese": "GJ16.1",
+        "desig": "GJ16.1"
+      },
+      "1501": {
+        "name": "",
+        "bayer": "",
+        "flam": "26",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20091438",
+        "hip": "HIP\u20091501",
+        "c": "And",
+        "desig": "26"
+      },
+      "1562": {
+        "name": "Deneb al' Shemali",
+        "bayer": "\u03b9",
+        "flam": "8",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20091522",
+        "hip": "HIP\u20091562",
+        "c": "Cet",
+        "desig": "\u03b9"
+      },
+      "1595": {
+        "name": "",
+        "bayer": "",
+        "flam": "40",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20091563",
+        "hip": "HIP\u20091595",
+        "c": "Psc",
+        "desig": "40"
+      },
+      "1599": {
+        "name": "",
+        "bayer": "\u03b6",
+        "flam": "",
+        "var": "",
+        "gl": "GJ 17",
+        "hd": "HD\u20091581",
+        "hip": "HIP\u20091599",
+        "c": "Tuc",
+        "desig": "\u03b6",
+        "gliese": "GJ17"
+      },
+      "1645": {
+        "name": "",
+        "bayer": "d",
+        "flam": "41",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20091635",
+        "hip": "HIP\u20091645",
+        "c": "Psc",
+        "desig": "d"
+      },
+      "1647": {
+        "name": "",
+        "bayer": "\u03c0",
+        "flam": "",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20091685",
+        "hip": "HIP\u20091647",
+        "c": "Tuc",
+        "desig": "\u03c0"
+      },
+      "1652": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "V0743",
+        "gl": "",
+        "hd": "HD\u20091613",
+        "hip": "HIP\u20091652",
+        "c": "Cas",
+        "desig": "V0743"
+      },
+      "1686": {
+        "name": "",
+        "bayer": "\u03c1",
+        "flam": "27",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20091671",
+        "hip": "HIP\u20091686",
+        "c": "And",
+        "desig": "\u03c1"
+      },
+      "1708": {
+        "name": "",
+        "bayer": "\u03b9",
+        "flam": "",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20091737",
+        "hip": "HIP\u20091708",
+        "c": "Scl",
+        "desig": "\u03b9"
+      },
+      "1728": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "T",
+        "gl": "",
+        "hd": "HD\u20091760",
+        "hip": "HIP\u20091728",
+        "c": "Cet",
+        "desig": "T"
+      },
+      "1772": {
+        "name": "",
+        "bayer": "",
+        "flam": "42",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20091796",
+        "hip": "HIP\u20091772",
+        "c": "Psc",
+        "desig": "42"
+      },
+      "1803": {
+        "name": "",
+        "bayer": "",
+        "flam": "9",
+        "var": "BE",
+        "gl": "GJ 17.3",
+        "hd": "HD\u20091835",
+        "hip": "HIP\u20091803",
+        "c": "Cet",
+        "desig": "9",
+        "gliese": "GJ17.3"
+      },
+      "1830": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "AV",
+        "gl": "",
+        "hd": "HD\u20091909",
+        "hip": "HIP\u20091830",
+        "c": "Scl",
+        "desig": "AV"
+      },
+      "1921": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "V0746",
+        "gl": "",
+        "hd": "HD\u20091976",
+        "hip": "HIP\u20091921",
+        "c": "Cas",
+        "desig": "V0746"
+      },
+      "1960": {
+        "name": "",
+        "bayer": "",
+        "flam": "12",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20092011",
+        "hip": "HIP\u20091960",
+        "c": "Cas",
+        "desig": "12"
+      },
+      "2006": {
+        "name": "",
+        "bayer": "",
+        "flam": "44",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20092114",
+        "hip": "HIP\u20092006",
+        "c": "Psc",
+        "desig": "44"
+      },
+      "2021": {
+        "name": "",
+        "bayer": "\u03b2",
+        "flam": "",
+        "var": "",
+        "gl": "GJ 19",
+        "hd": "HD\u20092151",
+        "hip": "HIP\u20092021",
+        "c": "Hyi",
+        "desig": "\u03b2",
+        "gliese": "GJ19"
+      },
+      "2025": {
+        "name": "",
+        "bayer": "",
+        "flam": "45",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20092140",
+        "hip": "HIP\u20092025",
+        "c": "Psc",
+        "desig": "45"
+      },
+      "2072": {
+        "name": "",
+        "bayer": "\u03ba",
+        "flam": "",
+        "var": "",
+        "gl": "GJ 20",
+        "hd": "HD\u20092262",
+        "hip": "HIP\u20092072",
+        "c": "Phe",
+        "desig": "\u03ba",
+        "gliese": "GJ20"
+      },
+      "2080": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "CF",
+        "gl": "",
+        "hd": "HD\u20092235",
+        "hip": "HIP\u20092080",
+        "c": "Psc",
+        "desig": "CF"
+      },
+      "2081": {
+        "name": "Ankaa",
+        "bayer": "\u03b1",
+        "flam": "",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20092261",
+        "hip": "HIP\u20092081",
+        "c": "Phe",
+        "desig": "\u03b1"
+      },
+      "2100": {
+        "name": "",
+        "bayer": "",
+        "flam": "10",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20092273",
+        "hip": "HIP\u20092100",
+        "c": "Cet",
+        "desig": "10"
+      },
+      "2210": {
+        "name": "",
+        "bayer": "\u03b7",
+        "flam": "",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20092429",
+        "hip": "HIP\u20092210",
+        "c": "Scl",
+        "desig": "\u03b7"
+      },
+      "2213": {
+        "name": "",
+        "bayer": "",
+        "flam": "46",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20092410",
+        "hip": "HIP\u20092213",
+        "c": "Psc",
+        "desig": "46"
+      },
+      "2219": {
+        "name": "",
+        "bayer": "",
+        "flam": "47",
+        "var": "TV",
+        "gl": "",
+        "hd": "HD\u20092411",
+        "hip": "HIP\u20092219",
+        "c": "Psc",
+        "desig": "47"
+      },
+      "2224": {
+        "name": "",
+        "bayer": "",
+        "flam": "48",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20092436",
+        "hip": "HIP\u20092224",
+        "c": "Psc",
+        "desig": "48"
+      },
+      "2243": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "GR",
+        "gl": "",
+        "hd": "HD\u20092453",
+        "hip": "HIP\u20092243",
+        "c": "And",
+        "desig": "GR"
+      },
+      "2353": {
+        "name": "",
+        "bayer": "",
+        "flam": "12",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20092637",
+        "hip": "HIP\u20092353",
+        "c": "Cet",
+        "desig": "12"
+      },
+      "2355": {
+        "name": "",
+        "bayer": "",
+        "flam": "28",
+        "var": "GN",
+        "gl": "",
+        "hd": "HD\u20092628",
+        "hip": "HIP\u20092355",
+        "c": "And",
+        "desig": "28"
+      },
+      "2388": {
+        "name": "",
+        "bayer": "",
+        "flam": "",
+        "var": "BB",
+        "gl": "",
+        "hd": "HD\u20092724",
+        "hip": "HIP\u20092388",
+        "c": "Phe",
+        "desig": "BB"
+      },
+      "2472": {
+        "name": "",
+        "bayer": "\u03bb1",
+        "flam": "",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20092834",
+        "hip": "HIP\u20092472",
+        "c": "Phe",
+        "desig": "\u03bb1"
+      },
+      "2474": {
+        "name": "",
+        "bayer": "",
+        "flam": "13",
+        "var": "",
+        "gl": "",
+        "hd": "HD\u20092729",
+        "hip": "HIP\u20092474",
+        "c": "Cas",
+        "desig": "13"
+      }
+    },
+    "rows_or_keys": 4774
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/data/constellations.json",
+    "nbytes": 49332,
+    "sha256": "3649b9d93cc787e3816a06509a7dde895673717478c451f87f00c62c638ab93f",
+    "schema": {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "id": "And",
+          "properties": {
+            "name": "Andromeda",
+            "desig": "And",
+            "gen": "Andromedae",
+            "rank": "1",
+            "en": "Andromeda",
+            "lat": "Andromeda",
+            "ar": "\u0627\u0644\u0645\u0631\u0623\u0629\u2005\u0627\u0644\u0645\u0633\u0644\u0633\u0644\u0629",
+            "cn": "\u4ed9\u5973\u5ea7",
+            "cz": "Andromeda",
+            "ir": "\u0632\u0646\u2005\u0628\u0647\u2005\u0632\u0646\u062c\u06cc\u0631\u2005\u0628\u0633\u062a\u0647",
+            "ee": "Andromeeda",
+            "fi": "Andromeda",
+            "fr": "Androm\u00e8de",
+            "de": "Andromeda",
+            "gr": "\u0391\u03bd\u03b4\u03c1\u03bf\u03bc\u03ad\u03b4\u03b1",
+            "it": "Andromeda",
+            "jp": "\u30a2\u30f3\u30c9\u30ed\u30e1\u30c0\u5ea7",
+            "kr": "\uc548\ub4dc\ub85c\uba54\ub2e4\uc790\ub9ac",
+            "in": "\u0926\u0947\u0935\u092f\u093e\u0928\u0940",
+            "ru": "\u0410\u043d\u0434\u0440\u043e\u043c\u0435\u0434\u0430",
+            "es": "Andr\u00f3meda",
+            "tr": "Andromeda",
+            "il": "\u05d0\u05e0\u05d3\u05e8\u05d5\u05de\u05d3\u05d4",
+            "display": [
+              "-350"
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              "0.75"
+            ]
+          }
+        }
+      ]
+    },
+    "rows_or_keys": 2
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/data/stars.6.json",
+    "nbytes": 656721,
+    "sha256": "0297b8fa3adfbce1dc26566f61c4abcc1df4f29c6a28729ca06b56d1c6d25602",
+    "schema": {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "id": "88",
+          "properties": {
+            "mag": "5.71",
+            "bv": "0.911"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              "0.2691"
+            ]
+          }
+        }
+      ]
+    },
+    "rows_or_keys": 2
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/data/mw.json",
+    "nbytes": 534254,
+    "sha256": "aee221a7a0e879418e685de00c3e68fbdfac5667c0a8aab74929ef9cf4aab4fb",
+    "schema": {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "id": "ol1",
+          "properties": {},
+          "geometry": {
+            "type": "MultiPolygon",
+            "coordinates": [
+              [
+                [
+                  [
+                    "97.754"
+                  ]
+                ]
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    "rows_or_keys": 2
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/data/constellations.lines.json",
+    "nbytes": 27136,
+    "sha256": "294f66bef5d5cf50b1e17f16d2efa1d97a15131612c68dd935adef6e7373e13c",
+    "schema": {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "id": "And",
+          "properties": {
+            "rank": "1"
+          },
+          "geometry": {
+            "type": "MultiLineString",
+            "coordinates": [
+              [
+                [
+                  "30.9748"
+                ]
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    "rows_or_keys": 2
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/data/dsos.bright.json",
+    "nbytes": 7398,
+    "sha256": "aac878afbd5fadd163896ae1dc480c7bea0395072bc54e8c2fb66df368a4da70",
+    "schema": {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "id": "Cr140",
+          "properties": {
+            "name": "Collinder 140",
+            "desig": "Cr 140",
+            "type": "oc",
+            "mag": "3.5",
+            "dim": "60"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              "111.12"
+            ]
+          }
+        }
+      ]
+    },
+    "rows_or_keys": 2
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/data/constellations.bounds.json",
+    "nbytes": 40714,
+    "sha256": "f2e2687af6b20b24567879f838c21874d412efcc93ecc1966be07e78431cc196",
+    "schema": {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "id": "And",
+          "properties": {
+            "rank": "1"
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  "-15.5347"
+                ]
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    "rows_or_keys": 2
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/data/planets.json",
+    "nbytes": 3884,
+    "sha256": "1ee5f3932d65d78e69cdaa09bebc81b68b612f02b489d654923adee4b8a4bca9",
+    "schema": {
+      "mer": {
+        "name": "Mercury",
+        "map": "mercurymap.jpg",
+        "trajectory": "True",
+        "H": "-0.665",
+        "elements": [
+          {
+            "a": "0.38709927",
+            "e": "0.20563593",
+            "i": "7.00497902",
+            "L": "252.2503235",
+            "W": "77.45779628",
+            "N": "48.33076593",
+            "da": "3.7e-07",
+            "de": "1.906e-05",
+            "di": "-0.00594749",
+            "dL": "149472.67411175",
+            "dW": "0.16047689",
+            "dN": "-0.12534081",
+            "ep": "2000-01-01"
+          }
+        ]
+      },
+      "ven": {
+        "name": "Venus",
+        "map": "venusmap.jpg",
+        "trajectory": "True",
+        "H": "-4.33",
+        "elements": [
+          {
+            "a": "0.72333566",
+            "e": "0.00677672",
+            "i": "3.39467605",
+            "L": "181.9790995",
+            "W": "131.60246718",
+            "N": "76.67984255",
+            "da": "3.9e-06",
+            "de": "-4.107e-05",
+            "di": "-0.0007889",
+            "dL": "58517.81538729",
+            "dW": "0.00268329",
+            "dN": "-0.27769418",
+            "ep": "2000-01-01"
+          }
+        ]
+      },
+      "ter": {
+        "name": "Earth",
+        "map": "earthmapclouds.jpg",
+        "trajectory": "True",
+        "H": "-3.79",
+        "elements": [
+          {
+            "a": "1.00000261",
+            "e": "0.01671123",
+            "i": "-1.531e-05",
+            "L": "100.46457166",
+            "W": "102.93768193",
+            "N": "0",
+            "da": "5.62e-06",
+            "de": "-4.392e-05",
+            "di": "-0.01294668",
+            "dL": "35999.37244981",
+            "dW": "0.32327364",
+            "dN": "0",
+            "ep": "2000-01-01"
+          }
+        ]
+      },
+      "mar": {
+        "name": "Mars",
+        "map": "marsmap.jpg",
+        "trajectory": "True",
+        "H": "-1.59",
+        "elements": [
+          {
+            "a": "1.52371034",
+            "e": "0.0933941",
+            "i": "1.84969142",
+            "L": "-4.55343205",
+            "W": "-23.94362959",
+            "N": "49.55953891",
+            "da": "1.847e-05",
+            "de": "7.882e-05",
+            "di": "-0.00813131",
+            "dL": "19140.30268499",
+            "dW": "0.44441088",
+            "dN": "-0.29257343",
+            "ep": "2000-01-01"
+          }
+        ]
+      },
+      "jup": {
+        "name": "Jupiter",
+        "map": "jupitermap.jpg",
+        "ring": {
+          "map": "jupiterrings.gif",
+          "radius": "2.5",
+          "opacity": "0.5"
+        },
+        "trajectory": "True",
+        "H": "-9.42",
+        "elements": [
+          {
+            "a": "5.202887",
+            "e": "0.04838624",
+            "i": "1.30439695",
+            "L": "34.39644051",
+            "W": "14.72847983",
+            "N": "100.47390909",
+            "da": "-0.00011607",
+            "de": "-0.00013253",
+            "di": "-0.00183714",
+            "dL": "3034.74612775",
+            "dW": "0.21252668",
+            "dN": "0.20469106",
+            "ep": "2000-01-01"
+          }
+        ]
+      },
+      "sat": {
+        "name": "Saturn",
+        "map": "saturnmap.jpg",
+        "ring": {
+          "map": "saturnrings.gif",
+          "radius": "2.3",
+          "opacity": "0.9"
+        },
+        "trajectory": "True",
+        "H": "-8.94",
+        "elements": [
+          {
+            "a": "9.53667594",
+            "e": "0.05386179",
+            "i": "2.48599187",
+            "L": "49.95424423",
+            "W": "92.59887831",
+            "N": "113.66242448",
+            "da": "-0.0012506",
+            "de": "-0.00050991",
+            "di": "0.00193609",
+            "dL": "1222.49362201",
+            "dW": "-0.41897216",
+            "dN": "-0.28867794",
+            "ep": "2000-01-01"
+          }
+        ]
+      },
+      "ura": {
+        "name": "Uranus",
+        "map": "uranusmap.jpg",
+        "ring": {
+          "map": "uranusrings.gif",
+          "radius": "2.1",
+          "opacity": "0.6"
+        },
+        "trajectory": "True",
+        "H": "-7.16",
+        "elements": [
+          {
+            "a": "19.18916464",
+            "e": "0.04725744",
+            "i": "0.77263783",
+            "L": "313.23810451",
+            "W": "170.9542763",
+            "N": "74.01692503",
+            "da": "-0.00196176",
+            "de": "-4.397e-05",
+            "di": "-0.00242939",
+            "dL": "428.48202785",
+            "dW": "0.40805281",
+            "dN": "0.04240589",
+            "ep": "2000-01-01"
+          }
+        ]
+      },
+      "nep": {
+        "name": "Neptune",
+        "map": "neptunemap.jpg",
+        "ring": {
+          "map": "neptunerings.gif",
+          "radius": "2.5",
+          "opacity": "0.8"
+        },
+        "trajectory": "True",
+        "H": "-6.86",
+        "elements": [
+          {
+            "a": "30.06992276",
+            "e": "0.00859048",
+            "i": "1.77004347",
+            "L": "-55.12002969",
+            "W": "44.96476227",
+            "N": "131.78422574",
+            "da": "0.00026291",
+            "de": "5.105e-05",
+            "di": "0.00035372",
+            "dL": "218.45945325",
+            "dW": "-0.32241464",
+            "dN": "-0.00508664",
+            "ep": "2000-01-01"
+          }
+        ]
+      },
+      "plu": {
+        "name": "Pluto",
+        "map": "plutomap.jpg",
+        "trajectory": "True",
+        "H": "-0.614",
+        "elements": [
+          {
+            "a": "39.48211675",
+            "e": "0.2488273",
+            "i": "17.14001206",
+            "L": "238.92903833",
+            "W": "224.06891629",
+            "N": "110.30393684",
+            "da": "-0.00031596",
+            "de": "5.17e-05",
+            "di": "4.818e-05",
+            "dL": "145.20780515",
+            "dW": "-0.04062942",
+            "dN": "-0.01183482",
+            "ep": "2000-01-01"
+          }
+        ]
+      },
+      "eri": {
+        "desig": "136199",
+        "name": "Eris",
+        "H": "-1.2",
+        "elements": [
+          {
+            "a": "67.7302788",
+            "e": "0.4415085",
+            "i": "44.09828",
+            "M": "204.34837",
+            "w": "151.08738",
+            "N": "35.92742",
+            "n": "0.00176819",
+            "ep": "2015-06-27"
+          }
+        ]
+      },
+      "mak": {
+        "desig": "136472",
+        "name": "Makemake",
+        "H": "-0.3",
+        "elements": [
+          {
+            "a": "45.739408",
+            "e": "0.1549633",
+            "i": "29.00294",
+            "M": "157.21189",
+            "w": "297.06081",
+            "N": "79.41278",
+            "n": "0.00318617",
+            "ep": "2015-06-27"
+          }
+        ]
+      },
+      "hau": {
+        "desig": "136108",
+        "name": "Haumea",
+        "H": "0.1",
+        "elements": [
+          {
+            "a": "43.2669406",
+            "e": "0.1902225",
+            "i": "28.19317",
+            "M": "210.0836",
+            "w": "239.91753",
+            "N": "121.81135",
+            "n": "0.00346314",
+            "ep": "2015-06-27"
+          }
+        ]
+      },
+      "ves": {
+        "desig": "4",
+        "name": "Vesta",
+        "map": "vestamap.jpg",
+        "H": "3.20",
+        "elements": [
+          {
+            "a": "2.3619132",
+            "e": "0.0888337",
+            "i": "7.1401",
+            "M": "75.17272",
+            "w": "151.1884",
+            "N": "103.84968",
+            "n": "0.27152397",
+            "ep": "2015-06-27"
+          }
+        ]
+      },
+      "cer": {
+        "desig": "1",
+        "name": "Ceres",
+        "map": "ceresmap.jpg",
+        "H": "3.34",
+        "elements": [
+          {
+            "a": "2.7679724",
+            "e": "0.0757825",
+            "i": "10.5923",
+            "M": "138.66222",
+            "w": "72.6541",
+            "N": "80.3272",
+            "n": "0.21402349",
+            "ep": "2015-06-27"
+          }
+        ]
+      }
+    },
+    "rows_or_keys": 14
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/queryDB.php?typeOfRequest=SourceList&catalog=4FGL",
+    "nbytes": 2595234,
+    "sha256": "f00ab05e89dfadf270ff8ee43b28718f232abf84db87280f15d2d4cddbce3b46",
+    "schema": [
+      {
+        "Source_Name": "4FGL J0000.3-7355",
+        "ASSOC_FGL": "",
+        "ASSOC1": "",
+        "RAJ2000": "0.098",
+        "DEJ2000": "-73.922",
+        "GLON": "307.709",
+        "GLAT": "-42.730",
+        "Signif_Avg": "6.9052067",
+        "Flux1000": "1.420555e-10",
+        "Unc_Flux1000": "2.6055654e-11",
+        "Energy_Flux100": "1.6224615e-12",
+        "Unc_Energy_Flux100": "3.1334153e-13",
+        "SpectrumType": "PowerLaw",
+        "PL_Index": "2.194066",
+        "LP_Index": "2.3001616",
+        "PLEC_Index": "1.9426928",
+        "Variability_Index": "14.022921",
+        "CLASS1": ""
+      }
+    ],
+    "rows_or_keys": 5788
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/queryDB.php?typeOfRequest=lightCurveData&source_name=4FGL%2520J1555.7%252B1111&cadence=weekly&flux_type=photon&index_type=fixed&ts_min=4",
+    "nbytes": 192,
+    "sha256": "6452fda64b760e7b5f7dd0bc66eb4645911f4143fad6ae620325dc2d42aa5d97",
+    "schema": {
+      "ts": [],
+      "flux": [],
+      "flux_upper_limits": [],
+      "flux_error": [],
+      "photon_index": [],
+      "photon_index_interval": [],
+      "fit_tolerance": [],
+      "fit_convergence": [],
+      "dlogl": [],
+      "EG": [],
+      "GAL": [],
+      "bin_id": []
+    },
+    "rows_or_keys": 12
+  },
+  {
+    "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/queryDB.php?typeOfRequest=sourceData&source_name=4FGL%2520J1555.7%252B1111",
+    "nbytes": 11,
+    "sha256": "0610c6e962ec44fa97b0eda11f1b020e9f99a4ed5c0c99cc00d11ae25ee0a1bf",
+    "schema": [],
+    "rows_or_keys": 0
+  }
+]
