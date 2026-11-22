@@ -1,0 +1,558 @@
+{
+  "comparison": {
+    "all_recorded": {
+      "fisher_two_sided_descriptive_p": 0.08284703801945183,
+      "flank_trial_fraction": {
+        "cp95": [
+          0.027751507422793194,
+          0.3358891375371209
+        ],
+        "fraction": 0.13043478260869565,
+        "k": 3,
+        "n": 23
+      },
+      "trigger_then_pooled_flanks_by_trial_and_csc": [
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          20
+        ]
+      ],
+      "trigger_trial_fraction": {
+        "cp95": [
+          0.11811724875702521,
+          0.8818827512429748
+        ],
+        "fraction": 0.5,
+        "k": 3,
+        "n": 6
+      }
+    },
+    "common_geometry_supported": {
+      "fisher_two_sided_descriptive_p": null,
+      "flank_trial_fraction": {
+        "cp95": [
+          0.043271868292741676,
+          0.7772219044964879
+        ],
+        "fraction": 0.3333333333333333,
+        "k": 2,
+        "n": 6
+      },
+      "trigger_then_pooled_flanks_by_trial_and_csc": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "trigger_trial_fraction": {
+        "cp95": [
+          null,
+          null
+        ],
+        "fraction": null,
+        "k": 0,
+        "n": 0
+      }
+    }
+  },
+  "csc_master": {
+    "acis_num": "1",
+    "conf_flag": "F",
+    "dec": "27.8554526909568",
+    "err_ellipse_ang": "91.06514118569999",
+    "err_ellipse_r0": "1.6653732604254394",
+    "err_ellipse_r1": "0.9349722806963588",
+    "flux_aper_b": "0.0",
+    "hrc_num": "0",
+    "likelihood_class": "TRUE",
+    "name": "2CXO J125704.0+275119",
+    "ra": "194.2670023851923",
+    "sat_src_flag": "F",
+    "significance": "7.913316320515456",
+    "streak_src_flag": "F"
+  },
+  "csc_receipts": {
+    "detections": {
+      "archived_body": "pointed_visits/45011722864-1/history/target-01/csc_detections.xml.gz",
+      "bytes": 4817,
+      "git_blob": "ea1a6ccae7faeb2c52a0b325dce46c0de972ba26",
+      "gzip_sha256": "4b2df4d4959b9dee58cec4c2c6a3919a5295aeec19cc6a24896cd30e21b9a274",
+      "last_modified": null,
+      "raw_entity_gzip": "csc_detections.xml.gz",
+      "receipt": "pointed_visits/45011722864-1/history/target-01/csc_detections.json",
+      "receipt_sha256": "5cb106a02e6cdfa10d7c8c3161a152762b8d48357415e9d0ccd1792ef07df08a",
+      "resolved_url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+DISTINCT+m.name%2Cm.ra%2Cm.dec%2Ca.match_type%2Co.obsid%2Co.obi%2Co.region_id%2Co.gti_obs%2Co.gti_end%2Co.livetime%2Co.detector%2Co.flux_significance_b%2Co.src_cnts_aper_b%2Co.src_rate_aper_b%2Co.flux_aper_b%2Co.var_index_b%2Co.conf_code%2Co.streak_src_flag+FROM+master_source+m%2C+master_stack_assoc+a%2C+stack_source+s%2C+stack_observation_assoc+b%2C+observation_source+o+WHERE+m.name%3Da.name+AND+s.detect_stack_id%3Da.detect_stack_id+AND+s.region_id%3Da.region_id+AND+s.detect_stack_id%3Db.detect_stack_id+AND+s.region_id%3Db.region_id+AND+o.obsid%3Db.obsid+AND+o.obi%3Db.obi+AND+o.region_id%3Db.region_id+AND+%28m.dec+BETWEEN+27.851729206+AND+27.860062739%29+AND+%28m.ra+BETWEEN+194.264336302+AND+194.273762011%29+AND+dbo.cone_distance%28m.ra%2Cm.dec%2C194.2690491569%2C27.8558959722%29+%3C%3D+0.250000000000&coordFormat=decimal&floatFormat=native&outputFormat=votable",
+      "retrieved_utc": "2026-11-22T10:44:26.679839+00:00",
+      "sha256": "aeb86b0897a0809b6bbd49546d6b9f39c2de78143aab63ab5f22438a42505b26",
+      "url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+DISTINCT+m.name%2Cm.ra%2Cm.dec%2Ca.match_type%2Co.obsid%2Co.obi%2Co.region_id%2Co.gti_obs%2Co.gti_end%2Co.livetime%2Co.detector%2Co.flux_significance_b%2Co.src_cnts_aper_b%2Co.src_rate_aper_b%2Co.flux_aper_b%2Co.var_index_b%2Co.conf_code%2Co.streak_src_flag+FROM+master_source+m%2C+master_stack_assoc+a%2C+stack_source+s%2C+stack_observation_assoc+b%2C+observation_source+o+WHERE+m.name%3Da.name+AND+s.detect_stack_id%3Da.detect_stack_id+AND+s.region_id%3Da.region_id+AND+s.detect_stack_id%3Db.detect_stack_id+AND+s.region_id%3Db.region_id+AND+o.obsid%3Db.obsid+AND+o.obi%3Db.obi+AND+o.region_id%3Db.region_id+AND+%28m.dec+BETWEEN+27.851729206+AND+27.860062739%29+AND+%28m.ra+BETWEEN+194.264336302+AND+194.273762011%29+AND+dbo.cone_distance%28m.ra%2Cm.dec%2C194.2690491569%2C27.8558959722%29+%3C%3D+0.250000000000&coordFormat=decimal&floatFormat=native&outputFormat=votable"
+    },
+    "master": {
+      "archived_body": "pointed_visits/45011722864-1/history/target-01/csc_master.xml.gz",
+      "bytes": 3579,
+      "git_blob": "2e8e93680c79c269ec899e33846195b70db1b9f1",
+      "gzip_sha256": "be725f5eb301f5c08cd42aa1f444afa36662841a4283d3e0cb0576d366f4e99d",
+      "last_modified": null,
+      "raw_entity_gzip": "csc_master.xml.gz",
+      "receipt": "pointed_visits/45011722864-1/history/target-01/csc_master.json",
+      "receipt_sha256": "397e62a0040962024106a7b2faa60ca58071815bc7459f09d4f946b06d11f477",
+      "resolved_url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+27.851729206+AND+27.860062739%29+AND+%28m.ra+BETWEEN+194.264336302+AND+194.273762011%29+AND+dbo.cone_distance%28m.ra%2Cm.dec%2C194.2690491569%2C27.8558959722%29+%3C%3D+0.250000000000&coordFormat=decimal&floatFormat=native&outputFormat=votable",
+      "retrieved_utc": "2026-11-22T10:44:25.990023+00:00",
+      "sha256": "564820d4602669a3f4af0f103e910f43f9b313586beff4cbd8fbd649d7fe3375",
+      "url": "https://cda.cfa.harvard.edu/csccli/getProperties?version=rel2.2&query=SELECT+m.name%2Cm.ra%2Cm.dec%2Cm.err_ellipse_r0%2Cm.err_ellipse_r1%2Cm.err_ellipse_ang%2Cm.significance%2Cm.likelihood_class%2Cm.conf_flag%2Cm.sat_src_flag%2Cm.streak_src_flag%2Cm.acis_num%2Cm.hrc_num%2Cm.flux_aper_b+FROM+master_source+m+WHERE+%28m.dec+BETWEEN+27.851729206+AND+27.860062739%29+AND+%28m.ra+BETWEEN+194.264336302+AND+194.273762011%29+AND+dbo.cone_distance%28m.ra%2Cm.dec%2C194.2690491569%2C27.8558959722%29+%3C%3D+0.250000000000&coordFormat=decimal&floatFormat=native&outputFormat=votable"
+    }
+  },
+  "geometry": {
+    "annulus_px": [
+      20.757030673134825,
+      34.10083610586435
+    ],
+    "arcsec_per_sky_px_range": [
+      0.49199513225347863,
+      0.49199759447201985
+    ],
+    "core_radius_px": 6.671902716364765,
+    "csc_xy": [
+      5268.510691413423,
+      4708.247485830311
+    ],
+    "event_wcs_header": "TCRPX11 =               4096.5 / Pixel coordinate of reference point            \nTCRPX12 =               4096.5 / Pixel coordinate of reference point            \nTCDLT11 = -0.00013666666666667 / [deg] Coordinate increment at reference point  \nTCDLT12 =  0.00013666666666667 / [deg] Coordinate increment at reference point  \nTCUNI11 = 'deg'                / Units of coordinate increment and value        \nTCUNI12 = 'deg'                / Units of coordinate increment and value        \nTCTYP11 = 'RA---TAN'           / Right ascension, gnomonic projection           \nTCTYP12 = 'DEC--TAN'           / Declination, gnomonic projection               \nTCRVL11 =       194.4481685192 / [deg] Coordinate value at reference point      \nTCRVL12 =      27.771965581297 / [deg] Coordinate value at reference point      \nLONP11  =                180.0 / [deg] Native longitude of celestial pole       \nLATP11  =      27.771965581297 / [deg] Native latitude of celestial pole        \nMJDREF  =                  0.0 / [d] MJD of fiducial time                       \nRADE11  = 'ICRS'               / Equatorial coordinate system                   ",
+    "extraction_circle": {
+      "center_icrs_deg": [
+        194.2692418962891,
+        27.85588315646475
+      ],
+      "center_in_csc_ellipse": false,
+      "csc_center_in_circle": true,
+      "csc_ellipse_intersects_circle": true,
+      "distance_to_filled_csc_ellipse_arcsec": 5.665242852549245,
+      "ellipse_intersection_over_scale_range": [
+        true,
+        true
+      ],
+      "radius_arcsec": 8.26551822185844,
+      "radius_range_arcsec": [
+        8.26551822185844,
+        8.265559587129932
+      ],
+      "separation_arcsec": 7.2945565452733705
+    },
+    "localization_circle": {
+      "center_icrs_deg": [
+        194.26904915692327,
+        27.85589597221555
+      ],
+      "center_in_csc_ellipse": false,
+      "csc_center_in_circle": false,
+      "csc_ellipse_intersects_circle": false,
+      "distance_to_filled_csc_ellipse_arcsec": 5.086979418229358,
+      "radius_arcsec": 2.6805031863960767,
+      "separation_arcsec": 6.707192675312663
+    },
+    "midpoint_xy": [
+      5261.2643789098365,
+      4709.811731196405
+    ],
+    "original_radius_px": 16.799999999999997,
+    "separation_px": 14.826450480810589,
+    "trial_xy": [
+      5254.01806640625,
+      4711.3759765625
+    ],
+    "wcs_origin": 1
+  },
+  "heldout_selection_changed": false,
+  "input": {
+    "ascdsver": "10.14.1.1",
+    "bytes": 13491620,
+    "caldbver": "4.12.2",
+    "cycle": "P",
+    "dec_nom_deg": 27.771965581297,
+    "dec_targ_deg": 27.769461,
+    "filename": "acisf23779N002_evt2.fits.gz",
+    "fits_sha256": "010268ef63dc8f0806205d55616b9dd88b42cec90f9f3f849f8753c637f96075",
+    "grating": "NONE",
+    "index_sha256": "4923bef1e26e3a9d415ec717b66f499444fb375fdbc0e7608f0c48813862702e",
+    "index_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/23779/primary/",
+    "last_modified": "Fri, 29 Aug 2025 22:38:30 GMT",
+    "obsid": 23779,
+    "ra_nom_deg": 194.4481685192,
+    "ra_targ_deg": 194.449417,
+    "readmode": "TIMED",
+    "resolved_url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/23779/primary/acisf23779N002_evt2.fits.gz",
+    "retrieved_utc": "2026-11-22T09:47:49.847434+00:00",
+    "revision": 2,
+    "rows": 345490,
+    "sha256": "49987e33e7bc66ca583baa1b7aab2ea59c067b58889807ec78dd851fd752585b",
+    "tstart": 773298337.45017,
+    "tstop": 773352621.45358,
+    "url": "https://cxc.cfa.harvard.edu/cdaftp/byobsid/9/23779/primary/acisf23779N002_evt2.fits.gz"
+  },
+  "inventory_sha256": "172b673a39b7c2bca8b82294563a62a7cb5807fdcc393a8da27d31e56f3c518e",
+  "live_fraction": 0.9869342638107088,
+  "obsid": 23779,
+  "original_trigger_vet_status": "ambiguous",
+  "phases": {
+    "after": {
+      "common_geometry": {
+        "accepted_bins": [
+          [
+            773321612.1095258,
+            773321671.9046935
+          ],
+          [
+            773322210.0612028,
+            773322389.4467059
+          ],
+          [
+            773322927.6032152,
+            773323106.9887183
+          ],
+          [
+            773323585.3500599,
+            773323824.5307307
+          ]
+        ],
+        "csc_core": 1,
+        "neighborhood_quadrant_counts": [
+          11,
+          8,
+          9,
+          8
+        ],
+        "reason": null,
+        "rejected_bins": {
+          "node_boundary": 29
+        },
+        "shared_annulus": 0,
+        "supported_live_s": 649.15289801544,
+        "trial_core": 0
+      },
+      "csc_core": 4,
+      "gt_live_s": 2360.555992516028,
+      "met_s": [
+        773321612.1095258,
+        773324003.9162338
+      ],
+      "nominal_background_per_core": 0.30405405405405406,
+      "original_aperture": 7,
+      "original_distances_to_csc": {
+        "max_px": 23.437972436804955,
+        "median_px": 14.860336589861959,
+        "min_px": 3.4299151473667777
+      },
+      "original_distances_to_trial": {
+        "max_px": 16.42794046804473,
+        "median_px": 9.257433662228376,
+        "min_px": 8.06222240945981
+      },
+      "original_photons_in_csc_core": 2,
+      "original_photons_in_trial_core": 0,
+      "original_photons_nearer_csc": 3,
+      "original_photons_outside_both_cores": 5,
+      "shared_annulus": 5,
+      "trial_core": 0,
+      "trial_fraction_among_both_cores": {
+        "cp95": [
+          0.0,
+          0.6023646356164746
+        ],
+        "fraction": 0.0,
+        "k": 0,
+        "n": 4
+      }
+    },
+    "before": {
+      "common_geometry": {
+        "accepted_bins": [
+          [
+            773299593.3017662,
+            773299713.295087
+          ],
+          [
+            773300253.2650305,
+            773300373.2583513
+          ],
+          [
+            773300973.2249552,
+            773301093.218276
+          ],
+          [
+            773301693.1848799,
+            773301813.1782007
+          ],
+          [
+            773302413.1448046,
+            773302533.1381253
+          ],
+          [
+            773303133.1047293,
+            773303253.09805
+          ],
+          [
+            773303853.064654,
+            773303913.0613143
+          ],
+          [
+            773304573.0245787,
+            773304693.0178994
+          ],
+          [
+            773305232.9878429,
+            773305352.9811637
+          ],
+          [
+            773305952.9477676,
+            773306072.9410884
+          ],
+          [
+            773306612.911032,
+            773306792.9010131
+          ],
+          [
+            773307332.8709567,
+            773307512.8609378
+          ],
+          [
+            773308052.8308814,
+            773308172.8242021
+          ],
+          [
+            773308772.790806,
+            773308952.7807872
+          ],
+          [
+            773309492.7507308,
+            773309612.7440515
+          ],
+          [
+            773310212.7106555,
+            773310332.7039762
+          ],
+          [
+            773310932.6705801,
+            773311052.6639009
+          ],
+          [
+            773311592.6338444,
+            773311772.6238256
+          ],
+          [
+            773312312.5937691,
+            773312432.5870899
+          ],
+          [
+            773313032.5536938,
+            773313152.5470146
+          ],
+          [
+            773313692.5169581,
+            773313872.5069393
+          ],
+          [
+            773314412.4768828,
+            773314592.466864
+          ],
+          [
+            773315132.4368075,
+            773315312.4267887
+          ],
+          [
+            773315852.3967322,
+            773315972.3900529
+          ],
+          [
+            773316512.3599964,
+            773316692.3499776
+          ],
+          [
+            773317232.3199211,
+            773317412.3099023
+          ],
+          [
+            773317952.2798458,
+            773318132.269827
+          ],
+          [
+            773318672.2397705,
+            773318852.2297517
+          ],
+          [
+            773319392.1996952,
+            773319572.1896764
+          ],
+          [
+            773320052.1629596,
+            773320232.1529408
+          ],
+          [
+            773320772.1228843,
+            773320952.1128654
+          ]
+        ],
+        "csc_core": 3,
+        "neighborhood_quadrant_counts": [
+          90,
+          82,
+          93,
+          111
+        ],
+        "reason": null,
+        "rejected_bins": {
+          "node_boundary": 286
+        },
+        "shared_annulus": 4,
+        "supported_live_s": 4440.956988740241,
+        "trial_core": 2
+      },
+      "csc_core": 16,
+      "gt_live_s": 21375.806307345054,
+      "met_s": [
+        773299353.3151246,
+        773321012.1095258
+      ],
+      "nominal_background_per_core": 1.2770270270270272,
+      "original_aperture": 31,
+      "original_distances_to_csc": {
+        "max_px": 30.519423296209578,
+        "median_px": 8.574798278437962,
+        "min_px": 1.0196238496777454
+      },
+      "original_distances_to_trial": {
+        "max_px": 16.341342974888292,
+        "median_px": 13.48160650978307,
+        "min_px": 4.254273958313455
+      },
+      "original_photons_in_csc_core": 15,
+      "original_photons_in_trial_core": 3,
+      "original_photons_nearer_csc": 18,
+      "original_photons_outside_both_cores": 13,
+      "shared_annulus": 21,
+      "trial_core": 3,
+      "trial_fraction_among_both_cores": {
+        "cp95": [
+          0.03382624900176467,
+          0.3957845512666743
+        ],
+        "fraction": 0.15789473684210525,
+        "k": 3,
+        "n": 19
+      }
+    },
+    "trigger": {
+      "common_geometry": {
+        "accepted_bins": [],
+        "csc_core": 0,
+        "neighborhood_quadrant_counts": [
+          1,
+          1,
+          3,
+          3
+        ],
+        "reason": "insufficient local footprint witnesses",
+        "rejected_bins": {},
+        "shared_annulus": 0,
+        "supported_live_s": 0,
+        "trial_core": 0
+      },
+      "csc_core": 3,
+      "gt_live_s": 592.1605582864253,
+      "met_s": [
+        773321012.1095258,
+        773321612.1095258
+      ],
+      "nominal_background_per_core": 0.18243243243243246,
+      "original_aperture": 9,
+      "original_distances_to_csc": {
+        "max_px": 23.624031496784255,
+        "median_px": 17.379944332996732,
+        "min_px": 2.027655017723081
+      },
+      "original_distances_to_trial": {
+        "max_px": 16.08274931992066,
+        "median_px": 7.050253538212596,
+        "min_px": 0.8974302533604528
+      },
+      "original_photons_in_csc_core": 2,
+      "original_photons_in_trial_core": 3,
+      "original_photons_nearer_csc": 2,
+      "original_photons_outside_both_cores": 4,
+      "shared_annulus": 3,
+      "trial_core": 3,
+      "trial_fraction_among_both_cores": {
+        "cp95": [
+          0.11811724875702521,
+          0.8818827512429748
+        ],
+        "fraction": 0.5,
+        "k": 3,
+        "n": 6
+      }
+    }
+  },
+  "primary_control_replicas": 24,
+  "same_observation_csc_rows": [
+    {
+      "conf_code": "0",
+      "dec": "27.8554526909568",
+      "detector": "ACIS-3",
+      "flux_aper_b": "0.0",
+      "flux_significance_b": "7.913316320515456",
+      "gti_end": "2022-07-04T19:54:07",
+      "gti_obs": "2022-07-04T05:22:33",
+      "livetime": "51606.935252091",
+      "match_type": "u",
+      "name": "2CXO J125704.0+275119",
+      "obi": "0",
+      "obsid": "23779",
+      "ra": "194.2670023851923",
+      "region_id": "57",
+      "src_cnts_aper_b": "114.18645076678",
+      "src_rate_aper_b": "0.0022126183275366",
+      "streak_src_flag": "F",
+      "var_index_b": "7"
+    }
+  ],
+  "source_artifact": 14749108711,
+  "source_ledger_member": {
+    "bytes": 7753,
+    "destination": "observations/23779.json.gz",
+    "sha256": "fb17e5b69b54972d78c3cbe2a6e189c19ea9a066c38e07b87d392f2b313e7a9e",
+    "source": "observations/23779.json.gz"
+  },
+  "source_row_member": {
+    "bytes": 4210,
+    "destination": "photometry/23779/acisf23779N002_evt2.fits.gz/real/0/event_rows.csv.gz",
+    "sha256": "e81125a01ee247169a4722fcab074a34cc4b0b2e2aada2ab03ade3fbb0d19165",
+    "source": "photometry/23779/acisf23779N002_evt2.fits.gz/real/0/event_rows.csv.gz"
+  },
+  "source_stage": {
+    "code_commit": "4663ab98666b5d9b5b116478f61d6cae5d49e104",
+    "group": 99,
+    "plan_commit": "0655e5b54215a3d7bbac1f6b2561379bb50c81cf",
+    "run": 44985879443
+  },
+  "source_zip_digest": "sha256:56fd0f8edfa88298671fc1094f079884cbb55e198a0b07d11840cfceba088ea9",
+  "tagged_photon_count": 77,
+  "tagged_photons_sha256": "b1c47138b9648d559f314cd07df649ecda8a706abf5139a56e76722fab919da4",
+  "targeting": {
+    "catalog_dec_deg": 27.76946111111111,
+    "catalog_ra_deg": 194.44941666666665,
+    "csc_offset_from_pointing_reference_arcsec": 658.1769155759903,
+    "observation_url": "https://cda.harvard.edu/chaser/startViewer.do?menuItem=details&obsid=23779",
+    "proposal_number": "22700333",
+    "proposal_title": "A CHANDRA LOOK AT VARIABILITY-SELECTED LOW-MASS AGN CANDIDATES",
+    "proposal_url": "https://cda.cfa.harvard.edu/cxctap/sync?REQUEST=doQuery&FORMAT=text&LANG=ADQL&QUERY=SELECT+%2A+FROM+cxc.proposal+p+WHERE+p.number+%3D+%2722700333%27",
+    "target_name": "NSA103757",
+    "trial_offset_from_pointing_reference_arcsec": 652.6289922033957
+  },
+  "trigger_ccd_id": 3,
+  "trigger_key": "real/0"
+}
