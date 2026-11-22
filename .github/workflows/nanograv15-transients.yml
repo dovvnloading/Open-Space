@@ -1,6 +1,11 @@
 name: NANOGrav individual and common timing transients
 
 on:
+  # Runs once when this file changes on the research branch: a workflow_dispatch-only
+  # file cannot be dispatched until it exists on the default branch.
+  push:
+    branches: [research/nanograv15-blind-transients]
+    paths: ['.github/workflows/nanograv15-transients.yml']
   workflow_dispatch:
 
 permissions:
