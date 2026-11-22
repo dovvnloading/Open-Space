@@ -89,7 +89,80 @@
           ]
         }
       },
-      "normalized_comments": 622
+      "ignored_line_locations": {},
+      "normalized_comments": 622,
+      "tim_file_counts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/J1022+1001_all.tim": {},
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/EFF.EBPP.1360.tim": {
+          "retained_format1_toas": 57,
+          "tempo2_comments": 45
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/EFF.EBPP.1410.tim": {
+          "retained_format1_toas": 163,
+          "tempo2_comments": 99
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/EFF.EBPP.2639.tim": {
+          "retained_format1_toas": 69,
+          "tempo2_comments": 47
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/EFF.P200.1380.tim": {
+          "retained_format1_toas": 65
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/EFF.P217.1380.tim": {
+          "outside_clock_range": 1,
+          "retained_format1_toas": 178,
+          "tempo2_comments": 8
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/EFF.S110.2487.tim": {
+          "retained_format1_toas": 84,
+          "tempo2_comments": 6
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/EFF.S60.1420.tim": {
+          "retained_format1_toas": 27,
+          "tempo2_comments": 3
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/JBO.DFB.1400.tim": {
+          "retained_format1_toas": 39,
+          "tempo2_comments": 8
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/JBO.DFB.1520.tim": {
+          "retained_format1_toas": 82,
+          "tempo2_comments": 127
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/JBO.ROACH.1520.tim": {
+          "retained_format1_toas": 291,
+          "tempo2_comments": 145
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/LEAP.1396.tim": {
+          "outside_clock_range": 69,
+          "retained_format1_toas": 12,
+          "tempo2_comments": 6
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/NRT.BON.1400.tim": {
+          "retained_format1_toas": 123,
+          "tempo2_comments": 5
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/NRT.NUPPI.1484.tim": {
+          "retained_format1_toas": 1008,
+          "tempo2_comments": 43
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/WSRT.P1.1380.tim": {
+          "retained_format1_toas": 37,
+          "tempo2_comments": 21
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/WSRT.P1.323.tim": {
+          "retained_format1_toas": 18,
+          "tempo2_comments": 8
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/WSRT.P1.367.tim": {
+          "retained_format1_toas": 14,
+          "tempo2_comments": 3
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1022+1001/tims/WSRT.P2.1380.tim": {
+          "retained_format1_toas": 108,
+          "tempo2_comments": 48
+        }
+      }
     },
     "epta_timing_refit": {
       "empty_masks_frozen": [],
@@ -141,10 +214,10 @@
       ],
       "initial_track_mode": "nearest",
       "iterations": 3,
-      "max_abs_postfit_cycles": 0.0035202360477370165,
+      "max_abs_postfit_cycles": 0.003520236025334365,
       "original_par_ntoa": 2445,
       "original_par_tres_us": 1.022,
-      "postfit_wrms_us": 1.0400198984950306,
+      "postfit_wrms_us": 1.040020017422975,
       "prefit_wrms_us": 1.2085927169118071,
       "pulse_numbers": "nearest integer from the released converted model, fixed for all iterations"
     },
@@ -177,7 +250,7 @@
     "pint": "1.1.8",
     "pulsar": "J1022+1001",
     "raw_toas": 2445,
-    "rms_postfit_us_before_restoring_dmx": 1.0400198984950306,
+    "rms_postfit_us_before_restoring_dmx": 1.040020017422975,
     "source_pulsar": "J1022+1001",
     "spin_hz": 60.779448899095314,
     "status": "ok",
@@ -186,10 +259,26 @@
     "toa_track_mode": "use_pulse_numbers",
     "tres_check": "within 25 percent by ratio",
     "used_toas": 2375,
-    "wrms_to_tres_ratio": 1.0176319946135328
+    "wrms_to_tres_ratio": 1.0176321109813846
   },
   {
+    "clock": "BIPM2021",
+    "components": [
+      "AbsPhase",
+      "AstrometryEquatorial",
+      "BinaryDDH",
+      "DispersionDM",
+      "PhaseJump",
+      "SolarSystemShapiro",
+      "SolarWindDispersion",
+      "Spindown",
+      "TroposphereDelay"
+    ],
+    "compressed_rows": 1912,
+    "cut_count": 66,
     "dataset": "epta",
+    "dmx_restored": false,
+    "ephemeris": "de440",
     "epta_format": {
       "clock_cuts": {
         "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/EFF.S110.2487.tim:effix:effix2gps.clk": {
@@ -256,9 +345,107 @@
           ]
         }
       },
-      "normalized_comments": 3
+      "ignored_line_locations": {},
+      "normalized_comments": 3,
+      "tim_file_counts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/J1640+2224_all.tim": {
+          "tempo2_comments": 2
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/EFF.EBPP.1360.tim": {
+          "retained_format1_toas": 67
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/EFF.EBPP.1410.tim": {
+          "retained_format1_toas": 122
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/EFF.EBPP.2639.tim": {
+          "retained_format1_toas": 61
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/EFF.P200.1380.tim": {
+          "retained_format1_toas": 51
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/EFF.P217.1380.tim": {
+          "retained_format1_toas": 144,
+          "tempo2_comments": 1
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/EFF.S110.2487.tim": {
+          "outside_clock_range": 3,
+          "retained_format1_toas": 49
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/JBO.DFB.1400.tim": {
+          "retained_format1_toas": 10
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/JBO.DFB.1520.tim": {
+          "retained_format1_toas": 57
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/JBO.ROACH.1520.tim": {
+          "retained_format1_toas": 212
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/LEAP.1396.tim": {
+          "outside_clock_range": 63,
+          "retained_format1_toas": 13
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/NRT.BON.1400.tim": {
+          "retained_format1_toas": 103
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/NRT.NUPPI.1484.tim": {
+          "retained_format1_toas": 1011
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/WSRT.P1.1380.tim": {
+          "retained_format1_toas": 40
+        }
+      }
     },
-    "error": "ValueError: could not convert string to float: '0.0000_0000.cle'",
+    "epta_timing_refit": {
+      "empty_masks_frozen": [],
+      "fitter": "WLSFitter",
+      "initial_free_parameters": [
+        "PX",
+        "RAJ",
+        "DECJ",
+        "PMRA",
+        "PMDEC",
+        "F0",
+        "F1",
+        "DM",
+        "DM1",
+        "DM2",
+        "PB",
+        "PBDOT",
+        "A1",
+        "A1DOT",
+        "ECC",
+        "T0",
+        "OM",
+        "H3",
+        "STIGMA",
+        "JUMP1",
+        "JUMP2",
+        "JUMP3",
+        "JUMP4",
+        "JUMP5",
+        "JUMP6",
+        "JUMP7",
+        "JUMP8",
+        "JUMP9",
+        "JUMP10",
+        "JUMP11",
+        "JUMP12",
+        "JUMP13",
+        "JUMP14",
+        "JUMP15",
+        "JUMP16",
+        "JUMP18",
+        "JUMP19"
+      ],
+      "initial_track_mode": "nearest",
+      "iterations": 3,
+      "max_abs_postfit_cycles": 0.01722216100588288,
+      "original_par_ntoa": 2007,
+      "original_par_tres_us": 1.142,
+      "postfit_wrms_us": 1.1328174548132606,
+      "prefit_wrms_us": 1.2820350561178735,
+      "pulse_numbers": "nearest integer from the released converted model, fixed for all iterations"
+    },
     "include_sha256": {
       "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/EFF.EBPP.1360.tim": "cc1adcc93260667afc3cf85f02ca6cf85bda5946246c04742130f5ba1315f153",
       "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/EFF.EBPP.1410.tim": "bbed78863f54bbbb4745a37654ae2dd2b5b4bb896e28d681304750f5dedbdaed",
@@ -274,12 +461,26 @@
       "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/NRT.NUPPI.1484.tim": "d8541c0f5e10cf7ec240f6011f730956d799d34ee19ca5367a9349f7fd347943",
       "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/tims/WSRT.P1.1380.tim": "5a0de6fea576f6bde926187822d423cc3c1c74246d341fb0106e3a61768a6f77"
     },
+    "max_mjd_tdb": 59294.25902226012,
+    "min_mjd_tdb": 50459.22787850213,
     "par": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/J1640+2224.par",
     "par_sha256": "4735618b393757f23d595c960b2cd6aebc846c4098a33a9fbe9536d49483c05d",
+    "parfile_clock": "TT(BIPM2021)",
+    "parfile_ntoa": 2007,
+    "parfile_tres_us": 1.142,
+    "pint": "1.1.8",
     "pulsar": "J1640+2224",
-    "status": "inconclusive",
+    "raw_toas": 2006,
+    "rms_postfit_us_before_restoring_dmx": 1.1328174548132606,
+    "source_pulsar": "J1640+2224",
+    "spin_hz": 316.12398423343245,
+    "status": "ok",
     "tim": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1640+2224/J1640+2224_all.tim",
-    "tim_sha256": "48dafe9ad0f70a01973cfed9d3f34a6cf85477baf186c5252547b7af46baf8d0"
+    "tim_sha256": "48dafe9ad0f70a01973cfed9d3f34a6cf85477baf186c5252547b7af46baf8d0",
+    "toa_track_mode": "use_pulse_numbers",
+    "tres_check": "within 25 percent by ratio",
+    "used_toas": 1940,
+    "wrms_to_tres_ratio": 0.9919592423933982
   },
   {
     "clock": "BIPM2021",
@@ -293,7 +494,7 @@
       "Spindown",
       "TroposphereDelay"
     ],
-    "compressed_rows": 387,
+    "compressed_rows": 1867,
     "cut_count": 72,
     "dataset": "epta",
     "dmx_restored": false,
@@ -359,25 +560,85 @@
           ]
         }
       },
-      "normalized_comments": 338
+      "ignored_line_locations": {},
+      "normalized_comments": 230,
+      "tim_file_counts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/J1744-1134_all.tim": {},
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/EFF.EBPP.1360.tim": {
+          "retained_format1_toas": 10,
+          "tempo2_comments": 31
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/EFF.EBPP.1410.tim": {
+          "retained_format1_toas": 92,
+          "tempo2_comments": 26
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/EFF.EBPP.2639.tim": {
+          "retained_format1_toas": 35,
+          "tempo2_comments": 32
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/EFF.P200.1380.tim": {
+          "retained_format1_toas": 41
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/EFF.P217.1380.tim": {
+          "retained_format1_toas": 122,
+          "tempo2_comments": 8
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/EFF.S110.2487.tim": {
+          "retained_format1_toas": 41
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/EFF.S60.4857.tim": {
+          "retained_format1_toas": 26,
+          "tempo2_comments": 1
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/JBO.DFB.1520.tim": {
+          "lines_after_local_end": 57,
+          "retained_format1_toas": 22,
+          "tempo2_comments": 3
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/JBO.ROACH.1520.tim": {
+          "retained_format1_toas": 174,
+          "tempo2_comments": 76
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/LEAP.1396.tim": {
+          "outside_clock_range": 72,
+          "retained_format1_toas": 15,
+          "tempo2_comments": 1
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/NRT.BON.1400.tim": {
+          "retained_format1_toas": 141,
+          "tempo2_comments": 24
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/NRT.BON.1600.tim": {
+          "lines_after_local_end": 67,
+          "retained_format1_toas": 15,
+          "tempo2_comments": 2
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/NRT.BON.2000.tim": {
+          "retained_format1_toas": 27,
+          "tempo2_comments": 4
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/NRT.NUPPI.1484.tim": {
+          "retained_format1_toas": 886,
+          "tempo2_comments": 16
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/NRT.NUPPI.2539.tim": {
+          "retained_format1_toas": 116,
+          "tempo2_comments": 1
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/WSRT.P1.323.tim": {
+          "retained_format1_toas": 32
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/WSRT.P1.367.tim": {
+          "retained_format1_toas": 31
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/WSRT.P2.1380.tim": {
+          "retained_format1_toas": 48,
+          "tempo2_comments": 5
+        }
+      }
     },
     "epta_timing_refit": {
-      "empty_masks_frozen": [
-        "JUMP11",
-        "JUMP12",
-        "JUMP13",
-        "JUMP14",
-        "JUMP15",
-        "JUMP16",
-        "JUMP17",
-        "JUMP19",
-        "JUMP20",
-        "JUMP21",
-        "JUMP22",
-        "JUMP23",
-        "JUMP24",
-        "JUMP25"
-      ],
+      "empty_masks_frozen": [],
       "fitter": "WLSFitter",
       "initial_free_parameters": [
         "PX",
@@ -417,11 +678,11 @@
       ],
       "initial_track_mode": "nearest",
       "iterations": 3,
-      "max_abs_postfit_cycles": 0.006327111887300523,
+      "max_abs_postfit_cycles": 0.0077957112285840366,
       "original_par_ntoa": 1931,
       "original_par_tres_us": 0.567,
-      "postfit_wrms_us": 0.5256232183647424,
-      "prefit_wrms_us": 0.6851647219809364,
+      "postfit_wrms_us": 0.6219608859698295,
+      "prefit_wrms_us": 0.8278534879568403,
       "pulse_numbers": "nearest integer from the released converted model, fixed for all iterations"
     },
     "include_sha256": {
@@ -444,8 +705,8 @@
       "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/WSRT.P1.367.tim": "8107d518dde7f3162a1d62b1d4660fa514b0623e6d44c904202f28df58be792c",
       "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/tims/WSRT.P2.1380.tim": "5087cf0731ec4ce20e255e0424914886420e3ea4d99061da9234862a3ca48791"
     },
-    "max_mjd_tdb": 59083.7121591148,
-    "min_mjd_tdb": 50460.43982873589,
+    "max_mjd_tdb": 59104.757075555855,
+    "min_mjd_tdb": 50460.43982873595,
     "par": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/J1744-1134.par",
     "par_sha256": "972d3ff0ef2adaad8cd5bd410e7432587b9f5db609108d47e4c45c5ca2fd1940",
     "parfile_clock": "TT(BIPM2021)",
@@ -453,21 +714,36 @@
     "parfile_tres_us": 0.567,
     "pint": "1.1.8",
     "pulsar": "J1744-1134",
-    "raw_toas": 461,
-    "rms_postfit_us_before_restoring_dmx": 0.5256232183647424,
+    "raw_toas": 1946,
+    "rms_postfit_us_before_restoring_dmx": 0.6219608859698295,
     "source_pulsar": "J1744-1134",
-    "spin_hz": 245.42612349518956,
+    "spin_hz": 245.42612349518802,
     "status": "ok",
     "tim": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1744-1134/J1744-1134_all.tim",
     "tim_sha256": "76c56dda764f4455c848f1423ad67a64b1d3d8145e7d9de916b3ac143bd6dca3",
     "toa_track_mode": "use_pulse_numbers",
     "tres_check": "within 25 percent by ratio",
-    "used_toas": 389,
-    "wrms_to_tres_ratio": 0.9270250764810272
+    "used_toas": 1874,
+    "wrms_to_tres_ratio": 1.0969327794882355
   },
   {
+    "clock": "BIPM2021",
+    "components": [
+      "AbsPhase",
+      "AstrometryEquatorial",
+      "BinaryELL1",
+      "DispersionDM",
+      "PhaseJump",
+      "SolarSystemShapiro",
+      "SolarWindDispersion",
+      "Spindown",
+      "TroposphereDelay"
+    ],
+    "compressed_rows": 2503,
     "cut_count": 0,
     "dataset": "epta",
+    "dmx_restored": false,
+    "ephemeris": "de440",
     "epta_format": {
       "clock_cuts": {},
       "clock_valid_mjd_by_site": {
@@ -483,25 +759,43 @@
           ]
         }
       },
-      "normalized_comments": 290
+      "ignored_line_locations": {},
+      "normalized_comments": 101,
+      "tim_file_counts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/J1909-3744_all.tim": {},
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/tims/NRT.BON.1400.tim": {
+          "retained_format1_toas": 156,
+          "tempo2_comments": 6
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/tims/NRT.BON.1600.tim": {
+          "lines_after_local_end": 201,
+          "retained_format1_toas": 27
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/tims/NRT.BON.2000.tim": {
+          "lines_after_local_end": 33,
+          "retained_format1_toas": 31,
+          "tempo2_comments": 3
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/tims/NRT.NUPPI.1484.tim": {
+          "retained_format1_toas": 1842,
+          "tempo2_comments": 59
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/tims/NRT.NUPPI.1854.tim": {
+          "retained_format1_toas": 61,
+          "tempo2_comments": 2
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/tims/NRT.NUPPI.2154.tim": {
+          "retained_format1_toas": 69,
+          "tempo2_comments": 6
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/tims/NRT.NUPPI.2539.tim": {
+          "retained_format1_toas": 317,
+          "tempo2_comments": 25
+        }
+      }
     },
     "epta_timing_refit": {
-      "empty_masks_frozen": [
-        "JUMP3",
-        "JUMP4",
-        "JUMP6",
-        "JUMP7",
-        "JUMP8",
-        "JUMP9",
-        "JUMP10",
-        "JUMP11",
-        "JUMP12",
-        "JUMP13",
-        "JUMP14",
-        "JUMP15",
-        "JUMP16",
-        "JUMP17"
-      ],
+      "empty_masks_frozen": [],
       "fitter": "WLSFitter",
       "initial_free_parameters": [
         "PX",
@@ -542,14 +836,13 @@
       ],
       "initial_track_mode": "nearest",
       "iterations": 3,
-      "max_abs_postfit_cycles": 0.0013752416052737883,
+      "max_abs_postfit_cycles": 0.002402878291026608,
       "original_par_ntoa": 2524,
       "original_par_tres_us": 0.347,
-      "postfit_wrms_us": 0.07220830519885983,
-      "prefit_wrms_us": 0.13632209435345705,
+      "postfit_wrms_us": 0.24979481830408062,
+      "prefit_wrms_us": 0.630341686629539,
       "pulse_numbers": "nearest integer from the released converted model, fixed for all iterations"
     },
-    "error": "ValueError: pre-DMX-restoration WRMS differs from published TRES by factor 0.2081",
     "include_sha256": {
       "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/tims/NRT.BON.1400.tim": "0454a21a56c60e350609c63c1a8a85e46c3427fbcb4f2beaaaf6ad69366263c0",
       "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/tims/NRT.BON.1600.tim": "8dc9940cb55465094d3573d51fb228690ef8aa82c86eab7b9bfe85296f6c6b29",
@@ -559,19 +852,26 @@
       "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/tims/NRT.NUPPI.2154.tim": "ee7e5c2775ac114b6840620be5e1afb48826eb6fec49a999e6c72131b03b94a3",
       "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/tims/NRT.NUPPI.2539.tim": "3fe5c88119c76b35951cce120b256a9cf6e99d72d8576b72bc16415eb87a1bcb"
     },
+    "max_mjd_tdb": 59115.78669270156,
+    "min_mjd_tdb": 53368.51471664241,
     "par": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/J1909-3744.par",
     "par_sha256": "3d985904bcd922cb9a165bd7f585985a9eb7f209c4fc352bde63058b20b0529b",
+    "parfile_clock": "TT(BIPM2021)",
     "parfile_ntoa": 2524,
     "parfile_tres_us": 0.347,
+    "pint": "1.1.8",
     "pulsar": "J1909-3744",
-    "raw_toas": 183,
-    "rms_postfit_us_before_restoring_dmx": 0.07220830519885983,
-    "status": "inconclusive",
+    "raw_toas": 2503,
+    "rms_postfit_us_before_restoring_dmx": 0.24979481830408062,
+    "source_pulsar": "J1909-3744",
+    "spin_hz": 339.3156924796292,
+    "status": "ok",
     "tim": "epta/EPTA-DR2/EPTA-DR2/DR2full/J1909-3744/J1909-3744_all.tim",
     "tim_sha256": "25e22bce1ebc0aad0130a01c38994737174dc53d53bdfd15310fba2a5f2cf88e",
-    "tres_check": "excluded",
-    "used_toas": 183,
-    "wrms_to_tres_ratio": 0.20809309855579203
+    "toa_track_mode": "use_pulse_numbers",
+    "tres_check": "inspect weighting and model agreement",
+    "used_toas": 2503,
+    "wrms_to_tres_ratio": 0.7198697933835178
   },
   {
     "clock": "BIPM2021",
@@ -617,7 +917,47 @@
           ]
         }
       },
-      "normalized_comments": 218
+      "ignored_line_locations": {},
+      "normalized_comments": 218,
+      "tim_file_counts": {
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2124-3358/J2124-3358_all.tim": {},
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2124-3358/tims/JBO.DFB.1520.tim": {
+          "retained_format1_toas": 23,
+          "tempo2_comments": 43
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2124-3358/tims/JBO.ROACH.1520.tim": {
+          "retained_format1_toas": 98,
+          "tempo2_comments": 28
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2124-3358/tims/NRT.BON.1400.tim": {
+          "retained_format1_toas": 328,
+          "tempo2_comments": 30
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2124-3358/tims/NRT.BON.1600.tim": {
+          "retained_format1_toas": 21,
+          "tempo2_comments": 81
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2124-3358/tims/NRT.BON.2000.tim": {
+          "retained_format1_toas": 45,
+          "tempo2_comments": 6
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2124-3358/tims/NRT.NUPPI.1484.tim": {
+          "retained_format1_toas": 1297,
+          "tempo2_comments": 19
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2124-3358/tims/NRT.NUPPI.1854.tim": {
+          "retained_format1_toas": 82,
+          "tempo2_comments": 1
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2124-3358/tims/NRT.NUPPI.2154.tim": {
+          "retained_format1_toas": 69,
+          "tempo2_comments": 6
+        },
+        "epta/EPTA-DR2/EPTA-DR2/DR2full/J2124-3358/tims/NRT.NUPPI.2539.tim": {
+          "retained_format1_toas": 55,
+          "tempo2_comments": 4
+        }
+      }
     },
     "epta_timing_refit": {
       "empty_masks_frozen": [],
@@ -654,10 +994,10 @@
       ],
       "initial_track_mode": "nearest",
       "iterations": 3,
-      "max_abs_postfit_cycles": 0.01837864863493892,
+      "max_abs_postfit_cycles": 0.018378649353777445,
       "original_par_ntoa": 2018,
       "original_par_tres_us": 2.381,
-      "postfit_wrms_us": 2.3689842011219633,
+      "postfit_wrms_us": 2.368984251872054,
       "prefit_wrms_us": 2.451888836099062,
       "pulse_numbers": "nearest integer from the released converted model, fixed for all iterations"
     },
@@ -682,7 +1022,7 @@
     "pint": "1.1.8",
     "pulsar": "J2124-3358",
     "raw_toas": 2018,
-    "rms_postfit_us_before_restoring_dmx": 2.3689842011219633,
+    "rms_postfit_us_before_restoring_dmx": 2.368984251872054,
     "source_pulsar": "J2124-3358",
     "spin_hz": 202.7938968903776,
     "status": "ok",
@@ -691,6 +1031,6 @@
     "toa_track_mode": "use_pulse_numbers",
     "tres_check": "within 25 percent by ratio",
     "used_toas": 2018,
-    "wrms_to_tres_ratio": 0.9949534654019166
+    "wrms_to_tres_ratio": 0.9949534867165285
   }
 ]

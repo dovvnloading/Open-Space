@@ -1,0 +1,137 @@
+{
+  "draws": 4095,
+  "seed": 21615073,
+  "original_survivors": 77,
+  "n_bank": 9688,
+  "n_subset_bank": 5990,
+  "diagnostic_passing_pulsars": [
+    "J0340+4130",
+    "J0406+3039",
+    "J0557+1551",
+    "J0605+3757",
+    "J0610-2100",
+    "J0614-3329",
+    "J0636+5128",
+    "J0645+5158",
+    "J0709+0458",
+    "J0740+6620",
+    "J0931-1902",
+    "J1012-4235",
+    "J1024-0719",
+    "J1125+7819",
+    "J1312+0051",
+    "J1453+1902",
+    "J1455-3330",
+    "J1600-3053",
+    "J1630+3734",
+    "J1705-1903",
+    "J1719-1438",
+    "J1738+0333",
+    "J1741+1351",
+    "J1744-1134",
+    "J1747-4036",
+    "J1751-2857",
+    "J1802-2124",
+    "J1832-0836",
+    "J1843-1113",
+    "J1853+1303",
+    "J1903+0327",
+    "J1910+1256",
+    "J1923+2515",
+    "J1946+3417",
+    "J1955+2908",
+    "J2017+0603",
+    "J2033+1734",
+    "J2229+2643",
+    "J2234+0611",
+    "J2234+0944",
+    "J2302+4442",
+    "J2322+2057"
+  ],
+  "largest_original_statistic_replay_difference": 1.2448708730516955e-11,
+  "observed_full_max_log10_score": 65.21509412273322,
+  "observed_full_max_tail": {
+    "exceedances": 82,
+    "p_sign_max_bank": 0.020263671875,
+    "mc_low": 0.013066265390546406,
+    "mc_high": 0.029124673519438555
+  },
+  "observed_subset_max_log10_score": 10.278256181752926,
+  "observed_subset_max_tail": {
+    "exceedances": 1001,
+    "p_sign_max_bank": 0.24462890625,
+    "mc_low": 0.22073834158588296,
+    "mc_high": 0.2692763061580705
+  },
+  "n_pass_both_sign_and_subset_checks": 0,
+  "input_failures": [],
+  "telescope_subset_failures": [
+    {
+      "release": "epta",
+      "pulsar": "J0030+0451",
+      "site": "leap",
+      "error": "insufficient time coverage"
+    },
+    {
+      "release": "epta",
+      "pulsar": "J0613-0200",
+      "site": "leap",
+      "error": "insufficient time coverage"
+    },
+    {
+      "release": "epta",
+      "pulsar": "J1012+5307",
+      "site": "leap",
+      "error": "insufficient time coverage"
+    },
+    {
+      "release": "epta",
+      "pulsar": "J1022+1001",
+      "site": "leap",
+      "error": "insufficient time coverage"
+    },
+    {
+      "release": "epta",
+      "pulsar": "J1024-0719",
+      "site": "leap",
+      "error": "insufficient time coverage"
+    },
+    {
+      "release": "epta",
+      "pulsar": "J1600-3053",
+      "site": "leap",
+      "error": "insufficient time coverage"
+    },
+    {
+      "release": "epta",
+      "pulsar": "J1640+2224",
+      "site": "leap",
+      "error": "insufficient time coverage"
+    },
+    {
+      "release": "epta",
+      "pulsar": "J1730-2304",
+      "site": "effelsberg",
+      "error": "fewer than nine degrees of freedom after nuisance projection"
+    },
+    {
+      "release": "epta",
+      "pulsar": "J1744-1134",
+      "site": "leap",
+      "error": "insufficient time coverage"
+    },
+    {
+      "release": "epta",
+      "pulsar": "J1857+0943",
+      "site": "leap",
+      "error": "insufficient time coverage"
+    },
+    {
+      "release": "epta",
+      "pulsar": "J1918-0642",
+      "site": "leap",
+      "error": "insufficient time coverage"
+    }
+  ],
+  "interpretation": "Post-discovery checks of the original survivors. One random sign applies to every residual of each narrowband pulsar across all epochs, shapes and sky directions. Within each draw the maximum negative log10 chi-square tail across the bank compares one-, two- and three-parameter responses. The randomization tests joint invariance under independent pulsar sign changes. A stochastic Hellings-Downs background, shared clocks or other cross-pulsar noise can violate this assumption. These checks cannot identify a deterministic burst. Monte Carlo p values use (exceedances+1)/(draws+1); the exact binomial bounds jointly cover the reported randomization tails at 95% conditional on the data. The diagnostic subset keeps only original pulsars passing the single-pulsar noise screen; each retained template still needs the original eight-pulsar, coverage and geometry criteria. Telescope comparisons freeze the discovery epoch, sky, sign and polarization and report descriptive fixed-template tails. EPTA directional probabilities from the original replication fits are adjusted across every internally surviving array template, counting unavailable tests as p=1. EPTA minus NANOGrav amplitudes use the original fitted vector direction and the same physical units. The difference in quadrature standard errors is descriptive; sharing DE440 and any true common process violates the assumption of independent errors. Candidate selection also affects discovery amplitudes."
+}

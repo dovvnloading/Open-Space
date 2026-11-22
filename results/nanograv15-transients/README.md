@@ -1,14 +1,18 @@
 # Blind pulsar timing transient search
 
-**An individual timing search analyzed 68 of 68 pulsars. The array search tested 68 pulsars. 77 template fits survived the specified checks.**
+**Across 68 NANOGrav pulsars, 0 individual template fits passed the wideband, independent EPTA and noise checks. Of 77 common-pattern fits that survived internal checks, 0 had support across the sign, noise-subset, wideband, independent EPTA and dispersion checks.**
 
 The individual search produced 5395 primary template crossings. Nearby epochs, widths and physical templates can describe the same excursion. The number of fits is not the number of distinct astrophysical events.
 
-Wideband reductions succeeded for 68 pulsars. EPTA DR2 reductions succeeded for 11 overlapping pulsars. The coverage table identifies untested targets. The individual records retain every primary crossing and its disposition. [Coverage](evidence/coverage.csv) · [Per-pulsar dispositions](evidence/individual-dispositions.csv) · [Individual records](evidence/single) · [Surviving fits](evidence/surviving-fits.json)
+Wideband reductions succeeded for 68 pulsars. EPTA DR2 reductions succeeded for 19 overlapping pulsars. The coverage table identifies untested targets. The individual records retain every primary crossing and its disposition. [Coverage](evidence/coverage.csv) · [Per-pulsar dispositions](evidence/individual-dispositions.csv) · [Individual records](evidence/single) · [Surviving fits](evidence/surviving-fits.json)
 
 ## Timing signatures and interpretation
 
+Of the 77 internally surviving clock, ephemeris or memory fits, 0 passed the whole-bank pulsar-sign control, 0 also passed the noise-screened repeat, and 1 had multiplicity-adjusted support in EPTA (68 had enough external sky coverage). The independent-per-visit dispersion fit supported the original direction in 0 of 57 testable fits. These controls probe different failure modes. [Every surviving fit, with MJD, amplitude and checks](evidence/EVENTS.md) · [Physical review by waveform and epoch](COHERENT_REVIEW.md) · [Post-discovery controls](ADJUDICATION.md)
+
 The surviving-fits table includes the fitted epoch, amplitude, significance and checks for every surviving template. Individual survivors require independent EPTA support. Array survivors pass the internal leave-one-pulsar-out check. Each array record separately reports wideband and EPTA support, inconclusive checks and missing epochs. A wideband recurrence tests the reduction of the same telescope observations. An EPTA comparison tests independent telescope data at the discovery epoch. Publication history and any physical attribution require an event-by-event review. [Common-mode results and alternatives](evidence/array) · [Published event epochs](PRIOR_EVENTS.md)
+
+As a post-search comparison, fixed 60-day timing templates were evaluated at the two published J1713+0747 dips and the J1643−1224 profile event. The table distinguishes a fixed-epoch response from a blind trial that crossed the survey threshold. [Known-event controls](evidence/known-event-controls.csv)
 
 ## Sensitivity and scope
 
