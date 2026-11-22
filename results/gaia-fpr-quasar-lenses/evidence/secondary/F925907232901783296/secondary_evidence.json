@@ -1,0 +1,275 @@
+{
+  "chosen_band": "PS1/i",
+  "measured_centre_radec_deg": [
+    116.72102424781856,
+    44.064298419918835
+  ],
+  "image_source_ids": [
+    "925907232900521472",
+    "925907232901783296"
+  ],
+  "band_evidence": {
+    "psf_search_width_arcsec": 48.000001162290374,
+    "field_psf_objects": 1,
+    "empirical_fwhm_arcsec": 0.950674800331532,
+    "fitted_fwhm_arcsec": 0.849667266339266,
+    "point_magnitudes_AB": [
+      19.834931048063673,
+      19.819662313350733
+    ],
+    "point_snr": [
+      17.23926192297783,
+      16.833219848668232
+    ],
+    "point_flux_in_native_units": [
+      303856.1900828614,
+      308159.51505095797
+    ],
+    "pixel_scale_arcsec": 0.2500000060535957,
+    "background_sky_per_pixel": 13.886068344116211,
+    "sky_rms_per_pixel": 247.60124413719177,
+    "variance_inflation": 3.33199622350647,
+    "bic_points_minus_extended": 54.305712838000375,
+    "bic_third_point_minus_extended": 32.9228602818376,
+    "galaxy_snr": 10.463895826629079,
+    "galaxy_radec_deg": [
+      116.72102424781856,
+      44.064298419918835
+    ],
+    "galaxy_offset_arcsec": [
+      0.046828995023529545,
+      0.021645922702285887
+    ],
+    "galaxy_intrinsic_gaussian_sigma_arcsec": 0.7161351234503516,
+    "nearest_image_arcsec": 0.5117924786246318,
+    "bic_single_host_minus_free_galaxy": [
+      40.130198754927555,
+      40.4880562540121
+    ],
+    "resolved_from_every_single_host": true,
+    "usable_morphology": true,
+    "extended_light": true
+  },
+  "color_evidence": [
+    {
+      "bands": [
+        "Legacy-DR9-North/z",
+        "PS1/i"
+      ],
+      "colour_spread_mag": 0.07431778450389359,
+      "within_055mag": true
+    }
+  ],
+  "lens_model": {
+    "physical_geometry": false,
+    "n_images_model": 4,
+    "observed_to_predicted": [
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "maximum_image_residual_arcsec": 4.041272810440265e-16,
+    "tolerance_arcsec": 0.065,
+    "missing_bright_predictions": [
+      2
+    ],
+    "theta_e_arcsec": 0.558294860848297,
+    "q": 0.85,
+    "mass_pa_deg_east_to_north": 148.84785352264336,
+    "shear1": 2.4345933408372577e-18,
+    "shear2": 6.284525706504368e-20,
+    "shear": 2.4354043322587505e-18,
+    "shear_pa_deg_east_to_north": 0.7393367261261904,
+    "center_radec_deg": [
+      116.72102424781856,
+      44.064298419918835
+    ],
+    "source_radec_deg": [
+      116.72101486107547,
+      44.06430370201657
+    ],
+    "source_offset_from_mass_center_arcsec": [
+      -0.02428176780399685,
+      0.019015553270762542
+    ],
+    "predicted_radec_deg": [
+      [
+        116.72082172134655,
+        44.06423113020924
+      ],
+      [
+        116.72118927292756,
+        44.06422019001585
+      ],
+      [
+        116.72103244462562,
+        44.064460404425475
+      ],
+      [
+        116.72082301635649,
+        44.06436462401957
+      ]
+    ],
+    "signed_magnifications": [
+      14.981203559858992,
+      -5.443159489100833,
+      11.425855321071783,
+      -18.1565514736089
+    ],
+    "regularized_objective": 1.2591567155353166e-30,
+    "light_center_constrained": true,
+    "center_prior_basis": "measured one-filter extended-light centroid",
+    "positional_dof_without_priors": -5,
+    "interpretation": "One regularized solution; q and shear are prior-sensitive. Coincident source positions alone do not establish lensing.",
+    "mass_to_measured_light_arcsec": 0.0
+  },
+  "independent_catalogues": [
+    {
+      "system_id": "F925907232901783296",
+      "survey": "Legacy_DR10",
+      "status": "no_catalogued_extended_object",
+      "object_id": null,
+      "ra": null,
+      "dec": null,
+      "centre_distance_arcsec": null,
+      "nearest_image_distance_arcsec": null
+    },
+    {
+      "system_id": "F925907232901783296",
+      "survey": "Legacy_DR9",
+      "status": "no_catalogued_extended_object",
+      "object_id": null,
+      "ra": null,
+      "dec": null,
+      "centre_distance_arcsec": null,
+      "nearest_image_distance_arcsec": null
+    },
+    {
+      "system_id": "F925907232901783296",
+      "survey": "PS1_DR2_stack",
+      "status": "central_extended_object_without_distinct_catalogued_images",
+      "object_id": "160871167209997816",
+      "ra": 116.72101889,
+      "dec": 44.06430609,
+      "centre_distance_arcsec": 0.03089546195021995,
+      "nearest_image_distance_arcsec": 0.5384137722074126
+    }
+  ],
+  "spectra": [
+    {
+      "catalog": "DESI DR1",
+      "identifier": "39633148148974272",
+      "classification": "QSO",
+      "ra": 116.72082060325397,
+      "dec": 44.064400037132465,
+      "target_ra": 116.7208228524933,
+      "target_dec": 44.0643645785308,
+      "z": 2.004647645999517,
+      "z_err": 0.00017113914839025823,
+      "quality_pass": true,
+      "fiber_radius_arcsec": 0.75,
+      "target_centre_distance_arcsec": 0.5728328425229721,
+      "target_image_distances_arcsec": [
+        0.0004544164659365662,
+        1.0810333598423223
+      ],
+      "quality": {
+        "name": "39633148148974272",
+        "era": "116.7208228524933",
+        "edec": "44.0643645785308",
+        "classification": "QSO",
+        "z": "2.004647645999517",
+        "z_err": "0.00017113914839025823",
+        "warning": "0",
+        "mean_fiber_ra": "116.72082060325397",
+        "mean_fiber_dec": "44.064400037132465",
+        "deltachi2": "20859.305246323347",
+        "zcat_primary": "True",
+        "objtype": "TGT",
+        "coadd_fiberstatus": "0",
+        "survey": "main",
+        "program": "dark",
+        "healpix": "6578"
+      },
+      "distance_centre_arcsec": 0.6413531398992833,
+      "image_distances_arcsec": [
+        0.1276399365008384,
+        1.1526911218129454
+      ],
+      "nearest_image_index": 0,
+      "reliable_z": true,
+      "isolated_at_centre": false,
+      "isolated_at_image": false,
+      "clearance_arcsec": 1.4
+    },
+    {
+      "catalog": "DESI DR1",
+      "identifier": "39633148148974274",
+      "classification": "QSO",
+      "ra": 116.72118402413543,
+      "dec": 44.06422837118183,
+      "target_ra": 116.7211893141351,
+      "target_dec": 44.06422022838289,
+      "z": 2.005641719736291,
+      "z_err": 9.506304715977082e-05,
+      "quality_pass": true,
+      "fiber_radius_arcsec": 0.75,
+      "target_centre_distance_arcsec": 0.5114315534766009,
+      "target_image_distances_arcsec": [
+        1.0807674998934191,
+        0.00017447147837714057
+      ],
+      "quality": {
+        "name": "39633148148974274",
+        "era": "116.7211893141351",
+        "edec": "44.06422022838289",
+        "classification": "QSO",
+        "z": "2.005641719736291",
+        "z_err": "9.506304715977082e-05",
+        "warning": "0",
+        "mean_fiber_ra": "116.72118402413543",
+        "mean_fiber_dec": "44.06422837118183",
+        "deltachi2": "29339.282355725765",
+        "zcat_primary": "True",
+        "objtype": "TGT",
+        "coadd_fiberstatus": "0",
+        "survey": "main",
+        "program": "dark",
+        "healpix": "6578"
+      },
+      "distance_centre_arcsec": 0.4841686841861815,
+      "image_distances_arcsec": [
+        1.0548438841409358,
+        0.03243123688967351
+      ],
+      "nearest_image_index": 1,
+      "reliable_z": true,
+      "isolated_at_centre": false,
+      "isolated_at_image": false,
+      "clearance_arcsec": 1.4
+    }
+  ],
+  "foreground_source_pairs": [],
+  "desi_receipt": {
+    "status": "complete_native_target_neighbourhood",
+    "source_file": "desi_nearby_spectra.csv.gz",
+    "sha256": "cc8644e421b20db2250caae37233e0d447e63c19acf3614055fc9f0da82e739f",
+    "n_rows": 2,
+    "augmented_quality_columns": true,
+    "selection": "8 arcsec of any Gaia image; all eligible target-centre associations within 0.65 arcsec covered"
+  },
+  "result": {
+    "centroid_model_pass": false,
+    "catalogued_central_deblend": false,
+    "secure_foreground_and_source_spectra": false,
+    "new_spectral_conflict": false,
+    "warrants_individual_review": false,
+    "desi_lookup": "complete_native_target_neighbourhood",
+    "sdss_lookup": "complete"
+  }
+}
