@@ -6,7 +6,7 @@ on:
         description: Research stage
         type: choice
         default: full
-        options: [scan, vet, focus, finalize, audit, geometry, full]
+        options: [scan, vet, focus, finalize, audit, geometry, catalog, full]
   push:
     branches: [science/hetdex-blind-emitter-search]
     paths: [.github/workflows/hetdex-blind-emitters.yml]
@@ -20,7 +20,7 @@ concurrency:
 
 env:
   SURVEY: results/hetdex_blind_emitters
-  STAGE: ${{ inputs.stage || (contains(github.event.head_commit.message, '[full-hetdex]') && 'full') || (contains(github.event.head_commit.message, '[geometry-hetdex]') && 'geometry') || 'audit' }}
+  STAGE: ${{ inputs.stage || (contains(github.event.head_commit.message, '[catalog-hetdex]') && 'catalog') || (contains(github.event.head_commit.message, '[full-hetdex]') && 'full') || (contains(github.event.head_commit.message, '[geometry-hetdex]') && 'geometry') || 'audit' }}
   VET_RUN: "44995021247"
   FOCUS_RUN: "44999164862"
   OMP_NUM_THREADS: "1"
@@ -28,7 +28,7 @@ env:
 
 jobs:
   research:
-    if: github.ref == 'refs/heads/science/hetdex-blind-emitter-search'
+    if: github.ref == 'refs/heads/science/hetdex-blind-emitter-search' && inputs.stage != 'catalog' && !contains(github.event.head_commit.message, '[catalog-hetdex]')
     runs-on: ubuntu-24.04
     timeout-minutes: 330
     permissions:
@@ -194,7 +194,7 @@ jobs:
           retention-days: 3
 
   publish:
-    if: always() && needs.research.result != 'skipped' && github.ref == 'refs/heads/science/hetdex-blind-emitter-search'
+    if: always() && (needs.research.result != 'skipped' || inputs.stage == 'catalog' || contains(github.event.head_commit.message, '[catalog-hetdex]')) && github.ref == 'refs/heads/science/hetdex-blind-emitter-search'
     needs: research
     runs-on: ubuntu-24.04
     permissions:
@@ -203,11 +203,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: science/hetdex-blind-emitter-search
+          fetch-depth: ${{ env.STAGE == 'catalog' && '0' || '1' }}
       - uses: actions/download-artifact@v4
+        if: env.STAGE != 'catalog'
         with:
           pattern: research-*
           path: ${{ runner.temp }}/hetdex-receipts
       - name: Commit evidence to the research branch
+        if: env.STAGE != 'catalog'
         run: |
           for release in sc1 sc2; do
             src="$RUNNER_TEMP/hetdex-receipts/research-$release"
@@ -223,19 +226,39 @@ jobs:
           git push origin HEAD:science/hetdex-blind-emitter-search
 
       - uses: actions/setup-python@v5
-        if: needs.research.result == 'success'
+        if: needs.research.result == 'success' || env.STAGE == 'catalog'
         with:
           python-version: "3.12"
       - name: Install dependencies for the repository checks
-        if: needs.research.result == 'success'
+        if: needs.research.result == 'success' || env.STAGE == 'catalog'
         run: python -m pip install '.[archive]' -r "$SURVEY/requirements.txt" pandas matplotlib
 
+      - name: Incorporate current main into the research branch before recounting
+        if: env.STAGE == 'catalog'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch --no-tags origin main:refs/remotes/origin/main
+          if ! git merge --no-commit --no-ff origin/main; then
+            test "$(git diff --name-only --diff-filter=U)" = README.md
+          fi
+          git show origin/main:README.md > README.md
+          git add README.md
+
       - name: Build claim and verify branch
-        if: (env.STAGE == 'focus' || env.STAGE == 'full' || env.STAGE == 'finalize' || env.STAGE == 'audit' || env.STAGE == 'geometry') && needs.research.result == 'success'
+        if: (env.STAGE == 'focus' || env.STAGE == 'full' || env.STAGE == 'finalize' || env.STAGE == 'audit' || env.STAGE == 'geometry') && needs.research.result == 'success' || env.STAGE == 'catalog'
         run: |
           python "$SURVEY/report.py"
           git add README.md "$SURVEY"
-          git diff --cached --quiet || git commit -m 'Report HETDEX results, sensitivity limits and catalog counts'
+          if git rev-parse --quiet --verify MERGE_HEAD >/dev/null; then
+            git commit -m 'Refresh the research branch and include the HETDEX entry in current catalog totals'
+          elif ! git diff --cached --quiet; then
+            git commit -m 'Report HETDEX results, sensitivity limits and catalog counts'
+          fi
+          if test "$STAGE" = catalog; then
+            outside=$(git diff --name-only origin/main HEAD | grep -Ev '^README\.md$|^\.github/workflows/hetdex-blind-emitters\.yml$|^results/hetdex_blind_emitters/' || true)
+            test -z "$outside" || { echo "$outside"; exit 1; }
+          fi
           python -m open_space.verify > "$RUNNER_TEMP/verify.txt" || { tail -100 "$RUNNER_TEMP/verify.txt"; exit 1; }
           python -m unittest discover -s tests > "$RUNNER_TEMP/unittest.txt" 2>&1 || { tail -100 "$RUNNER_TEMP/unittest.txt"; exit 1; }
           tail -6 "$RUNNER_TEMP/verify.txt"
