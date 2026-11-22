@@ -1,0 +1,6328 @@
+{
+  "selection": "All guarded pairs with RASS as the high epoch, retaining every host class.",
+  "tables": {
+    "rass2rxs": "Boller et al. 2016; 2RXS",
+    "rassbsc": "Voges et al. 1999; 1RXS bright catalogue"
+  },
+  "bands_pi": {
+    "A": [
+      11,
+      41
+    ],
+    "B": [
+      52,
+      201
+    ],
+    "C": [
+      52,
+      90
+    ],
+    "D": [
+      91,
+      201
+    ],
+    "broad": [
+      11,
+      235
+    ]
+  },
+  "definitions": "Published HR1=(B-A)/(B+A), HR2=(D-C)/(D+C). The HEASARC band B counts description starts at PI 51, whereas its hardness-ratio definition starts at PI 52. The forward model follows the hardness definition. The native counts are preserved unchanged.",
+  "limits": "RASS-modeled observed 0.2\u20132 keV flux is conditioned on a finite family of absorbed power laws (shape is Gamma) and blackbodies (shape is kT in keV). Three times the catalogue marginal error is a diagnostic tolerance, not a joint confidence region. One or two colours cannot uniquely resolve a soft excess, intrinsic absorption, blends, or mixtures. The low-state mission retains its published calibration. Both ROSAT catalogues reduce the same photons. Catalogued absorption-corrected PL, blackbody, and plasma-model fluxes are not used as observed common-band fluxes.",
+  "urls": {
+    "rass2rxs": "https://heasarc.gsfc.nasa.gov/W3Browse/rosat/rass2rxs.html",
+    "rassbsc": "https://heasarc.gsfc.nasa.gov/W3Browse/rosat/rassbsc.html"
+  },
+  "swift_2sxps_exact_countercheck": "one_exact_row",
+  "unique_2rxs_queries": 21,
+  "exact_2rxs_rows": 21,
+  "bsc_rows_by_target": 21,
+  "pair_diagnostics": 33,
+  "receipts": [
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "MAXREC": 50000,
+        "QUERY": "SELECT column_name,unit,description,ucd FROM TAP_SCHEMA.columns WHERE table_name='swift2sxps'"
+      },
+      "status": 200,
+      "final_url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=50000&QUERY=SELECT+column_name%2Cunit%2Cdescription%2Cucd+FROM+TAP_SCHEMA.columns+WHERE+table_name%3D%27swift2sxps%27",
+      "bytes": 36671,
+      "sha256": "ab1218249904c3ae9a21df3cd1a3ea50009542eaf01c9a503b65fa0b1b9301a5",
+      "returned_fields": [
+        {
+          "name": "column_name",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "unit",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "description",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "ucd",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        }
+      ]
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "MAXREC": 50000,
+        "QUERY": "SELECT * FROM swift2sxps WHERE name IN ('2SXPS J125851.4+235529')"
+      },
+      "status": 200,
+      "final_url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=50000&QUERY=SELECT+%2A+FROM+swift2sxps+WHERE+name+IN+%28%272SXPS+J125851.4%2B235529%27%29",
+      "bytes": 51085,
+      "sha256": "05de0b6fb65779e3e7e75a27c341bb970028205f9a8e92661f691cce47b07145",
+      "returned_fields": [
+        {
+          "name": "__row",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "source_number",
+          "unit": "",
+          "ucd": "meta.id;src",
+          "datatype": "int"
+        },
+        {
+          "name": "name",
+          "unit": "",
+          "ucd": "meta.id;meta.main",
+          "datatype": "char"
+        },
+        {
+          "name": "ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "lii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lon",
+          "datatype": "double"
+        },
+        {
+          "name": "bii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lat",
+          "datatype": "double"
+        },
+        {
+          "name": "error_radius",
+          "unit": "deg",
+          "ucd": "stat.error;pos",
+          "datatype": "double"
+        },
+        {
+          "name": "trackers_flag",
+          "unit": "",
+          "ucd": "meta.code;pos",
+          "datatype": "short"
+        },
+        {
+          "name": "off_axis",
+          "unit": "arcmin",
+          "ucd": "instr.offset;stat.mean",
+          "datatype": "double"
+        },
+        {
+          "name": "error_radius_ori",
+          "unit": "deg",
+          "ucd": "stat.error;pos",
+          "datatype": "double"
+        },
+        {
+          "name": "ctrpart_offset",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance",
+          "datatype": "double"
+        },
+        {
+          "name": "ctrpart_offset_good",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance",
+          "datatype": "double"
+        },
+        {
+          "name": "exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "time",
+          "unit": "d",
+          "ucd": "time.start;obs",
+          "datatype": "double"
+        },
+        {
+          "name": "end_time",
+          "unit": "d",
+          "ucd": "time.end;obs",
+          "datatype": "double"
+        },
+        {
+          "name": "time_met",
+          "unit": "s",
+          "ucd": "time.start",
+          "datatype": "int"
+        },
+        {
+          "name": "end_time_met",
+          "unit": "s",
+          "ucd": "time.end",
+          "datatype": "int"
+        },
+        {
+          "name": "time_determine",
+          "unit": "d",
+          "ucd": "time.start",
+          "datatype": "double"
+        },
+        {
+          "name": "end_time_determine",
+          "unit": "d",
+          "ucd": "time.end",
+          "datatype": "double"
+        },
+        {
+          "name": "time_determine_met",
+          "unit": "s",
+          "ucd": "time.start",
+          "datatype": "int"
+        },
+        {
+          "name": "end_time_determine_met",
+          "unit": "s",
+          "ucd": "time.end",
+          "datatype": "int"
+        },
+        {
+          "name": "time_blind",
+          "unit": "d",
+          "ucd": "time.start",
+          "datatype": "double"
+        },
+        {
+          "name": "end_time_blind",
+          "unit": "d",
+          "ucd": "time.end",
+          "datatype": "double"
+        },
+        {
+          "name": "time_blind_met",
+          "unit": "s",
+          "ucd": "time.start",
+          "datatype": "int"
+        },
+        {
+          "name": "end_time_blind_met",
+          "unit": "s",
+          "ucd": "time.end",
+          "datatype": "int"
+        },
+        {
+          "name": "num_obs",
+          "unit": "",
+          "ucd": "meta.number;obs",
+          "datatype": "int"
+        },
+        {
+          "name": "num_blind_obs",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "int"
+        },
+        {
+          "name": "num_determine_obs",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "int"
+        },
+        {
+          "name": "best_detect_id",
+          "unit": "",
+          "ucd": "meta.id;obs",
+          "datatype": "int"
+        },
+        {
+          "name": "rate_fb_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "rate_sb_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "rate_mb_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "rate_hb_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "detect_flag",
+          "unit": "",
+          "ucd": "meta.code.qual;em.X-ray",
+          "datatype": "short"
+        },
+        {
+          "name": "field_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "det_fb_flag",
+          "unit": "",
+          "ucd": "meta.code.qual;em.X-ray",
+          "datatype": "short"
+        },
+        {
+          "name": "det_sb_flag",
+          "unit": "",
+          "ucd": "meta.code.qual;em.X-ray.soft",
+          "datatype": "short"
+        },
+        {
+          "name": "det_mb_flag",
+          "unit": "",
+          "ucd": "meta.code.qual;em.X-ray",
+          "datatype": "short"
+        },
+        {
+          "name": "det_hb_flag",
+          "unit": "",
+          "ucd": "meta.code.qual;em.X-ray.hard",
+          "datatype": "short"
+        },
+        {
+          "name": "optical_load",
+          "unit": "mag",
+          "ucd": "phot.mag",
+          "datatype": "double"
+        },
+        {
+          "name": "stray_flag",
+          "unit": "",
+          "ucd": "meta.code;phot",
+          "datatype": "short"
+        },
+        {
+          "name": "bright_flag",
+          "unit": "",
+          "ucd": "meta.code;phot",
+          "datatype": "short"
+        },
+        {
+          "name": "alias_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "alias_list",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "count_rate_fb",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_fb_pos_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.max;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_fb_neg_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.min;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_1",
+          "unit": "",
+          "ucd": "phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_1_pos_err",
+          "unit": "",
+          "ucd": "stat.error;phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_1_neg_err",
+          "unit": "",
+          "ucd": "stat.error;phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2",
+          "unit": "",
+          "ucd": "phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2_pos_err",
+          "unit": "",
+          "ucd": "stat.error;phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2_neg_err",
+          "unit": "",
+          "ucd": "stat.error;phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_sb",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray.soft",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_sb_pos_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.max;phot.count;em.X-ray.soft",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_sb_neg_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.min;phot.count;em.X-ray.soft",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_mb",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_mb_pos_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.max;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_mb_neg_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.min;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_hb",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray.hard",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_hb_pos_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.max;phot.count;em.X-ray.hard",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_hb_neg_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.min;phot.count;em.X-ray.hard",
+          "datatype": "double"
+        },
+        {
+          "name": "count_fb",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "int"
+        },
+        {
+          "name": "count_sb",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray.soft",
+          "datatype": "int"
+        },
+        {
+          "name": "count_mb",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "int"
+        },
+        {
+          "name": "count_hb",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray.hard",
+          "datatype": "int"
+        },
+        {
+          "name": "bkgcnt_fb",
+          "unit": "ct",
+          "ucd": "phot;instr.background;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "bkgcnt_sb",
+          "unit": "ct",
+          "ucd": "phot;instr.background;em.X-ray.soft",
+          "datatype": "double"
+        },
+        {
+          "name": "bkgcnt_mb",
+          "unit": "ct",
+          "ucd": "phot;instr.background;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "bkgcnt_hb",
+          "unit": "ct",
+          "ucd": "phot;instr.background;em.X-ray.hard",
+          "datatype": "double"
+        },
+        {
+          "name": "ratecf_fb",
+          "unit": "",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "ratecf_sb",
+          "unit": "",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "ratecf_mb",
+          "unit": "",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "ratecf_hb",
+          "unit": "",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_fb_upper",
+          "unit": "ct / s",
+          "ucd": "phot.count;stat.max;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_sb_upper",
+          "unit": "ct / s",
+          "ucd": "phot.count;stat.max;em.X-ray.soft",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_mb_upper",
+          "unit": "ct / s",
+          "ucd": "phot.count;stat.max;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_hb_upper",
+          "unit": "ct / s",
+          "ucd": "phot.count;stat.max;em.X-ray.hard",
+          "datatype": "double"
+        },
+        {
+          "name": "pkrate_fb",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pkrate_fb_pos_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.max;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pkrate_fb_neg_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.min;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pkrate_sb",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray.soft",
+          "datatype": "double"
+        },
+        {
+          "name": "pkrate_sb_pos_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.max;phot.count;em.X-ray.soft",
+          "datatype": "double"
+        },
+        {
+          "name": "pkrate_sb_neg_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.min;phot.count;em.X-ray.soft",
+          "datatype": "double"
+        },
+        {
+          "name": "pkrate_mb",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pkrate_mb_pos_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.max;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pkrate_mb_neg_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.min;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pkrate_hb",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray.hard",
+          "datatype": "double"
+        },
+        {
+          "name": "pkrate_hb_pos_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.max;phot.count;em.X-ray.hard",
+          "datatype": "double"
+        },
+        {
+          "name": "pkrate_hb_neg_err",
+          "unit": "ct / s",
+          "ucd": "stat.error;stat.min;phot.count;em.X-ray.hard",
+          "datatype": "double"
+        },
+        {
+          "name": "nh",
+          "unit": "1 / cm2",
+          "ucd": "phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "prbcnst_snap_fb",
+          "unit": "",
+          "ucd": "src.var.index",
+          "datatype": "double"
+        },
+        {
+          "name": "prbcnst_snap_sb",
+          "unit": "",
+          "ucd": "src.var.index",
+          "datatype": "double"
+        },
+        {
+          "name": "prbcnst_snap_mb",
+          "unit": "",
+          "ucd": "src.var.index",
+          "datatype": "double"
+        },
+        {
+          "name": "prbcnst_snap_hb",
+          "unit": "",
+          "ucd": "src.var.index",
+          "datatype": "double"
+        },
+        {
+          "name": "prbcnst_snap_hr_1",
+          "unit": "",
+          "ucd": "src.var.index",
+          "datatype": "double"
+        },
+        {
+          "name": "prbcnst_snap_hr_2",
+          "unit": "",
+          "ucd": "src.var.index",
+          "datatype": "double"
+        },
+        {
+          "name": "prbcnst_fb",
+          "unit": "",
+          "ucd": "src.var.index",
+          "datatype": "double"
+        },
+        {
+          "name": "prbcnst_sb",
+          "unit": "",
+          "ucd": "src.var.index",
+          "datatype": "double"
+        },
+        {
+          "name": "prbcnst_mb",
+          "unit": "",
+          "ucd": "src.var.index",
+          "datatype": "double"
+        },
+        {
+          "name": "prbcnst_hb",
+          "unit": "",
+          "ucd": "src.var.index",
+          "datatype": "double"
+        },
+        {
+          "name": "prbcnst_hr_1",
+          "unit": "",
+          "ucd": "src.var.index",
+          "datatype": "double"
+        },
+        {
+          "name": "prbcnst_hr_2",
+          "unit": "",
+          "ucd": "src.var.index",
+          "datatype": "double"
+        },
+        {
+          "name": "which_pow",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "which_apec",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "powcf_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "powcf_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "pow_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pow_flux_a_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pow_flux_a_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pow_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pow_flux_b_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pow_flux_b_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "apeccf_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "apeccf_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "apec_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "apec_flux_a_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "apec_flux_a_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "apec_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "apec_flux_b_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "apec_flux_b_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pow_pkflux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pow_pkflux_a_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pow_pkflux_a_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pow_pkflux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pow_pkflux_b_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "pow_pkflux_b_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "apec_pkflux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "apec_pkflux_a_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "apec_pkflux_a_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "apec_pkflux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "apec_pkflux_b_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "apec_pkflux_b_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_powcf_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_powcf_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_pow_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_pow_flux_a_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_pow_flux_a_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_pow_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_pow_flux_b_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_pow_flux_b_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_apeccf_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_apeccf_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_apec_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_apec_flux_a_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_apec_flux_a_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_apec_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_apec_flux_b_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fix_apec_flux_b_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_powcf_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_powcf_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_pow_nh",
+          "unit": "1 / cm2",
+          "ucd": "phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_pow_nh_pos_err",
+          "unit": "1 / cm2",
+          "ucd": "stat.error;stat.max;phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_pow_nh_neg_err",
+          "unit": "1 / cm2",
+          "ucd": "stat.error;stat.min;phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_pow_gam",
+          "unit": "",
+          "ucd": "spect.index",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_pow_gam_pos_err",
+          "unit": "",
+          "ucd": "stat.error;stat.max;spect.index",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_pow_gam_neg_err",
+          "unit": "",
+          "ucd": "stat.error;stat.min;spect.index",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_pow_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_pow_flux_a_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_pow_flux_a_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_pow_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_pow_flux_b_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_pow_flux_b_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apeccf_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apeccf_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apec_nh",
+          "unit": "1 / cm2",
+          "ucd": "phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apec_nh_pos_err",
+          "unit": "1 / cm2",
+          "ucd": "stat.error;stat.max;phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apec_nh_neg_err",
+          "unit": "1 / cm2",
+          "ucd": "stat.error;stat.min;phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apec_kt",
+          "unit": "keV",
+          "ucd": "phys.temperature;stat.fit.param;meta.modelled",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apec_kt_pos_err",
+          "unit": "keV",
+          "ucd": "stat.error;stat.max;phys.temperature;stat.fit.param;meta.modelled",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apec_kt_neg_err",
+          "unit": "keV",
+          "ucd": "stat.error;stat.min;phys.temperature;stat.fit.param;meta.modelled",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apec_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apec_flux_a_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apec_flux_a_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apec_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apec_flux_b_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "intr_apec_flux_b_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "prob_pow",
+          "unit": "",
+          "ucd": "stat.probability",
+          "datatype": "double"
+        },
+        {
+          "name": "prob_apec",
+          "unit": "",
+          "ucd": "stat.probability",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_powcf_flux_a",
+          "unit": "",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_powcf_flux_b",
+          "unit": "",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_nh",
+          "unit": "1 / cm2",
+          "ucd": "phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_nh_pos_err",
+          "unit": "1 / cm2",
+          "ucd": "stat.error;stat.max;phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_nh_neg_err",
+          "unit": "1 / cm2",
+          "ucd": "stat.error;stat.min;phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_gam",
+          "unit": "",
+          "ucd": "spect.index",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_gam_pos_err",
+          "unit": "",
+          "ucd": "stat.error;stat.max;spect.index",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_gam_neg_err",
+          "unit": "",
+          "ucd": "stat.error;stat.min;spect.index",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_flux_a_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_flux_a_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_flux_b_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_flux_b_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_cstat",
+          "unit": "",
+          "ucd": "stat.fit.param",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_pow_dof",
+          "unit": "",
+          "ucd": "stat.fit.dof",
+          "datatype": "int"
+        },
+        {
+          "name": "fit_pow_chisq",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apeccf_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apeccf_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_nh",
+          "unit": "1 / cm2",
+          "ucd": "phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_nh_pos_err",
+          "unit": "1 / cm2",
+          "ucd": "stat.error;stat.max;phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_nh_neg_err",
+          "unit": "1 / cm2",
+          "ucd": "stat.error;stat.min;phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_kt",
+          "unit": "keV",
+          "ucd": "phys.temperature;stat.fit.param;meta.modelled",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_kt_pos_err",
+          "unit": "keV",
+          "ucd": "stat.error;stat.max;phys.temperature;stat.fit.param;meta.modelled",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_kt_neg_err",
+          "unit": "keV",
+          "ucd": "stat.error;stat.min;phys.temperature;stat.fit.param;meta.modelled",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_flux_a",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_flux_a_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_flux_a_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_flux_b",
+          "unit": "erg/cm^2/s",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_flux_b_pos_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.max;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_flux_b_neg_err",
+          "unit": "erg/cm^2/s",
+          "ucd": "stat.error;stat.min;phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_cstat",
+          "unit": "",
+          "ucd": "stat.fit.param",
+          "datatype": "double"
+        },
+        {
+          "name": "fit_apec_dof",
+          "unit": "",
+          "ucd": "stat.fit.dof",
+          "datatype": "int"
+        },
+        {
+          "name": "fit_apec_chisq",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "spec_flag",
+          "unit": "",
+          "ucd": "meta.code;spect",
+          "datatype": "short"
+        },
+        {
+          "name": "num_matches",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "int"
+        },
+        {
+          "name": "num_matches_reduced",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "int"
+        },
+        {
+          "name": "cat_roshri_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "cat_2rxs_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "cat_3xmmdr8_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "cat_3xmm_stack_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "cat_xmmsl2_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "cat_swiftft_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "cat_1swxrt_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "cat_xrtgrb_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "cat_sdssqso_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "cat_2mass_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "cat_usnob1_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "cat_2csc_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "cat_1sxps_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "cat_allwise_flag",
+          "unit": "",
+          "ucd": "meta.code.member",
+          "datatype": "short"
+        },
+        {
+          "name": "__x_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__y_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__z_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        }
+      ]
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "MAXREC": 50000,
+        "QUERY": "SELECT column_name,unit,description,ucd FROM TAP_SCHEMA.columns WHERE table_name='rass2rxs'"
+      },
+      "status": 200,
+      "final_url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=50000&QUERY=SELECT+column_name%2Cunit%2Cdescription%2Cucd+FROM+TAP_SCHEMA.columns+WHERE+table_name%3D%27rass2rxs%27",
+      "bytes": 34392,
+      "sha256": "ad752998a76560ed3d274aeee4f7b9c24abdb9a4a2b733aee3eef43b7717566a",
+      "returned_fields": [
+        {
+          "name": "column_name",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "unit",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "description",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "ucd",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        }
+      ]
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "MAXREC": 50000,
+        "QUERY": "SELECT column_name,unit,description,ucd FROM TAP_SCHEMA.columns WHERE table_name='rassbsc'"
+      },
+      "status": 200,
+      "final_url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=50000&QUERY=SELECT+column_name%2Cunit%2Cdescription%2Cucd+FROM+TAP_SCHEMA.columns+WHERE+table_name%3D%27rassbsc%27",
+      "bytes": 3879,
+      "sha256": "aea5fad1683b1cad0b520262c935ec3b91092cca5e8abe3e4f8dd9a3405fb041",
+      "returned_fields": [
+        {
+          "name": "column_name",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "unit",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "description",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "ucd",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        }
+      ]
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "MAXREC": 50000,
+        "QUERY": "SELECT * FROM rass2rxs WHERE name IN ('2RXS J014100.7-675331','2RXS J015316.2-475829','2RXS J031519.2-214329','2RXS J032541.0-164613','2RXS J042704.6-594855','2RXS J051351.0-695144','2RXS J051523.8+324106','2RXS J054334.6-682218','2RXS J074833.9-674506','2RXS J080026.1+101314','2RXS J100710.0+220311','2RXS J101001.8+300330','2RXS J105238.8+240715','2RXS J111706.3+201410','2RXS J112704.3-185727')"
+      },
+      "status": 200,
+      "final_url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=50000&QUERY=SELECT+%2A+FROM+rass2rxs+WHERE+name+IN+%28%272RXS+J014100.7-675331%27%2C%272RXS+J015316.2-475829%27%2C%272RXS+J031519.2-214329%27%2C%272RXS+J032541.0-164613%27%2C%272RXS+J042704.6-594855%27%2C%272RXS+J051351.0-695144%27%2C%272RXS+J051523.8%2B324106%27%2C%272RXS+J054334.6-682218%27%2C%272RXS+J074833.9-674506%27%2C%272RXS+J080026.1%2B101314%27%2C%272RXS+J100710.0%2B220311%27%2C%272RXS+J101001.8%2B300330%27%2C%272RXS+J105238.8%2B240715%27%2C%272RXS+J111706.3%2B201410%27%2C%272RXS+J112704.3-185727%27%29",
+      "bytes": 96637,
+      "sha256": "211709302c8e7cd761933de1b84dafa9ae1c5884ec3d26dbd65f00cee8a91fba",
+      "returned_fields": [
+        {
+          "name": "__row",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "entry_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "name",
+          "unit": "",
+          "ucd": "meta.id;meta.main",
+          "datatype": "char"
+        },
+        {
+          "name": "skyfield_number",
+          "unit": "",
+          "ucd": "meta.id;obs",
+          "datatype": "int"
+        },
+        {
+          "name": "skyfield_source_number",
+          "unit": "",
+          "ucd": "meta.id;src",
+          "datatype": "short"
+        },
+        {
+          "name": "detection_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "counts",
+          "unit": "ct",
+          "ucd": "phot;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "counts_error",
+          "unit": "ct",
+          "ucd": "stat.error;phot;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "double"
+        },
+        {
+          "name": "ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "lii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lon",
+          "datatype": "double"
+        },
+        {
+          "name": "bii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lat",
+          "datatype": "double"
+        },
+        {
+          "name": "lambda",
+          "unit": "deg",
+          "ucd": "pos.ecliptic.lat",
+          "datatype": "double"
+        },
+        {
+          "name": "beta",
+          "unit": "deg",
+          "ucd": "pos.ecliptic.lon",
+          "datatype": "double"
+        },
+        {
+          "name": "source_extent",
+          "unit": "pix",
+          "ucd": "phys.angSize;arith.ratio",
+          "datatype": "double"
+        },
+        {
+          "name": "source_extent_error",
+          "unit": "pix",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "source_extent_prob",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_1",
+          "unit": "",
+          "ucd": "phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_1_error",
+          "unit": "",
+          "ucd": "stat.error;phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2",
+          "unit": "",
+          "ucd": "phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2_error",
+          "unit": "",
+          "ucd": "stat.error;phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "unique_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "extended_region_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "nearby_src_det_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "source_quality_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "max_amplitude",
+          "unit": "",
+          "ucd": "src.var.amplitude",
+          "datatype": "double"
+        },
+        {
+          "name": "mean_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "mean_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "lc_counts",
+          "unit": "ct",
+          "ucd": "phot.count",
+          "datatype": "double"
+        },
+        {
+          "name": "min_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "min_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "max_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "max_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "lc_chi2",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "excess_variance",
+          "unit": "",
+          "ucd": "stat.variance",
+          "datatype": "double"
+        },
+        {
+          "name": "excess_variance_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "excess_variance_sigma",
+          "unit": "sigma",
+          "ucd": "stat.variance",
+          "datatype": "double"
+        },
+        {
+          "name": "nh_gal",
+          "unit": "1 / cm2",
+          "ucd": "phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_nh",
+          "unit": "1 / cm2",
+          "ucd": "phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_nh_error",
+          "unit": "1 / cm2",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_norm",
+          "unit": "",
+          "ucd": "stat.fit.param",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_norm_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_photon_index",
+          "unit": "",
+          "ucd": "spect.index",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_photon_index_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_flux",
+          "unit": "erg/s/cm^2",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_chi2_reduced",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_chi2",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_number_data_pts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "plaw_dof",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "mekal_nh",
+          "unit": "1 / cm2",
+          "ucd": "phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_nh_error",
+          "unit": "1 / cm2",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_norm",
+          "unit": "",
+          "ucd": "stat.fit.param",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_norm_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_temperature",
+          "unit": "",
+          "ucd": "phys.temperature",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_temperature_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_flux",
+          "unit": "erg/s/cm^2",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_chi2_reduced",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_chi2",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_number_data_pts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "mekal_dof",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "bb_nh",
+          "unit": "1 / cm2",
+          "ucd": "phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_nh_error",
+          "unit": "1 / cm2",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_norm",
+          "unit": "",
+          "ucd": "stat.fit.param",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_norm_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_temperature",
+          "unit": "",
+          "ucd": "phys.temperature",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_temperature_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_flux",
+          "unit": "erg/s/cm^2",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_chi2_reduced",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_chi2",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_number_data_pts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "bb_dof",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "x_pixel",
+          "unit": "pix",
+          "ucd": "pos.cartesian.x;instr.pixel",
+          "datatype": "double"
+        },
+        {
+          "name": "x_pixel_error",
+          "unit": "pix",
+          "ucd": "stat.error;pos.cartesian.x;instr.pixel",
+          "datatype": "double"
+        },
+        {
+          "name": "y_pixel",
+          "unit": "pix",
+          "ucd": "pos.cartesian.y;instr.pixel",
+          "datatype": "double"
+        },
+        {
+          "name": "y_pixel_error",
+          "unit": "pix",
+          "ucd": "stat.error;pos.cartesian.y;instr.pixel",
+          "datatype": "double"
+        },
+        {
+          "name": "x_sky_pixel",
+          "unit": "pix",
+          "ucd": "pos.cartesian.x;instr.det",
+          "datatype": "double"
+        },
+        {
+          "name": "y_sky_pixel",
+          "unit": "pix",
+          "ucd": "pos.cartesian.y;instr.det",
+          "datatype": "double"
+        },
+        {
+          "name": "extraction_radius",
+          "unit": "pix",
+          "ucd": "phys.angSize",
+          "datatype": "short"
+        },
+        {
+          "name": "extraction_radius_frac",
+          "unit": "",
+          "ucd": "stat.fit.param",
+          "datatype": "double"
+        },
+        {
+          "name": "total_photons",
+          "unit": "",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "short"
+        },
+        {
+          "name": "bkg_in_extr_reg",
+          "unit": "1 / pix",
+          "ucd": "instr.background",
+          "datatype": "double"
+        },
+        {
+          "name": "vignetting_factor",
+          "unit": "",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "remarks",
+          "unit": "",
+          "ucd": "meta.note",
+          "datatype": "char"
+        },
+        {
+          "name": "band_a_tot_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_b_tot_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_c_tot_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_d_tot_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_a_bkg_counts",
+          "unit": "ct",
+          "ucd": "instr.background;meta.table",
+          "datatype": "double"
+        },
+        {
+          "name": "band_b_bkg_counts",
+          "unit": "ct",
+          "ucd": "instr.background;em.opt.B;meta.table",
+          "datatype": "double"
+        },
+        {
+          "name": "band_c_bkg_counts",
+          "unit": "ct",
+          "ucd": "instr.background;meta.table",
+          "datatype": "double"
+        },
+        {
+          "name": "band_d_bkg_counts",
+          "unit": "ct",
+          "ucd": "instr.background;meta.table",
+          "datatype": "double"
+        },
+        {
+          "name": "remaining_bkg_area",
+          "unit": "arcmin2",
+          "ucd": "instr.background",
+          "datatype": "double"
+        },
+        {
+          "name": "band_a_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_b_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_c_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_d_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "xmmsl1_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "xmmsl1_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "xmmsl1_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_bb_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_bb_count_rate_err",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_sb_count_rate",
+          "unit": "c / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_sb_count_rate_err",
+          "unit": "c / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "threexmm_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "threexmm_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "threexmm_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_count_rate_err",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_flux",
+          "unit": "erg/s/cm^2",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_flux_error",
+          "unit": "erg/s/cm^2",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxp_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "tworxp_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "tworxp_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxp_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "tworxp_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxp_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxp_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxp_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxp_exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "tworxp_obsid",
+          "unit": "",
+          "ucd": "meta.id;obs",
+          "datatype": "char"
+        },
+        {
+          "name": "onerxs_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "onerxs_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "onerxs_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "onerxs_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_counts",
+          "unit": "",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_counts_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_det_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "short"
+        },
+        {
+          "name": "onerxs_exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "onerxs_hr_1",
+          "unit": "",
+          "ucd": "phot.flux;arith.ratio",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_hr_1_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_hr_2",
+          "unit": "",
+          "ucd": "phot.flux;arith.ratio",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_hr_2_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "veron_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "veron_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "veron_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "veron_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "veron_type",
+          "unit": "",
+          "ucd": "src.class",
+          "datatype": "char"
+        },
+        {
+          "name": "veron_vmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "veron_redshift",
+          "unit": "",
+          "ucd": "src.redshift;pos.heliocentric",
+          "datatype": "double"
+        },
+        {
+          "name": "veron_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "veron_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "veron_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "tycho2_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "tycho2_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "tycho2_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "tycho2_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "tycho2_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "tycho2_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "tycho2_vmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "tycho2_bmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.B",
+          "datatype": "double"
+        },
+        {
+          "name": "tycho2_tyc1_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "tycho2_tyc2_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "tycho2_tyc3_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "bsc_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "bsc_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "bsc_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "bsc_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "bsc_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "bsc_vmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "bsc_spect_type",
+          "unit": "",
+          "ucd": "src.spType",
+          "datatype": "char"
+        },
+        {
+          "name": "bsc_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "hd_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "hmxb_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "hmxb_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "hmxb_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "hmxb_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "hmxb_alt_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "hmxb_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "hmxb_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "hmxb_vmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "lmxb_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "lmxb_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "lmxb_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "lmxb_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "lmxb_alt_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "lmxb_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "lmxb_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "lmxb_vmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "atnf_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "atnf_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "atnf_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "atnf_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "atnf_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "atnf_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "atnf_pulsar_type",
+          "unit": "",
+          "ucd": "src.class",
+          "datatype": "char"
+        },
+        {
+          "name": "atnf_pulse_period",
+          "unit": "s",
+          "ucd": "time.period",
+          "datatype": "char"
+        },
+        {
+          "name": "fuhr_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "fuhr_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "fuhr_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "fuhr_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "fuhr_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "fuhr_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "fuhr_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "onesxps_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "onesxps_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "onesxps_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "onesxps_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "onesxps_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "onesxps_exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "onesxps_det_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "onesxps_total_det_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "onesxps_soft_det_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "onesxps_medium_det_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "onesxps_hard_det_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "onesxps_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "onesxps_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "onesxps_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxh_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "onerxh_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "onerxh_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxh_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "onerxh_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxh_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxh_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxh_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxh_exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "onerxh_snr",
+          "unit": "",
+          "ucd": "stat.snr",
+          "datatype": "double"
+        },
+        {
+          "name": "flem_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "flem_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "flem_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "flem_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "flem_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "flem_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "flem_type",
+          "unit": "",
+          "ucd": "src.class",
+          "datatype": "char"
+        },
+        {
+          "name": "flem_wfc_detection_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "flem_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "flem_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "wdcat_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "wdcat_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "wdcat_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "wdcat_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "wdcat_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "wdcat_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "wdcat_vmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "wdcat_vsphot",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "sdss_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "sdss_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "sdss_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "sdss_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "sdss_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "sdss_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "sdss_lambda",
+          "unit": "deg",
+          "ucd": "pos.ecliptic.lat",
+          "datatype": "double"
+        },
+        {
+          "name": "sdss_beta",
+          "unit": "deg",
+          "ucd": "pos.ecliptic.lon",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "tworxs_nearest_src_num",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "tworxs_nearest_src_index",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "tworxs_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_skyfield_number",
+          "unit": "",
+          "ucd": "meta.id;obs.field",
+          "datatype": "int"
+        },
+        {
+          "name": "tworxs_skyfield_src_num",
+          "unit": "",
+          "ucd": "meta.id;obs.field",
+          "datatype": "short"
+        },
+        {
+          "name": "tworxs_det_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_subfield_det_cell",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "tworxs_nearby_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "tworxs_selected_bkg",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "tworxs_x_pixel_sky_bkg1",
+          "unit": "pix",
+          "ucd": "pos.cartesian.x;instr.det",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_y_pixel_sky_bkg1",
+          "unit": "pix",
+          "ucd": "pos.cartesian.y;instr.det",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_x_pixel_sky_bkg2",
+          "unit": "pix",
+          "ucd": "pos.cartesian.x;instr.det",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_y_pixel_sky_bkg2",
+          "unit": "pix",
+          "ucd": "pos.cartesian.y;instr.det",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_bkg_count_rate",
+          "unit": "ct/s/arcmin^2",
+          "ucd": "arith.rate;instr.background",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_bkg_count_rate",
+          "unit": "ct/s/arcmin^2",
+          "ucd": "arith.rate;instr.background",
+          "datatype": "double"
+        },
+        {
+          "name": "var_flag",
+          "unit": "",
+          "ucd": "meta.code;src.var",
+          "datatype": "short"
+        },
+        {
+          "name": "count_rate_6s",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_6s_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "excess_var_6s",
+          "unit": "",
+          "ucd": "stat.variance",
+          "datatype": "double"
+        },
+        {
+          "name": "excess_var_6s_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "number_pts_in_lc",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "number_pts_lessthan_6s",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "number_pts_lessthan_1s",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "number_pts_gtrthan_6s",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "min_count_rate_6s",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "max_count_rate_6s",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "min_count_rate_6s_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "max_count_rate_6s_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "counts_notused_6",
+          "unit": "ct",
+          "ucd": "phot.count",
+          "datatype": "double"
+        },
+        {
+          "name": "excess_var_lessthan_6",
+          "unit": "",
+          "ucd": "stat.variance",
+          "datatype": "double"
+        },
+        {
+          "name": "sum_count_rate_sigma",
+          "unit": "",
+          "ucd": "stat.fit.param",
+          "datatype": "double"
+        },
+        {
+          "name": "spect_plot_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "lc_plot_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "clock_time",
+          "unit": "s",
+          "ucd": "time.start;obs.exposure",
+          "datatype": "double"
+        },
+        {
+          "name": "clock_end_time",
+          "unit": "s",
+          "ucd": "time.end;obs.exposure",
+          "datatype": "double"
+        },
+        {
+          "name": "time",
+          "unit": "d",
+          "ucd": "time.start;obs",
+          "datatype": "double"
+        },
+        {
+          "name": "end_time",
+          "unit": "d",
+          "ucd": "time.end;obs",
+          "datatype": "double"
+        },
+        {
+          "name": "__x_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__y_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__z_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        }
+      ]
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "MAXREC": 50000,
+        "QUERY": "SELECT * FROM rass2rxs WHERE name IN ('2RXS J122758.6-485342','2RXS J123939.6-052035','2RXS J125851.4+235533','2RXS J150209.2+661221','2RXS J192558.6-563341','2RXS J224520.1-465213')"
+      },
+      "status": 200,
+      "final_url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=50000&QUERY=SELECT+%2A+FROM+rass2rxs+WHERE+name+IN+%28%272RXS+J122758.6-485342%27%2C%272RXS+J123939.6-052035%27%2C%272RXS+J125851.4%2B235533%27%2C%272RXS+J150209.2%2B661221%27%2C%272RXS+J192558.6-563341%27%2C%272RXS+J224520.1-465213%27%29",
+      "bytes": 72289,
+      "sha256": "61c39f7bfee821406a42dce3ad7a1d40500578b0aba13971cd05b404a645cc66",
+      "returned_fields": [
+        {
+          "name": "__row",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "entry_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "name",
+          "unit": "",
+          "ucd": "meta.id;meta.main",
+          "datatype": "char"
+        },
+        {
+          "name": "skyfield_number",
+          "unit": "",
+          "ucd": "meta.id;obs",
+          "datatype": "int"
+        },
+        {
+          "name": "skyfield_source_number",
+          "unit": "",
+          "ucd": "meta.id;src",
+          "datatype": "short"
+        },
+        {
+          "name": "detection_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "counts",
+          "unit": "ct",
+          "ucd": "phot;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "counts_error",
+          "unit": "ct",
+          "ucd": "stat.error;phot;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "double"
+        },
+        {
+          "name": "ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "lii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lon",
+          "datatype": "double"
+        },
+        {
+          "name": "bii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lat",
+          "datatype": "double"
+        },
+        {
+          "name": "lambda",
+          "unit": "deg",
+          "ucd": "pos.ecliptic.lat",
+          "datatype": "double"
+        },
+        {
+          "name": "beta",
+          "unit": "deg",
+          "ucd": "pos.ecliptic.lon",
+          "datatype": "double"
+        },
+        {
+          "name": "source_extent",
+          "unit": "pix",
+          "ucd": "phys.angSize;arith.ratio",
+          "datatype": "double"
+        },
+        {
+          "name": "source_extent_error",
+          "unit": "pix",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "source_extent_prob",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_1",
+          "unit": "",
+          "ucd": "phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_1_error",
+          "unit": "",
+          "ucd": "stat.error;phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2",
+          "unit": "",
+          "ucd": "phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2_error",
+          "unit": "",
+          "ucd": "stat.error;phot.flux;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "unique_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "extended_region_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "nearby_src_det_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "source_quality_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "max_amplitude",
+          "unit": "",
+          "ucd": "src.var.amplitude",
+          "datatype": "double"
+        },
+        {
+          "name": "mean_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "mean_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "lc_counts",
+          "unit": "ct",
+          "ucd": "phot.count",
+          "datatype": "double"
+        },
+        {
+          "name": "min_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "min_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "max_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "max_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "lc_chi2",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "excess_variance",
+          "unit": "",
+          "ucd": "stat.variance",
+          "datatype": "double"
+        },
+        {
+          "name": "excess_variance_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "excess_variance_sigma",
+          "unit": "sigma",
+          "ucd": "stat.variance",
+          "datatype": "double"
+        },
+        {
+          "name": "nh_gal",
+          "unit": "1 / cm2",
+          "ucd": "phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_nh",
+          "unit": "1 / cm2",
+          "ucd": "phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_nh_error",
+          "unit": "1 / cm2",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_norm",
+          "unit": "",
+          "ucd": "stat.fit.param",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_norm_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_photon_index",
+          "unit": "",
+          "ucd": "spect.index",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_photon_index_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_flux",
+          "unit": "erg/s/cm^2",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_chi2_reduced",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_chi2",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "plaw_number_data_pts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "plaw_dof",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "mekal_nh",
+          "unit": "1 / cm2",
+          "ucd": "phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_nh_error",
+          "unit": "1 / cm2",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_norm",
+          "unit": "",
+          "ucd": "stat.fit.param",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_norm_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_temperature",
+          "unit": "",
+          "ucd": "phys.temperature",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_temperature_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_flux",
+          "unit": "erg/s/cm^2",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_chi2_reduced",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_chi2",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "mekal_number_data_pts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "mekal_dof",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "bb_nh",
+          "unit": "1 / cm2",
+          "ucd": "phys.columnDensity",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_nh_error",
+          "unit": "1 / cm2",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_norm",
+          "unit": "",
+          "ucd": "stat.fit.param",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_norm_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_temperature",
+          "unit": "",
+          "ucd": "phys.temperature",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_temperature_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_flux",
+          "unit": "erg/s/cm^2",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_chi2_reduced",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_chi2",
+          "unit": "",
+          "ucd": "stat.fit.chi2",
+          "datatype": "double"
+        },
+        {
+          "name": "bb_number_data_pts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "bb_dof",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "x_pixel",
+          "unit": "pix",
+          "ucd": "pos.cartesian.x;instr.pixel",
+          "datatype": "double"
+        },
+        {
+          "name": "x_pixel_error",
+          "unit": "pix",
+          "ucd": "stat.error;pos.cartesian.x;instr.pixel",
+          "datatype": "double"
+        },
+        {
+          "name": "y_pixel",
+          "unit": "pix",
+          "ucd": "pos.cartesian.y;instr.pixel",
+          "datatype": "double"
+        },
+        {
+          "name": "y_pixel_error",
+          "unit": "pix",
+          "ucd": "stat.error;pos.cartesian.y;instr.pixel",
+          "datatype": "double"
+        },
+        {
+          "name": "x_sky_pixel",
+          "unit": "pix",
+          "ucd": "pos.cartesian.x;instr.det",
+          "datatype": "double"
+        },
+        {
+          "name": "y_sky_pixel",
+          "unit": "pix",
+          "ucd": "pos.cartesian.y;instr.det",
+          "datatype": "double"
+        },
+        {
+          "name": "extraction_radius",
+          "unit": "pix",
+          "ucd": "phys.angSize",
+          "datatype": "short"
+        },
+        {
+          "name": "extraction_radius_frac",
+          "unit": "",
+          "ucd": "stat.fit.param",
+          "datatype": "double"
+        },
+        {
+          "name": "total_photons",
+          "unit": "",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "short"
+        },
+        {
+          "name": "bkg_in_extr_reg",
+          "unit": "1 / pix",
+          "ucd": "instr.background",
+          "datatype": "double"
+        },
+        {
+          "name": "vignetting_factor",
+          "unit": "",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "remarks",
+          "unit": "",
+          "ucd": "meta.note",
+          "datatype": "char"
+        },
+        {
+          "name": "band_a_tot_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_b_tot_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_c_tot_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_d_tot_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_a_bkg_counts",
+          "unit": "ct",
+          "ucd": "instr.background;meta.table",
+          "datatype": "double"
+        },
+        {
+          "name": "band_b_bkg_counts",
+          "unit": "ct",
+          "ucd": "instr.background;em.opt.B;meta.table",
+          "datatype": "double"
+        },
+        {
+          "name": "band_c_bkg_counts",
+          "unit": "ct",
+          "ucd": "instr.background;meta.table",
+          "datatype": "double"
+        },
+        {
+          "name": "band_d_bkg_counts",
+          "unit": "ct",
+          "ucd": "instr.background;meta.table",
+          "datatype": "double"
+        },
+        {
+          "name": "remaining_bkg_area",
+          "unit": "arcmin2",
+          "ucd": "instr.background",
+          "datatype": "double"
+        },
+        {
+          "name": "band_a_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_b_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_c_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "band_d_counts",
+          "unit": "ct",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "xmmsl1_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "xmmsl1_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "xmmsl1_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_bb_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_bb_count_rate_err",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_sb_count_rate",
+          "unit": "c / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "xmmsl1_sb_count_rate_err",
+          "unit": "c / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "threexmm_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "threexmm_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "threexmm_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_count_rate_err",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_flux",
+          "unit": "erg/s/cm^2",
+          "ucd": "phot.flux;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "threexmm_flux_error",
+          "unit": "erg/s/cm^2",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxp_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "tworxp_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "tworxp_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxp_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "tworxp_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxp_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxp_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxp_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxp_exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "tworxp_obsid",
+          "unit": "",
+          "ucd": "meta.id;obs",
+          "datatype": "char"
+        },
+        {
+          "name": "onerxs_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "onerxs_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "onerxs_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "onerxs_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_counts",
+          "unit": "",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_counts_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_det_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "short"
+        },
+        {
+          "name": "onerxs_exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "onerxs_hr_1",
+          "unit": "",
+          "ucd": "phot.flux;arith.ratio",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_hr_1_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_hr_2",
+          "unit": "",
+          "ucd": "phot.flux;arith.ratio",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_hr_2_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "veron_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "veron_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "veron_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "veron_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "veron_type",
+          "unit": "",
+          "ucd": "src.class",
+          "datatype": "char"
+        },
+        {
+          "name": "veron_vmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "veron_redshift",
+          "unit": "",
+          "ucd": "src.redshift;pos.heliocentric",
+          "datatype": "double"
+        },
+        {
+          "name": "veron_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "veron_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "veron_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "tycho2_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "tycho2_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "tycho2_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "tycho2_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "tycho2_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "tycho2_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "tycho2_vmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "tycho2_bmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.B",
+          "datatype": "double"
+        },
+        {
+          "name": "tycho2_tyc1_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "tycho2_tyc2_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "tycho2_tyc3_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "bsc_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "bsc_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "bsc_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "bsc_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "bsc_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "bsc_vmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "bsc_spect_type",
+          "unit": "",
+          "ucd": "src.spType",
+          "datatype": "char"
+        },
+        {
+          "name": "bsc_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "hd_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "hmxb_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "hmxb_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "hmxb_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "hmxb_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "hmxb_alt_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "hmxb_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "hmxb_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "hmxb_vmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "lmxb_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "lmxb_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "lmxb_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "lmxb_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "lmxb_alt_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "lmxb_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "lmxb_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "lmxb_vmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "atnf_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "atnf_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "atnf_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "atnf_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "atnf_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "atnf_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "atnf_pulsar_type",
+          "unit": "",
+          "ucd": "src.class",
+          "datatype": "char"
+        },
+        {
+          "name": "atnf_pulse_period",
+          "unit": "s",
+          "ucd": "time.period",
+          "datatype": "char"
+        },
+        {
+          "name": "fuhr_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "fuhr_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "fuhr_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "fuhr_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "fuhr_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "fuhr_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "fuhr_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "onesxps_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "onesxps_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "onesxps_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "onesxps_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "onesxps_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "onesxps_exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "onesxps_det_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "onesxps_total_det_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "onesxps_soft_det_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "onesxps_medium_det_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "onesxps_hard_det_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "onesxps_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "onesxps_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "onesxps_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxh_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "onerxh_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "onerxh_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxh_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "onerxh_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxh_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxh_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxh_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxh_exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "onerxh_snr",
+          "unit": "",
+          "ucd": "stat.snr",
+          "datatype": "double"
+        },
+        {
+          "name": "flem_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "flem_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "flem_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "flem_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "flem_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "flem_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "flem_type",
+          "unit": "",
+          "ucd": "src.class",
+          "datatype": "char"
+        },
+        {
+          "name": "flem_wfc_detection_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "flem_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "flem_count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "wdcat_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "wdcat_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "wdcat_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "wdcat_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "wdcat_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "wdcat_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "wdcat_vmag",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "wdcat_vsphot",
+          "unit": "mag",
+          "ucd": "phot.mag;em.opt.V",
+          "datatype": "double"
+        },
+        {
+          "name": "sdss_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "sdss_nearest",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "short"
+        },
+        {
+          "name": "sdss_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "sdss_name",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "sdss_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "sdss_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "sdss_lambda",
+          "unit": "deg",
+          "ucd": "pos.ecliptic.lat",
+          "datatype": "double"
+        },
+        {
+          "name": "sdss_beta",
+          "unit": "deg",
+          "ucd": "pos.ecliptic.lon",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_number_ctrprts",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "tworxs_nearest_src_num",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "tworxs_nearest_src_index",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "int"
+        },
+        {
+          "name": "tworxs_separation",
+          "unit": "arcsec",
+          "ucd": "pos.angDistance;src.orbital",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_skyfield_number",
+          "unit": "",
+          "ucd": "meta.id;obs.field",
+          "datatype": "int"
+        },
+        {
+          "name": "tworxs_skyfield_src_num",
+          "unit": "",
+          "ucd": "meta.id;obs.field",
+          "datatype": "short"
+        },
+        {
+          "name": "tworxs_det_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_subfield_det_cell",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "tworxs_nearby_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "tworxs_selected_bkg",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "tworxs_x_pixel_sky_bkg1",
+          "unit": "pix",
+          "ucd": "pos.cartesian.x;instr.det",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_y_pixel_sky_bkg1",
+          "unit": "pix",
+          "ucd": "pos.cartesian.y;instr.det",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_x_pixel_sky_bkg2",
+          "unit": "pix",
+          "ucd": "pos.cartesian.x;instr.det",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_y_pixel_sky_bkg2",
+          "unit": "pix",
+          "ucd": "pos.cartesian.y;instr.det",
+          "datatype": "double"
+        },
+        {
+          "name": "onerxs_bkg_count_rate",
+          "unit": "ct/s/arcmin^2",
+          "ucd": "arith.rate;instr.background",
+          "datatype": "double"
+        },
+        {
+          "name": "tworxs_bkg_count_rate",
+          "unit": "ct/s/arcmin^2",
+          "ucd": "arith.rate;instr.background",
+          "datatype": "double"
+        },
+        {
+          "name": "var_flag",
+          "unit": "",
+          "ucd": "meta.code;src.var",
+          "datatype": "short"
+        },
+        {
+          "name": "count_rate_6s",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_6s_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "excess_var_6s",
+          "unit": "",
+          "ucd": "stat.variance",
+          "datatype": "double"
+        },
+        {
+          "name": "excess_var_6s_error",
+          "unit": "",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "number_pts_in_lc",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "number_pts_lessthan_6s",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "number_pts_lessthan_1s",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "number_pts_gtrthan_6s",
+          "unit": "",
+          "ucd": "meta.number",
+          "datatype": "short"
+        },
+        {
+          "name": "min_count_rate_6s",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "max_count_rate_6s",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "min_count_rate_6s_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "max_count_rate_6s_error",
+          "unit": "ct / s",
+          "ucd": "stat.error",
+          "datatype": "double"
+        },
+        {
+          "name": "counts_notused_6",
+          "unit": "ct",
+          "ucd": "phot.count",
+          "datatype": "double"
+        },
+        {
+          "name": "excess_var_lessthan_6",
+          "unit": "",
+          "ucd": "stat.variance",
+          "datatype": "double"
+        },
+        {
+          "name": "sum_count_rate_sigma",
+          "unit": "",
+          "ucd": "stat.fit.param",
+          "datatype": "double"
+        },
+        {
+          "name": "spect_plot_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "lc_plot_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "short"
+        },
+        {
+          "name": "clock_time",
+          "unit": "s",
+          "ucd": "time.start;obs.exposure",
+          "datatype": "double"
+        },
+        {
+          "name": "clock_end_time",
+          "unit": "s",
+          "ucd": "time.end;obs.exposure",
+          "datatype": "double"
+        },
+        {
+          "name": "time",
+          "unit": "d",
+          "ucd": "time.start;obs",
+          "datatype": "double"
+        },
+        {
+          "name": "end_time",
+          "unit": "d",
+          "ucd": "time.end;obs",
+          "datatype": "double"
+        },
+        {
+          "name": "__x_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__y_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__z_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        }
+      ]
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "MAXREC": 50000,
+        "QUERY": "SELECT * FROM rassbsc WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',117.141620000,-67.751830000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',291.494540000,-56.561530000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',78.849430000,32.685200000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',225.538440000,66.205870000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',48.830250000,-21.724860000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',25.253200000,-67.892200000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',152.507670000,30.058360000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',341.333990000,-46.870460000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',163.161970000,24.121060000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',169.276430000,20.236170000,0.016666667))"
+      },
+      "status": 200,
+      "final_url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=50000&QUERY=SELECT+%2A+FROM+rassbsc+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C117.141620000%2C-67.751830000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C291.494540000%2C-56.561530000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C78.849430000%2C32.685200000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C225.538440000%2C66.205870000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C48.830250000%2C-21.724860000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C25.253200000%2C-67.892200000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C152.507670000%2C30.058360000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C341.333990000%2C-46.870460000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C163.161970000%2C24.121060000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C169.276430000%2C20.236170000%2C0.016666667%29%29",
+      "bytes": 10180,
+      "sha256": "e73c7ea1df17bd03fef1be0aec47a37792e117b210d2160ba11daccc12e07ea1",
+      "returned_fields": [
+        {
+          "name": "__row",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "name",
+          "unit": "",
+          "ucd": "meta.id;meta.main",
+          "datatype": "char"
+        },
+        {
+          "name": "ra_b1950",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "dec_b1950",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "lii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lon",
+          "datatype": "double"
+        },
+        {
+          "name": "bii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lat",
+          "datatype": "double"
+        },
+        {
+          "name": "positional_error",
+          "unit": "arcsec",
+          "ucd": "stat.error;pos",
+          "datatype": "short"
+        },
+        {
+          "name": "screen_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "new_data_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "background_count_rate",
+          "unit": "ct/s/arcmin^2",
+          "ucd": "instr.background",
+          "datatype": "double"
+        },
+        {
+          "name": "exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "hardness_ratio_1",
+          "unit": "",
+          "ucd": "phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_1_error",
+          "unit": "",
+          "ucd": "stat.error;phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2",
+          "unit": "",
+          "ucd": "phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2_error",
+          "unit": "",
+          "ucd": "stat.error;phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "source_extent",
+          "unit": "arcsec",
+          "ucd": "phys.angSize;src",
+          "datatype": "int"
+        },
+        {
+          "name": "extent_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "int"
+        },
+        {
+          "name": "detect_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "int"
+        },
+        {
+          "name": "extraction_radius",
+          "unit": "arcsec",
+          "ucd": "",
+          "datatype": "int"
+        },
+        {
+          "name": "priority_flags",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "high_detect_range",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "vignetting_factor",
+          "unit": "",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "date_included",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "date_modified",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "sass_field_id",
+          "unit": "",
+          "ucd": "meta.id;obs.field",
+          "datatype": "char"
+        },
+        {
+          "name": "sass_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "__x_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__y_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__z_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        }
+      ]
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "MAXREC": 50000,
+        "QUERY": "SELECT * FROM rassbsc WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',51.420840000,-16.770330000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',78.462700000,-69.862310000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',85.894270000,-68.371780000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',189.915180000,-5.343320000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',186.994300000,-48.895260000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',66.769220000,-59.815490000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',120.109020000,10.220800000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',28.317820000,-47.974950000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',171.768160000,-18.957660000,0.016666667)) OR 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',151.791830000,22.053230000,0.016666667))"
+      },
+      "status": 200,
+      "final_url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=50000&QUERY=SELECT+%2A+FROM+rassbsc+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C51.420840000%2C-16.770330000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C78.462700000%2C-69.862310000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C85.894270000%2C-68.371780000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C189.915180000%2C-5.343320000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C186.994300000%2C-48.895260000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C66.769220000%2C-59.815490000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C120.109020000%2C10.220800000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C28.317820000%2C-47.974950000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C171.768160000%2C-18.957660000%2C0.016666667%29%29+OR+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C151.791830000%2C22.053230000%2C0.016666667%29%29",
+      "bytes": 10176,
+      "sha256": "882578a538450c6765d91b04ed406d0b3709e9b76aeb734aca18b72ae42980d2",
+      "returned_fields": [
+        {
+          "name": "__row",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "name",
+          "unit": "",
+          "ucd": "meta.id;meta.main",
+          "datatype": "char"
+        },
+        {
+          "name": "ra_b1950",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "dec_b1950",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "lii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lon",
+          "datatype": "double"
+        },
+        {
+          "name": "bii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lat",
+          "datatype": "double"
+        },
+        {
+          "name": "positional_error",
+          "unit": "arcsec",
+          "ucd": "stat.error;pos",
+          "datatype": "short"
+        },
+        {
+          "name": "screen_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "new_data_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "background_count_rate",
+          "unit": "ct/s/arcmin^2",
+          "ucd": "instr.background",
+          "datatype": "double"
+        },
+        {
+          "name": "exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "hardness_ratio_1",
+          "unit": "",
+          "ucd": "phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_1_error",
+          "unit": "",
+          "ucd": "stat.error;phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2",
+          "unit": "",
+          "ucd": "phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2_error",
+          "unit": "",
+          "ucd": "stat.error;phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "source_extent",
+          "unit": "arcsec",
+          "ucd": "phys.angSize;src",
+          "datatype": "int"
+        },
+        {
+          "name": "extent_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "int"
+        },
+        {
+          "name": "detect_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "int"
+        },
+        {
+          "name": "extraction_radius",
+          "unit": "arcsec",
+          "ucd": "",
+          "datatype": "int"
+        },
+        {
+          "name": "priority_flags",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "high_detect_range",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "vignetting_factor",
+          "unit": "",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "date_included",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "date_modified",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "sass_field_id",
+          "unit": "",
+          "ucd": "meta.id;obs.field",
+          "datatype": "char"
+        },
+        {
+          "name": "sass_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "__x_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__y_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__z_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        }
+      ]
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "MAXREC": 50000,
+        "QUERY": "SELECT * FROM rassbsc WHERE 1=CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',194.714400000,23.926020000,0.016666667))"
+      },
+      "status": 200,
+      "final_url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=50000&QUERY=SELECT+%2A+FROM+rassbsc+WHERE+1%3DCONTAINS%28POINT%28%27ICRS%27%2Cra%2Cdec%29%2CCIRCLE%28%27ICRS%27%2C194.714400000%2C23.926020000%2C0.016666667%29%29",
+      "bytes": 5975,
+      "sha256": "862fb33d0fba40dc5d7d5adf7848784f6bed66a51a39ee57a2934f6f1f0ada92",
+      "returned_fields": [
+        {
+          "name": "__row",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "name",
+          "unit": "",
+          "ucd": "meta.id;meta.main",
+          "datatype": "char"
+        },
+        {
+          "name": "ra_b1950",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "dec_b1950",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "lii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lon",
+          "datatype": "double"
+        },
+        {
+          "name": "bii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lat",
+          "datatype": "double"
+        },
+        {
+          "name": "positional_error",
+          "unit": "arcsec",
+          "ucd": "stat.error;pos",
+          "datatype": "short"
+        },
+        {
+          "name": "screen_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "new_data_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "background_count_rate",
+          "unit": "ct/s/arcmin^2",
+          "ucd": "instr.background",
+          "datatype": "double"
+        },
+        {
+          "name": "exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "hardness_ratio_1",
+          "unit": "",
+          "ucd": "phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_1_error",
+          "unit": "",
+          "ucd": "stat.error;phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2",
+          "unit": "",
+          "ucd": "phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2_error",
+          "unit": "",
+          "ucd": "stat.error;phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "source_extent",
+          "unit": "arcsec",
+          "ucd": "phys.angSize;src",
+          "datatype": "int"
+        },
+        {
+          "name": "extent_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "int"
+        },
+        {
+          "name": "detect_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "int"
+        },
+        {
+          "name": "extraction_radius",
+          "unit": "arcsec",
+          "ucd": "",
+          "datatype": "int"
+        },
+        {
+          "name": "priority_flags",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "high_detect_range",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "vignetting_factor",
+          "unit": "",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "date_included",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "date_modified",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "sass_field_id",
+          "unit": "",
+          "ucd": "meta.id;obs.field",
+          "datatype": "char"
+        },
+        {
+          "name": "sass_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "__x_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__y_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__z_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        }
+      ]
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "MAXREC": 50000,
+        "QUERY": "SELECT * FROM rassbsc WHERE name IN ('1RXS J014100.4-675332','1RXS J015316.2-475830','1RXS J031519.3-214329','1RXS J032540.8-164607','1RXS J042704.5-594854','1RXS J051351.2-695145','1RXS J051523.8+324107','1RXS J054334.5-682218','1RXS J074833.8-674505','1RXS J080026.2+101313','1RXS J100710.1+220312','1RXS J101001.9+300334','1RXS J105237.9+240659','1RXS J111706.3+201410','1RXS J112704.5-185731')"
+      },
+      "status": 200,
+      "final_url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=50000&QUERY=SELECT+%2A+FROM+rassbsc+WHERE+name+IN+%28%271RXS+J014100.4-675332%27%2C%271RXS+J015316.2-475830%27%2C%271RXS+J031519.3-214329%27%2C%271RXS+J032540.8-164607%27%2C%271RXS+J042704.5-594854%27%2C%271RXS+J051351.2-695145%27%2C%271RXS+J051523.8%2B324107%27%2C%271RXS+J054334.5-682218%27%2C%271RXS+J074833.8-674505%27%2C%271RXS+J080026.2%2B101313%27%2C%271RXS+J100710.1%2B220312%27%2C%271RXS+J101001.9%2B300334%27%2C%271RXS+J105237.9%2B240659%27%2C%271RXS+J111706.3%2B201410%27%2C%271RXS+J112704.5-185731%27%29",
+      "bytes": 11382,
+      "sha256": "32209d472408b6c41fcc0c0128e7e784ef25287815cfa0abe64b086ca225e390",
+      "returned_fields": [
+        {
+          "name": "__row",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "name",
+          "unit": "",
+          "ucd": "meta.id;meta.main",
+          "datatype": "char"
+        },
+        {
+          "name": "ra_b1950",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "dec_b1950",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "lii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lon",
+          "datatype": "double"
+        },
+        {
+          "name": "bii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lat",
+          "datatype": "double"
+        },
+        {
+          "name": "positional_error",
+          "unit": "arcsec",
+          "ucd": "stat.error;pos",
+          "datatype": "short"
+        },
+        {
+          "name": "screen_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "new_data_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "background_count_rate",
+          "unit": "ct/s/arcmin^2",
+          "ucd": "instr.background",
+          "datatype": "double"
+        },
+        {
+          "name": "exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "hardness_ratio_1",
+          "unit": "",
+          "ucd": "phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_1_error",
+          "unit": "",
+          "ucd": "stat.error;phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2",
+          "unit": "",
+          "ucd": "phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2_error",
+          "unit": "",
+          "ucd": "stat.error;phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "source_extent",
+          "unit": "arcsec",
+          "ucd": "phys.angSize;src",
+          "datatype": "int"
+        },
+        {
+          "name": "extent_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "int"
+        },
+        {
+          "name": "detect_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "int"
+        },
+        {
+          "name": "extraction_radius",
+          "unit": "arcsec",
+          "ucd": "",
+          "datatype": "int"
+        },
+        {
+          "name": "priority_flags",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "high_detect_range",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "vignetting_factor",
+          "unit": "",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "date_included",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "date_modified",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "sass_field_id",
+          "unit": "",
+          "ucd": "meta.id;obs.field",
+          "datatype": "char"
+        },
+        {
+          "name": "sass_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "__x_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__y_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__z_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        }
+      ]
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync",
+      "params": {
+        "REQUEST": "doQuery",
+        "LANG": "ADQL",
+        "FORMAT": "votable",
+        "MAXREC": 50000,
+        "QUERY": "SELECT * FROM rassbsc WHERE name IN ('1RXS J122758.8-485343','1RXS J123939.6-052035','1RXS J125851.4+235532','1RXS J150209.2+661220','1RXS J192558.3-563344','1RXS J224520.3-465212')"
+      },
+      "status": 200,
+      "final_url": "https://heasarc.gsfc.nasa.gov/xamin/vo/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=votable&MAXREC=50000&QUERY=SELECT+%2A+FROM+rassbsc+WHERE+name+IN+%28%271RXS+J122758.8-485343%27%2C%271RXS+J123939.6-052035%27%2C%271RXS+J125851.4%2B235532%27%2C%271RXS+J150209.2%2B661220%27%2C%271RXS+J192558.3-563344%27%2C%271RXS+J224520.3-465212%27%29",
+      "bytes": 7868,
+      "sha256": "96a5f30e7215826d457dcd56270bbace76b01b56c9f4d3f5939eeda3d0908f12",
+      "returned_fields": [
+        {
+          "name": "__row",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "name",
+          "unit": "",
+          "ucd": "meta.id;meta.main",
+          "datatype": "char"
+        },
+        {
+          "name": "ra_b1950",
+          "unit": "deg",
+          "ucd": "pos.eq.ra",
+          "datatype": "double"
+        },
+        {
+          "name": "dec_b1950",
+          "unit": "deg",
+          "ucd": "pos.eq.dec",
+          "datatype": "double"
+        },
+        {
+          "name": "ra",
+          "unit": "deg",
+          "ucd": "pos.eq.ra;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "dec",
+          "unit": "deg",
+          "ucd": "pos.eq.dec;meta.main",
+          "datatype": "double"
+        },
+        {
+          "name": "lii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lon",
+          "datatype": "double"
+        },
+        {
+          "name": "bii",
+          "unit": "deg",
+          "ucd": "pos.galactic.lat",
+          "datatype": "double"
+        },
+        {
+          "name": "positional_error",
+          "unit": "arcsec",
+          "ucd": "stat.error;pos",
+          "datatype": "short"
+        },
+        {
+          "name": "screen_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "new_data_flag",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "count_rate",
+          "unit": "ct / s",
+          "ucd": "phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "count_rate_error",
+          "unit": "ct / s",
+          "ucd": "stat.error;phot.count;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "background_count_rate",
+          "unit": "ct/s/arcmin^2",
+          "ucd": "instr.background",
+          "datatype": "double"
+        },
+        {
+          "name": "exposure",
+          "unit": "s",
+          "ucd": "time.duration;obs.exposure",
+          "datatype": "int"
+        },
+        {
+          "name": "hardness_ratio_1",
+          "unit": "",
+          "ucd": "phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_1_error",
+          "unit": "",
+          "ucd": "stat.error;phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2",
+          "unit": "",
+          "ucd": "phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "hardness_ratio_2_error",
+          "unit": "",
+          "ucd": "stat.error;phot.count;arith.ratio;em.X-ray",
+          "datatype": "double"
+        },
+        {
+          "name": "source_extent",
+          "unit": "arcsec",
+          "ucd": "phys.angSize;src",
+          "datatype": "int"
+        },
+        {
+          "name": "extent_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "int"
+        },
+        {
+          "name": "detect_likelihood",
+          "unit": "",
+          "ucd": "stat.likelihood",
+          "datatype": "int"
+        },
+        {
+          "name": "extraction_radius",
+          "unit": "arcsec",
+          "ucd": "",
+          "datatype": "int"
+        },
+        {
+          "name": "priority_flags",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "high_detect_range",
+          "unit": "",
+          "ucd": "meta.code",
+          "datatype": "char"
+        },
+        {
+          "name": "vignetting_factor",
+          "unit": "",
+          "ucd": "instr.param",
+          "datatype": "double"
+        },
+        {
+          "name": "date_included",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "date_modified",
+          "unit": "",
+          "ucd": "",
+          "datatype": "char"
+        },
+        {
+          "name": "sass_field_id",
+          "unit": "",
+          "ucd": "meta.id;obs.field",
+          "datatype": "char"
+        },
+        {
+          "name": "sass_source_number",
+          "unit": "",
+          "ucd": "meta.id",
+          "datatype": "char"
+        },
+        {
+          "name": "__x_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__y_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        },
+        {
+          "name": "__z_ra_dec",
+          "unit": "",
+          "ucd": "",
+          "datatype": "double"
+        }
+      ]
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/FTP/caldb/data/rosat/pspc/cpf/matrices/pspcc_gain1_256.rsp",
+      "params": null,
+      "status": 200,
+      "final_url": "https://heasarc.gsfc.nasa.gov/FTP/caldb/data/rosat/pspc/cpf/matrices/pspcc_gain1_256.rsp",
+      "bytes": 748800,
+      "sha256": "b421bbad8eaf93a0bedf6704c18ff2cdf3e77781382888245219cf609c33b1bd"
+    }
+  ]
+}

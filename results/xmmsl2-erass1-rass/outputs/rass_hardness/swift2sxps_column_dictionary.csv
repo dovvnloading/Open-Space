@@ -1,0 +1,235 @@
+column_name,unit,description,ucd
+name,,IAU-Style Source Designation (2SXPS JHHMMSS.s+DDMM.m),meta.id;meta.main
+ra,degree,Right Ascension,pos.eq.ra;meta.main
+dec,degree,Declination,pos.eq.dec;meta.main
+error_radius,degree,90%-Confidence Radial Position Error,stat.error;pos
+count_rate_fb,ct/s,Total Band (0.3-10 keV) Count Rate,phot.count;em.X-ray
+count_rate_fb_pos_err,ct/s,Positive Error on Total Band (0.3-10 keV) Count Rate,stat.error;stat.max;phot.count;em.X-ray
+count_rate_fb_neg_err,ct/s,Negative Error on Total Band (0.3-10 keV) Count Rate,stat.error;stat.min;phot.count;em.X-ray
+pow_flux_a,erg/cm^2/s,Observed 0.3-10 keV Flux for Power-Law Spectrum,phot.flux;em.X-ray
+pow_flux_a_pos_err,erg/cm^2/s,Positive Error on Observed 0.3-10 keV Flux for Power-Law,stat.error;stat.max;phot.flux;em.X-ray
+pow_flux_a_neg_err,erg/cm^2/s,Negative Error on Observed 0.3-10 keV Flux for Power-Law,stat.error;stat.min;phot.flux;em.X-ray
+apec_flux_a,erg/cm^2/s,Observed 0.3-10 keV Flux derived from APEC,phot.flux;em.X-ray
+apec_flux_a_pos_err,erg/cm^2/s,Positive Error on Observed 0.3-10 keV Flux for APEC,stat.error;stat.max;phot.flux;em.X-ray
+apec_flux_a_neg_err,erg/cm^2/s,Negative Error on Observed 0.3-10 keV Flux for APEC,stat.error;stat.min;phot.flux;em.X-ray
+fit_apeccf_flux_a,erg/cm^2/s,Counts-to-Obs.-Flux (0.3-10 keV) Conversion for Automated APEC,instr.param
+fix_apec_flux_b_neg_err,erg/cm^2/s,Negative Error on Unabsorbed 0.3-10 keV Flux for APEC,stat.error;stat.min;phot.flux;em.X-ray
+ratecf_fb,,Count Rate Correction Factor in Total Band (0.3-10 keV),instr.param
+best_detect_id,,ID from Detections Table from Which Position and Error Have Been Taken,meta.id;obs
+count_rate_hb_pos_err,ct/s,Positive Error on Hard Band (2-10 keV) Count Rate,stat.error;stat.max;phot.count;em.X-ray.hard
+count_rate_fb_upper,ct/s,Overall 3-Sigma Upper Limit Total Band (0.3-10 keV) Count Rate,phot.count;stat.max;em.X-ray
+nh,cm^-2,Galactic Neutral Hydrogen Absorption Column Density,phys.columnDensity
+fit_powcf_flux_a,,Counts-to-Obs.-Flux (0.3-10 keV) Conversion for Automated Power-Law,instr.param
+pkrate_mb_pos_err,ct/s,Positive Error on Peak Medium Band (1-2 keV) Count Rate,stat.error;stat.max;phot.count;em.X-ray
+intr_pow_gam_neg_err,,Negative Error of Power-Law Index Based on HR-Interpolated Power-Law,stat.error;stat.min;spect.index
+hardness_ratio_1_neg_err,,Negative Error on HR1,stat.error;phot.flux;arith.ratio;em.X-ray
+num_determine_obs,,Number of Obs. and Stacked Images with Source Detected in Retrospective Analysis,meta.number
+intr_pow_flux_b_pos_err,erg/cm^2/s,Positive Error on Unabsorbed 0.3-10 keV Flux for HR-Interpolated Power-Law,stat.error;stat.max;phot.flux;em.X-ray
+time_determine_met,s,Start MET of 1st Obs. in Blind Search or Retrospective Count-Rate Determination,time.start
+end_time_met,s,End MET of the Last Observation of Source in 2SXPS (Swift MET),time.end
+fit_apec_chisq,,Reduced Chi-Squared Value of Best-Fitting Automated APEC,stat.fit.chi2
+count_rate_sb_pos_err,ct/s,Positive Error on Soft Band (0.3-1 keV) Count Rate,stat.error;stat.max;phot.count;em.X-ray.soft
+fit_apec_kt_neg_err,keV,Negative Error on APEC Plasma Temperature for Automated APEC,stat.error;stat.min;phys.temperature;stat.fit.param;meta.modelled
+count_rate_hb,ct/s,Hard Band (2-10 keV) Count Rate of the source,phot.count;em.X-ray.hard
+prbcnst_snap_hr_1,,Probability Source HR1 Hardness Ratio Constant Between Snapshots,src.var.index
+cat_2rxs_flag,,Object Appears in 2RXS Catalog,meta.code.member
+time_blind_met,s,Start MET of First Observation of Source Detected in Blind Search,time.start
+cat_1sxps_flag,,Object Appears in 1SXPS Catalog,meta.code.member
+fit_pow_chisq,,Reduced Chi-Squared of best Fitting Automated Power-Law,stat.fit.chi2
+time_met,s,Start MET of the First Observation of Source in 2SXPS (Swift MET),time.start
+fit_powcf_flux_b,,Counts-to-Unabs.-Flux (0.3-10 keV) Conversion for Automated Power-Law,instr.param
+fit_pow_flux_a_pos_err,erg/cm^2/s,Positive Error on Observed 0.3-10 keV Flux for Automated Power-Law,stat.error;stat.max;phot.flux;em.X-ray
+num_blind_obs,,Number of Observations and Stacked Images with Source Detected in Blind Search,meta.number
+pkrate_sb,ct/s,Peak Count Rate of the Source in Soft Band (0.3-1 keV),phot.count;em.X-ray.soft
+intr_apec_kt,keV,APEC Plasma Temperature for HR-Interpolated APEC,phys.temperature;stat.fit.param;meta.modelled
+fix_pow_flux_b_pos_err,erg/cm^2/s,Positive Error Unabsorbed 0.3-10 keV Flux for Power-Law,stat.error;stat.max;phot.flux;em.X-ray
+optical_load,mag,Worst Optical Load Limit Exceeded,phot.mag
+cat_sdssqso_flag,,Object Appears in SDSS QSO DR14 Catalog,meta.code.member
+fit_apec_flux_a_pos_err,erg/cm^2/s,Positive Error on Observed 0.3-10 keV Flux for Automated APEC,stat.error;stat.max;phot.flux;em.X-ray
+count_rate_hb_neg_err,ct/s,Negative Error on Hard Band (2-10 keV) Count Rate,stat.error;stat.min;phot.count;em.X-ray.hard
+prbcnst_snap_fb,,Probability Source Constant Between Snapshots in Total Band (0.3-10 keV),src.var.index
+hardness_ratio_2_pos_err,,Positive Error on HR2,stat.error;phot.flux;arith.ratio;em.X-ray
+ratecf_sb,,Count Rate Correction Factor in Soft Band (0.3-1 keV),instr.param
+fit_pow_nh,cm^-2,Absorption Column for Automated Power-Law,phys.columnDensity
+apec_pkflux_b_pos_err,erg/cm^2/s,Positive Error on Peak Unabsorbed 0.3-10 keV Flux for APEC,stat.error;stat.max;phot.flux;em.X-ray
+prbcnst_snap_sb,,Probability Source Constant Between Snapshots in Soft Band (0.3-1 keV),src.var.index
+intr_pow_flux_b,erg/cm^2/s,Unabsorbed 0.3-10 keV Flux Based on HR-Interpolated Power-Law,phot.flux;em.X-ray
+count_rate_mb_pos_err,ct/s,Positive Error on Medium Band (1-2 keV) Count Rate,stat.error;stat.max;phot.count;em.X-ray
+fit_apec_flux_a,erg/cm^2/s,Observed 0.3-10 keV Flux for Automated APEC,phot.flux;em.X-ray
+fit_apec_nh_neg_err,cm^-2,Negative Error Absorption Column for Automated APEC,stat.error;stat.min;phys.columnDensity
+cat_allwise_flag,,Object Appears in ALLWISE Catalog,meta.code.member
+intr_powcf_flux_a,erg/cm^2/s,Counts-to-Obs.-Flux (0.3-10 keV) Conversion for HR-Interpolated Power-Law,instr.param
+apec_flux_b,erg/cm^2/s,Unabsorbed 0.3-10 keV Flux derived from the APEC,phot.flux;em.X-ray
+fit_pow_flux_b_pos_err,erg/cm^2/s,Positive Error on Unabsorbed 0.3-10 keV Flux for Automated Power-Law,stat.error;stat.max;phot.flux;em.X-ray
+prob_pow,,Probability for a Source with Power-Law from Hardness Ratios,stat.probability
+hardness_ratio_2,,Hardness Ratio HR2 (H-M/H+M),phot.flux;arith.ratio;em.X-ray
+cat_2mass_flag,,Object Appears in 2MASS Catalog,meta.code.member
+fit_apeccf_flux_b,erg/cm^2/s,Counts-to-Unabs.-Flux (0.3-10 keV) Conversion for Automated APEC,instr.param
+count_rate_mb,ct/s,Medium Band (1-2 keV) Count Rate of the source,phot.count;em.X-ray
+pkrate_hb_pos_err,ct/s,Positive Error on Peak Hard Band (2-10 keV) Count Rate,stat.error;stat.max;phot.count;em.X-ray.hard
+exposure,s,Total Exposure Time,time.duration;obs.exposure
+intr_apec_flux_b_neg_err,erg/cm^2/s,Negative Error on Unabsorbed 0.3-10 keV Flux for HR-Interpolated APEC,stat.error;stat.min;phot.flux;em.X-ray
+apec_flux_b_neg_err,erg/cm^2/s,Negative Error on Unabsorbed 0.3-10 keV Flux for the APEC Spectrum,stat.error;stat.min;phot.flux;em.X-ray
+fit_apec_flux_b_neg_err,erg/cm^2/s,Negative Error on Unabsorbed 0.3-10 keV Flux for Automated APEC,stat.error;stat.min;phot.flux;em.X-ray
+fix_apec_flux_b_pos_err,erg/cm^2/s,Positive Error on Unabsorbed 0.3-10 keV Flux for APEC,stat.error;stat.max;phot.flux;em.X-ray
+apeccf_flux_a,erg/cm^2/s,Counts-to-Obs.-Flux (0.3-10 keV) Conversion for APEC,instr.param
+powcf_flux_a,erg/cm^2/s,Counts-to-Obs.-Flux (0.3-10 keV) Conversion,instr.param
+cat_3xmm_stack_flag,,Object Appears in 3XMM-DR7 Catalog,meta.code.member
+end_time_blind_met,s,End MET of Last Observation of Source Detected in Blind Search,time.end
+pow_flux_b_pos_err,erg/cm^2/s,Positive Error on Unabsorbed 0.3-10 keV Flux for Power-Law,stat.error;stat.max;phot.flux;em.X-ray
+pow_pkflux_a_neg_err,erg/cm^2/s,Negative Error on Peak Observed 0.3-10 keV Flux for Power-Law,stat.error;stat.min;phot.flux;em.X-ray
+fix_pow_flux_b_neg_err,erg/cm^2/s,Negative Error Unabsorbed 0.3-10 keV Flux for Power-Law,stat.error;stat.min;phot.flux;em.X-ray
+pow_pkflux_a,erg/cm^2/s,Peak Observed 0.3-10 keV Flux for Power-Law Spectrum,phot.flux;em.X-ray
+pkrate_sb_pos_err,ct/s,Positive Error on Peak Soft Band (0.3-1 keV) Count Rate,stat.error;stat.max;phot.count;em.X-ray.soft
+fix_apec_flux_a,erg/cm^2/s,Observed 0.3-10 keV Flux for APEC,phot.flux;em.X-ray
+intr_apec_nh,cm^-2,Absorption Column for HR-Interpolated APEC,phys.columnDensity
+count_rate_mb_neg_err,ct/s,Negative Error on Medium Band (1-2 keV) Count Rate,stat.error;stat.min;phot.count;em.X-ray
+fit_apec_nh_pos_err,cm^-2,Positive Error Absorption Column for Automated APEC,stat.error;stat.max;phys.columnDensity
+intr_pow_gam,,Power-Law Index Based on HR-Interpolated Power-Law,spect.index
+cat_xrtgrb_flag,,Object Matches a Cataloged XRT Gamma-Ray Burst Position,meta.code.member
+intr_apeccf_flux_a,erg/cm^2/s,Counts-to-Obs.-Flux (0.3-10 keV) Conversion for HR-Interpolated APEC,instr.param
+apec_pkflux_b,erg/cm^2/s,Peak Unabsorbed 0.3-10 keV Flux for APEC Spectrum,phot.flux;em.X-ray
+pow_flux_b,erg/cm^2/s,Unabsorbed 0.3-10 keV Flux for Power-Law Spectrum,phot.flux;em.X-ray
+pow_flux_b_neg_err,erg/cm^2/s,Negative Error on Unabsorbed 0.3-10 keV Flux for Power-Law,stat.error;stat.min;phot.flux;em.X-ray
+pkrate_hb,ct/s,Peak Count Rate of the Source in Hard Band (2-10 keV),phot.count;em.X-ray.hard
+end_time_determine,mjd,End of Obs. in Blind Search or Retrospective Count-Rate Determination,time.end
+intr_apec_flux_a_pos_err,erg/cm^2/s,Positive Error on Observed 0.3-10 keV Flux for HR-Interpolated APEC,stat.error;stat.max;phot.flux;em.X-ray
+fit_pow_flux_a_neg_err,erg/cm^2/s,Negative Error on Observed 0.3-10 keV Flux for Automated Power-Law,stat.error;stat.min;phot.flux;em.X-ray
+"""time""",mjd,Start Time of the First Observation of Source in 2SXPS,time.start;obs
+bright_flag,,Nearby Bright Source Flag,meta.code;phot
+cat_roshri_flag,,Object Appears in ROSAT HRI Catalog,meta.code.member
+apec_pkflux_a_pos_err,erg/cm^2/s,Positive Error on Peak Observed 0.3-10 keV Flux for APEC,stat.error;stat.max;phot.flux;em.X-ray
+ctrpart_offset,arcsec,Distance to the Nearest 2SXPS Source,pos.angDistance
+fix_powcf_flux_b,erg/cm^2/s,Counts-to-Unabs.-Flux (0.3-10 keV) Conversion for Power-Law,instr.param
+count_rate_hb_upper,ct/s,Overall 3-Sigma Upper Limit Hard Band (2-10 keV) Count Rate,phot.count;stat.max;em.X-ray.hard
+off_axis,arcmin,Angular Distance from Center of XRT Detector to Source,instr.offset;stat.mean
+intr_apec_nh_neg_err,cm^-2,Negative Error Absorption Column for HR-Interpolated APEC,stat.error;stat.min;phys.columnDensity
+intr_apec_kt_neg_err,keV,Negative Error on APEC Plasma Temperature for HR-Interpolated APEC,stat.error;stat.min;phys.temperature;stat.fit.param;meta.modelled
+end_time_determine_met,s,End MET of Last Obs. in Blind Search or Retrospective Count-Rate Determination,time.end
+fit_apec_flux_a_neg_err,erg/cm^2/s,Negative Error on Observed 0.3-10 keV Flux for Automated APEC,stat.error;stat.min;phot.flux;em.X-ray
+fit_apec_dof,,Degrees of Freedom in Automated APEC,stat.fit.dof
+fix_pow_flux_a,erg/cm^2/s,Observed 0.3-10 keV Flux for Power-Law with nH Absorption,phot.flux;em.X-ray
+prbcnst_hr_2,,Probability Source HR2 Hardness Ratio Constant Between Observations,src.var.index
+intr_apec_flux_b,erg/cm^2/s,Unabsorbed 0.3-10 keV Flux for HR-Interpolated APEC,phot.flux;em.X-ray
+apec_pkflux_a,erg/cm^2/s,Peak Observed 0.3-10 keV Flux for APEC,phot.flux;em.X-ray
+fit_pow_dof,,Degrees of Freedom in Automated Power-Law,stat.fit.dof
+pkrate_fb_pos_err,ct/s,Positive Error on Peak Total Band (0.3-10 keV) Count Rate,stat.error;stat.max;phot.count;em.X-ray
+prbcnst_snap_hr_2,,Probability Source HR2 Hardness Ratio Constant Between Snapshots,src.var.index
+fit_pow_flux_b,erg/cm^2/s,Unabsorbed 0.3-10 keV Flux for Automated Power-Law,phot.flux;em.X-ray
+cat_1swxrt_flag,,Object Appears in 1SWXRT Catalog,meta.code.member
+intr_apec_nh_pos_err,cm^-2,Positive Error Absorption Column for HR-Interpolated APEC,stat.error;stat.max;phys.columnDensity
+intr_pow_nh_pos_err,cm^-2,Positive Error Absorption Column Based on HR-Interpolated Power-Law,stat.error;stat.max;phys.columnDensity
+num_obs,,Number of Observations and Stacked Images Including Non-Detections,meta.number;obs
+end_time_blind,mjd,End Time of Last Observation of Source Detected in Blind Search,time.end
+det_fb_flag,,Best Total Band (0.3-10 keV) Detection Flag from All Detections of the Source,meta.code.qual;em.X-ray
+pkrate_sb_neg_err,ct/s,Negative Error on Peak Soft Band (0.3-1 keV) Count Rate,stat.error;stat.min;phot.count;em.X-ray.soft
+count_fb,ct,Number of Events in Total Band (0.3-10 keV) Source Extraction Region,phot.count;em.X-ray
+pkrate_hb_neg_err,ct/s,Negative Error on Peak Hard Band (2-10 keV) Count Rate,stat.error;stat.min;phot.count;em.X-ray.hard
+intr_apec_flux_b_pos_err,erg/cm^2/s,Positive Error on Unabsorbed 0.3-10 keV Flux for HR-Interpolated APEC,stat.error;stat.max;phot.flux;em.X-ray
+cat_usnob1_flag,,Object Appears in USNO-B1 Catalog,meta.code.member
+source_number,,Unique Numerical Identifier for Each Source in This Catalog,meta.id;src
+intr_apec_flux_a_neg_err,erg/cm^2/s,Negative Error on Observed 0.3-10 keV Flux for HR-Interpolated APEC,stat.error;stat.min;phot.flux;em.X-ray
+intr_pow_flux_a,erg/cm^2/s,Observed 0.3-10 keV Flux Based on HR-Interpolated Power-Law,phot.flux;em.X-ray
+bii,degree,Galactic Latitude,pos.galactic.lat
+prob_apec,,Probability for a Source with APEC from Hardness Ratios,stat.probability
+bkgcnt_sb,ct,Counts in 0.3-1 keV Background Map from Source Extraction Region,phot;instr.background;em.X-ray.soft
+fit_apec_kt,keV,APEC Plasma Temperature for Automated APEC,phys.temperature;stat.fit.param;meta.modelled
+count_rate_mb_upper,ct/s,Overall 3-Sigma Upper Limit Medium Band (1-2 keV) Count Rate,phot.count;stat.max;em.X-ray
+bkgcnt_mb,ct,Counts in 1-2 keV Background Map from Source Extraction Region,phot;instr.background;em.X-ray
+intr_powcf_flux_b,erg/cm^2/s,Counts-to-Unabs.-Flux (0.3-10 keV) Conversion for HR-Interpolated Power-Law,instr.param
+intr_pow_nh_neg_err,cm^-2,Negative Error Absorption Column Based on HR-Interpolated Power-Law,stat.error;stat.min;phys.columnDensity
+time_blind,mjd,Start Time of First Observation of Source Detected in Blind Search,time.start
+field_flag,,Best Field Flag from All Detections of the Source (Bit Mask Flag),meta.code
+intr_pow_flux_a_neg_err,erg/cm^2/s,Negative Error on Observed 0.3-10 keV Flux Based on HR-Interpolated Power-Law,stat.error;stat.min;phot.flux;em.X-ray
+fix_apec_flux_a_neg_err,erg/cm^2/s,Negative Error on Observed 0.3-10 keV Flux for APEC,stat.error;stat.min;phot.flux;em.X-ray
+apec_pkflux_a_neg_err,erg/cm^2/s,Negative Error on Peak Observed 0.3-10 keV Flux for APEC,stat.error;stat.min;phot.flux;em.X-ray
+fix_powcf_flux_a,erg/cm^2/s,Counts-to-Obs.-Flux (0.3-10 keV) Conversion for Power-Law,instr.param
+rate_sb_flag,,Flag for Mean Count Rate in Soft Band (0.3-1 keV) Non-Zero,meta.code
+fit_pow_nh_neg_err,cm^-2,Negative Error Absorption Column for Automated Power-Law,stat.error;stat.min;phys.columnDensity
+fit_pow_flux_b_neg_err,erg/cm^2/s,Negative Error on Unabsorbed 0.3-10 keV Flux for Automated Power-Law,stat.error;stat.min;phot.flux;em.X-ray
+error_radius_ori,degree,Original Radial Position Error from First 2SXPS Release,stat.error;pos
+lii,degree,Galactic Longitude,pos.galactic.lon
+fix_apeccf_flux_b,erg/cm^2/s,Counts-to-Unabs.-Flux (0.3-10 keV) Conversion for APEC,instr.param
+count_rate_sb,ct/s,Soft Band (0.3-1 keV) Count Rate,phot.count;em.X-ray.soft
+which_apec,,Flag for Which APEC Spectral and Fluxes Are Given,meta.code
+fix_apeccf_flux_a,erg/cm^2/s,Counts-to-Obs.-Flux (0.3-10 keV) Conversion for APEC,instr.param
+bkgcnt_hb,ct,Counts in 2-10 keV Background mao from Source Extraction Region,phot;instr.background;em.X-ray.hard
+rate_hb_flag,,Flag for Mean Count Rate in Hard Band (2-10 keV) Non-Zero,meta.code
+detect_flag,,Best Detection Flag from All Detections of the Source (Bit Mask Flag),meta.code.qual;em.X-ray
+fit_pow_cstat,,C-Statistic from Automated Power-Law Spectral Fit,stat.fit.param
+count_rate_sb_neg_err,ct/s,Negative Error on Soft Band (0.3-1 keV) Count Rate,stat.error;stat.min;phot.count;em.X-ray.soft
+pkrate_fb_neg_err,ct/s,Negative Error on Peak Total Band (0.3-10 keV) Count Rate,stat.error;stat.min;phot.count;em.X-ray
+prbcnst_fb,,Probability Source Constant Between Observations in Total Band (0.3-10 keV),src.var.index
+fit_apec_flux_b_pos_err,erg/cm^2/s,Positive Error on Unabsorbed 0.3-10 keV Flux for Automated APEC,stat.error;stat.max;phot.flux;em.X-ray
+fix_apec_flux_b,erg/cm^2/s,Unabsorbed 0.3-10 keV Flux derived for APEC,phot.flux;em.X-ray
+count_rate_sb_upper,ct/s,Overall 3-Sigma Upper Limit Soft Band (0.3-1 keV) Count Rate,phot.count;stat.max;em.X-ray.soft
+pow_pkflux_b_pos_err,erg/cm^2/s,Positive Error on Peak Unabsorbed 0.3-10 keV Flux for Power-Law,stat.error;stat.max;phot.flux;em.X-ray
+pkrate_mb,ct/s,Peak Count Rate of the Source in Medium Band (1-2 keV),phot.count;em.X-ray
+prbcnst_sb,,Probability Source Constant Between Observations in Soft Band (0.3-1 keV),src.var.index
+trackers_flag,,"Flag Indicates Astrometry Source (0 for Swift Star Trackers, 1 for 2MASS)",meta.code;pos
+prbcnst_snap_hb,,Probability Source Constant Between Snapshots in Hard Band (2-10 keV),src.var.index
+cat_swiftft_flag,,Object Appears in SwiftFT Catalog,meta.code.member
+apec_flux_b_pos_err,erg/cm^2/s,Positive Error on Unabsorbed 0.3-10 keV Flux for APEC,stat.error;stat.max;phot.flux;em.X-ray
+num_matches_reduced,,"Number of Sources with Catalog Cross Matches, Excluding 2MASS/USNO-B1/ALLWISE",meta.number
+hardness_ratio_2_neg_err,,Negative Error on HR2,stat.error;phot.flux;arith.ratio;em.X-ray
+fit_apec_flux_b,erg/cm^2/s,Unabsorbed 0.3-10 keV Flux for Automated APEC,phot.flux;em.X-ray
+fit_pow_gam_neg_err,,Negative Error on Power-Law Index for Automated Power-Law,stat.error;stat.min;spect.index
+end_time,mjd,End Time of the Last Observation of Source in 2SXPS,time.end;obs
+fix_apec_flux_a_pos_err,erg/cm^2/s,Positive Error on Observed 0.3-10 keV Flux for APEC,stat.error;stat.max;phot.flux;em.X-ray
+powcf_flux_b,erg/cm^2/s,Counts-to-Unabs.-Flux (0.3-10 keV) Conversion,instr.param
+time_determine,mjd,Start of First Obs. in Blind Search or Retrospective Count-Rate Determination,time.start
+pow_pkflux_a_pos_err,erg/cm^2/s,Positive Error on Peak Observed 0.3-10 keV Flux for Power-Law,stat.error;stat.max;phot.flux;em.X-ray
+pkrate_mb_neg_err,ct/s,Negative Error on Peak Medium Band (1-2 keV) Count Rate,stat.error;stat.min;phot.count;em.X-ray
+bkgcnt_fb,ct,Counts in 0.3-10 keV Background Map from Source Extraction Region,phot;instr.background;em.X-ray
+prbcnst_hr_1,,Probability Source HR1 Hardness Ratio Constant Between Observations,src.var.index
+intr_pow_flux_b_neg_err,erg/cm^2/s,Negative Error on Unabsorbed 0.3-10 keV Flux for HR-Interpolated Power-Law,stat.error;stat.min;phot.flux;em.X-ray
+pow_pkflux_b,erg/cm^2/s,Peak Unabsorbed 0.3-10 keV Flux for Power-Law,phot.flux;em.X-ray
+ctrpart_offset_good,arcsec,Distance to the Nearest 2SXPS Source with Good Flag,pos.angDistance
+fix_pow_flux_a_neg_err,erg/cm^2/s,Negative Error Observed 0.3-10 keV Flux for Power-Law,stat.error;stat.min;phot.flux;em.X-ray
+fit_pow_gam_pos_err,,Positive Error on Power-Law Index for Automated Power-Law,stat.error;stat.max;spect.index
+ratecf_hb,,Count Rate Correction Factor in Hard Band (2-10 keV),instr.param
+ratecf_mb,,Count Rate Correction Factor in Medium Band (1-2 keV),instr.param
+cat_3xmmdr8_flag,,Object Appears in 3XMM-DR8 Catalog,meta.code.member
+intr_pow_flux_a_pos_err,erg/cm^2/s,Positive Error of Observed 0.3-10 keV Flux Based on HR-Interpolated Power-Law,stat.error;stat.max;phot.flux;em.X-ray
+pow_pkflux_b_neg_err,erg/cm^2/s,Negative Error on Peak Unabsorbed 0.3-10 keV Flux for Power-Law,stat.error;stat.min;phot.flux;em.X-ray
+which_pow,,Flag for Which Power-Law Spectral and Fluxes Are Given,meta.code
+prbcnst_mb,,Probability Source Constant Between Observations in Medium Band (1-2 keV),src.var.index
+det_mb_flag,,Best Medium Band (1-2 keV) Detection Flag from All Detections of the Source,meta.code.qual;em.X-ray
+alias_flag,,Potential Source Alias Flag,meta.code
+intr_pow_gam_pos_err,,Positive Error of Power-Law Index Based on HR-Interpolated Power-Law,stat.error;stat.max;spect.index
+cat_2csc_flag,,Object Appears in 2CSC (Chandra) Catalog,meta.code.member
+pkrate_fb,ct/s,Peak Count Rate of the Source in Total Band (0.3-10 keV),phot.count;em.X-ray
+num_matches,,Number of Sources with Catalog Cross Matches,meta.number
+fit_pow_flux_a,erg/cm^2/s,Observed 0.3-10 keV Flux for Automated Power-Law,phot.flux;em.X-ray
+intr_apec_kt_pos_err,keV,Positive Error on APEC Plasma Temperature for HR-Interpolated APEC Spectrum,stat.error;stat.max;phys.temperature;stat.fit.param;meta.modelled
+count_hb,ct,Number of Events in Hard Band (2-10 keV) Source Extraction Region,phot.count;em.X-ray.hard
+fit_apec_nh,cm^-2,Absorption Column for Automated APEC,phys.columnDensity
+spec_flag,,Flag for Automated Build Spectrum for This Source,meta.code;spect
+prbcnst_hb,,Probability Source Constant Between Observations in Hard Band (2-10 keV),src.var.index
+fit_pow_gam,,Power-Law Index for Automated Power-Law spectra,spect.index
+fix_pow_flux_b,erg/cm^2/s,Unabsorbed 0.3-10 keV Flux for Power-Law,phot.flux;em.X-ray
+fit_apec_kt_pos_err,keV,Positive Error on APEC Plasma Temperature for Automated APEC,stat.error;stat.max;phys.temperature;stat.fit.param;meta.modelled
+apeccf_flux_b,erg/cm^2/s,Counts-to-Unabs.-Flux (0.3-10 keV) Conversion for APEC,instr.param
+rate_fb_flag,,Flag for Mean Count Rate in Total Band (0.3-10 keV) Non-Zero,meta.code
+intr_apeccf_flux_b,erg/cm^2/s,Counts-to-Unabs.-Flux (0.3-10 keV) Conversion for HR-Interpolated APEC,instr.param
+fix_pow_flux_a_pos_err,erg/cm^2/s,Positive Error Observed 0.3-10 keV Flux for Power-Law,stat.error;stat.max;phot.flux;em.X-ray
+fit_apec_cstat,,C-Statistic from the Automated APEC Spectral Fit,stat.fit.param
+count_sb,ct,Number of Events in Soft Band (0.3-1 keV) Source Extraction Region,phot.count;em.X-ray.soft
+hardness_ratio_1_pos_err,,Positive Error on HR1,stat.error;phot.flux;arith.ratio;em.X-ray
+cat_xmmsl2_flag,,Object Appears in XMMSL2 Catalog,meta.code.member
+intr_apec_flux_a,erg/cm^2/s,Observed 0.3-10 keV Flux for HR-Interpolated APEC,phot.flux;em.X-ray
+alias_list,,List of Potential Alias Source IDs,meta.id
+rate_mb_flag,,Flag for Mean Count Rate in Medium Band (1-2 keV) Non-Zero,meta.code
+det_sb_flag,,Best Soft Band (0.3-1 keV) Detection Flag from All Detections of the Source,meta.code.qual;em.X-ray.soft
+hardness_ratio_1,,Hardness Ratio HR1 (M-S/M+S),phot.flux;arith.ratio;em.X-ray
+fit_pow_nh_pos_err,cm^-2,Positive Error Absorption Column for Automated Power-Law,stat.error;stat.max;phys.columnDensity
+intr_pow_nh,cm^-2,Absorption Column Based on HR-Interpolated Power-Law,phys.columnDensity
+det_hb_flag,,Best Hard Band (2-10 keV) Detection Flag from All Detections of the Source,meta.code.qual;em.X-ray.hard
+count_mb,ct,Number of Events in Medium Band (1-2 keV) Source Extraction Region,phot.count;em.X-ray
+stray_flag,,Stray Light Flag,meta.code;phot
+apec_pkflux_b_neg_err,erg/cm^2/s,Negative Error on Peak Unabsorbed 0.3-10 keV Flux for APEC,stat.error;stat.min;phot.flux;em.X-ray
+prbcnst_snap_mb,,Probability Source Constant Between Snapshots in Medium Band (1-2 keV),src.var.index
+"""__x_ra_dec""",,System unit vector column,
+"""__y_ra_dec""",,System unit vector column,
+"""__z_ra_dec""",,System unit vector column,
+"""__row""",,System index column,

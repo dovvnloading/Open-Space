@@ -1,0 +1,211 @@
+{
+  "primary_photometric_leads": 161,
+  "assessed_pairs": 176,
+  "original_grid_10x": 124,
+  "tied_stress_10x": 117,
+  "independent_epoch_stress_10x": 117,
+  "primary_ros_ECF": 1.0074608730476111e-11,
+  "recomputed_primary_midpoint_ECF": 1.0074556744060548e-11,
+  "folded_baseline_ros_ECF": 1.007433894630398e-11,
+  "ero_calibration": {
+    "mode": "fixed released eROSITA count-to-flux calibration; absorbed band ratios only",
+    "native_broad_ECF": 9.310987339145758e-13,
+    "scope": "No verified DR1 survey response or evaluated alternate-model ECF adopted. Published links restrict the search to the DR1 documentation examined.",
+    "documents": [
+      {
+        "page": "https://erosita.mpe.mpg.de/dr1/",
+        "published_response_links": [],
+        "ecf_references": []
+      },
+      {
+        "page": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/",
+        "published_response_links": [],
+        "ecf_references": []
+      },
+      {
+        "page": "https://erosita.mpe.mpg.de/dr1/eSASS4DR1/",
+        "published_response_links": [],
+        "ecf_references": []
+      },
+      {
+        "page": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/MerloniA_DR1/eRASS1_Main_v1.2.html",
+        "published_response_links": [],
+        "ecf_references": []
+      },
+      {
+        "page": "https://erosita.mpe.mpg.de/dr1/eSASS4DR1/eSASS4DR1_CALDB/",
+        "published_response_links": [],
+        "ecf_references": []
+      }
+    ],
+    "unavailable": []
+  },
+  "models": [
+    {
+      "label": "PL2_NH3e20",
+      "family": "powerlaw",
+      "gamma_or_kT_keV": 2.0,
+      "NH_cm-2": 3e+20,
+      "ero_band_factor": 0.9237434441492424,
+      "rass_common_ECF": 1.007433894630398e-11,
+      "relative_factors": {
+        "xmm": 1.0,
+        "ero": 1.0,
+        "ero_ul": 1.0,
+        "rass": 1.0
+      }
+    },
+    {
+      "label": "BB0.05_NH3e+20",
+      "family": "blackbody",
+      "gamma_or_kT_keV": 0.05,
+      "NH_cm-2": 3e+20,
+      "ero_band_factor": 1.0000088779260938,
+      "rass_common_ECF": 4.48115593353976e-12,
+      "relative_factors": {
+        "xmm": 1.0,
+        "ero": 1.0825612720283944,
+        "ero_ul": 1.0825612720283944,
+        "rass": 0.44480893063299026
+      }
+    },
+    {
+      "label": "BB0.05_NH1e+21",
+      "family": "blackbody",
+      "gamma_or_kT_keV": 0.05,
+      "NH_cm-2": 1e+21,
+      "ero_band_factor": 0.9999596870502654,
+      "rass_common_ECF": 1.621391450650084e-11,
+      "relative_factors": {
+        "xmm": 1.0,
+        "ero": 1.0825080203640496,
+        "ero_ul": 1.0825080203640496,
+        "rass": 1.609427138884315
+      }
+    },
+    {
+      "label": "BB0.08_NH3e+20",
+      "family": "blackbody",
+      "gamma_or_kT_keV": 0.08,
+      "NH_cm-2": 3e+20,
+      "ero_band_factor": 0.9999889273967535,
+      "rass_common_ECF": 8.967900466603367e-12,
+      "relative_factors": {
+        "xmm": 1.0,
+        "ero": 1.082539674549715,
+        "ero_ul": 1.082539674549715,
+        "rass": 0.8901725973686305
+      }
+    },
+    {
+      "label": "BB0.08_NH1e+21",
+      "family": "blackbody",
+      "gamma_or_kT_keV": 0.08,
+      "NH_cm-2": 1e+21,
+      "ero_band_factor": 0.9999160343530569,
+      "rass_common_ECF": 1.753121737168161e-11,
+      "relative_factors": {
+        "xmm": 1.0,
+        "ero": 1.0824607640641701,
+        "ero_ul": 1.0824607640641701,
+        "rass": 1.7401853823980549
+      }
+    },
+    {
+      "label": "BB0.12_NH3e+20",
+      "family": "blackbody",
+      "gamma_or_kT_keV": 0.12,
+      "NH_cm-2": 3e+20,
+      "ero_band_factor": 0.999908717254503,
+      "rass_common_ECF": 1.1225671726953172e-11,
+      "relative_factors": {
+        "xmm": 1.0,
+        "ero": 1.0824528429269753,
+        "ero_ul": 1.0824528429269753,
+        "rass": 1.1142837050436531
+      }
+    },
+    {
+      "label": "BB0.12_NH1e+21",
+      "family": "blackbody",
+      "gamma_or_kT_keV": 0.12,
+      "NH_cm-2": 1e+21,
+      "ero_band_factor": 0.9997973721990561,
+      "rass_common_ECF": 1.285898531635714e-11,
+      "relative_factors": {
+        "xmm": 1.0,
+        "ero": 1.0823323061522332,
+        "ero_ul": 1.0823323061522332,
+        "rass": 1.2764098354140423
+      }
+    },
+    {
+      "label": "PL1.5_NH3e+21",
+      "family": "powerlaw",
+      "gamma_or_kT_keV": 1.5,
+      "NH_cm-2": 3e+21,
+      "ero_band_factor": 0.8059253386511499,
+      "rass_common_ECF": 1.2084037275469191e-11,
+      "relative_factors": {
+        "xmm": 1.0,
+        "ero": 0.8724558141718649,
+        "ero_ul": 0.8724558141718649,
+        "rass": 1.199486868555531
+      }
+    },
+    {
+      "label": "PL1.5_NH1e+22",
+      "family": "powerlaw",
+      "gamma_or_kT_keV": 1.5,
+      "NH_cm-2": 1e+22,
+      "ero_band_factor": 0.699177306631218,
+      "rass_common_ECF": 1.4639870861807595e-11,
+      "relative_factors": {
+        "xmm": 1.0,
+        "ero": 0.756895554777282,
+        "ero_ul": 0.756895554777282,
+        "rass": 1.4531842674579252
+      }
+    }
+  ],
+  "scope": "Post-selection, finite illustrative shape grid. Observed energy flux with Morrison & McCammon absorption. Blackbody photon density E^2/(exp(E/kT)-1); PL photon density E^(-Gamma). Neutral column held per model. Instrument band/source morphology, the XMM catalogue ECF, Poisson errors, and source/detection selection stay fixed. eROSITA uses only the declared calibration mode. No event classification, arbitrary-temperature bound, or corrected catalogue flux is inferred.",
+  "ratios": "Multiply each existing count-based guarded amplitude by the ratio of the high and low conversion factors relative to its common fiducial. For an eROSITA map limit, vary only the band ratio at fixed released map ECF. RASS map limits use the refolded PSPC-C ECF. Both a common shape and independently allowed shapes across epochs are recorded. The lead statistic is the strongest surviving qualified pair.",
+  "inputs": [
+    {
+      "url": "https://erosita.mpe.mpg.de/dr1/",
+      "params": null,
+      "bytes": 11560,
+      "sha256": "fc637c2a212c522359bf5bcc6445bd23a056e94ae1cc80aeb2ca12e1236b443e"
+    },
+    {
+      "url": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/",
+      "params": null,
+      "bytes": 8239,
+      "sha256": "cfe4ed0202f16dcd087717f88116ba79eef127dffdfc298c8e45d5178d3c17bb"
+    },
+    {
+      "url": "https://erosita.mpe.mpg.de/dr1/AllSkySurveyData_dr1/Catalogues_dr1/MerloniA_DR1/eRASS1_Main_v1.2.html",
+      "params": null,
+      "bytes": 70226,
+      "sha256": "8015097907c9bb5bd2e45f9e3cf05ad138cdf63ba33d6e42fc3597b205154f58"
+    },
+    {
+      "url": "https://erosita.mpe.mpg.de/dr1/eSASS4DR1/",
+      "params": null,
+      "bytes": 5342,
+      "sha256": "2e411f7798ca2b393c4cb08cdbb3d66f785193b9a10ce8e1f8cd8b6d3b494cbf"
+    },
+    {
+      "url": "https://erosita.mpe.mpg.de/dr1/eSASS4DR1/eSASS4DR1_CALDB/",
+      "params": null,
+      "bytes": 22120,
+      "sha256": "f20652bccf21eb7943955c24e69acf4c625fa1a7b7116b50ef90e2307540e4e2"
+    },
+    {
+      "url": "https://heasarc.gsfc.nasa.gov/FTP/caldb/data/rosat/pspc/cpf/matrices/pspcc_gain1_256.rsp",
+      "params": null,
+      "bytes": 748800,
+      "sha256": "b421bbad8eaf93a0bedf6704c18ff2cdf3e77781382888245219cf609c33b1bd"
+    }
+  ]
+}

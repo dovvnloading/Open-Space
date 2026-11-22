@@ -1,0 +1,304 @@
+column_name,unit,description,ucd
+name,,IAU Source Designation,meta.id;meta.main
+ra,degree,Right Ascension,pos.eq.ra;meta.main
+dec,degree,Declination,pos.eq.dec;meta.main
+count_rate,ct/s,Source Count Rate,phot.count;em.X-ray
+count_rate_error,ct/s,Error in Source Count Rate,stat.error;phot.count;em.X-ray
+exposure,s,Source Exposure Time,time.duration;obs.exposure
+source_extent,pixel,Source Extent,phys.angSize;arith.ratio
+source_extent_prob,,Probability of the Source Extent,stat.likelihood
+source_quality_flag,,Source Quality Flag (0=Good),meta.code
+hardness_ratio_1,,Hardness Ratio 1,phot.flux;arith.ratio;em.X-ray
+hardness_ratio_2,,Hardness Ratio 2,phot.flux;arith.ratio;em.X-ray
+"""__x_ra_dec""",,System unit vector column,
+"""__y_ra_dec""",,System unit vector column,
+"""__z_ra_dec""",,System unit vector column,
+"""__row""",,System index column,
+wdcat_vmag,mag,WD V Magnitude,phot.mag;em.opt.V
+y_pixel_error,pixel,1-Sigma Error in Y Image Coordinate,stat.error;pos.cartesian.y;instr.pixel
+excess_variance_sigma,sigma,Excess Variance,stat.variance
+tworxs_skyfield_number,,Number of Sky Field of 2RXS Nearest Counterpart,meta.id;obs.field
+mekal_count_rate,ct/s,Count Rate Obtained from the Mekal Fit,phot.count;em.X-ray
+bb_norm,,Normalization for the Black-Body Fit,stat.fit.param
+bb_temperature_error,,Error in Temperature of the Black-Body Fit,stat.error
+threexmm_flux_error,erg/s/cm^2,3XMM Flux Error,stat.error
+fuhr_nearest,,Source Number of Nearest FUH Counterpart,meta.id
+threexmm_count_rate_err,ct/s,3XMM EP8 Count Rate Error,stat.error
+plaw_flux,erg/s/cm^2,Absorption-Corrected Flux of PL Fit,phot.flux;em.X-ray
+onesxps_nearest,,Source Number of Nearest 1SXPS Counterpart,meta.id
+lmxb_name,,LMXBCAT Source Designation,meta.id
+bb_norm_error,,Error in Normalization  for the Black-Body Fit,stat.error
+band_b_counts,ct,Source Counts in Band B,phot.count;em.X-ray
+bb_number_data_pts,,Number of Data Points Used in the Black-Body Fit,meta.number
+threexmm_separation,arcsec,Distance of Nearest 3XMM Counterpart,pos.angDistance;src.orbital
+tworxp_separation,arcsec,Distance of 2RXP Nearest Counterpart,pos.angDistance;src.orbital
+lmxb_ra,degree,LMXBCAT Right Ascension,pos.eq.ra
+number_pts_in_lc,,Number of Data Points in the Light Curve,meta.number
+max_count_rate_error,ct/s,Error in Maximum Count Rate,stat.error
+tworxp_obsid,,Field Number of 2RXP Counterpart,meta.id;obs
+x_pixel_error,pixel,1-Sigma Error in X Image Coordinate,stat.error;pos.cartesian.x;instr.pixel
+onesxps_source_number,,Source Number in 1SXPS Catalog,meta.id
+sdss_ra,degree,SDSS Right Ascension,pos.eq.ra
+veron_source_number,,VV10 Running Catalog Source Number,meta.id
+vignetting_factor,,Vignetting Correction Factor,instr.param
+sdss_nearest,,Source Number of SDSS Nearest Counterpart,meta.id
+var_flag,,"Variability Flag (0=Good, 1=Background)",meta.code;src.var
+band_d_bkg_counts,ct,Background Band D with Other Catalog Entries Excised,instr.background;meta.table
+onerxh_count_rate,ct/s,1RXH Source Count Rate,phot.count;em.X-ray
+number_pts_lessthan_1s,,Number of Data Points with Exposure Times Less Than 1s,meta.number
+mekal_chi2_reduced,,Reduced Chi^2 for Mekal Fit,stat.fit.chi2
+wdcat_separation,arcsec,Distance to Nearest WD Counterpart,pos.angDistance;src.orbital
+band_d_tot_counts,ct,Counts in Band D,phot.count;em.X-ray
+tworxs_x_pixel_sky_bkg1,pixel,X Sky Coordinate of Background Center 1,pos.cartesian.x;instr.det
+tworxs_y_pixel_sky_bkg1,pixel,Y Sky Coordinate of Background Center 1,pos.cartesian.y;instr.det
+onerxs_hr_1,,1RXS Hardness Ratio 1,phot.flux;arith.ratio
+hmxb_name,,HMXBCAT Source Designation,meta.id
+tworxp_ra,degree,2RXP Right Ascension,pos.eq.ra
+counts,ct,Background-Corrected Source Counts,phot;em.X-ray
+bsc_spect_type,,BSC Spectral Type,src.spType
+flem_separation,arcsec,Distance to Nearest Flemming Counterpart,pos.angDistance;src.orbital
+beta,degree,Ecliptic Latitutde,pos.ecliptic.lon
+tworxs_count_rate,ct/s,Source Count Rate of 2RXS Nearest Counterpart,phot.count;em.X-ray
+flem_count_rate_error,ct/s,Error in the Flemming Count Rate,stat.error
+fuhr_dec,degree,FUH Declination,pos.eq.dec
+bb_nh_error,cm^-2,Error in Neutral Hydrogen Density for the Black-Body Fit,stat.error
+onerxh_count_rate_error,ct/s,Error in 1RXH Source Count Rate,stat.error
+tworxs_dec,degree,2RXS Declination,pos.eq.dec
+onerxh_number_ctrprts,,Number of Counterparts in the 1RXH Catalog within 120 arcsec,meta.number
+sum_count_rate_sigma,,Sum of Count Rate and Standard Deviation,stat.fit.param
+lmxb_alt_name,,LMXBCAT Alternative Source Designation,meta.id
+xmmsl1_nearest,,Source Number of Nearest Counterpart in the XMM Slew Survey,meta.id
+hmxb_alt_name,,HMXBCAT Alternative Source Designation,meta.id
+plaw_number_data_pts,,Number of Data Points Used in the PL Fit,meta.number
+wdcat_ra,degree,WD Right Ascension,pos.eq.ra
+wdcat_number_ctrprts,,Number of Counterparts in the Catalog of White Dwarfs within 60 arcsec,meta.number
+tworxs_nearby_flag,,Nearby Flag of 2RXS Nearest Counterpart (0=Best),meta.code
+bb_temperature,,Temperature of the Black-Body Fit,phys.temperature
+onerxs_hr_2,,1RXS Hardness Ratio 2,phot.flux;arith.ratio
+onesxps_medium_det_flag,,1SXPS Medium (2-2keV) Band Detection Flag,meta.code
+tworxs_ra,degree,2RXS Right Ascension,pos.eq.ra
+threexmm_name,,Source Designation in the 3XMM Catalog,meta.id
+hmxb_ra,degree,HMXBCAT Right Ascension,pos.eq.ra
+xmmsl1_bb_count_rate_err,ct/s,XMMSL1 Broad-Band Count Rate Error,stat.error
+sdss_name,,SDSS Object Designation,meta.id
+tycho2_number_ctrprts,,Number of Counterparts in the Tyc2 Catalog,meta.number
+fuhr_ra,degree,FUH Right Ascension,pos.eq.ra
+tworxs_number_ctrprts,,Number of Counterparts in the 2RXS Catalog within 60 arcsec,meta.number
+onerxh_ra,degree,1RXH Right Ascension,pos.eq.ra
+onerxs_counts,,Background-Corrected Source Counts in 1RXS,phot.count;em.X-ray
+bb_nh,cm^-2,Neutral Hydrogen Density for the Black-Body Fit,phys.columnDensity
+max_count_rate_6s_error,ct/s,Error in Maximum Count Rate for Light curves with Exposures of Less Than 6s,stat.error
+bb_flux,erg/s/cm^2,Absorption-Corrected Flux from the Black-Body Fit,phot.flux;em.X-ray
+lmxb_number_ctrprts,,Number of Counterparts in LMXBCAT within 60 arcsec,meta.number
+tycho2_tyc1_number,,TYC1 Source Number,meta.id
+wdcat_dec,degree,WD Declination,pos.eq.dec
+plaw_norm,,Normalization for PL Fit,stat.fit.param
+tworxp_count_rate_error,ct/s,2RXP Count Rate Error,stat.error
+onerxs_ra,degree,1RXS Right Ascension,pos.eq.ra
+max_count_rate,ct/s,Maximum Count Rate,phot.count;em.X-ray
+flem_name,,Source Designation in the Flemming Catalog,meta.id
+onerxs_dec,degree,1RXS Declination,pos.eq.dec
+clock_end_time,s,Clock End Time of Exposure When Source Is within FOV and Detector on,time.end;obs.exposure
+band_c_tot_counts,ct,Counts in Band C,phot.count;em.X-ray
+hmxb_separation,arcsec,Distance of Nearest HMXBCAT Counterpart,pos.angDistance;src.orbital
+onesxps_total_det_flag,,1SXPS Total (0.3-10keV) Band Detection Flag,meta.code
+veron_redshift,,VV10 Redshift,src.redshift;pos.heliocentric
+total_photons,,Total Number of Photons Read from PET and Analyzed by Max. Likelihood Algorithm,phot.count;em.X-ray
+counts_notused_6,ct,Number of Counts for Light Curves with Exposures of Less Than 6s Not Used,phot.count
+tycho2_tyc3_number,,TYC3 Source Number,meta.id
+bb_chi2,,Chi^2 for the Black-Body Fit,stat.fit.chi2
+onerxs_name,,Source Designation in the 1RXS Catalog,meta.id
+mekal_number_data_pts,,Number of Data Points Used in Mekal Fit,meta.number
+excess_var_6s,,Excess Variance for Light Curves with Less Than 6s Exposure,stat.variance
+bsc_dec,degree,BSC Declination,pos.eq.dec
+xmmsl1_sb_count_rate_err,c/s,"XMMSL1 Count Rate Error, 0.5-2keV",stat.error
+xmmsl1_ra,degree,XMMSL1 Right Ascension,pos.eq.ra
+bsc_source_number,,BSC Catalog Source Number,meta.id
+band_b_bkg_counts,ct,Background Band B with Other Catalog Entries Excised,instr.background;em.opt.B;meta.table
+tworxs_selected_bkg,,2RXS Selected Background,meta.code
+flem_count_rate,ct/s,Flemming Count Rate,phot.count;em.X-ray
+tworxs_bkg_count_rate,ct/s/arcmin^2,Background Count Rate from 2RXS,arith.rate;instr.background
+onerxs_hr_1_error,,Error in HR1 in 1RXS,stat.error
+number_pts_lessthan_6s,,Number of Data Points with Exposure Times Less Than 6s,meta.number
+flem_type,,Flemming Object Type,src.class
+lc_chi2,,Chi^2 from the LC Analysis,stat.fit.chi2
+y_pixel,pixel,Y Image Coordinate (45 arcsec),pos.cartesian.y;instr.pixel
+onerxs_hr_2_error,,Error in HR2 in 1RXS,stat.error
+onerxs_nearest,,Source Number of Nearest Counterpart in the 1RXS Catalog,meta.id
+mekal_norm_error,,Error in Normalization for the Mekal Fit,stat.error
+tworxs_x_pixel_sky_bkg2,pixel,X Sky Coordinate of Background Center 2,pos.cartesian.x;instr.det
+onesxps_separation,arcsec,Distance to Nearest 1SXPS Counterparts,pos.angDistance;src.orbital
+band_a_counts,ct,Source Counts in Band A,phot.count;em.X-ray
+x_pixel,pixel,X Image Coordinate (45 arcsec),pos.cartesian.x;instr.pixel
+veron_number_ctrprts,,Number of Counterparts in the VV10 Catalog within 60 arcsec,meta.number
+lc_counts,ct,Number of Counts Calculated from the Light Curve Analysis,phot.count
+fuhr_name,,FUH Source Designation,meta.id
+tycho2_nearest,,Source Number of Nearest Tyc2 Counterpart,meta.id
+band_a_tot_counts,ct,Counts in Band A,phot.count;em.X-ray
+mean_count_rate,ct/s,Mean Count Rate,phot.count;em.X-ray
+mekal_dof,,Number of Degrees of Freedom in Mekal Fit,meta.number
+plaw_nh,cm^-2,Neutral Hydrogen Density of PL Fit,phys.columnDensity
+threexmm_dec,degree,3XMM Declination,pos.eq.dec
+band_c_bkg_counts,ct,Background Band C with Other Catalog Entries Excised,instr.background;meta.table
+wdcat_nearest,,Source Number of Nearest WD Counterpart,meta.id
+hardness_ratio_2_error,,Error in Hardness Ratio 2,stat.error;phot.flux;arith.ratio;em.X-ray
+count_rate_6s,ct/s,Count Rate for Light Curve with Less Than 6s Exposure,phot.count;em.X-ray
+clock_time,s,Clock Start Time of Exposure When Source Is within FOV and Detector on,time.start;obs.exposure
+bb_dof,,Number of Degrees of Freedom in the Black-Body Fit,meta.number
+xmmsl1_sb_count_rate,c/s,"XMMSL1 Count Rate, Energy Band 0.5-2keV",phot.count;em.X-ray
+hmxb_dec,degree,HMXBCAT Declination,pos.eq.dec
+tworxs_nearest_src_index,,Index of the Nearest 2RXS Counterpart,meta.id
+hmxb_vmag,mag,HMXBCAT V Magnitude,phot.mag;em.opt.V
+max_count_rate_6s,ct/s,Maximum Count Rate for Light curves with Exposures of Less Than 6s,phot.count;em.X-ray
+mekal_temperature,,Temperature of the Mekal Fit,phys.temperature
+bb_count_rate,ct/s,Count Rate for the Black-Body Fit,phot.count;em.X-ray
+min_count_rate_6s_error,ct/s,Error in Minimum Count Rate for Light Curves with Exposures of Less Than 6s,stat.error
+lmxb_nearest,,Source Number of Nearest LMXBCAT Counterpart,meta.id
+plaw_chi2,,Chi^2 of the PL Fit,stat.fit.chi2
+tycho2_dec,degree,Tyc2 Declination,pos.eq.dec
+veron_nearest,,Source Number of VV10 Nearest Counterpart,meta.id
+tworxs_y_pixel_sky_bkg2,pixel,Y Sky Coordinate of Background Center 2,pos.cartesian.y;instr.det
+mekal_temperature_error,,Error in Temperature of the Mekal Fit,stat.error
+onesxps_ra,degree,1SXPS Right Ascension,pos.eq.ra
+extraction_radius,pixel,Source Extraction Radius in Sky Pixels,phys.angSize
+veron_separation,arcsec,Distance to Nearest VV10 Counterpart,pos.angDistance;src.orbital
+fuhr_source_number,,FUH Object Number,meta.id
+onerxs_count_rate,ct/s,Source Count Rate in 1RXS,phot.count;em.X-ray
+max_amplitude,,Maximum Amplitude Variability,src.var.amplitude
+lii,degree,Galactic Longitude,pos.galactic.lon
+fuhr_separation,arcsec,Distance to Nearest FUH Counterpart,pos.angDistance;src.orbital
+band_c_counts,ct,Source Counts in Band C,phot.count;em.X-ray
+lmxb_dec,degree,LMXBCAT Declination,pos.eq.dec
+bsc_separation,arcsec,Distance to Nearest BSC Counterpart,pos.angDistance;src.orbital
+excess_variance_error,,1-Sigma Uncertainty in Normalized Excess Variance,stat.error
+threexmm_count_rate,ct/s,3XMM EP8 Count Rate,phot.count;em.X-ray
+plaw_chi2_reduced,,Reduced Chi^2 of the PL Fit,stat.fit.chi2
+nearby_src_det_flag,,Detection Flag of Nearby Sources (0=Best),meta.code
+extraction_radius_frac,,Analyzed Fraction of Cut Radius,stat.fit.param
+tworxp_dec,degree,2RXP Declination,pos.eq.dec
+onesxps_count_rate_error,ct/s,Error in Swift Total (0.3-10 keV)-Band Count Rate,stat.error
+tycho2_bmag,mag,Tyc2 BT Magnitude,phot.mag;em.opt.B
+mekal_nh,cm^-2,Neutral Hydrogen Density for the Mekal Fit,phys.columnDensity
+band_a_bkg_counts,ct,Background Band A with Other Catalog Entries Excised,instr.background;meta.table
+excess_variance,,Normalized Excess Variance,stat.variance
+veron_type,,Flag [BAQ] Indicates VV10 Object Type,src.class
+lambda,degree,Ecliptic Longitude,pos.ecliptic.lat
+tworxs_nearest_src_num,,Source Number of 2RXS Counterpart,meta.id
+veron_name,,VV10 Source Designation,meta.id
+excess_var_6s_error,,Uncertainty in Excess Variance for Light Curves with Less Than 6s Exposure,stat.error
+mekal_flux,erg/s/cm^2,Absorption-Corrected Flux Mekal Fit,phot.flux;em.X-ray
+plaw_norm_error,,Error in Normalization for PL Fit,stat.error
+source_extent_error,pixel,Error in the Source Extent,stat.error
+flem_dec,degree,Flemming Declination,pos.eq.dec
+atnf_pulsar_type,,ATNF Pulsar Type,src.class
+onerxs_counts_error,,Error in Background-Corrected Source Counts in 1RXS,stat.error
+atnf_dec,degree,ATNF Declination,pos.eq.dec
+y_sky_pixel,pixel,Y Sky Coordinates (0.5 arcsec),pos.cartesian.y;instr.det
+plaw_photon_index,,Photon Index for PL Fit,spect.index
+nh_gal,cm^-2,Galactic Neutral Hydrogen Density,phys.columnDensity
+mean_count_rate_error,ct/s,Standard Deviation of Mean Count Rate,stat.error
+onerxs_det_likelihood,,Detection Likelihood in 1RXS,stat.likelihood
+onesxps_exposure,s,1SXPS Source Exposure Time,time.duration;obs.exposure
+hardness_ratio_1_error,,Error in Hardness Ratio 1,stat.error;phot.flux;arith.ratio;em.X-ray
+onerxs_number_ctrprts,,Number of 1RXS Counterparts within 60 arcsec,meta.number
+onesxps_number_ctrprts,,Number of Counterparts in Swift 1SXPS Catalog within 120 arcsec,meta.number
+onesxps_count_rate,ct/s,Swift Total (0.3-10 keV)-Band Count Rate,phot.count;em.X-ray
+onerxh_nearest,,Source Number of Nearest 1RXH Counterpart,meta.id
+veron_ra,degree,VV10 Right Ascension,pos.eq.ra
+tworxs_skyfield_src_num,,Field Detection Number of 2RXS Nearest Counterpart,meta.id;obs.field
+onesxps_dec,degree,1SXPS Declination,pos.eq.dec
+mekal_chi2,,Chi^2 for the Mekal Fit,stat.fit.chi2
+tworxs_subfield_det_cell,,Sub-Field Detection Cell of 2RXS Nearest Counterpart,meta.code
+skyfield_source_number,,Source Number in the Specified Sky Field,meta.id;src
+plaw_dof,,Number of Degrees of Freedom in the PL Fit,meta.number
+bb_chi2_reduced,,Reduced Chi^2 for the Black-Body Fit,stat.fit.chi2
+band_d_counts,ct,Source Counts in Band D,phot.count;em.X-ray
+min_count_rate_6s,ct/s,Minimum Count Rate for Light Curves with Exposures of Less Than 6s,phot.count;em.X-ray
+count_rate_6s_error,ct/s,Standard Deviation of Light Curves with Less Than 6s Exposure,stat.error
+onesxps_soft_det_flag,,1SXPS Soft (0.3-1keV) Band Detection Flag,meta.code
+entry_number,,Sequential Identification Number for Each Entry in Catalog,meta.id
+mekal_norm,,Normalization for the Mekal Fit,stat.fit.param
+tycho2_source_number,,Tyc2 Catalog Source Number,meta.id
+bii,degree,Galactic Latitude,pos.galactic.lat
+threexmm_nearest,,Source Number of Nearest Counterpart in the 3XMM Catalog,meta.id
+xmmsl1_dec,degree,XMMSL1 Declination,pos.eq.dec
+tycho2_vmag,mag,Tyc2 VT Magnitude,phot.mag;em.opt.V
+extended_region_flag,,Flag Indicates Extended Emission Regions (0=yes 1=no) (Masked),meta.code
+onerxs_separation,arcsec,Distance to Nearest 1RXS Counterpart,pos.angDistance;src.orbital
+hmxb_nearest,,Source Number of Nearest HMXBCAT Counterpart,meta.id
+counts_error,ct,Error in the Source Counts,stat.error;phot;em.X-ray
+tworxp_exposure,s,2RXP Source Exposure Time,time.duration;obs.exposure
+lmxb_vmag,mag,LMXBCAT V Magnitude,phot.mag;em.opt.V
+remarks,,Remarks Concerning Nearby Source Originating from ML-Detection,meta.note
+plaw_nh_error,cm^-2,Error in Neutral Hydrogen Density of PL Fit,stat.error
+onerxs_bkg_count_rate,ct/s/arcmin^2,Background Count Rate from 1RXS,arith.rate;instr.background
+tworxp_count_rate,ct/s,2RXP Count Rate,phot.count;em.X-ray
+sdss_dec,degree,SDSS Declination,pos.eq.dec
+flem_wfc_detection_flag,,Flag [YN] Indicates Flemming Wide Field Camera Detection,meta.code
+tworxp_nearest,,Source Number of Nearest Counterpart in the 2RXP Catalog,meta.id
+atnf_name,,ATNF Pulsar Designation,meta.id
+atnf_ra,degree,ATNF Right Ascension,pos.eq.ra
+onerxh_name,,1RXH Source Designation,meta.id
+onerxh_snr,,1RXH Signal-to-Noise Ratio,stat.snr
+plaw_photon_index_error,,Error in Photon Index for PL Fit,stat.error
+flem_number_ctrprts,,Number of Counterparts in the Flemming Catalog of White Dwarfs within 60 arcsec,meta.number
+tworxp_name,,Source Designation in the 2RXP,meta.id
+excess_var_lessthan_6,,Excess Variance for Light Curves with Exposures of Less Than 6s,stat.variance
+spect_plot_flag,,Flag [01] Indicates Graphical Illustration of Spectral Fit Available,meta.code
+bsc_ra,degree,BSC Right Ascension,pos.eq.ra
+end_time,mjd,End Time of Exposure When Source Is within FOV and Detector on,time.end;obs
+flem_nearest,,Source Number of Nearest Flemming Counterpart,meta.id
+atnf_number_ctrprts,,Number of Counterparts in the Pulsar Catalog (ATNF) within 60 arcsec,meta.number
+skyfield_number,,Sky Field Number (SEQ_ID),meta.id;obs
+wdcat_name,,WD Catalog Source Designation,meta.id
+lmxb_separation,arcsec,Distance to Nearest LMXBCAT Counterpart,pos.angDistance;src.orbital
+atnf_pulse_period,s,ATNF Pulsar Period,time.period
+sdss_number_ctrprts,,Source Number of the Nearest Counterpart in the Sloan Catalog,meta.number
+onerxs_exposure,s,Source Exposure Time in 1RXS,time.duration;obs.exposure
+onerxh_dec,degree,1RXH Declination,pos.eq.dec
+bkg_in_extr_reg,pixel^-1,Background in Source Extraction Region,instr.background
+lc_plot_flag,,Flag [01] Indicates Graphical Illustration of Light Curve Available,meta.code
+sdss_separation,arcsec,Distance to Nearest SDSS Counterpart,pos.angDistance;src.orbital
+min_count_rate,ct/s,Minimum Count Rate,phot.count;em.X-ray
+xmmsl1_number_ctrprts,,Number of Counterparts in the XMM Slew Survey within 60 arcsec,meta.number
+onerxs_count_rate_error,ct/s,Error in Source Count Rate in 1RXS,stat.error
+unique_flag,,Unique Flag,meta.code
+hd_source_number,,Henry Draper Catalog Source Number,meta.id
+threexmm_ra,degree,3XMM Right Ascension,pos.eq.ra
+threexmm_flux,erg/s/cm^2,3XMM Flux,phot.flux;em.X-ray
+x_sky_pixel,pixel,X Sky Coordinates (0.5 arcsec),pos.cartesian.x;instr.det
+tworxp_number_ctrprts,,Number of 2RXP Counterparts within 300 arcsec,meta.number
+remaining_bkg_area,arcmin^2,Remaining Background Area,instr.background
+veron_dec,degree,VV10 Declination,pos.eq.dec
+atnf_nearest,,Source Number of Nearest ATNF Counterpart,meta.id
+atnf_separation,arcsec,Distance to Nearest ATNF Counterpart,pos.angDistance;src.orbital
+veron_vmag,mag,VV10 V Magnitude,phot.mag;em.opt.V
+plaw_count_rate,ct/s,Count Rate Obtained from the PL Fit,phot.count;em.X-ray
+fuhr_number_ctrprts,,Number of Counterparts in Fuhrmeister and Schmitt Catalog within 60 arcsec,meta.number
+hmxb_number_ctrprts,,Number of Counterparts in High Mass X-Ray Binaries (HMXBCAT) within 60 arcsec,meta.number
+number_pts_gtrthan_6s,,Number of Data Points with Exposure Times Greater Than 6s,meta.number
+sdss_beta,degree,SDSS Ecliptic Latitude,pos.ecliptic.lon
+tycho2_tyc2_number,,TYC2 Source Number,meta.id
+mekal_nh_error,cm^-2,Error in Neutral Hydrogen Density for the Mekal Fit,stat.error
+xmmsl1_separation,arcsec,Distance of Nearest XMMSL1 Counterpart,pos.angDistance;src.orbital
+tycho2_separation,arcsec,Distance to Nearest Tyc2 Counterpart,pos.angDistance;src.orbital
+flem_ra,degree,Flemming Right Ascension,pos.eq.ra
+onerxh_exposure,s,1RXH Source Exposure Time,time.duration;obs.exposure
+threexmm_number_ctrprts,,Number of 3XMM Counterparts within 60 arcsec,meta.number
+sdss_lambda,degree,SDSS Ecliptic Longitude,pos.ecliptic.lat
+bsc_vmag,mag,BSC V Magnitude,phot.mag;em.opt.V
+tycho2_ra,degree,Tyc2 Right Ascension,pos.eq.ra
+tworxs_det_likelihood,,Detection Likelihood of 2RXS Nearest Counterpart,stat.likelihood
+bsc_nearest,,Source Number of Nearest BSC Counterpart,meta.id
+onerxh_separation,arcsec,Distance to Nearest 1RXH Counterpart,pos.angDistance;src.orbital
+bsc_number_ctrprts,,Number of Counterparts in the Catalog of Bright Stars (BSC) within 300 arcsec,meta.number
+xmmsl1_name,,Source Designation in the XMM Slew Survey,meta.id
+xmmsl1_bb_count_rate,ct/s,XMMSL1 Broad-Band Count Rate,phot.count;em.X-ray
+detection_likelihood,,Detection Likelihood,stat.likelihood;em.X-ray
+tworxs_separation,arcsec,Distance to 2RXS Counterpart,pos.angDistance;src.orbital
+wdcat_vsphot,mag,WD V Multichannel Spectrophotometry Magnitude,phot.mag;em.opt.V
+onesxps_hard_det_flag,,1SXPS Hard (2-10keV) Band Detection Flag,meta.code
+band_b_tot_counts,ct,Counts in Band B,phot.count;em.X-ray
+"""time""",mjd,Start Time of Exposure When Source Is within FOV and Detector on,time.start;obs
+onesxps_det_flag,,1SXPS Total (0.3-10keV) Band Detection Flag,meta.code
+min_count_rate_error,ct/s,Error in Minimum Count Rate,stat.error

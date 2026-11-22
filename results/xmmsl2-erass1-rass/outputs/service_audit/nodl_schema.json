@@ -1,0 +1,12 @@
+{
+  "label": "nodl_schema",
+  "url": "https://datalab.noirlab.edu/query/query",
+  "params": {
+    "sql": "select table_schema,table_name from information_schema.tables where lower(table_schema) like '%wise%' or lower(table_schema) like '%gaia%' or lower(table_schema) like '%tns%' order by table_name",
+    "ofmt": "csv",
+    "async": "False"
+  },
+  "method": "GET",
+  "data": null,
+  "error": "400 Client Error: BAD REQUEST for url: https://datalab.noirlab.edu/query/query?sql=select+table_schema%2Ctable_name+from+information_schema.tables+where+lower%28table_schema%29+like+%27%25wise%25%27+or+lower%28table_schema%29+like+%27%25gaia%25%27+or+lower%28table_schema%29+like+%27%25tns%25%27+order+by+table_name&ofmt=csv&async=False"
+}
