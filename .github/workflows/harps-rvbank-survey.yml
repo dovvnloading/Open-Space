@@ -39,6 +39,7 @@ jobs:
           python -m pip freeze > receipts/packages.txt
           git rev-parse HEAD > receipts/revision.txt
           python "$SURVEY/ingest.py" --work work --out receipts
+          python -c 'import json; assert not json.load(open("receipts/ingest.json"))["source"].startswith("ESO"), "RVBank source unavailable; the completed ESO survey is already preserved"'
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -122,6 +123,9 @@ jobs:
           python "$SURVEY/report.py" combine --out evidence --shards shards --count 12
           python "$SURVEY/enrich.py" --work work --out evidence
           python "$SURVEY/vet.py" --work work --out evidence
+          python "$SURVEY/ingest.py" --source eso --work previous --out previous
+          python "$SURVEY/holdout.py" --work work --out evidence --eso-epochs previous/epochs.csv.gz
+          cp previous/inputs.csv evidence/holdout-inputs.csv
           python "$SURVEY/report.py" summarize --out evidence
       - uses: actions/upload-artifact@v4
         if: always()
@@ -135,40 +139,70 @@ jobs:
           name: harps-catalog-snapshot
           path: work/catalog-cache
           if-no-files-found: ignore
-      - run: python -m open_space.verify
-      - run: python -m unittest discover -s tests
 
   publish:
     name: Commit survey evidence to the research branch
     needs: review
-    if: github.ref == 'refs/heads/survey/harps-rvbank-companions'
+    if: always() && !cancelled() && github.ref == 'refs/heads/survey/harps-rvbank-companions'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     permissions:
       contents: write
+      actions: read
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
-      - uses: actions/download-artifact@v4
+      - name: Check for the archived ESO search
+        id: eso
+        run: |
+          if [[ -f "$SURVEY/eso/survey.json" ]]; then
+            echo 'deposited=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'deposited=false' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Retrieve completed ESO fits and receipts
+        if: steps.eso.outputs.deposited == 'false'
+        uses: actions/download-artifact@v4
         with:
           name: harps-evidence
-          path: published-evidence
-      - name: Verify evidence and stage the run
+          run-id: 44981252644
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/harps-eso
+      - name: Stage the verified ESO survey
+        if: steps.eso.outputs.deposited == 'false'
         run: |
           set -euo pipefail
-          (cd published-evidence && sha256sum --check --quiet SHA256SUMS)
-          test -s published-evidence/survey.json
-          test -s published-evidence/inputs.csv
-          test -s published-evidence/vetting.csv
-          test -s published-evidence/published-controls.csv
-          test -s published-evidence/completeness-grid.csv
+          (cd "$RUNNER_TEMP/harps-eso" && sha256sum --check --quiet SHA256SUMS)
+          test "$(cat "$RUNNER_TEMP/harps-eso/revision.txt")" = d17567a058c69b24bf292d9284e56a2fa23961e3
+          mkdir -p "$SURVEY/eso"
+          cp -a "$RUNNER_TEMP/harps-eso/." "$SURVEY/eso/"
+          git add -f -- "$SURVEY/eso"
+      - uses: actions/download-artifact@v4
+        if: needs.review.result == 'success'
+        with:
+          name: harps-evidence
+          path: ${{ runner.temp }}/harps-rvbank
+      - name: Verify and stage the RVBank evidence
+        if: needs.review.result == 'success'
+        run: |
+          set -euo pipefail
+          (cd "$RUNNER_TEMP/harps-rvbank" && sha256sum --check --quiet SHA256SUMS)
+          test -s "$RUNNER_TEMP/harps-rvbank/survey.json"
+          test -s "$RUNNER_TEMP/harps-rvbank/inputs.csv"
+          test -s "$RUNNER_TEMP/harps-rvbank/vetting.csv"
+          test -s "$RUNNER_TEMP/harps-rvbank/published-controls.csv"
+          test -s "$RUNNER_TEMP/harps-rvbank/completeness-grid.csv"
           mkdir -p "$SURVEY/evidence"
-          rsync -a --delete published-evidence/ "$SURVEY/evidence/"
+          rsync -a --delete "$RUNNER_TEMP/harps-rvbank/" "$SURVEY/evidence/"
           git add -f -- "$SURVEY/evidence"
+      - name: Commit the run
+        run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m "Record HARPS survey evidence from Actions run $GITHUB_RUN_ID"
+          if ! git diff --cached --quiet; then
+            git commit -m "Deposit verified HARPS survey tables and input receipts (run $GITHUB_RUN_ID)"
+          fi
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

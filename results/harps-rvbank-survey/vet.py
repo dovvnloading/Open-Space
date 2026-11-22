@@ -10,6 +10,7 @@ import io
 from pathlib import Path
 import re
 import time
+from urllib.parse import urlencode
 from xml.etree import ElementTree as ET
 
 import numpy as np
@@ -24,6 +25,9 @@ from scipy.stats import chi2
 
 NASA = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync"
 SIMBAD = "https://simbad.cds.unistra.fr/simbad/sim-tap/sync"
+SIMBAD_CFA = "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync"
+HGCA_AUTHOR = ("https://raw.githubusercontent.com/t-brandt/orvara/"
+               "37df2f9bd57f64078e63634feade0533dbaaab86/HGCA_vEDR3.fits")
 GAIA = "https://gea.esac.esa.int/tap-server/tap/sync"
 EU = "https://voparis-tap-planeto.obspm.fr/tap/sync"
 VIZIER = "https://tapvizier.cds.unistra.fr/TAPVizieR/tap/sync"
@@ -75,10 +79,24 @@ class Sources:
         self.cache = work / "catalog-cache"
         self.cache.mkdir(parents=True, exist_ok=True)
         self.failures = defaultdict(int)
+        self.simbad_endpoint = SIMBAD
         self.session = requests.Session()
         self.session.headers["User-Agent"] = "Open-Space-HARPS-survey/1.0 (research catalog queries)"
 
     def get(self, label, url, query="", fmt="votable"):
+        if url == SIMBAD:
+            for host in dict.fromkeys([self.simbad_endpoint, SIMBAD_CFA, SIMBAD]):
+                result = self.request(label, host, query, fmt)
+                if result is not None:
+                    self.simbad_endpoint = host
+                    return result
+            return None
+        result = self.request(label, url, query, fmt)
+        if result is None and url == HGCA:
+            return self.request(label, HGCA_AUTHOR, query, fmt)
+        return result
+
+    def request(self, label, url, query, fmt):
         params = {"QUERY": query, "REQUEST": "doQuery", "LANG": "ADQL", "FORMAT": fmt,
                   "MAXREC": 1000000} if query else {}
         key = hashlib.sha256((url + repr(params)).encode()).hexdigest()
@@ -88,7 +106,7 @@ class Sources:
         def record():
             with self.audit.open("a",newline="") as handle:
                 csv.DictWriter(handle,fieldnames=self.fields).writerow(entry)
-        if self.failures[label] >= 3 and not path.exists():
+        if self.failures[(label, url)] >= 3 and not path.exists():
             entry.update(status="unavailable after three consecutive failed requests")
             record()
             return None
@@ -124,7 +142,7 @@ class Sources:
                     result.columns = [c.lower() for c in result.columns]
                 if not path.exists():
                     path.write_bytes(data)
-                self.failures[label] = 0
+                self.failures[(label, url)] = 0
                 entry.update(status="ok", rows=len(result),
                              retrieved_utc=datetime.fromtimestamp(path.stat().st_mtime, timezone.utc).isoformat())
                 record()
@@ -133,9 +151,26 @@ class Sources:
                 entry.update(status="failed", detail=str(exc)[:500])
                 if attempt == 0:
                     time.sleep(1)
-        self.failures[label] += 1
+        self.failures[(label, url)] += 1
         record()
         return None
+
+
+def spores_prior_table(db, number, fields, expected):
+    table = f"J/AJ/170/343/table{number}"
+    query = "SELECT " + ",".join(f'"{name}"' for name in fields) + f' FROM "{table}"'
+    label = f"SPORES-HWO II Table {number}"
+    result = db.get(label, VIZIER, query)
+    columns = {c.lower() for c in fields}
+    if result is not None and len(result) == expected and columns.issubset(result):
+        return result
+    params = {"-source":table, "-out":",".join(fields), "-out.max":expected+1}
+    for host in ("vizier.cfa.harvard.edu", "vizier.idia.ac.za"):
+        url = f"https://{host}/viz-bin/votable?" + urlencode(params)
+        result = db.get(label, url)
+        if result is not None and len(result) == expected and columns.issubset(result):
+            return result
+    return None
 
 
 def batch_catalog(db, label, url, template, ids, key, size=100):
@@ -420,10 +455,8 @@ def run(work, out):
                       "SELECT DISTINCT hostname,pl_name,pl_orbper FROM ps WHERE pl_orbper IS NOT NULL", "csv")
     eu = db.get("exoplanet.eu", EU, "SELECT star_name,target_name,period,publication_status,ra,dec "
                 "FROM exoplanet.epn_core")
-    spores = db.get("SPORES-HWO II Table 6", VIZIER, 'SELECT "HD","Per","Class","BibCode" '
-                    'FROM "J/AJ/170/343/table6"')
-    trend_catalog = db.get("SPORES-HWO II Table 7", VIZIER,
-                           'SELECT "HD" FROM "J/AJ/170/343/table7"')
+    spores = spores_prior_table(db, 6, ["HD", "Per", "Class", "BibCode"], 109)
+    trend_catalog = spores_prior_table(db, 7, ["HD"], 74)
     reported_trends = {"hd25673":"previously reported by Open-Space"}
     if trend_catalog is not None and "hd" in trend_catalog:
         for hd in trend_catalog.hd:

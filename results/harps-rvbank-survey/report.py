@@ -206,6 +206,18 @@ def summarize(out):
         status_counts=dispositions, published_controls=len(controls),
         controls_above_threshold=int(controls.outcome.eq("period recovered above threshold").sum()),
     )
+    accelerations = read(out / "accelerations.csv")
+    fitted_mass = pd.to_numeric(vetting.dynamical_mass_mjup, errors="coerce").notna()
+    vetting.loc[fitted_mass].to_csv(out / "dynamical-masses.csv", index=False)
+    counts.update(
+        trend_targets=len(accelerations),
+        trends_with_hgca=int(accelerations.astrometry_check.eq("matched").sum()),
+        trends_with_pma_p_below_001=int(pd.to_numeric(accelerations.pma_p, errors="coerce").lt(.001).sum()),
+        adopted_conditional_dynamical_masses=int(pd.to_numeric(vetting.dynamical_mass_mjup, errors="coerce").notna().sum()),
+        rv_pass_by_external_status={k:int(v) for k,v in vetting.loc[vetting.rv_status.eq("pass"),
+                                                              "external_status"].value_counts().items()},
+        target_eligibility={k:int(v) for k,v in stars.eligibility.value_counts().items()},
+    )
     (out / "survey.json").write_text(json.dumps(counts, indent=2) + "\n")
     body = f"""# HARPS radial-velocity companion survey
 

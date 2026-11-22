@@ -2,6 +2,8 @@
 from runtime import require_survey_workflow
 
 import argparse
+import csv
+import zipfile
 import hashlib
 import json
 import http.client
@@ -16,7 +18,14 @@ from urllib.request import Request, urlopen
 import numpy as np
 import pandas as pd
 
-CDS = "https://cdsarc.cds.unistra.fr/ftp"
+CDS_STATIC = ("https://vizier.cfa.harvard.edu/ftp/cats",
+              "https://cdsarc.cds.unistra.fr/ftp/cats")
+AUTHOR_COMMIT = "09626a652ddc93df8771ce3d818ee04a292f7585"
+AUTHOR_BLOB = "bf5e0f4ceed9e8ce07e9412cc33646b45cb6c56a"
+AUTHOR_URL = (f"https://raw.githubusercontent.com/3fon3fonov/HARPS_RVBank/{AUTHOR_COMMIT}/"
+              "HARPS_RVBank_ver02.csv.zip")
+AUTHOR = "Perdelwitz et al. author HARPS-RVBank Ver.02b, 2024-03-03"
+ESO = "ESO Phase 3 HARPS RV catalogue DR1"
 VIZTAP = "https://tapvizier.cds.unistra.fr/TAPVizieR/tap/sync"
 ESOTAP = "https://archive.eso.org/tap_cat/sync"
 PRIMARY = "J/A+A/683/A125/table4"
@@ -38,16 +47,16 @@ S_FIELDS = {"hd": ("HD", 1, 8), "bjd": ("BJD", 10, 23), "sindex": ("S-ind", 44, 
             "inst": ("Inst", 140, 150)}
 
 
-def download(url, path, manifest):
+def download(url, path, manifest, timeout=60, attempts=2):
     request = Request(url, headers={"User-Agent": "Open-Space HARPS catalog research"})
-    for attempt in range(1, 4):
+    for attempt in range(1, attempts + 1):
         digest = hashlib.sha256()
         received = 0
         entry = dict(url=url, retrieved_utc=datetime.now(timezone.utc).isoformat(),
                      file=path.name, attempt=attempt)
         try:
             print(f"Retrieving {path.name}, attempt {attempt}", flush=True)
-            with urlopen(request, timeout=120) as stream, path.open("wb") as sink:
+            with urlopen(request, timeout=timeout) as stream, path.open("wb") as sink:
                 expected = stream.headers.get("Content-Length")
                 while block := stream.read(1024 * 1024):
                     sink.write(block)
@@ -64,48 +73,148 @@ def download(url, path, manifest):
             path.unlink(missing_ok=True)
             if isinstance(exc, HTTPError) and exc.code not in (408, 425, 429, 500, 502, 503, 504):
                 raise
-            if attempt == 3:
+            if attempt == attempts:
                 raise
             time.sleep(2 ** attempt)
 
 
-def tap(endpoint, query, limit, file, manifest):
+def tap(endpoint, query, limit, file, manifest, timeout=120, attempts=2):
     params = {"request": "doQuery", "lang": "ADQL", "format": "csv",
               "maxrec": limit, "query": query}
-    download(endpoint + "?" + urlencode(params), file, manifest)
+    download(endpoint + "?" + urlencode(params), file, manifest, timeout, attempts)
     return pd.read_csv(file, low_memory=False)
 
 
+def field_projection(frame, fields):
+    frame.columns = frame.columns.str.strip().str.lower()
+    # Mirrors may standardize equatorial column names. sexagesimal values
+    # must never be interpreted as decimal degrees.
+    aliases = {"radeg": ("radeg", "_raj2000", "ra_icrs", "raj2000"),
+               "dedeg": ("dedeg", "_dej2000", "de_icrs", "dej2000")}
+    result = {}
+    for key, (label, _, _) in fields.items():
+        choices = aliases.get(label.lower(), (label.lower(),))
+        found = next((col for col in choices if col in frame), None)
+        if found is None:
+            raise ValueError(f"Missing {label}. Available columns: {list(frame)}")
+        values = frame[found]
+        if key in ("ra_deg", "dec_deg") and found != label.lower():
+            numeric = pd.to_numeric(values, errors="coerce")
+            if values.notna().any() and not numeric.notna().any():
+                raise ValueError(f"Cannot interpret {found} as degrees")
+        result[key] = values
+    return pd.DataFrame(result)
+
+
+def asu_catalog(table, fields, expected, work, manifest, errors):
+    """Request bounded, gap-checked pages from independent VizieR mirrors."""
+    parts = []
+    stem = table.replace("/", "-")
+    for first in range(1, expected + 1, 25000):
+        last = min(first + 24999, expected)
+        params = {"-source": table, "-out": "**", "-out.max": last - first + 2,
+                  "-out.meta": "h", "-sort": "recno", "recno": f"{first}..{last}"}
+        for host in ("vizier.cfa.harvard.edu", "vizier.idia.ac.za"):
+            url = f"https://{host}/viz-bin/asu-tsv?" + urlencode(params)
+            path = work / f"{stem}.{host}.{first}-{last}.tsv"
+            try:
+                download(url, path, manifest, timeout=40, attempts=1)
+                raw = pd.read_csv(path, comment="#", sep="\t", dtype=str, quoting=csv.QUOTE_NONE)
+                raw.columns = raw.columns.str.strip().str.lower()
+                recno = pd.to_numeric(raw["recno"], errors="coerce")
+                # ASU can print unit and separator rows below its column names.
+                data_rows = recno.notna()
+                np.testing.assert_array_equal(np.sort(recno[data_rows].to_numpy()),
+                                              np.arange(first, last + 1))
+                parts.append(field_projection(raw[data_rows].copy(), fields))
+                break
+            except Exception as exc:
+                if manifest and manifest[-1]["file"] == path.name and manifest[-1]["status"] == "downloaded":
+                    manifest[-1].update(status="unusable_response", error=str(exc)[:500])
+                errors.append(f"{table} {host} rows {first}..{last}: {str(exc)[:500]}")
+        else:
+            raise RuntimeError(f"All mirror routes for {table} rows {first}..{last} failed")
+    return pd.concat(parts, ignore_index=True)
+
+
 def catalog(table, fields, expected, work, manifest, errors):
-    folder, name = table.rsplit("/", 1)
-    stem = folder.replace("/", "-") + "-" + name
-    for suffix in (".dat.gz", ".dat", ".tap.csv"):
-        file = work / (stem + suffix)
-        try:
-            if suffix == ".tap.csv":
-                data = tap(VIZTAP, f'SELECT * FROM "{table}"', expected + 10, file, manifest)
-                data.columns = data.columns.str.strip().str.lower()
-                # VizieR may standardise CDS coordinate labels in TAP tables.
-                ra = next((key for key in ("radeg", "raj2000", "ra_icrs") if key in data), "")
-                dec = next((key for key in ("dedeg", "dej2000", "de_icrs") if key in data), "")
-                if ra and dec:
-                    data = data.rename(columns={ra: "radeg", dec: "dedeg"})
-                data = data[[f[0].lower() for f in fields.values()]].copy()
-                data.columns = list(fields)
-            else:
-                url = f"{CDS}/{folder}/{name}{suffix}"
-                download(url, file, manifest)
-                data = pd.read_fwf(file, names=list(fields),
+    """CDS fixed-width mirrors, checked ASU pages, then one bounded TAP attempt."""
+    stem = table.replace("/", "-")
+    for host in CDS_STATIC:
+        for suffix in (".dat.gz", ".dat"):
+            path = work / (stem + "." + host.split("/")[2] + suffix)
+            url = f"{host}/{table}{suffix}"
+            try:
+                download(url, path, manifest, timeout=20, attempts=1)
+                data = pd.read_fwf(path, names=list(fields),
                                    colspecs=[(a-1, b) for _, a, b in fields.values()],
                                    na_values=["-", "nan"], dtype=str)
-            if len(data) != expected:
-                raise ValueError(f"expected {expected} rows, received {len(data)}")
-            return data
-        except Exception as exc:
-            if manifest and manifest[-1]["file"] == file.name and manifest[-1]["status"] == "downloaded":
-                manifest[-1].update(status="unusable_response", error=str(exc))
-            errors.append(f"{table} {suffix}: {exc}")
-    raise RuntimeError(f"All retrieval routes for {table} failed")
+                if len(data) != expected:
+                    raise ValueError(f"expected {expected} rows, received {len(data)}")
+                return data
+            except Exception as exc:
+                if manifest[-1]["status"] == "downloaded":
+                    manifest[-1].update(status="unusable_response", error=str(exc)[:500])
+                errors.append(f"{url}: {str(exc)[:500]}")
+    try:
+        return asu_catalog(table, fields, expected, work, manifest, errors)
+    except RuntimeError as exc:
+        errors.append(str(exc))
+    path = work / (stem + ".tap.csv")
+    try:
+        data = tap(VIZTAP, f'SELECT * FROM "{table}"', expected + 10, path, manifest,
+                   timeout=30, attempts=1)
+        if len(data) != expected:
+            raise ValueError(f"expected {expected} rows, received {len(data)}")
+        return field_projection(data, fields)
+    except Exception as exc:
+        if manifest[-1]["status"] == "downloaded":
+            manifest[-1].update(status="unusable_response", error=str(exc)[:500])
+        errors.append(f"{table} TAP: {str(exc)[:500]}")
+        raise RuntimeError(f"All corrected CDS routes for {table} failed") from exc
+
+
+def author_rvbank(work, manifest):
+    """Parse the author-published 2024 v2b archive using its CSV header."""
+    path = download(AUTHOR_URL, work/"RVBank-author-v02b.csv.zip", manifest)
+    # Verify the public Git object checksum, including its Git object header.
+    blob = hashlib.sha1(b"blob " + str(path.stat().st_size).encode() + b"\0")
+    with path.open("rb") as raw:
+        while buf := raw.read(1024 * 1024):
+            blob.update(buf)
+    if blob.hexdigest() != AUTHOR_BLOB:
+        raise ValueError(f"Archive differs from the file in author commit {AUTHOR_COMMIT}")
+    names = {"star":"target", "ra_deg":"ra", "dec_deg":"dec", "bjd":"bjd",
+             "rv":"rv_mlc_nzp", "err":"e_rv_mlc_nzp", "crx":"crx", "dlw":"dlw",
+             "halpha":"halpha", "flag":"f_rv", "fwhm":"fwhm_drs", "bis":"bis",
+             "epoch_id":"timeid", "rhkp":"rhkp"}
+    parts = []
+    with zipfile.ZipFile(path) as archive:
+        members = [n for n in archive.namelist() if n.lower().endswith(".csv")
+                   and not any(c.startswith((".", "__MACOSX")) for c in n.split("/"))]
+        for member in sorted(members):
+            with archive.open(member) as stream:
+                header = stream.readline().decode("utf-8-sig").strip().lstrip("#").strip()
+            dialect = csv.Sniffer().sniff(header, delimiters=",;\t|")
+            columns = next(csv.reader([header], dialect=dialect, skipinitialspace=True))
+            cols = [c.strip().lower() for c in columns]
+            if not set(names.values()).issubset(cols):
+                raise ValueError(f"Unexpected author CSV header in {member}: {cols}")
+            with archive.open(member) as stream:
+                data = pd.read_csv(stream, names=cols, skiprows=1, sep=dialect.delimiter,
+                                   quotechar=dialect.quotechar or '"', skipinitialspace=True,
+                                   usecols=list(names.values()), dtype=str,
+                                   na_values=["-", "None", "NULL", "null", "NaN", r"\N"],
+                                   encoding="latin-1")
+            parts.append(data.rename(columns={v:k for k,v in names.items()}))
+    if not parts:
+        raise ValueError("Author release contains no CSV tables")
+    data = pd.concat(parts, ignore_index=True)
+    # Full coverage is guaranteed by the pinned blob, CRC-checked members,
+    # and parsing every CSV. Record the actual count against the paper's total.
+    if data.empty or not pd.to_numeric(data.bjd, errors="coerce").between(2452700,2465000).any():
+        raise ValueError("Author release has no rows with a valid absolute BJD")
+    return data
 
 
 def eso_catalog(work, manifest):
@@ -187,7 +296,7 @@ def classify(data, source):
     reject(data.star.isna(), "missing_canonical_id")
     reject(~data.bjd.between(2452700, 2465000), "missing_or_invalid_bjd")
     reject(data.rv.isna() | data.err.isna() | data.err.le(0), "invalid_rv_or_error")
-    if source == PRIMARY:
+    if source in (PRIMARY, AUTHOR):
         reject(data.flag.ne(0), "serval_quality_flag")
     else:
         reject(~data["mode"].str.strip().eq("HAM"), "not_HAM")
@@ -202,31 +311,45 @@ def classify(data, source):
     data.loc[duplicates, "disposition"] = "duplicate_star_bjd"
 
 
+def select_archive(source, work, manifest, errors):
+    if source == "auto":
+        try:
+            return PRIMARY, catalog(PRIMARY, RV_FIELDS, 252615, work, manifest, errors)
+        except RuntimeError:
+            try:
+                return AUTHOR, author_rvbank(work, manifest)
+            except Exception as exc:
+                if manifest and manifest[-1]["url"] == AUTHOR_URL and manifest[-1]["status"] == "downloaded":
+                    manifest[-1].update(status="unusable_response", error=str(exc)[:500])
+                errors.append(f"{AUTHOR}: {exc}")
+    return ESO, eso_catalog(work, manifest)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--work", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--source", choices=("auto", "eso"), default="auto",
+                        help="Use ESO directly for the time-separated RV holdout")
     args = parser.parse_args()
     require_survey_workflow()
     work, out = args.work, args.out
     work.mkdir(parents=True, exist_ok=True)
     out.mkdir(parents=True, exist_ok=True)
     manifest, errors = [], []
-    release = PRIMARY
+    release = ESO if args.source == "eso" else "auto"
     try:
-        try:
-            data = catalog(PRIMARY, RV_FIELDS, 252615, work, manifest, errors)
-        except RuntimeError:
-            release = "ESO Phase 3 HARPS RV catalogue DR1"
-            data = eso_catalog(work, manifest)
+        release, data = select_archive(args.source, work, manifest, errors)
+        print(f"Selected {release}: {len(data)} input rows", flush=True)
         classify(data, release)
         if not data.disposition.eq("used").any():
             raise ValueError("no usable primary RV measurements")
-        try:
-            add_sindex(data, work, manifest, errors)
-        except Exception as exc:
-            data["sindex"] = np.nan
-            errors.append(f"S-index retrieval or matching unavailable: {exc}")
+        if args.source != "eso":
+            try:
+                add_sindex(data, work, manifest, errors)
+            except Exception as exc:
+                data["sindex"] = np.nan
+                errors.append(f"S-index retrieval or matching unavailable: {exc}")
         data["n_epochs"] = data.disposition.eq("used").astype(int)
         targets = data.groupby("star", sort=True).agg(
             ra_deg=("ra_deg", "median"), dec_deg=("dec_deg", "median"),
@@ -238,7 +361,12 @@ def main():
             out/"epoch-ledger.csv.gz", index=False, compression=compression)
         used = data.loc[data.n_epochs.eq(1), COLUMNS].sort_values(["star", "bjd"])
         used.to_csv(work/"epochs.csv.gz", index=False, compression=compression)
-        info = dict(source=release, input_rows=len(data), targets=len(targets),
+        version = {PRIMARY: "CDS corrected 2026-04-20", AUTHOR: "author Ver.02b 2024-03-03",
+                   ESO: "ESO Phase 3 DR1 2023-12-08"}[release]
+        info = dict(source=release, release_version=version, cds_corrected_table=(release == PRIMARY),
+                    author_commit=AUTHOR_COMMIT if release == AUTHOR else None,
+                    published_input_rows=289843 if release == ESO else 252615,
+                    input_rows=len(data), targets=len(targets),
                     used_epochs=len(used), dispositions=data.disposition.value_counts().to_dict(),
                     sindex_epochs=int(used.sindex.notna().sum()),
                     first_bjd=float(used.bjd.min()), last_bjd=float(used.bjd.max()))
