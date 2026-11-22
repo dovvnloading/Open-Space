@@ -1,0 +1,59 @@
+{
+  "release": "sc1",
+  "sampling": {
+    "shot_strata": 2787,
+    "drawn": 3653,
+    "used_shots": 2404,
+    "fewer_than_three_comparable_donors": 194
+  },
+  "expected_draw_fraction": 0.015625,
+  "observed": {
+    "spectra": 3459,
+    "usable_spectra": 3459,
+    "peaks": 2196,
+    "heii": 23,
+    "sky_or_calibration_flags": 16,
+    "unknown": 27
+  },
+  "mock": {
+    "spectra": 3459,
+    "usable_spectra": 3459,
+    "peaks": 2178,
+    "unknown": 805,
+    "single_pixel_flags": 69,
+    "sky_or_calibration_flags": 22,
+    "heii": 17
+  },
+  "rates_per_matched_spectrum": {
+    "peaks": {
+      "observed": 0.6348655680832611,
+      "mock": 0.629661751951431
+    },
+    "heii": {
+      "observed": 0.0066493206128939,
+      "mock": 0.004914715235617231
+    },
+    "ew": {
+      "observed": 0.0,
+      "mock": 0.0
+    },
+    "unknown": {
+      "observed": 0.007805724197745013,
+      "mock": 0.2327262214512865
+    }
+  },
+  "qa_subset": {
+    "gain": {
+      "real_median": 0.813993263925626,
+      "mock_median": 0.7946525925521257
+    },
+    "lag1_correlation": {
+      "real_median": 0.25342310240780797,
+      "mock_median": 0.18304100443733395
+    }
+  },
+  "block_channels": 4,
+  "minimum_donors": 3,
+  "maximum_donors": 8,
+  "limitations": "Short blocks retain within-block covariance and sky-line wavelengths. Boundaries cut correlations. Genuine source lines can be transferred from donors. Rates condition on successful same-shot matching and shared masks."
+}

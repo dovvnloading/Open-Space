@@ -1,0 +1,68 @@
+{
+  "release": "sc1",
+  "counts": {
+    "eligible_targets": 1479,
+    "shuffled_spectra": 1479,
+    "singleton_omitted": 0,
+    "preliminary_science_peaks": 70,
+    "verified_frozen_primary_fits": 70,
+    "additional_external_cone_unavailable": 58,
+    "disposition_unresolved": 62,
+    "independently_supported": 4,
+    "archived_cones_reused": 4,
+    "archived_band_measurements_reused": 6,
+    "native_cones_queried": 4,
+    "aperture_r_eligible": 2,
+    "aperture_z_eligible": 4,
+    "with_EW_lower": 4,
+    "lower_above_240": 0,
+    "two_band_model_upper_below_240": 0,
+    "disposition_published": 5,
+    "disposition_excluded": 3
+  },
+  "first_pass_status_counts": {
+    "no_clean_peak_at_redshift": 1408,
+    "science_peak_for_imaging": 70,
+    "spectral_continuum_rules_out_extreme_EW": 1
+  },
+  "catalog_errors": {},
+  "ancillary_and_cube_receipts": {
+    "hetdex_lan_v0.3.fits": {
+      "url": "https://web.corral.tacc.utexas.edu/hetdex/HETDEX/catalogs/HETDEX_LAN/hetdex_lan_v0.3.fits",
+      "bytes": 15284160,
+      "sha256": "bec4df6a05c7dd55c87a7229ce2d3b61dc13fb23b9561021edd543c39982c5cd"
+    },
+    "DESI_HETDEX_SPEC_v1.6.fits": {
+      "url": "https://web.corral.tacc.utexas.edu/hetdex/HETDEX/catalogs/HETDEX_DESI/DESI_HETDEX_SPEC_v1.6.fits",
+      "bytes": 168004800,
+      "sha256": "b63e822974b4c25bf80676e153a6407290069eede5fb6013515b129bf3f40486"
+    },
+    "dex_cube_20190524017_046.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20190524017/dex_cube_20190524017_046.fits",
+      "bytes": 19782720,
+      "sha256": "7dd1a25c0646b25fb08bfc5786ea3589cd4402c4aa4a63dbca75584da4964f89"
+    },
+    "dex_cube_20190728014_053.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20190728014/dex_cube_20190728014_053.fits",
+      "bytes": 18532800,
+      "sha256": "00a68d2816fe0e62e1ce94d2bb4b05ded87fb4f343606ab0bb27e89ad7e5fe04"
+    },
+    "dex_cube_20200129033_027.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20200129033/dex_cube_20200129033_027.fits",
+      "bytes": 18630720,
+      "sha256": "01e8f123c7747bff438c35eefad548f39b5d1a7385df3356b4af7896e8b152c9"
+    },
+    "dex_cube_20190426011_021.fits": {
+      "url": "https://data.sciserver.mpe.mpg.de/public/hetdex/pdr/pdr1/datacubes/20190426011/dex_cube_20190426011_021.fits",
+      "bytes": 20088000,
+      "sha256": "a591d9cfee98af653a380e7233328cbc74639960235fa822c94968284628df97"
+    }
+  },
+  "sha256": {
+    "ew-rescue-control-spectra.jsonl.gz": "8284e737a627643b351cbb018e2ab8af0e99e6402154e22fbe99a8d3023d06d8",
+    "ew-rescue-control-summary.json": "d447a52b3461602d1772b0f3979f9a6cc88d4f9505375551e7c0e2684f727fe4",
+    "ew-rescue-control-imaging.jsonl.gz": "ab7215a85e9e270b296476086daec2055f17fcc765eeefaa3e32689f44363c42",
+    "ew-imaging/native.jsonl.gz": "b73fcd84652255e87d661c08b57f6cacdffa2469b02aeacf2626394777617a03"
+  },
+  "method": "Position-assigned mocks use the original paired flux/error wavelength permutation across sorted 64-target groups, seed 572025 plus group offset. Every retained primary flux and error is verified against the frozen blind fit. Assigned sky positions keep the real DESI or separate-shot confirmation, cube and imaging tests. Earlier photometry reuses the same control or a native continuum measurement at the identical position and cube PSF. No observed source-line fit substitutes for a mock primary. An additional SPARCL cone is attempted for each locally unresolved control lacking corroboration."
+}

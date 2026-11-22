@@ -1,0 +1,266 @@
+name: HETDEX blind rare-emitter search
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: Research stage
+        type: choice
+        default: full
+        options: [scan, vet, focus, finalize, audit, geometry, catalog, full]
+  push:
+    branches: [science/hetdex-blind-emitter-search]
+    paths: [.github/workflows/hetdex-blind-emitters.yml]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hetdex-rare-emitters-${{ github.ref }}-${{ inputs.stage || 'audit' }}
+  cancel-in-progress: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[replace-hetdex-run]') }}
+
+env:
+  SURVEY: results/hetdex_blind_emitters
+  STAGE: ${{ inputs.stage || (contains(github.event.head_commit.message, '[catalog-hetdex]') && 'catalog') || (contains(github.event.head_commit.message, '[full-hetdex]') && 'full') || (contains(github.event.head_commit.message, '[geometry-hetdex]') && 'geometry') || 'audit' }}
+  VET_RUN: "44995021247"
+  FOCUS_RUN: "44999164862"
+  OMP_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+
+jobs:
+  research:
+    if: github.ref == 'refs/heads/science/hetdex-blind-emitter-search' && inputs.stage != 'catalog' && !contains(github.event.head_commit.message, '[catalog-hetdex]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    permissions:
+      contents: read
+      actions: read
+    strategy:
+      fail-fast: false
+      max-parallel: ${{ contains(fromJSON('["focus","finalize"]'), inputs.stage || 'audit') && 1 || 2 }}
+      matrix:
+        release: [sc2, sc1]
+    env:
+      RELEASE: ${{ matrix.release }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.STAGE == 'geometry' && github.ref_name || github.sha }}
+          persist-credentials: false
+          filter: blob:none
+          sparse-checkout: results/hetdex_blind_emitters
+      - name: Start a full reproduction with an empty release output directory
+        if: env.STAGE == 'full'
+        run: |
+          out="$SURVEY/evidence/$RELEASE"
+          if test -d "$out"; then mv "$out" "$RUNNER_TEMP/previous-evidence-$RELEASE"; fi
+      - name: Read the published scan checkpoint
+        if: env.STAGE == 'vet'
+        uses: actions/checkout@v4
+        with:
+          ref: science/hetdex-blind-emitter-search
+          path: checkpoint
+          persist-credentials: false
+          filter: blob:none
+          sparse-checkout: results/hetdex_blind_emitters/evidence
+      - name: Freeze input evidence for this run
+        if: env.STAGE == 'vet'
+        run: |
+          src="checkpoint/$SURVEY/evidence/$RELEASE"
+          test -s "$src/scan-summary.json"
+          mkdir -p "$SURVEY/evidence/$RELEASE"
+          cp "$src"/{scan-summary.json,screen.jsonl.gz,shuffled.jsonl.gz,injections.jsonl.gz} "$SURVEY/evidence/$RELEASE/"
+          git -C checkpoint rev-parse HEAD > "$SURVEY/evidence/$RELEASE/scan-checkpoint-commit.txt"
+      - name: Restore the preceding release checkpoint
+        if: env.STAGE == 'focus' || env.STAGE == 'finalize'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          out="$SURVEY/evidence/$RELEASE"
+          run_id="$VET_RUN"
+          marker=matched-shuffle-vet/vet-summary.json
+          confirm=vet-summary.json
+          if test "$STAGE" = finalize; then
+            run_id="$FOCUS_RUN"
+            marker=repeat-blobs/summary.json
+            confirm=focus/vet-summary.json
+          fi
+          if test -s "$out/$marker" && test -s "$out/$confirm"; then exit 0; fi
+          for attempt in $(seq 1 450); do
+            names=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id/artifacts?per_page=30" --jq '.artifacts[] | select(.expired==false) | .name')
+            if grep -Fxq "research-$RELEASE" <<< "$names"; then
+              archive_dir=$(mktemp -d "$RUNNER_TEMP/hetdex-vet-XXXXXXXX")
+              gh run download "$run_id" --repo "$GITHUB_REPOSITORY" --name "research-$RELEASE" --dir "$archive_dir"
+              mkdir -p "$out"
+              cp -a "$archive_dir/." "$out/"
+              test -s "$out/$marker"
+              test -s "$out/$confirm"
+              echo "$run_id" > "$out/$STAGE-input-run.txt"
+              exit 0
+            fi
+            if test "$(gh run view "$run_id" --repo "$GITHUB_REPOSITORY" --json status --jq .status)" = completed; then
+              echo 'The required research checkpoint was not produced.' >&2
+              exit 1
+            fi
+            sleep 30
+          done
+          exit 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r "$SURVEY/requirements.txt"
+      - run: python "$SURVEY/check_pipeline.py"
+      - name: Search every spectrum and run controls
+        if: env.STAGE == 'scan' || env.STAGE == 'full'
+        run: |
+          python "$SURVEY/scan.py" "$RELEASE" scan --cache "$RUNNER_TEMP/hetdex" --output "$SURVEY/evidence/$RELEASE" --workers 3
+      - name: Adjudicate leads and measure off-source apertures
+        if: env.STAGE == 'vet' || env.STAGE == 'full'
+        run: |
+          python "$SURVEY/scan.py" "$RELEASE" vet --cache "$RUNNER_TEMP/hetdex" --output "$SURVEY/evidence/$RELEASE"
+      - name: Check independent spectral archives for all viable line pairs and extreme EWs
+        if: env.STAGE == 'focus' || env.STAGE == 'full'
+        run: |
+          python "$SURVEY/focus.py" "$SURVEY/evidence/$RELEASE" "$SURVEY/evidence/$RELEASE/focus" --release "$RELEASE" --cache "$RUNNER_TEMP/hetdex" --vet
+      - name: Test recurrent knot geometries in independent datacubes
+        if: env.STAGE == 'focus' || env.STAGE == 'full'
+        run: |
+          python "$SURVEY/repeat_blobs.py" "$SURVEY/evidence/$RELEASE" "$SURVEY/evidence/$RELEASE/repeat-blobs" --release "$RELEASE" --cache "$RUNNER_TEMP/hetdex"
+      - name: Reconcile independent spectroscopy and repeated-shot decisions
+        if: env.STAGE == 'focus' || env.STAGE == 'full' || env.STAGE == 'finalize'
+        run: |
+          d="$SURVEY/evidence/$RELEASE"
+          test -s "$d/focus/vet-summary.json"
+          test -s "$d/repeat-blobs/summary.json"
+          python "$SURVEY/focus.py" "$d" "$d/focus" --static-retry --vet --release "$RELEASE" --cache "$RUNNER_TEMP/hetdex"
+          python "$SURVEY/focus.py" "$d" "$d/focus" --replay-saved
+          if python -c 'import json,sys; sys.exit(not json.load(open(sys.argv[1]))["cached_visit_receipts"].get("source_visits_unavailable",0))' "$d/focus/saved-pair-summary.json"; then
+            PYTHONPATH="$SURVEY" python -c 'from acquisition import prepare; import sys; prepare(*sys.argv[1:])' "$RELEASE" "$RUNNER_TEMP/hetdex" "$d/focus/visit-inputs"
+            python "$SURVEY/focus.py" "$d" "$d/focus" --replay-saved
+          fi
+          python - "$d" <<'PY'
+          import json, sys
+          from pathlib import Path
+          d = Path(sys.argv[1])
+          for name in ("focus/summary", "focus/saved-pair-summary", "repeat-blobs/summary"):
+              print(d.name, name, json.loads((d / (name + ".json")).read_text())["counts"])
+          PY
+      - name: Check knots and bridge centers in native imaging and independent spectra
+        if: env.STAGE == 'full' || env.STAGE == 'focus' || env.STAGE == 'finalize' || env.STAGE == 'audit' || env.STAGE == 'geometry'
+        run: |
+          d="$SURVEY/evidence/$RELEASE"
+          test -s "$d/focus/static-summary.json"
+          test -s "$d/focus/saved-pair-summary.json"
+          if test "$STAGE" = geometry; then test -s "$d/ew-imaging/summary.json"; fi
+          python "$SURVEY/blobs_followup.py" "$d" --cache "$RUNNER_TEMP/hetdex"
+      - name: Measure native optical continua for independently identified Ly-alpha lines
+        if: env.STAGE == 'full' || env.STAGE == 'focus' || env.STAGE == 'finalize' || env.STAGE == 'audit'
+        run: |
+          d="$SURVEY/evidence/$RELEASE"
+          python "$SURVEY/ew_imaging_followup.py" "$d" "$d/ew-imaging" --release "$RELEASE" --cache "$RUNNER_TEMP/hetdex"
+      - name: Replay the native equivalent-width selection on the position-assigned shuffled spectra
+        if: env.STAGE == 'full' || env.STAGE == 'focus' || env.STAGE == 'finalize' || env.STAGE == 'audit' || env.STAGE == 'geometry'
+        run: |
+          d="$SURVEY/evidence/$RELEASE"
+          python "$SURVEY/ew_imaging_followup.py" "$d" "$d/ew-imaging" --release "$RELEASE" --cache "$RUNNER_TEMP/hetdex" --scout-control-only
+      - name: Wait for the original evidence commit before publishing the supplement
+        if: (env.STAGE == 'focus' || env.STAGE == 'finalize') && matrix.release == 'sc1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if test -f "$SURVEY/evidence/$RELEASE/$STAGE-input-run.txt"; then
+            run_id=$(cat "$SURVEY/evidence/$RELEASE/$STAGE-input-run.txt")
+            for attempt in $(seq 1 40); do
+              if test "$(gh run view "$run_id" --repo "$GITHUB_REPOSITORY" --json status --jq .status)" = completed; then exit 0; fi
+              sleep 15
+            done
+            exit 1
+          fi
+      - name: Record execution revision and package versions
+        if: always()
+        run: |
+          mkdir -p "$SURVEY/evidence/$RELEASE"
+          {
+            git rev-parse HEAD
+            echo "https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            python --version
+            python -m pip freeze
+          } > "$SURVEY/evidence/$RELEASE/execution-$STAGE.txt"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: research-${{ matrix.release }}
+          path: results/hetdex_blind_emitters/evidence/${{ matrix.release }}/
+          if-no-files-found: warn
+          retention-days: 3
+
+  publish:
+    if: always() && (needs.research.result != 'skipped' || inputs.stage == 'catalog' || contains(github.event.head_commit.message, '[catalog-hetdex]')) && github.ref == 'refs/heads/science/hetdex-blind-emitter-search'
+    needs: research
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: science/hetdex-blind-emitter-search
+          fetch-depth: ${{ env.STAGE == 'catalog' && '0' || '1' }}
+      - uses: actions/download-artifact@v4
+        if: env.STAGE != 'catalog'
+        with:
+          pattern: research-*
+          path: ${{ runner.temp }}/hetdex-receipts
+      - name: Commit evidence to the research branch
+        if: env.STAGE != 'catalog'
+        run: |
+          for release in sc1 sc2; do
+            src="$RUNNER_TEMP/hetdex-receipts/research-$release"
+            if test -d "$src"; then
+              mkdir -p "$SURVEY/evidence/$release"
+              cp -r "$src/." "$SURVEY/evidence/$release/"
+            fi
+          done
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$SURVEY/evidence"
+          git diff --cached --quiet || git commit -m "Record HETDEX $STAGE evidence from run $GITHUB_RUN_ID"
+          git push origin HEAD:science/hetdex-blind-emitter-search
+
+      - uses: actions/setup-python@v5
+        if: needs.research.result == 'success' || env.STAGE == 'catalog'
+        with:
+          python-version: "3.12"
+      - name: Install dependencies for the repository checks
+        if: needs.research.result == 'success' || env.STAGE == 'catalog'
+        run: python -m pip install '.[archive]' -r "$SURVEY/requirements.txt" pandas matplotlib
+
+      - name: Incorporate current main into the research branch before recounting
+        if: env.STAGE == 'catalog'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch --no-tags origin main:refs/remotes/origin/main
+          if ! git merge --no-commit --no-ff origin/main; then
+            test "$(git diff --name-only --diff-filter=U)" = README.md
+          fi
+          git show origin/main:README.md > README.md
+          git add README.md
+
+      - name: Build claim and verify branch
+        if: (env.STAGE == 'focus' || env.STAGE == 'full' || env.STAGE == 'finalize' || env.STAGE == 'audit' || env.STAGE == 'geometry') && needs.research.result == 'success' || env.STAGE == 'catalog'
+        run: |
+          python "$SURVEY/report.py"
+          git add README.md "$SURVEY"
+          if git rev-parse --quiet --verify MERGE_HEAD >/dev/null; then
+            git commit -m 'Refresh the research branch and include the HETDEX entry in current catalog totals'
+          elif ! git diff --cached --quiet; then
+            git commit -m 'Report HETDEX results, sensitivity limits and catalog counts'
+          fi
+          if test "$STAGE" = catalog; then
+            outside=$(git diff --name-only origin/main HEAD | grep -Ev '^README\.md$|^\.github/workflows/hetdex-blind-emitters\.yml$|^results/hetdex_blind_emitters/' || true)
+            test -z "$outside" || { echo "$outside"; exit 1; }
+          fi
+          python -m open_space.verify > "$RUNNER_TEMP/verify.txt" || { tail -100 "$RUNNER_TEMP/verify.txt"; exit 1; }
+          python -m unittest discover -s tests > "$RUNNER_TEMP/unittest.txt" 2>&1 || { tail -100 "$RUNNER_TEMP/unittest.txt"; exit 1; }
+          tail -6 "$RUNNER_TEMP/verify.txt"
+          grep -E '^Ran [0-9]+ tests? in |^OK($| )' "$RUNNER_TEMP/unittest.txt"
+          git push origin HEAD:science/hetdex-blind-emitter-search

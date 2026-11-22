@@ -6,7 +6,7 @@
 
 Every night, observatories and space missions record far more than anyone has time to study. Open-Space downloads those public measurements, searches them with open code, and checks every lead against controls designed to catch false alarms. Each result comes with its data receipts, the scripts to replay it, and a plain statement of what it does *not* prove, so anyone can check our work.
 
-Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 241 entries: 106 new measurements, 46 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 45 carefully recorded null or inconclusive checks. Entries below that carry none of these five labels (feasibility pilots, and analyses blocked because their data could not be retrieved) are listed for the record and are not counted.
+Between 13 and 15 November 2026 the project merged 95 contributions. The catalog below has 243 entries: 106 new measurements, 46 candidate discoveries, 20 forecasts of specific events, 24 corrections to published catalogs and papers, and 47 carefully recorded null or inconclusive checks. Entries below that carry none of these five labels (feasibility pilots, and analyses blocked because their data could not be retrieved) are listed for the record and are not counted.
 
 **Contents:** [Highlights](#highlights) · [Upcoming events](#upcoming-events-you-can-watch-for) · [How to read the results](#how-to-read-the-results) · [All results](#all-results-by-topic) · [How the results were made](#how-these-results-were-made) · [For researchers and developers](#for-researchers-and-developers) · [Credits and citation](#credits-and-citation)
 
@@ -349,6 +349,9 @@ A few terms used below: an *eclipsing binary* is a pair of stars that pass in fr
 
 ### Galaxies and the distant universe
 
+- **A search of 174,737 Gaia quasar fields found no new gravitational lens candidate after review.** One previously unlisted system passed the lens screen. Two spectra identified the same bright quasar, and the fainter object was already catalogued as a galaxy. The search recovered 2 of 235 eligible known lenses. *Null result* · [Details](results/gaia-fpr-quasar-lenses/README.md)
+
+- **No confirmed rare emitter in HETDEX's public spectra, but most leads are still open.** Across 1,340,413 source observations, no source passed every check for unusually strong helium or hydrogen emission, an extended hydrogen cloud or an unidentified line. Only 577 of the leads could be checked against outside data; 12,512 remain unresolved, so this does not show that such objects are absent. The search recovered 69% of injected test lines. *Null result* · [Details](results/hetdex_blind_emitters/README.md)
 - **Where Euclid's new images overlap clouds of hydrogen gas.** The frozen HI survey inventory contains 1,375 beam/tile overlaps (117 ALFALFA, 1,258 FASHI, 0 WALLABY); 96/1,375 received checkpointed S3/HATS/Legacy/DESI follow-up, with 0 full four-band-beam MER pixel sets. A beam redshift association does not prove HI host identity; no validated starless galaxy, stellar-mass limit or occurrence rate. *Measured* (incomplete physical vetting) · [Results and referee](results/euclid-hi-dark-census/README.md)
 
 - **One known early quasar recovered, but no new record from the fresh Euclid release.** A limited search of new Euclid DR1 infrared data found 290 objects with quasar-like colour *cuts*, including 41 with unusually extreme colours. The known z≈7.69 quasar reappeared, but dwarf stars, image artefacts and unexamined follow-up data prevent classifying any new object as a quasar; this was not a search of the whole release. *Measured* (inconclusive) · [Details](results/euclid-dr1-highz-quasars/README.md)
