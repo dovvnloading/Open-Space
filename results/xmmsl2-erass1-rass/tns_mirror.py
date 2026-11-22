@@ -85,6 +85,9 @@ def inventory_tap(audit,item):
         for _,r in table.iterrows():
             name=str(r.table_name).strip('"')
             desc=str(r.description)
+            if name.lower().startswith("mydb.") or re.match(r"\s*select\s+(?:top|count)",desc,re.I):
+                info(audit,archive=service,excluded_saved_query=name,reason="user query result / subset rather than archive distribution")
+                continue
             if re.search(r"(?:^|[./_])tns(?:$|[./_])|tns_public_objects|transient.name.server",name+" "+desc,re.I):
                 candidates.append({"kind":"tap","label":service+":"+name,"url":url,
                                    "table":name,"description":desc})
@@ -150,6 +153,23 @@ def inventory_docs(audit,item):
         if raw.lstrip().startswith((b"{",b"[")):
             doc=json.loads(raw)
             direct=public_json_distributions(doc,url,service)
+            # Use the actual self relation returned by the ANTARES inventory.
+            # The relation may be advertised as HTTP; upgrade it to the same public TLS host.
+            for item in doc.get("data",[]) if isinstance(doc,dict) else []:
+                if not isinstance(item,dict) or item.get("attributes",{}).get("name")!="tns_public_objects":
+                    continue
+                ref=item.get("links",{}).get("self","")
+                route=urlparse(ref)
+                if route.hostname!="api.antares.noirlab.edu" or not re.fullmatch(r"/v1/catalogs/\d+",route.path):
+                    continue
+                catalog_url="https://api.antares.noirlab.edu"+route.path
+                try:
+                    payload=json.loads(audit.get("TNS-public-catalogue-record",catalog_url))
+                    direct.extend(public_json_distributions(payload,catalog_url,service))
+                    info(audit,provider=service,archive_record_url=catalog_url,
+                         archive_record_metadata=json.dumps(payload)[:6000])
+                except Exception as exc:
+                    info(audit,provider=service,archive_record_url=catalog_url,error=short(exc))
             content=json.dumps(doc)
             match=re.search(r"tns_public_objects|transient name server",content,re.I)
             excerpt=content[max(match.start()-200,0):match.end()+800] if match else ""
@@ -186,8 +206,7 @@ def inventory_zenodo(audit):
     url="https://zenodo.org/api/records"
     try:
         data=json.loads(audit.get("TNS-archive-inventory",url,params={
-                   "q":'metadata.title:"Transient Name Server" OR metadata.title:"TNS public objects"',
-                   "size":30,"sort":"mostrecent"}))
+                   "q":'"Transient Name Server"',"size":30}))
         candidates=[]
         for r in data["hits"]["hits"]:
             meta=r["metadata"]

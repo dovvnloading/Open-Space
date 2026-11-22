@@ -118,6 +118,8 @@ jobs:
           python "$STUDY/prepare.py" "$OUT"
           python "$STUDY/map_qa.py" "$OUT" --earlier work/first-reduction
           python "$STUDY/controls.py" "$OUT"
+          python "$STUDY/full_only_review.py" --out "$OUT" --work work
+          python "$STUDY/spectral_stress.py" --out "$OUT" --work work
           python "$STUDY/rass_legacy.py" --work work --out "$OUT"
       - uses: actions/upload-artifact@v4
         if: always()
@@ -127,6 +129,8 @@ jobs:
             results/xmmsl2-erass1-rass/outputs/limit*
             results/xmmsl2-erass1-rass/outputs/ero_ul_queries.jsonl.gz
             results/xmmsl2-erass1-rass/outputs/positive_controls.csv
+            results/xmmsl2-erass1-rass/outputs/full_only_review*
+            results/xmmsl2-erass1-rass/outputs/spectral_stress*
             results/xmmsl2-erass1-rass/outputs/rass_legacy*
             results/xmmsl2-erass1-rass/outputs/maps.sha256
             results/xmmsl2-erass1-rass/outputs/comparisons.csv.gz
@@ -161,7 +165,10 @@ jobs:
           python "$STUDY/vet.py" "$OUT/input.csv" "$OUT/vetting"
           python "$STUDY/history.py" "$OUT"
           python "$STUDY/casework.py" "$OUT"
+          python "$STUDY/casework.py" "$OUT" --historical
           python "$STUDY/report.py" "$OUT"
+          python "$STUDY/host_adjudication.py" --out "$OUT" --work work
+          python "$STUDY/independent_epochs.py" "$OUT" --work work
           python "$STUDY/survey_plot.py" "$OUT"
       - uses: actions/upload-artifact@v4
         if: always()
@@ -173,6 +180,7 @@ jobs:
             results/xmmsl2-erass1-rass/outputs/casework
             results/xmmsl2-erass1-rass/outputs/review*
             results/xmmsl2-erass1-rass/outputs/candidates*
+            results/xmmsl2-erass1-rass/outputs/host_adjudication*
             results/xmmsl2-erass1-rass/outputs/summary*
             results/xmmsl2-erass1-rass/outputs/survey-comparison.png
           if-no-files-found: warn

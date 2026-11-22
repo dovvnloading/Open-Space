@@ -55,7 +55,7 @@ def summarize(out):
         register["known_slew_flare_reference"]=register.detection_uid.map(known.bibcode)
         flag=register.known_slew_flare_reference.notna()
         register.loc[flag,"disposition"]="previously_reported_flare"
-        register.loc[flag,"rationale"]="This slew flare has a published discovery paper in positive_controls.csv"
+        register.loc[flag,"rationale"]="This position belongs to a published slew-flare source in positive_controls.csv"
     field_file=out/"published_hosts"/"local_galaxies.csv"
     if field_file.exists():
         galaxies=pd.read_csv(field_file,dtype={"ls_id":str})
@@ -79,6 +79,20 @@ def summarize(out):
         manual=register.disposition.eq("candidate") & (register.case_prior_event_leads.fillna(0).gt(0) | register.case_interpretation.fillna("").str.contains("bright-star alternative"))
         register.loc[manual,"disposition"]="inconclusive"
         register.loc[manual,"rationale"]="Source-specific publication or optical-loading alternative in casebook requires review"
+    # Flat comparison sheet for every qualifying observation. Keep the
+    # separate catalogue/limit status so a blank can never pass for zero flux.
+    display = ["detection_uid","source_group","name","ra","dec","position_mission",
+               "xmm_time","xmm_flux","xmm_err","ero_name","ero_flux","ero_err",
+               "ero_ul_limit_flux_cgs","ero_ul_status","rass_name","rass_flux","rass_err",
+               "rass_ul_limit_flux_cgs","rass_ul_status","high","low","low_kind",
+               "ratio","guarded_ratio","model_floor_ratio","robust_model_floor_ratio",
+               "host_catalog","host_id","host_type","host_offset_arcsec","match_radius_arcsec",
+               "salvato_NWAY_p_i","local_galaxy_pcc","local_galaxy_empirical_fraction",
+               "known_slew_flare_reference","published_tde","case_publications","prior_bibcodes",
+               "event_review","stellar_evidence","service_outcomes","disposition","rationale"]
+    register.sort_values("guarded_ratio",ascending=False)[
+        [k for k in display if k in register]
+    ].to_csv(out/"review_photometry.csv",index=False)
     register.to_csv(out/"review_register.csv.gz",index=False)
     candidates=register.loc[register.disposition.eq("candidate")].sort_values("robust_model_floor_ratio",ascending=False)
     candidates.to_csv(out/"candidates.csv",index=False)

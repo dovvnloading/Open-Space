@@ -9,6 +9,7 @@ import json
 import math
 import re
 import threading
+import traceback
 import subprocess
 import tarfile
 import xml.etree.ElementTree as ET
@@ -612,20 +613,41 @@ def tns_snapshot(audit,points):
 
 
 def backup_tns(audit,points,official_error):
-    try:
-        from tns_mirror import tns_lookup
-        hits,checks=tns_lookup(points,audit)
-        if all(checks.get(p["k"])=="ok" for p in points):
-            return hits,checks
-    except Exception as exc:
-        audit.record({"service":"TNS-secondary","error":clipped_failure(exc)})
-        hits,checks={},{}
-    alternate=tns_snapshot(audit,points)
-    for k,rs in hits.items():
-        alternate[k].extend(rs)
+    # Independent routes can each contribute a real positive. An authoritative
+    # no-hit on one source does not erase a match from a historic snapshot.
+    from tns_html import tns_html_lookup
+    from tns_mirror import tns_lookup
+    hits=defaultdict(list)
+    checks={}
+    def partial():
+        return tns_snapshot(audit,points),{}
+    routes={"official_html":lambda:tns_html_lookup(points,audit),
+            "recorded_census":lambda:tns_lookup(points,audit),
+            "broker_snapshot":partial}
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        futures={tag:pool.submit(fn) for tag,fn in routes.items()}
+        for tag,future in futures.items():
+            try:
+                found,states=future.result()
+                for k,rs in found.items():
+                    hits[k].extend(dict(r,tns_lookup_route=tag) for r in rs)
+                for k,state in states.items():
+                    checks.setdefault(k,{})[tag]=state
+            except Exception as exc:
+                audit.record({"service":"TNS-secondary","route":tag,"error":clipped_failure(exc),
+                              "traceback":traceback.format_exc()})
+    final={}
     for p in points:
-        checks.setdefault(p["k"],official_error+" | complete current TNS unavailable")
-    return alternate,checks
+        k=p["k"]
+        states=checks.get(k,{})
+        if "ok" in states.values():
+            final[k]="ok"
+        else:
+            dated=sorted(s for s in states.values() if isinstance(s,str) and s.startswith("complete_through_"))
+            final[k]=dated[-1] if dated else " | ".join(str(v) for v in states.values()) or official_error
+        audit.record({"service":"TNS-field-coverage","field":k,"routes":states,"final":final[k],
+                      "positional_matches":len(hits.get(k,[]))})
+    return hits,final
 
 
 def tns(audit, points, previous):
@@ -762,7 +784,11 @@ def publication_catalogs(audit,papers):
                     raise ValueError("no primary metadata records")
             except Exception:
                 found = mirror.find_catalogs(terms)
-            for name, resource in found.items():
+            for name, resource in (found or {}).items():
+                # Some VizieR metadata replies include a nameless RESOURCE
+                # for status/description. It has no catalogue to retrieve.
+                if not isinstance(name,str) or "/" not in name:
+                    continue
                 desc = str(resource.description or "")
                 if label == "Strotjohann" and not re.search(r"slew|tidal|AGN|X-ray", desc, re.I):
                     continue
@@ -991,18 +1017,23 @@ def li_supplement(audit,points,rec):
                     candidates.append((url,False))
     except Exception as exc:
         audit.record({"service":"Li-OpenAlex","error":clipped_failure(exc)})
-    try:
-        cat=ET.fromstring(audit.get("Li-arXiv-metadata","https://export.arxiv.org/api/query",
-                      params={"search_query":'doi:"'+doi+'"',"max_results":5}))
-        for entry in cat.findall("{*}entry"):
-            match=re.search(r"([0-9]{4}\.[0-9]{4,5})",entry.findtext("{*}id",""))
-            if match:
-                arxiv_ids.add(match.group(1))
-                abstract+=" "+entry.findtext("{*}summary","")
-    except Exception as exc:
-        audit.record({"service":"Li-arXiv-metadata","error":clipped_failure(exc)})
+    for query in ('doi:"'+doi+'"','ti:"Populations of highly variable X-ray sources"'):
+        try:
+            cat=ET.fromstring(audit.get("Li-arXiv-metadata","https://export.arxiv.org/api/query",
+                          params={"search_query":query,"max_results":5}))
+            for entry in cat.findall("{*}entry"):
+                title=re.sub(r"\s+"," ",entry.findtext("{*}title","")).lower()
+                if "slew" not in title or "variable" not in title:
+                    continue
+                match=re.search(r"([0-9]{4}\.[0-9]{4,5})",entry.findtext("{*}id",""))
+                if match:
+                    arxiv_ids.add(match.group(1))
+                    abstract+=" "+entry.findtext("{*}summary","")
+        except Exception as exc:
+            audit.record({"service":"Li-arXiv-metadata","query":query,"error":clipped_failure(exc)})
     for ident in arxiv_ids:
-        candidates.extend([("https://arxiv.org/src/"+ident,True),("https://arxiv.org/pdf/"+ident,False)])
+        candidates.extend([("https://arxiv.org/src/"+ident,True),("https://arxiv.org/pdf/"+ident,False),
+                           ("https://ar5iv.labs.arxiv.org/html/"+ident,False)])
     candidates.extend([("https://articles.adsabs.harvard.edu/pdf/2022MNRAS.512.3858L",False),
                        ("https://ui.adsabs.harvard.edu/link_gateway/2022MNRAS.512.3858L/EPRINT_PDF",False)])
     try:
@@ -1063,12 +1094,30 @@ def li_supplement(audit,points,rec):
                     html=ArticleHTML()
                     html.feed(body)
                     for href in html.links:
-                        if re.search(r"suppl|stac714[_-]s|supporting.information",href,re.I):
+                        if re.search(r"suppl|stac714[_-]s|supporting.information",href,re.I) or (
+                               is_attachment and re.search(r"\.(?:fits|fit|csv|tsv|dat|txt|zip)(?:\?|$)",href,re.I)):
                             dest=urljoin(url,href).split("#")[0]
                             if dest!=url and (dest,True) not in candidates:
                                 candidates.append((dest,True))
                     body=" ".join(html.parts)
+                # Published data availability statements sometimes link the
+                # author's deposit without an electronic-journal attachment.
+                before_bib=re.split(r"\\begin\{thebibliography\}|\nREFERENCES\s*\n",body,flags=re.I)[0]
+                for match in re.finditer(r"https?://[^\s<>{}\\]+",before_bib):
+                    link=match.group().rstrip(".,);]$'"+chr(34))
+                    host=urlparse(link).hostname or ""
+                    note=before_bib[max(0,match.start()-180):match.end()+120]
+                    if (any(h in host for h in ("zenodo.org","figshare.com","china-vo.org","nadc.china",
+                           "cdsarc","vizier","github.com","heasarc.gsfc")) and re.search(
+                           r"supplement|machine.readable|data availab|electronic|full table|full catalog",note,re.I)
+                           and (link,True) not in candidates):
+                        candidates.append((link,True))
                 names=coordinate_names(body)
+                if re.search(r"XMMSL[12]",body,re.I) and (is_attachment or re.search(r"tab|suppl",doc,re.I)):
+                    # Rows often omit the survey prefix printed in the
+                    # column heading. Keep a leading J and both coordinates.
+                    for m in re.finditer(r"(?m)(?:^|[|&>\s])J([0-9]{6}(?:\.[0-9]+)?[+−–-][0-9]{6}(?:\.[0-9]+)?)",body):
+                        names.update(coordinate_names("XMMSL J"+m.group(1)))
                 # A primary article may count its own sample in its abstract
                 # and provide a long main/appendix table. Retain sample counts
                 # by document and require independent agreement with total.
@@ -1095,9 +1144,8 @@ def li_supplement(audit,points,rec):
     return matched,complete
 
 
-def publications(audit, points):
+def published_catalogue_matches(audit, points, exact):
     result, inventory = defaultdict(list), []
-    exact = exact_papers(audit)
     (viz,mirror), catalogues = publication_catalogs(audit,exact)
     for cat, terms in sorted(catalogues.items()):
         try:
@@ -1164,22 +1212,45 @@ def publications(audit, points):
     # positions. Other omissions are reported in the full coverage inventory.
     complete = {t for i in inventory if i.get("status")=="ok" and i.get("usable",0)
                 and not i.get("invalid_coordinates") for t in i["terms"]}
-    fulltext,article_kinds = article_objects(audit,points,exact)
-    for k,hits in fulltext.items():
-        for h in hits:
-            result[k].append(dict(h,table="doi:"+h["doi"]))
-    covered = ("TDE" in complete or "TDE" in article_kinds) and (
-        bool(complete & {"Strotjohann", "slew variability"}) or "slew" in article_kinds)
-    absent = []
-    if not covered:
-        absent.append("TDE/slew samples")
-    if "Li2022" not in complete:
-        extra,li_complete=li_supplement(audit,points,exact.get("10.1093/mnras/stac714",({},))[0])
-        for k,hits in extra.items():
-            result[k].extend(hits)
-        if not li_complete:
-            absent.append("Li et al. 2022 source table (10.1093/mnras/stac714)")
-    return result, {p["k"]:"ok" if not absent else "incomplete "+", ".join(absent) for p in points}
+    return result,complete
+
+
+def publications(audit,points):
+    exact=exact_papers(audit)
+    doi="10.1093/mnras/stac714"
+    pieces={
+        "published_catalogues":(published_catalogue_matches,(audit,points,exact)),
+        "open_primary_papers":(article_objects,(audit,points,exact)),
+        "Li_exact_electronic_sources":(li_supplement,(audit,points,exact.get(doi,({},))[0])),
+    }
+    result=defaultdict(list)
+    coverage={}
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        futures={key:pool.submit(fn,*args) for key,(fn,args) in pieces.items()}
+        for key,fut in futures.items():
+            try:
+                hits,complete=fut.result()
+                coverage[key]=complete
+                for k,rows in hits.items():
+                    for h in rows:
+                        if key=="open_primary_papers":
+                            h=dict(h,table="doi:"+h["doi"])
+                        result[k].append(h)
+            except Exception as exc:
+                audit.record({"service":key,"task_error":clipped_failure(exc),"traceback":traceback.format_exc()})
+    catalogue=coverage.get("published_catalogues",set())
+    paper=coverage.get("open_primary_papers",set())
+    missing=[]
+    if "TDE" not in catalogue and "TDE" not in paper:
+        missing.append("TDE sample")
+    if not (catalogue & {"Strotjohann","slew variability"}) and "slew" not in paper:
+        missing.append("slew variability sample")
+    if "Li2022" not in catalogue and not coverage.get("Li_exact_electronic_sources",False):
+        missing.append("Li2022 electronic source list")
+    state="ok" if not missing else "incomplete "+", ".join(missing)
+    audit.record({"service":"published-coverage-summary","status":state,"catalogue_samples":sorted(catalogue),
+                  "paper_samples":sorted(paper),"Li_supplement_complete":coverage.get("Li_exact_electronic_sources",False)})
+    return result,{p["k"]:state for p in points}
 
 
 
@@ -1399,6 +1470,7 @@ def vet_rows(rows, output_dir):
             try:
                 found[k],status[k] = fut.result()
             except Exception as exc:
+                audit.record({"service":k,"task_error":clipped_failure(exc),"traceback":traceback.format_exc()})
                 found[k] = {}
                 status[k] = {p["k"]:clipped_failure(exc) or type(exc).__name__ for p in points}
     previously_classified = {}
@@ -1526,6 +1598,10 @@ def vet_rows(rows, output_dir):
     write_table(out/"host_shifted_controls.csv",controls,list(controls[0]))
     compressed_json(out/"counterpart_evidence.jsonl.gz",evidence)
     compressed_json(out/"vetting_provenance.jsonl.gz",audit.events)
+    (out/"publication_coverage.json").write_text(json.dumps([e for e in audit.events if
+        e.get("service") in ("Li-exact-coverage","Li-related-deposit","published-coverage-summary",
+        "VizieR-publication-tables","VizieR-publication-discovery","DOI-to-CDS") or e.get("task_error")],
+        indent=2,default=str)+"\n")
     (out/"tns_replica_coverage.json").write_text(json.dumps([
         e for e in audit.events if e.get("service")=="TNS-replica-audit"],indent=2,default=str)+"\n")
     return output
