@@ -218,8 +218,12 @@ class TestPublication(unittest.TestCase):
             self.assertIsNone(bounds["unresolved_date_sky"]["180"])
             conservative=result["instrument_pass_conservative_upper95_detected_events_per_Ms"]
             review_rates=result["review_selection_upper95_events_per_Ms"]
-            accepted_mu=2*review_rates["accepted_candidates"]["60"]
-            possible_mu=2*review_rates["candidates_and_unresolved"]["60"]
+            self.assertEqual(review_rates,{})
+            self.assertIn("Incomplete counterpart or photometric follow-up prevents an upper bound",
+                          (here/"README.md").read_text())
+            fixture_exposure={str(d):2_000_000 if d==60 else 0 for d in pub.DURATIONS}
+            accepted_mu=2*pub.instrument_rate_bounds(1,fixture_exposure)["60"]
+            possible_mu=2*pub.instrument_rate_bounds(2,fixture_exposure)["60"]
             self.assertAlmostEqual(math.exp(-accepted_mu)*(1+accepted_mu),.05)
             self.assertAlmostEqual(math.exp(-possible_mu)*(1+possible_mu+possible_mu**2/2),.05)
             self.assertLess(accepted_mu,possible_mu)

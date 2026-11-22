@@ -3,6 +3,8 @@ name: Chandra ACIS blind fast-transient survey
 on:
   # Runs once when this file changes on the research branch: a workflow_dispatch-only
   # file cannot be dispatched until it exists on the default branch.
+  # Resume authenticated primary artifact deposit and exact-source follow-up
+  # after correcting the relative archive root and incomplete-review fixture.
   push:
     branches: [research/chandra-acis-fast-transients]
     paths: ['.github/workflows/chandra-acis-fxt.yml']

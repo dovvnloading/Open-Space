@@ -34,6 +34,9 @@ COHORTS={"high-latitude":[(*p[:5],"real/0",p[5]) for p in POINTS],SECOND:[
 
 
 def archived_member(root, members, name):
+    # The CLI passes a relative --evidence directory; normalize before the
+    # strict path containment and archived-byte checks.
+    root = Path(root).resolve()
     [member]=[m for m in members if m["source"]==name]
     dest=followup.safe(root,member["destination"])
     candidates=[dest]

@@ -1,5 +1,9 @@
 """Synthetic CSC ellipse, original row identity, nonoverlap and sparse-count regressions."""
 from unittest import TestCase
+from pathlib import Path
+from tempfile import TemporaryDirectory
+import hashlib
+import os
 
 import numpy as np
 from astropy.wcs import WCS
@@ -9,6 +13,24 @@ from diagnostics import DTYPE
 
 
 class DeblendTest(TestCase):
+    def test_relative_archive_root_matches_exact_original_bytes(self):
+        with TemporaryDirectory() as tmp:
+            root=Path(tmp)/"evidence"
+            member_path=Path("observations/fixture.json.gz")
+            file=root/member_path
+            file.parent.mkdir(parents=True)
+            data=b"immutable original archive member"
+            file.write_bytes(data)
+            member={"source":member_path.as_posix(),"destination":member_path.as_posix(),
+                    "bytes":len(data),"sha256":hashlib.sha256(data).hexdigest()}
+            relative=Path(os.path.relpath(root))
+            path,matched=deblend.pointed_visits.archived_member(relative,[member],member["source"])
+            self.assertEqual(path,file.resolve())
+            self.assertEqual(matched,member)
+            with self.assertRaisesRegex(ValueError,"Original member no longer matches"):
+                deblend.pointed_visits.archived_member(
+                    relative,[{**member,"sha256":"0"*64}],member["source"])
+
     def test_rotated_csc_ellipse_and_two_distinct_chandra_centers(self):
         self.assertAlmostEqual(deblend.nearest_ellipse(5,0,2,1,90),3)
         self.assertAlmostEqual(deblend.nearest_ellipse(5,0,2,1,0),4)
