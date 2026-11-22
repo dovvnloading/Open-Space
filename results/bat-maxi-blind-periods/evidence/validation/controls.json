@@ -8,24 +8,37 @@
     "relative_tolerance_added_to_rayleigh": 0.0001,
     "stage": "did not reach independent match",
     "roster_id": "VelaX-1",
-    "source_status": "single_instrument_search",
+    "source_status": "dual_search",
     "bands": {
       "bat": {
-        "stage": "insufficient_sampling",
-        "matching_peaks": []
+        "stage": "failed window/alias",
+        "matching_peaks": [
+          {
+            "index": 3553,
+            "period_days": 8.96358543417367,
+            "score": 3217.4518670317225,
+            "source_global_mc_fap": 0.00390625,
+            "single_grid_log_p": -3373.469299747358,
+            "survey_fap_bound": 5e-324,
+            "window_reason": "direct native clock/harmonic or measured sampling line",
+            "model_ok": true,
+            "advisory_clock_proximity": []
+          }
+        ]
       },
       "maxi": {
-        "stage": "failed window/alias",
+        "stage": "passed instrument gates",
         "matching_peaks": [
           {
             "index": 2807,
             "period_days": 8.96334985835694,
-            "score": 1296.9075633740342,
+            "score": 1351.3032578552534,
             "source_global_mc_fap": 0.00390625,
-            "single_grid_log_p": -1527.7766226096137,
+            "single_grid_log_p": -1640.1067724972343,
             "survey_fap_bound": 5e-324,
-            "window_reason": "direct instrumental/sampling line, harmonic or clock beat",
-            "model_ok": true
+            "window_reason": null,
+            "model_ok": true,
+            "advisory_clock_proximity": []
           }
         ]
       }
@@ -40,13 +53,25 @@
     "reference": "Falanga et al. 2015, A&A 577, A130",
     "url": "https://ui.adsabs.harvard.edu/abs/2015A%26A...577A.130F/abstract",
     "relative_tolerance_added_to_rayleigh": 0.0001,
-    "stage": "did not reach independent match",
+    "stage": "blind recovery through halves",
     "roster_id": "CenX-3",
-    "source_status": "single_instrument_search",
+    "source_status": "dual_search",
     "bands": {
       "bat": {
-        "stage": "insufficient_sampling",
-        "matching_peaks": []
+        "stage": "passed instrument gates",
+        "matching_peaks": [
+          {
+            "index": 15316,
+            "period_days": 2.087001891345464,
+            "score": 1033.653806640639,
+            "source_global_mc_fap": 0.00390625,
+            "single_grid_log_p": -1052.3380178165517,
+            "survey_fap_bound": 5e-324,
+            "window_reason": null,
+            "model_ok": true,
+            "advisory_clock_proximity": []
+          }
+        ]
       },
       "maxi": {
         "stage": "passed instrument gates",
@@ -54,28 +79,78 @@
           {
             "index": 12112,
             "period_days": 2.0869403907989117,
-            "score": 1658.5396259974398,
+            "score": 1790.389325724921,
             "source_global_mc_fap": 0.00390625,
-            "single_grid_log_p": -1271.6146477564182,
+            "single_grid_log_p": -1255.394474487768,
             "survey_fap_bound": 5e-324,
             "window_reason": null,
-            "model_ok": true
+            "model_ok": true,
+            "advisory_clock_proximity": []
           },
           {
             "index": 12106,
             "period_days": 2.0879732739420938,
-            "score": 67.33696768674187,
+            "score": 62.41214107198346,
             "source_global_mc_fap": 0.00390625,
-            "single_grid_log_p": -55.60988961412154,
-            "survey_fap_bound": 9.195895285809298e-18,
-            "window_reason": null,
-            "model_ok": true
+            "single_grid_log_p": -52.02316509734436,
+            "survey_fap_bound": 6.642302937253362e-16,
+            "window_reason": "sideband of stronger peak at 2.08694 d (observed-window)",
+            "model_ok": true,
+            "advisory_clock_proximity": []
           }
         ]
       }
     },
-    "matches": [],
-    "surviving_periods_days": []
+    "matches": [
+      {
+        "bat_grid_period_days": 2.087001891345464,
+        "maxi_grid_period_days": 2.0869403907989117,
+        "bat_stability": {
+          "pass": true,
+          "phase_drift_cycles": 0.023474591751394103,
+          "halves": [
+            {
+              "period_days": 2.087001891345464,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.005663354056095174,
+              "phase_cycles": 0.19497439077733644,
+              "local_red_p": 2.1089277868885323e-266
+            },
+            {
+              "period_days": 2.087001891345464,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.005786038104564828,
+              "phase_cycles": 0.17149979902594228,
+              "local_red_p": 1.5318677548691807e-206
+            }
+          ]
+        },
+        "maxi_stability": {
+          "pass": true,
+          "phase_drift_cycles": 0.006961264161406744,
+          "halves": [
+            {
+              "period_days": 2.0869403907989117,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.08157230863155697,
+              "phase_cycles": 0.8223965526479305,
+              "local_red_p": 4.8840367407934223e-300
+            },
+            {
+              "period_days": 2.0869403907989117,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.0837192929031858,
+              "phase_cycles": 0.8293578168093373,
+              "local_red_p": 7.086070792574976e-249
+            }
+          ]
+        },
+        "pass": true
+      }
+    ],
+    "surviving_periods_days": [
+      2.0869780490436898
+    ]
   },
   {
     "source": "SMC X-1",
@@ -84,13 +159,25 @@
     "reference": "Falanga et al. 2015, A&A 577, A130",
     "url": "https://ui.adsabs.harvard.edu/abs/2015A%26A...577A.130F/abstract",
     "relative_tolerance_added_to_rayleigh": 0.0001,
-    "stage": "did not reach independent match",
+    "stage": "blind recovery through halves",
     "roster_id": "SMCX-1",
-    "source_status": "single_instrument_search",
+    "source_status": "dual_search",
     "bands": {
       "bat": {
-        "stage": "insufficient_sampling",
-        "matching_peaks": []
+        "stage": "passed instrument gates",
+        "matching_peaks": [
+          {
+            "index": 8205,
+            "period_days": 3.8919970810021893,
+            "score": 1353.7308333627113,
+            "source_global_mc_fap": 0.00390625,
+            "single_grid_log_p": -1179.407974753399,
+            "survey_fap_bound": 5e-324,
+            "window_reason": null,
+            "model_ok": true,
+            "advisory_clock_proximity": []
+          }
+        ]
       },
       "maxi": {
         "stage": "passed instrument gates",
@@ -98,28 +185,162 @@
           {
             "index": 6487,
             "period_days": 3.8918357933579335,
-            "score": 2022.1043341809943,
+            "score": 2217.360719092568,
             "source_global_mc_fap": 0.00390625,
-            "single_grid_log_p": -2015.8542311020483,
+            "single_grid_log_p": -2180.2264623010424,
             "survey_fap_bound": 5e-324,
             "window_reason": null,
-            "model_ok": true
+            "model_ok": true,
+            "advisory_clock_proximity": []
           }
         ]
       }
     },
-    "matches": [],
-    "surviving_periods_days": []
+    "matches": [
+      {
+        "bat_grid_period_days": 3.8919970810021893,
+        "maxi_grid_period_days": 3.8918357933579335,
+        "bat_stability": {
+          "pass": true,
+          "phase_drift_cycles": 0.04575681289897371,
+          "halves": [
+            {
+              "period_days": 3.8919970810021893,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.002358322907875541,
+              "phase_cycles": 0.08365767876773933,
+              "local_red_p": 1.7751962602498773e-292
+            },
+            {
+              "period_days": 3.8919970810021893,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.0025700841244671382,
+              "phase_cycles": 0.03790086586876561,
+              "local_red_p": 5.389719562442288e-242
+            }
+          ]
+        },
+        "maxi_stability": {
+          "pass": true,
+          "phase_drift_cycles": 0.03827950824367021,
+          "halves": [
+            {
+              "period_days": 3.8918357933579335,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.03018467716834866,
+              "phase_cycles": 0.23332624507382024,
+              "local_red_p": 0.0
+            },
+            {
+              "period_days": 3.8918357933579335,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.03351813879422101,
+              "phase_cycles": 0.19504673683015009,
+              "local_red_p": 0.0
+            }
+          ]
+        },
+        "pass": true
+      }
+    ],
+    "surviving_periods_days": [
+      3.891784931990036
+    ]
   },
   {
-    "source": "4U 1538-522",
+    "source": "H 1538-522",
     "known_cycle": "orbital",
     "reference_period_days": 3.7284,
     "reference": "Falanga et al. 2015, A&A 577, A130",
     "url": "https://ui.adsabs.harvard.edu/abs/2015A%26A...577A.130F/abstract",
     "relative_tolerance_added_to_rayleigh": 0.0001,
-    "stage": "missing or ambiguous roster/search record",
-    "roster_matches": []
+    "stage": "blind recovery through halves",
+    "roster_id": "H1538-522",
+    "source_status": "dual_search",
+    "bands": {
+      "bat": {
+        "stage": "passed instrument gates",
+        "matching_peaks": [
+          {
+            "index": 8566,
+            "period_days": 3.728300128160317,
+            "score": 904.8480639387788,
+            "source_global_mc_fap": 0.00390625,
+            "single_grid_log_p": -888.9624660132571,
+            "survey_fap_bound": 5e-324,
+            "window_reason": null,
+            "model_ok": true,
+            "advisory_clock_proximity": []
+          }
+        ]
+      },
+      "maxi": {
+        "stage": "passed instrument gates",
+        "matching_peaks": [
+          {
+            "index": 6772,
+            "period_days": 3.7284577993813524,
+            "score": 729.4570825122477,
+            "source_global_mc_fap": 0.00390625,
+            "single_grid_log_p": -974.9329971448,
+            "survey_fap_bound": 5e-324,
+            "window_reason": null,
+            "model_ok": true,
+            "advisory_clock_proximity": []
+          }
+        ]
+      }
+    },
+    "matches": [
+      {
+        "bat_grid_period_days": 3.728300128160317,
+        "maxi_grid_period_days": 3.7284577993813524,
+        "bat_stability": {
+          "pass": true,
+          "phase_drift_cycles": 0.004393000682983428,
+          "halves": [
+            {
+              "period_days": 3.728300128160317,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.001745921082411743,
+              "phase_cycles": 0.2492957281090303,
+              "local_red_p": 2.006224603623651e-248
+            },
+            {
+              "period_days": 3.728300128160317,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.0017041511408744327,
+              "phase_cycles": 0.2536887287920137,
+              "local_red_p": 5.94647017749752e-140
+            }
+          ]
+        },
+        "maxi_stability": {
+          "pass": true,
+          "phase_drift_cycles": 0.03660904096794482,
+          "halves": [
+            {
+              "period_days": 3.7284577993813524,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.026353821040273714,
+              "phase_cycles": 0.8837300326873903,
+              "local_red_p": 1.5291015608788423e-214
+            },
+            {
+              "period_days": 3.7284577993813524,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.0249364405348063,
+              "phase_cycles": 0.8471209917194454,
+              "local_red_p": 1.9626285626825275e-213
+            }
+          ]
+        },
+        "pass": true
+      }
+    ],
+    "surviving_periods_days": [
+      3.728322961838129
+    ]
   },
   {
     "source": "OAO 1657-415",
@@ -128,13 +349,25 @@
     "reference": "Falanga et al. 2015, A&A 577, A130",
     "url": "https://ui.adsabs.harvard.edu/abs/2015A%26A...577A.130F/abstract",
     "relative_tolerance_added_to_rayleigh": 0.0001,
-    "stage": "did not reach independent match",
+    "stage": "blind recovery through halves",
     "roster_id": "EXO1657-419",
-    "source_status": "single_instrument_search",
+    "source_status": "dual_search",
     "bands": {
       "bat": {
-        "stage": "insufficient_sampling",
-        "matching_peaks": []
+        "stage": "passed instrument gates",
+        "matching_peaks": [
+          {
+            "index": 3046,
+            "period_days": 10.447273914462944,
+            "score": 1108.2291009742282,
+            "source_global_mc_fap": 0.00390625,
+            "single_grid_log_p": -1081.6429143058065,
+            "survey_fap_bound": 5e-324,
+            "window_reason": null,
+            "model_ok": true,
+            "advisory_clock_proximity": []
+          }
+        ]
       },
       "maxi": {
         "stage": "passed instrument gates",
@@ -142,18 +375,67 @@
           {
             "index": 2406,
             "period_days": 10.446760214609988,
-            "score": 274.51756026623025,
+            "score": 268.03830744157057,
             "source_global_mc_fap": 0.00390625,
-            "single_grid_log_p": -269.7679573441072,
-            "survey_fap_bound": 9.0349748314565e-111,
+            "single_grid_log_p": -281.997061806891,
+            "survey_fap_bound": 8.82926101731152e-116,
             "window_reason": null,
-            "model_ok": true
+            "model_ok": true,
+            "advisory_clock_proximity": []
           }
         ]
       }
     },
-    "matches": [],
-    "surviving_periods_days": []
+    "matches": [
+      {
+        "bat_grid_period_days": 10.447273914462944,
+        "maxi_grid_period_days": 10.446760214609988,
+        "bat_stability": {
+          "pass": true,
+          "phase_drift_cycles": 0.000551064558114267,
+          "halves": [
+            {
+              "period_days": 10.447273914462944,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.0073398661648400474,
+              "phase_cycles": 0.9455071661588056,
+              "local_red_p": 1.4508015257548767e-290
+            },
+            {
+              "period_days": 10.447273914462944,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.007226971817141402,
+              "phase_cycles": 0.9449561016006913,
+              "local_red_p": 1.930395354252673e-186
+            }
+          ]
+        },
+        "maxi_stability": {
+          "pass": true,
+          "phase_drift_cycles": 0.006594572323234571,
+          "halves": [
+            {
+              "period_days": 10.446760214609988,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.0245036075944043,
+              "phase_cycles": 0.08440393295484452,
+              "local_red_p": 7.448850720002552e-73
+            },
+            {
+              "period_days": 10.446760214609988,
+              "frequency_offset_rayleigh": 0.0,
+              "semiamplitude": 0.020668610781290758,
+              "phase_cycles": 0.0909985052780791,
+              "local_red_p": 1.4227898894498836e-51
+            }
+          ]
+        },
+        "pass": true
+      }
+    ],
+    "surviving_periods_days": [
+      10.44713184420134
+    ]
   },
   {
     "source": "Her X-1",
@@ -164,11 +446,114 @@
     "relative_tolerance_added_to_rayleigh": 0.025,
     "stage": "did not reach independent match",
     "roster_id": "HerX-1",
-    "source_status": "single_instrument_search",
+    "source_status": "dual_search",
     "bands": {
       "bat": {
-        "stage": "insufficient_sampling",
-        "matching_peaks": []
+        "stage": "passed instrument gates",
+        "matching_peaks": [
+          {
+            "index": 903,
+            "period_days": 34.78260869565217,
+            "score": 987.2022249275741,
+            "source_global_mc_fap": 0.00390625,
+            "single_grid_log_p": -1147.714453679443,
+            "survey_fap_bound": 5e-324,
+            "window_reason": null,
+            "model_ok": true,
+            "advisory_clock_proximity": [
+              {
+                "clock": "2 x ISS-precession (other spacecraft)",
+                "predicted_frequency": 0.02857142857142857,
+                "measured_window_power": null
+              }
+            ]
+          },
+          {
+            "index": 909,
+            "period_days": 34.557235421166304,
+            "score": 139.37318197471092,
+            "source_global_mc_fap": 0.00390625,
+            "single_grid_log_p": -163.18995512926622,
+            "survey_fap_bound": 4.416991648120536e-64,
+            "window_reason": "sideband of stronger peak at 34.7826 d (Swift-precession)",
+            "model_ok": true,
+            "advisory_clock_proximity": [
+              {
+                "clock": "2 x ISS-precession (other spacecraft)",
+                "predicted_frequency": 0.02857142857142857,
+                "measured_window_power": null
+              }
+            ]
+          },
+          {
+            "index": 914,
+            "period_days": 34.371643394199786,
+            "score": 50.90107556445195,
+            "source_global_mc_fap": 0.00390625,
+            "single_grid_log_p": -45.751318808511165,
+            "survey_fap_bound": 4.4471143262525653e-13,
+            "window_reason": "sideband of stronger peak at 34.7826 d (Swift-precession)",
+            "model_ok": true,
+            "advisory_clock_proximity": [
+              {
+                "clock": "2 x ISS-precession (other spacecraft)",
+                "predicted_frequency": 0.02857142857142857,
+                "measured_window_power": null
+              }
+            ]
+          },
+          {
+            "index": 918,
+            "period_days": 34.22459893048128,
+            "score": 36.86400648241056,
+            "source_global_mc_fap": 0.00390625,
+            "single_grid_log_p": -31.919396130384385,
+            "survey_fap_bound": 4.520703123239199e-07,
+            "window_reason": "sideband of stronger peak at 34.7826 d (Swift-precession)",
+            "model_ok": true,
+            "advisory_clock_proximity": [
+              {
+                "clock": "2 x ISS-precession (other spacecraft)",
+                "predicted_frequency": 0.02857142857142857,
+                "measured_window_power": null
+              }
+            ]
+          },
+          {
+            "index": 885,
+            "period_days": 35.47671840354767,
+            "score": 22.82415820548015,
+            "source_global_mc_fap": 0.00390625,
+            "single_grid_log_p": -25.69524286705397,
+            "survey_fap_bound": 0.00022820302889436722,
+            "window_reason": "sideband of stronger peak at 34.7826 d (Swift-precession)",
+            "model_ok": true,
+            "advisory_clock_proximity": [
+              {
+                "clock": "2 x ISS-precession (other spacecraft)",
+                "predicted_frequency": 0.02857142857142857,
+                "measured_window_power": null
+              }
+            ]
+          },
+          {
+            "index": 876,
+            "period_days": 35.83426651735722,
+            "score": 17.98325977746985,
+            "source_global_mc_fap": 0.00390625,
+            "single_grid_log_p": -13.409835406760724,
+            "survey_fap_bound": 1.0,
+            "window_reason": "sideband of stronger peak at 34.7826 d (Swift-precession)",
+            "model_ok": true,
+            "advisory_clock_proximity": [
+              {
+                "clock": "2 x ISS-precession (other spacecraft)",
+                "predicted_frequency": 0.02857142857142857,
+                "measured_window_power": null
+              }
+            ]
+          }
+        ]
       },
       "maxi": {
         "stage": "failed survey FAP, window/alias",
@@ -176,42 +561,46 @@
           {
             "index": 712,
             "period_days": 34.72222222222222,
-            "score": 453.25336790672344,
+            "score": 509.9424974511114,
             "source_global_mc_fap": 0.00390625,
-            "single_grid_log_p": -376.426732685823,
-            "survey_fap_bound": 4.311311173234281e-157,
-            "window_reason": "direct instrumental/sampling line, harmonic or clock beat",
-            "model_ok": true
-          },
-          {
-            "index": 718,
-            "period_days": 34.43877551020408,
-            "score": 55.79680175942895,
-            "source_global_mc_fap": 0.00390625,
-            "single_grid_log_p": -54.61138563402348,
-            "survey_fap_bound": 2.495966694858316e-17,
-            "window_reason": "direct instrumental/sampling line, harmonic or clock beat",
-            "model_ok": true
+            "single_grid_log_p": -622.7817417424825,
+            "survey_fap_bound": 8.810860855651272e-264,
+            "window_reason": "direct native clock/harmonic or measured sampling line",
+            "model_ok": true,
+            "advisory_clock_proximity": []
           },
           {
             "index": 706,
             "period_days": 35.010373443983404,
-            "score": 39.05306529359789,
+            "score": 66.68421050039511,
             "source_global_mc_fap": 0.00390625,
-            "single_grid_log_p": -46.31967453564134,
-            "survey_fap_bound": 9.960546368948034e-14,
-            "window_reason": "direct instrumental/sampling line, harmonic or clock beat",
-            "model_ok": true
+            "single_grid_log_p": -58.54603213086117,
+            "survey_fap_bound": 9.760532679198104e-19,
+            "window_reason": "direct native clock/harmonic or measured sampling line",
+            "model_ok": true,
+            "advisory_clock_proximity": []
+          },
+          {
+            "index": 718,
+            "period_days": 34.43877551020408,
+            "score": 60.5034862796801,
+            "source_global_mc_fap": 0.00390625,
+            "single_grid_log_p": -68.35769769843733,
+            "survey_fap_bound": 5.349599943105755e-23,
+            "window_reason": "direct native clock/harmonic or measured sampling line",
+            "model_ok": true,
+            "advisory_clock_proximity": []
           },
           {
             "index": 726,
             "period_days": 34.06796769851952,
-            "score": 19.673049041687122,
+            "score": 21.671642546153585,
             "source_global_mc_fap": 0.00390625,
-            "single_grid_log_p": -16.107367142720474,
-            "survey_fap_bound": 1.0,
-            "window_reason": "direct instrumental/sampling line, harmonic or clock beat",
-            "model_ok": true
+            "single_grid_log_p": -17.873045758007702,
+            "survey_fap_bound": 0.4503260435670242,
+            "window_reason": "direct native clock/harmonic or measured sampling line",
+            "model_ok": true,
+            "advisory_clock_proximity": []
           }
         ]
       }
