@@ -1,0 +1,23 @@
+{
+  "label": "GAIA_AIP",
+  "url": "https://gaia.aip.de/tap/sync",
+  "params": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "csv",
+    "QUERY": "SELECT TOP 1 source_id,ra,dec FROM gaiadr3.gaia_source"
+  },
+  "method": "GET",
+  "data": null,
+  "status": 200,
+  "sha256": "c43122c9e3e53639a2bc0170a54d26c3b93409b341aa9cb9c43346c8410001e2",
+  "final_url": "https://gaia.aip.de/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+1+source_id%2Cra%2Cdec+FROM+gaiadr3.gaia_source",
+  "text": "<?xml version=\"1.0\"?>\n<VOTABLE version=\"1.3\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xmlns=\"http://www.ivoa.net/xml/VOTable/v1.3\"\n    xmlns:stc=\"http://www.ivoa.net/xml/STC/v1.30\">\n    <RESOURCE type=\"results\">\n        <LINK title=\"gaiadr3.gaia_source\" content-role=\"doc\" href=\"https://doi.org/10.17876/gaia/dr.3/1\"/>\n        <INFO name=\"QUERY_STATUS\" value=\"OK\" />\n        <INFO name=\"QUERY\" value=\"SELECT TOP 1 source_id,ra,dec FROM gaiadr3.gaia_source\" />\n        <INFO name=\"QUERY_LANGUAGE\" value=\"adql-2.1\" />\n        <INFO name=\"SOURCE\" value=\"gaiadr3.gaia_source\" />\n        <TABLE name=\"gaia_user_anonymous.2026-11-22-06-03-44-556003\">\n                <FIELD name=\"source_id\" ucd=\"meta.id;meta.main;meta.ref\" ID=\"datalinkID\" datatype=\"long\"> <DESCRIPTION>Unique source identifier (unique within a particular Data Release)</DESCRIPTION> </FIELD>\n                <FIELD name=\"ra\" unit=\"deg\" ucd=\"pos.eq.ra;meta.main\" datatype=\"double\"> <DESCRIPTION>Right ascension</DESCRIPTION> </FIELD>\n                <FIELD name=\"dec\" unit=\"deg\" ucd=\"pos.eq.dec;meta.main\" datatype=\"double\"> <DESCRIPTION>Declination</DESCRIPTION> </FIELD>\n            <DATA>\n                <TABLEDATA><TR><TD>4049722537390793472</TD><TD>274.1908631651221</TD><TD>-29.914171144600616</TD></TR>\n                </TABLEDATA>\n            </DATA>\n        </TABLE>\n    </RESOURCE>\n    <RESOURCE type=\"meta\" utype=\"adhoc:service\">\n        <PARAM name=\"standardID\" datatype=\"char\" arraysize=\"*\" value=\"ivo://ivoa.net/std/DataLink#links-1.0\" />\n        <PARAM name=\"accessURL\" datatype=\"char\" arraysize=\"*\" value=\"https://gaia.aip.de/datalink/links\" />\n        <GROUP name=\"inputParams\">\n            <PARAM name=\"ID\" datatype=\"char\" arraysize=\"*\" value=\"\" ref=\"datalinkID\"/>\n        </GROUP>\n    </RESOURCE>\n</VOTABLE>\n",
+  "rows": 1,
+  "fields": [
+    "datalinkID",
+    "ra",
+    "dec"
+  ],
+  "example": "     datalinkID             ra                dec        \n                           deg                deg        \n------------------- ----------------- -------------------\n4049722537390793472 274.1908631651221 -29.914171144600616"
+}

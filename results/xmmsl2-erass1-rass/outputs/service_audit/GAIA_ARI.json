@@ -1,0 +1,16 @@
+{
+  "label": "GAIA_ARI",
+  "url": "https://gaia.ari.uni-heidelberg.de/tap/sync",
+  "params": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "csv",
+    "QUERY": "SELECT TOP 1 source_id,ra,dec FROM gaiadr3.gaia_source"
+  },
+  "method": "GET",
+  "data": null,
+  "status": 200,
+  "sha256": "c7044ce3b6352ad94730aec14c099ad6ab840b6204b52de547cb4fda768c9054",
+  "final_url": "https://gaia.ari.uni-heidelberg.de/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+1+source_id%2Cra%2Cdec+FROM+gaiadr3.gaia_source",
+  "text": "source_id,ra,dec\n4275018581662485760,274.508428029573,0.8871994767041007\n"
+}

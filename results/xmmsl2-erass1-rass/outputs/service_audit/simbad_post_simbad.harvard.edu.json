@@ -1,0 +1,16 @@
+{
+  "label": "simbad_post_simbad.harvard.edu",
+  "url": "https://simbad.harvard.edu/simbad/sim-tap/sync",
+  "params": {},
+  "method": "POST",
+  "data": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "csv",
+    "QUERY": "SELECT TOP 1 main_id,ra,dec FROM basic WHERE main_id='Vega'"
+  },
+  "status": 200,
+  "sha256": "8169187f7760411cad49bb108445effd91b22bfa208eaba13c9cc294004bf5d7",
+  "final_url": "https://simbad.harvard.edu/simbad/sim-tap/sync",
+  "text": "main_id,ra,dec\n"
+}

@@ -1,0 +1,16 @@
+{
+  "label": "simbad_get_simbad.cfa.harvard.edu",
+  "url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+  "params": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "csv",
+    "QUERY": "SELECT TOP 1 main_id,ra,dec FROM basic WHERE main_id='Vega'"
+  },
+  "method": "GET",
+  "data": null,
+  "status": 200,
+  "sha256": "8169187f7760411cad49bb108445effd91b22bfa208eaba13c9cc294004bf5d7",
+  "final_url": "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+1+main_id%2Cra%2Cdec+FROM+basic+WHERE+main_id%3D%27Vega%27",
+  "text": "main_id,ra,dec\n"
+}
