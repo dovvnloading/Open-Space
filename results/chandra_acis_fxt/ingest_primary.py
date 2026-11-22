@@ -121,7 +121,12 @@ class Frozen:
 def api(endpoint, destination=None):
     route = f"repos/{REPO}/actions/{endpoint}"
     for i in range(3):
-        args = ["gh", "api", "--method", "GET", "-H", "X-GitHub-Api-Version: 2022-11-28", route]
+        args = ["gh", "api", "--method", "GET", "-H", "X-GitHub-Api-Version: 2022-11-28"]
+        # Completed job logs may contain ANSI formatting. Preserve those original bytes
+        # only when writing directly to a file; no log bytes are sent to the terminal.
+        if destination is not None and re.fullmatch(r"jobs/[0-9]+/logs", endpoint):
+            args.append("--allow-escape-sequences")
+        args.append(route)
         try:
             if destination is None:
                 return json.loads(subprocess.check_output(args))

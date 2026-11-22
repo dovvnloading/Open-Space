@@ -1156,6 +1156,8 @@ jobs:
         env:
           TOOLS_SHA: ${{ needs.final-route.outputs.tools }}
         run: printf '%s  %s\n' "$TOOLS_SHA" "$RUNNER_TEMP/final-tools/push.py" | sha256sum -c -
+      - name: Audit original and recovered inputs after scientific repairs
+        run: python "$SURVEY/audit_upload_recovery.py"
       - name: Build complete corrected search, control and injection tables
         run: python "$SURVEY/finalize.py" report
       - name: Deposit measured tables while written claims remain in review
@@ -1510,8 +1512,8 @@ jobs:
       - name: Check recovery provenance fixtures
         env:
           PYTHONPATH: results/chandra_acis_fxt
-        run: python -m unittest test_upload_recovery
-      - name: Recover the missing observation evidence
+        run: python -m unittest test_upload_recovery test_ingest_primary.RawJobLogs
+      - name: Preserve the original job log and recover the missing observation evidence
         env:
           GH_TOKEN: ${{ github.token }}
           GROUP: ${{ steps.select.outputs.group }}

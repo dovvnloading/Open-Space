@@ -137,3 +137,16 @@ class IngressTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"controls or injections"):
             self.ingest()
         self.assertFalse(recover.receipt_file(self.root,"0").exists())
+
+
+class RawJobLogs(unittest.TestCase):
+    def test_ansi_job_log_is_archived_verbatim_to_a_file(self):
+        body=b"\x1b[0mShard complete\n"
+        def run(args, stdout, check):
+            self.assertIn("--allow-escape-sequences",args)
+            self.assertTrue(check)
+            stdout.write(body)
+        with tempfile.TemporaryDirectory() as temp, patch.object(recover.subprocess, "run", side_effect=run):
+            dest=Path(temp)/"job.log"
+            recover.api("jobs/123/logs", dest)
+            self.assertEqual(dest.read_bytes(),body)
