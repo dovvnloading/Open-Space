@@ -1,0 +1,137 @@
+{
+  "base_commit": "972cd5169eea2b83d7407df84eb60c167b3c084e",
+  "command": "python summarize.py --flares data/detections.csv --epochs data/flare-light-curves.csv --positions data/2mrs-positions.csv.gz --centroid data/centroid.csv --vet data/catalogue-records.json --flaires data/flaires-positions.csv --masterson data/published-flares.csv --notes notes.json --ztf data/ztf-alerts.json --out SCRATCH/flares.csv",
+  "comparison": "113 rows match deposited table with rtol=atol=3e-5",
+  "classes": {
+    "active nucleus": 55,
+    "unreported": 27,
+    "published": 13,
+    "reported transient": 13,
+    "off-nuclear": 5
+  },
+  "strict_selection_ids": [
+    "02265317+4141211",
+    "06440345-5554310",
+    "11514275-3116072",
+    "21172918-8048085",
+    "19265088-1147169",
+    "03183820+3736290",
+    "01110461-4558435"
+  ],
+  "deposited_source_hash_checks": [
+    {
+      "path": "data/2mrs-positions.csv.gz",
+      "expected_sha256": "49601aa1b1a98f014eca72fbce8687a11426b57525aea3e5ff54167706e8f7f8",
+      "actual_sha256": "49601aa1b1a98f014eca72fbce8687a11426b57525aea3e5ff54167706e8f7f8",
+      "match": true
+    },
+    {
+      "path": "data/catalogue-records.json",
+      "expected_sha256": "49c1f96f65ee22ddcf001c0ebdeaec4ba4f87200fa9e0627aac1279c34f19cb0",
+      "actual_sha256": "49c1f96f65ee22ddcf001c0ebdeaec4ba4f87200fa9e0627aac1279c34f19cb0",
+      "match": true
+    },
+    {
+      "path": "data/centroid.csv",
+      "expected_sha256": "f5bedd5da7f9edb47b1716c3fb038214f09816abcf583b4dcc3782bb83c136ff",
+      "actual_sha256": "f5bedd5da7f9edb47b1716c3fb038214f09816abcf583b4dcc3782bb83c136ff",
+      "match": true
+    },
+    {
+      "path": "data/cgcg-539-025-checks.json",
+      "expected_sha256": "e289cbd2ed4e7d4836db762f0444bd0aa9259b1597a0ea5f463c15464c1d8ca8",
+      "actual_sha256": "e289cbd2ed4e7d4836db762f0444bd0aa9259b1597a0ea5f463c15464c1d8ca8",
+      "match": true
+    },
+    {
+      "path": "data/detections.csv",
+      "expected_sha256": "91278f9f666b7840ed9f3d22964e98d6f985493085aa160579c1d5df6d80fdaa",
+      "actual_sha256": "91278f9f666b7840ed9f3d22964e98d6f985493085aa160579c1d5df6d80fdaa",
+      "match": true
+    },
+    {
+      "path": "data/eso-161-23-checks.json",
+      "expected_sha256": "48ec6f546f79c909cae48f97c6f840d13371d2e16cb9ddd8cb3f3f4a245fe7c6",
+      "actual_sha256": "48ec6f546f79c909cae48f97c6f840d13371d2e16cb9ddd8cb3f3f4a245fe7c6",
+      "match": true
+    },
+    {
+      "path": "data/flaires-positions.csv",
+      "expected_sha256": "065e2be98d9d1569fbca2f43e0698bd7fce4c716915597c97a4b8647738a0f02",
+      "actual_sha256": "065e2be98d9d1569fbca2f43e0698bd7fce4c716915597c97a4b8647738a0f02",
+      "match": true
+    },
+    {
+      "path": "data/flare-light-curves.csv",
+      "expected_sha256": "9c52a6815c534f085cfbfe7a76bc99e66a834dd33ea69f10f7551401a214b09d",
+      "actual_sha256": "9c52a6815c534f085cfbfe7a76bc99e66a834dd33ea69f10f7551401a214b09d",
+      "match": true
+    },
+    {
+      "path": "data/flares.csv",
+      "expected_sha256": "7df7fc416c598a9cecfffca1e49183529df89abe2d1471ef9ae04bdd876640aa",
+      "actual_sha256": "7df7fc416c598a9cecfffca1e49183529df89abe2d1471ef9ae04bdd876640aa",
+      "match": true
+    },
+    {
+      "path": "data/gaia-alert-matches.json",
+      "expected_sha256": "8b2de9c1686d6b95c5388850f9fb1b9737eaf64b76e60a031858fa6409b3b7ff",
+      "actual_sha256": "8b2de9c1686d6b95c5388850f9fb1b9737eaf64b76e60a031858fa6409b3b7ff",
+      "match": true
+    },
+    {
+      "path": "data/published-flares.csv",
+      "expected_sha256": "419a4b8741f25b04aef7c8a6fc9181263ff9926abf8cb0b2d096c9b67dcfb13b",
+      "actual_sha256": "419a4b8741f25b04aef7c8a6fc9181263ff9926abf8cb0b2d096c9b67dcfb13b",
+      "match": true
+    },
+    {
+      "path": "data/radio.json",
+      "expected_sha256": "8d27bce54110efc35befaa624e9b8975d128a42c3d358fd14ff605d6c776c3e6",
+      "actual_sha256": "8d27bce54110efc35befaa624e9b8975d128a42c3d358fd14ff605d6c776c3e6",
+      "match": true
+    },
+    {
+      "path": "data/spherex-colours-ring3-5.json",
+      "expected_sha256": "4b6e62498d483a70762a8d0e511a4d4fe92a19fd8ed2d538c083121f67b87058",
+      "actual_sha256": "4b6e62498d483a70762a8d0e511a4d4fe92a19fd8ed2d538c083121f67b87058",
+      "match": true
+    },
+    {
+      "path": "data/spherex-colours.json",
+      "expected_sha256": "e1639709707c9ab0cec451e46b6df6217af94aab46e7d268eae6a9d999ce0a4d",
+      "actual_sha256": "e1639709707c9ab0cec451e46b6df6217af94aab46e7d268eae6a9d999ce0a4d",
+      "match": true
+    },
+    {
+      "path": "data/supergiant-dropouts.csv",
+      "expected_sha256": "a5c3553577c087482a2f37e203008cb321240557022d0783e09cf47a67158960",
+      "actual_sha256": "a5c3553577c087482a2f37e203008cb321240557022d0783e09cf47a67158960",
+      "match": true
+    },
+    {
+      "path": "data/supergiant-flares.csv",
+      "expected_sha256": "197f075cee455e8527de9c3dededdb28cd775a09beacd51a785811f4f40c5969",
+      "actual_sha256": "197f075cee455e8527de9c3dededdb28cd775a09beacd51a785811f4f40c5969",
+      "match": true
+    },
+    {
+      "path": "data/supergiants.json",
+      "expected_sha256": "3012ac038f81bc99d17a05db12e6b0239f20adc6d218ff71b457adc5b57890ef",
+      "actual_sha256": "3012ac038f81bc99d17a05db12e6b0239f20adc6d218ff71b457adc5b57890ef",
+      "match": true
+    },
+    {
+      "path": "data/ugc-2653-checks.json",
+      "expected_sha256": "87bb2b868dd61ae09e440df3852d5585223a480826dcb7ebeeaff07c66b82742",
+      "actual_sha256": "87bb2b868dd61ae09e440df3852d5585223a480826dcb7ebeeaff07c66b82742",
+      "match": true
+    },
+    {
+      "path": "data/ztf-alerts.json",
+      "expected_sha256": "19edcab53a9d5d93efa9042e2692d5150a0118477029ed3e2c368151f7ad2ac2",
+      "actual_sha256": "19edcab53a9d5d93efa9042e2692d5150a0118477029ed3e2c368151f7ad2ac2",
+      "match": true
+    }
+  ]
+}

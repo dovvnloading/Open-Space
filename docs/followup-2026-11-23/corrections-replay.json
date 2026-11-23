@@ -1,0 +1,90 @@
+{
+  "date": "2026-11-23",
+  "base_commit": "972cd5169eea2b83d7407df84eb60c167b3c084e",
+  "scope": "Compact-table computational replay; does not independently re-extract all NICER photons or all original SMGPS FITS headers.",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "astropy": "8.0.3"
+  },
+  "checks": [
+    {
+      "name": "nicer-packet",
+      "command": "python results/nicer-magnetar-microbursts/verify.py",
+      "exit_code": 0,
+      "output": "1020240141  7 cleaned 0.5\u20138 keV events, all slow only; 5 particle-filter events; 131/140 matched fast triggers\n5505010502  32 cleaned 0.5\u20138 keV events, all slow only; 0 particle-filter events; 555/640 matched fast triggers\n5505010502  13.17 arcmin from the SMC magnetar\n5505011602  12.74 arcmin from the SMC magnetar\n5505011703  12.87 arcmin from the SMC magnetar\n5505011704  12.76 arcmin from the SMC magnetar\nPacket checks passed.\n"
+    },
+    {
+      "name": "nicer-geometry",
+      "command": "python results/nicer-magnetar-microbursts/geometry.py",
+      "exit_code": 0,
+      "output": "1020240141  R\u00b2=0.76287, 24709/100000 within-MPU permutations matched or exceeded it\n5505010502  R\u00b2=0.57992, 62/100000 within-MPU permutations matched or exceeded it\n2018 footprint 20 cells, 32/100000 matched draws as compact\n"
+    },
+    {
+      "name": "nicer-clock-summary",
+      "command": "python results/nicer-magnetar-microbursts/catalog-clock/summary.py",
+      "exit_code": 0,
+      "output": "1132 catalog rows in 159 observations\nnarrow pairs, wins, ties, losses, literal hits, shifted hits, median difference\nall (944, 843, 1, 100, 115351, 274146, 26.0)\n1E 1841-045 (13, 13, 0, 0, 184, 1429, 38)\n1E 2259+586 (1, 1, 0, 0, 14, 28, 14)\n1RXS J170849.0-400910 (1, 1, 0, 0, 14, 113, 99)\n4U 0142+61 (3, 3, 0, 0, 115, 183, 24)\nCXOU J010043.1-721134 (1, 1, 0, 0, 35, 57, 22)\nPSR J1846-0258 (3, 3, 0, 0, 8, 38, 10)\nSGR 1806-20 (4, 4, 0, 0, 6, 3951, 342.5)\nSGR 1830-0645 (39, 39, 0, 0, 123, 874, 17)\nSGR 1935+2154 (798, 698, 1, 99, 114542, 265888, 34.0)\nSwift J1555.2-5402 (56, 56, 0, 0, 129, 1036, 10.5)\nSwift J1818.0-1607 (23, 23, 0, 0, 22, 386, 12)\nSwift J1822.3-1606 (1, 1, 0, 0, 3, 39, 36)\nXTE J1810-197 (1, 0, 0, 1, 156, 124, -32)\nobservations with positive median difference 120 of 121\nfour-way complete 783 {'minus69': 111312, 'literal': 110282, 'plus69': 252152, 'plus138': 102009}\nsingle-source storm excluded (146, 145, 0, 1, 809, 8258, 15.0)\nwide pairs, wins, ties, losses, literal hits, shifted hits, median difference\nall (931, 786, 4, 141, 290172, 388987, 28)\n1E 1841-045 (13, 13, 0, 0, 500, 1863, 46)\n1E 2259+586 (1, 1, 0, 0, 46, 55, 9)\n4U 0142+61 (3, 1, 1, 1, 429, 482, 0)\nCXOU J010043.1-721134 (1, 1, 0, 0, 69, 86, 17)\nPSR J1846-0258 (3, 3, 0, 0, 31, 62, 11)\nSGR 1806-20 (4, 4, 0, 0, 16, 3972, 343.0)\nSGR 1830-0645 (38, 36, 0, 2, 468, 1391, 22.0)\nSGR 1935+2154 (788, 651, 3, 134, 287539, 378993, 34.0)\nSwift J1555.2-5402 (55, 52, 0, 3, 469, 1392, 13)\nSwift J1818.0-1607 (23, 23, 0, 0, 95, 455, 11)\nSwift J1822.3-1606 (1, 1, 0, 0, 11, 44, 33)\nXTE J1810-197 (1, 0, 0, 1, 499, 192, -307)\nobservations with positive median difference 114 of 119\nfour-way complete 768 {'minus69': 239675, 'literal': 275615, 'plus69': 351102, 'plus138': 209722}\nsingle-source storm excluded (143, 135, 1, 7, 2633, 9994, 17)\n"
+    },
+    {
+      "name": "nicer-blank-sky",
+      "command": "python results/nicer-magnetar-microbursts/blank-sky/verify.py",
+      "exit_code": 0,
+      "output": "{\n  \"observations\": 2178,\n  \"seconds\": 3231475.848,\n  \"in_band_events\": 52543114,\n  \"observation_maxima\": {\n    \"0\": 24,\n    \"1\": 1851,\n    \"2\": 240,\n    \"3\": 41,\n    \"4\": 15,\n    \"5\": 7\n  },\n  \"threshold_windows\": 28,\n  \"all_slow_windows\": 4,\n  \"fields\": {\n    \"BKGD_RXTE_1\": [\n      219,\n      189718.375\n    ],\n    \"BKGD_RXTE_2\": [\n      363,\n      506275.325\n    ],\n    \"BKGD_RXTE_3\": [\n      308,\n      363779.883\n    ],\n    \"BKGD_RXTE_4\": [\n      241,\n      356316.011\n    ],\n    \"BKGD_RXTE_5\": [\n      291,\n      418259.995\n    ],\n    \"BKGD_RXTE_6\": [\n      417,\n      920656.261\n    ],\n    \"BKGD_RXTE_8\": [\n      339,\n      476469.997\n    ]\n  }\n}\n"
+    },
+    {
+      "name": "nicer-timescale-forensics",
+      "command": "python results/nicer-magnetar-microbursts/timescale-forensics/verify.py",
+      "exit_code": 0,
+      "output": "NASA header-model checks: 67.184-s reference + 2 leap seconds = 69.184 s\nYear, target stratum, pairs, +69 wins, ties, losses, distinct visits\n2017,other,1,1,0,0,1\n2018,other,1,1,0,0,1\n2019,other,2,1,0,1,2\n2020,SGR1935,332,235,0,97,7\n2020,other,64,64,0,0,35\n2021,SGR1935,62,62,0,0,16\n2021,other,58,58,0,0,30\n2022,SGR1935,404,401,1,2,19\n2023,other,6,6,0,0,4\n2024,other,14,14,0,0,6\nShao ID, Chu ID, Chu-label minus Shao UTC [s], Shao UTC minus PR23 +69.184 local UTC [s]\n1,441,9.941,61.309\n2,443,9.952,61.298\n3,444,9.968,61.279\n4,446,9.916,61.321\n5,447,9.739,61.495\n6,449,9.958,61.271\n7,452,9.596,61.236\n8,453,9.569,61.258\n9,455,9.562,61.262\n10,457,9.589,61.228\nN=10; median Shao minus frozen PR23 local UTC = 61.275 s; range 61.228 to 61.495 s\nNo Chu catalog label within 5 min of 2020-04-28T14:34:24 ; this does not prove lack of NICER exposure or a counterpart.\nNo Chu catalog label within 5 min of 2022-10-14T19:21:39 ; this does not prove lack of NICER exposure or a counterpart.\n"
+    },
+    {
+      "name": "nicer-frame-controls",
+      "command": "python results/nicer-magnetar-microbursts/timescale-forensics/frame_controls.py",
+      "exit_code": 0,
+      "output": "Chu ID, corrected Chu SSB TDB minus predicted local TT [s], Shao UTC-labelled time minus predicted local UTC [s], literal Chu TDB label minus Shao UTC label [s]\n441,71.250100,61.309100,9.941000\n443,71.249572,61.297572,9.952000\n444,71.246892,61.278892,9.968000\n446,71.237480,61.321480,9.916000\n447,71.234406,61.495406,9.739000\n449,71.228668,61.270668,9.958000\n452,70.831716,61.235716,9.596000\n453,70.827211,61.258211,9.569000\n455,70.823537,61.261537,9.562000\n457,70.816830,61.227830,9.589000\nFrame-mixed comparison (Shao - local UTC) median: 61.274780 seconds\nDo not interpret frame-mixed numbers as a new clock offset.\n"
+    },
+    {
+      "name": "smgps-projection",
+      "command": "python audit.py (scratch copy of results/smgps-image-astrometry)",
+      "exit_code": 0,
+      "output": "{\n  \"images\": 693,\n  \"outside\": 649,\n  \"within_5_arcmin\": 20,\n  \"median_arcmin\": 88.776,\n  \"max_arcmin\": 179.97642,\n  \"min_arcmin\": 0.1249,\n  \"median_model_residual_arcsec\": 0.01218,\n  \"max_model_residual_arcsec\": 0.02545\n}\n"
+    },
+    {
+      "name": "smgps-wcslib",
+      "command": "python check_wcslib.py (same scratch copy)",
+      "exit_code": 0,
+      "output": "693 centers verified via WCSLIB. Maximum separation 0.000025 arcsec.\n"
+    },
+    {
+      "name": "smgps-live-index-compare",
+      "command": "Independent TSV/CSV join by exact filename; float coordinate and integer size equality; regenerated CSV byte comparison",
+      "exit_code": 0,
+      "output": "{\n  \"rows_live\": 693,\n  \"rows_frozen\": 693,\n  \"filename_sets_identical\": true,\n  \"changed_coordinate_or_size_rows\": 0,\n  \"changed_names\": [],\n  \"live_sha256\": \"121bb5c78f345d7011f2c4ee8fd696a3f605adf63223d461dbaed0d3916309f8\"\n}\nRecomputed coordinates.csv byte-identical to committed file.\n"
+    },
+    {
+      "name": "ngc-primary-crossidentifications",
+      "command": "python reproduce.py --cache /workspace/scratch/e8102e82a39d/correction-replay/ngc-cache --output /workspace/scratch/e8102e82a39d/correction-replay/ngc-result (cwd results/ngc1261b-reticulum-ii)",
+      "exit_code": 0,
+      "output": "24540 atlas rows, 87 streams, 129 Ji targets, 59 Simon targets. 12 matches in stream 14.\n"
+    },
+    {
+      "name": "ngc-track-audit",
+      "command": "python track_audit.py --cache /workspace/scratch/e8102e82a39d/correction-replay/ngc-cache --output /workspace/scratch/e8102e82a39d/correction-replay/ngc-result/track.json (cwd results/ngc1261b-reticulum-ii)",
+      "exit_code": 0,
+      "output": "Original audit completed. Python byte comparisons confirmed matches.csv, coverage.csv and track.json identical to committed files.\n"
+    },
+    {
+      "name": "ngc-independent-coverage",
+      "command": "python independent_coverage.py --cache /workspace/scratch/e8102e82a39d/correction-replay/ngc-cache (cwd results/ngc1261b-reticulum-ii)",
+      "exit_code": 0,
+      "output": "{\n  \"awad_b1_stars\": 115,\n  \"awad_b1_exact_matches\": [\n    {\n      \"GaiaDR3\": \"4734256791553917952\",\n      \"RV\": \"85.706\",\n      \"e_RV\": \"3.365\",\n      \"[Fe/H]\": \"-1.114\",\n      \"e_[Fe/H]\": \"0.173\",\n      \"Pmemb\": \"0.946\"\n    }\n  ],\n  \"atlas_branch_stars\": 70,\n  \"gaia_dr3_rows\": 70,\n  \"gaia_dr3_nonblank_rvs\": 0,\n  \"s5_dr1_rows\": 31777,\n  \"s5_dr1_matched_within_6_arcsec\": 0\n}\n"
+    },
+    {
+      "name": "ngc-target-manifest",
+      "command": "python docs/followup-2026-11-23/corrections-build-targets.py --atlas /workspace/scratch/e8102e82a39d/correction-replay/ngc-cache/ibata.txt",
+      "exit_code": 0,
+      "output": "Wrote 58 candidates; 1 have the checked later Awad spectrum.\n"
+    }
+  ]
+}

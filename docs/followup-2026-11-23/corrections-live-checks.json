@@ -1,0 +1,82 @@
+{
+  "checked_date": "2026-11-23",
+  "base_commit": "972cd5169eea2b83d7407df84eb60c167b3c084e",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "astropy": "8.0.3"
+  },
+  "smgps_live_index": {
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J/A%2BA/693/A247/list&-out=Name,GLON,GLAT,Nx,Ny,FileName&-out.max=unlimited",
+    "snapshot": "corrections-live-smgps-index.tsv",
+    "sha256": "121bb5c78f345d7011f2c4ee8fd696a3f605adf63223d461dbaed0d3916309f8",
+    "bytes": 59123,
+    "rows": 693,
+    "filename_sets_equal_to_frozen_headers": true,
+    "changed_coordinate_or_size_rows": 0,
+    "native_header_retrieval_date": "2026-11-15 (in existing result)",
+    "all_native_headers_refetched_today": false,
+    "recomputed_coordinates_byte_identical": true,
+    "wcslib_max_separation_arcsec_rounded": 2.5e-05
+  },
+  "galstreams_live_track": {
+    "url": "https://github.com/cmateu/galstreams/blob/main/galstreams/tracks/track.st.NGC1261b.ibata2024.ecsv",
+    "git_blob_sha": "870458a736dea9213b0e63d0837c2d8d7e016fb9",
+    "latest_path_commit_returned": "5f3125fec686c1aa199c374135010e2595ba56ed",
+    "latest_path_commit_date": "2024-08-06T18:08:35Z",
+    "sha256": "03a116fa782fc7c9a59ec31daff0c0bcc8758e5a65461755a89c27ffdf7f3a31",
+    "byte_identical_to_pinned_audit": true,
+    "track_rows": 1044,
+    "rows_with_abs_velocity_above_c": 690,
+    "rows_in_measured_ra_span": 28,
+    "rows_above_c_in_measured_ra_span": 0,
+    "min_velocity_kms": -32929072.160805665,
+    "max_velocity_kms": 396486.03085099044
+  },
+  "ngc_primary_replay": {
+    "source_sha256": {
+      "ibata.txt": "76742daaf44d69e1afe71b56f49ec93c88631a6ae10261cc4adcb6f8485644ba",
+      "ji.txt": "4a0c0576b3e93c38beb1334e5a0df690d7509b4a6611c479b965ce0e4068a4d6",
+      "simon.pdf": "2330033fe384198c6d3e52d586836c24531b23fb25cbab8e7e73cc62a66d9e8d",
+      "s5_pdr1_light.fits": "87680e5327c1dc066438489b6b1547952ba2205a9adbccea2f63a2f55d360a61",
+      "awad.tsv": "7eab5fb00e6ada59ae1d7125c06234ce80c84835b4f8b6397c5660a43006618c",
+      "gavo-dr3.csv": "b6ab2ac447b5a71e9662f9d97f69a6af56f65140fd95c80e0697206f0a1d1f2b"
+    },
+    "atlas_rows": 24540,
+    "atlas_streams": 87,
+    "ji_targets": 129,
+    "simon_targets": 59,
+    "exact_matches_branch14": 12,
+    "byte_identical_outputs": [
+      "matches.csv",
+      "coverage.csv",
+      "track.json"
+    ],
+    "fresh_independent_coverage": {
+      "awad_b1_stars": 115,
+      "awad_b1_exact_matches": [
+        {
+          "GaiaDR3": "4734256791553917952",
+          "RV": "85.706",
+          "e_RV": "3.365",
+          "[Fe/H]": "-1.114",
+          "e_[Fe/H]": "0.173",
+          "Pmemb": "0.946"
+        }
+      ],
+      "atlas_branch_stars": 70,
+      "gaia_dr3_rows": 70,
+      "gaia_dr3_nonblank_rvs": 0,
+      "s5_dr1_rows": 31777,
+      "s5_dr1_matched_within_6_arcsec": 0
+    }
+  },
+  "target_manifest": {
+    "filename": "corrections-ngc1261b-targets.csv",
+    "rows": 58,
+    "known_later_spectra": 1,
+    "selection": "All original stream14 candidates excluding the12 exact ReticulumII matches; not a membership-pure sample",
+    "coordinate_epoch_as_published": "J2016.5",
+    "gaia_ids_must_remain_strings": true
+  }
+}

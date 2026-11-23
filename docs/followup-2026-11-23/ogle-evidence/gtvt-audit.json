@@ -1,0 +1,125 @@
+{
+  "audit_date": "2026-11-23",
+  "position_deg_icrf": {
+    "ra": 268.1587083333333,
+    "dec": -31.7933611111111
+  },
+  "software": {
+    "jwst_gtvt": "1.2",
+    "numpy": "2.5.5",
+    "pandas": "3.1.1",
+    "astropy": "8.0.3",
+    "pysiaf": "0.29.0"
+  },
+  "module": "jwst_gtvt/jwst_tvt.py",
+  "module_sha256": "a7cde290b66f184955c6b3eb1b595b5ebee9624a40a9b50cc4b985ad259e47ab",
+  "script_sha256": "cf5fa1cf914c145df5bac9d3221862c400725d4f10feebcb44e49817fe52a9b8",
+  "input_sha256": {
+    "gtvt-horizons-ephemeris.txt": "686c24575b86fd16cfdab29368d86fc0e91eb8121e1e7d4d371429471ad740a1",
+    "gtvt-original.csv": "3368e47de82b6eae4200076ddaec74423d587ee826712190a6de0dc82924047c"
+  },
+  "aligned_csv_sha256": "7649a9b1a7fdb5cfd592f78e701eaf8743273473d43c72774b5cf9971754918b",
+  "horizons_header_metadata": [
+    "Target body name: James Webb Space Telescope (spacecraft) (-170) {source: JWST_merged}",
+    "Center body name: Sun (10)                        {source: DE441}",
+    "Start time      : A.D. 2027-Jan-01 00:00:00.0000 TDB",
+    "Stop  time      : A.D. 2027-Dec-31 00:00:00.0000 TDB",
+    "Step-size       : 1440 minutes",
+    "Output units    : KM-S",
+    "Output type     : LT CORRECTED cartesian states",
+    "Reference frame : ICRF"
+  ],
+  "horizons_request_template": "https://ssd.jpl.nasa.gov/horizons_batch.cgi?batch=1&COMMAND=-170&OBJ_DATA=%27NO%27&EPHEM_TYPE=VECTORS&START_TIME=%27{}%27&STOP_TIME=%27{}%27&CENTER=%27500@10%27&STEP_SIZE=%271%20DAYS%27&CSV_FORMAT=%27YES%27&VEC_TABLE=%272%27&REF_SYSTEM=%27ICRF%27&REF_PLANE=%27FRAME%27&VEC_CORR=%27LT%27&OUT_UNITS=%27KM-S%27&VEC_LABELS=%27YES%27&VEC_DELTA_T=%27NO%27",
+  "time_frame": "JDTDB and Calendar Date (TDB); daily midnight TDB samples. Display dates must not be labeled UTC.",
+  "coverage": {
+    "raw_vectors": 365,
+    "original_csv_rows": 365,
+    "original_missing_position_rows": 1,
+    "aligned_missing_position_rows": 0
+  },
+  "finding": "Installed GTVT 1.2 __init__ replaces each coordinate by (coordinate.shift()-coordinate)*1+coordinate. This equals the previous row while retaining the current JDTDB/date.",
+  "previous_row_position_matches": {
+    "rows": 364,
+    "maximum_absolute_difference_km": 2.3283064365386963e-10
+  },
+  "aligned_method": "Deep copy of original table; replace only X/Y/Z from raw Horizons rows joined exactly on JDTDB; rerun existing get_fixed_target_positions/build_dataframe. No package file changed.",
+  "field_of_regard_criterion": {
+    "minimum_degrees_strict": 84.80000000000001,
+    "maximum_degrees_strict": 135.0
+  },
+  "unmodified_gtvt_windows": [
+    {
+      "first_daily_sample_tdb_date": "2027-03-16",
+      "last_daily_sample_tdb_date": "2027-05-05",
+      "daily_samples": 51,
+      "first_jd_tdb": 2461480.5,
+      "last_jd_tdb": 2461530.5,
+      "first_sample_utc": "2027-03-15T23:58:50.814",
+      "last_sample_utc": "2027-05-04T23:58:50.815"
+    },
+    {
+      "first_daily_sample_tdb_date": "2027-08-08",
+      "last_daily_sample_tdb_date": "2027-09-28",
+      "daily_samples": 52,
+      "first_jd_tdb": 2461625.5,
+      "last_jd_tdb": 2461676.5,
+      "first_sample_utc": "2027-08-07T23:58:50.817",
+      "last_sample_utc": "2027-09-27T23:58:50.818"
+    }
+  ],
+  "date_aligned_gtvt_windows": [
+    {
+      "first_daily_sample_tdb_date": "2027-03-15",
+      "last_daily_sample_tdb_date": "2027-05-04",
+      "daily_samples": 51,
+      "first_jd_tdb": 2461479.5,
+      "last_jd_tdb": 2461529.5,
+      "first_sample_utc": "2027-03-14T23:58:50.814",
+      "last_sample_utc": "2027-05-03T23:58:50.815"
+    },
+    {
+      "first_daily_sample_tdb_date": "2027-08-07",
+      "last_daily_sample_tdb_date": "2027-09-27",
+      "daily_samples": 52,
+      "first_jd_tdb": 2461624.5,
+      "last_jd_tdb": 2461675.5,
+      "first_sample_utc": "2027-08-06T23:58:50.817",
+      "last_sample_utc": "2027-09-26T23:58:50.818"
+    }
+  ],
+  "date_aligned_windows_with_85_degree_lower_bound": [
+    {
+      "first_daily_sample_tdb_date": "2027-03-15",
+      "last_daily_sample_tdb_date": "2027-05-04",
+      "daily_samples": 51,
+      "first_jd_tdb": 2461479.5,
+      "last_jd_tdb": 2461529.5,
+      "first_sample_utc": "2027-03-14T23:58:50.814",
+      "last_sample_utc": "2027-05-03T23:58:50.815"
+    },
+    {
+      "first_daily_sample_tdb_date": "2027-08-07",
+      "last_daily_sample_tdb_date": "2027-09-27",
+      "daily_samples": 52,
+      "first_jd_tdb": 2461624.5,
+      "last_jd_tdb": 2461675.5,
+      "first_sample_utc": "2027-08-06T23:58:50.817",
+      "last_sample_utc": "2027-09-26T23:58:50.818"
+    }
+  ],
+  "independent_vector_check_maximum_angle_difference_radians": 1.4988010832439613e-15,
+  "july_2027": {
+    "daily_samples": 31,
+    "samples_in_field_of_regard": 0,
+    "minimum_elongation_degrees": 140.7483846220333,
+    "maximum_elongation_degrees": 167.0729928875787
+  },
+  "limits": [
+    "First/last accepted daily samples are not exact visibility boundary instants or full-day scheduling guarantees.",
+    "Horizons states are the supplied LT-corrected JWST_merged vectors centered on the Sun (DE441), in ICRF and KM-S; this audit does not replace or improve that ephemeris.",
+    "The date-aligned output is an explicitly modified calculation using the tool's methods, not an unmodified official GTVT result.",
+    "Fixed input target coordinates have no propagated stellar proper motion; this is a feasibility estimate, not a pointing or astrometric reduction solution.",
+    "Instrument angle columns are tool outputs only; no target-specific roll/detector/guide-star optimization, ETC, APT, allocation or scheduling check was completed.",
+    "Daily TDB labels convert to approximately 69 seconds earlier in UTC under the supplied time-scale tables; retain explicit time-scale labels."
+  ]
+}

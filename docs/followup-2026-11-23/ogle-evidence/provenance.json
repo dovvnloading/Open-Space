@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-23",
+  "base_commit": "972cd5169eea2b83d7407df84eb60c167b3c084e",
+  "python": "3.12.14",
+  "code_sha256": {
+    "results/ogle-dark-lenses/check/pspl.py": "2eacf64114b9f08fc5808fa6e09f9dcf7809ebe2706812e53e0c9374552f442b",
+    "results/ogle-dark-lenses/check/baseline.py": "825f0744f6ea387a1c357e5beaa549f0790db05b9143b34aff866b65fdca952a",
+    "results/ogle-dark-lenses/forecast.py": "9a8bb6f8a864eb0ec3621cd0c7f3323a89f886f27da06d5aafd152622f4a4056",
+    "results/ogle-dark-lenses/candidate.py": "9ea9fe32925d1559b922533e0f17c8fc36b73feb3ea1f2699ce68e17204a1c3e",
+    "results/ogle-dark-lenses/lens.py": "86b23018ba242fafd7b3663530a935364181071fa55d3046de8fc80b69789dfa",
+    "results/ogle-dark-lenses/screen.py": "b1b9cc4659959e5ba0c0372bbf5c4c24777bdf743e60082f31eebf181f3d5ed0",
+    "results/ogle-dark-lenses/galaxy.py": "d36a7b6d5986d1722bcd0bc502129c8b2ad7c1d5231a455816837a6ecca34bab",
+    "docs/followup-2026-11-23/ogle_checks.py": "4b08573b7989f13302b82262827d7bd086c8c87b279652142540d6ae98a0fea1"
+  },
+  "science_input_hashes": "checks.json",
+  "new_observations": false,
+  "population_model_rerun": false,
+  "mcmc_rerun": false,
+  "independent_review": "A separate agent reproduced the all-4800-row timing quantiles exactly, confirmed one rising and zero falling crossings per row, checked all five narrative files, and verified that the frozen forecast hash was unchanged.",
+  "sampling_review_change": "Extra stride removed from the new timing calculation after review; the saved file already contains only eight original walkers. Original frozen photometric forecast retained."
+}

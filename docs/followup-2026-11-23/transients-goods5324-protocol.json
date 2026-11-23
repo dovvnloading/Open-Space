@@ -1,0 +1,31 @@
+{
+  "campaign": "followup-2026-11-23-goods-s-185-program5324",
+  "base_commit": "972cd5169eea2b83d7407df84eb60c167b3c084e",
+  "frozen_before_flux_inspection": true,
+  "question": "Does the public 2026-02-04 epoch add a valid intermediate brightness measurement for GOODS-S site 185?",
+  "target": {"site":185,"ra_deg":53.188672,"dec_deg":-27.812554},
+  "observing_unit": "One Stage 3 product per filter from JWST program 5324 observation 27; different filters do not count as separate epochs.",
+  "primary_filter": "F277W",
+  "corroborating_filter": "F356W",
+  "additional_filters": ["F150W","F200W"],
+  "products": [
+    "jwst/public/jw05324/L3/t/o027/jw05324-o027_t022_nircam_clear-f150w_i2d.fits",
+    "jwst/public/jw05324/L3/t/o027/jw05324-o027_t022_nircam_clear-f200w_i2d.fits",
+    "jwst/public/jw05324/L3/t/o027/jw05324-o027_t022_nircam_clear-f277w_i2d.fits",
+    "jwst/public/jw05324/L3/t/o027/jw05324-o027_t022_nircam_clear-f356w_i2d.fits"
+  ],
+  "method": {
+    "aperture_radius_arcsec":0.15,
+    "background_annulus_arcsec":[0.27,0.42],
+    "sky_grid_arcsec":0.03,
+    "interpolation_order":1,
+    "background":"median in annulus",
+    "noise":"1.4826 times MAD of displaced-aperture fluxes at the existing measure.py offsets",
+    "coordinate_sensitivity_arcsec":[-0.02,0,0.02],
+    "aperture_correction":false,
+    "reference":"Deposited site 185 fixed-aperture photometry from program 8060 (2025) and 12577 (2026), unchanged.",
+    "acceptance":"Finite complete target aperture and at least 90% finite annulus, at least 15 finite displaced apertures, positive finite empirical scatter. Report failed coverage explicitly.",
+    "falsification":"A valid February point consistent with the earlier state does not support an already-completed rise by February. A point inconsistent with both old and new states, or sensitive to common coordinate offsets, triggers an instrumental/registration review. No source classification or discovery claim follows from one mosaic epoch."
+  },
+  "limits":"No independent exposure or PSF/registration calibration is asserted by this initial checkpoint. Local scatter omits source Poisson, relative calibration and PSF uncertainty. A spatial footprint hit is not valid-pixel coverage."
+}

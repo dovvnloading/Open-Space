@@ -1,0 +1,58 @@
+{
+  "base_commit": "972cd5169eea2b83d7407df84eb60c167b3c084e",
+  "sources": [
+    {
+      "path": "results/neowise-nuclear-flares/data/radio.json",
+      "sha256": "8d27bce54110efc35befaa624e9b8975d128a42c3d358fd14ff605d6c776c3e6"
+    },
+    {
+      "path": "results/neowise-nuclear-flares/data/spherex-colours.json",
+      "sha256": "e1639709707c9ab0cec451e46b6df6217af94aab46e7d268eae6a9d999ce0a4d"
+    }
+  ],
+  "observing_dates": [
+    "2019-04-13T17:34:23.025001",
+    "2021-11-28T08:25:59.250000",
+    "2024-07-05T12:00:39.600000"
+  ],
+  "baseline_mjy_beam": 0.7549294892312629,
+  "statistical_weights": [
+    0.44947843104053525,
+    0.5505215689594647
+  ],
+  "delta_mjy_beam": 0.4835418735085385,
+  "scenarios": [
+    {
+      "assumed_fractional_calibration_error": 0.0,
+      "assumed_common_correlation": 0.0,
+      "error_mjy_beam": 0.14998256433843019,
+      "contrast_over_error": 3.223987239059628
+    },
+    {
+      "assumed_fractional_calibration_error": 0.1,
+      "assumed_common_correlation": 0.0,
+      "error_mjy_beam": 0.20186007147434817,
+      "contrast_over_error": 2.3954310031540125
+    },
+    {
+      "assumed_fractional_calibration_error": 0.1,
+      "assumed_common_correlation": 0.5,
+      "error_mjy_beam": 0.18108062499273878,
+      "contrast_over_error": 2.6703125943370707
+    },
+    {
+      "assumed_fractional_calibration_error": 0.1,
+      "assumed_common_correlation": 1.0,
+      "error_mjy_beam": 0.15758457107183058,
+      "contrast_over_error": 3.068459495873675
+    }
+  ],
+  "spherex": {
+    "colour_excess_mag": 0.47726672412590687,
+    "control_scatter_mag": 0.05200375176203564,
+    "excess_over_scatter": 9.177544080085516,
+    "controls": 65,
+    "controls_at_least_as_red": 0
+  },
+  "limits": "10% gain errors and their correlations are assumptions, not measured calibration errors. The original measurements select the maximum pixel within 2.5 arcsec. Peak-selection bias, PSF and registration are not calibrated here. SPHEREx excess/scatter is not a calibrated Gaussian false-alarm significance; 65 comparison galaxies cannot measure a nine-sigma tail."
+}

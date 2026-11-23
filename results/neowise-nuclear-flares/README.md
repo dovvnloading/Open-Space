@@ -104,7 +104,7 @@ UGC 2653's infrared flare began in mid-2022, between the second and third epochs
 
 ## Next tests
 
-An optical spectrum of UGC 2653 and CGCG 539-025 now would test for high-ionization coronal lines, which persist for years after dust-obscured disruption events and are not produced by supernovae. Radio imaging of UGC 2653 at several frequencies would test whether its 2024 brightening is a new outflow, and later SPHEREx all-sky passes will follow the hot dust as it fades.
+An optical spectrum of UGC 2653 and CGCG 539-025 would test for high-ionization coronal lines, broad and narrow hydrogen/helium emission, and other signs of nuclear activity or shock interaction. Coronal lines alone do not establish a tidal disruption: interacting supernovae such as SN 2005ip also produce strong coronal emission and infrared dust emission ([Smith et al. 2009](https://doi.org/10.1088/0004-637X/695/2/1334)). Classification requires the line profiles, line ratios, spectral evolution and multiwavelength history together; a nondetection of coronal lines years after onset would not by itself exclude a disruption. Radio imaging of UGC 2653 at several frequencies, with a matched flux scale and resolution, would test whether its possible 2024 brightening is a new outflow. Later SPHEREx observations with individual exposure times could test whether the red component has faded. The [23 November 2026 follow-up review](../../docs/followup-2026-11-23/transients.md) records the remaining checks and a sensitivity calculation for the radio change.
 
 ## No vanishing supergiant
 

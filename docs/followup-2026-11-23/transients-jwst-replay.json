@@ -1,0 +1,181 @@
+{
+  "base_commit": "972cd5169eea2b83d7407df84eb60c167b3c084e",
+  "scope": "Seven original offline scripts on a scratch copy; no raw exposure recalibration",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "jobs": [
+    {
+      "directory": "results/jwst-repeat-imaging-transients/repeat-catalog-followup/cosmos-022-history",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "summarize.py"
+      ],
+      "script_sha256": "28471b7f7d5a395be694b9832a0e72e6aa15f39b7b5aa047c70641002e6014de",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "status": "passed",
+      "checks": [
+        {
+          "output": "nightly.csv",
+          "matches_with_numeric_tolerance": true,
+          "regenerated_sha256": "4ec5b243b7fec72cd85df6f60c632383730d148e49423ab7d7c841ca0f40fd29"
+        },
+        {
+          "output": "medium_changes.csv",
+          "matches_with_numeric_tolerance": true,
+          "regenerated_sha256": "f6042ddccb13c17a4447d033489d6dc5a244507b1768db4ec53122f496b80809"
+        },
+        {
+          "output": "inventory_checksums.csv",
+          "matches_with_numeric_tolerance": true,
+          "regenerated_sha256": "af42ecfaef2d454eb1362084d4157d3828f87c7e07441e9fbd7898ba4d715354"
+        }
+      ]
+    },
+    {
+      "directory": "results/jwst-repeat-imaging-transients/repeat-catalog-followup/cosmos-022-validation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "emission_lines.py"
+      ],
+      "script_sha256": "598628d9afdabc1d6330bacee501dbe9634f0cc75f2c4dd0d80e98b24aeaba4b",
+      "exit_code": 0,
+      "stdout": "     line  flux_1e20  error_1e20   snr  delta_A  sigma_A\n  NeV3426     -59.16      104.05 -0.57     0.00     1.50\n  OII3727    1802.20      140.32 12.84    -0.11     1.10\nNeIII3869     187.88      130.40  1.44     0.00     1.50\n   Hdelta      63.47       87.56  0.72     0.00     1.50\n   Hgamma     308.00       74.21  4.15     0.00     1.50\n HeII4686     -68.96       82.23 -0.84     0.00     1.50\n    Hbeta    1041.20      103.26 10.08     0.00     1.50\n OIII4959    1133.32      146.69  7.73     0.00     1.50\n OIII5007    3033.84       69.25 43.81    -0.17     1.08\n",
+      "stderr": "",
+      "status": "passed",
+      "earlier_attempt": {
+        "status": "blocked_missing_sparse_checkout_input",
+        "error": "FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/e8102e82a39d/transient_checks/transients-replay-qsvkrclu/survey/repeat-catalog-followup/cosmos-022-validation/muse_spectrum.csv.gz'"
+      },
+      "checks": [
+        {
+          "output": "muse_lines.csv",
+          "matches_with_numeric_tolerance": true,
+          "regenerated_sha256": "dc5162e2b184b8a5de6beb03f9094d544d7d481ea6836cb67cec4ac174cc4647"
+        }
+      ]
+    },
+    {
+      "directory": "results/jwst-repeat-imaging-transients/repeat-catalog-followup/cosmos-022-validation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "broad_hbeta.py"
+      ],
+      "script_sha256": "26c0c5b22da5e8b1341d2d926628cc0560c2e98856d8616fe46be7e911d807c3",
+      "exit_code": 0,
+      "stdout": " fwhm_kms  narrow_flux_1e20  broad_flux_1e20  broad_error_1e20  snr  conservative_3sigma_upper_1e20\n     2000            1051.8           -119.5             520.4 -0.2                          1561.2\n     4000            1059.8           -572.6             939.6 -0.6                          2818.8\n",
+      "stderr": "",
+      "status": "passed",
+      "earlier_attempt": {
+        "status": "blocked_missing_sparse_checkout_input",
+        "error": "FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/e8102e82a39d/transient_checks/transients-replay-qsvkrclu/survey/repeat-catalog-followup/cosmos-022-validation/muse_spectrum.csv.gz'"
+      },
+      "checks": [
+        {
+          "output": "muse_broad_hbeta.csv",
+          "matches_with_numeric_tolerance": true,
+          "regenerated_sha256": "e575f5bdff3646e350d7c3d3cf1f759c7854fbcd5a3c4c744dd25e2930e699b0"
+        }
+      ]
+    },
+    {
+      "directory": "results/jwst-repeat-imaging-transients/repeat-catalog-followup",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "dispositions.py"
+      ],
+      "script_sha256": "16dead8d9658d21c724351e58de1053f86053bb54ec291b45616691d231e0cc1",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "status": "passed",
+      "checks": [
+        {
+          "output": "dispositions.csv",
+          "matches_with_numeric_tolerance": true,
+          "regenerated_sha256": "c0f8c133c650f9ef5f0049678ec3227c69cf71dd82c6e8e817dd1f2b74b4c4d0"
+        }
+      ]
+    },
+    {
+      "directory": "results/jwst-repeat-imaging-transients/repeat-catalog-followup",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "candidate_photometry.py"
+      ],
+      "script_sha256": "8ddf1ee0e858c21ef61db8f9d2c15c1cde38a3fbbf54a7fb8ec6d945ee22d34e",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "status": "passed",
+      "checks": [
+        {
+          "output": "cosmos022_host_magnitude.json",
+          "matches_with_numeric_tolerance": true,
+          "regenerated_sha256": "ce476079aca58d8e64c5ae867a0055d39be827525b3a9e8b7b13b92fdb616f3a"
+        }
+      ]
+    },
+    {
+      "directory": "results/jwst-repeat-imaging-transients/goods-s-oct2026",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "blind_summary.py"
+      ],
+      "script_sha256": "76b6e6158a2809ff255121c6c716ef922da9d51f4502b45fd90cc45a5e618b5a",
+      "exit_code": 0,
+      "stdout": "filter  pixels  area_arcmin2  peaks_7sigma  morphology_pass  median_tile_fluxerr_njy\n F277W 2124368         2.335           148              105                    4.521\n F356W 2120231         2.331           103               80                    4.315 pairs 31\n",
+      "stderr": "",
+      "status": "passed",
+      "earlier_attempt": {
+        "status": "blocked_missing_sparse_checkout_input",
+        "error": "FileNotFoundError: [Errno 2] No such file or directory: 'blind-o1-f277-west/model.npz'"
+      },
+      "checks": [
+        {
+          "output": "blind_recovery.csv",
+          "matches_with_numeric_tolerance": true,
+          "regenerated_sha256": "b12a125d6d2b83dd60e6449acfd5fc925cf54348209f50bfe5055b031ec01ad1"
+        },
+        {
+          "output": "blind_area.csv",
+          "matches_with_numeric_tolerance": true,
+          "regenerated_sha256": "01bb5c24b282e30e20ac44bbb9fc105ba3a72d15e61908ec8198f463da44ce2b"
+        },
+        {
+          "output": "blind_pairs.csv",
+          "matches_with_numeric_tolerance": true,
+          "regenerated_sha256": "0b28c1f7453638a5e6cfe750564d40ccdcc72173d22f3022176afc6730a0056d"
+        }
+      ]
+    },
+    {
+      "directory": "results/jwst-repeat-imaging-transients/goods-s-oct2026",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "nuclear.py"
+      ],
+      "script_sha256": "0c15394666481743ef2b01a4875875c3cf156dcb3e8552b8e4772d697ae3a945",
+      "exit_code": 0,
+      "stdout": "      abs_delta_ab_ap  bright_envelope  faint_envelope  rest_band_center_um\nsite                                                                       \n93             -18.26           -18.47          -18.18                 0.70\n99             -15.91           -16.16          -15.72                 1.66\n185            -17.18           -17.27          -16.64                 0.80\n525             -9.27            -9.79           -8.25                 2.64\n829            -18.78           -18.89          -18.37                 1.62\n",
+      "stderr": "",
+      "status": "passed",
+      "checks": [
+        {
+          "output": "nuclear_candidates.csv",
+          "matches_with_numeric_tolerance": true,
+          "regenerated_sha256": "0d456432d4a87474be3de9ed5950e4e32593d1997c61cd86b8ee838d643333e8"
+        }
+      ]
+    }
+  ],
+  "focused_referee_methods": {
+    "status": "passed",
+    "tests_run": 3,
+    "methods": [
+      "test_catalog_census_and_cosmos_flux",
+      "test_native_exposures_and_spectrum",
+      "test_goods_candidate_and_blind_depth"
+    ]
+  }
+}
