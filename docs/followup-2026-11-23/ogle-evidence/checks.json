@@ -1,0 +1,339 @@
+{
+  "base_commit": "972cd5169eea2b83d7407df84eb60c167b3c084e",
+  "software": {
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "astropy": "8.0.3"
+  },
+  "input_hashes": {
+    "data/ews/2026/blg-0058.dat": {
+      "sha256": "2b8dea62b190401f20440ad5de8b4d29da0e6ffcfe94a81193583df6af5a5cd1",
+      "matches_manifest": true
+    },
+    "data/forecast.csv": {
+      "sha256": "06299ebbf0169c23a2467c279be02a45f185cf2f0d59978fc38e6b74be8daf31",
+      "matches_manifest": true
+    },
+    "posteriors/2026-BLG-0058-chains.npz": {
+      "sha256": "89d56afcfa4e68ef8ca92e7b1850c3ae45df28f3ce4bb1ea4d45d273f72132cd",
+      "matches_manifest": true
+    },
+    "posteriors/2026-BLG-0058.json": {
+      "sha256": "6236f61f7d17456a9c0f0f725c39d446a773e0ddbf04ccd90d06e6e0c7cacbbe",
+      "matches_manifest": true
+    },
+    "check/out/fits.json": {
+      "sha256": "201ce23c8971a7d83a56e13dc3728942b237e2accae546f78ab193747b04ca01",
+      "matches_manifest": true
+    }
+  },
+  "replay_checks": {
+    "independent_fit_params_within_1e_minus_5": true,
+    "baseline_stdout_equal": true,
+    "forecast_all_24_rows_equal": true
+  },
+  "fit_replay_differences": {
+    "no_parallax": {
+      "parameter_order": [
+        "t0_hjd",
+        "u0",
+        "tE_days",
+        "piE_north",
+        "piE_east"
+      ],
+      "parameter_differences_replay_minus_deposit": [
+        -3.864988684654236e-07,
+        -6.029887367198228e-09,
+        1.3101498552714474e-06,
+        0.0,
+        0.0
+      ],
+      "chi2_difference": 0.0
+    },
+    "u0+": {
+      "parameter_order": [
+        "t0_hjd",
+        "u0",
+        "tE_days",
+        "piE_north",
+        "piE_east"
+      ],
+      "parameter_differences_replay_minus_deposit": [
+        -1.0710209608078003e-07,
+        -9.442323700703525e-09,
+        5.847423949489894e-06,
+        -1.9055417417590537e-09,
+        1.3251434498318115e-09
+      ],
+      "chi2_difference": 0.0
+    },
+    "u0-": {
+      "parameter_order": [
+        "t0_hjd",
+        "u0",
+        "tE_days",
+        "piE_north",
+        "piE_east"
+      ],
+      "parameter_differences_replay_minus_deposit": [
+        -2.207234501838684e-07,
+        5.699916094670243e-09,
+        2.7325233986630337e-07,
+        -9.467260378426268e-10,
+        -1.153115804231053e-09
+      ],
+      "chi2_difference": 0.0
+    }
+  },
+  "forecast_calendar_check": {
+    "2027-02-15": {
+      "tabulated_hjd_minus_2450000": 11451.5,
+      "midnight_utc_jd_minus_2450000": 11451.5
+    },
+    "2027-04-01": {
+      "tabulated_hjd_minus_2450000": 11496.5,
+      "midnight_utc_jd_minus_2450000": 11496.5
+    },
+    "2027-06-01": {
+      "tabulated_hjd_minus_2450000": 11557.5,
+      "midnight_utc_jd_minus_2450000": 11557.5
+    },
+    "2027-08-01": {
+      "tabulated_hjd_minus_2450000": 11618.5,
+      "midnight_utc_jd_minus_2450000": 11618.5
+    },
+    "2027-10-01": {
+      "tabulated_hjd_minus_2450000": 11679.5,
+      "midnight_utc_jd_minus_2450000": 11679.5
+    },
+    "2028-03-01": {
+      "tabulated_hjd_minus_2450000": 11831.5,
+      "midnight_utc_jd_minus_2450000": 11831.5
+    },
+    "2028-06-01": {
+      "tabulated_hjd_minus_2450000": 11923.5,
+      "midnight_utc_jd_minus_2450000": 11923.5
+    },
+    "2028-09-01": {
+      "tabulated_hjd_minus_2450000": 12015.5,
+      "midnight_utc_jd_minus_2450000": 12015.5
+    }
+  },
+  "hjd_2461215p7_calendar_approx": "2026-06-24T04:48:00.000",
+  "position_deg": {
+    "ra": 268.1587083333333,
+    "dec": -31.793361111111114
+  },
+  "visibility_method": "Daily geocentric apparent solar separation; 85 <= elongation <= 135 deg. Not GTVT/APT.",
+  "approximate_2027_jwst_windows": [
+    {
+      "first_daily_sample_utc": "2027-03-15T00:00:00.000",
+      "last_daily_sample_utc": "2027-05-05T00:00:00.000"
+    },
+    {
+      "first_daily_sample_utc": "2027-08-06T00:00:00.000",
+      "last_daily_sample_utc": "2027-09-27T00:00:00.000"
+    }
+  ],
+  "solar_elongations_deg": {
+    "2027-04-01": 102.10661287317129,
+    "2027-07-01": 166.86349012309856,
+    "2027-07-15": 155.12117473315936,
+    "2027-08-15": 126.37931145262544,
+    "2027-09-01": 110.22432967866773,
+    "2028-09-01": 109.51445897790897
+  },
+  "astrometric_examples": {
+    "u0+": {
+      "fitted_t0_hjd": 2461215.651740633,
+      "fitted_t0_calendar_approx": "2026-06-24T03:38:30.391",
+      "maximum_magnification_hjd": 2461215.6906356174,
+      "maximum_magnification_calendar_approx": "2026-06-24T04:34:30.917",
+      "unblended_astrometric_maximum_hjd": 2461541.7574024294,
+      "unblended_astrometric_maximum_calendar_approx": "2027-05-16T06:10:39.570",
+      "centroid_shift_for_assumed_thetaE_3p5_mas": {
+        "2027-04-01": {
+          "u": 1.2595382186626976,
+          "unblended_mas": 1.2291821521124744,
+          "lensed_source_fraction_of_total_light": 0.724443739667004,
+          "lensing_term_in_unresolved_centroid_mas": 0.8904733150082972
+        },
+        "2027-07-01": {
+          "u": 1.5639040850787727,
+          "unblended_mas": 1.231200062571437,
+          "lensed_source_fraction_of_total_light": 0.7095972289347088,
+          "lensing_term_in_unresolved_centroid_mas": 0.8736561526649318
+        },
+        "2027-07-15": {
+          "u": 1.610545393154296,
+          "unblended_mas": 1.2270537664677352,
+          "lensed_source_fraction_of_total_light": 0.7079496898657418,
+          "lensing_term_in_unresolved_centroid_mas": 0.8686923334194235
+        },
+        "2027-08-15": {
+          "u": 1.7180678319071783,
+          "unblended_mas": 1.2143643802707254,
+          "lensed_source_fraction_of_total_light": 0.7046237705247258,
+          "lensing_term_in_unresolved_centroid_mas": 0.8556700084172805
+        },
+        "2027-09-01": {
+          "u": 1.7803355272325967,
+          "unblended_mas": 1.2053506783565286,
+          "lensed_source_fraction_of_total_light": 0.7029608020880272,
+          "lensing_term_in_unresolved_centroid_mas": 0.8473142796548532
+        },
+        "2028-09-01": {
+          "u": 3.2095450819935816,
+          "unblended_mas": 0.9131976055794795,
+          "lensed_source_fraction_of_total_light": 0.6886389828554272,
+          "lensing_term_in_unresolved_centroid_mas": 0.6288634702522644
+        }
+      }
+    },
+    "u0-": {
+      "fitted_t0_hjd": 2461215.956565882,
+      "fitted_t0_calendar_approx": "2026-06-24T10:57:27.292",
+      "maximum_magnification_hjd": 2461215.7914935374,
+      "maximum_magnification_calendar_approx": "2026-06-24T06:59:45.042",
+      "unblended_astrometric_maximum_hjd": 2461506.6073053153,
+      "unblended_astrometric_maximum_calendar_approx": "2027-04-11T02:34:31.179",
+      "centroid_shift_for_assumed_thetaE_3p5_mas": {
+        "2027-04-01": {
+          "u": 1.375821289577758,
+          "unblended_mas": 1.236968335129177,
+          "lensed_source_fraction_of_total_light": 0.8043268086776696,
+          "lensing_term_in_unresolved_centroid_mas": 0.994926793429781
+        },
+        "2027-07-01": {
+          "u": 1.6907430631638447,
+          "unblended_mas": 1.2179611363105571,
+          "lensed_source_fraction_of_total_light": 0.7946466260639422,
+          "lensing_term_in_unresolved_centroid_mas": 0.9678487076461895
+        },
+        "2027-07-15": {
+          "u": 1.7372318636762676,
+          "unblended_mas": 1.211706329814246,
+          "lensed_source_fraction_of_total_light": 0.7936107547148815,
+          "lensing_term_in_unresolved_centroid_mas": 0.9616231748966829
+        },
+        "2027-08-15": {
+          "u": 1.8444542565686954,
+          "unblended_mas": 1.1950344593905242,
+          "lensed_source_fraction_of_total_light": 0.7915089624413629,
+          "lensing_term_in_unresolved_centroid_mas": 0.9458804850338689
+        },
+        "2027-09-01": {
+          "u": 1.9071142604595273,
+          "unblended_mas": 1.184104931100123,
+          "lensed_source_fraction_of_total_light": 0.7904435229646414,
+          "lensing_term_in_unresolved_centroid_mas": 0.9359680732985852
+        },
+        "2028-09-01": {
+          "u": 3.4282572112846346,
+          "unblended_mas": 0.8724602659632663,
+          "lensed_source_fraction_of_total_light": 0.78091738787614,
+          "lensing_term_in_unresolved_centroid_mas": 0.6813193919217563
+        }
+      }
+    }
+  },
+  "unblended_astrometric_peak_posterior": {
+    "plus": {
+      "method": "All saved, unweighted photometric posterior samples; first rising u=sqrt(2) crossing; daily-grid linear interpolation.",
+      "sampling_limit": "The saved file contains 4800 rows from eight of the original 40 walkers (candidate.py flattened samples and saved [::5]). Samples are correlated; no extra thinning or new chain run is applied here.",
+      "samples": 4800,
+      "samples_with_crossing_in_grid": 4800,
+      "samples_below_sqrt2_at_grid_start": 4800,
+      "rising_crossing_counts_min_max": [
+        1,
+        1
+      ],
+      "falling_crossing_counts_min_max": [
+        0,
+        0
+      ],
+      "grid_start_hjd": 2461345.5,
+      "grid_end_hjd": 2462144.5,
+      "grid_step_days": 1,
+      "quantile_method": "numpy.quantile(method='linear')",
+      "quantile_probabilities": [
+        0.025,
+        0.16,
+        0.5,
+        0.84,
+        0.975
+      ],
+      "quantiles_hjd": [
+        2461466.2883583982,
+        2461494.054377026,
+        2461531.594844324,
+        2461569.707073314,
+        2461607.781595474
+      ],
+      "calendar_quantiles_approx": [
+        "2027-03-01T18:55:14.166",
+        "2027-03-29T13:18:18.175",
+        "2027-05-06T02:16:34.550",
+        "2027-06-13T04:58:11.134",
+        "2027-07-21T06:45:29.849"
+      ]
+    },
+    "minus": {
+      "method": "All saved, unweighted photometric posterior samples; first rising u=sqrt(2) crossing; daily-grid linear interpolation.",
+      "sampling_limit": "The saved file contains 4800 rows from eight of the original 40 walkers (candidate.py flattened samples and saved [::5]). Samples are correlated; no extra thinning or new chain run is applied here.",
+      "samples": 4800,
+      "samples_with_crossing_in_grid": 4800,
+      "samples_below_sqrt2_at_grid_start": 4800,
+      "rising_crossing_counts_min_max": [
+        1,
+        1
+      ],
+      "falling_crossing_counts_min_max": [
+        0,
+        0
+      ],
+      "grid_start_hjd": 2461345.5,
+      "grid_end_hjd": 2462144.5,
+      "grid_step_days": 1,
+      "quantile_method": "numpy.quantile(method='linear')",
+      "quantile_probabilities": [
+        0.025,
+        0.16,
+        0.5,
+        0.84,
+        0.975
+      ],
+      "quantiles_hjd": [
+        2461458.1209158213,
+        2461480.397155763,
+        2461507.2070186054,
+        2461538.810575893,
+        2461574.7380032386
+      ],
+      "calendar_quantiles_approx": [
+        "2027-02-21T14:54:07.127",
+        "2027-03-15T21:31:54.258",
+        "2027-04-11T16:58:06.408",
+        "2027-05-13T07:27:13.757",
+        "2027-06-18T05:42:43.480"
+      ]
+    }
+  },
+  "centroid_maximum_condition": "delta/thetaE=u/(u^2+2); derivative=(2-u^2)/(u^2+2)^2. A rising crossing of sqrt(2) changes the derivative from positive to negative.",
+  "mass_scale_checks": {
+    "u0_plus": {
+      "thetaE_for_3Msun_at_median_piE_mas": 0.9411372007218235,
+      "thetaE_for_3Msun_at_95pct_piE_mas": 1.1878149841399683
+    },
+    "u0_minus": {
+      "thetaE_for_3Msun_at_median_piE_mas": 1.3808793531546486,
+      "thetaE_for_3Msun_at_95pct_piE_mas": 1.7539954075149011
+    }
+  },
+  "limits": [
+    "Calendar labels treat HJD as JD: heliocentric and time-scale corrections were not removed.",
+    "3.5 mas is an assumed angular Einstein radius, not a measurement or both-sign posterior.",
+    "The diluted lensing term omits variable flux weighting of an offset blend; joint modeling is required.",
+    "Solar-elongation windows omit JWST orbit, roll, guide stars, other constraints and telescope allocation."
+  ]
+}

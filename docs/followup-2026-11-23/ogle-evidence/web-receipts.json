@@ -1,0 +1,53 @@
+{
+  "checked_date": "2026-11-23",
+  "scope": "Public web lookup; no direct authenticated ADS, ATel or proposal-database search was completed.",
+  "records": [
+    {
+      "url": "https://ogle.astrouw.edu.pl/ogle4/ews/2026/blg-0058.html",
+      "outcome": "Year-prefixed event-page URL was not accessible through the web reader."
+    },
+    {
+      "url": "https://ogle.astrouw.edu.pl/ogle4/ews/blg-0058.html",
+      "outcome": "Returned official OGLE-2026-BLG-0058 page: BLG535.28 star 57331, RA17:52:38.09 Dec-31:47:36.1, unblended alert-fit peak HJD2461213.419, last epoch HJD2461345.51161 (2026-11-01).",
+      "limit": "Returned web content can be cached. The live photometry bytes could not be compared."
+    },
+    {
+      "url": "https://www.astrouw.edu.pl/ogle/ogle4/ews/2026/blg-0058/phot.dat",
+      "outcome": "Official page's photometry link timed out or was unavailable through web reader; separate direct retrieval returned HTTP503. See live-photometry-receipt.json."
+    },
+    {
+      "queries": ["\"OGLE-2026-BLG-0058\"", "\"KMT-2026-BLG-0521\"", "\"OGLE-2026-BLG-0058\" black hole", "\"KMT-2026-BLG-0521\" black hole"],
+      "method": "Two web search systems; stronger-system black-hole queries used a 30-day recency filter.",
+      "outcome": "Official event pages appeared. No separate black-hole report was found in the returned results.",
+      "limit": "Search-result absence does not establish novelty or priority; database and unpublished-work checks remain open."
+    },
+    {
+      "url": "https://kmtnet.kasi.re.kr/ulens/event/2026/",
+      "outcome": "Official 2026 page labels data proprietary, cross-lists KMT-2026-BLG-0521 with OB260058, and states the general July1-following-year release rule. Preparation with posted curves is allowed but submission/arXiv/public reproduction is restricted during the proprietary period.",
+      "data_used": "Event cross-identification and policy only; no KMTNet photometry was used."
+    },
+    {
+      "url": "https://www.stsci.edu/jwst-program-info/download/jwst/pdf/10476/",
+      "outcome": "Public program for OGLE-2024-BLG-0062 describes multiple filters, repeated seasons and reference-star astrometry. Used as a design example for another event, not an observing allocation or exposure plan for this target."
+    },
+    {
+      "url": "https://jwst-docs.stsci.edu/methods-and-roadmaps/jwst-moving-target-observations/jwst-moving-target-supporting-technical-information/moving-target-field-of-regard",
+      "outcome": "Official STScI documentation specifies the 85-to-135-degree solar-elongation field of regard. The bound is the only observatory constraint used in the new approximate window calculation."
+    },
+    {
+      "url": "https://jwst-docs.stsci.edu/jwst-other-tools/jwst-target-visibility-tools/jwst-general-target-visibility-tool-help",
+      "outcome": "Official GTVT documentation distinguishes quick-look visibility from APT schedulability and guide-star/other constraints.",
+      "limit": "GTVT and APT were not run during this initial web check. A subsequent GTVT run and date-alignment audit are documented in gtvt-audit.json; APT remains pending."
+    },
+    {
+      "url": "https://oro.open.ac.uk/84469/1/Sahu_2022_ApJ_933_83.pdf",
+      "doi": "10.3847/1538-4357/ac739e",
+      "outcome": "Read primary paper's section2.3/equation6 and observing discussion: isolated-source centroid shift u/(u^2+2) times thetaE, maximum at sqrt(2), and astrometric tail longer than photometric event."
+    },
+    {
+      "url": "https://arxiv.org/abs/2202.01903",
+      "doi": "10.3847/2041-8213/ac7442",
+      "outcome": "Primary Lam etal2022 paper/abstract records the need for joint astrometric/photometric interpretation and source-model alternatives in OGLE-2011-BLG-0462. No claim that the old papers alone settle the current census of confirmed isolated black holes."
+    }
+  ]
+}

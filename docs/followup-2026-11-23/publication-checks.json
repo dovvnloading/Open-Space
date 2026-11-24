@@ -1,0 +1,109 @@
+{
+  "checked_date": "2026-11-23",
+  "base_commit": "972cd5169eea2b83d7407df84eb60c167b3c084e",
+  "status": "drafts_for_author_review",
+  "word_count_method": "Remove comment lines and TeX command names, split remaining whitespace; rough screening only, not texcount/editorial count",
+  "manuscripts": {
+    "ogle-2026-blg-0058": {
+      "path": "papers/rnaas/ogle-2026-blg-0058/note.tex",
+      "sha256": "f8a7695390bfcb2394b9e56aa5ab7d02631fe95aadd3c5d1df1199f1017fcd1a",
+      "rough_abstract_words": 136,
+      "rough_all_source_words": 1218,
+      "citation_keys": 12,
+      "bibliography_keys": 12,
+      "unresolved_citation_keys": [],
+      "document_class": "aastex701",
+      "placeholders_present": [
+        "0000-0000-0000-0000",
+        "AFFILIATION",
+        "EMAIL",
+        "XXXX"
+      ]
+    },
+    "neowise-nuclear-flares": {
+      "path": "papers/rnaas/neowise-nuclear-flares/note.tex",
+      "sha256": "d2d41835706aff70e5d945233b35914bd302a6a081cd9cca783e87cb70786f77",
+      "rough_abstract_words": 129,
+      "rough_all_source_words": 1342,
+      "citation_keys": 14,
+      "bibliography_keys": 14,
+      "unresolved_citation_keys": [],
+      "document_class": "aastex701",
+      "placeholders_present": [
+        "0000-0000-0000-0000",
+        "AFFILIATION",
+        "EMAIL",
+        "XXXX"
+      ]
+    }
+  },
+  "uat": {
+    "source_url": "https://raw.githubusercontent.com/astrothesaurus/UAT/master/UAT_list.json",
+    "git_blob_sha": "cc77dd58458d48cc2eaae19a14b253d66060cd71",
+    "sha256": "d1e2731ad825236ee11b7587a9be978e377980d429452cf9050f36060a9c8289",
+    "verified_terms": [
+      {
+        "uri": "http://astrothesaurus.org/uat/1611",
+        "name": "Stellar mass black holes"
+      },
+      {
+        "uri": "http://astrothesaurus.org/uat/1696",
+        "name": "Tidal disruption"
+      },
+      {
+        "uri": "http://astrothesaurus.org/uat/1851",
+        "name": "Transient sources"
+      },
+      {
+        "uri": "http://astrothesaurus.org/uat/672",
+        "name": "Gravitational microlensing"
+      },
+      {
+        "uri": "http://astrothesaurus.org/uat/786",
+        "name": "Infrared astronomy"
+      },
+      {
+        "uri": "http://astrothesaurus.org/uat/2140",
+        "name": "Astrometric microlensing effect"
+      }
+    ]
+  },
+  "selected_reference_checks": [
+    {
+      "reference": "Masterson et al. 2024",
+      "result": "ApJ 961, 211; DOI10.3847/1538-4357/ad18bb; listed first authors agree",
+      "primary_source": "https://swift.gsfc.nasa.gov/results/refereed/2024.html"
+    },
+    {
+      "reference": "Necker et al. 2025",
+      "result": "A&A 695,A228; author list verified and manuscript first3 authors expanded",
+      "primary_source": "https://cdsarc.cds.unistra.fr/viz-bin/ReadMe/J/A%2BA/695/A228?format=html&tex=true"
+    },
+    {
+      "reference": "Smith et al. 2009",
+      "result": "ApJ695,1334-1350; SN2005ip coronal emission and infrared dust",
+      "primary_source": "https://arxiv.org/abs/0809.5079"
+    }
+  ],
+  "rendering": {
+    "status": "blocked_no_pdf_produced",
+    "class": "aastex701",
+    "class_source": "https://mirrors.ctan.org/macros/latex/contrib/aastex.zip",
+    "distribution_sha256": "8b76872176f499607d63c477629ffd06b90f1d765b3910e1d2fa02d2306e0ab9",
+    "attempts": [
+      {
+        "engine": "pdflatex",
+        "outcome": "Missing pdflatex.fmt; latex.ltx and font metrics also absent from local TeX search path"
+      },
+      {
+        "engine": "tectonic",
+        "outcome": "HTTP403 retrieving official support bundle index",
+        "urls": [
+          "https://relay.fullyjustified.net/default_bundle_v33.tar.index.gz",
+          "https://data1b.fullyjustified.net/tlextras-2022.0r0.tar.index.gz"
+        ]
+      }
+    ],
+    "visual_review_completed": false
+  }
+}

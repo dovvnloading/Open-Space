@@ -5,7 +5,7 @@
 % AAS LLM policy (journals.aas.org/author-llm-guidelines, posted 2026-09-09): the author must check
 %   every sentence and every reference before submission, and disclose AI use (statement below).
 % Fill in: ORCID, affiliation, email, Zenodo DOI. Check every reference in ADS.
-\documentclass{aastex7}
+\documentclass{aastex701}
 
 \begin{document}
 
@@ -16,7 +16,7 @@
 \email{EMAIL}
 
 \begin{abstract}
-I searched NEOWISE-R single-exposure photometry from 2014--2024 of 43,916 galaxies in the 2MASS Redshift Survey for nuclear mid-infrared flares. Of 113 flares, seven pass all quality cuts and are absent from transient reports and published infrared-flare samples. The largest, in CGCG 539-025 at 62\,Mpc, began around the start of 2017 and was seven times brighter at 4.6\,$\mu$m by 2018. Its excess emission has a dust temperature of 1,040\,K and peaked at $1.4\times10^{43}$\,erg\,s$^{-1}$, with $1.5\times10^{51}$\,erg radiated by 2024 and no optical transient reported. The search recovers 13 published events. In 2025--26 SPHEREx colors show residual hot dust in UGC 2653 (+0.48\,mag, 9$\sigma$) and possibly in CGCG 539-025 (+0.12\,mag). VLASS shows the UGC 2653 nucleus brightening at 3\,GHz after its 2022 onset (about 3$\sigma$). These are candidate dust-obscured tidal disruption events.
+I searched 2014--2024 NEOWISE-R photometry of 43,916 2MASS Redshift Survey galaxies for nuclear infrared flares. Seven of 113 flares pass the strict selection and were absent from the reports and catalogs searched on 2026 November 14--15. The largest, in CGCG 539-025 at 62\,Mpc, brightened sevenfold at 4.6\,$\mu$m by 2018. Its two-band excess implies a blackbody temperature of 1,040\,K, peak luminosity $1.4\times10^{43}$\,erg\,s$^{-1}$ and integrated energy $1.5\times10^{51}$\,erg by 2024. The search recovers 13 published events. UGC~2653 has a 2025--26 SPHEREx color excess of 0.48\,mag, larger than all 65 comparison galaxies, and tentative radio brightening subject to calibration uncertainty. The measured flares are consistent with dust-obscured tidal disruption events, but interacting supernovae and accretion variability remain competing explanations.
 \end{abstract}
 
 \keywords{\uat{Tidal disruption}{1696} --- \uat{Transient sources}{1851} --- \uat{Infrared astronomy}{786}}
@@ -35,7 +35,7 @@ Seven of the unreported flares have one peak, a baseline scatter of 3\% or less 
 
 To test whether the dust still glows, I measured each nucleus's color between 3.0--3.8 and 4.1--5.0\,$\mu$m in the SPHEREx DR1 spectral cube \citep{2014arXiv1412.4872D}, observed in 2025--26. I compared it with the pre-flare AllWISE color, calibrated on 65 2MRS galaxies in the same sky tiles (scatter 0.052\,mag). UGC~2653, whose excess had faded least by 2024, is 0.48\,mag redder than predicted, and none of the 65 calibration galaxies is as red. CGCG 539-025 is 0.12\,mag redder, and three of the 65 are as red. In VLASS quick-look images \citep{2020PASP..132c5001L}, the UGC~2653 nucleus rose from $0.71\pm0.12$ and $0.79\pm0.11$\,mJy\,beam$^{-1}$ in 2019 and 2021 to $1.24\pm0.13$ in 2024, after its mid-2022 onset. The rise corresponds to $\nu L_\nu\approx2\times10^{37}$\,erg\,s$^{-1}$. SN~2007D, 6.3\arcsec\ away in the same galaxy, stays undetected. CGCG 539-025 is steady at 0.7--1.0\,mJy\,beam$^{-1}$, consistent with star formation (NVSS 4.4\,mJy; \citealt{1998AJ....115.1693C}).
 
-The flares match published dust echoes in rise time, temperature and energy. For CGCG 539-025 the main alternative is a luminous interacting supernova behind several magnitudes of extinction; a first outburst of a weak active nucleus is also possible. Optical spectra that search for long-lived coronal lines, and multi-frequency radio imaging of UGC~2653, can distinguish these. ``Unreported'' means absent from the services and catalogs I queried on 2026 November 14--15. Measurements, code and the full flare list are archived at \url{https://github.com/dovvnloading/Open-Space} (results/neowise-nuclear-flares; Zenodo DOI: XXXX).
+The flares match published dust echoes in rise time, temperature and energy. For CGCG 539-025 the main alternative is a luminous interacting supernova behind several magnitudes of extinction; an outburst of a weak active nucleus is also possible. Coronal lines alone do not distinguish these: SN~2005ip exhibited coronal emission and an infrared dust excess \citep{2009ApJ...695.1334S}. Line profiles, ratios and evolution, source localization and multi-frequency radio monitoring must be considered together. ``Unreported'' means absent from the services and catalogs I queried on 2026 November 14--15. Measurements, code and the full flare list are archived at \url{https://github.com/dovvnloading/Open-Space} (results/neowise-nuclear-flares; Zenodo DOI: XXXX).
 
 \begin{deluxetable*}{lcccccccc}
 \tablecaption{The seven unreported nuclear flares.\label{tab:flares}}
@@ -55,7 +55,7 @@ UGC 2653 & 49.6593 & $+$37.6081 & 99 & 2022-08 & 0.60 & 760 & 4.1, 1.7 & $+0.48$
 
 \section*{AI disclosure}
 % Confirm this statement is accurate before submitting.
-The search, vetting and follow-up code, the measurements and a first draft of this Note were produced with Anthropic's Claude models working under my direction. I checked every result, sentence and reference and take responsibility for the content.
+The repository records that the search, vetting and follow-up code, measurements and first draft were produced with Anthropic's Claude models under the author's direction. OpenAI's ChatGPT assisted with the 2026 November follow-up checks and revisions. Final author verification of the scientific content, references and disclosure is pending.
 
 \software{Astropy, NumPy, SciPy, pandas, Requests}
 
@@ -71,7 +71,8 @@ The search, vetting and follow-up code, the measurements and a first draft of th
 \bibitem[Lacy et al.(2020)]{2020PASP..132c5001L} Lacy, M., Baum, S.~A., Chandler, C.~J., et al.\ 2020, PASP, 132, 035001
 \bibitem[Mainzer et al.(2014)]{2014ApJ...792...30M} Mainzer, A., Bauer, J., Cutri, R.~M., et al.\ 2014, ApJ, 792, 30
 \bibitem[Masterson et al.(2024)]{2024ApJ...961..211M} Masterson, M., De, K., Panagiotou, C., et al.\ 2024, ApJ, 961, 211
-\bibitem[Necker et al.(2025)]{2025A&A...695A.228N} Necker, J., et al.\ 2025, A\&A, 695, A228
+\bibitem[Necker et al.(2025)]{2025A&A...695A.228N} Necker, J., Graikou, E., Kowalski, M., et al.\ 2025, A\&A, 695, A228
+\bibitem[Smith et al.(2009)]{2009ApJ...695.1334S} Smith, N., Silverman, J.~M., Chornock, R., et al.\ 2009, ApJ, 695, 1334
 \bibitem[Wright et al.(2010)]{2010AJ....140.1868W} Wright, E.~L., Eisenhardt, P.~R.~M., Mainzer, A.~K., et al.\ 2010, AJ, 140, 1868
 \end{thebibliography}
 
