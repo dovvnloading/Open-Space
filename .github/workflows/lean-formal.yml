@@ -1,0 +1,49 @@
+name: Lean mathematical certificates
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'formal/**'
+      - '.github/workflows/lean-formal.yml'
+      - 'results/nicer-magnetar-microbursts/catalog-clock/windows.csv'
+      - 'results/solar-orbiter-venus-jovian-occultations/contacts.csv'
+      - 'results/oec-orbital-scale-audit/primary_checks.csv'
+  pull_request:
+    paths:
+      - 'formal/**'
+      - '.github/workflows/lean-formal.yml'
+      - 'results/nicer-magnetar-microbursts/catalog-clock/windows.csv'
+      - 'results/solar-orbiter-venus-jovian-occultations/contacts.csv'
+      - 'results/oec-orbital-scale-audit/primary_checks.csv'
+permissions:
+  contents: read
+jobs:
+  certificates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /formal/
+            /results/nicer-magnetar-microbursts/catalog-clock/windows.csv
+            /results/solar-orbiter-venus-jovian-occultations/contacts.csv
+            /results/oec-orbital-scale-audit/primary_checks.csv
+      - name: Install pinned Lean release
+        shell: bash
+        run: |
+          set -euo pipefail
+          toolchain=$(cat formal/lean-toolchain)
+          version=${toolchain#leanprover/lean4:}
+          [[ "$version" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          release="lean-${version#v}-linux"
+          curl --fail --location --retry 3 \
+            "https://github.com/leanprover/lean4/releases/download/$version/$release.tar.zst" \
+            -o "$RUNNER_TEMP/$release.tar.zst"
+          tar --zstd -xf "$RUNNER_TEMP/$release.tar.zst" -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/$release/bin" >> "$GITHUB_PATH"
+      - name: Compile proofs and check committed evidence
+        run: |
+          lean --version
+          bash formal/check.sh
