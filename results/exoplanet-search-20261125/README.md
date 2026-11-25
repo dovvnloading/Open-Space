@@ -32,7 +32,8 @@ inspected; regenerating a plan with newer catalogs defines a different cohort.
 python results/exoplanet-search-20261125/search.py inventory --cache /path/to/cache
 python results/exoplanet-search-20261125/search.py metadata --cache /path/to/cache
 # Retrieve the catalog snapshots using catalogs.py before making a new plan.
-python results/exoplanet-search-20261125/search.py plan --cache /path/to/cache
+# Do not regenerate or overwrite the deposited plan for this investigation.
+# For a distinct exploratory cohort only, use plan --output /path/to/new-cohort.
 python results/exoplanet-search-20261125/search.py fetch --cache /path/to/cache --limit 1062
 python results/exoplanet-search-20261125/search.py screen --cache /path/to/cache --limit 1062
 python results/exoplanet-search-20261125/search.py summarize --cache /path/to/cache
@@ -45,3 +46,21 @@ Data credit: NASA/TESS, MAST/STScI, SPOC, TIC, NASA Exoplanet Archive, ExoFOP,
 and the credited authors of the comparison catalogs. Public observations and
 catalog misses do not establish priority; all candidate interpretations remain
 subject to independent astronomical review.
+
+## Screening integrity gate
+
+The committed plan and selection ledger are immutable inputs to the frozen search.
+A new cohort must use a fresh output directory and a complete catalog exclusion
+index. Every cached screen is bound to the exact plan bytes, target row, pipeline
+code/dependency configuration, and verified original-product/scientific-column
+hashes. Failed and unbound records are recomputed; partial peaks never enter the
+shortlist. The summarizer emits a complete per-target census, a summary and a
+shortlist; it exits nonzero for missing, invalid, failed or foreign records.
+Coverage exclusions are distinct from retrieval or processing failures.
+
+The initial committed plan contains the original exclusion-index digest, not the
+full original catalog snapshots. Later catalog downloads are dated follow-up
+snapshots and cannot be represented as identical to the frozen inputs without
+matching hashes. The screening census alone does not validate any candidate or
+establish a survey null. Independent observations, pixel and literature vetting,
+and the protocol's statistical controls remain required as applicable.

@@ -17,6 +17,12 @@ from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, as_compl
 from datetime import datetime, timezone
 from functools import partial
 from pathlib import Path
+import platform
+
+import astropy
+import scipy
+from search_provenance import (binding, census, checked_catalog, checked_product,
+                               check_record, digest, load_plan, record_name)
 
 import numpy as np
 import requests
@@ -44,7 +50,19 @@ def sha(raw):
 def write_json(path, obj):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(obj, indent=2, allow_nan=False) + "\n")
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(json.dumps(obj, indent=2, allow_nan=False) + "\n")
+    tmp.replace(path)
+
+
+def configuration_sha():
+    # Invalidate legacy caches after any screening code or numerical dependency change.
+    payload = {"python": platform.python_version(), "numpy": np.__version__,
+               "scipy": scipy.__version__, "astropy": astropy.__version__,
+               "requests": requests.__version__,
+               "files": {name: sha(Path(__file__).with_name(name).read_bytes())
+                         for name in ("search.py", "search_provenance.py")}}
+    return digest(json.dumps(payload, sort_keys=True).encode())
 
 
 def get(url, timeout=90, max_bytes=32_000_000):
@@ -85,9 +103,10 @@ def inventory(sector, cache):
         m = PRODUCT.fullmatch(name)
         if not m or int(m[1]) != sector:
             continue
-        if m[2] in products and products[m[2]] != name:
+        key = str(int(m[2]))
+        if key in products and products[key] != name:
             raise ValueError("Multiple reductions for a target")
-        products[str(int(m[2]))] = name
+        products[key] = name
     if not products:
         raise ValueError("No standard two-minute light curves")
     (out / f"s{sector}.sh").write_bytes(raw)
@@ -129,7 +148,9 @@ def metadata_batch(job, cache):
 def make_plan(cache, output, sector=108):
     cache, output = Path(cache), Path(output)
     inv = inventory(sector, cache)
-    index = json.loads((cache / "catalogs/exclusion_index.json").read_text())
+    if (output / "plan.json").exists() or (output / "selection.csv").exists():
+        raise ValueError("Refusing to overwrite frozen plan; use a new --output directory")
+    index = checked_catalog(cache / "catalogs/exclusion_index.json")
     excluded = set(map(int, index["tic_exclusions"]))
     rows = {}
     for p in sorted((cache / "tic108").glob("batch[0-9][0-9][0-9].json")):
@@ -137,6 +158,8 @@ def make_plan(cache, output, sector=108):
             if int(row["ID"]) in rows:
                 raise ValueError("Duplicate TIC metadata row")
             rows[int(row["ID"])] = row
+    if set(rows) != set(map(int, inv["products"])):
+        raise ValueError("TIC metadata does not cover exactly the inventory")
     selection = []
     for tic in sorted(map(int, inv["products"])):
         r = rows.get(tic, {})
@@ -189,6 +212,17 @@ def column_digest(data):
     return h.hexdigest()
 
 
+def verified_photometry(row, cache):
+    tic, sector = int(row["tic"]), int(row["sector"])
+    path = Path(cache) / "lightcurves" / f"tic{tic}_s{sector}.npz"
+    meta = json.loads(path.with_suffix(".json").read_text())
+    product = checked_product(row, meta)
+    with np.load(path, allow_pickle=False) as data:
+        if column_digest(data) != product["columns_sha256"]:
+            raise ValueError("Cached photometry checksum mismatch")
+    return path, meta, product
+
+
 def fetch_one(row, cache):
     tic, sector = int(row["tic"]), int(row["sector"])
     dest = Path(cache) / "lightcurves"
@@ -196,10 +230,7 @@ def fetch_one(row, cache):
     path = dest / f"tic{tic}_s{sector}.npz"
     meta_path = path.with_suffix(".json")
     if path.exists() and meta_path.exists():
-        meta = json.loads(meta_path.read_text())
-        with np.load(path) as data:
-            if column_digest(data) != meta["columns_sha256"]:
-                raise ValueError("Cached photometry checksum mismatch")
+        _, meta, _ = verified_photometry(row, cache)
         return meta
     name = row["filename"]
     m = PRODUCT.fullmatch(name)
@@ -231,6 +262,10 @@ def fetch_one(row, cache):
     return meta
 
 
+class CoverageError(ValueError):
+    """A retrieved, identity-checked observation cannot meet frozen coverage cuts."""
+
+
 def curve(path, column="pdcsap", window_days=1.0):
     with np.load(path) as data:
         valid = ((data["quality"] == 0) & np.isfinite(data["time"]) &
@@ -238,7 +273,7 @@ def curve(path, column="pdcsap", window_days=1.0):
         t = data["time"][valid].astype(float)
         f = data[column][valid].astype(float)
     if len(t) < 1000:
-        raise ValueError("Fewer than 1000 clean native cadences")
+        raise CoverageError("Fewer than 1000 clean native cadences")
     order = np.argsort(t); t, f = t[order], f[order]
     med = np.median(f); f /= med
     bins = np.floor((t - t[0]) * 144 + 1e-6).astype(int)
@@ -256,7 +291,7 @@ def curve(path, column="pdcsap", window_days=1.0):
     valid = np.isfinite(y) & (y < 6 * scatter)
     t, y = t[valid], y[valid]
     if len(t) < 1000 or np.ptp(t) < 10 or not scatter > 0:
-        raise ValueError("Inadequate searchable coverage")
+        raise CoverageError("Inadequate searchable coverage")
     return t, y, scatter
 
 
@@ -281,15 +316,23 @@ def box_measure(t, y, p, epoch, duration):
             "event_depths_ppm": [d*1e6 for d in event_depths]}
 
 
-def screen_one(row, cache, output):
+def screen_one(row, cache, output, plan_sha, configuration):
     tic, sector = int(row["tic"]), int(row["sector"])
-    dest = Path(output) / "screen" / f"tic{tic}_s{sector}.json"
-    if dest.exists():
-        return json.loads(dest.read_text())
-    result = {"tic": tic, "sector": sector, "rank": row.get("rank"), "radius": row.get("radius"),
-              "status": "searched", "peaks": []}
+    dest = Path(output) / "screen" / record_name(row)
+    result = {"tic": tic, "sector": sector, "rank": row["rank"], "radius": row.get("radius"),
+              "status": "searched", "peaks": [],
+              "provenance": binding(row, plan_sha, configuration)}
     try:
-        path = Path(cache) / "lightcurves" / f"tic{tic}_s{sector}.npz"
+        path, _, product = verified_photometry(row, cache)
+        result["provenance"] = binding(row, plan_sha, configuration, product)
+        if dest.exists():
+            try:
+                previous = json.loads(dest.read_text())
+                if check_record(row, previous, plan_sha, configuration, product) in (
+                        "searched", "unsearchable"):
+                    return previous
+            except (ValueError, KeyError, TypeError, OSError, AttributeError):
+                pass  # Stale or failed records are recomputed, never reused.
         t, y, scatter = curve(path)
         baseline, origin = np.ptp(t), t[0]
         model = BoxLeastSquares(t-origin, y, dy=scatter)
@@ -321,9 +364,17 @@ def screen_one(row, cache, output):
                                     "radius_proxy_rearth": rad, "local": measurement, "halves": halves,
                                     "secondary": secondary, "preliminary_pass": bool(prelim)})
             ranking[abs(1/periods-1/p) < .8/baseline] = -np.inf
+    except CoverageError as exc:
+        result.update(status="unsearchable", reason=str(exc), peaks=[])
     except Exception as exc:
-        result["status"] = "error"
-        result["error"] = repr(exc)
+        result.update(status="error", error=repr(exc), peaks=[])
+    # Validate newly produced records as strictly as reused records.
+    try:
+        check_record(row, result, plan_sha, configuration)
+    except (ValueError, TypeError, KeyError, AttributeError) as exc:
+        result = {"tic": tic, "sector": sector, "rank": row["rank"],
+                  "status": "error", "error": repr(exc), "peaks": [],
+                  "provenance": binding(row, plan_sha, configuration)}
     write_json(dest, result)
     return result
 
@@ -350,17 +401,23 @@ def main():
         return
     if args.command == "plan":
         print(json.dumps(make_plan(args.cache, args.output, args.sector), indent=2)); return
+    plan, plan_sha = load_plan(args.output)
+    configuration = configuration_sha()
     if args.command == "summarize":
-        records = [json.loads(p.read_text()) for p in sorted((args.output/"screen").glob("*.json"))]
-        shortlist = [{"tic": r["tic"], "sector": r["sector"], **p} for r in records for p in r["peaks"] if p["preliminary_pass"]]
-        shortlist.sort(key=lambda r:r["white_snr"], reverse=True)
-        write_json(args.output/"shortlist.json", shortlist)
-        print(json.dumps({"records": len(records), "searched": sum(r["status"]=="searched" for r in records),
-                          "preliminary_peaks": len(shortlist), "top": shortlist[:12]}, indent=2)); return
-    plan = json.loads((args.output/"plan.json").read_text())
+        summary, ledger, shortlist = census(plan, plan_sha, configuration, args.output / "screen")
+        write_json(args.output / "screening_ledger.json", ledger)
+        write_json(args.output / "shortlist.json", shortlist)
+        write_json(args.output / "screening_summary.json", summary)
+        print(json.dumps(summary, indent=2))
+        return 0 if summary["status"] == "complete_screening_census" else 1
+    if args.start < 0 or args.limit <= 0 or args.workers <= 0:
+        parser.error("start must be nonnegative; limit and workers must be positive")
     rows = plan["targets"][args.start:args.start+args.limit]
+    if not rows:
+        parser.error("Requested slice contains no frozen targets")
     pool_type = ThreadPoolExecutor if args.command == "fetch" else ProcessPoolExecutor
-    fn = partial(fetch_one, cache=args.cache) if args.command == "fetch" else partial(screen_one, cache=args.cache, output=args.output)
+    fn = partial(fetch_one, cache=args.cache) if args.command == "fetch" else partial(screen_one, cache=args.cache, output=args.output,
+                    plan_sha=plan_sha, configuration=configuration)
     with pool_type(args.workers) as pool:
         futures = {pool.submit(fn, row):row for row in rows}
         failures = []
@@ -375,8 +432,10 @@ def main():
                 failures.append({"tic": row["tic"], "error": repr(exc)})
             if i%25==0 or i==len(rows):print(args.command, i, "/", len(rows), "failures", len(failures), flush=True)
         write_json(args.output/f"{args.command}_{args.start}_{len(rows)}_receipt.json", {
-            "command": args.command, "created_at":stamp(), "start":args.start, "requested":len(rows), "failures": failures})
+            "command": args.command, "created_at":stamp(), "start":args.start, "requested":len(rows),
+            "plan_sha256": plan_sha, "configuration_sha256": configuration, "failures": failures})
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
