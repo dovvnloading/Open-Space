@@ -42,7 +42,7 @@ These forecasts give a date and a geometry that anyone can test. Times and condi
 
 | When | What should happen | Details |
 | --- | --- | --- |
-| 24 Dec 2026 | During its Venus flyby, Solar Orbiter sees Venus hide Earth (22:55 UTC) and then Jupiter (22:57 UTC), each for about 19 seconds | [Link](results/solar-orbiter-venus-jovian-occultations/README.md) |
+| 24 Dec 2026 | During its Venus flyby, Solar Orbiter is predicted to see Venus hide Earth's center for about 139 seconds (22:55 UTC) and Jupiter's center for about 888 seconds (22:57 UTC), with about 19 seconds of simultaneous coverage | [Link](results/solar-orbiter-venus-jovian-occultations/README.md) |
 | 6 Feb 2027 | Venus passes in front of the radio pulsar PSR J1813−2113, as seen from the South Pole and New Zealand | [Link](results/venus-psr-j1813-2113/README.md) |
 | Feb–Jun 2027 | The star magnified by the black-hole candidate OGLE-2026-BLG-0058 should be 2–5% fainter than a simple lensing curve predicts, if its measured parallax is real | [Link](results/ogle-dark-lenses/README.md) |
 | 8, 9 and 11 Oct 2027 | Phobos casts its partial shadow on Mars's other moon, Deimos | [Link](results/deimos-penumbra-2027/README.md) |
