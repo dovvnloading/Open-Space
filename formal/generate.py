@@ -6,7 +6,6 @@ import csv
 import re
 import sys
 from datetime import datetime
-from decimal import Decimal
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,7 +23,7 @@ OEC_EXPECTED = {
 
 def read_rows(path, required):
     with path.open(encoding="utf-8", newline="") as handle:
-        reader = csv.DictReader(handle)
+        reader = csv.DictReader(handle, strict=True)
         fields = reader.fieldnames or []
         if len(set(fields)) != len(fields) or not set(required) <= set(fields):
             raise ValueError(f"Missing or duplicated column: {path}")
@@ -45,10 +44,14 @@ def nat_or_none(value):
 def scaled(value, factor):
     if not re.fullmatch(r"[0-9]+(?:\.[0-9]+)?", value):
         raise ValueError(f"Expected nonnegative decimal, got {value!r}")
-    result = Decimal(value) * factor
-    if result != result.to_integral_value():
+    if not isinstance(factor, int) or factor <= 0:
+        raise ValueError("Scale must be a positive integer")
+    whole, _, fraction = value.partition(".")
+    numerator = int(whole + fraction) * factor
+    result, remainder = divmod(numerator, 10 ** len(fraction))
+    if remainder:
         raise ValueError(f"Value {value!r} cannot be encoded at scale {factor}")
-    return int(result)
+    return result
 
 
 def numeral_tuple(values):
@@ -80,13 +83,30 @@ def block_summary(rows):
     return result
 
 
+def nicer_rows(path):
+    rows = []
+    identities = set()
+    required = ["obsid", "number", "source", "narrow_literal", "narrow_plus69"]
+    for row in read_rows(path, required):
+        obsid = row["obsid"]
+        number = nat_or_none(row["number"])
+        source = row["source"]
+        if (not re.fullmatch(r"[0-9]{10}", obsid)
+                or number is None or number == 0
+                or not source or source != source.strip()):
+            raise ValueError("Invalid NICER observation, burst number or source")
+        key = (obsid, number)
+        if key in identities:
+            raise ValueError(f"Duplicate NICER burst: {key}")
+        identities.add(key)
+        rows.append((nat_or_none(row["narrow_literal"]),
+                     nat_or_none(row["narrow_plus69"]),
+                     source != "SGR 1935+2154"))
+    return rows
+
+
 def nicer_lines():
-    rows = [
-        (nat_or_none(row["narrow_literal"]),
-         nat_or_none(row["narrow_plus69"]),
-         row["source"] != "SGR 1935+2154")
-        for row in read_rows(NICER, ["source", "narrow_literal", "narrow_plus69"])
-    ]
+    rows = nicer_rows(NICER)
     if not rows:
         raise ValueError("Empty NICER input")
     names = []
@@ -164,6 +184,10 @@ def contact_lines():
                   f"def {name}StopMs : Int := {b}",
                   f"def {name}ReportedDurationMs : Int := {duration}"]
     lines += [
+        "-- Exact deposited timestamp labels, in milliseconds since midnight.",
+        "theorem decemberContactLabels :",
+        "    earthStartMs = 82502324 ∧ earthStopMs = 82641627 ∧",
+        "    jupiterStartMs = 82622973 ∧ jupiterStopMs = 83510669 := by decide",
         "theorem decemberContactOrder : earthStartMs ≤ jupiterStartMs ∧",
         "    jupiterStartMs ≤ earthStopMs ∧ earthStopMs ≤ jupiterStopMs := by decide",
         "theorem decemberContactDurations :",
@@ -177,6 +201,8 @@ def contact_lines():
         "theorem decemberDurationRounding :",
         "    (earthStopMs - earthStartMs - earthReportedDurationMs).natAbs ≤ 6 ∧",
         "    (jupiterStopMs - jupiterStartMs - jupiterReportedDurationMs).natAbs ≤ 6 := by decide",
+        "#print axioms decemberContactLabels",
+        "#print axioms decemberContactOrder",
         "#print axioms decemberContactDurations",
         "#print axioms decemberDurationRounding",
         "",

@@ -154,6 +154,9 @@ def axisChecks (q r o rounded : Nat) : Prop :=
   17 * (correct * correct) < reported * reported ∧
   reported * reported < 23 * (correct * correct)
 
+#print axioms nicerClockOffset
+#print axioms nicer2018PrintedLabels
+#print axioms nicer2022PrintedLabels
 #print axioms commonShiftPreservesDuration
 #print axioms commonShiftPreservesWindow
 #print axioms orderedOverlap
