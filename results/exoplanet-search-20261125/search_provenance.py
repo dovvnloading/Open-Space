@@ -11,6 +11,7 @@ import json
 import re
 from collections import Counter
 from pathlib import Path
+from zipfile import BadZipFile
 
 PRODUCT = re.compile(r"tess\d+-s(\d{4})-(\d{16})-\d+-s_lc\.fits")
 DIGEST = re.compile(r"[a-f0-9]{64}")
@@ -164,7 +165,7 @@ def check_record(row, record, plan_sha, configuration_sha, expected_product=None
     return status
 
 
-def census(plan, plan_sha, configuration_sha, screen):
+def census(plan, plan_sha, configuration_sha, screen, verify_product):
     """Count every frozen target once; never promote peaks from a failed record."""
     screen = Path(screen)
     ledger, shortlist = [], []
@@ -182,17 +183,21 @@ def census(plan, plan_sha, configuration_sha, screen):
                 item["record_sha256"] = digest(raw)
                 record = json.loads(raw)
                 status = check_record(row, record, plan_sha, configuration_sha)
-                item.update(status=status, product=record["provenance"]["product"])
+                product = record["provenance"]["product"]
+                if status in ("searched", "unsearchable") and product != verify_product(row):
+                    raise ValueError("Cached photometry changed")
+                item.update(status=status, product=product)
                 if status == "searched":
                     passed = [p for p in record["peaks"] if p["preliminary_pass"]]
                     item["preliminary_peaks"] = len(passed)
-                    shortlist.extend({"tic": row["tic"], "sector": row["sector"],
-                                      "rank": row["rank"], **p} for p in passed)
+                    shortlist.extend({**p, "tic": row["tic"], "sector": row["sector"],
+                                      "rank": row["rank"]} for p in passed)
                 elif status == "error":
                     item["reason"] = record["error"]
                 else:
                     item["reason"] = record["reason"]
-            except (ValueError, TypeError, KeyError, OSError, AttributeError) as exc:
+            except (ValueError, TypeError, KeyError, OSError, AttributeError,
+                    EOFError, BadZipFile) as exc:
                 item.update(status="invalid", reason=str(exc))
         ledger.append(item)
     extras = sorted(p.name for p in screen.glob("*.json") if p.name not in expected)

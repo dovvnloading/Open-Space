@@ -56,7 +56,8 @@ class FrozenScreenGuards(unittest.TestCase):
         (self.screen / p.record_name(row)).write_text(json.dumps(rec))
 
     def census(self):
-        return p.census(self.plan, self.plan_sha, self.config, self.screen)
+        return p.census(self.plan, self.plan_sha, self.config, self.screen,
+                        verify_product=lambda row: self.record(row)["provenance"]["product"])
 
     def test_incomplete_catalog_fails_closed(self):
         index = self.root / "index.json"
@@ -125,6 +126,36 @@ class FrozenScreenGuards(unittest.TestCase):
         changed = {**rec["provenance"]["product"], "sha256": "e" * 64}
         with self.assertRaisesRegex(ValueError, "photometry changed"):
             p.check_record(row, rec, self.plan_sha, self.config, changed)
+
+    def test_census_rejects_changed_or_missing_photometry(self):
+        changed, missing, current = self.plan["targets"]
+        for row in self.plan["targets"]:
+            self.save(row, self.record(row))
+
+        def verify(row):
+            product = self.record(row)["provenance"]["product"]
+            if row == changed:
+                return {**product, "sha256": "e" * 64}
+            if row == missing:
+                raise FileNotFoundError("Missing cached light curve")
+            return product
+
+        summary, ledger, shortlist = p.census(
+            self.plan, self.plan_sha, self.config, self.screen, verify_product=verify,
+        )
+        self.assertEqual(summary["status"], "incomplete")
+        self.assertEqual([row["status"] for row in ledger], ["invalid", "invalid", "searched"])
+        self.assertEqual([peak["tic"] for peak in shortlist], [current["tic"]])
+
+    def test_shortlist_uses_frozen_target_identity(self):
+        row = self.plan["targets"][0]
+        record = self.record(row)
+        record["peaks"][0].update(tic=999, sector=1, rank=999)
+        self.save(row, record)
+        _, _, shortlist = self.census()
+        self.assertEqual(len(shortlist), 1)
+        self.assertEqual(tuple(shortlist[0][key] for key in ("tic", "sector", "rank")),
+                         tuple(row[key] for key in ("tic", "sector", "rank")))
 
     def test_wrong_target_and_legacy_records_rejected(self):
         first, second, _ = self.plan["targets"]

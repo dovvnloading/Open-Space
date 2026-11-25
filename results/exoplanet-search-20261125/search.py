@@ -11,13 +11,16 @@ import csv
 import hashlib
 import io
 import json
+import platform
 import re
 import time
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, as_completed
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from functools import partial
 from pathlib import Path
-import platform
+from tempfile import TemporaryDirectory
+from zipfile import BadZipFile
 
 import astropy
 import scipy
@@ -47,12 +50,20 @@ def sha(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
-def write_json(path, obj):
+@contextmanager
+def staged_file(path):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_name(path.name + ".tmp")
-    tmp.write_text(json.dumps(obj, indent=2, allow_nan=False) + "\n")
-    tmp.replace(path)
+    with TemporaryDirectory(dir=path.parent) as directory:
+        temporary = Path(directory) / path.name
+        yield temporary
+        temporary.replace(path)
+
+
+def write_json(path, obj):
+    with staged_file(path) as temporary:
+        temporary.write_text(json.dumps(obj, indent=2, allow_nan=False) + "\n",
+                             encoding="utf-8", newline="\n")
 
 
 def configuration_sha():
@@ -217,10 +228,11 @@ def verified_photometry(row, cache):
     path = Path(cache) / "lightcurves" / f"tic{tic}_s{sector}.npz"
     meta = json.loads(path.with_suffix(".json").read_text())
     product = checked_product(row, meta)
-    with np.load(path, allow_pickle=False) as data:
-        if column_digest(data) != product["columns_sha256"]:
-            raise ValueError("Cached photometry checksum mismatch")
-    return path, meta, product
+    with np.load(path, allow_pickle=False) as archive:
+        data = {key: archive[key] for key in FIELDS}
+    if column_digest(data) != product["columns_sha256"]:
+        raise ValueError("Cached photometry checksum mismatch")
+    return data, meta, product
 
 
 def fetch_one(row, cache):
@@ -230,8 +242,12 @@ def fetch_one(row, cache):
     path = dest / f"tic{tic}_s{sector}.npz"
     meta_path = path.with_suffix(".json")
     if path.exists() and meta_path.exists():
-        _, meta, _ = verified_photometry(row, cache)
-        return meta
+        try:
+            _, meta, _ = verified_photometry(row, cache)
+            return meta
+        except (OSError, ValueError, KeyError, TypeError, AttributeError, EOFError, BadZipFile):
+            # A new download must pass the same identity checks before replacing the cache.
+            pass
     name = row["filename"]
     m = PRODUCT.fullmatch(name)
     if not m or int(m[1]) != sector or int(m[2]) != tic:
@@ -256,8 +272,8 @@ def fetch_one(row, cache):
             "mast_uri": "mast:TESS/product/" + name, "sha256": sha(raw), "bytes": len(raw),
             "columns_sha256": column_digest(data), "retrieved_at": stamp(), "headers": headers,
             "cadences": len(data["time"])}
-    tmp = path.with_suffix(".tmp.npz")
-    np.savez_compressed(tmp, **data); tmp.replace(path)
+    with staged_file(path) as temporary:
+        np.savez_compressed(temporary, **data)
     write_json(meta_path, meta)
     return meta
 
@@ -266,12 +282,11 @@ class CoverageError(ValueError):
     """A retrieved, identity-checked observation cannot meet frozen coverage cuts."""
 
 
-def curve(path, column="pdcsap", window_days=1.0):
-    with np.load(path) as data:
-        valid = ((data["quality"] == 0) & np.isfinite(data["time"]) &
-                 np.isfinite(data[column]) & (data[column] > 0))
-        t = data["time"][valid].astype(float)
-        f = data[column][valid].astype(float)
+def curve(data, column="pdcsap", window_days=1.0):
+    valid = ((data["quality"] == 0) & np.isfinite(data["time"]) &
+             np.isfinite(data[column]) & (data[column] > 0))
+    t = data["time"][valid].astype(float)
+    f = data[column][valid].astype(float)
     if len(t) < 1000:
         raise CoverageError("Fewer than 1000 clean native cadences")
     order = np.argsort(t); t, f = t[order], f[order]
@@ -323,7 +338,7 @@ def screen_one(row, cache, output, plan_sha, configuration):
               "status": "searched", "peaks": [],
               "provenance": binding(row, plan_sha, configuration)}
     try:
-        path, _, product = verified_photometry(row, cache)
+        data, _, product = verified_photometry(row, cache)
         result["provenance"] = binding(row, plan_sha, configuration, product)
         if dest.exists():
             try:
@@ -333,7 +348,7 @@ def screen_one(row, cache, output, plan_sha, configuration):
                     return previous
             except (ValueError, KeyError, TypeError, OSError, AttributeError):
                 pass  # Stale or failed records are recomputed, never reused.
-        t, y, scatter = curve(path)
+        t, y, scatter = curve(data)
         baseline, origin = np.ptp(t), t[0]
         model = BoxLeastSquares(t-origin, y, dy=scatter)
         periods = 1 / np.arange(1/13, 1/.5, .008/baseline)[::-1]
@@ -404,7 +419,10 @@ def main():
     plan, plan_sha = load_plan(args.output)
     configuration = configuration_sha()
     if args.command == "summarize":
-        summary, ledger, shortlist = census(plan, plan_sha, configuration, args.output / "screen")
+        summary, ledger, shortlist = census(
+            plan, plan_sha, configuration, args.output / "screen",
+            verify_product=lambda row: verified_photometry(row, args.cache)[2],
+        )
         write_json(args.output / "screening_ledger.json", ledger)
         write_json(args.output / "shortlist.json", shortlist)
         write_json(args.output / "screening_summary.json", summary)

@@ -39,6 +39,9 @@ python results/exoplanet-search-20261125/search.py screen --cache /path/to/cache
 python results/exoplanet-search-20261125/search.py summarize --cache /path/to/cache
 ```
 
+On memory-constrained machines, set `OPENBLAS_NUM_THREADS=1` and
+`OMP_NUM_THREADS=1` before running the screen, and lower `--workers` as needed.
+
 Final measured outcomes, rejection ledger, controls and retained candidate
 evidence will replace this in-progress summary as the investigation completes.
 
@@ -54,8 +57,10 @@ A new cohort must use a fresh output directory and a complete catalog exclusion
 index. Every cached screen is bound to the exact plan bytes, target row, pipeline
 code/dependency configuration, and verified original-product/scientific-column
 hashes. Failed and unbound records are recomputed; partial peaks never enter the
-shortlist. The summarizer emits a complete per-target census, a summary and a
-shortlist; it exits nonzero for missing, invalid, failed or foreign records.
+shortlist. The fetch step re-downloads a cached product if its receipt or native
+arrays fail verification. The summarizer rechecks each successful screen against
+the current verified cache, emits one census row per frozen target, and exits
+nonzero for missing, invalid, failed or foreign records.
 Coverage exclusions are distinct from retrieval or processing failures.
 
 The initial committed plan contains the original exclusion-index digest, not the
